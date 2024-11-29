@@ -16,11 +16,13 @@
   "license": "LGPLv3",
   "type": "module",
   "fhir": {
-    "spec": "https://hl7.fr/ig/fhir/core/2.0.0/definitions.json.zip",
-    "adaptorGeneratedDate": "2024-11-29T14:33:55.696Z",
+    "specUrl": "https://hl7.fr/ig/fhir/core/2.0.0/definitions.json.zip",
+    "adaptorGeneratedDate": "2024-11-29T15:29:24.329Z",
     "name": "hl7.fhir.fr.core",
-    "specVersion": "4.0.1",
-    "specDate": "2024-03-25"
+    "specDate": "2024-03-25",
+    "generatorVersion": "0.1.0",
+    "igVersion": "4.0.1",
+    "webUrl": "https://hl7.fr/ig/fhir/core"
   },
   "dependencies": {
     "@openfn/language-common": "workspace:*"

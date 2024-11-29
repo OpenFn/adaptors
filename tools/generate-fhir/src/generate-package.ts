@@ -46,8 +46,6 @@ const copyAndRename = async (
 
   const templated = {
     '{{NAME}}': adaptorName,
-    '{{SPEC_PATH}}': specPath,
-    '{{SPEC_DATE}}': new Date().toISOString(),
   };
 
   for (const item of items) {

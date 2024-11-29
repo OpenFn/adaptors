@@ -23,9 +23,12 @@ import { MappingSpec, SpecJSON } from './types';
 const valueSetCache: Record<string, any> = {};
 
 export type Meta = {
-  specVersion?: string;
+  igVersion?: string;
+  webUrl?: string;
   specDate?: string;
   name?: string;
+  adaptorGeneratedDate?: string;
+  generatorVersion?: string;
 };
 
 // TODO pass mappings into this
@@ -55,6 +58,7 @@ export default async function (
           let specs;
           try {
             ({ meta, specs } = await parseIGZip(specOutputPath));
+            meta.specUrl = specPath;
             console.log('... downloaded!');
           } catch (e) {
             console.log('Error processing zip stream');
@@ -248,7 +252,8 @@ function parseIGZip(inputDir: string) {
 
               if (entry.fileName === 'spec.internals') {
                 meta.name = json['npm-name'];
-                meta.specVersion = json['ig-version'];
+                meta.igVersion = json['ig-version'];
+                meta.webUrl = json['webUrl'];
                 meta.specDate = json.date;
               }
 

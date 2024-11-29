@@ -15,10 +15,7 @@
   "author": "Open Function Group",
   "license": "LGPLv3",
   "type": "module",
-  "fhir": {
-    "spec": "{{SPEC_PATH}}",
-    "adaptorGeneratedDate": "{{SPEC_DATE}}"
-  },
+  "fhir": {},
   "dependencies": {
     "@openfn/language-common": "workspace:*"
   },

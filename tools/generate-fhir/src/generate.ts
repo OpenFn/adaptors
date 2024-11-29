@@ -9,6 +9,8 @@ import withDisclaimer from './util/disclaimer';
 import generateDTS from './generate-dts';
 import generateTests from './generate-tests';
 
+import toolPkg from '../package.json' assert { type: 'json' };
+
 export type Options = {
   /** The base fhir package to import datatypes and functions from, ie, @openfn/language-fhir-4 */
   base?: string;
@@ -68,29 +70,19 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     mappings = {};
   }
 
+  let meta;
   // Determine whether to setup the initial template and/or re-download the spec
   try {
     const pkg = await readPkg();
 
     if (respec || spec) {
-      const meta = await fetchSpec(
-        adaptorPath,
-        spec ?? pkg.fhir.spec,
-        mappings
-      );
-      updateMeta(pkg, meta);
+      meta = await fetchSpec(adaptorPath, spec ?? pkg.fhir.spec, mappings);
     }
   } catch (error: any) {
     console.log(`Package ${adaptorName} does not exist: generating...`);
     // If the adaptor does not exist, generate the project boilerplate
     await generatePackage(adaptorPath, adaptorName, spec!);
-    const meta = await fetchSpec(adaptorPath, spec, mappings);
-
-    const pkg = await readPkg();
-    pkg.fhir.spec = spec;
-    pkg.fhir.adaptorGeneratedDate = new Date().toISOString();
-
-    updateMeta(pkg, meta);
+    meta = await fetchSpec(adaptorPath, spec, mappings);
 
     // Unless the user said otherwise, generate test
     if (!('tests' in options)) {
@@ -100,7 +92,6 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   }
 
   // Now generate from the spec
-
   const specPath = path.resolve(adaptorPath, 'spec', 'spec.json');
   try {
     await access(specPath);
@@ -148,6 +139,14 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
         withDisclaimer(dts)
       );
     }, 500);
+  });
+
+  // Finally, update package json metadata
+  const pkg = await readPkg();
+  updateMeta(pkg, {
+    ...meta,
+    adaptorGeneratedDate: new Date().toISOString(),
+    generatorVersion: toolPkg.version,
   });
 };
 
