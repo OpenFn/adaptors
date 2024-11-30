@@ -11,9 +11,13 @@ type Address_fr_core_address_Props = {
      *  */
     id: string;
     /**
-     * Code COG de la ville
+     * Additional content defined by implementations
      *  */
     extension: Extension;
+    /**
+     * Code COG de la ville
+     *  */
+    inseeCode: Extension;
     /**
      * home | work | temp | old | billing - purpose of this address
      *  */
@@ -182,7 +186,7 @@ type Extension_fr_core_identity_reliability_Props = {
      *  */
     id: string;
     /**
-     * Spécifie le type de document qui a été contrôlé par l'agent d'admission pour justifier le statut de l'identité. Seuls certains types de pièces définis dans le RNIV permettent de valider une identité (CN | PA | CS | ... )
+     * Additional content defined by implementations
      *  */
     extension: {
         /**
@@ -198,6 +202,26 @@ type Extension_fr_core_identity_reliability_Props = {
          *  */
         value: Coding;
     };
+    /**
+     * The way the INS identity is collected | Mode d'obtention de l'INS (SM, CV, INSI, ...)
+     *  */
+    methodCollection: Extension;
+    /**
+     * INS collection date| date d'interrogation du téléservice INSi
+     *  */
+    dateCollection: Extension;
+    /**
+     * Il s'agit du statut de l'identité (VALI | PROV | FICT | DOUT | ...). Dans certains cas il peut également être nécessaire de véhiculer, la notion d’attribut d’identité. Les combinaisons autorisées entre statuts et attributs sont décrites dans le Référentiel National d’Identito-Vigilance.
+     *  */
+    identityStatus: Extension;
+    /**
+     * Date de vérification de l'identité
+     *  */
+    validationDate: Extension;
+    /**
+     * Spécifie le type de document qui a été contrôlé par l'agent d'admission pour justifier le statut de l'identité. Seuls certains types de pièces définis dans le RNIV permettent de valider une identité (CN | PA | CS | ... )
+     *  */
+    validationMode: Extension;
     /**
      * identifies the meaning of the extension
      *  */
@@ -613,7 +637,7 @@ type Extension_fr_core_patient_nationality_Props = {
      *  */
     id: string;
     /**
-     * Nationality Period
+     * Additional content defined by implementations
      *  */
     extension: {
         /**
@@ -629,6 +653,14 @@ type Extension_fr_core_patient_nationality_Props = {
          *  */
         value: Period;
     };
+    /**
+     * Nationality Code
+     *  */
+    code: Extension;
+    /**
+     * Nationality Period
+     *  */
+    period: Extension;
     /**
      * identifies the meaning of the extension
      *  */
@@ -732,6 +764,90 @@ type Extension_fr_core_schedule_availability_time_Props = {
         value: number;
     };
     /**
+     * Extension
+     *  */
+    type: Extension;
+    /**
+     * Recurrent caracteristic of the Schedule | Caractère récurrent du Schedule
+     *  */
+    rrule: Extension;
+    /**
+     * The value set comes from iCalendar | Le jeu de valeur est issu de iCalendar
+     *  */
+    freq: Extension;
+    /**
+     * Extension
+     *  */
+    until: Extension;
+    /**
+     * Number of occurrences | Nombre d'occurences
+     *  */
+    count: Extension;
+    /**
+     * How often the recurrence rule repeats | répétition de la règle de récurrence
+     *  */
+    interval: Extension;
+    /**
+     * List of seconds within a minute | Liste de secondes dans une minute
+     *  */
+    bySecond: Extension;
+    /**
+     * List of minutes within an hour | Liste de minutes dans une heure
+     *  */
+    byMinute: Extension;
+    /**
+     * List of hours of the day | Liste des heures du jour
+     *  */
+    byHour: Extension;
+    /**
+     * List of days of the week | Liste des jours de la semaine
+     *  */
+    byDay: Extension;
+    /**
+     * List of days of the month | Liste des jours dans le mois
+     *  */
+    byMonthDay: Extension;
+    /**
+     * List of days of the year | liste des jours de l'année (1 à 366)
+     *  */
+    byYearDay: Extension;
+    /**
+     * List of weeks of the year | Liste des semaines de l'année
+     *  */
+    byWeekNo: Extension;
+    /**
+     * List of months of the year | Liste des mois de l'année
+     *  */
+    byMonth: Extension;
+    /**
+     * First day of the workweek | Premier jour de la semaine de travail
+     *  */
+    wkst: Extension;
+    /**
+     * Start of the period | Début de la période
+     *  */
+    start: Extension;
+    /**
+     * End of the period | Fin de la période
+     *  */
+    end: Extension;
+    /**
+     * Availability/non-availabilty identifier | Identifiant des disponibilités/non disponibilités
+     *  */
+    identifier: Extension;
+    /**
+     * Non-availability resaon | Raison de l'indisponibilité
+     *  */
+    unavailabilityReason: Extension;
+    /**
+     * The date/time the period was created | Date de création de la période
+     *  */
+    created: Extension;
+    /**
+     * Extension
+     *  */
+    priority: Extension;
+    /**
      * identifies the meaning of the extension
      *  */
     url: string;
@@ -747,7 +863,7 @@ type Extension_fr_core_service_type_duration_Props = {
      *  */
     id: string;
     /**
-     * Duration of the service | durée du service
+     * Extension
      *  */
     extension: {
         /**
@@ -763,6 +879,14 @@ type Extension_fr_core_service_type_duration_Props = {
          *  */
         value: Duration;
     };
+    /**
+     * Type of the service that has to be performed during the appointment | Typedu service à assurer durant le RDV
+     *  */
+    serviceType: Extension;
+    /**
+     * Duration of the service | durée du service
+     *  */
+    duration: Extension;
     /**
      * identifies the meaning of the extension
      *  */
@@ -907,9 +1031,13 @@ type Appointment_fr_core_appointment_Props = {
      *  */
     contained: Resource;
     /**
-     * FR Core Appointment Operator Extension
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * FR Core Appointment Operator Extension
+     *  */
+    appointmentOperator: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -1045,9 +1173,13 @@ type ContactPoint_fr_core_contact_point_Props = {
      *  */
     id: string;
     /**
-     * Type of email | type de messagerie électronique
+     * Additional content defined by implementations
      *  */
     extension: Extension;
+    /**
+     * Type of email | type de messagerie électronique
+     *  */
+    emailType: Extension;
     /**
      * phone | fax | email | pager | url | sms | other
      *  */
@@ -1131,9 +1263,13 @@ type Encounter_fr_core_encounter_Props = {
      *  */
     contained: Resource;
     /**
-     * Estimated discharge date | Date de sortie estimée
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * Estimated discharge date | Date de sortie estimée
+     *  */
+    estimatedDischargeDate: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -1493,9 +1629,13 @@ type HealthcareService_fr_core_healthcare_service_Props = {
      *  */
     contained: Resource;
     /**
-     * FR Core Service Type Duration Extension
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * FR Core Service Type Duration Extension
+     *  */
+    serviceTypeDuration: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -1698,9 +1838,13 @@ type HumanName_fr_core_human_name_Props = {
      *  */
     id: string;
     /**
-     * Preferred display order of name parts
+     * Additional content defined by implementations
      *  */
     extension: Extension;
+    /**
+     * Preferred display order of name parts
+     *  */
+    assemblyOrder: Extension;
     /**
      * usual | official | temp | nickname | anonymous | old | maiden
      *  */
@@ -1792,9 +1936,13 @@ type Location_fr_core_location_Props = {
      *  */
     contained: Resource;
     /**
-     * FR Core Use Period Extension
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * FR Core Use Period Extension
+     *  */
+    usePeriod: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -1910,10 +2058,6 @@ type Location_fr_core_location_Props = {
          *  */
         id: string;
         /**
-         * FR Core Location Part Of Position Room Extension
-         *  */
-        positionRoom: any;
-        /**
          * Literal reference, Relative, internal or absolute URL
          *  */
         reference: string;
@@ -1930,6 +2074,10 @@ type Location_fr_core_location_Props = {
          *  */
         display: string;
     };
+    /**
+     * FR Core Location Part Of Position Room Extension
+     *  */
+    positionRoom: Extension;
     /**
      * What days/times during a week is this location usually open
      *  */
@@ -2239,9 +2387,13 @@ type Observation_fr_core_observation_bmi_Props = {
      *  */
     contained: Resource;
     /**
-     * Other information that may be relevant to this event.
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * Other information that may be relevant to this event.
+     *  */
+    supportingInfo: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -2508,9 +2660,17 @@ type Observation_fr_core_observation_body_height_Props = {
      *  */
     contained: Resource;
     /**
-     * Other information that may be relevant to this event.
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * FR Core Observation Height Body Position Extension
+     *  */
+    bodyposition: Extension;
+    /**
+     * Other information that may be relevant to this event.
+     *  */
+    supportingInfo: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -2777,9 +2937,17 @@ type Observation_fr_core_observation_body_temperature_Props = {
      *  */
     contained: Resource;
     /**
-     * Other information that may be relevant to this event.
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * FR Core Observation Level Of Exertion Extension
+     *  */
+    levelOfExertion: Extension;
+    /**
+     * Other information that may be relevant to this event.
+     *  */
+    supportingInfo: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -3046,9 +3214,13 @@ type Observation_fr_core_observation_body_weight_Props = {
      *  */
     contained: Resource;
     /**
-     * Other information that may be relevant to this event.
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * Other information that may be relevant to this event.
+     *  */
+    supportingInfo: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -3315,9 +3487,13 @@ type Observation_fr_core_observation_bp_Props = {
      *  */
     contained: Resource;
     /**
-     * Other information that may be relevant to this event.
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * Other information that may be relevant to this event.
+     *  */
+    supportingInfo: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -3559,9 +3735,13 @@ type Observation_fr_core_observation_head_circum_Props = {
      *  */
     contained: Resource;
     /**
-     * Other information that may be relevant to this event.
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * Other information that may be relevant to this event.
+     *  */
+    supportingInfo: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -3828,9 +4008,21 @@ type Observation_fr_core_observation_heartrate_Props = {
      *  */
     contained: Resource;
     /**
-     * Other information that may be relevant to this event.
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * FR Core Observation Level Of Exertion Extension
+     *  */
+    levelOfExertion: Extension;
+    /**
+     * FR Core Observation Body Position Ext Extension
+     *  */
+    bodyPosition: Extension;
+    /**
+     * Other information that may be relevant to this event.
+     *  */
+    supportingInfo: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -4123,9 +4315,21 @@ type Observation_fr_core_observation_resp_rate_Props = {
      *  */
     contained: Resource;
     /**
-     * Other information that may be relevant to this event.
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * FR Core Observation Body Position Ext Extension
+     *  */
+    bodyPosition: Extension;
+    /**
+     * FR Core Observation Level Of Exertion Extension
+     *  */
+    levelOfExertion: Extension;
+    /**
+     * Other information that may be relevant to this event.
+     *  */
+    supportingInfo: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -4392,9 +4596,13 @@ type Observation_fr_core_observation_saturation_oxygen_Props = {
      *  */
     contained: Resource;
     /**
-     * Other information that may be relevant to this event.
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * Other information that may be relevant to this event.
+     *  */
+    supportingInfoAdministrationOxygen: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -4700,6 +4908,18 @@ type Organization_fr_core_organization_Props = {
      *  */
     extension: Extension;
     /**
+     * FR Core Organization Short Name Extension
+     *  */
+    shortName: Extension;
+    /**
+     * FR Core Organization Description Extension
+     *  */
+    description: Extension;
+    /**
+     * Extension
+     *  */
+    usePeriod: Extension;
+    /**
      * Extensions that cannot be ignored
      *  */
     modifierExtension: Extension;
@@ -4892,6 +5112,22 @@ type Organization_fr_core_organization_pole_Props = {
      *  */
     extension: Extension;
     /**
+     * FR Core Organization Short Name Extension
+     *  */
+    shortName: Extension;
+    /**
+     * FR Core Organization Description Extension
+     *  */
+    description: Extension;
+    /**
+     * FR Core Organization Budget Letter Extension
+     *  */
+    budgetLetter: Extension;
+    /**
+     * Extension
+     *  */
+    usePeriod: Extension;
+    /**
      * Extensions that cannot be ignored
      *  */
     modifierExtension: Extension;
@@ -5070,6 +5306,18 @@ type Organization_fr_core_organization_uac_Props = {
      * Extension
      *  */
     extension: Extension;
+    /**
+     * FR Core Organization Short Name Extension
+     *  */
+    shortName: Extension;
+    /**
+     * FR Core Organization Description Extension
+     *  */
+    description: Extension;
+    /**
+     * Extension
+     *  */
+    usePeriod: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -5250,6 +5498,54 @@ type Organization_fr_core_organization_uf_Props = {
      *  */
     extension: Extension;
     /**
+     * FR Core Organization Short Name Extension
+     *  */
+    shortName: Extension;
+    /**
+     * FR Core Organization Description Extension
+     *  */
+    description: Extension;
+    /**
+     * FR Core Organization Budget Letter Extension
+     *  */
+    budgetLetter: Extension;
+    /**
+     * FR Core Organization Field Extension
+     *  */
+    equipmentField: Extension;
+    /**
+     * FR Core Organization Activity Field Extension
+     *  */
+    activityField: Extension;
+    /**
+     * FR Core Organization External Extension
+     *  */
+    external: Extension;
+    /**
+     * FR Core Organization Total Number Of Theorical Accomodation Space Extension
+     *  */
+    accomodationSpace: Extension;
+    /**
+     * FR Core Organization Applicant Act Extension
+     *  */
+    applicantAct: Extension;
+    /**
+     * FR Core Organization Executant Extension
+     *  */
+    executantAct: Extension;
+    /**
+     * FR Core Organization Analysis Section Extension
+     *  */
+    analysisSection: Extension;
+    /**
+     * FR Core Organization Activity Type Extension
+     *  */
+    activityType: Extension;
+    /**
+     * Extension
+     *  */
+    usePeriod: Extension;
+    /**
      * Extensions that cannot be ignored
      *  */
     modifierExtension: Extension;
@@ -5413,7 +5709,7 @@ type Patient_fr_core_patient_Props = {
      *  */
     contained: Resource;
     /**
-     * Place of Birth for patient
+     * Extension
      *  */
     extension: {
         /**
@@ -5429,6 +5725,26 @@ type Patient_fr_core_patient_Props = {
          *  */
         value: Address;
     };
+    /**
+     * Nationality
+     *  */
+    nationality: Extension;
+    /**
+     * Reliabilility of the identity | Fiabilité de l'identité
+     *  */
+    identityReliability: Extension;
+    /**
+     * FR Core Patient Death Place Extension
+     *  */
+    deathPlace: Extension;
+    /**
+     * FR Core Patient Birthdate Update Indicator Extension
+     *  */
+    birthdateUpdateIndicator: Extension;
+    /**
+     * Place of Birth for patient
+     *  */
+    birthPlace: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -5479,10 +5795,6 @@ type Patient_fr_core_patient_Props = {
          *  */
         id: string;
         /**
-         * Dans le cas d’une identité créée ou modifiée par un appel au téléservice INSi, il s’agit de la liste des prénoms retournée par le téléservice. Ce composant contient tous les prénoms du patient, y compris le premier, que l'on retrouve également dans le champ name.given. Il s'agit de la liste des prénoms du patient, qu'elle soit issue d'une saisie locale ou du retour à l'appel au téléservice INSi. Conformément aux spécifications INS, cette liste est constituée des prénoms, séparés par des espaces.
-         *  */
-        "birth-list-given-name": any;
-        /**
          * usual | official | temp | nickname | anonymous | old | maiden
          *  */
         use: "usual" | "official" | "temp" | "nickname" | "anonymous" | "old";
@@ -5511,6 +5823,10 @@ type Patient_fr_core_patient_Props = {
          *  */
         period: Period;
     };
+    /**
+     * Dans le cas d’une identité créée ou modifiée par un appel au téléservice INSi, il s’agit de la liste des prénoms retournée par le téléservice. Ce composant contient tous les prénoms du patient, y compris le premier, que l'on retrouve également dans le champ name.given. Il s'agit de la liste des prénoms du patient, qu'elle soit issue d'une saisie locale ou du retour à l'appel au téléservice INSi. Conformément aux spécifications INS, cette liste est constituée des prénoms, séparés par des espaces.
+     *  */
+    birth-list-given-name: Extension;
     /**
      * Details of a Technology mediated contact point (phone, fax, email, etc.)
      *  */
@@ -5552,14 +5868,6 @@ type Patient_fr_core_patient_Props = {
          *  */
         id: string;
         /**
-         * Contact identifier in the patient resource | Identifiant de contact dans la ressource Patient
-         *  */
-        contactIdentifier: any;
-        /**
-         * Comment on a dataElement | Commentaire sur un dataElement
-         *  */
-        comment: any;
-        /**
          * Extensions that cannot be ignored even if unrecognized
          *  */
         modifierExtension: Extension;
@@ -5592,6 +5900,14 @@ type Patient_fr_core_patient_Props = {
          *  */
         period: Period;
     };
+    /**
+     * Contact identifier in the patient resource | Identifiant de contact dans la ressource Patient
+     *  */
+    contactIdentifier: Extension;
+    /**
+     * Comment on a dataElement | Commentaire sur un dataElement
+     *  */
+    comment: Extension;
     /**
      * A language which may be used to communicate with the patient about his or her health
      *  */
@@ -5699,7 +6015,7 @@ type Patient_fr_core_patient_ins_Props = {
      *  */
     contained: Resource;
     /**
-     * Place of Birth for patient
+     * Extension
      *  */
     extension: {
         /**
@@ -5715,6 +6031,30 @@ type Patient_fr_core_patient_ins_Props = {
          *  */
         value: Period;
     };
+    /**
+     * Nationality
+     *  */
+    nationality: Extension;
+    /**
+     * Reliabilility of the identity | Fiabilité de l'identité
+     *  */
+    identityReliability: Extension;
+    /**
+     * FR Core Patient Death Place Extension
+     *  */
+    deathPlace: Extension;
+    /**
+     * FR Core Patient Birthdate Update Indicator Extension
+     *  */
+    birthdateUpdateIndicator: Extension;
+    /**
+     * Place of Birth for patient
+     *  */
+    birthPlace: Extension;
+    /**
+     * FR Core Address Insee Code Extension
+     *  */
+    inseeCode: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -5765,10 +6105,6 @@ type Patient_fr_core_patient_ins_Props = {
          *  */
         id: string;
         /**
-         * Dans le cas d’une identité créée ou modifiée par un appel au téléservice INSi, il s’agit de la liste des prénoms retournée par le téléservice. Ce composant contient tous les prénoms du patient, y compris le premier, que l'on retrouve également dans le champ name.given. Il s'agit de la liste des prénoms du patient, qu'elle soit issue d'une saisie locale ou du retour à l'appel au téléservice INSi. Conformément aux spécifications INS, cette liste est constituée des prénoms, séparés par des espaces.
-         *  */
-        "birth-list-given-name": any;
-        /**
          * usual | official | temp | nickname | anonymous | old | maiden
          *  */
         use: "usual" | "official" | "temp" | "nickname" | "anonymous" | "old";
@@ -5797,6 +6133,10 @@ type Patient_fr_core_patient_ins_Props = {
          *  */
         period: Period;
     };
+    /**
+     * Dans le cas d’une identité créée ou modifiée par un appel au téléservice INSi, il s’agit de la liste des prénoms retournée par le téléservice. Ce composant contient tous les prénoms du patient, y compris le premier, que l'on retrouve également dans le champ name.given. Il s'agit de la liste des prénoms du patient, qu'elle soit issue d'une saisie locale ou du retour à l'appel au téléservice INSi. Conformément aux spécifications INS, cette liste est constituée des prénoms, séparés par des espaces.
+     *  */
+    birth-list-given-name: Extension;
     /**
      * Details of a Technology mediated contact point (phone, fax, email, etc.)
      *  */
@@ -5838,14 +6178,6 @@ type Patient_fr_core_patient_ins_Props = {
          *  */
         id: string;
         /**
-         * Contact identifier in the patient resource | Identifiant de contact dans la ressource Patient
-         *  */
-        contactIdentifier: any;
-        /**
-         * Comment on a dataElement | Commentaire sur un dataElement
-         *  */
-        comment: any;
-        /**
          * Extensions that cannot be ignored even if unrecognized
          *  */
         modifierExtension: Extension;
@@ -5878,6 +6210,14 @@ type Patient_fr_core_patient_ins_Props = {
          *  */
         period: Period;
     };
+    /**
+     * Contact identifier in the patient resource | Identifiant de contact dans la ressource Patient
+     *  */
+    contactIdentifier: Extension;
+    /**
+     * Comment on a dataElement | Commentaire sur un dataElement
+     *  */
+    comment: Extension;
     /**
      * A language which may be used to communicate with the patient about his or her health
      *  */
@@ -5992,9 +6332,13 @@ type Practitioner_fr_core_practitioner_Props = {
      *  */
     contained: Resource;
     /**
-     * FR Core Practitioner Specialty Extension
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * FR Core Practitioner Specialty Extension
+     *  */
+    specialty: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -6156,9 +6500,13 @@ type PractitionerRole_fr_core_practitioner_role_exercice_Props = {
      *  */
     contained: Resource;
     /**
-     * FR Core Service Type Duration Extension
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * FR Core Service Type Duration Extension
+     *  */
+    serviceTypeDuration: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
@@ -6383,10 +6731,6 @@ type PractitionerRole_fr_core_practitioner_role_profession_Props = {
          *  */
         id: string;
         /**
-         * Catégorie professionnnelle selon le MOS de l'ANS
-         *  */
-        professionnalCategory: any;
-        /**
          * Code defined by a terminology system
          *  */
         coding: Coding;
@@ -6395,6 +6739,10 @@ type PractitionerRole_fr_core_practitioner_role_profession_Props = {
          *  */
         text: string;
     };
+    /**
+     * Catégorie professionnnelle selon le MOS de l'ANS
+     *  */
+    professionnalCategory: Extension;
     /**
      * Specific specialty of the practitioner
      *  */
@@ -6681,9 +7029,17 @@ type Schedule_fr_core_schedule_Props = {
      *  */
     contained: Resource;
     /**
-     * FR Core Schedule availability time Extension
+     * Extension
      *  */
     extension: Extension;
+    /**
+     * FR Core Service Type Duration Extension
+     *  */
+    serviceTypeDuration: Extension;
+    /**
+     * FR Core Schedule availability time Extension
+     *  */
+    availabilityTime: Extension;
     /**
      * Extensions that cannot be ignored
      *  */
