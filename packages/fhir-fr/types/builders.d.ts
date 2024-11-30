@@ -56,13 +56,11 @@ type Address_fr_core_address_Props = {
     period: Period;
 };
 
-type Address_variants = "fr-core-address";
-
 type Address__lookups = {
     "fr-core-address": Address_fr_core_address_Props;
 };
 
-export declare function address<T extends Address_variants>(type: Address_variants, props: Address__lookups[T]);;
+export declare function address<T extends keyof Address__lookups>(type: T, props: Address__lookups[T]);;
 
 type Extension_fr_core_address_insee_code_Props = {
     /**
@@ -813,8 +811,6 @@ type Extension_fr_core_use_period_Props = {
     value: Period;
 };
 
-type Extension_variants = "fr-core-address-insee-code" | "fr-core-appointment-operator" | "fr-core-comment" | "fr-core-contact-point-email-type" | "fr-core-estimated-discharge-date" | "fr-core-human-name-assembly-order" | "fr-core-identity-reliability" | "fr-core-location-position-room" | "fr-core-lunar-date" | "fr-core-observation-body-position-ext" | "fr-core-observation-height-body-position" | "fr-core-observation-level-of-exertion" | "fr-core-organization-activity-field" | "fr-core-organization-activity-type" | "fr-core-organization-analysis-section" | "fr-core-organization-applicant-act" | "fr-core-organization-budget-letter" | "fr-core-organization-description" | "fr-core-organization-executant" | "fr-core-organization-external" | "fr-core-organization-field" | "fr-core-organization-number-of-theorical-accomadation-space" | "fr-core-organization-prestation-discipline" | "fr-core-organization-short-name" | "fr-core-patient-birth-list-given-name" | "fr-core-patient-birthdate-update-indicator" | "fr-core-patient-contact-identifier" | "fr-core-patient-death-place" | "fr-core-patient-nationality" | "fr-core-practitioner-profession" | "fr-core-practitioner-specialty" | "fr-core-role-code-categorie-professionnelle" | "fr-core-schedule-availability-time" | "fr-core-service-type-duration" | "fr-core-slot-date" | "fr-core-use-period";
-
 type Extension__lookups = {
     "fr-core-address-insee-code": Extension_fr_core_address_insee_code_Props;
     "fr-core-appointment-operator": Extension_fr_core_appointment_operator_Props;
@@ -854,7 +850,7 @@ type Extension__lookups = {
     "fr-core-use-period": Extension_fr_core_use_period_Props;
 };
 
-export declare function extension<T extends Extension_variants>(type: Extension_variants, props: Extension__lookups[T]);;
+export declare function extension<T extends keyof Extension__lookups>(type: T, props: Extension__lookups[T]);;
 
 type Appointment_fr_core_appointment_Props = {
     /**
@@ -1037,13 +1033,11 @@ type Appointment_fr_core_appointment_Props = {
     requestedPeriod: Period;
 };
 
-type Appointment_variants = "fr-core-appointment";
-
 type Appointment__lookups = {
     "fr-core-appointment": Appointment_fr_core_appointment_Props;
 };
 
-export declare function appointment<T extends Appointment_variants>(type: Appointment_variants, props: Appointment__lookups[T]);;
+export declare function appointment<T extends keyof Appointment__lookups>(type: T, props: Appointment__lookups[T]);;
 
 type ContactPoint_fr_core_contact_point_Props = {
     /**
@@ -1076,13 +1070,11 @@ type ContactPoint_fr_core_contact_point_Props = {
     period: Period;
 };
 
-type ContactPoint_variants = "fr-core-contact-point";
-
 type ContactPoint__lookups = {
     "fr-core-contact-point": ContactPoint_fr_core_contact_point_Props;
 };
 
-export declare function contactPoint<T extends ContactPoint_variants>(type: ContactPoint_variants, props: ContactPoint__lookups[T]);;
+export declare function contactPoint<T extends keyof ContactPoint__lookups>(type: T, props: ContactPoint__lookups[T]);;
 
 type Encounter_fr_core_encounter_Props = {
     /**
@@ -1440,13 +1432,11 @@ type Encounter_fr_core_encounter_Props = {
     partOf: Reference;
 };
 
-type Encounter_variants = "fr-core-encounter";
-
 type Encounter__lookups = {
     "fr-core-encounter": Encounter_fr_core_encounter_Props;
 };
 
-export declare function encounter<T extends Encounter_variants>(type: Encounter_variants, props: Encounter__lookups[T]);;
+export declare function encounter<T extends keyof Encounter__lookups>(type: T, props: Encounter__lookups[T]);;
 
 type HealthcareService_fr_core_healthcare_service_Props = {
     /**
@@ -1696,13 +1686,11 @@ type HealthcareService_fr_core_healthcare_service_Props = {
     endpoint: Reference;
 };
 
-type HealthcareService_variants = "fr-core-healthcare-service";
-
 type HealthcareService__lookups = {
     "fr-core-healthcare-service": HealthcareService_fr_core_healthcare_service_Props;
 };
 
-export declare function healthcareService<T extends HealthcareService_variants>(type: HealthcareService_variants, props: HealthcareService__lookups[T]);;
+export declare function healthcareService<T extends keyof HealthcareService__lookups>(type: T, props: HealthcareService__lookups[T]);;
 
 type HumanName_fr_core_human_name_Props = {
     /**
@@ -1743,13 +1731,11 @@ type HumanName_fr_core_human_name_Props = {
     period: Period;
 };
 
-type HumanName_variants = "fr-core-human-name";
-
 type HumanName__lookups = {
     "fr-core-human-name": HumanName_fr_core_human_name_Props;
 };
 
-export declare function humanName<T extends HumanName_variants>(type: HumanName_variants, props: HumanName__lookups[T]);;
+export declare function humanName<T extends keyof HumanName__lookups>(type: T, props: HumanName__lookups[T]);;
 
 type Location_fr_core_location_Props = {
     /**
@@ -1983,13 +1969,11 @@ type Location_fr_core_location_Props = {
     endpoint: Reference;
 };
 
-type Location_variants = "fr-core-location";
-
 type Location__lookups = {
     "fr-core-location": Location_fr_core_location_Props;
 };
 
-export declare function location<T extends Location_variants>(type: Location_variants, props: Location__lookups[T]);;
+export declare function location<T extends keyof Location__lookups>(type: T, props: Location__lookups[T]);;
 
 type MedicationAdministration_fr_core_medication_administration_inhaled_oxygen_Props = {
     /**
@@ -2194,13 +2178,11 @@ type MedicationAdministration_fr_core_medication_administration_inhaled_oxygen_P
     eventHistory: Reference;
 };
 
-type MedicationAdministration_variants = "fr-core-medication-administration-inhaled-oxygen";
-
 type MedicationAdministration__lookups = {
     "fr-core-medication-administration-inhaled-oxygen": MedicationAdministration_fr_core_medication_administration_inhaled_oxygen_Props;
 };
 
-export declare function medicationAdministration<T extends MedicationAdministration_variants>(type: MedicationAdministration_variants, props: MedicationAdministration__lookups[T]);;
+export declare function medicationAdministration<T extends keyof MedicationAdministration__lookups>(type: T, props: MedicationAdministration__lookups[T]);;
 
 type Observation_fr_core_observation_bmi_Props = {
     /**
@@ -4645,8 +4627,6 @@ type Observation_fr_core_observation_saturation_oxygen_Props = {
     };
 };
 
-type Observation_variants = "fr-core-observation-bmi" | "fr-core-observation-body-height" | "fr-core-observation-body-temperature" | "fr-core-observation-body-weight" | "fr-core-observation-bp" | "fr-core-observation-head-circum" | "fr-core-observation-heartrate" | "fr-core-observation-resp-rate" | "fr-core-observation-saturation-oxygen";
-
 type Observation__lookups = {
     "fr-core-observation-bmi": Observation_fr_core_observation_bmi_Props;
     "fr-core-observation-body-height": Observation_fr_core_observation_body_height_Props;
@@ -4659,7 +4639,7 @@ type Observation__lookups = {
     "fr-core-observation-saturation-oxygen": Observation_fr_core_observation_saturation_oxygen_Props;
 };
 
-export declare function observation<T extends Observation_variants>(type: Observation_variants, props: Observation__lookups[T]);;
+export declare function observation<T extends keyof Observation__lookups>(type: T, props: Observation__lookups[T]);;
 
 type Organization_fr_core_organization_Props = {
     /**
@@ -5369,8 +5349,6 @@ type Organization_fr_core_organization_uf_Props = {
     endpoint: Reference;
 };
 
-type Organization_variants = "fr-core-organization" | "fr-core-organization-pole" | "fr-core-organization-uac" | "fr-core-organization-uf";
-
 type Organization__lookups = {
     "fr-core-organization": Organization_fr_core_organization_Props;
     "fr-core-organization-pole": Organization_fr_core_organization_pole_Props;
@@ -5378,7 +5356,7 @@ type Organization__lookups = {
     "fr-core-organization-uf": Organization_fr_core_organization_uf_Props;
 };
 
-export declare function organization<T extends Organization_variants>(type: Organization_variants, props: Organization__lookups[T]);;
+export declare function organization<T extends keyof Organization__lookups>(type: T, props: Organization__lookups[T]);;
 
 type Patient_fr_core_patient_Props = {
     /**
@@ -5952,14 +5930,12 @@ type Patient_fr_core_patient_ins_Props = {
     };
 };
 
-type Patient_variants = "fr-core-patient" | "fr-core-patient-ins";
-
 type Patient__lookups = {
     "fr-core-patient": Patient_fr_core_patient_Props;
     "fr-core-patient-ins": Patient_fr_core_patient_ins_Props;
 };
 
-export declare function patient<T extends Patient_variants>(type: Patient_variants, props: Patient__lookups[T]);;
+export declare function patient<T extends keyof Patient__lookups>(type: T, props: Patient__lookups[T]);;
 
 type Practitioner_fr_core_practitioner_Props = {
     /**
@@ -6119,13 +6095,11 @@ type Practitioner_fr_core_practitioner_Props = {
     communication: CodeableConcept;
 };
 
-type Practitioner_variants = "fr-core-practitioner";
-
 type Practitioner__lookups = {
     "fr-core-practitioner": Practitioner_fr_core_practitioner_Props;
 };
 
-export declare function practitioner<T extends Practitioner_variants>(type: Practitioner_variants, props: Practitioner__lookups[T]);;
+export declare function practitioner<T extends keyof Practitioner__lookups>(type: T, props: Practitioner__lookups[T]);;
 
 type PractitionerRole_fr_core_practitioner_role_exercice_Props = {
     /**
@@ -6497,14 +6471,12 @@ type PractitionerRole_fr_core_practitioner_role_profession_Props = {
     endpoint: Reference;
 };
 
-type PractitionerRole_variants = "fr-core-practitioner-role-exercice" | "fr-core-practitioner-role-profession";
-
 type PractitionerRole__lookups = {
     "fr-core-practitioner-role-exercice": PractitionerRole_fr_core_practitioner_role_exercice_Props;
     "fr-core-practitioner-role-profession": PractitionerRole_fr_core_practitioner_role_profession_Props;
 };
 
-export declare function practitionerRole<T extends PractitionerRole_variants>(type: PractitionerRole_variants, props: PractitionerRole__lookups[T]);;
+export declare function practitionerRole<T extends keyof PractitionerRole__lookups>(type: T, props: PractitionerRole__lookups[T]);;
 
 type RelatedPerson_fr_core_related_person_Props = {
     /**
@@ -6648,13 +6620,11 @@ type RelatedPerson_fr_core_related_person_Props = {
     };
 };
 
-type RelatedPerson_variants = "fr-core-related-person";
-
 type RelatedPerson__lookups = {
     "fr-core-related-person": RelatedPerson_fr_core_related_person_Props;
 };
 
-export declare function relatedPerson<T extends RelatedPerson_variants>(type: RelatedPerson_variants, props: RelatedPerson__lookups[T]);;
+export declare function relatedPerson<T extends keyof RelatedPerson__lookups>(type: T, props: RelatedPerson__lookups[T]);;
 
 type Schedule_fr_core_schedule_Props = {
     /**
@@ -6752,13 +6722,11 @@ type Schedule_fr_core_schedule_Props = {
     comment: string;
 };
 
-type Schedule_variants = "fr-core-schedule";
-
 type Schedule__lookups = {
     "fr-core-schedule": Schedule_fr_core_schedule_Props;
 };
 
-export declare function schedule<T extends Schedule_variants>(type: Schedule_variants, props: Schedule__lookups[T]);;
+export declare function schedule<T extends keyof Schedule__lookups>(type: T, props: Schedule__lookups[T]);;
 
 type Slot_fr_core_slot_Props = {
     /**
@@ -6897,10 +6865,8 @@ type Slot_fr_core_slot_Props = {
     comment: string;
 };
 
-type Slot_variants = "fr-core-slot";
-
 type Slot__lookups = {
     "fr-core-slot": Slot_fr_core_slot_Props;
 };
 
-export declare function slot<T extends Slot_variants>(type: Slot_variants, props: Slot__lookups[T]);;
+export declare function slot<T extends keyof Slot__lookups>(type: T, props: Slot__lookups[T]);;
