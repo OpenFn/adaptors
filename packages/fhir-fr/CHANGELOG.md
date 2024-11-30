@@ -1,5 +1,11 @@
 # @openfn/language-fhir-fr
 
+## 1.0.3
+
+### Patch Changes
+
+- Attempt to fix typings in lightning using new builder
+
 ## 1.0.2
 
 ### Patch Changes
