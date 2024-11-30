@@ -76,19 +76,6 @@ const typeMap = {
 const generateEntryFuction = (resourceType: string, schemas: Schema[]) => {
   const result = [];
 
-  const v = `${resourceType}_variants`;
-
-  // ok not a real enum
-  // TODO maybe we could use keys rather than duplicate the declaration?
-  // An optimisation for later I think
-  const strs = b.createTypeAliasDeclaration(
-    [],
-    v,
-    [], // generics
-    b.createUnionTypeNode(schemas.map(({ id }) => b.createStringLiteral(id)))
-  );
-  result.push(strs);
-
   // create the lookup table
   const lookupTableName = `${resourceType}__lookups`;
   const lookup = b.createTypeAliasDeclaration(
@@ -115,14 +102,24 @@ const generateEntryFuction = (resourceType: string, schemas: Schema[]) => {
       [b.createModifier(ts.SyntaxKind.DeclareKeyword)],
       undefined,
       getBuilderName(resourceType),
-      [b.createTypeParameterDeclaration([], 'T', b.createIdentifier(v))], // generics
+      [
+        // generics
+        b.createTypeParameterDeclaration(
+          [],
+          'T',
+          b.createTypeOperatorNode(
+            ts.SyntaxKind.KeyOfKeyword,
+            b.createTypeReferenceNode(lookupTableName)
+          )
+        ),
+      ],
       [
         b.createParameterDeclaration(
           [],
           undefined,
           'type',
           undefined,
-          b.createTypeReferenceNode(v)
+          b.createTypeReferenceNode('T')
         ),
         b.createParameterDeclaration(
           [],

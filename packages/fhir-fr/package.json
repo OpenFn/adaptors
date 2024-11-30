@@ -21,7 +21,7 @@
     "webUrl": "https://hl7.fr/ig/fhir/core",
     "specDate": "2024-03-25",
     "specUrl": "https://hl7.fr/ig/fhir/core/2.0.0/definitions.json.zip",
-    "adaptorGeneratedDate": "2024-11-29T18:01:10.462Z",
+    "adaptorGeneratedDate": "2024-11-30T12:26:24.491Z",
     "generatorVersion": "0.2.0"
   },
   "dependencies": {
