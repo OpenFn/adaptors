@@ -144,7 +144,17 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
       if (el.path === resourceType) {
         continue;
       }
-      const path = el.path.replace(`${resourceType}\.`, '');
+
+      let path;
+      if (el.type?.at(0)?.code === 'Extension' && el.sliceName) {
+        // If this is an extension type, we work out a the path a bit differently
+        path = el.sliceName;
+        console.log(' >> ', el.id);
+
+        // TODO if there's a profile, look up the type def from that
+      } else {
+        path = el.path.replace(`${resourceType}\.`, '');
+      }
 
       if (path.includes('.')) {
         await parseProp(fullSpec, valuesets, schema, path, el);

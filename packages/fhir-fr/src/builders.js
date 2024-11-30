@@ -39,6 +39,10 @@ function address_fr_core_address(props) {
         resource.extension = props.extension;
     }
 
+    if (!_.isNil(props.inseeCode)) {
+        resource.inseeCode = props.inseeCode;
+    }
+
     if (!_.isNil(props.use)) {
         resource.use = props.use;
     }
@@ -133,6 +137,10 @@ function appointment_fr_core_appointment(props) {
 
     if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.appointmentOperator)) {
+        resource.appointmentOperator = props.appointmentOperator;
     }
 
     if (!_.isNil(props.modifierExtension)) {
@@ -308,6 +316,10 @@ function contactPoint_fr_core_contact_point(props) {
         resource.extension = props.extension;
     }
 
+    if (!_.isNil(props.emailType)) {
+        resource.emailType = props.emailType;
+    }
+
     if (!_.isNil(props.system)) {
         resource.system = props.system;
     }
@@ -382,6 +394,10 @@ function encounter_fr_core_encounter(props) {
 
     if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.estimatedDischargeDate)) {
+        resource.estimatedDischargeDate = props.estimatedDischargeDate;
     }
 
     if (!_.isNil(props.modifierExtension)) {
@@ -1034,6 +1050,26 @@ function extension_fr_core_identity_reliability(props) {
 
             resource.extension.push(_extension);
         }
+    }
+
+    if (!_.isNil(props.methodCollection)) {
+        resource.methodCollection = props.methodCollection;
+    }
+
+    if (!_.isNil(props.dateCollection)) {
+        resource.dateCollection = props.dateCollection;
+    }
+
+    if (!_.isNil(props.identityStatus)) {
+        resource.identityStatus = props.identityStatus;
+    }
+
+    if (!_.isNil(props.validationDate)) {
+        resource.validationDate = props.validationDate;
+    }
+
+    if (!_.isNil(props.validationMode)) {
+        resource.validationMode = props.validationMode;
     }
 
     if (!_.isNil(props.url)) {
@@ -1824,6 +1860,14 @@ function extension_fr_core_patient_nationality(props) {
         }
     }
 
+    if (!_.isNil(props.code)) {
+        resource.code = props.code;
+    }
+
+    if (!_.isNil(props.period)) {
+        resource.period = props.period;
+    }
+
     if (!_.isNil(props.url)) {
         resource.url = props.url;
     }
@@ -1984,6 +2028,90 @@ function extension_fr_core_schedule_availability_time(props) {
         }
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = props.type;
+    }
+
+    if (!_.isNil(props.rrule)) {
+        resource.rrule = props.rrule;
+    }
+
+    if (!_.isNil(props.freq)) {
+        resource.freq = props.freq;
+    }
+
+    if (!_.isNil(props.until)) {
+        resource.until = props.until;
+    }
+
+    if (!_.isNil(props.count)) {
+        resource.count = props.count;
+    }
+
+    if (!_.isNil(props.interval)) {
+        resource.interval = props.interval;
+    }
+
+    if (!_.isNil(props.bySecond)) {
+        resource.bySecond = props.bySecond;
+    }
+
+    if (!_.isNil(props.byMinute)) {
+        resource.byMinute = props.byMinute;
+    }
+
+    if (!_.isNil(props.byHour)) {
+        resource.byHour = props.byHour;
+    }
+
+    if (!_.isNil(props.byDay)) {
+        resource.byDay = props.byDay;
+    }
+
+    if (!_.isNil(props.byMonthDay)) {
+        resource.byMonthDay = props.byMonthDay;
+    }
+
+    if (!_.isNil(props.byYearDay)) {
+        resource.byYearDay = props.byYearDay;
+    }
+
+    if (!_.isNil(props.byWeekNo)) {
+        resource.byWeekNo = props.byWeekNo;
+    }
+
+    if (!_.isNil(props.byMonth)) {
+        resource.byMonth = props.byMonth;
+    }
+
+    if (!_.isNil(props.wkst)) {
+        resource.wkst = props.wkst;
+    }
+
+    if (!_.isNil(props.start)) {
+        resource.start = props.start;
+    }
+
+    if (!_.isNil(props.end)) {
+        resource.end = props.end;
+    }
+
+    if (!_.isNil(props.identifier)) {
+        resource.identifier = props.identifier;
+    }
+
+    if (!_.isNil(props.unavailabilityReason)) {
+        resource.unavailabilityReason = props.unavailabilityReason;
+    }
+
+    if (!_.isNil(props.created)) {
+        resource.created = props.created;
+    }
+
+    if (!_.isNil(props.priority)) {
+        resource.priority = props.priority;
+    }
+
     if (!_.isNil(props.url)) {
         resource.url = props.url;
     }
@@ -2037,6 +2165,14 @@ function extension_fr_core_service_type_duration(props) {
 
             resource.extension.push(_extension);
         }
+    }
+
+    if (!_.isNil(props.serviceType)) {
+        resource.serviceType = props.serviceType;
+    }
+
+    if (!_.isNil(props.duration)) {
+        resource.duration = props.duration;
     }
 
     if (!_.isNil(props.url)) {
@@ -2169,6 +2305,10 @@ function healthcareService_fr_core_healthcare_service(props) {
 
     if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.serviceTypeDuration)) {
+        resource.serviceTypeDuration = props.serviceTypeDuration;
     }
 
     if (!_.isNil(props.modifierExtension)) {
@@ -2433,6 +2573,10 @@ function humanName_fr_core_human_name(props) {
         resource.extension = props.extension;
     }
 
+    if (!_.isNil(props.assemblyOrder)) {
+        resource.assemblyOrder = props.assemblyOrder;
+    }
+
     if (!_.isNil(props.use)) {
         resource.use = props.use;
     }
@@ -2515,6 +2659,10 @@ function location_fr_core_location(props) {
 
     if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.usePeriod)) {
+        resource.usePeriod = props.usePeriod;
     }
 
     if (!_.isNil(props.modifierExtension)) {
@@ -2641,14 +2789,6 @@ function location_fr_core_location(props) {
             _partOf.id = src.id;
         }
 
-        if (!_.isNil(src.positionRoom)) {
-            util.addExtension(
-                _partOf,
-                "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-location-position-room",
-                src.positionRoom
-            );
-        }
-
         if (!_.isNil(src.reference)) {
             _partOf.reference = src.reference;
         }
@@ -2666,6 +2806,10 @@ function location_fr_core_location(props) {
         }
 
         resource.partOf = _partOf;
+    }
+
+    if (!_.isNil(props.positionRoom)) {
+        resource.positionRoom = props.positionRoom;
     }
 
     if (!_.isNil(props.hoursOfOperation)) {
@@ -2980,6 +3124,10 @@ function observation_fr_core_observation_bmi(props) {
         resource.extension = props.extension;
     }
 
+    if (!_.isNil(props.supportingInfo)) {
+        resource.supportingInfo = props.supportingInfo;
+    }
+
     if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
@@ -3233,6 +3381,14 @@ function observation_fr_core_observation_body_height(props) {
 
     if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.bodyposition)) {
+        resource.bodyposition = props.bodyposition;
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        resource.supportingInfo = props.supportingInfo;
     }
 
     if (!_.isNil(props.modifierExtension)) {
@@ -3492,6 +3648,14 @@ function observation_fr_core_observation_body_temperature(props) {
         resource.extension = props.extension;
     }
 
+    if (!_.isNil(props.levelOfExertion)) {
+        resource.levelOfExertion = props.levelOfExertion;
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        resource.supportingInfo = props.supportingInfo;
+    }
+
     if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
@@ -3747,6 +3911,10 @@ function observation_fr_core_observation_body_weight(props) {
 
     if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        resource.supportingInfo = props.supportingInfo;
     }
 
     if (!_.isNil(props.modifierExtension)) {
@@ -4006,6 +4174,10 @@ function observation_fr_core_observation_bp(props) {
         resource.extension = props.extension;
     }
 
+    if (!_.isNil(props.supportingInfo)) {
+        resource.supportingInfo = props.supportingInfo;
+    }
+
     if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
@@ -4259,6 +4431,10 @@ function observation_fr_core_observation_head_circum(props) {
 
     if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        resource.supportingInfo = props.supportingInfo;
     }
 
     if (!_.isNil(props.modifierExtension)) {
@@ -4516,6 +4692,18 @@ function observation_fr_core_observation_heartrate(props) {
 
     if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.levelOfExertion)) {
+        resource.levelOfExertion = props.levelOfExertion;
+    }
+
+    if (!_.isNil(props.bodyPosition)) {
+        resource.bodyPosition = props.bodyPosition;
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        resource.supportingInfo = props.supportingInfo;
     }
 
     if (!_.isNil(props.modifierExtension)) {
@@ -4805,6 +4993,18 @@ function observation_fr_core_observation_resp_rate(props) {
         resource.extension = props.extension;
     }
 
+    if (!_.isNil(props.bodyPosition)) {
+        resource.bodyPosition = props.bodyPosition;
+    }
+
+    if (!_.isNil(props.levelOfExertion)) {
+        resource.levelOfExertion = props.levelOfExertion;
+    }
+
+    if (!_.isNil(props.supportingInfo)) {
+        resource.supportingInfo = props.supportingInfo;
+    }
+
     if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
@@ -5060,6 +5260,10 @@ function observation_fr_core_observation_saturation_oxygen(props) {
 
     if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.supportingInfoAdministrationOxygen)) {
+        resource.supportingInfoAdministrationOxygen = props.supportingInfoAdministrationOxygen;
     }
 
     if (!_.isNil(props.modifierExtension)) {
@@ -5364,6 +5568,18 @@ function organization_fr_core_organization(props) {
         resource.extension = props.extension;
     }
 
+    if (!_.isNil(props.shortName)) {
+        resource.shortName = props.shortName;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.usePeriod)) {
+        resource.usePeriod = props.usePeriod;
+    }
+
     if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
@@ -5562,6 +5778,22 @@ function organization_fr_core_organization_pole(props) {
         resource.extension = props.extension;
     }
 
+    if (!_.isNil(props.shortName)) {
+        resource.shortName = props.shortName;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.budgetLetter)) {
+        resource.budgetLetter = props.budgetLetter;
+    }
+
+    if (!_.isNil(props.usePeriod)) {
+        resource.usePeriod = props.usePeriod;
+    }
+
     if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
@@ -5742,6 +5974,18 @@ function organization_fr_core_organization_uac(props) {
         resource.extension = props.extension;
     }
 
+    if (!_.isNil(props.shortName)) {
+        resource.shortName = props.shortName;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.usePeriod)) {
+        resource.usePeriod = props.usePeriod;
+    }
+
     if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
@@ -5918,6 +6162,54 @@ function organization_fr_core_organization_uf(props) {
 
     if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.shortName)) {
+        resource.shortName = props.shortName;
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = props.description;
+    }
+
+    if (!_.isNil(props.budgetLetter)) {
+        resource.budgetLetter = props.budgetLetter;
+    }
+
+    if (!_.isNil(props.equipmentField)) {
+        resource.equipmentField = props.equipmentField;
+    }
+
+    if (!_.isNil(props.activityField)) {
+        resource.activityField = props.activityField;
+    }
+
+    if (!_.isNil(props.external)) {
+        resource.external = props.external;
+    }
+
+    if (!_.isNil(props.accomodationSpace)) {
+        resource.accomodationSpace = props.accomodationSpace;
+    }
+
+    if (!_.isNil(props.applicantAct)) {
+        resource.applicantAct = props.applicantAct;
+    }
+
+    if (!_.isNil(props.executantAct)) {
+        resource.executantAct = props.executantAct;
+    }
+
+    if (!_.isNil(props.analysisSection)) {
+        resource.analysisSection = props.analysisSection;
+    }
+
+    if (!_.isNil(props.activityType)) {
+        resource.activityType = props.activityType;
+    }
+
+    if (!_.isNil(props.usePeriod)) {
+        resource.usePeriod = props.usePeriod;
     }
 
     if (!_.isNil(props.modifierExtension)) {
@@ -6111,6 +6403,26 @@ function patient_fr_core_patient(props) {
         }
     }
 
+    if (!_.isNil(props.nationality)) {
+        resource.nationality = props.nationality;
+    }
+
+    if (!_.isNil(props.identityReliability)) {
+        resource.identityReliability = props.identityReliability;
+    }
+
+    if (!_.isNil(props.deathPlace)) {
+        resource.deathPlace = props.deathPlace;
+    }
+
+    if (!_.isNil(props.birthdateUpdateIndicator)) {
+        resource.birthdateUpdateIndicator = props.birthdateUpdateIndicator;
+    }
+
+    if (!_.isNil(props.birthPlace)) {
+        resource.birthPlace = props.birthPlace;
+    }
+
     if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
@@ -6172,14 +6484,6 @@ function patient_fr_core_patient(props) {
                 _name.id = item.id;
             }
 
-            if (!_.isNil(item["birth-list-given-name"])) {
-                util.addExtension(
-                    _name,
-                    "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-patient-birth-list-given-name",
-                    item["birth-list-given-name"]
-                );
-            }
-
             if (!_.isNil(item.use)) {
                 _name.use = item.use;
             }
@@ -6210,6 +6514,10 @@ function patient_fr_core_patient(props) {
 
             resource.name.push(_name);
         }
+    }
+
+    if (!_.isNil(props["birth-list-given-name"])) {
+        resource["birth-list-given-name"] = props.birth-list-given-name;
     }
 
     if (!_.isNil(props.telecom)) {
@@ -6256,22 +6564,6 @@ function patient_fr_core_patient(props) {
                 _contact.id = item.id;
             }
 
-            if (!_.isNil(item.contactIdentifier)) {
-                util.addExtension(
-                    _contact,
-                    "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-patient-contact-identifier",
-                    item.contactIdentifier
-                );
-            }
-
-            if (!_.isNil(item.comment)) {
-                util.addExtension(
-                    _contact,
-                    "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-comment",
-                    item.comment
-                );
-            }
-
             if (!_.isNil(item.modifierExtension)) {
                 _contact.modifierExtension = item.modifierExtension;
             }
@@ -6306,6 +6598,14 @@ function patient_fr_core_patient(props) {
 
             resource.contact.push(_contact);
         }
+    }
+
+    if (!_.isNil(props.contactIdentifier)) {
+        resource.contactIdentifier = props.contactIdentifier;
+    }
+
+    if (!_.isNil(props.comment)) {
+        resource.comment = props.comment;
     }
 
     if (!_.isNil(props.communication)) {
@@ -6434,6 +6734,30 @@ function patient_fr_core_patient_ins(props) {
         }
     }
 
+    if (!_.isNil(props.nationality)) {
+        resource.nationality = props.nationality;
+    }
+
+    if (!_.isNil(props.identityReliability)) {
+        resource.identityReliability = props.identityReliability;
+    }
+
+    if (!_.isNil(props.deathPlace)) {
+        resource.deathPlace = props.deathPlace;
+    }
+
+    if (!_.isNil(props.birthdateUpdateIndicator)) {
+        resource.birthdateUpdateIndicator = props.birthdateUpdateIndicator;
+    }
+
+    if (!_.isNil(props.birthPlace)) {
+        resource.birthPlace = props.birthPlace;
+    }
+
+    if (!_.isNil(props.inseeCode)) {
+        util.composite(resource, "inseeCode", props.inseeCode);
+    }
+
     if (!_.isNil(props.modifierExtension)) {
         resource.modifierExtension = props.modifierExtension;
     }
@@ -6497,14 +6821,6 @@ function patient_fr_core_patient_ins(props) {
                 _name.id = item.id;
             }
 
-            if (!_.isNil(item["birth-list-given-name"])) {
-                util.addExtension(
-                    _name,
-                    "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-patient-birth-list-given-name",
-                    item["birth-list-given-name"]
-                );
-            }
-
             if (!_.isNil(item.use)) {
                 _name.use = item.use;
             }
@@ -6535,6 +6851,10 @@ function patient_fr_core_patient_ins(props) {
 
             resource.name.push(_name);
         }
+    }
+
+    if (!_.isNil(props["birth-list-given-name"])) {
+        resource["birth-list-given-name"] = props.birth-list-given-name;
     }
 
     if (!_.isNil(props.telecom)) {
@@ -6581,22 +6901,6 @@ function patient_fr_core_patient_ins(props) {
                 _contact.id = item.id;
             }
 
-            if (!_.isNil(item.contactIdentifier)) {
-                util.addExtension(
-                    _contact,
-                    "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-patient-contact-identifier",
-                    item.contactIdentifier
-                );
-            }
-
-            if (!_.isNil(item.comment)) {
-                util.addExtension(
-                    _contact,
-                    "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-comment",
-                    item.comment
-                );
-            }
-
             if (!_.isNil(item.modifierExtension)) {
                 _contact.modifierExtension = item.modifierExtension;
             }
@@ -6631,6 +6935,14 @@ function patient_fr_core_patient_ins(props) {
 
             resource.contact.push(_contact);
         }
+    }
+
+    if (!_.isNil(props.contactIdentifier)) {
+        resource.contactIdentifier = props.contactIdentifier;
+    }
+
+    if (!_.isNil(props.comment)) {
+        resource.comment = props.comment;
     }
 
     if (!_.isNil(props.communication)) {
@@ -6752,6 +7064,10 @@ function practitioner_fr_core_practitioner(props) {
 
     if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.specialty)) {
+        resource.specialty = props.specialty;
     }
 
     if (!_.isNil(props.modifierExtension)) {
@@ -6922,6 +7238,10 @@ function practitionerRole_fr_core_practitioner_role_exercice(props) {
 
     if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.serviceTypeDuration)) {
+        resource.serviceTypeDuration = props.serviceTypeDuration;
     }
 
     if (!_.isNil(props.modifierExtension)) {
@@ -7160,14 +7480,6 @@ function practitionerRole_fr_core_practitioner_role_profession(props) {
                 _code.id = item.id;
             }
 
-            if (!_.isNil(item.professionnalCategory)) {
-                util.addExtension(
-                    _code,
-                    "https://hl7.fr/ig/fhir/core/StructureDefinition/fr-core-role-code-categorie-professionnelle",
-                    item.professionnalCategory
-                );
-            }
-
             if (!_.isNil(item.coding)) {
                 _code.coding = item.coding;
             }
@@ -7178,6 +7490,10 @@ function practitionerRole_fr_core_practitioner_role_profession(props) {
 
             resource.code.push(_code);
         }
+    }
+
+    if (!_.isNil(props.professionnalCategory)) {
+        resource.professionnalCategory = props.professionnalCategory;
     }
 
     if (!_.isNil(props.specialty)) {
@@ -7480,6 +7796,14 @@ function schedule_fr_core_schedule(props) {
 
     if (!_.isNil(props.extension)) {
         resource.extension = props.extension;
+    }
+
+    if (!_.isNil(props.serviceTypeDuration)) {
+        resource.serviceTypeDuration = props.serviceTypeDuration;
+    }
+
+    if (!_.isNil(props.availabilityTime)) {
+        resource.availabilityTime = props.availabilityTime;
     }
 
     if (!_.isNil(props.modifierExtension)) {
