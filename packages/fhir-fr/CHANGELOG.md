@@ -1,5 +1,11 @@
 # @openfn/language-fhir-fr
 
+## 1.0.4
+
+### Patch Changes
+
+- Fix exports
+
 ## 1.0.3
 
 ### Patch Changes

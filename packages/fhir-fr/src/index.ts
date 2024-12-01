@@ -1,6 +1,7 @@
 import './builders';
 
 import * as Adaptor from './Adaptor';
+export default Adaptor;
 
 export * as util from './utils';
 

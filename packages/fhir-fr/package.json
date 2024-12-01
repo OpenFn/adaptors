@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-fhir-fr",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "OpenFn fhir-fr adaptor",
   "scripts": {
     "build": "pnpm clean && build-adaptor fhir-fr src ast docs",
@@ -21,7 +21,7 @@
     "webUrl": "https://hl7.fr/ig/fhir/core",
     "specDate": "2024-03-25",
     "specUrl": "https://hl7.fr/ig/fhir/core/2.0.0/definitions.json.zip",
-    "adaptorGeneratedDate": "2024-11-30T12:30:54.911Z",
+    "adaptorGeneratedDate": "2024-12-01T15:19:38.395Z",
     "generatorVersion": "0.2.1"
   },
   "dependencies": {
