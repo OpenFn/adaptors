@@ -378,7 +378,7 @@ describe('set', () => {
     expect(err.message).to.eql('ILLEGAL_ARGUMENTS');
   });
 
-  it.only('should throw if only two args passed', async () => {
+  it('should throw if only two args passed', async () => {
     const { state } = init();
     state.configuration = {};
 
@@ -403,6 +403,30 @@ describe('set', () => {
     expect(result).to.eql(item);
   });
 
+  it('should resolve a value reference', async () => {
+    const { state } = init();
+
+    const key = 'x';
+    const item = { id: 'x' };
+
+    await collections.set(COLLECTION, key, () => item)(state);
+
+    const result = api.asJSON(COLLECTION, key);
+    expect(result).to.eql(item);
+  });
+
+  it('should set a single array-type item', async () => {
+    const { state } = init();
+
+    const key = 'x';
+    const item = [{ id: 'x' }];
+
+    await collections.set(COLLECTION, key, item)(state);
+
+    const result = api.asJSON(COLLECTION, key);
+    expect(result).to.eql(item);
+  });
+
   it('should set multiple items with a key generator', async () => {
     const { state } = init();
 
@@ -416,6 +440,22 @@ describe('set', () => {
 
     const y = api.asJSON(COLLECTION, items[1].id);
     expect(y).to.eql(items[1]);
+  });
+
+  it('should set multiple array items with a key generator', async () => {
+    const { state } = init();
+
+    const items = [[{ id: 'x' }], [{ id: 'y' }]];
+
+    const keygen = item => item[0].id;
+
+    await collections.set(COLLECTION, keygen, items)(state);
+
+    const x = api.asJSON(COLLECTION, 'x');
+    expect(x).to.eql([{ id: 'x' }]);
+
+    const y = api.asJSON(COLLECTION, 'y');
+    expect(y).to.eql([{ id: 'y' }]);
   });
 
   // TODO: there's no actual test of pagination here, save the logs

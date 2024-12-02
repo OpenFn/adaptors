@@ -122,7 +122,7 @@ export function get(name, query = {}) {
  * @public
  * @function
  * @param keygen - a function which generates a key for each value: (value, index) => key. Pass a string to set a static key for a single item.
- * @param values - an array of values to set, or a single value.
+ * @param values - an array of values to set, or a single value. Note that references are not recursively resolved.
  * @example <caption>Set a number of values using each value's id property as a key</caption>
  * collections.set('my-collection', (item) => item.id, $.data)
  * @example <caption>Set a number of values, generating an id from a string template</caption>
@@ -158,17 +158,24 @@ export function set(name, keyGen, values) {
       ? resolvedValues
       : [resolvedValues];
 
-    const keyGenFn = typeof keyGen === 'string' ? () => keyGen : keyGen;
+    let kvPairs;
+    if (typeof keyGen === 'string' && Array.isArray(values)) {
+      // Special case where a single item with an array value is being set
+      kvPairs = [{ key: keyGen, value: JSON.stringify(values) }];
+    } else {
+      const keyGenFn = typeof keyGen === 'string' ? () => keyGen : keyGen;
 
-    // Note that we may need to serialize json to string
-    // the hardest bit is knowing when to deserialize
-    const pairs = dataArray.map((value, index) => ({
-      key: keyGenFn(value, index),
-      value: JSON.stringify(value),
-    }));
+      // Otherwise we convert the incoming values into an array of key/value pairs
+      // Note that we may need to serialize json to string
+      // the hardest bit is knowing when to deserialize
+      kvPairs = dataArray.map((value, index) => ({
+        key: keyGenFn(value, index),
+        value: JSON.stringify(value),
+      }));
+    }
 
-    while (pairs.length) {
-      const batch = pairs.splice(0, batchSize);
+    while (kvPairs.length) {
+      const batch = kvPairs.splice(0, batchSize);
 
       console.log(
         `Collections: uploading batch of ${batch.length} values to "${name}"...`
