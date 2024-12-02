@@ -131,7 +131,21 @@ export function get(name, query = {}) {
  * collections.set('my-collection', 'city-codes', { NY: 'New York', LDN: 'London' }})
  */
 export function set(name, keyGen, values) {
+  let argCount = arguments.length;
   return async state => {
+    if (argCount < 3) {
+      const e = new Error('ILLEGAL_ARGUMENTS');
+      e.description = 'Insufficient arguments passed to set()';
+      e.fix =
+        'Make sure to pass three arguments to: set(name, key/keygen, values)';
+      e.args = {
+        name,
+        keyGen,
+        values,
+      };
+      throw e;
+    }
+
     const batchSize = 1000;
 
     const [resolvedName, resolvedValues] = expandReferences(

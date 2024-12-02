@@ -365,6 +365,32 @@ describe('set', () => {
     expect(err.code).to.eql('INVALID_AUTH');
   });
 
+  it('should throw if only one arg passed', async () => {
+    const { state } = init();
+    state.configuration = {};
+
+    let err;
+    try {
+      await collections.set(COLLECTION)(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.message).to.eql('ILLEGAL_ARGUMENTS');
+  });
+
+  it.only('should throw if only two args passed', async () => {
+    const { state } = init();
+    state.configuration = {};
+
+    let err;
+    try {
+      await collections.set(COLLECTION, { x: 1 })(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.message).to.eql('ILLEGAL_ARGUMENTS');
+  });
+
   it('should set a single item', async () => {
     const { state } = init();
 
