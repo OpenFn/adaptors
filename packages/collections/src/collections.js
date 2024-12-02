@@ -122,7 +122,7 @@ export function get(name, query = {}) {
  * @public
  * @function
  * @param keygen - a function which generates a key for each value: (value, index) => key. Pass a string to set a static key for a single item.
- * @param values - an array of values to set, or a single value. Note that references are not recursively resolved.
+ * @param values - an array of values to set, or a single value.
  * @example <caption>Set a number of values using each value's id property as a key</caption>
  * collections.set('my-collection', (item) => item.id, $.data)
  * @example <caption>Set a number of values, generating an id from a string template</caption>
