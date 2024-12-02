@@ -50,6 +50,18 @@ describe('each', () => {
     expect(err.code).to.eql('INVALID_AUTH');
   });
 
+  it('should throw if the collection does not exist', async () => {
+    const { state } = init();
+
+    let err;
+    try {
+      await collections.each('error', 'x', state => state)(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('COLLECTION_NOT_FOUND');
+  });
+
   it('should iterate over all items', async () => {
     const { state } = init([
       ['a', { id: 'a' }],
@@ -187,6 +199,18 @@ describe('get', () => {
       err = e;
     }
     expect(err.code).to.eql('INVALID_AUTH');
+  });
+
+  it('should throw if the collection does not exist', async () => {
+    const { state } = init();
+
+    let err;
+    try {
+      await collections.get('no-collection-here', 'x')(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('COLLECTION_NOT_FOUND');
   });
 
   it('should get a single item with string query', async () => {
@@ -365,6 +389,18 @@ describe('set', () => {
     expect(err.code).to.eql('INVALID_AUTH');
   });
 
+  it('should throw if the collection does not exist', async () => {
+    const { state } = init();
+
+    let err;
+    try {
+      await collections.set('error', 'x', {})(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('COLLECTION_NOT_FOUND');
+  });
+
   it('should throw if only one arg passed', async () => {
     const { state } = init();
     state.configuration = {};
@@ -488,6 +524,18 @@ describe('remove', () => {
       err = e;
     }
     expect(err.code).to.eql('INVALID_AUTH');
+  });
+
+  it('should throw if the collection does not exist', async () => {
+    const { state } = init();
+
+    let err;
+    try {
+      await collections.remove('error', 'x')(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('COLLECTION_NOT_FOUND');
   });
 
   it('should remove an item', async () => {

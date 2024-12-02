@@ -433,7 +433,7 @@ export const parseQuery = (options = {}) => {
   }, {});
 };
 
-export const request = (state, client, path, options = {}) => {
+export const request = async (state, client, path, options = {}) => {
   if (!state.configuration.collections_token) {
     throwError('INVALID_AUTH', {
       description: 'No access key provided for collection request',
@@ -458,5 +458,33 @@ export const request = (state, client, path, options = {}) => {
     query,
     ...otherOptions,
   };
-  return client.request(args);
+
+  const response = await client.request(args);
+  if (response.statusCode >= 400) {
+    await handleError(response, path, state.configuration.collections_endpoint);
+  }
+  return response;
+};
+
+export const handleError = async (response, path, endpoint) => {
+  if (response.statusCode === 404) {
+    const [collection] = path.split('/');
+    console.error(`Error! Collection ${collection} does not exist`);
+
+    // 404 means the collection doesn't exist
+    const e = new Error('COLLECTION_NOT_FOUND');
+    e.code = 'COLLECTION_NOT_FOUND';
+    e.description = `The collection "${collection}" does not exist`;
+    e.collection = collection;
+    e.endpoint = endpoint;
+    e.fix =
+      'Make sure the collection name is correct, and has been created by a system administrator';
+    throw e;
+  }
+  // Otherwise throw a general error
+  const e = new Error('COLLECTIONS_ERROR');
+  e.code = response.statusCode;
+  e.description = 'The server returned an error, see attached message';
+  e.message = await response.body.text();
+  throw e;
 };
