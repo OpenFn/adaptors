@@ -98,14 +98,19 @@ export function get(name, query = {}) {
         getClient(state),
         `${resolvedName}/${key}`
       );
-      // write it straight to state.data
-      const body = await response.body.json();
-      if (body.value) {
-        data = JSON.parse(body.value);
-        console.log(`Collections: Fetched "${key}" from "${name}"`);
-      } else {
+
+      if (response.statusCode === 204) {
         data = {};
         console.warn(`Collections: Key "${key}" not found in "${name}"`);
+      } else {
+        try {
+          // write it straight to state.data
+          const body = await response.body.json();
+          data = JSON.parse(body.value);
+        } catch (e) {
+          console.error('Unexpected error parsing response data!');
+          throw e;
+        }
       }
     }
     state.data = data;
