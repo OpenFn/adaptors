@@ -50,6 +50,18 @@ describe('each', () => {
     expect(err.code).to.eql('INVALID_AUTH');
   });
 
+  it('should throw if the collection does not exist', async () => {
+    const { state } = init();
+
+    let err;
+    try {
+      await collections.each('error', 'x', state => state)(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('COLLECTION_NOT_FOUND');
+  });
+
   it('should iterate over all items', async () => {
     const { state } = init([
       ['a', { id: 'a' }],
@@ -187,6 +199,18 @@ describe('get', () => {
       err = e;
     }
     expect(err.code).to.eql('INVALID_AUTH');
+  });
+
+  it('should throw if the collection does not exist', async () => {
+    const { state } = init();
+
+    let err;
+    try {
+      await collections.get('no-collection-here', 'x')(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('COLLECTION_NOT_FOUND');
   });
 
   it('should get a single item with string query', async () => {
@@ -365,11 +389,73 @@ describe('set', () => {
     expect(err.code).to.eql('INVALID_AUTH');
   });
 
+  it('should throw if the collection does not exist', async () => {
+    const { state } = init();
+
+    let err;
+    try {
+      await collections.set('error', 'x', {})(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('COLLECTION_NOT_FOUND');
+  });
+
+  it('should throw if only one arg passed', async () => {
+    const { state } = init();
+    state.configuration = {};
+
+    let err;
+    try {
+      await collections.set(COLLECTION)(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.message).to.eql('ILLEGAL_ARGUMENTS');
+  });
+
+  it('should throw if only two args passed', async () => {
+    const { state } = init();
+    state.configuration = {};
+
+    let err;
+    try {
+      await collections.set(COLLECTION, { x: 1 })(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.message).to.eql('ILLEGAL_ARGUMENTS');
+  });
+
   it('should set a single item', async () => {
     const { state } = init();
 
     const key = 'x';
     const item = { id: 'x' };
+
+    await collections.set(COLLECTION, key, item)(state);
+
+    const result = api.asJSON(COLLECTION, key);
+    expect(result).to.eql(item);
+  });
+
+  it('should resolve a value reference', async () => {
+    const { state } = init();
+
+    const key = 'x';
+    const item = { id: 'x' };
+
+    await collections.set(COLLECTION, key, () => item)(state);
+
+    const result = api.asJSON(COLLECTION, key);
+    expect(result).to.eql(item);
+  });
+
+  it('should set a single array-type item', async () => {
+    const { state } = init();
+
+    const key = 'x';
+    const item = [{ id: 'x' }];
 
     await collections.set(COLLECTION, key, item)(state);
 
@@ -390,6 +476,22 @@ describe('set', () => {
 
     const y = api.asJSON(COLLECTION, items[1].id);
     expect(y).to.eql(items[1]);
+  });
+
+  it('should set multiple array items with a key generator', async () => {
+    const { state } = init();
+
+    const items = [[{ id: 'x' }], [{ id: 'y' }]];
+
+    const keygen = item => item[0].id;
+
+    await collections.set(COLLECTION, keygen, items)(state);
+
+    const x = api.asJSON(COLLECTION, 'x');
+    expect(x).to.eql([{ id: 'x' }]);
+
+    const y = api.asJSON(COLLECTION, 'y');
+    expect(y).to.eql([{ id: 'y' }]);
   });
 
   // TODO: there's no actual test of pagination here, save the logs
@@ -422,6 +524,18 @@ describe('remove', () => {
       err = e;
     }
     expect(err.code).to.eql('INVALID_AUTH');
+  });
+
+  it('should throw if the collection does not exist', async () => {
+    const { state } = init();
+
+    let err;
+    try {
+      await collections.remove('error', 'x')(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('COLLECTION_NOT_FOUND');
   });
 
   it('should remove an item', async () => {

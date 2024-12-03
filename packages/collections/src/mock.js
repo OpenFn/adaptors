@@ -68,12 +68,21 @@ export function API() {
 
   // internal dev only api
   const byKey = (name, key) => {
+    if (!(name in collections)) {
+      throw new Error(COLLECTION_NOT_FOUND);
+    }
     return collections[name][key];
   };
   const asJSON = (name, key) => {
+    if (!(name in collections)) {
+      throw new Error(COLLECTION_NOT_FOUND);
+    }
     return JSON.parse(collections[name][key]);
   };
   const count = name => {
+    if (!(name in collections)) {
+      throw new Error(COLLECTION_NOT_FOUND);
+    }
     return Object.keys(collections[name]).length;
   };
 

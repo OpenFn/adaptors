@@ -98,14 +98,19 @@ export function get(name, query = {}) {
         getClient(state),
         `${resolvedName}/${key}`
       );
-      // write it straight to state.data
-      const body = await response.body.json();
-      if (body.value) {
-        data = JSON.parse(body.value);
-        console.log(`Collections: Fetched "${key}" from "${name}"`);
-      } else {
+
+      if (response.statusCode === 204) {
         data = {};
         console.warn(`Collections: Key "${key}" not found in "${name}"`);
+      } else {
+        try {
+          // write it straight to state.data
+          const body = await response.body.json();
+          data = JSON.parse(body.value);
+        } catch (e) {
+          console.error('Unexpected error parsing response data!');
+          throw e;
+        }
       }
     }
     state.data = data;
@@ -131,7 +136,21 @@ export function get(name, query = {}) {
  * collections.set('my-collection', 'city-codes', { NY: 'New York', LDN: 'London' }})
  */
 export function set(name, keyGen, values) {
+  let argCount = arguments.length;
   return async state => {
+    if (argCount < 3) {
+      const e = new Error('ILLEGAL_ARGUMENTS');
+      e.description = 'Insufficient arguments passed to set()';
+      e.fix =
+        'Make sure to pass three arguments to: set(name, key/keygen, values)';
+      e.args = {
+        name,
+        keyGen,
+        values,
+      };
+      throw e;
+    }
+
     const batchSize = 1000;
 
     const [resolvedName, resolvedValues] = expandReferences(
@@ -144,17 +163,24 @@ export function set(name, keyGen, values) {
       ? resolvedValues
       : [resolvedValues];
 
-    const keyGenFn = typeof keyGen === 'string' ? () => keyGen : keyGen;
+    let kvPairs;
+    if (typeof keyGen === 'string' && Array.isArray(values)) {
+      // Special case where a single item with an array value is being set
+      kvPairs = [{ key: keyGen, value: JSON.stringify(values) }];
+    } else {
+      const keyGenFn = typeof keyGen === 'string' ? () => keyGen : keyGen;
 
-    // Note that we may need to serialize json to string
-    // the hardest bit is knowing when to deserialize
-    const pairs = dataArray.map((value, index) => ({
-      key: keyGenFn(value, index),
-      value: JSON.stringify(value),
-    }));
+      // Otherwise we convert the incoming values into an array of key/value pairs
+      // Note that we may need to serialize json to string
+      // the hardest bit is knowing when to deserialize
+      kvPairs = dataArray.map((value, index) => ({
+        key: keyGenFn(value, index),
+        value: JSON.stringify(value),
+      }));
+    }
 
-    while (pairs.length) {
-      const batch = pairs.splice(0, batchSize);
+    while (kvPairs.length) {
+      const batch = kvPairs.splice(0, batchSize);
 
       console.log(
         `Collections: uploading batch of ${batch.length} values to "${name}"...`
@@ -412,7 +438,7 @@ export const parseQuery = (options = {}) => {
   }, {});
 };
 
-export const request = (state, client, path, options = {}) => {
+export const request = async (state, client, path, options = {}) => {
   if (!state.configuration.collections_token) {
     throwError('INVALID_AUTH', {
       description: 'No access key provided for collection request',
@@ -437,5 +463,33 @@ export const request = (state, client, path, options = {}) => {
     query,
     ...otherOptions,
   };
-  return client.request(args);
+
+  const response = await client.request(args);
+  if (response.statusCode >= 400) {
+    await handleError(response, path, state.configuration.collections_endpoint);
+  }
+  return response;
+};
+
+export const handleError = async (response, path, endpoint) => {
+  if (response.statusCode === 404) {
+    const [collection] = path.split('/');
+    console.error(`Error! Collection ${collection} does not exist`);
+
+    // 404 means the collection doesn't exist
+    const e = new Error('COLLECTION_NOT_FOUND');
+    e.code = 'COLLECTION_NOT_FOUND';
+    e.description = `The collection "${collection}" does not exist`;
+    e.collection = collection;
+    e.endpoint = endpoint;
+    e.fix =
+      'Make sure the collection name is correct, and has been created by a system administrator';
+    throw e;
+  }
+  // Otherwise throw a general error
+  const e = new Error('COLLECTIONS_ERROR');
+  e.code = response.statusCode;
+  e.description = 'The server returned an error, see attached message';
+  e.message = await response.body.text();
+  throw e;
 };
