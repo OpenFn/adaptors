@@ -1,5 +1,25 @@
 # @openfn/language-collections
 
+## 0.6.0
+
+### Minor Changes
+
+- Various stability fixes
+
+### Patch Changes
+
+- 39fb894: Allow a single key to be set to an array value
+- ad9fca2: Throw if insufficient arguments passed to set()
+- 29a6ce0: Throw a nice error if the collection does not exist
+- 26aa57c: Fix an issue where requesting a single key that does not exist throws
+  an error, as in:
+
+  ```
+  collections.get('my-collection', 'some-item')
+  ```
+
+  Note that this requires Lightning v2.10.5+
+
 ## 0.5.2
 
 ### Patch Changes
