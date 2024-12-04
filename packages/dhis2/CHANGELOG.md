@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 6.0.1
+
+### Patch Changes
+
+- ab94b7c: Fix links in docs examples
+
 ## 6.0.0
 
 ### Major Changes
