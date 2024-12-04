@@ -122,7 +122,7 @@ create('events', {
   status: 'COMPLETED',
 });
 ```
-**Example:** Create a single tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Create tracker docs}
+**Example:** Create a single tracker entity. See [Create tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)
 ```js
 create('trackedEntities', {
   orgUnit: 'TSyzvBiovKh',
@@ -262,7 +262,7 @@ Delete a record. A generic helper function to delete an object
 | [options] | <code>Object</code> | Optional `options` for `del` operation including params e.g. `{preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}`. Run `discover` or see [DHIS2 documentation](https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#create-update-parameters). Defaults to `{operationName: 'delete', apiVersion: state.configuration.apiVersion, responseType: 'json'}` |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example:** a tracked entity instance. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Delete tracker docs}
+**Example:** a tracked entity instance. See [Delete tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)
 ```js
 destroy('trackedEntities', 'LcRd6Nyaq7T');
 ```
@@ -355,19 +355,19 @@ get('dataValueSets', {
 ```js
 get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
 ```
-**Example:** Get a single tracked entity given the provided ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities TrackedEntities docs}
+**Example:** Get a single tracked entity given the provided ID. See [TrackedEntities docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities)
 ```js
 get('tracker/trackedEntities/F8yKM85NbxW');
 ```
-**Example:** Get an enrollment given the provided ID. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments Enrollment docs}
+**Example:** Get an enrollment given the provided ID. See [Enrollment docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments)
 ```js
 get('tracker/enrollments/abcd');
 ```
-**Example:** Get all events matching given criteria. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents Events docs}
+**Example:** Get all events matching given criteria. See [Events docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents)
 ```js
 get('tracker/events');
 ```
-**Example:** Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships Relationships docs}
+**Example:** Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See [Relationships docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships)
 ```js
 get('tracker/relationships', {
   trackedEntity:['F8yKM85NbxW'],
@@ -465,7 +465,7 @@ update('events', 'PVqUD2hvU4E', {
   dataValues: [],
 });
 ```
-**Example:** Update a tracker entity. See {@link https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import Update tracker docs}
+**Example:** Update a tracker entity. See [Update tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)
 ```js
 update('trackedEntities', '', {
   createdAt: '2015-08-06T21:12:37.256',
