@@ -158,7 +158,6 @@ export function set(name, keyGen, values) {
       name,
       values
     );
-    console.log(resolvedValues);
 
     let kvPairs;
     if (typeof keyGen === 'string' && Array.isArray(resolvedValues)) {
