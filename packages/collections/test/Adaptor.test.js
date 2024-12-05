@@ -463,6 +463,18 @@ describe('set', () => {
     expect(result).to.eql(item);
   });
 
+  it('should set a single array-type item with a reference', async () => {
+    const { state } = init();
+
+    const key = 'x';
+    const item = [{ id: 'x' }];
+
+    await collections.set(COLLECTION, key, state => item)(state);
+
+    const result = api.asJSON(COLLECTION, key);
+    expect(result).to.eql(item);
+  });
+
   it('should set multiple items with a key generator', async () => {
     const { state } = init();
 
