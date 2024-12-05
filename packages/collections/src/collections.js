@@ -158,16 +158,17 @@ export function set(name, keyGen, values) {
       name,
       values
     );
-
-    const dataArray = Array.isArray(resolvedValues)
-      ? resolvedValues
-      : [resolvedValues];
+    console.log(resolvedValues);
 
     let kvPairs;
-    if (typeof keyGen === 'string' && Array.isArray(values)) {
+    if (typeof keyGen === 'string' && Array.isArray(resolvedValues)) {
       // Special case where a single item with an array value is being set
-      kvPairs = [{ key: keyGen, value: JSON.stringify(values) }];
+      kvPairs = [{ key: keyGen, value: JSON.stringify(resolvedValues) }];
     } else {
+      const dataArray = Array.isArray(resolvedValues)
+        ? resolvedValues
+        : [resolvedValues];
+
       const keyGenFn = typeof keyGen === 'string' ? () => keyGen : keyGen;
 
       // Otherwise we convert the incoming values into an array of key/value pairs
