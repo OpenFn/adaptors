@@ -288,6 +288,9 @@ export function createServer(url = 'https://app.openfn.org') {
 
   return {
     api,
+    // export the agent for use with setGlobalDispatcher()
+    // (used in CLI tests)
+    agent,
     // Util API for tests (roughly matches the unidici api)
     request: ({ method, path, data, ...rest }) => {
       const opts = {
