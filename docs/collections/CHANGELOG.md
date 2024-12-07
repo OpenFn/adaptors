@@ -1,5 +1,11 @@
 # @openfn/language-collections
 
+## 0.6.2
+
+### Patch Changes
+
+- Expose mock agent for unit tests
+
 ## 0.6.1
 
 ### Patch Changes
