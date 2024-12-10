@@ -25,7 +25,7 @@ To use this package, execute commands via OpenFn/core from the root of the
 repository:
 
 ```sh
-openfn job.js -a dhis2 -s tmp/state.json -o tmp/output.json
+openfn job.js -a dhis2 -s tmp/state.json
 ```
 
 For installation and usage, see the
@@ -35,12 +35,12 @@ For installation and usage, see the
 
 ## Important Note
 
-This adaptor supports **old tracker versions** and is compatible with DHIS2 API
-versions **prior to 2.42**.  
-For DHIS2 API versions 2.42+ and the **new tracker**, use **adaptor 6.0+**.
-Refer to the
-[DHIS2 API documentation](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html)
-for details.
+- For DHIS2 API versions 2.42+ and the **new tracker**, use **adaptor 6.0+**.
+  Refer to the
+  [DHIS2 API documentation](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html)
+  for details.
+- For **old tracker versions** and DHIS2 API versions **prior to 2.42**, use
+  **adaptor 5.0+**. But we highly recommend upgrading to the latest version.
 
 ---
 
