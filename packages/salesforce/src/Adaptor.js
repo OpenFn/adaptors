@@ -383,7 +383,7 @@ export function describe(sObjectName) {
  * Delete records of an object.
  * This functions uses {@link https://jsforce.github.io/document/#delete|jsforce delete} under the hood.
  * @public
- * @example <caption>Delete multiple Account records</caption>
+ * @example <caption>Allow operation to fail if any record fails to delete</caption>
  * destroy("Account", ["001XXXXXXXXXXXXXXX", "001YYYYYYYYYYYYYYY"], {
  *   failOnError: true,
  * });
@@ -393,10 +393,6 @@ export function describe(sObjectName) {
  *   return state;
  * });
  * destroy("Account", $.data);
- * @example <caption> Using options</caption>
- * destroy("Account", ["001XXXXXXXXXXXXXXX", "001YYYYYYYYYYYYYYY"], {
- *   failOnError: true,
- * });
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @param {string[]} ids - Array of IDs of records to delete.

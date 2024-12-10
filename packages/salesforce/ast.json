@@ -324,17 +324,12 @@
           {
             "title": "example",
             "description": "destroy(\"Account\", [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"], {\n  failOnError: true,\n});",
-            "caption": "Delete multiple Account records"
+            "caption": "Allow operation to fail if any record fails to delete"
           },
           {
             "title": "example",
             "description": "fn((state) => {\n  state.data = [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"];\n  return state;\n});\ndestroy(\"Account\", $.data);",
             "caption": "Using a state variable"
-          },
-          {
-            "title": "example",
-            "description": "destroy(\"Account\", [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"], {\n  failOnError: true,\n});",
-            "caption": "Using options"
           },
           {
             "title": "function",
