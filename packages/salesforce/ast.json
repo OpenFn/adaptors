@@ -742,7 +742,7 @@
         "records"
       ],
       "docs": {
-        "description": "Create a new sObject record, or updates it if it already exists\nExternal ID field name must be specified in second argument.",
+        "description": "Create a new sObject record, or updates it if it already exists.\nThis function uses {@link https://jsforce.github.io/document/#upsert|jsforce upsert} under the hood.",
         "tags": [
           {
             "title": "public",

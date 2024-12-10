@@ -645,8 +645,8 @@ export function query(query, options = {}) {
 }
 
 /**
- * Create a new sObject record, or updates it if it already exists
- * External ID field name must be specified in second argument.
+ * Create a new sObject record, or updates it if it already exists.
+ * This function uses {@link https://jsforce.github.io/document/#upsert|jsforce upsert} under the hood.
  * @public
  * @example <caption> Single record upsert </caption>
  * upsert("UpsertTable__c", "ExtId__c", { Name: "Record #1", ExtId__c : 'ID-0000001' });
