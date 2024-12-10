@@ -311,9 +311,15 @@ export function bulkQuery(query, options = {}) {
  * create("Account", { Name: "My Account #1" });
  * @example <caption> Multiple records creation</caption>
  * create("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
+ * @example <caption> Create a records from a state variable</caption>
+ * fn((state) => {
+ *   state.data = [{ Name: "My Account #1" }, { Name: "My Account #2" }];
+ *   return state;
+ * });
+ * create("Account", $.data);
  * @function
  * @param {string} sObjectName - API name of the sObject.
- * @param {object} records - Field attributes for the new record.
+ * @param {(Object|Object[])} records - Field attributes for the new record, or an array of field attributes.
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -461,9 +467,15 @@ export function get(path, options = {}) {
  * insert("Account", { Name: "My Account #1" });
  * @example <caption> Multiple records creation</caption>
  * insert("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
+ * @example <caption> Using a state variable</caption>
+ *  fn((state) => {
+ *   state.data = [{ Name: "My Account #1" }, { Name: "My Account #2" }];
+ *   return state;
+ * });
+ * insert("Account", $.data);
  * @function
  * @param {string} sObjectName - API name of the sObject.
- * @param {object} records - Field attributes for the new record.
+ * @param {(Object|Object[])} records - Field attributes for the new record, or an array of field attributes.
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -529,6 +541,9 @@ export function post(path, data, options = {}) {
  * @param {QueryOptions} [options] - Optional configuration for the query operation
  * @param {function} [callback] - Optional callback function to execute for each retrieved record
  * @state {SalesforceState}
+ * @state {boolean} data.done - Indicates whether the operation is complete.
+ * @state {number} data.totalSize - The total number of items returned by the query.
+ * @state {Object[]} data.records - The records returned by the query.
  * @returns {Operation}
  */
 export function query(query, options = {}, callback = s => s) {
@@ -616,7 +631,7 @@ export function query(query, options = {}, callback = s => s) {
  * @magic sObjectName - $.children[?(!@.meta.system)].name
  * @param {string} externalId - The external ID of the sObject.
  * @magic externalId - $.children[?(@.name=="{{args.sObject}}")].children[?(@.meta.externalId)].name
- * @param {(object|object[])} records - Field attributes for the new object.
+ * @param {(Object|Object[])} records - Field attributes for the records to upsert, or an array of field attributes.
  * @magic records - $.children[?(@.name=="{{args.sObject}}")].children[?(!@.meta.externalId)]
  * @state {SalesforceState}
  * @returns {Operation}

@@ -192,6 +192,11 @@
             "caption": "Multiple records creation"
           },
           {
+            "title": "example",
+            "description": "fn((state) => {\n  state.data = [{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }];\n  return state;\n});\ncreate(\"Account\", $.data);",
+            "caption": "Create a records from a state variable"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -207,10 +212,28 @@
           },
           {
             "title": "param",
-            "description": "Field attributes for the new record.",
+            "description": "Field attributes for the new record, or an array of field attributes.",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "Object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "Object"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "records"
           },
@@ -437,6 +460,11 @@
             "caption": "Multiple records creation"
           },
           {
+            "title": "example",
+            "description": "fn((state) => {\n  state.data = [{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }];\n  return state;\n});\ninsert(\"Account\", $.data);",
+            "caption": "Using a state variable"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -452,10 +480,28 @@
           },
           {
             "title": "param",
-            "description": "Field attributes for the new record.",
+            "description": "Field attributes for the new record, or an array of field attributes.",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "Object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "Object"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "records"
           },
@@ -625,6 +671,18 @@
             "description": "{SalesforceState}"
           },
           {
+            "title": "state",
+            "description": "{boolean} data.done - Indicates whether the operation is complete."
+          },
+          {
+            "title": "state",
+            "description": "{number} data.totalSize - The total number of items returned by the query."
+          },
+          {
+            "title": "state",
+            "description": "{Object[]} data.records - The records returned by the query."
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -694,13 +752,13 @@
           },
           {
             "title": "param",
-            "description": "Field attributes for the new object.",
+            "description": "Field attributes for the records to upsert, or an array of field attributes.",
             "type": {
               "type": "UnionType",
               "elements": [
                 {
                   "type": "NameExpression",
-                  "name": "object"
+                  "name": "Object"
                 },
                 {
                   "type": "TypeApplication",
@@ -711,7 +769,7 @@
                   "applications": [
                     {
                       "type": "NameExpression",
-                      "name": "object"
+                      "name": "Object"
                     }
                   ]
                 }
