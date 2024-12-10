@@ -314,7 +314,7 @@
         "options"
       ],
       "docs": {
-        "description": "Delete records of an object.\nThis functions uses {@link https://jsforce.github.io/document/#delete|jsforce delete} under the hood.",
+        "description": "Delete records of an sObject.\nThis functions uses {@link https://jsforce.github.io/document/#delete|jsforce delete} under the hood.",
         "tags": [
           {
             "title": "public",
@@ -388,6 +388,22 @@
           {
             "title": "state",
             "description": "{SalesforceState}"
+          },
+          {
+            "title": "state",
+            "description": "{Object[]} data - An array of result objects."
+          },
+          {
+            "title": "state",
+            "description": "{string} data[].id - The unique identifier of the result."
+          },
+          {
+            "title": "state",
+            "description": "{boolean} data[].success - Indicates whether the operation was successful."
+          },
+          {
+            "title": "state",
+            "description": "{Array} data[].errors - An array of error messages, if any."
           },
           {
             "title": "returns",

@@ -380,7 +380,7 @@ export function describe(sObjectName) {
 }
 
 /**
- * Delete records of an object.
+ * Delete records of an sObject.
  * This functions uses {@link https://jsforce.github.io/document/#delete|jsforce delete} under the hood.
  * @public
  * @example <caption>Allow operation to fail if any record fails to delete</caption>
@@ -399,6 +399,10 @@ export function describe(sObjectName) {
  * @param {object} options - Options for the destroy delete operation.
  * @param {boolean} [options.failOnError=false] - If true, the operation will fail if any record fails to delete.
  * @state {SalesforceState}
+ * @state {Object[]} data - An array of result objects.
+ * @state {string} data[].id - The unique identifier of the result.
+ * @state {boolean} data[].success - Indicates whether the operation was successful.
+ * @state {Array} data[].errors - An array of error messages, if any.
  * @returns {Operation}
  */
 export function destroy(sObjectName, ids, options = {}) {
