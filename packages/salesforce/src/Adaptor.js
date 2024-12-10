@@ -306,6 +306,7 @@ export function bulkQuery(query, options = {}) {
 
 /**
  * Create a new sObject record(s).
+ * This function uses {@link https://jsforce.github.io/document/#create|jsforce create} under the hood.
  * @public
  * @example <caption> Single record creation</caption>
  * create("Account", { Name: "My Account #1" });
@@ -440,13 +441,21 @@ export function destroy(sObjectName, ids, options = {}) {
 }
 
 /**
- * Send a GET HTTP request using connected session information.
+ * Send a GET request on salesforce server configured in `state.configuration`.
  * @public
  * @example <caption>Make a GET request to a custom Salesforce flow</caption>
  * get('/actions/custom/flow/POC_OpenFN_Test_Flow');
+ * @example <caption>Make a GET request to a custom Salesforce flow with query parameters</caption>
+ * get('/actions/custom/flow/POC_OpenFN_Test_Flow', { query: { Status: 'Active' } });
+ * @example <caption>Make a GET request then map the response</caption>
+ * get('/jobs/query/v1/jobs/001XXXXXXXXXXXXXXX/results', (state) => {
+ *  // Mapping the response
+ *  state.mapping = state.data.map(d => ({ name: d.name, id: d.extId }));
+ *  return state;
+ * });
  * @function
- * @param {string} path - The Salesforce API endpoint, Relative to request from
- * @param {RequestOptions} options - Request options
+ * @param {string} path - The Salesforce API endpoint.
+ * @param {RequestOptions} options - Configure headers and query parameters for the request.
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -480,7 +489,7 @@ export function get(path, options = {}) {
  * @example <caption> Multiple records creation</caption>
  * insert("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
  * @example <caption> Using a state variable</caption>
- *  fn((state) => {
+ * fn((state) => {
  *   state.data = [{ Name: "My Account #1" }, { Name: "My Account #2" }];
  *   return state;
  * });
@@ -496,14 +505,23 @@ export function insert(sObjectName, records) {
 }
 
 /**
- * Send a POST HTTP request using connected session information.
+ * Send a POST request to salesforce server configured in `state.configuration`.
  * @public
  * @example <caption>Make a POST request to a custom Salesforce flow</caption>
- * post('/actions/custom/flow/POC_OpenFN_Test_Flow', { inputs: [{}] });
+ * post("/actions/custom/flow/POC_OpenFN_Test_Flow", {
+ *   body: {
+ *     inputs: [
+ *       {
+ *         CommentCount: 6,
+ *         FeedItemId: "0D5D0000000cfMY",
+ *       },
+ *     ],
+ *   },
+ * });
  * @function
- * @param {string} path - The Salesforce API endpoint, Relative to request from
- * @param {object} data - A JSON Object request body
- * @param {RequestOptions} options - Request options
+ * @param {string} path - The Salesforce API endpoint.
+ * @param {object} data - A JSON Object request body.
+ * @param {RequestOptions} [options] - Configure headers and query parameters for the request.
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -725,7 +743,7 @@ export function toUTF8(input) {
 }
 
 /**
- * Send a HTTP request using connected session information.
+ * Send a request to salesforce server configured in `state.configuration`.
  * @public
  * @example <caption>Make a POST request to a custom Salesforce flow</caption>
  * request("/actions/custom/flow/POC_OpenFN_Test_Flow", {
@@ -733,8 +751,8 @@ export function toUTF8(input) {
  *   json: { inputs: [{}] },
  * });
  * @function
- * @param {string} path - The Salesforce API endpoint, Relative to request from
- * @param {SalesforceRequestOptions} options - Request options
+ * @param {string} path - The Salesforce API endpoint.
+ * @param {SalesforceRequestOptions} [options] - Configure headers, query and body parameters for the request.
  * @state {SalesforceState}
  * @returns {Operation}
  */

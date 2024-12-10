@@ -174,7 +174,7 @@
         "records"
       ],
       "docs": {
-        "description": "Create a new sObject record(s).",
+        "description": "Create a new sObject record(s).\nThis function uses {@link https://jsforce.github.io/document/#create|jsforce create} under the hood.",
         "tags": [
           {
             "title": "public",
@@ -424,7 +424,7 @@
         "options"
       ],
       "docs": {
-        "description": "Send a GET HTTP request using connected session information.",
+        "description": "Send a GET request on salesforce server configured in `state.configuration`.",
         "tags": [
           {
             "title": "public",
@@ -437,13 +437,23 @@
             "caption": "Make a GET request to a custom Salesforce flow"
           },
           {
+            "title": "example",
+            "description": "get('/actions/custom/flow/POC_OpenFN_Test_Flow', { query: { Status: 'Active' } });",
+            "caption": "Make a GET request to a custom Salesforce flow with query parameters"
+          },
+          {
+            "title": "example",
+            "description": "get('/jobs/query/v1/jobs/001XXXXXXXXXXXXXXX/results', (state) => {\n // Mapping the response\n state.mapping = state.data.map(d => ({ name: d.name, id: d.extId }));\n return state;\n});",
+            "caption": "Make a GET request then map the response"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
           },
           {
             "title": "param",
-            "description": "The Salesforce API endpoint, Relative to request from",
+            "description": "The Salesforce API endpoint.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -452,7 +462,7 @@
           },
           {
             "title": "param",
-            "description": "Request options",
+            "description": "Configure headers and query parameters for the request.",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
@@ -569,7 +579,7 @@
         "options"
       ],
       "docs": {
-        "description": "Send a POST HTTP request using connected session information.",
+        "description": "Send a POST request to salesforce server configured in `state.configuration`.",
         "tags": [
           {
             "title": "public",
@@ -578,7 +588,7 @@
           },
           {
             "title": "example",
-            "description": "post('/actions/custom/flow/POC_OpenFN_Test_Flow', { inputs: [{}] });",
+            "description": "post(\"/actions/custom/flow/POC_OpenFN_Test_Flow\", {\n  body: {\n    inputs: [\n      {\n        CommentCount: 6,\n        FeedItemId: \"0D5D0000000cfMY\",\n      },\n    ],\n  },\n});",
             "caption": "Make a POST request to a custom Salesforce flow"
           },
           {
@@ -588,7 +598,7 @@
           },
           {
             "title": "param",
-            "description": "The Salesforce API endpoint, Relative to request from",
+            "description": "The Salesforce API endpoint.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -597,7 +607,7 @@
           },
           {
             "title": "param",
-            "description": "A JSON Object request body",
+            "description": "A JSON Object request body.",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -606,10 +616,13 @@
           },
           {
             "title": "param",
-            "description": "Request options",
+            "description": "Configure headers and query parameters for the request.",
             "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "RequestOptions"
+              }
             },
             "name": "options"
           },
@@ -964,7 +977,7 @@
         "options"
       ],
       "docs": {
-        "description": "Send a HTTP request using connected session information.",
+        "description": "Send a request to salesforce server configured in `state.configuration`.",
         "tags": [
           {
             "title": "public",
@@ -983,7 +996,7 @@
           },
           {
             "title": "param",
-            "description": "The Salesforce API endpoint, Relative to request from",
+            "description": "The Salesforce API endpoint.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -992,10 +1005,13 @@
           },
           {
             "title": "param",
-            "description": "Request options",
+            "description": "Configure headers, query and body parameters for the request.",
             "type": {
-              "type": "NameExpression",
-              "name": "SalesforceRequestOptions"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "SalesforceRequestOptions"
+              }
             },
             "name": "options"
           },
