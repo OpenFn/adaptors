@@ -554,7 +554,7 @@ export function post(path, data, options = {}) {
 
 /**
  * Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.
- * This operation allows querying Salesforce objects using SOQL syntax and handles pagination.
+ * This operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.
  * Note that in an event of a query error, error logs will be printed but the operation will not throw the error.
  *
  * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.
