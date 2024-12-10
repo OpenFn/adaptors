@@ -50,6 +50,7 @@
 /**
  * Options provided to the Salesforce bulk query API request
  * @typedef {Object} BulkQueryOptions
+ * @public
  * @property {integer} [pollTimeout=90000] - Polling timeout in milliseconds.
  * @property {integer} [pollInterval=3000] - Polling interval in milliseconds.
  * */
@@ -259,29 +260,33 @@ export function bulk(sObjectName, operation, records, options = {}) {
  *   { pollTimeout: 10000, pollInterval: 6000 }
  * );
  * @function
- * @param {string} qs - A query string.
+ * @param {string} query - A query string.
  * @param {BulkQueryOptions} options - Options passed to the bulk api.
  * @state {SalesforceState}
  * @returns {Operation}
  */
-export function bulkQuery(qs, options = {}) {
+export function bulkQuery(query, options = {}) {
   return async state => {
     const { connection } = state;
-    const [resolvedQs, resolvedOptions] = expandReferences(state, qs, options);
+    const [resolvedQuery, resolvedOptions] = expandReferences(
+      state,
+      query,
+      options
+    );
 
     if (parseFloat(connection.version) < 47.0)
       throw new Error('bulkQuery requires API version 47.0 and later');
 
     const { pollTimeout = 90000, pollInterval = 3000 } = resolvedOptions;
 
-    console.log(`Executing query: ${resolvedQs}`);
+    console.log(`Executing query: ${resolvedQuery}`);
 
     const queryJob = await connection.request({
       method: 'POST',
       url: `/services/data/v${connection.version}/jobs/query`,
       body: JSON.stringify({
         operation: 'query',
-        query: resolvedQs,
+        query: resolvedQuery,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -520,17 +525,21 @@ export function post(path, data, options = {}) {
  * @example <caption>Query patients by Health ID using a lazy state reference</caption>
  * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
  * @function
- * @param {(string|function)} qs - A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause
+ * @param {(string|function)} query - A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause
  * @param {QueryOptions} [options] - Optional configuration for the query operation
  * @param {function} [callback] - Optional callback function to execute for each retrieved record
  * @state {SalesforceState}
  * @returns {Operation}
  */
-export function query(qs, options = {}, callback = s => s) {
+export function query(query, options = {}, callback = s => s) {
   return async state => {
     const { connection } = state;
-    const [resolvedQs, resolvedOptions] = expandReferences(state, qs, options);
-    console.log(`Executing query: ${resolvedQs}`);
+    const [resolvedQuery, resolvedOptions] = expandReferences(
+      state,
+      query,
+      options
+    );
+    console.log(`Executing query: ${resolvedQuery}`);
     const autoFetch = resolvedOptions.autoFetch || resolvedOptions.autofetch;
 
     if (autoFetch) {
@@ -569,7 +578,7 @@ export function query(qs, options = {}, callback = s => s) {
     };
 
     try {
-      const qResult = await connection.query(resolvedQs);
+      const qResult = await connection.query(resolvedQuery);
       if (qResult.totalSize > 0) {
         console.log('Total records:', qResult.totalSize);
         await processRecords(qResult);
@@ -587,7 +596,7 @@ export function query(qs, options = {}, callback = s => s) {
       'Results retrieved and pushed to position [0] of the references array.'
     );
 
-    return composeNextState(state, result);
+    return callback(composeNextState(state, result));
   };
 }
 

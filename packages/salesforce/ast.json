@@ -107,7 +107,7 @@
     {
       "name": "bulkQuery",
       "params": [
-        "qs",
+        "query",
         "options"
       ],
       "docs": {
@@ -140,7 +140,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "qs"
+            "name": "query"
           },
           {
             "title": "param",
@@ -546,7 +546,7 @@
     {
       "name": "query",
       "params": [
-        "qs",
+        "query",
         "options",
         "callback"
       ],
@@ -594,7 +594,7 @@
                 }
               ]
             },
-            "name": "qs"
+            "name": "query"
           },
           {
             "title": "param",
