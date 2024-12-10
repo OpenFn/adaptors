@@ -111,7 +111,7 @@
         "options"
       ],
       "docs": {
-        "description": "Execute an SOQL Bulk Query.\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\n`bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v2.0 Query} which is available in API version 47.0 and later.\nThis API is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
+        "description": "Execute an SOQL Bulk Query.\nThis function query large data sets and reduce the number of API requests.\n`bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v2.0 Query} which is available in API version 47.0 and later.\nThis API is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
         "tags": [
           {
             "title": "public",
@@ -120,13 +120,8 @@
           },
           {
             "title": "example",
-            "description": "bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);",
-            "caption": "Bulk query patient records where `Health_ID__c` is equal to the value in `state.data.healthId`"
-          },
-          {
-            "title": "example",
             "description": "bulkQuery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);",
-            "caption": "Bulk query patient records using a lazy state reference"
+            "caption": "Bulk query patient records where \"Health_ID__c\" is equal to the value in \"state.data.healthId\""
           },
           {
             "title": "example",

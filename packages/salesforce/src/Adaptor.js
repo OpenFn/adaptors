@@ -246,13 +246,11 @@ export function bulk(sObjectName, operation, records, options = {}) {
 }
 /**
  * Execute an SOQL Bulk Query.
- * This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
+ * This function query large data sets and reduce the number of API requests.
  * `bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v2.0 Query} which is available in API version 47.0 and later.
  * This API is subject to {@link https://sforce.co/4b6kn6z rate limits}.
  * @public
- * @example <caption>Bulk query patient records where `Health_ID__c` is equal to the value in `state.data.healthId`</caption>
- * bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);
- * @example <caption>Bulk query patient records using a lazy state reference</caption>
+ * @example <caption>Bulk query patient records where "Health_ID__c" is equal to the value in "state.data.healthId"</caption>
  * bulkQuery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
  * @example <caption>Bulk query with custom polling options</caption>
  * bulkQuery(
