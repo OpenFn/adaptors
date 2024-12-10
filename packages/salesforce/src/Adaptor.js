@@ -557,10 +557,10 @@ export function post(path, data, options = {}) {
  * This operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.
  * Note that in an event of a query error, error logs will be printed but the operation will not throw the error.
  *
- * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.
+ * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ Learn more here}.
  *
  * @public
- * @example <caption>Query more records if next records are available</caption>
+ * @example <caption>Run a query and download all matching records</caption>
  * query('SELECT Id FROM Patient__c', { autoFetch: true });
  * @example <caption>Query patients by Health ID</caption>
  * query(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);
@@ -569,14 +569,13 @@ export function post(path, data, options = {}) {
  * @function
  * @param {(string|function)} query - A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause
  * @param {QueryOptions} [options] - Optional configuration for the query operation
- * @param {function} [callback] - Optional callback function to execute for each retrieved record
  * @state {SalesforceState}
  * @state {boolean} data.done - Indicates whether the operation is complete.
  * @state {number} data.totalSize - The total number of items returned by the query.
  * @state {Object[]} data.records - The records returned by the query.
  * @returns {Operation}
  */
-export function query(query, options = {}, callback = s => s) {
+export function query(query, options = {}) {
   return async state => {
     const { connection } = state;
     const [resolvedQuery, resolvedOptions] = expandReferences(
@@ -641,7 +640,7 @@ export function query(query, options = {}, callback = s => s) {
       'Results retrieved and pushed to position [0] of the references array.'
     );
 
-    return callback(composeNextState(state, result));
+    return composeNextState(state, result);
   };
 }
 

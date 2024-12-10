@@ -646,11 +646,10 @@
       "name": "query",
       "params": [
         "query",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
-        "description": "Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.\nThis operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.\nNote that in an event of a query error, error logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.",
+        "description": "Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.\nThis operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.\nNote that in an event of a query error, error logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ Learn more here}.",
         "tags": [
           {
             "title": "public",
@@ -660,7 +659,7 @@
           {
             "title": "example",
             "description": "query('SELECT Id FROM Patient__c', { autoFetch: true });",
-            "caption": "Query more records if next records are available"
+            "caption": "Run a query and download all matching records"
           },
           {
             "title": "example",
@@ -706,18 +705,6 @@
               }
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback function to execute for each retrieved record",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
           },
           {
             "title": "state",
