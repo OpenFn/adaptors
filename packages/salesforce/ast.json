@@ -28,7 +28,7 @@
           },
           {
             "title": "example",
-            "description": "fn((state) => {\n  state.accounts = state.data.map((a) => ({ Id: a.id, Name: a.name }));\n  return state;\n});\nbulk(\"Account\", \"update\", { failOnError: true }, $.accounts);",
+            "description": "fn((state) => {\n  state.accounts = state.data.map((a) => ({ Id: a.id, Name: a.name }));\n  return state;\n});\nbulk(\"Account\", \"update\", $.accounts, { failOnError: true });",
             "caption": "Bulk update Account records using a lazy state reference"
           },
           {
@@ -65,16 +65,32 @@
           },
           {
             "title": "param",
-            "description": "Options passed to the bulk api.",
+            "description": "Options to configure the request. In addition to these, you can pass any of the options supported by the {@link https://bit.ly/41tyvVU jsforce API}.",
             "type": {
               "type": "NameExpression",
-              "name": "BulkOptions"
+              "name": "Options"
             },
             "name": "options"
           },
           {
             "title": "state",
             "description": "{SalesforceState}"
+          },
+          {
+            "title": "state",
+            "description": "{Object[]} data - An array of result objects."
+          },
+          {
+            "title": "state",
+            "description": "{string} data[].id - The unique identifier of the result."
+          },
+          {
+            "title": "state",
+            "description": "{boolean} data[].success - Indicates whether the operation was successful."
+          },
+          {
+            "title": "state",
+            "description": "{Array} data[].errors - An array of error messages, if any."
           },
           {
             "title": "returns",
