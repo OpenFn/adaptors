@@ -343,7 +343,7 @@ export function create(sObjectName, records) {
 }
 
 /**
- * Fetches and prints metadata for an sObject and pushes the result to `state.data`.
+ * Fetches and logs metadata for an sObject and pushes the result to `state.data`.
  * If `sObjectName` is not specified, it will print the total number of all available sObjects and push the result to `state.data`.
  * @public
  * @example <caption>Fetch metadata for all available sObjects</caption>
@@ -351,7 +351,7 @@ export function create(sObjectName, records) {
  * @example <caption>Fetch metadata for Account sObject</caption>
  * describe('Account')
  * @function
- * @param {string} [sObjectName] - The API name of the sObject. If omitted, fetches metadata for all sObjects.
+ * @param {string} sObjectName - The API name of the sObject. If omitted, fetches metadata for all sObjects.
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -381,15 +381,27 @@ export function describe(sObjectName) {
 
 /**
  * Delete records of an object.
+ * This functions uses {@link https://jsforce.github.io/document/#delete|jsforce delete} under the hood.
  * @public
  * @example <caption>Delete multiple Account records</caption>
  * destroy("Account", ["001XXXXXXXXXXXXXXX", "001YYYYYYYYYYYYYYY"], {
  *   failOnError: true,
  * });
+ * @example <caption> Using a state variable</caption>
+ *  fn((state) => {
+ *   state.data = ["001XXXXXXXXXXXXXXX", "001YYYYYYYYYYYYYYY"];
+ *   return state;
+ * });
+ * destroy("Account", $.data);
+ * @example <caption> Using options</caption>
+ * destroy("Account", ["001XXXXXXXXXXXXXXX", "001YYYYYYYYYYYYYYY"], {
+ *   failOnError: true,
+ * });
  * @function
  * @param {string} sObjectName - API name of the sObject.
- * @param {object} ids - Array of IDs of records to delete.
+ * @param {string[]} ids - Array of IDs of records to delete.
  * @param {object} options - Options for the destroy delete operation.
+ * @param {boolean} [options.failOnError=false] - If true, the operation will fail if any record fails to delete.
  * @state {SalesforceState}
  * @returns {Operation}
  */

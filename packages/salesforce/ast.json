@@ -259,7 +259,7 @@
         "sObjectName"
       ],
       "docs": {
-        "description": "Fetches and prints metadata for an sObject and pushes the result to `state.data`.\nIf `sObjectName` is not specified, it will print the total number of all available sObjects and push the result to `state.data`.",
+        "description": "Fetches and logs metadata for an sObject and pushes the result to `state.data`.\nIf `sObjectName` is not specified, it will print the total number of all available sObjects and push the result to `state.data`.",
         "tags": [
           {
             "title": "public",
@@ -285,11 +285,8 @@
             "title": "param",
             "description": "The API name of the sObject. If omitted, fetches metadata for all sObjects.",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
+              "type": "NameExpression",
+              "name": "string"
             },
             "name": "sObjectName"
           },
@@ -317,7 +314,7 @@
         "options"
       ],
       "docs": {
-        "description": "Delete records of an object.",
+        "description": "Delete records of an object.\nThis functions uses {@link https://jsforce.github.io/document/#delete|jsforce delete} under the hood.",
         "tags": [
           {
             "title": "public",
@@ -328,6 +325,16 @@
             "title": "example",
             "description": "destroy(\"Account\", [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"], {\n  failOnError: true,\n});",
             "caption": "Delete multiple Account records"
+          },
+          {
+            "title": "example",
+            "description": "fn((state) => {\n  state.data = [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"];\n  return state;\n});\ndestroy(\"Account\", $.data);",
+            "caption": "Using a state variable"
+          },
+          {
+            "title": "example",
+            "description": "destroy(\"Account\", [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"], {\n  failOnError: true,\n});",
+            "caption": "Using options"
           },
           {
             "title": "function",
@@ -347,8 +354,17 @@
             "title": "param",
             "description": "Array of IDs of records to delete.",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              ]
             },
             "name": "ids"
           },
@@ -360,6 +376,19 @@
               "name": "object"
             },
             "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "If true, the operation will fail if any record fails to delete.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.failOnError",
+            "default": "false"
           },
           {
             "title": "state",
@@ -375,7 +404,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "get",
