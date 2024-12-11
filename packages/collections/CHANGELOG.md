@@ -1,5 +1,20 @@
 # @openfn/language-collections
 
+## 0.7.0
+
+### Minor Changes
+
+- c95ccba: BREAKING: Pass state into the keygen function on `set()`. This allows
+  state to be used to calculate keys.
+
+  When calling `collections.set(collection, keygen, values)`, the keygen
+  function signature has changed from `(value, index) => key` to
+  `(value, state, index) => key`.
+
+### Patch Changes
+
+- cdb01db: Better error handling if the keygen function is invalid
+
 ## 0.6.2
 
 ### Patch Changes
