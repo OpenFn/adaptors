@@ -440,7 +440,7 @@ describe('set', () => {
     expect(err.message).to.eql('KEYGEN_ERROR');
   });
 
-  it('should throw keygen looks like a state refernece', async () => {
+  it('should throw keygen looks like a state reference', async () => {
     const { state } = init();
     state.configuration = {};
 
@@ -486,6 +486,18 @@ describe('set', () => {
     await collections.set(COLLECTION, key, item)(state);
 
     const result = api.asJSON(COLLECTION, key);
+    expect(result).to.eql(item);
+  });
+
+  it('should pass state to the keygen function', async () => {
+    const { state } = init();
+    state.key = 'x';
+
+    const item = { id: 'x' };
+
+    await collections.set(COLLECTION, (_key, state) => state.key, item)(state);
+
+    const result = api.asJSON(COLLECTION, 'x');
     expect(result).to.eql(item);
   });
 
