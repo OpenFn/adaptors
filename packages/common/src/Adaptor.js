@@ -11,7 +11,10 @@ import { Readable } from 'node:stream';
 import { request } from 'undici';
 import dateFns from 'date-fns';
 
-import { expandReferences as newExpandReferences, parseDate } from './util';
+import {
+  expandReferences as newExpandReferences,
+  parseDate,
+} from './util/index.js';
 
 const schemaCache = {};
 

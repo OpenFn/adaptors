@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { encode, decode, uuid } from '../../src/util/helpers.js';
+import { encode, decode, uuid } from '../../src/util';
 
 describe('uuid', () => {
   it('should generate a uuid', () => {
