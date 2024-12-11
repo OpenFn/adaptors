@@ -427,6 +427,32 @@ describe('set', () => {
     expect(err.message).to.eql('ILLEGAL_ARGUMENTS');
   });
 
+  it("should throw keygen doesn't return a string", async () => {
+    const { state } = init();
+    state.configuration = {};
+
+    let err;
+    try {
+      await collections.set(COLLECTION, () => true, { x: 1 })(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.message).to.eql('KEYGEN_ERROR');
+  });
+
+  it('should throw keygen looks like a state refernece', async () => {
+    const { state } = init();
+    state.configuration = {};
+
+    let err;
+    try {
+      await collections.set(COLLECTION, state => state, { x: 1 })(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.message).to.eql('KEYGEN_ERROR');
+  });
+
   it('should set a single item', async () => {
     const { state } = init();
 

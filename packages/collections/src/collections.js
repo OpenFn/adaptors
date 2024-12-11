@@ -173,10 +173,20 @@ export function set(name, keyGen, values) {
       // Otherwise we convert the incoming values into an array of key/value pairs
       // Note that we may need to serialize json to string
       // the hardest bit is knowing when to deserialize
-      kvPairs = dataArray.map((value, index) => ({
-        key: keyGenFn(value, index),
-        value: JSON.stringify(value),
-      }));
+      kvPairs = dataArray.map((value, index) => {
+        const key = keyGenFn(value, state, index);
+        if (typeof key !== 'string') {
+          const e = new Error('KEYGEN_ERROR');
+          e.description =
+            'The key generator function returned a non-string value which is not a valid key';
+          e.fix = `The second argument to set() is a key or key-generator function. If you pass a function, make sure the function returns a string (a key). Note that this function is NOT a state reference and does not support lazy state ($)`;
+          throw e;
+        }
+        return {
+          key,
+          value: JSON.stringify(value),
+        };
+      });
     }
 
     while (kvPairs.length) {
