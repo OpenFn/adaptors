@@ -53,7 +53,7 @@ export const setMockClient = mockClient => {
  * @example <caption>Get a range of values from a collection with a key pattern</caption>
  * collections.get('my-collection', '2024*')
  * @example <caption>Get all values created since the end of January 2024</caption>
- * collections.get('my-collection', { createdAfter: '202401')
+ * collections.get('my-collection', { createdAfter: '202401'})
  */
 export function get(name, query = {}) {
   return async state => {
@@ -126,6 +126,7 @@ export function get(name, query = {}) {
  * a string key.
  * @public
  * @function
+ * @param {string} name - The name of the collection to fetch from
  * @param keygen - a function which generates a key for each value: (value, index) => key. Pass a string to set a static key for a single item.
  * @param values - an array of values to set, or a single value.
  * @example <caption>Set a number of values using each value's id property as a key</caption>
@@ -133,7 +134,7 @@ export function get(name, query = {}) {
  * @example <caption>Set a number of values, generating an id from a string template</caption>
  * collections.set('my-collection', (item) => `${item.category}-${Date.now()}`, $.data)
  * @example <caption>Set a single value with a static key</caption>
- * collections.set('my-collection', 'city-codes', { NY: 'New York', LDN: 'London' }})
+ * collections.set('my-collection', 'city-codes', { NY: 'New York', LDN: 'London' })
  */
 export function set(name, keyGen, values) {
   let argCount = arguments.length;
@@ -238,7 +239,7 @@ export function set(name, keyGen, values) {
  * @example <caption>Remove a range of values from a collection with a key pattern</caption>
  * collections.remove('my-collection', '2024*')
  * @example <caption>Remove all values created since the end of January 2024</caption>
- * collections.remove('my-collection', { createdAfter: '202401')
+ * collections.remove('my-collection', { createdAfter: '202401'})
  */
 export function remove(name, query = {}, options = {}) {
   return async state => {
