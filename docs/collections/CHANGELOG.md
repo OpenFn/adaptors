@@ -1,5 +1,11 @@
 # @openfn/language-collections
 
+## 0.7.1
+
+### Patch Changes
+
+- Fixed some small issues in the docs
+
 ## 0.7.0
 
 ### Minor Changes

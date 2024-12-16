@@ -15,7 +15,7 @@ This adaptor exports the following namespaced functions:
 </dt>
 
 <dt>
-    <a href="#collections_set">collections.set(keygen, values)</a>
+    <a href="#collections_set">collections.set(name, keygen, values)</a>
 </dt>
 </dl>
 
@@ -95,7 +95,7 @@ collections.get('my-collection', '2024*')
 ```
 **Example:** Get all values created since the end of January 2024
 ```js
-collections.get('my-collection', { createdAfter: '202401')
+collections.get('my-collection', { createdAfter: '202401'})
 ```
 
 * * *
@@ -125,7 +125,7 @@ collections.remove('my-collection', '2024*')
 ```
 **Example:** Remove all values created since the end of January 2024
 ```js
-collections.remove('my-collection', { createdAfter: '202401')
+collections.remove('my-collection', { createdAfter: '202401'})
 ```
 
 * * *
@@ -133,7 +133,7 @@ collections.remove('my-collection', { createdAfter: '202401')
 
 ### collections.set {#collections_set}
 
-<p><code>set(keygen, values)</code></p>
+<p><code>set(name, keygen, values)</code></p>
 
 Adds one or more values to a collection. If a key already exists, its value will
 be replaced by the new value.
@@ -142,10 +142,11 @@ The function will be called for each value, passing each value as the first argu
 a string key.
 
 
-| Param | Description |
-| --- | --- |
-| keygen | a function which generates a key for each value: (value, index) => key. Pass a string to set a static key for a single item. |
-| values | an array of values to set, or a single value. |
+| Param | Type | Description |
+| --- | --- | --- |
+| name | <code>string</code> | The name of the collection to fetch from |
+| keygen |  | a function which generates a key for each value: (value, index) => key. Pass a string to set a static key for a single item. |
+| values |  | an array of values to set, or a single value. |
 
 **Example:** Set a number of values using each value's id property as a key
 ```js
@@ -157,7 +158,7 @@ collections.set('my-collection', (item) => `${item.category}-${Date.now()}`, $.d
 ```
 **Example:** Set a single value with a static key
 ```js
-collections.set('my-collection', 'city-codes', { NY: 'New York', LDN: 'London' }})
+collections.set('my-collection', 'city-codes', { NY: 'New York', LDN: 'London' })
 ```
 
 * * *
