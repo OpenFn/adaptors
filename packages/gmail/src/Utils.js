@@ -1,70 +1,190 @@
-import { composeNextState } from '@openfn/language-common';
-import {
-  request as commonRequest,
-  makeBasicAuthHeader,
-  assertRelativeUrl,
-} from '@openfn/language-common/util';
-import nodepath from 'node:path';
+import unzipper from 'unzipper';
+import { google } from 'googleapis';
 
-export const prepareNextState = (state, response, callback = s => s) => {
-  const { body, ...responseWithoutBody } = response;
+let gmail = undefined;
 
-  if (!state.references) {
-    state.references = [];
+export async function fetchMessages(userId, query, lastPageToken) {
+  let messagesResponse = null;
+
+  try {
+    messagesResponse = await gmail.users.messages.list({
+      userId: userId,
+      q: query,
+      maxResults: 3,
+      pageToken: lastPageToken,
+    });
+  } catch (error) {
+    throw new Error('Error fetching messages: ' + error.message);
   }
 
-  const nextState = {
-    ...composeNextState(state, response.body),
-    response: responseWithoutBody,
+  const { messages, nextPageToken } = messagesResponse.data;
+
+  return { messages, nextPageToken };
+}
+
+export async function getContentFromMessage(userId, messageId, desiredContent) {
+  const messageResponse = await gmail.users.messages.get({
+    userId,
+    id: messageId,
+    format: 'full',
+  });
+
+  if (desiredContent.type === 'archive') {
+    const { attachmentId, filename } = getAttachmentInfo(
+      messageResponse,
+      desiredContent.archive
+    );
+
+    if (!attachmentId) {
+      return null;
+    }
+
+    const archive = await getAttachment(userId, messageId, attachmentId);
+    const file = await getFileFromArchive(archive, desiredContent.file);
+    return { ...file, archiveFilename: filename };
+  }
+
+  if (desiredContent.type === 'file') {
+    const { attachmentId, filename } = getAttachmentInfo(
+      messageResponse,
+      desiredContent.file
+    );
+
+    if (!attachmentId) {
+      return null;
+    }
+
+    const attachment = await getAttachment(userId, messageId, attachmentId);
+    const file = await getFileFromAttachment(attachment);
+    return { content: file, filename };
+  }
+
+  if (desiredContent.type === 'body') {
+    const body = getBodyFromMessage(messageResponse);
+    return body;
+  }
+
+  if (desiredContent.type === 'subject') {
+    const headers = messageResponse.data?.payload?.headers;
+    const subject = headers?.find(h => h.name === 'Subject')?.value;
+    return subject;
+  }
+
+  if (desiredContent.type === 'from') {
+    const headers = messageResponse.data?.payload?.headers;
+    const from = headers?.find(h => h.name === 'From')?.value;
+    return from;
+  }
+
+  if (desiredContent.type === 'date') {
+    const headers = messageResponse.data?.payload?.headers;
+    const rawDate = headers?.find(h => h.name === 'Date')?.value;
+    const date = rawDate ? new Date(rawDate) : null;
+    return date;
+  }
+
+  return `Unsupported content type: ${desiredContent.type}`;
+}
+
+export async function getAttachment(userId, messageId, attachmentId) {
+  return await gmail.users.messages.attachments.get({
+    userId,
+    messageId,
+    id: attachmentId,
+  });
+}
+
+export async function getFileFromAttachment(attachment) {
+  const base64String = attachment?.data?.data;
+  if (!base64String) {
+    throw new Error('No data found in file.');
+  }
+
+  const fileContent = atob(base64String);
+
+  return isTesting ? fileContent.substring(0, 40) : fileContent;
+}
+
+export async function getFileFromArchive(archive, filePattern) {
+  const base64String = archive?.data?.data;
+  if (!base64String) {
+    throw new Error('No data found in zip attachmentResponse.');
+  }
+
+  const compressedBuffer = Buffer.from(base64String, 'base64');
+  const directory = await unzipper.Open.buffer(compressedBuffer);
+
+  const file = directory?.files.find(f => filePattern.test(f.path));
+
+  if (!file) {
+    throw new Error('File not found in the archive.');
+  }
+
+  const fileBuffer = await file.buffer();
+  const fileString = fileBuffer.toString('base64');
+  const fileContent = atob(fileString);
+
+  return {
+    content: isTesting ? fileContent.substring(0, 40) : fileContent,
+    filename: file.path,
   };
+}
 
-  return callback(nextState);
-};
+export function getAttachmentInfo(messageResponse, regex) {
+  const parts = messageResponse?.data?.payload?.parts;
+  const part = parts?.find(p => regex.test(p.filename));
 
-// This helper function will call out to the backend service
-// and add authorisation headers
-// Refer to the common request function for options and details
-export const request = (configuration = {}, method, path, options) => {
-  // You might want to check that the path is not an absolute URL befor
-  // appending credentials commonRequest will do this for you if you
-  // pass a baseURL to it and you don't need to build a path here
-  // assertRelativeUrl(path);
+  return part
+    ? { attachmentId: part.body.attachmentId, filename: part.filename }
+    : { attachmentId: null };
+}
 
-  // TODO This example adds basic auth from config data
-  //       you may need to support other auth strategies
-  const { baseUrl, username, password } = configuration;
-  const headers = makeBasicAuthHeader(username, password);
+export function getBodyFromMessage(fullMessage) {
+  const parts = fullMessage?.data?.payload?.parts;
 
-  // TODO You can define custom error messages here
-  //      The request function will throw if it receives
-  //      an error code (<=400), terminating the workflow
-  const errors = {
-    404: 'Page not found',
-  };
+  const bodyPart = parts?.find(
+    part => part.mimeType === 'multipart/alternative'
+  );
 
-  const opts = {
-    // Force the response to be parsed as JSON
-    parseAs: 'json',
+  const textBodyPart = bodyPart?.parts.find(
+    part => part.mimeType === 'text/plain'
+  );
 
-    // Include the error map
-    errors,
+  const textBody = textBodyPart?.body?.data;
+  if (textBody) {
+    let body = Buffer.from(textBody, 'base64').toString('utf-8');
+    return isTesting ? body.substring(0, 40) : body;
+  }
 
-    // Set the baseUrl from the config object
-    baseUrl,
+  return null;
+}
 
-    ...options,
+export function createConnection(state) {
+  const { access_token } = state.configuration;
 
-    // You can add extra headers here if you want to
-    headers: {
-      'content-type': 'application/json',
-      ...headers,
-    },
-  };
+  const auth = new google.auth.OAuth2();
+  auth.credentials = { access_token };
 
-  // TODO you may want to add a prefix to the path
-  // use path.join to build the path safely
-  const safePath = nodepath.join(path);
+  gmail = google.gmail({ version: 'v1', auth });
 
-  // Make the actual request
-  return commonRequest(method, safePath, options);
-};
+  return state;
+}
+
+export function removeConnection(state) {
+  gmail = undefined;
+  return state;
+}
+
+export function logError(error) {
+  console.log('RAW ERROR:', error);
+  const { code, errors, response } = error;
+  if (code && errors && response) {
+    console.error('The API returned an error:', errors);
+
+    const { statusText, config } = response;
+    const { url, method, body } = config;
+    const message = `${method} ${url} - ${code}:${statusText} \nbody: ${body}`;
+
+    console.log(message);
+  }
+}
