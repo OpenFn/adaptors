@@ -22,10 +22,10 @@ This adaptor is used to extract specific content from Gmail messages using custo
     - file: Regex to isolate the file inside the archive: `/_CURRENT_DATA_\w*?\.json$/`
 
 - **Other Metadata Extracted**:
-  - Body: Extracts the message body.
-  - Subject: Extracts the email subject.
-  - Date: Extracts the timestamp of the email.
-  - From: Extracts the sender's information.
+  - body: Extracts the message body.
+  - subject: Extracts the email subject.
+  - date: Extracts the timestamp of the email.
+  - from: Extracts the sender's information.
 
 ### Query Setup
 
@@ -63,12 +63,7 @@ const dataFile = {
   file: /_CURRENT_DATA_\w*?\.json$/,
 };
 
-const body = { type: "body", name: "body" };
-const subject = { type: "subject", name: "subject" };
-const date = { type: "date", name: "date" };
-const from = { type: "from", name: "from" };
-
-const desiredContents = [subject, date, from, metadataFile, dataFile];
+const desiredContents = ["body", "subject", "date", "from", metadataFile, dataFile];
 
 getContentsFromMessages(userId, query, desiredContents, (state) => console.log(state.data));
 ```
