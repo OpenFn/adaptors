@@ -68,29 +68,13 @@
             "description": "Options to configure the request. In addition to these, you can pass any of the options supported by the {@link https://bit.ly/41tyvVU jsforce API}.",
             "type": {
               "type": "NameExpression",
-              "name": "Options"
+              "name": "BulkOptions"
             },
             "name": "options"
           },
           {
             "title": "state",
-            "description": "{SalesforceState}"
-          },
-          {
-            "title": "state",
-            "description": "{Object[]} data - An array of result objects."
-          },
-          {
-            "title": "state",
-            "description": "{string} data[].id - The unique identifier of the result."
-          },
-          {
-            "title": "state",
-            "description": "{boolean} data[].success - Indicates whether the operation was successful."
-          },
-          {
-            "title": "state",
-            "description": "{Array} data[].errors - An array of error messages, if any."
+            "description": "{SalesforceResultState}"
           },
           {
             "title": "returns",
@@ -387,23 +371,7 @@
           },
           {
             "title": "state",
-            "description": "{SalesforceState}"
-          },
-          {
-            "title": "state",
-            "description": "{Object[]} data - An array of result objects."
-          },
-          {
-            "title": "state",
-            "description": "{string} data[].id - The unique identifier of the result."
-          },
-          {
-            "title": "state",
-            "description": "{boolean} data[].success - Indicates whether the operation was successful."
-          },
-          {
-            "title": "state",
-            "description": "{Array} data[].errors - An array of error messages, if any."
+            "description": "{SalesforceResultState}"
           },
           {
             "title": "returns",
@@ -465,7 +433,7 @@
             "description": "Configure headers and query parameters for the request.",
             "type": {
               "type": "NameExpression",
-              "name": "RequestOptions"
+              "name": "SimpleRequestOptions"
             },
             "name": "options"
           },
@@ -621,7 +589,7 @@
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "RequestOptions"
+                "name": "SimpleRequestOptions"
               }
             },
             "name": "options"
@@ -649,7 +617,7 @@
         "options"
       ],
       "docs": {
-        "description": "Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.\nThis operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.\nNote that in an event of a query error, error logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ Learn more here}.",
+        "description": "Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.\nThis operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.\nNote that in an event of a query error, error logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ learn more here}.",
         "tags": [
           {
             "title": "public",
@@ -709,26 +677,6 @@
           {
             "title": "state",
             "description": "{SalesforceState}"
-          },
-          {
-            "title": "state",
-            "description": "{boolean} data.done - Indicates whether the operation is complete."
-          },
-          {
-            "title": "state",
-            "description": "{number} data.totalSize - The total number of items returned by the query."
-          },
-          {
-            "title": "state",
-            "description": "{Object[]} data.records - The records returned by the query."
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
           }
         ]
       },
@@ -997,7 +945,7 @@
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "SalesforceRequestOptions"
+                "name": "FullRequestOptions"
               }
             },
             "name": "options"

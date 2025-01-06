@@ -19,10 +19,17 @@
  **/
 
 /**
+ * State object
+ * @typedef {Object} SalesforceResultState
+ * @property data - Array of result objects of the form <code>\{ id, success, errors \}</code>
+ * @property references - History of all previous operations results
+ **/
+
+/**
  * Options provided to the Salesforce HTTP request
- * @typedef {Object} SalesforceRequestOptions
+ * @typedef {Object} FullRequestOptions
  * @public
- * @property {string} [method=GET] - HTTP method to use. Defaults to GET
+ * @property {string} [method=GET] - HTTP method to use.
  * @property {object} headers - Object of request headers
  * @property {object} query - Object request query
  * @property {object} json - Object request body
@@ -30,7 +37,7 @@
  */
 
 /**
- * @typedef {Object} RequestOptions
+ * @typedef {Object} SimpleRequestOptions
  * @public
  * @property {object} headers - Object of request headers
  * @property {object} query - Object of request query
@@ -41,8 +48,8 @@
  * @typedef {Object} BulkOptions
  * @public
  * @property {string} extIdField - External id field. Required for upsert.
- * @property {boolean} [allowNoOp=false] - Skipping bulk operation if no records. Default: false
- * @property {boolean} [failOnError=false] - Fail the operation on error. Default: false
+ * @property {boolean} [allowNoOp=false] - Skipping bulk operation if no records.
+ * @property {boolean} [failOnError=false] - Fail the operation on error.
  * @property {integer} [pollTimeout=240000] - Polling timeout in milliseconds.
  * @property {integer} [pollInterval=6000] - Polling interval in milliseconds.
  */
@@ -144,11 +151,7 @@ export function execute(...operations) {
  * @param {string} operation - The bulk operation to be performed.Eg `insert`, `update` or `upsert`
  * @param {array} records - an array of records, or a function which returns an array.
  * @param {BulkOptions} options - Options to configure the request. In addition to these, you can pass any of the options supported by the {@link https://bit.ly/41tyvVU jsforce API}.
- * @state {SalesforceState}
- * @state {Object[]} data - An array of result objects.
- * @state {string} data[].id - The unique identifier of the result.
- * @state {boolean} data[].success - Indicates whether the operation was successful.
- * @state {Array} data[].errors - An array of error messages, if any.
+ * @state {SalesforceResultState}
  * @returns {Operation}
  */
 export function bulk(sObjectName, operation, records, options = {}) {
@@ -399,11 +402,7 @@ export function describe(sObjectName) {
  * @param {string[]} ids - Array of IDs of records to delete.
  * @param {object} options - Options for the destroy delete operation.
  * @param {boolean} [options.failOnError=false] - If true, the operation will fail if any record fails to delete.
- * @state {SalesforceState}
- * @state {Object[]} data - An array of result objects.
- * @state {string} data[].id - The unique identifier of the result.
- * @state {boolean} data[].success - Indicates whether the operation was successful.
- * @state {Array} data[].errors - An array of error messages, if any.
+ * @state {SalesforceResultState}
  * @returns {Operation}
  */
 export function destroy(sObjectName, ids, options = {}) {
@@ -455,7 +454,7 @@ export function destroy(sObjectName, ids, options = {}) {
  * });
  * @function
  * @param {string} path - The Salesforce API endpoint.
- * @param {RequestOptions} options - Configure headers and query parameters for the request.
+ * @param {SimpleRequestOptions} options - Configure headers and query parameters for the request.
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -521,7 +520,7 @@ export function insert(sObjectName, records) {
  * @function
  * @param {string} path - The Salesforce API endpoint.
  * @param {object} data - A JSON Object request body.
- * @param {RequestOptions} [options] - Configure headers and query parameters for the request.
+ * @param {SimpleRequestOptions} [options] - Configure headers and query parameters for the request.
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -557,7 +556,7 @@ export function post(path, data, options = {}) {
  * This operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.
  * Note that in an event of a query error, error logs will be printed but the operation will not throw the error.
  *
- * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ Learn more here}.
+ * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ learn more here}.
  *
  * @public
  * @example <caption>Run a query and download all matching records</caption>
@@ -570,9 +569,7 @@ export function post(path, data, options = {}) {
  * @param {(string|function)} query - A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause
  * @param {QueryOptions} [options] - Optional configuration for the query operation
  * @state {SalesforceState}
- * @state {boolean} data.done - Indicates whether the operation is complete.
- * @state {number} data.totalSize - The total number of items returned by the query.
- * @state {Object[]} data.records - The records returned by the query.
+ * @property data - Array of result objects of the form <code>\{ done, totalSize, records \}</code>
  * @returns {Operation}
  */
 export function query(query, options = {}) {
@@ -751,7 +748,7 @@ export function toUTF8(input) {
  * });
  * @function
  * @param {string} path - The Salesforce API endpoint.
- * @param {SalesforceRequestOptions} [options] - Configure headers, query and body parameters for the request.
+ * @param {FullRequestOptions} [options] - Configure headers, query and body parameters for the request.
  * @state {SalesforceState}
  * @returns {Operation}
  */
