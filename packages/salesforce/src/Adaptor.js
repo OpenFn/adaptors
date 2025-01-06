@@ -38,7 +38,7 @@
 
 /**
  * Options provided to the Salesforce bulk API request
- * @typedef {Object} Options
+ * @typedef {Object} BulkOptions
  * @public
  * @property {string} extIdField - External id field. Required for upsert.
  * @property {boolean} [allowNoOp=false] - Skipping bulk operation if no records. Default: false
@@ -143,7 +143,7 @@ export function execute(...operations) {
  * @param {string} sObjectName - API name of the sObject.
  * @param {string} operation - The bulk operation to be performed.Eg `insert`, `update` or `upsert`
  * @param {array} records - an array of records, or a function which returns an array.
- * @param {Options} options - Options to configure the request. In addition to these, you can pass any of the options supported by the {@link https://bit.ly/41tyvVU jsforce API}.
+ * @param {BulkOptions} options - Options to configure the request. In addition to these, you can pass any of the options supported by the {@link https://bit.ly/41tyvVU jsforce API}.
  * @state {SalesforceState}
  * @state {Object[]} data - An array of result objects.
  * @state {string} data[].id - The unique identifier of the result.
