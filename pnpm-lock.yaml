@@ -1144,8 +1144,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       tedious:
-        specifier: 19.0.0
-        version: 19.0.0
+        specifier: 18.6.1
+        version: 18.6.1
     devDependencies:
       '@openfn/simple-ast':
         specifier: 0.4.1
@@ -4156,12 +4156,6 @@ packages:
   /@types/node@18.17.5:
     resolution: {integrity: sha512-xNbS75FxH6P4UXTPUJp/zNPq6/xsfdJKussCWNOnz4aULWIRwMgP1LgaB5RiBnMX1DPCYenuqGZfnIAx5mbFLA==}
 
-  /@types/node@22.10.5:
-    resolution: {integrity: sha512-F8Q+SeGimwOo86fiovQh8qiXfFEh2/ocYv7tU5pJ3EXMSSxk1Joj5wefpFK2fHTf/N6HKGSxIDBT9f3gCxXPkQ==}
-    dependencies:
-      undici-types: 6.20.0
-    dev: false
-
   /@types/node@8.10.66:
     resolution: {integrity: sha512-tktOkFUA4kXx2hhhrB8bIFb5TbwzS4uOhKEmwiD+NoiL0qtP2OQ9mFldbgD4dV1djrlBYP6eBuQZiWjuHUpqFw==}
     dev: false
@@ -4177,7 +4171,7 @@ packages:
   /@types/readable-stream@4.0.18:
     resolution: {integrity: sha512-21jK/1j+Wg+7jVw1xnSwy/2Q1VgVjWuFssbYGTREPUBeZ+rqVFl2udq0IkxzPC0ZhOzVceUbyIACFZKLqKEBlA==}
     dependencies:
-      '@types/node': 22.10.5
+      '@types/node': 18.17.5
       safe-buffer: 5.1.2
     dev: false
 
@@ -13375,15 +13369,15 @@ packages:
       wordwrapjs: 3.0.0
     dev: false
 
-  /tedious@19.0.0:
-    resolution: {integrity: sha512-nmxNBAT72mMVCIYp0Ts0Zzd5+LBQjoXlqigCrIjSo2OERSi04vr3EHq3qJxv/zgrSkg7si03SoIIfekTAadA7w==}
-    engines: {node: '>=18.17'}
+  /tedious@18.6.1:
+    resolution: {integrity: sha512-9AvErXXQTd6l7TDd5EmM+nxbOGyhnmdbp/8c3pw+tjaiSXW9usME90ET/CRG1LN1Y9tPMtz/p83z4Q97B4DDpw==}
+    engines: {node: '>=18'}
     dependencies:
       '@azure/core-auth': 1.9.0
       '@azure/identity': 4.5.0
       '@azure/keyvault-keys': 4.9.0
       '@js-joda/core': 5.6.3
-      '@types/node': 22.10.5
+      '@types/node': 18.17.5
       bl: 6.0.18
       iconv-lite: 0.6.3
       js-md4: 0.3.2
@@ -13955,10 +13949,6 @@ packages:
 
   /underscore@1.8.2:
     resolution: {integrity: sha512-CHzhycUy6eSLBV/Yksw4nSDIcsNAsdAExaSILTOSvZkfmymBxxrvnrUGoFJSYEUJvEe8C/p8a5Cs844mtwgNOw==}
-    dev: false
-
-  /undici-types@6.20.0:
-    resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
     dev: false
 
   /undici@5.22.1:

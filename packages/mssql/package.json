@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "tedious": "19.0.0"
+    "tedious": "18.6.1"
   },
   "devDependencies": {
     "@openfn/simple-ast": "0.4.1",
