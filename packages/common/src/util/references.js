@@ -19,7 +19,7 @@ const isStream = value => {
 };
 
 function expandReference(state, value) {
-  if (Buffer.isBuffer(value)) {
+  if (Buffer.isBuffer(value) || value instanceof RegExp) {
     return value;
   }
 
