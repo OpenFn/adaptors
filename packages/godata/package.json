@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-godata",
-  "version": "3.5.3",
+  "version": "3.5.4",
   "description": "An OpenFn adaptor for use with the WHO's GoData API",
   "main": "dist/index.cjs",
   "scripts": {
@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^2.0.1",
+    "@openfn/language-common": "^2.1.1",
     "axios": "^1.7.7"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-fhir-ndr-et",
-  "version": "0.1.3",
+  "version": "0.1.7",
   "description": "OpenFn fhir adaptor for NDR HIV in Ehtiopia",
   "type": "module",
   "exports": {
@@ -20,14 +20,14 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "_build": "pnpm clean && esno build/build.ts && build-adaptor fhir-ndr-et",
+    "build": "pnpm clean && pnpm build-adaptor fhir-ndr-et src ast docs",
     "build:src": "esno build/build.ts",
     "build:adaptor": "pnpm build-adaptor fhir-ndr-et",
     "build:schema": "esno build/generate-schema.ts",
     "load-schema": "esno build/fetch-schema.ts",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
-    "clean": "rimraf dist types docs",
+    "clean": "rimraf dist docs",
     "pack": "pnpm pack --pack-destination ../../dist",
     "lint": "eslint src"
   },
@@ -41,7 +41,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "@openfn/language-fhir": "^5.0.2",
+    "@openfn/language-fhir": "^5.0.3",
     "@types/fhir": "^0.0.41",
     "ast-types": "^0.14.2",
     "lodash": "^4.17.21",

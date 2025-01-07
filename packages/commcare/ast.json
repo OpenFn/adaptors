@@ -8,7 +8,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a GET request to any CommCare endpoint. The response body will be returned to `state.data` as JSON.\nPaginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.",
+        "description": "Make a GET request to CommCare. Use this to fetch resources directly from Commcare REST API.\nYou can pass Commcare query parameters as an object of key value pairs, which will map to parameters\nin the URL.\nThe response body will be returned to `state.data` as JSON.\nPaginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.",
         "tags": [
           {
             "title": "public",
@@ -23,22 +23,17 @@
           {
             "title": "example",
             "description": "get(\"/case/12345\")",
-            "caption": "Get a specific case by id"
+            "caption": "Get a resource by Id. Equivalent to GET `<baseUrl>/case/12345`"
           },
           {
             "title": "example",
             "description": "get(\"/case\", { offset:0, limit: 20 })",
-            "caption": "Get exactly 20 cases"
+            "caption": "Get a resource with exactly 20 items. Equivalent to `<baseUrl>/case?offset=0&limit=20`"
           },
           {
             "title": "example",
-            "description": "get(\"/form\", { app_id: \"02bf50ab803a89ea4963799362874f0c\" })",
-            "caption": "Get forms by app id"
-          },
-          {
-            "title": "example",
-            "description": "get(\"/case\", {}, (state) => {\n   state.cases.push(...state.data) // adds 50 cases to the cases array\n   return state;\n})",
-            "caption": "Get all cases, 50 at a time, and add them to state"
+            "description": "get(\"/case\", {}, (state) => {\n  state.cases.push(...state.data) // adds all cases to the cases array\n  return state;\n})",
+            "caption": "Get all items in a resource, and add them to state. Equivalent to `<baseUrl>/case`"
           },
           {
             "title": "param",
@@ -98,12 +93,12 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a POST request to any CommCare endpoint.",
+        "description": "Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.\nYou can pass Commcare body data as a JSON object.",
         "tags": [
           {
             "title": "example",
             "description": "post(\"/user\", { \"username\":\"test\", \"password\":\"somepassword\" })",
-            "caption": "Post a user object to to the /user endpoint"
+            "caption": "Create a user resource.Equivalent to `<baseUrl>/user`"
           },
           {
             "title": "function",
@@ -126,7 +121,7 @@
           },
           {
             "title": "param",
-            "description": "Object or JSON to use as the request body",
+            "description": "Object or JSON to create a resource",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -180,7 +175,7 @@
         "params"
       ],
       "docs": {
-        "description": "Bulk upload data to CommCare. Accepts an array of objects, converts them into\nan XLS representation, and uploads.",
+        "description": "Bulk upload data to CommCare. Use this to send multiple items for a single resource at once to Commcare. It accepts an array of objects, converts them into\nan XLS representation, and uploads.",
         "tags": [
           {
             "title": "public",
@@ -194,8 +189,8 @@
           },
           {
             "title": "example",
-            "description": "submitXls(\n   [\n     {name: 'Mamadou', phone: '000000'},\n   ],\n   {\n     case_type: 'student',\n     search_field: 'external_id',\n     create_new_cases: 'on',\n   }\n)",
-            "caption": "Upload a single row of data"
+            "description": "submitXls([{ name: 'Mamadou', phone: '000000' }], {\n  case_type: 'student',\n  search_field: 'external_id',\n  create_new_cases: 'on',\n});",
+            "caption": "Upload a single row of data for a resource."
           },
           {
             "title": "param",
@@ -217,7 +212,7 @@
           },
           {
             "title": "state",
-            "description": "data - the response from the CommCare Server"
+            "description": "{CommcareHttpState}"
           },
           {
             "title": "returns",
@@ -237,7 +232,7 @@
         "data"
       ],
       "docs": {
-        "description": "Submit forms to CommCare. Accepts an array of JSON\nobjects, converts them into XML, and submits to CommCare as an x-form.",
+        "description": "Submit forms to CommCare. Use this to send forms directly to Commcare REST API. Accepts an array of JSON\nobjects, converts them into XML, and submits to CommCare as an x-form.",
         "tags": [
           {
             "title": "public",
@@ -251,8 +246,8 @@
           },
           {
             "title": "example",
-            "description": "submit(\n   fields(\n     field(\"@\", (state) => ({\n         \"xmlns\": `http://openrosa.org/formdesigner/${state.formId}`\n     }),\n     field(\"question1\", (state) => state.data.answer1),\n     field(\"question2\", (state) => state.data.answer2),\n   )\n )",
-            "caption": "Submit a form to CommCare"
+            "description": "submit(\n fields(\n   field('@', state => ({\n     xmlns: `http://openrosa.org/formdesigner/${state.formId}`,\n   })),\n   field('question1', state => state.data.answer1),\n   field('question2', state => state.data.answer2)\n )\n);",
+            "caption": "Submit a form resource."
           },
           {
             "title": "param",
@@ -265,7 +260,7 @@
           },
           {
             "title": "state",
-            "description": "data - the response from the CommCare Server"
+            "description": "{CommcareHttpState}"
           },
           {
             "title": "returns",
@@ -296,8 +291,8 @@
           },
           {
             "title": "example",
-            "description": "fetchReportData(\n  \"9aab0eeb88555a7b4568676883e7379a\",\n  { limit: 10 },\n  \"https://www.example.com/api/\"\n)",
-            "caption": "Fetch 10 records from a report and post them to example.com"
+            "description": "fetchReportData(\n  \"abcde\",\n  { limit: 10 },\n  \"https://www.example.com/api/\"\n)",
+            "caption": "Get 10 records from a report and post them to example.com. Equivalent to `<baseUrl>/configurablereportdata/abcde?limit=10`"
           },
           {
             "title": "function",
@@ -332,6 +327,10 @@
             "name": "postUrl"
           },
           {
+            "title": "state",
+            "description": "{CommcareHttpState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -352,12 +351,12 @@
         "options"
       ],
       "docs": {
-        "description": "Make a general HTTP request against the Commcare server.",
+        "description": "Make a general HTTP request against the Commcare server. Use this to make any request to Commcare REST API.",
         "tags": [
           {
             "title": "example",
             "description": "request(\"GET\", \"/a/asri/api/v0.5/case\");",
-            "caption": "Make a GET request to get cases"
+            "caption": "Get a resource. Equivalent to `<baseUrl>/a/asri/api/v0.5/case`"
           },
           {
             "title": "function",
@@ -443,13 +442,13 @@
           },
           {
             "title": "example",
-            "description": "bulk(\n'case-data',\n   [\n     {name: 'Mamadou', phone: '000000'},\n   ],\n   {\n     case_type: 'student',\n     search_field: 'external_id',\n     create_new_cases: 'on',\n   }\n)",
-            "caption": "Upload a single row of data for case-data"
+            "description": "bulk('case-data', [{ name: 'Mamadou', phone: '000000' }], {\n  case_type: 'student',\n  search_field: 'external_id',\n  create_new_cases: 'on',\n});",
+            "caption": "Upload a single row of a case-data resource"
           },
           {
             "title": "example",
-            "description": "bulk(\n    'lookup-table',\n {\n   types: [{\n\n  'DELETE(Y/N)':'N',\n  table_id: 'fruit',\n  'is_global?':'yes',\n  'field 1': 'type',\n  'field 2': 'name',\n     }],\n     fruit: [{\n      UID: '',\n       'DELETE(Y/N)':'N',\n      'field:type': 'citrus',\n       'field:name': 'Orange',\n    }],\n  },\n{replace: false}\n)",
-            "caption": "Upload a single row of data for a lookup-table"
+            "description": "bulk(\n  'lookup-table',\n  {\n    types: [\n      {\n        'DELETE(Y/N)': 'N',\n        table_id: 'fruit',\n        'is_global?': 'yes',\n        'field 1': 'type',\n        'field 2': 'name',\n      },\n    ],\n    fruit: [\n      {\n        UID: '',\n        'DELETE(Y/N)': 'N',\n        'field:type': 'citrus',\n        'field:name': 'Orange',\n      },\n    ],\n  },\n  { replace: false }\n);",
+            "caption": "Upload a single row of a lookup-table resource"
           },
           {
             "title": "param",
@@ -507,7 +506,7 @@
           },
           {
             "title": "state",
-            "description": "data - the response from the CommCare Server"
+            "description": "{CommcareHttpState}"
           },
           {
             "title": "returns",
@@ -799,7 +798,7 @@
         "operation"
       ],
       "docs": {
-        "description": "Scopes an array of data based on a JSONPath.\nUseful when the source data has `n` items you would like to map to\nan operation.\nThe operation will receive a slice of the data based of each item\nof the JSONPath provided.\n\nIt also ensures the results of an operation make their way back into\nthe state's references.",
+        "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
         "tags": [
           {
             "title": "public",
@@ -813,7 +812,18 @@
           },
           {
             "title": "example",
-            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
+            "description": "each(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+            "caption": "Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+            "caption": "Iterate over items in state.data and pass each one into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);",
+            "caption": "Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation"
           },
           {
             "title": "param",

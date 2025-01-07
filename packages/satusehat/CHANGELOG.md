@@ -1,5 +1,19 @@
 # @openfn/language-satusehat
 
+## 2.0.6
+
+### Patch Changes
+
+- 7c528d3: Update docs with examples
+
+## 2.0.5
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
 ## 2.0.4
 
 ### Patch Changes

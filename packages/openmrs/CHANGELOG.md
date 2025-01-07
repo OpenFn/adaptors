@@ -1,5 +1,13 @@
 # @openfn/language-openmrs
 
+## 4.1.3
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
 ## 4.1.2
 
 ### Patch Changes

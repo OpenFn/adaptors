@@ -1,5 +1,19 @@
 # @openfn/language-odk
 
+## 3.0.8
+
+### Patch Changes
+
+- 6c9affd: Fix typo in error message
+
+## 3.0.7
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
 ## 3.0.6
 
 ### Patch Changes

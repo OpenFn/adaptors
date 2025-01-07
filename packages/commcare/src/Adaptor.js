@@ -37,20 +37,21 @@ export function execute(...operations) {
 }
 
 /**
- * Make a GET request to any CommCare endpoint. The response body will be returned to `state.data` as JSON.
+ * Make a GET request to CommCare. Use this to fetch resources directly from Commcare REST API.
+ * You can pass Commcare query parameters as an object of key value pairs, which will map to parameters
+ * in the URL.
+ * The response body will be returned to `state.data` as JSON.
  * Paginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.
  * @public
  * @function
- * @example <caption>Get a specific case by id</caption>
+ * @example <caption>Get a resource by Id. Equivalent to GET `<baseUrl>/case/12345`</caption>
  * get("/case/12345")
- * @example <caption>Get exactly 20 cases</caption>
+ * @example <caption>Get a resource with exactly 20 items. Equivalent to `<baseUrl>/case?offset=0&limit=20`</caption>
  * get("/case", { offset:0, limit: 20 })
- * @example <caption>Get forms by app id</caption>
- * get("/form", { app_id: "02bf50ab803a89ea4963799362874f0c" })
- * @example <caption>Get all cases, 50 at a time, and add them to state</caption>
+ * @example <caption>Get all items in a resource, and add them to state. Equivalent to `<baseUrl>/case`</caption>
  * get("/case", {}, (state) => {
- *    state.cases.push(...state.data) // adds 50 cases to the cases array
- *    return state;
+ *   state.cases.push(...state.data) // adds all cases to the cases array
+ *   return state;
  * })
  * @param {string} path - Path to resource
  * @param {Object} [params] - Input parameters for the request. These vary by endpoint,  see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare docs}.
@@ -133,13 +134,14 @@ export function get(path, params = {}, callback = s => s) {
 }
 
 /**
- * Make a POST request to any CommCare endpoint.
- * @example <caption>Post a user object to to the /user endpoint</caption>
+ * Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.
+ * You can pass Commcare body data as a JSON object.
+ * @example <caption>Create a user resource.Equivalent to `<baseUrl>/user`</caption>
  * post("/user", { "username":"test", "password":"somepassword" })
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {object} data - Object or JSON to use as the request body
+ * @param {object} data - Object or JSON to create a resource
  * @param {Object} [params] - Optional request params
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -175,24 +177,19 @@ export function post(path, data, params = {}, callback = s => s) {
 }
 
 /**
- * Bulk upload data to CommCare. Accepts an array of objects, converts them into
+ * Bulk upload data to CommCare. Use this to send multiple items for a single resource at once to Commcare. It accepts an array of objects, converts them into
  * an XLS representation, and uploads.
  * @public
  * @function
- * @example <caption>Upload a single row of data</caption>
- * submitXls(
- *    [
- *      {name: 'Mamadou', phone: '000000'},
- *    ],
- *    {
- *      case_type: 'student',
- *      search_field: 'external_id',
- *      create_new_cases: 'on',
- *    }
- * )
+ * @example <caption>Upload a single row of data for a resource.</caption>
+ * submitXls([{ name: 'Mamadou', phone: '000000' }], {
+ *   case_type: 'student',
+ *   search_field: 'external_id',
+ *   create_new_cases: 'on',
+ * });
  * @param {array} data - Array of objects to upload
  * @param {Object} params - Input parameters, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data CommCare docs}.
- * @state data - the response from the CommCare Server
+ * @state {CommcareHttpState}
  * @returns {Operation}
  */
 export function submitXls(data, params) {
@@ -235,22 +232,22 @@ export function submitXls(data, params) {
 }
 
 /**
- * Submit forms to CommCare. Accepts an array of JSON
+ * Submit forms to CommCare. Use this to send forms directly to Commcare REST API. Accepts an array of JSON
  * objects, converts them into XML, and submits to CommCare as an x-form.
  * @public
  * @function
- * @example <caption>Submit a form to CommCare</caption>
- *  submit(
- *    fields(
- *      field("@", (state) => ({
- *          "xmlns": `http://openrosa.org/formdesigner/${state.formId}`
- *      }),
- *      field("question1", (state) => state.data.answer1),
- *      field("question2", (state) => state.data.answer2),
- *    )
+ * @example <caption>Submit a form resource.</caption>
+ * submit(
+ *  fields(
+ *    field('@', state => ({
+ *      xmlns: `http://openrosa.org/formdesigner/${state.formId}`,
+ *    })),
+ *    field('question1', state => state.data.answer1),
+ *    field('question2', state => state.data.answer2)
  *  )
+ * );
  * @param {Object} data - The form as a JSON object
- * @state data - the response from the CommCare Server
+ * @state {CommcareHttpState}
  * @returns {Operation}
  */
 export function submit(data) {
@@ -280,9 +277,9 @@ export function submit(data) {
  * Make a GET request to CommCare's Reports API
  * and POST the response somewhere else.
  * @public
- * @example <caption>Fetch 10 records from a report and post them to example.com</caption>
+ * @example <caption>Get 10 records from a report and post them to example.com. Equivalent to `<baseUrl>/configurablereportdata/abcde?limit=10`</caption>
  * fetchReportData(
- *   "9aab0eeb88555a7b4568676883e7379a",
+ *   "abcde",
  *   { limit: 10 },
  *   "https://www.example.com/api/"
  * )
@@ -290,6 +287,7 @@ export function submit(data) {
  * @param {String} reportId - API name of the report.
  * @param {Object} params - Input parameters for the request, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957341/Download+Report+Data Commcare docs}.
  * @param {String} postUrl - URL to which the response object will be posted.
+ * @state {CommcareHttpState}
  * @returns {Operation}
  */
 export function fetchReportData(reportId, params, postUrl) {
@@ -317,8 +315,8 @@ export function fetchReportData(reportId, params, postUrl) {
 }
 
 /**
- * Make a general HTTP request against the Commcare server.
- * @example <caption>Make a GET request to get cases</caption>
+ * Make a general HTTP request against the Commcare server. Use this to make any request to Commcare REST API.
+ * @example <caption>Get a resource. Equivalent to `<baseUrl>/a/asri/api/v0.5/case`</caption>
  * request("GET", "/a/asri/api/v0.5/case");
  * @function
  * @public
@@ -349,45 +347,42 @@ export function request(method, path, body, options = {}) {
  * an XLS representation, and uploads.
  * @public
  * @function
- * @example <caption>Upload a single row of data for case-data</caption>
+ * @example <caption>Upload a single row of a case-data resource</caption>
+ * bulk('case-data', [{ name: 'Mamadou', phone: '000000' }], {
+ *   case_type: 'student',
+ *   search_field: 'external_id',
+ *   create_new_cases: 'on',
+ * });
+ * @example <caption>Upload a single row of a lookup-table resource</caption>
  * bulk(
- * 'case-data',
- *    [
- *      {name: 'Mamadou', phone: '000000'},
- *    ],
- *    {
- *      case_type: 'student',
- *      search_field: 'external_id',
- *      create_new_cases: 'on',
- *    }
- * )
- * @example <caption>Upload a single row of data for a lookup-table</caption>
- * bulk(
- *     'lookup-table',
- *  {
- *    types: [{
- *
- *   'DELETE(Y/N)':'N',
- *   table_id: 'fruit',
- *   'is_global?':'yes',
- *   'field 1': 'type',
- *   'field 2': 'name',
- *      }],
- *      fruit: [{
- *       UID: '',
- *        'DELETE(Y/N)':'N',
- *       'field:type': 'citrus',
- *        'field:name': 'Orange',
- *     }],
+ *   'lookup-table',
+ *   {
+ *     types: [
+ *       {
+ *         'DELETE(Y/N)': 'N',
+ *         table_id: 'fruit',
+ *         'is_global?': 'yes',
+ *         'field 1': 'type',
+ *         'field 2': 'name',
+ *       },
+ *     ],
+ *     fruit: [
+ *       {
+ *         UID: '',
+ *         'DELETE(Y/N)': 'N',
+ *         'field:type': 'citrus',
+ *         'field:name': 'Orange',
+ *       },
+ *     ],
  *   },
- * {replace: false}
- * )
+ *   { replace: false }
+ * );
  * @param {('case-data'|'lookup-table')} type -  The type of data being processed.
  * @param {(Object|Object[])} data - An object or an array of objects to upload.
  * - If type is `'case-data'`, this should be an object array of objects.
  * - If type is `'lookup-table'`, this should be an object.
  * @param {Object} params - Input parameters, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946459/Bulk+Upload+Case+Data CommCare docs} for case-data and {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143946023/Bulk+upload+Lookup+Tables Commcare Docs} for lookup-table.
- * @state data - the response from the CommCare Server
+ * @state {CommcareHttpState}
  * @returns {Operation}
  */
 export function bulk(type, data, params) {

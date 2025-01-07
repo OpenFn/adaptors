@@ -450,7 +450,7 @@
         "operation"
       ],
       "docs": {
-        "description": "Scopes an array of data based on a JSONPath.\nUseful when the source data has `n` items you would like to map to\nan operation.\nThe operation will receive a slice of the data based of each item\nof the JSONPath provided.\n\nIt also ensures the results of an operation make their way back into\nthe state's references.",
+        "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
         "tags": [
           {
             "title": "public",
@@ -464,7 +464,18 @@
           },
           {
             "title": "example",
-            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
+            "description": "each(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+            "caption": "Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+            "caption": "Iterate over items in state.data and pass each one into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);",
+            "caption": "Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation"
           },
           {
             "title": "param",

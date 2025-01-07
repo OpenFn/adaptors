@@ -1,5 +1,13 @@
 # @openfn/language-smpp
 
+## 1.4.7
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
 ## 1.4.6
 
 ### Patch Changes

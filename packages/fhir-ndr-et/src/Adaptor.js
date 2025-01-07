@@ -5,7 +5,7 @@ import * as util from './utils';
 // @ts-ignore
 import * as builders from './builders';
 
-export const getBuilderName = resourceName =>
+const getBuilderName = resourceName =>
   resourceName[0].toLowerCase() + resourceName.slice(1);
 
 /**

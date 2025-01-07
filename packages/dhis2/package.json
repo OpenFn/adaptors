@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-dhis2",
-  "version": "5.0.5",
+  "version": "6.0.1",
   "description": "DHIS2 Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -19,10 +19,10 @@
   "scripts": {
     "build": "pnpm clean && build-adaptor dhis2",
     "clean": "rimraf dist types docs",
-    "integration-test": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.cjs",
     "pack": "pnpm pack --pack-destination ../../dist",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --exclude test/integration.cjs --recursive --timeout 10000",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings --exclude test/integration.cjs --recursive --timeout 10000",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings --exclude test/integration.js --recursive --timeout 10000",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --exclude test/integration.js --recursive --timeout 10000",
+    "test:integration": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.js",
     "lint": "eslint src"
   },
   "author": "Open Function Group",
