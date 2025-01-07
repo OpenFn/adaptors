@@ -315,12 +315,12 @@ export function bulkQuery(query, options = {}) {
  * create("Account", { Name: "My Account #1" });
  * @example <caption> Multiple records creation</caption>
  * create("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
- * @example <caption> Create a records from a state variable</caption>
- * fn((state) => {
- *   state.data = [{ Name: "My Account #1" }, { Name: "My Account #2" }];
- *   return state;
- * });
- * create("Account", $.data);
+ * @example <caption> Create records from data on state</caption>
+ * create("Account",
+ *   $.data.map((account) => ({
+ *     Name: account.label
+ *   })
+ * ));
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @param {(Object|Object[])} records - Field attributes for the new record, or an array of field attributes.
