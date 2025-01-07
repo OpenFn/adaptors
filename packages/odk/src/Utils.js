@@ -40,7 +40,7 @@ export const authorize = state => {
   }
 
   // warn if no auth found
-  console.warn(`WARNING: no authentication properties found on congfiguration schema!
+  console.warn(`WARNING: no authentication properties found on configuration schema!
     
 Make sure to either set an access_token or email & password`);
 };
