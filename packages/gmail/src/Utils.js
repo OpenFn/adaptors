@@ -87,6 +87,18 @@ export async function getContentFromMessage(userId, messageId, desiredContent) {
   return `Unsupported content type: ${desiredContent.type}`;
 }
 
+function isExpressionMatch(text, expression) {
+  if (expression.startsWith('/') && expression.endsWith('/')) {
+    try {
+      return new RegExp(expression.slice(1, -1)).test(text);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  return text.includes(expression);
+}
+
 export async function getAttachment(userId, messageId, attachmentId) {
   return await gmail.users.messages.attachments.get({
     userId,
@@ -106,7 +118,7 @@ export async function getFileFromAttachment(attachment) {
   return isTesting ? fileContent.substring(0, 40) : fileContent;
 }
 
-export async function getFileFromArchive(archive, filePattern) {
+async function getFileFromArchive(archive, expression) {
   const base64String = archive?.data?.data;
   if (!base64String) {
     throw new Error('No data found in zip attachmentResponse.');
@@ -115,7 +127,9 @@ export async function getFileFromArchive(archive, filePattern) {
   const compressedBuffer = Buffer.from(base64String, 'base64');
   const directory = await unzipper.Open.buffer(compressedBuffer);
 
-  const file = directory?.files.find(f => filePattern.test(f.path));
+  const file = directory?.files.find(f =>
+    isExpressionMatch(f.path, expression)
+  );
 
   if (!file) {
     throw new Error('File not found in the archive.');
@@ -131,9 +145,9 @@ export async function getFileFromArchive(archive, filePattern) {
   };
 }
 
-export function getAttachmentInfo(messageResponse, regex) {
+function getAttachmentInfo(messageResponse, expression) {
   const parts = messageResponse?.data?.payload?.parts;
-  const part = parts?.find(p => regex.test(p.filename));
+  const part = parts?.find(p => isExpressionMatch(p.filename, expression));
 
   return part
     ? { attachmentId: part.body.attachmentId, filename: part.filename }
@@ -174,18 +188,4 @@ export function createConnection(state) {
 export function removeConnection(state) {
   gmail = undefined;
   return state;
-}
-
-export function logError(error) {
-  console.log('RAW ERROR:', error);
-  const { code, errors, response } = error;
-  if (code && errors && response) {
-    console.error('The API returned an error:', errors);
-
-    const { statusText, config } = response;
-    const { url, method, body } = config;
-    const message = `${method} ${url} - ${code}:${statusText} \nbody: ${body}`;
-
-    console.log(message);
-  }
 }
