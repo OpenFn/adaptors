@@ -21,7 +21,7 @@
 /**
  * State object
  * @typedef {Object} SalesforceResultState
- * @property data - Result object(s) of the form <code>\{ id, success, errors \}</code>. Returns array for multiple records.
+ * @property data - Result object(s) of the form <code>\{ id, success, errors \}</code>. Will be an array for multiple results.
  * @property references - History of all previous operations results.
  **/
 
@@ -308,7 +308,7 @@ export function bulkQuery(query, options = {}) {
 }
 
 /**
- * Create a new sObject record(s).
+ * Create one or more new sObject records.
  * @public
  * @example <caption> Single record creation</caption>
  * create("Account", { Name: "My Account #1" });
