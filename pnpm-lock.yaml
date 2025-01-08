@@ -1664,8 +1664,8 @@ importers:
   packages/salesforce:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.15.2
-        version: 1.15.2
+        specifier: workspace:*
+        version: link:../common
       any-ascii:
         specifier: ^0.3.2
         version: 0.3.2
