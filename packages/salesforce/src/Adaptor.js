@@ -1,3 +1,14 @@
+import {
+  execute as commonExecute,
+  composeNextState,
+  chunk,
+} from '@openfn/language-common';
+
+import { expandReferences } from '@openfn/language-common/util';
+import * as util from './Utils';
+
+import flatten from 'lodash/flatten';
+
 /**
  * @typedef {object} State
  * @property {object} data JSON Data.
@@ -67,17 +78,6 @@
  * @public
  * @property {boolean} [autoFetch=false] - When true, automatically fetches next batch of records if available.
  * */
-
-import {
-  execute as commonExecute,
-  composeNextState,
-  chunk,
-} from '@openfn/language-common';
-
-import { expandReferences } from '@openfn/language-common/util';
-import * as util from './Utils';
-
-import flatten from 'lodash/flatten';
 
 let anyAscii = undefined;
 
