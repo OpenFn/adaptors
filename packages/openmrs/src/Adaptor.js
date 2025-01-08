@@ -103,18 +103,20 @@ export function get(path, query, callback = s => s) {
  * @public
  * @param {string} path - Path to resource
  * @param {object} data - Object which defines data that will be used to create a given instance of resource
+ * @param {object} query - Optional parameters for the request
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function post(path, data, callback = s => s) {
+export function post(path, data, query, callback = s => s) {
   return async state => {
-    const [resolvedPath, resolvedData] = expandReferences(state, path, data);
+    const [resolvedPath, resolvedData, resolvedQuery = {}] = expandReferences(state, path, data, query);
 
     const response = await request(
       state,
       'POST',
       `/ws/rest/v1/${resolvedPath}`,
-      resolvedData
+      resolvedData,
+      resolvedQuery
     );
 
     return prepareNextState(state, response, callback);
