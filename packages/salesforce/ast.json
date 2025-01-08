@@ -9,7 +9,7 @@
         "options"
       ],
       "docs": {
-        "description": "Create and execute a bulk job.",
+        "description": "Create and execute a bulk job.\nThis function uses {@link https://sforce.co/4fDLJnk Bulk API},\nwhich is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
         "tags": [
           {
             "title": "public",
@@ -27,6 +27,11 @@
             "caption": "Bulk upsert"
           },
           {
+            "title": "example",
+            "description": "fn((state) => {\n  state.accounts = state.data.map((a) => ({ Id: a.id, Name: a.name }));\n  return state;\n});\nbulk(\"Account\", \"update\", $.accounts, { failOnError: true });",
+            "caption": "Bulk update Account records using a lazy state reference"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -42,7 +47,7 @@
           },
           {
             "title": "param",
-            "description": "The bulk operation to be performed.Eg \"insert\" | \"update\" | \"upsert\"",
+            "description": "The bulk operation to be performed.Eg `insert`, `update` or `upsert`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -60,76 +65,16 @@
           },
           {
             "title": "param",
-            "description": "Options passed to the bulk api.",
+            "description": "Options to configure the request. In addition to these, you can pass any of the options supported by the {@link https://bit.ly/41tyvVU jsforce API}.",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "BulkOptions"
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "External id field.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.extIdField"
-          },
-          {
-            "title": "param",
-            "description": "Skipping bulk operation if no records.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.allowNoOp",
-            "default": "false"
-          },
-          {
-            "title": "param",
-            "description": "Fail the operation on error.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.failOnError",
-            "default": "false"
-          },
-          {
-            "title": "param",
-            "description": "Polling interval in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollInterval",
-            "default": "6000"
-          },
-          {
-            "title": "param",
-            "description": "Polling timeout in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollTimeout",
-            "default": "240000"
+            "title": "state",
+            "description": "{SalesforceResultState}"
           },
           {
             "title": "returns",
@@ -141,16 +86,16 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "bulkQuery",
       "params": [
-        "qs",
+        "query",
         "options"
       ],
       "docs": {
-        "description": "Execute an SOQL Bulk Query.\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\n`bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v.2.0 Query} which is available in API version 47.0 and later.\nThis API is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
+        "description": "Execute an SOQL Bulk Query.\nThis function query large data sets and reduce the number of API requests.\n`bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v2.0 Query} which is available in API version 47.0 and later.\nThis API is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
         "tags": [
           {
             "title": "public",
@@ -159,12 +104,13 @@
           },
           {
             "title": "example",
-            "description": "bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);",
-            "caption": "The results will be available on `state.data`"
+            "description": "bulkQuery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);",
+            "caption": "Bulk query patient records where \"Health_ID__c\" is equal to the value in \"state.data.healthId\""
           },
           {
             "title": "example",
-            "description": "bulkQuery(\n  (state) =>\n    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,\n  { pollTimeout: 10000, pollInterval: 6000 }\n);"
+            "description": "bulkQuery(\n  (state) =>\n    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,\n  { pollTimeout: 10000, pollInterval: 6000 }\n);",
+            "caption": "Bulk query with custom polling options"
           },
           {
             "title": "function",
@@ -178,42 +124,20 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "qs"
+            "name": "query"
           },
           {
             "title": "param",
             "description": "Options passed to the bulk api.",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "BulkQueryOptions"
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "Polling timeout in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollTimeout",
-            "default": "90000"
-          },
-          {
-            "title": "param",
-            "description": "Polling interval in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollInterval",
-            "default": "3000"
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -225,7 +149,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "create",
@@ -252,6 +176,11 @@
             "caption": "Multiple records creation"
           },
           {
+            "title": "example",
+            "description": "create(\"Account\",\n  $.data.map((account) => ({\n    Name: account.label\n  })\n));",
+            "caption": "Create records from data on state"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -267,12 +196,34 @@
           },
           {
             "title": "param",
-            "description": "Field attributes for the new record.",
+            "description": "Field attributes for the new record, or an array of field attributes.",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "Object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "Object"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "records"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -292,7 +243,7 @@
         "sObjectName"
       ],
       "docs": {
-        "description": "Fetches and prints metadata for an sObject and pushes the result to `state.data`.\nIf `sObjectName` is not specified, it will print the total number of all available sObjects and push the result to `state.data`.",
+        "description": "Fetches and logs metadata for an sObject and pushes the result to `state.data`.\nIf `sObjectName` is not specified, it will print the total number of all available sObjects and push the result to `state.data`.",
         "tags": [
           {
             "title": "public",
@@ -318,13 +269,14 @@
             "title": "param",
             "description": "The API name of the sObject. If omitted, fetches metadata for all sObjects.",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
+              "type": "NameExpression",
+              "name": "string"
             },
             "name": "sObjectName"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -346,7 +298,7 @@
         "options"
       ],
       "docs": {
-        "description": "Delete records of an object.",
+        "description": "Delete records of an sObject.",
         "tags": [
           {
             "title": "public",
@@ -355,7 +307,18 @@
           },
           {
             "title": "example",
-            "description": "destroy('obj_name', [\n '0060n00000JQWHYAA5',\n '0090n00000JQEWHYAA5'\n], { failOnError: true })"
+            "description": "destroy(\"Account\", \"001XXXXXXXXXXXXXXX\");",
+            "caption": "Delete a single record"
+          },
+          {
+            "title": "example",
+            "description": "destroy(\"Account\", [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"], {\n  failOnError: true,\n});",
+            "caption": "Allow operation to fail if any record fails to delete"
+          },
+          {
+            "title": "example",
+            "description": "fn((state) => {\n  state.data = [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"];\n  return state;\n});\ndestroy(\"Account\", $.data);",
+            "caption": "Using a state variable"
           },
           {
             "title": "function",
@@ -373,10 +336,28 @@
           },
           {
             "title": "param",
-            "description": "Array of IDs of records to delete.",
+            "description": "ID or array of IDs of records to delete",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "string"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "ids"
           },
@@ -388,6 +369,91 @@
               "name": "object"
             },
             "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "If true, the operation will fail if any record fails to delete.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.failOnError",
+            "default": "false"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceResultState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "get",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Send a GET request on salesforce server configured in `state.configuration`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "get('/actions/custom/flow/POC_OpenFN_Test_Flow');",
+            "caption": "Make a GET request to a custom Salesforce flow"
+          },
+          {
+            "title": "example",
+            "description": "get('/actions/custom/flow/POC_OpenFN_Test_Flow', { query: { Status: 'Active' } });",
+            "caption": "Make a GET request to a custom Salesforce flow with query parameters"
+          },
+          {
+            "title": "example",
+            "description": "get('/jobs/query/v1/jobs/001XXXXXXXXXXXXXXX/results', (state) => {\n // Mapping the response\n state.mapping = state.data.map(d => ({ name: d.name, id: d.extId }));\n return state;\n});",
+            "caption": "Make a GET request then map the response"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The Salesforce API endpoint.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Configure headers and query parameters for the request.",
+            "type": {
+              "type": "NameExpression",
+              "name": "SimpleRequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -426,6 +492,11 @@
             "caption": "Multiple records creation"
           },
           {
+            "title": "example",
+            "description": "fn((state) => {\n  state.data = [{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }];\n  return state;\n});\ninsert(\"Account\", $.data);",
+            "caption": "Using a state variable"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -441,12 +512,105 @@
           },
           {
             "title": "param",
-            "description": "Field attributes for the new record.",
+            "description": "Field attributes for the new record, or an array of field attributes.",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "Object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "Object"
+                    }
+                  ]
+                }
+              ]
+            },
+            "name": "records"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "post",
+      "params": [
+        "path",
+        "data",
+        "options"
+      ],
+      "docs": {
+        "description": "Send a POST request to salesforce server configured in `state.configuration`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "post(\"/actions/custom/flow/POC_OpenFN_Test_Flow\", {\n  body: {\n    inputs: [\n      {\n        CommentCount: 6,\n        FeedItemId: \"0D5D0000000cfMY\",\n      },\n    ],\n  },\n});",
+            "caption": "Make a POST request to a custom Salesforce flow"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The Salesforce API endpoint.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "A JSON Object request body.",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "records"
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Configure headers and query parameters for the request.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "SimpleRequestOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -463,12 +627,11 @@
     {
       "name": "query",
       "params": [
-        "qs",
-        "options",
-        "callback"
+        "query",
+        "options"
       ],
       "docs": {
-        "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.",
+        "description": "Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.\nThis operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.\nNote that in an event of a query error, error logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ learn more here}.",
         "tags": [
           {
             "title": "public",
@@ -477,12 +640,18 @@
           },
           {
             "title": "example",
-            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
+            "description": "query('SELECT Id FROM Patient__c', { autoFetch: true });",
+            "caption": "Run a query and download all matching records"
           },
           {
             "title": "example",
-            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });",
-            "caption": "Query more records if next records are available"
+            "description": "query(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);",
+            "caption": "Query patients by Health ID"
+          },
+          {
+            "title": "example",
+            "description": "query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);",
+            "caption": "Query patients by Health ID using a lazy state reference"
           },
           {
             "title": "function",
@@ -491,55 +660,41 @@
           },
           {
             "title": "param",
-            "description": "A query string. Must be less than `4000` characters in WHERE clause",
+            "description": "A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "function"
+                }
+              ]
             },
-            "name": "qs"
+            "name": "query"
           },
           {
             "title": "param",
-            "description": "Options passed to the bulk api.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Fetch next records if available.",
+            "description": "Optional configuration for the query operation",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "boolean"
+                "name": "QueryOptions"
               }
             },
-            "name": "options.autoFetch",
-            "default": "false"
+            "name": "options"
           },
           {
-            "title": "param",
-            "description": "A callback to execute once the record is retrieved",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
+            "title": "state",
+            "description": "{SalesforceState}"
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "upsert",
@@ -549,7 +704,7 @@
         "records"
       ],
       "docs": {
-        "description": "Create a new sObject record, or updates it if it already exists\nExternal ID field name must be specified in second argument.",
+        "description": "Create a new sObject record, or updates it if it already exists.",
         "tags": [
           {
             "title": "public",
@@ -599,13 +754,13 @@
           },
           {
             "title": "param",
-            "description": "Field attributes for the new object.",
+            "description": "Field attributes for the records to upsert, or an array of field attributes.",
             "type": {
               "type": "UnionType",
               "elements": [
                 {
                   "type": "NameExpression",
-                  "name": "object"
+                  "name": "Object"
                 },
                 {
                   "type": "TypeApplication",
@@ -616,7 +771,7 @@
                   "applications": [
                     {
                       "type": "NameExpression",
-                      "name": "object"
+                      "name": "Object"
                     }
                   ]
                 }
@@ -627,6 +782,10 @@
           {
             "title": "magic",
             "description": "records - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -706,6 +865,10 @@
             "name": "records"
           },
           {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -732,7 +895,8 @@
           },
           {
             "title": "example",
-            "description": "fn((state) => {\n  const s = toUTF8(\"άνθρωποι\");\n  console.log(s); // anthropoi\n  return state;\n});"
+            "description": "fn((state) => {\n  const s = toUTF8(\"άνθρωποι\");\n  console.log(s); // anthropoi\n  return state;\n});",
+            "caption": "Transliterate `άνθρωποι` to `anthropoi`"
           },
           {
             "title": "param",
@@ -756,6 +920,67 @@
       "valid": true
     },
     {
+      "name": "request",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Send a request to salesforce server configured in `state.configuration`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "request(\"/actions/custom/flow/POC_OpenFN_Test_Flow\", {\n  method: \"POST\",\n  json: { inputs: [{}] },\n});",
+            "caption": "Make a POST request to a custom Salesforce flow"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The Salesforce API endpoint.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Configure headers, query and body parameters for the request.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "FullRequestOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "retrieve",
       "params": [
         "sObjectName",
@@ -771,7 +996,8 @@
           },
           {
             "title": "example",
-            "description": "retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');"
+            "description": "retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');",
+            "caption": "Retrieve a specific ContentVersion record"
           },
           {
             "title": "function",
@@ -795,6 +1021,10 @@
               "name": "string"
             },
             "name": "id"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
