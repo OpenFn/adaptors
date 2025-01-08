@@ -14,15 +14,15 @@
 /**
  * State object
  * @typedef {Object} SalesforceState
- * @property data - Operation results
- * @property references - History of all previous operations results
+ * @property data - API response data. Can be either an object or array of objects.
+ * @property references - History of all previous operations results.
  **/
 
 /**
  * State object
  * @typedef {Object} SalesforceResultState
- * @property data - Array of result objects of the form <code>\{ id, success, errors \}</code>
- * @property references - History of all previous operations results
+ * @property data - Result object(s) of the form <code>\{ id, success, errors \}</code>. Returns array for multiple records.
+ * @property references - History of all previous operations results.
  **/
 
 /**
@@ -30,17 +30,17 @@
  * @typedef {Object} FullRequestOptions
  * @public
  * @property {string} [method=GET] - HTTP method to use.
- * @property {object} headers - Object of request headers
- * @property {object} query - Object request query
- * @property {object} json - Object request body
- * @property {string} body - A string request body
+ * @property {object} headers - Object of request headers.
+ * @property {object} query - Object request query.
+ * @property {object} json - Object request body.
+ * @property {string} body - A string request body.
  */
 
 /**
  * @typedef {Object} SimpleRequestOptions
  * @public
- * @property {object} headers - Object of request headers
- * @property {object} query - Object of request query
+ * @property {object} headers - Object of request headers.
+ * @property {object} query - Object of request query.
  * */
 
 /**
@@ -65,7 +65,7 @@
 /**
  * @typedef {Object} QueryOptions
  * @public
- * @property {boolean} [autoFetch=false] - When true, automatically fetches next batch of records if available
+ * @property {boolean} [autoFetch=false] - When true, automatically fetches next batch of records if available.
  * */
 
 import {
@@ -309,7 +309,6 @@ export function bulkQuery(query, options = {}) {
 
 /**
  * Create a new sObject record(s).
- * This function uses {@link https://jsforce.github.io/document/#create|jsforce create} under the hood.
  * @public
  * @example <caption> Single record creation</caption>
  * create("Account", { Name: "My Account #1" });
@@ -385,8 +384,9 @@ export function describe(sObjectName) {
 
 /**
  * Delete records of an sObject.
- * This functions uses {@link https://jsforce.github.io/document/#delete|jsforce delete} under the hood.
  * @public
+ * @example <caption>Delete a single record</caption>
+ * destroy("Account", "001XXXXXXXXXXXXXXX");
  * @example <caption>Allow operation to fail if any record fails to delete</caption>
  * destroy("Account", ["001XXXXXXXXXXXXXXX", "001YYYYYYYYYYYYYYY"], {
  *   failOnError: true,
@@ -399,7 +399,7 @@ export function describe(sObjectName) {
  * destroy("Account", $.data);
  * @function
  * @param {string} sObjectName - API name of the sObject.
- * @param {string[]} ids - Array of IDs of records to delete.
+ * @param {string|string[]} ids - ID or array of IDs of records to delete
  * @param {object} options - Options for the destroy delete operation.
  * @param {boolean} [options.failOnError=false] - If true, the operation will fail if any record fails to delete.
  * @state {SalesforceResultState}
@@ -419,21 +419,28 @@ export function destroy(sObjectName, ids, options = {}) {
       .sobject(resolvedSObjectName)
       .del(resolvedIds)
       .then(function (result) {
-        const successes = result.filter(r => r.success);
-        const failures = result.filter(r => !r.success);
+        if (Array.isArray(result)) {
+          const successes = result.filter(r => r.success);
+          const failures = result.filter(r => !r.success);
 
-        console.log(
-          'Sucessfully deleted: ',
-          JSON.stringify(successes, null, 2)
-        );
+          console.log(
+            'Sucessfully deleted: ',
+            JSON.stringify(successes, null, 2)
+          );
 
-        if (failures.length > 0) {
-          console.log('Failed to delete: ', JSON.stringify(failures, null, 2));
+          if (failures.length > 0) {
+            console.log(
+              'Failed to delete: ',
+              JSON.stringify(failures, null, 2)
+            );
 
-          if (failOnError)
-            throw 'Some deletes failed; exiting with failure code.';
+            if (failOnError)
+              throw 'Some deletes failed; exiting with failure code.';
+          }
+
+          return composeNextState(state, result);
         }
-
+        console.log('Successfully deleted: ', JSON.stringify(result, null, 2));
         return composeNextState(state, result);
       });
   };
@@ -643,7 +650,6 @@ export function query(query, options = {}) {
 
 /**
  * Create a new sObject record, or updates it if it already exists.
- * This function uses {@link https://jsforce.github.io/document/#upsert|jsforce upsert} under the hood.
  * @public
  * @example <caption> Single record upsert </caption>
  * upsert("UpsertTable__c", "ExtId__c", { Name: "Record #1", ExtId__c : 'ID-0000001' });
