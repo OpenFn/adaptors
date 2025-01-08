@@ -191,3 +191,69 @@ export function formatResults(input) {
 
   return output;
 }
+
+/**
+ * Flattens an array of nested objects to a maximum of two levels deep.
+ * - Each object in the array is flattened to have dot-separated keys.
+ * - Throws an error if the input is not an array or if a nested object exceeds two levels deep.
+ *
+ * @param {Array<Object>} input - An array of objects to flatten.
+ * @returns {Array<Object>} - An array of flattened objects.
+ * @throws {Error} - Throws an error if the input is not an array of objects or if nesting exceeds two levels.
+ */
+
+export function flattenData(input) {
+  if (!Array.isArray(input)) {
+    throw new Error('Input must be an array of objects.');
+  }
+
+  return input.map(item => flattenSingleObject(item));
+}
+
+const flattenSingleObject = (obj, parentKey = '', currentDepth = 0) => {
+  const result = {};
+  Object.entries(obj).forEach(([key, value]) => {
+    const newKey = parentKey ? `${parentKey}.${key}` : key;
+
+    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+      if (currentDepth < 1) {
+        Object.assign(
+          result,
+          flattenSingleObject(value, newKey, currentDepth + 1)
+        );
+      } else {
+        throw new Error(
+          `Nested object with key ${newKey} exceeds the allowed depth`
+        );
+      }
+    } else {
+      result[newKey] = value;
+    }
+  });
+  return result;
+};
+
+/**
+ * Validates that no keys in the input object or array of objects contain dots ('.').
+ * Throws an error if a key containing a dot is found.
+ *
+ * @param {Object|Array<Object>} input - The object or array of objects to validate.
+ * @throws {Error} - Throws an error if a key containing a dot is found or if the input is invalid.
+ */
+export function validateNoDotKeys(input) {
+  const hasDotInKeys = obj => {
+    for (const key of Object.keys(obj)) {
+      if (key.includes('.')) {
+        throw new Error(`Invalid key "${key}" contains a dot.`);
+      }
+    }
+  };
+
+  if (Array.isArray(input)) {
+    input.forEach(item => hasDotInKeys(item));
+  } else if (typeof input === 'object' && input !== null) {
+    hasDotInKeys(input);
+  } else {
+    throw new Error('Input must be an object or an array of objects.');
+  }
+}
