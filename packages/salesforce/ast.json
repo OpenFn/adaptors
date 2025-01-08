@@ -158,7 +158,7 @@
         "records"
       ],
       "docs": {
-        "description": "Create a new sObject record(s).\nThis function uses {@link https://jsforce.github.io/document/#create|jsforce create} under the hood.",
+        "description": "Create a new sObject record(s).",
         "tags": [
           {
             "title": "public",
@@ -177,8 +177,8 @@
           },
           {
             "title": "example",
-            "description": "fn((state) => {\n  state.data = [{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }];\n  return state;\n});\ncreate(\"Account\", $.data);",
-            "caption": "Create a records from a state variable"
+            "description": "create(\"Account\",\n  $.data.map((account) => ({\n    Name: account.label\n  })\n));",
+            "caption": "Create records from data on state"
           },
           {
             "title": "function",
@@ -298,12 +298,17 @@
         "options"
       ],
       "docs": {
-        "description": "Delete records of an sObject.\nThis functions uses {@link https://jsforce.github.io/document/#delete|jsforce delete} under the hood.",
+        "description": "Delete records of an sObject.",
         "tags": [
           {
             "title": "public",
             "description": null,
             "type": null
+          },
+          {
+            "title": "example",
+            "description": "destroy(\"Account\", \"001XXXXXXXXXXXXXXX\");",
+            "caption": "Delete a single record"
           },
           {
             "title": "example",
@@ -331,17 +336,26 @@
           },
           {
             "title": "param",
-            "description": "Array of IDs of records to delete.",
+            "description": "ID or array of IDs of records to delete",
             "type": {
-              "type": "TypeApplication",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Array"
-              },
-              "applications": [
+              "type": "UnionType",
+              "elements": [
                 {
                   "type": "NameExpression",
                   "name": "string"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "string"
+                    }
+                  ]
                 }
               ]
             },
@@ -690,7 +704,7 @@
         "records"
       ],
       "docs": {
-        "description": "Create a new sObject record, or updates it if it already exists.\nThis function uses {@link https://jsforce.github.io/document/#upsert|jsforce upsert} under the hood.",
+        "description": "Create a new sObject record, or updates it if it already exists.",
         "tags": [
           {
             "title": "public",
