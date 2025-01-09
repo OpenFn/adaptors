@@ -8,7 +8,7 @@
 
 ### Patch Changes
 
-- 9240428: Update dependencies
+- 9240428: security: Update dependencies
 
 ## 2.1.1
 
