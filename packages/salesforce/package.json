@@ -17,6 +17,7 @@
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --recursive",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
+    "test:integration": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.js",
     "lint": "eslint src"
   },
   "author": "Open Function Group",
