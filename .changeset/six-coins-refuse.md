@@ -2,7 +2,8 @@
 '@openfn/language-salesforce': major
 ---
 
-- Restructured response format for `bulk` and `destroy` functions:
+- Restructured response format for `bulk`, `create`,`update` and `destroy`
+  functions:
   - Added standardized result structure:
     ```
     {
