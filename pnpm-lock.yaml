@@ -406,7 +406,7 @@ importers:
   packages/dynamics:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.1.1
+        specifier: 2.2.0
         version: link:../common
       request:
         specifier: ^2.72.0
@@ -1243,7 +1243,7 @@ importers:
   packages/ocl:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.1.1
+        specifier: 2.2.0
         version: link:../common
     devDependencies:
       '@openfn/simple-ast':
@@ -2146,7 +2146,7 @@ importers:
   tools/import-tests:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^2.1.1
+        specifier: workspace:^2.2.0
         version: link:../../packages/common
 
   tools/metadata:
