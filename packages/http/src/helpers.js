@@ -8,7 +8,7 @@ import {
 import * as cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
 
-export function addAuth(configuration, headers) {
+function addAuth(configuration, headers) {
   if (headers.Authorization) {
     return;
   }
