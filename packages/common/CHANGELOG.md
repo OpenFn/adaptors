@@ -4,7 +4,8 @@
 
 ### Minor Changes
 
-- a47d8d5: Fix namespacing of utils.\*
+- a47d8d5: `decode`, `encode` and `uuid` are now correctly documented as being
+  in the `util` namespace
 
 ### Patch Changes
 
