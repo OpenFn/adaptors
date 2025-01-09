@@ -1,7 +1,14 @@
 // For creds.json, See LP: Salesforce Demo Org (API user)
 import { expect } from 'chai';
 import configuration from '../tmp/creds.json' assert { type: 'json' };
-import { execute, create, destroy, bulk, query } from '../dist/index.js';
+import {
+  execute,
+  destroy,
+  create,
+  update,
+  query,
+  bulk,
+} from '../dist/index.js';
 
 const state = { configuration };
 
@@ -15,7 +22,6 @@ describe('Integration tests', () => {
         bulk('Account', 'insert', state => state.data)
       )(state);
 
-      console.log(references, data);
       expect(data.success).to.eq(true);
     }).timeout(50000);
 
@@ -74,10 +80,50 @@ describe('Integration tests', () => {
         { name: 'Coco', vera__Active__c: 'No' },
         { name: 'Melon', vera__Active__c: 'Yes' },
       ];
-      const finalState = await execute(create('Account', state => state.data))(
+      const { data } = await execute(create('Account', state => state.data))(
         state
       );
-      expect(finalState.data.filter(d => d.success).length).to.eq(2);
+
+      expect(data.completed).to.eq(2);
+      expect(data.success).to.eq(true);
+    }).timeout(5000);
+  });
+
+  describe('update', () => {
+    it('should update a single sobject', async () => {
+      const { data } = await execute([
+        query("Select Id, Name from Account where Name = 'test' limit 1"),
+        update('Account', state => {
+          const data = state.data.records[0];
+          return {
+            Id: data.Id,
+            Name: 'new name',
+            vera__Active__c: 'Yes',
+          };
+        }),
+      ])(state);
+
+      expect(data.success).to.eq(true);
+    }).timeout(5000);
+
+    it('should update multiple sobject', async () => {
+      const { data } = await execute([
+        create('Account', [
+          { name: 'Coco', vera__Active__c: 'No' },
+          { name: 'Melon', vera__Active__c: 'Yes' },
+        ]),
+        query("SELECT Id FROM Account WHERE Name IN ('Coco', 'Melon')"),
+        update('Account', state => {
+          const data = state.data.records.map(d => ({
+            Id: d.Id,
+            Name: 'new name',
+            vera__Active__c: 'Yes',
+          }));
+          return data;
+        }),
+      ])(state);
+
+      expect(data.success).to.eq(true);
     }).timeout(5000);
   });
 
@@ -92,7 +138,7 @@ describe('Integration tests', () => {
     }).timeout(5000);
 
     it('should destroy multiple sobject', async () => {
-      const { references, data } = await execute([
+      const { data } = await execute([
         create('Account', [
           { name: 'Coco', vera__Active__c: 'No' },
           { name: 'Melon', vera__Active__c: 'Yes' },
@@ -109,7 +155,6 @@ describe('Integration tests', () => {
         ),
       ])(state);
 
-      expect(references.at(-2).filter(d => d.success).length).to.eq(2); // 2 accounts created
       expect(data.success).to.eq(true);
     }).timeout(10000);
 
