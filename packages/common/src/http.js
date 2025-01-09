@@ -1,6 +1,5 @@
-import { expandReferences } from './util';
-import { request } from './util/http';
 import set from 'lodash/set';
+import { request, expandReferences } from './util';
 
 /**
  * Helper functions provided by `http.options`.
@@ -44,7 +43,7 @@ const helpers = {
  * @function
  * @public
  * @example <caption>Get with a query an oath token</caption>
- * get($.data.url, http.options({ query: $.query }).oath($.configuration.access_token)
+ * get($.data.url, http.options({ query: $.query }).oath($.configuration.access_token))
  */
 export function options(opts = {}) {
   for (let h in helpers) {

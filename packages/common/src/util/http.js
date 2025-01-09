@@ -57,14 +57,14 @@ const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
     const body = await readResponseBody(response);
 
     const statusText = getReasonPhrase(response.statusCode);
-    const defaultErrorMesssage = `${method} to ${fullUrl} returned ${response.statusCode}: ${statusText}`;
+    const defaultErrorMessage = `${method} to ${fullUrl} returned ${response.statusCode}: ${statusText}`;
 
     const duration = Date.now() - startTime;
 
     const errMessage =
       typeof errMapMessage === 'function'
         ? errMapMessage(response)
-        : errMapMessage || defaultErrorMesssage;
+        : errMapMessage || defaultErrorMessage;
 
     const error = new Error(errMessage);
     error.statusCode = response.statusCode;
