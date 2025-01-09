@@ -313,7 +313,7 @@ export function bulkQuery(query, options = {}) {
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @param {(Object|Object[])} records - Field attributes for the new record, or an array of field attributes.
- * @state {SalesforceState}
+ * @state {SalesforceResultState}
  * @returns {Operation}
  */
 export function create(sObjectName, records) {
@@ -694,7 +694,7 @@ export function upsert(sObjectName, externalId, records) {
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @param {(object|object[])} records - Field attributes for the new object.
- * @state {SalesforceState}
+ * @state {SalesforceResultState}
  * @returns {Operation}
  */
 export function update(sObjectName, records) {
