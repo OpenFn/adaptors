@@ -328,9 +328,11 @@ export function create(sObjectName, records) {
 
     return connection
       .create(resolvedSObjectName, resolvedRecords)
-      .then(recordResult => {
-        console.log('Result : ' + JSON.stringify(recordResult));
-        return composeNextState(state, recordResult);
+      .then(result => {
+        console.log('Result : ' + JSON.stringify(result));
+        return Array.isArray(result)
+          ? composeNextState(state, util.formatResults(result))
+          : composeNextState(state, result);
       });
   };
 }
@@ -709,7 +711,9 @@ export function update(sObjectName, records) {
       .update(resolvedSObjectName, resolvedRecords)
       .then(function (result) {
         console.log('Result : ' + JSON.stringify(result));
-        return composeNextState(state, result);
+        return Array.isArray(result)
+          ? composeNextState(state, util.formatResults(result))
+          : composeNextState(state, result);
       });
   };
 }
