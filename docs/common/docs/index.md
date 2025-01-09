@@ -63,15 +63,15 @@ This adaptor exports the following namespaced functions:
 
 <dl>
 <dt>
-    <a href="#helpers_decode">helpers.decode(base64Data)</a>
+    <a href="#util_decode">util.decode(base64Data)</a>
 </dt>
 
 <dt>
-    <a href="#helpers_encode">helpers.encode(data)</a>
+    <a href="#util_encode">util.encode(data)</a>
 </dt>
 
 <dt>
-    <a href="#helpers_uuid">helpers.uuid()</a>
+    <a href="#util_uuid">util.uuid()</a>
 </dt>
 
 <dt>
@@ -736,10 +736,10 @@ each(function(state) {
 * * *
 
 
-## helpers
+## util
 
-These functions belong to the helpers namespace.
-### helpers.decode {#helpers_decode}
+These functions belong to the util namespace.
+### util.decode {#util_decode}
 
 <p><code>decode(base64Data) ⇒ string</code></p>
 
@@ -760,7 +760,7 @@ console.log(decoded); // Output: Hello World
 * * *
 
 
-### helpers.encode {#helpers_encode}
+### util.encode {#util_encode}
 
 <p><code>encode(data) ⇒ string</code></p>
 
@@ -781,7 +781,7 @@ console.log(encoded); // Output: SGVsbG8gV29ybGQ=
 * * *
 
 
-### helpers.uuid {#helpers_uuid}
+### util.uuid {#util_uuid}
 
 <p><code>uuid() ⇒ string</code></p>
 
@@ -913,7 +913,7 @@ Pass an object to set your own options.
 
 **Example:** Get with a query an oath token
 ```js
-get($.data.url, http.options({ query: $.query }).oath($.configuration.access_token)
+get($.data.url, http.options({ query: $.query }).oath($.configuration.access_token))
 ```
 
 * * *

@@ -345,7 +345,7 @@ Decodes a Base64 encoded string back to its original format.
 
 **Example:** Decode a Base64 string
 ```js
-const decoded = Util.decode('SGVsbG8gV29ybGQ=');
+const decoded = util.decode('SGVsbG8gV29ybGQ=');
 console.log(decoded); // Output: Hello World
 ```
 
@@ -366,7 +366,7 @@ Encodes a given string into Base64 format.
 
 **Example:** Encode a string
 ```js
-const encoded = Util.encode('Hello World');
+const encoded = util.encode('Hello World');
 console.log(encoded); // Output: SGVsbG8gV29ybGQ=
 ```
 
@@ -382,7 +382,7 @@ Generates a UUID (Universally Unique Identifier).
 **Returns**: <code>string</code> - - A newly generated UUID.  
 **Example:** Generate a UUID
 ```js
-const id = Util.uuid();
+const id = util.uuid();
 console.log(id); // Output:'3f4e254e-8f6f-4f8b-9651-1c1c262cc83f'
 ```
 
