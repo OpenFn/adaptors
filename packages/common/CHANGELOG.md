@@ -1,5 +1,16 @@
 ## 2.0.0
 
+## 2.2.0
+
+### Minor Changes
+
+- a47d8d5: `decode`, `encode` and `uuid` are now correctly documented as being
+  in the `util` namespace
+
+### Patch Changes
+
+- 9240428: security: Update dependencies
+
 ## 2.1.1
 
 ### Patch Changes

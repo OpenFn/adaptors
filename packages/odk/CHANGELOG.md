@@ -1,5 +1,13 @@
 # @openfn/language-odk
 
+## 3.0.9
+
+### Patch Changes
+
+- Updated dependencies [a47d8d5]
+- Updated dependencies [9240428]
+  - @openfn/language-common@2.2.0
+
 ## 3.0.8
 
 ### Patch Changes
