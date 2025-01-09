@@ -1,5 +1,16 @@
 # @openfn/language-mssql
 
+## 5.0.8
+
+### Patch Changes
+
+- de03bea: Update tedious to 1.18.0. This should have no impact on the adaptor,
+  but note this version will only run in node versions 18.x and 20+ (this should
+  be fully compatible with all `@openfn/cli` and `@openfn/ws-worker` releases)
+- Updated dependencies [a47d8d5]
+- Updated dependencies [9240428]
+  - @openfn/language-common@2.2.0
+
 ## 5.0.7
 
 ### Patch Changes

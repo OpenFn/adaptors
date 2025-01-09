@@ -16,4 +16,12 @@ exports.defineTags = dictionary => {
       });
     },
   });
+
+  dictionary.defineTag('namespace', {
+    canHaveName: true,
+    canHaveType: false,
+    onTagged: (doclet, tag) => {
+      doclet.namespace = tag.value.name;
+    },
+  });
 };

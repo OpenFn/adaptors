@@ -1,5 +1,15 @@
 # @openfn/language-http
 
+## 6.5.2
+
+### Patch Changes
+
+- 4b9a5b9: - Fix typo in util functions examples
+  - Remove export for `addAuth()` helper
+- Updated dependencies [a47d8d5]
+- Updated dependencies [9240428]
+  - @openfn/language-common@2.2.0
+
 ## 6.5.1
 
 ### Patch Changes

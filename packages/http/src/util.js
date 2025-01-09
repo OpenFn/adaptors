@@ -8,11 +8,10 @@ import {
   decode,
   uuid,
 } from '@openfn/language-common/util';
-
 import * as cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
 
-export function addAuth(configuration, headers) {
+function addAuth(configuration, headers) {
   if (headers.Authorization) {
     return;
   }
@@ -52,6 +51,11 @@ const assertUrl = (pathOrUrl, baseUrl) => {
   }
 };
 
+/**
+ * Request helper function
+ * @function
+ * @private
+ */
 export function request(method, path, params, callback = s => s) {
   return state => {
     const [resolvedPath, resolvedParams = {}] = expandReferences(
@@ -119,7 +123,11 @@ export function request(method, path, params, callback = s => s) {
       });
   };
 }
-
+/**
+ * XML parser helper function
+ * @function
+ * @private
+ */
 export function xmlParser(body, script, callback = s => s) {
   return state => {
     const [resolvedBody] = expandReferences(state, body);
@@ -148,7 +156,7 @@ export {
    * @param {string} data - The string to be encoded.
    * @returns {string} - The Base64 encoded string.
    * @example <caption>Encode a string</caption>
-   * const encoded = Util.encode('Hello World');
+   * const encoded = util.encode('Hello World');
    * console.log(encoded); // Output: SGVsbG8gV29ybGQ=
    */
   encode,
@@ -159,7 +167,7 @@ export {
    * @param {string} base64Data - The Base64 encoded string.
    * @returns {string} - The decoded string.
    * @example <caption>Decode a Base64 string</caption>
-   * const decoded = Util.decode('SGVsbG8gV29ybGQ=');
+   * const decoded = util.decode('SGVsbG8gV29ybGQ=');
    * console.log(decoded); // Output: Hello World
    */
   decode,
@@ -169,7 +177,7 @@ export {
    * @public
    * @returns {string} - A newly generated UUID.
    * @example <caption>Generate a UUID</caption>
-   * const id = Util.uuid();
+   * const id = util.uuid();
    * console.log(id); // Output:'3f4e254e-8f6f-4f8b-9651-1c1c262cc83f'
    */
   uuid,
