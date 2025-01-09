@@ -23,13 +23,17 @@ export async function fetchMessages(userId, query, lastPageToken) {
   return { messages, nextPageToken };
 }
 
-export async function getContentFromMessage(userId, messageId, desiredContent) {
+export async function getMessageResponse(userId, messageId) {
   const messageResponse = await gmail.users.messages.get({
     userId,
     id: messageId,
     format: 'full',
   });
 
+  return messageResponse;
+}
+
+export async function getContentFromMessage(messageResponse, userId, messageId, desiredContent) {
   if (desiredContent.type === 'archive') {
     const { attachmentId, filename } = getAttachmentInfo(
       messageResponse,
@@ -88,9 +92,9 @@ export async function getContentFromMessage(userId, messageId, desiredContent) {
 }
 
 function isExpressionMatch(text, expression) {
-  if (expression.startsWith('/') && expression.endsWith('/')) {
+  if (expression?.constructor?.name === 'RegExp') {
     try {
-      return new RegExp(expression.slice(1, -1)).test(text);
+      return expression.test(text);
     } catch (e) {
       return false;
     }

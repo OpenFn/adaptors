@@ -10,6 +10,7 @@ import {
   createConnection,
   fetchMessages,
   getContentFromMessage,
+  getMessageResponse,
   removeConnection,
 } from './Utils';
 
@@ -82,7 +83,10 @@ export function getContentsFromMessages(
             desiredContent.name = desiredContent.type;
           }
 
+          const messageResponse = await getMessageResponse(userId, messageId);
+
           const content = await getContentFromMessage(
+            messageResponse,
             userId,
             messageId,
             desiredContent
