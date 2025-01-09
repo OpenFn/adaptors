@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-fhir-fr",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "OpenFn fhir-fr adaptor",
   "scripts": {
     "build": "pnpm clean && build-adaptor fhir-fr src ast docs",

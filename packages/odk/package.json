@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-odk",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "OpenFn odk adaptor",
   "type": "module",
   "exports": {

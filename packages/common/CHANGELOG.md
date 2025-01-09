@@ -1,5 +1,15 @@
 ## 2.0.0
 
+## 2.2.0
+
+### Minor Changes
+
+- a47d8d5: Fix namespacing of utils.\*
+
+### Patch Changes
+
+- 9240428: Update dependencies
+
 ## 2.1.1
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @openfn/language-collections
 
+## 0.7.2
+
+### Patch Changes
+
+- Updated dependencies [a47d8d5]
+- Updated dependencies [9240428]
+  - @openfn/language-common@2.2.0
+
 ## 0.7.1
 
 ### Patch Changes
