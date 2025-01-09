@@ -1,7 +1,8 @@
 import unzipper from 'unzipper';
 import { google } from 'googleapis';
 
-let gmail = undefined;
+let gmail;
+let isTesting;
 
 export async function fetchMessages(userId, query, lastPageToken) {
   let messagesResponse = null;
