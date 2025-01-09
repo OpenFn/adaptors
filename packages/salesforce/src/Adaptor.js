@@ -32,7 +32,7 @@ import flatten from 'lodash/flatten';
 /**
  * State object
  * @typedef {Object} SalesforceResultState
- * @property data - Result object(s) of the form <code>\{ id, success, errors \}</code>. Will be an array for multiple results.
+ * @property data - Result object of the form <code>\{ success, completed, errors \}</code>. Will be <code>\{ id, success, errors \}</code> for single result.
  * @property references - History of all previous operations results.
  **/
 
@@ -204,7 +204,6 @@ export function bulk(sObjectName, operation, records, options = {}) {
 
             return batch
               .on('queue', function (batchInfo) {
-                console.info(batchInfo);
                 const batchId = batchInfo.id;
                 var batch = job.batch(batchId);
                 batch.poll(pollInterval, pollTimeout);
@@ -233,8 +232,9 @@ export function bulk(sObjectName, operation, records, options = {}) {
           })
       )
     ).then(results => {
+      const allResults = util.formatResults(results.flat());
       console.log('Merging results arrays.');
-      return composeNextState(state, results.flat());
+      return composeNextState(state, allResults);
     });
   };
 }
@@ -410,25 +410,21 @@ export function destroy(sObjectName, ids, options = {}) {
       .del(resolvedIds)
       .then(function (result) {
         if (Array.isArray(result)) {
-          const successes = result.filter(r => r.success);
-          const failures = result.filter(r => !r.success);
+          const allResults = util.formatResults(result);
 
-          console.log(
-            'Sucessfully deleted: ',
-            JSON.stringify(successes, null, 2)
-          );
+          console.log('Sucessfully deleted: ', allResults.completed);
 
-          if (failures.length > 0) {
+          if (allResults.errors.length > 0) {
             console.log(
               'Failed to delete: ',
-              JSON.stringify(failures, null, 2)
+              JSON.stringify(allResults.errors, null, 2)
             );
 
-            if (failOnError)
+            if (failOnError && !allResults.success)
               throw 'Some deletes failed; exiting with failure code.';
           }
 
-          return composeNextState(state, result);
+          return composeNextState(state, allResults);
         }
         console.log('Successfully deleted: ', JSON.stringify(result, null, 2));
         return composeNextState(state, result);
