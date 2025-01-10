@@ -9,7 +9,7 @@
         "options"
       ],
       "docs": {
-        "description": "Create and execute a bulk job.\nThis function uses {@link https://sforce.co/4fDLJnk Bulk API},\nwhich is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
+        "description": "Create and execute a bulk job. Nested relationships will be flattened to dot notation automatically.\nThis function uses {@link https://sforce.co/4fDLJnk Bulk API},\nwhich is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
         "tags": [
           {
             "title": "public",
@@ -25,6 +25,11 @@
             "title": "example",
             "description": "bulk(\n  \"vera__Beneficiary__c\",\n  \"upsert\",\n  [\n    {\n      vera__Reporting_Period__c: 2023,\n      vera__Geographic_Area__c: \"Uganda\",\n      \"vera__Indicator__r.vera__ExtId__c\": 1001,\n      vera__Result_UID__c: \"1001_2023_Uganda\",\n    },\n  ],\n  { extIdField: \"vera__Result_UID__c\" }\n);",
             "caption": "Bulk upsert"
+          },
+          {
+            "title": "example",
+            "description": "bulk(\n  \"vera__Beneficiary__c\",\n  \"upsert\",\n  [\n    {\n      vera__Reporting_Period__c: 2023,\n      \"vera_Project\": {\n        \"Metrics_ID__c\": \"jfh5LAnxu1i4na\"\n      }\n    },\n  ],\n  { extIdField: \"vera__Result_UID__c\" }\n);",
+            "caption": "Bulk upsert with a nested relationship"
           },
           {
             "title": "example",
@@ -158,7 +163,7 @@
         "records"
       ],
       "docs": {
-        "description": "Create one or more new sObject records.",
+        "description": "Create one or more new sObject records. Relationships in the record should be nested and not use dot-notation syntax",
         "tags": [
           {
             "title": "public",
@@ -179,6 +184,11 @@
             "title": "example",
             "description": "create(\"Account\",\n  $.data.map((account) => ({\n    Name: account.label\n  })\n));",
             "caption": "Create records from data on state"
+          },
+          {
+            "title": "example",
+            "description": "create(\"Account\", {\n  Name: \"My Account #1\" ,\n  \"Project__r\": {\n    \"Metrics_ID__c\": \"jfh5LAnxu1i4na\"\n  }\n});",
+            "caption": "Update a record with a relationship"
           },
           {
             "title": "function",
@@ -704,7 +714,7 @@
         "records"
       ],
       "docs": {
-        "description": "Create a new sObject record, or updates it if it already exists.",
+        "description": "Create a new sObject record, or updates it if it already exists. Relationships in the record should be nested and not use dot-notation syntax",
         "tags": [
           {
             "title": "public",
@@ -720,6 +730,11 @@
             "title": "example",
             "description": "upsert(\"UpsertTable__c\", \"ExtId__c\", [\n  { Name: \"Record #1\", ExtId__c : 'ID-0000001' },\n  { Name: \"Record #2\", ExtId__c : 'ID-0000002' },\n]);",
             "caption": "Multiple record upsert"
+          },
+          {
+            "title": "example",
+            "description": "upsert(\"UpsertTable__c\", {\n  Name: \"Record #1\",\n  \"Project__r\": {\n    \"Metrics_ID__c\": \"jfh5LAnxu1i4na\"\n  }\n});",
+            "caption": "Update a record with a relationship"
           },
           {
             "title": "function",
@@ -806,12 +821,17 @@
         "records"
       ],
       "docs": {
-        "description": "Update an sObject record or records.",
+        "description": "Update an sObject record or records. Relationships in the record should be nested and not use dot-notation syntax",
         "tags": [
           {
             "title": "public",
             "description": null,
             "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
           },
           {
             "title": "example",
@@ -824,9 +844,9 @@
             "caption": "Multiple records update"
           },
           {
-            "title": "function",
-            "description": null,
-            "name": null
+            "title": "example",
+            "description": "update(\"Account\", {\n  Id: \"0010500000fxbcuAAA\",\n  \"Project__r\": {\n    \"Metrics_ID__c\": \"jfh5LAnxu1i4na\"\n  }\n});",
+            "caption": "Update a record with a relationship"
           },
           {
             "title": "param",
