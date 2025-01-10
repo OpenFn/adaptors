@@ -37,7 +37,7 @@ describe('Adaptor', () => {
     it('makes a new sObject', done => {
       const fakeConnection = {
         create: function () {
-          return Promise.resolve({ Id: 10 });
+          return Promise.resolve({ id: 10, success: true, errors: [] });
         },
       };
       let state = { connection: fakeConnection, references: [] };
@@ -54,7 +54,11 @@ describe('Adaptor', () => {
         .then(state => {
           expect(spy.args[0]).to.eql([sObject, fields]);
           expect(spy.called).to.eql(true);
-          expect(state.data).to.eql({ Id: 10 });
+          expect(state.data).to.eql({
+            success: true,
+            errors: [],
+            completed: [10],
+          });
         })
         .then(done)
         .catch(done);

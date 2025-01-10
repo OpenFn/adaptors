@@ -131,7 +131,7 @@ describe('Integration tests', () => {
     it('should destroy a single sobject', async () => {
       const finalState = await execute([
         create('Account', { name: 'Coco', vera__Active__c: 'No' }),
-        destroy('Account', state => state.data.id),
+        destroy('Account', state => state.data.completed[0]),
       ])(state);
 
       expect(finalState.data.success).to.eq(true);
