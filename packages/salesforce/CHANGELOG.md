@@ -88,6 +88,23 @@ changes to be compatible - see the Migration Guide.
   Salesforce
 - Update `describe()` to fetch all available sObjects metadata
 - update function examples and improve options documentation
+- Enforce that `upsert`, `create` and `update` do not accept dot-notated
+  relationships. Relationships should be nested instead. Eg, do this:
+  ```
+  create('Project', {
+   "Project__r": {
+     "Metrics_ID__c": "value"
+   }
+  })
+  ```
+  Not this:
+  ```
+  create('Project', {
+   "Project__r.Metrics_ID__c": "value"
+  })
+  ```
+- Add support for nested relationships in `bulk` (the adaptor will flatten them
+  to dot-notation for you)
 
 ### Patch Changes
 
