@@ -25,15 +25,18 @@ import flatten from 'lodash/flatten';
 /**
  * State object
  * @typedef {Object} SalesforceState
- * @property data - API response data. Can be either an object or array of objects.
- * @property references - History of all previous operations results.
+ * @property data - API response data. Can be either an object or array of objects
+ * @property references - History of all previous results
  **/
 
 /**
  * State object
  * @typedef {Object} SalesforceResultState
- * @property data - Result object(s) of the form <code>\{ success, completed, errors \}</code>.
- * @property references - History of all previous operations results.
+ * @property data - Contains a summary of the operation and any errors
+ * @property data.success - `true` if Salesforce reports no errors from the operation
+ * @property data.completed - Array of ids for every successful completion
+ * @property data.errors - Array of errors reported by Salesforce
+ * @property references - History of all previous results
  **/
 
 /**
