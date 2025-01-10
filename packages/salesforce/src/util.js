@@ -160,7 +160,6 @@ export async function pollJobResult(conn, job, pollInterval, pollTimeout) {
     attempt++;
   }
 }
-
 export function formatResults(input) {
   const output = {
     success: true,
@@ -168,28 +167,27 @@ export function formatResults(input) {
     errors: [],
   };
 
+  if (!Array.isArray(input)) {
+    return {
+      success: input.success,
+      errors: input.errors,
+      completed: [input.id],
+    };
+  }
+
   input.forEach(record => {
     if (record.success) {
       output.completed.push(record.id);
-
-      if (record.errors && record.errors.length > 0) {
-        record.errors.forEach(message => {
-          output.errors.push({ id: record.id, message });
-        });
-      }
     } else {
-      if (record.errors && record.errors.length > 0) {
-        record.errors.forEach(message => {
-          output.errors.push({ id: record.id, message });
-        });
-      }
       output.success = false;
     }
-  });
 
-  if (output.errors.length === 0) {
-    output.errors = [];
-  }
+    if (record.errors?.length) {
+      record.errors.forEach(message => {
+        output.errors.push({ id: record.id, message });
+      });
+    }
+  });
 
   return output;
 }
