@@ -66,7 +66,7 @@ export const loadAnyAscii = state =>
  * @public
  * @example <caption>Transliterate `άνθρωποι` to `anthropoi`</caption>
  * fn((state) => {
- *   const s = toUTF8("άνθρωποι");
+ *   const s = util.toUTF8("άνθρωποι");
  *   console.log(s); // anthropoi
  *   return state;
  * });

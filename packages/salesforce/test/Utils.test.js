@@ -1,6 +1,6 @@
 import chai from 'chai';
 import { execute } from '../src/Adaptor';
-import { toUTF8 } from '../src/Utils';
+import { toUTF8 } from '../src/util';
 
 const { expect } = chai;
 

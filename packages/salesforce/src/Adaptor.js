@@ -5,7 +5,7 @@ import {
 } from '@openfn/language-common';
 
 import { expandReferences } from '@openfn/language-common/util';
-import * as util from './Utils';
+import * as util from './util';
 
 import flatten from 'lodash/flatten';
 
