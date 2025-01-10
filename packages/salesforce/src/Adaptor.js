@@ -32,7 +32,7 @@ import flatten from 'lodash/flatten';
 /**
  * State object
  * @typedef {Object} SalesforceResultState
- * @property data - Result object of the form <code>\{ success, completed, errors \}</code>. Will be <code>\{ id, success, errors \}</code> for single result.
+ * @property data - Result object(s) of the form <code>\{ success, completed, errors \}</code>.
  * @property references - History of all previous operations results.
  **/
 
