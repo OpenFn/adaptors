@@ -18,7 +18,7 @@ describe('Integration tests', () => {
       state.data = [{ name: 'Coco', vera__Active__c: 'No' }];
     });
     it('should create multiple sobjects', async () => {
-      const { references, data } = await execute(
+      const { data } = await execute(
         bulk('Account', 'insert', state => state.data)
       )(state);
 
@@ -84,7 +84,7 @@ describe('Integration tests', () => {
         state
       );
 
-      expect(data.completed).to.eq(2);
+      expect(data.completed.length).to.eq(2);
       expect(data.success).to.eq(true);
     }).timeout(5000);
   });
@@ -112,10 +112,10 @@ describe('Integration tests', () => {
           { name: 'Coco', vera__Active__c: 'No' },
           { name: 'Melon', vera__Active__c: 'Yes' },
         ]),
-        query("SELECT Id FROM Account WHERE Name IN ('Coco', 'Melon')"),
+
         update('Account', state => {
-          const data = state.data.records.map(d => ({
-            Id: d.Id,
+          const data = state.data.completed.map(Id => ({
+            Id,
             Name: 'new name',
             vera__Active__c: 'Yes',
           }));
@@ -143,16 +143,10 @@ describe('Integration tests', () => {
           { name: 'Coco', vera__Active__c: 'No' },
           { name: 'Melon', vera__Active__c: 'Yes' },
         ]),
-        query("SELECT Id FROM Account WHERE Name IN ('Coco', 'Melon')"),
-        destroy(
-          'Account',
-          state => {
-            return state.data.records.map(d => d.Id);
-          },
-          {
-            failOnError: true,
-          }
-        ),
+
+        destroy('Account', state => state.data.completed, {
+          failOnError: true,
+        }),
       ])(state);
 
       expect(data.success).to.eq(true);
