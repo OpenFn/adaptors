@@ -1,8 +1,11 @@
-import chai from 'chai';
+import { expect } from 'chai';
 import { execute } from '../src/Adaptor';
-import { toUTF8, formatResults } from '../src/util';
-
-const { expect } = chai;
+import {
+  toUTF8,
+  removeNestings,
+  assertNoNesting,
+  formatResults,
+} from '../src/util';
 
 describe('toUTF8', () => {
   it('Transliterate unicode to ASCII representation', async () => {
@@ -109,5 +112,111 @@ describe('formatResults', () => {
 
     const result = formatResults(input);
     expect(result).to.deep.equal(expectedOutput);
+  });
+});
+
+describe('removeNestings', () => {
+  it('should throw an error for nested objects beyond two levels deep', () => {
+    const input = [
+      {
+        Project__r: {
+          Details: {
+            SubMetric__c: 'subValue1',
+          },
+        },
+      },
+    ];
+
+    expect(() => removeNestings(input)).throw(
+      'Nested object with key Project__r.Details exceeds the allowed depth'
+    );
+  });
+
+  it('should flatten an array of objects up to two levels deep', () => {
+    const input = [
+      {
+        Task__r: {
+          Metrics_ID__c: 'value2',
+        },
+      },
+    ];
+
+    const expectedOutput = [
+      {
+        'Task__r.Metrics_ID__c': 'value2',
+      },
+    ];
+
+    expect(removeNestings(input)).to.eql(expectedOutput);
+  });
+
+  it('should throw an error for invalid input types', () => {
+    const invalidInputs = [null, undefined, 42, 'string', true, {}];
+    invalidInputs.forEach(input => {
+      expect(() => removeNestings(input)).throw(
+        'Input must be an array of objects.'
+      );
+    });
+  });
+
+  it('should handle empty array input', () => {
+    expect(removeNestings([])).to.eql([]);
+  });
+
+  it('should preserve 1-level keys', () => {
+    const input = [
+      {
+        Name: 'it Project',
+        Details: {
+          Description: 'A it description',
+        },
+      },
+    ];
+
+    const expectedOutput = [
+      {
+        Name: 'it Project',
+        'Details.Description': 'A it description',
+      },
+    ];
+
+    expect(removeNestings(input)).to.eql(expectedOutput);
+  });
+});
+describe('assertNoNesting', () => {
+  it('should not throw an error for inputs without keys containing dots', () => {
+    expect(() =>
+      assertNoNesting({ Task__r: 'value1', Metrics_ID__c: 'value2' })
+    ).not.throw();
+
+    expect(() =>
+      assertNoNesting([
+        { Task__r: 'value1', Metrics_ID__c: 'value2' },
+        { Project__r: 'value3' },
+      ])
+    ).not.throw();
+  });
+
+  it('should throw an error for input containing dots', () => {
+    const input = {
+      'Task__r.Metrics_ID__c': 'value1',
+      Metrics_ID__c: 'value2',
+    };
+    expect(() => assertNoNesting(input)).throw(
+      'UNEXPECTED_KEY: Dot notation (Task__r.Metrics_ID__c) is not supported in field names'
+    );
+  });
+
+  it('should throw an error if the input is not an object or array', () => {
+    const invalidInputs = [null, undefined, 42, 'string', true];
+    invalidInputs.forEach(input => {
+      expect(() => assertNoNesting(input)).throw(
+        'INVALID_INPUT_TYPE: Input must be an object or an array of objects.'
+      );
+    });
+  });
+  it('should not throw an error for an empty object or array input', () => {
+    expect(() => assertNoNesting({})).not.throw();
+    expect(() => assertNoNesting([])).not.throw();
   });
 });
