@@ -46,6 +46,15 @@
       "examples": [
         "v2"
       ]
+    },
+    "personalAccessToken": {
+      "title": "Personal Access Token",
+      "type": "string",
+      "description": "Personal access token",
+      "minLength": 1,
+      "examples": [
+        "d2pat_vreYExmi0yh92Soy8CCF2zHG0wRjID494035128247"
+      ]
     }
   },
   "type": "object",
