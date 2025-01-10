@@ -3,17 +3,11 @@
 ---
 
 - Restructured response format for `bulk`, `create`,`update` and `destroy`
-  functions:
-  - Added standardized result structure:
-    ```
-    {
-      success: boolean,
-      completed: number,
-      errors: [
-        {
-          id: string,
-          message: string
-        }
-      ]
-    }
-    ```
+  functions into standardized result structure:
+  ```
+  {
+    success: boolean,
+    completed: [id],
+    errors: [{ id message }],
+  }
+  ```
