@@ -79,16 +79,6 @@ import flatten from 'lodash/flatten';
  * @property {boolean} [autoFetch=false] - When true, automatically fetches next batch of records if available.
  * */
 
-let anyAscii = undefined;
-
-// use a dynamic import because any-ascii is pure ESM and doesn't play well with CJS
-// This promise MUST be resolved by execute before a connection is created
-const loadAnyAscii = state =>
-  import('any-ascii').then(m => {
-    anyAscii = m.default;
-    return state;
-  });
-
 /**
  * Executes an operation.
  * @function
@@ -105,7 +95,7 @@ export function execute(...operations) {
 
   return state => {
     return commonExecute(
-      loadAnyAscii,
+      util.loadAnyAscii,
       util.createConnection,
       ...flatten(operations),
       util.removeConnection
@@ -726,22 +716,6 @@ export function update(sObjectName, records) {
         return composeNextState(state, result);
       });
   };
-}
-
-/**
- * Transliterates unicode characters to their best ASCII representation
- * @public
- * @example <caption>Transliterate `άνθρωποι` to `anthropoi`</caption>
- * fn((state) => {
- *   const s = toUTF8("άνθρωποι");
- *   console.log(s); // anthropoi
- *   return state;
- * });
- * @param {string} input - A string with unicode characters
- * @returns {string} - ASCII representation of input string
- */
-export function toUTF8(input) {
-  return anyAscii(input);
 }
 
 /**
