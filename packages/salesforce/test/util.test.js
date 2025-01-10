@@ -203,7 +203,7 @@ describe('assertNoNesting', () => {
       Metrics_ID__c: 'value2',
     };
     expect(() => assertNoNesting(input)).throw(
-      'UNEXPECTED_KEY: Dot notation (Task__r.Metrics_ID__c) is not supported in field names'
+      'UNEXPECTED_KEY: Dot notation syntax (i.e., Task__r.Metrics_ID__c) is not supported in key names'
     );
   });
 
