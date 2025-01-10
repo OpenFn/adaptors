@@ -164,13 +164,13 @@ export async function pollJobResult(conn, job, pollInterval, pollTimeout) {
 export function formatResults(input) {
   const output = {
     success: true,
-    completed: 0,
+    completed: [],
     errors: [],
   };
 
   input.forEach(record => {
     if (record.success) {
-      output.completed++;
+      output.completed.push(record.id);
 
       if (record.errors && record.errors.length > 0) {
         record.errors.forEach(message => {
