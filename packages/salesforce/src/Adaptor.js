@@ -4,7 +4,7 @@ import {
   chunk,
 } from '@openfn/language-common';
 
-import { expandReferences } from '@openfn/language-common/util';
+import { expandReferences, throwError } from '@openfn/language-common/util';
 import * as util from './util';
 
 import flatten from 'lodash/flatten';
@@ -328,11 +328,15 @@ export function create(sObjectName, records) {
 
     return connection
       .create(resolvedSObjectName, resolvedRecords)
-      .then(result => {
-        console.log('Result : ' + JSON.stringify(result));
-        return Array.isArray(result)
-          ? composeNextState(state, util.formatResults(result))
-          : composeNextState(state, result);
+      .then(response => {
+        const result = util.formatResults(response);
+        const { success, errors, completed } = result;
+        console.log('Sucessfully created: ', completed.length, 'records');
+
+        if (!success) {
+          console.log('Failed to create: ', errors.length, 'records');
+        }
+        return composeNextState(state, result);
       });
   };
 }
@@ -410,25 +414,22 @@ export function destroy(sObjectName, ids, options = {}) {
     return connection
       .sobject(resolvedSObjectName)
       .del(resolvedIds)
-      .then(function (result) {
-        if (Array.isArray(result)) {
-          const allResults = util.formatResults(result);
+      .then(response => {
+        const result = util.formatResults(response);
+        const { success, errors, completed } = result;
 
-          console.log('Sucessfully deleted: ', allResults.completed);
+        console.log('Sucessfully deleted: ', completed.length, 'records');
 
-          if (allResults.errors.length > 0) {
-            console.log(
-              'Failed to delete: ',
-              JSON.stringify(allResults.errors, null, 2)
-            );
+        if (!success) {
+          console.log('Failed to delete: ', errors.length, 'records');
 
-            if (failOnError && !allResults.success)
-              throw 'Some deletes failed; exiting with failure code.';
+          if (failOnError) {
+            throwError('FAILED_TO_DELETE_RECORDS', {
+              description: 'Some deletes failed; exiting with failure code.',
+            });
           }
-
-          return composeNextState(state, allResults);
         }
-        console.log('Successfully deleted: ', JSON.stringify(result, null, 2));
+
         return composeNextState(state, result);
       });
   };
@@ -709,11 +710,15 @@ export function update(sObjectName, records) {
 
     return connection
       .update(resolvedSObjectName, resolvedRecords)
-      .then(function (result) {
-        console.log('Result : ' + JSON.stringify(result));
-        return Array.isArray(result)
-          ? composeNextState(state, util.formatResults(result))
-          : composeNextState(state, result);
+      .then(result => {
+        const records = util.formatResults(result);
+        const { success, errors, completed } = records;
+        console.log('Sucessfully updated: ', completed.length, 'records');
+
+        if (!success) {
+          console.log('Failed to update: ', errors.length, 'records');
+        }
+        return composeNextState(state, records);
       });
   };
 }
