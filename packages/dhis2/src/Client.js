@@ -7,11 +7,11 @@ import Qs from 'qs';
  * before spreading the rest of the axios configuration, and (3) executes an
  * axios request.
  * @function
- * @param {object} configuration - configuration must have a username and password
+ * @param {object} configuration - configuration can either be a username and password OR a personal access token
  * @param {object} axiosRequest - the axiosRequest contains valid axios params: https://axios-http.com/docs/req_config
  * @returns {Promise} a promise that will resolve to either a response object or an error object.
  */
-export function request({ username, password }, axiosRequest) {
+export function request({ username, password, personalAccessToken }, axiosRequest) {
   const { method, url, params } = axiosRequest;
 
   console.log(`Sending ${method} request to ${url}`);
@@ -22,13 +22,26 @@ export function request({ username, password }, axiosRequest) {
     method.toLowerCase()
   );
 
-  return axios({
-    headers: { 'Content-Type': 'application/json' },
-    responseType: 'json',
-    maxRedirects: safeRedirect ? 5 : 0,
-    auth: { username, password },
-    paramsSerializer: params => Qs.stringify(params, { arrayFormat: 'repeat' }),
-    // Note that providing headers or auth in the request object will overwrite.
-    ...axiosRequest,
-  });
+  // Declare auth property and headers dynamically
+  const headers = { 'Content-Type': 'application/json'}
+  let auth;
+
+  if(personalAccessToken){
+    headers.Authorization = `ApiToken ${personalAccessToken}`
+  } else {
+    auth = { username, password }
+  }
+
+
+  return axios(
+    {
+      headers,
+      responseType: 'json',
+      auth,
+      maxRedirects: safeRedirect ? 5 : 0,
+      paramsSerializer: params => Qs.stringify(params, { arrayFormat: 'repeat' }),
+      // Note that providing headers or auth in the request object will overwrite.
+      ...axiosRequest,
+    }
+  );
 }
