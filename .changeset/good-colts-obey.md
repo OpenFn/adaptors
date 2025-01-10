@@ -2,10 +2,20 @@
 '@openfn/language-salesforce': minor
 ---
 
-- Add utils functions `assertNoNesting` and `removeNestings`
-- Update `@openfn/langauge-common` package to `workspace:*`
-- Use `throwError` function from common to throw errors for `assertNoNesting`
-  and `removeNestings` functions
-- Asserts input data for `upsert`, `create` and `update` to be an object or
-  array of objects
-- Update `bulk` to use `removeNestings`
+- Enforce that `upsert`, `create` and `update` do not accept dot-notated
+  relationships. Relationships should be nested instead. Eg, do this:
+  ```
+  create('Project', {
+   "Project__r": {
+     "Metrics_ID__c": "value"
+   }
+  })
+  ```
+  Not this:
+  ```
+  create('Project', {
+   "Project__r.Metrics_ID__c": "value"
+  })
+  ```
+- Add support for nested relationships in `bulk` (the adaptor will flatten them
+  to dot-notation for you)

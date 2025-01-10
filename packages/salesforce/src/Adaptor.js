@@ -107,7 +107,7 @@ export function execute(...operations) {
 }
 
 /**
- * Create and execute a bulk job.
+ * Create and execute a bulk job. Nested relationships will be flattened to dot notation automatically.
  * This function uses {@link https://sforce.co/4fDLJnk Bulk API},
  * which is subject to {@link https://sforce.co/4b6kn6z rate limits}.
  * @public
@@ -129,6 +129,20 @@ export function execute(...operations) {
  *       vera__Geographic_Area__c: "Uganda",
  *       "vera__Indicator__r.vera__ExtId__c": 1001,
  *       vera__Result_UID__c: "1001_2023_Uganda",
+ *     },
+ *   ],
+ *   { extIdField: "vera__Result_UID__c" }
+ * );
+ * @example <caption>Bulk upsert with a nested relationship</caption>
+ * bulk(
+ *   "vera__Beneficiary__c",
+ *   "upsert",
+ *   [
+ *     {
+ *       vera__Reporting_Period__c: 2023,
+ *       "vera_Project": {
+ *         "Metrics_ID__c": "jfh5LAnxu1i4na"
+ *       }
  *     },
  *   ],
  *   { extIdField: "vera__Result_UID__c" }
@@ -302,7 +316,7 @@ export function bulkQuery(query, options = {}) {
 }
 
 /**
- * Create one or more new sObject records.
+ * Create one or more new sObject records. Relationships in the record should be nested and not use dot-notation syntax
  * @public
  * @example <caption> Single record creation</caption>
  * create("Account", { Name: "My Account #1" });
@@ -314,6 +328,13 @@ export function bulkQuery(query, options = {}) {
  *     Name: account.label
  *   })
  * ));
+ * @example <caption>Update a record with a relationship</caption>
+ * create("Account", {
+ *   Name: "My Account #1" ,
+ *   "Project__r": {
+ *     "Metrics_ID__c": "jfh5LAnxu1i4na"
+ *   }
+ * });
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @param {(Object|Object[])} records - Field attributes for the new record, or an array of field attributes.
@@ -643,7 +664,7 @@ export function query(query, options = {}) {
 }
 
 /**
- * Create a new sObject record, or updates it if it already exists.
+ * Create a new sObject record, or updates it if it already exists. Relationships in the record should be nested and not use dot-notation syntax
  * @public
  * @example <caption> Single record upsert </caption>
  * upsert("UpsertTable__c", "ExtId__c", { Name: "Record #1", ExtId__c : 'ID-0000001' });
@@ -652,6 +673,13 @@ export function query(query, options = {}) {
  *   { Name: "Record #1", ExtId__c : 'ID-0000001' },
  *   { Name: "Record #2", ExtId__c : 'ID-0000002' },
  * ]);
+ * @example <caption>Update a record with a relationship</caption>
+ * upsert("UpsertTable__c", {
+ *   Name: "Record #1",
+ *   "Project__r": {
+ *     "Metrics_ID__c": "jfh5LAnxu1i4na"
+ *   }
+ * });
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @magic sObjectName - $.children[?(!@.meta.system)].name
@@ -687,8 +715,9 @@ export function upsert(sObjectName, externalId, records) {
 }
 
 /**
- * Update an sObject record or records.
+ * Update an sObject record or records. Relationships in the record should be nested and not use dot-notation syntax
  * @public
+ * @function
  * @example <caption> Single record update</caption>
  * update("Account", {
  *   Id: "0010500000fxbcuAAA",
@@ -699,7 +728,13 @@ export function upsert(sObjectName, externalId, records) {
  *   { Id: "0010500000fxbcuAAA", Name: "Updated Account #1" },
  *   { Id: "0010500000fxbcvAAA", Name: "Updated Account #2" },
  * ]);
- * @function
+ * @example <caption>Update a record with a relationship</caption>
+ * update("Account", {
+ *   Id: "0010500000fxbcuAAA",
+ *   "Project__r": {
+ *     "Metrics_ID__c": "jfh5LAnxu1i4na"
+ *   }
+ * });
  * @param {string} sObjectName - API name of the sObject.
  * @param {(object|object[])} records - Field attributes for the new object.
  * @state {SalesforceResultState}
