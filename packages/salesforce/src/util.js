@@ -250,8 +250,8 @@ export function assertNoNesting(input) {
       if (key.includes('.')) {
         const { first, last } = key.split('.');
         throwError('UNEXPECTED_KEY', {
-          description: `Dot notation (${key}) is not supported in field names`,
-          fix: `Use nested object format instead (e.g., { ${first}: { ${last}: value } })`,
+          description: `Dot notation syntax (i.e., ${key}) is not supported in key names`,
+          fix: `Relationships record should be nested in an object (e.g., { ${first}: { ${last}: value } })`,
         });
       }
     }
