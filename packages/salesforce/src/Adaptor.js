@@ -165,18 +165,18 @@ export function bulk(sObjectName, operation, records, options = {}) {
       pollInterval = 6000,
     } = resolvedOptions;
 
-    const flattenRecords = util.flattenData(resolvedRecords);
-    if (allowNoOp && flattenRecords.length === 0) {
+    const flatRecords = util.removeNestings(resolvedRecords);
+    if (allowNoOp && flatRecords.length === 0) {
       console.info(
         `No items in ${resolvedSObjectName} array. Skipping bulk ${resolvedOperation} operation.`
       );
       return state;
     }
 
-    if (flattenRecords.length > 10000)
+    if (flatRecords.length > 10000)
       console.log('Your batch is bigger than 10,000 records; chunking...');
 
-    const chunkedBatches = chunk(flattenRecords, 10000);
+    const chunkedBatches = chunk(flatRecords, 10000);
 
     return Promise.all(
       chunkedBatches.map(
@@ -328,7 +328,7 @@ export function create(sObjectName, records) {
       sObjectName,
       records
     );
-    util.validateNoDotKeys(resolvedRecords);
+    util.assertNoNesting(resolvedRecords);
     console.info(`Creating ${resolvedSObjectName}`, resolvedRecords);
 
     return connection
@@ -668,7 +668,7 @@ export function upsert(sObjectName, externalId, records) {
     const [resolvedSObjectName, resolvedExternalId, resolvedRecords] =
       expandReferences(state, sObjectName, externalId, records);
 
-    util.validateNoDotKeys(resolvedRecords);
+    util.assertNoNesting(resolvedRecords);
     console.info(
       `Upserting ${resolvedSObjectName} with externalId`,
       resolvedExternalId,
@@ -713,7 +713,7 @@ export function update(sObjectName, records) {
       sObjectName,
       records
     );
-    util.validateNoDotKeys(resolvedRecords);
+    util.assertNoNesting(resolvedRecords);
     console.info(`Updating ${resolvedSObjectName}`, resolvedRecords);
 
     return connection

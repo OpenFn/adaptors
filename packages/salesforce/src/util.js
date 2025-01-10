@@ -1,4 +1,5 @@
 import jsforce from 'jsforce';
+import { throwError } from '@openfn/language-common/util';
 
 function getConnection(state, options) {
   const { apiVersion } = state.configuration;
@@ -193,7 +194,7 @@ export function formatResults(input) {
 }
 
 /**
- * Flattens an array of nested objects to a maximum of two levels deep.
+ * Removes nesting from an array of objects.
  * - Each object in the array is flattened to have dot-separated keys.
  * - Throws an error if the input is not an array or if a nested object exceeds two levels deep.
  *
@@ -202,15 +203,18 @@ export function formatResults(input) {
  * @throws {Error} - Throws an error if the input is not an array of objects or if nesting exceeds two levels.
  */
 
-export function flattenData(input) {
+export function removeNestings(input) {
   if (!Array.isArray(input)) {
-    throw new Error('Input must be an array of objects.');
+    throwError('INVALID_INPUT_TYPE', {
+      description: 'Input must be an array of objects.',
+      fix: 'Ensure input is an array of objects.',
+    });
   }
 
-  return input.map(item => flattenSingleObject(item));
+  return input.map(item => flattenNestedObject(item));
 }
 
-const flattenSingleObject = (obj, parentKey = '', currentDepth = 0) => {
+const flattenNestedObject = (obj, parentKey = '', currentDepth = 0) => {
   const result = {};
   Object.entries(obj).forEach(([key, value]) => {
     const newKey = parentKey ? `${parentKey}.${key}` : key;
@@ -219,12 +223,12 @@ const flattenSingleObject = (obj, parentKey = '', currentDepth = 0) => {
       if (currentDepth < 1) {
         Object.assign(
           result,
-          flattenSingleObject(value, newKey, currentDepth + 1)
+          flattenNestedObject(value, newKey, currentDepth + 1)
         );
       } else {
-        throw new Error(
-          `Nested object with key ${newKey} exceeds the allowed depth`
-        );
+        throwError('NESTED_OBJECT_EXCEEDS_DEPTH', {
+          description: `Nested object with key ${newKey} exceeds the allowed depth`,
+        });
       }
     } else {
       result[newKey] = value;
@@ -234,17 +238,21 @@ const flattenSingleObject = (obj, parentKey = '', currentDepth = 0) => {
 };
 
 /**
- * Validates that no keys in the input object or array of objects contain dots ('.').
+ * Asserts that no keys in the input object or array of objects contain dots ('.').
  * Throws an error if a key containing a dot is found.
  *
  * @param {Object|Array<Object>} input - The object or array of objects to validate.
  * @throws {Error} - Throws an error if a key containing a dot is found or if the input is invalid.
  */
-export function validateNoDotKeys(input) {
+export function assertNoNesting(input) {
   const hasDotInKeys = obj => {
     for (const key of Object.keys(obj)) {
       if (key.includes('.')) {
-        throw new Error(`Invalid key "${key}" contains a dot.`);
+        const { first, last } = key.split('.');
+        throwError('UNEXPECTED_KEY', {
+          description: `Dot notation (${key}) is not supported in field names`,
+          fix: `Use nested object format instead (e.g., { ${first}: { ${last}: value } })`,
+        });
       }
     }
   };
@@ -254,6 +262,9 @@ export function validateNoDotKeys(input) {
   } else if (typeof input === 'object' && input !== null) {
     hasDotInKeys(input);
   } else {
-    throw new Error('Input must be an object or an array of objects.');
+    throwError('INVALID_INPUT_TYPE', {
+      description: 'Input must be an object or an array of objects.',
+      fix: 'Ensure the input is an object or an array of objects.',
+    });
   }
 }
