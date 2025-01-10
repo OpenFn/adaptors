@@ -4,7 +4,7 @@ import {
   chunk,
 } from '@openfn/language-common';
 
-import { expandReferences } from '@openfn/language-common/util';
+import { expandReferences, throwError } from '@openfn/language-common/util';
 import * as util from './util';
 
 import flatten from 'lodash/flatten';
@@ -25,15 +25,18 @@ import flatten from 'lodash/flatten';
 /**
  * State object
  * @typedef {Object} SalesforceState
- * @property data - API response data. Can be either an object or array of objects.
- * @property references - History of all previous operations results.
+ * @property data - API response data. Can be either an object or array of objects
+ * @property references - History of all previous states
  **/
 
 /**
  * State object
  * @typedef {Object} SalesforceResultState
- * @property data - Result object(s) of the form <code>\{ id, success, errors \}</code>. Will be an array for multiple results.
- * @property references - History of all previous operations results.
+ * @property data - Summary of the response fom Salesforce
+ * @property data.success - `true` if Salesforce reports no errors from the operation
+ * @property data.completed - Array of ids for every successful completion
+ * @property data.errors - Array of errors reported by Salesforce
+ * @property references - History of all previous states
  **/
 
 /**
@@ -204,7 +207,6 @@ export function bulk(sObjectName, operation, records, options = {}) {
 
             return batch
               .on('queue', function (batchInfo) {
-                console.info(batchInfo);
                 const batchId = batchInfo.id;
                 var batch = job.batch(batchId);
                 batch.poll(pollInterval, pollTimeout);
@@ -233,8 +235,9 @@ export function bulk(sObjectName, operation, records, options = {}) {
           })
       )
     ).then(results => {
+      const allResults = util.formatResults(results.flat());
       console.log('Merging results arrays.');
-      return composeNextState(state, results.flat());
+      return composeNextState(state, allResults);
     });
   };
 }
@@ -313,7 +316,7 @@ export function bulkQuery(query, options = {}) {
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @param {(Object|Object[])} records - Field attributes for the new record, or an array of field attributes.
- * @state {SalesforceState}
+ * @state {SalesforceResultState}
  * @returns {Operation}
  */
 export function create(sObjectName, records) {
@@ -328,9 +331,15 @@ export function create(sObjectName, records) {
 
     return connection
       .create(resolvedSObjectName, resolvedRecords)
-      .then(recordResult => {
-        console.log('Result : ' + JSON.stringify(recordResult));
-        return composeNextState(state, recordResult);
+      .then(response => {
+        const result = util.formatResults(response);
+        const { success, errors, completed } = result;
+        console.log('Sucessfully created: ', completed.length, 'records');
+
+        if (!success) {
+          console.log('Failed to create: ', errors.length, 'records');
+        }
+        return composeNextState(state, result);
       });
   };
 }
@@ -408,29 +417,22 @@ export function destroy(sObjectName, ids, options = {}) {
     return connection
       .sobject(resolvedSObjectName)
       .del(resolvedIds)
-      .then(function (result) {
-        if (Array.isArray(result)) {
-          const successes = result.filter(r => r.success);
-          const failures = result.filter(r => !r.success);
+      .then(response => {
+        const result = util.formatResults(response);
+        const { success, errors, completed } = result;
 
-          console.log(
-            'Sucessfully deleted: ',
-            JSON.stringify(successes, null, 2)
-          );
+        console.log('Sucessfully deleted: ', completed.length, 'records');
 
-          if (failures.length > 0) {
-            console.log(
-              'Failed to delete: ',
-              JSON.stringify(failures, null, 2)
-            );
+        if (!success) {
+          console.log('Failed to delete: ', errors.length, 'records');
 
-            if (failOnError)
-              throw 'Some deletes failed; exiting with failure code.';
+          if (failOnError) {
+            throwError('FAILED_TO_DELETE_RECORDS', {
+              description: 'Some deletes failed; exiting with failure code.',
+            });
           }
-
-          return composeNextState(state, result);
         }
-        console.log('Successfully deleted: ', JSON.stringify(result, null, 2));
+
         return composeNextState(state, result);
       });
   };
@@ -696,7 +698,7 @@ export function upsert(sObjectName, externalId, records) {
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @param {(object|object[])} records - Field attributes for the new object.
- * @state {SalesforceState}
+ * @state {SalesforceResultState}
  * @returns {Operation}
  */
 export function update(sObjectName, records) {
@@ -711,9 +713,15 @@ export function update(sObjectName, records) {
 
     return connection
       .update(resolvedSObjectName, resolvedRecords)
-      .then(function (result) {
-        console.log('Result : ' + JSON.stringify(result));
-        return composeNextState(state, result);
+      .then(result => {
+        const records = util.formatResults(result);
+        const { success, errors, completed } = records;
+        console.log('Sucessfully updated: ', completed.length, 'records');
+
+        if (!success) {
+          console.log('Failed to update: ', errors.length, 'records');
+        }
+        return composeNextState(state, records);
       });
   };
 }

@@ -160,3 +160,34 @@ export async function pollJobResult(conn, job, pollInterval, pollTimeout) {
     attempt++;
   }
 }
+export function formatResults(input) {
+  const output = {
+    success: true,
+    completed: [],
+    errors: [],
+  };
+
+  if (!Array.isArray(input)) {
+    return {
+      success: input.success,
+      errors: input.errors,
+      completed: [input.id],
+    };
+  }
+
+  input.forEach(record => {
+    if (record.success) {
+      output.completed.push(record.id);
+    } else {
+      output.success = false;
+    }
+
+    if (record.errors?.length) {
+      record.errors.forEach(message => {
+        output.errors.push({ id: record.id, message });
+      });
+    }
+  });
+
+  return output;
+}

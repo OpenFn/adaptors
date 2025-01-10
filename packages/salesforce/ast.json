@@ -223,7 +223,7 @@
           },
           {
             "title": "state",
-            "description": "{SalesforceState}"
+            "description": "{SalesforceResultState}"
           },
           {
             "title": "returns",
@@ -866,7 +866,7 @@
           },
           {
             "title": "state",
-            "description": "{SalesforceState}"
+            "description": "{SalesforceResultState}"
           },
           {
             "title": "returns",
