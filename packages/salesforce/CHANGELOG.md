@@ -1,5 +1,100 @@
 # @openfn/language-salesforce
 
+## 5.0.0
+
+Major modernisation of the Salesforce adaptor, focusing on standardised state
+handling (ie,`state.data` over on `state.references`) and a cleaner API.
+
+This version introduces multiple breaking changes and worklows WILL require
+changes to be compatible - see the Migration Guide.
+
+### Migration Guide
+
+- Operations now "return" their results to `state.data`. Use `state.data`
+  instead of `state.references`. For example:
+
+```js
+❌  retrieve('Patient__c', $.patientId);
+    fn((state) => {
+      state.patients = state.references.at(-1)
+      return state
+    });
+
+✅  retrieve('Patient__c', $.patientId);
+    fn((state) => {
+      state.patients = state.data;
+      return state
+    });
+```
+
+- All callback functions have been removed. Use `fn()` blocks or `.then()`
+  functions instead. For example:
+
+```js
+❌  query($.query, {}, (state) => {
+      state.patients = state.references.at(-1)
+      return state
+    });
+
+✅  query($.query).then((state) => {
+      state.patients = state.data;
+      return state
+    });
+
+✅  query($.query)
+    fn((state) => {
+     state.patients = state.data
+     return state
+    });
+```
+
+- The `axios` object has been removed. For HTTP requests outside salesforce, use
+  a different step with the http adaptor
+- Replace `describeAll()` with `describe()`.
+- Replace `upsertIf(...)` with `fnIf(true, upsert(...))`
+- Replace `createIf(...)` with `fnIf(true, create(...))`
+- Replace `toUTF8(...)` with `util.UTF8(...)`
+- The `bulk()` signature has been re-ordered: replace
+  `bulk(operation, sObject, options, records)` with
+  `bulk(operation, sObjectName, records, options)`
+
+### Major Changes
+
+- 59721be: New API design for salesforce, including use of `composeNextState`
+  and removing old code.
+- Remove axios dependency
+- Remove old/unused functions. `relationship`, `upsertIf`, `createIf`,
+  `reference`, `steps`, `beta`, `describeAll()`
+- Standardize state mutation in all operations
+- Change `bulk` signature to `bulk(operation, sObjectName, records, options)`
+- Remove callback support
+- a2cf9c7: Move `toUTF8()` to `util.UTF8()`. `toUTF8` is not an operation and
+  cannot be called at the top level. Moving into the utils namespace should help
+  make the usage of the function a little clearer
+- ca09ade: - Restructured response format for `bulk`, `create`,`update` and
+  `destroy` functions into standardized result structure:
+  ```
+  {
+    success: boolean,
+    completed: [id],
+    errors: [{ id message }],
+  }
+  ```
+- b1227a2: - add `query` option in `request` function
+
+### Minor Changes
+
+- b4a9c42: - Create `get()` and `post()` functions for all http requests against
+  Salesforce
+- Update `describe()` to fetch all available sObjects metadata
+- update function examples and improve options documentation
+
+### Patch Changes
+
+- b4a9c42: - Change internal `cleanupState` to `removeConnection` and tagged it
+  as private function
+  - Rename `attrs` to `records` in docs
+
 ## 4.8.6
 
 ### Patch Changes
