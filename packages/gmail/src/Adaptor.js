@@ -7,10 +7,11 @@ import {
   expandReferences,
 } from '@openfn/language-common/util';
 import {
+  getMessagesResult,
+  getMessageResult,
+  getDesiredContent,
+  getMessageContent,
   createConnection,
-  fetchMessages,
-  getContentFromMessage,
-  getMessageResponse,
   removeConnection,
 } from './Utils';
 
@@ -26,7 +27,7 @@ export function getContentsFromMessages(
     const [resolvedUserId, resolvedQuery, resolvedDesiredContents] =
       expandReferences(state, userId, query, desiredContents);
 
-    const messageContents = [];
+    const contents = [];
     const currentIds = [];
     const previousIds = Array.isArray(state.processedIds)
       ? state.processedIds
@@ -39,11 +40,12 @@ export function getContentsFromMessages(
     let nextPageToken = null;
 
     do {
-      const messagesResult = await fetchMessages(
+      const messagesResult = await getMessagesResult(
         resolvedUserId,
         resolvedQuery,
         nextPageToken
       );
+
       if (!messagesResult.messages?.length) {
         console.log('No messages found.');
         break;
@@ -58,50 +60,30 @@ export function getContentsFromMessages(
       );
 
       for (const messageId of unprocessedIds) {
-        const messageContent = {
+        const content = {
           messageId: messageId,
         };
 
-        for (const hint of resolvedDesiredContents) {
-          const desiredContent =
-            typeof hint === 'object' ? hint : { type: hint };
+        const messageResult = await getMessageResult(userId, messageId);
 
-          if (!desiredContent.type) {
-            if (desiredContent.archive) {
-              desiredContent.type = 'archive';
-            } else if (desiredContent.file) {
-              desiredContent.type = 'file';
-            }
-          }
+        for (const desiredContentHint of resolvedDesiredContents) {
+          const desiredContent = getDesiredContent(desiredContentHint);
 
-          if (!desiredContent.type) {
-            console.error('Unable to determine desired content type:', hint);
-            throw new Error('No desired content type provided.');
-          }
-
-          if (!desiredContent.name) {
-            desiredContent.name = desiredContent.type;
-          }
-
-          const messageResponse = await getMessageResponse(userId, messageId);
-
-          const content = await getContentFromMessage(
-            messageResponse,
-            userId,
-            messageId,
+          const messageContent = await getMessageContent(
+            messageResult,
             desiredContent
           );
 
-          if (content && messageContent[desiredContent.name]) {
+          if (messageContent && content[desiredContent.name]) {
             throw new Error(
               `Duplicate content name detected: ${desiredContent.name}`
             );
           }
 
-          messageContent[desiredContent.name] ??= content;
+          content[desiredContent.name] ??= messageContent;
         }
 
-        messageContents.push(messageContent);
+        contents.push(content);
       }
 
       currentIds.push(...incomingIds);
@@ -111,7 +93,7 @@ export function getContentsFromMessages(
     const newIds = currentIds.filter(id => !expiredIds.includes(id));
 
     const nextState = {
-      ...composeNextState(state, messageContents),
+      ...composeNextState(state, contents),
       processedIds: newIds,
     };
 

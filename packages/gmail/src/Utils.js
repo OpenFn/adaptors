@@ -2,180 +2,85 @@ import unzipper from 'unzipper';
 import { google } from 'googleapis';
 
 let gmail;
-let isTesting;
+let isTesting = true;
 
-export async function fetchMessages(userId, query, lastPageToken) {
-  let messagesResponse = null;
-
+export async function getMessagesResult(userId, query, lastPageToken) {
   try {
-    messagesResponse = await gmail.users.messages.list({
+    const { data } = await gmail.users.messages.list({
       userId: userId,
       q: query,
       maxResults: 3,
       pageToken: lastPageToken,
     });
+
+    return {
+      messages: data.messages,
+      nextPageToken: data.nextPageToken,
+    };
   } catch (error) {
     throw new Error('Error fetching messages: ' + error.message);
   }
-
-  const { messages, nextPageToken } = messagesResponse.data;
-
-  return { messages, nextPageToken };
 }
 
-export async function getMessageResponse(userId, messageId) {
+export async function getMessageResult(userId, messageId) {
   const messageResponse = await gmail.users.messages.get({
     userId,
     id: messageId,
     format: 'full',
   });
 
-  return messageResponse;
-}
-
-export async function getContentFromMessage(messageResponse, userId, messageId, desiredContent) {
-  if (desiredContent.type === 'archive') {
-    const { attachmentId, filename } = getAttachmentInfo(
-      messageResponse,
-      desiredContent.archive
-    );
-
-    if (!attachmentId) {
-      return null;
-    }
-
-    const archive = await getAttachment(userId, messageId, attachmentId);
-    const file = await getFileFromArchive(archive, desiredContent.file);
-    return { ...file, archiveFilename: filename };
-  }
-
-  if (desiredContent.type === 'file') {
-    const { attachmentId, filename } = getAttachmentInfo(
-      messageResponse,
-      desiredContent.file
-    );
-
-    if (!attachmentId) {
-      return null;
-    }
-
-    const attachment = await getAttachment(userId, messageId, attachmentId);
-    const file = await getFileFromAttachment(attachment);
-    return { content: file, filename };
-  }
-
-  if (desiredContent.type === 'body') {
-    const body = getBodyFromMessage(messageResponse);
-    return body;
-  }
-
-  if (desiredContent.type === 'subject') {
-    const headers = messageResponse.data?.payload?.headers;
-    const subject = headers?.find(h => h.name === 'Subject')?.value;
-    return subject;
-  }
-
-  if (desiredContent.type === 'from') {
-    const headers = messageResponse.data?.payload?.headers;
-    const from = headers?.find(h => h.name === 'From')?.value;
-    return from;
-  }
-
-  if (desiredContent.type === 'date') {
-    const headers = messageResponse.data?.payload?.headers;
-    const rawDate = headers?.find(h => h.name === 'Date')?.value;
-    const date = rawDate ? new Date(rawDate) : null;
-    return date;
-  }
-
-  return `Unsupported content type: ${desiredContent.type}`;
-}
-
-function isExpressionMatch(text, expression) {
-  if (expression?.constructor?.name === 'RegExp') {
-    try {
-      return expression.test(text);
-    } catch (e) {
-      return false;
-    }
-  }
-
-  return text.includes(expression);
-}
-
-export async function getAttachment(userId, messageId, attachmentId) {
-  return await gmail.users.messages.attachments.get({
-    userId,
-    messageId,
-    id: attachmentId,
-  });
-}
-
-export async function getFileFromAttachment(attachment) {
-  const base64String = attachment?.data?.data;
-  if (!base64String) {
-    throw new Error('No data found in file.');
-  }
-
-  const fileContent = atob(base64String);
-
-  return isTesting ? fileContent.substring(0, 40) : fileContent;
-}
-
-async function getFileFromArchive(archive, expression) {
-  const base64String = archive?.data?.data;
-  if (!base64String) {
-    throw new Error('No data found in zip attachmentResponse.');
-  }
-
-  const compressedBuffer = Buffer.from(base64String, 'base64');
-  const directory = await unzipper.Open.buffer(compressedBuffer);
-
-  const file = directory?.files.find(f =>
-    isExpressionMatch(f.path, expression)
-  );
-
-  if (!file) {
-    throw new Error('File not found in the archive.');
-  }
-
-  const fileBuffer = await file.buffer();
-  const fileString = fileBuffer.toString('base64');
-  const fileContent = atob(fileString);
+  const payload = messageResponse?.data?.payload;
 
   return {
-    content: isTesting ? fileContent.substring(0, 40) : fileContent,
-    filename: file.path,
+    userId,
+    messageId,
+    parts: payload?.parts,
+    headers: payload?.headers,
   };
 }
 
-function getAttachmentInfo(messageResponse, expression) {
-  const parts = messageResponse?.data?.payload?.parts;
-  const part = parts?.find(p => isExpressionMatch(p.filename, expression));
+export function getDesiredContent(hint) {
+  const desiredContent = typeof hint === 'string' ? { type: hint } : hint;
 
-  return part
-    ? { attachmentId: part.body.attachmentId, filename: part.filename }
-    : { attachmentId: null };
-}
-
-export function getBodyFromMessage(fullMessage) {
-  const parts = fullMessage?.data?.payload?.parts;
-
-  const bodyPart = parts?.find(
-    part => part.mimeType === 'multipart/alternative'
-  );
-
-  const textBodyPart = bodyPart?.parts.find(
-    part => part.mimeType === 'text/plain'
-  );
-
-  const textBody = textBodyPart?.body?.data;
-  if (textBody) {
-    let body = Buffer.from(textBody, 'base64').toString('utf-8');
-    return isTesting ? body.substring(0, 40) : body;
+  if (!desiredContent.type) {
+    if (desiredContent.archive) {
+      desiredContent.type = 'archive';
+    } else if (desiredContent.file) {
+      desiredContent.type = 'file';
+    }
   }
 
-  return null;
+  if (!desiredContent.type) {
+    console.error(`Unable to determine desired content type ${hint}`);
+    throw new Error('No desired content type provided.');
+  }
+
+  if (!desiredContent.name) {
+    desiredContent.name = desiredContent.type;
+  }
+
+  return desiredContent;
+}
+
+export async function getMessageContent(message, desiredContent) {
+  switch (desiredContent.type) {
+    case 'archive':
+      return await getFileFromArchiveFromAttachment(message, desiredContent);
+
+    case 'file':
+      return await getFileFromAttachment(message, desiredContent);
+
+    case 'body':
+      return getBodyFromMessage(message);
+
+    case 'subject':
+    case 'from':
+    case 'date':
+      return getValueFromMessageHeader(message, desiredContent.type);
+
+    default:
+      return `Unsupported content type: ${desiredContent.type}`;
+  }
 }
 
 export function createConnection(state) {
@@ -192,4 +97,134 @@ export function createConnection(state) {
 export function removeConnection(state) {
   gmail = undefined;
   return state;
+}
+
+async function getFileFromArchiveFromAttachment(message, desiredContent) {
+  const attachment = await getAttachmentResult(message, desiredContent.archive);
+
+  return await extractFileFromArchiveAttachment(
+    attachment,
+    desiredContent.file
+  );
+}
+
+async function getFileFromAttachment(message, desiredContent) {
+  const attachment = await getAttachmentResult(message, desiredContent.file);
+
+  return await extractFileFromAttachment(attachment);
+}
+
+async function getAttachmentResult(message, expression) {
+  const part = message.parts?.find(p => {
+    return isExpressionMatch(p.filename, expression);
+  });
+
+  if (!part) {
+    console.info(`Attachment not found for ${expression}`);
+    return null;
+  }
+
+  const attachment = await gmail.users.messages.attachments.get({
+    userId: message.userId,
+    messageId: message.messageId,
+    id: part.body.attachmentId,
+  });
+
+  return {
+    data: attachment?.data?.data,
+    filename: part.filename,
+    expression,
+  };
+}
+
+async function extractFileFromArchiveAttachment(attachment, fileExpression) {
+  if (!attachment) {
+    return null;
+  }
+
+  if (!attachment.data) {
+    console.error(
+      `Data not found in the archive attachment for ${attachment.expression}`
+    );
+    return null;
+  }
+
+  const compressedBuffer = Buffer.from(attachment.data, 'base64');
+  const directory = await unzipper.Open.buffer(compressedBuffer);
+
+  const file = directory?.files.find(f =>
+    isExpressionMatch(f.path, fileExpression)
+  );
+
+  if (!file) {
+    console.info(`File not found in the archive for ${fileExpression}`);
+    return null;
+  }
+
+  const fileBuffer = await file.buffer();
+  const fileString = fileBuffer.toString('base64');
+  const fileContent = Buffer.from(fileString, 'base64').toString('utf-8');
+
+  return {
+    content: isTesting ? fileContent.substring(0, 40) : fileContent,
+    filename: file.path,
+    archiveFilename: attachment.filename,
+  };
+}
+
+async function extractFileFromAttachment(attachment) {
+  if (!attachment) {
+    return null;
+  }
+
+  if (!attachment.data) {
+    console.error(
+      `Data not found in the file attachment for ${attachment.expression}`
+    );
+    return null;
+  }
+
+  const fileContent = Buffer.from(attachment.data, 'base64').toString('utf-8');
+
+  return {
+    content: isTesting ? fileContent.substring(0, 40) : fileContent,
+    filename: attachment.filename,
+  };
+}
+
+function getBodyFromMessage(message) {
+  const bodyPart = message.parts?.find(
+    part => part.mimeType === 'multipart/alternative'
+  );
+
+  const textBodyPart = bodyPart?.parts.find(
+    part => part.mimeType === 'text/plain'
+  );
+
+  const textBody = textBodyPart?.body?.data;
+
+  if (textBody) {
+    const body = Buffer.from(textBody, 'base64').toString('utf-8');
+    return isTesting ? body.substring(0, 40) : body;
+  }
+
+  return null;
+}
+
+function getValueFromMessageHeader(message, headerName) {
+  const value = message.headers?.find(
+    h => h.name.toLowerCase() === headerName
+  )?.value;
+
+  return headerName === 'date' && value ? new Date(value) : value;
+}
+
+function isExpressionMatch(text, expression) {
+  try {
+    return expression?.constructor?.name === 'RegExp'
+      ? expression.test(text)
+      : text.includes(expression);
+  } catch (e) {
+    return false;
+  }
 }
