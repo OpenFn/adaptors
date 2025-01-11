@@ -2,7 +2,7 @@ import unzipper from 'unzipper';
 import { google } from 'googleapis';
 
 let gmail;
-let isTesting = true;
+const isTesting = true;
 
 export async function getMessagesResult(userId, query, lastPageToken) {
   try {
@@ -23,19 +23,17 @@ export async function getMessagesResult(userId, query, lastPageToken) {
 }
 
 export async function getMessageResult(userId, messageId) {
-  const messageResponse = await gmail.users.messages.get({
+  const { data } = await gmail.users.messages.get({
     userId,
     id: messageId,
     format: 'full',
   });
 
-  const payload = messageResponse?.data?.payload;
-
   return {
     userId,
     messageId,
-    parts: payload?.parts,
-    headers: payload?.headers,
+    parts: data?.payload?.parts,
+    headers: data?.payload?.headers,
   };
 }
 
@@ -51,7 +49,7 @@ export function getDesiredContent(hint) {
   }
 
   if (!desiredContent.type) {
-    console.error(`Unable to determine desired content type ${hint}`);
+    console.error(`Unable to determine desired content type: ${hint}`);
     throw new Error('No desired content type provided.');
   }
 
@@ -100,18 +98,24 @@ export function removeConnection(state) {
 }
 
 async function getFileFromArchiveFromAttachment(message, desiredContent) {
-  const attachment = await getAttachmentResult(message, desiredContent.archive);
+  const attachmentResult = await getAttachmentResult(
+    message,
+    desiredContent.archive
+  );
 
   return await extractFileFromArchiveAttachment(
-    attachment,
+    attachmentResult,
     desiredContent.file
   );
 }
 
 async function getFileFromAttachment(message, desiredContent) {
-  const attachment = await getAttachmentResult(message, desiredContent.file);
+  const attachmentResult = await getAttachmentResult(
+    message,
+    desiredContent.file
+  );
 
-  return await extractFileFromAttachment(attachment);
+  return await extractFileFromAttachment(attachmentResult);
 }
 
 async function getAttachmentResult(message, expression) {
@@ -120,18 +124,18 @@ async function getAttachmentResult(message, expression) {
   });
 
   if (!part) {
-    console.info(`Attachment not found for ${expression}`);
+    console.info(`Attachment not found for: ${expression}`);
     return null;
   }
 
-  const attachment = await gmail.users.messages.attachments.get({
+  const { data } = await gmail.users.messages.attachments.get({
     userId: message.userId,
     messageId: message.messageId,
     id: part.body.attachmentId,
   });
 
   return {
-    data: attachment?.data?.data,
+    data: data?.data,
     filename: part.filename,
     expression,
   };
@@ -144,7 +148,7 @@ async function extractFileFromArchiveAttachment(attachment, fileExpression) {
 
   if (!attachment.data) {
     console.error(
-      `Data not found in the archive attachment for ${attachment.expression}`
+      `Data not found in the archive attachment for: ${attachment.expression}`
     );
     return null;
   }
@@ -157,7 +161,7 @@ async function extractFileFromArchiveAttachment(attachment, fileExpression) {
   );
 
   if (!file) {
-    console.info(`File not found in the archive for ${fileExpression}`);
+    console.info(`File not found in the archive for: ${fileExpression}`);
     return null;
   }
 
@@ -166,9 +170,9 @@ async function extractFileFromArchiveAttachment(attachment, fileExpression) {
   const fileContent = Buffer.from(fileString, 'base64').toString('utf-8');
 
   return {
-    content: isTesting ? fileContent.substring(0, 40) : fileContent,
-    filename: file.path,
     archiveFilename: attachment.filename,
+    filename: file.path,
+    content: isTesting ? fileContent.substring(0, 40) : fileContent,
   };
 }
 
@@ -179,7 +183,7 @@ async function extractFileFromAttachment(attachment) {
 
   if (!attachment.data) {
     console.error(
-      `Data not found in the file attachment for ${attachment.expression}`
+      `Data not found in the file attachment for: ${attachment.expression}`
     );
     return null;
   }
@@ -187,8 +191,8 @@ async function extractFileFromAttachment(attachment) {
   const fileContent = Buffer.from(attachment.data, 'base64').toString('utf-8');
 
   return {
-    content: isTesting ? fileContent.substring(0, 40) : fileContent,
     filename: attachment.filename,
+    content: isTesting ? fileContent.substring(0, 40) : fileContent,
   };
 }
 
