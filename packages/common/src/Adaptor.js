@@ -903,3 +903,27 @@ export function cursor(value, options = {}) {
     return state;
   };
 }
+
+/**
+ * An assert function that throws an error when an expression or function resolves to false.
+ * Otherwise, it returns true.
+ * @public
+ * @function
+ * @example
+ * assert("a" === "b")
+ * @param expression
+ * @param errorMessage
+ * @returns {(function(*): (boolean|undefined))|*}
+ */
+export function assert (expression, errorMessage) {
+  return state => {
+    const resolvedValue = expandReferences(expression)(state);
+
+    if(resolvedValue){
+      return true;
+    }
+    else{
+      throw new Error(errorMessage);
+    }
+  }
+}
