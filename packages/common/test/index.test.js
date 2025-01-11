@@ -30,6 +30,7 @@ import {
   splitKeys,
   toArray,
   validate,
+  assert as assertCommon
 } from '../src/Adaptor';
 import { startOfToday } from 'date-fns';
 
@@ -1045,4 +1046,48 @@ describe('group', () => {
 
     expect(result.data).eql({ a: [{ x: 'a', y: { z: 'a' } }] });
   });
+});
+
+describe("assert", () => {
+  it("throws an error when a function returns false", () => {
+    let error;
+
+    const testFunction = function(){
+      return "a" === "b"
+    }
+
+    const errorMessage = "a is not equal to b";
+
+    try {
+     assertCommon(testFunction, errorMessage)({});
+    } catch(e) {
+      error = e
+    }
+
+    assert.equal(error.message, errorMessage)
+  })
+
+  it("throws an error when an expression evaluates to false", () => {
+    let error;
+    const errorMessage = "a is not equal to b";
+
+    try {
+     assertCommon(("a"==="b"), errorMessage)({});
+    } catch(e) {
+      error = e
+    }
+
+    assert.equal(error.message, errorMessage)
+  });
+
+  it("returns true when an expression evaluates to true", () => {
+    const result = assertCommon(("a"==="a"), "a is not equal to a")({});
+    assert.equal(result, true);
+  });
+
+  it("returns true when an argument is neither an expression nor a function", () => {
+    const result = assertCommon(("a"), "a is not equal to b")({});
+    assert.equal(result, true);
+  });
+
 });
