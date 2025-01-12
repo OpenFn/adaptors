@@ -27,7 +27,7 @@ function expandReference(state, value) {
     return value.map(v => expandReference(state, v));
   }
 
-  if (typeof value == 'object' && !!value && !isStream(value)) {
+  if (typeof value == 'object' && !!value && !isStream(value) && !(value instanceof RegExp)) {
     return Object.keys(value).reduce((acc, key) => {
       return { ...acc, [key]: expandReference(state, value[key]) };
     }, {});
