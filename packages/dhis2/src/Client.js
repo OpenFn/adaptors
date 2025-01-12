@@ -11,7 +11,7 @@ import Qs from 'qs';
  * @param {object} axiosRequest - the axiosRequest contains valid axios params: https://axios-http.com/docs/req_config
  * @returns {Promise} a promise that will resolve to either a response object or an error object.
  */
-export function request({ username, password, personalAccessToken }, axiosRequest) {
+export function request({ username, password, pat }, axiosRequest) {
   const { method, url, params } = axiosRequest;
 
   console.log(`Sending ${method} request to ${url}`);
@@ -26,8 +26,8 @@ export function request({ username, password, personalAccessToken }, axiosReques
   const headers = { 'Content-Type': 'application/json'}
   let auth;
 
-  if(personalAccessToken){
-    headers.Authorization = `ApiToken ${personalAccessToken}`
+  if(pat){
+    headers.Authorization = `ApiToken ${pat}`
   } else {
     auth = { username, password }
   }
