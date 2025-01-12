@@ -190,6 +190,12 @@ describe('expandReferences', () => {
 
     expect(result).to.eql([2, { c: 3 }, 3]);
   });
+
+  it('resolves regex objects', () => {
+    let result = expandReferences(/foobar/i)({});
+
+    expect(result).to.eql(/foobar/i);
+  });
 });
 
 describe('field', () => {
