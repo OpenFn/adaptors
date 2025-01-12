@@ -913,7 +913,7 @@ export function cursor(value, options = {}) {
  * assert('a' === 'b', '"a" is not equal to "b"')
  * @param {any} expression  - The expression or function to be evaluated.
  * @param {string} errorMessage - The error message thrown in case of a failed state.
- * @returns {boolean} Always returns true if the assertion passes.
+ * @returns {operation}
  */
 export function assert (expression, errorMessage) {
   return state => {
@@ -923,6 +923,6 @@ export function assert (expression, errorMessage) {
       throw new Error(errorMessage);
     }
 
-    return true;
+    return state;
   }
 }
