@@ -910,10 +910,10 @@ export function cursor(value, options = {}) {
  * @public
  * @function
  * @example
- * assert("a" === "b")
- * @param expression
- * @param errorMessage
- * @returns {(function(*): (boolean|undefined))|*}
+ * assert('a' === 'b', '"a" is not equal to "b"')
+ * @param {any} expression  - The expression or function to be evaluated.
+ * @param {string} errorMessage - The error message thrown in case of a failed state.
+ * @returns {boolean} Always returns true if the assertion passes.
  */
 export function assert (expression, errorMessage) {
   return state => {
