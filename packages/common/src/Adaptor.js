@@ -372,7 +372,7 @@ export function expandReferences(value, skipFilter) {
       return value.map(v => expandReferences(v)(state));
     }
 
-    if (typeof value == 'object' && !!value) {
+    if (typeof value == 'object' && !!value && !(value instanceof RegExp)) {
       return Object.keys(value).reduce((acc, key) => {
         return { ...acc, [key]: expandReferences(value[key])(state) };
       }, {});
