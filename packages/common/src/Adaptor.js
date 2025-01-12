@@ -919,11 +919,10 @@ export function assert (expression, errorMessage) {
   return state => {
     const resolvedValue = expandReferences(expression)(state);
 
-    if(resolvedValue){
-      return true;
-    }
-    else{
+    if(!resolvedValue){
       throw new Error(errorMessage);
     }
+
+    return true;
   }
 }
