@@ -920,7 +920,7 @@ export function assert (expression, errorMessage) {
     const [resolvedValue] = newExpandReferences(state,expression);
 
     if(!resolvedValue){
-      throw new Error(errorMessage);
+      throw new Error(errorMessage || `assertion statement failed with ${resolvedValue}`);
     }
 
     return state;
