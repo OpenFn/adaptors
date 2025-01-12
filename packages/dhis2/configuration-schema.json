@@ -47,7 +47,7 @@
         "v2"
       ]
     },
-    "personalAccessToken": {
+    "pat": {
       "title": "Personal Access Token",
       "type": "string",
       "description": "Personal access token",
