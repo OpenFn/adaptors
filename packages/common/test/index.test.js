@@ -1092,4 +1092,15 @@ describe("assert", () => {
     assert.equal(result, state);
   });
 
+  it("falls back to the generic message if no 'errorMessage' argument is passed", () => {
+   let error;
+
+   try {
+     assertCommon(("a" === "b"))({});
+    } catch (e) {
+      error = e;
+    }
+
+    assert.equal(error.message, `assertion statement failed with false`);
+  });
 });
