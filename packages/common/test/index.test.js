@@ -1081,13 +1081,15 @@ describe("assert", () => {
   });
 
   it("returns true when an expression evaluates to true", () => {
-    const result = assertCommon(("a"==="a"), "a is not equal to a")({});
-    assert.equal(result, true);
+    const state = { name: "Jane" }
+    const result = assertCommon(("a"==="a"), "a is not equal to a")(state);
+    assert.equal(result, state);
   });
 
   it("returns true when an argument is neither an expression nor a function", () => {
-    const result = assertCommon(("a"), "a is not equal to b")({});
-    assert.equal(result, true);
+    const state = { name: "Jane" }
+    const result = assertCommon(("a"), "a is not equal to b")(state);
+    assert.equal(result, state);
   });
 
 });
