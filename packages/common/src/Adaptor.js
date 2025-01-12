@@ -917,7 +917,7 @@ export function cursor(value, options = {}) {
  */
 export function assert (expression, errorMessage) {
   return state => {
-    const resolvedValue = expandReferences(expression)(state);
+    const [resolvedValue] = newExpandReferences(state,expression);
 
     if(!resolvedValue){
       throw new Error(errorMessage);
