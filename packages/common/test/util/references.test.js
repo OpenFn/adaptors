@@ -63,6 +63,14 @@ describe('util expandReferences', () => {
     expect(resolvedName.first).to.equal('fox');
     expect(resolvedName.second).to.equal('mulder');
   });
+
+  it('should expand regular expressions', () => {
+    const regex = /xy+z/;
+    const state = {};
+
+    const [result] = expandReferences(state, regex)
+    expect(result).to.equal(regex)
+  });
 });
 
 describe('util normalizeOauthConfig', () => {
