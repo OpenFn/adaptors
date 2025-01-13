@@ -32,7 +32,7 @@ import flatten from 'lodash/flatten';
 /**
  * State object
  * @typedef {Object} SalesforceResultState
- * @property data - Summary of the response fom Salesforce
+ * @property data - Summary of the response from Salesforce
  * @property data.success - `true` if Salesforce reports no errors from the operation
  * @property data.completed - Array of ids for every successful completion
  * @property data.errors - Array of errors reported by Salesforce
@@ -157,7 +157,7 @@ export function execute(...operations) {
  * @param {string} sObjectName - API name of the sObject.
  * @param {string} operation - The bulk operation to be performed.Eg `insert`, `update` or `upsert`
  * @param {array} records - an array of records, or a function which returns an array.
- * @param {BulkOptions} options - Options to configure the request. In addition to these, you can pass any of the options supported by the {@link https://bit.ly/41tyvVU jsforce API}.
+ * @param {BulkOptions} [options] - Options to configure the request. In addition to these, you can pass any of the options supported by the {@link https://bit.ly/41tyvVU jsforce API}.
  * @state {SalesforceResultState}
  * @returns {Operation}
  */
@@ -272,7 +272,7 @@ export function bulk(sObjectName, operation, records, options = {}) {
  * );
  * @function
  * @param {string} query - A query string.
- * @param {BulkQueryOptions} options - Options passed to the bulk api.
+ * @param {BulkQueryOptions} [options] - Options passed to the bulk api.
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -422,7 +422,7 @@ export function describe(sObjectName) {
  * @function
  * @param {string} sObjectName - API name of the sObject.
  * @param {string|string[]} ids - ID or array of IDs of records to delete
- * @param {object} options - Options for the destroy delete operation.
+ * @param {object} [options] - Options for the destroy delete operation.
  * @param {boolean} [options.failOnError=false] - If true, the operation will fail if any record fails to delete.
  * @state {SalesforceResultState}
  * @returns {Operation}
@@ -476,7 +476,7 @@ export function destroy(sObjectName, ids, options = {}) {
  * });
  * @function
  * @param {string} path - The Salesforce API endpoint.
- * @param {SimpleRequestOptions} options - Configure headers and query parameters for the request.
+ * @param {SimpleRequestOptions} [options] - Configure headers and query parameters for the request.
  * @state {SalesforceState}
  * @returns {Operation}
  */
@@ -503,7 +503,7 @@ export function get(path, options = {}) {
   };
 }
 /**
- * Alias for "create(sObjectName, attrs)".
+ * Alias for "create(sObjectName, records)".
  * @public
  * @example <caption> Single record creation</caption>
  * insert("Account", { Name: "My Account #1" });

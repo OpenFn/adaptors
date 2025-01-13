@@ -72,8 +72,11 @@
             "title": "param",
             "description": "Options to configure the request. In addition to these, you can pass any of the options supported by the {@link https://bit.ly/41tyvVU jsforce API}.",
             "type": {
-              "type": "NameExpression",
-              "name": "BulkOptions"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "BulkOptions"
+              }
             },
             "name": "options"
           },
@@ -135,8 +138,11 @@
             "title": "param",
             "description": "Options passed to the bulk api.",
             "type": {
-              "type": "NameExpression",
-              "name": "BulkQueryOptions"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "BulkQueryOptions"
+              }
             },
             "name": "options"
           },
@@ -375,8 +381,11 @@
             "title": "param",
             "description": "Options for the destroy delete operation.",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
           },
@@ -456,8 +465,11 @@
             "title": "param",
             "description": "Configure headers and query parameters for the request.",
             "type": {
-              "type": "NameExpression",
-              "name": "SimpleRequestOptions"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "SimpleRequestOptions"
+              }
             },
             "name": "options"
           },
@@ -484,7 +496,7 @@
         "records"
       ],
       "docs": {
-        "description": "Alias for \"create(sObjectName, attrs)\".",
+        "description": "Alias for \"create(sObjectName, records)\".",
         "tags": [
           {
             "title": "public",
