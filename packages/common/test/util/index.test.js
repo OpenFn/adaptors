@@ -61,4 +61,8 @@ describe('decode', () => {
   it('should decode an empty Base64 string', () => {
     expect(decode('')).to.eql('');
   });
+  it('should decode a JSON object into a standard javascript object', () => {
+    const obj = {name: "Jane Doe"}
+    expect(decode('eyJuYW1lIjoiSmFuZSBEb2UifQ==')).to.eql(obj);
+  });
 });
