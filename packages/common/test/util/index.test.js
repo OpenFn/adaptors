@@ -36,6 +36,11 @@ describe('encode', () => {
     expect(() => encode({})).to.throw(errorMsg);
     expect(() => encode(() => {})).to.throw(errorMsg);
   });
+  it('should encode a javascript object', () => {
+    const obj = {"name": "Jane Doe"}
+
+    expect(encode(obj)).to.eql("eyJuYW1lIjoiSmFuZSBEb2UifQ==");
+  });
 });
 
 describe('decode', () => {
