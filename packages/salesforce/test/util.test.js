@@ -5,8 +5,47 @@ import {
   removeNestings,
   assertNoNesting,
   formatResults,
+  assertLoginUrl,
 } from '../src/util';
 
+describe('assertLoginUrl', () => {
+  it('should not throw an error for valid login URLs', () => {
+    const validUrls = [
+      'https://login.salesforce.com',
+      'https://test.salesforce.com',
+      'https://foo.my.salesforce.com',
+      'https://foo--bar.sandbox.my.salesforce.com',
+      'https://foo-bar.sandbox.my.salesforce.com',
+      'https://foo.bar.my.salesforce.com',
+      'https://foo.bar.baz.my.salesforce.com',
+      'https://foo--bar.sandbox.my.salesforce.com',
+      'https://foo-bar.sandbox.my.salesforce.com',
+      'https://foo.bar.my.salesforce.com',
+      'https://foo.bar.baz.my.salesforce.com',
+    ];
+
+    validUrls.forEach(url => {
+      expect(() => assertLoginUrl(url)).to.not.throw();
+    });
+  });
+
+  it('should throw an error for invalid login URLs', () => {
+    const invalidUrls = [
+      'https://my.salesforce.com',
+      'https://login.salesforce.com/foo',
+      'https://login.salesforce.com/foo',
+      'demo-now--sampotest.sandbox.lightning.force.com',
+      'http://demo--sampotest.sandbox.lightning.force.com',
+    ];
+
+    invalidUrls.forEach(url => {
+      expect(() => assertLoginUrl(url)).to.throw(
+        'INVALID_LOGIN_URL',
+        `Invalid login URL: ${url}`
+      );
+    });
+  });
+});
 describe('toUTF8', () => {
   it('Transliterate unicode to ASCII representation', async () => {
     const state = {
