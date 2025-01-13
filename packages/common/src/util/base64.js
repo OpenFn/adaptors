@@ -30,5 +30,13 @@ export const encode = data => {
  * const decoded = decode('SGVsbG8gV29ybGQ=');
  * console.log(decoded); // Output: Hello World
  */
-export const decode = base64Data =>
-  Buffer.from(base64Data, 'base64').toString('utf-8');
+export const decode = base64Data =>{
+  let decodedObject = Buffer.from(base64Data, 'base64').toString('utf-8');
+
+  if(['[', '{'].includes(decodedObject[0])){
+    decodedObject = JSON.parse(decodedObject);
+  }
+
+  return decodedObject;
+}
+
