@@ -21115,7 +21115,7 @@
     "name": "bulk",
     "kind": "function",
     "scope": "global",
-    "description": "Create and execute a bulk job.",
+    "description": "Create and execute a bulk job. Nested relationships will be flattened to dot notation automatically.\nThis function uses {@link https://sforce.co/4fDLJnk Bulk API},\nwhich is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
     "params": [
       {
         "type": {
@@ -21124,7 +21124,7 @@
           ]
         },
         "description": "API name of the sObject.",
-        "name": "sObject"
+        "name": "sObjectName"
       },
       {
         "type": {
@@ -21132,49 +21132,93 @@
             "string"
           ]
         },
-        "description": "The bulk operation to be performed.Eg \"insert\" | \"update\" | \"upsert\"",
+        "description": "The bulk operation to be performed.Eg `insert`, `update` or `upsert`",
         "name": "operation"
       },
       {
         "type": {
           "names": [
-            "object"
+            "array"
           ]
         },
-        "description": "Options passed to the bulk api.",
+        "description": "an array of records, or a function which returns an array.",
+        "name": "records"
+      },
+      {
+        "type": {
+          "names": [
+            "BulkOptions"
+          ]
+        },
+        "optional": true,
+        "description": "Options to configure the request. In addition to these, you can pass any of the options supported by the {@link https://bit.ly/41tyvVU jsforce API}.",
         "name": "options"
-      },
+      }
+    ],
+    "examples": [
+      "<caption>Bulk insert</caption>\nbulk(\n  \"Patient__c\",\n  \"insert\",\n  (state) => state.patients.map((x) => ({ Age__c: x.age, Name: x.name })),\n  { failOnError: true }\n);",
+      "<caption>Bulk upsert</caption>\nbulk(\n  \"vera__Beneficiary__c\",\n  \"upsert\",\n  [\n    {\n      vera__Reporting_Period__c: 2023,\n      vera__Geographic_Area__c: \"Uganda\",\n      \"vera__Indicator__r.vera__ExtId__c\": 1001,\n      vera__Result_UID__c: \"1001_2023_Uganda\",\n    },\n  ],\n  { extIdField: \"vera__Result_UID__c\" }\n);",
+      "<caption>Bulk upsert with a nested relationship</caption>\nbulk(\n  \"vera__Beneficiary__c\",\n  \"upsert\",\n  [\n    {\n      vera__Reporting_Period__c: 2023,\n      \"vera_Project\": {\n        \"Metrics_ID__c\": \"jfh5LAnxu1i4na\"\n      }\n    },\n  ],\n  { extIdField: \"vera__Result_UID__c\" }\n);",
+      "<caption>Bulk update Account records using a lazy state reference</caption>\nfn((state) => {\n  state.accounts = state.data.map((a) => ({ Id: a.id, Name: a.name }));\n  return state;\n});\nbulk(\"Account\", \"update\", $.accounts, { failOnError: true });"
+    ],
+    "returns": [
       {
         "type": {
           "names": [
-            "integer"
+            "Operation"
           ]
-        },
-        "optional": true,
-        "defaultvalue": 240000,
-        "description": "Polling timeout in milliseconds.",
-        "name": "options.pollTimeout"
-      },
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 164,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
+    },
+    "state": [
       {
-        "type": {
-          "names": [
-            "integer"
-          ]
-        },
-        "optional": true,
-        "defaultvalue": 6000,
-        "description": "Polling interval in milliseconds.",
-        "name": "options.pollInterval"
-      },
+        "name": null,
+        "description": "No description",
+        "type": "SalesforceResultState"
+      }
+    ],
+    "order": 10,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "BulkOptions",
+    "longname": "BulkOptions",
+    "name": "BulkOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to the Salesforce bulk API request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
       {
         "type": {
           "names": [
             "string"
           ]
         },
+        "description": "External id field. Required for upsert.",
+        "name": "extIdField"
+      },
+      {
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        },
         "optional": true,
-        "description": "External id field.",
-        "name": "options.extIdField"
+        "defaultvalue": false,
+        "description": "Skipping bulk operation if no records.",
+        "name": "allowNoOp"
       },
       {
         "type": {
@@ -21185,21 +21229,71 @@
         "optional": true,
         "defaultvalue": false,
         "description": "Fail the operation on error.",
-        "name": "options.failOnError"
+        "name": "failOnError"
       },
       {
         "type": {
           "names": [
-            "array"
+            "integer"
           ]
         },
-        "description": "an array of records, or a function which returns an array.",
-        "name": "records"
+        "optional": true,
+        "defaultvalue": 240000,
+        "description": "Polling timeout in milliseconds.",
+        "name": "pollTimeout"
+      },
+      {
+        "type": {
+          "names": [
+            "integer"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": 6000,
+        "description": "Polling interval in milliseconds.",
+        "name": "pollInterval"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 60,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
+    },
+    "order": 6,
+    "level": 0
+  },
+  {
+    "id": "bulkQuery",
+    "longname": "bulkQuery",
+    "name": "bulkQuery",
+    "kind": "function",
+    "scope": "global",
+    "description": "Execute an SOQL Bulk Query.\nThis function query large data sets and reduce the number of API requests.\n`bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v2.0 Query} which is available in API version 47.0 and later.\nThis API is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "A query string.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "BulkQueryOptions"
+          ]
+        },
+        "optional": true,
+        "description": "Options passed to the bulk api.",
+        "name": "options"
       }
     ],
     "examples": [
-      "<caption>Bulk insert</caption>\nbulk(\n  \"Patient__c\",\n  \"insert\",\n  { failOnError: true },\n  (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))\n);",
-      "<caption>Bulk upsert</caption>\nbulk(\n  \"vera__Beneficiary__c\",\n  \"upsert\",\n  { extIdField: \"vera__Result_UID__c\" },\n  [\n    {\n      vera__Reporting_Period__c: 2023,\n      vera__Geographic_Area__c: \"Uganda\",\n      \"vera__Indicator__r.vera__ExtId__c\": 1001,\n      vera__Result_UID__c: \"1001_2023_Uganda\",\n    },\n  ]\n);"
+      "<caption>Bulk query patient records where \"Health_ID__c\" is equal to the value in \"state.data.healthId\"</caption>\nbulkQuery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);",
+      "<caption>Bulk query with custom polling options</caption>\nbulkQuery(\n  (state) =>\n    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,\n  { pollTimeout: 10000, pollInterval: 6000 }\n);"
     ],
     "returns": [
       {
@@ -21212,40 +21306,33 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 401,
+      "lineno": 279,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
     },
-    "order": 8,
-    "newscope": true,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SalesforceState"
+      }
+    ],
+    "order": 11,
     "level": 0
   },
   {
-    "id": "bulkQuery",
-    "longname": "bulkQuery",
-    "name": "bulkQuery",
-    "kind": "function",
+    "id": "BulkQueryOptions",
+    "longname": "BulkQueryOptions",
+    "name": "BulkQueryOptions",
+    "kind": "typedef",
     "scope": "global",
-    "description": "Execute an SOQL Bulk Query.\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\n`bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v.2.0 Query} which is available in API version 47.0 and later.\nThis API is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "A query string.",
-        "name": "qs"
-      },
-      {
-        "type": {
-          "names": [
-            "object"
-          ]
-        },
-        "description": "Options passed to the bulk api.",
-        "name": "options"
-      },
+    "description": "Options provided to the Salesforce bulk query API request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
       {
         "type": {
           "names": [
@@ -21255,7 +21342,7 @@
         "optional": true,
         "defaultvalue": 90000,
         "description": "Polling timeout in milliseconds.",
-        "name": "options.pollTimeout"
+        "name": "pollTimeout"
       },
       {
         "type": {
@@ -21266,34 +21353,12 @@
         "optional": true,
         "defaultvalue": 3000,
         "description": "Polling interval in milliseconds.",
-        "name": "options.pollInterval"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "A callback to execute once the record is retrieved",
-        "name": "callback"
-      }
-    ],
-    "examples": [
-      "<caption>The results will be available on `state.data`</caption>\nbulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);",
-      "bulkQuery(\n  (state) =>\n    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,\n  { pollTimeout: 10000, pollInterval: 6000 }\n);"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
+        "name": "pollInterval"
       }
     ],
     "access": "public",
     "meta": {
-      "lineno": 318,
+      "lineno": 71,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
     },
@@ -21306,7 +21371,7 @@
     "name": "create",
     "kind": "function",
     "scope": "global",
-    "description": "Create a new sObject record(s).",
+    "description": "Create one or more new sObject records. Relationships in the record should be nested and not use dot-notation syntax",
     "params": [
       {
         "type": {
@@ -21315,21 +21380,24 @@
           ]
         },
         "description": "API name of the sObject.",
-        "name": "sObject"
+        "name": "sObjectName"
       },
       {
         "type": {
           "names": [
-            "object"
+            "Object",
+            "Array.<Object>"
           ]
         },
-        "description": "Field attributes for the new record.",
-        "name": "attrs"
+        "description": "Field attributes for the new record, or an array of field attributes.",
+        "name": "records"
       }
     ],
     "examples": [
       "<caption> Single record creation</caption>\ncreate(\"Account\", { Name: \"My Account #1\" });",
-      "<caption> Multiple records creation</caption>\ncreate(\"Account\",[{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }]);"
+      "<caption> Multiple records creation</caption>\ncreate(\"Account\",[{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }]);",
+      "<caption> Create records from data on state</caption>\ncreate(\"Account\",\n  $.data.map((account) => ({\n    Name: account.label\n  })\n));",
+      "<caption>Update a record with a relationship</caption>\ncreate(\"Account\", {\n  Name: \"My Account #1\" ,\n  \"Project__r\": {\n    \"Metrics_ID__c\": \"jfh5LAnxu1i4na\"\n  }\n});"
     ],
     "returns": [
       {
@@ -21342,68 +21410,17 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 557,
+      "lineno": 344,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
     },
-    "order": 10,
-    "level": 0
-  },
-  {
-    "id": "createIf",
-    "longname": "createIf",
-    "name": "createIf",
-    "kind": "function",
-    "scope": "global",
-    "description": "Create a new sObject if conditions are met.\n\n**The `createIf()` function has been deprecated. Use `fnIf(condition,create())` instead.**",
-    "params": [
+    "state": [
       {
-        "type": {
-          "names": [
-            "boolean"
-          ]
-        },
-        "description": "a logical statement that will be evaluated.",
-        "name": "logical"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "API name of the sObject.",
-        "name": "sObject"
-      },
-      {
-        "type": {
-          "names": [
-            "object",
-            "Array.<object>"
-          ]
-        },
-        "description": "Field attributes for the new object.",
-        "name": "attrs"
+        "name": null,
+        "description": "No description",
+        "type": "SalesforceResultState"
       }
     ],
-    "examples": [
-      "createIf(true, 'obj_name', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 605,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
-    },
     "order": 12,
     "level": 0
   },
@@ -21413,7 +21430,7 @@
     "name": "describe",
     "kind": "function",
     "scope": "global",
-    "description": "Prints an sObject metadata and pushes the result to state.references",
+    "description": "Fetches and logs metadata for an sObject and pushes the result to `state.data`.\nIf `sObjectName` is not specified, it will print the total number of all available sObjects and push the result to `state.data`.",
     "params": [
       {
         "type": {
@@ -21421,12 +21438,13 @@
             "string"
           ]
         },
-        "description": "API name of the sObject.",
-        "name": "sObject"
+        "description": "The API name of the sObject. If omitted, fetches metadata for all sObjects.",
+        "name": "sObjectName"
       }
     ],
     "examples": [
-      "describe('obj_name')"
+      "<caption>Fetch metadata for all available sObjects</caption>\ndescribe()",
+      "<caption>Fetch metadata for Account sObject</caption>\ndescribe('Account')"
     ],
     "returns": [
       {
@@ -21439,39 +21457,18 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 93,
+      "lineno": 383,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
     },
-    "order": 4,
-    "level": 0
-  },
-  {
-    "id": "describeAll",
-    "longname": "describeAll",
-    "name": "describeAll",
-    "kind": "function",
-    "scope": "global",
-    "description": "Prints the total number of all available sObjects and pushes the result to `state.references`.",
-    "examples": [
-      "describeAll()"
-    ],
-    "returns": [
+    "state": [
       {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
+        "name": null,
+        "description": "No description",
+        "type": "SalesforceState"
       }
     ],
-    "access": "public",
-    "meta": {
-      "lineno": 68,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
-    },
-    "order": 3,
+    "order": 13,
     "level": 0
   },
   {
@@ -21480,7 +21477,7 @@
     "name": "destroy",
     "kind": "function",
     "scope": "global",
-    "description": "Delete records of an object.",
+    "description": "Delete records of an sObject.",
     "params": [
       {
         "type": {
@@ -21489,7 +21486,17 @@
           ]
         },
         "description": "API name of the sObject.",
-        "name": "sObject"
+        "name": "sObjectName"
+      },
+      {
+        "type": {
+          "names": [
+            "string",
+            "Array.<string>"
+          ]
+        },
+        "description": "ID or array of IDs of records to delete",
+        "name": "ids"
       },
       {
         "type": {
@@ -21497,21 +21504,26 @@
             "object"
           ]
         },
-        "description": "Array of IDs of records to delete.",
-        "name": "attrs"
-      },
-      {
-        "type": {
-          "names": [
-            "object"
-          ]
-        },
+        "optional": true,
         "description": "Options for the destroy delete operation.",
         "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": false,
+        "description": "If true, the operation will fail if any record fails to delete.",
+        "name": "options.failOnError"
       }
     ],
     "examples": [
-      "destroy('obj_name', [\n '0060n00000JQWHYAA5',\n '0090n00000JQEWHYAA5\n], { failOnError: true })"
+      "<caption>Delete a single record</caption>\ndestroy(\"Account\", \"001XXXXXXXXXXXXXXX\");",
+      "<caption>Allow operation to fail if any record fails to delete</caption>\ndestroy(\"Account\", [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"], {\n  failOnError: true,\n});",
+      "<caption> Using a state variable</caption>\n fn((state) => {\n  state.data = [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"];\n  return state;\n});\ndestroy(\"Account\", $.data);"
     ],
     "returns": [
       {
@@ -21524,11 +21536,146 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 514,
+      "lineno": 430,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
     },
-    "order": 9,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SalesforceResultState"
+      }
+    ],
+    "order": 14,
+    "level": 0
+  },
+  {
+    "id": "FullRequestOptions",
+    "longname": "FullRequestOptions",
+    "name": "FullRequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to the Salesforce HTTP request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "GET",
+        "description": "HTTP method to use.",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object of request headers.",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object request query.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object request body.",
+        "name": "json"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "A string request body.",
+        "name": "body"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 42,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
+    },
+    "order": 4,
+    "level": 0
+  },
+  {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "global",
+    "description": "Send a GET request on salesforce server configured in `state.configuration`.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The Salesforce API endpoint.",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "SimpleRequestOptions"
+          ]
+        },
+        "optional": true,
+        "description": "Configure headers and query parameters for the request.",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Make a GET request to a custom Salesforce flow</caption>\nget('/actions/custom/flow/POC_OpenFN_Test_Flow');",
+      "<caption>Make a GET request to a custom Salesforce flow with query parameters</caption>\nget('/actions/custom/flow/POC_OpenFN_Test_Flow', { query: { Status: 'Active' } });",
+      "<caption>Make a GET request then map the response</caption>\nget('/jobs/query/v1/jobs/001XXXXXXXXXXXXXXX/results', (state) => {\n // Mapping the response\n state.mapping = state.data.map(d => ({ name: d.name, id: d.extId }));\n return state;\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 483,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SalesforceState"
+      }
+    ],
+    "order": 15,
     "level": 0
   },
   {
@@ -21537,7 +21684,7 @@
     "name": "insert",
     "kind": "function",
     "scope": "global",
-    "description": "Alias for \"create(sObject, attrs)\".",
+    "description": "Alias for \"create(sObjectName, records)\".",
     "params": [
       {
         "type": {
@@ -21546,21 +21693,23 @@
           ]
         },
         "description": "API name of the sObject.",
-        "name": "sObject"
+        "name": "sObjectName"
       },
       {
         "type": {
           "names": [
-            "object"
+            "Object",
+            "Array.<Object>"
           ]
         },
-        "description": "Field attributes for the new record.",
-        "name": "attrs"
+        "description": "Field attributes for the new record, or an array of field attributes.",
+        "name": "records"
       }
     ],
     "examples": [
       "<caption> Single record creation</caption>\ninsert(\"Account\", { Name: \"My Account #1\" });",
-      "<caption> Multiple records creation</caption>\ninsert(\"Account\",[{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }]);"
+      "<caption> Multiple records creation</caption>\ninsert(\"Account\",[{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }]);",
+      "<caption> Using a state variable</caption>\nfn((state) => {\n  state.data = [{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }];\n  return state;\n});\ninsert(\"Account\", $.data);"
     ],
     "returns": [
       {
@@ -21573,11 +21722,18 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 585,
+      "lineno": 524,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
     },
-    "order": 11,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SalesforceState"
+      }
+    ],
+    "order": 16,
     "level": 0
   },
   {
@@ -21603,19 +21759,19 @@
     },
     "ignore": true,
     "meta": {
-      "lineno": 8,
+      "lineno": 19,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
     },
     "order": 1
   },
   {
-    "id": "query",
-    "longname": "query",
-    "name": "query",
+    "id": "post",
+    "longname": "post",
+    "name": "post",
     "kind": "function",
     "scope": "global",
-    "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.",
+    "description": "Send a POST request to salesforce server configured in `state.configuration`.",
     "params": [
       {
         "type": {
@@ -21623,8 +21779,8 @@
             "string"
           ]
         },
-        "description": "A query string. Must be less than `4000` characters in WHERE clause",
-        "name": "qs"
+        "description": "The Salesforce API endpoint.",
+        "name": "path"
       },
       {
         "type": {
@@ -21632,33 +21788,22 @@
             "object"
           ]
         },
-        "description": "Options passed to the bulk api.",
-        "name": "options"
+        "description": "A JSON Object request body.",
+        "name": "data"
       },
       {
         "type": {
           "names": [
-            "boolean"
+            "SimpleRequestOptions"
           ]
         },
         "optional": true,
-        "defaultvalue": false,
-        "description": "Fetch next records if available.",
-        "name": "options.autoFetch"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "A callback to execute once the record is retrieved",
-        "name": "callback"
+        "description": "Configure headers and query parameters for the request.",
+        "name": "options"
       }
     ],
     "examples": [
-      "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);",
-      "<caption>Query more records if next records are available</caption>\nquery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });"
+      "<caption>Make a POST request to a custom Salesforce flow</caption>\npost(\"/actions/custom/flow/POC_OpenFN_Test_Flow\", {\n  body: {\n    inputs: [\n      {\n        CommentCount: 6,\n        FeedItemId: \"0D5D0000000cfMY\",\n      },\n    ],\n  },\n});"
     ],
     "returns": [
       {
@@ -21671,107 +21816,172 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 167,
+      "lineno": 549,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
     },
-    "order": 6,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SalesforceState"
+      }
+    ],
+    "order": 17,
     "level": 0
   },
   {
-    "id": "reference",
-    "longname": "reference",
-    "name": "reference",
+    "id": "query",
+    "longname": "query",
+    "name": "query",
     "kind": "function",
     "scope": "global",
-    "description": "Get a reference ID by an index.",
+    "description": "Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.\nThis operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.\nNote that in an event of a query error, error logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ learn more here}.",
     "params": [
       {
         "type": {
           "names": [
-            "number"
+            "string",
+            "function"
           ]
         },
-        "description": "Position for references array.",
-        "name": "position"
+        "description": "A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "QueryOptions"
+          ]
+        },
+        "optional": true,
+        "description": "Optional configuration for the query operation",
+        "name": "options"
       }
     ],
     "examples": [
-      "reference(0)"
+      "<caption>Run a query and download all matching records</caption>\nquery('SELECT Id FROM Patient__c', { autoFetch: true });",
+      "<caption>Query patients by Health ID</caption>\nquery(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);",
+      "<caption>Query patients by Health ID using a lazy state reference</caption>\nquery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);"
     ],
     "returns": [
       {
         "type": {
           "names": [
-            "State"
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "properties": [
+      {
+        "description": "Array of result objects of the form <code>\\{ done, totalSize, records \\}</code>",
+        "name": "data"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 597,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SalesforceState"
+      }
+    ],
+    "order": 18,
+    "level": 0
+  },
+  {
+    "id": "QueryOptions",
+    "longname": "QueryOptions",
+    "name": "QueryOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": false,
+        "description": "When true, automatically fetches next batch of records if available.",
+        "name": "autoFetch"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 79,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
+    },
+    "order": 8,
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "global",
+    "description": "Send a request to salesforce server configured in `state.configuration`.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The Salesforce API endpoint.",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "FullRequestOptions"
+          ]
+        },
+        "optional": true,
+        "description": "Configure headers, query and body parameters for the request.",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Make a POST request to a custom Salesforce flow</caption>\nrequest(\"/actions/custom/flow/POC_OpenFN_Test_Flow\", {\n  method: \"POST\",\n  json: { inputs: [{}] },\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
           ]
         }
       }
     ],
     "access": "public",
     "meta": {
-      "lineno": 774,
+      "lineno": 783,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
     },
-    "order": 16,
-    "level": 0
-  },
-  {
-    "id": "relationship",
-    "longname": "relationship",
-    "name": "relationship",
-    "kind": "function",
-    "scope": "global",
-    "description": "Adds a lookup relation or 'dome insert' to a record.",
-    "params": [
+    "state": [
       {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "`__r` relationship field on the record.",
-        "name": "relationshipName"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Salesforce ExternalID field.",
-        "name": "externalId"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "resolvable source.",
-        "name": "dataSource"
+        "name": null,
+        "description": "No description",
+        "type": "SalesforceState"
       }
     ],
-    "examples": [
-      "Data Sourced Value:\n relationship(\"relationship_name__r\", \"externalID on related object\", dataSource(\"path\"))\nFixed Value:\n relationship(\"relationship_name__r\", \"externalID on related object\", \"hello world\")"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "object"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 51,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
-    },
-    "order": 2,
+    "order": 21,
     "level": 0
   },
   {
@@ -21789,7 +21999,7 @@
           ]
         },
         "description": "The sObject to retrieve",
-        "name": "sObject"
+        "name": "sObjectName"
       },
       {
         "type": {
@@ -21799,19 +22009,10 @@
         },
         "description": "The id of the record",
         "name": "id"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "A callback to execute once the record is retrieved",
-        "name": "callback"
       }
     ],
     "examples": [
-      "retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');"
+      "<caption>Retrieve a specific ContentVersion record</caption>\nretrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');"
     ],
     "returns": [
       {
@@ -21824,7 +22025,124 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 125,
+      "lineno": 820,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SalesforceState"
+      }
+    ],
+    "order": 22,
+    "level": 0
+  },
+  {
+    "id": "SalesforceResultState",
+    "longname": "SalesforceResultState",
+    "name": "SalesforceResultState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "Summary of the response from Salesforce",
+        "name": "data"
+      },
+      {
+        "description": "`true` if Salesforce reports no errors from the operation",
+        "name": "data.success"
+      },
+      {
+        "description": "Array of ids for every successful completion",
+        "name": "data.completed"
+      },
+      {
+        "description": "Array of errors reported by Salesforce",
+        "name": "data.errors"
+      },
+      {
+        "description": "History of all previous states",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 32,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
+    },
+    "order": 3
+  },
+  {
+    "id": "SalesforceState",
+    "longname": "SalesforceState",
+    "name": "SalesforceState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "API response data. Can be either an object or array of objects",
+        "name": "data"
+      },
+      {
+        "description": "History of all previous states",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 25,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
+    },
+    "order": 2
+  },
+  {
+    "id": "SimpleRequestOptions",
+    "longname": "SimpleRequestOptions",
+    "name": "SimpleRequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object of request headers.",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object of request query.",
+        "name": "query"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 53,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
     },
@@ -21864,7 +22182,7 @@
     ],
     "ignore": true,
     "meta": {
-      "lineno": 1,
+      "lineno": 12,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
     },
@@ -21875,7 +22193,7 @@
     "longname": "toUTF8",
     "name": "toUTF8",
     "kind": "function",
-    "scope": "global",
+    "scope": "util",
     "description": "Transliterates unicode characters to their best ASCII representation",
     "params": [
       {
@@ -21889,7 +22207,7 @@
       }
     ],
     "examples": [
-      "fn((state) => {\n  const s = toUTF8(\"άνθρωποι\");\n  console.log(s); // anthropoi\n  return state;\n});"
+      "<caption>Transliterate `άνθρωποι` to `anthropoi`</caption>\nfn((state) => {\n  const s = util.toUTF8(\"άνθρωποι\");\n  console.log(s); // anthropoi\n  return state;\n});"
     ],
     "returns": [
       {
@@ -21903,11 +22221,12 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 915,
-      "filename": "Adaptor.js",
+      "lineno": 77,
+      "filename": "util.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
     },
-    "order": 21,
+    "order": 23,
+    "newscope": true,
     "level": 0
   },
   {
@@ -21916,7 +22235,7 @@
     "name": "update",
     "kind": "function",
     "scope": "global",
-    "description": "Update an sObject record or records.",
+    "description": "Update an sObject record or records. Relationships in the record should be nested and not use dot-notation syntax",
     "params": [
       {
         "type": {
@@ -21925,7 +22244,7 @@
           ]
         },
         "description": "API name of the sObject.",
-        "name": "sObject"
+        "name": "sObjectName"
       },
       {
         "type": {
@@ -21935,12 +22254,13 @@
           ]
         },
         "description": "Field attributes for the new object.",
-        "name": "attrs"
+        "name": "records"
       }
     ],
     "examples": [
       "<caption> Single record update</caption>\nupdate(\"Account\", {\n  Id: \"0010500000fxbcuAAA\",\n  Name: \"Updated Account #1\",\n});",
-      "<caption> Multiple records update</caption>\nupdate(\"Account\", [\n  { Id: \"0010500000fxbcuAAA\", Name: \"Updated Account #1\" },\n  { Id: \"0010500000fxbcvAAA\", Name: \"Updated Account #2\" },\n]);"
+      "<caption> Multiple records update</caption>\nupdate(\"Account\", [\n  { Id: \"0010500000fxbcuAAA\", Name: \"Updated Account #1\" },\n  { Id: \"0010500000fxbcvAAA\", Name: \"Updated Account #2\" },\n]);",
+      "<caption>Update a record with a relationship</caption>\nupdate(\"Account\", {\n  Id: \"0010500000fxbcuAAA\",\n  \"Project__r\": {\n    \"Metrics_ID__c\": \"jfh5LAnxu1i4na\"\n  }\n});"
     ],
     "returns": [
       {
@@ -21953,11 +22273,18 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 749,
+      "lineno": 743,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
     },
-    "order": 15,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SalesforceResultState"
+      }
+    ],
+    "order": 20,
     "level": 0
   },
   {
@@ -21966,7 +22293,7 @@
     "name": "upsert",
     "kind": "function",
     "scope": "global",
-    "description": "Create a new sObject record, or updates it if it already exists\nExternal ID field name must be specified in second argument.",
+    "description": "Create a new sObject record, or updates it if it already exists. Relationships in the record should be nested and not use dot-notation syntax",
     "params": [
       {
         "type": {
@@ -21975,7 +22302,7 @@
           ]
         },
         "description": "API name of the sObject.",
-        "name": "sObject"
+        "name": "sObjectName"
       },
       {
         "type": {
@@ -21989,17 +22316,18 @@
       {
         "type": {
           "names": [
-            "object",
-            "Array.<object>"
+            "Object",
+            "Array.<Object>"
           ]
         },
-        "description": "Field attributes for the new object.",
-        "name": "attrs"
+        "description": "Field attributes for the records to upsert, or an array of field attributes.",
+        "name": "records"
       }
     ],
     "examples": [
       "<caption> Single record upsert </caption>\nupsert(\"UpsertTable__c\", \"ExtId__c\", { Name: \"Record #1\", ExtId__c : 'ID-0000001' });",
-      "<caption> Multiple record upsert </caption>\nupsert(\"UpsertTable__c\", \"ExtId__c\", [\n  { Name: \"Record #1\", ExtId__c : 'ID-0000001' },\n  { Name: \"Record #2\", ExtId__c : 'ID-0000002' },\n]);"
+      "<caption> Multiple record upsert </caption>\nupsert(\"UpsertTable__c\", \"ExtId__c\", [\n  { Name: \"Record #1\", ExtId__c : 'ID-0000001' },\n  { Name: \"Record #2\", ExtId__c : 'ID-0000002' },\n]);",
+      "<caption>Update a record with a relationship</caption>\nupsert(\"UpsertTable__c\", {\n  Name: \"Record #1\",\n  \"Project__r\": {\n    \"Metrics_ID__c\": \"jfh5LAnxu1i4na\"\n  }\n});"
     ],
     "returns": [
       {
@@ -22011,10 +22339,22 @@
       }
     ],
     "access": "public",
+    "meta": {
+      "lineno": 693,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SalesforceState"
+      }
+    ],
     "customTags": [
       {
         "tag": "magic",
-        "value": "sObject - $.children[?(!@.meta.system)].name"
+        "value": "sObjectName - $.children[?(!@.meta.system)].name"
       },
       {
         "tag": "magic",
@@ -22022,82 +22362,10 @@
       },
       {
         "tag": "magic",
-        "value": "attrs - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
+        "value": "records - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
       }
     ],
-    "meta": {
-      "lineno": 655,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
-    },
-    "order": 13,
-    "level": 0
-  },
-  {
-    "id": "upsertIf",
-    "longname": "upsertIf",
-    "name": "upsertIf",
-    "kind": "function",
-    "scope": "global",
-    "description": "Conditionally create a new sObject record, or updates it if it already exists\n\n**The `upsertIf()` function has been deprecated. Use `fnIf(condition,upsert())` instead.**",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "boolean"
-          ]
-        },
-        "description": "a logical statement that will be evaluated.",
-        "name": "logical"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "API name of the sObject.",
-        "name": "sObject"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "ID.",
-        "name": "externalId"
-      },
-      {
-        "type": {
-          "names": [
-            "object",
-            "Array.<object>"
-          ]
-        },
-        "description": "Field attributes for the new object.",
-        "name": "attrs"
-      }
-    ],
-    "examples": [
-      "upsertIf(true, 'obj_name', 'ext_id', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 695,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/salesforce/src"
-    },
-    "order": 14,
+    "order": 19,
     "level": 0
   },
   {
@@ -22113,13 +22381,6 @@
     "name": "arrayToString",
     "scope": "global",
     "kind": "external-function"
-  },
-  {
-    "id": "beta",
-    "common": true,
-    "name": "beta",
-    "scope": "global",
-    "kind": "external"
   },
   {
     "id": "chunk",
@@ -22297,7 +22558,7 @@
     "kind": "external-function"
   }
 ],
-{"name":"salesforce","adaptor":"@openfn/language-salesforce","version":"4.8.6","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#bulk\\\">bulk(sObject, operation, options, records)</a></dt>\\n<dt>\\n    <a href=\\\"#bulkquery\\\">bulkQuery(qs, options, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#create\\\">create(sObject, attrs)</a></dt>\\n<dt>\\n    <a href=\\\"#createif\\\">createIf(logical, sObject, attrs)</a></dt>\\n<dt>\\n    <a href=\\\"#describe\\\">describe(sObject)</a></dt>\\n<dt>\\n    <a href=\\\"#describeall\\\">describeAll()</a></dt>\\n<dt>\\n    <a href=\\\"#destroy\\\">destroy(sObject, attrs, options)</a></dt>\\n<dt>\\n    <a href=\\\"#insert\\\">insert(sObject, attrs)</a></dt>\\n<dt>\\n    <a href=\\\"#query\\\">query(qs, options, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#reference\\\">reference(position)</a></dt>\\n<dt>\\n    <a href=\\\"#relationship\\\">relationship(relationshipName, externalId, dataSource)</a></dt>\\n<dt>\\n    <a href=\\\"#retrieve\\\">retrieve(sObject, id, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#toutf8\\\">toUTF8(input)</a></dt>\\n<dt>\\n    <a href=\\\"#update\\\">update(sObject, attrs)</a></dt>\\n<dt>\\n    <a href=\\\"#upsert\\\">upsert(sObject, externalId, attrs)</a></dt>\\n<dt>\\n    <a href=\\\"#upsertif\\\">upsertIf(logical, sObject, externalId, attrs)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#arraytostring\\\">arrayToString()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#beta\\\">beta</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#chunk\\\">chunk()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#expandreferences\\\">expandReferences()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#humanproper\\\">humanProper()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#index\\\">index()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#join\\\">join()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#jsonvalue\\\">jsonValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#referencepath\\\">referencePath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#source\\\">source()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#toarray\\\">toArray()</a>\\n</dt></dl>\\n\\n## Functions\\n### bulk\\n\\n<p><code>bulk(sObject, operation, options, records) ⇒ Operation</code></p>\\n\\nCreate and execute a bulk job.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| sObject | <code>string</code> |  | API name of the sObject. |\\n| operation | <code>string</code> |  | The bulk operation to be performed.Eg \\\"insert\\\" | \\\"update\\\" | \\\"upsert\\\" |\\n| options | <code>object</code> |  | Options passed to the bulk api. |\\n| [options.pollTimeout] | <code>integer</code> | <code>240000</code> | Polling timeout in milliseconds. |\\n| [options.pollInterval] | <code>integer</code> | <code>6000</code> | Polling interval in milliseconds. |\\n| [options.extIdField] | <code>string</code> |  | External id field. |\\n| [options.failOnError] | <code>boolean</code> | <code>false</code> | Fail the operation on error. |\\n| records | <code>array</code> |  | an array of records, or a function which returns an array. |\\n\\n**Example:** Bulk insert\\n```js\\nbulk(\\n  \\\"Patient__c\\\",\\n  \\\"insert\\\",\\n  { failOnError: true },\\n  (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))\\n);\\n```\\n**Example:** Bulk upsert\\n```js\\nbulk(\\n  \\\"vera__Beneficiary__c\\\",\\n  \\\"upsert\\\",\\n  { extIdField: \\\"vera__Result_UID__c\\\" },\\n  [\\n    {\\n      vera__Reporting_Period__c: 2023,\\n      vera__Geographic_Area__c: \\\"Uganda\\\",\\n      \\\"vera__Indicator__r.vera__ExtId__c\\\": 1001,\\n      vera__Result_UID__c: \\\"1001_2023_Uganda\\\",\\n    },\\n  ]\\n);\\n```\\n\\n* * *\\n\\n### bulkQuery\\n\\n<p><code>bulkQuery(qs, options, callback) ⇒ Operation</code></p>\\n\\nExecute an SOQL Bulk Query.\\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\\n`bulkQuery()` uses [Bulk API v.2.0 Query](https://sforce.co/4azgczz) which is available in API version 47.0 and later.\\nThis API is subject to [rate limits](https://sforce.co/4b6kn6z).\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| qs | <code>string</code> |  | A query string. |\\n| options | <code>object</code> |  | Options passed to the bulk api. |\\n| [options.pollTimeout] | <code>integer</code> | <code>90000</code> | Polling timeout in milliseconds. |\\n| [options.pollInterval] | <code>integer</code> | <code>3000</code> | Polling interval in milliseconds. |\\n| callback | <code>function</code> |  | A callback to execute once the record is retrieved |\\n\\n**Example:** The results will be available on `state.data`\\n```js\\nbulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);\\n```\\n**Example**\\n```js\\nbulkQuery(\\n  (state) =>\\n    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,\\n  { pollTimeout: 10000, pollInterval: 6000 }\\n);\\n```\\n\\n* * *\\n\\n### create\\n\\n<p><code>create(sObject, attrs) ⇒ Operation</code></p>\\n\\nCreate a new sObject record(s).\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObject | <code>string</code> | API name of the sObject. |\\n| attrs | <code>object</code> | Field attributes for the new record. |\\n\\n**Example:**  Single record creation\\n```js\\ncreate(\\\"Account\\\", { Name: \\\"My Account #1\\\" });\\n```\\n**Example:**  Multiple records creation\\n```js\\ncreate(\\\"Account\\\",[{ Name: \\\"My Account #1\\\" }, { Name: \\\"My Account #2\\\" }]);\\n```\\n\\n* * *\\n\\n### createIf\\n\\n<p><code>createIf(logical, sObject, attrs) ⇒ Operation</code></p>\\n\\nCreate a new sObject if conditions are met.\\n\\n**The `createIf()` function has been deprecated. Use `fnIf(condition,create())` instead.**\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| logical | <code>boolean</code> | a logical statement that will be evaluated. |\\n| sObject | <code>string</code> | API name of the sObject. |\\n| attrs | <code>object</code> \\\\| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |\\n\\n**Example**\\n```js\\ncreateIf(true, 'obj_name', {\\n  attr1: \\\"foo\\\",\\n  attr2: \\\"bar\\\"\\n})\\n```\\n\\n* * *\\n\\n### describe\\n\\n<p><code>describe(sObject) ⇒ Operation</code></p>\\n\\nPrints an sObject metadata and pushes the result to state.references\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObject | <code>string</code> | API name of the sObject. |\\n\\n**Example**\\n```js\\ndescribe('obj_name')\\n```\\n\\n* * *\\n\\n### describeAll\\n\\n<p><code>describeAll() ⇒ Operation</code></p>\\n\\nPrints the total number of all available sObjects and pushes the result to `state.references`.\\n\\n**Example**\\n```js\\ndescribeAll()\\n```\\n\\n* * *\\n\\n### destroy\\n\\n<p><code>destroy(sObject, attrs, options) ⇒ Operation</code></p>\\n\\nDelete records of an object.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObject | <code>string</code> | API name of the sObject. |\\n| attrs | <code>object</code> | Array of IDs of records to delete. |\\n| options | <code>object</code> | Options for the destroy delete operation. |\\n\\n**Example**\\n```js\\ndestroy('obj_name', [\\n '0060n00000JQWHYAA5',\\n '0090n00000JQEWHYAA5\\n], { failOnError: true })\\n```\\n\\n* * *\\n\\n### insert\\n\\n<p><code>insert(sObject, attrs) ⇒ Operation</code></p>\\n\\nAlias for \\\"create(sObject, attrs)\\\".\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObject | <code>string</code> | API name of the sObject. |\\n| attrs | <code>object</code> | Field attributes for the new record. |\\n\\n**Example:**  Single record creation\\n```js\\ninsert(\\\"Account\\\", { Name: \\\"My Account #1\\\" });\\n```\\n**Example:**  Multiple records creation\\n```js\\ninsert(\\\"Account\\\",[{ Name: \\\"My Account #1\\\" }, { Name: \\\"My Account #2\\\" }]);\\n```\\n\\n* * *\\n\\n### query\\n\\n<p><code>query(qs, options, callback) ⇒ Operation</code></p>\\n\\nExecute an SOQL query.\\nNote that in an event of a query error,\\nerror logs will be printed but the operation will not throw the error.\\n\\nThe Salesforce query API is subject to rate limits, [See for more details](https://sforce.co/3W9zyaQ).\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| qs | <code>string</code> |  | A query string. Must be less than `4000` characters in WHERE clause |\\n| options | <code>object</code> |  | Options passed to the bulk api. |\\n| [options.autoFetch] | <code>boolean</code> | <code>false</code> | Fetch next records if available. |\\n| callback | <code>function</code> |  | A callback to execute once the record is retrieved |\\n\\n**Example**\\n```js\\nquery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);\\n```\\n**Example:** Query more records if next records are available\\n```js\\nquery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });\\n```\\n\\n* * *\\n\\n### reference\\n\\n<p><code>reference(position) ⇒ State</code></p>\\n\\nGet a reference ID by an index.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| position | <code>number</code> | Position for references array. |\\n\\n**Example**\\n```js\\nreference(0)\\n```\\n\\n* * *\\n\\n### relationship\\n\\n<p><code>relationship(relationshipName, externalId, dataSource) ⇒ object</code></p>\\n\\nAdds a lookup relation or 'dome insert' to a record.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| relationshipName | <code>string</code> | `__r` relationship field on the record. |\\n| externalId | <code>string</code> | Salesforce ExternalID field. |\\n| dataSource | <code>string</code> | resolvable source. |\\n\\n**Example**\\n```js\\nData Sourced Value:\\n relationship(\\\"relationship_name__r\\\", \\\"externalID on related object\\\", dataSource(\\\"path\\\"))\\nFixed Value:\\n relationship(\\\"relationship_name__r\\\", \\\"externalID on related object\\\", \\\"hello world\\\")\\n```\\n\\n* * *\\n\\n### retrieve\\n\\n<p><code>retrieve(sObject, id, callback) ⇒ Operation</code></p>\\n\\nRetrieves a Salesforce sObject(s).\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObject | <code>string</code> | The sObject to retrieve |\\n| id | <code>string</code> | The id of the record |\\n| callback | <code>function</code> | A callback to execute once the record is retrieved |\\n\\n**Example**\\n```js\\nretrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');\\n```\\n\\n* * *\\n\\n### toUTF8\\n\\n<p><code>toUTF8(input) ⇒ string</code></p>\\n\\nTransliterates unicode characters to their best ASCII representation\\n\\n**Returns**: <code>string</code> - - ASCII representation of input string  \\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| input | <code>string</code> | A string with unicode characters |\\n\\n**Example**\\n```js\\nfn((state) => {\\n  const s = toUTF8(\\\"άνθρωποι\\\");\\n  console.log(s); // anthropoi\\n  return state;\\n});\\n```\\n\\n* * *\\n\\n### update\\n\\n<p><code>update(sObject, attrs) ⇒ Operation</code></p>\\n\\nUpdate an sObject record or records.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObject | <code>string</code> | API name of the sObject. |\\n| attrs | <code>object</code> \\\\| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |\\n\\n**Example:**  Single record update\\n```js\\nupdate(\\\"Account\\\", {\\n  Id: \\\"0010500000fxbcuAAA\\\",\\n  Name: \\\"Updated Account #1\\\",\\n});\\n```\\n**Example:**  Multiple records update\\n```js\\nupdate(\\\"Account\\\", [\\n  { Id: \\\"0010500000fxbcuAAA\\\", Name: \\\"Updated Account #1\\\" },\\n  { Id: \\\"0010500000fxbcvAAA\\\", Name: \\\"Updated Account #2\\\" },\\n]);\\n```\\n\\n* * *\\n\\n### upsert\\n\\n<p><code>upsert(sObject, externalId, attrs) ⇒ Operation</code></p>\\n\\nCreate a new sObject record, or updates it if it already exists\\nExternal ID field name must be specified in second argument.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObject | <code>string</code> | API name of the sObject. |\\n| externalId | <code>string</code> | The external ID of the sObject. |\\n| attrs | <code>object</code> \\\\| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |\\n\\n**Example:**  Single record upsert \\n```js\\nupsert(\\\"UpsertTable__c\\\", \\\"ExtId__c\\\", { Name: \\\"Record #1\\\", ExtId__c : 'ID-0000001' });\\n```\\n**Example:**  Multiple record upsert \\n```js\\nupsert(\\\"UpsertTable__c\\\", \\\"ExtId__c\\\", [\\n  { Name: \\\"Record #1\\\", ExtId__c : 'ID-0000001' },\\n  { Name: \\\"Record #2\\\", ExtId__c : 'ID-0000002' },\\n]);\\n```\\n\\n* * *\\n\\n### upsertIf\\n\\n<p><code>upsertIf(logical, sObject, externalId, attrs) ⇒ Operation</code></p>\\n\\nConditionally create a new sObject record, or updates it if it already exists\\n\\n**The `upsertIf()` function has been deprecated. Use `fnIf(condition,upsert())` instead.**\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| logical | <code>boolean</code> | a logical statement that will be evaluated. |\\n| sObject | <code>string</code> | API name of the sObject. |\\n| externalId | <code>string</code> | ID. |\\n| attrs | <code>object</code> \\\\| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |\\n\\n**Example**\\n```js\\nupsertIf(true, 'obj_name', 'ext_id', {\\n  attr1: \\\"foo\\\",\\n  attr2: \\\"bar\\\"\\n})\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# Language Salesforce\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\nSalesforce API.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/salesforce-docs)\\nfor full technical documentation.\\n\\n## Release notes and deprecated CHANGELOG.md\\n\\nSee [releases](https://docs.openfn.org/adaptors/packages/salesforce-changelog)\\nfor all changes.\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/saleforce-configuration-schema/)\\ndefinition.\\n\\n## Intent\\n\\n---\\n\\nAllow communication with Salesforce using a set of Lisp compatible expressions.\\n\\nUsing simple functions we can create a simplified API, simple enough to generate\\ncode from data.\\n\\n## Expressions\\n\\n---\\n\\nExpressions are a simplified set of function calls. Outlining the operations\\nneeded to be performed.\\n\\nAn uncompiled expression has no knowledge of the internals of the adaptor,\\ncredentials or runtime environment.\\n\\nIt's the responsibility of the build process to provide a wrapper that will\\ninject the functions in.\\n\\nFor example:\\n\\n```javascript\\ndescribe('vera__Test_Event__c'),\\n  create('vera__Test_Event__c', {\\n    vera__Test_Event_Name_Unique__c: 'hello from jsforce',\\n  }),\\n  create('vera__Boat__c', {\\n    Name: 'Catatafish redux!',\\n    vera__Test_Event__c: reference(0),\\n  });\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\\n## Other\\n\\nCreate SOAP session\\n\\n```sh\\ncurl https://test.salesforce.com/services/Soap/u/47.0 -H \\\"Content-Type: text/xml; charset=UTF-8\\\" -H \\\"SOAPAction: login\\\" -d @tmp/login.txt | xmllint --format -\\n```\\n\\nClose jobs\\n\\n```sh\\ncurl\\nhttps://openfn.my.salesforce.com/services/async/47.0/job/some_id -H 'X-SFDC-Session: abc123sessionID456xyz' -H \\\"Content-Type: application/xml; charset=UTF-8\\\" -d @tmp/close_job.txt | xmllint --format -\\n```\\n\"","changelog":"\"# @openfn/language-salesforce\\n\\n## 4.8.6\\n\\n### Patch Changes\\n\\n- Security fix: update jsonpath-plus version\\n\\n## 4.8.5\\n\\n### Patch Changes\\n\\n- 3fd13c2: Update axios to 1.7.7\\n\\n## 4.8.4\\n\\n### Patch Changes\\n\\n- 8d866e4: Update tough-cookie dependency\\n\\n## 4.8.3\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 4.8.2\\n\\n### Patch Changes\\n\\n- ce08e7f: Fix `autoFetch` behaviour in `query()` function. All records are\\n  merged into a single `records` array, and pushed to `[0]` in\\n  `state.references`.\\n\\n  For jobs which use `references[0][0]` to read query results, this is a\\n  breaking fix.\\n\\n## 4.8.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [4c08444]\\n- Updated dependencies [73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 4.8.0\\n\\n### Minor Changes\\n\\n- 5fb82f07: Export `group` operation from common\\n- b5e0c266: ### Added\\n\\n  - `insert()` function as an alias for `create()`.\\n\\n  ### Improved\\n\\n  - JSDocs for `query`, `bulk`, `describe`, `create`, and `upsert`.\\n\\n  ### Deprecated\\n\\n  - `upsertIf()` and `createIf()` functions are now deprecated. Use\\n    `fnIf(condition, upsert())` instead.\\n\\n### Patch Changes\\n\\n- Updated dependencies [5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 4.7.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 4.6.11\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 4.6.10\\n\\n### Patch Changes\\n\\n- 90f44c62: Include the Salesforce query response in the result, even if no\\n  records are found.\\n\\n## 4.6.9\\n\\n### Patch Changes\\n\\n- Fix any-ascii load and add more tests\\n\\n## 4.6.8\\n\\n### Patch Changes\\n\\n- Properly ensure any-ascii is loaded before executing, resolving a critical\\n  race that we are losing in production\\n\\n## 4.6.7\\n\\n### Patch Changes\\n\\n- 332225ec: - Set default API version to `47.0`\\n  - In `bulkQuery` throw errors if API version is less than `47.0`\\n  - Update `bulkQuery` jsdocs with a link to `Bulk API 2.0 Query`\\n\\n## 4.6.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [12f02ed5]\\n  - @openfn/language-common@1.13.4\\n\\n## 4.6.5\\n\\n### Patch Changes\\n\\n- b1c915b0: Add documentation about Salesforce API limits to query and bulkQuery\\n\\n## 4.6.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 4.6.3\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 4.6.2\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.1\\n\\n## 4.6.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 4.6.0\\n\\n### Minor Changes\\n\\n- cfe1ccb: Add options and callback params in query function\\n\\n## 4.5.2\\n\\n### Patch Changes\\n\\n- 2006e88: fix an issue with bulk jobs not closing\\n\\n## 4.5.1\\n\\n### Patch Changes\\n\\n- fa3e28fe: refactor bulk() to use newExpandReferences\\n\\n## 4.5.0\\n\\n### Minor Changes\\n\\n- 0d2b478: Remove `instance_url` under `other_params` and put it at the root\\n  level of the configuration schema\\n\\n## 4.4.0\\n\\nDeprecated because it does not work with Lightning\\n\\n### Minor Changes\\n\\n- 632b585: Add `OAuth` support\\n- a12f434: Add `request(path, opts, cb)` function\\n\\n## 4.3.1\\n\\n### Patch Changes\\n\\n- 1131c34: Remove regex pattern for validation and changed minLength to 1\\n\\n## 4.3.0\\n\\n### Minor Changes\\n\\n- 1d5b62f: Add `toUTF8` function\\n\\n## 4.2.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [c19efbe]\\n  - @openfn/language-common@1.11.1\\n\\n## 4.2.1\\n\\n### Patch Changes\\n\\n- 07debe9: Update bulkQuery to use bulkv2\\n\\n## 4.2.0\\n\\n### Minor Changes\\n\\n- fc58f1c: add options in bulkQuery\\n\\n## 4.1.0\\n\\n### Minor Changes\\n\\n- 1e3a083: add bulkQuery function\\n\\n## 4.0.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [85c35b8]\\n  - @openfn/language-common@1.11.0\\n\\n## 4.0.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [df09270]\\n  - @openfn/language-common@1.10.3\\n\\n## 4.0.6\\n\\n### Patch Changes\\n\\n- aceedd2: update jsforce and remove unused packages\\n\\n## 4.0.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [26a303e]\\n  - @openfn/language-common@1.10.2\\n\\n## 4.0.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [8c32eb3]\\n  - @openfn/language-common@1.10.1\\n\\n## 4.0.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [aad9549]\\n  - @openfn/language-common@1.10.0\\n\\n## 4.0.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [111807f]\\n  - @openfn/language-common@1.9.0\\n\\n## 4.0.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 4.0.0\\n\\n### Major Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 3.0.7\\n\\n### Patch Changes\\n\\n- 7cc8efc: remove FakeAdaptor references\\n\\n## 3.0.6\\n\\n### Patch Changes\\n\\n- 705caab: Remove tools as devdependencies\\n\\n## 3.0.5\\n\\n### Patch Changes\\n\\n- 929bca6: Use metadata helper function from common\\n- Updated dependencies [929bca6]\\n  - @openfn/language-common@1.7.7\\n\\n## 3.0.4\\n\\n### Patch Changes\\n\\n- ef828e7: update old urls in readme\\n- Updated dependencies [2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 3.0.3\\n\\n### Patch Changes\\n\\n- 06aced8: Fix dependencies\\n\\n## 3.0.2\\n\\n### Patch Changes\\n\\n- aed7e0b: fix required field in configuration schema\\n\\n## 3.0.1\\n\\n### Patch Changes\\n\\n- c09b821: Add @magic annotations\\n\\n## 3.0.0\\n\\n### Major Changes\\n\\n- 190f667: Remove curry from salesforce\\n\\n## 2.12.3\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 2.12.2\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 2.12.1\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*_ @module Adaptor _/\\n\\n## 2.12.0\\n\\n### Minor Changes\\n\\n- 5c883c6: Allow expansion for describe(), add describeAll()\\n\\n### Patch Changes\\n\\n- f2a91a4: Update package exports\\n- Updated dependencies [f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\\n## 2.11.1\\n\\n### Patch Changes\\n\\n- e7bf865: chore(deps): update dependency sinon to v14\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- Updated dependencies [8566b26]\\n- Updated dependencies [b3d45ff]\\n- Updated dependencies [b5eb665]\\n- Updated dependencies [ecf5d30]\\n  - @openfn/language-common@1.7.4\\n\\n## 2.11.0\\n\\n### Minor Changes\\n\\n- edff578: Migrate salesforce\\n\"","functions":["bulk","bulkQuery","create","createIf","describe","describeAll","destroy","insert","query","reference","relationship","retrieve","toUTF8","update","upsert","upsertIf"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"loginUrl":{"title":"Login URL","type":"string","description":"The Salesforce instance login URL","format":"uri","minLength":1,"examples":["https://somesalesforcelogin.url"]},"username":{"title":"Username","type":"string","description":"The username to log in the Salesforce instance","minLength":1,"examples":["someusername"]},"password":{"title":"Password","type":"string","description":"The password to log in the Salesforce instance","writeOnly":true,"minLength":1,"examples":["@super(!)SecretPass"]},"securityToken":{"title":"Security Token","type":"string","description":"The security token to access the Salesforce instance","minLength":1,"examples":["salesforcesecuritytoken"]},"apiVersion":{"title":"API Version","type":"string","placeholder":"52.0","description":"Salesforce API Version","minLength":1,"examples":["59.0"]}},"type":"object","additionalProperties":true,"required":["loginUrl","username","password"]}},
+{"name":"salesforce","adaptor":"@openfn/language-salesforce","version":"5.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#bulk\\\">bulk(sObjectName, operation, records, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#bulkquery\\\">bulkQuery(query, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#create\\\">create(sObjectName, records)</a></dt>\\n<dt>\\n    <a href=\\\"#describe\\\">describe(sObjectName)</a></dt>\\n<dt>\\n    <a href=\\\"#destroy\\\">destroy(sObjectName, ids, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#insert\\\">insert(sObjectName, records)</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, data, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#query\\\">query(query, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(path, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#retrieve\\\">retrieve(sObjectName, id)</a></dt>\\n<dt>\\n    <a href=\\\"#update\\\">update(sObjectName, records)</a></dt>\\n<dt>\\n    <a href=\\\"#upsert\\\">upsert(sObjectName, externalId, records)</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#util_toUTF8\\\">util.toUTF8(input)</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#arraytostring\\\">arrayToString()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#chunk\\\">chunk()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#expandreferences\\\">expandReferences()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#humanproper\\\">humanProper()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#index\\\">index()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#join\\\">join()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#jsonvalue\\\">jsonValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#referencepath\\\">referencePath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#source\\\">source()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#toarray\\\">toArray()</a>\\n</dt></dl>\\n\\n## Functions\\n### bulk\\n\\n<p><code>bulk(sObjectName, operation, records, [options]) ⇒ Operation</code></p>\\n\\nCreate and execute a bulk job. Nested relationships will be flattened to dot notation automatically.\\nThis function uses [Bulk API](https://sforce.co/4fDLJnk),\\nwhich is subject to [rate limits](https://sforce.co/4b6kn6z).\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObjectName | <code>string</code> | API name of the sObject. |\\n| operation | <code>string</code> | The bulk operation to be performed.Eg `insert`, `update` or `upsert` |\\n| records | <code>array</code> | an array of records, or a function which returns an array. |\\n| [options] | [<code>BulkOptions</code>](#bulkoptions) | Options to configure the request. In addition to these, you can pass any of the options supported by the [jsforce API](https://bit.ly/41tyvVU). |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | Summary of the response from Salesforce |\\n| data.success | `true` if Salesforce reports no errors from the operation |\\n| data.completed | Array of ids for every successful completion |\\n| data.errors | Array of errors reported by Salesforce |\\n| references | History of all previous states |\\n**Example:** Bulk insert\\n```js\\nbulk(\\n  \\\"Patient__c\\\",\\n  \\\"insert\\\",\\n  (state) => state.patients.map((x) => ({ Age__c: x.age, Name: x.name })),\\n  { failOnError: true }\\n);\\n```\\n**Example:** Bulk upsert\\n```js\\nbulk(\\n  \\\"vera__Beneficiary__c\\\",\\n  \\\"upsert\\\",\\n  [\\n    {\\n      vera__Reporting_Period__c: 2023,\\n      vera__Geographic_Area__c: \\\"Uganda\\\",\\n      \\\"vera__Indicator__r.vera__ExtId__c\\\": 1001,\\n      vera__Result_UID__c: \\\"1001_2023_Uganda\\\",\\n    },\\n  ],\\n  { extIdField: \\\"vera__Result_UID__c\\\" }\\n);\\n```\\n**Example:** Bulk upsert with a nested relationship\\n```js\\nbulk(\\n  \\\"vera__Beneficiary__c\\\",\\n  \\\"upsert\\\",\\n  [\\n    {\\n      vera__Reporting_Period__c: 2023,\\n      \\\"vera_Project\\\": {\\n        \\\"Metrics_ID__c\\\": \\\"jfh5LAnxu1i4na\\\"\\n      }\\n    },\\n  ],\\n  { extIdField: \\\"vera__Result_UID__c\\\" }\\n);\\n```\\n**Example:** Bulk update Account records using a lazy state reference\\n```js\\nfn((state) => {\\n  state.accounts = state.data.map((a) => ({ Id: a.id, Name: a.name }));\\n  return state;\\n});\\nbulk(\\\"Account\\\", \\\"update\\\", $.accounts, { failOnError: true });\\n```\\n\\n* * *\\n\\n### bulkQuery\\n\\n<p><code>bulkQuery(query, [options]) ⇒ Operation</code></p>\\n\\nExecute an SOQL Bulk Query.\\nThis function query large data sets and reduce the number of API requests.\\n`bulkQuery()` uses [Bulk API v2.0 Query](https://sforce.co/4azgczz) which is available in API version 47.0 and later.\\nThis API is subject to [rate limits](https://sforce.co/4b6kn6z).\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| query | <code>string</code> | A query string. |\\n| [options] | [<code>BulkQueryOptions</code>](#bulkqueryoptions) | Options passed to the bulk api. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | API response data. Can be either an object or array of objects |\\n| references | History of all previous states |\\n**Example:** Bulk query patient records where \\\"Health_ID__c\\\" is equal to the value in \\\"state.data.healthId\\\"\\n```js\\nbulkQuery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);\\n```\\n**Example:** Bulk query with custom polling options\\n```js\\nbulkQuery(\\n  (state) =>\\n    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,\\n  { pollTimeout: 10000, pollInterval: 6000 }\\n);\\n```\\n\\n* * *\\n\\n### create\\n\\n<p><code>create(sObjectName, records) ⇒ Operation</code></p>\\n\\nCreate one or more new sObject records. Relationships in the record should be nested and not use dot-notation syntax\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObjectName | <code>string</code> | API name of the sObject. |\\n| records | <code>Object</code> \\\\| <code>Array.&lt;Object&gt;</code> | Field attributes for the new record, or an array of field attributes. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | Summary of the response from Salesforce |\\n| data.success | `true` if Salesforce reports no errors from the operation |\\n| data.completed | Array of ids for every successful completion |\\n| data.errors | Array of errors reported by Salesforce |\\n| references | History of all previous states |\\n**Example:**  Single record creation\\n```js\\ncreate(\\\"Account\\\", { Name: \\\"My Account #1\\\" });\\n```\\n**Example:**  Multiple records creation\\n```js\\ncreate(\\\"Account\\\",[{ Name: \\\"My Account #1\\\" }, { Name: \\\"My Account #2\\\" }]);\\n```\\n**Example:**  Create records from data on state\\n```js\\ncreate(\\\"Account\\\",\\n  $.data.map((account) => ({\\n    Name: account.label\\n  })\\n));\\n```\\n**Example:** Update a record with a relationship\\n```js\\ncreate(\\\"Account\\\", {\\n  Name: \\\"My Account #1\\\" ,\\n  \\\"Project__r\\\": {\\n    \\\"Metrics_ID__c\\\": \\\"jfh5LAnxu1i4na\\\"\\n  }\\n});\\n```\\n\\n* * *\\n\\n### describe\\n\\n<p><code>describe(sObjectName) ⇒ Operation</code></p>\\n\\nFetches and logs metadata for an sObject and pushes the result to `state.data`.\\nIf `sObjectName` is not specified, it will print the total number of all available sObjects and push the result to `state.data`.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObjectName | <code>string</code> | The API name of the sObject. If omitted, fetches metadata for all sObjects. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | API response data. Can be either an object or array of objects |\\n| references | History of all previous states |\\n**Example:** Fetch metadata for all available sObjects\\n```js\\ndescribe()\\n```\\n**Example:** Fetch metadata for Account sObject\\n```js\\ndescribe('Account')\\n```\\n\\n* * *\\n\\n### destroy\\n\\n<p><code>destroy(sObjectName, ids, [options]) ⇒ Operation</code></p>\\n\\nDelete records of an sObject.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| sObjectName | <code>string</code> |  | API name of the sObject. |\\n| ids | <code>string</code> \\\\| <code>Array.&lt;string&gt;</code> |  | ID or array of IDs of records to delete |\\n| [options] | <code>object</code> |  | Options for the destroy delete operation. |\\n| [options.failOnError] | <code>boolean</code> | <code>false</code> | If true, the operation will fail if any record fails to delete. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | Summary of the response from Salesforce |\\n| data.success | `true` if Salesforce reports no errors from the operation |\\n| data.completed | Array of ids for every successful completion |\\n| data.errors | Array of errors reported by Salesforce |\\n| references | History of all previous states |\\n**Example:** Delete a single record\\n```js\\ndestroy(\\\"Account\\\", \\\"001XXXXXXXXXXXXXXX\\\");\\n```\\n**Example:** Allow operation to fail if any record fails to delete\\n```js\\ndestroy(\\\"Account\\\", [\\\"001XXXXXXXXXXXXXXX\\\", \\\"001YYYYYYYYYYYYYYY\\\"], {\\n  failOnError: true,\\n});\\n```\\n**Example:**  Using a state variable\\n```js\\n fn((state) => {\\n  state.data = [\\\"001XXXXXXXXXXXXXXX\\\", \\\"001YYYYYYYYYYYYYYY\\\"];\\n  return state;\\n});\\ndestroy(\\\"Account\\\", $.data);\\n```\\n\\n* * *\\n\\n### get\\n\\n<p><code>get(path, [options]) ⇒ Operation</code></p>\\n\\nSend a GET request on salesforce server configured in `state.configuration`.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | The Salesforce API endpoint. |\\n| [options] | [<code>SimpleRequestOptions</code>](#simplerequestoptions) | Configure headers and query parameters for the request. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | API response data. Can be either an object or array of objects |\\n| references | History of all previous states |\\n**Example:** Make a GET request to a custom Salesforce flow\\n```js\\nget('/actions/custom/flow/POC_OpenFN_Test_Flow');\\n```\\n**Example:** Make a GET request to a custom Salesforce flow with query parameters\\n```js\\nget('/actions/custom/flow/POC_OpenFN_Test_Flow', { query: { Status: 'Active' } });\\n```\\n**Example:** Make a GET request then map the response\\n```js\\nget('/jobs/query/v1/jobs/001XXXXXXXXXXXXXXX/results', (state) => {\\n // Mapping the response\\n state.mapping = state.data.map(d => ({ name: d.name, id: d.extId }));\\n return state;\\n});\\n```\\n\\n* * *\\n\\n### insert\\n\\n<p><code>insert(sObjectName, records) ⇒ Operation</code></p>\\n\\nAlias for \\\"create(sObjectName, records)\\\".\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObjectName | <code>string</code> | API name of the sObject. |\\n| records | <code>Object</code> \\\\| <code>Array.&lt;Object&gt;</code> | Field attributes for the new record, or an array of field attributes. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | API response data. Can be either an object or array of objects |\\n| references | History of all previous states |\\n**Example:**  Single record creation\\n```js\\ninsert(\\\"Account\\\", { Name: \\\"My Account #1\\\" });\\n```\\n**Example:**  Multiple records creation\\n```js\\ninsert(\\\"Account\\\",[{ Name: \\\"My Account #1\\\" }, { Name: \\\"My Account #2\\\" }]);\\n```\\n**Example:**  Using a state variable\\n```js\\nfn((state) => {\\n  state.data = [{ Name: \\\"My Account #1\\\" }, { Name: \\\"My Account #2\\\" }];\\n  return state;\\n});\\ninsert(\\\"Account\\\", $.data);\\n```\\n\\n* * *\\n\\n### post\\n\\n<p><code>post(path, data, [options]) ⇒ Operation</code></p>\\n\\nSend a POST request to salesforce server configured in `state.configuration`.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | The Salesforce API endpoint. |\\n| data | <code>object</code> | A JSON Object request body. |\\n| [options] | [<code>SimpleRequestOptions</code>](#simplerequestoptions) | Configure headers and query parameters for the request. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | API response data. Can be either an object or array of objects |\\n| references | History of all previous states |\\n**Example:** Make a POST request to a custom Salesforce flow\\n```js\\npost(\\\"/actions/custom/flow/POC_OpenFN_Test_Flow\\\", {\\n  body: {\\n    inputs: [\\n      {\\n        CommentCount: 6,\\n        FeedItemId: \\\"0D5D0000000cfMY\\\",\\n      },\\n    ],\\n  },\\n});\\n```\\n\\n* * *\\n\\n### query\\n\\n<p><code>query(query, [options]) ⇒ Operation</code></p>\\n\\nExecutes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.\\nThis operation uses [for querying salesforce records](https://jsforce.github.io/document/#using-soql) using SOQL query and handles pagination.\\nNote that in an event of a query error, error logs will be printed but the operation will not throw the error.\\n\\nThe Salesforce query API is subject to rate limits, [learn more here](https://sforce.co/3W9zyaQ).\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| query | <code>string</code> \\\\| <code>function</code> | A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause |\\n| [options] | [<code>QueryOptions</code>](#queryoptions) | Optional configuration for the query operation |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | API response data. Can be either an object or array of objects |\\n| references | History of all previous states |\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | Array of result objects of the form <code>\\\\{ done, totalSize, records \\\\}</code> |\\n\\n**Example:** Run a query and download all matching records\\n```js\\nquery('SELECT Id FROM Patient__c', { autoFetch: true });\\n```\\n**Example:** Query patients by Health ID\\n```js\\nquery(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);\\n```\\n**Example:** Query patients by Health ID using a lazy state reference\\n```js\\nquery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(path, [options]) ⇒ Operation</code></p>\\n\\nSend a request to salesforce server configured in `state.configuration`.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | The Salesforce API endpoint. |\\n| [options] | [<code>FullRequestOptions</code>](#fullrequestoptions) | Configure headers, query and body parameters for the request. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | API response data. Can be either an object or array of objects |\\n| references | History of all previous states |\\n**Example:** Make a POST request to a custom Salesforce flow\\n```js\\nrequest(\\\"/actions/custom/flow/POC_OpenFN_Test_Flow\\\", {\\n  method: \\\"POST\\\",\\n  json: { inputs: [{}] },\\n});\\n```\\n\\n* * *\\n\\n### retrieve\\n\\n<p><code>retrieve(sObjectName, id) ⇒ Operation</code></p>\\n\\nRetrieves a Salesforce sObject(s).\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObjectName | <code>string</code> | The sObject to retrieve |\\n| id | <code>string</code> | The id of the record |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | API response data. Can be either an object or array of objects |\\n| references | History of all previous states |\\n**Example:** Retrieve a specific ContentVersion record\\n```js\\nretrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');\\n```\\n\\n* * *\\n\\n### update\\n\\n<p><code>update(sObjectName, records) ⇒ Operation</code></p>\\n\\nUpdate an sObject record or records. Relationships in the record should be nested and not use dot-notation syntax\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObjectName | <code>string</code> | API name of the sObject. |\\n| records | <code>object</code> \\\\| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | Summary of the response from Salesforce |\\n| data.success | `true` if Salesforce reports no errors from the operation |\\n| data.completed | Array of ids for every successful completion |\\n| data.errors | Array of errors reported by Salesforce |\\n| references | History of all previous states |\\n**Example:**  Single record update\\n```js\\nupdate(\\\"Account\\\", {\\n  Id: \\\"0010500000fxbcuAAA\\\",\\n  Name: \\\"Updated Account #1\\\",\\n});\\n```\\n**Example:**  Multiple records update\\n```js\\nupdate(\\\"Account\\\", [\\n  { Id: \\\"0010500000fxbcuAAA\\\", Name: \\\"Updated Account #1\\\" },\\n  { Id: \\\"0010500000fxbcvAAA\\\", Name: \\\"Updated Account #2\\\" },\\n]);\\n```\\n**Example:** Update a record with a relationship\\n```js\\nupdate(\\\"Account\\\", {\\n  Id: \\\"0010500000fxbcuAAA\\\",\\n  \\\"Project__r\\\": {\\n    \\\"Metrics_ID__c\\\": \\\"jfh5LAnxu1i4na\\\"\\n  }\\n});\\n```\\n\\n* * *\\n\\n### upsert\\n\\n<p><code>upsert(sObjectName, externalId, records) ⇒ Operation</code></p>\\n\\nCreate a new sObject record, or updates it if it already exists. Relationships in the record should be nested and not use dot-notation syntax\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sObjectName | <code>string</code> | API name of the sObject. |\\n| externalId | <code>string</code> | The external ID of the sObject. |\\n| records | <code>Object</code> \\\\| <code>Array.&lt;Object&gt;</code> | Field attributes for the records to upsert, or an array of field attributes. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | API response data. Can be either an object or array of objects |\\n| references | History of all previous states |\\n**Example:**  Single record upsert \\n```js\\nupsert(\\\"UpsertTable__c\\\", \\\"ExtId__c\\\", { Name: \\\"Record #1\\\", ExtId__c : 'ID-0000001' });\\n```\\n**Example:**  Multiple record upsert \\n```js\\nupsert(\\\"UpsertTable__c\\\", \\\"ExtId__c\\\", [\\n  { Name: \\\"Record #1\\\", ExtId__c : 'ID-0000001' },\\n  { Name: \\\"Record #2\\\", ExtId__c : 'ID-0000002' },\\n]);\\n```\\n**Example:** Update a record with a relationship\\n```js\\nupsert(\\\"UpsertTable__c\\\", {\\n  Name: \\\"Record #1\\\",\\n  \\\"Project__r\\\": {\\n    \\\"Metrics_ID__c\\\": \\\"jfh5LAnxu1i4na\\\"\\n  }\\n});\\n```\\n\\n* * *\\n\\n\\n## util\\n\\nThese functions belong to the util namespace.\\n### util.toUTF8 {#util_toUTF8}\\n\\n<p><code>toUTF8(input) ⇒ string</code></p>\\n\\nTransliterates unicode characters to their best ASCII representation\\n\\n**Returns**: <code>string</code> - - ASCII representation of input string  \\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| input | <code>string</code> | A string with unicode characters |\\n\\n**Example:** Transliterate `άνθρωποι` to `anthropoi`\\n```js\\nfn((state) => {\\n  const s = util.toUTF8(\\\"άνθρωποι\\\");\\n  console.log(s); // anthropoi\\n  return state;\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### BulkOptions\\n\\nOptions provided to the Salesforce bulk API request\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| extIdField | <code>string</code> |  | External id field. Required for upsert. |\\n| [allowNoOp] | <code>boolean</code> | <code>false</code> | Skipping bulk operation if no records. |\\n| [failOnError] | <code>boolean</code> | <code>false</code> | Fail the operation on error. |\\n| [pollTimeout] | <code>integer</code> | <code>240000</code> | Polling timeout in milliseconds. |\\n| [pollInterval] | <code>integer</code> | <code>6000</code> | Polling interval in milliseconds. |\\n\\n\\n* * *\\n\\n### BulkQueryOptions\\n\\nOptions provided to the Salesforce bulk query API request\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [pollTimeout] | <code>integer</code> | <code>90000</code> | Polling timeout in milliseconds. |\\n| [pollInterval] | <code>integer</code> | <code>3000</code> | Polling interval in milliseconds. |\\n\\n\\n* * *\\n\\n### FullRequestOptions\\n\\nOptions provided to the Salesforce HTTP request\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [method] | <code>string</code> | <code>&quot;GET&quot;</code> | HTTP method to use. |\\n| headers | <code>object</code> |  | Object of request headers. |\\n| query | <code>object</code> |  | Object request query. |\\n| json | <code>object</code> |  | Object request body. |\\n| body | <code>string</code> |  | A string request body. |\\n\\n\\n* * *\\n\\n### QueryOptions\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [autoFetch] | <code>boolean</code> | <code>false</code> | When true, automatically fetches next batch of records if available. |\\n\\n\\n* * *\\n\\n### SimpleRequestOptions\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| headers | <code>object</code> | Object of request headers. |\\n| query | <code>object</code> | Object of request query. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# Language Salesforce\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\nSalesforce API.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/salesforce-docs)\\nfor full technical documentation.\\n\\n## Release notes and deprecated CHANGELOG.md\\n\\nSee [releases](https://docs.openfn.org/adaptors/packages/salesforce-changelog)\\nfor all changes.\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/saleforce-configuration-schema/)\\ndefinition.\\n\\n## Intent\\n\\n---\\n\\nAllow communication with Salesforce using a set of Lisp compatible expressions.\\n\\nUsing simple functions we can create a simplified API, simple enough to generate\\ncode from data.\\n\\n## Expressions\\n\\n---\\n\\nExpressions are a simplified set of function calls. Outlining the operations\\nneeded to be performed.\\n\\nAn uncompiled expression has no knowledge of the internals of the adaptor,\\ncredentials or runtime environment.\\n\\nIt's the responsibility of the build process to provide a wrapper that will\\ninject the functions in.\\n\\nFor example:\\n\\n```javascript\\ndescribe('vera__Test_Event__c'),\\n  create('vera__Test_Event__c', {\\n    vera__Test_Event_Name_Unique__c: 'hello from jsforce',\\n  }),\\n  create('vera__Boat__c', {\\n    Name: 'Catatafish redux!',\\n    vera__Test_Event__c: reference(0),\\n  });\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\\n## Other\\n\\nCreate SOAP session\\n\\n```sh\\ncurl https://test.salesforce.com/services/Soap/u/47.0 -H \\\"Content-Type: text/xml; charset=UTF-8\\\" -H \\\"SOAPAction: login\\\" -d @tmp/login.txt | xmllint --format -\\n```\\n\\nClose jobs\\n\\n```sh\\ncurl\\nhttps://openfn.my.salesforce.com/services/async/47.0/job/some_id -H 'X-SFDC-Session: abc123sessionID456xyz' -H \\\"Content-Type: application/xml; charset=UTF-8\\\" -d @tmp/close_job.txt | xmllint --format -\\n```\\n\"","changelog":"\"# @openfn/language-salesforce\\n\\n## 5.0.0\\n\\nMajor modernization of the Salesforce adaptor, focusing on standardized state\\nhandling (ie,`state.data` over on `state.references`) and a cleaner API.\\n\\nThis version introduces multiple breaking changes and workflows WILL require\\nchanges to be compatible - see the Migration Guide.\\n\\n### Migration Guide\\n\\n- Operations now \\\"return\\\" their results to `state.data`. Use `state.data`\\n  instead of `state.references`. For example:\\n\\n```js\\n❌  retrieve('Patient__c', $.patientId);\\n    fn((state) => {\\n      state.patients = state.references.at(-1)\\n      return state\\n    });\\n\\n✅  retrieve('Patient__c', $.patientId);\\n    fn((state) => {\\n      state.patients = state.data;\\n      return state\\n    });\\n```\\n\\n- All callback functions have been removed. Use `fn()` blocks or `.then()`\\n  functions instead. For example:\\n\\n```js\\n❌  query($.query, {}, (state) => {\\n      state.patients = state.references.at(-1)\\n      return state\\n    });\\n\\n✅  query($.query).then((state) => {\\n      state.patients = state.data;\\n      return state\\n    });\\n\\n✅  query($.query)\\n    fn((state) => {\\n     state.patients = state.data\\n     return state\\n    });\\n```\\n\\n- The `axios` object has been removed. For HTTP requests outside salesforce, use\\n  a different step with the http adaptor\\n- Replace `describeAll()` with `describe()`.\\n- Replace `upsertIf(...)` with `fnIf(true, upsert(...))`\\n- Replace `createIf(...)` with `fnIf(true, create(...))`\\n- Replace `toUTF8(...)` with `util.UTF8(...)`\\n- The `bulk()` signature has been re-ordered: replace\\n  `bulk(operation, sObject, options, records)` with\\n  `bulk(operation, sObjectName, records, options)`\\n\\n### Major Changes\\n\\n- 59721be: New API design for salesforce, including use of `composeNextState`\\n  and removing old code.\\n- Remove `axios` dependency\\n- Remove old/unused functions. `relationship`, `upsertIf`, `createIf`,\\n  `reference`, `steps`, `beta`, `describeAll()`\\n- Standardize state mutation in all operations\\n- Change `bulk` signature to `bulk(operation, sObjectName, records, options)`\\n- Remove callback support\\n- a2cf9c7: Move `toUTF8()` to `util.UTF8()`. `toUTF8` is not an operation and\\n  cannot be called at the top level. Moving into the utils namespace should help\\n  make the usage of the function a little clearer\\n- ca09ade: - Restructured response format for `bulk`, `create`,`update` and\\n  `destroy` functions into standardized result structure:\\n  ```\\n  {\\n    success: boolean,\\n    completed: [id],\\n    errors: [{ id message }],\\n  }\\n  ```\\n- b1227a2: - add `query` option in `request` function\\n\\n### Minor Changes\\n\\n- b4a9c42: - Create `get()` and `post()` functions for all http requests against\\n  Salesforce\\n- Update `describe()` to fetch all available sObjects metadata\\n- update function examples and improve options documentation\\n- Enforce that `upsert`, `create` and `update` do not accept dot-notated\\n  relationships. Relationships should be nested instead. Eg, do this:\\n  ```\\n  create('Project', {\\n   \\\"Project__r\\\": {\\n     \\\"Metrics_ID__c\\\": \\\"value\\\"\\n   }\\n  })\\n  ```\\n  Not this:\\n  ```\\n  create('Project', {\\n   \\\"Project__r.Metrics_ID__c\\\": \\\"value\\\"\\n  })\\n  ```\\n- Add support for nested relationships in `bulk` (the adaptor will flatten them\\n  to dot-notation for you)\\n\\n### Patch Changes\\n\\n- b4a9c42: - Change internal `cleanupState` to `removeConnection` and tagged it\\n  as private function\\n  - Rename `attrs` to `records` in docs\\n- Update `@openfn/language-common` to `workspace:*`\\n- Add integration tests\\n\\n## 4.8.6\\n\\n### Patch Changes\\n\\n- Security fix: update jsonpath-plus version\\n\\n## 4.8.5\\n\\n### Patch Changes\\n\\n- 3fd13c2: Update axios to 1.7.7\\n\\n## 4.8.4\\n\\n### Patch Changes\\n\\n- 8d866e4: Update tough-cookie dependency\\n\\n## 4.8.3\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 4.8.2\\n\\n### Patch Changes\\n\\n- ce08e7f: Fix `autoFetch` behaviour in `query()` function. All records are\\n  merged into a single `records` array, and pushed to `[0]` in\\n  `state.references`.\\n\\n  For jobs which use `references[0][0]` to read query results, this is a\\n  breaking fix.\\n\\n## 4.8.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [4c08444]\\n- Updated dependencies [73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 4.8.0\\n\\n### Minor Changes\\n\\n- 5fb82f07: Export `group` operation from common\\n- b5e0c266: ### Added\\n\\n  - `insert()` function as an alias for `create()`.\\n\\n  ### Improved\\n\\n  - JSDocs for `query`, `bulk`, `describe`, `create`, and `upsert`.\\n\\n  ### Deprecated\\n\\n  - `upsertIf()` and `createIf()` functions are now deprecated. Use\\n    `fnIf(condition, upsert())` instead.\\n\\n### Patch Changes\\n\\n- Updated dependencies [5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 4.7.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 4.6.11\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 4.6.10\\n\\n### Patch Changes\\n\\n- 90f44c62: Include the Salesforce query response in the result, even if no\\n  records are found.\\n\\n## 4.6.9\\n\\n### Patch Changes\\n\\n- Fix any-ascii load and add more tests\\n\\n## 4.6.8\\n\\n### Patch Changes\\n\\n- Properly ensure any-ascii is loaded before executing, resolving a critical\\n  race that we are losing in production\\n\\n## 4.6.7\\n\\n### Patch Changes\\n\\n- 332225ec: - Set default API version to `47.0`\\n  - In `bulkQuery` throw errors if API version is less than `47.0`\\n  - Update `bulkQuery` jsdocs with a link to `Bulk API 2.0 Query`\\n\\n## 4.6.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [12f02ed5]\\n  - @openfn/language-common@1.13.4\\n\\n## 4.6.5\\n\\n### Patch Changes\\n\\n- b1c915b0: Add documentation about Salesforce API limits to query and bulkQuery\\n\\n## 4.6.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 4.6.3\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 4.6.2\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.1\\n\\n## 4.6.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 4.6.0\\n\\n### Minor Changes\\n\\n- cfe1ccb: Add options and callback params in query function\\n\\n## 4.5.2\\n\\n### Patch Changes\\n\\n- 2006e88: fix an issue with bulk jobs not closing\\n\\n## 4.5.1\\n\\n### Patch Changes\\n\\n- fa3e28fe: refactor bulk() to use newExpandReferences\\n\\n## 4.5.0\\n\\n### Minor Changes\\n\\n- 0d2b478: Remove `instance_url` under `other_params` and put it at the root\\n  level of the configuration schema\\n\\n## 4.4.0\\n\\nDeprecated because it does not work with Lightning\\n\\n### Minor Changes\\n\\n- 632b585: Add `OAuth` support\\n- a12f434: Add `request(path, opts, cb)` function\\n\\n## 4.3.1\\n\\n### Patch Changes\\n\\n- 1131c34: Remove regex pattern for validation and changed minLength to 1\\n\\n## 4.3.0\\n\\n### Minor Changes\\n\\n- 1d5b62f: Add `toUTF8` function\\n\\n## 4.2.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [c19efbe]\\n  - @openfn/language-common@1.11.1\\n\\n## 4.2.1\\n\\n### Patch Changes\\n\\n- 07debe9: Update bulkQuery to use bulkv2\\n\\n## 4.2.0\\n\\n### Minor Changes\\n\\n- fc58f1c: add options in bulkQuery\\n\\n## 4.1.0\\n\\n### Minor Changes\\n\\n- 1e3a083: add bulkQuery function\\n\\n## 4.0.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [85c35b8]\\n  - @openfn/language-common@1.11.0\\n\\n## 4.0.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [df09270]\\n  - @openfn/language-common@1.10.3\\n\\n## 4.0.6\\n\\n### Patch Changes\\n\\n- aceedd2: update jsforce and remove unused packages\\n\\n## 4.0.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [26a303e]\\n  - @openfn/language-common@1.10.2\\n\\n## 4.0.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [8c32eb3]\\n  - @openfn/language-common@1.10.1\\n\\n## 4.0.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [aad9549]\\n  - @openfn/language-common@1.10.0\\n\\n## 4.0.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [111807f]\\n  - @openfn/language-common@1.9.0\\n\\n## 4.0.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 4.0.0\\n\\n### Major Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 3.0.7\\n\\n### Patch Changes\\n\\n- 7cc8efc: remove FakeAdaptor references\\n\\n## 3.0.6\\n\\n### Patch Changes\\n\\n- 705caab: Remove tools as devdependencies\\n\\n## 3.0.5\\n\\n### Patch Changes\\n\\n- 929bca6: Use metadata helper function from common\\n- Updated dependencies [929bca6]\\n  - @openfn/language-common@1.7.7\\n\\n## 3.0.4\\n\\n### Patch Changes\\n\\n- ef828e7: update old urls in readme\\n- Updated dependencies [2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 3.0.3\\n\\n### Patch Changes\\n\\n- 06aced8: Fix dependencies\\n\\n## 3.0.2\\n\\n### Patch Changes\\n\\n- aed7e0b: fix required field in configuration schema\\n\\n## 3.0.1\\n\\n### Patch Changes\\n\\n- c09b821: Add @magic annotations\\n\\n## 3.0.0\\n\\n### Major Changes\\n\\n- 190f667: Remove curry from salesforce\\n\\n## 2.12.3\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 2.12.2\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 2.12.1\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*_ @module Adaptor _/\\n\\n## 2.12.0\\n\\n### Minor Changes\\n\\n- 5c883c6: Allow expansion for describe(), add describeAll()\\n\\n### Patch Changes\\n\\n- f2a91a4: Update package exports\\n- Updated dependencies [f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\\n## 2.11.1\\n\\n### Patch Changes\\n\\n- e7bf865: chore(deps): update dependency sinon to v14\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- Updated dependencies [8566b26]\\n- Updated dependencies [b3d45ff]\\n- Updated dependencies [b5eb665]\\n- Updated dependencies [ecf5d30]\\n  - @openfn/language-common@1.7.4\\n\\n## 2.11.0\\n\\n### Minor Changes\\n\\n- edff578: Migrate salesforce\\n\"","functions":["bulk","bulkQuery","create","describe","destroy","get","insert","post","query","request","retrieve","update","upsert"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"loginUrl":{"title":"Login URL","type":"string","description":"The Salesforce instance login URL","format":"uri","minLength":1,"examples":["https://somesalesforcelogin.url"]},"username":{"title":"Username","type":"string","description":"The username to log in the Salesforce instance","minLength":1,"examples":["someusername"]},"password":{"title":"Password","type":"string","description":"The password to log in the Salesforce instance","writeOnly":true,"minLength":1,"examples":["@super(!)SecretPass"]},"securityToken":{"title":"Security Token","type":"string","description":"The security token to access the Salesforce instance","minLength":1,"examples":["salesforcesecuritytoken"]},"apiVersion":{"title":"API Version","type":"string","placeholder":"52.0","description":"Salesforce API Version","minLength":1,"examples":["59.0"]}},"type":"object","additionalProperties":true,"required":["loginUrl","username","password"]}},
 [
   {
     "id": "get",

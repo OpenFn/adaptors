@@ -1,36 +1,38 @@
 <dl>
 <dt>
-    <a href="#bulk">bulk(sObject, operation, options, records)</a></dt>
+    <a href="#bulk">bulk(sObjectName, operation, records, [options])</a></dt>
 <dt>
-    <a href="#bulkquery">bulkQuery(qs, options, callback)</a></dt>
+    <a href="#bulkquery">bulkQuery(query, [options])</a></dt>
 <dt>
-    <a href="#create">create(sObject, attrs)</a></dt>
+    <a href="#create">create(sObjectName, records)</a></dt>
 <dt>
-    <a href="#createif">createIf(logical, sObject, attrs)</a></dt>
+    <a href="#describe">describe(sObjectName)</a></dt>
 <dt>
-    <a href="#describe">describe(sObject)</a></dt>
+    <a href="#destroy">destroy(sObjectName, ids, [options])</a></dt>
 <dt>
-    <a href="#describeall">describeAll()</a></dt>
+    <a href="#get">get(path, [options])</a></dt>
 <dt>
-    <a href="#destroy">destroy(sObject, attrs, options)</a></dt>
+    <a href="#insert">insert(sObjectName, records)</a></dt>
 <dt>
-    <a href="#insert">insert(sObject, attrs)</a></dt>
+    <a href="#post">post(path, data, [options])</a></dt>
 <dt>
-    <a href="#query">query(qs, options, callback)</a></dt>
+    <a href="#query">query(query, [options])</a></dt>
 <dt>
-    <a href="#reference">reference(position)</a></dt>
+    <a href="#request">request(path, [options])</a></dt>
 <dt>
-    <a href="#relationship">relationship(relationshipName, externalId, dataSource)</a></dt>
+    <a href="#retrieve">retrieve(sObjectName, id)</a></dt>
 <dt>
-    <a href="#retrieve">retrieve(sObject, id, callback)</a></dt>
+    <a href="#update">update(sObjectName, records)</a></dt>
 <dt>
-    <a href="#toutf8">toUTF8(input)</a></dt>
+    <a href="#upsert">upsert(sObjectName, externalId, records)</a></dt>
+</dl>
+
+This adaptor exports the following namespaced functions:
+
+<dl>
 <dt>
-    <a href="#update">update(sObject, attrs)</a></dt>
-<dt>
-    <a href="#upsert">upsert(sObject, externalId, attrs)</a></dt>
-<dt>
-    <a href="#upsertif">upsertIf(logical, sObject, externalId, attrs)</a></dt>
+    <a href="#util_toUTF8">util.toUTF8(input)</a>
+</dt>
 </dl>
 
 
@@ -41,9 +43,6 @@ This adaptor exports the following from common:
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#arraytostring">arrayToString()</a>
-</dt>
-<dt>
-    <a href="/adaptors/packages/common-docs#beta">beta</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#chunk">chunk()</a>
@@ -124,29 +123,36 @@ This adaptor exports the following from common:
 ## Functions
 ### bulk
 
-<p><code>bulk(sObject, operation, options, records) ⇒ Operation</code></p>
+<p><code>bulk(sObjectName, operation, records, [options]) ⇒ Operation</code></p>
 
-Create and execute a bulk job.
+Create and execute a bulk job. Nested relationships will be flattened to dot notation automatically.
+This function uses [Bulk API](https://sforce.co/4fDLJnk),
+which is subject to [rate limits](https://sforce.co/4b6kn6z).
 
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| sObject | <code>string</code> |  | API name of the sObject. |
-| operation | <code>string</code> |  | The bulk operation to be performed.Eg "insert" | "update" | "upsert" |
-| options | <code>object</code> |  | Options passed to the bulk api. |
-| [options.pollTimeout] | <code>integer</code> | <code>240000</code> | Polling timeout in milliseconds. |
-| [options.pollInterval] | <code>integer</code> | <code>6000</code> | Polling interval in milliseconds. |
-| [options.extIdField] | <code>string</code> |  | External id field. |
-| [options.failOnError] | <code>boolean</code> | <code>false</code> | Fail the operation on error. |
-| records | <code>array</code> |  | an array of records, or a function which returns an array. |
+| Param | Type | Description |
+| --- | --- | --- |
+| sObjectName | <code>string</code> | API name of the sObject. |
+| operation | <code>string</code> | The bulk operation to be performed.Eg `insert`, `update` or `upsert` |
+| records | <code>array</code> | an array of records, or a function which returns an array. |
+| [options] | [<code>BulkOptions</code>](#bulkoptions) | Options to configure the request. In addition to these, you can pass any of the options supported by the [jsforce API](https://bit.ly/41tyvVU). |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | Summary of the response from Salesforce |
+| data.success | `true` if Salesforce reports no errors from the operation |
+| data.completed | Array of ids for every successful completion |
+| data.errors | Array of errors reported by Salesforce |
+| references | History of all previous states |
 **Example:** Bulk insert
 ```js
 bulk(
   "Patient__c",
   "insert",
-  { failOnError: true },
-  (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))
+  (state) => state.patients.map((x) => ({ Age__c: x.age, Name: x.name })),
+  { failOnError: true }
 );
 ```
 **Example:** Bulk upsert
@@ -154,7 +160,6 @@ bulk(
 bulk(
   "vera__Beneficiary__c",
   "upsert",
-  { extIdField: "vera__Result_UID__c" },
   [
     {
       vera__Reporting_Period__c: 2023,
@@ -162,35 +167,63 @@ bulk(
       "vera__Indicator__r.vera__ExtId__c": 1001,
       vera__Result_UID__c: "1001_2023_Uganda",
     },
-  ]
+  ],
+  { extIdField: "vera__Result_UID__c" }
 );
+```
+**Example:** Bulk upsert with a nested relationship
+```js
+bulk(
+  "vera__Beneficiary__c",
+  "upsert",
+  [
+    {
+      vera__Reporting_Period__c: 2023,
+      "vera_Project": {
+        "Metrics_ID__c": "jfh5LAnxu1i4na"
+      }
+    },
+  ],
+  { extIdField: "vera__Result_UID__c" }
+);
+```
+**Example:** Bulk update Account records using a lazy state reference
+```js
+fn((state) => {
+  state.accounts = state.data.map((a) => ({ Id: a.id, Name: a.name }));
+  return state;
+});
+bulk("Account", "update", $.accounts, { failOnError: true });
 ```
 
 * * *
 
 ### bulkQuery
 
-<p><code>bulkQuery(qs, options, callback) ⇒ Operation</code></p>
+<p><code>bulkQuery(query, [options]) ⇒ Operation</code></p>
 
 Execute an SOQL Bulk Query.
-This function uses bulk query to efficiently query large data sets and reduce the number of API requests.
-`bulkQuery()` uses [Bulk API v.2.0 Query](https://sforce.co/4azgczz) which is available in API version 47.0 and later.
+This function query large data sets and reduce the number of API requests.
+`bulkQuery()` uses [Bulk API v2.0 Query](https://sforce.co/4azgczz) which is available in API version 47.0 and later.
 This API is subject to [rate limits](https://sforce.co/4b6kn6z).
 
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| qs | <code>string</code> |  | A query string. |
-| options | <code>object</code> |  | Options passed to the bulk api. |
-| [options.pollTimeout] | <code>integer</code> | <code>90000</code> | Polling timeout in milliseconds. |
-| [options.pollInterval] | <code>integer</code> | <code>3000</code> | Polling interval in milliseconds. |
-| callback | <code>function</code> |  | A callback to execute once the record is retrieved |
+| Param | Type | Description |
+| --- | --- | --- |
+| query | <code>string</code> | A query string. |
+| [options] | [<code>BulkQueryOptions</code>](#bulkqueryoptions) | Options passed to the bulk api. |
 
-**Example:** The results will be available on `state.data`
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | API response data. Can be either an object or array of objects |
+| references | History of all previous states |
+**Example:** Bulk query patient records where "Health_ID__c" is equal to the value in "state.data.healthId"
 ```js
-bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
+bulkQuery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
 ```
-**Example**
+**Example:** Bulk query with custom polling options
 ```js
 bulkQuery(
   (state) =>
@@ -203,16 +236,25 @@ bulkQuery(
 
 ### create
 
-<p><code>create(sObject, attrs) ⇒ Operation</code></p>
+<p><code>create(sObjectName, records) ⇒ Operation</code></p>
 
-Create a new sObject record(s).
+Create one or more new sObject records. Relationships in the record should be nested and not use dot-notation syntax
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sObject | <code>string</code> | API name of the sObject. |
-| attrs | <code>object</code> | Field attributes for the new record. |
+| sObjectName | <code>string</code> | API name of the sObject. |
+| records | <code>Object</code> \| <code>Array.&lt;Object&gt;</code> | Field attributes for the new record, or an array of field attributes. |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | Summary of the response from Salesforce |
+| data.success | `true` if Salesforce reports no errors from the operation |
+| data.completed | Array of ids for every successful completion |
+| data.errors | Array of errors reported by Salesforce |
+| references | History of all previous states |
 **Example:**  Single record creation
 ```js
 create("Account", { Name: "My Account #1" });
@@ -221,100 +263,154 @@ create("Account", { Name: "My Account #1" });
 ```js
 create("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
 ```
-
-* * *
-
-### createIf
-
-<p><code>createIf(logical, sObject, attrs) ⇒ Operation</code></p>
-
-Create a new sObject if conditions are met.
-
-**The `createIf()` function has been deprecated. Use `fnIf(condition,create())` instead.**
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| logical | <code>boolean</code> | a logical statement that will be evaluated. |
-| sObject | <code>string</code> | API name of the sObject. |
-| attrs | <code>object</code> \| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |
-
-**Example**
+**Example:**  Create records from data on state
 ```js
-createIf(true, 'obj_name', {
-  attr1: "foo",
-  attr2: "bar"
-})
+create("Account",
+  $.data.map((account) => ({
+    Name: account.label
+  })
+));
+```
+**Example:** Update a record with a relationship
+```js
+create("Account", {
+  Name: "My Account #1" ,
+  "Project__r": {
+    "Metrics_ID__c": "jfh5LAnxu1i4na"
+  }
+});
 ```
 
 * * *
 
 ### describe
 
-<p><code>describe(sObject) ⇒ Operation</code></p>
+<p><code>describe(sObjectName) ⇒ Operation</code></p>
 
-Prints an sObject metadata and pushes the result to state.references
+Fetches and logs metadata for an sObject and pushes the result to `state.data`.
+If `sObjectName` is not specified, it will print the total number of all available sObjects and push the result to `state.data`.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sObject | <code>string</code> | API name of the sObject. |
+| sObjectName | <code>string</code> | The API name of the sObject. If omitted, fetches metadata for all sObjects. |
 
-**Example**
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | API response data. Can be either an object or array of objects |
+| references | History of all previous states |
+**Example:** Fetch metadata for all available sObjects
 ```js
-describe('obj_name')
+describe()
 ```
-
-* * *
-
-### describeAll
-
-<p><code>describeAll() ⇒ Operation</code></p>
-
-Prints the total number of all available sObjects and pushes the result to `state.references`.
-
-**Example**
+**Example:** Fetch metadata for Account sObject
 ```js
-describeAll()
+describe('Account')
 ```
 
 * * *
 
 ### destroy
 
-<p><code>destroy(sObject, attrs, options) ⇒ Operation</code></p>
+<p><code>destroy(sObjectName, ids, [options]) ⇒ Operation</code></p>
 
-Delete records of an object.
+Delete records of an sObject.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| sObjectName | <code>string</code> |  | API name of the sObject. |
+| ids | <code>string</code> \| <code>Array.&lt;string&gt;</code> |  | ID or array of IDs of records to delete |
+| [options] | <code>object</code> |  | Options for the destroy delete operation. |
+| [options.failOnError] | <code>boolean</code> | <code>false</code> | If true, the operation will fail if any record fails to delete. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | Summary of the response from Salesforce |
+| data.success | `true` if Salesforce reports no errors from the operation |
+| data.completed | Array of ids for every successful completion |
+| data.errors | Array of errors reported by Salesforce |
+| references | History of all previous states |
+**Example:** Delete a single record
+```js
+destroy("Account", "001XXXXXXXXXXXXXXX");
+```
+**Example:** Allow operation to fail if any record fails to delete
+```js
+destroy("Account", ["001XXXXXXXXXXXXXXX", "001YYYYYYYYYYYYYYY"], {
+  failOnError: true,
+});
+```
+**Example:**  Using a state variable
+```js
+ fn((state) => {
+  state.data = ["001XXXXXXXXXXXXXXX", "001YYYYYYYYYYYYYYY"];
+  return state;
+});
+destroy("Account", $.data);
+```
+
+* * *
+
+### get
+
+<p><code>get(path, [options]) ⇒ Operation</code></p>
+
+Send a GET request on salesforce server configured in `state.configuration`.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sObject | <code>string</code> | API name of the sObject. |
-| attrs | <code>object</code> | Array of IDs of records to delete. |
-| options | <code>object</code> | Options for the destroy delete operation. |
+| path | <code>string</code> | The Salesforce API endpoint. |
+| [options] | [<code>SimpleRequestOptions</code>](#simplerequestoptions) | Configure headers and query parameters for the request. |
 
-**Example**
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | API response data. Can be either an object or array of objects |
+| references | History of all previous states |
+**Example:** Make a GET request to a custom Salesforce flow
 ```js
-destroy('obj_name', [
- '0060n00000JQWHYAA5',
- '0090n00000JQEWHYAA5
-], { failOnError: true })
+get('/actions/custom/flow/POC_OpenFN_Test_Flow');
+```
+**Example:** Make a GET request to a custom Salesforce flow with query parameters
+```js
+get('/actions/custom/flow/POC_OpenFN_Test_Flow', { query: { Status: 'Active' } });
+```
+**Example:** Make a GET request then map the response
+```js
+get('/jobs/query/v1/jobs/001XXXXXXXXXXXXXXX/results', (state) => {
+ // Mapping the response
+ state.mapping = state.data.map(d => ({ name: d.name, id: d.extId }));
+ return state;
+});
 ```
 
 * * *
 
 ### insert
 
-<p><code>insert(sObject, attrs) ⇒ Operation</code></p>
+<p><code>insert(sObjectName, records) ⇒ Operation</code></p>
 
-Alias for "create(sObject, attrs)".
+Alias for "create(sObjectName, records)".
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sObject | <code>string</code> | API name of the sObject. |
-| attrs | <code>object</code> | Field attributes for the new record. |
+| sObjectName | <code>string</code> | API name of the sObject. |
+| records | <code>Object</code> \| <code>Array.&lt;Object&gt;</code> | Field attributes for the new record, or an array of field attributes. |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | API response data. Can be either an object or array of objects |
+| references | History of all previous states |
 **Example:**  Single record creation
 ```js
 insert("Account", { Name: "My Account #1" });
@@ -323,134 +419,169 @@ insert("Account", { Name: "My Account #1" });
 ```js
 insert("Account",[{ Name: "My Account #1" }, { Name: "My Account #2" }]);
 ```
+**Example:**  Using a state variable
+```js
+fn((state) => {
+  state.data = [{ Name: "My Account #1" }, { Name: "My Account #2" }];
+  return state;
+});
+insert("Account", $.data);
+```
+
+* * *
+
+### post
+
+<p><code>post(path, data, [options]) ⇒ Operation</code></p>
+
+Send a POST request to salesforce server configured in `state.configuration`.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | The Salesforce API endpoint. |
+| data | <code>object</code> | A JSON Object request body. |
+| [options] | [<code>SimpleRequestOptions</code>](#simplerequestoptions) | Configure headers and query parameters for the request. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | API response data. Can be either an object or array of objects |
+| references | History of all previous states |
+**Example:** Make a POST request to a custom Salesforce flow
+```js
+post("/actions/custom/flow/POC_OpenFN_Test_Flow", {
+  body: {
+    inputs: [
+      {
+        CommentCount: 6,
+        FeedItemId: "0D5D0000000cfMY",
+      },
+    ],
+  },
+});
+```
 
 * * *
 
 ### query
 
-<p><code>query(qs, options, callback) ⇒ Operation</code></p>
+<p><code>query(query, [options]) ⇒ Operation</code></p>
 
-Execute an SOQL query.
-Note that in an event of a query error,
-error logs will be printed but the operation will not throw the error.
+Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.
+This operation uses [for querying salesforce records](https://jsforce.github.io/document/#using-soql) using SOQL query and handles pagination.
+Note that in an event of a query error, error logs will be printed but the operation will not throw the error.
 
-The Salesforce query API is subject to rate limits, [See for more details](https://sforce.co/3W9zyaQ).
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| qs | <code>string</code> |  | A query string. Must be less than `4000` characters in WHERE clause |
-| options | <code>object</code> |  | Options passed to the bulk api. |
-| [options.autoFetch] | <code>boolean</code> | <code>false</code> | Fetch next records if available. |
-| callback | <code>function</code> |  | A callback to execute once the record is retrieved |
-
-**Example**
-```js
-query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);
-```
-**Example:** Query more records if next records are available
-```js
-query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });
-```
-
-* * *
-
-### reference
-
-<p><code>reference(position) ⇒ State</code></p>
-
-Get a reference ID by an index.
+The Salesforce query API is subject to rate limits, [learn more here](https://sforce.co/3W9zyaQ).
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| position | <code>number</code> | Position for references array. |
+| query | <code>string</code> \| <code>function</code> | A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause |
+| [options] | [<code>QueryOptions</code>](#queryoptions) | Optional configuration for the query operation |
 
-**Example**
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | API response data. Can be either an object or array of objects |
+| references | History of all previous states |
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | Array of result objects of the form <code>\{ done, totalSize, records \}</code> |
+
+**Example:** Run a query and download all matching records
 ```js
-reference(0)
+query('SELECT Id FROM Patient__c', { autoFetch: true });
+```
+**Example:** Query patients by Health ID
+```js
+query(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);
+```
+**Example:** Query patients by Health ID using a lazy state reference
+```js
+query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
 ```
 
 * * *
 
-### relationship
+### request
 
-<p><code>relationship(relationshipName, externalId, dataSource) ⇒ object</code></p>
+<p><code>request(path, [options]) ⇒ Operation</code></p>
 
-Adds a lookup relation or 'dome insert' to a record.
+Send a request to salesforce server configured in `state.configuration`.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| relationshipName | <code>string</code> | `__r` relationship field on the record. |
-| externalId | <code>string</code> | Salesforce ExternalID field. |
-| dataSource | <code>string</code> | resolvable source. |
+| path | <code>string</code> | The Salesforce API endpoint. |
+| [options] | [<code>FullRequestOptions</code>](#fullrequestoptions) | Configure headers, query and body parameters for the request. |
 
-**Example**
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | API response data. Can be either an object or array of objects |
+| references | History of all previous states |
+**Example:** Make a POST request to a custom Salesforce flow
 ```js
-Data Sourced Value:
- relationship("relationship_name__r", "externalID on related object", dataSource("path"))
-Fixed Value:
- relationship("relationship_name__r", "externalID on related object", "hello world")
+request("/actions/custom/flow/POC_OpenFN_Test_Flow", {
+  method: "POST",
+  json: { inputs: [{}] },
+});
 ```
 
 * * *
 
 ### retrieve
 
-<p><code>retrieve(sObject, id, callback) ⇒ Operation</code></p>
+<p><code>retrieve(sObjectName, id) ⇒ Operation</code></p>
 
 Retrieves a Salesforce sObject(s).
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sObject | <code>string</code> | The sObject to retrieve |
+| sObjectName | <code>string</code> | The sObject to retrieve |
 | id | <code>string</code> | The id of the record |
-| callback | <code>function</code> | A callback to execute once the record is retrieved |
 
-**Example**
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | API response data. Can be either an object or array of objects |
+| references | History of all previous states |
+**Example:** Retrieve a specific ContentVersion record
 ```js
 retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
 ```
 
 * * *
 
-### toUTF8
-
-<p><code>toUTF8(input) ⇒ string</code></p>
-
-Transliterates unicode characters to their best ASCII representation
-
-**Returns**: <code>string</code> - - ASCII representation of input string  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| input | <code>string</code> | A string with unicode characters |
-
-**Example**
-```js
-fn((state) => {
-  const s = toUTF8("άνθρωποι");
-  console.log(s); // anthropoi
-  return state;
-});
-```
-
-* * *
-
 ### update
 
-<p><code>update(sObject, attrs) ⇒ Operation</code></p>
+<p><code>update(sObjectName, records) ⇒ Operation</code></p>
 
-Update an sObject record or records.
+Update an sObject record or records. Relationships in the record should be nested and not use dot-notation syntax
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sObject | <code>string</code> | API name of the sObject. |
-| attrs | <code>object</code> \| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |
+| sObjectName | <code>string</code> | API name of the sObject. |
+| records | <code>object</code> \| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | Summary of the response from Salesforce |
+| data.success | `true` if Salesforce reports no errors from the operation |
+| data.completed | Array of ids for every successful completion |
+| data.errors | Array of errors reported by Salesforce |
+| references | History of all previous states |
 **Example:**  Single record update
 ```js
 update("Account", {
@@ -465,23 +596,37 @@ update("Account", [
   { Id: "0010500000fxbcvAAA", Name: "Updated Account #2" },
 ]);
 ```
+**Example:** Update a record with a relationship
+```js
+update("Account", {
+  Id: "0010500000fxbcuAAA",
+  "Project__r": {
+    "Metrics_ID__c": "jfh5LAnxu1i4na"
+  }
+});
+```
 
 * * *
 
 ### upsert
 
-<p><code>upsert(sObject, externalId, attrs) ⇒ Operation</code></p>
+<p><code>upsert(sObjectName, externalId, records) ⇒ Operation</code></p>
 
-Create a new sObject record, or updates it if it already exists
-External ID field name must be specified in second argument.
+Create a new sObject record, or updates it if it already exists. Relationships in the record should be nested and not use dot-notation syntax
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sObject | <code>string</code> | API name of the sObject. |
+| sObjectName | <code>string</code> | API name of the sObject. |
 | externalId | <code>string</code> | The external ID of the sObject. |
-| attrs | <code>object</code> \| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |
+| records | <code>Object</code> \| <code>Array.&lt;Object&gt;</code> | Field attributes for the records to upsert, or an array of field attributes. |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | API response data. Can be either an object or array of objects |
+| references | History of all previous states |
 **Example:**  Single record upsert 
 ```js
 upsert("UpsertTable__c", "ExtId__c", { Name: "Record #1", ExtId__c : 'ID-0000001' });
@@ -493,33 +638,114 @@ upsert("UpsertTable__c", "ExtId__c", [
   { Name: "Record #2", ExtId__c : 'ID-0000002' },
 ]);
 ```
-
-* * *
-
-### upsertIf
-
-<p><code>upsertIf(logical, sObject, externalId, attrs) ⇒ Operation</code></p>
-
-Conditionally create a new sObject record, or updates it if it already exists
-
-**The `upsertIf()` function has been deprecated. Use `fnIf(condition,upsert())` instead.**
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| logical | <code>boolean</code> | a logical statement that will be evaluated. |
-| sObject | <code>string</code> | API name of the sObject. |
-| externalId | <code>string</code> | ID. |
-| attrs | <code>object</code> \| <code>Array.&lt;object&gt;</code> | Field attributes for the new object. |
-
-**Example**
+**Example:** Update a record with a relationship
 ```js
-upsertIf(true, 'obj_name', 'ext_id', {
-  attr1: "foo",
-  attr2: "bar"
-})
+upsert("UpsertTable__c", {
+  Name: "Record #1",
+  "Project__r": {
+    "Metrics_ID__c": "jfh5LAnxu1i4na"
+  }
+});
 ```
 
 * * *
 
+
+## util
+
+These functions belong to the util namespace.
+### util.toUTF8 {#util_toUTF8}
+
+<p><code>toUTF8(input) ⇒ string</code></p>
+
+Transliterates unicode characters to their best ASCII representation
+
+**Returns**: <code>string</code> - - ASCII representation of input string  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| input | <code>string</code> | A string with unicode characters |
+
+**Example:** Transliterate `άνθρωποι` to `anthropoi`
+```js
+fn((state) => {
+  const s = util.toUTF8("άνθρωποι");
+  console.log(s); // anthropoi
+  return state;
+});
+```
+
+* * *
+
+
+##  Interfaces
+
+### BulkOptions
+
+Options provided to the Salesforce bulk API request
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| extIdField | <code>string</code> |  | External id field. Required for upsert. |
+| [allowNoOp] | <code>boolean</code> | <code>false</code> | Skipping bulk operation if no records. |
+| [failOnError] | <code>boolean</code> | <code>false</code> | Fail the operation on error. |
+| [pollTimeout] | <code>integer</code> | <code>240000</code> | Polling timeout in milliseconds. |
+| [pollInterval] | <code>integer</code> | <code>6000</code> | Polling interval in milliseconds. |
+
+
+* * *
+
+### BulkQueryOptions
+
+Options provided to the Salesforce bulk query API request
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [pollTimeout] | <code>integer</code> | <code>90000</code> | Polling timeout in milliseconds. |
+| [pollInterval] | <code>integer</code> | <code>3000</code> | Polling interval in milliseconds. |
+
+
+* * *
+
+### FullRequestOptions
+
+Options provided to the Salesforce HTTP request
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [method] | <code>string</code> | <code>&quot;GET&quot;</code> | HTTP method to use. |
+| headers | <code>object</code> |  | Object of request headers. |
+| query | <code>object</code> |  | Object request query. |
+| json | <code>object</code> |  | Object request body. |
+| body | <code>string</code> |  | A string request body. |
+
+
+* * *
+
+### QueryOptions
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [autoFetch] | <code>boolean</code> | <code>false</code> | When true, automatically fetches next batch of records if available. |
+
+
+* * *
+
+### SimpleRequestOptions
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| headers | <code>object</code> | Object of request headers. |
+| query | <code>object</code> | Object of request query. |
+
+
+* * *
 
