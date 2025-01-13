@@ -2,10 +2,10 @@
 
 ## 5.0.0
 
-Major modernisation of the Salesforce adaptor, focusing on standardised state
+Major modernization of the Salesforce adaptor, focusing on standardized state
 handling (ie,`state.data` over on `state.references`) and a cleaner API.
 
-This version introduces multiple breaking changes and worklows WILL require
+This version introduces multiple breaking changes and workflows WILL require
 changes to be compatible - see the Migration Guide.
 
 ### Migration Guide
@@ -62,7 +62,7 @@ changes to be compatible - see the Migration Guide.
 
 - 59721be: New API design for salesforce, including use of `composeNextState`
   and removing old code.
-- Remove axios dependency
+- Remove `axios` dependency
 - Remove old/unused functions. `relationship`, `upsertIf`, `createIf`,
   `reference`, `steps`, `beta`, `describeAll()`
 - Standardize state mutation in all operations
@@ -111,6 +111,8 @@ changes to be compatible - see the Migration Guide.
 - b4a9c42: - Change internal `cleanupState` to `removeConnection` and tagged it
   as private function
   - Rename `attrs` to `records` in docs
+- Update `@openfn/language-common` to `workspace:*`
+- Add integration tests
 
 ## 4.8.6
 
