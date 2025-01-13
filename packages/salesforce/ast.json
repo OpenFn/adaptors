@@ -1,14 +1,15 @@
 {
   "operations": [
     {
-      "name": "relationship",
+      "name": "bulk",
       "params": [
-        "relationshipName",
-        "externalId",
-        "dataSource"
+        "sObjectName",
+        "operation",
+        "records",
+        "options"
       ],
       "docs": {
-        "description": "Adds a lookup relation or 'dome insert' to a record.",
+        "description": "Create and execute a bulk job. Nested relationships will be flattened to dot notation automatically.\nThis function uses {@link https://sforce.co/4fDLJnk Bulk API},\nwhich is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
         "tags": [
           {
             "title": "public",
@@ -17,100 +18,23 @@
           },
           {
             "title": "example",
-            "description": "Data Sourced Value:\n relationship(\"relationship_name__r\", \"externalID on related object\", dataSource(\"path\"))\nFixed Value:\n relationship(\"relationship_name__r\", \"externalID on related object\", \"hello world\")"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "`__r` relationship field on the record.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "relationshipName"
-          },
-          {
-            "title": "param",
-            "description": "Salesforce ExternalID field.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "externalId"
-          },
-          {
-            "title": "param",
-            "description": "resolvable source.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "dataSource"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "describeAll",
-      "params": [],
-      "docs": {
-        "description": "Prints the total number of all available sObjects and pushes the result to `state.references`.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
+            "description": "bulk(\n  \"Patient__c\",\n  \"insert\",\n  (state) => state.patients.map((x) => ({ Age__c: x.age, Name: x.name })),\n  { failOnError: true }\n);",
+            "caption": "Bulk insert"
           },
           {
             "title": "example",
-            "description": "describeAll()"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "describe",
-      "params": [
-        "sObject"
-      ],
-      "docs": {
-        "description": "Prints an sObject metadata and pushes the result to state.references",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
+            "description": "bulk(\n  \"vera__Beneficiary__c\",\n  \"upsert\",\n  [\n    {\n      vera__Reporting_Period__c: 2023,\n      vera__Geographic_Area__c: \"Uganda\",\n      \"vera__Indicator__r.vera__ExtId__c\": 1001,\n      vera__Result_UID__c: \"1001_2023_Uganda\",\n    },\n  ],\n  { extIdField: \"vera__Result_UID__c\" }\n);",
+            "caption": "Bulk upsert"
           },
           {
             "title": "example",
-            "description": "describe('obj_name')"
+            "description": "bulk(\n  \"vera__Beneficiary__c\",\n  \"upsert\",\n  [\n    {\n      vera__Reporting_Period__c: 2023,\n      \"vera_Project\": {\n        \"Metrics_ID__c\": \"jfh5LAnxu1i4na\"\n      }\n    },\n  ],\n  { extIdField: \"vera__Result_UID__c\" }\n);",
+            "caption": "Bulk upsert with a nested relationship"
+          },
+          {
+            "title": "example",
+            "description": "fn((state) => {\n  state.accounts = state.data.map((a) => ({ Id: a.id, Name: a.name }));\n  return state;\n});\nbulk(\"Account\", \"update\", $.accounts, { failOnError: true });",
+            "caption": "Bulk update Account records using a lazy state reference"
           },
           {
             "title": "function",
@@ -124,151 +48,41 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "retrieve",
-      "params": [
-        "sObject",
-        "id",
-        "callback"
-      ],
-      "docs": {
-        "description": "Retrieves a Salesforce sObject(s).",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
+            "name": "sObjectName"
           },
           {
             "title": "param",
-            "description": "The sObject to retrieve",
+            "description": "The bulk operation to be performed.Eg `insert`, `update` or `upsert`",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "operation"
           },
           {
             "title": "param",
-            "description": "The id of the record",
+            "description": "an array of records, or a function which returns an array.",
             "type": {
               "type": "NameExpression",
-              "name": "string"
+              "name": "array"
             },
-            "name": "id"
+            "name": "records"
           },
           {
             "title": "param",
-            "description": "A callback to execute once the record is retrieved",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "query",
-      "params": [
-        "qs",
-        "options",
-        "callback"
-      ],
-      "docs": {
-        "description": "Execute an SOQL query.\nNote that in an event of a query error,\nerror logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ See for more details}.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);"
-          },
-          {
-            "title": "example",
-            "description": "query(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`, { autoFetch: true });",
-            "caption": "Query more records if next records are available"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "A query string. Must be less than `4000` characters in WHERE clause",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "qs"
-          },
-          {
-            "title": "param",
-            "description": "Options passed to the bulk api.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Fetch next records if available.",
+            "description": "Options to configure the request. In addition to these, you can pass any of the options supported by the {@link https://bit.ly/41tyvVU jsforce API}.",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "boolean"
+                "name": "BulkOptions"
               }
             },
-            "name": "options.autoFetch",
-            "default": "false"
+            "name": "options"
           },
           {
-            "title": "param",
-            "description": "A callback to execute once the record is retrieved",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
+            "title": "state",
+            "description": "{SalesforceResultState}"
           },
           {
             "title": "returns",
@@ -280,17 +94,16 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "bulkQuery",
       "params": [
-        "qs",
-        "options",
-        "callback"
+        "query",
+        "options"
       ],
       "docs": {
-        "description": "Execute an SOQL Bulk Query.\nThis function uses bulk query to efficiently query large data sets and reduce the number of API requests.\n`bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v.2.0 Query} which is available in API version 47.0 and later.\nThis API is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
+        "description": "Execute an SOQL Bulk Query.\nThis function query large data sets and reduce the number of API requests.\n`bulkQuery()` uses {@link https://sforce.co/4azgczz Bulk API v2.0 Query} which is available in API version 47.0 and later.\nThis API is subject to {@link https://sforce.co/4b6kn6z rate limits}.",
         "tags": [
           {
             "title": "public",
@@ -299,12 +112,13 @@
           },
           {
             "title": "example",
-            "description": "bulkQuery(state=> `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`);",
-            "caption": "The results will be available on `state.data`"
+            "description": "bulkQuery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);",
+            "caption": "Bulk query patient records where \"Health_ID__c\" is equal to the value in \"state.data.healthId\""
           },
           {
             "title": "example",
-            "description": "bulkQuery(\n  (state) =>\n    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,\n  { pollTimeout: 10000, pollInterval: 6000 }\n);"
+            "description": "bulkQuery(\n  (state) =>\n    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,\n  { pollTimeout: 10000, pollInterval: 6000 }\n);",
+            "caption": "Bulk query with custom polling options"
           },
           {
             "title": "function",
@@ -318,244 +132,23 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "qs"
+            "name": "query"
           },
           {
             "title": "param",
             "description": "Options passed to the bulk api.",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "BulkQueryOptions"
+              }
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "Polling timeout in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollTimeout",
-            "default": "90000"
-          },
-          {
-            "title": "param",
-            "description": "Polling interval in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollInterval",
-            "default": "3000"
-          },
-          {
-            "title": "param",
-            "description": "A callback to execute once the record is retrieved",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": false
-    },
-    {
-      "name": "bulk",
-      "params": [
-        "sObject",
-        "operation",
-        "options",
-        "records"
-      ],
-      "docs": {
-        "description": "Create and execute a bulk job.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "bulk(\n  \"Patient__c\",\n  \"insert\",\n  { failOnError: true },\n  (state) => state.someArray.map((x) => ({ Age__c: x.age, Name: x.name }))\n);",
-            "caption": "Bulk insert"
-          },
-          {
-            "title": "example",
-            "description": "bulk(\n  \"vera__Beneficiary__c\",\n  \"upsert\",\n  { extIdField: \"vera__Result_UID__c\" },\n  [\n    {\n      vera__Reporting_Period__c: 2023,\n      vera__Geographic_Area__c: \"Uganda\",\n      \"vera__Indicator__r.vera__ExtId__c\": 1001,\n      vera__Result_UID__c: \"1001_2023_Uganda\",\n    },\n  ]\n);",
-            "caption": "Bulk upsert"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "API name of the sObject.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "sObject"
-          },
-          {
-            "title": "param",
-            "description": "The bulk operation to be performed.Eg \"insert\" | \"update\" | \"upsert\"",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "operation"
-          },
-          {
-            "title": "param",
-            "description": "Options passed to the bulk api.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Polling timeout in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollTimeout",
-            "default": "240000"
-          },
-          {
-            "title": "param",
-            "description": "Polling interval in milliseconds.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "integer"
-              }
-            },
-            "name": "options.pollInterval",
-            "default": "6000"
-          },
-          {
-            "title": "param",
-            "description": "External id field.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.extIdField"
-          },
-          {
-            "title": "param",
-            "description": "Fail the operation on error.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.failOnError",
-            "default": "false"
-          },
-          {
-            "title": "param",
-            "description": "an array of records, or a function which returns an array.",
-            "type": {
-              "type": "NameExpression",
-              "name": "array"
-            },
-            "name": "records"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": false
-    },
-    {
-      "name": "destroy",
-      "params": [
-        "sObject",
-        "attrs",
-        "options"
-      ],
-      "docs": {
-        "description": "Delete records of an object.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "destroy('obj_name', [\n '0060n00000JQWHYAA5',\n '0090n00000JQEWHYAA5\n], { failOnError: true })"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "API name of the sObject.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "sObject"
-          },
-          {
-            "title": "param",
-            "description": "Array of IDs of records to delete.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "attrs"
-          },
-          {
-            "title": "param",
-            "description": "Options for the destroy delete operation.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "options"
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -572,11 +165,11 @@
     {
       "name": "create",
       "params": [
-        "sObject",
-        "attrs"
+        "sObjectName",
+        "records"
       ],
       "docs": {
-        "description": "Create a new sObject record(s).",
+        "description": "Create one or more new sObject records. Relationships in the record should be nested and not use dot-notation syntax",
         "tags": [
           {
             "title": "public",
@@ -594,6 +187,16 @@
             "caption": "Multiple records creation"
           },
           {
+            "title": "example",
+            "description": "create(\"Account\",\n  $.data.map((account) => ({\n    Name: account.label\n  })\n));",
+            "caption": "Create records from data on state"
+          },
+          {
+            "title": "example",
+            "description": "create(\"Account\", {\n  Name: \"My Account #1\" ,\n  \"Project__r\": {\n    \"Metrics_ID__c\": \"jfh5LAnxu1i4na\"\n  }\n});",
+            "caption": "Update a record with a relationship"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -605,16 +208,274 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "param",
-            "description": "Field attributes for the new record.",
+            "description": "Field attributes for the new record, or an array of field attributes.",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "Object"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "Object"
+                    }
+                  ]
+                }
+              ]
+            },
+            "name": "records"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceResultState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "describe",
+      "params": [
+        "sObjectName"
+      ],
+      "docs": {
+        "description": "Fetches and logs metadata for an sObject and pushes the result to `state.data`.\nIf `sObjectName` is not specified, it will print the total number of all available sObjects and push the result to `state.data`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "describe()",
+            "caption": "Fetch metadata for all available sObjects"
+          },
+          {
+            "title": "example",
+            "description": "describe('Account')",
+            "caption": "Fetch metadata for Account sObject"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The API name of the sObject. If omitted, fetches metadata for all sObjects.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
             },
-            "name": "attrs"
+            "name": "sObjectName"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "destroy",
+      "params": [
+        "sObjectName",
+        "ids",
+        "options"
+      ],
+      "docs": {
+        "description": "Delete records of an sObject.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "destroy(\"Account\", \"001XXXXXXXXXXXXXXX\");",
+            "caption": "Delete a single record"
+          },
+          {
+            "title": "example",
+            "description": "destroy(\"Account\", [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"], {\n  failOnError: true,\n});",
+            "caption": "Allow operation to fail if any record fails to delete"
+          },
+          {
+            "title": "example",
+            "description": "fn((state) => {\n  state.data = [\"001XXXXXXXXXXXXXXX\", \"001YYYYYYYYYYYYYYY\"];\n  return state;\n});\ndestroy(\"Account\", $.data);",
+            "caption": "Using a state variable"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "API name of the sObject.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "sObjectName"
+          },
+          {
+            "title": "param",
+            "description": "ID or array of IDs of records to delete",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "string"
+                    }
+                  ]
+                }
+              ]
+            },
+            "name": "ids"
+          },
+          {
+            "title": "param",
+            "description": "Options for the destroy delete operation.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "If true, the operation will fail if any record fails to delete.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.failOnError",
+            "default": "false"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceResultState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "get",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Send a GET request on salesforce server configured in `state.configuration`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "get('/actions/custom/flow/POC_OpenFN_Test_Flow');",
+            "caption": "Make a GET request to a custom Salesforce flow"
+          },
+          {
+            "title": "example",
+            "description": "get('/actions/custom/flow/POC_OpenFN_Test_Flow', { query: { Status: 'Active' } });",
+            "caption": "Make a GET request to a custom Salesforce flow with query parameters"
+          },
+          {
+            "title": "example",
+            "description": "get('/jobs/query/v1/jobs/001XXXXXXXXXXXXXXX/results', (state) => {\n // Mapping the response\n state.mapping = state.data.map(d => ({ name: d.name, id: d.extId }));\n return state;\n});",
+            "caption": "Make a GET request then map the response"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The Salesforce API endpoint.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Configure headers and query parameters for the request.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "SimpleRequestOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -631,11 +492,11 @@
     {
       "name": "insert",
       "params": [
-        "sObject",
-        "attrs"
+        "sObjectName",
+        "records"
       ],
       "docs": {
-        "description": "Alias for \"create(sObject, attrs)\".",
+        "description": "Alias for \"create(sObjectName, records)\".",
         "tags": [
           {
             "title": "public",
@@ -653,58 +514,9 @@
             "caption": "Multiple records creation"
           },
           {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "API name of the sObject.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "sObject"
-          },
-          {
-            "title": "param",
-            "description": "Field attributes for the new record.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "attrs"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "createIf",
-      "params": [
-        "logical",
-        "sObject",
-        "attrs"
-      ],
-      "docs": {
-        "description": "Create a new sObject if conditions are met.\n\n**The `createIf()` function has been deprecated. Use `fnIf(condition,create())` instead.**",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
             "title": "example",
-            "description": "createIf(true, 'obj_name', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
+            "description": "fn((state) => {\n  state.data = [{ Name: \"My Account #1\" }, { Name: \"My Account #2\" }];\n  return state;\n});\ninsert(\"Account\", $.data);",
+            "caption": "Using a state variable"
           },
           {
             "title": "function",
@@ -713,31 +525,22 @@
           },
           {
             "title": "param",
-            "description": "a logical statement that will be evaluated.",
-            "type": {
-              "type": "NameExpression",
-              "name": "boolean"
-            },
-            "name": "logical"
-          },
-          {
-            "title": "param",
             "description": "API name of the sObject.",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "param",
-            "description": "Field attributes for the new object.",
+            "description": "Field attributes for the new record, or an array of field attributes.",
             "type": {
               "type": "UnionType",
               "elements": [
                 {
                   "type": "NameExpression",
-                  "name": "object"
+                  "name": "Object"
                 },
                 {
                   "type": "TypeApplication",
@@ -748,13 +551,17 @@
                   "applications": [
                     {
                       "type": "NameExpression",
-                      "name": "object"
+                      "name": "Object"
                     }
                   ]
                 }
               ]
             },
-            "name": "attrs"
+            "name": "records"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -769,14 +576,157 @@
       "valid": true
     },
     {
-      "name": "upsert",
+      "name": "post",
       "params": [
-        "sObject",
-        "externalId",
-        "attrs"
+        "path",
+        "data",
+        "options"
       ],
       "docs": {
-        "description": "Create a new sObject record, or updates it if it already exists\nExternal ID field name must be specified in second argument.",
+        "description": "Send a POST request to salesforce server configured in `state.configuration`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "post(\"/actions/custom/flow/POC_OpenFN_Test_Flow\", {\n  body: {\n    inputs: [\n      {\n        CommentCount: 6,\n        FeedItemId: \"0D5D0000000cfMY\",\n      },\n    ],\n  },\n});",
+            "caption": "Make a POST request to a custom Salesforce flow"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The Salesforce API endpoint.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "A JSON Object request body.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Configure headers and query parameters for the request.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "SimpleRequestOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "query",
+      "params": [
+        "query",
+        "options"
+      ],
+      "docs": {
+        "description": "Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.\nThis operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.\nNote that in an event of a query error, error logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ learn more here}.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "query('SELECT Id FROM Patient__c', { autoFetch: true });",
+            "caption": "Run a query and download all matching records"
+          },
+          {
+            "title": "example",
+            "description": "query(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);",
+            "caption": "Query patients by Health ID"
+          },
+          {
+            "title": "example",
+            "description": "query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);",
+            "caption": "Query patients by Health ID using a lazy state reference"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "function"
+                }
+              ]
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "Optional configuration for the query operation",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "QueryOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "upsert",
+      "params": [
+        "sObjectName",
+        "externalId",
+        "records"
+      ],
+      "docs": {
+        "description": "Create a new sObject record, or updates it if it already exists. Relationships in the record should be nested and not use dot-notation syntax",
         "tags": [
           {
             "title": "public",
@@ -794,6 +744,11 @@
             "caption": "Multiple record upsert"
           },
           {
+            "title": "example",
+            "description": "upsert(\"UpsertTable__c\", {\n  Name: \"Record #1\",\n  \"Project__r\": {\n    \"Metrics_ID__c\": \"jfh5LAnxu1i4na\"\n  }\n});",
+            "caption": "Update a record with a relationship"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -805,11 +760,11 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "magic",
-            "description": "sObject - $.children[?(!@.meta.system)].name"
+            "description": "sObjectName - $.children[?(!@.meta.system)].name"
           },
           {
             "title": "param",
@@ -826,13 +781,13 @@
           },
           {
             "title": "param",
-            "description": "Field attributes for the new object.",
+            "description": "Field attributes for the records to upsert, or an array of field attributes.",
             "type": {
               "type": "UnionType",
               "elements": [
                 {
                   "type": "NameExpression",
-                  "name": "object"
+                  "name": "Object"
                 },
                 {
                   "type": "TypeApplication",
@@ -843,108 +798,21 @@
                   "applications": [
                     {
                       "type": "NameExpression",
-                      "name": "object"
+                      "name": "Object"
                     }
                   ]
                 }
               ]
             },
-            "name": "attrs"
+            "name": "records"
           },
           {
             "title": "magic",
-            "description": "attrs - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
+            "description": "records - $.children[?(@.name==\"{{args.sObject}}\")].children[?(!@.meta.externalId)]"
           },
           {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "upsertIf",
-      "params": [
-        "logical",
-        "sObject",
-        "externalId",
-        "attrs"
-      ],
-      "docs": {
-        "description": "Conditionally create a new sObject record, or updates it if it already exists\n\n**The `upsertIf()` function has been deprecated. Use `fnIf(condition,upsert())` instead.**",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "upsertIf(true, 'obj_name', 'ext_id', {\n  attr1: \"foo\",\n  attr2: \"bar\"\n})"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "a logical statement that will be evaluated.",
-            "type": {
-              "type": "NameExpression",
-              "name": "boolean"
-            },
-            "name": "logical"
-          },
-          {
-            "title": "param",
-            "description": "API name of the sObject.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "sObject"
-          },
-          {
-            "title": "param",
-            "description": "ID.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "externalId"
-          },
-          {
-            "title": "param",
-            "description": "Field attributes for the new object.",
-            "type": {
-              "type": "UnionType",
-              "elements": [
-                {
-                  "type": "NameExpression",
-                  "name": "object"
-                },
-                {
-                  "type": "TypeApplication",
-                  "expression": {
-                    "type": "NameExpression",
-                    "name": "Array"
-                  },
-                  "applications": [
-                    {
-                      "type": "NameExpression",
-                      "name": "object"
-                    }
-                  ]
-                }
-              ]
-            },
-            "name": "attrs"
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
@@ -961,16 +829,21 @@
     {
       "name": "update",
       "params": [
-        "sObject",
-        "attrs"
+        "sObjectName",
+        "records"
       ],
       "docs": {
-        "description": "Update an sObject record or records.",
+        "description": "Update an sObject record or records. Relationships in the record should be nested and not use dot-notation syntax",
         "tags": [
           {
             "title": "public",
             "description": null,
             "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
           },
           {
             "title": "example",
@@ -983,9 +856,9 @@
             "caption": "Multiple records update"
           },
           {
-            "title": "function",
-            "description": null,
-            "name": null
+            "title": "example",
+            "description": "update(\"Account\", {\n  Id: \"0010500000fxbcuAAA\",\n  \"Project__r\": {\n    \"Metrics_ID__c\": \"jfh5LAnxu1i4na\"\n  }\n});",
+            "caption": "Update a record with a relationship"
           },
           {
             "title": "param",
@@ -994,7 +867,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sObject"
+            "name": "sObjectName"
           },
           {
             "title": "param",
@@ -1021,7 +894,11 @@
                 }
               ]
             },
-            "name": "attrs"
+            "name": "records"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceResultState}"
           },
           {
             "title": "returns",
@@ -1036,12 +913,13 @@
       "valid": true
     },
     {
-      "name": "reference",
+      "name": "request",
       "params": [
-        "position"
+        "path",
+        "options"
       ],
       "docs": {
-        "description": "Get a reference ID by an index.",
+        "description": "Send a request to salesforce server configured in `state.configuration`.",
         "tags": [
           {
             "title": "public",
@@ -1050,7 +928,8 @@
           },
           {
             "title": "example",
-            "description": "reference(0)"
+            "description": "request(\"/actions/custom/flow/POC_OpenFN_Test_Flow\", {\n  method: \"POST\",\n  json: { inputs: [{}] },\n});",
+            "caption": "Make a POST request to a custom Salesforce flow"
           },
           {
             "title": "function",
@@ -1059,19 +938,35 @@
           },
           {
             "title": "param",
-            "description": "Position for references array.",
+            "description": "The Salesforce API endpoint.",
             "type": {
               "type": "NameExpression",
-              "name": "number"
+              "name": "string"
             },
-            "name": "position"
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Configure headers, query and body parameters for the request.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "FullRequestOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",
             "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "State"
+              "name": "Operation"
             }
           }
         ]
@@ -1079,12 +974,13 @@
       "valid": true
     },
     {
-      "name": "toUTF8",
+      "name": "retrieve",
       "params": [
-        "input"
+        "sObjectName",
+        "id"
       ],
       "docs": {
-        "description": "Transliterates unicode characters to their best ASCII representation",
+        "description": "Retrieves a Salesforce sObject(s).",
         "tags": [
           {
             "title": "public",
@@ -1093,23 +989,42 @@
           },
           {
             "title": "example",
-            "description": "fn((state) => {\n  const s = toUTF8(\"άνθρωποι\");\n  console.log(s); // anthropoi\n  return state;\n});"
+            "description": "retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');",
+            "caption": "Retrieve a specific ContentVersion record"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
           },
           {
             "title": "param",
-            "description": "A string with unicode characters",
+            "description": "The sObject to retrieve",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "input"
+            "name": "sObjectName"
           },
           {
-            "title": "returns",
-            "description": "ASCII representation of input string",
+            "title": "param",
+            "description": "The id of the record",
             "type": {
               "type": "NameExpression",
               "name": "string"
+            },
+            "name": "id"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
             }
           }
         ]
@@ -1551,7 +1466,7 @@
         "operation"
       ],
       "docs": {
-        "description": "Scopes an array of data based on a JSONPath.\nUseful when the source data has `n` items you would like to map to\nan operation.\nThe operation will receive a slice of the data based of each item\nof the JSONPath provided.\n\nIt also ensures the results of an operation make their way back into\nthe state's references.",
+        "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
         "tags": [
           {
             "title": "public",
@@ -1565,7 +1480,18 @@
           },
           {
             "title": "example",
-            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
+            "description": "each(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+            "caption": "Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+            "caption": "Iterate over items in state.data and pass each one into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);",
+            "caption": "Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation"
           },
           {
             "title": "param",

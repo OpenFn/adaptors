@@ -1698,14 +1698,11 @@ importers:
   packages/salesforce:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.15.2
-        version: 1.15.2
+        specifier: workspace:*
+        version: link:../common
       any-ascii:
         specifier: ^0.3.2
         version: 0.3.2
-      axios:
-        specifier: ^1.7.7
-        version: 1.7.7
       jsforce:
         specifier: ^1.11.1
         version: 1.11.1

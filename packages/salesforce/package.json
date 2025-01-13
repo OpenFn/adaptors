@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-salesforce",
-  "version": "4.8.6",
-  "description": "Salesforce Language Pack for OpenFn",
+  "version": "5.0.0",
+  "description": "OpenFn Salesforce adaptor",
   "homepage": "https://docs.openfn.org",
   "exports": {
     ".": {
@@ -13,10 +13,11 @@
   },
   "scripts": {
     "build": "pnpm clean && build-adaptor salesforce",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings --recursive",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --recursive",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings --exclude test/integration.js --recursive",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --exclude test/integration.js --recursive",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
+    "test:integration": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.js",
     "lint": "eslint src"
   },
   "author": "Open Function Group",
@@ -32,9 +33,8 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.15.2",
+    "@openfn/language-common": "workspace:*",
     "any-ascii": "^0.3.2",
-    "axios": "^1.7.7",
     "jsforce": "^1.11.1",
     "lodash": "^4.17.21"
   },
