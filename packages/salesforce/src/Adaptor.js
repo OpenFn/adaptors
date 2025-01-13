@@ -66,6 +66,7 @@ import flatten from 'lodash/flatten';
  * @property {boolean} [failOnError=false] - Fail the operation on error.
  * @property {integer} [pollTimeout=240000] - Polling timeout in milliseconds.
  * @property {integer} [pollInterval=6000] - Polling interval in milliseconds.
+ * @property {boolean} [asynMode=true] - Asynchronous mode.
  */
 
 /**
@@ -177,6 +178,7 @@ export function bulk(sObjectName, operation, records, options = {}) {
       allowNoOp = false,
       pollTimeout = 240000,
       pollInterval = 6000,
+      asyncMode = true,
     } = resolvedOptions;
 
     const flatRecords = util.removeNestings(resolvedRecords);
@@ -220,36 +222,46 @@ export function bulk(sObjectName, operation, records, options = {}) {
               reject(err);
             });
 
-            return batch
-              .on('queue', function (batchInfo) {
-                const batchId = batchInfo.id;
-                var batch = job.batch(batchId);
-                batch.poll(pollInterval, pollTimeout);
-              })
-              .then(async res => {
-                await job.close();
-                const errors = res
-                  .map((r, i) => ({ ...r, position: i + 1 }))
-                  .filter(item => {
-                    return !item.success;
+            if (asyncMode === false) {
+              return batch.on('queue', function (batchInfo) {
+                console.info('Batch queued:', batchInfo);
+                resolve(batchInfo); // Resolve with batch information
+              });
+            } else {
+              return batch
+                .on('queue', function (batchInfo) {
+                  const batchId = batchInfo.id;
+                  var batch = job.batch(batchId);
+                  batch.poll(pollInterval, pollTimeout);
+                })
+                .then(async res => {
+                  await job.close();
+                  const errors = res
+                    .map((r, i) => ({ ...r, position: i + 1 }))
+                    .filter(item => {
+                      return !item.success;
+                    });
+
+                  errors.forEach(err => {
+                    err[`${resolvedOptions.extIdField}`] =
+                      chunkedBatch[err.position - 1][
+                        resolvedOptions.extIdField
+                      ];
                   });
 
-                errors.forEach(err => {
-                  err[`${resolvedOptions.extIdField}`] =
-                    chunkedBatch[err.position - 1][resolvedOptions.extIdField];
+                  if (failOnError && errors.length > 0) {
+                    console.error('Errors detected:');
+                    reject(JSON.stringify(errors, null, 2));
+                  } else {
+                    console.log('Result : ' + JSON.stringify(res, null, 2));
+                    resolve(res);
+                  }
                 });
-
-                if (failOnError && errors.length > 0) {
-                  console.error('Errors detected:');
-                  reject(JSON.stringify(errors, null, 2));
-                } else {
-                  console.log('Result : ' + JSON.stringify(res, null, 2));
-                  resolve(res);
-                }
-              });
+            }
           })
       )
     ).then(results => {
+      console.log({ results });
       const allResults = util.formatResults(results.flat());
       console.log('Merging results arrays.');
       return composeNextState(state, allResults);
