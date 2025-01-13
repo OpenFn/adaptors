@@ -2,8 +2,8 @@ import jsforce from 'jsforce';
 import { throwError } from '@openfn/language-common/util';
 
 function getConnection(state, options) {
-  const { apiVersion } = state.configuration;
-
+  const { apiVersion, loginUrl } = state.configuration;
+  assertLoginUrl(loginUrl);
   const apiVersionRegex = /^\d{2}\.\d$/;
 
   if (apiVersion && apiVersionRegex.test(apiVersion)) {
@@ -14,6 +14,58 @@ function getConnection(state, options) {
   console.log('Using Salesforce API version:', options.version);
 
   return new jsforce.Connection(options);
+}
+
+/**
+ * Validates Salesforce login URLs for both production and sandbox environments
+ * @private
+ * @param {string} url - The Salesforce Login URL to validate
+ * @throws {Error} If the URL format is invalid
+ * @returns {boolean} Returns true if URL is valid
+ */
+export function assertLoginUrl(url) {
+  const cleanUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  const URL_PATTERNS = {
+    production: [
+      /^login\.salesforce\.com$/,
+      /^[a-zA-Z0-9-_.]+\.my\.salesforce\.com$/,
+    ],
+    sandbox: [
+      /^[a-zA-Z0-9-_.]+\.sandbox\.my\.salesforce\.com$/,
+      /^test\.salesforce\.com$/,
+    ],
+  };
+
+  const EXACT_URLS = ['test.salesforce.com', 'login.salesforce.com'];
+  if (EXACT_URLS.includes(cleanUrl)) {
+    return true;
+  }
+
+  const isSandbox = cleanUrl.includes('sandbox') || cleanUrl.includes('test');
+
+  if (isSandbox) {
+    const isValidSandbox = URL_PATTERNS.sandbox.some(pattern =>
+      pattern.test(cleanUrl)
+    );
+    if (!isValidSandbox) {
+      throwError('INVALID_LOGIN_URL', {
+        description: `Invalid login URL: ${url}`,
+        fix: `Sandbox URLs must be either: test.salesforce.com or <domain>.sandbox.my.salesforce.com`,
+      });
+    }
+  } else {
+    const isValidProduction = URL_PATTERNS.production.some(pattern =>
+      pattern.test(cleanUrl)
+    );
+    if (!isValidProduction) {
+      throwError('INVALID_LOGIN_URL', {
+        description: `Invalid login URL: ${url}`,
+        fix: `Production URLs must be either: login.salesforce.com or <mydomain>.my.salesforce.com`,
+      });
+    }
+  }
+
+  return true;
 }
 
 async function createBasicAuthConnection(state) {
