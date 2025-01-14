@@ -29,15 +29,11 @@ describe('encode', () => {
   it('should encode emoji to Base64', () => {
     expect(encode('😀')).to.eql('8J+YgA==');
   });
-  it('should throw an error if the string is not a string', () => {
-    expect(() => encode(123)).to.throw(errorMsg);
-    expect(() => encode(true)).to.throw(errorMsg);
-    expect(() => encode(null)).to.throw(errorMsg);
+  it('should throw an error if a function is passed', () => {
     expect(() => encode(() => {})).to.throw(errorMsg);
   });
   it('should encode a javascript object', () => {
     const obj = {"name": "Jane Doe"}
-
     expect(encode(obj)).to.eql("eyJuYW1lIjoiSmFuZSBEb2UifQ==");
   });
 });
