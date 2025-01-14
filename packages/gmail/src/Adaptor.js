@@ -2,10 +2,12 @@ import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
+
 import {
   normalizeOauthConfig,
   expandReferences,
 } from '@openfn/language-common/util';
+
 import {
   getMessagesResult,
   getMessageResult,
@@ -15,17 +17,59 @@ import {
   removeConnection,
 } from './Utils';
 
-const isTesting = false;
+/**
+ * Used to isolate the type of content to retrieve from the message.
+ * @typedef {Object} DesiredContent
+ * @public
+ * @property {string} type - Message content type. Valid types: from, date, subject, body, archive, file.
+ * @property {string} [name=null] - A custom description the content type. Optional.
+ * @property {RegExp|string} [archive] - When type is 'archive', an identifier to isolate the desired attachment.
+ *   Use a regular expression for pattern matching or a string for a literal match. Required when type is 'archive'.
+ * @property {RegExp|string} [file] - When type is 'file', an identifier to isolate the desired attachment.
+ *   Use a regular expression for pattern matching or a string for a literal match. Required when type is 'file' or 'archive'.
+ * @property {number} [maxLength] - The maximum number of characters to retrieve from the content. Optional.
+ */
 
-export function getContentsFromMessages(
-  userId,
-  query,
-  desiredContents,
-  callback = s => s
-) {
+/**
+ * Configurable options provided to the Gmail adaptor.
+ * @typedef {Object} Options
+ * @public
+ * @property {string} userId - The email address of the Gmail account.
+ * @property {string} [query=null] - Custom query to limit the messages result. Adheres to the Gmail search syntax. Optional.
+ * @property {Array<string|DesiredContent>} [desiredContents=['from', 'date', 'subject', 'body']]
+ *   An array of strings or DesiredContent objects used to specify which parts of the message to retrieve.
+ */
+
+/**
+ * Requests contents from messages of a Gmail account.
+ * @public
+ * @function
+ * @param {string} userId - The email address of the account to retrieve messages from.
+ * @param {Options} userOptions - Customized options including desired contents and query.
+ * @returns {Function} A function that processes the state.
+ * @example
+ * getContentsFromMessages(
+ *   'test@tester.com',
+ *   {
+ *     query: 'in:inbox subject:my+test+message',
+ *     desiredContents: ['date', 'from', 'subject', { type: 'body', maxLength: 50 }]
+ *   }
+ * )
+ */
+export function getContentsFromMessages(userId, userOptions) {
   return async state => {
-    const [resolvedUserId, resolvedQuery, resolvedDesiredContents] =
-      expandReferences(state, userId, query, desiredContents);
+    const [resolvedUserId, resolvedUserOptions] = expandReferences(
+      state,
+      userId,
+      userOptions
+    );
+
+    const defaultOptions = {
+      desiredContents: ['from', 'date', 'subject', 'body'],
+      query: '',
+    };
+
+    const options = { ...defaultOptions, ...(resolvedUserOptions || {}) };
 
     const contents = [];
     const currentIds = [];
@@ -33,16 +77,12 @@ export function getContentsFromMessages(
       ? state.processedIds
       : [];
 
-    if (isTesting) {
-      console.log('previousIds', previousIds);
-    }
-
     let nextPageToken = null;
 
     do {
       const messagesResult = await getMessagesResult(
         resolvedUserId,
-        resolvedQuery,
+        options.query,
         nextPageToken
       );
 
@@ -66,7 +106,7 @@ export function getContentsFromMessages(
 
         const messageResult = await getMessageResult(userId, messageId);
 
-        for (const desiredContentHint of resolvedDesiredContents) {
+        for (const desiredContentHint of options.desiredContents) {
           const desiredContent = getDesiredContent(desiredContentHint);
 
           const messageContent = await getMessageContent(
@@ -97,7 +137,7 @@ export function getContentsFromMessages(
       processedIds: newIds,
     };
 
-    return callback(nextState);
+    return nextState;
   };
 }
 

@@ -1,5 +1,108 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "getContentsFromMessages",
+      "params": [
+        "userId",
+        "userOptions"
+      ],
+      "docs": {
+        "description": "Used to isolate the type of content to retrieve from the message.",
+        "tags": [
+          {
+            "title": "typedef",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "DesiredContent"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "property",
+            "description": "Message content type. Valid types: from, date, subject, body, archive, file.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "type"
+          },
+          {
+            "title": "property",
+            "description": "A custom description the content type. Optional.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "name"
+          },
+          {
+            "title": "property",
+            "description": "When type is 'archive', an identifier to isolate the desired attachment.\n  Use a regular expression for pattern matching or a string for a literal match. Required when type is 'archive'.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "UnionType",
+                "elements": [
+                  {
+                    "type": "NameExpression",
+                    "name": "RegExp"
+                  },
+                  {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                ]
+              }
+            },
+            "name": "archive"
+          },
+          {
+            "title": "property",
+            "description": "When type is 'file', an identifier to isolate the desired attachment.\n  Use a regular expression for pattern matching or a string for a literal match. Required when type is 'file' or 'archive'.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "UnionType",
+                "elements": [
+                  {
+                    "type": "NameExpression",
+                    "name": "RegExp"
+                  },
+                  {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                ]
+              }
+            },
+            "name": "file"
+          },
+          {
+            "title": "property",
+            "description": "The maximum number of characters to retrieve from the content. Optional.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "maxLength"
+          }
+        ]
+      },
+      "valid": false
+    }
+  ],
   "exports": [],
   "common": [
     {

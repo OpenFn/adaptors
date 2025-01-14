@@ -2,7 +2,6 @@ import unzipper from 'unzipper';
 import { google } from 'googleapis';
 
 let gmail;
-const isTesting = true;
 
 export async function getMessagesResult(userId, query, lastPageToken) {
   try {
@@ -69,12 +68,12 @@ export async function getMessageContent(message, desiredContent) {
       return await getFileFromAttachment(message, desiredContent);
 
     case 'body':
-      return getBodyFromMessage(message);
+      return getBodyFromMessage(message, desiredContent);
 
     case 'subject':
     case 'from':
     case 'date':
-      return getValueFromMessageHeader(message, desiredContent.type);
+      return getValueFromMessageHeader(message, desiredContent);
 
     default:
       return `Unsupported content type: ${desiredContent.type}`;
@@ -105,7 +104,7 @@ async function getFileFromArchiveFromAttachment(message, desiredContent) {
 
   return await extractFileFromArchiveAttachment(
     attachmentResult,
-    desiredContent.file
+    desiredContent
   );
 }
 
@@ -115,7 +114,7 @@ async function getFileFromAttachment(message, desiredContent) {
     desiredContent.file
   );
 
-  return await extractFileFromAttachment(attachmentResult);
+  return await extractFileFromAttachment(attachmentResult, desiredContent);
 }
 
 async function getAttachmentResult(message, expression) {
@@ -141,7 +140,7 @@ async function getAttachmentResult(message, expression) {
   };
 }
 
-async function extractFileFromArchiveAttachment(attachment, fileExpression) {
+async function extractFileFromArchiveAttachment(attachment, desiredContent) {
   if (!attachment) {
     return null;
   }
@@ -157,11 +156,11 @@ async function extractFileFromArchiveAttachment(attachment, fileExpression) {
   const directory = await unzipper.Open.buffer(compressedBuffer);
 
   const file = directory?.files.find(f =>
-    isExpressionMatch(f.path, fileExpression)
+    isExpressionMatch(f.path, desiredContent.file)
   );
 
   if (!file) {
-    console.info(`File not found in the archive for: ${fileExpression}`);
+    console.info(`File not found in the archive for: ${desiredContent.file}`);
     return null;
   }
 
@@ -172,11 +171,13 @@ async function extractFileFromArchiveAttachment(attachment, fileExpression) {
   return {
     archiveFilename: attachment.filename,
     filename: file.path,
-    content: isTesting ? fileContent.substring(0, 40) : fileContent,
+    content: desiredContent.maxLength
+      ? fileContent.substring(0, desiredContent.maxLength)
+      : fileContent,
   };
 }
 
-async function extractFileFromAttachment(attachment) {
+async function extractFileFromAttachment(attachment, desiredContent) {
   if (!attachment) {
     return null;
   }
@@ -192,11 +193,13 @@ async function extractFileFromAttachment(attachment) {
 
   return {
     filename: attachment.filename,
-    content: isTesting ? fileContent.substring(0, 40) : fileContent,
+    content: desiredContent.maxLength
+      ? fileContent.substring(0, desiredContent.maxLength)
+      : fileContent,
   };
 }
 
-function getBodyFromMessage(message) {
+function getBodyFromMessage(message, desiredContent) {
   const bodyPart = message.parts?.find(
     part => part.mimeType === 'multipart/alternative'
   );
@@ -209,18 +212,32 @@ function getBodyFromMessage(message) {
 
   if (textBody) {
     const body = Buffer.from(textBody, 'base64').toString('utf-8');
-    return isTesting ? body.substring(0, 40) : body;
+    return desiredContent.maxLength
+      ? body.substring(0, desiredContent.maxLength)
+      : body;
   }
 
   return null;
 }
 
-function getValueFromMessageHeader(message, headerName) {
-  const value = message.headers?.find(
-    h => h.name.toLowerCase() === headerName
-  )?.value;
+function getValueFromMessageHeader(message, desiredContent) {
+  const header = message.headers?.find(
+    h => h.name.toLowerCase() === desiredContent.type
+  );
 
-  return headerName === 'date' && value ? new Date(value) : value;
+  if (!header) {
+    return null;
+  }
+
+  const value = header.value;
+
+  if (desiredContent.type === 'date') {
+    return new Date(value);
+  }
+
+  return desiredContent.maxLength
+    ? value.substring(0, desiredContent.maxLength)
+    : value;
 }
 
 function isExpressionMatch(text, expression) {
