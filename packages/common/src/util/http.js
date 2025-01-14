@@ -247,14 +247,14 @@ async function readResponseBody(response, parseAs) {
 
     switch (parseAs) {
       case 'json':
-        return response.body.json();
+        return await response.body.json();
       case 'text':
         return response.body.text();
       case 'stream':
         return response.body;
       default:
         return contentType && contentType.includes('application/json')
-          ? response.body.json()
+          ? await response.body.json()
           : response.body.text();
     }
   } catch (error) {
