@@ -12,7 +12,7 @@
 export const encode = data => {
   let str = data;
 
-  if(typeof str === "object" && str !== null && Object.keys(str).length > 0){
+  if(typeof data !== "string"){
     str = JSON.stringify(str);
   }
 
