@@ -2,6 +2,7 @@ import {
   execute as commonExecute,
   composeNextState,
   chunk,
+  parseCsv,
 } from '@openfn/language-common';
 
 import { expandReferences, throwError } from '@openfn/language-common/util';
@@ -216,14 +217,19 @@ export function bulk(sObjectName, operation, records, options = {}) {
 
             batch.on('error', async function (err) {
               await job.close();
-              console.error('Request error:');
+              console.error('Batch Error:', err);
               reject(err);
             });
 
+            let jobId;
+            let batchId;
             return batch
               .on('queue', function (batchInfo) {
-                const batchId = batchInfo.id;
-                var batch = job.batch(batchId);
+                batchId = batchInfo.id;
+                const batch = job.batch(batchId);
+                jobId = batchInfo.jobId;
+                console.log('Job ID:', jobId);
+                console.log('Batch queued. Batch ID:', batchId);
                 batch.poll(pollInterval, pollTimeout);
               })
               .then(async res => {
@@ -238,7 +244,24 @@ export function bulk(sObjectName, operation, records, options = {}) {
                   err[`${resolvedOptions.extIdField}`] =
                     chunkedBatch[err.position - 1][resolvedOptions.extIdField];
                 });
-
+                if (errors.length > 0) {
+                  await connection
+                    .request({
+                      method: 'GET',
+                      url: `/services/data/v${connection.version}/jobs/ingest/${jobId}/unprocessedrecords/`,
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                    })
+                    .then(async failedRecords => {
+                      console.log('Did we get here?');
+                      console.log('Failed records: ', failedRecords);
+                      resolve(failedRecords);
+                    });
+                  // console.log(typeof failedRecords);
+                  // console.log('Failed records: ', failedRecords);
+                  // resolve(failedRecords);
+                }
                 if (failOnError && errors.length > 0) {
                   console.error('Errors detected:');
                   reject(JSON.stringify(errors, null, 2));
