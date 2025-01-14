@@ -1545,6 +1545,59 @@
       "valid": false
     },
     {
+      "name": "assert",
+      "params": [
+        "expression",
+        "errorMessage"
+      ],
+      "docs": {
+        "description": "An assert function that throws an error when an expression or function resolves to false.\nOtherwise, it returns true.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "assert('a' === 'b', '\"a\" is not equal to \"b\"')"
+          },
+          {
+            "title": "param",
+            "description": "The expression or function to be evaluated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "expression"
+          },
+          {
+            "title": "param",
+            "description": "The error message thrown in case of a failed state.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "errorMessage"
+          },
+          {
+            "title": "returns",
+            "description": "Always returns true if the assertion passes.",
+            "type": {
+              "type": "NameExpression",
+              "name": "boolean"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "map",
       "params": [
         "path",
