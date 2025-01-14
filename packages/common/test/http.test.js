@@ -204,6 +204,17 @@ describe('request()', () => {
     expect(error.statusCode).to.eql(404);
     expect(error.statusMessage).to.eql('Not Found');
   });
+  it('should return undefined if status is 204 and parseAs is json', async () => {
+    mock('/api/1', { method: 'TEST' }, { code: 204 });
+
+    const state = {};
+    const { response, data } = await request('TEST', 'https://a.com/api/1', {
+      parseAs: 'json',
+    })(state);
+    expect(data).to.eql({ ok: true });
+    expect(response.statusCode).to.eql(204);
+    expect(response.body).to.eql(undefined);
+  });
 
   it('should request with basic auth', async () => {
     mock('/api/4', {

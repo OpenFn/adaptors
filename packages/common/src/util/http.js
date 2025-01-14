@@ -3,6 +3,7 @@ import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
 import path from 'node:path';
+import throwError from './throw-error';
 
 const clients = new Map();
 
@@ -195,7 +196,14 @@ export async function request(method, fullUrlOrPath, options = {}) {
 
   await assertOK(response, errors, url, method, startTime);
 
-  const responseBody = await readResponseBody(response, parseAs);
+  const responseBody = await readResponseBody(response, parseAs).catch(() => {
+    throwError(response.statusCode, {
+      description: `Error parsing the response body from ${baseUrl}${path}`,
+      parseAs,
+      contentType: response.headers['content-type'],
+      bodyLength: +response.headers['content-length'] === 0,
+    });
+  });
   const endTime = Date.now();
   const duration = endTime - startTime;
 
@@ -242,7 +250,9 @@ async function readResponseBody(response, parseAs) {
 
   switch (parseAs) {
     case 'json':
-      return response.body.json();
+      return +response.headers['content-length'] === 0
+        ? undefined
+        : response.body.json();
     case 'text':
       return response.body.text();
     case 'stream':
