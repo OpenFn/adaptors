@@ -35,6 +35,14 @@ describe('Integration tests', () => {
         );
       }
     }).timeout(50000);
+    it.only('should fetch failed records', async () => {
+      state.data.push({ name: 'Aleksa', vera__Active__c: undefined });
+
+      const failedRecords = await execute(
+        bulk('Account', 'insert', state => state.data)
+      )(state);
+      expect(failedRecords.length).to.eql(1);
+    }).timeout(50000);
   });
 
   describe('create', () => {
