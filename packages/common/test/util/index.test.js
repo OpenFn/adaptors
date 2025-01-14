@@ -22,6 +22,9 @@ describe('encode', () => {
   it('should encode a string to Base64', () => {
     expect(encode('Hello World')).to.eql('SGVsbG8gV29ybGQ=');
   });
+  it('should encode a string to Base64 while skipping the JSON stringification step', () => {
+    expect(encode('Hello World', {parseJson: false})).to.eql('SGVsbG8gV29ybGQ=');
+  });
 
   it('should encode an empty string to Base64', () => {
     expect(encode('')).to.eql('');
@@ -51,6 +54,9 @@ describe('decode', () => {
   });
   it('should decode a Base64 string back to its original string', () => {
     expect(decode('SGVsbG8gV29ybGQ=')).to.eql('Hello World');
+  });
+  it('should decode a Base64 string back to its original string without needing to JSON parse', () => {
+    expect(decode('SGVsbG8gV29ybGQ=', {parseJson: false})).to.eql('Hello World');
   });
 
   it('should decode an empty Base64 string', () => {
