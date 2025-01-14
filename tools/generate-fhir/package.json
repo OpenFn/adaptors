@@ -16,6 +16,7 @@
     "@openfn/simple-ast": "0.4.1",
     "@types/node": "18.17.5",
     "ast-types": "^0.14.2",
+    "ava": "^5.1.1",
     "esno": "0.16.3",
     "gunzip-maybe": "^1.4.2",
     "inquirer": "^9.2.15",

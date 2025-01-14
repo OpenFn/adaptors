@@ -157,8 +157,7 @@ export type ValueSetDef = {
 async function downloadValueSets(spec, mappings) {
   const valueSets: Record<string, ValueSetDef> = {};
 
-  //const regexes = mappings.valueSets?.map(e => new RegExp(e)) ?? [];
-  const regexes = []; // tmp
+  const regexes = mappings.valueSets?.map(e => new RegExp(e)) ?? [];
 
   const processCache = {};
 
