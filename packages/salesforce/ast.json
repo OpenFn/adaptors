@@ -85,6 +85,10 @@
             "description": "{SalesforceResultState}"
           },
           {
+            "title": "state",
+            "description": "data.batches - Array of batch Infomation"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
