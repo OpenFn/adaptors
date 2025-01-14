@@ -1,13 +1,17 @@
 /**
- * Encodes a given string into Base64 format.
+ * Encodes a given string or Javascript object into Base64 format.
  * @function
  * @public
  * @namespace util
- * @param {string} data - The string to be encoded.
+ * @param {string | object} data - The string or object to be encoded.
  * @returns {string} - The Base64 encoded string.
  * @example <caption>Encode a string</caption>
- * const encoded = encode('Hello World');
+ * const encodedString = encode('Hello World');
  * console.log(encoded); // Output: SGVsbG8gV29ybGQ=
+ * @example <caption>Encode an object</caption>
+ * const encodedObject = encode({name: 'Jane Doe'})
+ * console.log(encodedObject); //output eyJuYW1lIjoiSmFuZSBEb2UifQ==
+ *
  */
 export const encode = data => {
   let str = data;
