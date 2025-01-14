@@ -345,11 +345,19 @@ function getSimpleType(prop: any) {
   // if (prop.type.length > 1) {
   //   console.log('WARNING: multiple types found on ', prop.path);
   // }
-  for (const type of prop.type) {
-    if (type.code in typeMappings) {
-      return typeMappings[type.code];
+  if (prop.type) {
+    try {
+      for (const type of prop.type) {
+        if (type.code in typeMappings) {
+          return typeMappings[type.code];
+        }
+        return type.code;
+      }
+    } catch (e) {
+      console.log('ERROR extracting type for prop ', prop.path);
+      console.log(prop);
+      throw e;
     }
-    return type.code;
   }
 }
 

@@ -18,7 +18,12 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { Readable } from 'node:stream';
 import yauzl from 'yauzl';
 import gunzip from 'gunzip-maybe';
-import { MappingSpec, SpecJSON } from './types';
+import parser from 'stream-json';
+import { chain } from 'stream-chain';
+import Pick from 'stream-json/filters/Pick';
+import StreamArray from 'stream-json/streamers/StreamArray';
+
+import { type MappingSpec, SpecJSON } from './types';
 
 const valueSetCache: Record<string, any> = {};
 
@@ -152,7 +157,8 @@ export type ValueSetDef = {
 async function downloadValueSets(spec, mappings) {
   const valueSets: Record<string, ValueSetDef> = {};
 
-  const regexes = mappings.valueSets?.map(e => new RegExp(e)) ?? [];
+  //const regexes = mappings.valueSets?.map(e => new RegExp(e)) ?? [];
+  const regexes = []; // tmp
 
   const processCache = {};
 
@@ -218,6 +224,10 @@ function parseIGZip(inputDir: string) {
 
       const outputDir = path.resolve(dirname(inputDir));
 
+      // If we're parsing a core fhir bundle,
+      // which are packaged a bit differently, this will be true
+      let coreMode = false;
+
       const onComplete = async () => {
         console.log('\n\nDone!');
         console.log(Object.keys(result));
@@ -232,23 +242,67 @@ function parseIGZip(inputDir: string) {
 
       const onEntry = async entry => {
         console.log(`Reading ${entry.fileName}...`);
+        if (entry.fileName.endsWith('definitions.json/')) {
+          zipfile.readEntry(); // this will read the folder
+          coreMode = true;
+        } else if (
+          coreMode &&
+          entry.fileName.endsWith('profiles-resources.json')
+        ) {
+          extractDefinitionsFromBundle(entry);
+        } else if (
+          !coreMode &&
+          entry.fileName.endsWith('.json') &&
+          !entry.fileName.match('MACOSX')
+        ) {
+          extractDefinitionsFromFile(entry);
+        } else {
+          zipfile.readEntry();
+        }
+      };
 
+      /**
+       * This file contains a fhir bundle of definitions
+       * it's probably big - we should really stream it
+       */
+      const extractDefinitionsFromBundle = (entry: any) => {
+        console.log('Parsing definitions from bundle', entry.fileName);
+        zipfile.openReadStream(entry, function (err, readStream) {
+          // stream the bundle contents
+
+          // @ts-ignore chain typing is wrong?
+          const pipeline = chain([
+            readStream,
+            parser(),
+            new Pick({ filter: 'entry' }),
+            new StreamArray(),
+            ({ value }) => {
+              console.log(value.fullUrl);
+              const { resource } = value;
+              processResource(resource, `${resource.id}.json`);
+            },
+          ]);
+
+          readStream.on('end', async () => {
+            setTimeout(() => {
+              zipfile.readEntry();
+            }, 1);
+          });
+        });
+      };
+
+      /**
+       * Extract a profile definition from a single JSON file
+       * This file contains one object which IS the resource definition
+       */
+      const extractDefinitionsFromFile = (entry: any) => {
         zipfile.openReadStream(entry, function (err, readStream) {
           try {
             if (err) throw err;
             readStream.on('end', async () => {
               const json = JSON.parse(text);
 
-              if (json.resourceType === 'StructureDefinition') {
-                // TODO maybe only do this if a flag is passed
-                await writeFile(
-                  path.resolve(outputDir, entry.fileName),
-                  JSON.stringify(json, null, 2)
-                );
-
-                delete json.text;
-                result[json.id] = json;
-              }
+              processResource(json, entry.fileName);
 
               if (entry.fileName === 'spec.internals') {
                 meta.name = json['npm-name'];
@@ -268,8 +322,23 @@ function parseIGZip(inputDir: string) {
             });
           } catch (e) {
             console.log(e);
+            zipfile.readEntry();
           }
         });
+      };
+
+      // Process a single JSON object that represents a fhir resource
+      const processResource = async (json, fileName) => {
+        if (json.resourceType === 'StructureDefinition') {
+          // TODO maybe only do this if a flag is passed
+          await writeFile(
+            path.resolve(outputDir, fileName),
+            JSON.stringify(json, null, 2)
+          );
+
+          delete json.text;
+          result[json.id] = json;
+        }
       };
 
       if (err) throw err;
