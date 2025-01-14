@@ -66,7 +66,7 @@ import flatten from 'lodash/flatten';
  * @property {boolean} [failOnError=false] - Fail the operation on error.
  * @property {integer} [pollTimeout=240000] - Polling timeout in milliseconds.
  * @property {integer} [pollInterval=6000] - Polling interval in milliseconds.
- * @property {boolean} [asynMode=true] - Asynchronous mode.
+ * @property {boolean} [asynMode=false] - Use asyn mode.
  */
 
 /**
