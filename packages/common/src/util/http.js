@@ -196,14 +196,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
 
   await assertOK(response, errors, url, method, startTime);
 
-  const responseBody = await readResponseBody(response, parseAs).catch(() => {
-    throwError(response.statusCode, {
-      description: `Error parsing the response body from ${baseUrl}${path}`,
-      parseAs,
-      contentType: response.headers['content-type'],
-      bodyLength: +response.headers['content-length'] === 0,
-    });
-  });
+  const responseBody = await readResponseBody(response, parseAs);
   const endTime = Date.now();
   const duration = endTime - startTime;
 
@@ -246,21 +239,32 @@ function encodeRequestBody(body) {
 }
 
 async function readResponseBody(response, parseAs) {
-  const contentType = response.headers['content-type'];
+  try {
+    const contentType = response.headers['content-type'];
+    if (+response.headers['content-length'] === 0) {
+      return undefined;
+    }
 
-  switch (parseAs) {
-    case 'json':
-      return +response.headers['content-length'] === 0
-        ? undefined
-        : response.body.json();
-    case 'text':
-      return response.body.text();
-    case 'stream':
-      return response.body;
-    default:
-      return contentType && contentType.includes('application/json')
-        ? response.body.json()
-        : response.body.text();
+    switch (parseAs) {
+      case 'json':
+        return response.body.json();
+      case 'text':
+        return response.body.text();
+      case 'stream':
+        return response.body;
+      default:
+        return contentType && contentType.includes('application/json')
+          ? response.body.json()
+          : response.body.text();
+    }
+  } catch (error) {
+    throwError(response.statusCode, {
+      description: 'Error parsing the response body',
+      parseAs,
+      contentType: response.headers['content-type'],
+      bodyLength: +response.headers['content-length'] === 0,
+      error: error.message,
+    });
   }
 }
 

@@ -204,15 +204,14 @@ describe('request()', () => {
     expect(error.statusCode).to.eql(404);
     expect(error.statusMessage).to.eql('Not Found');
   });
-  it('should return undefined if status is 204 and parseAs is json', async () => {
-    mock('/api/1', { method: 'TEST' }, { code: 204 });
+  it('should return undefined if response body is empty and parseAs is json', async () => {
+    mock('/api/1', { method: 'PUT' }, { body: undefined });
 
     const state = {};
-    const { response, data } = await request('TEST', 'https://a.com/api/1', {
+    const { response } = await request('PUT', 'https://a.com/api/1', {
       parseAs: 'json',
+      body: { id: 2 },
     })(state);
-    expect(data).to.eql({ ok: true });
-    expect(response.statusCode).to.eql(204);
     expect(response.body).to.eql(undefined);
   });
 
