@@ -160,6 +160,7 @@ export function execute(...operations) {
  * @param {array} records - an array of records, or a function which returns an array.
  * @param {BulkOptions} [options] - Options to configure the request. In addition to these, you can pass any of the options supported by the {@link https://bit.ly/41tyvVU jsforce API}.
  * @state {SalesforceResultState}
+ * @state data.batches - Array of batch Infomation
  * @returns {Operation}
  */
 export function bulk(sObjectName, operation, records, options = {}) {
@@ -178,7 +179,7 @@ export function bulk(sObjectName, operation, records, options = {}) {
       allowNoOp = false,
       pollTimeout = 240000,
       pollInterval = 6000,
-      asyncMode = true,
+      asyncMode = false,
     } = resolvedOptions;
 
     const flatRecords = util.removeNestings(resolvedRecords);
@@ -222,10 +223,11 @@ export function bulk(sObjectName, operation, records, options = {}) {
               reject(err);
             });
 
-            if (asyncMode === false) {
-              return batch.on('queue', function (batchInfo) {
-                console.info('Batch queued:', batchInfo);
-                resolve(batchInfo); // Resolve with batch information
+            if (asyncMode) {
+              return batch.on('queue', async function (batchInfo) {
+                console.info('Batch queued. Batch ID:', batchInfo.id);
+                resolve({ batchInfo });
+                await job.close();
               });
             } else {
               return batch
@@ -261,7 +263,14 @@ export function bulk(sObjectName, operation, records, options = {}) {
           })
       )
     ).then(results => {
-      console.log({ results });
+      // Handle batch results
+      if (asyncMode && results.some(obj => 'batchInfo' in obj)) {
+        return composeNextState(state, {
+          success: true,
+          batches: results.map(r => r.batchInfo).filter(Boolean),
+          errors: [],
+        });
+      }
       const allResults = util.formatResults(results.flat());
       console.log('Merging results arrays.');
       return composeNextState(state, allResults);
