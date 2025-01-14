@@ -17,7 +17,11 @@ export const encode = data => {
   let str = data;
 
   if(typeof data !== "string"){
-    str = JSON.stringify(str);
+    try {
+      str = JSON.stringify(str);
+    } catch (e){
+      console.log(e.message);
+    }
   }
 
   return Buffer.from(str, 'utf-8').toString('base64');
