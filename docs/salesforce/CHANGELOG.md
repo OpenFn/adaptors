@@ -1,6 +1,6 @@
 # @openfn/language-salesforce
 
-## 5.0.0
+## 5.0.2
 
 Major modernization of the Salesforce adaptor, focusing on standardized state
 handling (ie,`state.data` over on `state.references`) and a cleaner API.
@@ -113,6 +113,9 @@ changes to be compatible - see the Migration Guide.
   - Rename `attrs` to `records` in docs
 - Update `@openfn/language-common` to `workspace:*`
 - Add integration tests
+
+Note: due to a conflict in the npm registry this 5.0.0 build has been released
+with version number 5.0.2.
 
 ## 4.8.6
 
