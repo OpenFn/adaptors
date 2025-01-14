@@ -33,10 +33,12 @@ export const encode = data => {
  * @public
  * @namespace util
  * @param {string} base64Data - The Base64 encoded string.
- * @returns {string} - The decoded string.
+ * @returns {string | object} - The decoded string or JavaScript Object.
  * @example <caption>Decode a Base64 string</caption>
  * const decoded = decode('SGVsbG8gV29ybGQ=');
- * console.log(decoded); // Output: Hello World
+ * @example <caption>Decode a Base64 JSON object to a standard JavaScript object</caption>
+ * const decoded = decode('eyJuYW1lIjoiSmFuZSBEb2UifQ==');
+ * console.log(decoded); // Output: {name: 'Jane Doe'}
  */
 export const decode = base64Data =>{
   let decodedObject = Buffer.from(base64Data, 'base64').toString('utf-8');
