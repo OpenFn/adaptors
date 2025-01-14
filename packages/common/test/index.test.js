@@ -30,7 +30,7 @@ import {
   splitKeys,
   toArray,
   validate,
-  assert as assertCommon
+  assert as assertCommon,
 } from '../src/Adaptor';
 import { startOfToday } from 'date-fns';
 
@@ -1048,59 +1048,65 @@ describe('group', () => {
   });
 });
 
-describe("assert", () => {
-  it("throws an error when a function returns false", () => {
+describe('assert', () => {
+  it('throws an error when a function returns false', () => {
     let error;
 
-    const testFunction = function(){
-      return "a" === "b"
-    }
+    const testFunction = function () {
+      return 'a' === 'b';
+    };
 
-    const errorMessage = "a is not equal to b";
-
-    try {
-     assertCommon(testFunction, errorMessage)({});
-    } catch(e) {
-      error = e
-    }
-
-    assert.equal(error.message, errorMessage)
-  })
-
-  it("throws an error when an expression evaluates to false", () => {
-    let error;
-    const errorMessage = "a is not equal to b";
+    const errorMessage = 'a is not equal to b';
 
     try {
-     assertCommon(("a"==="b"), errorMessage)({});
-    } catch(e) {
-      error = e
-    }
-
-    assert.equal(error.message, errorMessage)
-  });
-
-  it("returns true when an expression evaluates to true", () => {
-    const state = { name: "Jane" }
-    const result = assertCommon(("a"==="a"), "a is not equal to a")(state);
-    assert.equal(result, state);
-  });
-
-  it("returns true when an argument is neither an expression nor a function", () => {
-    const state = { name: "Jane" }
-    const result = assertCommon(("a"), "a is not equal to b")(state);
-    assert.equal(result, state);
-  });
-
-  it("falls back to the generic message if no 'errorMessage' argument is passed", () => {
-   let error;
-
-   try {
-     assertCommon(("a" === "b"))({});
+      assertCommon(testFunction, errorMessage)({});
     } catch (e) {
       error = e;
     }
 
-    assert.equal(error.message, `assertion statement failed with false`);
+    expect(error.message).to.eql(errorMessage);
+  });
+
+  it('throws an error when an expression evaluates to false', () => {
+    let error;
+    const errorMessage = 'a is not equal to b';
+
+    try {
+      assertCommon('a' === 'b', errorMessage)({});
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error.message).to.eql(errorMessage);
+  });
+
+  it('does not throw when an expression evaluates to true', () => {
+    const state = { name: 'Jane' };
+    const result = assertCommon('a' === 'a', 'a is not equal to a')(state);
+    expect(result).to.eql(state);
+  });
+
+  it('expands references on error message', () => {
+    const msg = 'this is an error';
+    const state = { msg };
+    let error;
+    try {
+      assertCommon(false, state => state.msg)(state);
+    } catch (e) {
+      error = e;
+    }
+    expect(error.message).to.eql(msg);
+  });
+
+  it("falls back to the generic message if no 'errorMessage' argument is passed", () => {
+    let error;
+
+    try {
+      assertCommon('a' === 'b')({});
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error.message).to.eql(`assertion statement failed with false`);
   });
 });

@@ -905,8 +905,7 @@ export function cursor(value, options = {}) {
 }
 
 /**
- * An assert function that throws an error when an expression or function resolves to false.
- * Otherwise, it returns true.
+ * Asserts the given expression or function resolves to `true`, or else throws an exception. Optionally accepts and error message.
  * @public
  * @function
  * @example
@@ -915,14 +914,21 @@ export function cursor(value, options = {}) {
  * @param {string} errorMessage - The error message thrown in case of a failed state.
  * @returns {operation}
  */
-export function assert (expression, errorMessage) {
+export function assert(expression, errorMessage) {
   return state => {
-    const [resolvedValue] = newExpandReferences(state,expression);
+    const [resolvedValue, resolvedErrorMessage] = newExpandReferences(
+      state,
+      expression,
+      errorMessage
+    );
 
-    if(!resolvedValue){
-      throw new Error(errorMessage || `assertion statement failed with ${resolvedValue}`);
+    if (!resolvedValue) {
+      throw new Error(
+        resolvedErrorMessage ||
+          `assertion statement failed with ${resolvedValue}`
+      );
     }
 
     return state;
-  }
+  };
 }
