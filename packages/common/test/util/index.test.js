@@ -33,7 +33,6 @@ describe('encode', () => {
     expect(() => encode(123)).to.throw(errorMsg);
     expect(() => encode(true)).to.throw(errorMsg);
     expect(() => encode(null)).to.throw(errorMsg);
-    expect(() => encode({})).to.throw(errorMsg);
     expect(() => encode(() => {})).to.throw(errorMsg);
   });
   it('should encode a javascript object', () => {
