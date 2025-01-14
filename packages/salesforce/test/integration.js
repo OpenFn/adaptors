@@ -17,12 +17,13 @@ describe('Integration tests', () => {
     before(async () => {
       state.data = [{ name: 'Coco', vera__Active__c: 'No' }];
     });
-    it.only('should return batchInfo if asyncMode: false', async () => {
+    it('should return batchInfo if asyncMode: true', async () => {
       const { data } = await execute(
-        bulk('Account', 'insert', state => state.data, { asyncMode: false })
+        bulk('Account', 'insert', state => state.data, { asyncMode: true })
       )(state);
-      console.log(data);
-      // expect(data.batchInfo).to.be.an('object');
+
+      expect(data.batches.length).to.eql(1);
+      expect(data.success).to.eql(true);
     }).timeout(10000);
     it('should create multiple sobjects', async () => {
       const { data } = await execute(
