@@ -48,16 +48,16 @@ export const encode = (data, options = {parseJson: true}) => {
  * const decodedString = decode('Hello World', {parseJson: false})
  */
 export const decode = (base64Data, options = {parseJson: true}) =>{
-  let decodedObject = Buffer.from(base64Data, 'base64').toString('utf-8');
+  let decodedValue = Buffer.from(base64Data, 'base64').toString('utf-8');
 
-  if((_.startsWith(decodedObject, '[') || _.startsWith(decodedObject, '{')) && options.parseJson) {
+  if((_.startsWith(decodedValue, '[') || _.startsWith(decodedValue, '{')) && options.parseJson) {
     try {
-      decodedObject = JSON.parse(decodedObject);
+      decodedValue = JSON.parse(decodedValue);
     } catch (e) {
       console.log(e.message);
     }
   }
 
-  return decodedObject;
+  return decodedValue;
 }
 
