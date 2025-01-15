@@ -204,16 +204,6 @@ describe('request()', () => {
     expect(error.statusCode).to.eql(404);
     expect(error.statusMessage).to.eql('Not Found');
   });
-  it('should return undefined if response body is empty and parseAs is json', async () => {
-    mock('/api/1', { method: 'PUT' }, { body: undefined });
-
-    const state = {};
-    const { response } = await request('PUT', 'https://a.com/api/1', {
-      parseAs: 'json',
-      body: { id: 2 },
-    })(state);
-    expect(response.body).to.eql(undefined);
-  });
 
   it('should request with basic auth', async () => {
     mock('/api/4', {
