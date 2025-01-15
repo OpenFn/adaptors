@@ -262,7 +262,7 @@ async function readResponseBody(response, parseAs) {
       description: 'Error parsing the response body',
       parseAs,
       contentType: response.headers['content-type'],
-      bodyLength: +response.headers['content-length'] === 0,
+      bodyLength: +response.headers['content-length'],
       error: error.message,
     });
   }

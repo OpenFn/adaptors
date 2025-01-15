@@ -2,5 +2,4 @@
 '@openfn/language-common': patch
 ---
 
-Handle empty body responses from API callsImproved handling of empty API
-responses to ensure smoother and more consistent behavior.
+Fixed an issue in the HTTP helpers where responses without a body can cause an error to be thrown.

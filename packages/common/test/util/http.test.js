@@ -250,6 +250,24 @@ describe('request function', () => {
     });
   });
 
+  it('should display the body length in numbers if a request throws an error', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'PUT',
+      })
+      .reply(200, undefined, {
+        headers: { 'Content-Length': '0' },
+      });
+
+    await request('PUT', 'https://www.example.com/api', {
+      parseAs: 'json',
+      body: { id: 2 },
+    }).catch(error => {
+      expect(error.bodyLength).to.eql(0);
+    });
+  });
+
   it('should send data', async () => {
     const data = {
       hello: 'world',
