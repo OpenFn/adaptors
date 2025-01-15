@@ -34,19 +34,24 @@
           },
           {
             "title": "property",
-            "description": "A custom description the content type. Optional.",
+            "description": "A custom description for the content type. Optional.",
             "type": {
               "type": "OptionalType",
               "expression": {
-                "type": "NameExpression",
-                "name": "string"
+                "type": "NullableType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                "prefix": false
               }
             },
-            "name": "name"
+            "name": "name",
+            "default": "null"
           },
           {
             "title": "property",
-            "description": "When type is 'archive', an identifier to isolate the desired attachment.\n  Use a regular expression for pattern matching or a string for a literal match. Required when type is 'archive'.",
+            "description": "Identifier to isolate the desired attachment when type is 'archive'.\n  Use a regular expression for pattern matching or a string for a literal match. Required if type is 'archive'.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -67,7 +72,7 @@
           },
           {
             "title": "property",
-            "description": "When type is 'file', an identifier to isolate the desired attachment.\n  Use a regular expression for pattern matching or a string for a literal match. Required when type is 'file' or 'archive'.",
+            "description": "Identifier to isolate the desired attachment when type is 'file' or 'archive'.\n  Use a regular expression for pattern matching or a string for a literal match. Required if type is 'file' or 'archive'.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -88,15 +93,20 @@
           },
           {
             "title": "property",
-            "description": "The maximum number of characters to retrieve from the content. Optional.",
+            "description": "Maximum number of characters to retrieve from the content. Optional.",
             "type": {
               "type": "OptionalType",
               "expression": {
-                "type": "NameExpression",
-                "name": "number"
+                "type": "NullableType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "number"
+                },
+                "prefix": false
               }
             },
-            "name": "maxLength"
+            "name": "maxLength",
+            "default": "null"
           }
         ]
       },

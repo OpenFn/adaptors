@@ -22,12 +22,12 @@ import {
  * @typedef {Object} DesiredContent
  * @public
  * @property {string} type - Message content type. Valid types: from, date, subject, body, archive, file.
- * @property {string} [name=null] - A custom description the content type. Optional.
- * @property {RegExp|string} [archive] - When type is 'archive', an identifier to isolate the desired attachment.
- *   Use a regular expression for pattern matching or a string for a literal match. Required when type is 'archive'.
- * @property {RegExp|string} [file] - When type is 'file', an identifier to isolate the desired attachment.
- *   Use a regular expression for pattern matching or a string for a literal match. Required when type is 'file' or 'archive'.
- * @property {number} [maxLength] - The maximum number of characters to retrieve from the content. Optional.
+ * @property {string?} [name=null] - A custom description for the content type. Optional.
+ * @property {RegExp|string} [archive] - Identifier to isolate the desired attachment when type is 'archive'.
+ *   Use a regular expression for pattern matching or a string for a literal match. Required if type is 'archive'.
+ * @property {RegExp|string} [file] - Identifier to isolate the desired attachment when type is 'file' or 'archive'.
+ *   Use a regular expression for pattern matching or a string for a literal match. Required if type is 'file' or 'archive'.
+ * @property {number?} [maxLength=null] - Maximum number of characters to retrieve from the content. Optional.
  */
 
 /**
@@ -35,9 +35,10 @@ import {
  * @typedef {Object} Options
  * @public
  * @property {string} userId - The email address of the Gmail account.
- * @property {string} [query=null] - Custom query to limit the messages result. Adheres to the Gmail search syntax. Optional.
- * @property {Array<string|DesiredContent>} [desiredContents=['from', 'date', 'subject', 'body']]
- *   An array of strings or DesiredContent objects used to specify which parts of the message to retrieve.
+ * @property {string?} [query=null] - Custom query to limit the messages result. Adheres to the Gmail search syntax. Optional.
+ * @property {Array<string|DesiredContent>?} [desiredContents=['from', 'date', 'subject', 'body']]
+ *   An array of strings or DesiredContent objects used to specify which parts of the message to retrieve. Optional, default is `['from', 'date', 'subject', 'body']`.
+ * @property {Array<string>?} [processedIds=null] - Ignore message ids which have already been processed. Optional.
  */
 
 /**
@@ -66,15 +67,14 @@ export function getContentsFromMessages(userId, userOptions) {
 
     const defaultOptions = {
       desiredContents: ['from', 'date', 'subject', 'body'],
-      query: '',
     };
 
     const options = { ...defaultOptions, ...(resolvedUserOptions || {}) };
 
     const contents = [];
     const currentIds = [];
-    const previousIds = Array.isArray(state.processedIds)
-      ? state.processedIds
+    const previousIds = Array.isArray(options.processedIds)
+      ? options.processedIds
       : [];
 
     let nextPageToken = null;
@@ -93,9 +93,9 @@ export function getContentsFromMessages(userId, userOptions) {
 
       nextPageToken = messagesResult.nextPageToken;
 
-      const incomingIds = messagesResult.messages.map(message => message.id);
+      const currentPageIds = messagesResult.messages.map(message => message.id);
 
-      const unprocessedIds = incomingIds.filter(
+      const unprocessedIds = currentPageIds.filter(
         id => !previousIds.includes(id)
       );
 
@@ -126,15 +126,12 @@ export function getContentsFromMessages(userId, userOptions) {
         contents.push(content);
       }
 
-      currentIds.push(...incomingIds);
+      currentIds.push(...currentPageIds);
     } while (nextPageToken);
-
-    const expiredIds = previousIds.filter(id => !currentIds.includes(id));
-    const newIds = currentIds.filter(id => !expiredIds.includes(id));
 
     const nextState = {
       ...composeNextState(state, contents),
-      processedIds: newIds,
+      processedIds: currentIds,
     };
 
     return nextState;
