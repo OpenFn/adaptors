@@ -17,21 +17,21 @@ import _ from 'lodash';
  * @example <caption>To skip the JSON stringification step</caption>
  * const encodedObject = encode('Hello World', {parseJson: false})
  */
-export const encode = (data, options = {parseJson: true}) => {
+export const encode = (data, options = { parseJson: true }) => {
   let str = data;
 
-  if(typeof data !== "string" && options.parseJson){
+  if (typeof data !== 'string' && options.parseJson) {
     try {
       str = JSON.stringify(str);
-    } catch (e){
+    } catch (e) {
       console.log(e.message);
     }
   }
 
   return Buffer.from(str, 'utf-8').toString('base64');
-}
+};
 
-/**4
+/**
  * Decodes a Base64 encoded string back to its original format.
  * @function
  * @public
@@ -47,10 +47,13 @@ export const encode = (data, options = {parseJson: true}) => {
  * @example <caption>To skip the JSON stringification step</caption>
  * const decodedString = decode('Hello World', {parseJson: false})
  */
-export const decode = (base64Data, options = {parseJson: true}) =>{
+export const decode = (base64Data, options = { parseJson: true }) => {
   let decodedValue = Buffer.from(base64Data, 'base64').toString('utf-8');
 
-  if((_.startsWith(decodedValue, '[') || _.startsWith(decodedValue, '{')) && options.parseJson) {
+  if (
+    (_.startsWith(decodedValue, '[') || _.startsWith(decodedValue, '{')) &&
+    options.parseJson
+  ) {
     try {
       decodedValue = JSON.parse(decodedValue);
     } catch (e) {
@@ -59,5 +62,4 @@ export const decode = (base64Data, options = {parseJson: true}) =>{
   }
 
   return decodedValue;
-}
-
+};
