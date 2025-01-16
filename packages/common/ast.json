@@ -1551,7 +1551,7 @@
         "errorMessage"
       ],
       "docs": {
-        "description": "An assert function that throws an error when an expression or function resolves to false.\nOtherwise, it returns true.",
+        "description": "Asserts the given expression or function resolves to `true`, or else throws an exception. Optionally accepts and error message.",
         "tags": [
           {
             "title": "public",
@@ -1587,10 +1587,10 @@
           },
           {
             "title": "returns",
-            "description": "Always returns true if the assertion passes.",
+            "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "boolean"
+              "name": "operation"
             }
           }
         ]
