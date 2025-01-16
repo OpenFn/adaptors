@@ -1,5 +1,18 @@
 # @openfn/language-dhis2
 
+## 6.1.0
+
+### Minor Changes
+
+- c19d561: Added support for personal access tokens in dhis2
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
 ## 6.0.3
 
 ### Patch Changes

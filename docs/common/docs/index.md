@@ -4,6 +4,8 @@
 <dt>
     <a href="#asdata">asData(data, state)</a></dt>
 <dt>
+    <a href="#assert">assert(expression, errorMessage)</a></dt>
+<dt>
     <a href="#chunk">chunk(array, chunkSize)</a></dt>
 <dt>
     <a href="#combine">combine(operations)</a></dt>
@@ -63,11 +65,11 @@ This adaptor exports the following namespaced functions:
 
 <dl>
 <dt>
-    <a href="#util_decode">util.decode(base64Data)</a>
+    <a href="#util_decode">util.decode(base64Data, options)</a>
 </dt>
 
 <dt>
-    <a href="#util_encode">util.encode(data)</a>
+    <a href="#util_encode">util.encode(data, options)</a>
 </dt>
 
 <dt>
@@ -145,6 +147,25 @@ object literals as a data source.
 **Example**
 ```js
 asData('$.key'| key | callback)
+```
+
+* * *
+
+### assert
+
+<p><code>assert(expression, errorMessage) ⇒ operation</code></p>
+
+Asserts the given expression or function resolves to `true`, or else throws an exception. Optionally accepts and error message.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| expression | <code>any</code> | The expression or function to be evaluated. |
+| errorMessage | <code>string</code> | The error message thrown in case of a failed state. |
+
+**Example**
+```js
+assert('a' === 'b', '"a" is not equal to "b"')
 ```
 
 * * *
@@ -741,20 +762,30 @@ each(function(state) {
 These functions belong to the util namespace.
 ### util.decode {#util_decode}
 
-<p><code>decode(base64Data) ⇒ string</code></p>
+<p><code>decode(base64Data, options) ⇒ string | object</code></p>
 
+4
 Decodes a Base64 encoded string back to its original format.
 
-**Returns**: <code>string</code> - - The decoded string.  
+**Returns**: <code>string</code> \| <code>object</code> - - The decoded string or JavaScript Object.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | base64Data | <code>string</code> | The Base64 encoded string. |
+| options | <code>object</code> | Options. |
 
 **Example:** Decode a Base64 string
 ```js
 const decoded = decode('SGVsbG8gV29ybGQ=');
-console.log(decoded); // Output: Hello World
+```
+**Example:** Decode a Base64 JSON object to a standard JavaScript object
+```js
+const decoded = decode('eyJuYW1lIjoiSmFuZSBEb2UifQ==');
+console.log(decoded); // Output: {name: 'Jane Doe'}
+```
+**Example:** To skip the JSON stringification step
+```js
+const decodedString = decode('Hello World', {parseJson: false})
 ```
 
 * * *
@@ -762,20 +793,30 @@ console.log(decoded); // Output: Hello World
 
 ### util.encode {#util_encode}
 
-<p><code>encode(data) ⇒ string</code></p>
+<p><code>encode(data, options) ⇒ string</code></p>
 
-Encodes a given string into Base64 format.
+Encodes a given string or Javascript object into Base64 format.
 
 **Returns**: <code>string</code> - - The Base64 encoded string.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| data | <code>string</code> | The string to be encoded. |
+| data | <code>string</code> \| <code>object</code> | The string or object to be encoded. |
+| options | <code>object</code> | Options. |
 
 **Example:** Encode a string
 ```js
-const encoded = encode('Hello World');
+const encodedString = encode('Hello World');
 console.log(encoded); // Output: SGVsbG8gV29ybGQ=
+```
+**Example:** Encode an object
+```js
+const encodedObject = encode({name: 'Jane Doe'})
+console.log(encodedObject); //output eyJuYW1lIjoiSmFuZSBEb2UifQ==
+```
+**Example:** To skip the JSON stringification step
+```js
+const encodedObject = encode('Hello World', {parseJson: false})
 ```
 
 * * *
