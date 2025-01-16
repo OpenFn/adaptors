@@ -903,3 +903,32 @@ export function cursor(value, options = {}) {
     return state;
   };
 }
+
+/**
+ * Asserts the given expression or function resolves to `true`, or else throws an exception. Optionally accepts and error message.
+ * @public
+ * @function
+ * @example
+ * assert('a' === 'b', '"a" is not equal to "b"')
+ * @param {any} expression  - The expression or function to be evaluated.
+ * @param {string} errorMessage - The error message thrown in case of a failed state.
+ * @returns {operation}
+ */
+export function assert(expression, errorMessage) {
+  return state => {
+    const [resolvedValue, resolvedErrorMessage] = newExpandReferences(
+      state,
+      expression,
+      errorMessage
+    );
+
+    if (!resolvedValue) {
+      throw new Error(
+        resolvedErrorMessage ||
+          `assertion statement failed with ${resolvedValue}`
+      );
+    }
+
+    return state;
+  };
+}

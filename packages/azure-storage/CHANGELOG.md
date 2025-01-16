@@ -1,5 +1,14 @@
 # @openfn/language-azure-storage
 
+## 2.0.8
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
 ## 2.0.7
 
 ### Patch Changes

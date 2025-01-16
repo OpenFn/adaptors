@@ -259,7 +259,7 @@ importers:
         version: link:../common
       stream-json:
         specifier: ^1.8.0
-        version: 1.8.0
+        version: 1.9.1
       undici:
         specifier: ^5.22.1
         version: 5.28.4
@@ -406,7 +406,7 @@ importers:
   packages/dynamics:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.2.1
+        specifier: 2.3.0
         version: link:../common
       request:
         specifier: ^2.72.0
@@ -569,6 +569,40 @@ importers:
       esno:
         specifier: ^0.16.3
         version: 0.16.3
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      undici:
+        specifier: ^5.22.1
+        version: 5.28.4
+
+  packages/gmail:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+      googleapis:
+        specifier: 100.0.0
+        version: 100.0.0
+      unzipper:
+        specifier: ^0.10.11
+        version: 0.10.11
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      esno:
+        specifier: ^0.16.3
+        version: 0.16.3
+      mocha:
+        specifier: ^10.7.3
+        version: 10.7.3
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
@@ -1243,7 +1277,7 @@ importers:
   packages/ocl:
     dependencies:
       '@openfn/language-common':
-        specifier: 2.2.1
+        specifier: 2.3.0
         version: link:../common
     devDependencies:
       '@openfn/simple-ast':
@@ -2143,7 +2177,7 @@ importers:
   tools/import-tests:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^2.2.1
+        specifier: workspace:^2.3.0
         version: link:../../packages/common
 
   tools/metadata:
@@ -8721,7 +8755,7 @@ packages:
       extend: 3.0.2
       gaxios: 4.3.3
       google-auth-library: 7.14.1
-      qs: 6.11.0
+      qs: 6.11.2
       url-template: 2.0.8
       uuid: 8.3.2
     transitivePeerDependencies:
@@ -10336,8 +10370,8 @@ packages:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
     dev: false
 
-  /lru-cache@11.0.1:
-    resolution: {integrity: sha512-CgeuL5uom6j/ZVrg7G/+1IXqRY8JXX4Hghfy5YE0EhoYQWvndP1kufu58cmZLNIDKnRhZrXfdS9urVWx98AipQ==}
+  /lru-cache@11.0.2:
+    resolution: {integrity: sha512-123qHRfJBmo2jXDbo/a5YOQrJoHF/GNQTLzQ5+IdK5pWpceK17yRc6ozlWd25FxvGKQbIUs91fDFkXmDHTKcyA==}
     engines: {node: 20 || >=22}
     dev: false
 
@@ -11532,7 +11566,7 @@ packages:
     resolution: {integrity: sha512-ypGJsmGtdXUOeM5u93TyeIEfEhM6s+ljAhrk5vAvSx8uyY/02OvrZnA0YNGUrPXfpJMgI1ODd3nwz8Npx4O4cg==}
     engines: {node: 20 || >=22}
     dependencies:
-      lru-cache: 11.0.1
+      lru-cache: 11.0.2
       minipass: 7.1.2
     dev: false
 
@@ -13008,8 +13042,8 @@ packages:
       stubs: 3.0.0
     dev: false
 
-  /stream-json@1.8.0:
-    resolution: {integrity: sha512-HZfXngYHUAr1exT4fxlbc1IOce1RYxp2ldeaf97LYCOPSoOqY/1Psp7iGvpb+6JIOgkra9zDYnPX01hGAHzEPw==}
+  /stream-json@1.9.1:
+    resolution: {integrity: sha512-uWkjJ+2Nt/LO9Z/JyKZbMusL8Dkh97uUBTv3AJQ74y07lVahLY4eEFsPsE97pxYBwr8nnjMAIch5eqI0gPShyw==}
     dependencies:
       stream-chain: 2.2.5
     dev: false
