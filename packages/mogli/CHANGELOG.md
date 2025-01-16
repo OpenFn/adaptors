@@ -1,5 +1,14 @@
 v0.1.6
 
+## 0.5.11
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
 ## 0.5.10
 
 ### Patch Changes

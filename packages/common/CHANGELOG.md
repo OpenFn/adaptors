@@ -1,4 +1,15 @@
-## 2.0.0
+## 2.3.0
+
+### Minor Changes
+
+- b3d7f59: Common util functions `encode` and `decode` can now take a JavaScript
+  object and stringify
+- 41e8cc3: Added an 'assert' function that throws an error when an expression or
+  function resolves to false
+
+### Patch Changes
+
+- 2d709ff: Ensure that RegExp objects can be safely passed as references
 
 ## 2.2.1
 
@@ -47,6 +58,8 @@
 ### Patch Changes
 
 - 8146c23: Fix typings in package.json
+
+## 2.0.0
 
 The 2.0 version of common removes axios and re-writes the `http` namespace.
 
