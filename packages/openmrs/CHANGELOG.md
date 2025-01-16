@@ -1,5 +1,12 @@
 # @openfn/language-openmrs
 
+## 4.1.5
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
 ## 4.1.4
 
 ### Patch Changes
