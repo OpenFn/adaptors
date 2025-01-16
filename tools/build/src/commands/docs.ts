@@ -106,8 +106,11 @@ const build = async (lang: string) => {
   }
 
   templateData.forEach(data => {
+    if (data.namespace) {
+      data.scope = data.namespace;
+    }
     // all typedefs are global
-    if (data.kind === 'typedef') {
+    else if (data.kind === 'typedef') {
       data.scope = 'global';
     }
     // Set scope to be the file name

@@ -1,5 +1,13 @@
 # @openfn/language-mailgun
 
+## 0.5.7
+
+### Patch Changes
+
+- Updated dependencies [a47d8d5]
+- Updated dependencies [9240428]
+  - @openfn/language-common@2.2.0
+
 ## 0.5.6
 
 ### Patch Changes
