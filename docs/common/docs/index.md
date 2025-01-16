@@ -764,7 +764,6 @@ These functions belong to the util namespace.
 
 <p><code>decode(base64Data, options) ⇒ string | object</code></p>
 
-4
 Decodes a Base64 encoded string back to its original format.
 
 **Returns**: <code>string</code> \| <code>object</code> - - The decoded string or JavaScript Object.  
