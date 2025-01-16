@@ -318,23 +318,25 @@ export function fetchReportData(reportId, params, postUrl) {
  * Make a general HTTP request against the Commcare server. Use this to make any request to Commcare REST API.
  * @example <caption>Get a resource. Equivalent to `<baseUrl>/a/asri/api/v0.5/case`</caption>
  * request("GET", "/a/asri/api/v0.5/case");
+ * @example <caption>Get a resource using query parameters. Equivalent to `<baseUrl>/case?offset=0&limit=20`</caption>
+ * request("GET", "/case", {}, { offset:0, limit: 20 })
  * @function
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
  * @param {object} body - Object which will be attached to the body
- * @param {RequestOptions} options - Optional request params
+ * @param {object} params - An object of query parameters to be encoded into the URL
  * @returns {Operation}
  * @state {CommcareHttpState}
  */
-export function request(method, path, body, options = {}) {
+export function request(method, path, body, params = {}) {
   return async state => {
-    const [resolvedMethod, resolvedPath, resolvedBody, resolvedOptions] =
-      expandReferences(state, method, path, body, options);
+    const [resolvedMethod, resolvedPath, resolvedBody, resolvedParams] =
+      expandReferences(state, method, path, body, params);
     const response = await util.request(state.configuration, resolvedPath, {
       method: resolvedMethod,
       data: resolvedBody,
-      params: resolvedOptions,
+      params: resolvedParams,
       contentType: 'application/json',
     });
 
