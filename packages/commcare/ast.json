@@ -348,7 +348,7 @@
         "method",
         "path",
         "body",
-        "options"
+        "params"
       ],
       "docs": {
         "description": "Make a general HTTP request against the Commcare server. Use this to make any request to Commcare REST API.",
@@ -357,6 +357,11 @@
             "title": "example",
             "description": "request(\"GET\", \"/a/asri/api/v0.5/case\");",
             "caption": "Get a resource. Equivalent to `<baseUrl>/a/asri/api/v0.5/case`"
+          },
+          {
+            "title": "example",
+            "description": "request(\"GET\", \"/case\", {}, { offset:0, limit: 20 })",
+            "caption": "Get a resource using query parameters. Equivalent to `<baseUrl>/case?offset=0&limit=20`"
           },
           {
             "title": "function",
@@ -397,12 +402,12 @@
           },
           {
             "title": "param",
-            "description": "Optional request params",
+            "description": "An object of query parameters to be encoded into the URL",
             "type": {
               "type": "NameExpression",
-              "name": "RequestOptions"
+              "name": "object"
             },
-            "name": "options"
+            "name": "params"
           },
           {
             "title": "returns",
