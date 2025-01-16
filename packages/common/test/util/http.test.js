@@ -215,6 +215,59 @@ describe('request function', () => {
     expect(response.url).to.eql('https://www.example.com/api');
   });
 
+  it('should return undefined if response body is empty and parseAs is json', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'PUT',
+      })
+      .reply(200, undefined, {
+        headers: { 'Content-Length': '0' },
+      });
+
+    const response = await request('PUT', 'https://www.example.com/api', {
+      parseAs: 'json',
+      body: { id: 2 },
+    });
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.body).to.eql(undefined);
+  });
+
+  it('should throw an error if there is no content-length header and an empty response body', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'PUT',
+      })
+      .reply(200);
+
+    await request('PUT', 'https://www.example.com/api', {
+      parseAs: 'json',
+      body: { id: 2 },
+    }).catch(error => {
+      expect(error.message).to.eql('200: Error parsing the response body');
+    });
+  });
+
+  it('should display the body length in numbers if a request throws an error', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'PUT',
+      })
+      .reply(200, undefined, {
+        headers: { 'Content-Length': '0' },
+      });
+
+    await request('PUT', 'https://www.example.com/api', {
+      parseAs: 'json',
+      body: { id: 2 },
+    }).catch(error => {
+      expect(error.bodyLength).to.eql(0);
+    });
+  });
+
   it('should send data', async () => {
     const data = {
       hello: 'world',

@@ -1,5 +1,12 @@
 # @openfn/language-medicmobile
 
+## 0.5.9
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
 ## 0.5.8
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-testing",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "OpenFn test adaptor. Internal use only.",
   "type": "module",
   "exports": {

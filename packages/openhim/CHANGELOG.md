@@ -1,5 +1,12 @@
 # @openfn/language-openhim
 
+## 0.3.7
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
 ## 0.3.6
 
 ### Patch Changes
