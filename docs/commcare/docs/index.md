@@ -8,7 +8,7 @@
 <dt>
     <a href="#post">post(path, data, [params], [callback])</a></dt>
 <dt>
-    <a href="#request">request(method, path, body, options)</a></dt>
+    <a href="#request">request(method, path, body, params)</a></dt>
 <dt>
     <a href="#submit">submit(data)</a></dt>
 <dt>
@@ -231,7 +231,7 @@ post("/user", { "username":"test", "password":"somepassword" })
 
 ### request
 
-<p><code>request(method, path, body, options) ⇒ Operation</code></p>
+<p><code>request(method, path, body, params) ⇒ Operation</code></p>
 
 Make a general HTTP request against the Commcare server. Use this to make any request to Commcare REST API.
 
@@ -241,7 +241,7 @@ Make a general HTTP request against the Commcare server. Use this to make any re
 | method | <code>string</code> | HTTP method to use |
 | path | <code>string</code> | Path to resource |
 | body | <code>object</code> | Object which will be attached to the body |
-| options | <code>RequestOptions</code> | Optional request params |
+| params | <code>object</code> | An object of query parameters to be encoded into the URL |
 
 This operation writes the following keys to state:
 
@@ -253,6 +253,10 @@ This operation writes the following keys to state:
 **Example:** Get a resource. Equivalent to `<baseUrl>/a/asri/api/v0.5/case`
 ```js
 request("GET", "/a/asri/api/v0.5/case");
+```
+**Example:** Get a resource using query parameters. Equivalent to `<baseUrl>/case?offset=0&limit=20`
+```js
+request("GET", "/case", {}, { offset:0, limit: 20 })
 ```
 
 * * *

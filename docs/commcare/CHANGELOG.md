@@ -1,5 +1,13 @@
 # @openfn/language-commcare
 
+## 3.2.9
+
+### Patch Changes
+
+- 3b166c9: Update commcare request docs to read query parameters instead of
+  options, and fix the empty body response received when specific requests are
+  made.
+
 ## 3.2.8
 
 ### Patch Changes
