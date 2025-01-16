@@ -3,8 +3,8 @@
     {
       "name": "getContentsFromMessages",
       "params": [
-        "userId",
-        "userOptions"
+        "accountId",
+        "options"
       ],
       "docs": {
         "description": "Used to isolate the type of content to retrieve from the message.",
@@ -16,7 +16,7 @@
               "type": "NameExpression",
               "name": "Object"
             },
-            "name": "DesiredContent"
+            "name": "MessageContent"
           },
           {
             "title": "public",
@@ -34,16 +34,12 @@
           },
           {
             "title": "property",
-            "description": "A custom description for the content type. Optional.",
+            "description": "A custom description for the content type.",
             "type": {
               "type": "OptionalType",
               "expression": {
-                "type": "NullableType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                },
-                "prefix": false
+                "type": "NameExpression",
+                "name": "string"
               }
             },
             "name": "name",
@@ -93,7 +89,7 @@
           },
           {
             "title": "property",
-            "description": "Maximum number of characters to retrieve from the content. Optional.",
+            "description": "Maximum number of characters to retrieve from the content.",
             "type": {
               "type": "OptionalType",
               "expression": {

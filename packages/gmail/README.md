@@ -16,23 +16,22 @@ Gmail for messages and identify desired attachments and metadata.
 
 ## Usage
 
-The adaptor's primary function is `getContentsFromMessages`
+The adaptor's primary function is `getContentsFromMessages`:
 
 ```js
-getContentsFromMessages(userId, query, desiredContents, callback);
+getContentsFromMessages(accountId, options);
 ```
 
-1. Set userId with the Gmail account to query.
-2. Customize the query to contain filters as needed. This is the same format a
-   the query in the Gmail UI.
+1. Set accountId with the Gmail account to query.
+2. Set a query in options in the same format used in the Gmail UI.
 3. Specify what content to retrieve from messages (body, subject, attachments,
    etc)
 
 ## Extracting Message Contents
 
 The `desiredContents` array should list what content to retrieve from each
-message. Each item should be a string (ie, `"body"` or an object describing an
-attachment)
+message. Each item should be a string (ie, `"body"`) or an object describing an
+attachment.
 
 ### Metadata
 
@@ -82,7 +81,7 @@ The query variable is constructed to filter Gmail messages:
 ## Example
 
 ```js
-const userId = 'tester@gmail.com';
+const accountId = 'tester@gmail.com';
 
 const querySubject = encodeURIComponent('device data summary');
 
@@ -116,9 +115,15 @@ const desiredContents = [
   dataFile,
 ];
 
-getContentsFromMessages(userId, query, desiredContents, state =>
-  console.log(state.data)
-);
+getContentsFromMessages(accountId, {
+  query,
+  desiredContents,
+});
+
+fn(state => {
+  console.log(state.data);
+  return state;
+});
 ```
 
 ## Sample Output

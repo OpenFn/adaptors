@@ -19,70 +19,81 @@ import {
 
 /**
  * Used to isolate the type of content to retrieve from the message.
- * @typedef {Object} DesiredContent
+ * @typedef {Object} MessageContent
  * @public
  * @property {string} type - Message content type. Valid types: from, date, subject, body, archive, file.
- * @property {string?} [name=null] - A custom description for the content type. Optional.
+ * @property {string} [name] - A custom description for the content type.
  * @property {RegExp|string} [archive] - Identifier to isolate the desired attachment when type is 'archive'.
  *   Use a regular expression for pattern matching or a string for a literal match. Required if type is 'archive'.
  * @property {RegExp|string} [file] - Identifier to isolate the desired attachment when type is 'file' or 'archive'.
  *   Use a regular expression for pattern matching or a string for a literal match. Required if type is 'file' or 'archive'.
- * @property {number?} [maxLength=null] - Maximum number of characters to retrieve from the content. Optional.
+ * @property {number?} [maxLength] - Maximum number of characters to retrieve from the content.
  */
 
 /**
  * Configurable options provided to the Gmail adaptor.
  * @typedef {Object} Options
  * @public
- * @property {string} userId - The email address of the Gmail account.
- * @property {string?} [query=null] - Custom query to limit the messages result. Adheres to the Gmail search syntax. Optional.
- * @property {Array<string|DesiredContent>?} [desiredContents=['from', 'date', 'subject', 'body']]
- *   An array of strings or DesiredContent objects used to specify which parts of the message to retrieve. Optional, default is `['from', 'date', 'subject', 'body']`.
- * @property {Array<string>?} [processedIds=null] - Ignore message ids which have already been processed. Optional.
+ * @property {string?} [query] - Gmail search query string.
+ * @property {Array<string|MessageContent>} [desiredContents=['from', 'date', 'subject', 'body']]
+ *   An array of strings or MessageContent objects used to specify which parts of the message to retrieve.
+ * @property {Array<string>} [processedIds] - Ignore message ids which have already been processed.
  */
 
 /**
- * Requests contents from messages of a Gmail account.
+ * Downloads contents from messages of a Gmail account.
  * @public
  * @function
- * @param {string} userId - The email address of the account to retrieve messages from.
- * @param {Options} userOptions - Customized options including desired contents and query.
- * @returns {Function} A function that processes the state.
- * @example
+ * @param {string} accountId - The email address of the account to retrieve messages from.
+ * @param {Options} options - Customized options including desired contents and query.
+ * @state {Array} data - The returned message objects, of the form `{ id, contents } `
+ * @state {Array<string>} processedIds - An array of string ids processed by this request
+ * @returns {Operation}
+ * @example <caption>Get a message with a specific subject</caption>
  * getContentsFromMessages(
- *   'test@tester.com',
+ *   'user123@gmail.com',
  *   {
- *     query: 'in:inbox subject:my+test+message',
- *     desiredContents: ['date', 'from', 'subject', { type: 'body', maxLength: 50 }]
+ *     query: 'subject:my+test+message'
+ *   }
+ * )
+ * @example <caption>Get messages after a specific date, with subject and report.txt attachment</caption>
+ * getContentsFromMessages(
+ *   'user123@gmail.com',
+ *   {
+ *     query: 'after:15/01/2025',
+ *     desiredContents: [
+ *       'subject',
+ *       { type: 'file', name: 'metadata', file: 'report.txt'}
+ *     ]
  *   }
  * )
  */
-export function getContentsFromMessages(userId, userOptions) {
+export function getContentsFromMessages(accountId, options) {
   return async state => {
-    const [resolvedUserId, resolvedUserOptions] = expandReferences(
+    const [resolvedAccountId, resolvedOptions] = expandReferences(
       state,
-      userId,
-      userOptions
+      accountId,
+      options
     );
 
     const defaultOptions = {
       desiredContents: ['from', 'date', 'subject', 'body'],
     };
 
-    const options = { ...defaultOptions, ...(resolvedUserOptions || {}) };
+    const opts = { ...defaultOptions, ...(resolvedOptions || {}) };
 
     const contents = [];
     const currentIds = [];
-    const previousIds = Array.isArray(options.processedIds)
-      ? options.processedIds
+    const previousIds = Array.isArray(opts.processedIds)
+      ? opts.processedIds
       : [];
 
     let nextPageToken = null;
 
     do {
       const messagesResult = await getMessagesResult(
-        resolvedUserId,
-        options.query,
+        resolvedAccountId,
+        opts.query,
         nextPageToken
       );
 
@@ -104,9 +115,9 @@ export function getContentsFromMessages(userId, userOptions) {
           messageId: messageId,
         };
 
-        const messageResult = await getMessageResult(userId, messageId);
+        const messageResult = await getMessageResult(accountId, messageId);
 
-        for (const desiredContentHint of options.desiredContents) {
+        for (const desiredContentHint of opts.desiredContents) {
           const desiredContent = getDesiredContent(desiredContentHint);
 
           const messageContent = await getMessageContent(
