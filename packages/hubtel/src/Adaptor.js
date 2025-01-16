@@ -26,16 +26,19 @@ import * as util from './Utils';
 /**
  * Send an SMS
  * @example
- * sendSMS("patient", { "name":"Bukayo" });
+ * sendSMS({
+ *   from: 'OpenFn-Test-01',
+ *   to: '233536066061',
+ *   content: 'hi there, this is OpenFn using the new Hubtel adaptor',
+ * });
  * @function
  * @public
  * @param {object} data - An object with `from`, `to`, and `content` attributes
  * @param {RequestOptions} options - Optional hubtel options
- * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {HttpState}
  */
-export function sendSMS(data, options, callback) {
+export function sendSMS(data, options) {
   // `https://devp-sms03726-api.hubtel.com/v1/messages/send`,
 
   // maybe JSON.stringify later if necessary.
