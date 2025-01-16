@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL (http://www.example.com)",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://example.com"]
+    },
+    "clientID": {
+      "title": "Client ID",
+      "type": "string",
+      "description": "Client ID",
+      "examples": ["xxx-yyy-zzz"]
+    },
+    "clientSecret": {
+      "title": "Client Secret",
+      "type": "string",
+      "description": "Client Secret",
+      "writeOnly": true,
+      "examples": ["@some(!)Str0ngSecr3t"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["baseUrl", "clientID", "clientSecret"]
+}
