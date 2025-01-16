@@ -1,5 +1,12 @@
 # @openfn/language-dhis2
 
+## 6.0.3
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
 ## 6.0.2
 
 ### Patch Changes

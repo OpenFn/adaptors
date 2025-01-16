@@ -1,5 +1,12 @@
 # @openfn/language-fhir-ndr-et
 
+## 0.1.9
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
 ## 0.1.8
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 ## 2.0.0
 
+## 2.2.1
+
+### Patch Changes
+
+- 6dffdbd: Fixed an issue in the HTTP helpers where responses without a body can
+  cause an error to be thrown.
+
 ## 2.2.0
 
 ### Minor Changes
