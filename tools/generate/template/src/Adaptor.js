@@ -80,7 +80,7 @@ export function request(method, path, body, options = {}) {
       resolvedMethod,
       resolvedPath,
       {
-        data: resolvedData,
+        body: resolvedData,
         ...resolvedoptions,
       }
     );
