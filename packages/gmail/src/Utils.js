@@ -3,13 +3,13 @@ import { google } from 'googleapis';
 
 let gmail;
 
-export async function getMessagesResult(userId, query, lastPageToken) {
+export async function getMessagesResult(userId, query, pageToken) {
   try {
     const { data } = await gmail.users.messages.list({
-      userId: userId,
+      userId,
       q: query,
-      maxResults: 3,
-      pageToken: lastPageToken,
+      maxResults: 20,
+      pageToken,
     });
 
     return {
@@ -36,27 +36,48 @@ export async function getMessageResult(userId, messageId) {
   };
 }
 
-export function getDesiredContent(hint) {
-  const desiredContent = typeof hint === 'string' ? { type: hint } : hint;
+export function getContentIndicators(defaultContentRequests, contentRequests) {
+  const indicators = new Map();
 
-  if (!desiredContent.type) {
-    if (desiredContent.archive) {
-      desiredContent.type = 'archive';
-    } else if (desiredContent.file) {
-      desiredContent.type = 'file';
+  const requests = [
+    ...(defaultContentRequests || []),
+    ...(contentRequests || []),
+  ];
+
+  for (const request of requests) {
+    const indicator = getContentIndicator(request);
+    indicators.set(indicator.type, indicator);
+  }
+
+  return Array.from(indicators.values());
+}
+
+function getContentIndicator(contentRequest) {
+  const contentIndicator =
+    typeof contentRequest === 'string'
+      ? { type: contentRequest }
+      : { ...contentRequest };
+
+  if (!contentIndicator.type) {
+    if (contentIndicator.archive) {
+      contentIndicator.type = 'archive';
+    } else if (contentIndicator.file) {
+      contentIndicator.type = 'file';
     }
   }
 
-  if (!desiredContent.type) {
-    console.error(`Unable to determine desired content type: ${hint}`);
+  if (!contentIndicator.type) {
+    console.error(
+      `Unable to determine desired content type: ${contentRequest}`
+    );
     throw new Error('No desired content type provided.');
   }
 
-  if (!desiredContent.name) {
-    desiredContent.name = desiredContent.type;
+  if (!contentIndicator.name) {
+    contentIndicator.name = contentIndicator.type;
   }
 
-  return desiredContent;
+  return contentIndicator;
 }
 
 export async function getMessageContent(message, desiredContent) {
@@ -70,9 +91,9 @@ export async function getMessageContent(message, desiredContent) {
     case 'body':
       return getBodyFromMessage(message, desiredContent);
 
-    case 'subject':
     case 'from':
     case 'date':
+    case 'subject':
       return getValueFromMessageHeader(message, desiredContent);
 
     default:

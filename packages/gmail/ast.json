@@ -3,7 +3,6 @@
     {
       "name": "getContentsFromMessages",
       "params": [
-        "accountId",
         "options"
       ],
       "docs": {
@@ -42,8 +41,7 @@
                 "name": "string"
               }
             },
-            "name": "name",
-            "default": "null"
+            "name": "name"
           },
           {
             "title": "property",
@@ -101,8 +99,7 @@
                 "prefix": false
               }
             },
-            "name": "maxLength",
-            "default": "null"
+            "name": "maxLength"
           }
         ]
       },

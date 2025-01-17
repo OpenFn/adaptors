@@ -1,102 +1,156 @@
 # Gmail Message Content Extraction
 
 This adaptor is used to extract specific content from Gmail messages using
-custom "desiredContent" configurations. The sample code specifies how to query
+custom desired "content" configurations. The sample code specifies how to query
 Gmail for messages and identify desired attachments and metadata.
 
 ## How It Works
 
-1. Gmail Query: Constructs a Gmail query string to filter relevant messages.
-2. Desired Content Matching: Uses the desiredContents array to identify and
-   extract:
-   - Metadata files
-   - Archive files and their contents
-   - Message metadata (subject, date, from, body)
-3. Output: Returns a structured collection of matched content.
+Without any parameters, the `getContentsFromMessages()` function will return an
+array containing every message in the account of the authenticated user including
+`from`, `date` and subject.
 
-## Usage
+A number of options are available to isolated the messages desired and to
+customize the output.
 
-The adaptor's primary function is `getContentsFromMessages`:
+# Options
 
-```js
-getContentsFromMessages(accountId, options);
-```
+Optional parameters include: `contents`, `query`, `email`, `processedIds`
 
-1. Set accountId with the Gmail account to query.
-2. Set a query in options in the same format used in the Gmail UI.
-3. Specify what content to retrieve from messages (body, subject, attachments,
-   etc)
+## options.contents
+### Extracting Message Contents
 
-## Extracting Message Contents
-
-The `desiredContents` array should list what content to retrieve from each
-message. Each item should be a string (ie, `"body"`) or an object describing an
-attachment.
+Use the `options.contents` array to extract the content you'd like to retrieve
+from each message. Each item should be a string (ie, `'body'`, `'subject'`) or
+an object describing an attachment. Additionally, the contents will always
+include `from`, `date`, and `subject`.
 
 ### Metadata
 
-The following strings can be extracted:
+The following types of content can be extracted:
 
 - `body`: Extracts the message body.
 - `subject`: Extracts the email subject.
 - `date`: Extracts the timestamp of the email.
 - `from`: Extracts the sender's information.
 
-### Attachment: basic file
-
-Extract the content from a file attachment. Specify the file name with a regular
-expression on the `file` key.
+Optionally, each of these content strings can be expanded to include additional
+specifications:
 
 ```js
 {
-  type: "file",
-  name: "metadata",
+  type: 'subject',
+  name: 'email-title',
+  maxLength: 25,
+}
+```
+
+- The `type` property instructs the function which content type to extract.
+- The `name` property allows you to add a custom name to this information.
+- The `maxLength` property allows you to limit the length of the content
+  returned.
+
+### Attachment: basic file
+
+Extract content from a file attachment.
+
+`file`: Identify the specific file inside the archive by providing its name as a
+string or using a regular expression to matching a pattern.
+
+```js
+{
+  type: 'file',
+  name: 'metadata',
   file: /^summary\.txt$/,
+}
+```
+
+```js
+{
+  type: 'file',
+  file: 'summary.txt',
+  maxLength: 500,
 }
 ```
 
 ### Attachment: archived file
 
-Extract the content from a file embedded in an archive attachment.
+Extract content from a file embedded in an archive attachment.
 
-Specify the archive with a regular expression on the `archive` key. Extract a
-file within the archive with the `file` key.
+- `archive`: Specify the file name of the archive using either a string for an
+  exact match or a regular expression to match a pattern.
+- `file`: Identify the specific file inside the archive by providing its name as
+  a string or using a regular expression to match a pattern.
 
 ```js
 {
-  type: "archive",
-  name: "data",
-  archive: /_device_data\.zip$/,
+  type: 'archive',
+  name: 'data',
+  archive: 'devicedata.zip',
   file: /_CURRENT_DATA_\w*?\.json$/,
+  maxLength: 5000,
 }
 ```
 
-## Query Setup
+## options.query
+### Query Setup
 
-The query variable is constructed to filter Gmail messages:
+Use a `query` parameter to filter the messages returned.
 
-- Inbox messages with the subject containing "30DTR Data".
-- Messages sent within the last 31 days.
+The query syntax supports the same query format as the Gmail `search` box.
 
-## Example
+```
+options.query = 'from:someuser@example.com rfc822msgid:<somemsgid@example.com> is:unread';
+```
+
+A full list of supported search operations can be found here:
+[Refine searches in Gmail](https://support.google.com/mail/answer/7190)
+
+## options.email
+### Optionally specify email address.
+
+Specify the email address used for the Gmail account. This almost always the
+same email associated with the authenticated user so this parameter is optional.
+
+```
+options.email = '<EMAIL>';
+```
+
+## options.processedIds
+### Optionally skip message ids.
+
+In some scenarios, it may be necessary to skip certain messages to prevent the
+retrieval of duplicate data. Passing an array of messageIds will allow the
+function to skip these messages if any of the ids are matched in the returned
+messages.
+
+```
+options.processedIds = [
+  '123',
+  '234',
+  '345',
+];
+```
+
+# Example jobs
 
 ```js
-const accountId = 'tester@gmail.com';
+const query = 'in:inbox newer_than:2d';
+const contents = ['body'];
+getContentsFromMessages({ query, contents });
+```
 
-const querySubject = encodeURIComponent('device data summary');
+```js
+const subject = 'device data summary'.replace(' ', '+');
+const query = `in:inbox subject:${subject} newer_than:1m`;
 
-// All messages newer than 30 days ago
-const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-const queryAfterDate = new Date(Date.now() - 30 * MILLISECONDS_PER_DAY)
-  .toISOString()
-  .split('T')[0];
-
-const query = `in:inbox subject:${querySubject} after:${queryAfterDate}`;
+const email = 'special_admin@gmail.com';
 
 const metadataFile = {
   type: 'file',
   name: 'metadata',
-  file: /^summary\.txt$/,
+  file: /summary\.txt$/,
+  maxLength: 500,
 };
 
 const dataFile = {
@@ -106,69 +160,43 @@ const dataFile = {
   file: /_CURRENT_DATA_\w*?\.json$/,
 };
 
-const desiredContents = [
-  'body',
-  'subject',
-  'date',
-  'from',
-  metadataFile,
-  dataFile,
-];
+const contents = [metadataFile, dataFile];
 
-getContentsFromMessages(accountId, {
-  query,
-  desiredContents,
-});
-
-fn(state => {
-  console.log(state.data);
-  return state;
-});
+getContentsFromMessages({ query, email, contents });
 ```
 
-## Sample Output
+# Sample state.data Output
 
-For each matched message, the extracted content is returned in a collection of
-content blocks. Here's an example for a single match message:
+For each matched message, the extracted content is returned as a message object
+of content properties. Here's an example `state.data` for a single matched
+message:
 
 ```js
 [
   {
     messageId: '1934c017c1752c01',
-    contents: [
-      {
-        name: 'subject',
-        value: 'Fwd: FW: Facility Temperature Report (Summary Data)',
-      },
-      {
-        name: 'date',
-        value: '2024-11-20T23:56:08.000Z',
-      },
-      {
-        name: 'from',
-        value: 'Friendly Sender <sender@gmail.com>',
-      },
-      {
-        name: 'metadata',
-        value:
-          '{\n  "appInfo": {\n    "isAutomaticTime": true,\n    "isTrueTime": true,\n    "os": "Android",\n    "osVe" }',
-        path: '004800123457501820383131_20241115T102926Z.json',
-      },
-      {
-        name: 'data',
-        value:
-          '{\n "AMOD": "VL45",\n "AMFR": "ICECO",\n "ASER": "BJBC 08 30",\n "ADOP": "2024-04-01",\n "APQS": "E003/XX" }',
-        path: '004800123457501820383131_CURRENT_DATA_P100DT9H45M46S_20241115T102926Z.json',
-      },
-    ],
+    from: 'Friendly Sender <sender@gmail.com>',
+    date: '2024-11-20T23:56:08.000Z',
+    subject: 'Fwd: FW: Facility Anomaly Report (Summary Data)',
+    metadata: {
+      filename: 'daily_summary.txt',
+      content: '{ "appInfo": { "isAutomaticTime": true }',
+    },
+    data: {
+      archiveFilename: '0031_device_data.zip',
+      filename: '0031_CURRENT_DATA_P100DT9H45M46S_20241115T102926Z.json',
+      content: '{ "AMOD": "VL45", "AMFR": "ICECO" }',
+    },
   },
 ];
 ```
 
-Each content block represents a specific piece of information extracted:
+Each property on the message object represents a specific piece of information
+extracted:
 
-- **subject**: Contains the email subject.
-- **date**: The timestamp when the email was sent.
 - **from**: Sender's email and name.
-- **metadata**: Metadata file content, with its file path.
-- **data**: Data file content, with its file path.
+- **date**: The timestamp when the email was sent.
+- **subject**: Contains the email subject.
+- **metadata**: Metadata-named file content, with its matched file name.
+- **data**: Data-named archive file content, with its matched archive name and
+  file name.

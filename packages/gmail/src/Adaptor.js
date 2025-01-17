@@ -11,7 +11,7 @@ import {
 import {
   getMessagesResult,
   getMessageResult,
-  getDesiredContent,
+  getContentIndicators,
   getMessageContent,
   createConnection,
   removeConnection,
@@ -21,7 +21,7 @@ import {
  * Used to isolate the type of content to retrieve from the message.
  * @typedef {Object} MessageContent
  * @public
- * @property {string} type - Message content type. Valid types: from, date, subject, body, archive, file.
+ * @property {string} [type] - Message content type. Valid types: from, date, subject, body, archive, file.
  * @property {string} [name] - A custom description for the content type.
  * @property {RegExp|string} [archive] - Identifier to isolate the desired attachment when type is 'archive'.
  *   Use a regular expression for pattern matching or a string for a literal match. Required if type is 'archive'.
@@ -35,52 +35,56 @@ import {
  * @typedef {Object} Options
  * @public
  * @property {string?} [query] - Gmail search query string.
- * @property {Array<string|MessageContent>} [desiredContents=['from', 'date', 'subject', 'body']]
+ * @property {Array<string|MessageContent>} [contents=['from', 'date', 'subject', 'body']]
  *   An array of strings or MessageContent objects used to specify which parts of the message to retrieve.
  * @property {Array<string>} [processedIds] - Ignore message ids which have already been processed.
+ * @property {string?} [email] - The user account to retrieve messages from. Defaults to the authenticated user.
  */
 
 /**
  * Downloads contents from messages of a Gmail account.
  * @public
  * @function
- * @param {string} accountId - The email address of the account to retrieve messages from.
  * @param {Options} options - Customized options including desired contents and query.
- * @state {Array} data - The returned message objects, of the form `{ id, contents } `
+ * @state {Array} data - The returned message objects, of the form `{ messageId, contents } `
  * @state {Array<string>} processedIds - An array of string ids processed by this request
  * @returns {Operation}
  * @example <caption>Get a message with a specific subject</caption>
  * getContentsFromMessages(
- *   'user123@gmail.com',
  *   {
  *     query: 'subject:my+test+message'
  *   }
  * )
  * @example <caption>Get messages after a specific date, with subject and report.txt attachment</caption>
  * getContentsFromMessages(
- *   'user123@gmail.com',
  *   {
  *     query: 'after:15/01/2025',
- *     desiredContents: [
+ *     contents: [
  *       'subject',
  *       { type: 'file', name: 'metadata', file: 'report.txt'}
  *     ]
  *   }
  * )
  */
-export function getContentsFromMessages(accountId, options) {
+export function getContentsFromMessages(options) {
   return async state => {
-    const [resolvedAccountId, resolvedOptions] = expandReferences(
-      state,
-      accountId,
-      options
-    );
+    const [resolvedOptions] = expandReferences(state, options);
 
     const defaultOptions = {
-      desiredContents: ['from', 'date', 'subject', 'body'],
+      contents: ['from', 'date', 'subject'],
+      userId: 'me',
     };
 
-    const opts = { ...defaultOptions, ...(resolvedOptions || {}) };
+    const opts = {
+      userId: resolvedOptions.email ?? defaultOptions.userId,
+      query: resolvedOptions.query,
+      processedIds: resolvedOptions.processedIds,
+    };
+
+    const contentIndicators = getContentIndicators(
+      defaultOptions.contents,
+      resolvedOptions.contents,
+    );
 
     const contents = [];
     const currentIds = [];
@@ -92,7 +96,7 @@ export function getContentsFromMessages(accountId, options) {
 
     do {
       const messagesResult = await getMessagesResult(
-        resolvedAccountId,
+        opts.userId,
         opts.query,
         nextPageToken
       );
@@ -115,23 +119,21 @@ export function getContentsFromMessages(accountId, options) {
           messageId: messageId,
         };
 
-        const messageResult = await getMessageResult(accountId, messageId);
+        const messageResult = await getMessageResult(opts.userId, messageId);
 
-        for (const desiredContentHint of opts.desiredContents) {
-          const desiredContent = getDesiredContent(desiredContentHint);
-
+        for (const contentIndicator of contentIndicators) {
           const messageContent = await getMessageContent(
             messageResult,
-            desiredContent
+            contentIndicator
           );
 
-          if (messageContent && content[desiredContent.name]) {
+          if (messageContent && content[contentIndicator.name]) {
             throw new Error(
-              `Duplicate content name detected: ${desiredContent.name}`
+              `Duplicate content name detected: ${contentIndicator.name}`
             );
           }
 
-          content[desiredContent.name] ??= messageContent;
+          content[contentIndicator.name] ??= messageContent;
         }
 
         contents.push(content);
