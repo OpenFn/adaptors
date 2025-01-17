@@ -1,32 +1,35 @@
-# Gmail Message Content Extraction
+# Gmail Adaptor
+
+## Gmail message content extraction
 
 This adaptor is used to extract specific content from Gmail messages using
 custom desired "content" configurations. The sample code specifies how to query
 Gmail for messages and identify desired attachments and metadata.
 
-## How It Works
+## How it works
 
 Without any parameters, the `getContentsFromMessages()` function will return an
 array containing every message in the account of the authenticated user
-including `from`, `date` and subject.
+including `from`, `date` and `subject`.
 
 A number of options are available to isolated the messages desired and to
 customize the output.
 
-# Options
+## Options
 
 Optional parameters include: `contents`, `query`, `email`, `processedIds`
 
-## options.contents
+### options.contents
 
-### Extracting Message Contents
+#### Extracting message contents
 
-Use the `options.contents` array to extract the content you'd like to retrieve
-from each message. Each item should be a string (ie, `'body'`, `'subject'`) or
-an object describing an attachment. Additionally, the contents will always
-include `from`, `date`, and `subject`.
+Use the `options.contents` array to specify the content to retrieve from each
+message. Always included are `from`, `date`, and `subject`.
 
-### Metadata
+Each item can be a simple string (ie, `'body'`, `'subject'`) or an
+MessageContent object offering advanced configuration.
+
+#### Metadata
 
 The following types of content can be extracted:
 
@@ -39,11 +42,11 @@ Optionally, each of these content strings can be expanded to include additional
 specifications:
 
 ```js
-{
+const mySubject = {
   type: 'subject',
   name: 'email-title',
   maxLength: 25,
-}
+};
 ```
 
 - The `type` property instructs the function which content type to extract.
@@ -51,7 +54,7 @@ specifications:
 - The `maxLength` property allows you to limit the length of the content
   returned.
 
-### Attachment: basic file
+#### Attachment: basic file
 
 Extract content from a file attachment.
 
@@ -59,22 +62,22 @@ Extract content from a file attachment.
 string or using a regular expression to matching a pattern.
 
 ```js
-{
+const myMetadata = {
   type: 'file',
   name: 'metadata',
   file: /^summary\.txt$/,
-}
+};
 ```
 
 ```js
-{
+const myMetadata = {
   type: 'file',
   file: 'summary.txt',
   maxLength: 500,
-}
+};
 ```
 
-### Attachment: archived file
+#### Attachment: archived file
 
 Extract content from a file embedded in an archive attachment.
 
@@ -84,18 +87,22 @@ Extract content from a file embedded in an archive attachment.
   a string or using a regular expression to match a pattern.
 
 ```js
-{
+const myArchivedFile = {
   type: 'archive',
   name: 'data',
   archive: 'devicedata.zip',
   file: /_CURRENT_DATA_\w*?\.json$/,
   maxLength: 5000,
-}
+};
 ```
 
-## options.query
+```js
+options.contents = [mySubject, 'body', myMetadata, myArchivedFile];
+```
 
-### Query Setup
+### options.query
+
+#### Query Setup
 
 Use a `query` parameter to filter the messages returned.
 
@@ -108,9 +115,9 @@ options.query = 'from:someuser@example.com rfc822msgid:<somemsgid@example.com> i
 A full list of supported search operations can be found here:
 [Refine searches in Gmail](https://support.google.com/mail/answer/7190)
 
-## options.email
+### options.email
 
-### Optionally specify email address.
+#### Optionally specify email address.
 
 Specify the email address used for the Gmail account. This almost always the
 same email associated with the authenticated user so this parameter is optional.
@@ -119,24 +126,24 @@ same email associated with the authenticated user so this parameter is optional.
 options.email = '<EMAIL>';
 ```
 
-## options.processedIds
+### options.processedIds
 
-### Optionally skip message ids.
+#### Optionally skip message ids.
 
 In some scenarios, it may be necessary to skip certain messages to prevent the
 retrieval of duplicate data. Passing an array of messageIds will allow the
-function to skip these messages if any of the ids are matched in the returned
-messages.
+function to skip these messages if any of the ids are encountered in the
+returned messages.
 
 ```
 options.processedIds = [
-  '123',
-  '234',
-  '345',
+  '194e3cf1ca0ccd66',
+  '283e2df2ca0ecd75',
+  '572e1af3ca0bcd84',
 ];
 ```
 
-# Example jobs
+## Example jobs
 
 ```js
 const query = 'in:inbox newer_than:2d';
@@ -148,7 +155,7 @@ getContentsFromMessages({ query, contents });
 const subject = 'device data summary'.replace(' ', '+');
 const query = `in:inbox subject:${subject} newer_than:1m`;
 
-const email = 'special_admin@gmail.com';
+const email = 'special_assigned_delegate@gmail.com';
 
 const metadataFile = {
   type: 'file',
@@ -169,7 +176,7 @@ const contents = [metadataFile, dataFile];
 getContentsFromMessages({ query, email, contents });
 ```
 
-# Sample `state.data` Output
+## Sample `state.data` Output
 
 For each matched message, the extracted content is returned as a message object
 of content properties. Here's an example `state.data` for a single matched
@@ -205,14 +212,14 @@ extracted:
 - **data**: Data-named archive file content, with its matched archive name and
   file name.
 
-# Acquiring an Access Token
+## Acquiring an access token
 
 The Gmail adaptor implicitly uses the Gmail account of the Google account that
 is used to authenticate the application.
 
 Allowing the Gmail adaptor to access a Gmail account is a multi-step process.
 
-### Create an OAuth 2.0 Client ID
+### Create an OAuth 2.0 client ID
 
 Follow the instructions are found here:
 https://support.google.com/googleapi/answer/6158849
@@ -263,7 +270,8 @@ access token:
 
 ### Configure OpenFn CLI to find the access token
 
-The Gmail adaptor looks for the access token in the configuration section under `access_token`.
+The Gmail adaptor looks for the access token in the configuration section under
+`access_token`.
 
 Example configuration using a workflow:
 
