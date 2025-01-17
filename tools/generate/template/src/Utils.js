@@ -6,26 +6,24 @@ import {
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 
-export const prepareNextState = (state, response, callback = s => s) => {
+export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
   if (!state.references) {
     state.references = [];
   }
 
-  const nextState = {
+  return {
     ...composeNextState(state, response.body),
     response: responseWithoutBody,
   };
-
-  return callback(nextState);
 };
 
 // This helper function will call out to the backend service
 // and add authorisation headers
 // Refer to the common request function for options and details
 export const request = (configuration = {}, method, path, options) => {
-  // You might want to check that the path is not an absolute URL befor
+  // You might want to check that the path is not an absolute URL before
   // appending credentials commonRequest will do this for you if you
   // pass a baseURL to it and you don't need to build a path here
   // assertRelativeUrl(path);
@@ -66,5 +64,5 @@ export const request = (configuration = {}, method, path, options) => {
   const safePath = nodepath.join(path);
 
   // Make the actual request
-  return commonRequest(method, safePath, options);
+  return commonRequest(method, safePath, opts);
 };
