@@ -35,8 +35,8 @@ import * as util from './Utils';
  * @returns {Operation}
  * @state {HttpState}
  */
-export function get(path, options, callback) {
-  return request('GET', path, null, options, callback);
+export function get(path, options) {
+  return request('GET', path, null, options);
 }
 
 /**
@@ -52,8 +52,8 @@ export function get(path, options, callback) {
  * @returns {Operation}
  * @state {HttpState}
  */
-export function post(path, options, callback) {
-  return request('POST', path, null, options, callback);
+export function post(path, options) {
+  return request('POST', path, null, options);
 }
 
 /**
@@ -70,7 +70,7 @@ export function post(path, options, callback) {
  * @returns {Operation}
  * @state {HttpState}
  */
-export function request(method, path, body, options = {}, callback = s => s) {
+export function request(method, path, body, options = {}) {
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedData, resolvedoptions] =
       expandReferences(state, method, path, body, options);
@@ -85,7 +85,7 @@ export function request(method, path, body, options = {}, callback = s => s) {
       }
     );
 
-    return util.prepareNextState(state, response, callback);
+    return util.prepareNextState(state, response);
   };
 }
 
