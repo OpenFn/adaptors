@@ -28,7 +28,7 @@ import * as util from './Utils';
  * @example
  * sendSMS({
  *   from: 'OpenFn-Test-01',
- *   to: '233536066061',
+ *   to: '233538675309',
  *   content: 'hi there, this is OpenFn using the new Hubtel adaptor',
  * });
  * @function

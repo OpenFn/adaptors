@@ -10,7 +10,7 @@ import { sendSMS } from '../src/Adaptor.js';
 const testServer = enableMockClient('https://smsc.hubtel.com');
 
 describe('sendSMS', () => {
-  it('makes a post request to the right endpoint', async () => {
+  it('uses the correct auth and data format to send an SMS via hubtel', async () => {
     // Setup a mock endpoint
     testServer
       .intercept({
