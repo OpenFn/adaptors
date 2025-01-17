@@ -39,11 +39,15 @@ export function getPatient(uuid, callback = s => s) {
   return async state => {
     const [resolvedUuid] = expandReferences(state, uuid);
     console.log(`Fetching patient by uuid: ${resolvedUuid}`);
+    const { instanceUrl:baseUrl } = state.configuration; 
 
     const response = await request(
       state,
       'GET',
-      `/ws/rest/v1/patient/${resolvedUuid}`
+      `/ws/rest/v1/patient/${resolvedUuid}`,
+      {
+        baseUrl,
+      }
     );
 
     console.log(`Retrieved patient with uuid: ${resolvedUuid}...`);
@@ -73,13 +77,15 @@ export function get(path, query, callback = s => s) {
       path,
       query
     );
-
+    const { instanceUrl:baseUrl } = state.configuration;   
     const response = await request(
       state,
       'GET',
       `/ws/rest/v1/${resolvedPath}`,
-      {},
-      resolvedQuery
+      {
+        baseUrl,
+        query: resolvedQuery
+      }
     );
 
     // TODO: later decide if we want to throw for no-results.
@@ -109,12 +115,15 @@ export function get(path, query, callback = s => s) {
 export function post(path, data, callback = s => s) {
   return async state => {
     const [resolvedPath, resolvedData] = expandReferences(state, path, data);
-
+    const { instanceUrl:baseUrl } = state.configuration; 
     const response = await request(
       state,
       'POST',
       `/ws/rest/v1/${resolvedPath}`,
-      resolvedData
+      {
+        baseUrl,
+        data: resolvedData,
+      }
     );
 
     return prepareNextState(state, response, callback);
@@ -134,6 +143,7 @@ export function post(path, data, callback = s => s) {
 export function searchPatient(query, callback = s => s) {
   return async state => {
     const [resolvedQuery] = expandReferences(state, query);
+    const { instanceUrl:baseUrl } = state.configuration; 
 
     console.log('Searching for patient with query:', resolvedQuery);
 
@@ -141,8 +151,10 @@ export function searchPatient(query, callback = s => s) {
       state,
       'GET',
       '/ws/rest/v1/patient',
-      {},
-      resolvedQuery
+      {
+        baseUrl,
+        query: resolvedQuery
+      },
     );
 
     return prepareNextState(state, response, callback);
@@ -162,6 +174,7 @@ export function searchPatient(query, callback = s => s) {
 export function searchPerson(query, callback = s => s) {
   return async state => {
     const [resolvedQuery = {}] = expandReferences(state, query);
+    const { instanceUrl:baseUrl } = state.configuration; 
 
     console.log(`Searching for person with query:`, resolvedQuery);
 
@@ -169,8 +182,10 @@ export function searchPerson(query, callback = s => s) {
       state,
       'GET',
       '/ws/rest/v1/person',
-      {},
-      resolvedQuery
+      {
+        baseUrl,
+        query: resolvedQuery
+      },
     );
 
     console.log(`Found ${response.body.results.length} people`);
@@ -193,11 +208,15 @@ export function getEncounter(uuid, callback = s => s) {
   return async state => {
     const [resolvedUuid] = expandReferences(state, uuid);
     console.log(`Fetching encounter with UUID: ${resolvedUuid}`);
+    const { instanceUrl:baseUrl } = state.configuration; 
 
     const response = await request(
       state,
       'GET',
-      `/ws/rest/v1/encounter/${resolvedUuid}`
+      `/ws/rest/v1/encounter/${resolvedUuid}`,
+      {
+        baseUrl,
+      }
     );
 
     console.log(
@@ -222,13 +241,16 @@ export function getEncounters(query, callback = s => s) {
   return async state => {
     const [resolvedQuery] = expandReferences(state, query);
     console.log('Fetching encounters by query', resolvedQuery);
+    const { instanceUrl:baseUrl } = state.configuration; 
 
     const response = await request(
       state,
       'GET',
       `/ws/rest/v1/encounter/`,
-      {},
-      resolvedQuery
+      {
+        baseUrl,
+        query: resolvedQuery
+      },
     );
     console.log(`Found ${response.body.results.length} results`);
 
@@ -308,12 +330,16 @@ export function create(resourceType, data, callback = s => s) {
       data
     );
     console.log('Preparing to create', resolvedResource);
+    const { instanceUrl:baseUrl } = state.configuration; 
 
     const response = await request(
       state,
       'POST',
       `/ws/rest/v1/${resolvedResource}`,
-      resolvedData
+      {
+        baseUrl,
+        data: resolvedData,
+      }
     );
 
     console.log('Successfully created', resolvedResource);
@@ -344,12 +370,16 @@ export function update(resourceType, path, data, callback = s => s) {
       data
     );
     console.log('Preparing to update', resolvedResource);
+    const { instanceUrl:baseUrl } = state.configuration; 
 
     const response = await request(
       state,
       'POST',
       `/ws/rest/v1/${resolvedResource}/${resolvedPath}`,
-      resolvedData
+      {
+        baseUrl,
+        data: resolvedData,
+      }
     );
 
     console.log('Successfully updated', resolvedResource);
@@ -404,13 +434,15 @@ export function upsert(
       "Preparing composed upsert (via 'get' then 'create' OR 'update') on",
       resolvedResource
     );
-
+    const { instanceUrl:baseUrl } = state.configuration; 
     return await request(
       state,
       'GET',
       `/ws/rest/v1/${resolvedResource}`,
-      {},
-      resolvedQuery
+      {
+        baseUrl,
+        query: resolvedQuery
+      },
     ).then(resp => {
       const resource = resp.body.results;
       if (resource.length > 1) {

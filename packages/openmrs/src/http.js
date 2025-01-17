@@ -1,16 +1,14 @@
-
 import { expandReferences } from '@openfn/language-common/util';
-import * as http from '@openfn/language-http'
+import * as util from './Utils';
 
 /**
  * State object
  * @typedef {Object} OpenMRSOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
- * @property {object} header - An object of all request headers
+ * @property {object} headers - An object of all request headers
  * @property {object} body - The request body (as JSON)
+ * @property {string} baseUrl - The base url for the request
  */
-
-
 
 /**
  * Make a HTTP request to any OpenMRS endpoint
@@ -28,16 +26,18 @@ import * as http from '@openfn/language-http'
  * @param {OpenMRSOptions}  options - An object containing either query, headers, and body for the request
  * @returns {Operation}
  */
-export function request(method, path, options = {}, callback = s => s ) {
-  return  async state => {
-    const [resolvedMethod, resolvedPath, resolvedOptions = {}] = expandReferences(
+export function request(method, path, options = {}, callback = s => s) {
+  return async state => {
+    const [resolvedMethod, resolvedPath, resolvedOptions = {}] =
+      expandReferences(state, method, path, options);
+
+    const response = await util.request(
       state,
-      method,
-      path,
-      options
+      resolvedMethod,
+      resolvedPath,
+      resolvedOptions
     );
 
-   await http.request(resolvedMethod, resolvedPath,resolvedOptions, callback)
-
+    return util.prepareNextState(state, response, callback);
   };
 }
