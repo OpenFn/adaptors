@@ -1,19 +1,12 @@
 # Gmail Adaptor
 
-## Gmail message content extraction
+## What it does
 
-This adaptor is used to extract specific content from Gmail messages using
-custom desired "content" configurations. The sample code specifies how to query
-Gmail for messages and identify desired attachments and metadata.
+This adaptor is used to extract specific content from Gmail messages using custom desired "content" configurations. The sample code specifies how to query Gmail for messages and identify desired attachments and metadata.
 
-## How it works
+Without any parameters, the `getContentsFromMessages()` function will return an array containing every message in the account of the authenticated user including `from`, `date` and `subject`.
 
-Without any parameters, the `getContentsFromMessages()` function will return an
-array containing every message in the account of the authenticated user
-including `from`, `date` and `subject`.
-
-A number of options are available to isolated the messages desired and to
-customize the output.
+A number of options are available to isolated the desired messages and to customize the output.
 
 ## Options
 
@@ -21,15 +14,11 @@ Optional parameters include: `contents`, `query`, `email`, `processedIds`
 
 ### options.contents
 
-#### Extracting message contents
+Use the `options.contents` array to specify the content to retrieve from each message. Always included are `from`, `date`, and `subject`.
 
-Use the `options.contents` array to specify the content to retrieve from each
-message. Always included are `from`, `date`, and `subject`.
+Each item can be a simple string (ie, `'body'`, `'subject'`) or an MessageContent object offering advanced configuration.
 
-Each item can be a simple string (ie, `'body'`, `'subject'`) or an
-MessageContent object offering advanced configuration.
-
-#### Metadata
+#### Basic metadata
 
 The following types of content can be extracted:
 
@@ -38,8 +27,7 @@ The following types of content can be extracted:
 - `date`: Extracts the timestamp of the email.
 - `from`: Extracts the sender's information.
 
-Optionally, each of these content strings can be expanded to include additional
-specifications:
+Optionally, each of these content strings can be expanded to include additional specifications:
 
 ```js
 const mySubject = {
@@ -51,15 +39,13 @@ const mySubject = {
 
 - The `type` property instructs the function which content type to extract.
 - The `name` property allows you to add a custom name to this information.
-- The `maxLength` property allows you to limit the length of the content
-  returned.
+- The `maxLength` property allows you to limit the length of the content returned.
 
 #### Attachment: basic file
 
 Extract content from a file attachment.
 
-`file`: Identify the specific file inside the archive by providing its name as a
-string or using a regular expression to matching a pattern.
+`file`: Identify the specific file inside the archive by providing its name as a string or using a regular expression to matching a pattern.
 
 ```js
 const myMetadata = {
@@ -81,10 +67,8 @@ const myMetadata = {
 
 Extract content from a file embedded in an archive attachment.
 
-- `archive`: Specify the file name of the archive using either a string for an
-  exact match or a regular expression to match a pattern.
-- `file`: Identify the specific file inside the archive by providing its name as
-  a string or using a regular expression to match a pattern.
+- `archive`: Specify the file name of the archive using either a string for an exact match or a regular expression to match a pattern.
+- `file`: Identify the specific file inside the archive by providing its name as a string or using a regular expression to match a pattern.
 
 ```js
 const myArchivedFile = {
@@ -102,8 +86,6 @@ options.contents = [mySubject, 'body', myMetadata, myArchivedFile];
 
 ### options.query
 
-#### Query Setup
-
 Use a `query` parameter to filter the messages returned.
 
 The query syntax supports the same query format as the Gmail `search` box.
@@ -112,15 +94,11 @@ The query syntax supports the same query format as the Gmail `search` box.
 options.query = 'from:someuser@example.com rfc822msgid:<somemsgid@example.com> is:unread';
 ```
 
-A full list of supported search operations can be found here:
-[Refine searches in Gmail](https://support.google.com/mail/answer/7190)
+A full list of supported search operations can be found here: [Refine searches in Gmail](https://support.google.com/mail/answer/7190)
 
 ### options.email
 
-#### Optionally specify email address.
-
-Specify the email address used for the Gmail account. This almost always the
-same email associated with the authenticated user so this parameter is optional.
+Optionally specify the email address used for the Gmail account. This almost always the same email associated with the authenticated user so this parameter is optional.
 
 ```
 options.email = '<EMAIL>';
@@ -128,12 +106,7 @@ options.email = '<EMAIL>';
 
 ### options.processedIds
 
-#### Optionally skip message ids.
-
-In some scenarios, it may be necessary to skip certain messages to prevent the
-retrieval of duplicate data. Passing an array of messageIds will allow the
-function to skip these messages if any of the ids are encountered in the
-returned messages.
+In some scenarios, it may be necessary to skip certain messages to prevent the retrieval of duplicate data. Passing an array of messageIds will allow the function to skip these messages if any of the ids are encountered in the returned messages.
 
 ```
 options.processedIds = [
@@ -178,9 +151,7 @@ getContentsFromMessages({ query, email, contents });
 
 ## Sample `state.data` Output
 
-For each matched message, the extracted content is returned as a message object
-of content properties. Here's an example `state.data` for a single matched
-message:
+For each matched message, the extracted content is returned as a message object of content properties. Here's an example `state.data` for a single matched message:
 
 ```js
 [
@@ -202,20 +173,17 @@ message:
 ];
 ```
 
-Each property on the message object represents a specific piece of information
-extracted:
+Each property on the message object represents a specific piece of information extracted:
 
 - **from**: Sender's email and name.
 - **date**: The timestamp when the email was sent.
 - **subject**: Contains the email subject.
 - **metadata**: Metadata-named file content, with its matched file name.
-- **data**: Data-named archive file content, with its matched archive name and
-  file name.
+- **data**: Data-named archive file content, with its matched archive name and file name.
 
 ## Acquiring an access token
 
-The Gmail adaptor implicitly uses the Gmail account of the Google account that
-is used to authenticate the application.
+The Gmail adaptor implicitly uses the Gmail account of the Google account that is used to authenticate the application.
 
 Allowing the Gmail adaptor to access a Gmail account is a multi-step process.
 
@@ -233,13 +201,11 @@ https://support.google.com/googleapi/answer/6158849
 - Select Application type "Web application"
   - Add a uniquely-identifiable name
   - Click "Create"
-- On the resulting popup screen, find and click "DOWNLOAD JSON" and save this
-  file to a secure location.
+- On the resulting popup screen, find and click "DOWNLOAD JSON" and save this file to a secure location.
 
 ### Use the Postman application to query the OAuth enpoint and retrieve an access token
 
-Initially, you'll need to configure an authentication request using Postman's
-built-in OAuth 2.0 implementation:
+Initially, you'll need to configure an authentication request using Postman's built-in OAuth 2.0 implementation:
 
 - Open Postman
 - Create a new request
@@ -262,16 +228,14 @@ Once the form is filled out, repeat these steps each hour to retrieve a new
 access token:
 
 - Click on "Get New Access Token"
-- A browser will open and you'll be asked to authenticate with your Google
-  Account
+- A browser will open and you'll be asked to authenticate with your Google Account
 - Accept the request to allow this OAuth session to access your Google Account.
 - In the MANAGE ACCESS TOKENS popup, find and copy the new Access Token
 - This access token will be valid for 1 hour.
 
 ### Configure OpenFn CLI to find the access token
 
-The Gmail adaptor looks for the access token in the configuration section under
-`access_token`.
+The Gmail adaptor looks for the access token in the configuration section under `access_token`.
 
 Example configuration using a workflow:
 
