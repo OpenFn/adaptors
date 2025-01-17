@@ -25,7 +25,7 @@ export const prepareNextState = (state, response, callback = s => s) => {
 // and add authorisation headers
 // Refer to the common request function for options and details
 export const request = (configuration = {}, method, path, options) => {
-  // You might want to check that the path is not an absolute URL befor
+  // You might want to check that the path is not an absolute URL before
   // appending credentials commonRequest will do this for you if you
   // pass a baseURL to it and you don't need to build a path here
   // assertRelativeUrl(path);
@@ -33,6 +33,7 @@ export const request = (configuration = {}, method, path, options) => {
   // TODO This example adds basic auth from config data
   //       you may need to support other auth strategies
   const { baseUrl, clientId, clientSecret } = configuration;
+
   const headers = makeBasicAuthHeader(clientId, clientSecret);
 
   // TODO You can define custom error messages here
@@ -56,15 +57,18 @@ export const request = (configuration = {}, method, path, options) => {
 
     // You can add extra headers here if you want to
     headers: {
-      'content-type': 'application/json',
+      'Content-Type': 'application/json',
       ...headers,
     },
   };
+
+  // opts.data = JSON.stringify(opts.data);
 
   // TODO you may want to add a prefix to the path
   // use path.join to build the path safely
   const safePath = nodepath.join(path);
 
   // Make the actual request
-  return commonRequest(method, safePath, options);
+
+  return commonRequest(method, safePath, opts);
 };

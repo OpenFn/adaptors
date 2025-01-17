@@ -39,35 +39,13 @@ import * as util from './Utils';
  * @state {HttpState}
  */
 export function sendSMS(data, options) {
-  // `https://devp-sms03726-api.hubtel.com/v1/messages/send`,
-
-  // maybe JSON.stringify later if necessary.
-  const body = {
-    from: 'MySenderId',
-    to: 'string',
-    content: 'hello world',
-  };
-
-  // {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     Authorization: 'Basic ' + Buffer.from('<username>:<password>').toString('base64')
-  //   },
-  //   body: JSON.stringify({
-  //     from: 'MySenderId',
-  //     to: 'string',
-  //     content: 'hello world'
-  //   })
-  // }
-
-  return request('POST', 'messages/send', body, options);
+  return request('POST', '/messages/send', data, options);
 }
 
 /**
  * Make a general HTTP request
  * @example
- * request("POST", "patient", { "name":"Bukayo" });
+ * request("POST", "patient", { "name": "Bukayo" });
  * @function
  * @public
  * @param {string} method - HTTP method to use
@@ -87,7 +65,7 @@ export function request(method, path, body, options = {}) {
       resolvedMethod,
       resolvedPath,
       {
-        data: resolvedData,
+        body: resolvedData,
         ...resolvedoptions,
       }
     );
