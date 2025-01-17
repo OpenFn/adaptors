@@ -25,7 +25,8 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:*"
+    "@openfn/language-common": "workspace:*",
+    "@openfn/language-http": "workspace:*"
   },
   "devDependencies": {
     "@openfn/simple-ast": "^0.4.1",

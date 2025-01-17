@@ -1468,6 +1468,9 @@ importers:
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
+      '@openfn/language-http':
+        specifier: workspace:*
+        version: link:../http
     devDependencies:
       '@openfn/simple-ast':
         specifier: ^0.4.1
