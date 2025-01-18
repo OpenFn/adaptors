@@ -5,6 +5,16 @@ import {
   logResponse,
 } from '@openfn/language-common/util';
 
+/**
+ * Options object
+ * @typedef {Object} OpenMRSOptions
+ * @property {object} query - An object of query parameters to be encoded into the URL
+ * @property {object} headers - An object of all request headers
+ * @property {object} body - The request body (as JSON)
+ * @property {string} baseUrl - The base url for the request
+ * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
+ */
+
 export const prepareNextState = (state, response, callback) => {
   const { body, ...responseWithoutBody } = response;
   const nextState = {
@@ -16,30 +26,41 @@ export const prepareNextState = (state, response, callback) => {
 };
 
 export async function request(state, method, path, options = {}) {
-
   const {
     baseUrl = '',
     query = {},
     data = {},
-    headers = {'content-type': 'application/json'},
-    parseAs = 'json'
+    headers = { 'content-type': 'application/json' },
+    parseAs = 'json',
   } = options;
+
+  if (baseUrl.length <= 0) {
+    throw new Error(
+      'Invalid instanceUrl. Include instanceUrl in state.configuration'
+    );
+  }
+
+  const isAbsoluteUrl = /^(https?:|\/\/)/i.test(path);
+  if (isAbsoluteUrl) {
+    throw new Error(
+      `Invalid path argument: "${path}" appears to be an absolute URL. Please provide a relative path.`
+    );
+  }
+
   const { username, password } = state.configuration;
   const authHeaders = makeBasicAuthHeader(username, password);
- 
 
   const opts = {
     body: data,
     headers: {
       ...authHeaders,
-      ... headers,
+      ...headers,
     },
     query,
     parseAs,
   };
 
   const url = `${baseUrl}${path}`;
-  
 
   let allResponses;
   let queryParams = opts?.query;
@@ -47,7 +68,7 @@ export async function request(state, method, path, options = {}) {
 
   do {
     const requestOptions = queryParams ? { ...opts, queryParams } : opts;
-    
+
     const response = await commonRequest(method, url, requestOptions);
     logResponse(response);
 
