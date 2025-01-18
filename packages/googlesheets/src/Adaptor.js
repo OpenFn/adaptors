@@ -100,6 +100,7 @@ export function appendValues(params, callback = s => s) {
     const { spreadsheetId, range, values } = resolvedParams;
 
     if (!values || values.length === 0) {
+      console.log('Warning: empty values array');
       return state;
     }
 
@@ -168,6 +169,7 @@ export function batchUpdateValues(params, callback = s => s) {
     } = resolvedParams;
 
     if (!values || values.length === 0) {
+      console.log('Warning: empty values array');
       return state;
     }
 
