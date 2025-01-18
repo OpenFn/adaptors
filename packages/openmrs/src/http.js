@@ -16,7 +16,7 @@ import * as util from './Utils';
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
- * @param {import('./Utils').OpenMRSOptions}  [options={}] - An object containing either query, headers, and body for the request
+ * @param {object}  [options={}] - An object containing either query, headers, and body for the request
  * @returns {Operation}
  */
 export function request(method, path, options = {}, callback = s => s) {
