@@ -26,8 +26,11 @@
             "title": "property",
             "description": "Message content type. Valid types: from, date, subject, body, archive, file.",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
             },
             "name": "type"
           },
