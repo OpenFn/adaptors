@@ -1,7 +1,29 @@
-import * as util from './Utils';
+import { execute as commonExecute } from '@openfn/language-common';
+import * as util from './util';
 import { createServer } from './mock';
 
-export { createServer as createMockServer };
+/**
+ * Executes an operation.
+ * @function
+ * @private
+ * @param {Operation} operations - Operations
+ * @returns {State}
+ */
+export function execute(...operations) {
+  const initialState = {
+    references: [],
+    data: null,
+    configuration: {},
+  };
+
+  return state => {
+    if (!state.configuration.baseUrl) {
+      const client = createServer();
+      util.setMockClient(client);
+    }
+    return commonExecute(...operations)({ ...initialState, ...state });
+  };
+}
 
 /**
 /**
@@ -34,18 +56,18 @@ export function get(path, query) {
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
+ * @param {object} data - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
  * @returns {Operation}
  * @state {HttpState}
  */
-export function post(path, body) {
-  return util.request(path, { body, method: 'POST' });
+export function post(path, data) {
+  return util.request(path, { data, method: 'POST' });
 }
 
 export function sendBirthNotification(data, options = {}) {
   return util.request('api/notification', {
     method: 'POST',
-    body: data,
+    data,
     ...options,
   });
 }

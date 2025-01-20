@@ -4,7 +4,7 @@
       "name": "post",
       "params": [
         "path",
-        "body"
+        "data"
       ],
       "docs": {
         "description": "Make a POST request",
@@ -36,19 +36,10 @@
             "title": "param",
             "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
             "type": {
-              "type": "UnionType",
-              "elements": [
-                {
-                  "type": "NameExpression",
-                  "name": "object"
-                },
-                {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              ]
+              "type": "NameExpression",
+              "name": "object"
             },
-            "name": "body"
+            "name": "data"
           },
           {
             "title": "returns",
