@@ -2,6 +2,16 @@ import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
 
 /**
+ * Options object
+ * @typedef {Object} OpenMRSOptions
+ * @property {object} query - An object of query parameters to be encoded into the URL
+ * @property {object} headers - An object of all request headers
+ * @property {object} body - The request body (as JSON)
+ * @property {string} baseUrl - The base url for the request
+ * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
+ */
+
+/**
  * Make a HTTP request to any OpenMRS endpoint
  * @example
  * request("GET",
@@ -16,7 +26,7 @@ import * as util from './Utils';
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
- * @param {object}  [options={}] - An object containing either query, headers, and body for the request
+ * @param {OpenMRSOptions}  [options={}] - An object containing either query, headers, and body for the request
  * @returns {Operation}
  */
 export function request(method, path, options = {}, callback = s => s) {

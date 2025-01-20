@@ -7,6 +7,7 @@ import {
 
 /**
  * Options object
+ * @global
  * @typedef {Object} OpenMRSOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
  * @property {object} headers - An object of all request headers
