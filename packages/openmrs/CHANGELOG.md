@@ -1,5 +1,13 @@
 # @openfn/language-openmrs
 
+## 4.2.0
+
+### Minor Changes
+
+- 5d6839e: Implement namespaced http.request() function. The function makes a
+  call against the `instanceUrl` and the path provided, while allowing
+  manipulation to the API call as needed.
+
 ## 4.1.6
 
 ### Patch Changes
