@@ -84,7 +84,23 @@ export const request = (path, options) => {
         body: await response.body.text(),
       });
     }
+
+    //TODO: Add a function for handling stream responses
+    // Eg: const responseBody = await streamToString(response.body);
+
     logResponse(response);
     return prepareNextState(state, response);
   };
 };
+/**
+ * Convert a readable stream to a string
+ * @param {Readable} stream - The readable stream to convert
+ * @returns {Promise<string>} - The string content of the stream
+ */
+async function streamToString(stream) {
+  const chunks = [];
+  for await (const chunk of stream) {
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks).toString('utf8');
+}
