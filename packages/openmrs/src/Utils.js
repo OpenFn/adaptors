@@ -15,28 +15,50 @@ export const prepareNextState = (state, response, callback) => {
   return callback(nextState);
 };
 
-export async function request(state, method, path, data, params) {
-  const { instanceUrl, username, password } = state.configuration;
-  const headers = makeBasicAuthHeader(username, password);
+export async function request(state, method, path, options = {}) {
+  const {
+    baseUrl = state.configuration.instanceUrl,
+    query = {},
+    data = {},
+    headers = { 'content-type': 'application/json' },
+    parseAs = 'json',
+  } = options;
 
-  const options = {
+  if (baseUrl.length <= 0) {
+    throw new Error(
+      'Invalid instanceUrl. Include instanceUrl in state.configuration'
+    );
+  }
+
+  const isAbsoluteUrl = /^(https?:|\/\/)/i.test(path);
+  if (isAbsoluteUrl) {
+    throw new Error(
+      `Invalid path argument: "${path}" appears to be an absolute URL. Please provide a relative path.`
+    );
+  }
+
+  const { username, password } = state.configuration;
+  const authHeaders = makeBasicAuthHeader(username, password);
+
+  const opts = {
     body: data,
     headers: {
+      ...authHeaders,
       ...headers,
-      'content-type': 'application/json',
     },
-    query: params,
-    parseAs: 'json',
+    query,
+    parseAs,
   };
 
-  const url = `${instanceUrl}${path}`;
+  const url = `${baseUrl}${path}`;
 
   let allResponses;
-  let query = options?.query;
-  let allowPagination = isNaN(query?.startIndex);
+  let queryParams = opts?.query;
+  let allowPagination = isNaN(queryParams?.startIndex);
 
   do {
-    const requestOptions = query ? { ...options, query } : options;
+    const requestOptions = queryParams ? { ...opts, query: queryParams } : opts;
+
     const response = await commonRequest(method, url, requestOptions);
     logResponse(response);
 
@@ -56,7 +78,7 @@ export async function request(state, method, path, data, params) {
       const params = new URLSearchParams(urlObj.search);
       const startIndex = params.get('startIndex');
 
-      query = { ...query, startIndex };
+      queryParams = { ...queryParams, startIndex };
     } else {
       delete allResponses.body.links;
       break;
