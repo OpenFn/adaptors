@@ -116,11 +116,15 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
 
   const srcPath = path.resolve(adaptorPath, 'src/builders.js');
   console.log('Writing source to ', srcPath);
-  await writeFile(
-    // TODO move to ./gen
-    srcPath,
-    withDisclaimer(src)
-  );
+  await writeFile(srcPath, withDisclaimer(src.builders));
+
+  await mkdir(path.resolve(adaptorPath, 'src/profiles'), { recursive: true });
+  for (const profile in src.profiles) {
+    await writeFile(
+      path.resolve(adaptorPath, 'src/profiles', `${profile}.js`),
+      withDisclaimer(src.profiles[profile])
+    );
+  }
 
   if (options.tests) {
     console.log('Generating tests');

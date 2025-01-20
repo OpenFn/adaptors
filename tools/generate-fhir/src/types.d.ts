@@ -40,7 +40,7 @@ export type profileId = string;
 
 export type SpecJSON = Record<profileId, ProfileSpec>;
 
-// This (partially)) defines the JSON structure of a fhir spec for a profile
+// This (partially) defines the JSON structure of a fhir spec for a profile
 export type ProfileSpec = {
   id: string; // profile id
   resourceType: string; // should be StructureDefinition

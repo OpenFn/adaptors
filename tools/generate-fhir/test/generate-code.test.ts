@@ -23,6 +23,44 @@ import generateCode from '../src/generate-code';
  * That would test the result of the code, rather than the content of it
  */
 
-test('should generate a single builder function', () => {
-  const schema = {};
+test('should generate a single builder and profile', t => {
+  const schema = {
+    Patient: [
+      {
+        id: 'patient',
+        type: 'Patient',
+        url: 'https://ihir.openfn.org/patient',
+        props: {
+          id: {
+            type: 'string',
+            isArray: false,
+            desc: 'Logical id of this artifact',
+            isComposite: false,
+          },
+          name: {
+            type: 'HumanName',
+            isArray: true,
+            desc: 'A name associated with the patient',
+          },
+        },
+      },
+    ],
+  };
+
+  const result = generateCode(schema, {});
+
+  const { builders, profiles } = result;
+  // find the import
+  t.regex(builders, /import Patient_patient from "\.\/profiles\/patient";/i);
+  // find the named export
+  t.regex(builders, /export function patient\(type, props\)/);
+  // trap the key mapping line
+  t.regex(builders, /"patient": Patient_patient/);
+
+  // Find the default export
+  t.regex(profiles.patient, /export default function\(props\)/i);
+  // Track the datatype import
+  t.regex(profiles.patient, /import \* as util from ".\/utils\.js";/i);
+  // Track the right resource type is being created
+  t.regex(profiles.patient, /resourceType: "Patient"/i);
 });

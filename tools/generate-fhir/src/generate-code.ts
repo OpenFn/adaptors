@@ -3,6 +3,7 @@ import { print, parse } from 'recast';
 
 import { StatementKind } from 'ast-types/gen/kinds';
 import { getBuilderName, getTypeName, sortKeys } from './util';
+import { Mapping, MappingSpec, Schema } from './types';
 
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
@@ -10,13 +11,54 @@ const INPUT_NAME = 'props';
 const generateCode = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {}
-) => {
+): { builders: string; profiles: Record<string, string> } => {
   const statements: n.Statement[] = [];
+
+  const imports: n.Statement[] = [];
+
+  const profiles = {};
+
+  // generate a builder for each profile
+  const orderedResources = Object.keys(schema).sort();
+  for (const resourceType of orderedResources) {
+    // Note that the schema has already applied include/exclude filters
+    const sortedProfiles = sortKeys(schema[resourceType]) as Schema[];
+    for (const profile of sortedProfiles) {
+      // import this builder
+      const name = getTypeName(profile);
+      imports.push(
+        b.importDeclaration(
+          [b.importDefaultSpecifier(b.identifier(name))],
+          b.stringLiteral(`./profiles/${profile.id}`)
+        )
+      );
+
+      profiles[profile.id] = generateProfile(
+        profile,
+        mappings.overrides?.[resourceType] ?? {}
+      );
+
+      // Generate an entrypoint function
+      statements.push(generateEntry(name, resourceType, schema[resourceType]));
+    }
+  }
+
+  const program = b.program([...imports, ...statements]);
+
+  const builders = print(program).code;
+
+  return { builders, profiles };
+};
+
+const generateProfile = (profile: Schema, mappings: MappingSpec) => {
+  const statements = [];
+
+  const overrides = Object.assign({}, mappings.any, mappings[profile.id]);
 
   statements.push(
     b.importDeclaration(
       [b.importNamespaceSpecifier(b.identifier('util'))],
-      b.stringLiteral('./utils.js')
+      b.stringLiteral('../utils.js')
     )
   );
   statements.push(
@@ -26,33 +68,23 @@ const generateCode = (
     )
   );
 
-  // generate a builder for each variant
-  const orderedResources = Object.keys(schema).sort();
-  for (const resourceType of orderedResources) {
-    // Note that the schema has already applied include/exclude filters
+  const fn = generateBuilder(profile, overrides);
 
-    // Generate an entrypoint function
-    statements.push(generateEntry(resourceType, schema[resourceType]));
+  statements.push(b.exportDefaultDeclaration(fn));
 
-    // Now generate an actual builder for each profile
-    const sortedProfiles = sortKeys(schema[resourceType]);
-    for (const profile of sortedProfiles) {
-      const m = mappings.overrides?.[resourceType] ?? {};
-      const overrides = Object.assign({}, m.any, m[profile.id]);
-      const name = getTypeName(profile);
-
-      statements.push(generateBuilder(name, profile, overrides));
-    }
-  }
+  // TODO export default
 
   const program = b.program(statements);
-
   return print(program).code;
 };
 
 export default generateCode;
 
-const generateEntry = (resourceType: string, variants: Schema[]) => {
+const generateEntry = (
+  name: string,
+  resourceType: string,
+  variants: Schema[]
+) => {
   const comment = parse(`/**
   * Create a FHIR ${resourceType} resource.
   * @public
@@ -67,12 +99,7 @@ const generateEntry = (resourceType: string, variants: Schema[]) => {
       b.identifier('mappings'),
       b.objectExpression(
         variants.map(schema =>
-          b.objectProperty(
-            b.stringLiteral(schema.id),
-            b.identifier(
-              `${getBuilderName(resourceType)}_${schema.id.replace(/-/g, '_')}`
-            )
-          )
+          b.objectProperty(b.stringLiteral(schema.id), b.identifier(name))
         )
       )
     ),
@@ -97,7 +124,7 @@ const generateEntry = (resourceType: string, variants: Schema[]) => {
   return ex;
 };
 
-const generateBuilder = (resourceName, schema, mappings) => {
+const generateBuilder = (schema, mappings) => {
   const body: StatementKind[] = [];
 
   body.push(initResource(schema.type));
@@ -113,7 +140,7 @@ const generateBuilder = (resourceName, schema, mappings) => {
   body.push(returnResource());
 
   const fn = b.functionDeclaration(
-    b.identifier(getBuilderName(resourceName)),
+    null,
     [b.identifier(INPUT_NAME)],
     b.blockStatement(body)
   );
