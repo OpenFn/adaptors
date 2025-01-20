@@ -27,6 +27,10 @@ This adaptor exports the following namespaced functions:
 <dt>
     <a href="#fhir_get">fhir.get(path, query, [callback])</a>
 </dt>
+
+<dt>
+    <a href="#http_request">http.request(method, path, [options])</a>
+</dt>
 </dl>
 
 
@@ -382,6 +386,36 @@ Make a get request to any FHIR endpoint in OpenMRS
 **Example:** Get encounters based on lastUpdated field
 ```js
 fhir.get('Encounter', { count: 100, lastUpdated: 'ge2024-01-01T00:00:00Z' })
+```
+
+* * *
+
+
+## http
+
+These functions belong to the http namespace.
+### http.request {#http_request}
+
+<p><code>request(method, path, [options]) ⇒ Operation</code></p>
+
+Make a HTTP request to any OpenMRS endpoint
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| method | <code>string</code> |  | HTTP method to use |
+| path | <code>string</code> |  | Path to resource |
+| [options] | [<code>OpenMRSOptions</code>](#openmrsoptions) | <code>{}</code> | An object containing query, headers, and body for the request |
+
+**Example**
+```js
+request("GET",
+  "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8", {
+   query:{ 
+      limit: 1, 
+      offset: 20 
+   },
+});
 ```
 
 * * *
