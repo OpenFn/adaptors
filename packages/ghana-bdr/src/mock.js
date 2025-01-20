@@ -77,26 +77,20 @@ const birthNotificationResponse = {
 
 // This creates a mock bdr server
 // It should present the same rest API as BDR-MOH-GHS
-export function createServer(url = 'https://bdr.openfn.org') {
+export function createServer(url = 'http://tracker.chimgh.org') {
   const agent = new MockAgent();
   agent.disableNetConnect();
 
   const mockPool = agent.get(url);
 
   const sendBirthNotification = req => {
-    try {
-      return {
-        statusCode: 200,
-        responseOptions: {
-          headers: { 'Content-Type': 'application/json' },
-        },
-        data: JSON.stringify(birthNotificationResponse),
-      };
-    } catch (e) {
-      if (e.message === COLLECTION_NOT_FOUND) {
-        return { statusCode: 404 };
-      }
-    }
+    return {
+      statusCode: 200,
+      responseOptions: {
+        headers: { 'Content-Type': 'application/json' },
+      },
+      data: JSON.stringify(birthNotificationResponse),
+    };
   };
 
   mockPool
@@ -105,10 +99,8 @@ export function createServer(url = 'https://bdr.openfn.org') {
     .persist();
 
   return {
-    // export the agent for use with setGlobalDispatcher()
-    // (used in CLI tests)
     agent,
-    // Util API for tests (roughly matches the unidici api)
+
     request: ({ method, path, data, ...rest }) => {
       const opts = {
         method,
@@ -116,14 +108,12 @@ export function createServer(url = 'https://bdr.openfn.org') {
         origin: url,
         headers: {
           // TODO this maybe needs to be base 64 encoded
-          Authorization: `Basic abc`,
+          // Authorization: `Basic dW5kZWZpbmVkOnVuZGVmaW5lZA==`,
         },
         ...rest,
       };
+
       if (data) {
-        Object.assign(opts.headers, {
-          'content-type': 'application/json',
-        });
         opts.body = JSON.stringify(data);
       }
       return mockPool.request(opts);
