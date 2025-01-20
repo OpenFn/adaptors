@@ -88,6 +88,24 @@ const generateProfile = (profile: Schema, mappings: MappingSpec) => {
 
 export default generateCode;
 
+// For each prop in the schema, generate a prop in jsdocs
+const generateJsDocs = (schema: Schema[]) => {
+  console.log(' >> GENERATE JSDOCS');
+  const props: string[] = [];
+
+  // TODO for now, just generate for the first schema
+  const profile = schema[0];
+  console.log(profile);
+
+  for (const propName in profile.props) {
+    const prop = profile.props[propName];
+    // TODO do I need the typemap here?
+    props.push(`[props.${propName}] {${prop.type}} - ${prop.desc}`);
+  }
+
+  return props.map(p => `  * @param ${p}`).join('\n');
+};
+
 const generateEntry = (
   name: string,
   resourceType: string,
@@ -102,7 +120,8 @@ const generateEntry = (
   * @param {string} type - The profile id for the resource variant.${
     simpleSignatures ? ' Optional.' : ''
   }
-  * @param props - Properties to apply to the resource
+  * @param props {object} - Properties to apply to the resource
+${generateJsDocs(variants)}
  */
 `);
 

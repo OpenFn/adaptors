@@ -41,6 +41,9 @@ importers:
       mocha:
         specifier: ^10.7.3
         version: 10.7.3
+      typescript:
+        specifier: 4.8.4
+        version: 4.8.4
 
   packages/asana:
     dependencies:
