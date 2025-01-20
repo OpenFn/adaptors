@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("DocumentReference", () => {
     it("should create a simple DocumentReference", () => {
-        const resource = builders.documentReference("DocumentReference", {});
+        const resource = builders.documentReference({});
         assert.isOk(resource);
     });
 });

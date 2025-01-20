@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("DeviceDefinition", () => {
     it("should create a simple DeviceDefinition", () => {
-        const resource = builders.deviceDefinition("DeviceDefinition", {});
+        const resource = builders.deviceDefinition({});
         assert.isOk(resource);
     });
 });

@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("Condition", () => {
     it("should create a simple Condition", () => {
-        const resource = builders.condition("Condition", {});
+        const resource = builders.condition({});
         assert.isOk(resource);
     });
 });

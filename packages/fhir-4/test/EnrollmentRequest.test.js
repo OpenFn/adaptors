@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("EnrollmentRequest", () => {
     it("should create a simple EnrollmentRequest", () => {
-        const resource = builders.enrollmentRequest("EnrollmentRequest", {});
+        const resource = builders.enrollmentRequest({});
         assert.isOk(resource);
     });
 });

@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("MeasureReport", () => {
     it("should create a simple MeasureReport", () => {
-        const resource = builders.measureReport("MeasureReport", {});
+        const resource = builders.measureReport({});
         assert.isOk(resource);
     });
 });

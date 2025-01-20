@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("Endpoint", () => {
     it("should create a simple Endpoint", () => {
-        const resource = builders.endpoint("Endpoint", {});
+        const resource = builders.endpoint({});
         assert.isOk(resource);
     });
 });

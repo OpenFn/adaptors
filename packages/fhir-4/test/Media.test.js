@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("Media", () => {
     it("should create a simple Media", () => {
-        const resource = builders.media("Media", {});
+        const resource = builders.media({});
         assert.isOk(resource);
     });
 });

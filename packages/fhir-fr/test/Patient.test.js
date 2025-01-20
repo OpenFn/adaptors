@@ -63,6 +63,7 @@ describe('fr-core-patient', () => {
   it('should create an example patient', () => {
     const resource = builders.patient('fr-core-patient', {
       birthDate: '1980-06-06',
+
       gender: 'male',
       id: '45283414',
       identifier: utils.id('02410', 'http://example.com/patient-ids'),

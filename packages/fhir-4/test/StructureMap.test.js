@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("StructureMap", () => {
     it("should create a simple StructureMap", () => {
-        const resource = builders.structureMap("StructureMap", {});
+        const resource = builders.structureMap({});
         assert.isOk(resource);
     });
 });

@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("ResearchElementDefinition", () => {
     it("should create a simple ResearchElementDefinition", () => {
-        const resource = builders.researchElementDefinition("ResearchElementDefinition", {});
+        const resource = builders.researchElementDefinition({});
         assert.isOk(resource);
     });
 });

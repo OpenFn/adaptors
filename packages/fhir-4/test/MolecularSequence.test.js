@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("MolecularSequence", () => {
     it("should create a simple MolecularSequence", () => {
-        const resource = builders.molecularSequence("MolecularSequence", {});
+        const resource = builders.molecularSequence({});
         assert.isOk(resource);
     });
 });

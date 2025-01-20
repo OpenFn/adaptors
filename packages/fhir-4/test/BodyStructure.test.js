@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("BodyStructure", () => {
     it("should create a simple BodyStructure", () => {
-        const resource = builders.bodyStructure("BodyStructure", {});
+        const resource = builders.bodyStructure({});
         assert.isOk(resource);
     });
 });

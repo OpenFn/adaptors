@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("DocumentManifest", () => {
     it("should create a simple DocumentManifest", () => {
-        const resource = builders.documentManifest("DocumentManifest", {});
+        const resource = builders.documentManifest({});
         assert.isOk(resource);
     });
 });

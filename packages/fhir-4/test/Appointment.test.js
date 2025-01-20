@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("Appointment", () => {
     it("should create a simple Appointment", () => {
-        const resource = builders.appointment("Appointment", {});
+        const resource = builders.appointment({});
         assert.isOk(resource);
     });
 });

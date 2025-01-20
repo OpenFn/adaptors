@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("Claim", () => {
     it("should create a simple Claim", () => {
-        const resource = builders.claim("Claim", {});
+        const resource = builders.claim({});
         assert.isOk(resource);
     });
 });

@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("OperationOutcome", () => {
     it("should create a simple OperationOutcome", () => {
-        const resource = builders.operationOutcome("OperationOutcome", {});
+        const resource = builders.operationOutcome({});
         assert.isOk(resource);
     });
 });

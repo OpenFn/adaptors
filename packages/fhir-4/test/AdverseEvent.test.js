@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("AdverseEvent", () => {
     it("should create a simple AdverseEvent", () => {
-        const resource = builders.adverseEvent("AdverseEvent", {});
+        const resource = builders.adverseEvent({});
         assert.isOk(resource);
     });
 });

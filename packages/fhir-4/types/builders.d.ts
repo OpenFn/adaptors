@@ -126,6 +126,8 @@ type Account__lookups = {
     "Account": Account_Account_Props;
 };
 
+export declare function account(props: Account_Account_Props);;
+
 export declare function account<T extends keyof Account__lookups>(type: T, props: Account__lookups[T]);;
 
 type ActivityDefinition_ActivityDefinition_Props = {
@@ -385,6 +387,8 @@ type ActivityDefinition__lookups = {
     "ActivityDefinition": ActivityDefinition_ActivityDefinition_Props;
 };
 
+export declare function activityDefinition(props: ActivityDefinition_ActivityDefinition_Props);;
+
 export declare function activityDefinition<T extends keyof ActivityDefinition__lookups>(type: T, props: ActivityDefinition__lookups[T]);;
 
 type AdministrableProductDefinition_AdministrableProductDefinition_Props = {
@@ -524,6 +528,8 @@ type AdministrableProductDefinition__lookups = {
     "AdministrableProductDefinition": AdministrableProductDefinition_AdministrableProductDefinition_Props;
 };
 
+export declare function administrableProductDefinition(props: AdministrableProductDefinition_AdministrableProductDefinition_Props);;
+
 export declare function administrableProductDefinition<T extends keyof AdministrableProductDefinition__lookups>(type: T, props: AdministrableProductDefinition__lookups[T]);;
 
 type AdverseEvent_AdverseEvent_Props = {
@@ -661,6 +667,8 @@ type AdverseEvent_AdverseEvent_Props = {
 type AdverseEvent__lookups = {
     "AdverseEvent": AdverseEvent_AdverseEvent_Props;
 };
+
+export declare function adverseEvent(props: AdverseEvent_AdverseEvent_Props);;
 
 export declare function adverseEvent<T extends keyof AdverseEvent__lookups>(type: T, props: AdverseEvent__lookups[T]);;
 
@@ -803,6 +811,8 @@ type AllergyIntolerance_AllergyIntolerance_Props = {
 type AllergyIntolerance__lookups = {
     "AllergyIntolerance": AllergyIntolerance_AllergyIntolerance_Props;
 };
+
+export declare function allergyIntolerance(props: AllergyIntolerance_AllergyIntolerance_Props);;
 
 export declare function allergyIntolerance<T extends keyof AllergyIntolerance__lookups>(type: T, props: AllergyIntolerance__lookups[T]);;
 
@@ -962,6 +972,8 @@ type Appointment__lookups = {
     "Appointment": Appointment_Appointment_Props;
 };
 
+export declare function appointment(props: Appointment_Appointment_Props);;
+
 export declare function appointment<T extends keyof Appointment__lookups>(type: T, props: Appointment__lookups[T]);;
 
 type AppointmentResponse_AppointmentResponse_Props = {
@@ -1034,6 +1046,8 @@ type AppointmentResponse_AppointmentResponse_Props = {
 type AppointmentResponse__lookups = {
     "AppointmentResponse": AppointmentResponse_AppointmentResponse_Props;
 };
+
+export declare function appointmentResponse(props: AppointmentResponse_AppointmentResponse_Props);;
 
 export declare function appointmentResponse<T extends keyof AppointmentResponse__lookups>(type: T, props: AppointmentResponse__lookups[T]);;
 
@@ -1239,6 +1253,8 @@ type AuditEvent__lookups = {
     "AuditEvent": AuditEvent_AuditEvent_Props;
 };
 
+export declare function auditEvent(props: AuditEvent_AuditEvent_Props);;
+
 export declare function auditEvent<T extends keyof AuditEvent__lookups>(type: T, props: AuditEvent__lookups[T]);;
 
 type Basic_Basic_Props = {
@@ -1300,6 +1316,8 @@ type Basic__lookups = {
     "Basic": Basic_Basic_Props;
 };
 
+export declare function basic(props: Basic_Basic_Props);;
+
 export declare function basic<T extends keyof Basic__lookups>(type: T, props: Basic__lookups[T]);;
 
 type Binary_Binary_Props = {
@@ -1336,6 +1354,8 @@ type Binary_Binary_Props = {
 type Binary__lookups = {
     "Binary": Binary_Binary_Props;
 };
+
+export declare function binary(props: Binary_Binary_Props);;
 
 export declare function binary<T extends keyof Binary__lookups>(type: T, props: Binary__lookups[T]);;
 
@@ -1510,6 +1530,8 @@ type BiologicallyDerivedProduct__lookups = {
     "BiologicallyDerivedProduct": BiologicallyDerivedProduct_BiologicallyDerivedProduct_Props;
 };
 
+export declare function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_BiologicallyDerivedProduct_Props);;
+
 export declare function biologicallyDerivedProduct<T extends keyof BiologicallyDerivedProduct__lookups>(type: T, props: BiologicallyDerivedProduct__lookups[T]);;
 
 type BodyStructure_BodyStructure_Props = {
@@ -1582,6 +1604,8 @@ type BodyStructure_BodyStructure_Props = {
 type BodyStructure__lookups = {
     "BodyStructure": BodyStructure_BodyStructure_Props;
 };
+
+export declare function bodyStructure(props: BodyStructure_BodyStructure_Props);;
 
 export declare function bodyStructure<T extends keyof BodyStructure__lookups>(type: T, props: BodyStructure__lookups[T]);;
 
@@ -1681,6 +1705,8 @@ type Bundle_Bundle_Props = {
 type Bundle__lookups = {
     "Bundle": Bundle_Bundle_Props;
 };
+
+export declare function bundle(props: Bundle_Bundle_Props);;
 
 export declare function bundle<T extends keyof Bundle__lookups>(type: T, props: Bundle__lookups[T]);;
 
@@ -1948,6 +1974,8 @@ type CapabilityStatement__lookups = {
     "CapabilityStatement": CapabilityStatement_CapabilityStatement_Props;
 };
 
+export declare function capabilityStatement(props: CapabilityStatement_CapabilityStatement_Props);;
+
 export declare function capabilityStatement<T extends keyof CapabilityStatement__lookups>(type: T, props: CapabilityStatement__lookups[T]);;
 
 type CarePlan_CarePlan_Props = {
@@ -2110,6 +2138,8 @@ type CarePlan__lookups = {
     "CarePlan": CarePlan_CarePlan_Props;
 };
 
+export declare function carePlan(props: CarePlan_CarePlan_Props);;
+
 export declare function carePlan<T extends keyof CarePlan__lookups>(type: T, props: CarePlan__lookups[T]);;
 
 type CareTeam_CareTeam_Props = {
@@ -2228,6 +2258,8 @@ type CareTeam__lookups = {
     "CareTeam": CareTeam_CareTeam_Props;
 };
 
+export declare function careTeam(props: CareTeam_CareTeam_Props);;
+
 export declare function careTeam<T extends keyof CareTeam__lookups>(type: T, props: CareTeam__lookups[T]);;
 
 type CatalogEntry_CatalogEntry_Props = {
@@ -2337,6 +2369,8 @@ type CatalogEntry_CatalogEntry_Props = {
 type CatalogEntry__lookups = {
     "CatalogEntry": CatalogEntry_CatalogEntry_Props;
 };
+
+export declare function catalogEntry(props: CatalogEntry_CatalogEntry_Props);;
 
 export declare function catalogEntry<T extends keyof CatalogEntry__lookups>(type: T, props: CatalogEntry__lookups[T]);;
 
@@ -2499,6 +2533,8 @@ type ChargeItem_ChargeItem_Props = {
 type ChargeItem__lookups = {
     "ChargeItem": ChargeItem_ChargeItem_Props;
 };
+
+export declare function chargeItem(props: ChargeItem_ChargeItem_Props);;
 
 export declare function chargeItem<T extends keyof ChargeItem__lookups>(type: T, props: ChargeItem__lookups[T]);;
 
@@ -2666,6 +2702,8 @@ type ChargeItemDefinition_ChargeItemDefinition_Props = {
 type ChargeItemDefinition__lookups = {
     "ChargeItemDefinition": ChargeItemDefinition_ChargeItemDefinition_Props;
 };
+
+export declare function chargeItemDefinition(props: ChargeItemDefinition_ChargeItemDefinition_Props);;
 
 export declare function chargeItemDefinition<T extends keyof ChargeItemDefinition__lookups>(type: T, props: ChargeItemDefinition__lookups[T]);;
 
@@ -2968,6 +3006,8 @@ type Citation_Citation_Props = {
 type Citation__lookups = {
     "Citation": Citation_Citation_Props;
 };
+
+export declare function citation(props: Citation_Citation_Props);;
 
 export declare function citation<T extends keyof Citation__lookups>(type: T, props: Citation__lookups[T]);;
 
@@ -3427,6 +3467,8 @@ type Claim__lookups = {
     "Claim": Claim_Claim_Props;
 };
 
+export declare function claim(props: Claim_Claim_Props);;
+
 export declare function claim<T extends keyof Claim__lookups>(type: T, props: Claim__lookups[T]);;
 
 type ClaimResponse_ClaimResponse_Props = {
@@ -3807,6 +3849,8 @@ type ClaimResponse__lookups = {
     "ClaimResponse": ClaimResponse_ClaimResponse_Props;
 };
 
+export declare function claimResponse(props: ClaimResponse_ClaimResponse_Props);;
+
 export declare function claimResponse<T extends keyof ClaimResponse__lookups>(type: T, props: ClaimResponse__lookups[T]);;
 
 type ClinicalImpression_ClinicalImpression_Props = {
@@ -3965,6 +4009,8 @@ type ClinicalImpression_ClinicalImpression_Props = {
 type ClinicalImpression__lookups = {
     "ClinicalImpression": ClinicalImpression_ClinicalImpression_Props;
 };
+
+export declare function clinicalImpression(props: ClinicalImpression_ClinicalImpression_Props);;
 
 export declare function clinicalImpression<T extends keyof ClinicalImpression__lookups>(type: T, props: ClinicalImpression__lookups[T]);;
 
@@ -4179,6 +4225,8 @@ type ClinicalUseDefinition_ClinicalUseDefinition_Props = {
 type ClinicalUseDefinition__lookups = {
     "ClinicalUseDefinition": ClinicalUseDefinition_ClinicalUseDefinition_Props;
 };
+
+export declare function clinicalUseDefinition(props: ClinicalUseDefinition_ClinicalUseDefinition_Props);;
 
 export declare function clinicalUseDefinition<T extends keyof ClinicalUseDefinition__lookups>(type: T, props: ClinicalUseDefinition__lookups[T]);;
 
@@ -4404,6 +4452,8 @@ type CodeSystem__lookups = {
     "CodeSystem": CodeSystem_CodeSystem_Props;
 };
 
+export declare function codeSystem(props: CodeSystem_CodeSystem_Props);;
+
 export declare function codeSystem<T extends keyof CodeSystem__lookups>(type: T, props: CodeSystem__lookups[T]);;
 
 type Communication_Communication_Props = {
@@ -4550,6 +4600,8 @@ type Communication__lookups = {
     "Communication": Communication_Communication_Props;
 };
 
+export declare function communication(props: Communication_Communication_Props);;
+
 export declare function communication<T extends keyof Communication__lookups>(type: T, props: Communication__lookups[T]);;
 
 type CommunicationRequest_CommunicationRequest_Props = {
@@ -4692,6 +4744,8 @@ type CommunicationRequest__lookups = {
     "CommunicationRequest": CommunicationRequest_CommunicationRequest_Props;
 };
 
+export declare function communicationRequest(props: CommunicationRequest_CommunicationRequest_Props);;
+
 export declare function communicationRequest<T extends keyof CommunicationRequest__lookups>(type: T, props: CommunicationRequest__lookups[T]);;
 
 type CompartmentDefinition_CompartmentDefinition_Props = {
@@ -4809,6 +4863,8 @@ type CompartmentDefinition_CompartmentDefinition_Props = {
 type CompartmentDefinition__lookups = {
     "CompartmentDefinition": CompartmentDefinition_CompartmentDefinition_Props;
 };
+
+export declare function compartmentDefinition(props: CompartmentDefinition_CompartmentDefinition_Props);;
 
 export declare function compartmentDefinition<T extends keyof CompartmentDefinition__lookups>(type: T, props: CompartmentDefinition__lookups[T]);;
 
@@ -5015,6 +5071,8 @@ type Composition__lookups = {
     "Composition": Composition_Composition_Props;
 };
 
+export declare function composition(props: Composition_Composition_Props);;
+
 export declare function composition<T extends keyof Composition__lookups>(type: T, props: Composition__lookups[T]);;
 
 type ConceptMap_ConceptMap_Props = {
@@ -5160,6 +5218,8 @@ type ConceptMap_ConceptMap_Props = {
 type ConceptMap__lookups = {
     "ConceptMap": ConceptMap_ConceptMap_Props;
 };
+
+export declare function conceptMap(props: ConceptMap_ConceptMap_Props);;
 
 export declare function conceptMap<T extends keyof ConceptMap__lookups>(type: T, props: ConceptMap__lookups[T]);;
 
@@ -5307,6 +5367,8 @@ type Condition_Condition_Props = {
 type Condition__lookups = {
     "Condition": Condition_Condition_Props;
 };
+
+export declare function condition(props: Condition_Condition_Props);;
 
 export declare function condition<T extends keyof Condition__lookups>(type: T, props: Condition__lookups[T]);;
 
@@ -5487,6 +5549,8 @@ type Consent_Consent_Props = {
 type Consent__lookups = {
     "Consent": Consent_Consent_Props;
 };
+
+export declare function consent(props: Consent_Consent_Props);;
 
 export declare function consent<T extends keyof Consent__lookups>(type: T, props: Consent__lookups[T]);;
 
@@ -5807,6 +5871,8 @@ type Contract__lookups = {
     "Contract": Contract_Contract_Props;
 };
 
+export declare function contract(props: Contract_Contract_Props);;
+
 export declare function contract<T extends keyof Contract__lookups>(type: T, props: Contract__lookups[T]);;
 
 type Coverage_Coverage_Props = {
@@ -5957,6 +6023,8 @@ type Coverage_Coverage_Props = {
 type Coverage__lookups = {
     "Coverage": Coverage_Coverage_Props;
 };
+
+export declare function coverage(props: Coverage_Coverage_Props);;
 
 export declare function coverage<T extends keyof Coverage__lookups>(type: T, props: Coverage__lookups[T]);;
 
@@ -6146,6 +6214,8 @@ type CoverageEligibilityRequest__lookups = {
     "CoverageEligibilityRequest": CoverageEligibilityRequest_CoverageEligibilityRequest_Props;
 };
 
+export declare function coverageEligibilityRequest(props: CoverageEligibilityRequest_CoverageEligibilityRequest_Props);;
+
 export declare function coverageEligibilityRequest<T extends keyof CoverageEligibilityRequest__lookups>(type: T, props: CoverageEligibilityRequest__lookups[T]);;
 
 type CoverageEligibilityResponse_CoverageEligibilityResponse_Props = {
@@ -6285,6 +6355,8 @@ type CoverageEligibilityResponse__lookups = {
     "CoverageEligibilityResponse": CoverageEligibilityResponse_CoverageEligibilityResponse_Props;
 };
 
+export declare function coverageEligibilityResponse(props: CoverageEligibilityResponse_CoverageEligibilityResponse_Props);;
+
 export declare function coverageEligibilityResponse<T extends keyof CoverageEligibilityResponse__lookups>(type: T, props: CoverageEligibilityResponse__lookups[T]);;
 
 type DetectedIssue_DetectedIssue_Props = {
@@ -6411,6 +6483,8 @@ type DetectedIssue_DetectedIssue_Props = {
 type DetectedIssue__lookups = {
     "DetectedIssue": DetectedIssue_DetectedIssue_Props;
 };
+
+export declare function detectedIssue(props: DetectedIssue_DetectedIssue_Props);;
 
 export declare function detectedIssue<T extends keyof DetectedIssue__lookups>(type: T, props: DetectedIssue__lookups[T]);;
 
@@ -6666,6 +6740,8 @@ type Device__lookups = {
     "Device": Device_Device_Props;
 };
 
+export declare function device(props: Device_Device_Props);;
+
 export declare function device<T extends keyof Device__lookups>(type: T, props: Device__lookups[T]);;
 
 type DeviceDefinition_DeviceDefinition_Props = {
@@ -6909,6 +6985,8 @@ type DeviceDefinition__lookups = {
     "DeviceDefinition": DeviceDefinition_DeviceDefinition_Props;
 };
 
+export declare function deviceDefinition(props: DeviceDefinition_DeviceDefinition_Props);;
+
 export declare function deviceDefinition<T extends keyof DeviceDefinition__lookups>(type: T, props: DeviceDefinition__lookups[T]);;
 
 type DeviceMetric_DeviceMetric_Props = {
@@ -7010,6 +7088,8 @@ type DeviceMetric_DeviceMetric_Props = {
 type DeviceMetric__lookups = {
     "DeviceMetric": DeviceMetric_DeviceMetric_Props;
 };
+
+export declare function deviceMetric(props: DeviceMetric_DeviceMetric_Props);;
 
 export declare function deviceMetric<T extends keyof DeviceMetric__lookups>(type: T, props: DeviceMetric__lookups[T]);;
 
@@ -7165,6 +7245,8 @@ type DeviceRequest__lookups = {
     "DeviceRequest": DeviceRequest_DeviceRequest_Props;
 };
 
+export declare function deviceRequest(props: DeviceRequest_DeviceRequest_Props);;
+
 export declare function deviceRequest<T extends keyof DeviceRequest__lookups>(type: T, props: DeviceRequest__lookups[T]);;
 
 type DeviceUseStatement_DeviceUseStatement_Props = {
@@ -7257,6 +7339,8 @@ type DeviceUseStatement_DeviceUseStatement_Props = {
 type DeviceUseStatement__lookups = {
     "DeviceUseStatement": DeviceUseStatement_DeviceUseStatement_Props;
 };
+
+export declare function deviceUseStatement(props: DeviceUseStatement_DeviceUseStatement_Props);;
 
 export declare function deviceUseStatement<T extends keyof DeviceUseStatement__lookups>(type: T, props: DeviceUseStatement__lookups[T]);;
 
@@ -7388,6 +7472,8 @@ type DiagnosticReport__lookups = {
     "DiagnosticReport": DiagnosticReport_DiagnosticReport_Props;
 };
 
+export declare function diagnosticReport(props: DiagnosticReport_DiagnosticReport_Props);;
+
 export declare function diagnosticReport<T extends keyof DiagnosticReport__lookups>(type: T, props: DiagnosticReport__lookups[T]);;
 
 type DocumentManifest_DocumentManifest_Props = {
@@ -7493,6 +7579,8 @@ type DocumentManifest_DocumentManifest_Props = {
 type DocumentManifest__lookups = {
     "DocumentManifest": DocumentManifest_DocumentManifest_Props;
 };
+
+export declare function documentManifest(props: DocumentManifest_DocumentManifest_Props);;
 
 export declare function documentManifest<T extends keyof DocumentManifest__lookups>(type: T, props: DocumentManifest__lookups[T]);;
 
@@ -7670,6 +7758,8 @@ type DocumentReference__lookups = {
     "DocumentReference": DocumentReference_DocumentReference_Props;
 };
 
+export declare function documentReference(props: DocumentReference_DocumentReference_Props);;
+
 export declare function documentReference<T extends keyof DocumentReference__lookups>(type: T, props: DocumentReference__lookups[T]);;
 
 type DomainResource_DomainResource_Props = {
@@ -7710,6 +7800,8 @@ type DomainResource_DomainResource_Props = {
 type DomainResource__lookups = {
     "DomainResource": DomainResource_DomainResource_Props;
 };
+
+export declare function domainResource(props: DomainResource_DomainResource_Props);;
 
 export declare function domainResource<T extends keyof DomainResource__lookups>(type: T, props: DomainResource__lookups[T]);;
 
@@ -7990,6 +8082,8 @@ type Encounter__lookups = {
     "Encounter": Encounter_Encounter_Props;
 };
 
+export declare function encounter(props: Encounter_Encounter_Props);;
+
 export declare function encounter<T extends keyof Encounter__lookups>(type: T, props: Encounter__lookups[T]);;
 
 type Endpoint_Endpoint_Props = {
@@ -8075,6 +8169,8 @@ type Endpoint__lookups = {
     "Endpoint": Endpoint_Endpoint_Props;
 };
 
+export declare function endpoint(props: Endpoint_Endpoint_Props);;
+
 export declare function endpoint<T extends keyof Endpoint__lookups>(type: T, props: Endpoint__lookups[T]);;
 
 type EnrollmentRequest_EnrollmentRequest_Props = {
@@ -8143,6 +8239,8 @@ type EnrollmentRequest_EnrollmentRequest_Props = {
 type EnrollmentRequest__lookups = {
     "EnrollmentRequest": EnrollmentRequest_EnrollmentRequest_Props;
 };
+
+export declare function enrollmentRequest(props: EnrollmentRequest_EnrollmentRequest_Props);;
 
 export declare function enrollmentRequest<T extends keyof EnrollmentRequest__lookups>(type: T, props: EnrollmentRequest__lookups[T]);;
 
@@ -8216,6 +8314,8 @@ type EnrollmentResponse_EnrollmentResponse_Props = {
 type EnrollmentResponse__lookups = {
     "EnrollmentResponse": EnrollmentResponse_EnrollmentResponse_Props;
 };
+
+export declare function enrollmentResponse(props: EnrollmentResponse_EnrollmentResponse_Props);;
 
 export declare function enrollmentResponse<T extends keyof EnrollmentResponse__lookups>(type: T, props: EnrollmentResponse__lookups[T]);;
 
@@ -8343,6 +8443,8 @@ type EpisodeOfCare_EpisodeOfCare_Props = {
 type EpisodeOfCare__lookups = {
     "EpisodeOfCare": EpisodeOfCare_EpisodeOfCare_Props;
 };
+
+export declare function episodeOfCare(props: EpisodeOfCare_EpisodeOfCare_Props);;
 
 export declare function episodeOfCare<T extends keyof EpisodeOfCare__lookups>(type: T, props: EpisodeOfCare__lookups[T]);;
 
@@ -8496,6 +8598,8 @@ type EventDefinition_EventDefinition_Props = {
 type EventDefinition__lookups = {
     "EventDefinition": EventDefinition_EventDefinition_Props;
 };
+
+export declare function eventDefinition(props: EventDefinition_EventDefinition_Props);;
 
 export declare function eventDefinition<T extends keyof EventDefinition__lookups>(type: T, props: EventDefinition__lookups[T]);;
 
@@ -8749,6 +8853,8 @@ type Evidence__lookups = {
     "Evidence": Evidence_Evidence_Props;
 };
 
+export declare function evidence(props: Evidence_Evidence_Props);;
+
 export declare function evidence<T extends keyof Evidence__lookups>(type: T, props: Evidence__lookups[T]);;
 
 type EvidenceReport_EvidenceReport_Props = {
@@ -8949,6 +9055,8 @@ type EvidenceReport__lookups = {
     "EvidenceReport": EvidenceReport_EvidenceReport_Props;
 };
 
+export declare function evidenceReport(props: EvidenceReport_EvidenceReport_Props);;
+
 export declare function evidenceReport<T extends keyof EvidenceReport__lookups>(type: T, props: EvidenceReport__lookups[T]);;
 
 type EvidenceVariable_EvidenceVariable_Props = {
@@ -9139,6 +9247,8 @@ type EvidenceVariable_EvidenceVariable_Props = {
 type EvidenceVariable__lookups = {
     "EvidenceVariable": EvidenceVariable_EvidenceVariable_Props;
 };
+
+export declare function evidenceVariable(props: EvidenceVariable_EvidenceVariable_Props);;
 
 export declare function evidenceVariable<T extends keyof EvidenceVariable__lookups>(type: T, props: EvidenceVariable__lookups[T]);;
 
@@ -9335,6 +9445,8 @@ type ExampleScenario_ExampleScenario_Props = {
 type ExampleScenario__lookups = {
     "ExampleScenario": ExampleScenario_ExampleScenario_Props;
 };
+
+export declare function exampleScenario(props: ExampleScenario_ExampleScenario_Props);;
 
 export declare function exampleScenario<T extends keyof ExampleScenario__lookups>(type: T, props: ExampleScenario__lookups[T]);;
 
@@ -10043,6 +10155,8 @@ type ExplanationOfBenefit__lookups = {
     "ExplanationOfBenefit": ExplanationOfBenefit_ExplanationOfBenefit_Props;
 };
 
+export declare function explanationOfBenefit(props: ExplanationOfBenefit_ExplanationOfBenefit_Props);;
+
 export declare function explanationOfBenefit<T extends keyof ExplanationOfBenefit__lookups>(type: T, props: ExplanationOfBenefit__lookups[T]);;
 
 type FamilyMemberHistory_FamilyMemberHistory_Props = {
@@ -10185,6 +10299,8 @@ type FamilyMemberHistory__lookups = {
     "FamilyMemberHistory": FamilyMemberHistory_FamilyMemberHistory_Props;
 };
 
+export declare function familyMemberHistory(props: FamilyMemberHistory_FamilyMemberHistory_Props);;
+
 export declare function familyMemberHistory<T extends keyof FamilyMemberHistory__lookups>(type: T, props: FamilyMemberHistory__lookups[T]);;
 
 type Flag_Flag_Props = {
@@ -10257,6 +10373,8 @@ type Flag_Flag_Props = {
 type Flag__lookups = {
     "Flag": Flag_Flag_Props;
 };
+
+export declare function flag(props: Flag_Flag_Props);;
 
 export declare function flag<T extends keyof Flag__lookups>(type: T, props: Flag__lookups[T]);;
 
@@ -10383,6 +10501,8 @@ type Goal_Goal_Props = {
 type Goal__lookups = {
     "Goal": Goal_Goal_Props;
 };
+
+export declare function goal(props: Goal_Goal_Props);;
 
 export declare function goal<T extends keyof Goal__lookups>(type: T, props: Goal__lookups[T]);;
 
@@ -10518,6 +10638,8 @@ type GraphDefinition__lookups = {
     "GraphDefinition": GraphDefinition_GraphDefinition_Props;
 };
 
+export declare function graphDefinition(props: GraphDefinition_GraphDefinition_Props);;
+
 export declare function graphDefinition<T extends keyof GraphDefinition__lookups>(type: T, props: GraphDefinition__lookups[T]);;
 
 type Group_Group_Props = {
@@ -10645,6 +10767,8 @@ type Group__lookups = {
     "Group": Group_Group_Props;
 };
 
+export declare function group(props: Group_Group_Props);;
+
 export declare function group<T extends keyof Group__lookups>(type: T, props: Group__lookups[T]);;
 
 type GuidanceResponse_GuidanceResponse_Props = {
@@ -10745,6 +10869,8 @@ type GuidanceResponse_GuidanceResponse_Props = {
 type GuidanceResponse__lookups = {
     "GuidanceResponse": GuidanceResponse_GuidanceResponse_Props;
 };
+
+export declare function guidanceResponse(props: GuidanceResponse_GuidanceResponse_Props);;
 
 export declare function guidanceResponse<T extends keyof GuidanceResponse__lookups>(type: T, props: GuidanceResponse__lookups[T]);;
 
@@ -10942,6 +11068,8 @@ type HealthcareService__lookups = {
     "HealthcareService": HealthcareService_HealthcareService_Props;
 };
 
+export declare function healthcareService(props: HealthcareService_HealthcareService_Props);;
+
 export declare function healthcareService<T extends keyof HealthcareService__lookups>(type: T, props: HealthcareService__lookups[T]);;
 
 type ImagingStudy_ImagingStudy_Props = {
@@ -11119,6 +11247,8 @@ type ImagingStudy_ImagingStudy_Props = {
 type ImagingStudy__lookups = {
     "ImagingStudy": ImagingStudy_ImagingStudy_Props;
 };
+
+export declare function imagingStudy(props: ImagingStudy_ImagingStudy_Props);;
 
 export declare function imagingStudy<T extends keyof ImagingStudy__lookups>(type: T, props: ImagingStudy__lookups[T]);;
 
@@ -11365,6 +11495,8 @@ type Immunization__lookups = {
     "Immunization": Immunization_Immunization_Props;
 };
 
+export declare function immunization(props: Immunization_Immunization_Props);;
+
 export declare function immunization<T extends keyof Immunization__lookups>(type: T, props: Immunization__lookups[T]);;
 
 type ImmunizationEvaluation_ImmunizationEvaluation_Props = {
@@ -11457,6 +11589,8 @@ type ImmunizationEvaluation_ImmunizationEvaluation_Props = {
 type ImmunizationEvaluation__lookups = {
     "ImmunizationEvaluation": ImmunizationEvaluation_ImmunizationEvaluation_Props;
 };
+
+export declare function immunizationEvaluation(props: ImmunizationEvaluation_ImmunizationEvaluation_Props);;
 
 export declare function immunizationEvaluation<T extends keyof ImmunizationEvaluation__lookups>(type: T, props: ImmunizationEvaluation__lookups[T]);;
 
@@ -11575,6 +11709,8 @@ type ImmunizationRecommendation_ImmunizationRecommendation_Props = {
 type ImmunizationRecommendation__lookups = {
     "ImmunizationRecommendation": ImmunizationRecommendation_ImmunizationRecommendation_Props;
 };
+
+export declare function immunizationRecommendation(props: ImmunizationRecommendation_ImmunizationRecommendation_Props);;
 
 export declare function immunizationRecommendation<T extends keyof ImmunizationRecommendation__lookups>(type: T, props: ImmunizationRecommendation__lookups[T]);;
 
@@ -11793,6 +11929,8 @@ type ImplementationGuide__lookups = {
     "ImplementationGuide": ImplementationGuide_ImplementationGuide_Props;
 };
 
+export declare function implementationGuide(props: ImplementationGuide_ImplementationGuide_Props);;
+
 export declare function implementationGuide<T extends keyof ImplementationGuide__lookups>(type: T, props: ImplementationGuide__lookups[T]);;
 
 type Ingredient_Ingredient_Props = {
@@ -11899,6 +12037,8 @@ type Ingredient_Ingredient_Props = {
 type Ingredient__lookups = {
     "Ingredient": Ingredient_Ingredient_Props;
 };
+
+export declare function ingredient(props: Ingredient_Ingredient_Props);;
 
 export declare function ingredient<T extends keyof Ingredient__lookups>(type: T, props: Ingredient__lookups[T]);;
 
@@ -12076,6 +12216,8 @@ type InsurancePlan__lookups = {
     "InsurancePlan": InsurancePlan_InsurancePlan_Props;
 };
 
+export declare function insurancePlan(props: InsurancePlan_InsurancePlan_Props);;
+
 export declare function insurancePlan<T extends keyof InsurancePlan__lookups>(type: T, props: InsurancePlan__lookups[T]);;
 
 type Invoice_Invoice_Props = {
@@ -12218,6 +12360,8 @@ type Invoice_Invoice_Props = {
 type Invoice__lookups = {
     "Invoice": Invoice_Invoice_Props;
 };
+
+export declare function invoice(props: Invoice_Invoice_Props);;
 
 export declare function invoice<T extends keyof Invoice__lookups>(type: T, props: Invoice__lookups[T]);;
 
@@ -12384,6 +12528,8 @@ type Library__lookups = {
     "Library": Library_Library_Props;
 };
 
+export declare function library(props: Library_Library_Props);;
+
 export declare function library<T extends keyof Library__lookups>(type: T, props: Library__lookups[T]);;
 
 type Linkage_Linkage_Props = {
@@ -12453,6 +12599,8 @@ type Linkage_Linkage_Props = {
 type Linkage__lookups = {
     "Linkage": Linkage_Linkage_Props;
 };
+
+export declare function linkage(props: Linkage_Linkage_Props);;
 
 export declare function linkage<T extends keyof Linkage__lookups>(type: T, props: Linkage__lookups[T]);;
 
@@ -12571,6 +12719,8 @@ type List_List_Props = {
 type List__lookups = {
     "List": List_List_Props;
 };
+
+export declare function list(props: List_List_Props);;
 
 export declare function list<T extends keyof List__lookups>(type: T, props: List__lookups[T]);;
 
@@ -12727,6 +12877,8 @@ type Location__lookups = {
     "Location": Location_Location_Props;
 };
 
+export declare function location(props: Location_Location_Props);;
+
 export declare function location<T extends keyof Location__lookups>(type: T, props: Location__lookups[T]);;
 
 type ManufacturedItemDefinition_ManufacturedItemDefinition_Props = {
@@ -12812,6 +12964,8 @@ type ManufacturedItemDefinition_ManufacturedItemDefinition_Props = {
 type ManufacturedItemDefinition__lookups = {
     "ManufacturedItemDefinition": ManufacturedItemDefinition_ManufacturedItemDefinition_Props;
 };
+
+export declare function manufacturedItemDefinition(props: ManufacturedItemDefinition_ManufacturedItemDefinition_Props);;
 
 export declare function manufacturedItemDefinition<T extends keyof ManufacturedItemDefinition__lookups>(type: T, props: ManufacturedItemDefinition__lookups[T]);;
 
@@ -13068,6 +13222,8 @@ type Measure__lookups = {
     "Measure": Measure_Measure_Props;
 };
 
+export declare function measure(props: Measure_Measure_Props);;
+
 export declare function measure<T extends keyof Measure__lookups>(type: T, props: Measure__lookups[T]);;
 
 type MeasureReport_MeasureReport_Props = {
@@ -13177,6 +13333,8 @@ type MeasureReport_MeasureReport_Props = {
 type MeasureReport__lookups = {
     "MeasureReport": MeasureReport_MeasureReport_Props;
 };
+
+export declare function measureReport(props: MeasureReport_MeasureReport_Props);;
 
 export declare function measureReport<T extends keyof MeasureReport__lookups>(type: T, props: MeasureReport__lookups[T]);;
 
@@ -13307,6 +13465,8 @@ type Media__lookups = {
     "Media": Media_Media_Props;
 };
 
+export declare function media(props: Media_Media_Props);;
+
 export declare function media<T extends keyof Media__lookups>(type: T, props: Media__lookups[T]);;
 
 type Medication_Medication_Props = {
@@ -13417,6 +13577,8 @@ type Medication_Medication_Props = {
 type Medication__lookups = {
     "Medication": Medication_Medication_Props;
 };
+
+export declare function medication(props: Medication_Medication_Props);;
 
 export declare function medication<T extends keyof Medication__lookups>(type: T, props: Medication__lookups[T]);;
 
@@ -13584,6 +13746,8 @@ type MedicationAdministration_MedicationAdministration_Props = {
 type MedicationAdministration__lookups = {
     "MedicationAdministration": MedicationAdministration_MedicationAdministration_Props;
 };
+
+export declare function medicationAdministration(props: MedicationAdministration_MedicationAdministration_Props);;
 
 export declare function medicationAdministration<T extends keyof MedicationAdministration__lookups>(type: T, props: MedicationAdministration__lookups[T]);;
 
@@ -13763,6 +13927,8 @@ type MedicationDispense_MedicationDispense_Props = {
 type MedicationDispense__lookups = {
     "MedicationDispense": MedicationDispense_MedicationDispense_Props;
 };
+
+export declare function medicationDispense(props: MedicationDispense_MedicationDispense_Props);;
 
 export declare function medicationDispense<T extends keyof MedicationDispense__lookups>(type: T, props: MedicationDispense__lookups[T]);;
 
@@ -14104,6 +14270,8 @@ type MedicationKnowledge__lookups = {
     "MedicationKnowledge": MedicationKnowledge_MedicationKnowledge_Props;
 };
 
+export declare function medicationKnowledge(props: MedicationKnowledge_MedicationKnowledge_Props);;
+
 export declare function medicationKnowledge<T extends keyof MedicationKnowledge__lookups>(type: T, props: MedicationKnowledge__lookups[T]);;
 
 type MedicationRequest_MedicationRequest_Props = {
@@ -14327,6 +14495,8 @@ type MedicationRequest__lookups = {
     "MedicationRequest": MedicationRequest_MedicationRequest_Props;
 };
 
+export declare function medicationRequest(props: MedicationRequest_MedicationRequest_Props);;
+
 export declare function medicationRequest<T extends keyof MedicationRequest__lookups>(type: T, props: MedicationRequest__lookups[T]);;
 
 type MedicationStatement_MedicationStatement_Props = {
@@ -14435,6 +14605,8 @@ type MedicationStatement_MedicationStatement_Props = {
 type MedicationStatement__lookups = {
     "MedicationStatement": MedicationStatement_MedicationStatement_Props;
 };
+
+export declare function medicationStatement(props: MedicationStatement_MedicationStatement_Props);;
 
 export declare function medicationStatement<T extends keyof MedicationStatement__lookups>(type: T, props: MedicationStatement__lookups[T]);;
 
@@ -14690,6 +14862,8 @@ type MedicinalProductDefinition__lookups = {
     "MedicinalProductDefinition": MedicinalProductDefinition_MedicinalProductDefinition_Props;
 };
 
+export declare function medicinalProductDefinition(props: MedicinalProductDefinition_MedicinalProductDefinition_Props);;
+
 export declare function medicinalProductDefinition<T extends keyof MedicinalProductDefinition__lookups>(type: T, props: MedicinalProductDefinition__lookups[T]);;
 
 type MessageDefinition_MessageDefinition_Props = {
@@ -14869,6 +15043,8 @@ type MessageDefinition__lookups = {
     "MessageDefinition": MessageDefinition_MessageDefinition_Props;
 };
 
+export declare function messageDefinition(props: MessageDefinition_MessageDefinition_Props);;
+
 export declare function messageDefinition<T extends keyof MessageDefinition__lookups>(type: T, props: MessageDefinition__lookups[T]);;
 
 type MessageHeader_MessageHeader_Props = {
@@ -15028,6 +15204,8 @@ type MessageHeader_MessageHeader_Props = {
 type MessageHeader__lookups = {
     "MessageHeader": MessageHeader_MessageHeader_Props;
 };
+
+export declare function messageHeader(props: MessageHeader_MessageHeader_Props);;
 
 export declare function messageHeader<T extends keyof MessageHeader__lookups>(type: T, props: MessageHeader__lookups[T]);;
 
@@ -15343,6 +15521,8 @@ type MolecularSequence__lookups = {
     "MolecularSequence": MolecularSequence_MolecularSequence_Props;
 };
 
+export declare function molecularSequence(props: MolecularSequence_MolecularSequence_Props);;
+
 export declare function molecularSequence<T extends keyof MolecularSequence__lookups>(type: T, props: MolecularSequence__lookups[T]);;
 
 type NamingSystem_NamingSystem_Props = {
@@ -15464,6 +15644,8 @@ type NamingSystem_NamingSystem_Props = {
 type NamingSystem__lookups = {
     "NamingSystem": NamingSystem_NamingSystem_Props;
 };
+
+export declare function namingSystem(props: NamingSystem_NamingSystem_Props);;
 
 export declare function namingSystem<T extends keyof NamingSystem__lookups>(type: T, props: NamingSystem__lookups[T]);;
 
@@ -15681,6 +15863,8 @@ type NutritionOrder__lookups = {
     "NutritionOrder": NutritionOrder_NutritionOrder_Props;
 };
 
+export declare function nutritionOrder(props: NutritionOrder_NutritionOrder_Props);;
+
 export declare function nutritionOrder<T extends keyof NutritionOrder__lookups>(type: T, props: NutritionOrder__lookups[T]);;
 
 type NutritionProduct_NutritionProduct_Props = {
@@ -15841,6 +16025,8 @@ type NutritionProduct_NutritionProduct_Props = {
 type NutritionProduct__lookups = {
     "NutritionProduct": NutritionProduct_NutritionProduct_Props;
 };
+
+export declare function nutritionProduct(props: NutritionProduct_NutritionProduct_Props);;
 
 export declare function nutritionProduct<T extends keyof NutritionProduct__lookups>(type: T, props: NutritionProduct__lookups[T]);;
 
@@ -16037,6 +16223,8 @@ type Observation__lookups = {
     "Observation": Observation_Observation_Props;
 };
 
+export declare function observation(props: Observation_Observation_Props);;
+
 export declare function observation<T extends keyof Observation__lookups>(type: T, props: Observation__lookups[T]);;
 
 type ObservationDefinition_ObservationDefinition_Props = {
@@ -16195,6 +16383,8 @@ type ObservationDefinition_ObservationDefinition_Props = {
 type ObservationDefinition__lookups = {
     "ObservationDefinition": ObservationDefinition_ObservationDefinition_Props;
 };
+
+export declare function observationDefinition(props: ObservationDefinition_ObservationDefinition_Props);;
 
 export declare function observationDefinition<T extends keyof ObservationDefinition__lookups>(type: T, props: ObservationDefinition__lookups[T]);;
 
@@ -16407,6 +16597,8 @@ type OperationDefinition__lookups = {
     "OperationDefinition": OperationDefinition_OperationDefinition_Props;
 };
 
+export declare function operationDefinition(props: OperationDefinition_OperationDefinition_Props);;
+
 export declare function operationDefinition<T extends keyof OperationDefinition__lookups>(type: T, props: OperationDefinition__lookups[T]);;
 
 type OperationOutcome_OperationOutcome_Props = {
@@ -16484,6 +16676,8 @@ type OperationOutcome_OperationOutcome_Props = {
 type OperationOutcome__lookups = {
     "OperationOutcome": OperationOutcome_OperationOutcome_Props;
 };
+
+export declare function operationOutcome(props: OperationOutcome_OperationOutcome_Props);;
 
 export declare function operationOutcome<T extends keyof OperationOutcome__lookups>(type: T, props: OperationOutcome__lookups[T]);;
 
@@ -16591,6 +16785,8 @@ type Organization__lookups = {
     "Organization": Organization_Organization_Props;
 };
 
+export declare function organization(props: Organization_Organization_Props);;
+
 export declare function organization<T extends keyof Organization__lookups>(type: T, props: Organization__lookups[T]);;
 
 type OrganizationAffiliation_OrganizationAffiliation_Props = {
@@ -16679,6 +16875,8 @@ type OrganizationAffiliation_OrganizationAffiliation_Props = {
 type OrganizationAffiliation__lookups = {
     "OrganizationAffiliation": OrganizationAffiliation_OrganizationAffiliation_Props;
 };
+
+export declare function organizationAffiliation(props: OrganizationAffiliation_OrganizationAffiliation_Props);;
 
 export declare function organizationAffiliation<T extends keyof OrganizationAffiliation__lookups>(type: T, props: OrganizationAffiliation__lookups[T]);;
 
@@ -16839,6 +17037,8 @@ type PackagedProductDefinition__lookups = {
     "PackagedProductDefinition": PackagedProductDefinition_PackagedProductDefinition_Props;
 };
 
+export declare function packagedProductDefinition(props: PackagedProductDefinition_PackagedProductDefinition_Props);;
+
 export declare function packagedProductDefinition<T extends keyof PackagedProductDefinition__lookups>(type: T, props: PackagedProductDefinition__lookups[T]);;
 
 type Parameters_Parameters_Props = {
@@ -16888,6 +17088,8 @@ type Parameters_Parameters_Props = {
 type Parameters__lookups = {
     "Parameters": Parameters_Parameters_Props;
 };
+
+export declare function parameters(props: Parameters_Parameters_Props);;
 
 export declare function parameters<T extends keyof Parameters__lookups>(type: T, props: Parameters__lookups[T]);;
 
@@ -17065,6 +17267,8 @@ type Patient__lookups = {
     "Patient": Patient_Patient_Props;
 };
 
+export declare function patient(props: Patient_Patient_Props);;
+
 export declare function patient<T extends keyof Patient__lookups>(type: T, props: Patient__lookups[T]);;
 
 type PaymentNotice_PaymentNotice_Props = {
@@ -17153,6 +17357,8 @@ type PaymentNotice_PaymentNotice_Props = {
 type PaymentNotice__lookups = {
     "PaymentNotice": PaymentNotice_PaymentNotice_Props;
 };
+
+export declare function paymentNotice(props: PaymentNotice_PaymentNotice_Props);;
 
 export declare function paymentNotice<T extends keyof PaymentNotice__lookups>(type: T, props: PaymentNotice__lookups[T]);;
 
@@ -17321,6 +17527,8 @@ type PaymentReconciliation__lookups = {
     "PaymentReconciliation": PaymentReconciliation_PaymentReconciliation_Props;
 };
 
+export declare function paymentReconciliation(props: PaymentReconciliation_PaymentReconciliation_Props);;
+
 export declare function paymentReconciliation<T extends keyof PaymentReconciliation__lookups>(type: T, props: PaymentReconciliation__lookups[T]);;
 
 type Person_Person_Props = {
@@ -17418,6 +17626,8 @@ type Person_Person_Props = {
 type Person__lookups = {
     "Person": Person_Person_Props;
 };
+
+export declare function person(props: Person_Person_Props);;
 
 export declare function person<T extends keyof Person__lookups>(type: T, props: Person__lookups[T]);;
 
@@ -17734,6 +17944,8 @@ type PlanDefinition__lookups = {
     "PlanDefinition": PlanDefinition_PlanDefinition_Props;
 };
 
+export declare function planDefinition(props: PlanDefinition_PlanDefinition_Props);;
+
 export declare function planDefinition<T extends keyof PlanDefinition__lookups>(type: T, props: PlanDefinition__lookups[T]);;
 
 type Practitioner_Practitioner_Props = {
@@ -17839,6 +18051,8 @@ type Practitioner_Practitioner_Props = {
 type Practitioner__lookups = {
     "Practitioner": Practitioner_Practitioner_Props;
 };
+
+export declare function practitioner(props: Practitioner_Practitioner_Props);;
 
 export declare function practitioner<T extends keyof Practitioner__lookups>(type: T, props: Practitioner__lookups[T]);;
 
@@ -17978,6 +18192,8 @@ type PractitionerRole_PractitionerRole_Props = {
 type PractitionerRole__lookups = {
     "PractitionerRole": PractitionerRole_PractitionerRole_Props;
 };
+
+export declare function practitionerRole(props: PractitionerRole_PractitionerRole_Props);;
 
 export declare function practitionerRole<T extends keyof PractitionerRole__lookups>(type: T, props: PractitionerRole__lookups[T]);;
 
@@ -18170,6 +18386,8 @@ type Procedure__lookups = {
     "Procedure": Procedure_Procedure_Props;
 };
 
+export declare function procedure(props: Procedure_Procedure_Props);;
+
 export declare function procedure<T extends keyof Procedure__lookups>(type: T, props: Procedure__lookups[T]);;
 
 type Provenance_Provenance_Props = {
@@ -18292,6 +18510,8 @@ type Provenance_Provenance_Props = {
 type Provenance__lookups = {
     "Provenance": Provenance_Provenance_Props;
 };
+
+export declare function provenance(props: Provenance_Provenance_Props);;
 
 export declare function provenance<T extends keyof Provenance__lookups>(type: T, props: Provenance__lookups[T]);;
 
@@ -18491,6 +18711,8 @@ type Questionnaire__lookups = {
     "Questionnaire": Questionnaire_Questionnaire_Props;
 };
 
+export declare function questionnaire(props: Questionnaire_Questionnaire_Props);;
+
 export declare function questionnaire<T extends keyof Questionnaire__lookups>(type: T, props: Questionnaire__lookups[T]);;
 
 type QuestionnaireResponse_QuestionnaireResponse_Props = {
@@ -18600,6 +18822,8 @@ type QuestionnaireResponse_QuestionnaireResponse_Props = {
 type QuestionnaireResponse__lookups = {
     "QuestionnaireResponse": QuestionnaireResponse_QuestionnaireResponse_Props;
 };
+
+export declare function questionnaireResponse(props: QuestionnaireResponse_QuestionnaireResponse_Props);;
 
 export declare function questionnaireResponse<T extends keyof QuestionnaireResponse__lookups>(type: T, props: QuestionnaireResponse__lookups[T]);;
 
@@ -18723,6 +18947,8 @@ type RegulatedAuthorization__lookups = {
     "RegulatedAuthorization": RegulatedAuthorization_RegulatedAuthorization_Props;
 };
 
+export declare function regulatedAuthorization(props: RegulatedAuthorization_RegulatedAuthorization_Props);;
+
 export declare function regulatedAuthorization<T extends keyof RegulatedAuthorization__lookups>(type: T, props: RegulatedAuthorization__lookups[T]);;
 
 type RelatedPerson_RelatedPerson_Props = {
@@ -18828,6 +19054,8 @@ type RelatedPerson_RelatedPerson_Props = {
 type RelatedPerson__lookups = {
     "RelatedPerson": RelatedPerson_RelatedPerson_Props;
 };
+
+export declare function relatedPerson(props: RelatedPerson_RelatedPerson_Props);;
 
 export declare function relatedPerson<T extends keyof RelatedPerson__lookups>(type: T, props: RelatedPerson__lookups[T]);;
 
@@ -19023,6 +19251,8 @@ type RequestGroup__lookups = {
     "RequestGroup": RequestGroup_RequestGroup_Props;
 };
 
+export declare function requestGroup(props: RequestGroup_RequestGroup_Props);;
+
 export declare function requestGroup<T extends keyof RequestGroup__lookups>(type: T, props: RequestGroup__lookups[T]);;
 
 type ResearchDefinition_ResearchDefinition_Props = {
@@ -19199,6 +19429,8 @@ type ResearchDefinition_ResearchDefinition_Props = {
 type ResearchDefinition__lookups = {
     "ResearchDefinition": ResearchDefinition_ResearchDefinition_Props;
 };
+
+export declare function researchDefinition(props: ResearchDefinition_ResearchDefinition_Props);;
 
 export declare function researchDefinition<T extends keyof ResearchDefinition__lookups>(type: T, props: ResearchDefinition__lookups[T]);;
 
@@ -19430,6 +19662,8 @@ type ResearchElementDefinition__lookups = {
     "ResearchElementDefinition": ResearchElementDefinition_ResearchElementDefinition_Props;
 };
 
+export declare function researchElementDefinition(props: ResearchElementDefinition_ResearchElementDefinition_Props);;
+
 export declare function researchElementDefinition<T extends keyof ResearchElementDefinition__lookups>(type: T, props: ResearchElementDefinition__lookups[T]);;
 
 type ResearchStudy_ResearchStudy_Props = {
@@ -19605,6 +19839,8 @@ type ResearchStudy__lookups = {
     "ResearchStudy": ResearchStudy_ResearchStudy_Props;
 };
 
+export declare function researchStudy(props: ResearchStudy_ResearchStudy_Props);;
+
 export declare function researchStudy<T extends keyof ResearchStudy__lookups>(type: T, props: ResearchStudy__lookups[T]);;
 
 type ResearchSubject_ResearchSubject_Props = {
@@ -19678,6 +19914,8 @@ type ResearchSubject__lookups = {
     "ResearchSubject": ResearchSubject_ResearchSubject_Props;
 };
 
+export declare function researchSubject(props: ResearchSubject_ResearchSubject_Props);;
+
 export declare function researchSubject<T extends keyof ResearchSubject__lookups>(type: T, props: ResearchSubject__lookups[T]);;
 
 type Resource_Resource_Props = {
@@ -19702,6 +19940,8 @@ type Resource_Resource_Props = {
 type Resource__lookups = {
     "Resource": Resource_Resource_Props;
 };
+
+export declare function resource(props: Resource_Resource_Props);;
 
 export declare function resource<T extends keyof Resource__lookups>(type: T, props: Resource__lookups[T]);;
 
@@ -19845,6 +20085,8 @@ type RiskAssessment__lookups = {
     "RiskAssessment": RiskAssessment_RiskAssessment_Props;
 };
 
+export declare function riskAssessment(props: RiskAssessment_RiskAssessment_Props);;
+
 export declare function riskAssessment<T extends keyof RiskAssessment__lookups>(type: T, props: RiskAssessment__lookups[T]);;
 
 type Schedule_Schedule_Props = {
@@ -19917,6 +20159,8 @@ type Schedule_Schedule_Props = {
 type Schedule__lookups = {
     "Schedule": Schedule_Schedule_Props;
 };
+
+export declare function schedule(props: Schedule_Schedule_Props);;
 
 export declare function schedule<T extends keyof Schedule__lookups>(type: T, props: Schedule__lookups[T]);;
 
@@ -20079,6 +20323,8 @@ type SearchParameter_SearchParameter_Props = {
 type SearchParameter__lookups = {
     "SearchParameter": SearchParameter_SearchParameter_Props;
 };
+
+export declare function searchParameter(props: SearchParameter_SearchParameter_Props);;
 
 export declare function searchParameter<T extends keyof SearchParameter__lookups>(type: T, props: SearchParameter__lookups[T]);;
 
@@ -20253,6 +20499,8 @@ type ServiceRequest__lookups = {
     "ServiceRequest": ServiceRequest_ServiceRequest_Props;
 };
 
+export declare function serviceRequest(props: ServiceRequest_ServiceRequest_Props);;
+
 export declare function serviceRequest<T extends keyof ServiceRequest__lookups>(type: T, props: ServiceRequest__lookups[T]);;
 
 type Slot_Slot_Props = {
@@ -20337,6 +20585,8 @@ type Slot_Slot_Props = {
 type Slot__lookups = {
     "Slot": Slot_Slot_Props;
 };
+
+export declare function slot(props: Slot_Slot_Props);;
 
 export declare function slot<T extends keyof Slot__lookups>(type: T, props: Slot__lookups[T]);;
 
@@ -20526,6 +20776,8 @@ type Specimen__lookups = {
     "Specimen": Specimen_Specimen_Props;
 };
 
+export declare function specimen(props: Specimen_Specimen_Props);;
+
 export declare function specimen<T extends keyof Specimen__lookups>(type: T, props: Specimen__lookups[T]);;
 
 type SpecimenDefinition_SpecimenDefinition_Props = {
@@ -20631,6 +20883,8 @@ type SpecimenDefinition_SpecimenDefinition_Props = {
 type SpecimenDefinition__lookups = {
     "SpecimenDefinition": SpecimenDefinition_SpecimenDefinition_Props;
 };
+
+export declare function specimenDefinition(props: SpecimenDefinition_SpecimenDefinition_Props);;
 
 export declare function specimenDefinition<T extends keyof SpecimenDefinition__lookups>(type: T, props: SpecimenDefinition__lookups[T]);;
 
@@ -20849,6 +21103,8 @@ type StructureDefinition__lookups = {
     "StructureDefinition": StructureDefinition_StructureDefinition_Props;
 };
 
+export declare function structureDefinition(props: StructureDefinition_StructureDefinition_Props);;
+
 export declare function structureDefinition<T extends keyof StructureDefinition__lookups>(type: T, props: StructureDefinition__lookups[T]);;
 
 type StructureMap_StructureMap_Props = {
@@ -21020,6 +21276,8 @@ type StructureMap__lookups = {
     "StructureMap": StructureMap_StructureMap_Props;
 };
 
+export declare function structureMap(props: StructureMap_StructureMap_Props);;
+
 export declare function structureMap<T extends keyof StructureMap__lookups>(type: T, props: StructureMap__lookups[T]);;
 
 type Subscription_Subscription_Props = {
@@ -21114,6 +21372,8 @@ type Subscription__lookups = {
     "Subscription": Subscription_Subscription_Props;
 };
 
+export declare function subscription(props: Subscription_Subscription_Props);;
+
 export declare function subscription<T extends keyof Subscription__lookups>(type: T, props: Subscription__lookups[T]);;
 
 type SubscriptionStatus_SubscriptionStatus_Props = {
@@ -21207,6 +21467,8 @@ type SubscriptionStatus_SubscriptionStatus_Props = {
 type SubscriptionStatus__lookups = {
     "SubscriptionStatus": SubscriptionStatus_SubscriptionStatus_Props;
 };
+
+export declare function subscriptionStatus(props: SubscriptionStatus_SubscriptionStatus_Props);;
 
 export declare function subscriptionStatus<T extends keyof SubscriptionStatus__lookups>(type: T, props: SubscriptionStatus__lookups[T]);;
 
@@ -21437,6 +21699,8 @@ type SubscriptionTopic__lookups = {
     "SubscriptionTopic": SubscriptionTopic_SubscriptionTopic_Props;
 };
 
+export declare function subscriptionTopic(props: SubscriptionTopic_SubscriptionTopic_Props);;
+
 export declare function subscriptionTopic<T extends keyof SubscriptionTopic__lookups>(type: T, props: SubscriptionTopic__lookups[T]);;
 
 type Substance_Substance_Props = {
@@ -21543,6 +21807,8 @@ type Substance_Substance_Props = {
 type Substance__lookups = {
     "Substance": Substance_Substance_Props;
 };
+
+export declare function substance(props: Substance_Substance_Props);;
 
 export declare function substance<T extends keyof Substance__lookups>(type: T, props: Substance__lookups[T]);;
 
@@ -21917,6 +22183,8 @@ type SubstanceDefinition__lookups = {
     "SubstanceDefinition": SubstanceDefinition_SubstanceDefinition_Props;
 };
 
+export declare function substanceDefinition(props: SubstanceDefinition_SubstanceDefinition_Props);;
+
 export declare function substanceDefinition<T extends keyof SubstanceDefinition__lookups>(type: T, props: SubstanceDefinition__lookups[T]);;
 
 type SupplyDelivery_SupplyDelivery_Props = {
@@ -22018,6 +22286,8 @@ type SupplyDelivery_SupplyDelivery_Props = {
 type SupplyDelivery__lookups = {
     "SupplyDelivery": SupplyDelivery_SupplyDelivery_Props;
 };
+
+export declare function supplyDelivery(props: SupplyDelivery_SupplyDelivery_Props);;
 
 export declare function supplyDelivery<T extends keyof SupplyDelivery__lookups>(type: T, props: SupplyDelivery__lookups[T]);;
 
@@ -22136,6 +22406,8 @@ type SupplyRequest_SupplyRequest_Props = {
 type SupplyRequest__lookups = {
     "SupplyRequest": SupplyRequest_SupplyRequest_Props;
 };
+
+export declare function supplyRequest(props: SupplyRequest_SupplyRequest_Props);;
 
 export declare function supplyRequest<T extends keyof SupplyRequest__lookups>(type: T, props: SupplyRequest__lookups[T]);;
 
@@ -22356,6 +22628,8 @@ type Task_Task_Props = {
 type Task__lookups = {
     "Task": Task_Task_Props;
 };
+
+export declare function task(props: Task_Task_Props);;
 
 export declare function task<T extends keyof Task__lookups>(type: T, props: Task__lookups[T]);;
 
@@ -22617,6 +22891,8 @@ type TerminologyCapabilities__lookups = {
     "TerminologyCapabilities": TerminologyCapabilities_TerminologyCapabilities_Props;
 };
 
+export declare function terminologyCapabilities(props: TerminologyCapabilities_TerminologyCapabilities_Props);;
+
 export declare function terminologyCapabilities<T extends keyof TerminologyCapabilities__lookups>(type: T, props: TerminologyCapabilities__lookups[T]);;
 
 type TestReport_TestReport_Props = {
@@ -22773,6 +23049,8 @@ type TestReport_TestReport_Props = {
 type TestReport__lookups = {
     "TestReport": TestReport_TestReport_Props;
 };
+
+export declare function testReport(props: TestReport_TestReport_Props);;
 
 export declare function testReport<T extends keyof TestReport__lookups>(type: T, props: TestReport__lookups[T]);;
 
@@ -23071,6 +23349,8 @@ type TestScript__lookups = {
     "TestScript": TestScript_TestScript_Props;
 };
 
+export declare function testScript(props: TestScript_TestScript_Props);;
+
 export declare function testScript<T extends keyof TestScript__lookups>(type: T, props: TestScript__lookups[T]);;
 
 type ValueSet_ValueSet_Props = {
@@ -23237,6 +23517,8 @@ type ValueSet_ValueSet_Props = {
 type ValueSet__lookups = {
     "ValueSet": ValueSet_ValueSet_Props;
 };
+
+export declare function valueSet(props: ValueSet_ValueSet_Props);;
 
 export declare function valueSet<T extends keyof ValueSet__lookups>(type: T, props: ValueSet__lookups[T]);;
 
@@ -23434,142 +23716,6 @@ type VerificationResult__lookups = {
     "VerificationResult": VerificationResult_VerificationResult_Props;
 };
 
+export declare function verificationResult(props: VerificationResult_VerificationResult_Props);;
+
 export declare function verificationResult<T extends keyof VerificationResult__lookups>(type: T, props: VerificationResult__lookups[T]);;
-
-type VisionPrescription_VisionPrescription_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for vision prescription
-     *  */
-    identifier: Identifier;
-    /**
-     * active | cancelled | draft | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Response creation date
-     *  */
-    created: string;
-    /**
-     * Who prescription is for
-     *  */
-    patient: Reference;
-    /**
-     * Created during encounter / admission / stay
-     *  */
-    encounter: Reference;
-    /**
-     * When prescription was authorized
-     *  */
-    dateWritten: string;
-    /**
-     * Who authorized the vision prescription
-     *  */
-    prescriber: Reference;
-    /**
-     * Vision lens authorization
-     *  */
-    lensSpecification: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Product to be supplied
-         *  */
-        product: CodeableConcept;
-        /**
-         * right | left
-         *  */
-        eye: string;
-        /**
-         * Power of the lens
-         *  */
-        sphere: number;
-        /**
-         * Lens power for astigmatism
-         *  */
-        cylinder: number;
-        /**
-         * Lens meridian which contain no power for astigmatism
-         *  */
-        axis: number;
-        /**
-         * up | down | in | out
-         *  */
-        prism: string;
-        /**
-         * Added power for multifocal levels
-         *  */
-        add: number;
-        /**
-         * Contact lens power
-         *  */
-        power: number;
-        /**
-         * Contact lens back curvature
-         *  */
-        backCurve: number;
-        /**
-         * Contact lens diameter
-         *  */
-        diameter: number;
-        /**
-         * Lens wear duration
-         *  */
-        duration: Quantity;
-        /**
-         * Color required
-         *  */
-        color: string;
-        /**
-         * Brand required
-         *  */
-        brand: string;
-        /**
-         * Notes for coatings
-         *  */
-        note: Annotation;
-    };
-};
-
-type VisionPrescription__lookups = {
-    "VisionPrescription": VisionPrescription_VisionPrescription_Props;
-};
-
-export declare function visionPrescription<T extends keyof VisionPrescription__lookups>(type: T, props: VisionPrescription__lookups[T]);;

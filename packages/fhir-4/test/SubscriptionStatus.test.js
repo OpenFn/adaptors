@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("SubscriptionStatus", () => {
     it("should create a simple SubscriptionStatus", () => {
-        const resource = builders.subscriptionStatus("SubscriptionStatus", {});
+        const resource = builders.subscriptionStatus({});
         assert.isOk(resource);
     });
 });

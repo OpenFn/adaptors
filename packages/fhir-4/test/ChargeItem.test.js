@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("ChargeItem", () => {
     it("should create a simple ChargeItem", () => {
-        const resource = builders.chargeItem("ChargeItem", {});
+        const resource = builders.chargeItem({});
         assert.isOk(resource);
     });
 });

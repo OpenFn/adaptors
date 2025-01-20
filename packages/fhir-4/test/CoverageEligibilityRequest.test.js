@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("CoverageEligibilityRequest", () => {
     it("should create a simple CoverageEligibilityRequest", () => {
-        const resource = builders.coverageEligibilityRequest("CoverageEligibilityRequest", {});
+        const resource = builders.coverageEligibilityRequest({});
         assert.isOk(resource);
     });
 });

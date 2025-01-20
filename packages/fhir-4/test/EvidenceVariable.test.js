@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("EvidenceVariable", () => {
     it("should create a simple EvidenceVariable", () => {
-        const resource = builders.evidenceVariable("EvidenceVariable", {});
+        const resource = builders.evidenceVariable({});
         assert.isOk(resource);
     });
 });

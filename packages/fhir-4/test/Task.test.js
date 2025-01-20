@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("Task", () => {
     it("should create a simple Task", () => {
-        const resource = builders.task("Task", {});
+        const resource = builders.task({});
         assert.isOk(resource);
     });
 });

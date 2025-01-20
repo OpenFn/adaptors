@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("ExampleScenario", () => {
     it("should create a simple ExampleScenario", () => {
-        const resource = builders.exampleScenario("ExampleScenario", {});
+        const resource = builders.exampleScenario({});
         assert.isOk(resource);
     });
 });

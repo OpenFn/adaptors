@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("CatalogEntry", () => {
     it("should create a simple CatalogEntry", () => {
-        const resource = builders.catalogEntry("CatalogEntry", {});
+        const resource = builders.catalogEntry({});
         assert.isOk(resource);
     });
 });

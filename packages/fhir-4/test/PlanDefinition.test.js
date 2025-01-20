@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("PlanDefinition", () => {
     it("should create a simple PlanDefinition", () => {
-        const resource = builders.planDefinition("PlanDefinition", {});
+        const resource = builders.planDefinition({});
         assert.isOk(resource);
     });
 });

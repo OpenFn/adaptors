@@ -6,7 +6,7 @@
     "build": "pnpm clean && build-adaptor fhir-4 src ast docs",
     "build:src": "pnpm generate-fhir fhir-4",
     "build:spec": "pnpm generate-fhir fhir-4 --respec",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
+    "test": "pnpm build-adaptor fhir-4 src && mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist docs",
     "pack": "pnpm pack --pack-destination ../../dist",
@@ -17,7 +17,7 @@
   "type": "module",
   "fhir": {
     "specUrl": "https://hl7.org/fhir/R4B/definitions.json.zip",
-    "adaptorGeneratedDate": "2025-01-14T16:36:09.668Z",
+    "adaptorGeneratedDate": "2025-01-20T17:55:59.126Z",
     "generatorVersion": "0.2.3"
   },
   "dependencies": {

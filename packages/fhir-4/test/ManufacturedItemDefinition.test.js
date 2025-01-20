@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("ManufacturedItemDefinition", () => {
     it("should create a simple ManufacturedItemDefinition", () => {
-        const resource = builders.manufacturedItemDefinition("ManufacturedItemDefinition", {});
+        const resource = builders.manufacturedItemDefinition({});
         assert.isOk(resource);
     });
 });

@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("ResearchStudy", () => {
     it("should create a simple ResearchStudy", () => {
-        const resource = builders.researchStudy("ResearchStudy", {});
+        const resource = builders.researchStudy({});
         assert.isOk(resource);
     });
 });

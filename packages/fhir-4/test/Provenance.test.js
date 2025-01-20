@@ -1,9 +1,9 @@
 import { expect, assert } from "chai";
-import * as builders from "../src/builders.js";
+import { builders } from "@openfn/language-fhir-4";
 
 describe("Provenance", () => {
     it("should create a simple Provenance", () => {
-        const resource = builders.provenance("Provenance", {});
+        const resource = builders.provenance({});
         assert.isOk(resource);
     });
 });
