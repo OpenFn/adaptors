@@ -13,7 +13,7 @@ type TestSpec = Record<FilePath, Content>;
 const generate = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {},
-  options: { simpleSignatures?: boolean } = {}
+  options: { name: string; simpleSignatures?: boolean }
 ) => {
   // test gen won't clean up after itself
   // Tests are really only support to be a one-time template
@@ -40,8 +40,8 @@ const generate = (
 
     statements.push(
       b.importDeclaration(
-        [b.importNamespaceSpecifier(b.identifier('builders'))],
-        b.stringLiteral('../src/builders.js')
+        [b.importSpecifier(b.identifier('builders'))],
+        b.stringLiteral(`@openfn/language-${options.name}`)
       )
     );
 

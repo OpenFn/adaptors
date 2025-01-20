@@ -86,9 +86,9 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   try {
     const pkg = await readPkg();
     mappings = await loadMappings();
-    // if (respec || spec) {
-    //   meta = await fetchSpec(adaptorPath, spec ?? pkg.fhir.specUrl, mappings);
-    // }
+    if (respec || spec) {
+      meta = await fetchSpec(adaptorPath, spec ?? pkg.fhir.specUrl, mappings);
+    }
   } catch (error: any) {
     console.log(`Package ${adaptorName} does not exist: generating...`);
     // If the adaptor does not exist, generate the project boilerplate
@@ -104,30 +104,29 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
 
   // // Now generate from the spec
   const specPath = path.resolve(adaptorPath, 'spec', 'spec.json');
-  // try {
-  //   await access(specPath);
-  // } catch (e) {
-  //   console.log('Error loading spec.json!');
-  //   console.log(
-  //     `You may need to redownload the spec with "pnpm generate-fhir ${adaptorName} --respec"`
-  //   );
-  //   console.log(e);
-  // }
+  try {
+    await access(specPath);
+  } catch (e) {
+    console.log('Error loading spec.json!');
+    console.log(
+      `You may need to redownload the spec with "pnpm generate-fhir ${adaptorName} --respec"`
+    );
+    console.log(e);
+  }
 
   const schema = await generateSchema(specPath, mappings);
   console.log('Generating code');
   const src = generateCode(schema, mappings, {
     simpleSignatures: simpleBuilders,
   });
-  // console.log('Generating DTS');
-  // const dts = generateDTS(schema, mappings, {
-  //   simpleSignatures: simpleBuilders,
-  // });
+  console.log('Generating DTS');
+  const dts = generateDTS(schema, mappings, {
+    simpleSignatures: simpleBuilders,
+  });
 
   const srcPath = path.resolve(adaptorPath, 'src/builders.js');
   console.log('Writing source to ', srcPath);
   await writeFile(srcPath, withDisclaimer(src.builders));
-  process.exit(1);
   await mkdir(path.resolve(adaptorPath, 'src/profiles'), { recursive: true });
   for (const profile in src.profiles) {
     await writeFile(
@@ -141,6 +140,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     await mkdir(path.resolve(adaptorPath, 'test'), { recursive: true });
     const tests = generateTests(schema, mappings, {
       simpleSignatures: simpleBuilders,
+      name: adaptorName,
     });
     for (const p in tests) {
       await writeFile(path.resolve(adaptorPath, p), tests[p]);

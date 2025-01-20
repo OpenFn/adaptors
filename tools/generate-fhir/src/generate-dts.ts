@@ -108,6 +108,39 @@ const generateEntryFuction = (
   );
   result.push(lookup);
 
+  if (simpleSignatures) {
+    const defaultProfile = schemas[0].id;
+    const defaultTypeName = `${resourceType}_${defaultProfile}_Props`.replace(
+      /-/g,
+      '_'
+    );
+    const fn2 = b.createExportDeclaration(
+      [],
+      false,
+      b.createFunctionDeclaration(
+        [b.createModifier(ts.SyntaxKind.DeclareKeyword)],
+        undefined,
+        getBuilderName(resourceType),
+        [
+          // generics
+        ],
+        [
+          b.createParameterDeclaration(
+            [],
+            undefined,
+            'props',
+            undefined,
+            b.createTypeReferenceNode(defaultTypeName)
+          ),
+        ], // params
+        undefined,
+        undefined // body
+      )
+    );
+
+    result.push(fn2);
+  }
+
   const fn = b.createExportDeclaration(
     [],
     false,
@@ -151,39 +184,6 @@ const generateEntryFuction = (
   );
 
   result.push(fn);
-
-  if (simpleSignatures) {
-    const defaultProfile = schemas[0].id;
-    const defaultTypeName = `${resourceType}_${defaultProfile}_Props`.replace(
-      /-/g,
-      '_'
-    );
-    const fn2 = b.createExportDeclaration(
-      [],
-      false,
-      b.createFunctionDeclaration(
-        [b.createModifier(ts.SyntaxKind.DeclareKeyword)],
-        undefined,
-        getBuilderName(resourceType),
-        [
-          // generics
-        ],
-        [
-          b.createParameterDeclaration(
-            [],
-            undefined,
-            'props',
-            undefined,
-            b.createTypeReferenceNode(defaultTypeName)
-          ),
-        ], // params
-        undefined,
-        undefined // body
-      )
-    );
-
-    result.push(fn2);
-  }
 
   return result;
 };
