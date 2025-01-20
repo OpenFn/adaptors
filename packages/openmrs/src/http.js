@@ -7,7 +7,6 @@ import * as util from './Utils';
  * @property {object} query - An object of query parameters to be encoded into the URL
  * @property {object} headers - An object of all request headers
  * @property {object} body - The request body (as JSON)
- * @property {string} baseUrl - The base url for the request
  * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
  */
 
@@ -20,13 +19,12 @@ import * as util from './Utils';
  *       limit: 1, 
  *       offset: 20 
  *    },
- *     baseUrl: "http://msf-ocg-openmrs3-dev.westeurope.cloudapp.azure.com/openmrs"
  * });
  * @function
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
- * @param {OpenMRSOptions}  [options={}] - An object containing either query, headers, and body for the request
+ * @param {OpenMRSOptions}  [options={}] - An object containing query, headers, and body for the request
  * @returns {Operation}
  */
 export function request(method, path, options = {}, callback = s => s) {

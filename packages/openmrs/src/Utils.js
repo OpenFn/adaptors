@@ -17,7 +17,7 @@ export const prepareNextState = (state, response, callback) => {
 
 export async function request(state, method, path, options = {}) {
   const {
-    baseUrl = 'https://demo.openmrs.org/openmrs',
+    baseUrl = state.configuration.instanceUrl,
     query = {},
     data = {},
     headers = { 'content-type': 'application/json' },

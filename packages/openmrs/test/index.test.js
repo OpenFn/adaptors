@@ -78,7 +78,6 @@ describe('http', () => {
 
     const { data } = await http.request('GET', '/ws/rest/v1/patient', {
       query: { q: 'Sarah 1' },
-      baseUrl: 'https://fn.openmrs.org',
     })(state);
 
     expect(data.results[0].display).to.eql('Sarah 1');
@@ -122,7 +121,6 @@ describe('http', () => {
     const state = { configuration };
     const { data } = await http.request('GET', '/ws/rest/v1/patient', {
       query: { q: 'Sarah', limit: 1 },
-      baseUrl: 'https://fn.openmrs.org',
     })(state);
 
     expect(data.results[0].display).to.eql('Sarah 1');
@@ -198,7 +196,7 @@ describe('request', () => {
 
     const { body } = await request(state, 'GET', '/ws/rest/v1/patient', {
       query: { q: 'Sarah 1' },
-      baseUrl: 'https://fn.openmrs.org',
+      baseUrl: state.configuration.instanceUrl,
     });
 
     expect(body.results[0].display).to.eql('Sarah 1');
@@ -241,7 +239,7 @@ describe('request', () => {
     const state = { configuration };
     const { body } = await request(state, 'GET', '/ws/rest/v1/patient', {
       query: { q: 'Sarah', limit: 1 },
-      baseUrl: 'https://fn.openmrs.org',
+      baseUrl: state.configuration.instanceUrl,
     });
 
     expect(body.results[0].display).to.eql('Sarah 1');
@@ -286,7 +284,7 @@ describe('request', () => {
     const state = { configuration };
     const { body } = await request(state, 'GET', '/ws/rest/v1/patient', {
       query: { q: 'Sarah', limit: 1, startIndex: 1 },
-      baseUrl: 'https://fn.openmrs.org',
+      baseUrl: state.configuration.instanceUrl,
     });
 
     expect(body.results[0].display).to.eql('Sarah 2');
