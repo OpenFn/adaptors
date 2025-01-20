@@ -64,3 +64,7 @@ test('should generate a single builder and profile', t => {
   // Track the right resource type is being created
   t.regex(profiles.patient, /resourceType: "Patient"/i);
 });
+
+test('should generate a simpler signature', t => {
+  // eval the builder (will this work??)
+});

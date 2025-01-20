@@ -10,7 +10,8 @@ const INPUT_NAME = 'props';
 
 const generateCode = (
   schema: Record<string, Schema[]>,
-  mappings: MappingSpec = {}
+  mappings: MappingSpec = {},
+  options: { simpleSignatures?: boolean } = {}
 ): { builders: string; profiles: Record<string, string> } => {
   const statements: n.Statement[] = [];
 
@@ -39,7 +40,14 @@ const generateCode = (
       );
 
       // Generate an entrypoint function
-      statements.push(generateEntry(name, resourceType, schema[resourceType]));
+      statements.push(
+        generateEntry(
+          name,
+          resourceType,
+          schema[resourceType],
+          options.simpleSignatures
+        )
+      );
     }
   }
 
@@ -83,13 +91,17 @@ export default generateCode;
 const generateEntry = (
   name: string,
   resourceType: string,
-  variants: Schema[]
+  variants: Schema[],
+  simpleSignatures?: boolean
 ) => {
+  const statements = [];
   const comment = parse(`/**
   * Create a FHIR ${resourceType} resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant
+  * @param {string} type - The profile id for the resource variant.${
+    simpleSignatures ? ' Optional.' : ''
+  }
   * @param props - Properties to apply to the resource
  */
 `);
@@ -104,17 +116,30 @@ const generateEntry = (
       )
     ),
   ]);
+  statements.push(map);
+
+  if (simpleSignatures) {
+    // TODO how do we know the default type?
+    const handleOptionalType = parse(`// Handle optional type parameter
+  if (typeof type !== "string") {
+    props = type;
+    type = "${variants[0].id}";
+  }`);
+    statements.push(...handleOptionalType.program.body);
+  }
+
   // TODO handle errors for invalid types
   const mapper = parse(`
-    return mappings[type](props)
+return mappings[type](props)
 `);
+  statements.push(...mapper.program.body);
 
   const ex = b.exportDeclaration(
     false,
     b.functionDeclaration(
       b.identifier(getBuilderName(resourceType)),
       [b.identifier('type'), b.identifier(INPUT_NAME)],
-      b.blockStatement([map, ...mapper.program.body])
+      b.blockStatement(statements)
     )
   );
 

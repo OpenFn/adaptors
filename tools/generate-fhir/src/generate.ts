@@ -1,4 +1,4 @@
-import { writeFile, mkdir, access, readFile } from 'node:fs/promises';
+import { writeFile, mkdir, access, readFile, rm } from 'node:fs/promises';
 import { exec } from 'node:child_process';
 import path from 'node:path';
 import generatePackage from './generate-package';
@@ -26,10 +26,17 @@ export type Options = {
 
   /** Should we generate tests? */
   tests?: boolean;
+
+  /**
+   * Allow simple builders. This means that for builders with only a single profile,
+   * a simpler signature can be used. Only works with base languages right now. Default to false.
+   * */
+  simpleBuilders?: boolean;
 };
 
 const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
-  const { base, respec, spec } = options;
+  const { base, respec, spec, simpleBuilders } = options;
+
   const dir = path.dirname(import.meta.url.replace('file://', ''));
   const monoRepoRoot = path.resolve(dir, `../../../`);
   const adaptorPath = path.resolve(monoRepoRoot, 'packages', adaptorName);
@@ -110,9 +117,13 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
 
   const schema = await generateSchema(specPath, mappings);
   console.log('Generating code');
-  const src = generateCode(schema, mappings);
+  const src = generateCode(schema, mappings, {
+    simpleSignatures: simpleBuilders,
+  });
   console.log('Generating DTS');
-  const dts = generateDTS(schema, mappings);
+  const dts = generateDTS(schema, mappings, {
+    simpleSignatures: simpleBuilders,
+  });
 
   const srcPath = path.resolve(adaptorPath, 'src/builders.js');
   console.log('Writing source to ', srcPath);
@@ -129,7 +140,9 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   if (options.tests) {
     console.log('Generating tests');
     await mkdir(path.resolve(adaptorPath, 'test'), { recursive: true });
-    const tests = generateTests(schema, mappings);
+    const tests = generateTests(schema, mappings, {
+      simpleSignatures: simpleBuilders,
+    });
     for (const p in tests) {
       await writeFile(path.resolve(adaptorPath, p), tests[p]);
     }
@@ -161,12 +174,20 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     `pnpm exec tsc ${tscArgs.join(' ')} ${pathToEntry}`,
     {},
     (err, stderr) => {
-      // TODO ignore tsc output for now
+      // // TODO ignore tsc output for now
       // if (err) {
       //   console.log('tsc build failed!');
       //   console.log(stderr);
-      // } else {
+      // }
       setTimeout(async () => {
+        // TODO a more elegant way to do this?
+        // Can we prevent them being generated in the first place?
+        console.log('Removing TS profiles');
+        await rm(path.resolve(adaptorPath, 'types/profiles'), {
+          recursive: true,
+          force: true,
+        });
+
         console.log('Writing builders.d.ts');
         // Overwrite builders.d.ts because typescript makes a mess of it
         await writeFile(

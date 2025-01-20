@@ -13,7 +13,10 @@ const b = ts.factory;
 // maybe
 const generateDTS = (
   schema: Record<string, Schema[]>,
-  mappings: MappingSpec = {}
+  mappings: MappingSpec = {},
+  options: {
+    simpleSignatures?: simpleBuilders;
+  } = {}
 ) => {
   let contents: ts.Statement[] = [];
 
@@ -44,7 +47,13 @@ const generateDTS = (
       contents.push(typedef);
     }
 
-    contents.push(...generateEntryFuction(resourceType, schema[resourceType]));
+    contents.push(
+      ...generateEntryFuction(
+        resourceType,
+        schema[resourceType],
+        options.simpleSignatures
+      )
+    );
   }
 
   return contents
@@ -73,7 +82,11 @@ const typeMap = {
 };
 
 // Ths generates an entry function which maps the variants
-const generateEntryFuction = (resourceType: string, schemas: Schema[]) => {
+const generateEntryFuction = (
+  resourceType: string,
+  schemas: Schema[],
+  simpleSignatures?: boolean
+) => {
   const result = [];
 
   // create the lookup table
@@ -138,6 +151,39 @@ const generateEntryFuction = (resourceType: string, schemas: Schema[]) => {
   );
 
   result.push(fn);
+
+  if (simpleSignatures) {
+    const defaultProfile = schemas[0].id;
+    const defaultTypeName = `${resourceType}_${defaultProfile}_Props`.replace(
+      /-/g,
+      '_'
+    );
+    const fn2 = b.createExportDeclaration(
+      [],
+      false,
+      b.createFunctionDeclaration(
+        [b.createModifier(ts.SyntaxKind.DeclareKeyword)],
+        undefined,
+        getBuilderName(resourceType),
+        [
+          // generics
+        ],
+        [
+          b.createParameterDeclaration(
+            [],
+            undefined,
+            'props',
+            undefined,
+            b.createTypeReferenceNode(defaultTypeName)
+          ),
+        ], // params
+        undefined,
+        undefined // body
+      )
+    );
+
+    result.push(fn2);
+  }
 
   return result;
 };
@@ -232,32 +278,6 @@ const generateInlineType = (typeDef: PropDef) => {
     );
   }
   return b.createTypeLiteralNode(props);
-};
-
-// actually we don't need to generate the builder signature itself?
-// we only care about the entry signature
-const generateBuilder = (resourceName, schema, mappings) => {
-  // TODO I think this needs an export
-  const d = b.createFunctionDeclaration(
-    [b.createModifier(ts.SyntaxKind.DeclareKeyword)],
-    undefined,
-    getBuilderName(resourceName),
-    [], // generics
-    [
-      b.createParameterDeclaration(
-        [],
-        undefined,
-        'props',
-        undefined,
-        //b.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
-        b.createTypeReferenceNode(`${resourceName}_Props`)
-      ),
-    ], // params
-    undefined,
-    undefined // body
-  );
-
-  return d;
 };
 
 export default generateDTS;

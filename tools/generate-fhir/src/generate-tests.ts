@@ -12,7 +12,8 @@ type TestSpec = Record<FilePath, Content>;
 
 const generate = (
   schema: Record<string, Schema[]>,
-  mappings: MappingSpec = {}
+  mappings: MappingSpec = {},
+  options: { simpleSignatures?: boolean } = {}
 ) => {
   // test gen won't clean up after itself
   // Tests are really only support to be a one-time template
@@ -50,7 +51,7 @@ const generate = (
       }
       const tests: n.Statement[] = [];
 
-      tests.push(createTestStub(profile));
+      tests.push(...createTestStub(profile, options.simpleSignatures));
 
       // TODO for each example in the spec, generate a skipped test
 
@@ -72,7 +73,8 @@ const createDescribeBlock = (profileId: string, tests: n.Statement[]) =>
     ])
   );
 
-const createTestStub = (profile: Schema) => {
+const createTestStub = (profile: Schema, simpleSignatures?: boolean) => {
+  const tests = [];
   const createResource = b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier('resource'),
@@ -81,7 +83,9 @@ const createTestStub = (profile: Schema) => {
           b.identifier('builders'),
           b.identifier(getBuilderName(profile.type))
         ),
-        [b.stringLiteral(profile.id), b.objectExpression([])]
+        simpleSignatures
+          ? [b.objectExpression([])]
+          : [b.stringLiteral(profile.id), b.objectExpression([])]
       )
     ),
   ]);
@@ -91,15 +95,19 @@ const createTestStub = (profile: Schema) => {
       [b.identifier('resource')]
     )
   );
-  return b.expressionStatement(
-    b.callExpression(b.identifier('it'), [
-      b.stringLiteral(`should create a simple ${profile.id}`),
-      b.arrowFunctionExpression(
-        [],
-        b.blockStatement([createResource, assertResource])
-      ),
-    ])
+  tests.push(
+    b.expressionStatement(
+      b.callExpression(b.identifier('it'), [
+        b.stringLiteral(`should create a simple ${profile.id}`),
+        b.arrowFunctionExpression(
+          [],
+          b.blockStatement([createResource, assertResource])
+        ),
+      ])
+    )
   );
+
+  return tests;
 };
 
 export default generate;
