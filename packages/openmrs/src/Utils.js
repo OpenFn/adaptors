@@ -5,17 +5,6 @@ import {
   logResponse,
 } from '@openfn/language-common/util';
 
-/**
- * Options object
- * @global
- * @typedef {Object} OpenMRSOptions
- * @property {object} query - An object of query parameters to be encoded into the URL
- * @property {object} headers - An object of all request headers
- * @property {object} body - The request body (as JSON)
- * @property {string} baseUrl - The base url for the request
- * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
- */
-
 export const prepareNextState = (state, response, callback) => {
   const { body, ...responseWithoutBody } = response;
   const nextState = {
@@ -68,7 +57,7 @@ export async function request(state, method, path, options = {}) {
   let allowPagination = isNaN(queryParams?.startIndex);
 
   do {
-    const requestOptions = queryParams ? { ...opts, queryParams } : opts;
+    const requestOptions = queryParams ? { ...opts, query: queryParams } : opts;
 
     const response = await commonRequest(method, url, requestOptions);
     logResponse(response);
