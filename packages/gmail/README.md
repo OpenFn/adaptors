@@ -120,13 +120,20 @@ options.processedIds = [
 
 To prevent inadventant massive retrieval of messages, the maximum number of results to return is limited. The default value is 50. If you need more than this limit, you can specify a larger value, up to 1,000, for this parameter.
 
+This works in conjuction with the `options.processedIds` parameter. For example:
+
+- account contains messages [1, 2, 3]
+- `options.processedIds = [1];`
+- `options.maxResults = 1;`
+- this will skip message #1 and resulting dataset will contain a single message #2
+
 ## Example jobs
 
 ```js
 const query = 'in:inbox newer_than:2d';
 const contents = ['body'];
-const maxLimit = 200;
-getContentsFromMessages({ query, contents, maxLimit });
+const maxResults = 200;
+getContentsFromMessages({ query, contents, maxResults });
 ```
 
 ```js
