@@ -94,17 +94,34 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
   for (const profileId in fullSpec) {
     const profile = fullSpec[profileId];
 
+    // Ignore inactive profiles
+    if (profile.active === false) {
+      console.log('ignoring inactive profile', profileId);
+      continue;
+    }
+
     // TODO is it useful to output this or not?
     if (mappings.exclude?.includes(profile.type)) {
-      console.log('ignoring excluded ', profileId);
+      console.log('ignoring excluded profile', profileId);
       continue;
     }
     if (mappings.include?.length && !mappings.include.includes(profile.type)) {
-      console.log('ignoring not included ', profileId);
+      console.log('ignoring not included profile', profileId);
       continue;
     }
 
     if (profile.resourceType !== 'StructureDefinition') {
+      continue;
+    }
+
+    const category = profile.extension?.find(
+      e =>
+        e.url ===
+        'http://hl7.org/fhir/StructureDefinition/structuredefinition-category'
+    );
+    console.log(category);
+    if (category?.valueString?.startsWith('Foundation.')) {
+      console.log('ignoring Foundation profile', profileId);
       continue;
     }
 

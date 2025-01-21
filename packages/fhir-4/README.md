@@ -5,10 +5,20 @@ An OpenFn adaptor for building integration jobs for use with the fhir-4 API.
 This adaptor has been auto-generated from a FHIR spec. Do not modify generated
 code or changes will be lost.
 
+## Build command
+
+```
+pnpm generate-fhir fhir-4 \
+  --spec https://hl7.org/fhir/R4B/definitions.json.zip \
+  --mappings tools/generate-fhir/tmp/mappings-fhir4.js \
+  --tests \
+  --simple-builders
+```
+
 ## Documentation
 
-View the [docs site](https://docs.openfn.org/adaptors/packages/fhir-4-docs)
-for full technical documentation.
+View the [docs site](https://docs.openfn.org/adaptors/packages/fhir-4-docs) for
+full technical documentation.
 
 ### Configuration
 
@@ -27,5 +37,5 @@ Build the adaptor using `pnpm build`.
 
 Re-generate the adaptor source with `pnpm generate-fhir fhir-4`
 
-To update the spec an re-generate, run `pnpm generate-fhir fhir-4 --respec`.
-You can update the spec url with `--spec <www>` or by modifying package.json
+To update the spec an re-generate, run `pnpm generate-fhir fhir-4 --respec`. You
+can update the spec url with `--spec <www>` or by modifying package.json

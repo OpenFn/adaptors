@@ -3,12 +3,7 @@ export default Adaptor;
 
 export * from './Adaptor';
 
-import * as datatypes from './datatypes';
+export * as util from './utils';
+
 import * as builders from './builders';
-
-const allHelpers = {
-  ...datatypes,
-  ...builders,
-};
-
-export { allHelpers as builders, allHelpers as b };
+export { builders, builders as b };

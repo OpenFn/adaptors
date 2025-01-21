@@ -6,7 +6,7 @@
     "build": "pnpm clean && build-adaptor fhir-4 src ast docs",
     "build:src": "pnpm generate-fhir fhir-4",
     "build:spec": "pnpm generate-fhir fhir-4 --respec",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
+    "test": "build-adaptor fhir-4 src && mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist docs",
     "pack": "pnpm pack --pack-destination ../../dist",
@@ -17,12 +17,11 @@
   "type": "module",
   "fhir": {
     "specUrl": "https://hl7.org/fhir/R4B/definitions.json.zip",
-    "adaptorGeneratedDate": "2025-01-21T15:22:56.285Z",
+    "adaptorGeneratedDate": "2025-01-21T17:20:26.733Z",
     "generatorVersion": "0.2.3"
   },
   "dependencies": {
-    "@openfn/language-common": "workspace:*",
-    "@types/fhir": "^0.0.41"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
@@ -31,8 +30,8 @@
     "esno": "^0.16.3",
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
-    "typescript": "4.8.4",
-    "undici": "^5.22.1"
+    "undici": "^5.22.1",
+    "typescript": "4.8.4"
   },
   "repository": {
     "type": "git",
