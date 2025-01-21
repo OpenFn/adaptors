@@ -163,6 +163,8 @@ export const findExtension = (obj, targetUrl, path) => {
  */
 export const coding = (code, system) => ({ code, system: mapSystems(system) });
 
+export const c = coding;
+
 /**
  * Create a value object { code, system } with optional system. Systems will be mapped.
  * @public
