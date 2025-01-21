@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -50,7 +50,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.version)) {
@@ -82,7 +82,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        util.composite(resource, "subject", props.subject);
+        dt.composite(resource, "subject", props.subject);
     }
 
     if (!_.isNil(props.date)) {
@@ -166,19 +166,19 @@ export default function(props) {
     }
 
     if (!_.isNil(props.population)) {
-        resource.population = util.reference(props.population);
+        resource.population = dt.reference(props.population);
     }
 
     if (!_.isNil(props.exposure)) {
-        resource.exposure = util.reference(props.exposure);
+        resource.exposure = dt.reference(props.exposure);
     }
 
     if (!_.isNil(props.exposureAlternative)) {
-        resource.exposureAlternative = util.reference(props.exposureAlternative);
+        resource.exposureAlternative = dt.reference(props.exposureAlternative);
     }
 
     if (!_.isNil(props.outcome)) {
-        resource.outcome = util.reference(props.outcome);
+        resource.outcome = dt.reference(props.outcome);
     }
 
     resource.meta = {

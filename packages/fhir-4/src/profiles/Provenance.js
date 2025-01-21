@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,11 +46,11 @@ export default function(props) {
 
     if (!_.isNil(props.target)) {
         if (!Array.isArray(props.target)) { props.target = [props.target]; }
-        resource.target = util.reference(props.target);
+        resource.target = dt.reference(props.target);
     }
 
     if (!_.isNil(props.occurred)) {
-        util.composite(resource, "occurred", props.occurred);
+        dt.composite(resource, "occurred", props.occurred);
     }
 
     if (!_.isNil(props.recorded)) {
@@ -62,7 +62,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.location)) {
-        resource.location = util.reference(props.location);
+        resource.location = dt.reference(props.location);
     }
 
     if (!_.isNil(props.reason)) {

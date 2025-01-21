@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -53,7 +53,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.manufacturer)) {
-        resource.manufacturer = util.reference(props.manufacturer);
+        resource.manufacturer = dt.reference(props.manufacturer);
     }
 
     if (!_.isNil(props.doseForm)) {
@@ -98,7 +98,7 @@ export default function(props) {
 
     if (!_.isNil(props.associatedMedication)) {
         if (!Array.isArray(props.associatedMedication)) { props.associatedMedication = [props.associatedMedication]; }
-        resource.associatedMedication = util.reference(props.associatedMedication);
+        resource.associatedMedication = dt.reference(props.associatedMedication);
     }
 
     if (!_.isNil(props.productType)) {
@@ -346,7 +346,7 @@ export default function(props) {
 
     if (!_.isNil(props.contraindication)) {
         if (!Array.isArray(props.contraindication)) { props.contraindication = [props.contraindication]; }
-        resource.contraindication = util.reference(props.contraindication);
+        resource.contraindication = dt.reference(props.contraindication);
     }
 
     if (!_.isNil(props.regulatory)) {

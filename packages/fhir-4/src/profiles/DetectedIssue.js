@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -62,20 +62,20 @@ export default function(props) {
     }
 
     if (!_.isNil(props.patient)) {
-        resource.patient = util.reference(props.patient);
+        resource.patient = dt.reference(props.patient);
     }
 
     if (!_.isNil(props.identified)) {
-        util.composite(resource, "identified", props.identified);
+        dt.composite(resource, "identified", props.identified);
     }
 
     if (!_.isNil(props.author)) {
-        resource.author = util.reference(props.author);
+        resource.author = dt.reference(props.author);
     }
 
     if (!_.isNil(props.implicated)) {
         if (!Array.isArray(props.implicated)) { props.implicated = [props.implicated]; }
-        resource.implicated = util.reference(props.implicated);
+        resource.implicated = dt.reference(props.implicated);
     }
 
     if (!_.isNil(props.evidence)) {

@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -62,7 +62,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.patient)) {
-        resource.patient = util.reference(props.patient);
+        resource.patient = dt.reference(props.patient);
     }
 
     if (!_.isNil(props.dateTime)) {
@@ -71,16 +71,16 @@ export default function(props) {
 
     if (!_.isNil(props.performer)) {
         if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
-        resource.performer = util.reference(props.performer);
+        resource.performer = dt.reference(props.performer);
     }
 
     if (!_.isNil(props.organization)) {
         if (!Array.isArray(props.organization)) { props.organization = [props.organization]; }
-        resource.organization = util.reference(props.organization);
+        resource.organization = dt.reference(props.organization);
     }
 
     if (!_.isNil(props.source)) {
-        util.composite(resource, "source", props.source);
+        dt.composite(resource, "source", props.source);
     }
 
     if (!_.isNil(props.policy)) {

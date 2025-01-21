@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,21 +46,21 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.basedOn)) {
         if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
+        resource.basedOn = dt.reference(props.basedOn);
     }
 
     if (!_.isNil(props.replaces)) {
         if (!Array.isArray(props.replaces)) { props.replaces = [props.replaces]; }
-        resource.replaces = util.reference(props.replaces);
+        resource.replaces = dt.reference(props.replaces);
     }
 
     if (!_.isNil(props.groupIdentifier)) {
-        resource.groupIdentifier = util.identifier(props.groupIdentifier, undefined);
+        resource.groupIdentifier = dt.identifier(props.groupIdentifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -88,16 +88,16 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.about)) {
         if (!Array.isArray(props.about)) { props.about = [props.about]; }
-        resource.about = util.reference(props.about);
+        resource.about = dt.reference(props.about);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
+        resource.encounter = dt.reference(props.encounter);
     }
 
     if (!_.isNil(props.payload)) {
@@ -125,7 +125,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.occurrence)) {
-        util.composite(resource, "occurrence", props.occurrence);
+        dt.composite(resource, "occurrence", props.occurrence);
     }
 
     if (!_.isNil(props.authoredOn)) {
@@ -133,16 +133,16 @@ export default function(props) {
     }
 
     if (!_.isNil(props.requester)) {
-        resource.requester = util.reference(props.requester);
+        resource.requester = dt.reference(props.requester);
     }
 
     if (!_.isNil(props.recipient)) {
         if (!Array.isArray(props.recipient)) { props.recipient = [props.recipient]; }
-        resource.recipient = util.reference(props.recipient);
+        resource.recipient = dt.reference(props.recipient);
     }
 
     if (!_.isNil(props.sender)) {
-        resource.sender = util.reference(props.sender);
+        resource.sender = dt.reference(props.sender);
     }
 
     if (!_.isNil(props.reasonCode)) {
@@ -151,7 +151,7 @@ export default function(props) {
 
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
+        resource.reasonReference = dt.reference(props.reasonReference);
     }
 
     if (!_.isNil(props.note)) {

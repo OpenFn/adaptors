@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.lifecycleStatus)) {
@@ -70,11 +70,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.start)) {
-        util.composite(resource, "start", props.start);
+        dt.composite(resource, "start", props.start);
     }
 
     if (!_.isNil(props.target)) {
@@ -118,12 +118,12 @@ export default function(props) {
     }
 
     if (!_.isNil(props.expressedBy)) {
-        resource.expressedBy = util.reference(props.expressedBy);
+        resource.expressedBy = dt.reference(props.expressedBy);
     }
 
     if (!_.isNil(props.addresses)) {
         if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
-        resource.addresses = util.reference(props.addresses);
+        resource.addresses = dt.reference(props.addresses);
     }
 
     if (!_.isNil(props.note)) {
@@ -136,7 +136,7 @@ export default function(props) {
 
     if (!_.isNil(props.outcomeReference)) {
         if (!Array.isArray(props.outcomeReference)) { props.outcomeReference = [props.outcomeReference]; }
-        resource.outcomeReference = util.reference(props.outcomeReference);
+        resource.outcomeReference = dt.reference(props.outcomeReference);
     }
 
     resource.meta = {

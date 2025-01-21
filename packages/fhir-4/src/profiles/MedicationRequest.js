@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -74,24 +74,24 @@ export default function(props) {
     }
 
     if (!_.isNil(props.reported)) {
-        util.composite(resource, "reported", props.reported);
+        dt.composite(resource, "reported", props.reported);
     }
 
     if (!_.isNil(props.medication)) {
-        util.composite(resource, "medication", props.medication);
+        dt.composite(resource, "medication", props.medication);
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
+        resource.encounter = dt.reference(props.encounter);
     }
 
     if (!_.isNil(props.supportingInformation)) {
         if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
-        resource.supportingInformation = util.reference(props.supportingInformation);
+        resource.supportingInformation = dt.reference(props.supportingInformation);
     }
 
     if (!_.isNil(props.authoredOn)) {
@@ -99,11 +99,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.requester)) {
-        resource.requester = util.reference(props.requester);
+        resource.requester = dt.reference(props.requester);
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = util.reference(props.performer);
+        resource.performer = dt.reference(props.performer);
     }
 
     if (!_.isNil(props.performerType)) {
@@ -111,7 +111,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.recorder)) {
-        resource.recorder = util.reference(props.recorder);
+        resource.recorder = dt.reference(props.recorder);
     }
 
     if (!_.isNil(props.reasonCode)) {
@@ -120,7 +120,7 @@ export default function(props) {
 
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
+        resource.reasonReference = dt.reference(props.reasonReference);
     }
 
     if (!_.isNil(props.instantiatesCanonical)) {
@@ -133,11 +133,11 @@ export default function(props) {
 
     if (!_.isNil(props.basedOn)) {
         if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
+        resource.basedOn = dt.reference(props.basedOn);
     }
 
     if (!_.isNil(props.groupIdentifier)) {
-        resource.groupIdentifier = util.identifier(props.groupIdentifier, undefined);
+        resource.groupIdentifier = dt.identifier(props.groupIdentifier);
     }
 
     if (!_.isNil(props.courseOfTherapyType)) {
@@ -146,7 +146,7 @@ export default function(props) {
 
     if (!_.isNil(props.insurance)) {
         if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
-        resource.insurance = util.reference(props.insurance);
+        resource.insurance = dt.reference(props.insurance);
     }
 
     if (!_.isNil(props.note)) {
@@ -224,17 +224,17 @@ export default function(props) {
     }
 
     if (!_.isNil(props.priorPrescription)) {
-        resource.priorPrescription = util.reference(props.priorPrescription);
+        resource.priorPrescription = dt.reference(props.priorPrescription);
     }
 
     if (!_.isNil(props.detectedIssue)) {
         if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
-        resource.detectedIssue = util.reference(props.detectedIssue);
+        resource.detectedIssue = dt.reference(props.detectedIssue);
     }
 
     if (!_.isNil(props.eventHistory)) {
         if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
-        resource.eventHistory = util.reference(props.eventHistory);
+        resource.eventHistory = dt.reference(props.eventHistory);
     }
 
     resource.meta = {

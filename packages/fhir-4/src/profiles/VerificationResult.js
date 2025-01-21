@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.target)) {
         if (!Array.isArray(props.target)) { props.target = [props.target]; }
-        resource.target = util.reference(props.target);
+        resource.target = dt.reference(props.target);
     }
 
     if (!_.isNil(props.targetLocation)) {

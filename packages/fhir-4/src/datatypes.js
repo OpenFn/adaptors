@@ -42,32 +42,36 @@ export const extendSystemMap = newMappings => {
 };
 
 /**
- * Create an Identifier. Systems will be mapped against the system map.
- * Value can be a string value or a value/system pair.
- * Extras can be any other valid Identifier keys
- * If input is an array of identifiers, an array of mapped/parsed values will be returned.
+ * Create an Identifier. Systems will be mapped against the system map. Pass extensions as extra arguments.
  * @public
  * @function
- * @param input - an array of strings, or a identifier value as a string or object
+ * @param id - A string identifier, a FHIR identifier object, or an array of either.
+ * @param ext - Any other arguments will be treated as extensions
  * @param {string} [system] - the string system to use by default if
  */
-// TODO not sure about the extras arg really. Should it just all be one object?
-export const identifier = (value, extras) => {
+export const identifier = (id, ...ext) => {
   // If an array of inputs is passed in, map each element of the array
   // because it's very common to support a set of identifiers, rather than just one
   // Note that in this mode, each argument should be an object
-  if (Array.isArray(value)) {
-    return value.map(i => identifier(i));
+  if (Array.isArray(id)) {
+    return id.map(i => identifier(i));
   }
 
   const i = {};
-  if (typeof value === 'string') {
-    i.value = value;
+  if (typeof id === 'string') {
+    i.value = id;
   } else {
-    Object.assign(i, value);
+    Object.assign(i, id);
+    // TODO can we default the system anyhow?
   }
 
-  Object.assign(i, extras);
+  // TODO warn for unexpected keys?
+
+  if (ext.length) {
+    i.extension ??= [];
+    i.extension.push(...ext);
+  }
+
   return mapSystems(i);
 };
 

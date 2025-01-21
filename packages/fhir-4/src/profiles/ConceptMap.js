@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -49,7 +49,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.identifier)) {
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.version)) {
@@ -105,11 +105,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.source)) {
-        util.composite(resource, "source", props.source);
+        dt.composite(resource, "source", props.source);
     }
 
     if (!_.isNil(props.target)) {
-        util.composite(resource, "target", props.target);
+        dt.composite(resource, "target", props.target);
     }
 
     if (!_.isNil(props.group)) {

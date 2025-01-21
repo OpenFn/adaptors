@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,12 +46,12 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.basedOn)) {
         if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
+        resource.basedOn = dt.reference(props.basedOn);
     }
 
     if (!_.isNil(props.status)) {
@@ -67,15 +67,15 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
+        resource.encounter = dt.reference(props.encounter);
     }
 
     if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
+        dt.composite(resource, "effective", props.effective);
     }
 
     if (!_.isNil(props.issued)) {
@@ -84,27 +84,27 @@ export default function(props) {
 
     if (!_.isNil(props.performer)) {
         if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
-        resource.performer = util.reference(props.performer);
+        resource.performer = dt.reference(props.performer);
     }
 
     if (!_.isNil(props.resultsInterpreter)) {
         if (!Array.isArray(props.resultsInterpreter)) { props.resultsInterpreter = [props.resultsInterpreter]; }
-        resource.resultsInterpreter = util.reference(props.resultsInterpreter);
+        resource.resultsInterpreter = dt.reference(props.resultsInterpreter);
     }
 
     if (!_.isNil(props.specimen)) {
         if (!Array.isArray(props.specimen)) { props.specimen = [props.specimen]; }
-        resource.specimen = util.reference(props.specimen);
+        resource.specimen = dt.reference(props.specimen);
     }
 
     if (!_.isNil(props.result)) {
         if (!Array.isArray(props.result)) { props.result = [props.result]; }
-        resource.result = util.reference(props.result);
+        resource.result = dt.reference(props.result);
     }
 
     if (!_.isNil(props.imagingStudy)) {
         if (!Array.isArray(props.imagingStudy)) { props.imagingStudy = [props.imagingStudy]; }
-        resource.imagingStudy = util.reference(props.imagingStudy);
+        resource.imagingStudy = dt.reference(props.imagingStudy);
     }
 
     if (!_.isNil(props.media)) {

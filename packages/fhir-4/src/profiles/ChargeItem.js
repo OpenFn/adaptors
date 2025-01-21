@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.definitionUri)) {
@@ -63,7 +63,7 @@ export default function(props) {
 
     if (!_.isNil(props.partOf)) {
         if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
+        resource.partOf = dt.reference(props.partOf);
     }
 
     if (!_.isNil(props.code)) {
@@ -71,15 +71,15 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.context)) {
-        resource.context = util.reference(props.context);
+        resource.context = dt.reference(props.context);
     }
 
     if (!_.isNil(props.occurrence)) {
-        util.composite(resource, "occurrence", props.occurrence);
+        dt.composite(resource, "occurrence", props.occurrence);
     }
 
     if (!_.isNil(props.performer)) {
@@ -111,15 +111,15 @@ export default function(props) {
     }
 
     if (!_.isNil(props.performingOrganization)) {
-        resource.performingOrganization = util.reference(props.performingOrganization);
+        resource.performingOrganization = dt.reference(props.performingOrganization);
     }
 
     if (!_.isNil(props.requestingOrganization)) {
-        resource.requestingOrganization = util.reference(props.requestingOrganization);
+        resource.requestingOrganization = dt.reference(props.requestingOrganization);
     }
 
     if (!_.isNil(props.costCenter)) {
-        resource.costCenter = util.reference(props.costCenter);
+        resource.costCenter = dt.reference(props.costCenter);
     }
 
     if (!_.isNil(props.quantity)) {
@@ -143,7 +143,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.enterer)) {
-        resource.enterer = util.reference(props.enterer);
+        resource.enterer = dt.reference(props.enterer);
     }
 
     if (!_.isNil(props.enteredDate)) {
@@ -156,16 +156,16 @@ export default function(props) {
 
     if (!_.isNil(props.service)) {
         if (!Array.isArray(props.service)) { props.service = [props.service]; }
-        resource.service = util.reference(props.service);
+        resource.service = dt.reference(props.service);
     }
 
     if (!_.isNil(props.product)) {
-        util.composite(resource, "product", props.product);
+        dt.composite(resource, "product", props.product);
     }
 
     if (!_.isNil(props.account)) {
         if (!Array.isArray(props.account)) { props.account = [props.account]; }
-        resource.account = util.reference(props.account);
+        resource.account = dt.reference(props.account);
     }
 
     if (!_.isNil(props.note)) {
@@ -174,7 +174,7 @@ export default function(props) {
 
     if (!_.isNil(props.supportingInformation)) {
         if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
-        resource.supportingInformation = util.reference(props.supportingInformation);
+        resource.supportingInformation = dt.reference(props.supportingInformation);
     }
 
     resource.meta = {

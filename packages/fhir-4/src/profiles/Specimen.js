@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,11 +46,11 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.accessionIdentifier)) {
-        resource.accessionIdentifier = util.identifier(props.accessionIdentifier, undefined);
+        resource.accessionIdentifier = dt.identifier(props.accessionIdentifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -62,7 +62,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.receivedTime)) {
@@ -71,12 +71,12 @@ export default function(props) {
 
     if (!_.isNil(props.parent)) {
         if (!Array.isArray(props.parent)) { props.parent = [props.parent]; }
-        resource.parent = util.reference(props.parent);
+        resource.parent = dt.reference(props.parent);
     }
 
     if (!_.isNil(props.request)) {
         if (!Array.isArray(props.request)) { props.request = [props.request]; }
-        resource.request = util.reference(props.request);
+        resource.request = dt.reference(props.request);
     }
 
     if (!_.isNil(props.collection)) {

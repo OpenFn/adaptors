@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,17 +46,17 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.basedOn)) {
         if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
+        resource.basedOn = dt.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
         if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
+        resource.partOf = dt.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -64,7 +64,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.patient)) {
-        resource.patient = util.reference(props.patient);
+        resource.patient = dt.reference(props.patient);
     }
 
     if (!_.isNil(props.type)) {
@@ -95,20 +95,20 @@ export default function(props) {
     }
 
     if (!_.isNil(props.occurrence)) {
-        util.composite(resource, "occurrence", props.occurrence);
+        dt.composite(resource, "occurrence", props.occurrence);
     }
 
     if (!_.isNil(props.supplier)) {
-        resource.supplier = util.reference(props.supplier);
+        resource.supplier = dt.reference(props.supplier);
     }
 
     if (!_.isNil(props.destination)) {
-        resource.destination = util.reference(props.destination);
+        resource.destination = dt.reference(props.destination);
     }
 
     if (!_.isNil(props.receiver)) {
         if (!Array.isArray(props.receiver)) { props.receiver = [props.receiver]; }
-        resource.receiver = util.reference(props.receiver);
+        resource.receiver = dt.reference(props.receiver);
     }
 
     resource.meta = {

@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.instantiatesCanonical)) {
@@ -59,12 +59,12 @@ export default function(props) {
 
     if (!_.isNil(props.basedOn)) {
         if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
+        resource.basedOn = dt.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
         if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
+        resource.partOf = dt.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -84,23 +84,23 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
+        resource.encounter = dt.reference(props.encounter);
     }
 
     if (!_.isNil(props.performed)) {
-        util.composite(resource, "performed", props.performed);
+        dt.composite(resource, "performed", props.performed);
     }
 
     if (!_.isNil(props.recorder)) {
-        resource.recorder = util.reference(props.recorder);
+        resource.recorder = dt.reference(props.recorder);
     }
 
     if (!_.isNil(props.asserter)) {
-        resource.asserter = util.reference(props.asserter);
+        resource.asserter = dt.reference(props.asserter);
     }
 
     if (!_.isNil(props.performer)) {
@@ -136,7 +136,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.location)) {
-        resource.location = util.reference(props.location);
+        resource.location = dt.reference(props.location);
     }
 
     if (!_.isNil(props.reasonCode)) {
@@ -145,7 +145,7 @@ export default function(props) {
 
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
+        resource.reasonReference = dt.reference(props.reasonReference);
     }
 
     if (!_.isNil(props.bodySite)) {
@@ -158,7 +158,7 @@ export default function(props) {
 
     if (!_.isNil(props.report)) {
         if (!Array.isArray(props.report)) { props.report = [props.report]; }
-        resource.report = util.reference(props.report);
+        resource.report = dt.reference(props.report);
     }
 
     if (!_.isNil(props.complication)) {
@@ -167,7 +167,7 @@ export default function(props) {
 
     if (!_.isNil(props.complicationDetail)) {
         if (!Array.isArray(props.complicationDetail)) { props.complicationDetail = [props.complicationDetail]; }
-        resource.complicationDetail = util.reference(props.complicationDetail);
+        resource.complicationDetail = dt.reference(props.complicationDetail);
     }
 
     if (!_.isNil(props.followUp)) {
@@ -208,7 +208,7 @@ export default function(props) {
 
     if (!_.isNil(props.usedReference)) {
         if (!Array.isArray(props.usedReference)) { props.usedReference = [props.usedReference]; }
-        resource.usedReference = util.reference(props.usedReference);
+        resource.usedReference = dt.reference(props.usedReference);
     }
 
     if (!_.isNil(props.usedCode)) {

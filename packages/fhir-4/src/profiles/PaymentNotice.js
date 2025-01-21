@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -54,11 +54,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.request)) {
-        resource.request = util.reference(props.request);
+        resource.request = dt.reference(props.request);
     }
 
     if (!_.isNil(props.response)) {
-        resource.response = util.reference(props.response);
+        resource.response = dt.reference(props.response);
     }
 
     if (!_.isNil(props.created)) {
@@ -66,11 +66,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.provider)) {
-        resource.provider = util.reference(props.provider);
+        resource.provider = dt.reference(props.provider);
     }
 
     if (!_.isNil(props.payment)) {
-        resource.payment = util.reference(props.payment);
+        resource.payment = dt.reference(props.payment);
     }
 
     if (!_.isNil(props.paymentDate)) {
@@ -78,11 +78,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.payee)) {
-        resource.payee = util.reference(props.payee);
+        resource.payee = dt.reference(props.payee);
     }
 
     if (!_.isNil(props.recipient)) {
-        resource.recipient = util.reference(props.recipient);
+        resource.recipient = dt.reference(props.recipient);
     }
 
     if (!_.isNil(props.amount)) {

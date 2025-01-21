@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.active)) {
@@ -54,7 +54,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.providedBy)) {
-        resource.providedBy = util.reference(props.providedBy);
+        resource.providedBy = dt.reference(props.providedBy);
     }
 
     if (!_.isNil(props.category)) {
@@ -71,7 +71,7 @@ export default function(props) {
 
     if (!_.isNil(props.location)) {
         if (!Array.isArray(props.location)) { props.location = [props.location]; }
-        resource.location = util.reference(props.location);
+        resource.location = dt.reference(props.location);
     }
 
     if (!_.isNil(props.name)) {
@@ -96,7 +96,7 @@ export default function(props) {
 
     if (!_.isNil(props.coverageArea)) {
         if (!Array.isArray(props.coverageArea)) { props.coverageArea = [props.coverageArea]; }
-        resource.coverageArea = util.reference(props.coverageArea);
+        resource.coverageArea = dt.reference(props.coverageArea);
     }
 
     if (!_.isNil(props.serviceProvisionCode)) {
@@ -221,7 +221,7 @@ export default function(props) {
 
     if (!_.isNil(props.endpoint)) {
         if (!Array.isArray(props.endpoint)) { props.endpoint = [props.endpoint]; }
-        resource.endpoint = util.reference(props.endpoint);
+        resource.endpoint = dt.reference(props.endpoint);
     }
 
     resource.meta = {

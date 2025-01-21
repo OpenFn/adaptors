@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -50,7 +50,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.version)) {
@@ -78,7 +78,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        util.composite(resource, "subject", props.subject);
+        dt.composite(resource, "subject", props.subject);
     }
 
     if (!_.isNil(props.date)) {
@@ -182,11 +182,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.timing)) {
-        util.composite(resource, "timing", props.timing);
+        dt.composite(resource, "timing", props.timing);
     }
 
     if (!_.isNil(props.location)) {
-        resource.location = util.reference(props.location);
+        resource.location = dt.reference(props.location);
     }
 
     if (!_.isNil(props.participant)) {
@@ -218,7 +218,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.product)) {
-        util.composite(resource, "product", props.product);
+        dt.composite(resource, "product", props.product);
     }
 
     if (!_.isNil(props.quantity)) {
@@ -235,17 +235,17 @@ export default function(props) {
 
     if (!_.isNil(props.specimenRequirement)) {
         if (!Array.isArray(props.specimenRequirement)) { props.specimenRequirement = [props.specimenRequirement]; }
-        resource.specimenRequirement = util.reference(props.specimenRequirement);
+        resource.specimenRequirement = dt.reference(props.specimenRequirement);
     }
 
     if (!_.isNil(props.observationRequirement)) {
         if (!Array.isArray(props.observationRequirement)) { props.observationRequirement = [props.observationRequirement]; }
-        resource.observationRequirement = util.reference(props.observationRequirement);
+        resource.observationRequirement = dt.reference(props.observationRequirement);
     }
 
     if (!_.isNil(props.observationResultRequirement)) {
         if (!Array.isArray(props.observationResultRequirement)) { props.observationResultRequirement = [props.observationResultRequirement]; }
-        resource.observationResultRequirement = util.reference(props.observationResultRequirement);
+        resource.observationResultRequirement = dt.reference(props.observationResultRequirement);
     }
 
     if (!_.isNil(props.transform)) {

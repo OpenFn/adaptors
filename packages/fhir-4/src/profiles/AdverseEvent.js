@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -45,7 +45,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.identifier)) {
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.actuality)) {
@@ -61,11 +61,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
+        resource.encounter = dt.reference(props.encounter);
     }
 
     if (!_.isNil(props.date)) {
@@ -82,11 +82,11 @@ export default function(props) {
 
     if (!_.isNil(props.resultingCondition)) {
         if (!Array.isArray(props.resultingCondition)) { props.resultingCondition = [props.resultingCondition]; }
-        resource.resultingCondition = util.reference(props.resultingCondition);
+        resource.resultingCondition = dt.reference(props.resultingCondition);
     }
 
     if (!_.isNil(props.location)) {
-        resource.location = util.reference(props.location);
+        resource.location = dt.reference(props.location);
     }
 
     if (!_.isNil(props.seriousness)) {
@@ -102,12 +102,12 @@ export default function(props) {
     }
 
     if (!_.isNil(props.recorder)) {
-        resource.recorder = util.reference(props.recorder);
+        resource.recorder = dt.reference(props.recorder);
     }
 
     if (!_.isNil(props.contributor)) {
         if (!Array.isArray(props.contributor)) { props.contributor = [props.contributor]; }
-        resource.contributor = util.reference(props.contributor);
+        resource.contributor = dt.reference(props.contributor);
     }
 
     if (!_.isNil(props.suspectEntity)) {
@@ -140,17 +140,17 @@ export default function(props) {
 
     if (!_.isNil(props.subjectMedicalHistory)) {
         if (!Array.isArray(props.subjectMedicalHistory)) { props.subjectMedicalHistory = [props.subjectMedicalHistory]; }
-        resource.subjectMedicalHistory = util.reference(props.subjectMedicalHistory);
+        resource.subjectMedicalHistory = dt.reference(props.subjectMedicalHistory);
     }
 
     if (!_.isNil(props.referenceDocument)) {
         if (!Array.isArray(props.referenceDocument)) { props.referenceDocument = [props.referenceDocument]; }
-        resource.referenceDocument = util.reference(props.referenceDocument);
+        resource.referenceDocument = dt.reference(props.referenceDocument);
     }
 
     if (!_.isNil(props.study)) {
         if (!Array.isArray(props.study)) { props.study = [props.study]; }
-        resource.study = util.reference(props.study);
+        resource.study = dt.reference(props.study);
     }
 
     resource.meta = {

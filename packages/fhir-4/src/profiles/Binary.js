@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -33,7 +33,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.securityContext)) {
-        resource.securityContext = util.reference(props.securityContext);
+        resource.securityContext = dt.reference(props.securityContext);
     }
 
     if (!_.isNil(props.data)) {

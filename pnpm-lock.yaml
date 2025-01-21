@@ -507,6 +507,9 @@ importers:
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
+      '@types/fhir':
+        specifier: ^0.0.41
+        version: 0.0.41
     devDependencies:
       assertion-error:
         specifier: 2.0.0

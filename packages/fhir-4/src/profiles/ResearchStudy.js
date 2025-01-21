@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.title)) {
@@ -55,12 +55,12 @@ export default function(props) {
 
     if (!_.isNil(props.protocol)) {
         if (!Array.isArray(props.protocol)) { props.protocol = [props.protocol]; }
-        resource.protocol = util.reference(props.protocol);
+        resource.protocol = dt.reference(props.protocol);
     }
 
     if (!_.isNil(props.partOf)) {
         if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
+        resource.partOf = dt.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -109,7 +109,7 @@ export default function(props) {
 
     if (!_.isNil(props.enrollment)) {
         if (!Array.isArray(props.enrollment)) { props.enrollment = [props.enrollment]; }
-        resource.enrollment = util.reference(props.enrollment);
+        resource.enrollment = dt.reference(props.enrollment);
     }
 
     if (!_.isNil(props.period)) {
@@ -117,16 +117,16 @@ export default function(props) {
     }
 
     if (!_.isNil(props.sponsor)) {
-        resource.sponsor = util.reference(props.sponsor);
+        resource.sponsor = dt.reference(props.sponsor);
     }
 
     if (!_.isNil(props.principalInvestigator)) {
-        resource.principalInvestigator = util.reference(props.principalInvestigator);
+        resource.principalInvestigator = dt.reference(props.principalInvestigator);
     }
 
     if (!_.isNil(props.site)) {
         if (!Array.isArray(props.site)) { props.site = [props.site]; }
-        resource.site = util.reference(props.site);
+        resource.site = dt.reference(props.site);
     }
 
     if (!_.isNil(props.reasonStopped)) {

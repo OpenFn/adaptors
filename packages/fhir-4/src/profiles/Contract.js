@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.url)) {
@@ -66,7 +66,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = util.reference(props.instantiatesCanonical);
+        resource.instantiatesCanonical = dt.reference(props.instantiatesCanonical);
     }
 
     if (!_.isNil(props.instantiatesUri)) {
@@ -91,22 +91,22 @@ export default function(props) {
 
     if (!_.isNil(props.subject)) {
         if (!Array.isArray(props.subject)) { props.subject = [props.subject]; }
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.authority)) {
         if (!Array.isArray(props.authority)) { props.authority = [props.authority]; }
-        resource.authority = util.reference(props.authority);
+        resource.authority = dt.reference(props.authority);
     }
 
     if (!_.isNil(props.domain)) {
         if (!Array.isArray(props.domain)) { props.domain = [props.domain]; }
-        resource.domain = util.reference(props.domain);
+        resource.domain = dt.reference(props.domain);
     }
 
     if (!_.isNil(props.site)) {
         if (!Array.isArray(props.site)) { props.site = [props.site]; }
-        resource.site = util.reference(props.site);
+        resource.site = dt.reference(props.site);
     }
 
     if (!_.isNil(props.name)) {
@@ -126,7 +126,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.author)) {
-        resource.author = util.reference(props.author);
+        resource.author = dt.reference(props.author);
     }
 
     if (!_.isNil(props.scope)) {
@@ -134,7 +134,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.topic)) {
-        util.composite(resource, "topic", props.topic);
+        dt.composite(resource, "topic", props.topic);
     }
 
     if (!_.isNil(props.type)) {
@@ -250,12 +250,12 @@ export default function(props) {
 
     if (!_.isNil(props.supportingInfo)) {
         if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
-        resource.supportingInfo = util.reference(props.supportingInfo);
+        resource.supportingInfo = dt.reference(props.supportingInfo);
     }
 
     if (!_.isNil(props.relevantHistory)) {
         if (!Array.isArray(props.relevantHistory)) { props.relevantHistory = [props.relevantHistory]; }
-        resource.relevantHistory = util.reference(props.relevantHistory);
+        resource.relevantHistory = dt.reference(props.relevantHistory);
     }
 
     if (!_.isNil(props.signer)) {
@@ -363,7 +363,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.legallyBinding)) {
-        util.composite(resource, "legallyBinding", props.legallyBinding);
+        dt.composite(resource, "legallyBinding", props.legallyBinding);
     }
 
     resource.meta = {

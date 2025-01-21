@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -66,7 +66,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.patient)) {
-        resource.patient = util.reference(props.patient);
+        resource.patient = dt.reference(props.patient);
     }
 
     if (!_.isNil(props.created)) {
@@ -74,15 +74,15 @@ export default function(props) {
     }
 
     if (!_.isNil(props.insurer)) {
-        resource.insurer = util.reference(props.insurer);
+        resource.insurer = dt.reference(props.insurer);
     }
 
     if (!_.isNil(props.requestor)) {
-        resource.requestor = util.reference(props.requestor);
+        resource.requestor = dt.reference(props.requestor);
     }
 
     if (!_.isNil(props.request)) {
-        resource.request = util.reference(props.request);
+        resource.request = dt.reference(props.request);
     }
 
     if (!_.isNil(props.outcome)) {
@@ -350,7 +350,7 @@ export default function(props) {
 
     if (!_.isNil(props.communicationRequest)) {
         if (!Array.isArray(props.communicationRequest)) { props.communicationRequest = [props.communicationRequest]; }
-        resource.communicationRequest = util.reference(props.communicationRequest);
+        resource.communicationRequest = dt.reference(props.communicationRequest);
     }
 
     if (!_.isNil(props.insurance)) {

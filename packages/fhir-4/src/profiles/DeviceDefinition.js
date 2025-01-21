@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.udiDeviceIdentifier)) {
@@ -82,7 +82,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.manufacturer)) {
-        util.composite(resource, "manufacturer", props.manufacturer);
+        dt.composite(resource, "manufacturer", props.manufacturer);
     }
 
     if (!_.isNil(props.deviceName)) {
@@ -230,7 +230,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.owner)) {
-        resource.owner = util.reference(props.owner);
+        resource.owner = dt.reference(props.owner);
     }
 
     if (!_.isNil(props.contact)) {
@@ -254,7 +254,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.parentDevice)) {
-        resource.parentDevice = util.reference(props.parentDevice);
+        resource.parentDevice = dt.reference(props.parentDevice);
     }
 
     if (!_.isNil(props.material)) {

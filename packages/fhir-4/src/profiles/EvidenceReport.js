@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -58,16 +58,16 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.relatedIdentifier)) {
         if (!Array.isArray(props.relatedIdentifier)) { props.relatedIdentifier = [props.relatedIdentifier]; }
-        resource.relatedIdentifier = util.identifier(props.relatedIdentifier, undefined);
+        resource.relatedIdentifier = dt.identifier(props.relatedIdentifier);
     }
 
     if (!_.isNil(props.citeAs)) {
-        util.composite(resource, "citeAs", props.citeAs);
+        dt.composite(resource, "citeAs", props.citeAs);
     }
 
     if (!_.isNil(props.type)) {

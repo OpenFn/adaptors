@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -58,11 +58,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.policyHolder)) {
-        resource.policyHolder = util.reference(props.policyHolder);
+        resource.policyHolder = dt.reference(props.policyHolder);
     }
 
     if (!_.isNil(props.subscriber)) {
-        resource.subscriber = util.reference(props.subscriber);
+        resource.subscriber = dt.reference(props.subscriber);
     }
 
     if (!_.isNil(props.subscriberId)) {
@@ -70,7 +70,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.beneficiary)) {
-        resource.beneficiary = util.reference(props.beneficiary);
+        resource.beneficiary = dt.reference(props.beneficiary);
     }
 
     if (!_.isNil(props.dependent)) {
@@ -87,7 +87,7 @@ export default function(props) {
 
     if (!_.isNil(props.payor)) {
         if (!Array.isArray(props.payor)) { props.payor = [props.payor]; }
-        resource.payor = util.reference(props.payor);
+        resource.payor = dt.reference(props.payor);
     }
 
     if (!_.isNil(props.class)) {
@@ -168,7 +168,7 @@ export default function(props) {
 
     if (!_.isNil(props.contract)) {
         if (!Array.isArray(props.contract)) { props.contract = [props.contract]; }
-        resource.contract = util.reference(props.contract);
+        resource.contract = dt.reference(props.contract);
     }
 
     resource.meta = {

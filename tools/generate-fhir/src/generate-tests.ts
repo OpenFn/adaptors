@@ -25,7 +25,7 @@ const generate = (
   for (const resourceType of orderedResources) {
     const sortedProfiles = sortKeys(schema[resourceType]);
 
-    const testPath = `test/${resourceType}.test.js`;
+    const testPath = `test/resources/${resourceType}.test.js`;
     const statements: n.Statement[] = [];
 
     statements.push(

@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.instantiates)) {
@@ -55,7 +55,7 @@ export default function(props) {
 
     if (!_.isNil(props.partOf)) {
         if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
+        resource.partOf = dt.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -71,24 +71,24 @@ export default function(props) {
     }
 
     if (!_.isNil(props.medication)) {
-        util.composite(resource, "medication", props.medication);
+        dt.composite(resource, "medication", props.medication);
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.context)) {
-        resource.context = util.reference(props.context);
+        resource.context = dt.reference(props.context);
     }
 
     if (!_.isNil(props.supportingInformation)) {
         if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
-        resource.supportingInformation = util.reference(props.supportingInformation);
+        resource.supportingInformation = dt.reference(props.supportingInformation);
     }
 
     if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
+        dt.composite(resource, "effective", props.effective);
     }
 
     if (!_.isNil(props.performer)) {
@@ -125,16 +125,16 @@ export default function(props) {
 
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
+        resource.reasonReference = dt.reference(props.reasonReference);
     }
 
     if (!_.isNil(props.request)) {
-        resource.request = util.reference(props.request);
+        resource.request = dt.reference(props.request);
     }
 
     if (!_.isNil(props.device)) {
         if (!Array.isArray(props.device)) { props.device = [props.device]; }
-        resource.device = util.reference(props.device);
+        resource.device = dt.reference(props.device);
     }
 
     if (!_.isNil(props.note)) {
@@ -182,7 +182,7 @@ export default function(props) {
 
     if (!_.isNil(props.eventHistory)) {
         if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
-        resource.eventHistory = util.reference(props.eventHistory);
+        resource.eventHistory = dt.reference(props.eventHistory);
     }
 
     resource.meta = {

@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -58,11 +58,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
+        resource.encounter = dt.reference(props.encounter);
     }
 
     if (!_.isNil(props.started)) {
@@ -71,21 +71,21 @@ export default function(props) {
 
     if (!_.isNil(props.basedOn)) {
         if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
+        resource.basedOn = dt.reference(props.basedOn);
     }
 
     if (!_.isNil(props.referrer)) {
-        resource.referrer = util.reference(props.referrer);
+        resource.referrer = dt.reference(props.referrer);
     }
 
     if (!_.isNil(props.interpreter)) {
         if (!Array.isArray(props.interpreter)) { props.interpreter = [props.interpreter]; }
-        resource.interpreter = util.reference(props.interpreter);
+        resource.interpreter = dt.reference(props.interpreter);
     }
 
     if (!_.isNil(props.endpoint)) {
         if (!Array.isArray(props.endpoint)) { props.endpoint = [props.endpoint]; }
-        resource.endpoint = util.reference(props.endpoint);
+        resource.endpoint = dt.reference(props.endpoint);
     }
 
     if (!_.isNil(props.numberOfSeries)) {
@@ -97,7 +97,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.procedureReference)) {
-        resource.procedureReference = util.reference(props.procedureReference);
+        resource.procedureReference = dt.reference(props.procedureReference);
     }
 
     if (!_.isNil(props.procedureCode)) {
@@ -105,7 +105,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.location)) {
-        resource.location = util.reference(props.location);
+        resource.location = dt.reference(props.location);
     }
 
     if (!_.isNil(props.reasonCode)) {
@@ -114,7 +114,7 @@ export default function(props) {
 
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
+        resource.reasonReference = dt.reference(props.reasonReference);
     }
 
     if (!_.isNil(props.note)) {

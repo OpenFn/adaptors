@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.instantiatesCanonical)) {
@@ -70,11 +70,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.patient)) {
-        resource.patient = util.reference(props.patient);
+        resource.patient = dt.reference(props.patient);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
+        resource.encounter = dt.reference(props.encounter);
     }
 
     if (!_.isNil(props.dateTime)) {
@@ -82,12 +82,12 @@ export default function(props) {
     }
 
     if (!_.isNil(props.orderer)) {
-        resource.orderer = util.reference(props.orderer);
+        resource.orderer = dt.reference(props.orderer);
     }
 
     if (!_.isNil(props.allergyIntolerance)) {
         if (!Array.isArray(props.allergyIntolerance)) { props.allergyIntolerance = [props.allergyIntolerance]; }
-        resource.allergyIntolerance = util.reference(props.allergyIntolerance);
+        resource.allergyIntolerance = dt.reference(props.allergyIntolerance);
     }
 
     if (!_.isNil(props.foodPreferenceModifier)) {

@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -45,7 +45,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.event)) {
-        util.composite(resource, "event", props.event);
+        dt.composite(resource, "event", props.event);
     }
 
     if (!_.isNil(props.destination)) {
@@ -85,15 +85,15 @@ export default function(props) {
     }
 
     if (!_.isNil(props.sender)) {
-        resource.sender = util.reference(props.sender);
+        resource.sender = dt.reference(props.sender);
     }
 
     if (!_.isNil(props.enterer)) {
-        resource.enterer = util.reference(props.enterer);
+        resource.enterer = dt.reference(props.enterer);
     }
 
     if (!_.isNil(props.author)) {
-        resource.author = util.reference(props.author);
+        resource.author = dt.reference(props.author);
     }
 
     if (!_.isNil(props.source)) {
@@ -132,7 +132,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.responsible)) {
-        resource.responsible = util.reference(props.responsible);
+        resource.responsible = dt.reference(props.responsible);
     }
 
     if (!_.isNil(props.reason)) {
@@ -168,7 +168,7 @@ export default function(props) {
 
     if (!_.isNil(props.focus)) {
         if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
-        resource.focus = util.reference(props.focus);
+        resource.focus = dt.reference(props.focus);
     }
 
     if (!_.isNil(props.definition)) {

@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -118,11 +118,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.patient)) {
-        resource.patient = util.reference(props.patient);
+        resource.patient = dt.reference(props.patient);
     }
 
     if (!_.isNil(props.managingOrganization)) {
-        resource.managingOrganization = util.reference(props.managingOrganization);
+        resource.managingOrganization = dt.reference(props.managingOrganization);
     }
 
     if (!_.isNil(props.period)) {
@@ -131,21 +131,21 @@ export default function(props) {
 
     if (!_.isNil(props.referralRequest)) {
         if (!Array.isArray(props.referralRequest)) { props.referralRequest = [props.referralRequest]; }
-        resource.referralRequest = util.reference(props.referralRequest);
+        resource.referralRequest = dt.reference(props.referralRequest);
     }
 
     if (!_.isNil(props.careManager)) {
-        resource.careManager = util.reference(props.careManager);
+        resource.careManager = dt.reference(props.careManager);
     }
 
     if (!_.isNil(props.team)) {
         if (!Array.isArray(props.team)) { props.team = [props.team]; }
-        resource.team = util.reference(props.team);
+        resource.team = dt.reference(props.team);
     }
 
     if (!_.isNil(props.account)) {
         if (!Array.isArray(props.account)) { props.account = [props.account]; }
-        resource.account = util.reference(props.account);
+        resource.account = dt.reference(props.account);
     }
 
     resource.meta = {

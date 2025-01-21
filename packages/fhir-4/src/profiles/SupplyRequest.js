@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -62,7 +62,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.item)) {
-        util.composite(resource, "item", props.item);
+        dt.composite(resource, "item", props.item);
     }
 
     if (!_.isNil(props.quantity)) {
@@ -98,7 +98,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.occurrence)) {
-        util.composite(resource, "occurrence", props.occurrence);
+        dt.composite(resource, "occurrence", props.occurrence);
     }
 
     if (!_.isNil(props.authoredOn)) {
@@ -106,12 +106,12 @@ export default function(props) {
     }
 
     if (!_.isNil(props.requester)) {
-        resource.requester = util.reference(props.requester);
+        resource.requester = dt.reference(props.requester);
     }
 
     if (!_.isNil(props.supplier)) {
         if (!Array.isArray(props.supplier)) { props.supplier = [props.supplier]; }
-        resource.supplier = util.reference(props.supplier);
+        resource.supplier = dt.reference(props.supplier);
     }
 
     if (!_.isNil(props.reasonCode)) {
@@ -120,15 +120,15 @@ export default function(props) {
 
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
+        resource.reasonReference = dt.reference(props.reasonReference);
     }
 
     if (!_.isNil(props.deliverFrom)) {
-        resource.deliverFrom = util.reference(props.deliverFrom);
+        resource.deliverFrom = dt.reference(props.deliverFrom);
     }
 
     if (!_.isNil(props.deliverTo)) {
-        resource.deliverTo = util.reference(props.deliverTo);
+        resource.deliverTo = dt.reference(props.deliverTo);
     }
 
     resource.meta = {

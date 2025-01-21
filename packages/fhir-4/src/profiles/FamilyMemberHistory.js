@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.instantiatesCanonical)) {
@@ -66,7 +66,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.patient)) {
-        resource.patient = util.reference(props.patient);
+        resource.patient = dt.reference(props.patient);
     }
 
     if (!_.isNil(props.date)) {
@@ -86,11 +86,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.born)) {
-        util.composite(resource, "born", props.born);
+        dt.composite(resource, "born", props.born);
     }
 
     if (!_.isNil(props.age)) {
-        util.composite(resource, "age", props.age);
+        dt.composite(resource, "age", props.age);
     }
 
     if (!_.isNil(props.estimatedAge)) {
@@ -98,7 +98,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.deceased)) {
-        util.composite(resource, "deceased", props.deceased);
+        dt.composite(resource, "deceased", props.deceased);
     }
 
     if (!_.isNil(props.reasonCode)) {
@@ -107,7 +107,7 @@ export default function(props) {
 
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
+        resource.reasonReference = dt.reference(props.reasonReference);
     }
 
     if (!_.isNil(props.note)) {

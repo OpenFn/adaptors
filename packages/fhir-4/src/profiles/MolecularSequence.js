@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.type)) {
@@ -58,19 +58,19 @@ export default function(props) {
     }
 
     if (!_.isNil(props.patient)) {
-        resource.patient = util.reference(props.patient);
+        resource.patient = dt.reference(props.patient);
     }
 
     if (!_.isNil(props.specimen)) {
-        resource.specimen = util.reference(props.specimen);
+        resource.specimen = dt.reference(props.specimen);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = util.reference(props.device);
+        resource.device = dt.reference(props.device);
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = util.reference(props.performer);
+        resource.performer = dt.reference(props.performer);
     }
 
     if (!_.isNil(props.quantity)) {
@@ -306,7 +306,7 @@ export default function(props) {
 
     if (!_.isNil(props.pointer)) {
         if (!Array.isArray(props.pointer)) { props.pointer = [props.pointer]; }
-        resource.pointer = util.reference(props.pointer);
+        resource.pointer = dt.reference(props.pointer);
     }
 
     if (!_.isNil(props.structureVariant)) {

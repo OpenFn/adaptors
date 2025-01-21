@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -58,19 +58,19 @@ export default function(props) {
     }
 
     if (!_.isNil(props.insurer)) {
-        resource.insurer = util.reference(props.insurer);
+        resource.insurer = dt.reference(props.insurer);
     }
 
     if (!_.isNil(props.provider)) {
-        resource.provider = util.reference(props.provider);
+        resource.provider = dt.reference(props.provider);
     }
 
     if (!_.isNil(props.candidate)) {
-        resource.candidate = util.reference(props.candidate);
+        resource.candidate = dt.reference(props.candidate);
     }
 
     if (!_.isNil(props.coverage)) {
-        resource.coverage = util.reference(props.coverage);
+        resource.coverage = dt.reference(props.coverage);
     }
 
     resource.meta = {

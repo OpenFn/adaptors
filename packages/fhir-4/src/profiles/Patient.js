@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.active)) {
@@ -70,7 +70,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.deceased)) {
-        util.composite(resource, "deceased", props.deceased);
+        dt.composite(resource, "deceased", props.deceased);
     }
 
     if (!_.isNil(props.address)) {
@@ -82,7 +82,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.multipleBirth)) {
-        util.composite(resource, "multipleBirth", props.multipleBirth);
+        dt.composite(resource, "multipleBirth", props.multipleBirth);
     }
 
     if (!_.isNil(props.photo)) {
@@ -167,11 +167,11 @@ export default function(props) {
 
     if (!_.isNil(props.generalPractitioner)) {
         if (!Array.isArray(props.generalPractitioner)) { props.generalPractitioner = [props.generalPractitioner]; }
-        resource.generalPractitioner = util.reference(props.generalPractitioner);
+        resource.generalPractitioner = dt.reference(props.generalPractitioner);
     }
 
     if (!_.isNil(props.managingOrganization)) {
-        resource.managingOrganization = util.reference(props.managingOrganization);
+        resource.managingOrganization = dt.reference(props.managingOrganization);
     }
 
     if (!_.isNil(props.link)) {

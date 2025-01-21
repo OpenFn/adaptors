@@ -65,8 +65,8 @@ const generateProfile = (profile: Schema, mappings: MappingSpec) => {
 
   statements.push(
     b.importDeclaration(
-      [b.importNamespaceSpecifier(b.identifier('util'))],
-      b.stringLiteral('../utils.js')
+      [b.importNamespaceSpecifier(b.identifier('dt'))],
+      b.stringLiteral('../datatypes.js')
     )
   );
   statements.push(
@@ -90,12 +90,10 @@ export default generateCode;
 
 // For each prop in the schema, generate a prop in jsdocs
 const generateJsDocs = (schema: Schema[]) => {
-  console.log(' >> GENERATE JSDOCS');
   const props: string[] = [];
 
   // TODO for now, just generate for the first schema
   const profile = schema[0];
-  console.log(profile);
 
   for (const propName in profile.props) {
     const prop = profile.props[propName];
@@ -375,7 +373,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
         b.expressionStatement(
           b.callExpression(
             b.memberExpression(
-              b.identifier('util'),
+              b.identifier('dt'),
               b.identifier('addExtension')
             ),
             [
@@ -408,10 +406,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           '=',
           b.identifier(safePropName),
           b.callExpression(
-            b.memberExpression(
-              b.identifier('util'),
-              b.identifier('mapSystems')
-            ),
+            b.memberExpression(b.identifier('dt'), b.identifier('mapSystems')),
             [b.identifier(safePropName)]
           )
         )
@@ -493,7 +488,7 @@ const mapCodeableConcept = (
 const mapExtension = (propName: string, mapping: Mapping) => {
   const callBuilder = b.expressionStatement(
     b.callExpression(
-      b.memberExpression(b.identifier('util'), b.identifier('addExtension')),
+      b.memberExpression(b.identifier('dt'), b.identifier('addExtension')),
       [
         b.identifier(RESOURCE_NAME),
         b.stringLiteral(mapping.extension),
@@ -515,7 +510,7 @@ const mapReference = (propName: string, _mapping: Mapping, schema: Schema) => {
   }
 
   const callBuilder = b.callExpression(
-    b.memberExpression(b.identifier('util'), b.identifier('reference')),
+    b.memberExpression(b.identifier('dt'), b.identifier('reference')),
     [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))]
   );
 
@@ -526,7 +521,7 @@ const mapReference = (propName: string, _mapping: Mapping, schema: Schema) => {
 
 const mapComposite = (propName: string, _mapping: Mapping, _schema: Schema) => {
   const callBuilder = b.callExpression(
-    b.memberExpression(b.identifier('util'), b.identifier('composite')),
+    b.memberExpression(b.identifier('dt'), b.identifier('composite')),
     // util.composite(resource, 'x'', input.x)
     [
       b.identifier(RESOURCE_NAME),
@@ -560,13 +555,11 @@ const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {
   const statements: StatementKind[] = [];
 
   const createIdentifier = b.callExpression(
-    b.memberExpression(b.identifier('util'), b.identifier('identifier')),
+    b.memberExpression(b.identifier('dt'), b.identifier('identifier')),
     [
       b.memberExpression(b.identifier(INPUT_NAME), b.identifier(name)),
-      defaultSystem
-        ? b.stringLiteral(defaultSystem)
-        : b.identifier('undefined'),
-    ]
+      defaultSystem && b.stringLiteral(defaultSystem),
+    ].filter(ast => ast)
   );
   if (schema.isArray) {
     // if this is an array type, we should force the input to be an array

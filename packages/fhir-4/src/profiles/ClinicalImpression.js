@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -66,15 +66,15 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
+        resource.encounter = dt.reference(props.encounter);
     }
 
     if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
+        dt.composite(resource, "effective", props.effective);
     }
 
     if (!_.isNil(props.date)) {
@@ -82,16 +82,16 @@ export default function(props) {
     }
 
     if (!_.isNil(props.assessor)) {
-        resource.assessor = util.reference(props.assessor);
+        resource.assessor = dt.reference(props.assessor);
     }
 
     if (!_.isNil(props.previous)) {
-        resource.previous = util.reference(props.previous);
+        resource.previous = dt.reference(props.previous);
     }
 
     if (!_.isNil(props.problem)) {
         if (!Array.isArray(props.problem)) { props.problem = [props.problem]; }
-        resource.problem = util.reference(props.problem);
+        resource.problem = dt.reference(props.problem);
     }
 
     if (!_.isNil(props.investigation)) {
@@ -168,12 +168,12 @@ export default function(props) {
 
     if (!_.isNil(props.prognosisReference)) {
         if (!Array.isArray(props.prognosisReference)) { props.prognosisReference = [props.prognosisReference]; }
-        resource.prognosisReference = util.reference(props.prognosisReference);
+        resource.prognosisReference = dt.reference(props.prognosisReference);
     }
 
     if (!_.isNil(props.supportingInfo)) {
         if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
-        resource.supportingInfo = util.reference(props.supportingInfo);
+        resource.supportingInfo = dt.reference(props.supportingInfo);
     }
 
     if (!_.isNil(props.note)) {

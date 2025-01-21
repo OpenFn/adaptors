@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -54,7 +54,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.patient)) {
-        resource.patient = util.reference(props.patient);
+        resource.patient = dt.reference(props.patient);
     }
 
     if (!_.isNil(props.date)) {
@@ -62,7 +62,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.authority)) {
-        resource.authority = util.reference(props.authority);
+        resource.authority = dt.reference(props.authority);
     }
 
     if (!_.isNil(props.targetDisease)) {
@@ -70,7 +70,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.immunizationEvent)) {
-        resource.immunizationEvent = util.reference(props.immunizationEvent);
+        resource.immunizationEvent = dt.reference(props.immunizationEvent);
     }
 
     if (!_.isNil(props.doseStatus)) {
@@ -90,11 +90,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.doseNumber)) {
-        util.composite(resource, "doseNumber", props.doseNumber);
+        dt.composite(resource, "doseNumber", props.doseNumber);
     }
 
     if (!_.isNil(props.seriesDoses)) {
-        util.composite(resource, "seriesDoses", props.seriesDoses);
+        dt.composite(resource, "seriesDoses", props.seriesDoses);
     }
 
     resource.meta = {

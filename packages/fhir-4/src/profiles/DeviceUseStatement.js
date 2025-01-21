@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,12 +46,12 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.basedOn)) {
         if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
+        resource.basedOn = dt.reference(props.basedOn);
     }
 
     if (!_.isNil(props.status)) {
@@ -59,16 +59,16 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.derivedFrom)) {
         if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
-        resource.derivedFrom = util.reference(props.derivedFrom);
+        resource.derivedFrom = dt.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.timing)) {
-        util.composite(resource, "timing", props.timing);
+        dt.composite(resource, "timing", props.timing);
     }
 
     if (!_.isNil(props.recordedOn)) {
@@ -76,11 +76,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.source)) {
-        resource.source = util.reference(props.source);
+        resource.source = dt.reference(props.source);
     }
 
     if (!_.isNil(props.device)) {
-        resource.device = util.reference(props.device);
+        resource.device = dt.reference(props.device);
     }
 
     if (!_.isNil(props.reasonCode)) {
@@ -89,7 +89,7 @@ export default function(props) {
 
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
+        resource.reasonReference = dt.reference(props.reasonReference);
     }
 
     if (!_.isNil(props.bodySite)) {

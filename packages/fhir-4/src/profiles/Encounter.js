@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -126,17 +126,17 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.episodeOfCare)) {
         if (!Array.isArray(props.episodeOfCare)) { props.episodeOfCare = [props.episodeOfCare]; }
-        resource.episodeOfCare = util.reference(props.episodeOfCare);
+        resource.episodeOfCare = dt.reference(props.episodeOfCare);
     }
 
     if (!_.isNil(props.basedOn)) {
         if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
+        resource.basedOn = dt.reference(props.basedOn);
     }
 
     if (!_.isNil(props.participant)) {
@@ -173,7 +173,7 @@ export default function(props) {
 
     if (!_.isNil(props.appointment)) {
         if (!Array.isArray(props.appointment)) { props.appointment = [props.appointment]; }
-        resource.appointment = util.reference(props.appointment);
+        resource.appointment = dt.reference(props.appointment);
     }
 
     if (!_.isNil(props.period)) {
@@ -190,7 +190,7 @@ export default function(props) {
 
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
+        resource.reasonReference = dt.reference(props.reasonReference);
     }
 
     if (!_.isNil(props.diagnosis)) {
@@ -227,7 +227,7 @@ export default function(props) {
 
     if (!_.isNil(props.account)) {
         if (!Array.isArray(props.account)) { props.account = [props.account]; }
-        resource.account = util.reference(props.account);
+        resource.account = dt.reference(props.account);
     }
 
     if (!_.isNil(props.hospitalization)) {
@@ -318,11 +318,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.serviceProvider)) {
-        resource.serviceProvider = util.reference(props.serviceProvider);
+        resource.serviceProvider = dt.reference(props.serviceProvider);
     }
 
     if (!_.isNil(props.partOf)) {
-        resource.partOf = util.reference(props.partOf);
+        resource.partOf = dt.reference(props.partOf);
     }
 
     resource.meta = {

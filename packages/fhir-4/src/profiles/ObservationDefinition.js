@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -54,7 +54,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.permittedDataType)) {
@@ -157,19 +157,19 @@ export default function(props) {
     }
 
     if (!_.isNil(props.validCodedValueSet)) {
-        resource.validCodedValueSet = util.reference(props.validCodedValueSet);
+        resource.validCodedValueSet = dt.reference(props.validCodedValueSet);
     }
 
     if (!_.isNil(props.normalCodedValueSet)) {
-        resource.normalCodedValueSet = util.reference(props.normalCodedValueSet);
+        resource.normalCodedValueSet = dt.reference(props.normalCodedValueSet);
     }
 
     if (!_.isNil(props.abnormalCodedValueSet)) {
-        resource.abnormalCodedValueSet = util.reference(props.abnormalCodedValueSet);
+        resource.abnormalCodedValueSet = dt.reference(props.abnormalCodedValueSet);
     }
 
     if (!_.isNil(props.criticalCodedValueSet)) {
-        resource.criticalCodedValueSet = util.reference(props.criticalCodedValueSet);
+        resource.criticalCodedValueSet = dt.reference(props.criticalCodedValueSet);
     }
 
     resource.meta = {

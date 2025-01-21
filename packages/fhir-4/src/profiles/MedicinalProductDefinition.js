@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.type)) {
@@ -123,12 +123,12 @@ export default function(props) {
 
     if (!_.isNil(props.attachedDocument)) {
         if (!Array.isArray(props.attachedDocument)) { props.attachedDocument = [props.attachedDocument]; }
-        resource.attachedDocument = util.reference(props.attachedDocument);
+        resource.attachedDocument = dt.reference(props.attachedDocument);
     }
 
     if (!_.isNil(props.masterFile)) {
         if (!Array.isArray(props.masterFile)) { props.masterFile = [props.masterFile]; }
-        resource.masterFile = util.reference(props.masterFile);
+        resource.masterFile = dt.reference(props.masterFile);
     }
 
     if (!_.isNil(props.contact)) {
@@ -161,7 +161,7 @@ export default function(props) {
 
     if (!_.isNil(props.clinicalTrial)) {
         if (!Array.isArray(props.clinicalTrial)) { props.clinicalTrial = [props.clinicalTrial]; }
-        resource.clinicalTrial = util.reference(props.clinicalTrial);
+        resource.clinicalTrial = dt.reference(props.clinicalTrial);
     }
 
     if (!_.isNil(props.code)) {

@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,17 +46,17 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.basedOn)) {
         if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
-        resource.basedOn = util.reference(props.basedOn);
+        resource.basedOn = dt.reference(props.basedOn);
     }
 
     if (!_.isNil(props.partOf)) {
         if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
-        resource.partOf = util.reference(props.partOf);
+        resource.partOf = dt.reference(props.partOf);
     }
 
     if (!_.isNil(props.status)) {
@@ -72,19 +72,19 @@ export default function(props) {
     }
 
     if (!_.isNil(props.medication)) {
-        util.composite(resource, "medication", props.medication);
+        dt.composite(resource, "medication", props.medication);
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.context)) {
-        resource.context = util.reference(props.context);
+        resource.context = dt.reference(props.context);
     }
 
     if (!_.isNil(props.effective)) {
-        util.composite(resource, "effective", props.effective);
+        dt.composite(resource, "effective", props.effective);
     }
 
     if (!_.isNil(props.dateAsserted)) {
@@ -92,12 +92,12 @@ export default function(props) {
     }
 
     if (!_.isNil(props.informationSource)) {
-        resource.informationSource = util.reference(props.informationSource);
+        resource.informationSource = dt.reference(props.informationSource);
     }
 
     if (!_.isNil(props.derivedFrom)) {
         if (!Array.isArray(props.derivedFrom)) { props.derivedFrom = [props.derivedFrom]; }
-        resource.derivedFrom = util.reference(props.derivedFrom);
+        resource.derivedFrom = dt.reference(props.derivedFrom);
     }
 
     if (!_.isNil(props.reasonCode)) {
@@ -106,7 +106,7 @@ export default function(props) {
 
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
+        resource.reasonReference = dt.reference(props.reasonReference);
     }
 
     if (!_.isNil(props.note)) {

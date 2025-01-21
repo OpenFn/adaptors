@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.status)) {
@@ -66,7 +66,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.patient)) {
-        resource.patient = util.reference(props.patient);
+        resource.patient = dt.reference(props.patient);
     }
 
     if (!_.isNil(props.billablePeriod)) {
@@ -78,15 +78,15 @@ export default function(props) {
     }
 
     if (!_.isNil(props.enterer)) {
-        resource.enterer = util.reference(props.enterer);
+        resource.enterer = dt.reference(props.enterer);
     }
 
     if (!_.isNil(props.insurer)) {
-        resource.insurer = util.reference(props.insurer);
+        resource.insurer = dt.reference(props.insurer);
     }
 
     if (!_.isNil(props.provider)) {
-        resource.provider = util.reference(props.provider);
+        resource.provider = dt.reference(props.provider);
     }
 
     if (!_.isNil(props.priority)) {
@@ -130,11 +130,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.prescription)) {
-        resource.prescription = util.reference(props.prescription);
+        resource.prescription = dt.reference(props.prescription);
     }
 
     if (!_.isNil(props.originalPrescription)) {
-        resource.originalPrescription = util.reference(props.originalPrescription);
+        resource.originalPrescription = dt.reference(props.originalPrescription);
     }
 
     if (!_.isNil(props.payee)) {
@@ -161,11 +161,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.referral)) {
-        resource.referral = util.reference(props.referral);
+        resource.referral = dt.reference(props.referral);
     }
 
     if (!_.isNil(props.facility)) {
-        resource.facility = util.reference(props.facility);
+        resource.facility = dt.reference(props.facility);
     }
 
     if (!_.isNil(props.careTeam)) {

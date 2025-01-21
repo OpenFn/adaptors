@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -46,7 +46,7 @@ export default function(props) {
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.active)) {
@@ -58,11 +58,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.practitioner)) {
-        resource.practitioner = util.reference(props.practitioner);
+        resource.practitioner = dt.reference(props.practitioner);
     }
 
     if (!_.isNil(props.organization)) {
-        resource.organization = util.reference(props.organization);
+        resource.organization = dt.reference(props.organization);
     }
 
     if (!_.isNil(props.code)) {
@@ -75,12 +75,12 @@ export default function(props) {
 
     if (!_.isNil(props.location)) {
         if (!Array.isArray(props.location)) { props.location = [props.location]; }
-        resource.location = util.reference(props.location);
+        resource.location = dt.reference(props.location);
     }
 
     if (!_.isNil(props.healthcareService)) {
         if (!Array.isArray(props.healthcareService)) { props.healthcareService = [props.healthcareService]; }
-        resource.healthcareService = util.reference(props.healthcareService);
+        resource.healthcareService = dt.reference(props.healthcareService);
     }
 
     if (!_.isNil(props.telecom)) {
@@ -157,7 +157,7 @@ export default function(props) {
 
     if (!_.isNil(props.endpoint)) {
         if (!Array.isArray(props.endpoint)) { props.endpoint = [props.endpoint]; }
-        resource.endpoint = util.reference(props.endpoint);
+        resource.endpoint = dt.reference(props.endpoint);
     }
 
     resource.meta = {

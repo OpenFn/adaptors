@@ -137,7 +137,9 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
 
   if (options.tests) {
     console.log('Generating tests');
-    await mkdir(path.resolve(adaptorPath, 'test'), { recursive: true });
+    await mkdir(path.resolve(adaptorPath, 'test/resources'), {
+      recursive: true,
+    });
     const tests = generateTests(schema, mappings, {
       simpleSignatures: simpleBuilders,
       name: adaptorName,

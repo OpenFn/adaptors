@@ -3,7 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as util from "../utils.js";
+import * as dt from "../datatypes.js";
 import _ from "lodash";
 
 export default function(props) {
@@ -45,16 +45,16 @@ export default function(props) {
     }
 
     if (!_.isNil(props.requestIdentifier)) {
-        resource.requestIdentifier = util.identifier(props.requestIdentifier, undefined);
+        resource.requestIdentifier = dt.identifier(props.requestIdentifier);
     }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = util.identifier(props.identifier, undefined);
+        resource.identifier = dt.identifier(props.identifier);
     }
 
     if (!_.isNil(props.module)) {
-        util.composite(resource, "module", props.module);
+        dt.composite(resource, "module", props.module);
     }
 
     if (!_.isNil(props.status)) {
@@ -62,11 +62,11 @@ export default function(props) {
     }
 
     if (!_.isNil(props.subject)) {
-        resource.subject = util.reference(props.subject);
+        resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.encounter)) {
-        resource.encounter = util.reference(props.encounter);
+        resource.encounter = dt.reference(props.encounter);
     }
 
     if (!_.isNil(props.occurrenceDateTime)) {
@@ -74,7 +74,7 @@ export default function(props) {
     }
 
     if (!_.isNil(props.performer)) {
-        resource.performer = util.reference(props.performer);
+        resource.performer = dt.reference(props.performer);
     }
 
     if (!_.isNil(props.reasonCode)) {
@@ -83,7 +83,7 @@ export default function(props) {
 
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
-        resource.reasonReference = util.reference(props.reasonReference);
+        resource.reasonReference = dt.reference(props.reasonReference);
     }
 
     if (!_.isNil(props.note)) {
@@ -92,15 +92,15 @@ export default function(props) {
 
     if (!_.isNil(props.evaluationMessage)) {
         if (!Array.isArray(props.evaluationMessage)) { props.evaluationMessage = [props.evaluationMessage]; }
-        resource.evaluationMessage = util.reference(props.evaluationMessage);
+        resource.evaluationMessage = dt.reference(props.evaluationMessage);
     }
 
     if (!_.isNil(props.outputParameters)) {
-        resource.outputParameters = util.reference(props.outputParameters);
+        resource.outputParameters = dt.reference(props.outputParameters);
     }
 
     if (!_.isNil(props.result)) {
-        resource.result = util.reference(props.result);
+        resource.result = dt.reference(props.result);
     }
 
     if (!_.isNil(props.dataRequirement)) {

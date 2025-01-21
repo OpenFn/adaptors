@@ -1,8 +1,8 @@
 export function mapSystems(obj: any): any;
 export function setSystemMap(newMappings: any): void;
 export function extendSystemMap(newMappings: any): void;
-export function identifier(value: any, extras: any): any;
-export function id(value: any, extras: any): any;
+export function identifier(id: any, ...ext: any[]): any;
+export function id(id: any, ...ext: any[]): any;
 export function addExtension(resource: any, url: string, value: any): void;
 export function findExtension(obj: any, targetUrl: string, path?: string): any;
 export function coding(code: string, system: string): {
