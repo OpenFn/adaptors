@@ -10,7 +10,7 @@ A number of options are available to isolated the desired messages and to custom
 
 ## Options
 
-Optional parameters include: `contents`, `query`, `email`, `processedIds`
+Optional parameters include: `contents`, `query`, `email`, `processedIds`, `maxResults`
 
 ### options.contents
 
@@ -116,12 +116,17 @@ options.processedIds = [
 ];
 ```
 
+### options.maxResults
+
+To prevent inadventant massive retrieval of messages, the maximum number of results to return is limited. The default value is 50. If you need more than this limit, you can specify a larger value, up to 1,000, for this parameter.
+
 ## Example jobs
 
 ```js
 const query = 'in:inbox newer_than:2d';
 const contents = ['body'];
-getContentsFromMessages({ query, contents });
+const maxLimit = 200;
+getContentsFromMessages({ query, contents, maxLimit });
 ```
 
 ```js
