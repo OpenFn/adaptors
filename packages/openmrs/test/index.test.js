@@ -127,6 +127,64 @@ describe('http', () => {
     expect(data.results[1].display).to.eql('Sarah 2');
   });
 });
+
+describe('http.get', () =>{
+  beforeEach(()=>{
+    // Basic patient query interceptor
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        method: 'GET',
+      })
+      .reply(200, { results: [{ display: 'Sarah 1' }] }, { ...jsonHeaders });
+
+    // Patient query with params interceptor
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        query: { q: 'Jon', startIndex: 1 },
+        method: 'GET',
+      })
+      .reply(
+        200,
+        {
+          results: [{ display: 'Jon Snow' }],
+          links: [
+            {
+              rel: 'next',
+              uri: 'https://fn.openmrs.org/ws/rest/v1/patient?q=Sarah&limit=1&startIndex=1',
+              resourceAlias: null,
+            },
+          ],
+        },
+        { ...jsonHeaders }
+      );
+  });
+
+  const state = { configuration };
+
+  it('should make http request with the "GET" verb', async () => {
+    const response = await http.get('/ws/rest/v1/patient')(state);
+    expect(response.response.method).to.eql('GET');
+  });
+
+  it('should make a basic get request to openmrs', async () => {
+    const { data } = await http.get('/ws/rest/v1/patient')(state);
+    expect(data.results[0].display).to.eql('Sarah 1');
+  });
+
+  it('should make a get request that includes query params', async () => {
+    const options = {
+      query: { q: 'Jon', startIndex: 1 }
+    }
+
+    const { data } = await http.get('/ws/rest/v1/patient', options)(state);
+    expect(data.results[0].display).to.eql('Jon Snow');
+  });
+
+
+});
+
 describe('fhir', () => {
   it('should GET with a query', async () => {
     testServer
