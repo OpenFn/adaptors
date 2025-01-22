@@ -41,7 +41,7 @@ const generateCode = (
 
       // Generate an entrypoint function
       statements.push(
-        generateEntry(
+        ...generateEntry(
           name,
           resourceType,
           schema[resourceType],
@@ -110,6 +110,8 @@ const generateEntry = (
   variants: Schema[],
   simpleSignatures?: boolean
 ) => {
+  const declarations = [];
+
   const statements = [];
   const comment = parse(`/**
   * Create a FHIR ${resourceType} resource.
@@ -135,6 +137,28 @@ ${generateJsDocs(variants)}
   ]);
   statements.push(map);
 
+  // Generate the main tssignature
+  // Also push an override for the simple interface
+  const signature = b.exportDeclaration(
+    false,
+    b.tsDeclareFunction(b.identifier(getBuilderName(resourceType)), [
+      b.tsParameterProperty(
+        b.identifier.from({
+          name: 'type',
+          typeAnnotation: b.tsTypeAnnotation(b.tsStringKeyword()),
+        })
+      ),
+      b.tsParameterProperty(
+        // TODO need a full type for this. Where do we get it?
+        b.identifier.from({
+          name: 'props',
+          typeAnnotation: b.tsTypeAnnotation(b.tsObjectKeyword()),
+        })
+      ),
+    ])
+  );
+  declarations.push(signature);
+
   if (simpleSignatures) {
     // TODO how do we know the default type?
     const handleOptionalType = parse(`// Handle optional type parameter
@@ -143,6 +167,21 @@ ${generateJsDocs(variants)}
     type = "${variants[0].id}";
   }`);
     statements.push(...handleOptionalType.program.body);
+
+    const override = b.exportDeclaration(
+      false,
+      b.tsDeclareFunction(b.identifier(getBuilderName(resourceType)), [
+        b.tsParameterProperty(
+          // TODO need a full type for this. Where do we get it?
+          b.identifier.from({
+            name: 'props',
+            typeAnnotation: b.tsTypeAnnotation(b.tsObjectKeyword()),
+          })
+        ),
+      ])
+    );
+
+    declarations.push(override);
   }
 
   // TODO handle errors for invalid types
@@ -161,9 +200,10 @@ return mappings[type](props)
   );
 
   ex.comments = comment.program.comments;
-  ex.comments[0].leading = true;
+  ex.comments![0].leading = true;
+  declarations.push(ex);
 
-  return ex;
+  return declarations;
 };
 
 const generateBuilder = (schema, mappings) => {

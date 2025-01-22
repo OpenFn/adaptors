@@ -1,6 +1,6 @@
 export default {
-  // include: ['Patient'],
-  include: [],
+  include: ['Patient'],
+  // include: [],
   exclude: [],
   overrides: {},
   valueSets: [],

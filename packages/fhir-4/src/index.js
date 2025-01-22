@@ -1,3 +1,4 @@
+// TODO as this is a ts adaptor I can remove this right?
 import * as Adaptor from './Adaptor';
 export default Adaptor;
 

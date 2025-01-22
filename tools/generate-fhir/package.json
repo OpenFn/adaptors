@@ -10,7 +10,8 @@
     "generate-fhir": "src/cli.ts"
   },
   "scripts": {
-    "cli": "esno src/cli.ts"
+    "cli": "esno src/cli.ts",
+    "demo": "esno demo.ts"
   },
   "dependencies": {
     "@openfn/simple-ast": "0.4.1",

@@ -119,16 +119,17 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   const src = generateCode(schema, mappings, {
     simpleSignatures: simpleBuilders,
   });
-  console.log('Generating DTS');
-  const dts = generateDTS(schema, mappings, {
-    simpleSignatures: simpleBuilders,
-  });
+  // console.log('Generating DTS');
+  // const dts = generateDTS(schema, mappings, {
+  //   simpleSignatures: simpleBuilders,
+  // });
 
-  const srcPath = path.resolve(adaptorPath, 'src/builders.js');
+  const srcPath = path.resolve(adaptorPath, 'src/builders.ts');
   console.log('Writing source to ', srcPath);
   await writeFile(srcPath, withDisclaimer(src.builders));
   await mkdir(path.resolve(adaptorPath, 'src/profiles'), { recursive: true });
   for (const profile in src.profiles) {
+    ``;
     await writeFile(
       path.resolve(adaptorPath, 'src/profiles', `${profile}.js`),
       withDisclaimer(src.profiles[profile])
@@ -180,22 +181,21 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       //   console.log('tsc build failed!');
       //   console.log(stderr);
       // }
-      setTimeout(async () => {
-        // TODO a more elegant way to do this?
-        // Can we prevent them being generated in the first place?
-        console.log('Removing TS profiles');
-        await rm(path.resolve(adaptorPath, 'types/profiles'), {
-          recursive: true,
-          force: true,
-        });
-
-        console.log('Writing builders.d.ts');
-        // Overwrite builders.d.ts because typescript makes a mess of it
-        await writeFile(
-          path.resolve(adaptorPath, 'types/builders.d.ts'),
-          withDisclaimer(dts)
-        );
-      }, 500);
+      // setTimeout(async () => {
+      //   // TODO a more elegant way to do this?
+      //   // Can we prevent them being generated in the first place?
+      //   console.log('Removing TS profiles');
+      //   await rm(path.resolve(adaptorPath, 'types/profiles'), {
+      //     recursive: true,
+      //     force: true,
+      //   });
+      //   console.log('Writing builders.d.ts');
+      //   // Overwrite builders.d.ts because typescript makes a mess of it
+      //   await writeFile(
+      //     path.resolve(adaptorPath, 'types/builders.d.ts'),
+      //     withDisclaimer(dts)
+      //   );
+      // }, 500);
       // }
     }
   );
