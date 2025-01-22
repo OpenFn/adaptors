@@ -98,8 +98,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.28.4
-        version: 5.28.4
+        specifier: ^5.28.5
+        version: 5.28.5
 
   packages/beyonic:
     dependencies:
@@ -250,7 +250,7 @@ importers:
         version: 3.0.2
       undici:
         specifier: ^5.22.1
-        version: 5.28.4
+        version: 5.28.5
 
   packages/collections:
     dependencies:
@@ -262,7 +262,7 @@ importers:
         version: 1.9.1
       undici:
         specifier: ^5.22.1
-        version: 5.28.4
+        version: 5.28.5
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -341,8 +341,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       undici:
-        specifier: ^5.28.4
-        version: 5.28.4
+        specifier: ^5.28.5
+        version: 5.28.5
     devDependencies:
       '@openfn/simple-ast':
         specifier: 0.4.1
@@ -477,8 +477,8 @@ importers:
         specifier: workspace:^2.1.1
         version: link:../common
       undici:
-        specifier: ^5.28.4
-        version: 5.28.4
+        specifier: ^5.28.5
+        version: 5.28.5
     devDependencies:
       '@openfn/simple-ast':
         specifier: ^0.4.1
@@ -528,7 +528,7 @@ importers:
         version: 4.8.4
       undici:
         specifier: ^5.22.1
-        version: 5.28.4
+        version: 5.28.5
 
   packages/fhir-ndr-et:
     dependencies:
@@ -574,7 +574,7 @@ importers:
         version: 3.0.2
       undici:
         specifier: ^5.22.1
-        version: 5.28.4
+        version: 5.28.5
 
   packages/gmail:
     dependencies:
@@ -608,7 +608,7 @@ importers:
         version: 3.0.2
       undici:
         specifier: ^5.22.1
-        version: 5.28.4
+        version: 5.28.5
 
   packages/godata:
     dependencies:
@@ -669,8 +669,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.28.4
-        version: 5.28.4
+        specifier: ^5.28.5
+        version: 5.28.5
 
   packages/googlesheets:
     dependencies:
@@ -885,8 +885,8 @@ importers:
         specifier: ^2.3.0
         version: 2.3.0
       undici:
-        specifier: ^5.28.4
-        version: 5.28.4
+        specifier: ^5.28.5
+        version: 5.28.5
     devDependencies:
       '@openfn/simple-ast':
         specifier: 0.4.1
@@ -1108,7 +1108,7 @@ importers:
         version: 3.0.2
       undici:
         specifier: ^5.22.1
-        version: 5.28.4
+        version: 5.28.5
 
   packages/mongodb:
     dependencies:
@@ -1147,8 +1147,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       undici:
-        specifier: ^5.28.4
-        version: 5.28.4
+        specifier: ^5.28.5
+        version: 5.28.5
       xlsx:
         specifier: https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz
         version: '@cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz'
@@ -1299,8 +1299,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.28.4
-        version: 5.28.4
+        specifier: ^5.28.5
+        version: 5.28.5
 
   packages/odk:
     dependencies:
@@ -1325,7 +1325,7 @@ importers:
         version: 3.0.2
       undici:
         specifier: ^5.22.1
-        version: 5.28.4
+        version: 5.28.5
 
   packages/openfn:
     dependencies:
@@ -1461,7 +1461,7 @@ importers:
         version: 3.0.2
       undici:
         specifier: ^5.22.1
-        version: 5.22.1
+        version: 5.28.5
 
   packages/openmrs:
     dependencies:
@@ -1519,8 +1519,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.28.4
-        version: 5.28.4
+        specifier: ^5.28.5
+        version: 5.28.5
 
   packages/postgresql:
     dependencies:
@@ -1795,7 +1795,7 @@ importers:
         version: 3.0.2
       undici:
         specifier: ^5.22.1
-        version: 5.28.4
+        version: 5.28.5
 
   packages/sftp:
     dependencies:
@@ -1959,7 +1959,7 @@ importers:
         version: 3.0.2
       undici:
         specifier: ^5.22.1
-        version: 5.28.4
+        version: 5.28.5
 
   packages/twilio:
     dependencies:
@@ -3952,7 +3952,7 @@ packages:
       http-status-codes: 2.3.0
       jsonpath-plus: 10.2.0
       lodash: 4.17.21
-      undici: 5.28.4
+      undici: 5.28.5
     transitivePeerDependencies:
       - debug
     dev: false
@@ -5787,13 +5787,6 @@ packages:
       esbuild: 0.15.18
       load-tsconfig: 0.2.5
     dev: false
-
-  /busboy@1.6.0:
-    resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
-    engines: {node: '>=10.16.0'}
-    dependencies:
-      streamsearch: 1.1.0
-    dev: true
 
   /cac@6.7.14:
     resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
@@ -13063,11 +13056,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /streamsearch@1.1.0:
-    resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
-    engines: {node: '>=10.0.0'}
-    dev: true
-
   /string-escape@0.3.0:
     resolution: {integrity: sha512-AM292mtfvJCPzoKBbL3YQaZ+xwaWOlYfejTADVDfL0QM/cFEZ2LoU2M8XuEZkuRxqtv9ZTjfCj+OX+rlfFWeTg==}
     dev: false
@@ -14050,15 +14038,8 @@ packages:
     resolution: {integrity: sha512-CHzhycUy6eSLBV/Yksw4nSDIcsNAsdAExaSILTOSvZkfmymBxxrvnrUGoFJSYEUJvEe8C/p8a5Cs844mtwgNOw==}
     dev: false
 
-  /undici@5.22.1:
-    resolution: {integrity: sha512-Ji2IJhFXZY0x/0tVBXeQwgPlLWw13GVzpsWPQ3rV50IFMMof2I55PZZxtm4P6iNq+L5znYN9nSTAq0ZyE6lSJw==}
-    engines: {node: '>=14.0'}
-    dependencies:
-      busboy: 1.6.0
-    dev: true
-
-  /undici@5.28.4:
-    resolution: {integrity: sha512-72RFADWFqKmUb2hmmvNODKL3p9hcB6Gt2DOQMis1SEBaV6a4MH8soBvzg+95CYhCKPFedut2JY9bMfrDl9D23g==}
+  /undici@5.28.5:
+    resolution: {integrity: sha512-zICwjrDrcrUE0pyyJc1I2QzBkLM8FINsgOrt6WjA+BgajVq9Nxu2PbFFXUrAggLfDXlZGZBVZYw7WNV5KiBiBA==}
     engines: {node: '>=14.0'}
     dependencies:
       '@fastify/busboy': 2.1.1
