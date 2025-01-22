@@ -788,7 +788,7 @@ importers:
         version: 3.0.2
       undici:
         specifier: ^5.22.1
-        version: 5.28.4
+        version: 5.28.5
 
   packages/khanacademy:
     dependencies:
