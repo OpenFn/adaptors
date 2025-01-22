@@ -131,7 +131,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   for (const profile in src.profiles) {
     ``;
     await writeFile(
-      path.resolve(adaptorPath, 'src/profiles', `${profile}.js`),
+      path.resolve(adaptorPath, 'src/profiles', `${profile}.ts`),
       withDisclaimer(src.profiles[profile])
     );
   }

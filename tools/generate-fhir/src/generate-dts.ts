@@ -213,7 +213,11 @@ const createTypeNode = (incomingType: string, values?: string[]) => {
   return b.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
 };
 
-const generateType = (resourceName: string, schema: Schema, mappings) => {
+export const generateType = (
+  resourceName: string,
+  schema: Schema,
+  mappings
+) => {
   const props = [];
 
   // find the superset of schema keys and mappings keys

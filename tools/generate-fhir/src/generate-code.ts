@@ -4,6 +4,7 @@ import { print, parse } from 'recast';
 import { StatementKind } from 'ast-types/gen/kinds';
 import { getBuilderName, getTypeName, sortKeys } from './util';
 import { Mapping, MappingSpec, Schema } from './types';
+import { generateType } from './generate-types';
 
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
@@ -75,6 +76,16 @@ const generateProfile = (profile: Schema, mappings: MappingSpec) => {
       b.stringLiteral('lodash')
     )
   );
+  statements.push(
+    b.importDeclaration(
+      [b.importDefaultSpecifier(b.identifier('fhir'))],
+      b.stringLiteral('fhir/r4')
+    )
+  );
+
+  const typedef = generateType(profile.type, profile, mappings);
+
+  statements.push(typedef);
 
   const fn = generateBuilder(profile, overrides);
 
@@ -223,7 +234,19 @@ const generateBuilder = (schema, mappings) => {
 
   const fn = b.functionDeclaration(
     null,
-    [b.identifier(INPUT_NAME)],
+    [
+      b.identifier.from({
+        name: INPUT_NAME,
+        typeAnnotation: b.tsTypeAnnotation(
+          b.tsTypeReference(
+            b.identifier('Partial'),
+            b.tsTypeParameterInstantiation([
+              b.tsTypeReference(b.identifier(`${schema.type}_Props`)),
+            ])
+          )
+        ),
+      }),
+    ],
     b.blockStatement(body)
   );
 
