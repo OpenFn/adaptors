@@ -10649,6 +10649,344 @@
     "kind": "external-function"
   }
 ],
+{"name":"hubtel","adaptor":"@openfn/language-hubtel","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#sendsms\\\">sendSMS(data, options)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### request\\n\\n<p><code>request(method, path, data, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\nrequest(\\\"POST\\\", \\\"patient\\\", { \\\"name\\\": \\\"Bukayo\\\" });\\n```\\n\\n* * *\\n\\n### sendSMS\\n\\n<p><code>sendSMS(data, options) ⇒ Operation</code></p>\\n\\nSend an SMS\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | <code>object</code> | An object with `from`, `to`, and `content` attributes |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional hubtel options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\nsendSMS({\\n  from: 'OpenFn-Test-01',\\n  to: '233538675309',\\n  content: 'hi there, this is OpenFn using the new Hubtel adaptor',\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-hubtel <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the hubtel\\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/hubtel-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/hubtel-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `create` function\\n\\n```js\\nsendSMS({\\n  from: 'OpenFn-Test-01',\\n  to: '233538675309',\\n  content: 'hi there, this is from OpenFn using the Hubtel adaptor',\\n});\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-hubtel\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The base URL (http://www.example.com)","format":"uri","minLength":1,"examples":["https://example.com"]},"clientID":{"title":"Client ID","type":"string","description":"Client ID","examples":["xxx-yyy-zzz"]},"clientSecret":{"title":"Client Secret","type":"string","description":"Client Secret","writeOnly":true,"examples":["@some(!)Str0ngSecr3t"]}},"type":"object","additionalProperties":true,"required":["baseUrl","clientID","clientSecret"]}},
+[
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the HTTP server, including headers, statusCode, body, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 4,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/hubtel/src"
+    },
+    "order": 0,
+    "newscope": true
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a general HTTP request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "HTTP method to use",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "request(\"POST\", \"patient\", { \"name\": \"Bukayo\" });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 58,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/hubtel/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to the HTTP request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object",
+            "string"
+          ]
+        },
+        "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
+        "name": "errors"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.",
+        "name": "form"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of headers to append to the request.",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Parse the response body as json, text or stream. By default will use the response headers.",
+        "name": "parseAs"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Request timeout in ms. Default: 300 seconds.",
+        "name": "timeout"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions",
+        "name": "tls"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 12,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/hubtel/src"
+    },
+    "order": 1,
+    "level": 0
+  },
+  {
+    "id": "sendSMS",
+    "longname": "sendSMS",
+    "name": "sendSMS",
+    "kind": "function",
+    "scope": "global",
+    "description": "Send an SMS",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object with `from`, `to`, and `content` attributes",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional hubtel options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "sendSMS({\n  from: 'OpenFn-Test-01',\n  to: '233538675309',\n  content: 'hi there, this is OpenFn using the new Hubtel adaptor',\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 41,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/hubtel/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 2,
+    "level": 0
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  }
+],
 {"name":"khanacademy","adaptor":"@openfn/language-khanacademy","version":"0.5.9","docs":"\"\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n\\n\"","readme":"\"# Language KhanAcademy\\n\\nLanguage Pack for building expressions and operations to make HTTP calls.\\n\\n## Documentation\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/khanacademy-configuration-schema/)\\ndefinition.\\n\\n## fetch\\n\\n#### sample usage\\n\\n```js\\nfetch({\\n  getEndpoint: 'user',\\n  queryParams: {\\n    email: 'thisoneuser@something.org',\\n  },\\n  postUrl: 'https://www.openfn.org/inbox/your-uuid',\\n});\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-khanacademy\\n\\n## 0.5.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [b3d7f59]\\n- Updated dependencies [2d709ff]\\n- Updated dependencies [41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 0.5.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 0.5.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [a47d8d5]\\n- Updated dependencies [9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 0.5.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 0.5.5\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus [33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 0.5.4\\n\\n### Patch Changes\\n\\n- 8d866e4: Update tough-cookie dependency\\n\\n## 0.5.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 0.5.2\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 0.5.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 0.5.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 0.4.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 0.4.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 0.3.4\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies [2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 0.3.3\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 0.3.2\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 0.3.1\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*_ @module Adaptor _/\\n\\n## 0.3.0\\n\\n### Minor Changes\\n\\n- 9137655: migrate khanacademy\\n\"","functions":[],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"email":{"title":"Email","type":"string","description":"Your Khanacademy login email","format":"email","minLength":1,"examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Your Khanacademy login password","writeOnly":true,"minLength":1,"examples":["@some(!)Strongpassword"]},"consumerKey":{"title":"Consumer Key","type":"string","description":"Your Khanacademy consumer key","writeOnly":true,"minLength":1,"examples":["somEThINGkeyish"]},"secretKey":{"title":"Secret Key","type":"string","description":"Your Khanacademy secret key","writeOnly":true,"minLength":1,"examples":["otherThiNGfSECret"]}},"type":"object","additionalProperties":true,"required":["email","password","secretKey","consumerKey"]}},
 [
   {
