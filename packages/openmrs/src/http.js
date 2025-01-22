@@ -42,3 +42,30 @@ export function request(method, path, options = {}, callback = s => s) {
     return util.prepareNextState(state, response, callback);
   };
 }
+
+/**
+ * Make a GET request to any OpenMRS endpoint
+ * @public
+ * @function
+ * @example
+ * get(
+ *  "/ws/rest/v1/patient",
+ *  {
+ *    query: {
+ *      limit: 1
+ *    }
+ *  }
+ *  )
+ * @param {string} path - path to resource
+ * @param {OpenMRSOptions} [options={}] - An object containing query params, headers and body for the request
+ * @returns {operation}
+ */
+export function get(path, options = {}, callback = s => s) {
+  return async state => {
+    const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
+
+    const response = await util.request(state, 'GET', resolvedPath, resolvedOptions);
+
+    return util.prepareNextState(state, response, callback);
+  };
+}
