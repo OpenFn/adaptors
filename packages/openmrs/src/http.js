@@ -107,3 +107,26 @@ export function post(path, options = {}, callback = s => s) {
     return util.prepareNextState(state, response, callback);
   }
 }
+
+
+/**
+ * Make a DELETE request to an OpenMRS endpoint
+ * @public
+ * @function
+ * @example
+ * remove(
+ *  "/ws/rest/v1/patient/abc/"
+ * )
+ * @param {string} path - path to resource
+ * @param {OpenMRSOptions} [options={}] - An object containing query params, headers and body for the request
+ * @returns {operation}
+ */
+export function remove(path, options = {}, callback = s => s) {
+  return  async state => {
+    const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
+
+    const response = await util.request(state, 'DELETE', resolvedPath, resolvedOptions);
+
+    return util.prepareNextState(state, response, callback);
+  }
+}
