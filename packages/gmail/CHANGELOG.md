@@ -1,5 +1,11 @@
 # @openfn/language-gmail
 
+## 1.1.0
+
+### Minor Changes
+
+- 8203e90: Added options.maxResults field to limit excessive data transfer.
+
 ## 1.0.1
 
 ### Patch Changes
