@@ -122,6 +122,7 @@ Configurable options provided to the Gmail adaptor.
 | [contents] | <code>Array.&lt;(string\|MessageContent)&gt;</code> | <code>[&#x27;from&#x27;, &#x27;date&#x27;, &#x27;subject&#x27;, &#x27;body&#x27;]</code> | An array of strings or MessageContent objects used to specify which parts of the message to retrieve. |
 | [processedIds] | <code>Array.&lt;string&gt;</code> |  | Ignore message ids which have already been processed. |
 | [email] | <code>string</code> |  | The user account to retrieve messages from. Defaults to the authenticated user. |
+| [maxResults] | <code>int</code> |  | Maximum number of messages to process per request. Default is 1000. |
 
 
 * * *
