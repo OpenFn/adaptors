@@ -39,7 +39,7 @@ import {
  *   An array of strings or MessageContent objects used to specify which parts of the message to retrieve.
  * @property {Array<string>} [processedIds] - Ignore message ids which have already been processed.
  * @property {string?} [email] - The user account to retrieve messages from. Defaults to the authenticated user.
- * @property {int?} [maxResults] - Maximum number of messages to process per request. Hard limit of 1000. Defaults to 50.
+ * @property {int?} [maxResults] - Maximum number of messages to process per request. Default is 1000.
  */
 
 /**
@@ -74,7 +74,7 @@ export function getContentsFromMessages(options) {
     const defaultOptions = {
       contents: ['from', 'date', 'subject'],
       userId: 'me',
-      maxResults: 50,
+      maxResults: 1000,
     };
 
     const opts = {
@@ -83,12 +83,6 @@ export function getContentsFromMessages(options) {
       processedIds: resolvedOptions.processedIds,
       maxResults: resolvedOptions.maxResults ?? defaultOptions.maxResults,
     };
-
-    if (opts.maxResults > 1000) {
-      throw new Error(
-        'The maximum number of results is 1000. Please reduce the number of results.'
-      );
-    }
 
     const contentIndicators = getContentIndicators(
       defaultOptions.contents,

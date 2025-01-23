@@ -118,7 +118,7 @@ options.processedIds = [
 
 ### options.maxResults
 
-To prevent inadventant massive retrieval of messages, the maximum number of results to return is limited. The default value is 50. If you need more than this limit, you can specify a larger value, up to 1,000, for this parameter.
+To prevent inadventant massive retrieval of messages, you can limit the number of results returned. The default value is 1000.
 
 This works in conjuction with the `options.processedIds` parameter. For example:
 
