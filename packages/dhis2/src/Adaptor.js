@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { execute as commonExecute } from '@openfn/language-common';
+import { execute as commonExecute, util } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import _ from 'lodash';
 const { indexOf } = _;
@@ -11,6 +11,7 @@ import {
   selectId,
   shouldUseNewTracker,
   ensureArray,
+  encode,
 } from './Utils';
 import { request } from './Client';
 
@@ -497,25 +498,26 @@ export function update(
  *   trackedEntity:['F8yKM85NbxW'],
  * });
  */
-export function get(resourceType, query, options = {}, callback = false) {
+export function get(resourceType, query, options = {}, callback = s => s) {
   return state => {
     console.log('Preparing get operation...');
 
     const [resolvedResourceType, resolvedQuery, resolvedOptions] =
       expandReferences(state, resourceType, query, options);
 
-    const { params, requestConfig } = resolvedOptions;
+    const { params, requestConfig, asBase64 = false } = resolvedOptions;
     const { configuration } = state;
 
     return request(configuration, {
       method: 'get',
       url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
       params: { ...resolvedQuery, ...params },
-      responseType: 'json',
+      responseType: asBase64 ? 'arraybuffer' : 'json',
       ...requestConfig,
     }).then(result => {
       console.log(`Retrieved ${resolvedResourceType}`);
-      return handleResponse(result, state, callback);
+      const response = asBase64 ? { data: encode(result.data) } : result;
+      return handleResponse(response, state, callback);
     });
   };
 }
