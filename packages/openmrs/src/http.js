@@ -69,3 +69,41 @@ export function get(path, options = {}, callback = s => s) {
     return util.prepareNextState(state, response, callback);
   };
 }
+
+
+/**
+ * Make a POST  request to an OpenMRS endpoint
+ * @public
+ * @function
+ * @example
+ * post(
+ *  "/ws/rest/v1/patient",
+ *  {
+ *    data: {
+ *      "person": {
+ *      "gender":"M",
+ *      "age":47,
+ *      "birthdate":"1970-01-01T00:00:00.000+0100",
+ *      "names":[
+ *        {
+ *          "givenName":"Jon",
+ *          "familyName":"Snow"
+ *        }
+ *      ],
+ *    }
+ *    }
+ *  }
+ * )
+ * @param {string} path - path to resource
+ * @param {OpenMRSOptions} [options={}] - An object containing query params, headers and body for the request
+ * @returns {operation}
+ */
+export function post(path, options = {}, callback = s => s) {
+  return  async state => {
+    const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
+
+    const response = await util.request(state, 'POST', resolvedPath, resolvedOptions);
+
+    return util.prepareNextState(state, response, callback);
+  }
+}
