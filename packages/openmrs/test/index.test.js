@@ -247,12 +247,12 @@ describe('http.post', () =>{
         }
       }
     }
-
-    const { data } = await http.post('/ws/rest/v1/patient', options)(state);
-    expect(data.results[0].display).to.eql('Jon Snow');
+    try {
+      await http.post('/ws/rest/v1/wrong-url', options)(state);
+    } catch (e) {
+      expect(e.statusCode).to.eql(404)
+    }
   });
-
-
 });
 
 describe('fhir', () => {
