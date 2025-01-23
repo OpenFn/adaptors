@@ -205,48 +205,33 @@ describe('http.post', () =>{
 
   const state = { configuration };
 
+  const options = {
+    data: {
+      "person":{
+        "gender":"M",
+        "age":47,
+        "birthdate":"1970-01-01T00:00:00.000+0100",
+        "names":[
+          {
+            "givenName":"Jon",
+            "familyName":"Snow"
+          }
+        ],
+      }
+    }
+  }
+
   it('should make http request with the "POST" verb', async () => {
-    const response = await http.post('/ws/rest/v1/patient')(state);
+    const response = await http.post('/ws/rest/v1/patient', options)(state);
     expect(response.response.method).to.eql('POST');
   });
 
   it('should make a successful POST request to openmrs', async () => {
-    const options = {
-      data: {
-        "person":{
-          "gender":"M",
-          "age":47,
-          "birthdate":"1970-01-01T00:00:00.000+0100",
-          "names":[
-            {
-              "givenName":"Jon",
-              "familyName":"Snow"
-            }
-          ],
-        }
-      }
-    }
-
     const { data } = await http.post('/ws/rest/v1/patient', options)(state);
     expect(data.results[0].display).to.eql('Jon Snow');
   });
 
   it('should throw an error for an invalid request', async () => {
-    const options = {
-      data: {
-        "person":{
-          "gender":"M",
-          "age":47,
-          "birthdate":"1970-01-01T00:00:00.000+0100",
-          "names":[
-            {
-              "givenName":"Jon",
-              "familyName":"Snow"
-            }
-          ],
-        }
-      }
-    }
     try {
       await http.post('/ws/rest/v1/wrong-url', options)(state);
     } catch (e) {
