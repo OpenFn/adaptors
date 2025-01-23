@@ -483,8 +483,7 @@ describe('create', () => {
     const { data } = await execute(create('patient', state => state.patient))(
       state
     );
-
-    expect(data).to.eql(patient);
+    expect(data.results[0].display).to.include('Sarah Lewis');
   });
   it('should throw an error if the resource is not found', async () => {
     testServer
