@@ -80,7 +80,10 @@ axios.interceptors.response.use(
       .split(';')[0]
       .split(',');
 
-    if (response.config.method === 'get') {
+    if (
+      response.config.method === 'get' &&
+      response.config.responseType != 'arraybuffer'
+    ) {
       if (indexOf(acceptHeaders, contentType) === -1) {
         const newError = {
           status: 404,
@@ -511,7 +514,10 @@ export function get(resourceType, query, options = {}, callback = s => s) {
     return request(configuration, {
       method: 'get',
       url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
-      params: { ...resolvedQuery, ...params },
+      params: {
+        ...resolvedQuery,
+        ...params,
+      },
       responseType: asBase64 ? 'arraybuffer' : 'json',
       ...requestConfig,
     }).then(result => {

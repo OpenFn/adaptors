@@ -23,7 +23,9 @@ export function request({ username, password, pat }, axiosRequest) {
   );
 
   // Declare auth property and headers dynamically
-  const headers = { 'Content-Type': 'application/json' };
+  const headers = {
+    'Content-Type': 'application/json',
+  };
   let auth;
 
   if (pat) {
@@ -32,29 +34,25 @@ export function request({ username, password, pat }, axiosRequest) {
     auth = { username, password };
   }
 
-  console.log(axiosRequest);
-  return axios({
+  const axiosReq = {
     headers,
-    // responseType: 'json',
+    responseType: 'json',
     auth,
-    maxRedirects: safeRedirect ? 5 : 0,
-    paramsSerializer: params => Qs.stringify(params, { arrayFormat: 'repeat' }),
+    // maxRedirects: safeRedirect ? 5 : 0,
+    // paramsSerializer: params => Qs.stringify(params, { arrayFormat: 'repeat' }),
     // Note that providing headers or auth in the request object will overwrite.
     ...axiosRequest,
-  })
-    .then(response => {
-      // Convert the response data (binary buffer) to Base64
-      const base64Image = Buffer.from(response.data, 'binary').toString(
-        'base64'
-      );
+  };
+  console.log({ axiosReq });
 
-      // Extract content type from headers to create a complete data URI
-      const contentType = response.headers['content-type'];
-      const dataUri = `data:${contentType};base64,${base64Image}`;
-      console.log(dataUri);
+  return axios(axiosReq)
+    .then(res => {
+      console.log('res headers', res.headers);
+
+      return res;
     })
     .catch(error => {
-      console.error(error);
-      throw error;
+      console.error('Something went wrong', error);
+      // throw error;
     });
 }
