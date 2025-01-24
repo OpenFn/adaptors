@@ -40,7 +40,7 @@ export const prepareNextState = async (state, response) => {
 
 export const request = (path, options) => {
   return async state => {
-    const { baseUrl, username, password } = state.configuration;
+    const { baseUrl,niaMerchantKey } = state.configuration;
     getClient(baseUrl);
     const basePath = baseUrl ? new URL(baseUrl).pathname : '/';
 
@@ -52,13 +52,12 @@ export const request = (path, options) => {
 
     const {
       data,
-      headers = { 'content-type': 'application/json' },
+      headers = { 'content-type': 'application/json','NIa_merchantKey' : niaMerchantKey},
       method = 'POST',
       query,
       ...otherOptions
     } = resolvedoptions;
 
-    const addAuth = makeBasicAuthHeader(username, password);
 
     const safePath = resolvedPath
       ? nodepath.join(basePath, resolvedPath)
@@ -69,7 +68,6 @@ export const request = (path, options) => {
       data,
       headers: {
         ...headers,
-        ...addAuth,
       },
       method,
       query,
@@ -82,29 +80,14 @@ export const request = (path, options) => {
     
     const response = await client.request(args);
     if (response.statusCode >= 400) {
-      throwError('BDR_ERROR', {
+      throwError('NIA_ERROR', {
         code: response.statusCode,
         description: response.statusMessage,
         body: await response.body.text(),
       });
     }
 
-    //TODO: Add a function for handling stream responses
-    // Eg: const responseBody = await streamToString(response.body);
-
     logResponse(response);
     return prepareNextState(state, response);
   };
 };
-/**
- * Convert a readable stream to a string
- * @param {Readable} stream - The readable stream to convert
- * @returns {Promise<string>} - The string content of the stream
- */
-async function streamToString(stream) {
-  const chunks = [];
-  for await (const chunk of stream) {
-    chunks.push(chunk);
-  }
-  return Buffer.concat(chunks).toString('utf8');
-}

@@ -38,9 +38,15 @@ export const prepareNextState = async (state, response) => {
   return nextState;
 };
 
+/**
+ * 
+ * @param {string} path  - path to the endpoint
+ * @param {object} options  - Other requred data for the request like   method, data, etc
+ * @returns 
+ */
 export const request = (path, options) => {
   return async state => {
-    const { baseUrl, username, password } = state.configuration;
+    const { baseUrl,apiKey,username } = state.configuration;
     getClient(baseUrl);
     const basePath = baseUrl ? new URL(baseUrl).pathname : '/';
 
@@ -52,13 +58,12 @@ export const request = (path, options) => {
 
     const {
       data,
-      headers = { 'content-type': 'application/json' },
+      headers = { 'content-type': 'application/json','API-KEY' : apiKey, 'USERNAME' : username },
       method = 'POST',
       query,
       ...otherOptions
     } = resolvedoptions;
 
-    const addAuth = makeBasicAuthHeader(username, password);
 
     const safePath = resolvedPath
       ? nodepath.join(basePath, resolvedPath)
@@ -69,7 +74,6 @@ export const request = (path, options) => {
       data,
       headers: {
         ...headers,
-        ...addAuth,
       },
       method,
       query,
@@ -79,32 +83,29 @@ export const request = (path, options) => {
     if (data) {
       args.body = JSON.stringify(data);
     }
-    
     const response = await client.request(args);
     if (response.statusCode >= 400) {
-      throwError('BDR_ERROR', {
-        code: response.statusCode,
-        description: response.statusMessage,
-        body: await response.body.text(),
-      });
+      await handleError(response, path);
     }
-
-    //TODO: Add a function for handling stream responses
-    // Eg: const responseBody = await streamToString(response.body);
-
     logResponse(response);
     return prepareNextState(state, response);
   };
 };
-/**
- * Convert a readable stream to a string
- * @param {Readable} stream - The readable stream to convert
- * @returns {Promise<string>} - The string content of the stream
- */
-async function streamToString(stream) {
-  const chunks = [];
-  for await (const chunk of stream) {
-    chunks.push(chunk);
+
+export const handleError = async (response, path) => {
+  const errordata = await response.body.json();
+  const e = new Error(errordata?.status);
+  e.message = errordata.message;
+  e.code = response.statusCode;
+  e.description = 'The server returned an error, see details message';
+
+  if (response.statusCode === 404) {
+    e.fix = `Kindly check the path: ${path} well and try again.`;
   }
-  return Buffer.concat(chunks).toString('utf8');
-}
+
+  if (response.statusCode === 403) {
+    e.fix = 'Make sure the API-Key,Username and senderid are correct and exists in the header of the request'
+  }
+
+  throw e;
+};
