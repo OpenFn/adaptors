@@ -15,7 +15,7 @@ export function request({ username, password, pat }, axiosRequest) {
   const { method, url, params } = axiosRequest;
 
   console.log(`Sending ${method} request to ${url}`);
-  if (params) console.log(` with params:`, params);
+  if (params) console.log(`with params: `, params);
 
   // NOTE: We don't follow redirects for unsafe methods: https://github.com/axios/axios/issues/2460
   const safeRedirect = ['get', 'head', 'options', 'trace'].includes(
@@ -34,25 +34,13 @@ export function request({ username, password, pat }, axiosRequest) {
     auth = { username, password };
   }
 
-  const axiosReq = {
+  return axios({
     headers,
     responseType: 'json',
     auth,
-    // maxRedirects: safeRedirect ? 5 : 0,
-    // paramsSerializer: params => Qs.stringify(params, { arrayFormat: 'repeat' }),
+    maxRedirects: safeRedirect ? 5 : 0,
+    paramsSerializer: params => Qs.stringify(params, { arrayFormat: 'repeat' }),
     // Note that providing headers or auth in the request object will overwrite.
     ...axiosRequest,
-  };
-  console.log({ axiosReq });
-
-  return axios(axiosReq)
-    .then(res => {
-      console.log('res headers', res.headers);
-
-      return res;
-    })
-    .catch(error => {
-      console.error('Something went wrong', error);
-      // throw error;
-    });
+  });
 }
