@@ -332,6 +332,43 @@
           },
           {
             "title": "param",
+            "description": "The parameters for the request.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            "name": "options.params"
+          },
+          {
+            "title": "param",
+            "description": "The configuration for the request, including headers, etc.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            "name": "options.requestConfig"
+          },
+          {
+            "title": "param",
+            "description": "Optional flag to indicate if the response should be returned as a Base64 encoded string.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.asBase64",
+            "default": "false"
+          },
+          {
+            "title": "param",
             "description": "Optional callback to handle the response",
             "type": {
               "type": "OptionalType",
@@ -382,7 +419,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "post",
