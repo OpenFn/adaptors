@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { execute as commonExecute, util } from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import _ from 'lodash';
 const { indexOf } = _;
