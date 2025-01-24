@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import { expandReferences, encode } from '@openfn/language-common/util';
 import _ from 'lodash';
 const { indexOf } = _;
 import {
@@ -11,7 +11,6 @@ import {
   selectId,
   shouldUseNewTracker,
   ensureArray,
-  encode,
 } from './Utils';
 import { request } from './Client';
 
