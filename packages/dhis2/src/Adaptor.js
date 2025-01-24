@@ -478,6 +478,9 @@ export function update(
  * @param {string} resourceType - The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.
  * @param {Object} query - A query object that will limit what resources are retrieved when converted into request params.
  * @param {Object} [options] - Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use.
+ * @param {Object} [options.params] - The parameters for the request.
+ * @param {Object} [options.requestConfig] - The configuration for the request, including headers, etc.
+ * @param {boolean} [options.asBase64=false] - Optional flag to indicate if the response should be returned as a Base64 encoded string.
  * @param {function} [callback]  - Optional callback to handle the response
  * @returns {Operation} state
  * @example <caption>Get all data values for the 'pBOMPrpg1QX' dataset</caption>
