@@ -225,7 +225,7 @@ describe('http.post', () =>{
   });
 });
 
-describe('http.remove', () =>{
+describe('http.delete', () =>{
   beforeEach(()=>{
     // Basic patient query interceptor
     testServer
@@ -247,18 +247,18 @@ describe('http.remove', () =>{
   const state = { configuration };
 
   it('should make http request with the "DELETE" verb', async () => {
-    const response = await http.remove('/ws/rest/v1/patient/abc')(state);
+    const response = await http.delete('/ws/rest/v1/patient/abc')(state);
     expect(response.response.method).to.eql('DELETE');
   });
 
   it('should make a successful DELETE request to openmrs', async () => {
-    const response = await http.remove('/ws/rest/v1/patient/abc')(state);
+    const response = await http.delete('/ws/rest/v1/patient/abc')(state);
     expect(response.response.statusCode).to.eql(200);
   });
 
   it('should throw an error for an invalid request', async () => {
     try {
-      await http.remove('/ws/rest/v1/patient/non-existent')(state);
+      await http.delete('/ws/rest/v1/patient/non-existent')(state);
     } catch (e) {
       expect(e.statusCode).to.eql(404)
     }
