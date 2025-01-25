@@ -44,7 +44,8 @@ export function request(method, path, options = {}, callback = s => s) {
 }
 
 /**
- * Make a GET request to any OpenMRS endpoint
+ * Make a GET request to any OpenMRS endpoint.
+ * Unlike the main `get`, this does not append anything to the path you provide.
  * @public
  * @function
  * @example
