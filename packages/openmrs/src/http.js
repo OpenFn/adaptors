@@ -13,7 +13,7 @@ import * as util from './Utils';
 /**
  * Make a HTTP request to any OpenMRS endpoint
  * @example
- * request("GET",
+ * http.request("GET",
  *   "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8", {
  *    query:{ 
  *       limit: 1, 
@@ -49,7 +49,7 @@ export function request(method, path, options = {}, callback = s => s) {
  * @public
  * @function
  * @example
- * get(
+ * http.get(
  *  "/ws/rest/v1/patient",
  *  {
  *    query: {
@@ -77,7 +77,7 @@ export function get(path, options = {}) {
  * @public
  * @function
  * @example
- * post(
+ * http.post(
  *  "/ws/rest/v1/patient",
  *  {
  *    data: {
@@ -116,7 +116,7 @@ export function post(path, options = {}) {
  * @public
  * @function
  * @example
- * remove(
+ * http.delete(
  *  "/ws/rest/v1/patient/abc/"
  * )
  * @param {string} path - path to resource
