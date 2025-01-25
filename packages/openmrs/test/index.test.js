@@ -207,18 +207,18 @@ describe('http.post', () =>{
   const state = { configuration };
 
   it('should make http request with the "POST" verb', async () => {
-    const response = await http.post('/ws/rest/v1/patient', { data: testData.newPatient })(state);
+    const response = await http.post('/ws/rest/v1/patient', testData.newPatient)(state);
     expect(response.response.method).to.eql('POST');
   });
 
   it('should make a successful POST request to openmrs', async () => {
-    const { data } = await http.post('/ws/rest/v1/patient', { data: testData.newPatient })(state);
+    const { data } = await http.post('/ws/rest/v1/patient',  testData.newPatient)(state);
     expect(data.results[0].display).to.eql(testData.patientResults[0].display);
   });
 
   it('should throw an error for an invalid request', async () => {
     try {
-      await http.post('/ws/rest/v1/wrong-url', { data: testData.newPatient })(state);
+      await http.post('/ws/rest/v1/wrong-url', testData.newPatient)(state);
     } catch (e) {
       expect(e.statusCode).to.eql(404)
     }
