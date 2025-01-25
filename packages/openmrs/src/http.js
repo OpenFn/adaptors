@@ -60,13 +60,13 @@ export function request(method, path, options = {}, callback = s => s) {
  * @param {OpenMRSOptions} [options={}] - An object containing query params, headers and body for the request
  * @returns {operation}
  */
-export function get(path, options = {}, callback = s => s) {
+export function get(path, options = {}) {
   return async state => {
     const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
 
     const response = await util.request(state, 'GET', resolvedPath, resolvedOptions);
 
-    return util.prepareNextState(state, response, callback);
+    return util.prepareNextState(state, response);
   };
 }
 
@@ -98,13 +98,13 @@ export function get(path, options = {}, callback = s => s) {
  * @param {OpenMRSOptions} [options={}] - An object containing query params, headers and body for the request
  * @returns {operation}
  */
-export function post(path, options = {}, callback = s => s) {
+export function post(path, options = {}) {
   return  async state => {
     const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
 
     const response = await util.request(state, 'POST', resolvedPath, resolvedOptions);
 
-    return util.prepareNextState(state, response, callback);
+    return util.prepareNextState(state, response);
   }
 }
 
@@ -122,13 +122,13 @@ export function post(path, options = {}, callback = s => s) {
  * @param {OpenMRSOptions} [options={}] - An object containing query params, headers and body for the request
  * @returns {operation}
  */
- function _delete(path, options = {}, callback = s => s) {
+ function _delete(path, options = {}) {
   return  async state => {
     const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
 
     const response = await util.request(state, 'DELETE', resolvedPath, resolvedOptions);
 
-    return util.prepareNextState(state, response, callback);
+    return util.prepareNextState(state, response);
   }
 }
 
