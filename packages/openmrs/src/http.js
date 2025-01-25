@@ -80,7 +80,6 @@ export function get(path, options = {}) {
  * http.post(
  *  "/ws/rest/v1/patient",
  *  {
- *    data: {
  *      "person": {
  *      "gender":"M",
  *      "age":47,
@@ -93,17 +92,21 @@ export function get(path, options = {}) {
  *      ],
  *    }
  *    }
- *  }
  * )
  * @param {string} path - path to resource
+ * @param {any} data - the payload
  * @param {OpenMRSOptions} [options={}] - An object containing query params, headers and body for the request
  * @returns {operation}
  */
-export function post(path, options = {}) {
+export function post(path,data , options = {}) {
   return  async state => {
-    const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
+    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(state, path, data, options);
 
-    const response = await util.request(state, 'POST', resolvedPath, resolvedOptions);
+    const optionsObject = {
+      data: resolvedData,
+      ...resolvedOptions
+    }
+    const response = await util.request(state, 'POST', resolvedPath, optionsObject);
 
     return util.prepareNextState(state, response);
   }
