@@ -79,7 +79,7 @@ export const request = (path, options) => {
     if (data) {
       args.body = JSON.stringify(data);
     }
-    
+
     const response = await client.request(args);
     if (response.statusCode >= 400) {
       throwError('BDR_ERROR', {

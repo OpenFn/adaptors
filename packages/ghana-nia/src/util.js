@@ -4,7 +4,6 @@ import {
   throwError,
   logResponse,
   expandReferences,
-  makeBasicAuthHeader,
 } from '@openfn/language-common/util';
 import { composeNextState } from '@openfn/language-common';
 
@@ -52,12 +51,14 @@ export const request = (path, options) => {
 
     const {
       data,
-      headers = { 'content-type': 'application/json', 'NIa_merchantKey': niaMerchantKey },
+      headers = {
+        'content-type': 'application/json',
+        NIa_merchantKey: niaMerchantKey,
+      },
       method = 'POST',
       query,
       ...otherOptions
     } = resolvedoptions;
-
 
     const safePath = resolvedPath
       ? nodepath.join(basePath, resolvedPath)

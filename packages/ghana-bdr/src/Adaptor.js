@@ -67,28 +67,28 @@ export function post(path, data) {
 /**
  * Generate a birth certificate
  * @example
- * sendBirthNotification({ 
- *   babyData: { 
- *     dateOfBirth: "string", 
- *     fatherName: "string", 
- *     forenames: "string", 
- *     gender: "string", 
- *     lightwaveETrackerID: "string", 
- *     motherName: "string", 
- *     noSiblingsInDelivery: "string", 
- *     placeOfBirth: "string", 
- *     surname: "string", 
- *     timeOfbirth: "string", 
- *     weightAtBirth: "string", 
- *     babyPicture: "string" 
- *   }, 
- *   personVouching: { 
- *     etrackerLightwaveID: "string", 
- *     ghanaCardPIN: "string", 
- *     relationToBaby: "string", 
- *     relativePhone: "string", 
- *     relativePicture: "string" 
- *   },  
+ * sendBirthNotification({
+ *   babyData: {
+ *     dateOfBirth: "string",
+ *     fatherName: "string",
+ *     forenames: "string",
+ *     gender: "string",
+ *     lightwaveETrackerID: "string",
+ *     motherName: "string",
+ *     noSiblingsInDelivery: "string",
+ *     placeOfBirth: "string",
+ *     surname: "string",
+ *     timeOfbirth: "string",
+ *     weightAtBirth: "string",
+ *     babyPicture: "string"
+ *   },
+ *   personVouching: {
+ *     etrackerLightwaveID: "string",
+ *     ghanaCardPIN: "string",
+ *     relationToBaby: "string",
+ *     relativePhone: "string",
+ *     relativePicture: "string"
+ *   },
  *   merchantKey: "XXXXXXXXXXXXXXXXXXXXXX"
  * })
  * @function
