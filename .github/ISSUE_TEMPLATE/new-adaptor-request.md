@@ -24,7 +24,7 @@ We want to build a basic adaptor to integrate with the REST API for `App X`, whi
 To start, this adaptor should:
 1. handle authentication
 2. include a generic GET helper so we can get any resource
-3. Make it easy to search for particular records and return results in JSON
+3. make it easy to search for particular records and return results in JSON
 ```
 
 ## Credentials
