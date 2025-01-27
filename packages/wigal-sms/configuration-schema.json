@@ -11,26 +11,35 @@
           "type": "null"
         }
       ],
-      "description": "The base URL (http://www.example.com)",
+      "description": "The base URL (https://frogapi.wigal.com.gh)",
       "format": "uri",
       "minLength": 1,
-      "examples": ["https://example.com"]
+      "examples": [
+        "https://frogapi.wigal.com.gh"
+      ]
     },
     "username": {
       "title": "Username",
       "type": "string",
       "description": "Username",
-      "examples": ["test@openfn.org"]
+      "examples": [
+        "test@openfn.org"
+      ]
     },
     "apiKey": {
       "title": "API-KEY",
       "type": "string",
       "description": "API-KEY",
       "writeOnly": true,
-      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+      "examples": [
+        "@some(!)apikey"
+      ]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["apiKey", "username"]
+  "required": [
+    "apiKey",
+    "username"
+  ]
 }
