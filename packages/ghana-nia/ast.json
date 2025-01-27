@@ -4,8 +4,7 @@
       "name": "post",
       "params": [
         "path",
-        "options",
-        "callback"
+        "data"
       ],
       "docs": {
         "description": "Make a POST request",
@@ -35,33 +34,12 @@
           },
           {
             "title": "param",
-            "description": "Object which will be attached to the POST body",
+            "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
-            },
-            "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -77,97 +55,7 @@
           }
         ]
       },
-      "valid": false
-    },
-    {
-      "name": "request",
-      "params": [
-        "method",
-        "path",
-        "body",
-        "options",
-        "callback"
-      ],
-      "docs": {
-        "description": "Make a general HTTP request",
-        "tags": [
-          {
-            "title": "example",
-            "description": "request(\"POST\", \"patient\", { \"name\":\"Bukayo\" });"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "HTTP method to use",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "method"
-          },
-          {
-            "title": "param",
-            "description": "Path to resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Object which will be attached to the POST body",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
-            },
-            "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{HttpState}"
-          }
-        ]
-      },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],

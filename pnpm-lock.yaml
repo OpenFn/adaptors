@@ -2121,6 +2121,9 @@ importers:
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
+      undici:
+        specifier: ^5.28.4
+        version: 5.28.4
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -2140,9 +2143,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.28.4
 
   packages/zoho:
     dependencies:
