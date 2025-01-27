@@ -1,5 +1,5 @@
 ---
-'@openfn/language-openmrs': major
+'@openfn/language-openmrs': minor
 ---
 
-Added wrappers for `post` `delete` and `get` http methods
+Added `http.post()`, `http.delete()` and `http.get()`
