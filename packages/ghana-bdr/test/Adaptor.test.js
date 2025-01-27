@@ -85,7 +85,12 @@ describe('sendBirthNotification', () => {
       sendBirthNotification(state => state.data)
     )(state);
 
-    // TODO add assertions
     expect(Object.keys(finalState.data).length).to.eql(6);
+    expect(finalState.data.registry_code).to.eql('1');
+    expect(finalState.data.child.birth_attendant_phone).to.eql('0556969609');
+    expect(finalState.data.mother.national_id_number).to.eql('90-030-003');
+    expect(finalState.data.health_facility.name).to.eql(
+      'Korlebu General Hospital'
+    );
   });
 });
