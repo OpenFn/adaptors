@@ -65,7 +65,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a get request to any OpenMRS endpoint",
+        "description": "Make a get request to any OpenMRS REST endpoint.",
         "tags": [
           {
             "title": "example",
@@ -83,7 +83,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to resource (excluding /ws/rest/v1/)",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -131,7 +131,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a post request to any OpenMRS endpoint",
+        "description": "Make a post request to any OpenMRS rest endpoint",
         "tags": [
           {
             "title": "example",
@@ -149,7 +149,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to resource (excluding /ws/rest/v1/)",
             "type": {
               "type": "NameExpression",
               "name": "string"
