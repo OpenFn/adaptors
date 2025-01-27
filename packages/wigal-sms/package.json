@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-wigal-sms",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "OpenFn wigal-sms adaptor",
   "type": "module",
   "exports": {
@@ -28,7 +28,8 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:*"
+    "@openfn/language-common": "workspace:*",
+    "undici": "^5.28.4"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
@@ -36,8 +37,7 @@
     "deep-eql": "4.1.1",
     "esno": "^0.16.3",
     "mocha": "^10.7.3",
-    "rimraf": "3.0.2",
-    "undici": "^5.22.1"
+    "rimraf": "3.0.2"
   },
   "repository": {
     "type": "git",
