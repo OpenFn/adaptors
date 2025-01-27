@@ -1,5 +1,12 @@
 # @openfn/language-googlesheets
 
+## 3.0.9
+
+### Patch Changes
+
+- `update()` and `append()` will exit early with a gentle warning if an empty
+  array is passed. This allows a no-op update to be error free.
+
 ## 3.0.8
 
 ### Patch Changes
