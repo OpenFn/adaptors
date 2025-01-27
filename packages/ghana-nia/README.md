@@ -2,6 +2,8 @@
 
 An OpenFn **_adaptor_** for building integration jobs for use with the ghana-nia API.
 
+There is no public documentation for the Ghana NIA system, but the the NIA itself can be reached at https://nia.gov.gh/
+
 ## Documentation
 
 View the [docs site](https://docs.openfn.org/adaptors/packages/ghana-nia-docs)

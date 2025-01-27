@@ -64,6 +64,39 @@ export function post(path, data) {
   return util.request(path, { data, method: 'POST' });
 }
 
+/**
+ * Generate a birth certificate
+ * @example
+ * sendBirthNotification({ 
+ *   babyData: { 
+ *     dateOfBirth: "string", 
+ *     fatherName: "string", 
+ *     forenames: "string", 
+ *     gender: "string", 
+ *     lightwaveETrackerID: "string", 
+ *     motherName: "string", 
+ *     noSiblingsInDelivery: "string", 
+ *     placeOfBirth: "string", 
+ *     surname: "string", 
+ *     timeOfbirth: "string", 
+ *     weightAtBirth: "string", 
+ *     babyPicture: "string" 
+ *   }, 
+ *   personVouching: { 
+ *     etrackerLightwaveID: "string", 
+ *     ghanaCardPIN: "string", 
+ *     relationToBaby: "string", 
+ *     relativePhone: "string", 
+ *     relativePicture: "string" 
+ *   },  
+ *   merchantKey: "XXXXXXXXXXXXXXXXXXXXXX"
+ * })
+ * @function
+ * @public
+ * @param {object} data - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
+ * @returns {Operation}
+ * @state {HttpState}
+ */
 export function sendBirthNotification(data, options = {}) {
   return util.request('api/notification', {
     method: 'POST',

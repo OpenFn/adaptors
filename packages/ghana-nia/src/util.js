@@ -40,7 +40,7 @@ export const prepareNextState = async (state, response) => {
 
 export const request = (path, options) => {
   return async state => {
-    const { baseUrl,niaMerchantKey } = state.configuration;
+    const { baseUrl, niaMerchantKey } = state.configuration;
     getClient(baseUrl);
     const basePath = baseUrl ? new URL(baseUrl).pathname : '/';
 
@@ -52,7 +52,7 @@ export const request = (path, options) => {
 
     const {
       data,
-      headers = { 'content-type': 'application/json','NIa_merchantKey' : niaMerchantKey},
+      headers = { 'content-type': 'application/json', 'NIa_merchantKey': niaMerchantKey },
       method = 'POST',
       query,
       ...otherOptions
@@ -77,7 +77,7 @@ export const request = (path, options) => {
     if (data) {
       args.body = JSON.stringify(data);
     }
-    
+
     const response = await client.request(args);
     if (response.statusCode >= 400) {
       throwError('NIA_ERROR', {

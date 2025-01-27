@@ -64,7 +64,23 @@ export function post(path, data) {
   return util.request(path, { data, method: 'POST' });
 }
 
-export function sendNiaData(data, options = {}) {
+/**
+ * Generate a national ID
+ * @example
+ * registerChild({
+ *   child: {},
+ *   mother: {},
+ *   father: {},
+ *   health_facility: {},
+ *   birth_informant: {}
+ * })
+ * @function
+ * @public
+ * @param {object} data - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function registerChild(data, options = {}) {
   return util.request('/awopa/api/v1/baby/registration', {
     method: 'POST',
     data,

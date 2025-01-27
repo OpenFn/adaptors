@@ -2,6 +2,8 @@
 
 An OpenFn **_adaptor_** for building integration jobs for use with the ghana-bdr API.
 
+There is no public documentation for the Ghana HBDRP, but the the BDR itself can be reached at https://bdr.gov.gh/
+
 ## Documentation
 
 View the [docs site](https://docs.openfn.org/adaptors/packages/ghana-bdr-docs)
