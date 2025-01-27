@@ -1,5 +1,13 @@
 # @openfn/language-openmrs
 
+## 4.3.0
+
+### Minor Changes
+
+- 909d81f: Added `http.post()`, `http.delete()` and `http.get()`.
+
+  removed the undocumented callback in `http.request()`.
+
 ## 4.2.0
 
 ### Minor Changes
