@@ -57,7 +57,7 @@ export function getPatient(uuid, callback = s => s) {
 }
 
 /**
- * Make a get request to any OpenMRS endpoint
+ * Make a get request to any OpenMRS REST endpoint.
  * @example
  * get("patient", {
  *   q: "Patient",
@@ -65,7 +65,7 @@ export function getPatient(uuid, callback = s => s) {
  * });
  * @function
  * @public
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource (excluding /ws/rest/v1/)
  * @param {object} query - parameters for the request
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -99,7 +99,7 @@ export function get(path, query, callback = s => s) {
 }
 
 /**
- * Make a post request to any OpenMRS endpoint
+ * Make a post request to any OpenMRS rest endpoint
  * @example
  * post(
  *   "idgen/identifiersource/8549f706-7e85-4c1d-9424-217d50a2988b/identifier",
@@ -107,7 +107,7 @@ export function get(path, query, callback = s => s) {
  * );
  * @function
  * @public
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource (excluding /ws/rest/v1/)
  * @param {object} data - Object which defines data that will be used to create a given instance of resource
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}

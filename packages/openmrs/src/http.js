@@ -12,7 +12,7 @@ import * as util from './Utils';
 
 /**
  * Make a HTTP request to any OpenMRS endpoint
- * @example
+ * @example <caption>GET request with a URL query</caption>
  * http.request("GET",
  *   "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8", {
  *    query:{ 
@@ -27,7 +27,7 @@ import * as util from './Utils';
  * @param {OpenMRSOptions}  [options={}] - An object containing query, headers, and body for the request
  * @returns {Operation}
  */
-export function request(method, path, options = {}, callback = s => s) {
+export function request(method, path, options = {}) {
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedOptions = {}] =
       expandReferences(state, method, path, options);
@@ -39,16 +39,16 @@ export function request(method, path, options = {}, callback = s => s) {
       resolvedOptions
     );
 
-    return util.prepareNextState(state, response, callback);
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
  * Make a GET request to any OpenMRS endpoint.
- * Unlike the main `get`, this does not append anything to the path you provide.
+ * Unlike the main `get()`, this does not append anything to the path you provide.
  * @public
  * @function
- * @example
+ * @example <caption>GET a resource with a query</caption>
  * http.get(
  *  "/ws/rest/v1/patient",
  *  {
@@ -58,7 +58,7 @@ export function request(method, path, options = {}, callback = s => s) {
  *  }
  *  )
  * @param {string} path - path to resource
- * @param {OpenMRSOptions} [options={}] - An object containing query params, headers and body for the request
+ * @param {OpenMRSOptions} [options={}] - An object containing query params and headers for the request
  * @returns {operation}
  */
 export function get(path, options = {}) {
@@ -73,10 +73,10 @@ export function get(path, options = {}) {
 
 
 /**
- * Make a POST  request to an OpenMRS endpoint
+ * Make a POST request to an OpenMRS endpoint
  * @public
  * @function
- * @example
+ * @example <caption>Post with a JSON payload</caption>
  * http.post(
  *  "/ws/rest/v1/patient",
  *  {
@@ -95,10 +95,10 @@ export function get(path, options = {}) {
  * )
  * @param {string} path - path to resource
  * @param {any} data - the payload
- * @param {OpenMRSOptions} [options={}] - An object containing query params, headers and body for the request
+ * @param {OpenMRSOptions} [options={}] - An object containing query params and headers for the request
  * @returns {operation}
  */
-export function post(path,data , options = {}) {
+export function post(path, data, options = {}) {
   return  async state => {
     const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(state, path, data, options);
 
@@ -118,12 +118,12 @@ export function post(path,data , options = {}) {
  * @alias delete
  * @public
  * @function
- * @example
+ * @example <caption>Delete a resource</caption>
  * http.delete(
  *  "/ws/rest/v1/patient/abc/"
  * )
  * @param {string} path - path to resource
- * @param {OpenMRSOptions} [options={}] - An object containing query params, headers and body for the request
+ * @param {OpenMRSOptions} [options={}] - An object containing query params and headers for the request
  * @returns {operation}
  */
  function _delete(path, options = {}) {
