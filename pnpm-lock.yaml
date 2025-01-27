@@ -611,7 +611,7 @@ importers:
         version: link:../common
       undici:
         specifier: ^5.22.1
-        version: 5.28.4
+        version: 5.28.5
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -2123,7 +2123,7 @@ importers:
         version: link:../common
       undici:
         specifier: ^5.28.4
-        version: 5.28.4
+        version: 5.28.5
     devDependencies:
       assertion-error:
         specifier: 2.0.0
