@@ -1,8 +1,8 @@
 import { MockAgent } from 'undici';
 
 const wigalSmsResponse = {
-  status: 'ACCEPTD',
-  message:'Message Accepted For Processing'
+  status: 'ACCEPTED',
+  message: 'Message Accepted For Processing',
 };
 
 // This creates a mock Wigal SMS server
@@ -27,7 +27,6 @@ export function createServer(url = 'https://frogapi.wigal.com.gh') {
     .reply(sendSms)
     .persist();
 
-
   return {
     agent,
 
@@ -42,10 +41,8 @@ export function createServer(url = 'https://frogapi.wigal.com.gh') {
       if (data) {
         opts.body = JSON.stringify(data);
       }
-      
+
       return mockPool.request(opts);
     },
   };
-};
-
-
+}

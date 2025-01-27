@@ -38,15 +38,9 @@ export const prepareNextState = async (state, response) => {
   return nextState;
 };
 
-/**
- * 
- * @param {string} path  - path to the endpoint
- * @param {object} options  - Other requred data for the request like   method, data, etc
- * @returns 
- */
 export const request = (path, options) => {
   return async state => {
-    const { baseUrl,apiKey,username } = state.configuration;
+    const { baseUrl, apiKey, username } = state.configuration;
     getClient(baseUrl);
     const basePath = baseUrl ? new URL(baseUrl).pathname : '/';
 
@@ -58,12 +52,15 @@ export const request = (path, options) => {
 
     const {
       data,
-      headers = { 'content-type': 'application/json','API-KEY' : apiKey, 'USERNAME' : username },
+      headers = {
+        'content-type': 'application/json',
+        'API-KEY': apiKey,
+        USERNAME: username,
+      },
       method = 'POST',
       query,
       ...otherOptions
     } = resolvedoptions;
-
 
     const safePath = resolvedPath
       ? nodepath.join(basePath, resolvedPath)
@@ -93,19 +90,21 @@ export const request = (path, options) => {
 };
 
 export const handleError = async (response, path) => {
-  const errordata = await response.body.json();
-  const e = new Error(errordata?.status);
-  e.message = errordata.message;
-  e.code = response.statusCode;
-  e.description = 'The server returned an error, see details message';
+  const error = await response.body.json();
 
   if (response.statusCode === 404) {
-    e.fix = `Kindly check the path: ${path} well and try again.`;
+    throwError('NOT_FOUND', {
+      description: 'The server returned an error, see details message',
+      error: error.message,
+      fix: `Kindly check the path: ${path} well and try again.`,
+    });
   }
 
   if (response.statusCode === 403) {
-    e.fix = 'Make sure the API-Key,Username and senderid are correct and exists in the header of the request'
+    throwError('FORBIDDEN', {
+      description: 'The server returned an error, see details message',
+      error: error.message,
+      fix: `Make sure the API-Key,Username and senderid are correct and exists in the header of the request`,
+    });
   }
-
-  throw e;
 };
