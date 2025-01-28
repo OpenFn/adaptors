@@ -1,31 +1,11 @@
 import { MockAgent } from 'undici';
-import { validateRequestBody } from '../../../tools/mock-validator.js';
 
-const sampleRequestBody = {
-  merchantKey: '89487284-9083-4015-9128-91d8db7e023e',
-  babyData: {
-    dateOfBirth: '2024-03-05',
-    fatherName: 'Nyarkoa Osei-Akoto',
-    forenames: 'Kharis',
-    gender: 'Female',
-    lightwaveETrackerID: '00313180/24-03',
-    motherName: 'Gifty Osei-Akoto',
-    noSiblingsInDelivery: '0',
-    placeOfBirth: 'New Market Health Centre',
-    surname: 'Osei',
-    timeOfbirth: '09:34',
-    weightAtBirth: '2.7',
-    birthCertificateNumber: '011803-48-2024',
-    babyPicture: '...base64 encoded image goes here...',
-  },
-  personVouching: {
-    etrackerLightwaveID: '00313180/24-03',
-    ghanaCardPIN: 'GHA-001097272-4',
-    relationToBaby: 'Mother',
-    relativePhone: '0248403076',
-    relativePicture: '...base64 encoded image goes here...',
-  },
-};
+// Generated from sample with https://www.jsongenerator.io/schema
+// But!! I had to replace $schema with $id
+import reqSchema from './schema/request.json' assert { type: 'json' };
+import Ajv from 'ajv';
+
+const validate = new Ajv().compile(reqSchema);
 
 const nationalIdSampleResponse = {
   data: {
@@ -47,7 +27,7 @@ export function createServer(url = 'https://selfie.imsgh.org:2035') {
   const mockPool = agent.get(url);
 
   const sendNiaData = req => {
-    if (validateRequestBody(JSON.parse(req.body), sampleRequestBody)) {
+    if (validate(JSON.parse(req.body))) {
       return {
         statusCode: 200,
         responseOptions: {
@@ -56,6 +36,7 @@ export function createServer(url = 'https://selfie.imsgh.org:2035') {
         data: JSON.stringify(nationalIdSampleResponse),
       };
     } else {
+      console.log('Validation errors:', validate.errors);
       return {
         // Why is this a 404 coming from NIA?
         statusCode: 404,
@@ -68,6 +49,8 @@ export function createServer(url = 'https://selfie.imsgh.org:2035') {
           data: null,
           // sic
           msg: 'Error in Verifiation Process',
+          // from the mock:
+          _errors: validate.errors,
         },
       };
     }

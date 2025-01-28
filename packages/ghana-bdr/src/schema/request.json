@@ -1,0 +1,313 @@
+{
+  "$id": "http://json-schema.org/draft-04/schema#",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "child": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "minLength": 0
+        },
+        "middle_name": {
+          "type": "string",
+          "minLength": 0
+        },
+        "Surname": {
+          "type": "string",
+          "minLength": 0
+        },
+        "birth_date": {
+          "type": "string",
+          "minLength": 0
+        },
+        "national_id_number": {
+          "type": "string",
+          "minLength": 0
+        },
+        "place_of_delivery_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "place_of_delivery_other": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        },
+        "birth_type_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "gender_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "attendant_at_birth_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "attendant_at_birth_other": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        },
+        "bith_attendant_full_name": {
+          "type": "string",
+          "minLength": 0
+        },
+        "bith_attendant_phone": {
+          "type": "string",
+          "minLength": 0
+        }
+      },
+      "required": [
+        "first_name",
+        "middle_name",
+        "Surname",
+        "birth_date",
+        "national_id_number",
+        "place_of_delivery_code",
+        "place_of_delivery_other",
+        "birth_type_code",
+        "gender_code",
+        "attendant_at_birth_code",
+        "attendant_at_birth_other",
+        "bith_attendant_full_name",
+        "bith_attendant_phone"
+      ]
+    },
+    "mother": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "minLength": 0
+        },
+        "middle_name": {
+          "type": "string",
+          "minLength": 0
+        },
+        "maiden_name": {
+          "type": "string",
+          "minLength": 0
+        },
+        "surname_or_marriage_name": {
+          "type": "string",
+          "minLength": 0
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 0
+        },
+        "age": {
+          "type": "number"
+        },
+        "national_id_number": {
+          "type": "string",
+          "minLength": 0
+        },
+        "nationality_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "house_number": {
+          "type": "string",
+          "minLength": 0
+        },
+        "street_name": {
+          "type": "string",
+          "minLength": 0
+        },
+        "district_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "region_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "town_or_village": {
+          "type": "string",
+          "minLength": 0
+        },
+        "number_of_children_ever_born_alive": {
+          "type": "number"
+        },
+        "born_alive_are_living": {
+          "type": "number"
+        },
+        "live_birth_order": {
+          "type": "number"
+        },
+        "born_alive_are_dead": {
+          "type": "number"
+        },
+        "education_level_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "education_level_other": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        },
+        "occupation_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "occupation_other": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        }
+      },
+      "required": [
+        "first_name",
+        "middle_name",
+        "maiden_name",
+        "surname_or_marriage_name",
+        "phone",
+        "age",
+        "national_id_number",
+        "nationality_code",
+        "house_number",
+        "street_name",
+        "district_code",
+        "region_code",
+        "town_or_village",
+        "number_of_children_ever_born_alive",
+        "born_alive_are_living",
+        "live_birth_order",
+        "born_alive_are_dead",
+        "education_level_code",
+        "education_level_other",
+        "occupation_code",
+        "occupation_other"
+      ]
+    },
+    "father": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "minLength": 0
+        },
+        "middle_name": {
+          "type": "string",
+          "minLength": 0
+        },
+        "surname": {
+          "type": "string",
+          "minLength": 0
+        },
+        "nationality_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "national_id_number": {
+          "type": "string",
+          "minLength": 0
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 0
+        },
+        "age": {
+          "type": "number"
+        },
+        "education_level_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "occupation_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "religion_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "education_level_other": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        },
+        "occupation_other": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        },
+        "religion_other": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        },
+        "is_gainfully_employed_code": {
+          "type": "string",
+          "minLength": 0
+        }
+      },
+      "required": [
+        "first_name",
+        "middle_name",
+        "surname",
+        "nationality_code",
+        "national_id_number",
+        "phone",
+        "age",
+        "education_level_code",
+        "occupation_code",
+        "religion_code",
+        "education_level_other",
+        "occupation_other",
+        "religion_other",
+        "is_gainfully_employed_code"
+      ]
+    },
+    "health_facility": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 0
+        },
+        "house_number": {
+          "type": "string",
+          "minLength": 0
+        },
+        "street_name": {
+          "type": "string",
+          "minLength": 0
+        },
+        "town_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "town_other": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        },
+        "district_code": {
+          "type": "string",
+          "minLength": 0
+        },
+        "region_code": {
+          "type": "string",
+          "minLength": 0
+        }
+      },
+      "required": [
+        "name",
+        "house_number",
+        "street_name",
+        "town_code",
+        "town_other",
+        "district_code",
+        "region_code"
+      ]
+    }
+  },
+  "required": ["child", "mother", "father", "health_facility"]
+}
