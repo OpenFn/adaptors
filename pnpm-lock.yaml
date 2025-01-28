@@ -407,7 +407,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: 2.3.0
-        version: link:../common
+        version: 2.3.0
       request:
         specifier: ^2.72.0
         version: 2.88.2
@@ -1278,7 +1278,7 @@ importers:
     dependencies:
       '@openfn/language-common':
         specifier: 2.3.0
-        version: link:../common
+        version: 2.3.0
     devDependencies:
       '@openfn/simple-ast':
         specifier: ^0.4.1
@@ -3955,6 +3955,19 @@ packages:
       undici: 5.28.4
     transitivePeerDependencies:
       - debug
+    dev: false
+
+  /@openfn/language-common@2.3.0:
+    resolution: {integrity: sha512-ZpwO8dME3nnAPpXi9MX7+XxbnuC3T6BuNK93yZu2dvpEKtw1Bk6Tdh2/hZeB7Yk1+g1FXVq567ELTcoiAOaeUw==}
+    dependencies:
+      ajv: 8.12.0
+      csv-parse: 5.4.0
+      csvtojson: 2.0.10
+      date-fns: 2.29.3
+      http-status-codes: 2.3.0
+      jsonpath-plus: 10.2.0
+      lodash: 4.17.21
+      undici: 5.28.4
     dev: false
 
   /@openfn/simple-ast@0.3.2:
@@ -11905,14 +11918,9 @@ packages:
       pump: 2.0.1
     dev: false
 
-  /punycode@2.3.0:
-    resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
-    engines: {node: '>=6'}
-
   /punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
-    dev: false
 
   /q@1.5.1:
     resolution: {integrity: sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==}
@@ -13666,7 +13674,7 @@ packages:
     engines: {node: '>=0.8'}
     dependencies:
       psl: 1.9.0
-      punycode: 2.3.0
+      punycode: 2.3.1
     dev: false
 
   /tough-cookie@4.1.2:
@@ -13674,7 +13682,7 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       psl: 1.9.0
-      punycode: 2.3.0
+      punycode: 2.3.1
       universalify: 0.2.0
       url-parse: 1.5.10
     dev: false
@@ -14123,7 +14131,7 @@ packages:
   /uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
     dependencies:
-      punycode: 2.3.0
+      punycode: 2.3.1
 
   /urix@0.1.0:
     resolution: {integrity: sha512-Am1ousAhSLBeB9cG/7k7r2R0zj50uDRlZHPGbazid5s9rlF1F/QKYObEKSIunSjIOkJZqwRRLpvewjEkM7pSqg==}
