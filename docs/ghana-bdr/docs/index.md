@@ -121,28 +121,11 @@ This operation writes the following keys to state:
 **Example**
 ```js
 sendBirthNotification({
-  babyData: {
-    dateOfBirth: "string",
-    fatherName: "string",
-    forenames: "string",
-    gender: "string",
-    lightwaveETrackerID: "string",
-    motherName: "string",
-    noSiblingsInDelivery: "string",
-    placeOfBirth: "string",
-    surname: "string",
-    timeOfbirth: "string",
-    weightAtBirth: "string",
-    babyPicture: "string"
-  },
-  personVouching: {
-    etrackerLightwaveID: "string",
-    ghanaCardPIN: "string",
-    relationToBaby: "string",
-    relativePhone: "string",
-    relativePicture: "string"
-  },
-  merchantKey: "XXXXXXXXXXXXXXXXXXXXXX"
+  child: {},
+  mother: {},
+  father: {},
+  health_facility: {},
+  birth_informant: {}
 })
 ```
 
