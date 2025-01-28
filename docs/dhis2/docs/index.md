@@ -335,12 +335,15 @@ Get data. Generic helper method for getting data of any kind from DHIS2.
 
 **Returns**: <code>Operation</code> - state  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| resourceType | <code>string</code> | The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc. |
-| query | <code>Object</code> | A query object that will limit what resources are retrieved when converted into request params. |
-| [options] | <code>Object</code> | Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use. |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| resourceType | <code>string</code> |  | The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc. |
+| query | <code>Object</code> |  | A query object that will limit what resources are retrieved when converted into request params. |
+| [options] | <code>Object</code> |  | Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use. |
+| [options.params] | <code>Object</code> |  | The parameters for the request. |
+| [options.requestConfig] | <code>Object</code> |  | The configuration for the request, including headers, etc. |
+| [options.asBase64] | <code>boolean</code> | <code>false</code> | Optional flag to indicate if the response should be returned as a Base64 encoded string. |
+| [callback] | <code>function</code> |  | Optional callback to handle the response |
 
 **Example:** Get all data values for the 'pBOMPrpg1QX' dataset
 ```js
