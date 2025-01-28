@@ -6,16 +6,17 @@ import _ from 'lodash';
  * @public
  * @namespace util
  * @param {string | object} data - The string or object to be encoded.
- * @param {object} options - Options.
+ * @param {object} options - Options
+ * @param {boolean} [options.parseJson=true] - If false, no attempt will be made to stringiy the data before encoding it.
  * @returns {string} - The Base64 encoded string.
  * @example <caption>Encode a string</caption>
- * const encodedString = encode('Hello World');
+ * const encodedString = util.encode('Hello World');
  * console.log(encoded); // Output: SGVsbG8gV29ybGQ=
  * @example <caption>Encode an object</caption>
- * const encodedObject = encode({name: 'Jane Doe'})
+ * const encodedObject = util.encode({name: 'Jane Doe' })
  * console.log(encodedObject); //output eyJuYW1lIjoiSmFuZSBEb2UifQ==
  * @example <caption>To skip the JSON stringification step</caption>
- * const encodedObject = encode('Hello World', {parseJson: false})
+ * const encodedObject = util.encode('Hello World', { parseJson: false })
  */
 export const encode = (data, options = { parseJson: true }) => {
   let str = data;
@@ -38,14 +39,15 @@ export const encode = (data, options = { parseJson: true }) => {
  * @namespace util
  * @param {string} base64Data - The Base64 encoded string.
  * @param {object} options - Options.
+ * @param {boolean} [options.parseJson=true] - If false, no attempt will be made to parse the decoded data into a JSON object.
  * @returns {string | object} - The decoded string or JavaScript Object.
  * @example <caption>Decode a Base64 string</caption>
- * const decoded = decode('SGVsbG8gV29ybGQ=');
+ * const decoded = util.decode('SGVsbG8gV29ybGQ=');
  * @example <caption>Decode a Base64 JSON object to a standard JavaScript object</caption>
- * const decoded = decode('eyJuYW1lIjoiSmFuZSBEb2UifQ==');
- * console.log(decoded); // Output: {name: 'Jane Doe'}
+ * const decoded = util.decode('eyJuYW1lIjoiSmFuZSBEb2UifQ==');
+ * console.log(decoded); // Output: {name: 'Jane Doe' }
  * @example <caption>To skip the JSON stringification step</caption>
- * const decodedString = decode('Hello World', {parseJson: false})
+ * const decodedString = util.decode('Hello World', { parseJson: false })
  */
 export const decode = (base64Data, options = { parseJson: true }) => {
   let decodedValue = Buffer.from(base64Data, 'base64').toString('utf-8');
