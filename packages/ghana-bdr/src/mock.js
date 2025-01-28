@@ -61,6 +61,7 @@ export function createServer(url = 'http://tracker.chimgh.org') {
         data: JSON.stringify(birthNotificationResponse),
       };
     } else {
+      console.log('Validation errors:', validate.errors);
       return {
         statusCode: 417,
         responseOptions: {
@@ -69,6 +70,8 @@ export function createServer(url = 'http://tracker.chimgh.org') {
         data: {
           Message:
             '{"issuccessful":false,"message":"Record failed to save with this error -->  Modify the clause to make sure that a column is updated only once. If this statement updates or inserts columns into a view, column aliasing can conceal the duplication in your code.","messagecode":"210"} (Note that this is just a sample error from a mock endpoint.)',
+          // from the mock:
+          _errors: validate.errors,
         },
       };
     }
