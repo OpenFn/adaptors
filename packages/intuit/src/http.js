@@ -2,6 +2,14 @@ import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
 
 /**
+ * State object
+ * @typedef {Object} IntuitState
+ * @property data - The response body (as JSON)
+ * @property response - The HTTP response from the Quickbook(intuit) server (excluding the body)
+ * @property references - An array of all previous data objects used in the Job
+ */
+
+/**
  * Options object
  * @typedef {Object} IntuitOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
@@ -13,11 +21,12 @@ import * as util from './Utils';
 /**
  * Make a GET request to any intuit endpoint
  * @example <caption>Get intuit user company information.</caption>
- * get("/v3/company/9341453908059456/companyinfo/9341453908059456");
+ * http.get("/v3/company/9341453908059456/companyinfo/9341453908059456");
  * @function
  * @public
  * @param {string} path - Path to resource
  * @param {IntuitOptions}  [options={}] - An object containing query and headers for the request
+ * @state {IntuitState}
  * @returns {Operation}
  */
 export function get(path, options = {}) {
@@ -41,7 +50,7 @@ export function get(path, options = {}) {
 /**
  * Make a POST request to any Intuit endpoint
  * @example <caption>Create an account on intuit.</caption>
- * post("/v3/company/9341453908059456/account", {
+ * http.post("/v3/company/9341453908059456/account", {
  *  query: {
  *    minorversion: 40,
  *   },
@@ -54,6 +63,7 @@ export function get(path, options = {}) {
  * @public
  * @param {string} path - Path to resource
  * @param {IntuitOptions}  [options={}] - An object containing query, headers, and body for the request
+ * @state {IntuitState}
  * @returns {Operation}
  */
 export function post(path, options = {}) {
