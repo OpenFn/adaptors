@@ -1,5 +1,4 @@
 import { MockAgent } from 'undici';
-import { validateRequestBody } from '../../../tools/mock-validator.js';
 
 // Generated from sample with https://www.jsongenerator.io/schema
 // But!! I had to replace $schema with $id

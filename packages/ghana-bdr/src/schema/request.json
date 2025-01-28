@@ -8,27 +8,27 @@
       "properties": {
         "first_name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "middle_name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "Surname": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "birth_date": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "national_id_number": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "place_of_delivery_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "place_of_delivery_other": {
           "type": "object",
@@ -37,15 +37,15 @@
         },
         "birth_type_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "gender_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "attendant_at_birth_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "attendant_at_birth_other": {
           "type": "object",
@@ -54,11 +54,11 @@
         },
         "bith_attendant_full_name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "bith_attendant_phone": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         }
       },
       "required": [
@@ -82,54 +82,54 @@
       "properties": {
         "first_name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "middle_name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "maiden_name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "surname_or_marriage_name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "phone": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "age": {
           "type": "number"
         },
         "national_id_number": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "nationality_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "house_number": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "street_name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "district_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "region_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "town_or_village": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "number_of_children_ever_born_alive": {
           "type": "number"
@@ -145,7 +145,7 @@
         },
         "education_level_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "education_level_other": {
           "type": "object",
@@ -154,7 +154,7 @@
         },
         "occupation_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "occupation_other": {
           "type": "object",
@@ -191,42 +191,42 @@
       "properties": {
         "first_name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "middle_name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "surname": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "nationality_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "national_id_number": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "phone": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "age": {
           "type": "number"
         },
         "education_level_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "occupation_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "religion_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "education_level_other": {
           "type": "object",
@@ -245,7 +245,7 @@
         },
         "is_gainfully_employed_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         }
       },
       "required": [
@@ -270,19 +270,19 @@
       "properties": {
         "name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "house_number": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "street_name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "town_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "town_other": {
           "type": "object",
@@ -291,11 +291,11 @@
         },
         "district_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         },
         "region_code": {
           "type": "string",
-          "minLength": 1
+          "minLength": 0
         }
       },
       "required": [

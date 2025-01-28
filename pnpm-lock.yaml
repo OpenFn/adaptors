@@ -612,6 +612,9 @@ importers:
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
+      ajv:
+        specifier: '6'
+        version: 6.12.6
       undici:
         specifier: ^5.22.1
         version: 5.28.5
