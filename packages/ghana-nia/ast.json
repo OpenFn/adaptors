@@ -67,7 +67,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "registerChild({\n  child: {},\n  mother: {},\n  father: {},\n  health_facility: {},\n  birth_informant: {}\n})"
+            "description": "registerChild({\n  babyData: {\n    dateOfBirth: \"string\",\n    fatherName: \"string\",\n    forenames: \"string\",\n    gender: \"string\",\n    lightwaveETrackerID: \"string\",\n    motherName: \"string\",\n    noSiblingsInDelivery: \"string\",\n    placeOfBirth: \"string\",\n    surname: \"string\",\n    timeOfbirth: \"string\",\n    weightAtBirth: \"string\",\n    babyPicture: \"string\"\n  },\n  personVouching: {\n    etrackerLightwaveID: \"string\",\n    ghanaCardPIN: \"string\",\n    relationToBaby: \"string\",\n    relativePhone: \"string\",\n    relativePicture: \"string\"\n  },\n  merchantKey: \"XXXXXXXXXXXXXXXXXXXXXX\"\n})"
           },
           {
             "title": "function",
