@@ -220,6 +220,21 @@ post("Bundle",{
 
 ##  Interfaces
 
+### FHIRHttpState
+
+State object
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the FHIR HTTP server (with the body removed) |
+| references | an array of all the previous data values |
+
+
+* * *
+
 ### GetOptions
 
 Options provided to a GET HTTP request

@@ -738,6 +738,37 @@ Options provided to the Salesforce HTTP request
 
 * * *
 
+### SalesforceResultState
+
+State object
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | Summary of the response from Salesforce |
+| data.success | `true` if Salesforce reports no errors from the operation |
+| data.completed | Array of ids for every successful completion |
+| data.errors | Array of errors reported by Salesforce |
+| references | History of all previous states |
+
+
+* * *
+
+### SalesforceState
+
+State object
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | API response data. Can be either an object or array of objects |
+| references | History of all previous states |
+
+
+* * *
+
 ### SimpleRequestOptions
 **Properties**
 

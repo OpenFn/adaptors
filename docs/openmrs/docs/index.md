@@ -25,11 +25,23 @@ This adaptor exports the following namespaced functions:
 
 <dl>
 <dt>
-    <a href="#fhir_get">fhir.get(path, query, [callback])</a>
+    <a href="#http_delete">http.delete(path, [options])</a>
+</dt>
+
+<dt>
+    <a href="#http_get">http.get(path, [options])</a>
+</dt>
+
+<dt>
+    <a href="#http_post">http.post(path, data, [options])</a>
 </dt>
 
 <dt>
     <a href="#http_request">http.request(method, path, [options])</a>
+</dt>
+
+<dt>
+    <a href="#fhir_get">fhir.get(path, query, [callback])</a>
 </dt>
 </dl>
 
@@ -161,12 +173,12 @@ create("patient", {
 
 <p><code>get(path, query, [callback]) ⇒ Operation</code></p>
 
-Make a get request to any OpenMRS endpoint
+Make a get request to any OpenMRS REST endpoint.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
+| path | <code>string</code> | Path to resource (excluding /ws/rest/v1/) |
 | query | <code>object</code> | parameters for the request |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
@@ -241,12 +253,12 @@ getPatient('681f8785-c9ca-4dc8-a091-7b869316ff93')
 
 <p><code>post(path, data, [callback]) ⇒ Operation</code></p>
 
-Make a post request to any OpenMRS endpoint
+Make a post request to any OpenMRS rest endpoint
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
+| path | <code>string</code> | Path to resource (excluding /ws/rest/v1/) |
 | data | <code>object</code> | Object which defines data that will be used to create a given instance of resource |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
@@ -367,6 +379,122 @@ upsert(
 * * *
 
 
+## http
+
+These functions belong to the http namespace.
+### http.delete {#http_delete}
+
+<p><code>delete(path, [options]) ⇒ operation</code></p>
+
+Make a DELETE request to an OpenMRS endpoint
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| path | <code>string</code> |  | path to resource |
+| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+
+**Example:** Delete a resource
+```js
+http.delete(
+ "/ws/rest/v1/patient/abc/"
+)
+```
+
+* * *
+
+
+### http.get {#http_get}
+
+<p><code>get(path, [options]) ⇒ operation</code></p>
+
+Make a GET request to any OpenMRS endpoint.
+Unlike the main `get()`, this does not append anything to the path you provide.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| path | <code>string</code> |  | path to resource |
+| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+
+**Example:** GET a resource with a query
+```js
+http.get(
+ "/ws/rest/v1/patient",
+ {
+   query: {
+     limit: 1
+   }
+ }
+ )
+```
+
+* * *
+
+
+### http.post {#http_post}
+
+<p><code>post(path, data, [options]) ⇒ operation</code></p>
+
+Make a POST request to an OpenMRS endpoint
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| path | <code>string</code> |  | path to resource |
+| data | <code>any</code> |  | the payload |
+| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+
+**Example:** Post with a JSON payload
+```js
+http.post(
+ "/ws/rest/v1/patient",
+ {
+     "person": {
+     "gender":"M",
+     "age":47,
+     "birthdate":"1970-01-01T00:00:00.000+0100",
+     "names":[
+       {
+         "givenName":"Jon",
+         "familyName":"Snow"
+       }
+     ],
+   }
+   }
+)
+```
+
+* * *
+
+
+### http.request {#http_request}
+
+<p><code>request(method, path, [options]) ⇒ Operation</code></p>
+
+Make a HTTP request to any OpenMRS endpoint
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| method | <code>string</code> |  | HTTP method to use |
+| path | <code>string</code> |  | Path to resource |
+| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query, headers, and body for the request |
+
+**Example:** GET request with a URL query
+```js
+http.request("GET",
+  "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8", {
+   query:{ 
+      limit: 1, 
+      offset: 20 
+   },
+});
+```
+
+* * *
+
+
 ## fhir
 
 These functions belong to the fhir namespace.
@@ -386,36 +514,6 @@ Make a get request to any FHIR endpoint in OpenMRS
 **Example:** Get encounters based on lastUpdated field
 ```js
 fhir.get('Encounter', { count: 100, lastUpdated: 'ge2024-01-01T00:00:00Z' })
-```
-
-* * *
-
-
-## http
-
-These functions belong to the http namespace.
-### http.request {#http_request}
-
-<p><code>request(method, path, [options]) ⇒ Operation</code></p>
-
-Make a HTTP request to any OpenMRS endpoint
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| method | <code>string</code> |  | HTTP method to use |
-| path | <code>string</code> |  | Path to resource |
-| [options] | [<code>OpenMRSOptions</code>](#openmrsoptions) | <code>{}</code> | An object containing query, headers, and body for the request |
-
-**Example**
-```js
-request("GET",
-  "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8", {
-   query:{ 
-      limit: 1, 
-      offset: 20 
-   },
-});
 ```
 
 * * *
@@ -452,6 +550,22 @@ This combines [ FHIR search parameters](https://fhir.openmrs.org/artifacts.html)
 | getPagesOffset | <code>string</code> | Offset for pagination, used to skip a number of results (_getpagesoffset in OpenMRS) |
 | getPages | <code>string</code> | Get specific pages of resources (_getpages in OpenMRS) |
 | bundleType | <code>string</code> | Type of bundle to return (e.g., searchset, batch, history) (_bundleType in FHIR) |
+
+
+* * *
+
+### RequestOptions
+
+Options object
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| query | <code>object</code> |  | An object of query parameters to be encoded into the URL |
+| headers | <code>object</code> |  | An object of all request headers |
+| body | <code>object</code> |  | The request body (as JSON) |
+| [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |
 
 
 * * *

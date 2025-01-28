@@ -104,6 +104,21 @@ sendSMS({
 
 ##  Interfaces
 
+### HttpState
+
+State object
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+
+* * *
+
 ### RequestOptions
 
 Options provided to the HTTP request

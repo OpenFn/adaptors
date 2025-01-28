@@ -187,3 +187,20 @@ put('Organization/abcde', { resourceType: 'Organization', active: false });
 * * *
 
 
+##  Interfaces
+
+### SatusehatHttpState
+
+State object
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Satusehat server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+
+
+* * *
+

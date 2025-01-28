@@ -1023,6 +1023,25 @@ http.request(
 
 ##  Interfaces
 
+### CommonRequestOptions
+
+Options provided to the HTTP request
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors. |
+| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |
+| query | <code>object</code> | An object of query parameters to be encoded into the URL. |
+| headers | <code>object</code> | An object of headers to append to the request. |
+| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |
+| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |
+| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |
+
+
+* * *
+
 ### OptionsHelpers
 
 Helper functions provided by `http.options`.

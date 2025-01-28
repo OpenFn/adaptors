@@ -391,6 +391,21 @@ console.log(id); // Output:'3f4e254e-8f6f-4f8b-9651-1c1c262cc83f'
 
 ##  Interfaces
 
+### HttpState
+
+State object
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+
+* * *
+
 ### RequestOptions
 
 Options provided to the HTTP request

@@ -111,6 +111,21 @@ items: [],
 
 ##  Interfaces
 
+### MojataxHttpState
+
+State object
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Mojatax server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+
+
+* * *
+
 ### MojataxRequestOptions
 
 Options provided to Mojatax HTTP request

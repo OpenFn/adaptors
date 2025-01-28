@@ -198,6 +198,21 @@ request("POST", 'v1/projects', { name: 'Project Name' });
 
 ##  Interfaces
 
+### ODKHttpState
+
+State object
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the ODK HTTP server (with the body removed) |
+| references | an array of all the previous data values |
+
+
+* * *
+
 ### RequestOptions
 
 Options provided to the HTTP request
