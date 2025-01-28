@@ -4,18 +4,17 @@ import {
   logResponse,
 } from '@openfn/language-common/util';
 
-export const prepareNextState = (state, response, callback) => {
+export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
   if (!state.references) {
     state.references = [];
   }
 
-  const nextState = {
+  return {
     ...composeNextState(state, response.body),
     response: responseWithoutBody,
   };
-  return callback(nextState);
 };
 
 export const request = (state, method, path, options = {}) => {

@@ -20,7 +20,7 @@ import * as util from './Utils';
  * @param {IntuitOptions}  [options={}] - An object containing query and headers for the request
  * @returns {Operation}
  */
-export function get(path, options = {}, callback = s => s) {
+export function get(path, options = {}) {
   return async state => {
     const [resolvedPath, resolvedOptions = {}] = expandReferences(
       state,
@@ -34,10 +34,9 @@ export function get(path, options = {}, callback = s => s) {
       resolvedOptions
     );
 
-    return util.prepareNextState(state, response, callback);
+    return util.prepareNextState(state, response);
   };
 }
-
 
 /**
  * Make a POST request to any Intuit endpoint
@@ -47,7 +46,7 @@ export function get(path, options = {}, callback = s => s) {
  *    minorversion: 40,
  *   },
  *  body:{
- *       "Name": "MyJobs_testing", 
+ *       "Name": "MyJobs_testing",
  *       "AccountType": "Accounts Receivable"
  *    }
  * })
@@ -57,20 +56,20 @@ export function get(path, options = {}, callback = s => s) {
  * @param {IntuitOptions}  [options={}] - An object containing query, headers, and body for the request
  * @returns {Operation}
  */
-export function post(path, options = {}, callback = s => s) {
-    return async state => {
-      const [resolvedPath, resolvedOptions = {}] = expandReferences(
-        state,
-        path,
-        options
-      );
-      const response = await util.request(
-        state,
-        'POST',
-        resolvedPath,
-        resolvedOptions
-      );
-  
-      return util.prepareNextState(state, response, callback);
-    };
-  }
+export function post(path, options = {}) {
+  return async state => {
+    const [resolvedPath, resolvedOptions = {}] = expandReferences(
+      state,
+      path,
+      options
+    );
+    const response = await util.request(
+      state,
+      'POST',
+      resolvedPath,
+      resolvedOptions
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
