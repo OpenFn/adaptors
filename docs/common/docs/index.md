@@ -768,23 +768,24 @@ Decodes a Base64 encoded string back to its original format.
 
 **Returns**: <code>string</code> \| <code>object</code> - - The decoded string or JavaScript Object.  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| base64Data | <code>string</code> | The Base64 encoded string. |
-| options | <code>object</code> | Options. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| base64Data | <code>string</code> |  | The Base64 encoded string. |
+| options | <code>object</code> |  | Options. |
+| [options.parseJson] | <code>boolean</code> | <code>true</code> | If false, no attempt will be made to parse the decoded data into a JSON object. |
 
 **Example:** Decode a Base64 string
 ```js
-const decoded = decode('SGVsbG8gV29ybGQ=');
+const decoded = util.decode('SGVsbG8gV29ybGQ=');
 ```
 **Example:** Decode a Base64 JSON object to a standard JavaScript object
 ```js
-const decoded = decode('eyJuYW1lIjoiSmFuZSBEb2UifQ==');
-console.log(decoded); // Output: {name: 'Jane Doe'}
+const decoded = util.decode('eyJuYW1lIjoiSmFuZSBEb2UifQ==');
+console.log(decoded); // Output: {name: 'Jane Doe' }
 ```
 **Example:** To skip the JSON stringification step
 ```js
-const decodedString = decode('Hello World', {parseJson: false})
+const decodedString = util.decode('Hello World', { parseJson: false })
 ```
 
 * * *
@@ -798,24 +799,25 @@ Encodes a given string or Javascript object into Base64 format.
 
 **Returns**: <code>string</code> - - The Base64 encoded string.  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| data | <code>string</code> \| <code>object</code> | The string or object to be encoded. |
-| options | <code>object</code> | Options. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| data | <code>string</code> \| <code>object</code> |  | The string or object to be encoded. |
+| options | <code>object</code> |  | Options |
+| [options.parseJson] | <code>boolean</code> | <code>true</code> | If false, no attempt will be made to stringiy the data before encoding it. |
 
 **Example:** Encode a string
 ```js
-const encodedString = encode('Hello World');
+const encodedString = util.encode('Hello World');
 console.log(encoded); // Output: SGVsbG8gV29ybGQ=
 ```
 **Example:** Encode an object
 ```js
-const encodedObject = encode({name: 'Jane Doe'})
+const encodedObject = util.encode({name: 'Jane Doe' })
 console.log(encodedObject); //output eyJuYW1lIjoiSmFuZSBEb2UifQ==
 ```
 **Example:** To skip the JSON stringification step
 ```js
-const encodedObject = encode('Hello World', {parseJson: false})
+const encodedObject = util.encode('Hello World', { parseJson: false })
 ```
 
 * * *
@@ -825,12 +827,12 @@ const encodedObject = encode('Hello World', {parseJson: false})
 
 <p><code>uuid() ⇒ string</code></p>
 
-Generates a UUID (Universally Unique Identifier).
+Generates a UUID (Universally Unique Identifier)
 
-**Returns**: <code>string</code> - - A newly generated UUID.  
+**Returns**: <code>string</code> - - A newly generated UUID  
 **Example:** Generate a UUID
 ```js
-const id = uuid();
+const id = util.uuid();
 console.log(id); // Output:'3f4e254e-8f6f-4f8b-9651-1c1c262cc83f'
 ```
 
