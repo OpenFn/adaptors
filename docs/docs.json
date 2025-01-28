@@ -8035,6 +8035,560 @@
     "kind": "external-function"
   }
 ],
+{"name":"ghana-bdr","adaptor":"@openfn/language-ghana-bdr","version":"0.1.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, query)</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, data)</a></dt>\\n<dt>\\n    <a href=\\\"#sendbirthnotification\\\">sendBirthNotification(data)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### get\\n\\n<p><code>get(path, query) ⇒ Operation</code></p>\\n\\nMake a GET request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\nget(\\\"patient\\\");\\n```\\n\\n* * *\\n\\n### post\\n\\n<p><code>post(path, data) ⇒ Operation</code></p>\\n\\nMake a POST request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\npost(\\\"patient\\\", { \\\"name\\\":\\\"Bukayo\\\" });\\n```\\n\\n* * *\\n\\n### sendBirthNotification\\n\\n<p><code>sendBirthNotification(data) ⇒ Operation</code></p>\\n\\nGenerate a birth certificate\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | <code>object</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\nsendBirthNotification({\\n  babyData: {\\n    dateOfBirth: \\\"string\\\",\\n    fatherName: \\\"string\\\",\\n    forenames: \\\"string\\\",\\n    gender: \\\"string\\\",\\n    lightwaveETrackerID: \\\"string\\\",\\n    motherName: \\\"string\\\",\\n    noSiblingsInDelivery: \\\"string\\\",\\n    placeOfBirth: \\\"string\\\",\\n    surname: \\\"string\\\",\\n    timeOfbirth: \\\"string\\\",\\n    weightAtBirth: \\\"string\\\",\\n    babyPicture: \\\"string\\\"\\n  },\\n  personVouching: {\\n    etrackerLightwaveID: \\\"string\\\",\\n    ghanaCardPIN: \\\"string\\\",\\n    relationToBaby: \\\"string\\\",\\n    relativePhone: \\\"string\\\",\\n    relativePicture: \\\"string\\\"\\n  },\\n  merchantKey: \\\"XXXXXXXXXXXXXXXXXXXXXX\\\"\\n})\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-ghana-bdr <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the Ghana\\nBirths and Deaths Registration (BDR) API.\\n\\nThere is no public documentation for the Ghana HBDRP, but the the BDR itself can\\nbe reached at https://bdr.gov.gh/\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/ghana-bdr-docs)\\nfor full technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/ghana-bdr-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-ghana-bdr\\n\\n## 0.1.0\\n\\n- Add `get()` operation\\n- Add `post()` operation\\n- Add `sendBirthNotification()` operation\\n\"","functions":["post","sendBirthNotification"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"The base URL (http://www.example.com)","format":"uri","minLength":1,"examples":["https://example.com"]},"username":{"title":"Username","type":"string","description":"Username","examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]}},"type":"object","additionalProperties":true,"required":["password","username","baseUrl"]}},
+[
+  {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a GET request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      }
+    ],
+    "examples": [
+      "get(\"patient\");"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 48,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/ghana-bdr/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 2,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "/**\nState object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the HTTP server, including headers, statusCode, body, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 28,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/ghana-bdr/src"
+    },
+    "order": 1
+  },
+  {
+    "id": "post",
+    "longname": "post",
+    "name": "post",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a POST request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
+        "name": "data"
+      }
+    ],
+    "examples": [
+      "post(\"patient\", { \"name\":\"Bukayo\" });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 63,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/ghana-bdr/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "sendBirthNotification",
+    "longname": "sendBirthNotification",
+    "name": "sendBirthNotification",
+    "kind": "function",
+    "scope": "global",
+    "description": "Generate a birth certificate",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
+        "name": "data"
+      }
+    ],
+    "examples": [
+      "sendBirthNotification({\n  babyData: {\n    dateOfBirth: \"string\",\n    fatherName: \"string\",\n    forenames: \"string\",\n    gender: \"string\",\n    lightwaveETrackerID: \"string\",\n    motherName: \"string\",\n    noSiblingsInDelivery: \"string\",\n    placeOfBirth: \"string\",\n    surname: \"string\",\n    timeOfbirth: \"string\",\n    weightAtBirth: \"string\",\n    babyPicture: \"string\"\n  },\n  personVouching: {\n    etrackerLightwaveID: \"string\",\n    ghanaCardPIN: \"string\",\n    relationToBaby: \"string\",\n    relativePhone: \"string\",\n    relativePicture: \"string\"\n  },\n  merchantKey: \"XXXXXXXXXXXXXXXXXXXXXX\"\n})"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 100,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/ghana-bdr/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 4,
+    "level": 0
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fnIf",
+    "common": true,
+    "name": "fnIf",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  }
+],
+{"name":"ghana-nia","adaptor":"@openfn/language-ghana-nia","version":"0.1.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, query)</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, data)</a></dt>\\n<dt>\\n    <a href=\\\"#registerchild\\\">registerChild(data)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### get\\n\\n<p><code>get(path, query) ⇒ Operation</code></p>\\n\\nMake a GET request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\nget(\\\"patient\\\");\\n```\\n\\n* * *\\n\\n### post\\n\\n<p><code>post(path, data) ⇒ Operation</code></p>\\n\\nMake a POST request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\npost(\\\"patient\\\", { \\\"name\\\":\\\"Bukayo\\\" });\\n```\\n\\n* * *\\n\\n### registerChild\\n\\n<p><code>registerChild(data) ⇒ Operation</code></p>\\n\\nGenerate a national ID\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | <code>object</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\nregisterChild({\\n  child: {},\\n  mother: {},\\n  father: {},\\n  health_facility: {},\\n  birth_informant: {}\\n})\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-ghana-nia <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the Ghana\\nNational Identification Authority (NIA) API.\\n\\nThere is no public documentation for the Ghana NIA system, but the the NIA\\nitself can be reached at https://nia.gov.gh/\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/ghana-nia-docs)\\nfor full technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/ghana-nia-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-ghana-nia\\n\\n## 0.1.0\\n\\n- Add `get()` operation\\n- Add `post()` operation\\n- Add `registerChild()` operation\\n\"","functions":["post","registerChild"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"The base URL (http://www.example.com)","format":"uri","minLength":1,"examples":["https://example.com"]},"merchantKey":{"title":"NIA Merchant Key","type":"string","description":"NI Merchant Key","examples":["abc-123-def"]}},"type":"object","additionalProperties":true,"required":["baseUrl","merchantKey"]}},
+[
+  {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a GET request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      }
+    ],
+    "examples": [
+      "get(\"patient\");"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 48,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/ghana-nia/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 2,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "/**\nState object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the HTTP server, including headers, statusCode, body, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 28,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/ghana-nia/src"
+    },
+    "order": 1
+  },
+  {
+    "id": "post",
+    "longname": "post",
+    "name": "post",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a POST request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
+        "name": "data"
+      }
+    ],
+    "examples": [
+      "post(\"patient\", { \"name\":\"Bukayo\" });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 63,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/ghana-nia/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "registerChild",
+    "longname": "registerChild",
+    "name": "registerChild",
+    "kind": "function",
+    "scope": "global",
+    "description": "Generate a national ID",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
+        "name": "data"
+      }
+    ],
+    "examples": [
+      "registerChild({\n  child: {},\n  mother: {},\n  father: {},\n  health_facility: {},\n  birth_informant: {}\n})"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 83,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/ghana-nia/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 4,
+    "level": 0
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fnIf",
+    "common": true,
+    "name": "fnIf",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  }
+],
 {"name":"gmail","adaptor":"@openfn/language-gmail","version":"1.1.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#getcontentsfrommessages\\\">getContentsFromMessages(options)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### getContentsFromMessages\\n\\n<p><code>getContentsFromMessages(options) ⇒ Operation</code></p>\\n\\nDownloads contents from messages of a Gmail account.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| options | [<code>Options</code>](#options) | Customized options including desired contents and query. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The returned message objects, of the form `{ messageId, contents } ` |\\n| processedIds | An array of string ids processed by this request |\\n**Example:** Get a message with a specific subject\\n```js\\ngetContentsFromMessages(\\n  {\\n    query: 'subject:my+test+message'\\n  }\\n)\\n```\\n**Example:** Get messages after a specific date, with subject and report.txt attachment\\n```js\\ngetContentsFromMessages(\\n  {\\n    query: 'after:15/01/2025',\\n    contents: [\\n      'subject',\\n      { type: 'file', name: 'metadata', file: 'report.txt'}\\n    ]\\n  }\\n)\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### MessageContent\\n\\nUsed to isolate the type of content to retrieve from the message.\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| [type] | <code>string</code> | Message content type. Valid types: from, date, subject, body, archive, file. |\\n| [name] | <code>string</code> | A custom description for the content type. |\\n| [archive] | <code>RegExp</code> \\\\| <code>string</code> | Identifier to isolate the desired attachment when type is 'archive'.   Use a regular expression for pattern matching or a string for a literal match. Required if type is 'archive'. |\\n| [file] | <code>RegExp</code> \\\\| <code>string</code> | Identifier to isolate the desired attachment when type is 'file' or 'archive'.   Use a regular expression for pattern matching or a string for a literal match. Required if type is 'file' or 'archive'. |\\n| [maxLength] | <code>number</code> | Maximum number of characters to retrieve from the content. |\\n\\n\\n* * *\\n\\n### Options\\n\\nConfigurable options provided to the Gmail adaptor.\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [query] | <code>string</code> |  | Gmail search query string. |\\n| [contents] | <code>Array.&lt;(string\\\\|MessageContent)&gt;</code> | <code>[&#x27;from&#x27;, &#x27;date&#x27;, &#x27;subject&#x27;, &#x27;body&#x27;]</code> | An array of strings or MessageContent objects used to specify which parts of the message to retrieve. |\\n| [processedIds] | <code>Array.&lt;string&gt;</code> |  | Ignore message ids which have already been processed. |\\n| [email] | <code>string</code> |  | The user account to retrieve messages from. Defaults to the authenticated user. |\\n| [maxResults] | <code>int</code> |  | Maximum number of messages to process per request. Default is 1000. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# Gmail Adaptor\\n\\n## What it does\\n\\nThis adaptor is used to extract specific content from Gmail messages using custom desired \\\"content\\\" configurations. The sample code specifies how to query Gmail for messages and identify desired attachments and metadata.\\n\\nWithout any parameters, the `getContentsFromMessages()` function will return an array containing every message in the account of the authenticated user including `from`, `date` and `subject`.\\n\\nA number of options are available to isolated the desired messages and to customize the output.\\n\\n## Options\\n\\nOptional parameters include: `contents`, `query`, `email`, `processedIds`, `maxResults`\\n\\n### options.contents\\n\\nUse the `options.contents` array to specify the content to retrieve from each message. Always included are `from`, `date`, and `subject`.\\n\\nEach item can be a simple string (ie, `'body'`, `'subject'`) or an MessageContent object offering advanced configuration.\\n\\n#### Basic metadata\\n\\nThe following types of content can be extracted:\\n\\n- `body`: Extracts the message body.\\n- `subject`: Extracts the email subject.\\n- `date`: Extracts the timestamp of the email.\\n- `from`: Extracts the sender's information.\\n\\nOptionally, each of these content strings can be expanded to include additional specifications:\\n\\n```js\\nconst mySubject = {\\n  type: 'subject',\\n  name: 'email-title',\\n  maxLength: 25,\\n};\\n```\\n\\n- The `type` property instructs the function which content type to extract.\\n- The `name` property allows you to add a custom name to this information.\\n- The `maxLength` property allows you to limit the length of the content returned.\\n\\n#### Attachment: basic file\\n\\nExtract content from a file attachment.\\n\\n`file`: Identify the specific file inside the archive by providing its name as a string or using a regular expression to matching a pattern.\\n\\n```js\\nconst myMetadata = {\\n  type: 'file',\\n  name: 'metadata',\\n  file: /^summary\\\\.txt$/,\\n};\\n```\\n\\n```js\\nconst myMetadata = {\\n  type: 'file',\\n  file: 'summary.txt',\\n  maxLength: 500,\\n};\\n```\\n\\n#### Attachment: archived file\\n\\nExtract content from a file embedded in an archive attachment.\\n\\n- `archive`: Specify the file name of the archive using either a string for an exact match or a regular expression to match a pattern.\\n- `file`: Identify the specific file inside the archive by providing its name as a string or using a regular expression to match a pattern.\\n\\n```js\\nconst myArchivedFile = {\\n  type: 'archive',\\n  name: 'data',\\n  archive: 'devicedata.zip',\\n  file: /_CURRENT_DATA_\\\\w*?\\\\.json$/,\\n  maxLength: 5000,\\n};\\n```\\n\\n```js\\noptions.contents = [mySubject, 'body', myMetadata, myArchivedFile];\\n```\\n\\n### options.query\\n\\nUse a `query` parameter to filter the messages returned.\\n\\nThe query syntax supports the same query format as the Gmail `search` box.\\n\\n```\\noptions.query = 'from:someuser@example.com rfc822msgid:<somemsgid@example.com> is:unread';\\n```\\n\\nA full list of supported search operations can be found here: [Refine searches in Gmail](https://support.google.com/mail/answer/7190)\\n\\n### options.email\\n\\nOptionally specify the email address used for the Gmail account. This almost always the same email associated with the authenticated user so this parameter is optional.\\n\\n```\\noptions.email = '<EMAIL>';\\n```\\n\\n### options.processedIds\\n\\nIn some scenarios, it may be necessary to skip certain messages to prevent the retrieval of duplicate data. Passing an array of messageIds will allow the function to skip these messages if any of the ids are encountered in the returned messages.\\n\\n```\\noptions.processedIds = [\\n  '194e3cf1ca0ccd66',\\n  '283e2df2ca0ecd75',\\n  '572e1af3ca0bcd84',\\n];\\n```\\n\\n### options.maxResults\\n\\nTo prevent inadventant massive retrieval of messages, you can limit the number of results returned. The default value is 1000.\\n\\nThis works in conjuction with the `options.processedIds` parameter. For example:\\n\\n- account contains messages [1, 2, 3]\\n- `options.processedIds = [1];`\\n- `options.maxResults = 1;`\\n- this will skip message #1 and resulting dataset will contain a single message #2\\n\\n## Example jobs\\n\\n```js\\nconst query = 'in:inbox newer_than:2d';\\nconst contents = ['body'];\\nconst maxResults = 200;\\ngetContentsFromMessages({ query, contents, maxResults });\\n```\\n\\n```js\\nconst subject = 'device data summary'.replace(' ', '+');\\nconst query = `in:inbox subject:${subject} newer_than:1m`;\\n\\nconst email = 'special_assigned_delegate@gmail.com';\\n\\nconst metadataFile = {\\n  type: 'file',\\n  name: 'metadata',\\n  file: /summary\\\\.txt$/,\\n  maxLength: 500,\\n};\\n\\nconst dataFile = {\\n  type: 'archive',\\n  name: 'data',\\n  archive: /_device_data\\\\.zip$/,\\n  file: /_CURRENT_DATA_\\\\w*?\\\\.json$/,\\n};\\n\\nconst contents = [metadataFile, dataFile];\\n\\ngetContentsFromMessages({ query, email, contents });\\n```\\n\\n## Sample `state.data` Output\\n\\nFor each matched message, the extracted content is returned as a message object of content properties. Here's an example `state.data` for a single matched message:\\n\\n```js\\n[\\n  {\\n    messageId: '1934c017c1752c01',\\n    from: 'Friendly Sender <sender@gmail.com>',\\n    date: '2024-11-20T23:56:08.000Z',\\n    subject: 'Fwd: FW: Facility Anomaly Report (Summary Data)',\\n    metadata: {\\n      filename: 'daily_summary.txt',\\n      content: '{ \\\"appInfo\\\": { \\\"isAutomaticTime\\\": true }',\\n    },\\n    data: {\\n      archiveFilename: '0031_device_data.zip',\\n      filename: '0031_CURRENT_DATA_P100DT9H45M46S_20241115T102926Z.json',\\n      content: '{ \\\"AMOD\\\": \\\"VL45\\\", \\\"AMFR\\\": \\\"ICECO\\\" }',\\n    },\\n  },\\n];\\n```\\n\\nEach property on the message object represents a specific piece of information extracted:\\n\\n- **from**: Sender's email and name.\\n- **date**: The timestamp when the email was sent.\\n- **subject**: Contains the email subject.\\n- **metadata**: Metadata-named file content, with its matched file name.\\n- **data**: Data-named archive file content, with its matched archive name and file name.\\n\\n## Acquiring an access token\\n\\nThe Gmail adaptor implicitly uses the Gmail account of the Google account that is used to authenticate the application.\\n\\nAllowing the Gmail adaptor to access a Gmail account is a multi-step process.\\n\\n### Create an OAuth 2.0 client ID\\n\\nFollow the instructions are found here:\\nhttps://support.google.com/googleapi/answer/6158849\\n\\n- Go to [Google Cloud Platform Console](https://console.cloud.google.com/)\\n- Go to \\\"APIs & Services\\\"\\n- Click \\\"Credentials\\\"\\n- Click \\\"Create Credentials\\\"\\n- Select \\\"OAuth client ID\\\"\\n- Select \\\"Create OAuth client ID\\\"\\n- Select Application type \\\"Web application\\\"\\n  - Add a uniquely-identifiable name\\n  - Click \\\"Create\\\"\\n- On the resulting popup screen, find and click \\\"DOWNLOAD JSON\\\" and save this file to a secure location.\\n\\n### Use the Postman application to query the OAuth enpoint and retrieve an access token\\n\\nInitially, you'll need to configure an authentication request using Postman's built-in OAuth 2.0 implementation:\\n\\n- Open Postman\\n- Create a new request\\n- Switch to the \\\"Authorization\\\" tab\\n- On the left side, select Type OAuth 2.0\\n- On the right side, scroll down to the \\\"Configure New Token\\\" section\\n- Fill out the form using information from the downloaded json file from the\\n  previous section\\n  - Token Name: Google Oauth\\n  - Grant Type: Authorization Code\\n  - Auth URL: (found in the json file as auth_url)\\n  - Access Token URL: (found in the json file as token_url)\\n  - Client ID: (found in the json file as client_id)\\n  - Client Secret: (found in the json file as client_secret)\\n  - Scope: https://www.googleapis.com/auth/gmail.readonly\\n  - State: (any random string is fine)\\n  - Client Authentication: Send as Basic Auth header\\n\\nOnce the form is filled out, repeat these steps each hour to retrieve a new\\naccess token:\\n\\n- Click on \\\"Get New Access Token\\\"\\n- A browser will open and you'll be asked to authenticate with your Google Account\\n- Accept the request to allow this OAuth session to access your Google Account.\\n- In the MANAGE ACCESS TOKENS popup, find and copy the new Access Token\\n- This access token will be valid for 1 hour.\\n\\n### Configure OpenFn CLI to find the access token\\n\\nThe Gmail adaptor looks for the access token in the configuration section under `access_token`.\\n\\nExample configuration using a workflow:\\n\\n```\\n\\\"workflow\\\": {\\n  \\\"steps\\\": [\\n    {\\n      \\\"id\\\": \\\"getGmailContent\\\",\\n      \\\"adaptors\\\": [\\n        \\\"gmail\\\"\\n      ],\\n      \\\"expression\\\": \\\"path/to/gmail.js\\\",\\n      \\\"configuration\\\": {\\n        \\\"access_token\\\": \\\"(access token acquired from Postman)\\\"\\n      }\\n    }\\n  ]\\n}\\n```\\n\"","changelog":"\"# @openfn/language-gmail\\n\\n## 1.1.0\\n\\n### Minor Changes\\n\\n- 8203e90: Added options.maxResults field to limit excessive data transfer.\\n\\n## 1.0.1\\n\\n### Patch Changes\\n\\n- 01b4aa9: This patch includes breaking changes to the API - but since the\\n  adpator has only been released a couple of days we don't anticipate this\\n  affecting any users.\\n\\n  - Removed the `userId` parameter from `getContentsFromMessages()`. Pass\\n    `options.email` instead.\\n  - Renamed `options.desiredContents` to `options.contents`\\n  - Revised documentation for clarity and accuracy\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["getContentsFromMessages"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","$comment":"OAuth2","properties":{"access_token":{"title":"Access Token","type":"string","description":"Your Gmail access token","writeOnly":true,"minLength":1,"examples":["eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmhax0rZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"]}},"type":"object","additionalProperties":true,"required":["access_token"]}},
 [
   {
@@ -24883,6 +25437,186 @@
   }
 ],
 {"name":"vtiger","adaptor":"@openfn/language-vtiger","version":"1.3.10","docs":"\"\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n\\n\"","readme":"\"# Language Vtiger\\n\\nLanguage Pack for building expressions and operations to make calls to the\\nVtiger API.\\n\\n## Documentation\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/vtiger-configuration-schema/)\\ndefinition.\\n\\n#### sample listTypes expression\\n\\n```js\\nlistTypes();\\n```\\n\\n#### sample postElement expression\\n\\n```js\\npostElement({\\n  operation: \\\"create\\\"\\n  elementType: \\\"leads\\\",\\n  element: {\\n    \\\"name\\\": dataValue(\\\"name\\\")(state),\\n    \\\"surname\\\": dataValue(\\\"surname\\\")(state),\\n    \\\"email\\\": dataValue(\\\"email\\\")(state)\\n  }\\n});\\n\\n\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-vtiger\\n\\n## 1.3.10\\n\\n### Patch Changes\\n\\n- Updated dependencies [b3d7f59]\\n- Updated dependencies [2d709ff]\\n- Updated dependencies [41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 1.3.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 1.3.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [a47d8d5]\\n- Updated dependencies [9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 1.3.7\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 1.3.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 1.3.5\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus [33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 1.3.4\\n\\n### Patch Changes\\n\\n- 8d866e4: Update tough-cookie dependency\\n\\n## 1.3.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 1.3.2\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 1.3.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 1.3.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 1.2.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 1.2.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 1.1.3\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies [2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 1.1.2\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 1.1.1\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 1.1.0\\n\\n### Minor Changes\\n\\n- b4a13ff: migrate vtiger\\n\"","functions":[],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"hostUrl":{"title":"Host URL","type":"string","description":"VTiger instance host URL","format":"uri","minLength":1,"examples":["https://openfunction.od2.vtiger.com"]},"username":{"title":"Username","type":"string","description":"VTiger instance username","minLength":1,"examples":["test@openfn.org"]},"accessToken":{"title":"Access Token","type":"string","description":"VTiger instance access token","writeOnly":true,"minLength":1,"examples":["@some()!veryHugeToke"]}},"type":"object","additionalProperties":true,"required":["hostUrl","username","accessToken"]}},
+[
+  {
+    "id": "SendSMSState",
+    "longname": "SendSMSState",
+    "name": "SendSMSState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body. containt status and message response",
+        "name": "data"
+      },
+      {
+        "description": "the response from the Wigal SMS server, including headers, statusCode etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 14,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/wigal-sms/src"
+    },
+    "order": 1,
+    "newscope": true
+  },
+  {
+    "id": "SMSRequestObject",
+    "longname": "SMSRequestObject",
+    "name": "SMSRequestObject",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "SMS Request Object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The senderID used for sending message. Approved SenderIDs only",
+        "name": "senderid"
+      },
+      {
+        "type": {
+          "names": [
+            "array"
+          ]
+        },
+        "description": "An array of objects containing the destination phone number and message to be sent",
+        "name": "destinations"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The message to be sent to the destinations",
+        "name": "message"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The type of message to be sent. Default is 'text'",
+        "name": "smstype"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 5,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/wigal-sms/src"
+    },
+    "order": 0,
+    "level": 0
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fnIf",
+    "common": true,
+    "name": "fnIf",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  }
+],
+{"name":"wigal-sms","adaptor":"@openfn/language-wigal-sms","version":"0.1.0","docs":"\"\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n\\n##  Interfaces\\n\\n### SMSRequestObject\\n\\nSMS Request Object\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| senderid | <code>string</code> | The senderID used for sending message. Approved SenderIDs only |\\n| destinations | <code>array</code> | An array of objects containing the destination phone number and message to be sent |\\n| message | <code>string</code> | The message to be sent to the destinations |\\n| smstype | <code>string</code> | The type of message to be sent. Default is 'text' |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-wigal-sms <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the Wigal SMS\\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/wigal-sms-docs)\\nfor full technical documentation. Bulk SMS APIs are documented\\n[here](https://frogdocs.wigal.com.gh/introduction).\\n\\n### Example\\n\\n```js\\nsendSMS({\\n  senderid: 'Stevkky',\\n  destinations: [\\n    {\\n      destination: '0552825710',\\n    },\\n  ],\\n  message: 'This is a sample message for SMS sending via Wigal FROG API.',\\n  smstype: 'text',\\n});\\n```\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/wigal-sms-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\\n```\\n\\n```\\n\"","changelog":"\"# @openfn/language-wigal-sms\\n\\n## 0.1.0\\n\\n- Add `sendSms()` operation\\n\"","functions":["execute"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The base URL (https://frogapi.wigal.com.gh)","format":"uri","minLength":1,"examples":["https://frogapi.wigal.com.gh"]},"username":{"title":"Username","type":"string","description":"Username","examples":["test@openfn.org"]},"apiKey":{"title":"API-KEY","type":"string","description":"API-KEY","writeOnly":true,"examples":["@some(!)apikey"]}},"type":"object","additionalProperties":true,"required":["apiKey","username"]}},
 [
   {
     "id": "alterState",
