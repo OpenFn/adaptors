@@ -1,11 +1,5 @@
 ## 2.3.0
 
-## 2.3.1
-
-### Patch Changes
-
-- f745566: Update docs examples for utils
-
 ### Minor Changes
 
 - b3d7f59: Common util functions `encode` and `decode` can now take a JavaScript
