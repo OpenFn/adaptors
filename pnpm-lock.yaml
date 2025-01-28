@@ -1924,37 +1924,6 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
 
-  packages/smpp:
-    dependencies:
-      '@openfn/language-common':
-        specifier: workspace:*
-        version: link:../common
-      request:
-        specifier: ^2.88.2
-        version: 2.88.2
-    devDependencies:
-      '@openfn/simple-ast':
-        specifier: 0.4.1
-        version: 0.4.1
-      assertion-error:
-        specifier: ^1.1.0
-        version: 1.1.0
-      chai:
-        specifier: ^4.3.7
-        version: 4.3.7
-      deep-eql:
-        specifier: ^4.1.2
-        version: 4.1.2
-      esno:
-        specifier: ^0.16.3
-        version: 0.16.3
-      nock:
-        specifier: ^13.2.9
-        version: 13.2.9
-      rimraf:
-        specifier: ^3.0.2
-        version: 3.0.2
-
   packages/surveycto:
     dependencies:
       '@openfn/language-common':
