@@ -42,7 +42,7 @@ export function get(path, options = {}, callback = s => s) {
 /**
  * Make a POST request to any Intuit endpoint
  * @example <caption>Create an account on intuit.</caption>
- * post("/v3/company/9341453908059321/account", {
+ * post("/v3/company/9341453908059456/account", {
  *  query: {
  *    minorversion: 40,
  *   },
