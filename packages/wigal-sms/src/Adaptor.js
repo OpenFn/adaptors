@@ -75,16 +75,16 @@ export function sendSms(data) {
 }
 
 export {
-  dataPath,
-  dataValue,
-  dateFns,
-  cursor,
-  each,
-  field,
-  fields,
   fn,
   fnIf,
-  lastReferenceValue,
+  each,
   merge,
+  field,
+  fields,
+  cursor,
+  dateFns,
+  dataPath,
+  dataValue,
   sourceValue,
+  lastReferenceValue,
 } from '@openfn/language-common';

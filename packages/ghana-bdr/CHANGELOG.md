@@ -2,4 +2,6 @@
 
 ## 0.1.0
 
-Initial release.
+- Add `get()` operation
+- Add `post()` operation
+- Add `sendBirthNotification()` operation

@@ -80,24 +80,24 @@ export function post(path, data) {
  * @returns {Operation}
  * @state {HttpState}
  */
-export function registerChild(data, options = {}) {
+export function registerChild(data) {
   return util.request('/awopa/api/v1/baby/registration', {
     method: 'POST',
     data,
-    ...options,
   });
 }
 
 export {
-  dataPath,
-  dataValue,
-  dateFns,
-  cursor,
+  fn,
+  fnIf,
   each,
+  merge,
   field,
   fields,
-  fn,
-  lastReferenceValue,
-  merge,
+  cursor,
+  dateFns,
+  dataPath,
+  dataValue,
   sourceValue,
+  lastReferenceValue,
 } from '@openfn/language-common';

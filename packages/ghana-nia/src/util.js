@@ -39,7 +39,7 @@ export const prepareNextState = async (state, response) => {
 
 export const request = (path, options) => {
   return async state => {
-    const { baseUrl, niaMerchantKey } = state.configuration;
+    const { baseUrl, merchantKey } = state.configuration;
     getClient(baseUrl);
     const basePath = baseUrl ? new URL(baseUrl).pathname : '/';
 
@@ -53,7 +53,7 @@ export const request = (path, options) => {
       data,
       headers = {
         'content-type': 'application/json',
-        NIa_merchantKey: niaMerchantKey,
+        NIa_merchantKey: merchantKey,
       },
       method = 'POST',
       query,

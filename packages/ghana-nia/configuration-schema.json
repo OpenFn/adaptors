@@ -7,16 +7,23 @@
       "description": "The base URL (http://www.example.com)",
       "format": "uri",
       "minLength": 1,
-      "examples": ["https://example.com"]
+      "examples": [
+        "https://example.com"
+      ]
     },
-    "niaMerchantKey": {
+    "merchantKey": {
       "title": "NIA Merchant Key",
       "type": "string",
       "description": "NI Merchant Key",
-      "examples": ["abc-123-def"]
+      "examples": [
+        "abc-123-def"
+      ]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["baseUrl", "niaMerchantKey"]
+  "required": [
+    "baseUrl",
+    "merchantKey"
+  ]
 }

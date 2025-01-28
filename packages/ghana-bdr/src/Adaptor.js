@@ -97,24 +97,24 @@ export function post(path, data) {
  * @returns {Operation}
  * @state {HttpState}
  */
-export function sendBirthNotification(data, options = {}) {
+export function sendBirthNotification(data) {
   return util.request('api/notification', {
     method: 'POST',
     data,
-    ...options,
   });
 }
 
 export {
-  dataPath,
-  dataValue,
-  dateFns,
-  cursor,
+  fn,
+  fnIf,
   each,
+  merge,
   field,
   fields,
-  fn,
-  lastReferenceValue,
-  merge,
+  cursor,
+  dateFns,
+  dataPath,
+  dataValue,
   sourceValue,
+  lastReferenceValue,
 } from '@openfn/language-common';

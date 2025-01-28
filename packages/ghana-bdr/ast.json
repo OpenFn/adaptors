@@ -56,6 +56,53 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "sendBirthNotification",
+      "params": [
+        "data"
+      ],
+      "docs": {
+        "description": "Generate a birth certificate",
+        "tags": [
+          {
+            "title": "example",
+            "description": "sendBirthNotification({\n  babyData: {\n    dateOfBirth: \"string\",\n    fatherName: \"string\",\n    forenames: \"string\",\n    gender: \"string\",\n    lightwaveETrackerID: \"string\",\n    motherName: \"string\",\n    noSiblingsInDelivery: \"string\",\n    placeOfBirth: \"string\",\n    surname: \"string\",\n    timeOfbirth: \"string\",\n    weightAtBirth: \"string\",\n    babyPicture: \"string\"\n  },\n  personVouching: {\n    etrackerLightwaveID: \"string\",\n    ghanaCardPIN: \"string\",\n    relationToBaby: \"string\",\n    relativePhone: \"string\",\n    relativePicture: \"string\"\n  },\n  merchantKey: \"XXXXXXXXXXXXXXXXXXXXXX\"\n})"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],
@@ -90,6 +137,59 @@
               "name": "Function"
             },
             "name": "func"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fnIf",
+      "params": [
+        "condition",
+        "operation"
+      ],
+      "docs": {
+        "description": "A custom operation that will only execute the function if the condition returns true",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+          },
+          {
+            "title": "param",
+            "description": "The condition that returns true",
+            "type": {
+              "type": "NameExpression",
+              "name": "Boolean"
+            },
+            "name": "condition"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be executed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
           },
           {
             "title": "returns",
