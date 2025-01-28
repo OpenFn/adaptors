@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import { expandReferences, encode } from '@openfn/language-common/util';
 import _ from 'lodash';
 const { indexOf } = _;
 import {
@@ -79,7 +79,10 @@ axios.interceptors.response.use(
       .split(';')[0]
       .split(',');
 
-    if (response.config.method === 'get') {
+    if (
+      response.config.method === 'get' &&
+      response.config.responseType != 'arraybuffer'
+    ) {
       if (indexOf(acceptHeaders, contentType) === -1) {
         const newError = {
           status: 404,
@@ -475,6 +478,9 @@ export function update(
  * @param {string} resourceType - The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.
  * @param {Object} query - A query object that will limit what resources are retrieved when converted into request params.
  * @param {Object} [options] - Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use.
+ * @param {Object} [options.params] - The parameters for the request.
+ * @param {Object} [options.requestConfig] - The configuration for the request, including headers, etc.
+ * @param {boolean} [options.asBase64=false] - Optional flag to indicate if the response should be returned as a Base64 encoded string.
  * @param {function} [callback]  - Optional callback to handle the response
  * @returns {Operation} state
  * @example <caption>Get all data values for the 'pBOMPrpg1QX' dataset</caption>
@@ -497,25 +503,29 @@ export function update(
  *   trackedEntity:['F8yKM85NbxW'],
  * });
  */
-export function get(resourceType, query, options = {}, callback = false) {
+export function get(resourceType, query, options = {}, callback = s => s) {
   return state => {
     console.log('Preparing get operation...');
 
     const [resolvedResourceType, resolvedQuery, resolvedOptions] =
       expandReferences(state, resourceType, query, options);
 
-    const { params, requestConfig } = resolvedOptions;
+    const { params, requestConfig, asBase64 = false } = resolvedOptions;
     const { configuration } = state;
 
     return request(configuration, {
       method: 'get',
       url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
-      params: { ...resolvedQuery, ...params },
-      responseType: 'json',
+      params: {
+        ...resolvedQuery,
+        ...params,
+      },
+      responseType: asBase64 ? 'arraybuffer' : 'json',
       ...requestConfig,
     }).then(result => {
       console.log(`Retrieved ${resolvedResourceType}`);
-      return handleResponse(result, state, callback);
+      const response = asBase64 ? { data: encode(result.data) } : result;
+      return handleResponse(response, state, callback);
     });
   };
 }

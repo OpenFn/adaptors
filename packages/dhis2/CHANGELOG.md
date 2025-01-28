@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 6.2.0
+
+### Minor Changes
+
+- 0156632: Add `asBase64` option in dhis2 `get()` function
+
 ## 6.1.0
 
 ### Minor Changes

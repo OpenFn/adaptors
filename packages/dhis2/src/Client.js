@@ -15,7 +15,7 @@ export function request({ username, password, pat }, axiosRequest) {
   const { method, url, params } = axiosRequest;
 
   console.log(`Sending ${method} request to ${url}`);
-  if (params) console.log(` with params:`, params);
+  if (params) console.log(`with params: `, params);
 
   // NOTE: We don't follow redirects for unsafe methods: https://github.com/axios/axios/issues/2460
   const safeRedirect = ['get', 'head', 'options', 'trace'].includes(
@@ -23,25 +23,24 @@ export function request({ username, password, pat }, axiosRequest) {
   );
 
   // Declare auth property and headers dynamically
-  const headers = { 'Content-Type': 'application/json'}
+  const headers = {
+    'Content-Type': 'application/json',
+  };
   let auth;
 
-  if(pat){
-    headers.Authorization = `ApiToken ${pat}`
+  if (pat) {
+    headers.Authorization = `ApiToken ${pat}`;
   } else {
-    auth = { username, password }
+    auth = { username, password };
   }
 
-
-  return axios(
-    {
-      headers,
-      responseType: 'json',
-      auth,
-      maxRedirects: safeRedirect ? 5 : 0,
-      paramsSerializer: params => Qs.stringify(params, { arrayFormat: 'repeat' }),
-      // Note that providing headers or auth in the request object will overwrite.
-      ...axiosRequest,
-    }
-  );
+  return axios({
+    headers,
+    responseType: 'json',
+    auth,
+    maxRedirects: safeRedirect ? 5 : 0,
+    paramsSerializer: params => Qs.stringify(params, { arrayFormat: 'repeat' }),
+    // Note that providing headers or auth in the request object will overwrite.
+    ...axiosRequest,
+  });
 }
