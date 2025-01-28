@@ -1,8 +1,10 @@
 # language-ghana-bdr <img src='./assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the ghana-bdr API.
+An OpenFn **_adaptor_** for building integration jobs for use with the Ghana
+Births and Deaths Registration (BDR) API.
 
-There is no public documentation for the Ghana HBDRP, but the the BDR itself can be reached at https://bdr.gov.gh/
+There is no public documentation for the Ghana HBDRP, but the the BDR itself can
+be reached at https://bdr.gov.gh/
 
 ## Documentation
 
@@ -14,12 +16,6 @@ for full technical documentation.
 View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/ghana-bdr-configuration-schema/)
 for required and optional `configuration` properties.
-
-### A example expression using the `create` function
-
-```js
-post('patient', { name: 'Bukayo' });
-```
 
 ## Development
 

@@ -1,8 +1,10 @@
 # language-ghana-nia <img src='./assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the ghana-nia API.
+An OpenFn **_adaptor_** for building integration jobs for use with the Ghana
+National Identification Authority (NIA) API.
 
-There is no public documentation for the Ghana NIA system, but the the NIA itself can be reached at https://nia.gov.gh/
+There is no public documentation for the Ghana NIA system, but the the NIA
+itself can be reached at https://nia.gov.gh/
 
 ## Documentation
 
@@ -14,12 +16,6 @@ for full technical documentation.
 View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/ghana-nia-configuration-schema/)
 for required and optional `configuration` properties.
-
-### A example expression using the `create` function
-
-```js
-post('patient', { name: 'Bukayo' });
-```
 
 ## Development
 
