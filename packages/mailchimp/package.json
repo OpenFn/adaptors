@@ -24,7 +24,7 @@
     "@openfn/language-common": "workspace:*",
     "axios": "^1.7.7",
     "md5": "^2.3.0",
-    "undici": "^5.28.4"
+    "undici": "^5.28.5"
   },
   "devDependencies": {
     "@openfn/simple-ast": "0.4.1",

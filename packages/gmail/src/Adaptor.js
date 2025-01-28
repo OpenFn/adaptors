@@ -39,6 +39,7 @@ import {
  *   An array of strings or MessageContent objects used to specify which parts of the message to retrieve.
  * @property {Array<string>} [processedIds] - Ignore message ids which have already been processed.
  * @property {string?} [email] - The user account to retrieve messages from. Defaults to the authenticated user.
+ * @property {int?} [maxResults] - Maximum number of messages to process per request. Default is 1000.
  */
 
 /**
@@ -73,28 +74,30 @@ export function getContentsFromMessages(options) {
     const defaultOptions = {
       contents: ['from', 'date', 'subject'],
       userId: 'me',
+      maxResults: 1000,
     };
 
     const opts = {
       userId: resolvedOptions.email ?? defaultOptions.userId,
       query: resolvedOptions.query,
       processedIds: resolvedOptions.processedIds,
+      maxResults: resolvedOptions.maxResults ?? defaultOptions.maxResults,
     };
 
     const contentIndicators = getContentIndicators(
       defaultOptions.contents,
-      resolvedOptions.contents,
+      resolvedOptions.contents
     );
 
     const contents = [];
-    const currentIds = [];
+    const newIds = [];
     const previousIds = Array.isArray(opts.processedIds)
       ? opts.processedIds
       : [];
 
     let nextPageToken = null;
 
-    do {
+    doNextPageToken: do {
       const messagesResult = await getMessagesResult(
         opts.userId,
         opts.query,
@@ -108,18 +111,18 @@ export function getContentsFromMessages(options) {
 
       nextPageToken = messagesResult.nextPageToken;
 
-      const currentPageIds = messagesResult.messages.map(message => message.id);
+      for (const message of messagesResult.messages) {
+        newIds.push(message.id);
 
-      const unprocessedIds = currentPageIds.filter(
-        id => !previousIds.includes(id)
-      );
+        if (previousIds.includes(message.id)) {
+          continue;
+        }
 
-      for (const messageId of unprocessedIds) {
         const content = {
-          messageId: messageId,
+          messageId: message.id,
         };
 
-        const messageResult = await getMessageResult(opts.userId, messageId);
+        const messageResult = await getMessageResult(opts.userId, message.id);
 
         for (const contentIndicator of contentIndicators) {
           const messageContent = await getMessageContent(
@@ -137,14 +140,16 @@ export function getContentsFromMessages(options) {
         }
 
         contents.push(content);
-      }
 
-      currentIds.push(...currentPageIds);
+        if (contents.length >= opts.maxResults) {
+          break doNextPageToken;
+        }
+      }
     } while (nextPageToken);
 
     const nextState = {
       ...composeNextState(state, contents),
-      processedIds: currentIds,
+      processedIds: newIds,
     };
 
     return nextState;

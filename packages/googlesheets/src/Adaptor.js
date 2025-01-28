@@ -99,6 +99,11 @@ export function appendValues(params, callback = s => s) {
     const [resolvedParams] = expandReferences(state, params);
     const { spreadsheetId, range, values } = resolvedParams;
 
+    if (!values || values.length === 0) {
+      console.log('Warning: empty values array');
+      return state;
+    }
+
     return new Promise((resolve, reject) => {
       client.spreadsheets.values.append(
         {
@@ -162,6 +167,11 @@ export function batchUpdateValues(params, callback = s => s) {
       valueInputOption = 'USER_ENTERED',
       values,
     } = resolvedParams;
+
+    if (!values || values.length === 0) {
+      console.log('Warning: empty values array');
+      return state;
+    }
 
     const resource = {
       data: [

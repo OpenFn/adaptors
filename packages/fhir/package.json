@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:^2.1.1",
-    "undici": "^5.28.4"
+    "undici": "^5.28.5"
   },
   "devDependencies": {
     "@openfn/simple-ast": "^0.4.1",
