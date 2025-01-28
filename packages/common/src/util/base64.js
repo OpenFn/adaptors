@@ -6,7 +6,8 @@ import _ from 'lodash';
  * @public
  * @namespace util
  * @param {string | object} data - The string or object to be encoded.
- * @param {object} options - Options.
+ * @param {object} options - Options
+ * @param {boolean} [options.parseJson=true] - If false, no attempt will be made to stringiy the data before encoding it.
  * @returns {string} - The Base64 encoded string.
  * @example <caption>Encode a string</caption>
  * const encodedString = util.encode('Hello World');
@@ -38,6 +39,7 @@ export const encode = (data, options = { parseJson: true }) => {
  * @namespace util
  * @param {string} base64Data - The Base64 encoded string.
  * @param {object} options - Options.
+ * @param {boolean} [options.parseJson=true] - If false, no attempt will be made to parse the decoded data into a JSON object.
  * @returns {string | object} - The decoded string or JavaScript Object.
  * @example <caption>Decode a Base64 string</caption>
  * const decoded = util.decode('SGVsbG8gV29ybGQ=');
