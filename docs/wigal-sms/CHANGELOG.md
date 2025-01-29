@@ -1,5 +1,11 @@
 # @openfn/language-wigal-sms
 
+## 0.1.2
+
+### Patch Changes
+
+- Expose via @function
+
 ## 0.1.1
 
 ### Patch Changes
