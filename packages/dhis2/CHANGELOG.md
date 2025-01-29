@@ -1,5 +1,12 @@
 # @openfn/language-dhis2
 
+## 6.3.0
+
+### Minor Changes
+
+- Added a 'findAttributeValueById' function; GHS points out that this is more
+  durable than the display names used by 'findAttributeValue'
+
 ## 6.2.0
 
 ### Minor Changes
