@@ -44,7 +44,6 @@ export function execute(...operations) {
 /**
  * Send SMS using Wigal SMS Gateway API
  *
- * @public
  * @example <caption>Send General SMS message</caption>
  * sendSMS({
  *   senderid: "Stevkky",
@@ -64,6 +63,8 @@ export function execute(...operations) {
  *     },
  *   ],
  * });
+ * @function
+ * @public
  * @param {SMSRequestObject} data  - SMS payload to push to Wigal. This includes the message, phone number, etc
  * @returns {Operation}
  * @state {SendSMSState}
