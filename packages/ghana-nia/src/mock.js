@@ -56,7 +56,7 @@ export function createServer(url = 'https://selfie.imsgh.org:2035') {
 
   const sendNiaData = req => {
     // if (validate(JSON.parse(req.body))) {
-     if (validateRequestBody(req, sampleRequestBody)) {
+    if (validateRequestBody(JSON.parse(req.body), sampleRequestBody)) {
       return {
         statusCode: 200,
         responseOptions: {
