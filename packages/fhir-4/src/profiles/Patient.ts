@@ -5,7 +5,6 @@
 
 import * as dt from "../datatypes.js";
 import _ from "lodash";
-import fhir from "fhir/r4";
 
 export type Patient_Props = {
     id?: any;
@@ -16,7 +15,7 @@ export type Patient_Props = {
     contained?: any;
     extension?: any;
     modifierExtension?: any;
-    identifier?: fhir.Identifier;
+    identifier?: dt.Identifier;
     active?: any;
     name?: any;
     telecom?: any;

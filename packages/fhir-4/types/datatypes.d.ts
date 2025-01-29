@@ -1,4 +1,5 @@
-import FHIR from 'fhir/r4';
+import * as FHIR from 'fhir/r4';
+export declare type Identifier = Omit<FHIR.Identifier, `_${string}`>;
 export declare const mapSystems: (obj: any) => any;
 /**
  * Define a set of mapped system values.
@@ -23,13 +24,13 @@ export declare const extendSystemMap: (newMappings: any) => void;
  * @param ext - Any other arguments will be treated as extensions
  * @param {string} [system] - the string system to use by default if
  */
-export declare const identifier: (id: string | FHIR.Identifier, ...ext: any[]) => any;
+export declare const identifier: (id: string | Identifier, ...ext: any[]) => any;
 /**
  * Alias for util.identifier()
  * @public
  * @function
  */
-export declare const id: (id: string | FHIR.Identifier, ...ext: any[]) => any;
+export declare const id: (id: string | Identifier, ...ext: any[]) => any;
 /**
  * Add an extension to a resource (or object).
  * An object will be created and added to an `extension` array on the provided resource.

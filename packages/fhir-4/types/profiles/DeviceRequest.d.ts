@@ -1,0 +1,42 @@
+import * as dt from "../datatypes.js";
+export declare type DeviceRequest_Props = {
+    id?: any;
+    meta?: any;
+    implicitRules?: any;
+    language?: any;
+    text?: any;
+    contained?: any;
+    extension?: any;
+    modifierExtension?: any;
+    identifier?: dt.Identifier;
+    instantiatesCanonical?: any;
+    instantiatesUri?: any;
+    basedOn?: any;
+    priorRequest?: any;
+    groupIdentifier?: dt.Identifier;
+    status?: any;
+    intent?: any;
+    priority?: any;
+    code?: any;
+    parameter?: any;
+    subject?: any;
+    encounter?: any;
+    occurrence?: any;
+    authoredOn?: any;
+    requester?: any;
+    performerType?: any;
+    performer?: any;
+    reasonCode?: any;
+    reasonReference?: any;
+    insurance?: any;
+    supportingInfo?: any;
+    note?: any;
+    relevantHistory?: any;
+};
+export default function (props: Partial<DeviceRequest_Props>): {
+    resourceType: string;
+    text: {
+        status: string;
+        div: string;
+    };
+};

@@ -1,0 +1,9 @@
+import { expect, assert } from "chai";
+import { builders } from "@openfn/language-fhir-4";
+
+describe("CareTeam", () => {
+    it("should create a simple CareTeam", () => {
+        const resource = builders.careTeam({});
+        assert.isOk(resource);
+    });
+});

@@ -1,4 +1,4 @@
-import fhir from "fhir/r4";
+import * as dt from "../datatypes.js";
 export declare type Patient_Props = {
     id?: any;
     meta?: any;
@@ -8,7 +8,7 @@ export declare type Patient_Props = {
     contained?: any;
     extension?: any;
     modifierExtension?: any;
-    identifier?: fhir.Identifier;
+    identifier?: dt.Identifier;
     active?: any;
     name?: any;
     telecom?: any;

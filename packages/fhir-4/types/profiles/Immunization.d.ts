@@ -1,0 +1,46 @@
+import * as dt from "../datatypes.js";
+export declare type Immunization_Props = {
+    id?: any;
+    meta?: any;
+    implicitRules?: any;
+    language?: any;
+    text?: any;
+    contained?: any;
+    extension?: any;
+    modifierExtension?: any;
+    identifier?: dt.Identifier;
+    status?: any;
+    statusReason?: any;
+    vaccineCode?: any;
+    patient?: any;
+    encounter?: any;
+    occurrence?: any;
+    recorded?: any;
+    primarySource?: any;
+    reportOrigin?: any;
+    location?: any;
+    manufacturer?: any;
+    lotNumber?: any;
+    expirationDate?: any;
+    site?: any;
+    route?: any;
+    doseQuantity?: any;
+    performer?: any;
+    note?: any;
+    reasonCode?: any;
+    reasonReference?: any;
+    isSubpotent?: any;
+    subpotentReason?: any;
+    education?: any;
+    programEligibility?: any;
+    fundingSource?: any;
+    reaction?: any;
+    protocolApplied?: any;
+};
+export default function (props: Partial<Immunization_Props>): {
+    resourceType: string;
+    text: {
+        status: string;
+        div: string;
+    };
+};

@@ -1,0 +1,40 @@
+import * as dt from "../datatypes.js";
+export declare type DeviceDefinition_Props = {
+    id?: any;
+    meta?: any;
+    implicitRules?: any;
+    language?: any;
+    text?: any;
+    contained?: any;
+    extension?: any;
+    modifierExtension?: any;
+    identifier?: dt.Identifier;
+    udiDeviceIdentifier?: any;
+    manufacturer?: any;
+    deviceName?: any;
+    modelNumber?: any;
+    type?: any;
+    specialization?: any;
+    version?: any;
+    safety?: any;
+    shelfLifeStorage?: any;
+    physicalCharacteristics?: any;
+    languageCode?: any;
+    capability?: any;
+    property?: any;
+    owner?: any;
+    contact?: any;
+    url?: any;
+    onlineInformation?: any;
+    note?: any;
+    quantity?: any;
+    parentDevice?: any;
+    material?: any;
+};
+export default function (props: Partial<DeviceDefinition_Props>): {
+    resourceType: string;
+    text: {
+        status: string;
+        div: string;
+    };
+};

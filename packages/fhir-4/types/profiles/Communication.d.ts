@@ -1,0 +1,41 @@
+import * as dt from "../datatypes.js";
+export declare type Communication_Props = {
+    id?: any;
+    meta?: any;
+    implicitRules?: any;
+    language?: any;
+    text?: any;
+    contained?: any;
+    extension?: any;
+    modifierExtension?: any;
+    identifier?: dt.Identifier;
+    instantiatesCanonical?: any;
+    instantiatesUri?: any;
+    basedOn?: any;
+    partOf?: any;
+    inResponseTo?: any;
+    status?: any;
+    statusReason?: any;
+    category?: any;
+    priority?: any;
+    medium?: any;
+    subject?: any;
+    topic?: any;
+    about?: any;
+    encounter?: any;
+    sent?: any;
+    received?: any;
+    recipient?: any;
+    sender?: any;
+    reasonCode?: any;
+    reasonReference?: any;
+    payload?: any;
+    note?: any;
+};
+export default function (props: Partial<Communication_Props>): {
+    resourceType: string;
+    text: {
+        status: string;
+        div: string;
+    };
+};

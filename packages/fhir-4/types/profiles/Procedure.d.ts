@@ -1,0 +1,46 @@
+import * as dt from "../datatypes.js";
+export declare type Procedure_Props = {
+    id?: any;
+    meta?: any;
+    implicitRules?: any;
+    language?: any;
+    text?: any;
+    contained?: any;
+    extension?: any;
+    modifierExtension?: any;
+    identifier?: dt.Identifier;
+    instantiatesCanonical?: any;
+    instantiatesUri?: any;
+    basedOn?: any;
+    partOf?: any;
+    status?: any;
+    statusReason?: any;
+    category?: any;
+    code?: any;
+    subject?: any;
+    encounter?: any;
+    performed?: any;
+    recorder?: any;
+    asserter?: any;
+    performer?: any;
+    location?: any;
+    reasonCode?: any;
+    reasonReference?: any;
+    bodySite?: any;
+    outcome?: any;
+    report?: any;
+    complication?: any;
+    complicationDetail?: any;
+    followUp?: any;
+    note?: any;
+    focalDevice?: any;
+    usedReference?: any;
+    usedCode?: any;
+};
+export default function (props: Partial<Procedure_Props>): {
+    resourceType: string;
+    text: {
+        status: string;
+        div: string;
+    };
+};

@@ -1,0 +1,42 @@
+import * as dt from "../datatypes.js";
+export declare type EvidenceVariable_Props = {
+    id?: any;
+    meta?: any;
+    implicitRules?: any;
+    language?: any;
+    text?: any;
+    contained?: any;
+    extension?: any;
+    modifierExtension?: any;
+    url?: any;
+    identifier?: dt.Identifier;
+    version?: any;
+    name?: any;
+    title?: any;
+    shortTitle?: any;
+    subtitle?: any;
+    status?: any;
+    date?: any;
+    description?: any;
+    note?: any;
+    useContext?: any;
+    publisher?: any;
+    contact?: any;
+    author?: any;
+    editor?: any;
+    reviewer?: any;
+    endorser?: any;
+    relatedArtifact?: any;
+    actual?: any;
+    characteristicCombination?: any;
+    characteristic?: any;
+    handling?: any;
+    category?: any;
+};
+export default function (props: Partial<EvidenceVariable_Props>): {
+    resourceType: string;
+    text: {
+        status: string;
+        div: string;
+    };
+};

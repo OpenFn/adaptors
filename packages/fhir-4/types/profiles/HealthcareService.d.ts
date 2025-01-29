@@ -1,0 +1,42 @@
+import * as dt from "../datatypes.js";
+export declare type HealthcareService_Props = {
+    id?: any;
+    meta?: any;
+    implicitRules?: any;
+    language?: any;
+    text?: any;
+    contained?: any;
+    extension?: any;
+    modifierExtension?: any;
+    identifier?: dt.Identifier;
+    active?: any;
+    providedBy?: any;
+    category?: any;
+    type?: any;
+    specialty?: any;
+    location?: any;
+    name?: any;
+    comment?: any;
+    extraDetails?: any;
+    photo?: any;
+    telecom?: any;
+    coverageArea?: any;
+    serviceProvisionCode?: any;
+    eligibility?: any;
+    program?: any;
+    characteristic?: any;
+    communication?: any;
+    referralMethod?: any;
+    appointmentRequired?: any;
+    availableTime?: any;
+    notAvailable?: any;
+    availabilityExceptions?: any;
+    endpoint?: any;
+};
+export default function (props: Partial<HealthcareService_Props>): {
+    resourceType: string;
+    text: {
+        status: string;
+        div: string;
+    };
+};

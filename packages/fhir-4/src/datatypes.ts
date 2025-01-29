@@ -1,5 +1,12 @@
 import _ from 'lodash';
-import FHIR from 'fhir/r4';
+// TODO need to add @types fhir to the gen
+import * as FHIR from 'fhir/r4';
+
+// re-declare fhir types with _ removed
+// basically everything allows _ variants
+// but it's not useful for users
+// We want to allow support for them, but not present them to users
+export type Identifier = Omit<FHIR.Identifier, `_${string}`>;
 
 let systemMap = {};
 
@@ -50,7 +57,7 @@ export const extendSystemMap = newMappings => {
  * @param ext - Any other arguments will be treated as extensions
  * @param {string} [system] - the string system to use by default if
  */
-export const identifier = (id: string | FHIR.Identifier, ...ext) => {
+export const identifier = (id: string | Identifier, ...ext) => {
   // If an array of inputs is passed in, map each element of the array
   // because it's very common to support a set of identifiers, rather than just one
   // Note that in this mode, each argument should be an object

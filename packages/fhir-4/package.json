@@ -18,12 +18,14 @@
   "type": "module",
   "fhir": {
     "specUrl": "https://hl7.org/fhir/R4B/definitions.json.zip",
-    "adaptorGeneratedDate": "2025-01-22T17:47:43.099Z",
+    "adaptorGeneratedDate": "2025-01-29T16:32:43.326Z",
     "generatorVersion": "0.2.3"
   },
   "dependencies": {
     "@openfn/language-common": "workspace",
     "@swc/core": "^1.10.9",
+    "@types/fhir": "^0.0.41",
+    "fhir": "^4.12.0",
     "swc-loader": "^0.2.6",
     "tsx": "^4.19.2"
   },

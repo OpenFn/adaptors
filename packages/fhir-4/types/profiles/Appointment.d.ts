@@ -1,0 +1,40 @@
+import * as dt from "../datatypes.js";
+export declare type Appointment_Props = {
+    id?: any;
+    meta?: any;
+    implicitRules?: any;
+    language?: any;
+    text?: any;
+    contained?: any;
+    extension?: any;
+    modifierExtension?: any;
+    identifier?: dt.Identifier;
+    status?: any;
+    cancelationReason?: any;
+    serviceCategory?: any;
+    serviceType?: any;
+    specialty?: any;
+    appointmentType?: any;
+    reasonCode?: any;
+    reasonReference?: any;
+    priority?: any;
+    description?: any;
+    supportingInformation?: any;
+    start?: any;
+    end?: any;
+    minutesDuration?: any;
+    slot?: any;
+    created?: any;
+    comment?: any;
+    patientInstruction?: any;
+    basedOn?: any;
+    participant?: any;
+    requestedPeriod?: any;
+};
+export default function (props: Partial<Appointment_Props>): {
+    resourceType: string;
+    text: {
+        status: string;
+        div: string;
+    };
+};

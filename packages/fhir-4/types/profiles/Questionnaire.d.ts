@@ -1,0 +1,40 @@
+import * as dt from "../datatypes.js";
+export declare type Questionnaire_Props = {
+    id?: any;
+    meta?: any;
+    implicitRules?: any;
+    language?: any;
+    text?: any;
+    contained?: any;
+    extension?: any;
+    modifierExtension?: any;
+    url?: any;
+    identifier?: dt.Identifier;
+    version?: any;
+    name?: any;
+    title?: any;
+    derivedFrom?: any;
+    status?: any;
+    experimental?: any;
+    subjectType?: any;
+    date?: any;
+    publisher?: any;
+    contact?: any;
+    description?: any;
+    useContext?: any;
+    jurisdiction?: any;
+    purpose?: any;
+    copyright?: any;
+    approvalDate?: any;
+    lastReviewDate?: any;
+    effectivePeriod?: any;
+    code?: any;
+    item?: any;
+};
+export default function (props: Partial<Questionnaire_Props>): {
+    resourceType: string;
+    text: {
+        status: string;
+        div: string;
+    };
+};

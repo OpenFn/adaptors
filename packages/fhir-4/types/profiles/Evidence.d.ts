@@ -1,0 +1,43 @@
+import * as dt from "../datatypes.js";
+export declare type Evidence_Props = {
+    id?: any;
+    meta?: any;
+    implicitRules?: any;
+    language?: any;
+    text?: any;
+    contained?: any;
+    extension?: any;
+    modifierExtension?: any;
+    url?: any;
+    identifier?: dt.Identifier;
+    version?: any;
+    title?: any;
+    citeAs?: any;
+    status?: any;
+    date?: any;
+    useContext?: any;
+    approvalDate?: any;
+    lastReviewDate?: any;
+    publisher?: any;
+    contact?: any;
+    author?: any;
+    editor?: any;
+    reviewer?: any;
+    endorser?: any;
+    relatedArtifact?: any;
+    description?: any;
+    assertion?: any;
+    note?: any;
+    variableDefinition?: any;
+    synthesisType?: any;
+    studyType?: any;
+    statistic?: any;
+    certainty?: any;
+};
+export default function (props: Partial<Evidence_Props>): {
+    resourceType: string;
+    text: {
+        status: string;
+        div: string;
+    };
+};
