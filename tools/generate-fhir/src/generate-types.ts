@@ -111,12 +111,11 @@ const generateInlineType = (typeDef: PropDef) => {
 // TODO maybe the sig is schema & mappings?
 const createTypeNode = (incomingType: string, values?: string[]) => {
   const type = typeMap[incomingType] ?? incomingType;
-  console.log(' >>> ', type);
 
   if (datatypes[type]) {
     // TODO why is this double wrapped??
     return b.tsTypeReference(
-      b.tsQualifiedName(b.identifier('fhir'), b.identifier(type))
+      b.tsQualifiedName(b.identifier('dt'), b.identifier(type))
     );
   }
   return b.tsAnyKeyword();

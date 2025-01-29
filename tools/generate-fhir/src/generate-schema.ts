@@ -106,7 +106,7 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
       continue;
     }
     if (mappings.include?.length && !mappings.include.includes(profile.type)) {
-      console.log('ignoring not included profile', profileId);
+      // console.log('ignoring not included profile', profileId);
       continue;
     }
 

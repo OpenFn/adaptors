@@ -2,7 +2,12 @@ import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 import { print, parse } from 'recast';
 
 import { StatementKind } from 'ast-types/gen/kinds';
-import { getBuilderName, getTypeName, sortKeys } from './util';
+import {
+  getBuilderName,
+  getInterfaceName,
+  getTypeName,
+  sortKeys,
+} from './util';
 import { Mapping, MappingSpec, Schema } from './types';
 import { generateType } from './generate-types';
 
@@ -28,9 +33,13 @@ const generateCode = (
     for (const profile of sortedProfiles) {
       // import this builder
       const name = getTypeName(profile);
+      const iface = getInterfaceName(profile);
       imports.push(
         b.importDeclaration(
-          [b.importDefaultSpecifier(b.identifier(name))],
+          [
+            b.importDefaultSpecifier(b.identifier(name)),
+            b.importSpecifier(b.identifier(iface)),
+          ],
           b.stringLiteral(`./profiles/${profile.id}`)
         )
       );
@@ -76,12 +85,13 @@ const generateProfile = (profile: Schema, mappings: MappingSpec) => {
       b.stringLiteral('lodash')
     )
   );
-  statements.push(
-    b.importDeclaration(
-      [b.importDefaultSpecifier(b.identifier('fhir'))],
-      b.stringLiteral('fhir/r4')
-    )
-  );
+  // No, actually we prefer our own typings in datatypes
+  // statements.push(
+  //   b.importDeclaration(
+  //     [b.importDefaultSpecifier(b.identifier('fhir'))],
+  //     b.stringLiteral('fhir/r4')
+  //   )
+  // );
 
   const typedef = generateType(profile.type, profile, mappings);
 
@@ -160,10 +170,11 @@ ${generateJsDocs(variants)}
         })
       ),
       b.tsParameterProperty(
-        // TODO need a full type for this. Where do we get it?
         b.identifier.from({
-          name: 'props',
-          typeAnnotation: b.tsTypeAnnotation(b.tsObjectKeyword()),
+          name: INPUT_NAME,
+          typeAnnotation: b.tsTypeAnnotation(
+            b.tsTypeReference(b.identifier(getInterfaceName(variants[0])))
+          ),
         })
       ),
     ])
@@ -186,7 +197,9 @@ ${generateJsDocs(variants)}
           // TODO need a full type for this. Where do we get it?
           b.identifier.from({
             name: INPUT_NAME,
-            typeAnnotation: b.tsTypeAnnotation(b.tsObjectKeyword()),
+            typeAnnotation: b.tsTypeAnnotation(
+              b.tsTypeReference(b.identifier(getInterfaceName(variants[0])))
+            ),
           })
         ),
       ])
