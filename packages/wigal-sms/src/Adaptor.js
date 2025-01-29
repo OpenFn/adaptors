@@ -65,7 +65,6 @@ export function execute(...operations) {
  * });
  * @function
  * @public
- * @public
  * @param {SMSRequestObject} data  - SMS payload to push to Wigal. This includes the message, phone number, etc
  * @returns {Operation}
  * @state {SendSMSState}
