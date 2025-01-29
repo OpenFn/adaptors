@@ -892,59 +892,6 @@
       "valid": true
     },
     {
-      "name": "findAttributeValueById",
-      "params": [
-        "trackedEntity",
-        "attributeUid"
-      ],
-      "docs": {
-        "description": "Gets an attribute value by its uid",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "findAttributeValueById(state.tei, 'y1w2R6leVmh')"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "A tracked entity instance (TEI) object",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "trackedEntity"
-          },
-          {
-            "title": "param",
-            "description": "The uid to search for in the TEI's attributes",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "attributeUid"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "findAttributeValue",
       "params": [
         "trackedEntity",

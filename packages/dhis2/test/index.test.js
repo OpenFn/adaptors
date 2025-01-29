@@ -1,13 +1,6 @@
 import chai from 'chai';
-import {
-  execute,
-  create,
-  update,
-  get,
-  upsert,
-  findAttributeValueById,
-} from '../src/Adaptor';
-import { dataValue, fn } from '@openfn/language-common';
+import { execute, create, update, get, upsert } from '../src/Adaptor';
+import { dataValue } from '@openfn/language-common';
 import {
   buildUrl,
   generateUrl,
@@ -698,48 +691,5 @@ describe('ensureArray', () => {
     const body = ensureArray(state.data, 'events');
 
     expect(body).to.eql({ events: [{ b: 2 }] });
-  });
-});
-
-describe('findAttributeValueById', () => {
-  it.only('returns the value of an attribute when provided with a TEI', async () => {
-    const state = {
-      configuration: {
-        username: 'admin',
-        password: 'district',
-        hostUrl: 'https://play.dhis2.org/2.36.4',
-        apiVersion: '2.36.4',
-      },
-      data: {
-        tei: {
-          attributes: [
-            {
-              attribute: 'y1w2R6leVmh',
-              displayName: 'First Name',
-              value: 'Test',
-            },
-            {
-              attribute: 'Rslz2y06aBf',
-              displayName: 'Middle Name',
-              value: 'McTesterson',
-            },
-          ],
-        },
-      },
-    };
-
-    const finalState = await execute(
-      fn(state => {
-        const theValue = findAttributeValueById(
-          state.tei,
-          'Rslz2y06aBf'
-        )(state);
-        return { theValue };
-      })
-    )(state);
-
-    console.log(finalState);
-
-    expect(finalState).to.eql('my valuw');
   });
 });
