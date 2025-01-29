@@ -1,5 +1,11 @@
 # @openfn/language-ghana-bdr
 
+## 0.1.2
+
+### Patch Changes
+
+- 5e3b3cf: Updates to the mock endpoint, these are still moving targets
+
 ## 0.1.1
 
 ### Patch Changes
