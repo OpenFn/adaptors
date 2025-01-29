@@ -1,3 +1,7 @@
+<dl>
+<dt>
+    <a href="#sendsms">sendSms(data)</a></dt>
+</dl>
 
 
 This adaptor exports the following from common:
@@ -38,6 +42,51 @@ This adaptor exports the following from common:
 <dt>
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt></dl>
+
+## Functions
+### sendSms
+
+<p><code>sendSms(data) ⇒ Operation</code></p>
+
+Send SMS using Wigal SMS Gateway API
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | [<code>SMSRequestObject</code>](#smsrequestobject) | SMS payload to push to Wigal. This includes the message, phone number, etc |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. containt status and message response |
+| response | the response from the Wigal SMS server, including headers, statusCode etc |
+| references | an array of all previous data objects used in the Job |
+**Example:** Send General SMS message
+```js
+sendSMS({
+  senderid: "Stevkky",
+  destinations: [{ destination: "0552825710" }],
+  message: "This is a sample message for SMS sending via Wigal FROG API.",
+  smstype: "text",
+});
+```
+**Example:** Send Personalized SMS message
+```js
+sendSMS({
+  senderid: "Stevkky",
+  destinations: [
+    {
+      destination: "0542709440",
+      message: "Hello Joe your order is ready",
+      msgid: "MGS1010101",
+      smstype: "text",
+    },
+  ],
+});
+```
+
+* * *
 
 
 ##  Interfaces

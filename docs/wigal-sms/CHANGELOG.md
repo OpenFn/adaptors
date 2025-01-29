@@ -1,5 +1,11 @@
 # @openfn/language-wigal-sms
 
+## 0.1.1
+
+### Patch Changes
+
+- Make sendSMS public
+
 ## 0.1.0
 
 - Add `sendSms()` operation
