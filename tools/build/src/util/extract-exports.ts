@@ -1,7 +1,9 @@
 import * as acorn from 'acorn';
+// TODO: need to replace with import assertions soon
+import { importAssertions } from 'acorn-import-assertions';
 
 export default (source: string) => {
-  const ast = acorn.parse(source, {
+  const ast = acorn.Parser.extend(importAssertions).parse(source, {
     sourceType: 'module',
     ecmaVersion: 'latest',
     locations: false,

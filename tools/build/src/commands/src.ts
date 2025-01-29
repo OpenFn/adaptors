@@ -4,7 +4,7 @@ import type { Options } from '../pipeline';
 
 const config: TsupOptions = {
   format: ['esm', 'cjs'],
-  target: 'node14',
+  target: 'node18',
   platform: 'node',
   clean: true,
   splitting: false,

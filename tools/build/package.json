@@ -15,6 +15,8 @@
     "@openfn/simple-ast": "0.4.1",
     "@types/node": "18.17.5",
     "acorn": "^8.11.3",
+    "acorn-import-assertions": "^1.9.0",
+    "acorn-import-attributes": "^1.9.5",
     "chokidar": "^3.6.0",
     "esno": "0.16.3",
     "file-set": "^5.1.3",
