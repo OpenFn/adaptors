@@ -58,7 +58,8 @@ export function createServer(url = 'http://tracker.chimgh.org') {
         responseOptions: {
           headers: { 'Content-Type': 'application/json' },
         },
-        data: JSON.stringify(birthNotificationResponse),
+        // Note the double stringification from BDR
+        data: JSON.stringify(JSON.stringify(birthNotificationResponse)),
       };
     } else {
       console.log('Validation errors:', validate.errors);

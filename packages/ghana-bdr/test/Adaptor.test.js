@@ -62,15 +62,15 @@ describe('sendBirthNotification', () => {
           religion_other: null,
           is_gainfully_employed_code: '1',
         },
-        health_facility: {
-          name: 'Korlebu General Hospital',
-          house_number: 'No 4536',
-          street_name: 'Adjiringano',
-          town_code: '12',
-          town_other: null,
-          district_code: '11',
-          region_code: '12',
-        }
+        // health_facility: {
+        //   name: 'Korlebu General Hospital',
+        //   house_number: 'No 4536',
+        //   street_name: 'Adjiringano',
+        //   town_code: '12',
+        //   town_other: null,
+        //   district_code: '11',
+        //   region_code: '12',
+        // }
         // Note that this does not actually seem to be required by BDR
         // birth_informant: {
         //   relationship_code: '2',

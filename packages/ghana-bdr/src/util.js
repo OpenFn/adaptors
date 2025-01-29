@@ -4,7 +4,6 @@ import {
   throwError,
   logResponse,
   expandReferences,
-  makeBasicAuthHeader,
 } from '@openfn/language-common/util';
 import { composeNextState } from '@openfn/language-common';
 

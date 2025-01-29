@@ -3,6 +3,10 @@
   "description": "",
   "type": "object",
   "properties": {
+    "registry_code": {
+      "type": "string",
+      "minLength": 0
+    },
     "child": {
       "type": "object",
       "properties": {
@@ -31,9 +35,8 @@
           "minLength": 0
         },
         "place_of_delivery_other": {
-          "type": "object",
-          "properties": {},
-          "required": []
+          "type": "string",
+          "minLength": 0
         },
         "birth_type_code": {
           "type": "string",
@@ -48,9 +51,8 @@
           "minLength": 0
         },
         "attendant_at_birth_other": {
-          "type": "object",
-          "properties": {},
-          "required": []
+          "type": "string",
+          "minLength": 0
         },
         "bith_attendant_full_name": {
           "type": "string",
@@ -66,13 +68,10 @@
         "middle_name",
         "Surname",
         "birth_date",
-        "national_id_number",
-        "place_of_delivery_code",
-        "place_of_delivery_other",
         "birth_type_code",
         "gender_code",
+        "place_of_delivery_code",
         "attendant_at_birth_code",
-        "attendant_at_birth_other",
         "bith_attendant_full_name",
         "bith_attendant_phone"
       ]
@@ -148,42 +147,26 @@
           "minLength": 0
         },
         "education_level_other": {
-          "type": "object",
-          "properties": {},
-          "required": []
+          "type": "string",
+          "minLength": 0
         },
         "occupation_code": {
           "type": "string",
           "minLength": 0
         },
         "occupation_other": {
-          "type": "object",
-          "properties": {},
-          "required": []
+          "type": "string",
+          "minLength": 0
         }
       },
       "required": [
+        "national_id_number",
         "first_name",
         "middle_name",
         "maiden_name",
-        "surname_or_marriage_name",
         "phone",
-        "age",
-        "national_id_number",
-        "nationality_code",
-        "house_number",
-        "street_name",
-        "district_code",
-        "region_code",
-        "town_or_village",
-        "number_of_children_ever_born_alive",
-        "born_alive_are_living",
-        "live_birth_order",
-        "born_alive_are_dead",
-        "education_level_code",
-        "education_level_other",
         "occupation_code",
-        "occupation_other"
+        "age"
       ]
     },
     "father": {
@@ -229,19 +212,16 @@
           "minLength": 0
         },
         "education_level_other": {
-          "type": "object",
-          "properties": {},
-          "required": []
+          "type": "string",
+          "minLength": 0
         },
         "occupation_other": {
-          "type": "object",
-          "properties": {},
-          "required": []
+          "type": "string",
+          "minLength": 0
         },
         "religion_other": {
-          "type": "object",
-          "properties": {},
-          "required": []
+          "type": "string",
+          "minLength": 0
         },
         "is_gainfully_employed_code": {
           "type": "string",
@@ -249,20 +229,13 @@
         }
       },
       "required": [
+        "national_id_number",
         "first_name",
         "middle_name",
-        "surname",
-        "nationality_code",
-        "national_id_number",
+        "Surname",
         "phone",
-        "age",
-        "education_level_code",
         "occupation_code",
-        "religion_code",
-        "education_level_other",
-        "occupation_other",
-        "religion_other",
-        "is_gainfully_employed_code"
+        "age"
       ]
     },
     "health_facility": {
@@ -285,9 +258,8 @@
           "minLength": 0
         },
         "town_other": {
-          "type": "object",
-          "properties": {},
-          "required": []
+          "type": "string",
+          "minLength": 0
         },
         "district_code": {
           "type": "string",
@@ -302,12 +274,10 @@
         "name",
         "house_number",
         "street_name",
-        "town_code",
-        "town_other",
         "district_code",
         "region_code"
       ]
     }
   },
-  "required": ["child", "mother", "father", "health_facility"]
+  "required": ["child", "mother", "father", "registry_code"]
 }
