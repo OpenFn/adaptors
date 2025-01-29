@@ -185,7 +185,7 @@ ${generateJsDocs(variants)}
         b.tsParameterProperty(
           // TODO need a full type for this. Where do we get it?
           b.identifier.from({
-            name: 'props',
+            name: INPUT_NAME,
             typeAnnotation: b.tsTypeAnnotation(b.tsObjectKeyword()),
           })
         ),
@@ -205,7 +205,22 @@ return mappings[type](props)
     false,
     b.functionDeclaration(
       b.identifier(getBuilderName(resourceType)),
-      [b.identifier('type'), b.identifier(INPUT_NAME)],
+      [
+        b.tsParameterProperty(
+          b.identifier.from({
+            name: 'type',
+            typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
+          })
+        ),
+        b.tsParameterProperty(
+          // TODO need a full type for this. Where do we get it?
+          b.identifier.from({
+            name: INPUT_NAME,
+            typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
+            optional: true,
+          })
+        ),
+      ],
       b.blockStatement(statements)
     )
   );
