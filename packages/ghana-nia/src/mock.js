@@ -1,9 +1,11 @@
 import { MockAgent } from 'undici';
+import Ajv from 'ajv';
 
 // Generated from sample with https://www.jsongenerator.io/schema
 // But!! I had to replace $schema with $id
-import reqSchema from './schema/request.json' assert { type: 'json' };
-import Ajv from 'ajv';
+// Note: use import() or ele src build breaks
+const reqSchemaString = import('./schema/request.json');
+const reqSchema = JSON.parse(reqSchemaString);
 
 const validate = new Ajv().compile(reqSchema);
 
