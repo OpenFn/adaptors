@@ -70,8 +70,7 @@ export function createServer(url = 'https://selfie.imsgh.org:2035') {
         path,
         origin: url,
         headers: {
-          // TODO this maybe needs to be base 64 encoded
-          // Authorization: `Basic dW5kZWZpbmVkOnVuZGVmaW5lZA==`,
+          // Note that BDR does not appear to accept basic auth headers.
         },
         ...rest,
       };
