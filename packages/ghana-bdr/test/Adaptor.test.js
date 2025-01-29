@@ -7,10 +7,11 @@ describe('sendBirthNotification', () => {
     const state = {
       configuration: {},
       data: {
+        registry_code: '',
         child: {
           first_name: 'Nana',
           middle_name: 'Nana',
-          surname: 'Kumasi',
+          Surname: 'Kumasi',
           birth_date: '2023/10/22',
           national_id_number: '90282901892',
           place_of_delivery_code: '2',
@@ -19,8 +20,8 @@ describe('sendBirthNotification', () => {
           gender_code: '2',
           attendant_at_birth_code: '1',
           attendant_at_birth_other: null,
-          birth_attendant_full_name: 'Dr Lawrence Kwame',
-          birth_attendant_phone: '0556969609',
+          bith_attendant_full_name: 'Dr Lawrence Kwame',
+          bith_attendant_phone: '0556969609',
         },
         mother: {
           first_name: 'Nana',
@@ -48,7 +49,7 @@ describe('sendBirthNotification', () => {
         father: {
           first_name: 'Kufor',
           middle_name: 'Kufor',
-          surname: 'Mensa',
+          Surname: 'Mensa',
           nationality_code: '131',
           national_id_number: '88-9292-92092',
           phone: '05673673737',
@@ -61,23 +62,24 @@ describe('sendBirthNotification', () => {
           religion_other: null,
           is_gainfully_employed_code: '1',
         },
-        health_facility: {
-          name: 'Korlebu General Hospital',
-          house_number: 'No 4536',
-          street_name: 'Adjiringano',
-          town_code: '12',
-          town_other: null,
-          district_code: '11',
-          region_code: '12',
-        },
-        birth_informant: {
-          relationship_code: '2',
-          relationship_other: null,
-          full_name: 'Kufor Mensa',
-          phone: '055646874',
-          digital_address: 'No. 64 Ajiringanor',
-          national_id_number: '993993939-0303',
-        },
+        // health_facility: {
+        //   name: 'Korlebu General Hospital',
+        //   house_number: 'No 4536',
+        //   street_name: 'Adjiringano',
+        //   town_code: '12',
+        //   town_other: null,
+        //   district_code: '11',
+        //   region_code: '12',
+        // }
+        // Note that this does not actually seem to be required by BDR
+        // birth_informant: {
+        //   relationship_code: '2',
+        //   relationship_other: null,
+        //   full_name: 'Kufor Mensa',
+        //   phone: '055646874',
+        //   digital_address: 'No. 64 Ajiringanor',
+        //   national_id_number: '993993939-0303',
+        // },
       },
     };
 
@@ -85,12 +87,7 @@ describe('sendBirthNotification', () => {
       sendBirthNotification(state => state.data)
     )(state);
 
-    expect(Object.keys(finalState.data).length).to.eql(6);
-    expect(finalState.data.registry_code).to.eql('1');
-    expect(finalState.data.child.birth_attendant_phone).to.eql('0556969609');
-    expect(finalState.data.mother.national_id_number).to.eql('90-030-003');
-    expect(finalState.data.health_facility.name).to.eql(
-      'Korlebu General Hospital'
-    );
+    expect(Object.keys(finalState.data).length).to.eql(33);
+    expect(finalState.data.birth_certificate_number).to.eql('000000-00-2024');
   });
 });
