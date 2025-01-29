@@ -91,11 +91,6 @@
             "type": null
           },
           {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
             "title": "param",
             "description": "SMS payload to push to Wigal. This includes the message, phone number, etc",
             "type": {
