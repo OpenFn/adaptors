@@ -1,75 +1,93 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
+import { http } from '../src/index.js';
 
-import { request, dataValue } from '../src/Adaptor.js';
+const testServer = enableMockClient('https://intuit.server.com');
 
-// This creates a mock client which acts like a fake server.
-// It enables pattern-matching on the request object and custom responses
-// For the full mock API see
-// https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
-const testServer = enableMockClient('https://fake.server.com');
+const jsonHeaders = {
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  },
+};
+const configuration = {
+  access_token: 'sometokenvalue',
+  baseUrl: 'https://intuit.server.com',
+};
 
-describe('request', () => {
-  it('makes a post request to the right endpoint', async () => {
-    // Setup a mock endpoint
+describe('http.get', () => {
+  it('should GET an account', async () => {
     testServer
       .intercept({
-        path: '/api/patients',
+        path: '/v3/company/9341453908059321/companyinfo/9341453908059321',
+        method: 'GET',
+      })
+      .reply(
+        200,
+        { Account: { Name: 'Accounts Payable' } },
+        { ...jsonHeaders }
+      );
+    const state = { configuration };
+
+    const { data } = await http.get(
+      '/v3/company/9341453908059321/companyinfo/9341453908059321'
+    )(state);
+
+    expect(data['Account']['Name']).to.eql('Accounts Payable');
+  });
+});
+
+describe('http.post', () => {
+  const testBodyData = {
+    Name: 'MyJob_testing_1',
+    AccountType: 'Accounts Receivable',
+  };
+
+  beforeEach(() => {
+    testServer
+      .intercept({
+        path: '/v3/company/9341453908059321/account',
         method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        query: {
+          minorversion: 40,
         },
       })
-      // Set the reply from this endpoint
-      // The body will be returned to state.data
-      .reply(200, { id: 7, fullName: 'Mamadou', gender: 'M' });
-
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
-      },
-    };
-
-    const finalState = await request('POST', 'patients', {
-      name: state.data.fullName,
-      gender: state.data.gender,
-    })(state);
-
-    expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-      id: 7,
-    });
+      .reply(
+        200,
+        { Account: { Name: 'MyJob_testing_1', Active: true } },
+        { ...jsonHeaders }
+      );
   });
 
-  it('throws an error if the service returns 403', async () => {
-    testServer
-      .intercept({
-        path: '/api/noAccess',
-        method: 'POST',
-      })
-      .reply(403);
-
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
+  const state = { configuration };
+  it('should successfully create an account', async () => {
+    const { data } = await http.post('/v3/company/9341453908059321/account', {
+      query: {
+        minorversion: 40,
       },
-    };
+      body: testBodyData,
+    })(state);
 
-    const error = await request('POST', 'noAccess', { name: 'taylor' })(
-      state
-    ).catch(error => {
-      return error;
-    });
+    expect(data['Account']['Name']).to.eql('MyJob_testing_1');
+  });
 
-    expect(error.statusMessage).to.eql('Forbidden');
+  it('should make a request with the "POST" method', async () => {
+    const response = await http.post('/v3/company/9341453908059321/account', {
+      query: {
+        minorversion: 40,
+      },
+      body: testBodyData,
+    })(state);
+    expect(response.response.method).to.eql('POST');
+  });
+  it('should make a POST request with query parameters', async () => {
+    const { data } = await http.post('/v3/company/9341453908059321/account', {
+      query: {
+        minorversion: 40,
+      },
+      body: testBodyData,
+    })(state);
+
+    expect(data['Account']['Active']).to.eql(true);
   });
 });
