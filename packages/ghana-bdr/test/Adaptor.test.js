@@ -49,7 +49,7 @@ describe('sendBirthNotification', () => {
         father: {
           first_name: 'Kufor',
           middle_name: 'Kufor',
-          surname: 'Mensa',
+          Surname: 'Mensa',
           nationality_code: '131',
           national_id_number: '88-9292-92092',
           phone: '05673673737',
