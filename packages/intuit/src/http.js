@@ -14,7 +14,6 @@ import * as util from './Utils';
  * @typedef {Object} IntuitOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
  * @property {object} headers - An object of all request headers
- * @property {object} body - The request body (as JSON)
  * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
  */
 
@@ -50,35 +49,36 @@ export function get(path, options = {}) {
 /**
  * Make a POST request to any Intuit endpoint
  * @example <caption>Create an account on intuit.</caption>
- * http.post("/v3/company/9341453908059456/account", {
+ * http.post("/v3/company/9341453908059456/account",
+ *  {
+ *       "Name": "MyJobs_testing",
+ *       "AccountType": "Accounts Receivable"
+ *  },
+ *  {
  *  query: {
  *    minorversion: 40,
  *   },
- *  body:{
- *       "Name": "MyJobs_testing",
- *       "AccountType": "Accounts Receivable"
- *    }
  * })
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {IntuitOptions}  [options={}] - An object containing query, headers, and body for the request
+ * @param {object} data - The request body (as JSON)
+ * @param {IntuitOptions} [options={}] - An object containing query, and headers for the request
  * @state {IntuitState}
  * @returns {Operation}
  */
-export function post(path, options = {}) {
+export function post(path, data, options = {}) {
   return async state => {
-    const [resolvedPath, resolvedOptions = {}] = expandReferences(
+    const [resolvedPath, resolvedBody, resolvedOptions = {}] = expandReferences(
       state,
       path,
+      data,
       options
     );
-    const response = await util.request(
-      state,
-      'POST',
-      resolvedPath,
-      resolvedOptions
-    );
+    const response = await util.request(state, 'POST', resolvedPath, {
+      ...resolvedOptions,
+      body: resolvedBody,
+    });
 
     return util.prepareNextState(state, response);
   };

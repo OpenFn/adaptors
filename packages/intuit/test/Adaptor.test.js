@@ -43,7 +43,24 @@ describe('http.post', () => {
     AccountType: 'Accounts Receivable',
   };
 
-  beforeEach(() => {
+  const state = { configuration };
+  it('should successfully create an account', async () => {
+    testServer
+      .intercept({
+        path: '/v3/company/9341453908059321/account',
+        method: 'POST',
+      })
+      .reply(
+        200,
+        { Account: { Name: 'MyJob_testing_1', Active: true } },
+        { ...jsonHeaders }
+      );
+    const { data } = await http.post('/v3/company/9341453908059321/account',testBodyData)(state);
+
+    expect(data['Account']['Name']).to.eql('MyJob_testing_1');
+  });
+
+  it('should make a POST request with query parameters', async () => {
     testServer
       .intercept({
         path: '/v3/company/9341453908059321/account',
@@ -57,35 +74,10 @@ describe('http.post', () => {
         { Account: { Name: 'MyJob_testing_1', Active: true } },
         { ...jsonHeaders }
       );
-  });
-
-  const state = { configuration };
-  it('should successfully create an account', async () => {
-    const { data } = await http.post('/v3/company/9341453908059321/account', {
+    const { data } = await http.post('/v3/company/9341453908059321/account', testBodyData,{
       query: {
         minorversion: 40,
       },
-      body: testBodyData,
-    })(state);
-
-    expect(data['Account']['Name']).to.eql('MyJob_testing_1');
-  });
-
-  it('should make a request with the "POST" method', async () => {
-    const response = await http.post('/v3/company/9341453908059321/account', {
-      query: {
-        minorversion: 40,
-      },
-      body: testBodyData,
-    })(state);
-    expect(response.response.method).to.eql('POST');
-  });
-  it('should make a POST request with query parameters', async () => {
-    const { data } = await http.post('/v3/company/9341453908059321/account', {
-      query: {
-        minorversion: 40,
-      },
-      body: testBodyData,
     })(state);
 
     expect(data['Account']['Active']).to.eql(true);

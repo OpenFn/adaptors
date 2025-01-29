@@ -23,7 +23,10 @@ export const request = (state, method, path, options = {}) => {
   const {
     query = {},
     body = {},
-    headers = { 'Content-type': 'application/json' },
+    headers = {
+      'Content-type': 'application/json',
+      Accept: 'application/json',
+    },
     parseAs = 'json',
   } = options;
 
@@ -33,13 +36,10 @@ export const request = (state, method, path, options = {}) => {
     body,
     query,
     headers: {
-      Accept: 'application/json',
       Authorization: `Bearer ${access_token}`,
       ...headers,
     },
   };
 
-  const url = `${baseUrl}${path}`;
-
-  return commonRequest(method, url, opts).then(logResponse);
+  return commonRequest(method, path, opts).then(logResponse);
 };
