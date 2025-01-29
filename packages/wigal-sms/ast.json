@@ -71,11 +71,6 @@
         "description": "Send SMS using Wigal SMS Gateway API",
         "tags": [
           {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
             "title": "example",
             "description": "sendSMS({\n  senderid: \"Stevkky\",\n  destinations: [{ destination: \"0552825710\" }],\n  message: \"This is a sample message for SMS sending via Wigal FROG API.\",\n  smstype: \"text\",\n});",
             "caption": "Send General SMS message"
@@ -84,6 +79,21 @@
             "title": "example",
             "description": "sendSMS({\n  senderid: \"Stevkky\",\n  destinations: [\n    {\n      destination: \"0542709440\",\n      message: \"Hello Joe your order is ready\",\n      msgid: \"MGS1010101\",\n      smstype: \"text\",\n    },\n  ],\n});",
             "caption": "Send Personalized SMS message"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
           },
           {
             "title": "param",
