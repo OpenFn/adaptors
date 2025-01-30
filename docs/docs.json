@@ -11661,6 +11661,296 @@
     "kind": "external-function"
   }
 ],
+{"name":"intuit","adaptor":"@openfn/language-intuit","version":"1.0.0","docs":"\"\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#http_get\\\">http.get(path, [options])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_post\\\">http.post(path, data, [options])</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n\\n## http\\n\\nThese functions belong to the http namespace.\\n### http.get {#http_get}\\n\\n<p><code>get(path, [options]) ⇒ Operation</code></p>\\n\\nMake a GET request to any intuit endpoint\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | Path to resource |\\n| [options] | [<code>IntuitOptions</code>](#intuitoptions) | <code>{}</code> | An object containing query and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Quickbook(intuit) server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** Get intuit user company information.\\n```js\\nhttp.get(\\\"/v3/company/9341453908059456/companyinfo/9341453908059456\\\");\\n```\\n\\n* * *\\n\\n\\n### http.post {#http_post}\\n\\n<p><code>post(path, data, [options]) ⇒ Operation</code></p>\\n\\nMake a POST request to any Intuit endpoint\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | Path to resource |\\n| data | <code>object</code> |  | The request body (as JSON) |\\n| [options] | [<code>IntuitOptions</code>](#intuitoptions) | <code>{}</code> | An object containing query, and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Quickbook(intuit) server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** Create an account on intuit.\\n```js\\nhttp.post(\\\"/v3/company/9341453908059456/account\\\",\\n {\\n      \\\"Name\\\": \\\"MyJobs_testing\\\",\\n      \\\"AccountType\\\": \\\"Accounts Receivable\\\"\\n },\\n {\\n query: {\\n   minorversion: 40,\\n  },\\n})\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### IntuitOptions\\n\\nOptions object\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| query | <code>object</code> |  | An object of query parameters to be encoded into the URL |\\n| headers | <code>object</code> |  | An object of all request headers |\\n| [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |\\n\\n\\n* * *\\n\\n### IntuitState\\n\\nState object\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Quickbook(intuit) server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-intuit <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the intuit\\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/intuit-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/intuit-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `create` function\\n\\n```js\\nhttp.post(\\n  '/v3/company/9341453908059321/account',\\n  {\\n    Name: 'MyJobs_testing',\\n    AccountType: 'Accounts Receivable',\\n  },\\n  {\\n    query: {\\n      minorversion: 40,\\n    },\\n  }\\n);\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-intuit\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":[],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"The Quickbooks(intuit) base URL","format":"uri","minLength":1,"examples":["https://sandbox-quickbooks.api.intuit.com"]},"access_token":{"title":"Access Token","type":"string","description":"Your Quickbooks(intuit) access token","examples":["eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"]}},"type":"object","additionalProperties":true,"required":["access_token","baseUrl"]}},
+[
+  {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a GET request to any intuit endpoint",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "IntuitOptions"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "{}",
+        "description": "An object containing query and headers for the request",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Get intuit user company information.</caption>\nhttp.get(\"/v3/company/9341453908059456/companyinfo/9341453908059456\");"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 31,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/intuit/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "IntuitState"
+      }
+    ],
+    "order": 2,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "IntuitOptions",
+    "longname": "IntuitOptions",
+    "name": "IntuitOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of all request headers",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "'json'",
+        "description": "The response format to parse (e.g., 'json', 'text', or 'stream')",
+        "name": "parseAs"
+      }
+    ],
+    "meta": {
+      "lineno": 12,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/intuit/src"
+    },
+    "order": 1,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "IntuitState",
+    "longname": "IntuitState",
+    "name": "IntuitState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "The response body (as JSON)",
+        "name": "data"
+      },
+      {
+        "description": "The HTTP response from the Quickbook(intuit) server (excluding the body)",
+        "name": "response"
+      },
+      {
+        "description": "An array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 4,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/intuit/src"
+    },
+    "order": 0,
+    "level": 0
+  },
+  {
+    "id": "post",
+    "longname": "post",
+    "name": "post",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a POST request to any Intuit endpoint",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "The request body (as JSON)",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "IntuitOptions"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "{}",
+        "description": "An object containing query, and headers for the request",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Create an account on intuit.</caption>\nhttp.post(\"/v3/company/9341453908059456/account\",\n {\n      \"Name\": \"MyJobs_testing\",\n      \"AccountType\": \"Accounts Receivable\"\n },\n {\n query: {\n   minorversion: 40,\n  },\n})"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 70,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/intuit/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "IntuitState"
+      }
+    ],
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  }
+],
 {"name":"khanacademy","adaptor":"@openfn/language-khanacademy","version":"0.5.9","docs":"\"\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n\\n\"","readme":"\"# Language KhanAcademy\\n\\nLanguage Pack for building expressions and operations to make HTTP calls.\\n\\n## Documentation\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/khanacademy-configuration-schema/)\\ndefinition.\\n\\n## fetch\\n\\n#### sample usage\\n\\n```js\\nfetch({\\n  getEndpoint: 'user',\\n  queryParams: {\\n    email: 'thisoneuser@something.org',\\n  },\\n  postUrl: 'https://www.openfn.org/inbox/your-uuid',\\n});\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-khanacademy\\n\\n## 0.5.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [b3d7f59]\\n- Updated dependencies [2d709ff]\\n- Updated dependencies [41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 0.5.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 0.5.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [a47d8d5]\\n- Updated dependencies [9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 0.5.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 0.5.5\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus [33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 0.5.4\\n\\n### Patch Changes\\n\\n- 8d866e4: Update tough-cookie dependency\\n\\n## 0.5.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 0.5.2\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 0.5.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 0.5.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 0.4.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 0.4.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 0.3.4\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies [2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 0.3.3\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 0.3.2\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 0.3.1\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*_ @module Adaptor _/\\n\\n## 0.3.0\\n\\n### Minor Changes\\n\\n- 9137655: migrate khanacademy\\n\"","functions":[],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"email":{"title":"Email","type":"string","description":"Your Khanacademy login email","format":"email","minLength":1,"examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Your Khanacademy login password","writeOnly":true,"minLength":1,"examples":["@some(!)Strongpassword"]},"consumerKey":{"title":"Consumer Key","type":"string","description":"Your Khanacademy consumer key","writeOnly":true,"minLength":1,"examples":["somEThINGkeyish"]},"secretKey":{"title":"Secret Key","type":"string","description":"Your Khanacademy secret key","writeOnly":true,"minLength":1,"examples":["otherThiNGfSECret"]}},"type":"object","additionalProperties":true,"required":["email","password","secretKey","consumerKey"]}},
 [
   {
