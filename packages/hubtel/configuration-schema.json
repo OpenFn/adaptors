@@ -16,7 +16,7 @@
       "minLength": 1,
       "examples": ["https://example.com"]
     },
-    "clientID": {
+    "clientId": {
       "title": "Client ID",
       "type": "string",
       "description": "Client ID",
