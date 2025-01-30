@@ -30,7 +30,6 @@ export async function request(state, method, path, opts) {
     },
     query,
     parseAs,
-    maxRedirections: 1,
     baseUrl: `${baseURL}/api/${apiVersion}`,
   };
 
