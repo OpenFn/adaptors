@@ -1,6 +1,63 @@
 {
   "operations": [
     {
+      "name": "sendSMS",
+      "params": [
+        "data",
+        "options"
+      ],
+      "docs": {
+        "description": "Send an SMS",
+        "tags": [
+          {
+            "title": "example",
+            "description": "sendSMS({\n  from: 'OpenFn-Test-01',\n  to: '233538675309',\n  content: 'hi there, this is OpenFn using the new Hubtel adaptor',\n});"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "An object with `from`, `to`, and `content` attributes",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Optional hubtel options",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "request",
       "params": [
         "method",
@@ -50,7 +107,7 @@
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "data"
+            "name": "body"
           },
           {
             "title": "param",
@@ -75,7 +132,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],
