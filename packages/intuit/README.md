@@ -17,7 +17,7 @@ for required and optional `configuration` properties.
 ### A example expression using the `create` function
 
 ```js
-post(
+http.post(
   '/v3/company/9341453908059321/account',
   {
     Name: 'MyJobs_testing',
