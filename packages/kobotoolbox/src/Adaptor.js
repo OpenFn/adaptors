@@ -57,7 +57,7 @@ export function getForms(options = {}, callback) {
     const url = `/assets/?format=json`;
 
     const response = await util.request(state, 'GET', url, resolvedOptions);
-    console.log('✓', response.data.count, 'forms fetched.');
+    console.log('✓', response.body.count, 'forms fetched.');
     return util.prepareNextState(state, response, callback);
   };
 }
@@ -84,7 +84,7 @@ export function getSubmissions(params, callback) {
     const url = `/assets/${formId}/data/?format=json`;
 
     const response = await util.request(state, 'GET', url, resolvedParams);
-    console.log('✓', response.data.count, 'forms fetched.');
+    console.log('✓', response.body.count, 'forms fetched.');
     return util.prepareNextState(state, response, callback);
   };
 }
