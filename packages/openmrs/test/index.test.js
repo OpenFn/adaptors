@@ -79,13 +79,13 @@ describe('http', () => {
         query: { q: 'Sarah 1' },
         method: 'GET',
       })
-      .reply(200, { results: [{ display: 'Sarah 1' }] }, { ...jsonHeaders });
+      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
 
     const { data } = await http.request('GET', '/ws/rest/v1/patient', {
       query: { q: 'Sarah 1' },
     })(state);
 
-    expect(data.results[0].display).to.eql('Sarah 1');
+    expect(data.results[0].display).to.eql(testData.patientResults[0].display);
   });
 
   it('should auto-fetch patients with a limit', async () => {
@@ -326,14 +326,14 @@ describe('request', () => {
         query: { q: 'Sarah 1' },
         method: 'GET',
       })
-      .reply(200, { results: [{ display: 'Sarah 1' }] }, { ...jsonHeaders });
+      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
 
     const { body } = await request(state, 'GET', '/ws/rest/v1/patient', {
       query: { q: 'Sarah 1' },
       baseUrl: state.configuration.instanceUrl,
     });
 
-    expect(body.results[0].display).to.eql('Sarah 1');
+    expect(body.results[0].display).to.eql(testData.patientResults[0].display);
   });
   it('should auto-fetch patients with a limit', async () => {
     testServer
@@ -379,7 +379,7 @@ describe('request', () => {
     expect(body.results[1].display).to.eql('Sarah 2');
   });
 
-  it('should not auto-fetch if the user sets startIdex', async () => {
+  it('should not auto-fetch if the user sets startIndex', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/patient',
@@ -469,12 +469,10 @@ describe('create', () => {
         ...jsonHeaders,
       });
 
-    const { patient } = testData;
-
     const { data } = await execute(create('patient', state => state.patient))(
       state
     );
-    expect(data.results[0].display).to.include('Sarah Lewis');
+    expect(data.results[0].display).to.eql(testData.patient.display);
   });
   it('should throw an error if the resource is not found', async () => {
     testServer
@@ -559,7 +557,7 @@ describe('searchPatient', () => {
         path: '/ws/rest/v1/patient?q=Sarah',
         method: 'GET',
       })
-      .reply(200, { results: [{ display: 'Sarah' }] }, { ...jsonHeaders });
+      .reply(200, { results: [testData.patient] }, { ...jsonHeaders });
 
     const { data } = await execute(
       searchPatient({
@@ -567,7 +565,7 @@ describe('searchPatient', () => {
       })
     )(state);
 
-    expect(data.results[0].display).to.eql('Sarah');
+    expect(data.results[0].display).to.eql(testData.patient.display);
   });
 });
 
@@ -598,7 +596,7 @@ describe('upsert', () => {
       state => state.patient
     )(state);
 
-    expect(result.data.person.display).to.eql('Sarah Lewis');
+    expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
   it('should create a patient', async () => {
     testServer
@@ -626,6 +624,6 @@ describe('upsert', () => {
       state => state.patient
     )(state);
 
-    expect(result.data.person.display).to.eql('Sarah Lewis');
+    expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
 });
