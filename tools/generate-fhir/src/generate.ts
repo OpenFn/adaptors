@@ -1,6 +1,9 @@
 import { writeFile, mkdir, access, readFile, rm } from 'node:fs/promises';
 import { exec } from 'node:child_process';
 import path from 'node:path';
+import dts from 'rollup-plugin-dts';
+import { rollup } from 'rollup';
+
 import generatePackage from './generate-package';
 import fetchSpec, { Meta } from './fetch-spec';
 import generateSchema from './generate-schema';
@@ -159,7 +162,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     '--declaration',
     '--emitDeclarationOnly',
     '--lib es2020',
-    `--declarationDir ${path.resolve(adaptorPath, 'types')}`,
+    `--declarationDir ${path.resolve(adaptorPath, 'types/tmp')}`,
   ];
 
   // Finally, update package json metadata
@@ -171,11 +174,12 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   });
 
   const pathToEntry = path.resolve(adaptorPath, 'src', 'index.ts');
+
   // Now build typings for index and utils
   exec(
     `pnpm exec tsc ${tscArgs.join(' ')} ${pathToEntry}`,
     {},
-    (err, stderr) => {
+    async (err, stderr) => {
       // // TODO ignore tsc output for now
       // if (err) {
       //   console.log('tsc build failed!');
@@ -197,8 +201,46 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       //   );
       // }, 500);
       // }
+      console.log('Bundling DTS files');
+      const bundle = await rollup({
+        input: path.resolve(adaptorPath, 'types', 'tmp', 'index.d.ts'),
+        plugins: [dts()],
+        //external: ['fhir'], // nothing is external
+        external: id => {
+          if (id.startsWith('fhir')) {
+            console.log(' >> ', id);
+            // doesn't work  - the library gets compiled in
+            return false;
+          }
+          return false;
+        },
+      });
+      const dtsBundle = await bundle.generate({
+        format: 'es',
+      });
+
+      await writeFile(
+        path.resolve(adaptorPath, 'types', 'index.d.ts'),
+        dtsBundle.output[0].code
+      );
+
+      console.log('Removing old dts files');
+
+      // finally remove the temporary  type files
+      await rm(path.resolve(adaptorPath, 'types/tmp'), {
+        recursive: true,
+        force: true,
+      });
     }
   );
+
+  // // now bundle the d.ts
+  // await rollup({
+  //   // path to your declaration files root
+  //   input: path.resolve(adaptorPath, 'types', 'tmp', 'index.d.ts'),
+  //   output: [{ file: `${adaptorPath}/types/index.d.ts`, format: 'es' }],
+  //   plugins: [dts()],
+  // });
 };
 
 export default generateAdaptor;
