@@ -1,11 +1,12 @@
 # language-intuit <img src='./assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the intuit API.
+An OpenFn **_adaptor_** for building integration jobs for use with the intuit
+API.
 
 ## Documentation
 
-View the [docs site](https://docs.openfn.org/adaptors/packages/intuit-docs)
-for full technical documentation.
+View the [docs site](https://docs.openfn.org/adaptors/packages/intuit-docs) for
+full technical documentation.
 
 ### Configuration
 
@@ -16,15 +17,18 @@ for required and optional `configuration` properties.
 ### A example expression using the `create` function
 
 ```js
-post("/v3/company/9341453908059321/account", {
- query: {
-   minorversion: 40,
+post(
+  '/v3/company/9341453908059321/account',
+  {
+    Name: 'MyJobs_testing',
+    AccountType: 'Accounts Receivable',
   },
- body:{
-      "Name": "MyJobs_testing", 
-      "AccountType": "Accounts Receivable"
-   }
-})
+  {
+    query: {
+      minorversion: 40,
+    },
+  }
+);
 ```
 
 ## Development

@@ -20,15 +20,13 @@ export const prepareNextState = (state, response) => {
 export const request = (state, method, path, options = {}) => {
   const { baseUrl, access_token } = state.configuration;
 
-  const {
-    query = {},
-    body = {},
-    headers = {
-      'Content-type': 'application/json',
-      Accept: 'application/json',
-    },
-    parseAs = 'json',
-  } = options;
+  if (!access_token) {
+    throw new Error(
+      'No access_token found in state.configuration. Please ensure you have authenticated before making a request.'
+    );
+  }
+
+  const { query = {}, body = {}, headers = {}, parseAs = 'json' } = options;
 
   const opts = {
     parseAs,
@@ -37,6 +35,8 @@ export const request = (state, method, path, options = {}) => {
     query,
     headers: {
       Authorization: `Bearer ${access_token}`,
+      'Content-type': 'application/json',
+      Accept: 'application/json',
       ...headers,
     },
   };
