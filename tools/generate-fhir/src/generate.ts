@@ -180,40 +180,10 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     `pnpm exec tsc ${tscArgs.join(' ')} ${pathToEntry}`,
     {},
     async (err, stderr) => {
-      // // TODO ignore tsc output for now
-      // if (err) {
-      //   console.log('tsc build failed!');
-      //   console.log(stderr);
-      // }
-      // setTimeout(async () => {
-      //   // TODO a more elegant way to do this?
-      //   // Can we prevent them being generated in the first place?
-      //   console.log('Removing TS profiles');
-      //   await rm(path.resolve(adaptorPath, 'types/profiles'), {
-      //     recursive: true,
-      //     force: true,
-      //   });
-      //   console.log('Writing builders.d.ts');
-      //   // Overwrite builders.d.ts because typescript makes a mess of it
-      //   await writeFile(
-      //     path.resolve(adaptorPath, 'types/builders.d.ts'),
-      //     withDisclaimer(dts)
-      //   );
-      // }, 500);
-      // }
       console.log('Bundling DTS files');
       const bundle = await rollup({
         input: path.resolve(adaptorPath, 'types', 'tmp', 'index.d.ts'),
         plugins: [dts()],
-        //external: ['fhir'], // nothing is external
-        external: id => {
-          if (id.startsWith('fhir')) {
-            console.log(' >> ', id);
-            // doesn't work  - the library gets compiled in
-            return false;
-          }
-          return false;
-        },
       });
       const dtsBundle = await bundle.generate({
         format: 'es',
@@ -221,7 +191,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
 
       await writeFile(
         path.resolve(adaptorPath, 'types', 'index.d.ts'),
-        dtsBundle.output[0].code
+        withDisclaimer(dtsBundle.output[0].code)
       );
 
       console.log('Removing old dts files');
@@ -233,14 +203,6 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       });
     }
   );
-
-  // // now bundle the d.ts
-  // await rollup({
-  //   // path to your declaration files root
-  //   input: path.resolve(adaptorPath, 'types', 'tmp', 'index.d.ts'),
-  //   output: [{ file: `${adaptorPath}/types/index.d.ts`, format: 'es' }],
-  //   plugins: [dts()],
-  // });
 };
 
 export default generateAdaptor;
