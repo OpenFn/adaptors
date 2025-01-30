@@ -1,5 +1,13 @@
 import chai from 'chai';
-import { execute, create, update, get, upsert } from '../src/Adaptor';
+import {
+  execute,
+  create,
+  update,
+  get,
+  upsert,
+  findAttributeValue,
+  findAttributeValueById,
+} from '../src/Adaptor';
 import { dataValue } from '@openfn/language-common';
 import {
   buildUrl,
@@ -691,5 +699,49 @@ describe('ensureArray', () => {
     const body = ensureArray(state.data, 'events');
 
     expect(body).to.eql({ events: [{ b: 2 }] });
+  });
+});
+
+describe('findAttributeValueById', () => {
+  it('returns the value of an attribute when provided with a TEI', async () => {
+    const tei = {
+      attributes: [
+        {
+          attribute: 'y1w2R6leVmh',
+          displayName: 'First Name',
+          value: 'Test',
+        },
+        {
+          attribute: 'Rslz2y06aBf',
+          displayName: 'Surname',
+          value: 'McTesterson',
+        },
+      ],
+    };
+
+    const theValue = findAttributeValueById(tei, 'Rslz2y06aBf');
+    expect(theValue).to.eql('McTesterson');
+  });
+});
+
+describe('findAttributeValue', () => {
+  it('returns the value of an attribute by display name when provided with a TEI', async () => {
+    const tei = {
+      attributes: [
+        {
+          attribute: 'y1w2R6leVmh',
+          displayName: 'First Name',
+          value: 'Test',
+        },
+        {
+          attribute: 'Rslz2y06aBf',
+          displayName: 'Surname',
+          value: 'McTesterson',
+        },
+      ],
+    };
+
+    const theValue = findAttributeValue(tei, 'Surname');
+    expect(theValue).to.eql('McTesterson');
   });
 });
