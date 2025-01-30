@@ -11322,7 +11322,7 @@
     "kind": "external-function"
   }
 ],
-{"name":"hubtel","adaptor":"@openfn/language-hubtel","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#sendsms\\\">sendSMS(data, options)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### request\\n\\n<p><code>request(method, path, data, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\nrequest(\\\"POST\\\", \\\"patient\\\", { \\\"name\\\": \\\"Bukayo\\\" });\\n```\\n\\n* * *\\n\\n### sendSMS\\n\\n<p><code>sendSMS(data, options) ⇒ Operation</code></p>\\n\\nSend an SMS\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | <code>object</code> | An object with `from`, `to`, and `content` attributes |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional hubtel options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\nsendSMS({\\n  from: 'OpenFn-Test-01',\\n  to: '233538675309',\\n  content: 'hi there, this is OpenFn using the new Hubtel adaptor',\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### HttpState\\n\\nState object\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-hubtel <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the hubtel\\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/hubtel-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/hubtel-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `create` function\\n\\n```js\\nsendSMS({\\n  from: 'OpenFn-Test-01',\\n  to: '233538675309',\\n  content: 'hi there, this is from OpenFn using the Hubtel adaptor',\\n});\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-hubtel\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The base URL (http://www.example.com)","format":"uri","minLength":1,"examples":["https://example.com"]},"clientID":{"title":"Client ID","type":"string","description":"Client ID","examples":["xxx-yyy-zzz"]},"clientSecret":{"title":"Client Secret","type":"string","description":"Client Secret","writeOnly":true,"examples":["@some(!)Str0ngSecr3t"]}},"type":"object","additionalProperties":true,"required":["baseUrl","clientID","clientSecret"]}},
+{"name":"hubtel","adaptor":"@openfn/language-hubtel","version":"1.0.1","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, options)</a></dt>\\n<dt>\\n    <a href=\\\"#sendsms\\\">sendSMS(data, options)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### request\\n\\n<p><code>request(method, path, body, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\nrequest(\\\"POST\\\", \\\"patient\\\", { \\\"name\\\": \\\"Bukayo\\\" });\\n```\\n\\n* * *\\n\\n### sendSMS\\n\\n<p><code>sendSMS(data, options) ⇒ Operation</code></p>\\n\\nSend an SMS\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | <code>object</code> | An object with `from`, `to`, and `content` attributes |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional hubtel options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\nsendSMS({\\n  from: 'OpenFn-Test-01',\\n  to: '233538675309',\\n  content: 'hi there, this is OpenFn using the new Hubtel adaptor',\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### HttpState\\n\\nState object\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-hubtel <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the hubtel\\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/hubtel-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/hubtel-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `create` function\\n\\n```js\\nsendSMS({\\n  from: 'OpenFn-Test-01',\\n  to: '233538675309',\\n  content: 'hi there, this is from OpenFn using the Hubtel adaptor',\\n});\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-hubtel\\n\\n## 1.0.1\\n\\n### Patch Changes\\n\\n- f762c5a: Fix schema and docs\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["request","sendSMS"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The base URL (http://www.example.com)","format":"uri","minLength":1,"examples":["https://example.com"]},"clientId":{"title":"Client ID","type":"string","description":"Client ID","examples":["abc123def"]},"clientSecret":{"title":"Client Secret","type":"string","description":"Client Secret","writeOnly":true,"examples":["ghi456jkl"]}},"type":"object","additionalProperties":true,"required":["baseUrl","clientId","clientSecret"]}},
 [
   {
     "id": "HttpState",
@@ -11351,11 +11351,11 @@
       }
     ],
     "meta": {
-      "lineno": 4,
+      "lineno": 55,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/hubtel/src"
     },
-    "order": 0,
+    "order": 2,
     "newscope": true,
     "level": 0
   },
@@ -11392,7 +11392,7 @@
           ]
         },
         "description": "Object which will be attached to the POST body",
-        "name": "data"
+        "name": "body"
       },
       {
         "type": {
@@ -11418,7 +11418,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 58,
+      "lineno": 36,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/hubtel/src"
     },
@@ -11429,7 +11429,7 @@
         "type": "HttpState"
       }
     ],
-    "order": 3,
+    "order": 1,
     "level": 0
   },
   {
@@ -11521,11 +11521,11 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 12,
+      "lineno": 63,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/hubtel/src"
     },
-    "order": 1,
+    "order": 3,
     "level": 0
   },
   {
@@ -11569,7 +11569,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 41,
+      "lineno": 19,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/hubtel/src"
     },
@@ -11580,7 +11580,7 @@
         "type": "HttpState"
       }
     ],
-    "order": 2,
+    "order": 0,
     "level": 0
   },
   {

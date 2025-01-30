@@ -1,6 +1,6 @@
 <dl>
 <dt>
-    <a href="#request">request(method, path, data, options)</a></dt>
+    <a href="#request">request(method, path, body, options)</a></dt>
 <dt>
     <a href="#sendsms">sendSMS(data, options)</a></dt>
 </dl>
@@ -45,7 +45,7 @@ This adaptor exports the following from common:
 ## Functions
 ### request
 
-<p><code>request(method, path, data, options) ⇒ Operation</code></p>
+<p><code>request(method, path, body, options) ⇒ Operation</code></p>
 
 Make a general HTTP request
 
@@ -54,7 +54,7 @@ Make a general HTTP request
 | --- | --- | --- |
 | method | <code>string</code> | HTTP method to use |
 | path | <code>string</code> | Path to resource |
-| data | <code>object</code> | Object which will be attached to the POST body |
+| body | <code>object</code> | Object which will be attached to the POST body |
 | options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |
 
 This operation writes the following keys to state:
