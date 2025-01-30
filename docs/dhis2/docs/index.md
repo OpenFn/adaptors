@@ -12,6 +12,8 @@
 <dt>
     <a href="#findattributevalue">findAttributeValue(trackedEntity, attributeDisplayName)</a></dt>
 <dt>
+    <a href="#findattributevaluebyid">findAttributeValueById(trackedEntity, attributeUid)</a></dt>
+<dt>
     <a href="#get">get(resourceType, query, [options], [callback])</a></dt>
 <dt>
     <a href="#patch">patch(resourceType, path, data, [options], [callback])</a></dt>
@@ -322,6 +324,25 @@ Gets an attribute value by its case-insensitive display name
 **Example**
 ```js
 findAttributeValue(state.data.trackedEntities[0], 'first name')
+```
+
+* * *
+
+### findAttributeValueById
+
+<p><code>findAttributeValueById(trackedEntity, attributeUid) ⇒ string</code></p>
+
+Gets an attribute value by its uid
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| trackedEntity | <code>Object</code> | A tracked entity instance (TEI) object |
+| attributeUid | <code>string</code> | The uid to search for in the TEI's attributes |
+
+**Example**
+```js
+findAttributeValueById(state.tei, 'y1w2R6leVmh')
 ```
 
 * * *
