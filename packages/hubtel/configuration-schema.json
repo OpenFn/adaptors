@@ -16,21 +16,21 @@
       "minLength": 1,
       "examples": ["https://example.com"]
     },
-    "clientID": {
+    "clientId": {
       "title": "Client ID",
       "type": "string",
       "description": "Client ID",
-      "examples": ["xxx-yyy-zzz"]
+      "examples": ["abc123def"]
     },
     "clientSecret": {
       "title": "Client Secret",
       "type": "string",
       "description": "Client Secret",
       "writeOnly": true,
-      "examples": ["@some(!)Str0ngSecr3t"]
+      "examples": ["ghi456jkl"]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["baseUrl", "clientID", "clientSecret"]
+  "required": ["baseUrl", "clientId", "clientSecret"]
 }
