@@ -128,6 +128,9 @@ export const request = (path, options) => {
           password,
         })
       );
+
+      // TODO: Why do we need to _ALSO_ append authentication to "data" for mock?
+      args.data = { ...data, username, password };
     }
 
     const response = await client.request(args);

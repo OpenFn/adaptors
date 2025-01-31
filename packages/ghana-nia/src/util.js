@@ -107,7 +107,7 @@ export const request = (path, options) => {
       ...otherOptions,
     };
 
-    if (data.merchantkey) {
+    if (data.merchantKey) {
       throwError(
         "Please don't supply `merchantKey` in your request body. " +
           'The adaptor will append it automatically.'
@@ -115,8 +115,12 @@ export const request = (path, options) => {
     }
 
     if (data) {
-      console.log('hello?');
+      // Please note that the BDR systems requires that we add username &
+      // password attributes to the POST body.
       args.body = JSON.stringify({ ...data, merchantKey });
+
+      // TODO: Why do we need to _ALSO_ append authentication to "data" for mock?
+      args.data = { ...data, merchantKey };
     }
 
     const response = await client.request(args);

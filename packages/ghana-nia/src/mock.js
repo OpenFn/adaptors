@@ -54,8 +54,9 @@ export function createServer(url = 'https://selfie.imsgh.org:2035') {
   const mockPool = agent.get(url);
 
   const sendNiaData = req => {
-    // if (validate(JSON.parse(req.body))) {
-    if (validateRequestBody(JSON.parse(req.body), sampleRequestBody)) {
+    const body = JSON.parse(req.body);
+
+    if (validateRequestBody(body, sampleRequestBody) && body.merchantKey) {
       return {
         statusCode: 200,
         responseOptions: {
