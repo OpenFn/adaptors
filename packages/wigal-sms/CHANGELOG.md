@@ -10,7 +10,7 @@
 
 ### Patch Changes
 
-- Make sendSMS public
+- Make sendSms public
 
 ## 0.1.0
 
