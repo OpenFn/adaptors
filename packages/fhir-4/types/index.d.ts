@@ -1,3 +1,8 @@
+
+// THIS FILE WAS AUTO-GENERATED
+// DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
+// SEE THE README FILE FOR DETAILS
+
 import * as FHIR from 'fhir/r4';
 import { cursor, dataPath, dataValue, dateFns, each, field, fields, fn, lastReferenceValue, merge, sourceValue } from '@openfn/language-common';
 
@@ -3572,3 +3577,4 @@ declare namespace utils_d {
 }
 
 export { builders_d as b, builders_d as builders, Adaptor as default, utils_d as util };
+
