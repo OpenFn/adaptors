@@ -3,37 +3,37 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type SubstanceDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    version?: any;
-    status?: any;
-    classification?: any;
-    domain?: any;
-    grade?: any;
-    description?: any;
-    informationSource?: any;
-    note?: any;
-    manufacturer?: any;
-    supplier?: any;
-    moiety?: any;
-    property?: any;
-    molecularWeight?: any;
-    structure?: any;
-    code?: any;
-    name?: any;
-    relationship?: any;
-    sourceMaterial?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    version?: string;
+    status?: CodeableConcept;
+    classification?: CodeableConcept;
+    domain?: CodeableConcept;
+    grade?: CodeableConcept;
+    description?: markdown;
+    informationSource?: Reference;
+    note?: Annotation;
+    manufacturer?: Reference;
+    supplier?: Reference;
+    moiety?: BackboneElement;
+    property?: BackboneElement;
+    molecularWeight?: BackboneElement;
+    structure?: BackboneElement;
+    code?: BackboneElement;
+    name?: BackboneElement;
+    relationship?: BackboneElement;
+    sourceMaterial?: BackboneElement;
 };
 
 export default function(props: Partial<SubstanceDefinition_Props>) {

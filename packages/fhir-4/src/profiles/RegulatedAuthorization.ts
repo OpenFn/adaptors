@@ -3,32 +3,32 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type RegulatedAuthorization_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    subject?: any;
-    type?: any;
-    description?: any;
-    region?: any;
-    status?: any;
-    statusDate?: any;
-    validityPeriod?: any;
-    indication?: any;
-    intendedUse?: any;
-    basis?: any;
-    holder?: any;
-    regulator?: any;
-    case?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    subject?: Reference;
+    type?: CodeableConcept;
+    description?: markdown;
+    region?: CodeableConcept;
+    status?: CodeableConcept;
+    statusDate?: string;
+    validityPeriod?: Period;
+    indication?: CodeableReference;
+    intendedUse?: CodeableConcept;
+    basis?: CodeableConcept;
+    holder?: Reference;
+    regulator?: Reference;
+    case?: BackboneElement;
 };
 
 export default function(props: Partial<RegulatedAuthorization_Props>) {

@@ -3,36 +3,36 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type RequestGroup_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    basedOn?: any;
-    replaces?: any;
-    groupIdentifier?: dt.Identifier;
-    status?: any;
-    intent?: any;
-    priority?: any;
-    code?: any;
-    subject?: any;
-    encounter?: any;
-    authoredOn?: any;
-    author?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    note?: any;
-    action?: any;
+    instantiatesUri?: string;
+    basedOn?: Reference;
+    replaces?: Reference;
+    groupIdentifier?: Identifier;
+    status?: string;
+    intent?: string;
+    priority?: string;
+    code?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    authoredOn?: string;
+    author?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    note?: Annotation;
+    action?: BackboneElement;
 };
 
 export default function(props: Partial<RequestGroup_Props>) {

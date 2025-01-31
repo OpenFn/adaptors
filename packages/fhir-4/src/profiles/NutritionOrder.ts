@@ -3,35 +3,35 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type NutritionOrder_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    instantiates?: any;
-    status?: any;
-    intent?: any;
-    patient?: any;
-    encounter?: any;
-    dateTime?: any;
-    orderer?: any;
-    allergyIntolerance?: any;
-    foodPreferenceModifier?: any;
-    excludeFoodModifier?: any;
-    oralDiet?: any;
-    supplement?: any;
-    enteralFormula?: any;
-    note?: any;
+    instantiatesUri?: string;
+    instantiates?: string;
+    status?: string;
+    intent?: string;
+    patient?: Reference;
+    encounter?: Reference;
+    dateTime?: string;
+    orderer?: Reference;
+    allergyIntolerance?: Reference;
+    foodPreferenceModifier?: CodeableConcept;
+    excludeFoodModifier?: CodeableConcept;
+    oralDiet?: BackboneElement;
+    supplement?: BackboneElement;
+    enteralFormula?: BackboneElement;
+    note?: Annotation;
 };
 
 export default function(props: Partial<NutritionOrder_Props>) {

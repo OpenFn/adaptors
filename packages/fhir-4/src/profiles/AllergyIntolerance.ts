@@ -3,34 +3,34 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type AllergyIntolerance_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    clinicalStatus?: any;
-    verificationStatus?: any;
-    type?: any;
-    category?: any;
-    criticality?: any;
-    code?: any;
-    patient?: any;
-    encounter?: any;
-    onset?: any;
-    recordedDate?: any;
-    recorder?: any;
-    asserter?: any;
-    lastOccurrence?: any;
-    note?: any;
-    reaction?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    clinicalStatus?: CodeableConcept;
+    verificationStatus?: CodeableConcept;
+    type?: string;
+    category?: string;
+    criticality?: string;
+    code?: CodeableConcept;
+    patient?: Reference;
+    encounter?: Reference;
+    onset?: string;
+    recordedDate?: string;
+    recorder?: Reference;
+    asserter?: Reference;
+    lastOccurrence?: string;
+    note?: Annotation;
+    reaction?: BackboneElement;
 };
 
 export default function(props: Partial<AllergyIntolerance_Props>) {

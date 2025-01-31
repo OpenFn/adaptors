@@ -3,42 +3,42 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type DeviceRequest_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    basedOn?: any;
-    priorRequest?: any;
-    groupIdentifier?: dt.Identifier;
-    status?: any;
-    intent?: any;
-    priority?: any;
-    code?: any;
-    parameter?: any;
-    subject?: any;
-    encounter?: any;
-    occurrence?: any;
-    authoredOn?: any;
-    requester?: any;
-    performerType?: any;
-    performer?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    insurance?: any;
-    supportingInfo?: any;
-    note?: any;
-    relevantHistory?: any;
+    instantiatesUri?: string;
+    basedOn?: Reference;
+    priorRequest?: Reference;
+    groupIdentifier?: Identifier;
+    status?: string;
+    intent?: string;
+    priority?: string;
+    code?: Reference;
+    parameter?: BackboneElement;
+    subject?: Reference;
+    encounter?: Reference;
+    occurrence?: string;
+    authoredOn?: string;
+    requester?: Reference;
+    performerType?: CodeableConcept;
+    performer?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    insurance?: Reference;
+    supportingInfo?: Reference;
+    note?: Annotation;
+    relevantHistory?: Reference;
 };
 
 export default function(props: Partial<DeviceRequest_Props>) {

@@ -3,33 +3,33 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type PaymentReconciliation_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    period?: any;
-    created?: any;
-    paymentIssuer?: any;
-    request?: any;
-    requestor?: any;
-    outcome?: any;
-    disposition?: any;
-    paymentDate?: any;
-    paymentAmount?: any;
-    paymentIdentifier?: dt.Identifier;
-    detail?: any;
-    formCode?: any;
-    processNote?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    period?: Period;
+    created?: string;
+    paymentIssuer?: Reference;
+    request?: Reference;
+    requestor?: Reference;
+    outcome?: string;
+    disposition?: string;
+    paymentDate?: string;
+    paymentAmount?: Money;
+    paymentIdentifier?: Identifier;
+    detail?: BackboneElement;
+    formCode?: CodeableConcept;
+    processNote?: BackboneElement;
 };
 
 export default function(props: Partial<PaymentReconciliation_Props>) {

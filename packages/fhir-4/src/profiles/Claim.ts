@@ -3,45 +3,45 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Claim_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    type?: any;
-    subType?: any;
-    use?: any;
-    patient?: any;
-    billablePeriod?: any;
-    created?: any;
-    enterer?: any;
-    insurer?: any;
-    provider?: any;
-    priority?: any;
-    fundsReserve?: any;
-    related?: any;
-    prescription?: any;
-    originalPrescription?: any;
-    payee?: any;
-    referral?: any;
-    facility?: any;
-    careTeam?: any;
-    supportingInfo?: any;
-    diagnosis?: any;
-    procedure?: any;
-    insurance?: any;
-    accident?: any;
-    item?: any;
-    total?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    type?: CodeableConcept;
+    subType?: CodeableConcept;
+    use?: string;
+    patient?: Reference;
+    billablePeriod?: Period;
+    created?: string;
+    enterer?: Reference;
+    insurer?: Reference;
+    provider?: Reference;
+    priority?: CodeableConcept;
+    fundsReserve?: CodeableConcept;
+    related?: BackboneElement;
+    prescription?: Reference;
+    originalPrescription?: Reference;
+    payee?: BackboneElement;
+    referral?: Reference;
+    facility?: Reference;
+    careTeam?: BackboneElement;
+    supportingInfo?: BackboneElement;
+    diagnosis?: BackboneElement;
+    procedure?: BackboneElement;
+    insurance?: BackboneElement;
+    accident?: BackboneElement;
+    item?: BackboneElement;
+    total?: Money;
 };
 
 export default function(props: Partial<Claim_Props>) {

@@ -3,28 +3,28 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type NutritionProduct_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    status?: any;
-    category?: any;
-    code?: any;
-    manufacturer?: any;
-    nutrient?: any;
-    ingredient?: any;
-    knownAllergen?: any;
-    productCharacteristic?: any;
-    instance?: any;
-    note?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    status?: string;
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    manufacturer?: Reference;
+    nutrient?: BackboneElement;
+    ingredient?: BackboneElement;
+    knownAllergen?: CodeableReference;
+    productCharacteristic?: BackboneElement;
+    instance?: BackboneElement;
+    note?: Annotation;
 };
 
 export default function(props: Partial<NutritionProduct_Props>) {

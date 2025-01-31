@@ -112,11 +112,9 @@ const generateInlineType = (typeDef: PropDef) => {
 const createTypeNode = (incomingType: string, values?: string[]) => {
   const type = typeMap[incomingType] ?? incomingType;
 
-  if (datatypes[type]) {
+  if (type) {
     // TODO why is this double wrapped??
-    return b.tsTypeReference(
-      b.tsQualifiedName(b.identifier('dt'), b.identifier(type))
-    );
+    return b.tsTypeReference(b.identifier(type));
   }
   return b.tsAnyKeyword();
   // if (values) {

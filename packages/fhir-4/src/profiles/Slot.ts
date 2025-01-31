@@ -3,29 +3,29 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Slot_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    serviceCategory?: any;
-    serviceType?: any;
-    specialty?: any;
-    appointmentType?: any;
-    schedule?: any;
-    status?: any;
-    start?: any;
-    end?: any;
-    overbooked?: any;
-    comment?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    serviceCategory?: CodeableConcept;
+    serviceType?: CodeableConcept;
+    specialty?: CodeableConcept;
+    appointmentType?: CodeableConcept;
+    schedule?: Reference;
+    status?: string;
+    start?: string;
+    end?: string;
+    overbooked?: boolean;
+    comment?: string;
 };
 
 export default function(props: Partial<Slot_Props>) {

@@ -3,29 +3,29 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type SupplyDelivery_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    basedOn?: any;
-    partOf?: any;
-    status?: any;
-    patient?: any;
-    type?: any;
-    suppliedItem?: any;
-    occurrence?: any;
-    supplier?: any;
-    destination?: any;
-    receiver?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    partOf?: Reference;
+    status?: string;
+    patient?: Reference;
+    type?: CodeableConcept;
+    suppliedItem?: BackboneElement;
+    occurrence?: string;
+    supplier?: Reference;
+    destination?: Reference;
+    receiver?: Reference;
 };
 
 export default function(props: Partial<SupplyDelivery_Props>) {

@@ -3,40 +3,40 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type MedicationKnowledge_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    code?: any;
-    status?: any;
-    manufacturer?: any;
-    doseForm?: any;
-    amount?: any;
-    synonym?: any;
-    relatedMedicationKnowledge?: any;
-    associatedMedication?: any;
-    productType?: any;
-    monograph?: any;
-    ingredient?: any;
-    preparationInstruction?: any;
-    intendedRoute?: any;
-    cost?: any;
-    monitoringProgram?: any;
-    administrationGuidelines?: any;
-    medicineClassification?: any;
-    packaging?: any;
-    drugCharacteristic?: any;
-    contraindication?: any;
-    regulatory?: any;
-    kinetics?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    code?: CodeableConcept;
+    status?: string;
+    manufacturer?: Reference;
+    doseForm?: CodeableConcept;
+    amount?: Quantity;
+    synonym?: string;
+    relatedMedicationKnowledge?: BackboneElement;
+    associatedMedication?: Reference;
+    productType?: CodeableConcept;
+    monograph?: BackboneElement;
+    ingredient?: BackboneElement;
+    preparationInstruction?: markdown;
+    intendedRoute?: CodeableConcept;
+    cost?: BackboneElement;
+    monitoringProgram?: BackboneElement;
+    administrationGuidelines?: BackboneElement;
+    medicineClassification?: BackboneElement;
+    packaging?: BackboneElement;
+    drugCharacteristic?: BackboneElement;
+    contraindication?: Reference;
+    regulatory?: BackboneElement;
+    kinetics?: BackboneElement;
 };
 
 export default function(props: Partial<MedicationKnowledge_Props>) {

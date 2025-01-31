@@ -3,31 +3,31 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type DeviceUseStatement_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    basedOn?: any;
-    status?: any;
-    subject?: any;
-    derivedFrom?: any;
-    timing?: any;
-    recordedOn?: any;
-    source?: any;
-    device?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    bodySite?: any;
-    note?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    status?: string;
+    subject?: Reference;
+    derivedFrom?: Reference;
+    timing?: Timing;
+    recordedOn?: string;
+    source?: Reference;
+    device?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    bodySite?: CodeableConcept;
+    note?: Annotation;
 };
 
 export default function(props: Partial<DeviceUseStatement_Props>) {

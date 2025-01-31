@@ -3,28 +3,28 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Organization_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    active?: any;
-    type?: any;
-    name?: any;
-    alias?: any;
-    telecom?: any;
-    address?: any;
-    partOf?: any;
-    contact?: any;
-    endpoint?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    type?: CodeableConcept;
+    name?: string;
+    alias?: string;
+    telecom?: ContactPoint;
+    address?: Address;
+    partOf?: Reference;
+    contact?: BackboneElement;
+    endpoint?: Reference;
 };
 
 export default function(props: Partial<Organization_Props>) {

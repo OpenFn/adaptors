@@ -3,28 +3,28 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Person_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    name?: any;
-    telecom?: any;
-    gender?: any;
-    birthDate?: any;
-    address?: any;
-    photo?: any;
-    managingOrganization?: any;
-    active?: any;
-    link?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    name?: HumanName;
+    telecom?: ContactPoint;
+    gender?: string;
+    birthDate?: string;
+    address?: Address;
+    photo?: Attachment;
+    managingOrganization?: Reference;
+    active?: boolean;
+    link?: BackboneElement;
 };
 
 export default function(props: Partial<Person_Props>) {

@@ -3,30 +3,30 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type EpisodeOfCare_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    statusHistory?: any;
-    type?: any;
-    diagnosis?: any;
-    patient?: any;
-    managingOrganization?: any;
-    period?: any;
-    referralRequest?: any;
-    careManager?: any;
-    team?: any;
-    account?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    statusHistory?: BackboneElement;
+    type?: CodeableConcept;
+    diagnosis?: BackboneElement;
+    patient?: Reference;
+    managingOrganization?: Reference;
+    period?: Period;
+    referralRequest?: Reference;
+    careManager?: Reference;
+    team?: Reference;
+    account?: Reference;
 };
 
 export default function(props: Partial<EpisodeOfCare_Props>) {

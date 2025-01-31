@@ -3,32 +3,32 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type InsurancePlan_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    type?: any;
-    name?: any;
-    alias?: any;
-    period?: any;
-    ownedBy?: any;
-    administeredBy?: any;
-    coverageArea?: any;
-    contact?: any;
-    endpoint?: any;
-    network?: any;
-    coverage?: any;
-    plan?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    type?: CodeableConcept;
+    name?: string;
+    alias?: string;
+    period?: Period;
+    ownedBy?: Reference;
+    administeredBy?: Reference;
+    coverageArea?: Reference;
+    contact?: BackboneElement;
+    endpoint?: Reference;
+    network?: Reference;
+    coverage?: BackboneElement;
+    plan?: BackboneElement;
 };
 
 export default function(props: Partial<InsurancePlan_Props>) {

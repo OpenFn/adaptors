@@ -3,32 +3,32 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type PractitionerRole_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    active?: any;
-    period?: any;
-    practitioner?: any;
-    organization?: any;
-    code?: any;
-    specialty?: any;
-    location?: any;
-    healthcareService?: any;
-    telecom?: any;
-    availableTime?: any;
-    notAvailable?: any;
-    availabilityExceptions?: any;
-    endpoint?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    period?: Period;
+    practitioner?: Reference;
+    organization?: Reference;
+    code?: CodeableConcept;
+    specialty?: CodeableConcept;
+    location?: Reference;
+    healthcareService?: Reference;
+    telecom?: ContactPoint;
+    availableTime?: BackboneElement;
+    notAvailable?: BackboneElement;
+    availabilityExceptions?: string;
+    endpoint?: Reference;
 };
 
 export default function(props: Partial<PractitionerRole_Props>) {

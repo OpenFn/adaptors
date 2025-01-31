@@ -3,35 +3,35 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type MedicationStatement_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    basedOn?: any;
-    partOf?: any;
-    status?: any;
-    statusReason?: any;
-    category?: any;
-    medication?: any;
-    subject?: any;
-    context?: any;
-    effective?: any;
-    dateAsserted?: any;
-    informationSource?: any;
-    derivedFrom?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    note?: any;
-    dosage?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    partOf?: Reference;
+    status?: string;
+    statusReason?: CodeableConcept;
+    category?: CodeableConcept;
+    medication?: CodeableConcept;
+    subject?: Reference;
+    context?: Reference;
+    effective?: string;
+    dateAsserted?: string;
+    informationSource?: Reference;
+    derivedFrom?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    note?: Annotation;
+    dosage?: Dosage;
 };
 
 export default function(props: Partial<MedicationStatement_Props>) {

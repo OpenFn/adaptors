@@ -7,6 +7,53 @@ import { PropDef } from './generate-schema';
 
 const b = ts.factory;
 
+// TODO primitive types like boolean, decimal. are they quite right?
+// TODO duplicates (are other globals, like dom globals). maybe we should namespace after all
+export const generateDataTypes = (schema: Record<string, Schema[]>) => {
+  const resultFile = ts.createSourceFile(
+    'test.ts',
+    '',
+    ts.ScriptTarget.Latest,
+    /*setParentNodes*/ false,
+    ts.ScriptKind.TS
+  );
+  // tmp
+  const statements: any[] = [];
+  for (const resourceType in schema) {
+    for (const profile of schema[resourceType]) {
+      // skip primitives which we map to plain js
+      if (profile.id in typeMap) {
+        continue;
+      }
+      const ast = generateType(resourceType, profile, {}, profile.id);
+      statements.push(ast);
+    }
+  }
+  const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
+
+  // needed to make the module register properly. Apparently.
+  const imp = b.createImportDeclaration(
+    [],
+    [],
+    undefined,
+    b.createStringLiteral('.')
+  );
+  const mod = b.createModuleDeclaration(
+    [b.createToken(ts.SyntaxKind.DeclareKeyword)],
+    b.createIdentifier('global'),
+    b.createModuleBlock(statements),
+    ts.NodeFlags.GlobalAugmentation |
+      // ts.NodeFlags.Ambient |
+      ts.NodeFlags.ContextFlags
+  );
+
+  return printer.printList(
+    ts.ListFormat.SourceFileStatements,
+    [imp, mod],
+    resultFile
+  );
+};
+
 // for a given list of mappings, generate a signature for the builder
 // a possible difficulty here is that this is sort of guessing?
 // it's duplicating similar logic to work out types
@@ -15,7 +62,7 @@ const generateDTS = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {},
   options: {
-    simpleSignatures?: simpleBuilders;
+    simpleSignatures?: boolean;
   } = {}
 ) => {
   let contents: ts.Statement[] = [];
@@ -71,11 +118,15 @@ const typeMap = {
   date: 'string',
   dateTime: 'string',
   instant: 'string',
+  time: 'string',
   uri: 'string',
   id: 'string',
   decimal: 'number',
   integer: 'number',
+  positiveInt: 'number',
   unsignedInt: 'number',
+  string: 'string',
+  boolean: 'boolean',
 
   // TODO
   canonical: 'any',
@@ -216,7 +267,8 @@ const createTypeNode = (incomingType: string, values?: string[]) => {
 export const generateType = (
   resourceName: string,
   schema: Schema,
-  mappings
+  mappings = {},
+  typeName?: string
 ) => {
   const props = [];
 
@@ -249,12 +301,19 @@ export const generateType = (
     if (s.desc) {
       props.push(b.createJSDocComment(s.desc + '\n'));
     }
-    props.push(b.createPropertySignature([], key, undefined, type));
+    props.push(
+      b.createPropertySignature(
+        [],
+        key,
+        b.createToken(ts.SyntaxKind.QuestionToken),
+        type
+      )
+    );
   }
 
   const t = b.createTypeAliasDeclaration(
     [],
-    `${resourceName}_Props`,
+    typeName || `${resourceName}_Props`,
     [], // generics
     b.createTypeLiteralNode(props)
   );

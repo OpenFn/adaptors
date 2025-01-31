@@ -3,45 +3,45 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type ClaimResponse_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    type?: any;
-    subType?: any;
-    use?: any;
-    patient?: any;
-    created?: any;
-    insurer?: any;
-    requestor?: any;
-    request?: any;
-    outcome?: any;
-    disposition?: any;
-    preAuthRef?: any;
-    preAuthPeriod?: any;
-    payeeType?: any;
-    item?: any;
-    addItem?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    type?: CodeableConcept;
+    subType?: CodeableConcept;
+    use?: string;
+    patient?: Reference;
+    created?: string;
+    insurer?: Reference;
+    requestor?: Reference;
+    request?: Reference;
+    outcome?: string;
+    disposition?: string;
+    preAuthRef?: string;
+    preAuthPeriod?: Period;
+    payeeType?: CodeableConcept;
+    item?: BackboneElement;
+    addItem?: BackboneElement;
     adjudication?: any;
-    total?: any;
-    payment?: any;
-    fundsReserve?: any;
-    formCode?: any;
-    form?: any;
-    processNote?: any;
-    communicationRequest?: any;
-    insurance?: any;
-    error?: any;
+    total?: BackboneElement;
+    payment?: BackboneElement;
+    fundsReserve?: CodeableConcept;
+    formCode?: CodeableConcept;
+    form?: Attachment;
+    processNote?: BackboneElement;
+    communicationRequest?: Reference;
+    insurance?: BackboneElement;
+    error?: BackboneElement;
 };
 
 export default function(props: Partial<ClaimResponse_Props>) {

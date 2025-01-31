@@ -3,36 +3,36 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type EvidenceReport_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    status?: any;
-    useContext?: any;
-    identifier?: dt.Identifier;
-    relatedIdentifier?: dt.Identifier;
-    citeAs?: any;
-    type?: any;
-    note?: any;
-    relatedArtifact?: any;
-    subject?: any;
-    publisher?: any;
-    contact?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    relatesTo?: any;
-    section?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    status?: string;
+    useContext?: UsageContext;
+    identifier?: Identifier;
+    relatedIdentifier?: Identifier;
+    citeAs?: Reference;
+    type?: CodeableConcept;
+    note?: Annotation;
+    relatedArtifact?: RelatedArtifact;
+    subject?: BackboneElement;
+    publisher?: string;
+    contact?: ContactDetail;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    relatesTo?: BackboneElement;
+    section?: BackboneElement;
 };
 
 export default function(props: Partial<EvidenceReport_Props>) {

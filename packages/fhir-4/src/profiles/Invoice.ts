@@ -3,34 +3,34 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Invoice_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    cancelledReason?: any;
-    type?: any;
-    subject?: any;
-    recipient?: any;
-    date?: any;
-    participant?: any;
-    issuer?: any;
-    account?: any;
-    lineItem?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    cancelledReason?: string;
+    type?: CodeableConcept;
+    subject?: Reference;
+    recipient?: Reference;
+    date?: string;
+    participant?: BackboneElement;
+    issuer?: Reference;
+    account?: Reference;
+    lineItem?: BackboneElement;
     totalPriceComponent?: any;
-    totalNet?: any;
-    totalGross?: any;
-    paymentTerms?: any;
-    note?: any;
+    totalNet?: Money;
+    totalGross?: Money;
+    paymentTerms?: markdown;
+    note?: Annotation;
 };
 
 export default function(props: Partial<Invoice_Props>) {

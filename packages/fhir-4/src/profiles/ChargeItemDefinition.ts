@@ -3,41 +3,41 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type ChargeItemDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: dt.Identifier;
-    version?: any;
-    title?: any;
-    derivedFromUri?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    title?: string;
+    derivedFromUri?: string;
     partOf?: any;
     replaces?: any;
-    status?: any;
-    experimental?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    copyright?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    effectivePeriod?: any;
-    code?: any;
-    instance?: any;
-    applicability?: any;
-    propertyGroup?: any;
+    status?: string;
+    experimental?: boolean;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    code?: CodeableConcept;
+    instance?: Reference;
+    applicability?: BackboneElement;
+    propertyGroup?: BackboneElement;
 };
 
 export default function(props: Partial<ChargeItemDefinition_Props>) {

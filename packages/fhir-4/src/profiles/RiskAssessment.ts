@@ -3,35 +3,35 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type RiskAssessment_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    basedOn?: any;
-    parent?: any;
-    status?: any;
-    method?: any;
-    code?: any;
-    subject?: any;
-    encounter?: any;
-    occurrence?: any;
-    condition?: any;
-    performer?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    basis?: any;
-    prediction?: any;
-    mitigation?: any;
-    note?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    parent?: Reference;
+    status?: string;
+    method?: CodeableConcept;
+    code?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    occurrence?: string;
+    condition?: Reference;
+    performer?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    basis?: Reference;
+    prediction?: BackboneElement;
+    mitigation?: string;
+    note?: Annotation;
 };
 
 export default function(props: Partial<RiskAssessment_Props>) {

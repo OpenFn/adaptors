@@ -3,42 +3,42 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type MedicationDispense_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    partOf?: any;
-    status?: any;
-    statusReason?: any;
-    category?: any;
-    medication?: any;
-    subject?: any;
-    context?: any;
-    supportingInformation?: any;
-    performer?: any;
-    location?: any;
-    authorizingPrescription?: any;
-    type?: any;
-    quantity?: any;
-    daysSupply?: any;
-    whenPrepared?: any;
-    whenHandedOver?: any;
-    destination?: any;
-    receiver?: any;
-    note?: any;
-    dosageInstruction?: any;
-    substitution?: any;
-    detectedIssue?: any;
-    eventHistory?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    partOf?: Reference;
+    status?: string;
+    statusReason?: CodeableConcept;
+    category?: CodeableConcept;
+    medication?: CodeableConcept;
+    subject?: Reference;
+    context?: Reference;
+    supportingInformation?: Reference;
+    performer?: BackboneElement;
+    location?: Reference;
+    authorizingPrescription?: Reference;
+    type?: CodeableConcept;
+    quantity?: Quantity;
+    daysSupply?: Quantity;
+    whenPrepared?: string;
+    whenHandedOver?: string;
+    destination?: Reference;
+    receiver?: Reference;
+    note?: Annotation;
+    dosageInstruction?: Dosage;
+    substitution?: BackboneElement;
+    detectedIssue?: Reference;
+    eventHistory?: Reference;
 };
 
 export default function(props: Partial<MedicationDispense_Props>) {

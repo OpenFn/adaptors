@@ -3,46 +3,46 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Procedure_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    basedOn?: any;
-    partOf?: any;
-    status?: any;
-    statusReason?: any;
-    category?: any;
-    code?: any;
-    subject?: any;
-    encounter?: any;
-    performed?: any;
-    recorder?: any;
-    asserter?: any;
-    performer?: any;
-    location?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    bodySite?: any;
-    outcome?: any;
-    report?: any;
-    complication?: any;
-    complicationDetail?: any;
-    followUp?: any;
-    note?: any;
-    focalDevice?: any;
-    usedReference?: any;
-    usedCode?: any;
+    instantiatesUri?: string;
+    basedOn?: Reference;
+    partOf?: Reference;
+    status?: string;
+    statusReason?: CodeableConcept;
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    performed?: string;
+    recorder?: Reference;
+    asserter?: Reference;
+    performer?: BackboneElement;
+    location?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    bodySite?: CodeableConcept;
+    outcome?: CodeableConcept;
+    report?: Reference;
+    complication?: CodeableConcept;
+    complicationDetail?: Reference;
+    followUp?: CodeableConcept;
+    note?: Annotation;
+    focalDevice?: BackboneElement;
+    usedReference?: Reference;
+    usedCode?: CodeableConcept;
 };
 
 export default function(props: Partial<Procedure_Props>) {

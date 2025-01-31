@@ -3,34 +3,34 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Goal_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    lifecycleStatus?: any;
-    achievementStatus?: any;
-    category?: any;
-    priority?: any;
-    description?: any;
-    subject?: any;
-    start?: any;
-    target?: any;
-    statusDate?: any;
-    statusReason?: any;
-    expressedBy?: any;
-    addresses?: any;
-    note?: any;
-    outcomeCode?: any;
-    outcomeReference?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    lifecycleStatus?: string;
+    achievementStatus?: CodeableConcept;
+    category?: CodeableConcept;
+    priority?: CodeableConcept;
+    description?: CodeableConcept;
+    subject?: Reference;
+    start?: string;
+    target?: BackboneElement;
+    statusDate?: string;
+    statusReason?: string;
+    expressedBy?: Reference;
+    addresses?: Reference;
+    note?: Annotation;
+    outcomeCode?: CodeableConcept;
+    outcomeReference?: Reference;
 };
 
 export default function(props: Partial<Goal_Props>) {

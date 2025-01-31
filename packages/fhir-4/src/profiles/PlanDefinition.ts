@@ -3,49 +3,49 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type PlanDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: dt.Identifier;
-    version?: any;
-    name?: any;
-    title?: any;
-    subtitle?: any;
-    type?: any;
-    status?: any;
-    experimental?: any;
-    subject?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    purpose?: any;
-    usage?: any;
-    copyright?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    effectivePeriod?: any;
-    topic?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    relatedArtifact?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    name?: string;
+    title?: string;
+    subtitle?: string;
+    type?: CodeableConcept;
+    status?: string;
+    experimental?: boolean;
+    subject?: CodeableConcept;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    purpose?: markdown;
+    usage?: string;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    topic?: CodeableConcept;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    relatedArtifact?: RelatedArtifact;
     library?: any;
-    goal?: any;
-    action?: any;
+    goal?: BackboneElement;
+    action?: BackboneElement;
 };
 
 export default function(props: Partial<PlanDefinition_Props>) {

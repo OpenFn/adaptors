@@ -3,49 +3,49 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Task_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    basedOn?: any;
-    groupIdentifier?: dt.Identifier;
-    partOf?: any;
-    status?: any;
-    statusReason?: any;
-    businessStatus?: any;
-    intent?: any;
-    priority?: any;
-    code?: any;
-    description?: any;
-    focus?: any;
-    for?: any;
-    encounter?: any;
-    executionPeriod?: any;
-    authoredOn?: any;
-    lastModified?: any;
-    requester?: any;
-    performerType?: any;
-    owner?: any;
-    location?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    insurance?: any;
-    note?: any;
-    relevantHistory?: any;
-    restriction?: any;
-    input?: any;
-    output?: any;
+    instantiatesUri?: string;
+    basedOn?: Reference;
+    groupIdentifier?: Identifier;
+    partOf?: Reference;
+    status?: string;
+    statusReason?: CodeableConcept;
+    businessStatus?: CodeableConcept;
+    intent?: string;
+    priority?: string;
+    code?: CodeableConcept;
+    description?: string;
+    focus?: Reference;
+    for?: Reference;
+    encounter?: Reference;
+    executionPeriod?: Period;
+    authoredOn?: string;
+    lastModified?: string;
+    requester?: Reference;
+    performerType?: CodeableConcept;
+    owner?: Reference;
+    location?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    insurance?: Reference;
+    note?: Annotation;
+    relevantHistory?: Reference;
+    restriction?: BackboneElement;
+    input?: BackboneElement;
+    output?: BackboneElement;
 };
 
 export default function(props: Partial<Task_Props>) {

@@ -3,29 +3,29 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Endpoint_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    connectionType?: any;
-    name?: any;
-    managingOrganization?: any;
-    contact?: any;
-    period?: any;
-    payloadType?: any;
-    payloadMimeType?: any;
-    address?: any;
-    header?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    connectionType?: Coding;
+    name?: string;
+    managingOrganization?: Reference;
+    contact?: ContactPoint;
+    period?: Period;
+    payloadType?: CodeableConcept;
+    payloadMimeType?: string;
+    address?: url;
+    header?: string;
 };
 
 export default function(props: Partial<Endpoint_Props>) {

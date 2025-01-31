@@ -3,42 +3,42 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Observation_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    basedOn?: any;
-    partOf?: any;
-    status?: any;
-    category?: any;
-    code?: any;
-    subject?: any;
-    focus?: any;
-    encounter?: any;
-    effective?: any;
-    issued?: any;
-    performer?: any;
-    value?: any;
-    dataAbsentReason?: any;
-    interpretation?: any;
-    note?: any;
-    bodySite?: any;
-    method?: any;
-    specimen?: any;
-    device?: any;
-    referenceRange?: any;
-    hasMember?: any;
-    derivedFrom?: any;
-    component?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    partOf?: Reference;
+    status?: string;
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    subject?: Reference;
+    focus?: Reference;
+    encounter?: Reference;
+    effective?: string;
+    issued?: string;
+    performer?: Reference;
+    value?: Quantity;
+    dataAbsentReason?: CodeableConcept;
+    interpretation?: CodeableConcept;
+    note?: Annotation;
+    bodySite?: CodeableConcept;
+    method?: CodeableConcept;
+    specimen?: Reference;
+    device?: Reference;
+    referenceRange?: BackboneElement;
+    hasMember?: Reference;
+    derivedFrom?: Reference;
+    component?: BackboneElement;
 };
 
 export default function(props: Partial<Observation_Props>) {

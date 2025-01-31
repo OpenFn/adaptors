@@ -3,36 +3,36 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type FamilyMemberHistory_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    status?: any;
-    dataAbsentReason?: any;
-    patient?: any;
-    date?: any;
-    name?: any;
-    relationship?: any;
-    sex?: any;
-    born?: any;
-    age?: any;
-    estimatedAge?: any;
-    deceased?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    note?: any;
-    condition?: any;
+    instantiatesUri?: string;
+    status?: string;
+    dataAbsentReason?: CodeableConcept;
+    patient?: Reference;
+    date?: string;
+    name?: string;
+    relationship?: CodeableConcept;
+    sex?: CodeableConcept;
+    born?: Period;
+    age?: Age;
+    estimatedAge?: boolean;
+    deceased?: boolean;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    note?: Annotation;
+    condition?: BackboneElement;
 };
 
 export default function(props: Partial<FamilyMemberHistory_Props>) {

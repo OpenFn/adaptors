@@ -3,42 +3,42 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type HealthcareService_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    active?: any;
-    providedBy?: any;
-    category?: any;
-    type?: any;
-    specialty?: any;
-    location?: any;
-    name?: any;
-    comment?: any;
-    extraDetails?: any;
-    photo?: any;
-    telecom?: any;
-    coverageArea?: any;
-    serviceProvisionCode?: any;
-    eligibility?: any;
-    program?: any;
-    characteristic?: any;
-    communication?: any;
-    referralMethod?: any;
-    appointmentRequired?: any;
-    availableTime?: any;
-    notAvailable?: any;
-    availabilityExceptions?: any;
-    endpoint?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    providedBy?: Reference;
+    category?: CodeableConcept;
+    type?: CodeableConcept;
+    specialty?: CodeableConcept;
+    location?: Reference;
+    name?: string;
+    comment?: string;
+    extraDetails?: markdown;
+    photo?: Attachment;
+    telecom?: ContactPoint;
+    coverageArea?: Reference;
+    serviceProvisionCode?: CodeableConcept;
+    eligibility?: BackboneElement;
+    program?: CodeableConcept;
+    characteristic?: CodeableConcept;
+    communication?: CodeableConcept;
+    referralMethod?: CodeableConcept;
+    appointmentRequired?: boolean;
+    availableTime?: BackboneElement;
+    notAvailable?: BackboneElement;
+    availabilityExceptions?: string;
+    endpoint?: Reference;
 };
 
 export default function(props: Partial<HealthcareService_Props>) {

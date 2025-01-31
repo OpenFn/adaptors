@@ -3,44 +3,44 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Device_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    definition?: any;
-    udiCarrier?: any;
-    status?: any;
-    statusReason?: any;
-    distinctIdentifier?: any;
-    manufacturer?: any;
-    manufactureDate?: any;
-    expirationDate?: any;
-    lotNumber?: any;
-    serialNumber?: any;
-    deviceName?: any;
-    modelNumber?: any;
-    partNumber?: any;
-    type?: any;
-    specialization?: any;
-    version?: any;
-    property?: any;
-    patient?: any;
-    owner?: any;
-    contact?: any;
-    location?: any;
-    url?: any;
-    note?: any;
-    safety?: any;
-    parent?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    definition?: Reference;
+    udiCarrier?: BackboneElement;
+    status?: string;
+    statusReason?: CodeableConcept;
+    distinctIdentifier?: string;
+    manufacturer?: string;
+    manufactureDate?: string;
+    expirationDate?: string;
+    lotNumber?: string;
+    serialNumber?: string;
+    deviceName?: BackboneElement;
+    modelNumber?: string;
+    partNumber?: string;
+    type?: CodeableConcept;
+    specialization?: BackboneElement;
+    version?: BackboneElement;
+    property?: BackboneElement;
+    patient?: Reference;
+    owner?: Reference;
+    contact?: ContactPoint;
+    location?: Reference;
+    url?: string;
+    note?: Annotation;
+    safety?: CodeableConcept;
+    parent?: Reference;
 };
 
 export default function(props: Partial<Device_Props>) {

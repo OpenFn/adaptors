@@ -3,29 +3,29 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type QuestionnaireResponse_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    basedOn?: any;
-    partOf?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    partOf?: Reference;
     questionnaire?: any;
-    status?: any;
-    subject?: any;
-    encounter?: any;
-    authored?: any;
-    author?: any;
-    source?: any;
-    item?: any;
+    status?: string;
+    subject?: Reference;
+    encounter?: Reference;
+    authored?: string;
+    author?: Reference;
+    source?: Reference;
+    item?: BackboneElement;
 };
 
 export default function(props: Partial<QuestionnaireResponse_Props>) {

@@ -3,41 +3,41 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Encounter_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    statusHistory?: any;
-    class?: any;
-    classHistory?: any;
-    type?: any;
-    serviceType?: any;
-    priority?: any;
-    subject?: any;
-    episodeOfCare?: any;
-    basedOn?: any;
-    participant?: any;
-    appointment?: any;
-    period?: any;
-    length?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    diagnosis?: any;
-    account?: any;
-    hospitalization?: any;
-    location?: any;
-    serviceProvider?: any;
-    partOf?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    statusHistory?: BackboneElement;
+    class?: Coding;
+    classHistory?: BackboneElement;
+    type?: CodeableConcept;
+    serviceType?: CodeableConcept;
+    priority?: CodeableConcept;
+    subject?: Reference;
+    episodeOfCare?: Reference;
+    basedOn?: Reference;
+    participant?: BackboneElement;
+    appointment?: Reference;
+    period?: Period;
+    length?: Duration;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    diagnosis?: BackboneElement;
+    account?: Reference;
+    hospitalization?: BackboneElement;
+    location?: BackboneElement;
+    serviceProvider?: Reference;
+    partOf?: Reference;
 };
 
 export default function(props: Partial<Encounter_Props>) {

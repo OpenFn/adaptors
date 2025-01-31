@@ -3,42 +3,42 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type ResearchStudy_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    title?: any;
-    protocol?: any;
-    partOf?: any;
-    status?: any;
-    primaryPurposeType?: any;
-    phase?: any;
-    category?: any;
-    focus?: any;
-    condition?: any;
-    contact?: any;
-    relatedArtifact?: any;
-    keyword?: any;
-    location?: any;
-    description?: any;
-    enrollment?: any;
-    period?: any;
-    sponsor?: any;
-    principalInvestigator?: any;
-    site?: any;
-    reasonStopped?: any;
-    note?: any;
-    arm?: any;
-    objective?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    title?: string;
+    protocol?: Reference;
+    partOf?: Reference;
+    status?: string;
+    primaryPurposeType?: CodeableConcept;
+    phase?: CodeableConcept;
+    category?: CodeableConcept;
+    focus?: CodeableConcept;
+    condition?: CodeableConcept;
+    contact?: ContactDetail;
+    relatedArtifact?: RelatedArtifact;
+    keyword?: CodeableConcept;
+    location?: CodeableConcept;
+    description?: markdown;
+    enrollment?: Reference;
+    period?: Period;
+    sponsor?: Reference;
+    principalInvestigator?: Reference;
+    site?: Reference;
+    reasonStopped?: CodeableConcept;
+    note?: Annotation;
+    arm?: BackboneElement;
+    objective?: BackboneElement;
 };
 
 export default function(props: Partial<ResearchStudy_Props>) {

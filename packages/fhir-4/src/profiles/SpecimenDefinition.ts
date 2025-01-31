@@ -3,24 +3,24 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type SpecimenDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    typeCollected?: any;
-    patientPreparation?: any;
-    timeAspect?: any;
-    collection?: any;
-    typeTested?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    typeCollected?: CodeableConcept;
+    patientPreparation?: CodeableConcept;
+    timeAspect?: string;
+    collection?: CodeableConcept;
+    typeTested?: BackboneElement;
 };
 
 export default function(props: Partial<SpecimenDefinition_Props>) {

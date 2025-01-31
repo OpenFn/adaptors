@@ -3,31 +3,31 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Specimen_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    accessionIdentifier?: dt.Identifier;
-    status?: any;
-    type?: any;
-    subject?: any;
-    receivedTime?: any;
-    parent?: any;
-    request?: any;
-    collection?: any;
-    processing?: any;
-    container?: any;
-    condition?: any;
-    note?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    accessionIdentifier?: Identifier;
+    status?: string;
+    type?: CodeableConcept;
+    subject?: Reference;
+    receivedTime?: string;
+    parent?: Reference;
+    request?: Reference;
+    collection?: BackboneElement;
+    processing?: BackboneElement;
+    container?: BackboneElement;
+    condition?: CodeableConcept;
+    note?: Annotation;
 };
 
 export default function(props: Partial<Specimen_Props>) {

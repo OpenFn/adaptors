@@ -3,33 +3,33 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type GuidanceResponse_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    requestIdentifier?: dt.Identifier;
-    identifier?: dt.Identifier;
-    module?: any;
-    status?: any;
-    subject?: any;
-    encounter?: any;
-    occurrenceDateTime?: any;
-    performer?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    note?: any;
-    evaluationMessage?: any;
-    outputParameters?: any;
-    result?: any;
-    dataRequirement?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    requestIdentifier?: Identifier;
+    identifier?: Identifier;
+    module?: string;
+    status?: string;
+    subject?: Reference;
+    encounter?: Reference;
+    occurrenceDateTime?: string;
+    performer?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    note?: Annotation;
+    evaluationMessage?: Reference;
+    outputParameters?: Reference;
+    result?: Reference;
+    dataRequirement?: DataRequirement;
 };
 
 export default function(props: Partial<GuidanceResponse_Props>) {

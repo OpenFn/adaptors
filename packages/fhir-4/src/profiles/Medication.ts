@@ -3,26 +3,26 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Medication_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    code?: any;
-    status?: any;
-    manufacturer?: any;
-    form?: any;
-    amount?: any;
-    ingredient?: any;
-    batch?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    code?: CodeableConcept;
+    status?: string;
+    manufacturer?: Reference;
+    form?: CodeableConcept;
+    amount?: Ratio;
+    ingredient?: BackboneElement;
+    batch?: BackboneElement;
 };
 
 export default function(props: Partial<Medication_Props>) {

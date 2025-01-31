@@ -3,31 +3,31 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type ObservationDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    category?: any;
-    code?: any;
-    identifier?: dt.Identifier;
-    permittedDataType?: any;
-    multipleResultsAllowed?: any;
-    method?: any;
-    preferredReportName?: any;
-    quantitativeDetails?: any;
-    qualifiedInterval?: any;
-    validCodedValueSet?: any;
-    normalCodedValueSet?: any;
-    abnormalCodedValueSet?: any;
-    criticalCodedValueSet?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    identifier?: Identifier;
+    permittedDataType?: string;
+    multipleResultsAllowed?: boolean;
+    method?: CodeableConcept;
+    preferredReportName?: string;
+    quantitativeDetails?: BackboneElement;
+    qualifiedInterval?: BackboneElement;
+    validCodedValueSet?: Reference;
+    normalCodedValueSet?: Reference;
+    abnormalCodedValueSet?: Reference;
+    criticalCodedValueSet?: Reference;
 };
 
 export default function(props: Partial<ObservationDefinition_Props>) {

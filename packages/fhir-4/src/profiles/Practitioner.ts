@@ -3,28 +3,28 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Practitioner_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    active?: any;
-    name?: any;
-    telecom?: any;
-    address?: any;
-    gender?: any;
-    birthDate?: any;
-    photo?: any;
-    qualification?: any;
-    communication?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    name?: HumanName;
+    telecom?: ContactPoint;
+    address?: Address;
+    gender?: string;
+    birthDate?: string;
+    photo?: Attachment;
+    qualification?: BackboneElement;
+    communication?: CodeableConcept;
 };
 
 export default function(props: Partial<Practitioner_Props>) {

@@ -3,43 +3,43 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Evidence_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: dt.Identifier;
-    version?: any;
-    title?: any;
-    citeAs?: any;
-    status?: any;
-    date?: any;
-    useContext?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    publisher?: any;
-    contact?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    relatedArtifact?: any;
-    description?: any;
-    assertion?: any;
-    note?: any;
-    variableDefinition?: any;
-    synthesisType?: any;
-    studyType?: any;
-    statistic?: any;
-    certainty?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    title?: string;
+    citeAs?: Reference;
+    status?: string;
+    date?: string;
+    useContext?: UsageContext;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    relatedArtifact?: RelatedArtifact;
+    description?: markdown;
+    assertion?: markdown;
+    note?: Annotation;
+    variableDefinition?: BackboneElement;
+    synthesisType?: CodeableConcept;
+    studyType?: CodeableConcept;
+    statistic?: BackboneElement;
+    certainty?: BackboneElement;
 };
 
 export default function(props: Partial<Evidence_Props>) {

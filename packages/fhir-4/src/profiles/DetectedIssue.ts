@@ -3,30 +3,30 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type DetectedIssue_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    code?: any;
-    severity?: any;
-    patient?: any;
-    identified?: any;
-    author?: any;
-    implicated?: any;
-    evidence?: any;
-    detail?: any;
-    reference?: any;
-    mitigation?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    code?: CodeableConcept;
+    severity?: string;
+    patient?: Reference;
+    identified?: string;
+    author?: Reference;
+    implicated?: Reference;
+    evidence?: BackboneElement;
+    detail?: string;
+    reference?: string;
+    mitigation?: BackboneElement;
 };
 
 export default function(props: Partial<DetectedIssue_Props>) {

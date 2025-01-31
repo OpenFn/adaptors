@@ -59,14 +59,20 @@ const typeMappings = {
   positiveInt: 'number',
 };
 
-const generate = async (specPath: string, mappings: MappingSpec = {}) => {
+const generate = async (
+  specPath: string,
+  mappings: MappingSpec = {},
+  options: { clean?: false; debugOutput?: false } = {}
+) => {
   console.log('Generating schemas from ', specPath);
 
   const outputDir = path.resolve(path.dirname(specPath), '../schema');
 
-  console.log('Cleaning output dir: ', outputDir);
-  await rimraf(outputDir);
-  await mkdir(outputDir, { recursive: true });
+  if (options.clean) {
+    console.log('Cleaning output dir: ', outputDir);
+    await rimraf(outputDir);
+    await mkdir(outputDir, { recursive: true });
+  }
 
   const fullSpec = (await import(path.resolve(specPath), {
     assert: { type: 'json' },
@@ -119,7 +125,6 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
         e.url ===
         'http://hl7.org/fhir/StructureDefinition/structuredefinition-category'
     );
-    console.log(category);
     if (category?.valueString?.startsWith('Foundation.')) {
       console.log('ignoring Foundation profile', profileId);
       continue;
@@ -221,10 +226,12 @@ const generate = async (specPath: string, mappings: MappingSpec = {}) => {
 
     // Output for debug
     // TODO maybe make optional?
-    await writeFile(
-      path.resolve(outputDir, `${resourceType}_${profileId}.json`),
-      JSON.stringify(result[resourceType], null, 2)
-    );
+    if (options.debugOutput) {
+      await writeFile(
+        path.resolve(outputDir, `${resourceType}_${profileId}.json`),
+        JSON.stringify(result[resourceType], null, 2)
+      );
+    }
   }
 
   console.log({ counts });

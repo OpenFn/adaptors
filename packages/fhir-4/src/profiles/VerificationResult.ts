@@ -3,32 +3,32 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type VerificationResult_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    target?: any;
-    targetLocation?: any;
-    need?: any;
-    status?: any;
-    statusDate?: any;
-    validationType?: any;
-    validationProcess?: any;
-    frequency?: any;
-    lastPerformed?: any;
-    nextScheduled?: any;
-    failureAction?: any;
-    primarySource?: any;
-    attestation?: any;
-    validator?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    target?: Reference;
+    targetLocation?: string;
+    need?: CodeableConcept;
+    status?: string;
+    statusDate?: string;
+    validationType?: CodeableConcept;
+    validationProcess?: CodeableConcept;
+    frequency?: Timing;
+    lastPerformed?: string;
+    nextScheduled?: string;
+    failureAction?: CodeableConcept;
+    primarySource?: BackboneElement;
+    attestation?: BackboneElement;
+    validator?: BackboneElement;
 };
 
 export default function(props: Partial<VerificationResult_Props>) {

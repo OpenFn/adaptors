@@ -3,29 +3,29 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type ClinicalUseDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    type?: any;
-    category?: any;
-    subject?: any;
-    status?: any;
-    contraindication?: any;
-    indication?: any;
-    interaction?: any;
-    population?: any;
-    undesirableEffect?: any;
-    warning?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    type?: string;
+    category?: CodeableConcept;
+    subject?: Reference;
+    status?: CodeableConcept;
+    contraindication?: BackboneElement;
+    indication?: BackboneElement;
+    interaction?: BackboneElement;
+    population?: Reference;
+    undesirableEffect?: BackboneElement;
+    warning?: BackboneElement;
 };
 
 export default function(props: Partial<ClinicalUseDefinition_Props>) {

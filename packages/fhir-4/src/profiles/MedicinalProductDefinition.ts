@@ -3,46 +3,46 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type MedicinalProductDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    type?: any;
-    domain?: any;
-    version?: any;
-    status?: any;
-    statusDate?: any;
-    description?: any;
-    combinedPharmaceuticalDoseForm?: any;
-    route?: any;
-    indication?: any;
-    legalStatusOfSupply?: any;
-    additionalMonitoringIndicator?: any;
-    specialMeasures?: any;
-    pediatricUseIndicator?: any;
-    classification?: any;
-    marketingStatus?: any;
-    packagedMedicinalProduct?: any;
-    ingredient?: any;
-    impurity?: any;
-    attachedDocument?: any;
-    masterFile?: any;
-    contact?: any;
-    clinicalTrial?: any;
-    code?: any;
-    name?: any;
-    crossReference?: any;
-    operation?: any;
-    characteristic?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    type?: CodeableConcept;
+    domain?: CodeableConcept;
+    version?: string;
+    status?: CodeableConcept;
+    statusDate?: string;
+    description?: markdown;
+    combinedPharmaceuticalDoseForm?: CodeableConcept;
+    route?: CodeableConcept;
+    indication?: markdown;
+    legalStatusOfSupply?: CodeableConcept;
+    additionalMonitoringIndicator?: CodeableConcept;
+    specialMeasures?: CodeableConcept;
+    pediatricUseIndicator?: CodeableConcept;
+    classification?: CodeableConcept;
+    marketingStatus?: MarketingStatus;
+    packagedMedicinalProduct?: CodeableConcept;
+    ingredient?: CodeableConcept;
+    impurity?: CodeableReference;
+    attachedDocument?: Reference;
+    masterFile?: Reference;
+    contact?: BackboneElement;
+    clinicalTrial?: Reference;
+    code?: Coding;
+    name?: BackboneElement;
+    crossReference?: BackboneElement;
+    operation?: BackboneElement;
+    characteristic?: BackboneElement;
 };
 
 export default function(props: Partial<MedicinalProductDefinition_Props>) {

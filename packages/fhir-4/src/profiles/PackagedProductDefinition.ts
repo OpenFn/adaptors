@@ -3,32 +3,32 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type PackagedProductDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    name?: any;
-    type?: any;
-    packageFor?: any;
-    status?: any;
-    statusDate?: any;
-    containedItemQuantity?: any;
-    description?: any;
-    legalStatusOfSupply?: any;
-    marketingStatus?: any;
-    characteristic?: any;
-    copackagedIndicator?: any;
-    manufacturer?: any;
-    package?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    name?: string;
+    type?: CodeableConcept;
+    packageFor?: Reference;
+    status?: CodeableConcept;
+    statusDate?: string;
+    containedItemQuantity?: Quantity;
+    description?: markdown;
+    legalStatusOfSupply?: BackboneElement;
+    marketingStatus?: MarketingStatus;
+    characteristic?: CodeableConcept;
+    copackagedIndicator?: boolean;
+    manufacturer?: Reference;
+    package?: BackboneElement;
 };
 
 export default function(props: Partial<PackagedProductDefinition_Props>) {

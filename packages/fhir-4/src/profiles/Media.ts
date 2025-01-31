@@ -3,40 +3,40 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Media_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    basedOn?: any;
-    partOf?: any;
-    status?: any;
-    type?: any;
-    modality?: any;
-    view?: any;
-    subject?: any;
-    encounter?: any;
-    created?: any;
-    issued?: any;
-    operator?: any;
-    reasonCode?: any;
-    bodySite?: any;
-    deviceName?: any;
-    device?: any;
-    height?: any;
-    width?: any;
-    frames?: any;
-    duration?: any;
-    content?: any;
-    note?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    partOf?: Reference;
+    status?: string;
+    type?: CodeableConcept;
+    modality?: CodeableConcept;
+    view?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    created?: string;
+    issued?: string;
+    operator?: Reference;
+    reasonCode?: CodeableConcept;
+    bodySite?: CodeableConcept;
+    deviceName?: string;
+    device?: Reference;
+    height?: number;
+    width?: number;
+    frames?: number;
+    duration?: number;
+    content?: Attachment;
+    note?: Annotation;
 };
 
 export default function(props: Partial<Media_Props>) {

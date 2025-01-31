@@ -3,40 +3,40 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type CommunicationRequest_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    basedOn?: any;
-    replaces?: any;
-    groupIdentifier?: dt.Identifier;
-    status?: any;
-    statusReason?: any;
-    category?: any;
-    priority?: any;
-    doNotPerform?: any;
-    medium?: any;
-    subject?: any;
-    about?: any;
-    encounter?: any;
-    payload?: any;
-    occurrence?: any;
-    authoredOn?: any;
-    requester?: any;
-    recipient?: any;
-    sender?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    note?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    replaces?: Reference;
+    groupIdentifier?: Identifier;
+    status?: string;
+    statusReason?: CodeableConcept;
+    category?: CodeableConcept;
+    priority?: string;
+    doNotPerform?: boolean;
+    medium?: CodeableConcept;
+    subject?: Reference;
+    about?: Reference;
+    encounter?: Reference;
+    payload?: BackboneElement;
+    occurrence?: string;
+    authoredOn?: string;
+    requester?: Reference;
+    recipient?: Reference;
+    sender?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    note?: Annotation;
 };
 
 export default function(props: Partial<CommunicationRequest_Props>) {

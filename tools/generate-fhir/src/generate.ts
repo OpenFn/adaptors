@@ -9,7 +9,7 @@ import fetchSpec, { Meta } from './fetch-spec';
 import generateSchema from './generate-schema';
 import generateCode from './generate-code';
 import withDisclaimer from './util/disclaimer';
-import generateDTS from './generate-dts';
+import generateDTS, { generateDataTypes } from './generate-dts';
 import generateTests from './generate-tests';
 
 import toolPkg from '../package.json' assert { type: 'json' };
@@ -85,12 +85,16 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   let mappings;
   let meta;
 
-  // // Determine whether to setup the initial template and/or re-download the spec
+  // Determine whether to setup the initial template and/or re-download the spec
   try {
     const pkg = await readPkg();
     mappings = await loadMappings();
     if (respec || spec) {
-      meta = await fetchSpec(adaptorPath, spec ?? pkg.fhir.specUrl, mappings);
+      try {
+        meta = await fetchSpec(adaptorPath, spec ?? pkg.fhir.specUrl, mappings);
+      } catch (e) {
+        process.exit(1);
+      }
     }
   } catch (error: any) {
     console.log(`Package ${adaptorName} does not exist: generating...`);
@@ -105,7 +109,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log(`Package ${adaptorName} generated!`);
   }
 
-  // // Now generate from the spec
+  // Now generate from the spec
   const specPath = path.resolve(adaptorPath, 'spec', 'spec.json');
   try {
     await access(specPath);
@@ -117,7 +121,23 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log(e);
   }
 
+  try {
+    await access(specPath);
+    console.log('Generating datatype schemas');
+    // TOOD rename spec-datatypes
+    const dtSpecPath = path.resolve(adaptorPath, 'spec', 'datatypes.json');
+    const dtSchema = await generateSchema(dtSpecPath, mappings);
+    const datatypes = generateDataTypes(dtSchema);
+    const dtsPath = path.resolve(adaptorPath, 'types/globals.d.ts');
+    console.log('Writing datatype schemas to ', dtsPath);
+    await writeFile(dtsPath, withDisclaimer(datatypes));
+  } catch (e) {
+    console.log('Skipping datatype generation');
+  }
+
+  console.log('Generating resource schemas');
   const schema = await generateSchema(specPath, mappings);
+
   console.log('Generating code');
   const src = generateCode(schema, mappings, {
     simpleSignatures: simpleBuilders,

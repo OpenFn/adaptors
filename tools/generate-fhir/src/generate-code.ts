@@ -1,6 +1,7 @@
 import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 import { print, parse } from 'recast';
 
+// TODO this is a strange type - shouldn't it be n.statement?
 import { StatementKind } from 'ast-types/gen/kinds';
 import {
   getBuilderName,
@@ -76,7 +77,7 @@ const generateProfile = (profile: Schema, mappings: MappingSpec) => {
   statements.push(
     b.importDeclaration(
       [b.importNamespaceSpecifier(b.identifier('dt'))],
-      b.stringLiteral('../datatypes.js')
+      b.stringLiteral('../datatypes')
     )
   );
   statements.push(

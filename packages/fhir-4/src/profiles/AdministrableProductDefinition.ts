@@ -3,28 +3,28 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type AdministrableProductDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    formOf?: any;
-    administrableDoseForm?: any;
-    unitOfPresentation?: any;
-    producedFrom?: any;
-    ingredient?: any;
-    device?: any;
-    property?: any;
-    routeOfAdministration?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    formOf?: Reference;
+    administrableDoseForm?: CodeableConcept;
+    unitOfPresentation?: CodeableConcept;
+    producedFrom?: Reference;
+    ingredient?: CodeableConcept;
+    device?: Reference;
+    property?: BackboneElement;
+    routeOfAdministration?: BackboneElement;
 };
 
 export default function(props: Partial<AdministrableProductDefinition_Props>) {

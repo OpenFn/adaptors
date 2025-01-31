@@ -3,29 +3,29 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type MeasureReport_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    type?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    type?: string;
     measure?: any;
-    subject?: any;
-    date?: any;
-    reporter?: any;
-    period?: any;
-    improvementNotation?: any;
-    group?: any;
-    evaluatedResource?: any;
+    subject?: Reference;
+    date?: string;
+    reporter?: Reference;
+    period?: Period;
+    improvementNotation?: CodeableConcept;
+    group?: BackboneElement;
+    evaluatedResource?: Reference;
 };
 
 export default function(props: Partial<MeasureReport_Props>) {

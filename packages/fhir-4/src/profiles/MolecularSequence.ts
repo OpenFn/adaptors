@@ -3,34 +3,34 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type MolecularSequence_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    type?: any;
-    coordinateSystem?: any;
-    patient?: any;
-    specimen?: any;
-    device?: any;
-    performer?: any;
-    quantity?: any;
-    referenceSeq?: any;
-    variant?: any;
-    observedSeq?: any;
-    quality?: any;
-    readCoverage?: any;
-    repository?: any;
-    pointer?: any;
-    structureVariant?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    type?: string;
+    coordinateSystem?: number;
+    patient?: Reference;
+    specimen?: Reference;
+    device?: Reference;
+    performer?: Reference;
+    quantity?: Quantity;
+    referenceSeq?: BackboneElement;
+    variant?: BackboneElement;
+    observedSeq?: string;
+    quality?: BackboneElement;
+    readCoverage?: number;
+    repository?: BackboneElement;
+    pointer?: Reference;
+    structureVariant?: BackboneElement;
 };
 
 export default function(props: Partial<MolecularSequence_Props>) {

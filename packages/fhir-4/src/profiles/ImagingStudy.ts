@@ -3,38 +3,38 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type ImagingStudy_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    modality?: any;
-    subject?: any;
-    encounter?: any;
-    started?: any;
-    basedOn?: any;
-    referrer?: any;
-    interpreter?: any;
-    endpoint?: any;
-    numberOfSeries?: any;
-    numberOfInstances?: any;
-    procedureReference?: any;
-    procedureCode?: any;
-    location?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    note?: any;
-    description?: any;
-    series?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    modality?: Coding;
+    subject?: Reference;
+    encounter?: Reference;
+    started?: string;
+    basedOn?: Reference;
+    referrer?: Reference;
+    interpreter?: Reference;
+    endpoint?: Reference;
+    numberOfSeries?: number;
+    numberOfInstances?: number;
+    procedureReference?: Reference;
+    procedureCode?: CodeableConcept;
+    location?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    note?: Annotation;
+    description?: string;
+    series?: BackboneElement;
 };
 
 export default function(props: Partial<ImagingStudy_Props>) {

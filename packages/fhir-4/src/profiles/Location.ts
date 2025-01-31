@@ -3,35 +3,35 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Location_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    operationalStatus?: any;
-    name?: any;
-    alias?: any;
-    description?: any;
-    mode?: any;
-    type?: any;
-    telecom?: any;
-    address?: any;
-    physicalType?: any;
-    position?: any;
-    managingOrganization?: any;
-    partOf?: any;
-    hoursOfOperation?: any;
-    availabilityExceptions?: any;
-    endpoint?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    operationalStatus?: Coding;
+    name?: string;
+    alias?: string;
+    description?: string;
+    mode?: string;
+    type?: CodeableConcept;
+    telecom?: ContactPoint;
+    address?: Address;
+    physicalType?: CodeableConcept;
+    position?: BackboneElement;
+    managingOrganization?: Reference;
+    partOf?: Reference;
+    hoursOfOperation?: BackboneElement;
+    availabilityExceptions?: string;
+    endpoint?: Reference;
 };
 
 export default function(props: Partial<Location_Props>) {

@@ -3,41 +3,41 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type CarePlan_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    basedOn?: any;
-    replaces?: any;
-    partOf?: any;
-    status?: any;
-    intent?: any;
-    category?: any;
-    title?: any;
-    description?: any;
-    subject?: any;
-    encounter?: any;
-    period?: any;
-    created?: any;
-    author?: any;
-    contributor?: any;
-    careTeam?: any;
-    addresses?: any;
-    supportingInfo?: any;
-    goal?: any;
-    activity?: any;
-    note?: any;
+    instantiatesUri?: string;
+    basedOn?: Reference;
+    replaces?: Reference;
+    partOf?: Reference;
+    status?: string;
+    intent?: string;
+    category?: CodeableConcept;
+    title?: string;
+    description?: string;
+    subject?: Reference;
+    encounter?: Reference;
+    period?: Period;
+    created?: string;
+    author?: Reference;
+    contributor?: Reference;
+    careTeam?: Reference;
+    addresses?: Reference;
+    supportingInfo?: Reference;
+    goal?: Reference;
+    activity?: BackboneElement;
+    note?: Annotation;
 };
 
 export default function(props: Partial<CarePlan_Props>) {

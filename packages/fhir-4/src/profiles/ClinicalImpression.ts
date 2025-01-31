@@ -3,38 +3,38 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type ClinicalImpression_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    statusReason?: any;
-    code?: any;
-    description?: any;
-    subject?: any;
-    encounter?: any;
-    effective?: any;
-    date?: any;
-    assessor?: any;
-    previous?: any;
-    problem?: any;
-    investigation?: any;
-    protocol?: any;
-    summary?: any;
-    finding?: any;
-    prognosisCodeableConcept?: any;
-    prognosisReference?: any;
-    supportingInfo?: any;
-    note?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    statusReason?: CodeableConcept;
+    code?: CodeableConcept;
+    description?: string;
+    subject?: Reference;
+    encounter?: Reference;
+    effective?: string;
+    date?: string;
+    assessor?: Reference;
+    previous?: Reference;
+    problem?: Reference;
+    investigation?: BackboneElement;
+    protocol?: string;
+    summary?: string;
+    finding?: BackboneElement;
+    prognosisCodeableConcept?: CodeableConcept;
+    prognosisReference?: Reference;
+    supportingInfo?: Reference;
+    note?: Annotation;
 };
 
 export default function(props: Partial<ClinicalImpression_Props>) {

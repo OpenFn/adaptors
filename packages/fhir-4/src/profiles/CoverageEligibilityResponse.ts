@@ -3,33 +3,33 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type CoverageEligibilityResponse_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    purpose?: any;
-    patient?: any;
-    serviced?: any;
-    created?: any;
-    requestor?: any;
-    request?: any;
-    outcome?: any;
-    disposition?: any;
-    insurer?: any;
-    insurance?: any;
-    preAuthRef?: any;
-    form?: any;
-    error?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    purpose?: string;
+    patient?: Reference;
+    serviced?: string;
+    created?: string;
+    requestor?: Reference;
+    request?: Reference;
+    outcome?: string;
+    disposition?: string;
+    insurer?: Reference;
+    insurance?: BackboneElement;
+    preAuthRef?: string;
+    form?: CodeableConcept;
+    error?: BackboneElement;
 };
 
 export default function(props: Partial<CoverageEligibilityResponse_Props>) {

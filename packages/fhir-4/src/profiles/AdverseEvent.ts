@@ -3,38 +3,38 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type AdverseEvent_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    actuality?: any;
-    category?: any;
-    event?: any;
-    subject?: any;
-    encounter?: any;
-    date?: any;
-    detected?: any;
-    recordedDate?: any;
-    resultingCondition?: any;
-    location?: any;
-    seriousness?: any;
-    severity?: any;
-    outcome?: any;
-    recorder?: any;
-    contributor?: any;
-    suspectEntity?: any;
-    subjectMedicalHistory?: any;
-    referenceDocument?: any;
-    study?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    actuality?: string;
+    category?: CodeableConcept;
+    event?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    date?: string;
+    detected?: string;
+    recordedDate?: string;
+    resultingCondition?: Reference;
+    location?: Reference;
+    seriousness?: CodeableConcept;
+    severity?: CodeableConcept;
+    outcome?: CodeableConcept;
+    recorder?: Reference;
+    contributor?: Reference;
+    suspectEntity?: BackboneElement;
+    subjectMedicalHistory?: Reference;
+    referenceDocument?: Reference;
+    study?: Reference;
 };
 
 export default function(props: Partial<AdverseEvent_Props>) {

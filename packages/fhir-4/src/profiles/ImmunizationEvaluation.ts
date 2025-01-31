@@ -3,31 +3,31 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type ImmunizationEvaluation_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    patient?: any;
-    date?: any;
-    authority?: any;
-    targetDisease?: any;
-    immunizationEvent?: any;
-    doseStatus?: any;
-    doseStatusReason?: any;
-    description?: any;
-    series?: any;
-    doseNumber?: any;
-    seriesDoses?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    patient?: Reference;
+    date?: string;
+    authority?: Reference;
+    targetDisease?: CodeableConcept;
+    immunizationEvent?: Reference;
+    doseStatus?: CodeableConcept;
+    doseStatusReason?: CodeableConcept;
+    description?: string;
+    series?: string;
+    doseNumber?: number;
+    seriesDoses?: number;
 };
 
 export default function(props: Partial<ImmunizationEvaluation_Props>) {

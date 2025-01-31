@@ -113,7 +113,6 @@ import Task_Task, { Task_Props } from "./profiles/Task";
 import TestReport_TestReport, { TestReport_Props } from "./profiles/TestReport";
 import TestScript_TestScript, { TestScript_Props } from "./profiles/TestScript";
 import VerificationResult_VerificationResult, { VerificationResult_Props } from "./profiles/VerificationResult";
-import VisionPrescription_VisionPrescription, { VisionPrescription_Props } from "./profiles/VisionPrescription";
 export function account(type: string, props: Account_Props);
 export function account(props: Account_Props);
 
@@ -5468,45 +5467,6 @@ export function verificationResult(type: any, props?: any) {
     if (typeof type !== "string") {
       props = type;
       type = "VerificationResult";
-    }
-    return mappings[type](props)
-}
-
-export function visionPrescription(type: string, props: VisionPrescription_Props);
-export function visionPrescription(props: VisionPrescription_Props);
-
-/**
-  * Create a FHIR VisionPrescription resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for vision prescription
-  * @param [props.status] {string} - active | cancelled | draft | entered-in-error
-  * @param [props.created] {dateTime} - Response creation date
-  * @param [props.patient] {Reference} - Who prescription is for
-  * @param [props.encounter] {Reference} - Created during encounter / admission / stay
-  * @param [props.dateWritten] {dateTime} - When prescription was authorized
-  * @param [props.prescriber] {Reference} - Who authorized the vision prescription
-  * @param [props.lensSpecification] {BackboneElement} - Vision lens authorization
- */
-export function visionPrescription(type: any, props?: any) {
-    const mappings = {
-        "VisionPrescription": VisionPrescription_VisionPrescription
-    };
-
-    // Handle optional type parameter
-    if (typeof type !== "string") {
-      props = type;
-      type = "VisionPrescription";
     }
     return mappings[type](props)
 }

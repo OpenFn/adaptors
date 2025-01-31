@@ -3,29 +3,29 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type BiologicallyDerivedProduct_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    productCategory?: any;
-    productCode?: any;
-    status?: any;
-    request?: any;
-    quantity?: any;
-    parent?: any;
-    collection?: any;
-    processing?: any;
-    manipulation?: any;
-    storage?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    productCategory?: string;
+    productCode?: CodeableConcept;
+    status?: string;
+    request?: Reference;
+    quantity?: number;
+    parent?: Reference;
+    collection?: BackboneElement;
+    processing?: BackboneElement;
+    manipulation?: BackboneElement;
+    storage?: BackboneElement;
 };
 
 export default function(props: Partial<BiologicallyDerivedProduct_Props>) {

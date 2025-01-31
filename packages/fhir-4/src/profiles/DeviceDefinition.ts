@@ -3,40 +3,40 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type DeviceDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    udiDeviceIdentifier?: any;
-    manufacturer?: any;
-    deviceName?: any;
-    modelNumber?: any;
-    type?: any;
-    specialization?: any;
-    version?: any;
-    safety?: any;
-    shelfLifeStorage?: any;
-    physicalCharacteristics?: any;
-    languageCode?: any;
-    capability?: any;
-    property?: any;
-    owner?: any;
-    contact?: any;
-    url?: any;
-    onlineInformation?: any;
-    note?: any;
-    quantity?: any;
-    parentDevice?: any;
-    material?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    udiDeviceIdentifier?: BackboneElement;
+    manufacturer?: string;
+    deviceName?: BackboneElement;
+    modelNumber?: string;
+    type?: CodeableConcept;
+    specialization?: BackboneElement;
+    version?: string;
+    safety?: CodeableConcept;
+    shelfLifeStorage?: ProductShelfLife;
+    physicalCharacteristics?: ProdCharacteristic;
+    languageCode?: CodeableConcept;
+    capability?: BackboneElement;
+    property?: BackboneElement;
+    owner?: Reference;
+    contact?: ContactPoint;
+    url?: string;
+    onlineInformation?: string;
+    note?: Annotation;
+    quantity?: Quantity;
+    parentDevice?: Reference;
+    material?: BackboneElement;
 };
 
 export default function(props: Partial<DeviceDefinition_Props>) {

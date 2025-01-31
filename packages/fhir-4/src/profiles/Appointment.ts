@@ -3,40 +3,40 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Appointment_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    cancelationReason?: any;
-    serviceCategory?: any;
-    serviceType?: any;
-    specialty?: any;
-    appointmentType?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    priority?: any;
-    description?: any;
-    supportingInformation?: any;
-    start?: any;
-    end?: any;
-    minutesDuration?: any;
-    slot?: any;
-    created?: any;
-    comment?: any;
-    patientInstruction?: any;
-    basedOn?: any;
-    participant?: any;
-    requestedPeriod?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    cancelationReason?: CodeableConcept;
+    serviceCategory?: CodeableConcept;
+    serviceType?: CodeableConcept;
+    specialty?: CodeableConcept;
+    appointmentType?: CodeableConcept;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    priority?: number;
+    description?: string;
+    supportingInformation?: Reference;
+    start?: string;
+    end?: string;
+    minutesDuration?: number;
+    slot?: Reference;
+    created?: string;
+    comment?: string;
+    patientInstruction?: string;
+    basedOn?: Reference;
+    participant?: BackboneElement;
+    requestedPeriod?: Period;
 };
 
 export default function(props: Partial<Appointment_Props>) {

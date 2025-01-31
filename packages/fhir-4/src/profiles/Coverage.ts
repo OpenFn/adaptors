@@ -3,35 +3,35 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Coverage_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    type?: any;
-    policyHolder?: any;
-    subscriber?: any;
-    subscriberId?: any;
-    beneficiary?: any;
-    dependent?: any;
-    relationship?: any;
-    period?: any;
-    payor?: any;
-    class?: any;
-    order?: any;
-    network?: any;
-    costToBeneficiary?: any;
-    subrogation?: any;
-    contract?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    type?: CodeableConcept;
+    policyHolder?: Reference;
+    subscriber?: Reference;
+    subscriberId?: string;
+    beneficiary?: Reference;
+    dependent?: string;
+    relationship?: CodeableConcept;
+    period?: Period;
+    payor?: Reference;
+    class?: BackboneElement;
+    order?: number;
+    network?: string;
+    costToBeneficiary?: BackboneElement;
+    subrogation?: boolean;
+    contract?: Reference;
 };
 
 export default function(props: Partial<Coverage_Props>) {

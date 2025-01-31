@@ -3,46 +3,46 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Immunization_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    status?: any;
-    statusReason?: any;
-    vaccineCode?: any;
-    patient?: any;
-    encounter?: any;
-    occurrence?: any;
-    recorded?: any;
-    primarySource?: any;
-    reportOrigin?: any;
-    location?: any;
-    manufacturer?: any;
-    lotNumber?: any;
-    expirationDate?: any;
-    site?: any;
-    route?: any;
-    doseQuantity?: any;
-    performer?: any;
-    note?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    isSubpotent?: any;
-    subpotentReason?: any;
-    education?: any;
-    programEligibility?: any;
-    fundingSource?: any;
-    reaction?: any;
-    protocolApplied?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    statusReason?: CodeableConcept;
+    vaccineCode?: CodeableConcept;
+    patient?: Reference;
+    encounter?: Reference;
+    occurrence?: string;
+    recorded?: string;
+    primarySource?: boolean;
+    reportOrigin?: CodeableConcept;
+    location?: Reference;
+    manufacturer?: Reference;
+    lotNumber?: string;
+    expirationDate?: string;
+    site?: CodeableConcept;
+    route?: CodeableConcept;
+    doseQuantity?: Quantity;
+    performer?: BackboneElement;
+    note?: Annotation;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    isSubpotent?: boolean;
+    subpotentReason?: CodeableConcept;
+    education?: BackboneElement;
+    programEligibility?: CodeableConcept;
+    fundingSource?: CodeableConcept;
+    reaction?: BackboneElement;
+    protocolApplied?: BackboneElement;
 };
 
 export default function(props: Partial<Immunization_Props>) {

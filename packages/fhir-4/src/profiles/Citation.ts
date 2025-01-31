@@ -3,47 +3,47 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Citation_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: dt.Identifier;
-    version?: any;
-    name?: any;
-    title?: any;
-    status?: any;
-    experimental?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    purpose?: any;
-    copyright?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    effectivePeriod?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    summary?: any;
-    classification?: any;
-    note?: any;
-    currentState?: any;
-    statusDate?: any;
-    relatesTo?: any;
-    citedArtifact?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    name?: string;
+    title?: string;
+    status?: string;
+    experimental?: boolean;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    purpose?: markdown;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    summary?: BackboneElement;
+    classification?: BackboneElement;
+    note?: Annotation;
+    currentState?: CodeableConcept;
+    statusDate?: BackboneElement;
+    relatesTo?: BackboneElement;
+    citedArtifact?: BackboneElement;
 };
 
 export default function(props: Partial<Citation_Props>) {

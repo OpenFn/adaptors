@@ -3,26 +3,26 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type AppointmentResponse_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    appointment?: any;
-    start?: any;
-    end?: any;
-    participantType?: any;
-    actor?: any;
-    participantStatus?: any;
-    comment?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    appointment?: Reference;
+    start?: string;
+    end?: string;
+    participantType?: CodeableConcept;
+    actor?: Reference;
+    participantStatus?: string;
+    comment?: string;
 };
 
 export default function(props: Partial<AppointmentResponse_Props>) {

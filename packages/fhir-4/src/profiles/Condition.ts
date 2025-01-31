@@ -3,35 +3,35 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type Condition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    clinicalStatus?: any;
-    verificationStatus?: any;
-    category?: any;
-    severity?: any;
-    code?: any;
-    bodySite?: any;
-    subject?: any;
-    encounter?: any;
-    onset?: any;
-    abatement?: any;
-    recordedDate?: any;
-    recorder?: any;
-    asserter?: any;
-    stage?: any;
-    evidence?: any;
-    note?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    clinicalStatus?: CodeableConcept;
+    verificationStatus?: CodeableConcept;
+    category?: CodeableConcept;
+    severity?: CodeableConcept;
+    code?: CodeableConcept;
+    bodySite?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    onset?: string;
+    abatement?: string;
+    recordedDate?: string;
+    recorder?: Reference;
+    asserter?: Reference;
+    stage?: BackboneElement;
+    evidence?: BackboneElement;
+    note?: Annotation;
 };
 
 export default function(props: Partial<Condition_Props>) {

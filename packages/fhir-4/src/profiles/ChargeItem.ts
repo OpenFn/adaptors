@@ -3,44 +3,44 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type ChargeItem_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    definitionUri?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    definitionUri?: string;
     definitionCanonical?: any;
-    status?: any;
-    partOf?: any;
-    code?: any;
-    subject?: any;
-    context?: any;
-    occurrence?: any;
-    performer?: any;
-    performingOrganization?: any;
-    requestingOrganization?: any;
-    costCenter?: any;
-    quantity?: any;
-    bodysite?: any;
-    factorOverride?: any;
-    priceOverride?: any;
-    overrideReason?: any;
-    enterer?: any;
-    enteredDate?: any;
-    reason?: any;
-    service?: any;
-    product?: any;
-    account?: any;
-    note?: any;
-    supportingInformation?: any;
+    status?: string;
+    partOf?: Reference;
+    code?: CodeableConcept;
+    subject?: Reference;
+    context?: Reference;
+    occurrence?: string;
+    performer?: BackboneElement;
+    performingOrganization?: Reference;
+    requestingOrganization?: Reference;
+    costCenter?: Reference;
+    quantity?: Quantity;
+    bodysite?: CodeableConcept;
+    factorOverride?: number;
+    priceOverride?: Money;
+    overrideReason?: string;
+    enterer?: Reference;
+    enteredDate?: string;
+    reason?: CodeableConcept;
+    service?: Reference;
+    product?: Reference;
+    account?: Reference;
+    note?: Annotation;
+    supportingInformation?: Reference;
 };
 
 export default function(props: Partial<ChargeItem_Props>) {

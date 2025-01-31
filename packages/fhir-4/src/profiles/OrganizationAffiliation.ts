@@ -3,30 +3,30 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes.js";
+import * as dt from "../datatypes";
 import _ from "lodash";
 
 export type OrganizationAffiliation_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: dt.Identifier;
-    active?: any;
-    period?: any;
-    organization?: any;
-    participatingOrganization?: any;
-    network?: any;
-    code?: any;
-    specialty?: any;
-    location?: any;
-    healthcareService?: any;
-    telecom?: any;
-    endpoint?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: Resource;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    period?: Period;
+    organization?: Reference;
+    participatingOrganization?: Reference;
+    network?: Reference;
+    code?: CodeableConcept;
+    specialty?: CodeableConcept;
+    location?: Reference;
+    healthcareService?: Reference;
+    telecom?: ContactPoint;
+    endpoint?: Reference;
 };
 
 export default function(props: Partial<OrganizationAffiliation_Props>) {
