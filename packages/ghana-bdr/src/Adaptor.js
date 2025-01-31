@@ -68,11 +68,10 @@ export function post(path, data) {
  * Generate a birth certificate
  * @example
  * sendBirthNotification({
+ *   registry_code: 'abc123',
  *   child: {},
  *   mother: {},
  *   father: {},
- *   health_facility: {},
- *   birth_informant: {}
  * })
  * @function
  * @public
