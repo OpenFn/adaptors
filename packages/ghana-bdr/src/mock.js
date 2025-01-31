@@ -89,11 +89,7 @@ export function createServer(url = 'http://tracker.chimgh.org') {
 
   const sendBirthNotification = req => {
     const body = JSON.parse(req.body);
-    if (
-      validateRequestBody(body, sampleRequestBody) &&
-      body.username &&
-      body.password
-    ) {
+    if (validateRequestBody(body, sampleRequestBody)) {
       return {
         statusCode: 200,
         responseOptions: {
