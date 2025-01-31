@@ -67,7 +67,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "sendBirthNotification({\n  child: {},\n  mother: {},\n  father: {},\n  health_facility: {},\n  birth_informant: {}\n})"
+            "description": "sendBirthNotification({\n  registry_code: 'abc123',\n  child: {},\n  mother: {},\n  father: {},\n})"
           },
           {
             "title": "function",

@@ -88,7 +88,6 @@ export function createServer(url = 'http://tracker.chimgh.org') {
   const mockPool = agent.get(url);
 
   const sendBirthNotification = req => {
-    // if (validate(JSON.parse(req.body))) {
     if (validateRequestBody(JSON.parse(req.body), sampleRequestBody)) {
       return {
         statusCode: 200,

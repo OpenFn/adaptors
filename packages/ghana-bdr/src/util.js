@@ -21,7 +21,6 @@ export const setMockClient = mockClient => {
   client = mockClient;
 };
 
-
 // mock validator
 export const validateRequestBody = (request, sample) => {
   // Check top-level keys
@@ -77,6 +76,7 @@ export const prepareNextState = async (state, response) => {
 export const request = (path, options) => {
   return async state => {
     const { baseUrl, username, password } = state.configuration;
+
     getClient(baseUrl);
     const basePath = baseUrl ? new URL(baseUrl).pathname : '/';
 
