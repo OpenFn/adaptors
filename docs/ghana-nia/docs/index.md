@@ -141,8 +141,7 @@ registerChild({
     relationToBaby: "string",
     relativePhone: "string",
     relativePicture: "string"
-  },
-  merchantKey: "XXXXXXXXXXXXXXXXXXXXXX"
+  }
 })
 ```
 

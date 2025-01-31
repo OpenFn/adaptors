@@ -121,11 +121,10 @@ This operation writes the following keys to state:
 **Example**
 ```js
 sendBirthNotification({
+  registry_code: 'abc123',
   child: {},
   mother: {},
   father: {},
-  health_facility: {},
-  birth_informant: {}
 })
 ```
 

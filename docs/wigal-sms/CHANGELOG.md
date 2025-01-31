@@ -1,5 +1,11 @@
 # @openfn/language-wigal-sms
 
+## 0.1.3
+
+### Patch Changes
+
+- 7c677a5: Update example for wigal sms
+
 ## 0.1.2
 
 ### Patch Changes
@@ -10,7 +16,7 @@
 
 ### Patch Changes
 
-- Make sendSMS public
+- Make sendSms public
 
 ## 0.1.0
 

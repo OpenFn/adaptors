@@ -64,7 +64,7 @@ This operation writes the following keys to state:
 | references | an array of all previous data objects used in the Job |
 **Example:** Send General SMS message
 ```js
-sendSMS({
+sendSms({
   senderid: "Stevkky",
   destinations: [{ destination: "0552825710" }],
   message: "This is a sample message for SMS sending via Wigal FROG API.",
@@ -73,7 +73,7 @@ sendSMS({
 ```
 **Example:** Send Personalized SMS message
 ```js
-sendSMS({
+sendSms({
   senderid: "Stevkky",
   destinations: [
     {
