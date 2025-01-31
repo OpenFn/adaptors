@@ -72,12 +72,12 @@
         "tags": [
           {
             "title": "example",
-            "description": "sendSMS({\n  senderid: \"Stevkky\",\n  destinations: [{ destination: \"0552825710\" }],\n  message: \"This is a sample message for SMS sending via Wigal FROG API.\",\n  smstype: \"text\",\n});",
+            "description": "sendSms({\n  senderid: \"Stevkky\",\n  destinations: [{ destination: \"0552825710\" }],\n  message: \"This is a sample message for SMS sending via Wigal FROG API.\",\n  smstype: \"text\",\n});",
             "caption": "Send General SMS message"
           },
           {
             "title": "example",
-            "description": "sendSMS({\n  senderid: \"Stevkky\",\n  destinations: [\n    {\n      destination: \"0542709440\",\n      message: \"Hello Joe your order is ready\",\n      msgid: \"MGS1010101\",\n      smstype: \"text\",\n    },\n  ],\n});",
+            "description": "sendSms({\n  senderid: \"Stevkky\",\n  destinations: [\n    {\n      destination: \"0542709440\",\n      message: \"Hello Joe your order is ready\",\n      msgid: \"MGS1010101\",\n      smstype: \"text\",\n    },\n  ],\n});",
             "caption": "Send Personalized SMS message"
           },
           {

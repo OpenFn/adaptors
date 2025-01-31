@@ -1,5 +1,11 @@
 # @openfn/language-ghana-bdr
 
+## 0.1.3
+
+### Patch Changes
+
+- 7c677a5: Update mock and examples for bdr, add auth to test
+
 ## 0.1.2
 
 ### Patch Changes

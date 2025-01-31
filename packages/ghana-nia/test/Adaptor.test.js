@@ -5,9 +5,10 @@ import { registerChild, execute } from '../src/Adaptor.js';
 describe('registerChild', () => {
   it('upload to NIA for Ghana Card Number', async () => {
     const state = {
-      configuration: {},
+      configuration: {
+        merchantKey: '123',
+      },
       data: {
-        merchantKey: '7834rtyfh8h834hf7834hf',
         babyData: {
           dateOfBirth: '2024-11-12',
           fatherName: 'kwamena Ahoi Jn',

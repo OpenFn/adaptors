@@ -21,7 +21,6 @@ export const setMockClient = mockClient => {
   client = mockClient;
 };
 
-
 // mock validator
 export const validateRequestBody = (request, sample) => {
   // Check top-level keys
@@ -77,6 +76,7 @@ export const prepareNextState = async (state, response) => {
 export const request = (path, options) => {
   return async state => {
     const { baseUrl, username, password } = state.configuration;
+
     getClient(baseUrl);
     const basePath = baseUrl ? new URL(baseUrl).pathname : '/';
 
@@ -111,7 +111,8 @@ export const request = (path, options) => {
 
     if (data.username || data.password) {
       throwError(
-        "Please don't supply `username` and `password` in your request body."
+        "Please don't supply `username` and `password` in your request body. " +
+          'The adaptor will append it automatically.'
       );
     }
 
@@ -127,6 +128,9 @@ export const request = (path, options) => {
           password,
         })
       );
+
+      // TODO: Why do we need to _ALSO_ append authentication to "data" for mock?
+      args.data = { ...data, username, password };
     }
 
     const response = await client.request(args);

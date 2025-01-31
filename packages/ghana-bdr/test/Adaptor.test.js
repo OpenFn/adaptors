@@ -5,7 +5,10 @@ import { sendBirthNotification, execute } from '../src/Adaptor.js';
 describe('sendBirthNotification', () => {
   it('upload birth notification', async () => {
     const state = {
-      configuration: {},
+      configuration: {
+        username: 'test',
+        password: 'fake',
+      },
       data: {
         registry_code: '',
         child: {

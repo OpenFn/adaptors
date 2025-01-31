@@ -88,8 +88,7 @@ export function post(path, data) {
  *     relationToBaby: "string",
  *     relativePhone: "string",
  *     relativePicture: "string"
- *   },
- *   merchantKey: "XXXXXXXXXXXXXXXXXXXXXX"
+ *   }
  * })
  * @function
  * @public

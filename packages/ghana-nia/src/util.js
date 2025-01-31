@@ -48,7 +48,6 @@ export const validateRequestBody = (request, sample) => {
   return true;
 };
 
-
 export const setMockClient = mockClient => {
   client = mockClient;
 };
@@ -108,8 +107,20 @@ export const request = (path, options) => {
       ...otherOptions,
     };
 
+    if (data.merchantKey) {
+      throwError(
+        "Please don't supply `merchantKey` in your request body. " +
+          'The adaptor will append it automatically.'
+      );
+    }
+
     if (data) {
-      args.body = JSON.stringify(data);
+      // Please note that the BDR systems requires that we add username &
+      // password attributes to the POST body.
+      args.body = JSON.stringify({ ...data, merchantKey });
+
+      // TODO: Why do we need to _ALSO_ append authentication to "data" for mock?
+      args.data = { ...data, merchantKey };
     }
 
     const response = await client.request(args);

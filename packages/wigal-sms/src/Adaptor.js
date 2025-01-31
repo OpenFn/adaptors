@@ -45,14 +45,14 @@ export function execute(...operations) {
  * Send SMS using Wigal SMS Gateway API
  *
  * @example <caption>Send General SMS message</caption>
- * sendSMS({
+ * sendSms({
  *   senderid: "Stevkky",
  *   destinations: [{ destination: "0552825710" }],
  *   message: "This is a sample message for SMS sending via Wigal FROG API.",
  *   smstype: "text",
  * });
  * @example <caption>Send Personalized SMS message</caption>
- * sendSMS({
+ * sendSms({
  *   senderid: "Stevkky",
  *   destinations: [
  *     {

@@ -1,5 +1,11 @@
 # @openfn/language-ghana-nia
 
+## 0.1.3
+
+### Patch Changes
+
+- 7c677a5: Update mock and nia, add auth to test
+
 ## 0.1.2
 
 ### Patch Changes
