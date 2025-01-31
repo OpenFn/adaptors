@@ -48,7 +48,6 @@ export const validateRequestBody = (request, sample) => {
   return true;
 };
 
-
 export const setMockClient = mockClient => {
   client = mockClient;
 };
@@ -108,8 +107,16 @@ export const request = (path, options) => {
       ...otherOptions,
     };
 
+    if (data.merchantkey) {
+      throwError(
+        "Please don't supply `merchantKey` in your request body. " +
+          'The adaptor will append it automatically.'
+      );
+    }
+
     if (data) {
-      args.body = JSON.stringify(data);
+      console.log('hello?');
+      args.body = JSON.stringify({ ...data, merchantKey });
     }
 
     const response = await client.request(args);

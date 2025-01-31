@@ -10,7 +10,6 @@ import { validateRequestBody } from './util';
 // const validate = new Ajv().compile(reqSchema);
 
 const sampleRequestBody = {
-  merchantKey: '89487284-9083-4015-9128-91d8db7e023e',
   babyData: {
     dateOfBirth: '2024-03-05',
     fatherName: 'Nyarkoa Osei-Akoto',

@@ -111,7 +111,8 @@ export const request = (path, options) => {
 
     if (data.username || data.password) {
       throwError(
-        "Please don't supply `username` and `password` in your request body."
+        "Please don't supply `username` and `password` in your request body. " +
+          'The adaptor will append it automatically.'
       );
     }
 
