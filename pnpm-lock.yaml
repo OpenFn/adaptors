@@ -917,8 +917,8 @@ importers:
   packages/kobotoolbox:
     dependencies:
       '@openfn/language-common':
-        specifier: 1.15.2
-        version: 1.15.2
+        specifier: workspace:*
+        version: link:../common
     devDependencies:
       '@openfn/simple-ast':
         specifier: 0.4.1

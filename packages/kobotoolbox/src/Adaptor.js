@@ -1,9 +1,15 @@
-import {
-  execute as commonExecute,
-  composeNextState,
-  expandReferences,
-  http, // IMPORTANT: this is the OLD axios-based HTTP
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
+
+import * as util from './Utils';
+
+/**
+ * Options object
+ * @typedef {Object} RequestOptions
+ * @property {object} query - An object of query parameters to be encoded into the URL
+ * @property {object} headers - An object of all request headers
+ * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
+ */
 
 /**
  * Execute a sequence of operations.
@@ -40,33 +46,19 @@ export function execute(...operations) {
  *    return state;
  * });
  * @function
- * @param {object} params - Query, Headers and Authentication parameters
+ * @param {RequestOptions} [options={}] - Optional headers and query for the request
  * @param {function} callback - (Optional) Callback function to execute after fetching form list
  * @returns {Operation}
  */
-export function getForms(params, callback) {
-  return state => {
-    const resolvedParams = expandReferences(params)(state);
+export function getForms(options = {}, callback) {
+  return async state => {
+    const [resolvedOptions] = expandReferences(state, options);
 
-    const { baseURL, apiVersion, username, password } = state.configuration;
+    const url = `/assets/?format=json`;
 
-    const url = `${baseURL}/api/${apiVersion}/assets/?format=json`;
-    const auth = { username, password };
-
-    const config = {
-      url,
-      params: resolvedParams,
-      auth,
-    };
-
-    return http
-      .get(config)(state)
-      .then(response => {
-        console.log('✓', response.data.count, 'forms fetched.');
-        const nextState = composeNextState(state, response.data);
-        if (callback) return callback(nextState);
-        return nextState;
-      });
+    const response = await util.request(state, 'GET', url, resolvedOptions);
+    console.log('✓', response.body.count, 'forms fetched.');
+    return util.prepareNextState(state, response, callback);
   };
 }
 
@@ -84,30 +76,16 @@ export function getForms(params, callback) {
  * @returns {Operation}
  */
 export function getSubmissions(params, callback) {
-  return state => {
-    const resolvedParams = expandReferences(params)(state);
+  return async state => {
+    const [resolvedParams] = expandReferences(state, params);
 
-    const { baseURL, apiVersion, username, password } = state.configuration;
     const { formId } = resolvedParams;
 
-    const url = `${baseURL}/api/${apiVersion}/assets/${formId}/data/?format=json`;
-    const auth = { username, password };
+    const url = `/assets/${formId}/data/?format=json`;
 
-    const config = {
-      url,
-      params: resolvedParams.query,
-      auth,
-    };
-
-    return http
-      .get(config)(state)
-      .then(response => {
-        console.log('✓', response.data.count, 'submissions fetched.');
-
-        const nextState = composeNextState(state, response.data);
-        if (callback) return callback(nextState);
-        return nextState;
-      });
+    const response = await util.request(state, 'GET', url, resolvedParams);
+    console.log('✓', response.body.count, 'forms fetched.');
+    return util.prepareNextState(state, response, callback);
   };
 }
 
@@ -125,30 +103,16 @@ export function getSubmissions(params, callback) {
  * @returns {Operation}
  */
 export function getDeploymentInfo(params, callback) {
-  return state => {
-    const resolvedParams = expandReferences(params)(state);
+  return async state => {
+    const [resolvedParams] = expandReferences(state, params);
 
-    const { baseURL, apiVersion, username, password } = state.configuration;
     const { formId } = resolvedParams;
 
-    const url = `${baseURL}/api/${apiVersion}/assets/${formId}/deployment/?format=json`;
-    const auth = { username, password };
+    const url = `/assets/${formId}/deployment/?format=json`;
 
-    const config = {
-      url,
-      params: resolvedParams.query,
-      auth,
-    };
-
-    return http
-      .get(config)(state)
-      .then(response => {
-        console.log('✓', 'deployment information fetched.');
-
-        const nextState = composeNextState(state, response.data);
-        if (callback) return callback(nextState);
-        return nextState;
-      });
+    const response = await util.request(state, 'GET', url, resolvedParams);
+    console.log('✓', 'deployment information fetched.');
+    return util.prepareNextState(state, response, callback);
   };
 }
 
@@ -162,7 +126,7 @@ export {
   fields,
   fn,
   fnIf,
-  http, // IMPORTANT: this is the OLD axios-based HTTP. The public documentation for this will be wrong.
+  http, 
   group,
   lastReferenceValue,
   merge,
