@@ -8,16 +8,37 @@
         "callback"
       ],
       "docs": {
-        "description": "Options provided to `fetchSubmissions()`",
+        "description": "Fetch form submissions.\n\nIf a date filter is provided, it will be  converted internally to the surveyCTO `MMM dd, yyy h:mm:ss` format (in UTC time).",
         "tags": [
           {
-            "title": "typedef",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "FetchSubmissionOptions"
+            "title": "example",
+            "description": "fetchSubmissions('test');",
+            "caption": "Fetch all form submissions"
+          },
+          {
+            "title": "example",
+            "description": "fetchSubmissions('test', { date: 'Apr 18, 2024 6:26:21 AM' });",
+            "caption": "With SurveyCTO date format (UTC)"
+          },
+          {
+            "title": "example",
+            "description": "cursor((state) => state.cursor, { defaultValue: 'today' });\nfetchSubmissions('test', { date: (state) => state.cursor, format: 'csv' });\ncursor('now');",
+            "caption": "Using a rolling cursor"
+          },
+          {
+            "title": "example",
+            "description": "fetchSubmissions('test', { format: 'csv' });",
+            "caption": "Formatting the results to CSV String"
+          },
+          {
+            "title": "example",
+            "description": "fetchSubmissions('test', { status: 'approved|rejected' });",
+            "caption": "With reviewStatus filter"
+          },
+          {
+            "title": "example",
+            "description": "fetchSubmissions(\n  'test',\n  {\n    date: 'Apr 18, 2024 6:26:21 AM',\n  },\n  state => {\n    console.log('Hello from the callback!');\n    return state;\n  }\n);",
+            "caption": "With a callback function"
           },
           {
             "title": "public",
@@ -25,46 +46,48 @@
             "type": null
           },
           {
-            "title": "property",
-            "description": "Fetch only submissions from this timestamp. Acccepts SuvreyCTO date strings, unix and epoch timestamps, and ISO dates. By default, all submissions will be retrieved.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "date",
-            "default": "0"
+            "title": "function",
+            "description": null,
+            "name": null
           },
           {
-            "title": "property",
-            "description": "Format the submission data type as  `csv` or `json`.",
+            "title": "param",
+            "description": "Form id",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
+              "type": "NameExpression",
+              "name": "string"
             },
-            "name": "format",
-            "default": "json"
+            "name": "formId"
           },
           {
-            "title": "property",
-            "description": "Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`.",
+            "title": "param",
+            "description": "Form submission date, format, status parameters",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
+              "type": "NameExpression",
+              "name": "FetchSubmissionOptions"
             },
-            "name": "status"
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "request",
@@ -74,74 +97,60 @@
         "callback"
       ],
       "docs": {
-        "description": "Options provided to request()",
+        "description": "Make a request in SurveyCTO API",
         "tags": [
-          {
-            "title": "typedef",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "RequestOptions"
-          },
           {
             "title": "public",
             "description": null,
             "type": null
           },
           {
-            "title": "property",
-            "description": "An object of headers parameters.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "headers"
+            "title": "example",
+            "description": "request(\"/anEndpoint\", {\n  method: \"POST\",\n  query: { foo: \"bar\", a: 1 },\n});"
           },
           {
-            "title": "property",
-            "description": "Body data to append to the request.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "body"
+            "title": "function",
+            "description": null,
+            "name": null
           },
           {
-            "title": "property",
-            "description": "An object of query parameters to be encoded into the URL.",
+            "title": "param",
+            "description": "Path to resource",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
+              "type": "NameExpression",
+              "name": "string"
             },
-            "name": "query"
+            "name": "path"
           },
           {
-            "title": "property",
-            "description": "The HTTP method to use.",
+            "title": "param",
+            "description": "Query, body and method parameters",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
+              "type": "NameExpression",
+              "name": "RequestOptions"
             },
-            "name": "method",
-            "default": "GET"
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "cursor",

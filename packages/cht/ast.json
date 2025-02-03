@@ -1,6 +1,82 @@
 {
   "operations": [
     {
+      "name": "get",
+      "params": [
+        "path",
+        "options",
+        "callback"
+      ],
+      "docs": {
+        "description": "Make a GET request against the base URL.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "get(\"/api/v2/export/contacts\");",
+            "caption": "Get a list of contacts"
+          },
+          {
+            "title": "example",
+            "description": "get(\"/api/v2/export/contacts\", {\nquery: {\"filters\": {\n\"search\": \"jim\"\n}}\n});",
+            "caption": "Filter contacts given a name"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Options to configure the HTTP request",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Optional callback to handle the response",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{CHTHttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "post",
       "params": [
         "path",

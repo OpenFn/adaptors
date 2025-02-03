@@ -6,107 +6,56 @@
         "options"
       ],
       "docs": {
-        "description": "Used to isolate the type of content to retrieve from the message.",
+        "description": "Downloads contents from messages of a Gmail account.",
         "tags": [
-          {
-            "title": "typedef",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "MessageContent"
-          },
           {
             "title": "public",
             "description": null,
             "type": null
           },
           {
-            "title": "property",
-            "description": "Message content type. Valid types: from, date, subject, body, archive, file.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "type"
+            "title": "function",
+            "description": null,
+            "name": null
           },
           {
-            "title": "property",
-            "description": "A custom description for the content type.",
+            "title": "param",
+            "description": "Customized options including desired contents and query.",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
+              "type": "NameExpression",
+              "name": "Options"
             },
-            "name": "name"
+            "name": "options"
           },
           {
-            "title": "property",
-            "description": "Identifier to isolate the desired attachment when type is 'archive'.\n  Use a regular expression for pattern matching or a string for a literal match. Required if type is 'archive'.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "UnionType",
-                "elements": [
-                  {
-                    "type": "NameExpression",
-                    "name": "RegExp"
-                  },
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
-              }
-            },
-            "name": "archive"
+            "title": "state",
+            "description": "{Array} data - The returned message objects, of the form `{ messageId, contents } `"
           },
           {
-            "title": "property",
-            "description": "Identifier to isolate the desired attachment when type is 'file' or 'archive'.\n  Use a regular expression for pattern matching or a string for a literal match. Required if type is 'file' or 'archive'.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "UnionType",
-                "elements": [
-                  {
-                    "type": "NameExpression",
-                    "name": "RegExp"
-                  },
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
-              }
-            },
-            "name": "file"
+            "title": "state",
+            "description": "{Array<string>} processedIds - An array of string ids processed by this request"
           },
           {
-            "title": "property",
-            "description": "Maximum number of characters to retrieve from the content.",
+            "title": "returns",
+            "description": null,
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NullableType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "number"
-                },
-                "prefix": false
-              }
-            },
-            "name": "maxLength"
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "example",
+            "description": "getContentsFromMessages(\n  {\n    query: 'subject:my+test+message'\n  }\n)",
+            "caption": "Get a message with a specific subject"
+          },
+          {
+            "title": "example",
+            "description": "getContentsFromMessages(\n  {\n    query: 'after:15/01/2025',\n    contents: [\n      'subject',\n      { type: 'file', name: 'metadata', file: 'report.txt'}\n    ]\n  }\n)",
+            "caption": "Get messages after a specific date, with subject and report.txt attachment"
           }
         ]
       },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],

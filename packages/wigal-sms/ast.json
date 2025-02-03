@@ -1,68 +1,6 @@
 {
   "operations": [
     {
-      "name": "execute",
-      "params": [
-        "operations"
-      ],
-      "docs": {
-        "description": "SMS Request Object",
-        "tags": [
-          {
-            "title": "typedef",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "SMSRequestObject"
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "property",
-            "description": "The senderID used for sending message. Approved SenderIDs only",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "senderid"
-          },
-          {
-            "title": "property",
-            "description": "An array of objects containing the destination phone number and message to be sent",
-            "type": {
-              "type": "NameExpression",
-              "name": "array"
-            },
-            "name": "destinations"
-          },
-          {
-            "title": "property",
-            "description": "The message to be sent to the destinations",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "message"
-          },
-          {
-            "title": "property",
-            "description": "The type of message to be sent. Default is 'text'",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "smstype"
-          }
-        ]
-      },
-      "valid": false
-    },
-    {
       "name": "sendSms",
       "params": [
         "data"

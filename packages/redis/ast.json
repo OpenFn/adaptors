@@ -1,50 +1,6 @@
 {
   "operations": [
     {
-      "name": "execute",
-      "params": [
-        "operations"
-      ],
-      "docs": {
-        "description": "Options provided to the scan function",
-        "tags": [
-          {
-            "title": "typedef",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "ScanOptions"
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "property",
-            "description": "Limits the keys returned to those of a specified type (e.g., string, list, set, hash, json, zset or stream).",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "type"
-          },
-          {
-            "title": "property",
-            "description": "A hint to the server about how many elements to return in the call (default is 10).",
-            "type": {
-              "type": "NameExpression",
-              "name": "integer"
-            },
-            "name": "count"
-          }
-        ]
-      },
-      "valid": false
-    },
-    {
       "name": "get",
       "params": [
         "key"
