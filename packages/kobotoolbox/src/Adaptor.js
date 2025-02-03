@@ -41,78 +41,70 @@ export function execute(...operations) {
  * Make a request to get the list of forms
  * @public
  * @example
- * getForms({}, state => {
- *    console.log(state.data);
- *    return state;
- * });
+ * getForms();
  * @function
- * @param {RequestOptions} [options={}] - Optional headers and query for the request
- * @param {function} callback - (Optional) Callback function to execute after fetching form list
  * @returns {Operation}
  */
-export function getForms(options = {}, callback) {
+export function getForms() {
   return async state => {
-    const [resolvedOptions] = expandReferences(state, options);
+    const url = `/assets/?asset_type=survey`;
 
-    const url = `/assets/?format=json`;
-
-    const response = await util.request(state, 'GET', url, resolvedOptions);
+    const response = await util.request(state, 'GET', url, {});
     console.log('✓', response.body.count, 'forms fetched.');
-    return util.prepareNextState(state, response, callback);
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
  * Get submissions for a specific form
- * @example
- * getSubmissions({formId: 'aXecHjmbATuF6iGFmvBLBX'}, state => {
- *   console.log(state.data);
- *   return state;
- * });
+ * @example <caption>Get all submissions for a specific form</caption>
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX');
+ * @example <caption>Get submissions with exactly 10 items. Equivalent to `<baseUrl>/assets/?offset=0&limit=10`</caption>
  * @function
  * @public
- * @param {object} params - Form Id and data to make the fetch or filter
- * @param {function} callback - (Optional) Callback function to execute after fetching form submissions
+ * @param {string} formId - Form Id to get the specific submissions
+ * @param {object} [options={}] - Optional query params, headers, limit, and start, for the request
  * @returns {Operation}
  */
-export function getSubmissions(params, callback) {
+export function getSubmissions(formId, options = {}) {
   return async state => {
-    const [resolvedParams] = expandReferences(state, params);
+    const [resolvedFormId, resolvedOptions] = expandReferences(
+      state,
+      formId,
+      options
+    );
 
-    const { formId } = resolvedParams;
+    const url = `/assets/${resolvedFormId}/data/`;
 
-    const url = `/assets/${formId}/data/?format=json`;
-
-    const response = await util.request(state, 'GET', url, resolvedParams);
-    console.log('✓', response.body.count, 'forms fetched.');
-    return util.prepareNextState(state, response, callback);
+    const response = await util.request(state, 'GET', url, resolvedOptions);
+    console.log('✓', response.body.results.length, 'forms fetched.');
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
  * Get deployment information for a specific form
  * @example
- * getDeploymentInfo({formId: 'aXecHjmbATuF6iGFmvBLBX'}, state => {
- *   console.log(state.data);
- *   return state;
- * });
+ * getDeploymentInfo('aXecHjmbATuF6iGFmvBLBX');
  * @function
  * @public
- * @param {object} params - Form Id and data to make the fetch or filter
- * @param {function} callback - (Optional) Callback function to execute after fetching form deployment information
+ * @param {string} formId - Form Id to get the deployment information
+ * @param {RequestOptions} [options={}] - Optional query params and headers for the request
  * @returns {Operation}
  */
-export function getDeploymentInfo(params, callback) {
+export function getDeploymentInfo(formId, options = {}) {
   return async state => {
-    const [resolvedParams] = expandReferences(state, params);
+    const [resolvedFormId, resolvedOptions] = expandReferences(
+      state,
+      formId,
+      options
+    );
 
-    const { formId } = resolvedParams;
+    const url = `/assets/${resolvedFormId}/deployment/`;
 
-    const url = `/assets/${formId}/deployment/?format=json`;
-
-    const response = await util.request(state, 'GET', url, resolvedParams);
+    const response = await util.request(state, 'GET', url, resolvedOptions);
     console.log('✓', 'deployment information fetched.');
-    return util.prepareNextState(state, response, callback);
+    return util.prepareNextState(state, response);
   };
 }
 
@@ -126,7 +118,7 @@ export {
   fields,
   fn,
   fnIf,
-  http, 
+  http,
   group,
   lastReferenceValue,
   merge,
