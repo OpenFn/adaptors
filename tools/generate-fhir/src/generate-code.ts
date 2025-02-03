@@ -86,13 +86,6 @@ const generateProfile = (profile: Schema, mappings: MappingSpec) => {
       b.stringLiteral('lodash')
     )
   );
-  // No, actually we prefer our own typings in datatypes
-  // statements.push(
-  //   b.importDeclaration(
-  //     [b.importDefaultSpecifier(b.identifier('fhir'))],
-  //     b.stringLiteral('fhir/r4')
-  //   )
-  // );
 
   const typedef = generateType(profile.type, profile, mappings);
 
@@ -193,17 +186,23 @@ ${generateJsDocs(variants)}
 
     const override = b.exportDeclaration(
       false,
-      b.tsDeclareFunction(b.identifier(getBuilderName(resourceType)), [
-        b.tsParameterProperty(
-          // TODO need a full type for this. Where do we get it?
-          b.identifier.from({
-            name: INPUT_NAME,
-            typeAnnotation: b.tsTypeAnnotation(
-              b.tsTypeReference(b.identifier(getInterfaceName(variants[0])))
-            ),
-          })
-        ),
-      ])
+      b.tsDeclareFunction(
+        b.identifier(getBuilderName(resourceType)),
+        [
+          b.tsParameterProperty(
+            // TODO need a full type for this. Where do we get it?
+            b.identifier.from({
+              name: INPUT_NAME,
+              typeAnnotation: b.tsTypeAnnotation(
+                b.tsTypeReference(b.identifier(getInterfaceName(variants[0])))
+              ),
+            })
+          ),
+        ]
+        // What is the return type?
+        // It's not the same as our props - it's a fhir object
+        // b.tsTypeAnnotation(b.tsTypeReference(b.identifier('Patient')))
+      )
     );
 
     declarations.push(override);
@@ -215,7 +214,7 @@ return mappings[type](props)
 `);
   statements.push(...mapper.program.body);
 
-  const ex = b.exportDeclaration(
+  const impl = b.exportDeclaration(
     false,
     b.functionDeclaration(
       b.identifier(getBuilderName(resourceType)),
@@ -238,10 +237,11 @@ return mappings[type](props)
       b.blockStatement(statements)
     )
   );
+  declarations.push(impl);
 
-  ex.comments = comment.program.comments;
-  ex.comments![0].leading = true;
-  declarations.push(ex);
+  // Add the comment to the first declaration
+  declarations[0].comments = comment.program.comments;
+  declarations[0].comments![0].leading = true;
 
   return declarations;
 };

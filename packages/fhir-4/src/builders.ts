@@ -113,8 +113,6 @@ import Task_Task, { Task_Props } from "./profiles/Task";
 import TestReport_TestReport, { TestReport_Props } from "./profiles/TestReport";
 import TestScript_TestScript, { TestScript_Props } from "./profiles/TestScript";
 import VerificationResult_VerificationResult, { VerificationResult_Props } from "./profiles/VerificationResult";
-export function account(type: string, props: Account_Props);
-export function account(props: Account_Props);
 
 /**
   * Create a FHIR Account resource.
@@ -142,6 +140,10 @@ export function account(props: Account_Props);
   * @param [props.guarantor] {BackboneElement} - The parties ultimately responsible for balancing the Account
   * @param [props.partOf] {Reference} - Reference to a parent Account
  */
+export function account(type: string, props: Account_Props);
+
+export function account(props: Account_Props);
+
 export function account(type: any, props?: any) {
     const mappings = {
         "Account": Account_Account
@@ -154,9 +156,6 @@ export function account(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function activityDefinition(type: string, props: ActivityDefinition_Props);
-export function activityDefinition(props: ActivityDefinition_Props);
 
 /**
   * Create a FHIR ActivityDefinition resource.
@@ -219,6 +218,10 @@ export function activityDefinition(props: ActivityDefinition_Props);
   * @param [props.transform] {canonical} - Transform to apply the template
   * @param [props.dynamicValue] {BackboneElement} - Dynamic aspects of the definition
  */
+export function activityDefinition(type: string, props: ActivityDefinition_Props);
+
+export function activityDefinition(props: ActivityDefinition_Props);
+
 export function activityDefinition(type: any, props?: any) {
     const mappings = {
         "ActivityDefinition": ActivityDefinition_ActivityDefinition
@@ -231,9 +234,6 @@ export function activityDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function administrableProductDefinition(type: string, props: AdministrableProductDefinition_Props);
-export function administrableProductDefinition(props: AdministrableProductDefinition_Props);
 
 /**
   * Create a FHIR AdministrableProductDefinition resource.
@@ -260,6 +260,10 @@ export function administrableProductDefinition(props: AdministrableProductDefini
   * @param [props.property] {BackboneElement} - Characteristics e.g. a product's onset of action
   * @param [props.routeOfAdministration] {BackboneElement} - The path by which the product is taken into or makes contact with the body
  */
+export function administrableProductDefinition(type: string, props: AdministrableProductDefinition_Props);
+
+export function administrableProductDefinition(props: AdministrableProductDefinition_Props);
+
 export function administrableProductDefinition(type: any, props?: any) {
     const mappings = {
         "AdministrableProductDefinition": AdministrableProductDefinition_AdministrableProductDefinition
@@ -272,9 +276,6 @@ export function administrableProductDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function adverseEvent(type: string, props: AdverseEvent_Props);
-export function adverseEvent(props: AdverseEvent_Props);
 
 /**
   * Create a FHIR AdverseEvent resource.
@@ -311,6 +312,10 @@ export function adverseEvent(props: AdverseEvent_Props);
   * @param [props.referenceDocument] {Reference} - AdverseEvent.referenceDocument
   * @param [props.study] {Reference} - AdverseEvent.study
  */
+export function adverseEvent(type: string, props: AdverseEvent_Props);
+
+export function adverseEvent(props: AdverseEvent_Props);
+
 export function adverseEvent(type: any, props?: any) {
     const mappings = {
         "AdverseEvent": AdverseEvent_AdverseEvent
@@ -323,9 +328,6 @@ export function adverseEvent(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function allergyIntolerance(type: string, props: AllergyIntolerance_Props);
-export function allergyIntolerance(props: AllergyIntolerance_Props);
 
 /**
   * Create a FHIR AllergyIntolerance resource.
@@ -358,6 +360,10 @@ export function allergyIntolerance(props: AllergyIntolerance_Props);
   * @param [props.note] {Annotation} - Additional text not captured in other fields
   * @param [props.reaction] {BackboneElement} - Adverse Reaction Events linked to exposure to substance
  */
+export function allergyIntolerance(type: string, props: AllergyIntolerance_Props);
+
+export function allergyIntolerance(props: AllergyIntolerance_Props);
+
 export function allergyIntolerance(type: any, props?: any) {
     const mappings = {
         "AllergyIntolerance": AllergyIntolerance_AllergyIntolerance
@@ -370,9 +376,6 @@ export function allergyIntolerance(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function appointment(type: string, props: Appointment_Props);
-export function appointment(props: Appointment_Props);
 
 /**
   * Create a FHIR Appointment resource.
@@ -411,6 +414,10 @@ export function appointment(props: Appointment_Props);
   * @param [props.participant] {BackboneElement} - Participants involved in appointment
   * @param [props.requestedPeriod] {Period} - Potential date/time interval(s) requested to allocate the appointment within
  */
+export function appointment(type: string, props: Appointment_Props);
+
+export function appointment(props: Appointment_Props);
+
 export function appointment(type: any, props?: any) {
     const mappings = {
         "Appointment": Appointment_Appointment
@@ -423,9 +430,6 @@ export function appointment(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function appointmentResponse(type: string, props: AppointmentResponse_Props);
-export function appointmentResponse(props: AppointmentResponse_Props);
 
 /**
   * Create a FHIR AppointmentResponse resource.
@@ -450,6 +454,10 @@ export function appointmentResponse(props: AppointmentResponse_Props);
   * @param [props.participantStatus] {string} - accepted | declined | tentative | needs-action
   * @param [props.comment] {string} - Additional comments
  */
+export function appointmentResponse(type: string, props: AppointmentResponse_Props);
+
+export function appointmentResponse(props: AppointmentResponse_Props);
+
 export function appointmentResponse(type: any, props?: any) {
     const mappings = {
         "AppointmentResponse": AppointmentResponse_AppointmentResponse
@@ -462,9 +470,6 @@ export function appointmentResponse(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function biologicallyDerivedProduct(type: string, props: BiologicallyDerivedProduct_Props);
-export function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Props);
 
 /**
   * Create a FHIR BiologicallyDerivedProduct resource.
@@ -492,6 +497,10 @@ export function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Pro
   * @param [props.manipulation] {BackboneElement} - Any manipulation of product post-collection
   * @param [props.storage] {BackboneElement} - Product storage
  */
+export function biologicallyDerivedProduct(type: string, props: BiologicallyDerivedProduct_Props);
+
+export function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Props);
+
 export function biologicallyDerivedProduct(type: any, props?: any) {
     const mappings = {
         "BiologicallyDerivedProduct": BiologicallyDerivedProduct_BiologicallyDerivedProduct
@@ -504,9 +513,6 @@ export function biologicallyDerivedProduct(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function bodyStructure(type: string, props: BodyStructure_Props);
-export function bodyStructure(props: BodyStructure_Props);
 
 /**
   * Create a FHIR BodyStructure resource.
@@ -531,6 +537,10 @@ export function bodyStructure(props: BodyStructure_Props);
   * @param [props.image] {Attachment} - Attached images
   * @param [props.patient] {Reference} - Who this is about
  */
+export function bodyStructure(type: string, props: BodyStructure_Props);
+
+export function bodyStructure(props: BodyStructure_Props);
+
 export function bodyStructure(type: any, props?: any) {
     const mappings = {
         "BodyStructure": BodyStructure_BodyStructure
@@ -543,9 +553,6 @@ export function bodyStructure(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function carePlan(type: string, props: CarePlan_Props);
-export function carePlan(props: CarePlan_Props);
 
 /**
   * Create a FHIR CarePlan resource.
@@ -585,6 +592,10 @@ export function carePlan(props: CarePlan_Props);
   * @param [props.activity] {BackboneElement} - Action to occur as part of plan
   * @param [props.note] {Annotation} - Comments about the plan
  */
+export function carePlan(type: string, props: CarePlan_Props);
+
+export function carePlan(props: CarePlan_Props);
+
 export function carePlan(type: any, props?: any) {
     const mappings = {
         "CarePlan": CarePlan_CarePlan
@@ -597,9 +608,6 @@ export function carePlan(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function careTeam(type: string, props: CareTeam_Props);
-export function careTeam(props: CareTeam_Props);
 
 /**
   * Create a FHIR CareTeam resource.
@@ -629,6 +637,10 @@ export function careTeam(props: CareTeam_Props);
   * @param [props.telecom] {ContactPoint} - A contact detail for the care team (that applies to all members)
   * @param [props.note] {Annotation} - Comments made about the CareTeam
  */
+export function careTeam(type: string, props: CareTeam_Props);
+
+export function careTeam(props: CareTeam_Props);
+
 export function careTeam(type: any, props?: any) {
     const mappings = {
         "CareTeam": CareTeam_CareTeam
@@ -641,9 +653,6 @@ export function careTeam(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function chargeItem(type: string, props: ChargeItem_Props);
-export function chargeItem(props: ChargeItem_Props);
 
 /**
   * Create a FHIR ChargeItem resource.
@@ -686,6 +695,10 @@ export function chargeItem(props: ChargeItem_Props);
   * @param [props.note] {Annotation} - Comments made about the ChargeItem
   * @param [props.supportingInformation] {Reference} - Further information supporting this charge
  */
+export function chargeItem(type: string, props: ChargeItem_Props);
+
+export function chargeItem(props: ChargeItem_Props);
+
 export function chargeItem(type: any, props?: any) {
     const mappings = {
         "ChargeItem": ChargeItem_ChargeItem
@@ -698,9 +711,6 @@ export function chargeItem(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function chargeItemDefinition(type: string, props: ChargeItemDefinition_Props);
-export function chargeItemDefinition(props: ChargeItemDefinition_Props);
 
 /**
   * Create a FHIR ChargeItemDefinition resource.
@@ -740,6 +750,10 @@ export function chargeItemDefinition(props: ChargeItemDefinition_Props);
   * @param [props.applicability] {BackboneElement} - Whether or not the billing code is applicable
   * @param [props.propertyGroup] {BackboneElement} - Group of properties which are applicable under the same conditions
  */
+export function chargeItemDefinition(type: string, props: ChargeItemDefinition_Props);
+
+export function chargeItemDefinition(props: ChargeItemDefinition_Props);
+
 export function chargeItemDefinition(type: any, props?: any) {
     const mappings = {
         "ChargeItemDefinition": ChargeItemDefinition_ChargeItemDefinition
@@ -752,9 +766,6 @@ export function chargeItemDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function citation(type: string, props: Citation_Props);
-export function citation(props: Citation_Props);
 
 /**
   * Create a FHIR Citation resource.
@@ -800,6 +811,10 @@ export function citation(props: Citation_Props);
   * @param [props.relatesTo] {BackboneElement} - Artifact related to the Citation Resource
   * @param [props.citedArtifact] {BackboneElement} - The article or artifact being described
  */
+export function citation(type: string, props: Citation_Props);
+
+export function citation(props: Citation_Props);
+
 export function citation(type: any, props?: any) {
     const mappings = {
         "Citation": Citation_Citation
@@ -812,9 +827,6 @@ export function citation(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function claim(type: string, props: Claim_Props);
-export function claim(props: Claim_Props);
 
 /**
   * Create a FHIR Claim resource.
@@ -858,6 +870,10 @@ export function claim(props: Claim_Props);
   * @param [props.item] {BackboneElement} - Product or service provided
   * @param [props.total] {Money} - Total claim cost
  */
+export function claim(type: string, props: Claim_Props);
+
+export function claim(props: Claim_Props);
+
 export function claim(type: any, props?: any) {
     const mappings = {
         "Claim": Claim_Claim
@@ -870,9 +886,6 @@ export function claim(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function claimResponse(type: string, props: ClaimResponse_Props);
-export function claimResponse(props: ClaimResponse_Props);
 
 /**
   * Create a FHIR ClaimResponse resource.
@@ -916,6 +929,10 @@ export function claimResponse(props: ClaimResponse_Props);
   * @param [props.insurance] {BackboneElement} - Patient insurance information
   * @param [props.error] {BackboneElement} - Processing errors
  */
+export function claimResponse(type: string, props: ClaimResponse_Props);
+
+export function claimResponse(props: ClaimResponse_Props);
+
 export function claimResponse(type: any, props?: any) {
     const mappings = {
         "ClaimResponse": ClaimResponse_ClaimResponse
@@ -928,9 +945,6 @@ export function claimResponse(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function clinicalImpression(type: string, props: ClinicalImpression_Props);
-export function clinicalImpression(props: ClinicalImpression_Props);
 
 /**
   * Create a FHIR ClinicalImpression resource.
@@ -967,6 +981,10 @@ export function clinicalImpression(props: ClinicalImpression_Props);
   * @param [props.supportingInfo] {Reference} - Information supporting the clinical impression
   * @param [props.note] {Annotation} - Comments made about the ClinicalImpression
  */
+export function clinicalImpression(type: string, props: ClinicalImpression_Props);
+
+export function clinicalImpression(props: ClinicalImpression_Props);
+
 export function clinicalImpression(type: any, props?: any) {
     const mappings = {
         "ClinicalImpression": ClinicalImpression_ClinicalImpression
@@ -979,9 +997,6 @@ export function clinicalImpression(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function clinicalUseDefinition(type: string, props: ClinicalUseDefinition_Props);
-export function clinicalUseDefinition(props: ClinicalUseDefinition_Props);
 
 /**
   * Create a FHIR ClinicalUseDefinition resource.
@@ -1009,6 +1024,10 @@ export function clinicalUseDefinition(props: ClinicalUseDefinition_Props);
   * @param [props.undesirableEffect] {BackboneElement} - A possible negative outcome from the use of this treatment
   * @param [props.warning] {BackboneElement} - Critical environmental, health or physical risks or hazards. For example 'Do not operate heavy machinery', 'May cause drowsiness'
  */
+export function clinicalUseDefinition(type: string, props: ClinicalUseDefinition_Props);
+
+export function clinicalUseDefinition(props: ClinicalUseDefinition_Props);
+
 export function clinicalUseDefinition(type: any, props?: any) {
     const mappings = {
         "ClinicalUseDefinition": ClinicalUseDefinition_ClinicalUseDefinition
@@ -1021,9 +1040,6 @@ export function clinicalUseDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function communication(type: string, props: Communication_Props);
-export function communication(props: Communication_Props);
 
 /**
   * Create a FHIR Communication resource.
@@ -1063,6 +1079,10 @@ export function communication(props: Communication_Props);
   * @param [props.payload] {BackboneElement} - Message payload
   * @param [props.note] {Annotation} - Comments made about the communication
  */
+export function communication(type: string, props: Communication_Props);
+
+export function communication(props: Communication_Props);
+
 export function communication(type: any, props?: any) {
     const mappings = {
         "Communication": Communication_Communication
@@ -1075,9 +1095,6 @@ export function communication(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function communicationRequest(type: string, props: CommunicationRequest_Props);
-export function communicationRequest(props: CommunicationRequest_Props);
 
 /**
   * Create a FHIR CommunicationRequest resource.
@@ -1116,6 +1133,10 @@ export function communicationRequest(props: CommunicationRequest_Props);
   * @param [props.reasonReference] {Reference} - Why is communication needed?
   * @param [props.note] {Annotation} - Comments made about communication request
  */
+export function communicationRequest(type: string, props: CommunicationRequest_Props);
+
+export function communicationRequest(props: CommunicationRequest_Props);
+
 export function communicationRequest(type: any, props?: any) {
     const mappings = {
         "CommunicationRequest": CommunicationRequest_CommunicationRequest
@@ -1128,9 +1149,6 @@ export function communicationRequest(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function condition(type: string, props: Condition_Props);
-export function condition(props: Condition_Props);
 
 /**
   * Create a FHIR Condition resource.
@@ -1164,6 +1182,10 @@ export function condition(props: Condition_Props);
   * @param [props.evidence] {BackboneElement} - Supporting evidence
   * @param [props.note] {Annotation} - Additional information about the Condition
  */
+export function condition(type: string, props: Condition_Props);
+
+export function condition(props: Condition_Props);
+
 export function condition(type: any, props?: any) {
     const mappings = {
         "Condition": Condition_Condition
@@ -1176,9 +1198,6 @@ export function condition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function contract(type: string, props: Contract_Props);
-export function contract(props: Contract_Props);
 
 /**
   * Create a FHIR Contract resource.
@@ -1228,6 +1247,10 @@ export function contract(props: Contract_Props);
   * @param [props.rule] {BackboneElement} - Computable Contract Language
   * @param [props.legallyBinding] {Attachment} - Binding Contract
  */
+export function contract(type: string, props: Contract_Props);
+
+export function contract(props: Contract_Props);
+
 export function contract(type: any, props?: any) {
     const mappings = {
         "Contract": Contract_Contract
@@ -1240,9 +1263,6 @@ export function contract(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function coverage(type: string, props: Coverage_Props);
-export function coverage(props: Coverage_Props);
 
 /**
   * Create a FHIR Coverage resource.
@@ -1276,6 +1296,10 @@ export function coverage(props: Coverage_Props);
   * @param [props.subrogation] {boolean} - Reimbursement to insurer
   * @param [props.contract] {Reference} - Contract details
  */
+export function coverage(type: string, props: Coverage_Props);
+
+export function coverage(props: Coverage_Props);
+
 export function coverage(type: any, props?: any) {
     const mappings = {
         "Coverage": Coverage_Coverage
@@ -1288,9 +1312,6 @@ export function coverage(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function coverageEligibilityRequest(type: string, props: CoverageEligibilityRequest_Props);
-export function coverageEligibilityRequest(props: CoverageEligibilityRequest_Props);
 
 /**
   * Create a FHIR CoverageEligibilityRequest resource.
@@ -1321,6 +1342,10 @@ export function coverageEligibilityRequest(props: CoverageEligibilityRequest_Pro
   * @param [props.insurance] {BackboneElement} - Patient insurance information
   * @param [props.item] {BackboneElement} - Item to be evaluated for eligibiity
  */
+export function coverageEligibilityRequest(type: string, props: CoverageEligibilityRequest_Props);
+
+export function coverageEligibilityRequest(props: CoverageEligibilityRequest_Props);
+
 export function coverageEligibilityRequest(type: any, props?: any) {
     const mappings = {
         "CoverageEligibilityRequest": CoverageEligibilityRequest_CoverageEligibilityRequest
@@ -1333,9 +1358,6 @@ export function coverageEligibilityRequest(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function coverageEligibilityResponse(type: string, props: CoverageEligibilityResponse_Props);
-export function coverageEligibilityResponse(props: CoverageEligibilityResponse_Props);
 
 /**
   * Create a FHIR CoverageEligibilityResponse resource.
@@ -1367,6 +1389,10 @@ export function coverageEligibilityResponse(props: CoverageEligibilityResponse_P
   * @param [props.form] {CodeableConcept} - Printed form identifier
   * @param [props.error] {BackboneElement} - Processing errors
  */
+export function coverageEligibilityResponse(type: string, props: CoverageEligibilityResponse_Props);
+
+export function coverageEligibilityResponse(props: CoverageEligibilityResponse_Props);
+
 export function coverageEligibilityResponse(type: any, props?: any) {
     const mappings = {
         "CoverageEligibilityResponse": CoverageEligibilityResponse_CoverageEligibilityResponse
@@ -1379,9 +1405,6 @@ export function coverageEligibilityResponse(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function detectedIssue(type: string, props: DetectedIssue_Props);
-export function detectedIssue(props: DetectedIssue_Props);
 
 /**
   * Create a FHIR DetectedIssue resource.
@@ -1410,6 +1433,10 @@ export function detectedIssue(props: DetectedIssue_Props);
   * @param [props.reference] {string} - Authority for issue
   * @param [props.mitigation] {BackboneElement} - Step taken to address
  */
+export function detectedIssue(type: string, props: DetectedIssue_Props);
+
+export function detectedIssue(props: DetectedIssue_Props);
+
 export function detectedIssue(type: any, props?: any) {
     const mappings = {
         "DetectedIssue": DetectedIssue_DetectedIssue
@@ -1422,9 +1449,6 @@ export function detectedIssue(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function device(type: string, props: Device_Props);
-export function device(props: Device_Props);
 
 /**
   * Create a FHIR Device resource.
@@ -1467,6 +1491,10 @@ export function device(props: Device_Props);
   * @param [props.safety] {CodeableConcept} - Safety Characteristics of Device
   * @param [props.parent] {Reference} - The device that this device is attached to or is part of
  */
+export function device(type: string, props: Device_Props);
+
+export function device(props: Device_Props);
+
 export function device(type: any, props?: any) {
     const mappings = {
         "Device": Device_Device
@@ -1479,9 +1507,6 @@ export function device(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function deviceDefinition(type: string, props: DeviceDefinition_Props);
-export function deviceDefinition(props: DeviceDefinition_Props);
 
 /**
   * Create a FHIR DeviceDefinition resource.
@@ -1520,6 +1545,10 @@ export function deviceDefinition(props: DeviceDefinition_Props);
   * @param [props.parentDevice] {Reference} - The parent device it can be part of
   * @param [props.material] {BackboneElement} - A substance used to create the material(s) of which the device is made
  */
+export function deviceDefinition(type: string, props: DeviceDefinition_Props);
+
+export function deviceDefinition(props: DeviceDefinition_Props);
+
 export function deviceDefinition(type: any, props?: any) {
     const mappings = {
         "DeviceDefinition": DeviceDefinition_DeviceDefinition
@@ -1532,9 +1561,6 @@ export function deviceDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function deviceMetric(type: string, props: DeviceMetric_Props);
-export function deviceMetric(props: DeviceMetric_Props);
 
 /**
   * Create a FHIR DeviceMetric resource.
@@ -1561,6 +1587,10 @@ export function deviceMetric(props: DeviceMetric_Props);
   * @param [props.measurementPeriod] {Timing} - Describes the measurement repetition time
   * @param [props.calibration] {BackboneElement} - Describes the calibrations that have been performed or that are required to be performed
  */
+export function deviceMetric(type: string, props: DeviceMetric_Props);
+
+export function deviceMetric(props: DeviceMetric_Props);
+
 export function deviceMetric(type: any, props?: any) {
     const mappings = {
         "DeviceMetric": DeviceMetric_DeviceMetric
@@ -1573,9 +1603,6 @@ export function deviceMetric(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function deviceRequest(type: string, props: DeviceRequest_Props);
-export function deviceRequest(props: DeviceRequest_Props);
 
 /**
   * Create a FHIR DeviceRequest resource.
@@ -1616,6 +1643,10 @@ export function deviceRequest(props: DeviceRequest_Props);
   * @param [props.note] {Annotation} - Notes or comments
   * @param [props.relevantHistory] {Reference} - Request provenance
  */
+export function deviceRequest(type: string, props: DeviceRequest_Props);
+
+export function deviceRequest(props: DeviceRequest_Props);
+
 export function deviceRequest(type: any, props?: any) {
     const mappings = {
         "DeviceRequest": DeviceRequest_DeviceRequest
@@ -1628,9 +1659,6 @@ export function deviceRequest(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function deviceUseStatement(type: string, props: DeviceUseStatement_Props);
-export function deviceUseStatement(props: DeviceUseStatement_Props);
 
 /**
   * Create a FHIR DeviceUseStatement resource.
@@ -1660,6 +1688,10 @@ export function deviceUseStatement(props: DeviceUseStatement_Props);
   * @param [props.bodySite] {CodeableConcept} - Target body site
   * @param [props.note] {Annotation} - Addition details (comments, instructions)
  */
+export function deviceUseStatement(type: string, props: DeviceUseStatement_Props);
+
+export function deviceUseStatement(props: DeviceUseStatement_Props);
+
 export function deviceUseStatement(type: any, props?: any) {
     const mappings = {
         "DeviceUseStatement": DeviceUseStatement_DeviceUseStatement
@@ -1672,9 +1704,6 @@ export function deviceUseStatement(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function diagnosticReport(type: string, props: DiagnosticReport_Props);
-export function diagnosticReport(props: DiagnosticReport_Props);
 
 /**
   * Create a FHIR DiagnosticReport resource.
@@ -1709,6 +1738,10 @@ export function diagnosticReport(props: DiagnosticReport_Props);
   * @param [props.conclusionCode] {CodeableConcept} - Codes for the clinical conclusion of test results
   * @param [props.presentedForm] {Attachment} - Entire report as issued
  */
+export function diagnosticReport(type: string, props: DiagnosticReport_Props);
+
+export function diagnosticReport(props: DiagnosticReport_Props);
+
 export function diagnosticReport(type: any, props?: any) {
     const mappings = {
         "DiagnosticReport": DiagnosticReport_DiagnosticReport
@@ -1721,9 +1754,6 @@ export function diagnosticReport(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function domainResource(type: string, props: DomainResource_Props);
-export function domainResource(props: DomainResource_Props);
 
 /**
   * Create a FHIR DomainResource resource.
@@ -1740,6 +1770,10 @@ export function domainResource(props: DomainResource_Props);
   * @param [props.extension] {Extension} - Additional content defined by implementations
   * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
  */
+export function domainResource(type: string, props: DomainResource_Props);
+
+export function domainResource(props: DomainResource_Props);
+
 export function domainResource(type: any, props?: any) {
     const mappings = {
         "DomainResource": DomainResource_DomainResource
@@ -1752,9 +1786,6 @@ export function domainResource(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function encounter(type: string, props: Encounter_Props);
-export function encounter(props: Encounter_Props);
 
 /**
   * Create a FHIR Encounter resource.
@@ -1794,6 +1825,10 @@ export function encounter(props: Encounter_Props);
   * @param [props.serviceProvider] {Reference} - The organization (facility) responsible for this encounter
   * @param [props.partOf] {Reference} - Another Encounter this encounter is part of
  */
+export function encounter(type: string, props: Encounter_Props);
+
+export function encounter(props: Encounter_Props);
+
 export function encounter(type: any, props?: any) {
     const mappings = {
         "Encounter": Encounter_Encounter
@@ -1806,9 +1841,6 @@ export function encounter(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function endpoint(type: string, props: Endpoint_Props);
-export function endpoint(props: Endpoint_Props);
 
 /**
   * Create a FHIR Endpoint resource.
@@ -1836,6 +1868,10 @@ export function endpoint(props: Endpoint_Props);
   * @param [props.address] {url} - The technical base address for connecting to this endpoint
   * @param [props.header] {string} - Usage depends on the channel type
  */
+export function endpoint(type: string, props: Endpoint_Props);
+
+export function endpoint(props: Endpoint_Props);
+
 export function endpoint(type: any, props?: any) {
     const mappings = {
         "Endpoint": Endpoint_Endpoint
@@ -1848,9 +1884,6 @@ export function endpoint(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function enrollmentRequest(type: string, props: EnrollmentRequest_Props);
-export function enrollmentRequest(props: EnrollmentRequest_Props);
 
 /**
   * Create a FHIR EnrollmentRequest resource.
@@ -1874,6 +1907,10 @@ export function enrollmentRequest(props: EnrollmentRequest_Props);
   * @param [props.candidate] {Reference} - The subject to be enrolled
   * @param [props.coverage] {Reference} - Insurance information
  */
+export function enrollmentRequest(type: string, props: EnrollmentRequest_Props);
+
+export function enrollmentRequest(props: EnrollmentRequest_Props);
+
 export function enrollmentRequest(type: any, props?: any) {
     const mappings = {
         "EnrollmentRequest": EnrollmentRequest_EnrollmentRequest
@@ -1886,9 +1923,6 @@ export function enrollmentRequest(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function enrollmentResponse(type: string, props: EnrollmentResponse_Props);
-export function enrollmentResponse(props: EnrollmentResponse_Props);
 
 /**
   * Create a FHIR EnrollmentResponse resource.
@@ -1913,6 +1947,10 @@ export function enrollmentResponse(props: EnrollmentResponse_Props);
   * @param [props.organization] {Reference} - Insurer
   * @param [props.requestProvider] {Reference} - Responsible practitioner
  */
+export function enrollmentResponse(type: string, props: EnrollmentResponse_Props);
+
+export function enrollmentResponse(props: EnrollmentResponse_Props);
+
 export function enrollmentResponse(type: any, props?: any) {
     const mappings = {
         "EnrollmentResponse": EnrollmentResponse_EnrollmentResponse
@@ -1925,9 +1963,6 @@ export function enrollmentResponse(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function episodeOfCare(type: string, props: EpisodeOfCare_Props);
-export function episodeOfCare(props: EpisodeOfCare_Props);
 
 /**
   * Create a FHIR EpisodeOfCare resource.
@@ -1956,6 +1991,10 @@ export function episodeOfCare(props: EpisodeOfCare_Props);
   * @param [props.team] {Reference} - Other practitioners facilitating this episode of care
   * @param [props.account] {Reference} - The set of accounts that may be used for billing for this EpisodeOfCare
  */
+export function episodeOfCare(type: string, props: EpisodeOfCare_Props);
+
+export function episodeOfCare(props: EpisodeOfCare_Props);
+
 export function episodeOfCare(type: any, props?: any) {
     const mappings = {
         "EpisodeOfCare": EpisodeOfCare_EpisodeOfCare
@@ -1968,9 +2007,6 @@ export function episodeOfCare(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function eventDefinition(type: string, props: EventDefinition_Props);
-export function eventDefinition(props: EventDefinition_Props);
 
 /**
   * Create a FHIR EventDefinition resource.
@@ -2015,6 +2051,10 @@ export function eventDefinition(props: EventDefinition_Props);
   * @param [props.relatedArtifact] {RelatedArtifact} - Additional documentation, citations, etc.
   * @param [props.trigger] {TriggerDefinition} - "when" the event occurs (multiple = 'or')
  */
+export function eventDefinition(type: string, props: EventDefinition_Props);
+
+export function eventDefinition(props: EventDefinition_Props);
+
 export function eventDefinition(type: any, props?: any) {
     const mappings = {
         "EventDefinition": EventDefinition_EventDefinition
@@ -2027,9 +2067,6 @@ export function eventDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function evidence(type: string, props: Evidence_Props);
-export function evidence(props: Evidence_Props);
 
 /**
   * Create a FHIR Evidence resource.
@@ -2071,6 +2108,10 @@ export function evidence(props: Evidence_Props);
   * @param [props.statistic] {BackboneElement} - Values and parameters for a single statistic
   * @param [props.certainty] {BackboneElement} - Certainty or quality of the evidence
  */
+export function evidence(type: string, props: Evidence_Props);
+
+export function evidence(props: Evidence_Props);
+
 export function evidence(type: any, props?: any) {
     const mappings = {
         "Evidence": Evidence_Evidence
@@ -2083,9 +2124,6 @@ export function evidence(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function evidenceReport(type: string, props: EvidenceReport_Props);
-export function evidenceReport(props: EvidenceReport_Props);
 
 /**
   * Create a FHIR EvidenceReport resource.
@@ -2120,6 +2158,10 @@ export function evidenceReport(props: EvidenceReport_Props);
   * @param [props.relatesTo] {BackboneElement} - Relationships to other compositions/documents
   * @param [props.section] {BackboneElement} - Composition is broken into sections
  */
+export function evidenceReport(type: string, props: EvidenceReport_Props);
+
+export function evidenceReport(props: EvidenceReport_Props);
+
 export function evidenceReport(type: any, props?: any) {
     const mappings = {
         "EvidenceReport": EvidenceReport_EvidenceReport
@@ -2132,9 +2174,6 @@ export function evidenceReport(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function evidenceVariable(type: string, props: EvidenceVariable_Props);
-export function evidenceVariable(props: EvidenceVariable_Props);
 
 /**
   * Create a FHIR EvidenceVariable resource.
@@ -2175,6 +2214,10 @@ export function evidenceVariable(props: EvidenceVariable_Props);
   * @param [props.handling] {string} - continuous | dichotomous | ordinal | polychotomous
   * @param [props.category] {BackboneElement} - A grouping for ordinal or polychotomous variables
  */
+export function evidenceVariable(type: string, props: EvidenceVariable_Props);
+
+export function evidenceVariable(props: EvidenceVariable_Props);
+
 export function evidenceVariable(type: any, props?: any) {
     const mappings = {
         "EvidenceVariable": EvidenceVariable_EvidenceVariable
@@ -2187,9 +2230,6 @@ export function evidenceVariable(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function explanationOfBenefit(type: string, props: ExplanationOfBenefit_Props);
-export function explanationOfBenefit(props: ExplanationOfBenefit_Props);
 
 /**
   * Create a FHIR ExplanationOfBenefit resource.
@@ -2249,6 +2289,10 @@ export function explanationOfBenefit(props: ExplanationOfBenefit_Props);
   * @param [props.benefitPeriod] {Period} - When the benefits are applicable
   * @param [props.benefitBalance] {BackboneElement} - Balance by Benefit Category
  */
+export function explanationOfBenefit(type: string, props: ExplanationOfBenefit_Props);
+
+export function explanationOfBenefit(props: ExplanationOfBenefit_Props);
+
 export function explanationOfBenefit(type: any, props?: any) {
     const mappings = {
         "ExplanationOfBenefit": ExplanationOfBenefit_ExplanationOfBenefit
@@ -2261,9 +2305,6 @@ export function explanationOfBenefit(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function familyMemberHistory(type: string, props: FamilyMemberHistory_Props);
-export function familyMemberHistory(props: FamilyMemberHistory_Props);
 
 /**
   * Create a FHIR FamilyMemberHistory resource.
@@ -2298,6 +2339,10 @@ export function familyMemberHistory(props: FamilyMemberHistory_Props);
   * @param [props.note] {Annotation} - General note about related person
   * @param [props.condition] {BackboneElement} - Condition that the related person had
  */
+export function familyMemberHistory(type: string, props: FamilyMemberHistory_Props);
+
+export function familyMemberHistory(props: FamilyMemberHistory_Props);
+
 export function familyMemberHistory(type: any, props?: any) {
     const mappings = {
         "FamilyMemberHistory": FamilyMemberHistory_FamilyMemberHistory
@@ -2310,9 +2355,6 @@ export function familyMemberHistory(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function flag(type: string, props: Flag_Props);
-export function flag(props: Flag_Props);
 
 /**
   * Create a FHIR Flag resource.
@@ -2337,6 +2379,10 @@ export function flag(props: Flag_Props);
   * @param [props.encounter] {Reference} - Alert relevant during encounter
   * @param [props.author] {Reference} - Flag creator
  */
+export function flag(type: string, props: Flag_Props);
+
+export function flag(props: Flag_Props);
+
 export function flag(type: any, props?: any) {
     const mappings = {
         "Flag": Flag_Flag
@@ -2349,9 +2395,6 @@ export function flag(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function goal(type: string, props: Goal_Props);
-export function goal(props: Goal_Props);
 
 /**
   * Create a FHIR Goal resource.
@@ -2384,6 +2427,10 @@ export function goal(props: Goal_Props);
   * @param [props.outcomeCode] {CodeableConcept} - What result was achieved regarding the goal?
   * @param [props.outcomeReference] {Reference} - Observation that resulted from goal
  */
+export function goal(type: string, props: Goal_Props);
+
+export function goal(props: Goal_Props);
+
 export function goal(type: any, props?: any) {
     const mappings = {
         "Goal": Goal_Goal
@@ -2396,9 +2443,6 @@ export function goal(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function group(type: string, props: Group_Props);
-export function group(props: Group_Props);
 
 /**
   * Create a FHIR Group resource.
@@ -2425,6 +2469,10 @@ export function group(props: Group_Props);
   * @param [props.characteristic] {BackboneElement} - Include / Exclude group members by Trait
   * @param [props.member] {BackboneElement} - Who or what is in group
  */
+export function group(type: string, props: Group_Props);
+
+export function group(props: Group_Props);
+
 export function group(type: any, props?: any) {
     const mappings = {
         "Group": Group_Group
@@ -2437,9 +2485,6 @@ export function group(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function guidanceResponse(type: string, props: GuidanceResponse_Props);
-export function guidanceResponse(props: GuidanceResponse_Props);
 
 /**
   * Create a FHIR GuidanceResponse resource.
@@ -2471,6 +2516,10 @@ export function guidanceResponse(props: GuidanceResponse_Props);
   * @param [props.result] {Reference} - Proposed actions, if any
   * @param [props.dataRequirement] {DataRequirement} - Additional required data
  */
+export function guidanceResponse(type: string, props: GuidanceResponse_Props);
+
+export function guidanceResponse(props: GuidanceResponse_Props);
+
 export function guidanceResponse(type: any, props?: any) {
     const mappings = {
         "GuidanceResponse": GuidanceResponse_GuidanceResponse
@@ -2483,9 +2532,6 @@ export function guidanceResponse(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function healthcareService(type: string, props: HealthcareService_Props);
-export function healthcareService(props: HealthcareService_Props);
 
 /**
   * Create a FHIR HealthcareService resource.
@@ -2526,6 +2572,10 @@ export function healthcareService(props: HealthcareService_Props);
   * @param [props.availabilityExceptions] {string} - Description of availability exceptions
   * @param [props.endpoint] {Reference} - Technical endpoints providing access to electronic services operated for the healthcare service
  */
+export function healthcareService(type: string, props: HealthcareService_Props);
+
+export function healthcareService(props: HealthcareService_Props);
+
 export function healthcareService(type: any, props?: any) {
     const mappings = {
         "HealthcareService": HealthcareService_HealthcareService
@@ -2538,9 +2588,6 @@ export function healthcareService(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function imagingStudy(type: string, props: ImagingStudy_Props);
-export function imagingStudy(props: ImagingStudy_Props);
 
 /**
   * Create a FHIR ImagingStudy resource.
@@ -2577,6 +2624,10 @@ export function imagingStudy(props: ImagingStudy_Props);
   * @param [props.description] {string} - Institution-generated description
   * @param [props.series] {BackboneElement} - Each study has one or more series of instances
  */
+export function imagingStudy(type: string, props: ImagingStudy_Props);
+
+export function imagingStudy(props: ImagingStudy_Props);
+
 export function imagingStudy(type: any, props?: any) {
     const mappings = {
         "ImagingStudy": ImagingStudy_ImagingStudy
@@ -2589,9 +2640,6 @@ export function imagingStudy(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function immunization(type: string, props: Immunization_Props);
-export function immunization(props: Immunization_Props);
 
 /**
   * Create a FHIR Immunization resource.
@@ -2636,6 +2684,10 @@ export function immunization(props: Immunization_Props);
   * @param [props.reaction] {BackboneElement} - Details of a reaction that follows immunization
   * @param [props.protocolApplied] {BackboneElement} - Protocol followed by the provider
  */
+export function immunization(type: string, props: Immunization_Props);
+
+export function immunization(props: Immunization_Props);
+
 export function immunization(type: any, props?: any) {
     const mappings = {
         "Immunization": Immunization_Immunization
@@ -2648,9 +2700,6 @@ export function immunization(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function immunizationEvaluation(type: string, props: ImmunizationEvaluation_Props);
-export function immunizationEvaluation(props: ImmunizationEvaluation_Props);
 
 /**
   * Create a FHIR ImmunizationEvaluation resource.
@@ -2680,6 +2729,10 @@ export function immunizationEvaluation(props: ImmunizationEvaluation_Props);
   * @param [props.doseNumber] {number} - Dose number within series
   * @param [props.seriesDoses] {number} - Recommended number of doses for immunity
  */
+export function immunizationEvaluation(type: string, props: ImmunizationEvaluation_Props);
+
+export function immunizationEvaluation(props: ImmunizationEvaluation_Props);
+
 export function immunizationEvaluation(type: any, props?: any) {
     const mappings = {
         "ImmunizationEvaluation": ImmunizationEvaluation_ImmunizationEvaluation
@@ -2692,9 +2745,6 @@ export function immunizationEvaluation(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function immunizationRecommendation(type: string, props: ImmunizationRecommendation_Props);
-export function immunizationRecommendation(props: ImmunizationRecommendation_Props);
 
 /**
   * Create a FHIR ImmunizationRecommendation resource.
@@ -2716,6 +2766,10 @@ export function immunizationRecommendation(props: ImmunizationRecommendation_Pro
   * @param [props.authority] {Reference} - Who is responsible for protocol
   * @param [props.recommendation] {BackboneElement} - Vaccine administration recommendations
  */
+export function immunizationRecommendation(type: string, props: ImmunizationRecommendation_Props);
+
+export function immunizationRecommendation(props: ImmunizationRecommendation_Props);
+
 export function immunizationRecommendation(type: any, props?: any) {
     const mappings = {
         "ImmunizationRecommendation": ImmunizationRecommendation_ImmunizationRecommendation
@@ -2728,9 +2782,6 @@ export function immunizationRecommendation(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function ingredient(type: string, props: Ingredient_Props);
-export function ingredient(props: Ingredient_Props);
 
 /**
   * Create a FHIR Ingredient resource.
@@ -2755,6 +2806,10 @@ export function ingredient(props: Ingredient_Props);
   * @param [props.manufacturer] {BackboneElement} - An organization that manufactures this ingredient
   * @param [props.substance] {BackboneElement} - The substance that comprises this ingredient
  */
+export function ingredient(type: string, props: Ingredient_Props);
+
+export function ingredient(props: Ingredient_Props);
+
 export function ingredient(type: any, props?: any) {
     const mappings = {
         "Ingredient": Ingredient_Ingredient
@@ -2767,9 +2822,6 @@ export function ingredient(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function insurancePlan(type: string, props: InsurancePlan_Props);
-export function insurancePlan(props: InsurancePlan_Props);
 
 /**
   * Create a FHIR InsurancePlan resource.
@@ -2800,6 +2852,10 @@ export function insurancePlan(props: InsurancePlan_Props);
   * @param [props.coverage] {BackboneElement} - Coverage details
   * @param [props.plan] {BackboneElement} - Plan details
  */
+export function insurancePlan(type: string, props: InsurancePlan_Props);
+
+export function insurancePlan(props: InsurancePlan_Props);
+
 export function insurancePlan(type: any, props?: any) {
     const mappings = {
         "InsurancePlan": InsurancePlan_InsurancePlan
@@ -2812,9 +2868,6 @@ export function insurancePlan(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function invoice(type: string, props: Invoice_Props);
-export function invoice(props: Invoice_Props);
 
 /**
   * Create a FHIR Invoice resource.
@@ -2847,6 +2900,10 @@ export function invoice(props: Invoice_Props);
   * @param [props.paymentTerms] {markdown} - Payment details
   * @param [props.note] {Annotation} - Comments made about the invoice
  */
+export function invoice(type: string, props: Invoice_Props);
+
+export function invoice(props: Invoice_Props);
+
 export function invoice(type: any, props?: any) {
     const mappings = {
         "Invoice": Invoice_Invoice
@@ -2859,9 +2916,6 @@ export function invoice(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function library(type: string, props: Library_Props);
-export function library(props: Library_Props);
 
 /**
   * Create a FHIR Library resource.
@@ -2909,6 +2963,10 @@ export function library(props: Library_Props);
   * @param [props.dataRequirement] {DataRequirement} - What data is referenced by this library
   * @param [props.content] {Attachment} - Contents of the library, either embedded or referenced
  */
+export function library(type: string, props: Library_Props);
+
+export function library(props: Library_Props);
+
 export function library(type: any, props?: any) {
     const mappings = {
         "Library": Library_Library
@@ -2921,9 +2979,6 @@ export function library(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function list(type: string, props: List_Props);
-export function list(props: List_Props);
 
 /**
   * Create a FHIR List resource.
@@ -2953,6 +3008,10 @@ export function list(props: List_Props);
   * @param [props.entry] {BackboneElement} - Entries in the list
   * @param [props.emptyReason] {CodeableConcept} - Why list is empty
  */
+export function list(type: string, props: List_Props);
+
+export function list(props: List_Props);
+
 export function list(type: any, props?: any) {
     const mappings = {
         "List": List_List
@@ -2965,9 +3024,6 @@ export function list(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function location(type: string, props: Location_Props);
-export function location(props: Location_Props);
 
 /**
   * Create a FHIR Location resource.
@@ -3001,6 +3057,10 @@ export function location(props: Location_Props);
   * @param [props.availabilityExceptions] {string} - Description of availability exceptions
   * @param [props.endpoint] {Reference} - Technical endpoints providing access to services operated for the location
  */
+export function location(type: string, props: Location_Props);
+
+export function location(props: Location_Props);
+
 export function location(type: any, props?: any) {
     const mappings = {
         "Location": Location_Location
@@ -3013,9 +3073,6 @@ export function location(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function manufacturedItemDefinition(type: string, props: ManufacturedItemDefinition_Props);
-export function manufacturedItemDefinition(props: ManufacturedItemDefinition_Props);
 
 /**
   * Create a FHIR ManufacturedItemDefinition resource.
@@ -3039,6 +3096,10 @@ export function manufacturedItemDefinition(props: ManufacturedItemDefinition_Pro
   * @param [props.ingredient] {CodeableConcept} - The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource
   * @param [props.property] {BackboneElement} - General characteristics of this item
  */
+export function manufacturedItemDefinition(type: string, props: ManufacturedItemDefinition_Props);
+
+export function manufacturedItemDefinition(props: ManufacturedItemDefinition_Props);
+
 export function manufacturedItemDefinition(type: any, props?: any) {
     const mappings = {
         "ManufacturedItemDefinition": ManufacturedItemDefinition_ManufacturedItemDefinition
@@ -3051,9 +3112,6 @@ export function manufacturedItemDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function measure(type: string, props: Measure_Props);
-export function measure(props: Measure_Props);
 
 /**
   * Create a FHIR Measure resource.
@@ -3111,6 +3169,10 @@ export function measure(props: Measure_Props);
   * @param [props.group] {BackboneElement} - Population criteria group
   * @param [props.supplementalData] {BackboneElement} - What other data should be reported with the measure
  */
+export function measure(type: string, props: Measure_Props);
+
+export function measure(props: Measure_Props);
+
 export function measure(type: any, props?: any) {
     const mappings = {
         "Measure": Measure_Measure
@@ -3123,9 +3185,6 @@ export function measure(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function measureReport(type: string, props: MeasureReport_Props);
-export function measureReport(props: MeasureReport_Props);
 
 /**
   * Create a FHIR MeasureReport resource.
@@ -3153,6 +3212,10 @@ export function measureReport(props: MeasureReport_Props);
   * @param [props.group] {BackboneElement} - Measure results for each group
   * @param [props.evaluatedResource] {Reference} - What data was used to calculate the measure score
  */
+export function measureReport(type: string, props: MeasureReport_Props);
+
+export function measureReport(props: MeasureReport_Props);
+
 export function measureReport(type: any, props?: any) {
     const mappings = {
         "MeasureReport": MeasureReport_MeasureReport
@@ -3165,9 +3228,6 @@ export function measureReport(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function media(type: string, props: Media_Props);
-export function media(props: Media_Props);
 
 /**
   * Create a FHIR Media resource.
@@ -3206,6 +3266,10 @@ export function media(props: Media_Props);
   * @param [props.content] {Attachment} - Actual Media - reference or data
   * @param [props.note] {Annotation} - Comments made about the media
  */
+export function media(type: string, props: Media_Props);
+
+export function media(props: Media_Props);
+
 export function media(type: any, props?: any) {
     const mappings = {
         "Media": Media_Media
@@ -3218,9 +3282,6 @@ export function media(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function medication(type: string, props: Medication_Props);
-export function medication(props: Medication_Props);
 
 /**
   * Create a FHIR Medication resource.
@@ -3245,6 +3306,10 @@ export function medication(props: Medication_Props);
   * @param [props.ingredient] {BackboneElement} - Active or inactive ingredient
   * @param [props.batch] {BackboneElement} - Details about packaged medications
  */
+export function medication(type: string, props: Medication_Props);
+
+export function medication(props: Medication_Props);
+
 export function medication(type: any, props?: any) {
     const mappings = {
         "Medication": Medication_Medication
@@ -3257,9 +3322,6 @@ export function medication(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function medicationAdministration(type: string, props: MedicationAdministration_Props);
-export function medicationAdministration(props: MedicationAdministration_Props);
 
 /**
   * Create a FHIR MedicationAdministration resource.
@@ -3295,6 +3357,10 @@ export function medicationAdministration(props: MedicationAdministration_Props);
   * @param [props.dosage] {BackboneElement} - Details of how medication was taken
   * @param [props.eventHistory] {Reference} - A list of events of interest in the lifecycle
  */
+export function medicationAdministration(type: string, props: MedicationAdministration_Props);
+
+export function medicationAdministration(props: MedicationAdministration_Props);
+
 export function medicationAdministration(type: any, props?: any) {
     const mappings = {
         "MedicationAdministration": MedicationAdministration_MedicationAdministration
@@ -3307,9 +3373,6 @@ export function medicationAdministration(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function medicationDispense(type: string, props: MedicationDispense_Props);
-export function medicationDispense(props: MedicationDispense_Props);
 
 /**
   * Create a FHIR MedicationDispense resource.
@@ -3350,6 +3413,10 @@ export function medicationDispense(props: MedicationDispense_Props);
   * @param [props.detectedIssue] {Reference} - Clinical issue with action
   * @param [props.eventHistory] {Reference} - A list of relevant lifecycle events
  */
+export function medicationDispense(type: string, props: MedicationDispense_Props);
+
+export function medicationDispense(props: MedicationDispense_Props);
+
 export function medicationDispense(type: any, props?: any) {
     const mappings = {
         "MedicationDispense": MedicationDispense_MedicationDispense
@@ -3362,9 +3429,6 @@ export function medicationDispense(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function medicationKnowledge(type: string, props: MedicationKnowledge_Props);
-export function medicationKnowledge(props: MedicationKnowledge_Props);
 
 /**
   * Create a FHIR MedicationKnowledge resource.
@@ -3403,6 +3467,10 @@ export function medicationKnowledge(props: MedicationKnowledge_Props);
   * @param [props.regulatory] {BackboneElement} - Regulatory information about a medication
   * @param [props.kinetics] {BackboneElement} - The time course of drug absorption, distribution, metabolism and excretion of a medication from the body
  */
+export function medicationKnowledge(type: string, props: MedicationKnowledge_Props);
+
+export function medicationKnowledge(props: MedicationKnowledge_Props);
+
 export function medicationKnowledge(type: any, props?: any) {
     const mappings = {
         "MedicationKnowledge": MedicationKnowledge_MedicationKnowledge
@@ -3415,9 +3483,6 @@ export function medicationKnowledge(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function medicationRequest(type: string, props: MedicationRequest_Props);
-export function medicationRequest(props: MedicationRequest_Props);
 
 /**
   * Create a FHIR MedicationRequest resource.
@@ -3466,6 +3531,10 @@ export function medicationRequest(props: MedicationRequest_Props);
   * @param [props.detectedIssue] {Reference} - Clinical Issue with action
   * @param [props.eventHistory] {Reference} - A list of events of interest in the lifecycle
  */
+export function medicationRequest(type: string, props: MedicationRequest_Props);
+
+export function medicationRequest(props: MedicationRequest_Props);
+
 export function medicationRequest(type: any, props?: any) {
     const mappings = {
         "MedicationRequest": MedicationRequest_MedicationRequest
@@ -3478,9 +3547,6 @@ export function medicationRequest(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function medicationStatement(type: string, props: MedicationStatement_Props);
-export function medicationStatement(props: MedicationStatement_Props);
 
 /**
   * Create a FHIR MedicationStatement resource.
@@ -3514,6 +3580,10 @@ export function medicationStatement(props: MedicationStatement_Props);
   * @param [props.note] {Annotation} - Further information about the statement
   * @param [props.dosage] {Dosage} - Details of how medication is/was taken or should be taken
  */
+export function medicationStatement(type: string, props: MedicationStatement_Props);
+
+export function medicationStatement(props: MedicationStatement_Props);
+
 export function medicationStatement(type: any, props?: any) {
     const mappings = {
         "MedicationStatement": MedicationStatement_MedicationStatement
@@ -3526,9 +3596,6 @@ export function medicationStatement(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function medicinalProductDefinition(type: string, props: MedicinalProductDefinition_Props);
-export function medicinalProductDefinition(props: MedicinalProductDefinition_Props);
 
 /**
   * Create a FHIR MedicinalProductDefinition resource.
@@ -3573,6 +3640,10 @@ export function medicinalProductDefinition(props: MedicinalProductDefinition_Pro
   * @param [props.operation] {BackboneElement} - A manufacturing or administrative process for the medicinal product
   * @param [props.characteristic] {BackboneElement} - Key product features such as "sugar free", "modified release"
  */
+export function medicinalProductDefinition(type: string, props: MedicinalProductDefinition_Props);
+
+export function medicinalProductDefinition(props: MedicinalProductDefinition_Props);
+
 export function medicinalProductDefinition(type: any, props?: any) {
     const mappings = {
         "MedicinalProductDefinition": MedicinalProductDefinition_MedicinalProductDefinition
@@ -3585,9 +3656,6 @@ export function medicinalProductDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function molecularSequence(type: string, props: MolecularSequence_Props);
-export function molecularSequence(props: MolecularSequence_Props);
 
 /**
   * Create a FHIR MolecularSequence resource.
@@ -3620,6 +3688,10 @@ export function molecularSequence(props: MolecularSequence_Props);
   * @param [props.pointer] {Reference} - Pointer to next atomic sequence
   * @param [props.structureVariant] {BackboneElement} - Structural variant
  */
+export function molecularSequence(type: string, props: MolecularSequence_Props);
+
+export function molecularSequence(props: MolecularSequence_Props);
+
 export function molecularSequence(type: any, props?: any) {
     const mappings = {
         "MolecularSequence": MolecularSequence_MolecularSequence
@@ -3632,9 +3704,6 @@ export function molecularSequence(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function nutritionOrder(type: string, props: NutritionOrder_Props);
-export function nutritionOrder(props: NutritionOrder_Props);
 
 /**
   * Create a FHIR NutritionOrder resource.
@@ -3668,6 +3737,10 @@ export function nutritionOrder(props: NutritionOrder_Props);
   * @param [props.enteralFormula] {BackboneElement} - Enteral formula components
   * @param [props.note] {Annotation} - Comments
  */
+export function nutritionOrder(type: string, props: NutritionOrder_Props);
+
+export function nutritionOrder(props: NutritionOrder_Props);
+
 export function nutritionOrder(type: any, props?: any) {
     const mappings = {
         "NutritionOrder": NutritionOrder_NutritionOrder
@@ -3680,9 +3753,6 @@ export function nutritionOrder(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function nutritionProduct(type: string, props: NutritionProduct_Props);
-export function nutritionProduct(props: NutritionProduct_Props);
 
 /**
   * Create a FHIR NutritionProduct resource.
@@ -3709,6 +3779,10 @@ export function nutritionProduct(props: NutritionProduct_Props);
   * @param [props.instance] {BackboneElement} - One or several physical instances or occurrences of the nutrition product
   * @param [props.note] {Annotation} - Comments made about the product
  */
+export function nutritionProduct(type: string, props: NutritionProduct_Props);
+
+export function nutritionProduct(props: NutritionProduct_Props);
+
 export function nutritionProduct(type: any, props?: any) {
     const mappings = {
         "NutritionProduct": NutritionProduct_NutritionProduct
@@ -3721,9 +3795,6 @@ export function nutritionProduct(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function observation(type: string, props: Observation_Props);
-export function observation(props: Observation_Props);
 
 /**
   * Create a FHIR Observation resource.
@@ -3764,6 +3835,10 @@ export function observation(props: Observation_Props);
   * @param [props.derivedFrom] {Reference} - Related measurements the observation is made from
   * @param [props.component] {BackboneElement} - Component results
  */
+export function observation(type: string, props: Observation_Props);
+
+export function observation(props: Observation_Props);
+
 export function observation(type: any, props?: any) {
     const mappings = {
         "Observation": Observation_Observation
@@ -3776,9 +3851,6 @@ export function observation(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function observationDefinition(type: string, props: ObservationDefinition_Props);
-export function observationDefinition(props: ObservationDefinition_Props);
 
 /**
   * Create a FHIR ObservationDefinition resource.
@@ -3808,6 +3880,10 @@ export function observationDefinition(props: ObservationDefinition_Props);
   * @param [props.abnormalCodedValueSet] {Reference} - Value set of abnormal coded values for the observations conforming to this ObservationDefinition
   * @param [props.criticalCodedValueSet] {Reference} - Value set of critical coded values for the observations conforming to this ObservationDefinition
  */
+export function observationDefinition(type: string, props: ObservationDefinition_Props);
+
+export function observationDefinition(props: ObservationDefinition_Props);
+
 export function observationDefinition(type: any, props?: any) {
     const mappings = {
         "ObservationDefinition": ObservationDefinition_ObservationDefinition
@@ -3820,9 +3896,6 @@ export function observationDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function organization(type: string, props: Organization_Props);
-export function organization(props: Organization_Props);
 
 /**
   * Create a FHIR Organization resource.
@@ -3849,6 +3922,10 @@ export function organization(props: Organization_Props);
   * @param [props.contact] {BackboneElement} - Contact for the organization for a certain purpose
   * @param [props.endpoint] {Reference} - Technical endpoints providing access to services operated for the organization
  */
+export function organization(type: string, props: Organization_Props);
+
+export function organization(props: Organization_Props);
+
 export function organization(type: any, props?: any) {
     const mappings = {
         "Organization": Organization_Organization
@@ -3861,9 +3938,6 @@ export function organization(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function organizationAffiliation(type: string, props: OrganizationAffiliation_Props);
-export function organizationAffiliation(props: OrganizationAffiliation_Props);
 
 /**
   * Create a FHIR OrganizationAffiliation resource.
@@ -3892,6 +3966,10 @@ export function organizationAffiliation(props: OrganizationAffiliation_Props);
   * @param [props.telecom] {ContactPoint} - Contact details at the participatingOrganization relevant to this Affiliation
   * @param [props.endpoint] {Reference} - Technical endpoints providing access to services operated for this role
  */
+export function organizationAffiliation(type: string, props: OrganizationAffiliation_Props);
+
+export function organizationAffiliation(props: OrganizationAffiliation_Props);
+
 export function organizationAffiliation(type: any, props?: any) {
     const mappings = {
         "OrganizationAffiliation": OrganizationAffiliation_OrganizationAffiliation
@@ -3904,9 +3982,6 @@ export function organizationAffiliation(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function packagedProductDefinition(type: string, props: PackagedProductDefinition_Props);
-export function packagedProductDefinition(props: PackagedProductDefinition_Props);
 
 /**
   * Create a FHIR PackagedProductDefinition resource.
@@ -3937,6 +4012,10 @@ export function packagedProductDefinition(props: PackagedProductDefinition_Props
   * @param [props.manufacturer] {Reference} - Manufacturer of this package type (multiple means these are all possible manufacturers)
   * @param [props.package] {BackboneElement} - A packaging item, as a container for medically related items, possibly with other packaging items within, or a packaging component, such as bottle cap
  */
+export function packagedProductDefinition(type: string, props: PackagedProductDefinition_Props);
+
+export function packagedProductDefinition(props: PackagedProductDefinition_Props);
+
 export function packagedProductDefinition(type: any, props?: any) {
     const mappings = {
         "PackagedProductDefinition": PackagedProductDefinition_PackagedProductDefinition
@@ -3949,9 +4028,6 @@ export function packagedProductDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function patient(type: string, props: Patient_Props);
-export function patient(props: Patient_Props);
 
 /**
   * Create a FHIR Patient resource.
@@ -3984,6 +4060,10 @@ export function patient(props: Patient_Props);
   * @param [props.managingOrganization] {Reference} - Organization that is the custodian of the patient record
   * @param [props.link] {BackboneElement} - Link to another patient resource that concerns the same actual person
  */
+export function patient(type: string, props: Patient_Props);
+
+export function patient(props: Patient_Props);
+
 export function patient(type: any, props?: any) {
     const mappings = {
         "Patient": Patient_Patient
@@ -3996,9 +4076,6 @@ export function patient(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function paymentNotice(type: string, props: PaymentNotice_Props);
-export function paymentNotice(props: PaymentNotice_Props);
 
 /**
   * Create a FHIR PaymentNotice resource.
@@ -4027,6 +4104,10 @@ export function paymentNotice(props: PaymentNotice_Props);
   * @param [props.amount] {Money} - Monetary amount of the payment
   * @param [props.paymentStatus] {CodeableConcept} - Issued or cleared Status of the payment
  */
+export function paymentNotice(type: string, props: PaymentNotice_Props);
+
+export function paymentNotice(props: PaymentNotice_Props);
+
 export function paymentNotice(type: any, props?: any) {
     const mappings = {
         "PaymentNotice": PaymentNotice_PaymentNotice
@@ -4039,9 +4120,6 @@ export function paymentNotice(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function paymentReconciliation(type: string, props: PaymentReconciliation_Props);
-export function paymentReconciliation(props: PaymentReconciliation_Props);
 
 /**
   * Create a FHIR PaymentReconciliation resource.
@@ -4073,6 +4151,10 @@ export function paymentReconciliation(props: PaymentReconciliation_Props);
   * @param [props.formCode] {CodeableConcept} - Printed form identifier
   * @param [props.processNote] {BackboneElement} - Note concerning processing
  */
+export function paymentReconciliation(type: string, props: PaymentReconciliation_Props);
+
+export function paymentReconciliation(props: PaymentReconciliation_Props);
+
 export function paymentReconciliation(type: any, props?: any) {
     const mappings = {
         "PaymentReconciliation": PaymentReconciliation_PaymentReconciliation
@@ -4085,9 +4167,6 @@ export function paymentReconciliation(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function person(type: string, props: Person_Props);
-export function person(props: Person_Props);
 
 /**
   * Create a FHIR Person resource.
@@ -4114,6 +4193,10 @@ export function person(props: Person_Props);
   * @param [props.active] {boolean} - This person's record is in active use
   * @param [props.link] {BackboneElement} - Link to a resource that concerns the same actual person
  */
+export function person(type: string, props: Person_Props);
+
+export function person(props: Person_Props);
+
 export function person(type: any, props?: any) {
     const mappings = {
         "Person": Person_Person
@@ -4126,9 +4209,6 @@ export function person(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function planDefinition(type: string, props: PlanDefinition_Props);
-export function planDefinition(props: PlanDefinition_Props);
 
 /**
   * Create a FHIR PlanDefinition resource.
@@ -4176,6 +4256,10 @@ export function planDefinition(props: PlanDefinition_Props);
   * @param [props.goal] {BackboneElement} - What the plan is trying to accomplish
   * @param [props.action] {BackboneElement} - Action defined by the plan
  */
+export function planDefinition(type: string, props: PlanDefinition_Props);
+
+export function planDefinition(props: PlanDefinition_Props);
+
 export function planDefinition(type: any, props?: any) {
     const mappings = {
         "PlanDefinition": PlanDefinition_PlanDefinition
@@ -4188,9 +4272,6 @@ export function planDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function practitioner(type: string, props: Practitioner_Props);
-export function practitioner(props: Practitioner_Props);
 
 /**
   * Create a FHIR Practitioner resource.
@@ -4217,6 +4298,10 @@ export function practitioner(props: Practitioner_Props);
   * @param [props.qualification] {BackboneElement} - Certification, licenses, or training pertaining to the provision of care
   * @param [props.communication] {CodeableConcept} - A language the practitioner can use in patient communication
  */
+export function practitioner(type: string, props: Practitioner_Props);
+
+export function practitioner(props: Practitioner_Props);
+
 export function practitioner(type: any, props?: any) {
     const mappings = {
         "Practitioner": Practitioner_Practitioner
@@ -4229,9 +4314,6 @@ export function practitioner(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function practitionerRole(type: string, props: PractitionerRole_Props);
-export function practitionerRole(props: PractitionerRole_Props);
 
 /**
   * Create a FHIR PractitionerRole resource.
@@ -4262,6 +4344,10 @@ export function practitionerRole(props: PractitionerRole_Props);
   * @param [props.availabilityExceptions] {string} - Description of availability exceptions
   * @param [props.endpoint] {Reference} - Technical endpoints providing access to services operated for the practitioner with this role
  */
+export function practitionerRole(type: string, props: PractitionerRole_Props);
+
+export function practitionerRole(props: PractitionerRole_Props);
+
 export function practitionerRole(type: any, props?: any) {
     const mappings = {
         "PractitionerRole": PractitionerRole_PractitionerRole
@@ -4274,9 +4360,6 @@ export function practitionerRole(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function procedure(type: string, props: Procedure_Props);
-export function procedure(props: Procedure_Props);
 
 /**
   * Create a FHIR Procedure resource.
@@ -4321,6 +4404,10 @@ export function procedure(props: Procedure_Props);
   * @param [props.usedReference] {Reference} - Items used during procedure
   * @param [props.usedCode] {CodeableConcept} - Coded items used during the procedure
  */
+export function procedure(type: string, props: Procedure_Props);
+
+export function procedure(props: Procedure_Props);
+
 export function procedure(type: any, props?: any) {
     const mappings = {
         "Procedure": Procedure_Procedure
@@ -4333,9 +4420,6 @@ export function procedure(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function questionnaire(type: string, props: Questionnaire_Props);
-export function questionnaire(props: Questionnaire_Props);
 
 /**
   * Create a FHIR Questionnaire resource.
@@ -4374,6 +4458,10 @@ export function questionnaire(props: Questionnaire_Props);
   * @param [props.code] {Coding} - Concept that represents the overall questionnaire
   * @param [props.item] {BackboneElement} - Questions and sections within the Questionnaire
  */
+export function questionnaire(type: string, props: Questionnaire_Props);
+
+export function questionnaire(props: Questionnaire_Props);
+
 export function questionnaire(type: any, props?: any) {
     const mappings = {
         "Questionnaire": Questionnaire_Questionnaire
@@ -4386,9 +4474,6 @@ export function questionnaire(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function questionnaireResponse(type: string, props: QuestionnaireResponse_Props);
-export function questionnaireResponse(props: QuestionnaireResponse_Props);
 
 /**
   * Create a FHIR QuestionnaireResponse resource.
@@ -4416,6 +4501,10 @@ export function questionnaireResponse(props: QuestionnaireResponse_Props);
   * @param [props.source] {Reference} - The person who answered the questions
   * @param [props.item] {BackboneElement} - Groups and questions
  */
+export function questionnaireResponse(type: string, props: QuestionnaireResponse_Props);
+
+export function questionnaireResponse(props: QuestionnaireResponse_Props);
+
 export function questionnaireResponse(type: any, props?: any) {
     const mappings = {
         "QuestionnaireResponse": QuestionnaireResponse_QuestionnaireResponse
@@ -4428,9 +4517,6 @@ export function questionnaireResponse(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function regulatedAuthorization(type: string, props: RegulatedAuthorization_Props);
-export function regulatedAuthorization(props: RegulatedAuthorization_Props);
 
 /**
   * Create a FHIR RegulatedAuthorization resource.
@@ -4461,6 +4547,10 @@ export function regulatedAuthorization(props: RegulatedAuthorization_Props);
   * @param [props.regulator] {Reference} - The regulatory authority or authorizing body granting the authorization
   * @param [props.case] {BackboneElement} - The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page)
  */
+export function regulatedAuthorization(type: string, props: RegulatedAuthorization_Props);
+
+export function regulatedAuthorization(props: RegulatedAuthorization_Props);
+
 export function regulatedAuthorization(type: any, props?: any) {
     const mappings = {
         "RegulatedAuthorization": RegulatedAuthorization_RegulatedAuthorization
@@ -4473,9 +4563,6 @@ export function regulatedAuthorization(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function relatedPerson(type: string, props: RelatedPerson_Props);
-export function relatedPerson(props: RelatedPerson_Props);
 
 /**
   * Create a FHIR RelatedPerson resource.
@@ -4504,6 +4591,10 @@ export function relatedPerson(props: RelatedPerson_Props);
   * @param [props.period] {Period} - Period of time that this relationship is considered valid
   * @param [props.communication] {BackboneElement} - A language which may be used to communicate with about the patient's health
  */
+export function relatedPerson(type: string, props: RelatedPerson_Props);
+
+export function relatedPerson(props: RelatedPerson_Props);
+
 export function relatedPerson(type: any, props?: any) {
     const mappings = {
         "RelatedPerson": RelatedPerson_RelatedPerson
@@ -4516,9 +4607,6 @@ export function relatedPerson(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function requestGroup(type: string, props: RequestGroup_Props);
-export function requestGroup(props: RequestGroup_Props);
 
 /**
   * Create a FHIR RequestGroup resource.
@@ -4553,6 +4641,10 @@ export function requestGroup(props: RequestGroup_Props);
   * @param [props.note] {Annotation} - Additional notes about the response
   * @param [props.action] {BackboneElement} - Proposed actions, if any
  */
+export function requestGroup(type: string, props: RequestGroup_Props);
+
+export function requestGroup(props: RequestGroup_Props);
+
 export function requestGroup(type: any, props?: any) {
     const mappings = {
         "RequestGroup": RequestGroup_RequestGroup
@@ -4565,9 +4657,6 @@ export function requestGroup(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function researchDefinition(type: string, props: ResearchDefinition_Props);
-export function researchDefinition(props: ResearchDefinition_Props);
 
 /**
   * Create a FHIR ResearchDefinition resource.
@@ -4618,6 +4707,10 @@ export function researchDefinition(props: ResearchDefinition_Props);
   * @param [props.exposureAlternative] {Reference} - What alternative exposure state?
   * @param [props.outcome] {Reference} - What outcome?
  */
+export function researchDefinition(type: string, props: ResearchDefinition_Props);
+
+export function researchDefinition(props: ResearchDefinition_Props);
+
 export function researchDefinition(type: any, props?: any) {
     const mappings = {
         "ResearchDefinition": ResearchDefinition_ResearchDefinition
@@ -4630,9 +4723,6 @@ export function researchDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function researchElementDefinition(type: string, props: ResearchElementDefinition_Props);
-export function researchElementDefinition(props: ResearchElementDefinition_Props);
 
 /**
   * Create a FHIR ResearchElementDefinition resource.
@@ -4682,6 +4772,10 @@ export function researchElementDefinition(props: ResearchElementDefinition_Props
   * @param [props.variableType] {string} - dichotomous | continuous | descriptive
   * @param [props.characteristic] {BackboneElement} - What defines the members of the research element
  */
+export function researchElementDefinition(type: string, props: ResearchElementDefinition_Props);
+
+export function researchElementDefinition(props: ResearchElementDefinition_Props);
+
 export function researchElementDefinition(type: any, props?: any) {
     const mappings = {
         "ResearchElementDefinition": ResearchElementDefinition_ResearchElementDefinition
@@ -4694,9 +4788,6 @@ export function researchElementDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function researchStudy(type: string, props: ResearchStudy_Props);
-export function researchStudy(props: ResearchStudy_Props);
 
 /**
   * Create a FHIR ResearchStudy resource.
@@ -4737,6 +4828,10 @@ export function researchStudy(props: ResearchStudy_Props);
   * @param [props.arm] {BackboneElement} - Defined path through the study for a subject
   * @param [props.objective] {BackboneElement} - A goal for the study
  */
+export function researchStudy(type: string, props: ResearchStudy_Props);
+
+export function researchStudy(props: ResearchStudy_Props);
+
 export function researchStudy(type: any, props?: any) {
     const mappings = {
         "ResearchStudy": ResearchStudy_ResearchStudy
@@ -4749,9 +4844,6 @@ export function researchStudy(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function researchSubject(type: string, props: ResearchSubject_Props);
-export function researchSubject(props: ResearchSubject_Props);
 
 /**
   * Create a FHIR ResearchSubject resource.
@@ -4776,6 +4868,10 @@ export function researchSubject(props: ResearchSubject_Props);
   * @param [props.actualArm] {string} - What path was followed
   * @param [props.consent] {Reference} - Agreement to participate in study
  */
+export function researchSubject(type: string, props: ResearchSubject_Props);
+
+export function researchSubject(props: ResearchSubject_Props);
+
 export function researchSubject(type: any, props?: any) {
     const mappings = {
         "ResearchSubject": ResearchSubject_ResearchSubject
@@ -4789,9 +4885,6 @@ export function researchSubject(type: any, props?: any) {
     return mappings[type](props)
 }
 
-export function resource(type: string, props: Resource_Props);
-export function resource(props: Resource_Props);
-
 /**
   * Create a FHIR Resource resource.
   * @public
@@ -4803,6 +4896,10 @@ export function resource(props: Resource_Props);
   * @param [props.implicitRules] {string} - A set of rules under which this content was created
   * @param [props.language] {string} - Language of the resource content
  */
+export function resource(type: string, props: Resource_Props);
+
+export function resource(props: Resource_Props);
+
 export function resource(type: any, props?: any) {
     const mappings = {
         "Resource": Resource_Resource
@@ -4815,9 +4912,6 @@ export function resource(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function riskAssessment(type: string, props: RiskAssessment_Props);
-export function riskAssessment(props: RiskAssessment_Props);
 
 /**
   * Create a FHIR RiskAssessment resource.
@@ -4851,6 +4945,10 @@ export function riskAssessment(props: RiskAssessment_Props);
   * @param [props.mitigation] {string} - How to reduce risk
   * @param [props.note] {Annotation} - Comments on the risk assessment
  */
+export function riskAssessment(type: string, props: RiskAssessment_Props);
+
+export function riskAssessment(props: RiskAssessment_Props);
+
 export function riskAssessment(type: any, props?: any) {
     const mappings = {
         "RiskAssessment": RiskAssessment_RiskAssessment
@@ -4863,9 +4961,6 @@ export function riskAssessment(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function schedule(type: string, props: Schedule_Props);
-export function schedule(props: Schedule_Props);
 
 /**
   * Create a FHIR Schedule resource.
@@ -4890,6 +4985,10 @@ export function schedule(props: Schedule_Props);
   * @param [props.planningHorizon] {Period} - Period of time covered by schedule
   * @param [props.comment] {string} - Comments on availability
  */
+export function schedule(type: string, props: Schedule_Props);
+
+export function schedule(props: Schedule_Props);
+
 export function schedule(type: any, props?: any) {
     const mappings = {
         "Schedule": Schedule_Schedule
@@ -4902,9 +5001,6 @@ export function schedule(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function serviceRequest(type: string, props: ServiceRequest_Props);
-export function serviceRequest(props: ServiceRequest_Props);
 
 /**
   * Create a FHIR ServiceRequest resource.
@@ -4954,6 +5050,10 @@ export function serviceRequest(props: ServiceRequest_Props);
   * @param [props.patientInstruction] {string} - Patient or consumer-oriented instructions
   * @param [props.relevantHistory] {Reference} - Request provenance
  */
+export function serviceRequest(type: string, props: ServiceRequest_Props);
+
+export function serviceRequest(props: ServiceRequest_Props);
+
 export function serviceRequest(type: any, props?: any) {
     const mappings = {
         "ServiceRequest": ServiceRequest_ServiceRequest
@@ -4966,9 +5066,6 @@ export function serviceRequest(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function slot(type: string, props: Slot_Props);
-export function slot(props: Slot_Props);
 
 /**
   * Create a FHIR Slot resource.
@@ -4996,6 +5093,10 @@ export function slot(props: Slot_Props);
   * @param [props.overbooked] {boolean} - This slot has already been overbooked, appointments are unlikely to be accepted for this time
   * @param [props.comment] {string} - Comments on the slot to describe any extended information. Such as custom constraints on the slot
  */
+export function slot(type: string, props: Slot_Props);
+
+export function slot(props: Slot_Props);
+
 export function slot(type: any, props?: any) {
     const mappings = {
         "Slot": Slot_Slot
@@ -5008,9 +5109,6 @@ export function slot(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function specimen(type: string, props: Specimen_Props);
-export function specimen(props: Specimen_Props);
 
 /**
   * Create a FHIR Specimen resource.
@@ -5040,6 +5138,10 @@ export function specimen(props: Specimen_Props);
   * @param [props.condition] {CodeableConcept} - State of the specimen
   * @param [props.note] {Annotation} - Comments
  */
+export function specimen(type: string, props: Specimen_Props);
+
+export function specimen(props: Specimen_Props);
+
 export function specimen(type: any, props?: any) {
     const mappings = {
         "Specimen": Specimen_Specimen
@@ -5052,9 +5154,6 @@ export function specimen(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function specimenDefinition(type: string, props: SpecimenDefinition_Props);
-export function specimenDefinition(props: SpecimenDefinition_Props);
 
 /**
   * Create a FHIR SpecimenDefinition resource.
@@ -5077,6 +5176,10 @@ export function specimenDefinition(props: SpecimenDefinition_Props);
   * @param [props.collection] {CodeableConcept} - Specimen collection procedure
   * @param [props.typeTested] {BackboneElement} - Specimen in container intended for testing by lab
  */
+export function specimenDefinition(type: string, props: SpecimenDefinition_Props);
+
+export function specimenDefinition(props: SpecimenDefinition_Props);
+
 export function specimenDefinition(type: any, props?: any) {
     const mappings = {
         "SpecimenDefinition": SpecimenDefinition_SpecimenDefinition
@@ -5089,9 +5192,6 @@ export function specimenDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function substance(type: string, props: Substance_Props);
-export function substance(props: Substance_Props);
 
 /**
   * Create a FHIR Substance resource.
@@ -5115,6 +5215,10 @@ export function substance(props: Substance_Props);
   * @param [props.instance] {BackboneElement} - If this describes a specific package/container of the substance
   * @param [props.ingredient] {BackboneElement} - Composition information about the substance
  */
+export function substance(type: string, props: Substance_Props);
+
+export function substance(props: Substance_Props);
+
 export function substance(type: any, props?: any) {
     const mappings = {
         "Substance": Substance_Substance
@@ -5127,9 +5231,6 @@ export function substance(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function substanceDefinition(type: string, props: SubstanceDefinition_Props);
-export function substanceDefinition(props: SubstanceDefinition_Props);
 
 /**
   * Create a FHIR SubstanceDefinition resource.
@@ -5165,6 +5266,10 @@ export function substanceDefinition(props: SubstanceDefinition_Props);
   * @param [props.relationship] {BackboneElement} - A link between this substance and another
   * @param [props.sourceMaterial] {BackboneElement} - Material or taxonomic/anatomical source
  */
+export function substanceDefinition(type: string, props: SubstanceDefinition_Props);
+
+export function substanceDefinition(props: SubstanceDefinition_Props);
+
 export function substanceDefinition(type: any, props?: any) {
     const mappings = {
         "SubstanceDefinition": SubstanceDefinition_SubstanceDefinition
@@ -5177,9 +5282,6 @@ export function substanceDefinition(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function supplyDelivery(type: string, props: SupplyDelivery_Props);
-export function supplyDelivery(props: SupplyDelivery_Props);
 
 /**
   * Create a FHIR SupplyDelivery resource.
@@ -5207,6 +5309,10 @@ export function supplyDelivery(props: SupplyDelivery_Props);
   * @param [props.destination] {Reference} - Where the Supply was sent
   * @param [props.receiver] {Reference} - Who collected the Supply
  */
+export function supplyDelivery(type: string, props: SupplyDelivery_Props);
+
+export function supplyDelivery(props: SupplyDelivery_Props);
+
 export function supplyDelivery(type: any, props?: any) {
     const mappings = {
         "SupplyDelivery": SupplyDelivery_SupplyDelivery
@@ -5219,9 +5325,6 @@ export function supplyDelivery(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function supplyRequest(type: string, props: SupplyRequest_Props);
-export function supplyRequest(props: SupplyRequest_Props);
 
 /**
   * Create a FHIR SupplyRequest resource.
@@ -5253,6 +5356,10 @@ export function supplyRequest(props: SupplyRequest_Props);
   * @param [props.deliverFrom] {Reference} - The origin of the supply
   * @param [props.deliverTo] {Reference} - The destination of the supply
  */
+export function supplyRequest(type: string, props: SupplyRequest_Props);
+
+export function supplyRequest(props: SupplyRequest_Props);
+
 export function supplyRequest(type: any, props?: any) {
     const mappings = {
         "SupplyRequest": SupplyRequest_SupplyRequest
@@ -5265,9 +5372,6 @@ export function supplyRequest(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function task(type: string, props: Task_Props);
-export function task(props: Task_Props);
 
 /**
   * Create a FHIR Task resource.
@@ -5315,6 +5419,10 @@ export function task(props: Task_Props);
   * @param [props.input] {BackboneElement} - Information used to perform task
   * @param [props.output] {BackboneElement} - Information produced as part of task
  */
+export function task(type: string, props: Task_Props);
+
+export function task(props: Task_Props);
+
 export function task(type: any, props?: any) {
     const mappings = {
         "Task": Task_Task
@@ -5327,9 +5435,6 @@ export function task(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function testReport(type: string, props: TestReport_Props);
-export function testReport(props: TestReport_Props);
 
 /**
   * Create a FHIR TestReport resource.
@@ -5358,6 +5463,10 @@ export function testReport(props: TestReport_Props);
   * @param [props.test] {BackboneElement} - A test executed from the test script
   * @param [props.teardown] {BackboneElement} - The results of running the series of required clean up steps
  */
+export function testReport(type: string, props: TestReport_Props);
+
+export function testReport(props: TestReport_Props);
+
 export function testReport(type: any, props?: any) {
     const mappings = {
         "TestReport": TestReport_TestReport
@@ -5370,9 +5479,6 @@ export function testReport(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function testScript(type: string, props: TestScript_Props);
-export function testScript(props: TestScript_Props);
 
 /**
   * Create a FHIR TestScript resource.
@@ -5413,6 +5519,10 @@ export function testScript(props: TestScript_Props);
   * @param [props.test] {BackboneElement} - A test in this script
   * @param [props.teardown] {BackboneElement} - A series of required clean up steps
  */
+export function testScript(type: string, props: TestScript_Props);
+
+export function testScript(props: TestScript_Props);
+
 export function testScript(type: any, props?: any) {
     const mappings = {
         "TestScript": TestScript_TestScript
@@ -5425,9 +5535,6 @@ export function testScript(type: any, props?: any) {
     }
     return mappings[type](props)
 }
-
-export function verificationResult(type: string, props: VerificationResult_Props);
-export function verificationResult(props: VerificationResult_Props);
 
 /**
   * Create a FHIR VerificationResult resource.
@@ -5458,6 +5565,10 @@ export function verificationResult(props: VerificationResult_Props);
   * @param [props.attestation] {BackboneElement} - Information about the entity attesting to information
   * @param [props.validator] {BackboneElement} - Information about the entity validating information
  */
+export function verificationResult(type: string, props: VerificationResult_Props);
+
+export function verificationResult(props: VerificationResult_Props);
+
 export function verificationResult(type: any, props?: any) {
     const mappings = {
         "VerificationResult": VerificationResult_VerificationResult
