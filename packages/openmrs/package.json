@@ -28,7 +28,6 @@
     "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "^0.4.1",
     "assertion-error": "^1.1.0",
     "chai": "^5.1.1",
     "deep-eql": "^0.1.3",

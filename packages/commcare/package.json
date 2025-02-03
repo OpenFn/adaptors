@@ -32,7 +32,6 @@
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "^0.4.1",
     "assertion-error": "^1.1.0",
     "chai": "^4.3.7",
     "deep-eql": "^4.1.3",

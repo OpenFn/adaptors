@@ -52,7 +52,6 @@
     "undici": "^5.28.5"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "0.4.1",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "esno": "^0.16.3",

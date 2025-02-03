@@ -1,0 +1,20 @@
+{
+  "name": "@openfn/simple-ast",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generates OpenFn readable ASTs for adaptors",
+  "type": "module",
+  "main": "src/generate.js",
+  "scripts": {},
+  "author": "Open Function Group",
+  "license": "LGPLv3",
+  "files": [
+    "lib/"
+  ],
+  "dependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/parser": "^7.26.7",
+    "doctrine": "^2.0.0",
+    "lodash.isequal": "^4.5.0"
+  }
+}
