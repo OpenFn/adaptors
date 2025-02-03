@@ -1,14 +1,6 @@
-// TODO utils shouldn't be in the generated template!
-
-// utils includes little builder functions
-
 import _ from 'lodash';
 
-const systemMap = {
-  SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID',
-  MRN: 'http://moh.gov.et/fhir/hiv/identifier/MRN',
-  UAN: 'http://moh.gov.et/fhir/hiv/identifier/UAN',
-};
+let systemMap = {};
 
 // https://hl7.org/fhir/R4/datatypes.html#dateTime
 const datetimeregex =
@@ -34,7 +26,7 @@ export const mapSystems = obj => {
  * Builder functions will use this mappings when they encounter them in system keys. Useful for setting shortcuts.
  * @public
  * @function
- * @example <caption>Set shortcut sustem mappings</caption>
+ * @example <caption>Set shortcut system mappings</caption>
  * util.setSystemMap({
  *   SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'
  * });
@@ -42,43 +34,78 @@ export const mapSystems = obj => {
  * };
  */
 export const setSystemMap = newMappings => {
+  systemMap = newMappings;
+};
+
+export const extendSystemMap = newMappings => {
   Object.assign(systemMap, newMappings);
 };
 
 /**
- * Create an identifier resource. Systems will be mapped against the system map.
- * The input can be a string value, or an identifier object.
- * If input is an array of identifiers, an array of mapped/parsed values will be returned.
+ * Create an Identifier. Systems will be mapped against the system map. Pass extensions as extra arguments.
  * @public
  * @function
- * @param input - an array of strings, or a identifier value as a string or object
+ * @param id - A string identifier, a FHIR identifier object, or an array of either.
+ * @param ext - Any other arguments will be treated as extensions
  * @param {string} [system] - the string system to use by default if
  */
-export const identifier = (input, system) => {
+export const identifier = (id: string | Identifier, ...ext) => {
   // If an array of inputs is passed in, map each element of the array
   // because it's very common to support a set of identifiers, rather than just one
-  if (Array.isArray(input)) {
-    return input.map(i => identifier(i, system));
+  // Note that in this mode, each argument should be an object
+  if (Array.isArray(id)) {
+    return id.map(i => identifier(i));
   }
 
-  if (input) {
-    if (typeof input === 'string') {
-      return mapSystems({
-        value: input,
-        system,
-      });
-    } else if (system) {
-      return mapSystems({
-        // Is system a default or override?
-        // Probably a default?
-        system,
-        ...input,
-      });
-    } else {
-      return mapSystems(input);
-    }
+  const i: Identifier = {};
+  if (typeof id === 'string') {
+    i.value = id;
+  } else {
+    Object.assign(i, id);
+    // TODO can we default the system anyhow?
   }
+
+  // TODO warn for unexpected keys?
+
+  if (ext.length) {
+    i.extension ??= [];
+    i.extension.push(...ext);
+  }
+
+  return mapSystems(i);
 };
+
+// TODO identifier takes many many things!
+// This API is insufficent really, and not well typed
+// technically all identifier fields are optional
+// but really there will usually be a value, and the value should usually have a system
+// everything else is optional
+// TODO how do we handle extensions?
+// export const identifier = (input, system) => {
+//   // If an array of inputs is passed in, map each element of the array
+//   // because it's very common to support a set of identifiers, rather than just one
+//   if (Array.isArray(input)) {
+//     return input.map(i => identifier(i, system));
+//   }
+
+//   if (input) {
+//     if (typeof input === 'string') {
+//       return mapSystems({
+//         value: input,
+//         system,
+//       });
+//     } else if (system) {
+//       return mapSystems({
+//         // Is system a default or override?
+//         // Probably a default?
+//         system,
+//         ...input,
+//       });
+//     } else {
+//       return mapSystems(input);
+//     }
+//   }
+// };
 
 /**
  * Alias for util.identifier()
@@ -135,6 +162,22 @@ export const findExtension = (obj, targetUrl, path) => {
  * @param {string} system - URL to the system. Well be mapped using the system map.
  */
 export const coding = (code, system) => ({ code, system: mapSystems(system) });
+
+export const c = coding;
+
+/**
+ * Create a value object { code, system } with optional system. Systems will be mapped.
+ * @public
+ * @function
+ * @param {string} value - the value
+ * @param {string} system - URL to the system. Well be mapped using the system map.
+ */
+export const value = (value, system, ...extra) =>
+  mapSystems({
+    value,
+    system,
+    ...extra,
+  });
 
 /**
  * Create a codeableConcept. Codings can be coding objects or
