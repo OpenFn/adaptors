@@ -48,44 +48,14 @@ export default function(props: Partial<ResearchStudy_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ResearchStudy</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
-    }
-
-    if (!_.isNil(props.title)) {
-        resource.title = props.title;
     }
 
     if (!_.isNil(props.protocol)) {
@@ -98,57 +68,9 @@ export default function(props: Partial<ResearchStudy_Props>) {
         resource.partOf = dt.reference(props.partOf);
     }
 
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.primaryPurposeType)) {
-        resource.primaryPurposeType = props.primaryPurposeType;
-    }
-
-    if (!_.isNil(props.phase)) {
-        resource.phase = props.phase;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.focus)) {
-        resource.focus = props.focus;
-    }
-
-    if (!_.isNil(props.condition)) {
-        resource.condition = props.condition;
-    }
-
-    if (!_.isNil(props.contact)) {
-        resource.contact = props.contact;
-    }
-
-    if (!_.isNil(props.relatedArtifact)) {
-        resource.relatedArtifact = props.relatedArtifact;
-    }
-
-    if (!_.isNil(props.keyword)) {
-        resource.keyword = props.keyword;
-    }
-
-    if (!_.isNil(props.location)) {
-        resource.location = props.location;
-    }
-
-    if (!_.isNil(props.description)) {
-        resource.description = props.description;
-    }
-
     if (!_.isNil(props.enrollment)) {
         if (!Array.isArray(props.enrollment)) { props.enrollment = [props.enrollment]; }
         resource.enrollment = dt.reference(props.enrollment);
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
     }
 
     if (!_.isNil(props.sponsor)) {
@@ -164,41 +86,15 @@ export default function(props: Partial<ResearchStudy_Props>) {
         resource.site = dt.reference(props.site);
     }
 
-    if (!_.isNil(props.reasonStopped)) {
-        resource.reasonStopped = props.reasonStopped;
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
     if (!_.isNil(props.arm)) {
         let src = props.arm;
         if (!Array.isArray(src)) { src = [src]; }
         resource.arm = [];
 
         for (let item of src) {
-            let _arm = {};
-
-            if (!_.isNil(item.id)) {
-                _arm.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _arm.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.name)) {
-                _arm.name = item.name;
-            }
-
-            if (!_.isNil(item.type)) {
-                _arm.type = item.type;
-            }
-
-            if (!_.isNil(item.description)) {
-                _arm.description = item.description;
-            }
+            let _arm = {
+                ...item
+            };
 
             resource.arm.push(_arm);
         }
@@ -210,23 +106,9 @@ export default function(props: Partial<ResearchStudy_Props>) {
         resource.objective = [];
 
         for (let item of src) {
-            let _objective = {};
-
-            if (!_.isNil(item.id)) {
-                _objective.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _objective.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.name)) {
-                _objective.name = item.name;
-            }
-
-            if (!_.isNil(item.type)) {
-                _objective.type = item.type;
-            }
+            let _objective = {
+                ...item
+            };
 
             resource.objective.push(_objective);
         }

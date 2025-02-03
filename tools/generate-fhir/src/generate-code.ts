@@ -305,7 +305,8 @@ const mapProps = (schema, mappings) => {
         switch (spec.type) {
           case 'string':
           case 'Period':
-            props.push(mapSimpleProp(key, mappings[key], spec));
+          case 'CodeableConcept':
+            // Do nothing - the prop will be spread to the resource
             break;
           case 'Reference':
             props.push(mapReference(key, mappings[key], spec));
@@ -313,15 +314,9 @@ const mapProps = (schema, mappings) => {
           case 'Identifier':
             props.push(mapIdentifier(key, mappings[key] || {}, spec));
             break;
-          case 'CodeableConcept':
-            props.push(mapCodeableConcept(key, mappings[key] || {}, spec));
-            break;
           default:
-            // console.warn(
-            //   `WARNING: using simple mapping for ${schema.id}.${key}`
-            // );
-            props.push(mapSimpleProp(key, mappings[key], spec));
-          // TODO: warn unused type
+            // Do nothing - the prop will be spread to the resource
+            break;
         }
       }
     } else {
@@ -392,8 +387,6 @@ const addDefaults = (propName: string, mapping: Mapping, schema: Schema) => {
 // A simple prop will just take what's in the input and map it right across
 // Mapping rules could add extra complications here, like aliasing and converting
 const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
-  if (propName === 'code') {
-  }
   // This is the actual assignment
   const assignProp = assignToInput(
     propName,
@@ -446,7 +439,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          b.objectExpression([])
+          b.objectExpression([b.spreadProperty(b.identifier('item'))])
         ),
       ])
     );
@@ -478,19 +471,11 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           )
         )
       );
+      assignments.push(ifPropInInput(prop, body, alts, inputName));
     } else {
-      body.push(
-        b.expressionStatement(
-          b.assignmentExpression(
-            '=',
-            b.memberExpression(b.identifier(safePropName), b.identifier(prop)),
-            sourceValue
-          )
-        )
-      );
+      // Don't bother to explicitly map simple assignments
+      // TODO: handle datatypes and special things here too
     }
-
-    assignments.push(ifPropInInput(prop, body, alts, inputName));
   }
 
   if (schema.hasSystem) {
@@ -515,7 +500,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          b.objectExpression([])
+          b.objectExpression([b.spreadProperty(b.identifier('item'))])
         ),
       ])
     );
@@ -686,7 +671,7 @@ const initResource = (resourceType: string) => {
   return b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier(RESOURCE_NAME),
-      b.objectExpression([rt, text])
+      b.objectExpression([rt, text, b.spreadProperty(b.identifier(INPUT_NAME))])
     ),
   ]);
 };

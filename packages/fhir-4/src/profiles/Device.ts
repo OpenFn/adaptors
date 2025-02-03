@@ -50,36 +50,10 @@ export default function(props: Partial<Device_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Device</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
@@ -96,74 +70,12 @@ export default function(props: Partial<Device_Props>) {
         resource.udiCarrier = [];
 
         for (let item of src) {
-            let _udiCarrier = {};
-
-            if (!_.isNil(item.id)) {
-                _udiCarrier.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _udiCarrier.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.deviceIdentifier)) {
-                _udiCarrier.deviceIdentifier = item.deviceIdentifier;
-            }
-
-            if (!_.isNil(item.issuer)) {
-                _udiCarrier.issuer = item.issuer;
-            }
-
-            if (!_.isNil(item.jurisdiction)) {
-                _udiCarrier.jurisdiction = item.jurisdiction;
-            }
-
-            if (!_.isNil(item.carrierAIDC)) {
-                _udiCarrier.carrierAIDC = item.carrierAIDC;
-            }
-
-            if (!_.isNil(item.carrierHRF)) {
-                _udiCarrier.carrierHRF = item.carrierHRF;
-            }
-
-            if (!_.isNil(item.entryType)) {
-                _udiCarrier.entryType = item.entryType;
-            }
+            let _udiCarrier = {
+                ...item
+            };
 
             resource.udiCarrier.push(_udiCarrier);
         }
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        resource.statusReason = props.statusReason;
-    }
-
-    if (!_.isNil(props.distinctIdentifier)) {
-        resource.distinctIdentifier = props.distinctIdentifier;
-    }
-
-    if (!_.isNil(props.manufacturer)) {
-        resource.manufacturer = props.manufacturer;
-    }
-
-    if (!_.isNil(props.manufactureDate)) {
-        resource.manufactureDate = props.manufactureDate;
-    }
-
-    if (!_.isNil(props.expirationDate)) {
-        resource.expirationDate = props.expirationDate;
-    }
-
-    if (!_.isNil(props.lotNumber)) {
-        resource.lotNumber = props.lotNumber;
-    }
-
-    if (!_.isNil(props.serialNumber)) {
-        resource.serialNumber = props.serialNumber;
     }
 
     if (!_.isNil(props.deviceName)) {
@@ -172,38 +84,12 @@ export default function(props: Partial<Device_Props>) {
         resource.deviceName = [];
 
         for (let item of src) {
-            let _deviceName = {};
-
-            if (!_.isNil(item.id)) {
-                _deviceName.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _deviceName.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.name)) {
-                _deviceName.name = item.name;
-            }
-
-            if (!_.isNil(item.type)) {
-                _deviceName.type = item.type;
-            }
+            let _deviceName = {
+                ...item
+            };
 
             resource.deviceName.push(_deviceName);
         }
-    }
-
-    if (!_.isNil(props.modelNumber)) {
-        resource.modelNumber = props.modelNumber;
-    }
-
-    if (!_.isNil(props.partNumber)) {
-        resource.partNumber = props.partNumber;
-    }
-
-    if (!_.isNil(props.type)) {
-        resource.type = props.type;
     }
 
     if (!_.isNil(props.specialization)) {
@@ -212,23 +98,9 @@ export default function(props: Partial<Device_Props>) {
         resource.specialization = [];
 
         for (let item of src) {
-            let _specialization = {};
-
-            if (!_.isNil(item.id)) {
-                _specialization.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _specialization.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.systemType)) {
-                _specialization.systemType = item.systemType;
-            }
-
-            if (!_.isNil(item.version)) {
-                _specialization.version = item.version;
-            }
+            let _specialization = {
+                ...item
+            };
 
             resource.specialization.push(_specialization);
         }
@@ -240,27 +112,9 @@ export default function(props: Partial<Device_Props>) {
         resource.version = [];
 
         for (let item of src) {
-            let _version = {};
-
-            if (!_.isNil(item.id)) {
-                _version.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _version.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.type)) {
-                _version.type = item.type;
-            }
-
-            if (!_.isNil(item.component)) {
-                _version.component = item.component;
-            }
-
-            if (!_.isNil(item.value)) {
-                _version.value = item.value;
-            }
+            let _version = {
+                ...item
+            };
 
             resource.version.push(_version);
         }
@@ -272,27 +126,9 @@ export default function(props: Partial<Device_Props>) {
         resource.property = [];
 
         for (let item of src) {
-            let _property = {};
-
-            if (!_.isNil(item.id)) {
-                _property.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _property.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.type)) {
-                _property.type = item.type;
-            }
-
-            if (!_.isNil(item.valueQuantity)) {
-                _property.valueQuantity = item.valueQuantity;
-            }
-
-            if (!_.isNil(item.valueCode)) {
-                _property.valueCode = item.valueCode;
-            }
+            let _property = {
+                ...item
+            };
 
             resource.property.push(_property);
         }
@@ -306,24 +142,8 @@ export default function(props: Partial<Device_Props>) {
         resource.owner = dt.reference(props.owner);
     }
 
-    if (!_.isNil(props.contact)) {
-        resource.contact = props.contact;
-    }
-
     if (!_.isNil(props.location)) {
         resource.location = dt.reference(props.location);
-    }
-
-    if (!_.isNil(props.url)) {
-        resource.url = props.url;
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.safety)) {
-        resource.safety = props.safety;
     }
 
     if (!_.isNil(props.parent)) {

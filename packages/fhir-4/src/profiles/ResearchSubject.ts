@@ -32,48 +32,14 @@ export default function(props: Partial<ResearchSubject_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ResearchSubject</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.period)) {
-        resource.period = props.period;
     }
 
     if (!_.isNil(props.study)) {
@@ -82,14 +48,6 @@ export default function(props: Partial<ResearchSubject_Props>) {
 
     if (!_.isNil(props.individual)) {
         resource.individual = dt.reference(props.individual);
-    }
-
-    if (!_.isNil(props.assignedArm)) {
-        resource.assignedArm = props.assignedArm;
-    }
-
-    if (!_.isNil(props.actualArm)) {
-        resource.actualArm = props.actualArm;
     }
 
     if (!_.isNil(props.consent)) {

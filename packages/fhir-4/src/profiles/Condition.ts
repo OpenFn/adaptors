@@ -41,64 +41,14 @@ export default function(props: Partial<Condition_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Condition</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
-    }
-
-    if (!_.isNil(props.clinicalStatus)) {
-        resource.clinicalStatus = props.clinicalStatus;
-    }
-
-    if (!_.isNil(props.verificationStatus)) {
-        resource.verificationStatus = props.verificationStatus;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.severity)) {
-        resource.severity = props.severity;
-    }
-
-    if (!_.isNil(props.code)) {
-        resource.code = props.code;
-    }
-
-    if (!_.isNil(props.bodySite)) {
-        resource.bodySite = props.bodySite;
     }
 
     if (!_.isNil(props.subject)) {
@@ -117,10 +67,6 @@ export default function(props: Partial<Condition_Props>) {
         dt.composite(resource, "abatement", props.abatement);
     }
 
-    if (!_.isNil(props.recordedDate)) {
-        resource.recordedDate = props.recordedDate;
-    }
-
     if (!_.isNil(props.recorder)) {
         resource.recorder = dt.reference(props.recorder);
     }
@@ -135,27 +81,9 @@ export default function(props: Partial<Condition_Props>) {
         resource.stage = [];
 
         for (let item of src) {
-            let _stage = {};
-
-            if (!_.isNil(item.id)) {
-                _stage.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _stage.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.summary)) {
-                _stage.summary = item.summary;
-            }
-
-            if (!_.isNil(item.assessment)) {
-                _stage.assessment = item.assessment;
-            }
-
-            if (!_.isNil(item.type)) {
-                _stage.type = item.type;
-            }
+            let _stage = {
+                ...item
+            };
 
             resource.stage.push(_stage);
         }
@@ -167,30 +95,12 @@ export default function(props: Partial<Condition_Props>) {
         resource.evidence = [];
 
         for (let item of src) {
-            let _evidence = {};
-
-            if (!_.isNil(item.id)) {
-                _evidence.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _evidence.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.code)) {
-                _evidence.code = item.code;
-            }
-
-            if (!_.isNil(item.detail)) {
-                _evidence.detail = item.detail;
-            }
+            let _evidence = {
+                ...item
+            };
 
             resource.evidence.push(_evidence);
         }
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
     }
 
     resource.meta = {

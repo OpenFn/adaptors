@@ -46,59 +46,13 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationKnowledge</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
-
-    if (!_.isNil(props.code)) {
-        resource.code = props.code;
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
 
     if (!_.isNil(props.manufacturer)) {
         resource.manufacturer = dt.reference(props.manufacturer);
-    }
-
-    if (!_.isNil(props.doseForm)) {
-        resource.doseForm = props.doseForm;
-    }
-
-    if (!_.isNil(props.amount)) {
-        resource.amount = props.amount;
-    }
-
-    if (!_.isNil(props.synonym)) {
-        resource.synonym = props.synonym;
     }
 
     if (!_.isNil(props.relatedMedicationKnowledge)) {
@@ -107,23 +61,9 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
         resource.relatedMedicationKnowledge = [];
 
         for (let item of src) {
-            let _relatedMedicationKnowledge = {};
-
-            if (!_.isNil(item.id)) {
-                _relatedMedicationKnowledge.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _relatedMedicationKnowledge.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.type)) {
-                _relatedMedicationKnowledge.type = item.type;
-            }
-
-            if (!_.isNil(item.reference)) {
-                _relatedMedicationKnowledge.reference = item.reference;
-            }
+            let _relatedMedicationKnowledge = {
+                ...item
+            };
 
             resource.relatedMedicationKnowledge.push(_relatedMedicationKnowledge);
         }
@@ -134,33 +74,15 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
         resource.associatedMedication = dt.reference(props.associatedMedication);
     }
 
-    if (!_.isNil(props.productType)) {
-        resource.productType = props.productType;
-    }
-
     if (!_.isNil(props.monograph)) {
         let src = props.monograph;
         if (!Array.isArray(src)) { src = [src]; }
         resource.monograph = [];
 
         for (let item of src) {
-            let _monograph = {};
-
-            if (!_.isNil(item.id)) {
-                _monograph.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _monograph.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.type)) {
-                _monograph.type = item.type;
-            }
-
-            if (!_.isNil(item.source)) {
-                _monograph.source = item.source;
-            }
+            let _monograph = {
+                ...item
+            };
 
             resource.monograph.push(_monograph);
         }
@@ -172,38 +94,12 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
         resource.ingredient = [];
 
         for (let item of src) {
-            let _ingredient = {};
-
-            if (!_.isNil(item.id)) {
-                _ingredient.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _ingredient.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.item)) {
-                _ingredient.item = item.item;
-            }
-
-            if (!_.isNil(item.isActive)) {
-                _ingredient.isActive = item.isActive;
-            }
-
-            if (!_.isNil(item.strength)) {
-                _ingredient.strength = item.strength;
-            }
+            let _ingredient = {
+                ...item
+            };
 
             resource.ingredient.push(_ingredient);
         }
-    }
-
-    if (!_.isNil(props.preparationInstruction)) {
-        resource.preparationInstruction = props.preparationInstruction;
-    }
-
-    if (!_.isNil(props.intendedRoute)) {
-        resource.intendedRoute = props.intendedRoute;
     }
 
     if (!_.isNil(props.cost)) {
@@ -212,27 +108,9 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
         resource.cost = [];
 
         for (let item of src) {
-            let _cost = {};
-
-            if (!_.isNil(item.id)) {
-                _cost.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _cost.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.type)) {
-                _cost.type = item.type;
-            }
-
-            if (!_.isNil(item.source)) {
-                _cost.source = item.source;
-            }
-
-            if (!_.isNil(item.cost)) {
-                _cost.cost = item.cost;
-            }
+            let _cost = {
+                ...item
+            };
 
             resource.cost.push(_cost);
         }
@@ -244,23 +122,9 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
         resource.monitoringProgram = [];
 
         for (let item of src) {
-            let _monitoringProgram = {};
-
-            if (!_.isNil(item.id)) {
-                _monitoringProgram.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _monitoringProgram.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.type)) {
-                _monitoringProgram.type = item.type;
-            }
-
-            if (!_.isNil(item.name)) {
-                _monitoringProgram.name = item.name;
-            }
+            let _monitoringProgram = {
+                ...item
+            };
 
             resource.monitoringProgram.push(_monitoringProgram);
         }
@@ -272,27 +136,9 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
         resource.administrationGuidelines = [];
 
         for (let item of src) {
-            let _administrationGuidelines = {};
-
-            if (!_.isNil(item.id)) {
-                _administrationGuidelines.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _administrationGuidelines.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.dosage)) {
-                _administrationGuidelines.dosage = item.dosage;
-            }
-
-            if (!_.isNil(item.indication)) {
-                _administrationGuidelines.indication = item.indication;
-            }
-
-            if (!_.isNil(item.patientCharacteristics)) {
-                _administrationGuidelines.patientCharacteristics = item.patientCharacteristics;
-            }
+            let _administrationGuidelines = {
+                ...item
+            };
 
             resource.administrationGuidelines.push(_administrationGuidelines);
         }
@@ -304,23 +150,9 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
         resource.medicineClassification = [];
 
         for (let item of src) {
-            let _medicineClassification = {};
-
-            if (!_.isNil(item.id)) {
-                _medicineClassification.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _medicineClassification.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.type)) {
-                _medicineClassification.type = item.type;
-            }
-
-            if (!_.isNil(item.classification)) {
-                _medicineClassification.classification = item.classification;
-            }
+            let _medicineClassification = {
+                ...item
+            };
 
             resource.medicineClassification.push(_medicineClassification);
         }
@@ -328,23 +160,10 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
 
     if (!_.isNil(props.packaging)) {
         let src = props.packaging;
-        let _packaging = {};
 
-        if (!_.isNil(src.id)) {
-            _packaging.id = src.id;
-        }
-
-        if (!_.isNil(src.modifierExtension)) {
-            _packaging.modifierExtension = src.modifierExtension;
-        }
-
-        if (!_.isNil(src.type)) {
-            _packaging.type = src.type;
-        }
-
-        if (!_.isNil(src.quantity)) {
-            _packaging.quantity = src.quantity;
-        }
+        let _packaging = {
+            ...item
+        };
 
         resource.packaging = _packaging;
     }
@@ -355,23 +174,9 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
         resource.drugCharacteristic = [];
 
         for (let item of src) {
-            let _drugCharacteristic = {};
-
-            if (!_.isNil(item.id)) {
-                _drugCharacteristic.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _drugCharacteristic.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.type)) {
-                _drugCharacteristic.type = item.type;
-            }
-
-            if (!_.isNil(item.value)) {
-                _drugCharacteristic.value = item.value;
-            }
+            let _drugCharacteristic = {
+                ...item
+            };
 
             resource.drugCharacteristic.push(_drugCharacteristic);
         }
@@ -388,31 +193,9 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
         resource.regulatory = [];
 
         for (let item of src) {
-            let _regulatory = {};
-
-            if (!_.isNil(item.id)) {
-                _regulatory.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _regulatory.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.regulatoryAuthority)) {
-                _regulatory.regulatoryAuthority = item.regulatoryAuthority;
-            }
-
-            if (!_.isNil(item.substitution)) {
-                _regulatory.substitution = item.substitution;
-            }
-
-            if (!_.isNil(item.schedule)) {
-                _regulatory.schedule = item.schedule;
-            }
-
-            if (!_.isNil(item.maxDispense)) {
-                _regulatory.maxDispense = item.maxDispense;
-            }
+            let _regulatory = {
+                ...item
+            };
 
             resource.regulatory.push(_regulatory);
         }
@@ -424,27 +207,9 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
         resource.kinetics = [];
 
         for (let item of src) {
-            let _kinetics = {};
-
-            if (!_.isNil(item.id)) {
-                _kinetics.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _kinetics.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.areaUnderCurve)) {
-                _kinetics.areaUnderCurve = item.areaUnderCurve;
-            }
-
-            if (!_.isNil(item.lethalDose50)) {
-                _kinetics.lethalDose50 = item.lethalDose50;
-            }
-
-            if (!_.isNil(item.halfLifePeriod)) {
-                _kinetics.halfLifePeriod = item.halfLifePeriod;
-            }
+            let _kinetics = {
+                ...item
+            };
 
             resource.kinetics.push(_kinetics);
         }

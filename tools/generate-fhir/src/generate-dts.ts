@@ -1,4 +1,4 @@
-// Note that I can build tyepscript types with typescripts own ast
+// Note that I can build typescript types with typescript's own ast
 // https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API#creating-and-printing-a-typescript-ast
 
 import ts from 'typescript';

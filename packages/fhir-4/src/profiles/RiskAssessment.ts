@@ -41,36 +41,10 @@ export default function(props: Partial<RiskAssessment_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>RiskAssessment</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
@@ -83,18 +57,6 @@ export default function(props: Partial<RiskAssessment_Props>) {
 
     if (!_.isNil(props.parent)) {
         resource.parent = dt.reference(props.parent);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.method)) {
-        resource.method = props.method;
-    }
-
-    if (!_.isNil(props.code)) {
-        resource.code = props.code;
     }
 
     if (!_.isNil(props.subject)) {
@@ -117,10 +79,6 @@ export default function(props: Partial<RiskAssessment_Props>) {
         resource.performer = dt.reference(props.performer);
     }
 
-    if (!_.isNil(props.reasonCode)) {
-        resource.reasonCode = props.reasonCode;
-    }
-
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = dt.reference(props.reasonReference);
@@ -137,50 +95,12 @@ export default function(props: Partial<RiskAssessment_Props>) {
         resource.prediction = [];
 
         for (let item of src) {
-            let _prediction = {};
-
-            if (!_.isNil(item.id)) {
-                _prediction.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _prediction.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.outcome)) {
-                _prediction.outcome = item.outcome;
-            }
-
-            if (!_.isNil(item.probability)) {
-                _prediction.probability = item.probability;
-            }
-
-            if (!_.isNil(item.qualitativeRisk)) {
-                _prediction.qualitativeRisk = item.qualitativeRisk;
-            }
-
-            if (!_.isNil(item.relativeRisk)) {
-                _prediction.relativeRisk = item.relativeRisk;
-            }
-
-            if (!_.isNil(item.when)) {
-                _prediction.when = item.when;
-            }
-
-            if (!_.isNil(item.rationale)) {
-                _prediction.rationale = item.rationale;
-            }
+            let _prediction = {
+                ...item
+            };
 
             resource.prediction.push(_prediction);
         }
-    }
-
-    if (!_.isNil(props.mitigation)) {
-        resource.mitigation = props.mitigation;
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
     }
 
     resource.meta = {

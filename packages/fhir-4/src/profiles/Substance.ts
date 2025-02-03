@@ -31,56 +31,14 @@ export default function(props: Partial<Substance_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Substance</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.code)) {
-        resource.code = props.code;
-    }
-
-    if (!_.isNil(props.description)) {
-        resource.description = props.description;
     }
 
     if (!_.isNil(props.instance)) {
@@ -89,27 +47,9 @@ export default function(props: Partial<Substance_Props>) {
         resource.instance = [];
 
         for (let item of src) {
-            let _instance = {};
-
-            if (!_.isNil(item.id)) {
-                _instance.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _instance.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.identifier)) {
-                _instance.identifier = item.identifier;
-            }
-
-            if (!_.isNil(item.expiry)) {
-                _instance.expiry = item.expiry;
-            }
-
-            if (!_.isNil(item.quantity)) {
-                _instance.quantity = item.quantity;
-            }
+            let _instance = {
+                ...item
+            };
 
             resource.instance.push(_instance);
         }
@@ -121,23 +61,9 @@ export default function(props: Partial<Substance_Props>) {
         resource.ingredient = [];
 
         for (let item of src) {
-            let _ingredient = {};
-
-            if (!_.isNil(item.id)) {
-                _ingredient.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _ingredient.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.quantity)) {
-                _ingredient.quantity = item.quantity;
-            }
-
-            if (!_.isNil(item.substance)) {
-                _ingredient.substance = item.substance;
-            }
+            let _ingredient = {
+                ...item
+            };
 
             resource.ingredient.push(_ingredient);
         }

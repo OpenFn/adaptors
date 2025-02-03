@@ -48,36 +48,10 @@ export default function(props: Partial<Observation_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
@@ -92,18 +66,6 @@ export default function(props: Partial<Observation_Props>) {
     if (!_.isNil(props.partOf)) {
         if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = dt.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.code)) {
-        resource.code = props.code;
     }
 
     if (!_.isNil(props.subject)) {
@@ -123,10 +85,6 @@ export default function(props: Partial<Observation_Props>) {
         dt.composite(resource, "effective", props.effective);
     }
 
-    if (!_.isNil(props.issued)) {
-        resource.issued = props.issued;
-    }
-
     if (!_.isNil(props.performer)) {
         if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = dt.reference(props.performer);
@@ -134,26 +92,6 @@ export default function(props: Partial<Observation_Props>) {
 
     if (!_.isNil(props.value)) {
         dt.composite(resource, "value", props.value);
-    }
-
-    if (!_.isNil(props.dataAbsentReason)) {
-        resource.dataAbsentReason = props.dataAbsentReason;
-    }
-
-    if (!_.isNil(props.interpretation)) {
-        resource.interpretation = props.interpretation;
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.bodySite)) {
-        resource.bodySite = props.bodySite;
-    }
-
-    if (!_.isNil(props.method)) {
-        resource.method = props.method;
     }
 
     if (!_.isNil(props.specimen)) {
@@ -170,39 +108,9 @@ export default function(props: Partial<Observation_Props>) {
         resource.referenceRange = [];
 
         for (let item of src) {
-            let _referenceRange = {};
-
-            if (!_.isNil(item.id)) {
-                _referenceRange.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _referenceRange.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.low)) {
-                _referenceRange.low = item.low;
-            }
-
-            if (!_.isNil(item.high)) {
-                _referenceRange.high = item.high;
-            }
-
-            if (!_.isNil(item.type)) {
-                _referenceRange.type = item.type;
-            }
-
-            if (!_.isNil(item.appliesTo)) {
-                _referenceRange.appliesTo = item.appliesTo;
-            }
-
-            if (!_.isNil(item.age)) {
-                _referenceRange.age = item.age;
-            }
-
-            if (!_.isNil(item.text)) {
-                _referenceRange.text = item.text;
-            }
+            let _referenceRange = {
+                ...item
+            };
 
             resource.referenceRange.push(_referenceRange);
         }
@@ -224,31 +132,9 @@ export default function(props: Partial<Observation_Props>) {
         resource.component = [];
 
         for (let item of src) {
-            let _component = {};
-
-            if (!_.isNil(item.id)) {
-                _component.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _component.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.code)) {
-                _component.code = item.code;
-            }
-
-            if (!_.isNil(item.value)) {
-                _component.value = item.value;
-            }
-
-            if (!_.isNil(item.dataAbsentReason)) {
-                _component.dataAbsentReason = item.dataAbsentReason;
-            }
-
-            if (!_.isNil(item.interpretation)) {
-                _component.interpretation = item.interpretation;
-            }
+            let _component = {
+                ...item
+            };
 
             resource.component.push(_component);
         }

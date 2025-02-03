@@ -35,61 +35,19 @@ export default function(props: Partial<BiologicallyDerivedProduct_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>BiologicallyDerivedProduct</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
     }
 
-    if (!_.isNil(props.productCategory)) {
-        resource.productCategory = props.productCategory;
-    }
-
-    if (!_.isNil(props.productCode)) {
-        resource.productCode = props.productCode;
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
     if (!_.isNil(props.request)) {
         if (!Array.isArray(props.request)) { props.request = [props.request]; }
         resource.request = dt.reference(props.request);
-    }
-
-    if (!_.isNil(props.quantity)) {
-        resource.quantity = props.quantity;
     }
 
     if (!_.isNil(props.parent)) {
@@ -99,27 +57,10 @@ export default function(props: Partial<BiologicallyDerivedProduct_Props>) {
 
     if (!_.isNil(props.collection)) {
         let src = props.collection;
-        let _collection = {};
 
-        if (!_.isNil(src.id)) {
-            _collection.id = src.id;
-        }
-
-        if (!_.isNil(src.modifierExtension)) {
-            _collection.modifierExtension = src.modifierExtension;
-        }
-
-        if (!_.isNil(src.collector)) {
-            _collection.collector = src.collector;
-        }
-
-        if (!_.isNil(src.source)) {
-            _collection.source = src.source;
-        }
-
-        if (!_.isNil(src.collected)) {
-            _collection.collected = src.collected;
-        }
+        let _collection = {
+            ...item
+        };
 
         resource.collection = _collection;
     }
@@ -130,31 +71,9 @@ export default function(props: Partial<BiologicallyDerivedProduct_Props>) {
         resource.processing = [];
 
         for (let item of src) {
-            let _processing = {};
-
-            if (!_.isNil(item.id)) {
-                _processing.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _processing.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.description)) {
-                _processing.description = item.description;
-            }
-
-            if (!_.isNil(item.procedure)) {
-                _processing.procedure = item.procedure;
-            }
-
-            if (!_.isNil(item.additive)) {
-                _processing.additive = item.additive;
-            }
-
-            if (!_.isNil(item.time)) {
-                _processing.time = item.time;
-            }
+            let _processing = {
+                ...item
+            };
 
             resource.processing.push(_processing);
         }
@@ -162,23 +81,10 @@ export default function(props: Partial<BiologicallyDerivedProduct_Props>) {
 
     if (!_.isNil(props.manipulation)) {
         let src = props.manipulation;
-        let _manipulation = {};
 
-        if (!_.isNil(src.id)) {
-            _manipulation.id = src.id;
-        }
-
-        if (!_.isNil(src.modifierExtension)) {
-            _manipulation.modifierExtension = src.modifierExtension;
-        }
-
-        if (!_.isNil(src.description)) {
-            _manipulation.description = src.description;
-        }
-
-        if (!_.isNil(src.time)) {
-            _manipulation.time = src.time;
-        }
+        let _manipulation = {
+            ...item
+        };
 
         resource.manipulation = _manipulation;
     }
@@ -189,31 +95,9 @@ export default function(props: Partial<BiologicallyDerivedProduct_Props>) {
         resource.storage = [];
 
         for (let item of src) {
-            let _storage = {};
-
-            if (!_.isNil(item.id)) {
-                _storage.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _storage.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.description)) {
-                _storage.description = item.description;
-            }
-
-            if (!_.isNil(item.temperature)) {
-                _storage.temperature = item.temperature;
-            }
-
-            if (!_.isNil(item.scale)) {
-                _storage.scale = item.scale;
-            }
-
-            if (!_.isNil(item.duration)) {
-                _storage.duration = item.duration;
-            }
+            let _storage = {
+                ...item
+            };
 
             resource.storage.push(_storage);
         }

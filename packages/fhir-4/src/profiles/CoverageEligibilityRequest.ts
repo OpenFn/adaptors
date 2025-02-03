@@ -38,52 +38,14 @@ export default function(props: Partial<CoverageEligibilityRequest_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CoverageEligibilityRequest</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.priority)) {
-        resource.priority = props.priority;
-    }
-
-    if (!_.isNil(props.purpose)) {
-        resource.purpose = props.purpose;
     }
 
     if (!_.isNil(props.patient)) {
@@ -92,10 +54,6 @@ export default function(props: Partial<CoverageEligibilityRequest_Props>) {
 
     if (!_.isNil(props.serviced)) {
         dt.composite(resource, "serviced", props.serviced);
-    }
-
-    if (!_.isNil(props.created)) {
-        resource.created = props.created;
     }
 
     if (!_.isNil(props.enterer)) {
@@ -120,27 +78,9 @@ export default function(props: Partial<CoverageEligibilityRequest_Props>) {
         resource.supportingInfo = [];
 
         for (let item of src) {
-            let _supportingInfo = {};
-
-            if (!_.isNil(item.id)) {
-                _supportingInfo.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _supportingInfo.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.sequence)) {
-                _supportingInfo.sequence = item.sequence;
-            }
-
-            if (!_.isNil(item.information)) {
-                _supportingInfo.information = item.information;
-            }
-
-            if (!_.isNil(item.appliesToAll)) {
-                _supportingInfo.appliesToAll = item.appliesToAll;
-            }
+            let _supportingInfo = {
+                ...item
+            };
 
             resource.supportingInfo.push(_supportingInfo);
         }
@@ -152,27 +92,9 @@ export default function(props: Partial<CoverageEligibilityRequest_Props>) {
         resource.insurance = [];
 
         for (let item of src) {
-            let _insurance = {};
-
-            if (!_.isNil(item.id)) {
-                _insurance.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _insurance.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.focal)) {
-                _insurance.focal = item.focal;
-            }
-
-            if (!_.isNil(item.coverage)) {
-                _insurance.coverage = item.coverage;
-            }
-
-            if (!_.isNil(item.businessArrangement)) {
-                _insurance.businessArrangement = item.businessArrangement;
-            }
+            let _insurance = {
+                ...item
+            };
 
             resource.insurance.push(_insurance);
         }
@@ -184,55 +106,9 @@ export default function(props: Partial<CoverageEligibilityRequest_Props>) {
         resource.item = [];
 
         for (let item of src) {
-            let _item = {};
-
-            if (!_.isNil(item.id)) {
-                _item.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _item.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.supportingInfoSequence)) {
-                _item.supportingInfoSequence = item.supportingInfoSequence;
-            }
-
-            if (!_.isNil(item.category)) {
-                _item.category = item.category;
-            }
-
-            if (!_.isNil(item.productOrService)) {
-                _item.productOrService = item.productOrService;
-            }
-
-            if (!_.isNil(item.modifier)) {
-                _item.modifier = item.modifier;
-            }
-
-            if (!_.isNil(item.provider)) {
-                _item.provider = item.provider;
-            }
-
-            if (!_.isNil(item.quantity)) {
-                _item.quantity = item.quantity;
-            }
-
-            if (!_.isNil(item.unitPrice)) {
-                _item.unitPrice = item.unitPrice;
-            }
-
-            if (!_.isNil(item.facility)) {
-                _item.facility = item.facility;
-            }
-
-            if (!_.isNil(item.diagnosis)) {
-                _item.diagnosis = item.diagnosis;
-            }
-
-            if (!_.isNil(item.detail)) {
-                _item.detail = item.detail;
-            }
+            let _item = {
+                ...item
+            };
 
             resource.item.push(_item);
         }

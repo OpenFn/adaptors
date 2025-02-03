@@ -48,48 +48,14 @@ export default function(props: Partial<DeviceRequest_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>DeviceRequest</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
     }
 
     if (!_.isNil(props.basedOn)) {
@@ -106,18 +72,6 @@ export default function(props: Partial<DeviceRequest_Props>) {
         resource.groupIdentifier = dt.identifier(props.groupIdentifier);
     }
 
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.priority)) {
-        resource.priority = props.priority;
-    }
-
     if (!_.isNil(props.code)) {
         dt.composite(resource, "code", props.code);
     }
@@ -128,23 +82,9 @@ export default function(props: Partial<DeviceRequest_Props>) {
         resource.parameter = [];
 
         for (let item of src) {
-            let _parameter = {};
-
-            if (!_.isNil(item.id)) {
-                _parameter.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _parameter.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.code)) {
-                _parameter.code = item.code;
-            }
-
-            if (!_.isNil(item.value)) {
-                _parameter.value = item.value;
-            }
+            let _parameter = {
+                ...item
+            };
 
             resource.parameter.push(_parameter);
         }
@@ -162,24 +102,12 @@ export default function(props: Partial<DeviceRequest_Props>) {
         dt.composite(resource, "occurrence", props.occurrence);
     }
 
-    if (!_.isNil(props.authoredOn)) {
-        resource.authoredOn = props.authoredOn;
-    }
-
     if (!_.isNil(props.requester)) {
         resource.requester = dt.reference(props.requester);
     }
 
-    if (!_.isNil(props.performerType)) {
-        resource.performerType = props.performerType;
-    }
-
     if (!_.isNil(props.performer)) {
         resource.performer = dt.reference(props.performer);
-    }
-
-    if (!_.isNil(props.reasonCode)) {
-        resource.reasonCode = props.reasonCode;
     }
 
     if (!_.isNil(props.reasonReference)) {
@@ -195,10 +123,6 @@ export default function(props: Partial<DeviceRequest_Props>) {
     if (!_.isNil(props.supportingInfo)) {
         if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
         resource.supportingInfo = dt.reference(props.supportingInfo);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
     }
 
     if (!_.isNil(props.relevantHistory)) {

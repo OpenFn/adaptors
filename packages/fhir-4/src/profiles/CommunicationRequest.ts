@@ -46,36 +46,10 @@ export default function(props: Partial<CommunicationRequest_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CommunicationRequest</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
@@ -94,30 +68,6 @@ export default function(props: Partial<CommunicationRequest_Props>) {
 
     if (!_.isNil(props.groupIdentifier)) {
         resource.groupIdentifier = dt.identifier(props.groupIdentifier);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        resource.statusReason = props.statusReason;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.priority)) {
-        resource.priority = props.priority;
-    }
-
-    if (!_.isNil(props.doNotPerform)) {
-        resource.doNotPerform = props.doNotPerform;
-    }
-
-    if (!_.isNil(props.medium)) {
-        resource.medium = props.medium;
     }
 
     if (!_.isNil(props.subject)) {
@@ -139,19 +89,9 @@ export default function(props: Partial<CommunicationRequest_Props>) {
         resource.payload = [];
 
         for (let item of src) {
-            let _payload = {};
-
-            if (!_.isNil(item.id)) {
-                _payload.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _payload.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.content)) {
-                _payload.content = item.content;
-            }
+            let _payload = {
+                ...item
+            };
 
             resource.payload.push(_payload);
         }
@@ -159,10 +99,6 @@ export default function(props: Partial<CommunicationRequest_Props>) {
 
     if (!_.isNil(props.occurrence)) {
         dt.composite(resource, "occurrence", props.occurrence);
-    }
-
-    if (!_.isNil(props.authoredOn)) {
-        resource.authoredOn = props.authoredOn;
     }
 
     if (!_.isNil(props.requester)) {
@@ -178,17 +114,9 @@ export default function(props: Partial<CommunicationRequest_Props>) {
         resource.sender = dt.reference(props.sender);
     }
 
-    if (!_.isNil(props.reasonCode)) {
-        resource.reasonCode = props.reasonCode;
-    }
-
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = dt.reference(props.reasonReference);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
     }
 
     resource.meta = {

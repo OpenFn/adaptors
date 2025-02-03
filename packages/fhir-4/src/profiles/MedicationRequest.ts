@@ -56,64 +56,14 @@ export default function(props: Partial<MedicationRequest_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        resource.statusReason = props.statusReason;
-    }
-
-    if (!_.isNil(props.intent)) {
-        resource.intent = props.intent;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.priority)) {
-        resource.priority = props.priority;
-    }
-
-    if (!_.isNil(props.doNotPerform)) {
-        resource.doNotPerform = props.doNotPerform;
     }
 
     if (!_.isNil(props.reported)) {
@@ -137,10 +87,6 @@ export default function(props: Partial<MedicationRequest_Props>) {
         resource.supportingInformation = dt.reference(props.supportingInformation);
     }
 
-    if (!_.isNil(props.authoredOn)) {
-        resource.authoredOn = props.authoredOn;
-    }
-
     if (!_.isNil(props.requester)) {
         resource.requester = dt.reference(props.requester);
     }
@@ -149,29 +95,13 @@ export default function(props: Partial<MedicationRequest_Props>) {
         resource.performer = dt.reference(props.performer);
     }
 
-    if (!_.isNil(props.performerType)) {
-        resource.performerType = props.performerType;
-    }
-
     if (!_.isNil(props.recorder)) {
         resource.recorder = dt.reference(props.recorder);
-    }
-
-    if (!_.isNil(props.reasonCode)) {
-        resource.reasonCode = props.reasonCode;
     }
 
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = dt.reference(props.reasonReference);
-    }
-
-    if (!_.isNil(props.instantiatesCanonical)) {
-        resource.instantiatesCanonical = props.instantiatesCanonical;
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
     }
 
     if (!_.isNil(props.basedOn)) {
@@ -183,85 +113,27 @@ export default function(props: Partial<MedicationRequest_Props>) {
         resource.groupIdentifier = dt.identifier(props.groupIdentifier);
     }
 
-    if (!_.isNil(props.courseOfTherapyType)) {
-        resource.courseOfTherapyType = props.courseOfTherapyType;
-    }
-
     if (!_.isNil(props.insurance)) {
         if (!Array.isArray(props.insurance)) { props.insurance = [props.insurance]; }
         resource.insurance = dt.reference(props.insurance);
     }
 
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.dosageInstruction)) {
-        resource.dosageInstruction = props.dosageInstruction;
-    }
-
     if (!_.isNil(props.dispenseRequest)) {
         let src = props.dispenseRequest;
-        let _dispenseRequest = {};
 
-        if (!_.isNil(src.id)) {
-            _dispenseRequest.id = src.id;
-        }
-
-        if (!_.isNil(src.modifierExtension)) {
-            _dispenseRequest.modifierExtension = src.modifierExtension;
-        }
-
-        if (!_.isNil(src.initialFill)) {
-            _dispenseRequest.initialFill = src.initialFill;
-        }
-
-        if (!_.isNil(src.dispenseInterval)) {
-            _dispenseRequest.dispenseInterval = src.dispenseInterval;
-        }
-
-        if (!_.isNil(src.validityPeriod)) {
-            _dispenseRequest.validityPeriod = src.validityPeriod;
-        }
-
-        if (!_.isNil(src.numberOfRepeatsAllowed)) {
-            _dispenseRequest.numberOfRepeatsAllowed = src.numberOfRepeatsAllowed;
-        }
-
-        if (!_.isNil(src.quantity)) {
-            _dispenseRequest.quantity = src.quantity;
-        }
-
-        if (!_.isNil(src.expectedSupplyDuration)) {
-            _dispenseRequest.expectedSupplyDuration = src.expectedSupplyDuration;
-        }
-
-        if (!_.isNil(src.performer)) {
-            _dispenseRequest.performer = src.performer;
-        }
+        let _dispenseRequest = {
+            ...item
+        };
 
         resource.dispenseRequest = _dispenseRequest;
     }
 
     if (!_.isNil(props.substitution)) {
         let src = props.substitution;
-        let _substitution = {};
 
-        if (!_.isNil(src.id)) {
-            _substitution.id = src.id;
-        }
-
-        if (!_.isNil(src.modifierExtension)) {
-            _substitution.modifierExtension = src.modifierExtension;
-        }
-
-        if (!_.isNil(src.allowed)) {
-            _substitution.allowed = src.allowed;
-        }
-
-        if (!_.isNil(src.reason)) {
-            _substitution.reason = src.reason;
-        }
+        let _substitution = {
+            ...item
+        };
 
         resource.substitution = _substitution;
     }

@@ -50,61 +50,19 @@ export default function(props: Partial<ChargeItem_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ChargeItem</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
     }
 
-    if (!_.isNil(props.definitionUri)) {
-        resource.definitionUri = props.definitionUri;
-    }
-
-    if (!_.isNil(props.definitionCanonical)) {
-        resource.definitionCanonical = props.definitionCanonical;
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
     if (!_.isNil(props.partOf)) {
         if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = dt.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.code)) {
-        resource.code = props.code;
     }
 
     if (!_.isNil(props.subject)) {
@@ -125,23 +83,9 @@ export default function(props: Partial<ChargeItem_Props>) {
         resource.performer = [];
 
         for (let item of src) {
-            let _performer = {};
-
-            if (!_.isNil(item.id)) {
-                _performer.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _performer.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.function)) {
-                _performer.function = item.function;
-            }
-
-            if (!_.isNil(item.actor)) {
-                _performer.actor = item.actor;
-            }
+            let _performer = {
+                ...item
+            };
 
             resource.performer.push(_performer);
         }
@@ -159,36 +103,8 @@ export default function(props: Partial<ChargeItem_Props>) {
         resource.costCenter = dt.reference(props.costCenter);
     }
 
-    if (!_.isNil(props.quantity)) {
-        resource.quantity = props.quantity;
-    }
-
-    if (!_.isNil(props.bodysite)) {
-        resource.bodysite = props.bodysite;
-    }
-
-    if (!_.isNil(props.factorOverride)) {
-        resource.factorOverride = props.factorOverride;
-    }
-
-    if (!_.isNil(props.priceOverride)) {
-        resource.priceOverride = props.priceOverride;
-    }
-
-    if (!_.isNil(props.overrideReason)) {
-        resource.overrideReason = props.overrideReason;
-    }
-
     if (!_.isNil(props.enterer)) {
         resource.enterer = dt.reference(props.enterer);
-    }
-
-    if (!_.isNil(props.enteredDate)) {
-        resource.enteredDate = props.enteredDate;
-    }
-
-    if (!_.isNil(props.reason)) {
-        resource.reason = props.reason;
     }
 
     if (!_.isNil(props.service)) {
@@ -203,10 +119,6 @@ export default function(props: Partial<ChargeItem_Props>) {
     if (!_.isNil(props.account)) {
         if (!Array.isArray(props.account)) { props.account = [props.account]; }
         resource.account = dt.reference(props.account);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
     }
 
     if (!_.isNil(props.supportingInformation)) {

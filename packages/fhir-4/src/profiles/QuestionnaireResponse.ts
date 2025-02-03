@@ -35,36 +35,10 @@ export default function(props: Partial<QuestionnaireResponse_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>QuestionnaireResponse</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         resource.identifier = dt.identifier(props.identifier);
@@ -80,24 +54,12 @@ export default function(props: Partial<QuestionnaireResponse_Props>) {
         resource.partOf = dt.reference(props.partOf);
     }
 
-    if (!_.isNil(props.questionnaire)) {
-        resource.questionnaire = props.questionnaire;
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
 
     if (!_.isNil(props.encounter)) {
         resource.encounter = dt.reference(props.encounter);
-    }
-
-    if (!_.isNil(props.authored)) {
-        resource.authored = props.authored;
     }
 
     if (!_.isNil(props.author)) {
@@ -114,31 +76,9 @@ export default function(props: Partial<QuestionnaireResponse_Props>) {
         resource.item = [];
 
         for (let item of src) {
-            let _item = {};
-
-            if (!_.isNil(item.id)) {
-                _item.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _item.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.linkId)) {
-                _item.linkId = item.linkId;
-            }
-
-            if (!_.isNil(item.definition)) {
-                _item.definition = item.definition;
-            }
-
-            if (!_.isNil(item.text)) {
-                _item.text = item.text;
-            }
-
-            if (!_.isNil(item.answer)) {
-                _item.answer = item.answer;
-            }
+            let _item = {
+                ...item
+            };
 
             resource.item.push(_item);
         }

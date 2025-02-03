@@ -44,51 +44,13 @@ export default function(props: Partial<AdverseEvent_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>AdverseEvent</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         resource.identifier = dt.identifier(props.identifier);
-    }
-
-    if (!_.isNil(props.actuality)) {
-        resource.actuality = props.actuality;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.event)) {
-        resource.event = props.event;
     }
 
     if (!_.isNil(props.subject)) {
@@ -99,18 +61,6 @@ export default function(props: Partial<AdverseEvent_Props>) {
         resource.encounter = dt.reference(props.encounter);
     }
 
-    if (!_.isNil(props.date)) {
-        resource.date = props.date;
-    }
-
-    if (!_.isNil(props.detected)) {
-        resource.detected = props.detected;
-    }
-
-    if (!_.isNil(props.recordedDate)) {
-        resource.recordedDate = props.recordedDate;
-    }
-
     if (!_.isNil(props.resultingCondition)) {
         if (!Array.isArray(props.resultingCondition)) { props.resultingCondition = [props.resultingCondition]; }
         resource.resultingCondition = dt.reference(props.resultingCondition);
@@ -118,18 +68,6 @@ export default function(props: Partial<AdverseEvent_Props>) {
 
     if (!_.isNil(props.location)) {
         resource.location = dt.reference(props.location);
-    }
-
-    if (!_.isNil(props.seriousness)) {
-        resource.seriousness = props.seriousness;
-    }
-
-    if (!_.isNil(props.severity)) {
-        resource.severity = props.severity;
-    }
-
-    if (!_.isNil(props.outcome)) {
-        resource.outcome = props.outcome;
     }
 
     if (!_.isNil(props.recorder)) {
@@ -147,23 +85,9 @@ export default function(props: Partial<AdverseEvent_Props>) {
         resource.suspectEntity = [];
 
         for (let item of src) {
-            let _suspectEntity = {};
-
-            if (!_.isNil(item.id)) {
-                _suspectEntity.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _suspectEntity.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.instance)) {
-                _suspectEntity.instance = item.instance;
-            }
-
-            if (!_.isNil(item.causality)) {
-                _suspectEntity.causality = item.causality;
-            }
+            let _suspectEntity = {
+                ...item
+            };
 
             resource.suspectEntity.push(_suspectEntity);
         }

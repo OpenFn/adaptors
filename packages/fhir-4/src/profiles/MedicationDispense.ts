@@ -48,36 +48,10 @@ export default function(props: Partial<MedicationDispense_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationDispense</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
@@ -89,16 +63,8 @@ export default function(props: Partial<MedicationDispense_Props>) {
         resource.partOf = dt.reference(props.partOf);
     }
 
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
     if (!_.isNil(props.statusReason)) {
         dt.composite(resource, "statusReason", props.statusReason);
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
     }
 
     if (!_.isNil(props.medication)) {
@@ -124,23 +90,9 @@ export default function(props: Partial<MedicationDispense_Props>) {
         resource.performer = [];
 
         for (let item of src) {
-            let _performer = {};
-
-            if (!_.isNil(item.id)) {
-                _performer.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _performer.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.function)) {
-                _performer.function = item.function;
-            }
-
-            if (!_.isNil(item.actor)) {
-                _performer.actor = item.actor;
-            }
+            let _performer = {
+                ...item
+            };
 
             resource.performer.push(_performer);
         }
@@ -155,26 +107,6 @@ export default function(props: Partial<MedicationDispense_Props>) {
         resource.authorizingPrescription = dt.reference(props.authorizingPrescription);
     }
 
-    if (!_.isNil(props.type)) {
-        resource.type = props.type;
-    }
-
-    if (!_.isNil(props.quantity)) {
-        resource.quantity = props.quantity;
-    }
-
-    if (!_.isNil(props.daysSupply)) {
-        resource.daysSupply = props.daysSupply;
-    }
-
-    if (!_.isNil(props.whenPrepared)) {
-        resource.whenPrepared = props.whenPrepared;
-    }
-
-    if (!_.isNil(props.whenHandedOver)) {
-        resource.whenHandedOver = props.whenHandedOver;
-    }
-
     if (!_.isNil(props.destination)) {
         resource.destination = dt.reference(props.destination);
     }
@@ -184,41 +116,12 @@ export default function(props: Partial<MedicationDispense_Props>) {
         resource.receiver = dt.reference(props.receiver);
     }
 
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.dosageInstruction)) {
-        resource.dosageInstruction = props.dosageInstruction;
-    }
-
     if (!_.isNil(props.substitution)) {
         let src = props.substitution;
-        let _substitution = {};
 
-        if (!_.isNil(src.id)) {
-            _substitution.id = src.id;
-        }
-
-        if (!_.isNil(src.modifierExtension)) {
-            _substitution.modifierExtension = src.modifierExtension;
-        }
-
-        if (!_.isNil(src.wasSubstituted)) {
-            _substitution.wasSubstituted = src.wasSubstituted;
-        }
-
-        if (!_.isNil(src.type)) {
-            _substitution.type = src.type;
-        }
-
-        if (!_.isNil(src.reason)) {
-            _substitution.reason = src.reason;
-        }
-
-        if (!_.isNil(src.responsibleParty)) {
-            _substitution.responsibleParty = src.responsibleParty;
-        }
+        let _substitution = {
+            ...item
+        };
 
         resource.substitution = _substitution;
     }

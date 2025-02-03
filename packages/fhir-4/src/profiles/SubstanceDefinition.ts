@@ -43,73 +43,19 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>SubstanceDefinition</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
     }
 
-    if (!_.isNil(props.version)) {
-        resource.version = props.version;
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.classification)) {
-        resource.classification = props.classification;
-    }
-
-    if (!_.isNil(props.domain)) {
-        resource.domain = props.domain;
-    }
-
-    if (!_.isNil(props.grade)) {
-        resource.grade = props.grade;
-    }
-
-    if (!_.isNil(props.description)) {
-        resource.description = props.description;
-    }
-
     if (!_.isNil(props.informationSource)) {
         if (!Array.isArray(props.informationSource)) { props.informationSource = [props.informationSource]; }
         resource.informationSource = dt.reference(props.informationSource);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
     }
 
     if (!_.isNil(props.manufacturer)) {
@@ -128,47 +74,9 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
         resource.moiety = [];
 
         for (let item of src) {
-            let _moiety = {};
-
-            if (!_.isNil(item.id)) {
-                _moiety.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _moiety.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.role)) {
-                _moiety.role = item.role;
-            }
-
-            if (!_.isNil(item.identifier)) {
-                _moiety.identifier = item.identifier;
-            }
-
-            if (!_.isNil(item.name)) {
-                _moiety.name = item.name;
-            }
-
-            if (!_.isNil(item.stereochemistry)) {
-                _moiety.stereochemistry = item.stereochemistry;
-            }
-
-            if (!_.isNil(item.opticalActivity)) {
-                _moiety.opticalActivity = item.opticalActivity;
-            }
-
-            if (!_.isNil(item.molecularFormula)) {
-                _moiety.molecularFormula = item.molecularFormula;
-            }
-
-            if (!_.isNil(item.amount)) {
-                _moiety.amount = item.amount;
-            }
-
-            if (!_.isNil(item.measurementType)) {
-                _moiety.measurementType = item.measurementType;
-            }
+            let _moiety = {
+                ...item
+            };
 
             resource.moiety.push(_moiety);
         }
@@ -180,23 +88,9 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
         resource.property = [];
 
         for (let item of src) {
-            let _property = {};
-
-            if (!_.isNil(item.id)) {
-                _property.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _property.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.type)) {
-                _property.type = item.type;
-            }
-
-            if (!_.isNil(item.value)) {
-                _property.value = item.value;
-            }
+            let _property = {
+                ...item
+            };
 
             resource.property.push(_property);
         }
@@ -208,27 +102,9 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
         resource.molecularWeight = [];
 
         for (let item of src) {
-            let _molecularWeight = {};
-
-            if (!_.isNil(item.id)) {
-                _molecularWeight.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _molecularWeight.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.method)) {
-                _molecularWeight.method = item.method;
-            }
-
-            if (!_.isNil(item.type)) {
-                _molecularWeight.type = item.type;
-            }
-
-            if (!_.isNil(item.amount)) {
-                _molecularWeight.amount = item.amount;
-            }
+            let _molecularWeight = {
+                ...item
+            };
 
             resource.molecularWeight.push(_molecularWeight);
         }
@@ -236,43 +112,10 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
 
     if (!_.isNil(props.structure)) {
         let src = props.structure;
-        let _structure = {};
 
-        if (!_.isNil(src.id)) {
-            _structure.id = src.id;
-        }
-
-        if (!_.isNil(src.modifierExtension)) {
-            _structure.modifierExtension = src.modifierExtension;
-        }
-
-        if (!_.isNil(src.stereochemistry)) {
-            _structure.stereochemistry = src.stereochemistry;
-        }
-
-        if (!_.isNil(src.opticalActivity)) {
-            _structure.opticalActivity = src.opticalActivity;
-        }
-
-        if (!_.isNil(src.molecularFormula)) {
-            _structure.molecularFormula = src.molecularFormula;
-        }
-
-        if (!_.isNil(src.molecularFormulaByMoiety)) {
-            _structure.molecularFormulaByMoiety = src.molecularFormulaByMoiety;
-        }
-
-        if (!_.isNil(src.technique)) {
-            _structure.technique = src.technique;
-        }
-
-        if (!_.isNil(src.sourceDocument)) {
-            _structure.sourceDocument = src.sourceDocument;
-        }
-
-        if (!_.isNil(src.representation)) {
-            _structure.representation = src.representation;
-        }
+        let _structure = {
+            ...item
+        };
 
         resource.structure = _structure;
     }
@@ -283,35 +126,9 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
         resource.code = [];
 
         for (let item of src) {
-            let _code = {};
-
-            if (!_.isNil(item.id)) {
-                _code.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _code.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.code)) {
-                _code.code = item.code;
-            }
-
-            if (!_.isNil(item.status)) {
-                _code.status = item.status;
-            }
-
-            if (!_.isNil(item.statusDate)) {
-                _code.statusDate = item.statusDate;
-            }
-
-            if (!_.isNil(item.note)) {
-                _code.note = item.note;
-            }
-
-            if (!_.isNil(item.source)) {
-                _code.source = item.source;
-            }
+            let _code = {
+                ...item
+            };
 
             resource.code.push(_code);
         }
@@ -323,51 +140,9 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
         resource.name = [];
 
         for (let item of src) {
-            let _name = {};
-
-            if (!_.isNil(item.id)) {
-                _name.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _name.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.name)) {
-                _name.name = item.name;
-            }
-
-            if (!_.isNil(item.type)) {
-                _name.type = item.type;
-            }
-
-            if (!_.isNil(item.status)) {
-                _name.status = item.status;
-            }
-
-            if (!_.isNil(item.preferred)) {
-                _name.preferred = item.preferred;
-            }
-
-            if (!_.isNil(item.language)) {
-                _name.language = item.language;
-            }
-
-            if (!_.isNil(item.domain)) {
-                _name.domain = item.domain;
-            }
-
-            if (!_.isNil(item.jurisdiction)) {
-                _name.jurisdiction = item.jurisdiction;
-            }
-
-            if (!_.isNil(item.official)) {
-                _name.official = item.official;
-            }
-
-            if (!_.isNil(item.source)) {
-                _name.source = item.source;
-            }
+            let _name = {
+                ...item
+            };
 
             resource.name.push(_name);
         }
@@ -379,43 +154,9 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
         resource.relationship = [];
 
         for (let item of src) {
-            let _relationship = {};
-
-            if (!_.isNil(item.id)) {
-                _relationship.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _relationship.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.substanceDefinition)) {
-                _relationship.substanceDefinition = item.substanceDefinition;
-            }
-
-            if (!_.isNil(item.type)) {
-                _relationship.type = item.type;
-            }
-
-            if (!_.isNil(item.isDefining)) {
-                _relationship.isDefining = item.isDefining;
-            }
-
-            if (!_.isNil(item.amount)) {
-                _relationship.amount = item.amount;
-            }
-
-            if (!_.isNil(item.ratioHighLimitAmount)) {
-                _relationship.ratioHighLimitAmount = item.ratioHighLimitAmount;
-            }
-
-            if (!_.isNil(item.comparator)) {
-                _relationship.comparator = item.comparator;
-            }
-
-            if (!_.isNil(item.source)) {
-                _relationship.source = item.source;
-            }
+            let _relationship = {
+                ...item
+            };
 
             resource.relationship.push(_relationship);
         }
@@ -423,35 +164,10 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
 
     if (!_.isNil(props.sourceMaterial)) {
         let src = props.sourceMaterial;
-        let _sourceMaterial = {};
 
-        if (!_.isNil(src.id)) {
-            _sourceMaterial.id = src.id;
-        }
-
-        if (!_.isNil(src.modifierExtension)) {
-            _sourceMaterial.modifierExtension = src.modifierExtension;
-        }
-
-        if (!_.isNil(src.type)) {
-            _sourceMaterial.type = src.type;
-        }
-
-        if (!_.isNil(src.genus)) {
-            _sourceMaterial.genus = src.genus;
-        }
-
-        if (!_.isNil(src.species)) {
-            _sourceMaterial.species = src.species;
-        }
-
-        if (!_.isNil(src.part)) {
-            _sourceMaterial.part = src.part;
-        }
-
-        if (!_.isNil(src.countryOfOrigin)) {
-            _sourceMaterial.countryOfOrigin = src.countryOfOrigin;
-        }
+        let _sourceMaterial = {
+            ...item
+        };
 
         resource.sourceMaterial = _sourceMaterial;
     }

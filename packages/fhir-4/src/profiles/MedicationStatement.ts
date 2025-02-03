@@ -41,36 +41,10 @@ export default function(props: Partial<MedicationStatement_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationStatement</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
@@ -85,18 +59,6 @@ export default function(props: Partial<MedicationStatement_Props>) {
     if (!_.isNil(props.partOf)) {
         if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
         resource.partOf = dt.reference(props.partOf);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.statusReason)) {
-        resource.statusReason = props.statusReason;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
     }
 
     if (!_.isNil(props.medication)) {
@@ -115,10 +77,6 @@ export default function(props: Partial<MedicationStatement_Props>) {
         dt.composite(resource, "effective", props.effective);
     }
 
-    if (!_.isNil(props.dateAsserted)) {
-        resource.dateAsserted = props.dateAsserted;
-    }
-
     if (!_.isNil(props.informationSource)) {
         resource.informationSource = dt.reference(props.informationSource);
     }
@@ -128,21 +86,9 @@ export default function(props: Partial<MedicationStatement_Props>) {
         resource.derivedFrom = dt.reference(props.derivedFrom);
     }
 
-    if (!_.isNil(props.reasonCode)) {
-        resource.reasonCode = props.reasonCode;
-    }
-
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = dt.reference(props.reasonReference);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
-    }
-
-    if (!_.isNil(props.dosage)) {
-        resource.dosage = props.dosage;
     }
 
     resource.meta = {

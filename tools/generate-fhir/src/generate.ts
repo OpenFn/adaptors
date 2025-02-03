@@ -126,7 +126,9 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log('Generating datatype schemas');
     // TOOD rename spec-datatypes
     const dtSpecPath = path.resolve(adaptorPath, 'spec', 'datatypes.json');
-    const dtSchema = await generateSchema(dtSpecPath, mappings);
+    // Note: when generating datatypes we ignore the user's mappings and generate everything
+    // maybe we need to take a different mappings object?
+    const dtSchema = await generateSchema(dtSpecPath);
     const datatypes = generateDataTypes(dtSchema);
     const dtsPath = path.resolve(adaptorPath, 'types/globals.d.ts');
     console.log('Writing datatype schemas to ', dtsPath);
@@ -138,26 +140,22 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   console.log('Generating resource schemas');
   const schema = await generateSchema(specPath, mappings);
 
-  console.log('Generating code');
-  const src = generateCode(schema, mappings, {
-    simpleSignatures: simpleBuilders,
-  });
-  // console.log('Generating DTS');
-  // const dts = generateDTS(schema, mappings, {
+  // console.log('Generating code');
+  // const src = generateCode(schema, mappings, {
   //   simpleSignatures: simpleBuilders,
   // });
 
-  const srcPath = path.resolve(adaptorPath, 'src/builders.ts');
-  console.log('Writing source to ', srcPath);
-  await writeFile(srcPath, withDisclaimer(src.builders));
-  await mkdir(path.resolve(adaptorPath, 'src/profiles'), { recursive: true });
-  for (const profile in src.profiles) {
-    ``;
-    await writeFile(
-      path.resolve(adaptorPath, 'src/profiles', `${profile}.ts`),
-      withDisclaimer(src.profiles[profile])
-    );
-  }
+  // const srcPath = path.resolve(adaptorPath, 'src/builders.ts');
+  // console.log('Writing source to ', srcPath);
+  // await writeFile(srcPath, withDisclaimer(src.builders));
+  // await mkdir(path.resolve(adaptorPath, 'src/profiles'), { recursive: true });
+  // for (const profile in src.profiles) {
+  //   ``;
+  //   await writeFile(
+  //     path.resolve(adaptorPath, 'src/profiles', `${profile}.ts`),
+  //     withDisclaimer(src.profiles[profile])
+  //   );
+  // }
 
   if (options.tests) {
     console.log('Generating tests');
@@ -200,6 +198,8 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     `pnpm exec tsc ${tscArgs.join(' ')} ${pathToEntry}`,
     {},
     async (err, stderr) => {
+      console.log('>', err);
+      console.log('>', stderr);
       console.log('Bundling DTS files');
       const bundle = await rollup({
         input: path.resolve(adaptorPath, 'types', 'tmp', 'index.d.ts'),

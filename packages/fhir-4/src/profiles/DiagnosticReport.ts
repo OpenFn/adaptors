@@ -42,36 +42,10 @@ export default function(props: Partial<DiagnosticReport_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>DiagnosticReport</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
@@ -81,18 +55,6 @@ export default function(props: Partial<DiagnosticReport_Props>) {
     if (!_.isNil(props.basedOn)) {
         if (!Array.isArray(props.basedOn)) { props.basedOn = [props.basedOn]; }
         resource.basedOn = dt.reference(props.basedOn);
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.code)) {
-        resource.code = props.code;
     }
 
     if (!_.isNil(props.subject)) {
@@ -105,10 +67,6 @@ export default function(props: Partial<DiagnosticReport_Props>) {
 
     if (!_.isNil(props.effective)) {
         dt.composite(resource, "effective", props.effective);
-    }
-
-    if (!_.isNil(props.issued)) {
-        resource.issued = props.issued;
     }
 
     if (!_.isNil(props.performer)) {
@@ -142,38 +100,12 @@ export default function(props: Partial<DiagnosticReport_Props>) {
         resource.media = [];
 
         for (let item of src) {
-            let _media = {};
-
-            if (!_.isNil(item.id)) {
-                _media.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _media.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.comment)) {
-                _media.comment = item.comment;
-            }
-
-            if (!_.isNil(item.link)) {
-                _media.link = item.link;
-            }
+            let _media = {
+                ...item
+            };
 
             resource.media.push(_media);
         }
-    }
-
-    if (!_.isNil(props.conclusion)) {
-        resource.conclusion = props.conclusion;
-    }
-
-    if (!_.isNil(props.conclusionCode)) {
-        resource.conclusionCode = props.conclusionCode;
-    }
-
-    if (!_.isNil(props.presentedForm)) {
-        resource.presentedForm = props.presentedForm;
     }
 
     resource.meta = {

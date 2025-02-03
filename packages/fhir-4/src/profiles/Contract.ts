@@ -57,80 +57,18 @@ export default function(props: Partial<Contract_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Contract</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
     }
 
-    if (!_.isNil(props.url)) {
-        resource.url = props.url;
-    }
-
-    if (!_.isNil(props.version)) {
-        resource.version = props.version;
-    }
-
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
-    if (!_.isNil(props.legalState)) {
-        resource.legalState = props.legalState;
-    }
-
     if (!_.isNil(props.instantiatesCanonical)) {
         resource.instantiatesCanonical = dt.reference(props.instantiatesCanonical);
-    }
-
-    if (!_.isNil(props.instantiatesUri)) {
-        resource.instantiatesUri = props.instantiatesUri;
-    }
-
-    if (!_.isNil(props.contentDerivative)) {
-        resource.contentDerivative = props.contentDerivative;
-    }
-
-    if (!_.isNil(props.issued)) {
-        resource.issued = props.issued;
-    }
-
-    if (!_.isNil(props.applies)) {
-        resource.applies = props.applies;
-    }
-
-    if (!_.isNil(props.expirationType)) {
-        resource.expirationType = props.expirationType;
     }
 
     if (!_.isNil(props.subject)) {
@@ -153,77 +91,20 @@ export default function(props: Partial<Contract_Props>) {
         resource.site = dt.reference(props.site);
     }
 
-    if (!_.isNil(props.name)) {
-        resource.name = props.name;
-    }
-
-    if (!_.isNil(props.title)) {
-        resource.title = props.title;
-    }
-
-    if (!_.isNil(props.subtitle)) {
-        resource.subtitle = props.subtitle;
-    }
-
-    if (!_.isNil(props.alias)) {
-        resource.alias = props.alias;
-    }
-
     if (!_.isNil(props.author)) {
         resource.author = dt.reference(props.author);
-    }
-
-    if (!_.isNil(props.scope)) {
-        resource.scope = props.scope;
     }
 
     if (!_.isNil(props.topic)) {
         dt.composite(resource, "topic", props.topic);
     }
 
-    if (!_.isNil(props.type)) {
-        resource.type = props.type;
-    }
-
-    if (!_.isNil(props.subType)) {
-        resource.subType = props.subType;
-    }
-
     if (!_.isNil(props.contentDefinition)) {
         let src = props.contentDefinition;
-        let _contentDefinition = {};
 
-        if (!_.isNil(src.id)) {
-            _contentDefinition.id = src.id;
-        }
-
-        if (!_.isNil(src.modifierExtension)) {
-            _contentDefinition.modifierExtension = src.modifierExtension;
-        }
-
-        if (!_.isNil(src.type)) {
-            _contentDefinition.type = src.type;
-        }
-
-        if (!_.isNil(src.subType)) {
-            _contentDefinition.subType = src.subType;
-        }
-
-        if (!_.isNil(src.publisher)) {
-            _contentDefinition.publisher = src.publisher;
-        }
-
-        if (!_.isNil(src.publicationDate)) {
-            _contentDefinition.publicationDate = src.publicationDate;
-        }
-
-        if (!_.isNil(src.publicationStatus)) {
-            _contentDefinition.publicationStatus = src.publicationStatus;
-        }
-
-        if (!_.isNil(src.copyright)) {
-            _contentDefinition.copyright = src.copyright;
-        }
+        let _contentDefinition = {
+            ...item
+        };
 
         resource.contentDefinition = _contentDefinition;
     }
@@ -234,59 +115,9 @@ export default function(props: Partial<Contract_Props>) {
         resource.term = [];
 
         for (let item of src) {
-            let _term = {};
-
-            if (!_.isNil(item.id)) {
-                _term.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _term.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.identifier)) {
-                _term.identifier = item.identifier;
-            }
-
-            if (!_.isNil(item.issued)) {
-                _term.issued = item.issued;
-            }
-
-            if (!_.isNil(item.applies)) {
-                _term.applies = item.applies;
-            }
-
-            if (!_.isNil(item.topic)) {
-                _term.topic = item.topic;
-            }
-
-            if (!_.isNil(item.type)) {
-                _term.type = item.type;
-            }
-
-            if (!_.isNil(item.subType)) {
-                _term.subType = item.subType;
-            }
-
-            if (!_.isNil(item.text)) {
-                _term.text = item.text;
-            }
-
-            if (!_.isNil(item.securityLabel)) {
-                _term.securityLabel = item.securityLabel;
-            }
-
-            if (!_.isNil(item.offer)) {
-                _term.offer = item.offer;
-            }
-
-            if (!_.isNil(item.asset)) {
-                _term.asset = item.asset;
-            }
-
-            if (!_.isNil(item.action)) {
-                _term.action = item.action;
-            }
+            let _term = {
+                ...item
+            };
 
             resource.term.push(_term);
         }
@@ -308,27 +139,9 @@ export default function(props: Partial<Contract_Props>) {
         resource.signer = [];
 
         for (let item of src) {
-            let _signer = {};
-
-            if (!_.isNil(item.id)) {
-                _signer.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _signer.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.type)) {
-                _signer.type = item.type;
-            }
-
-            if (!_.isNil(item.party)) {
-                _signer.party = item.party;
-            }
-
-            if (!_.isNil(item.signature)) {
-                _signer.signature = item.signature;
-            }
+            let _signer = {
+                ...item
+            };
 
             resource.signer.push(_signer);
         }
@@ -340,19 +153,9 @@ export default function(props: Partial<Contract_Props>) {
         resource.friendly = [];
 
         for (let item of src) {
-            let _friendly = {};
-
-            if (!_.isNil(item.id)) {
-                _friendly.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _friendly.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.content)) {
-                _friendly.content = item.content;
-            }
+            let _friendly = {
+                ...item
+            };
 
             resource.friendly.push(_friendly);
         }
@@ -364,19 +167,9 @@ export default function(props: Partial<Contract_Props>) {
         resource.legal = [];
 
         for (let item of src) {
-            let _legal = {};
-
-            if (!_.isNil(item.id)) {
-                _legal.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _legal.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.content)) {
-                _legal.content = item.content;
-            }
+            let _legal = {
+                ...item
+            };
 
             resource.legal.push(_legal);
         }
@@ -388,19 +181,9 @@ export default function(props: Partial<Contract_Props>) {
         resource.rule = [];
 
         for (let item of src) {
-            let _rule = {};
-
-            if (!_.isNil(item.id)) {
-                _rule.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _rule.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.content)) {
-                _rule.content = item.content;
-            }
+            let _rule = {
+                ...item
+            };
 
             resource.rule.push(_rule);
         }

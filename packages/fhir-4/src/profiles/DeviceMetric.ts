@@ -34,48 +34,14 @@ export default function(props: Partial<DeviceMetric_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>DeviceMetric</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
-    }
-
-    if (!_.isNil(props.type)) {
-        resource.type = props.type;
-    }
-
-    if (!_.isNil(props.unit)) {
-        resource.unit = props.unit;
     }
 
     if (!_.isNil(props.source)) {
@@ -86,49 +52,15 @@ export default function(props: Partial<DeviceMetric_Props>) {
         resource.parent = dt.reference(props.parent);
     }
 
-    if (!_.isNil(props.operationalStatus)) {
-        resource.operationalStatus = props.operationalStatus;
-    }
-
-    if (!_.isNil(props.color)) {
-        resource.color = props.color;
-    }
-
-    if (!_.isNil(props.category)) {
-        resource.category = props.category;
-    }
-
-    if (!_.isNil(props.measurementPeriod)) {
-        resource.measurementPeriod = props.measurementPeriod;
-    }
-
     if (!_.isNil(props.calibration)) {
         let src = props.calibration;
         if (!Array.isArray(src)) { src = [src]; }
         resource.calibration = [];
 
         for (let item of src) {
-            let _calibration = {};
-
-            if (!_.isNil(item.id)) {
-                _calibration.id = item.id;
-            }
-
-            if (!_.isNil(item.modifierExtension)) {
-                _calibration.modifierExtension = item.modifierExtension;
-            }
-
-            if (!_.isNil(item.type)) {
-                _calibration.type = item.type;
-            }
-
-            if (!_.isNil(item.state)) {
-                _calibration.state = item.state;
-            }
-
-            if (!_.isNil(item.time)) {
-                _calibration.time = item.time;
-            }
+            let _calibration = {
+                ...item
+            };
 
             resource.calibration.push(_calibration);
         }

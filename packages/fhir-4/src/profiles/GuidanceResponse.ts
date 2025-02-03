@@ -39,36 +39,10 @@ export default function(props: Partial<GuidanceResponse_Props>) {
         text: {
             status: "generated",
             div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>GuidanceResponse</b></p></div>"
-        }
+        },
+
+        ...props
     };
-
-    if (!_.isNil(props.id)) {
-        resource.id = props.id;
-    }
-
-    if (!_.isNil(props.implicitRules)) {
-        resource.implicitRules = props.implicitRules;
-    }
-
-    if (!_.isNil(props.language)) {
-        resource.language = props.language;
-    }
-
-    if (!_.isNil(props.text)) {
-        resource.text = props.text;
-    }
-
-    if (!_.isNil(props.contained)) {
-        resource.contained = props.contained;
-    }
-
-    if (!_.isNil(props.extension)) {
-        resource.extension = props.extension;
-    }
-
-    if (!_.isNil(props.modifierExtension)) {
-        resource.modifierExtension = props.modifierExtension;
-    }
 
     if (!_.isNil(props.requestIdentifier)) {
         resource.requestIdentifier = dt.identifier(props.requestIdentifier);
@@ -83,10 +57,6 @@ export default function(props: Partial<GuidanceResponse_Props>) {
         dt.composite(resource, "module", props.module);
     }
 
-    if (!_.isNil(props.status)) {
-        resource.status = props.status;
-    }
-
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -95,25 +65,13 @@ export default function(props: Partial<GuidanceResponse_Props>) {
         resource.encounter = dt.reference(props.encounter);
     }
 
-    if (!_.isNil(props.occurrenceDateTime)) {
-        resource.occurrenceDateTime = props.occurrenceDateTime;
-    }
-
     if (!_.isNil(props.performer)) {
         resource.performer = dt.reference(props.performer);
-    }
-
-    if (!_.isNil(props.reasonCode)) {
-        resource.reasonCode = props.reasonCode;
     }
 
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = dt.reference(props.reasonReference);
-    }
-
-    if (!_.isNil(props.note)) {
-        resource.note = props.note;
     }
 
     if (!_.isNil(props.evaluationMessage)) {
@@ -127,10 +85,6 @@ export default function(props: Partial<GuidanceResponse_Props>) {
 
     if (!_.isNil(props.result)) {
         resource.result = dt.reference(props.result);
-    }
-
-    if (!_.isNil(props.dataRequirement)) {
-        resource.dataRequirement = props.dataRequirement;
     }
 
     resource.meta = {

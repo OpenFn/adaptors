@@ -6,6 +6,7 @@ describe('Patient', () => {
     const resource = builders.patient({
       identifier: {},
     });
+    console.log(resource);
     assert.isOk(resource);
   });
 });
