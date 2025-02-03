@@ -1,9 +1,7 @@
-import './builders';
-
 import * as Adaptor from './Adaptor';
 export default Adaptor;
 
-// this wierd? export as dt?
+// Is this wierd? export as dt?
 // or should we right datatypes to builders?
 // why not b.identifier?
 export * as util from './datatypes';

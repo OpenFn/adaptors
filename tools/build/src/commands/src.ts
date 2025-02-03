@@ -4,7 +4,7 @@ import type { Options } from '../pipeline';
 
 const config: TsupOptions = {
   format: ['esm', 'cjs'],
-  target: 'node18',
+  target: 'node14',
   platform: 'node',
   clean: true,
   splitting: false,
@@ -40,6 +40,7 @@ export default async (lang: string, options: Options = {}) => {
   return build({
     ...defaultBuildConfig,
     ...overrides,
+
     watch: options.watch,
   });
 };
