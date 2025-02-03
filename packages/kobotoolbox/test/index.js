@@ -57,8 +57,8 @@ describe('execute', () => {
   });
 });
 
-describe('http.get', () => {
-  it('should GET with a query', async () => {
+describe('http', () => {
+  it('should return responses in JSON format', async () => {
     testServer
       .intercept({
         path: '/api/v2/assets/',
@@ -72,9 +72,29 @@ describe('http.get', () => {
       );
     const state = { configuration };
 
-    const { data } = await http.get('/assets/', {
-      query: { format: 'json' },
-    })(state);
+    const response = await http.get('/assets/')(state);
+    expect(response.response.headers['content-type']).to.eql(
+      'application/json'
+    );
+  });
+});
+
+describe('http.get', () => {
+  it('should make a GET request', async () => {
+    testServer
+      .intercept({
+        path: '/api/v2/assets/',
+        query: { format: 'json' },
+        method: 'GET',
+      })
+      .reply(
+        200,
+        { results: [{ name: 'Feedback Survey Test', asset_type: 'survey' }] },
+        { ...jsonHeaders }
+      );
+    const state = { configuration };
+
+    const { data } = await http.get('/assets/')(state);
 
     expect(data.results[0].name).to.eql('Feedback Survey Test');
   });
@@ -99,16 +119,10 @@ describe('http.post', () => {
       );
     const state = { configuration };
 
-    const { data } = await http.post(
-      '/assets/',
-      {
-        name: 'Feedback Survey Test',
-        asset_type: 'survey',
-      },
-      {
-        query: { format: 'json' },
-      }
-    )(state);
+    const { data } = await http.post('/assets/', {
+      name: 'Feedback Survey Test',
+      asset_type: 'survey',
+    })(state);
 
     expect(data.name).to.eql('Feedback Survey Test');
   });

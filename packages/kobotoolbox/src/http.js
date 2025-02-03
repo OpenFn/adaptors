@@ -2,6 +2,14 @@ import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
 
 /**
+ * State object
+ * @typedef {Object} KoboToolboxHttpState
+ * @property data - The response body (as JSON)
+ * @property response - The HTTP response from the KoboToolbox server (excluding the body). Responses will be returned in JSON format
+ * @property references - An array of all previous data objects used in the Job
+ */
+
+/**
  * Options object
  * @typedef {Object} RequestOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
@@ -10,20 +18,16 @@ import * as util from './Utils';
  */
 
 /**
- * Make a GET request to any Kobotoolbox endpoint.
+ * Make a GET request to any KoboToolbox endpoint.
  * @public
  * @function
- * @example <caption>GET forms resource</caption>
+ * @example <caption>GET assets resource</caption>
  * http.get(
  *  "/assets/",
- *  {
- *    query: {
- *      format: json
- *    }
- *  }
  *  )
  * @param {string} path - path to resource
  * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {KoboToolboxHttpState}
  * @returns {operation}
  */
 export function get(path, options = {}) {
@@ -46,7 +50,7 @@ export function get(path, options = {}) {
 }
 
 /**
- * Make a POST request to a Kobotoolbox endpoint
+ * Make a POST request to a KoboToolbox endpoint
  * @public
  * @function
  * @example <caption>Create an asset resource</caption>
@@ -56,15 +60,11 @@ export function get(path, options = {}) {
  *   name: 'Feedback Survey Test',
  *   asset_type: 'survey',
  *  },
- *  {
- *    query: {
- *      format: 'json',
- *    },
- *  }
  *  );
  * @param {string} path - path to resource
  * @param {any} data - the body data in JSON format
  * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {KoboToolboxHttpState}
  * @returns {operation}
  */
 export function post(path, data, options = {}) {
@@ -92,7 +92,7 @@ export function post(path, data, options = {}) {
 }
 
 /**
- * Make a PUT request to a Kobotoolbox endpoint
+ * Make a PUT request to a KoboToolbox endpoint
  * @public
  * @function
  * @example <caption>Update an asset resource</caption>
@@ -102,15 +102,11 @@ export function post(path, data, options = {}) {
  *   name: 'Feedback Survey Test',
  *   asset_type: 'survey',
  *  },
- *  {
- *    query: {
- *      format: 'json',
- *    },
- *  }
  *  );
  * @param {string} path - path to resource
  * @param {any} data - the body data in JSON format
  * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {KoboToolboxHttpState}
  * @returns {operation}
  */
 export function put(path, data, options = {}) {
