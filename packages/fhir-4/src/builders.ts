@@ -119,26 +119,26 @@ import VerificationResult_VerificationResult, { VerificationResult_Props } from 
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Account number
-  * @param [props.status] {string} - active | inactive | entered-in-error | on-hold | unknown
-  * @param [props.type] {CodeableConcept} - E.g. patient, expense, depreciation
-  * @param [props.name] {string} - Human-readable label
-  * @param [props.subject] {Reference} - The entity that caused the expenses
-  * @param [props.servicePeriod] {Period} - Transaction window
-  * @param [props.coverage] {BackboneElement} - The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account
-  * @param [props.owner] {Reference} - Entity managing the Account
-  * @param [props.description] {string} - Explanation of purpose/use
-  * @param [props.guarantor] {BackboneElement} - The parties ultimately responsible for balancing the Account
-  * @param [props.partOf] {Reference} - Reference to a parent Account
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Account number
+  * @param {string} [props.status] - active | inactive | entered-in-error | on-hold | unknown
+  * @param {CodeableConcept} [props.type] - E.g. patient, expense, depreciation
+  * @param {string} [props.name] - Human-readable label
+  * @param {Reference} [props.subject] - The entity that caused the expenses
+  * @param {Period} [props.servicePeriod] - Transaction window
+  * @param {BackboneElement} [props.coverage] - The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account
+  * @param {Reference} [props.owner] - Entity managing the Account
+  * @param {string} [props.description] - Explanation of purpose/use
+  * @param {BackboneElement} [props.guarantor] - The parties ultimately responsible for balancing the Account
+  * @param {Reference} [props.partOf] - Reference to a parent Account
  */
 export function account(type: string, props: Account_Props);
 
@@ -162,61 +162,61 @@ export function account(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this activity definition, represented as a URI (globally unique)
-  * @param [props.identifier] {Identifier} - Additional identifier for the activity definition
-  * @param [props.version] {string} - Business version of the activity definition
-  * @param [props.name] {string} - Name for this activity definition (computer friendly)
-  * @param [props.title] {string} - Name for this activity definition (human friendly)
-  * @param [props.subtitle] {string} - Subordinate title of the activity definition
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.experimental] {boolean} - For testing purposes, not real usage
-  * @param [props.subject] {CodeableConcept} - Type of individual the activity definition is intended for
-  * @param [props.date] {dateTime} - Date last changed
-  * @param [props.publisher] {string} - Name of the publisher (organization or individual)
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher
-  * @param [props.description] {markdown} - Natural language description of the activity definition
-  * @param [props.useContext] {UsageContext} - The context that the content is intended to support
-  * @param [props.jurisdiction] {CodeableConcept} - Intended jurisdiction for activity definition (if applicable)
-  * @param [props.purpose] {markdown} - Why this activity definition is defined
-  * @param [props.usage] {string} - Describes the clinical usage of the activity definition
-  * @param [props.copyright] {markdown} - Use and/or publishing restrictions
-  * @param [props.approvalDate] {date} - When the activity definition was approved by publisher
-  * @param [props.lastReviewDate] {date} - When the activity definition was last reviewed
-  * @param [props.effectivePeriod] {Period} - When the activity definition is expected to be used
-  * @param [props.topic] {CodeableConcept} - E.g. Education, Treatment, Assessment, etc.
-  * @param [props.author] {ContactDetail} - Who authored the content
-  * @param [props.editor] {ContactDetail} - Who edited the content
-  * @param [props.reviewer] {ContactDetail} - Who reviewed the content
-  * @param [props.endorser] {ContactDetail} - Who endorsed the content
-  * @param [props.relatedArtifact] {RelatedArtifact} - Additional documentation, citations, etc.
-  * @param [props.library] {canonical} - Logic used by the activity definition
-  * @param [props.kind] {string} - Kind of resource
-  * @param [props.profile] {canonical} - What profile the resource needs to conform to
-  * @param [props.code] {CodeableConcept} - Detail type of activity
-  * @param [props.intent] {string} - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
-  * @param [props.priority] {string} - routine | urgent | asap | stat
-  * @param [props.doNotPerform] {boolean} - True if the activity should not be performed
-  * @param [props.timing] {Timing} - When activity is to occur
-  * @param [props.location] {Reference} - Where it should happen
-  * @param [props.participant] {BackboneElement} - Who should participate in the action
-  * @param [props.product] {Reference} - What's administered/supplied
-  * @param [props.quantity] {Quantity} - How much is administered/consumed/supplied
-  * @param [props.dosage] {Dosage} - Detailed dosage instructions
-  * @param [props.bodySite] {CodeableConcept} - What part of body to perform on
-  * @param [props.specimenRequirement] {Reference} - What specimens are required to perform this action
-  * @param [props.observationRequirement] {Reference} - What observations are required to perform this action
-  * @param [props.observationResultRequirement] {Reference} - What observations must be produced by this action
-  * @param [props.transform] {canonical} - Transform to apply the template
-  * @param [props.dynamicValue] {BackboneElement} - Dynamic aspects of the definition
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this activity definition, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the activity definition
+  * @param {string} [props.version] - Business version of the activity definition
+  * @param {string} [props.name] - Name for this activity definition (computer friendly)
+  * @param {string} [props.title] - Name for this activity definition (human friendly)
+  * @param {string} [props.subtitle] - Subordinate title of the activity definition
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.subject] - Type of individual the activity definition is intended for
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the activity definition
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for activity definition (if applicable)
+  * @param {markdown} [props.purpose] - Why this activity definition is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the activity definition
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the activity definition was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the activity definition was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the activity definition is expected to be used
+  * @param {CodeableConcept} [props.topic] - E.g. Education, Treatment, Assessment, etc.
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {canonical} [props.library] - Logic used by the activity definition
+  * @param {string} [props.kind] - Kind of resource
+  * @param {canonical} [props.profile] - What profile the resource needs to conform to
+  * @param {CodeableConcept} [props.code] - Detail type of activity
+  * @param {string} [props.intent] - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {boolean} [props.doNotPerform] - True if the activity should not be performed
+  * @param {Timing} [props.timing] - When activity is to occur
+  * @param {Reference} [props.location] - Where it should happen
+  * @param {BackboneElement} [props.participant] - Who should participate in the action
+  * @param {Reference} [props.product] - What's administered/supplied
+  * @param {Quantity} [props.quantity] - How much is administered/consumed/supplied
+  * @param {Dosage} [props.dosage] - Detailed dosage instructions
+  * @param {CodeableConcept} [props.bodySite] - What part of body to perform on
+  * @param {Reference} [props.specimenRequirement] - What specimens are required to perform this action
+  * @param {Reference} [props.observationRequirement] - What observations are required to perform this action
+  * @param {Reference} [props.observationResultRequirement] - What observations must be produced by this action
+  * @param {canonical} [props.transform] - Transform to apply the template
+  * @param {BackboneElement} [props.dynamicValue] - Dynamic aspects of the definition
  */
 export function activityDefinition(type: string, props: ActivityDefinition_Props);
 
@@ -240,25 +240,25 @@ export function activityDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - An identifier for the administrable product
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.formOf] {Reference} - References a product from which one or more of the constituent parts of that product can be prepared and used as described by this administrable product
-  * @param [props.administrableDoseForm] {CodeableConcept} - The dose form of the final product after necessary reconstitution or processing
-  * @param [props.unitOfPresentation] {CodeableConcept} - The presentation type in which this item is given to a patient. e.g. for a spray - 'puff'
-  * @param [props.producedFrom] {Reference} - Indicates the specific manufactured items that are part of the 'formOf' product that are used in the preparation of this specific administrable form
-  * @param [props.ingredient] {CodeableConcept} - The ingredients of this administrable medicinal product. This is only needed if the ingredients are not specified either using ManufacturedItemDefiniton, or using by incoming references from the Ingredient resource
-  * @param [props.device] {Reference} - A device that is integral to the medicinal product, in effect being considered as an "ingredient" of the medicinal product
-  * @param [props.property] {BackboneElement} - Characteristics e.g. a product's onset of action
-  * @param [props.routeOfAdministration] {BackboneElement} - The path by which the product is taken into or makes contact with the body
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - An identifier for the administrable product
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {Reference} [props.formOf] - References a product from which one or more of the constituent parts of that product can be prepared and used as described by this administrable product
+  * @param {CodeableConcept} [props.administrableDoseForm] - The dose form of the final product after necessary reconstitution or processing
+  * @param {CodeableConcept} [props.unitOfPresentation] - The presentation type in which this item is given to a patient. e.g. for a spray - 'puff'
+  * @param {Reference} [props.producedFrom] - Indicates the specific manufactured items that are part of the 'formOf' product that are used in the preparation of this specific administrable form
+  * @param {CodeableConcept} [props.ingredient] - The ingredients of this administrable medicinal product. This is only needed if the ingredients are not specified either using ManufacturedItemDefiniton, or using by incoming references from the Ingredient resource
+  * @param {Reference} [props.device] - A device that is integral to the medicinal product, in effect being considered as an "ingredient" of the medicinal product
+  * @param {BackboneElement} [props.property] - Characteristics e.g. a product's onset of action
+  * @param {BackboneElement} [props.routeOfAdministration] - The path by which the product is taken into or makes contact with the body
  */
 export function administrableProductDefinition(type: string, props: AdministrableProductDefinition_Props);
 
@@ -282,35 +282,35 @@ export function administrableProductDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier for the event
-  * @param [props.actuality] {string} - actual | potential
-  * @param [props.category] {CodeableConcept} - product-problem | product-quality | product-use-error | wrong-dose | incorrect-prescribing-information | wrong-technique | wrong-route-of-administration | wrong-rate | wrong-duration | wrong-time | expired-drug | medical-device-use-error | problem-different-manufacturer | unsafe-physical-environment
-  * @param [props.event] {CodeableConcept} - Type of the event itself in relation to the subject
-  * @param [props.subject] {Reference} - Subject impacted by event
-  * @param [props.encounter] {Reference} - Encounter created as part of
-  * @param [props.date] {dateTime} - When the event occurred
-  * @param [props.detected] {dateTime} - When the event was detected
-  * @param [props.recordedDate] {dateTime} - When the event was recorded
-  * @param [props.resultingCondition] {Reference} - Effect on the subject due to this event
-  * @param [props.location] {Reference} - Location where adverse event occurred
-  * @param [props.seriousness] {CodeableConcept} - Seriousness of the event
-  * @param [props.severity] {CodeableConcept} - mild | moderate | severe
-  * @param [props.outcome] {CodeableConcept} - resolved | recovering | ongoing | resolvedWithSequelae | fatal | unknown
-  * @param [props.recorder] {Reference} - Who recorded the adverse event
-  * @param [props.contributor] {Reference} - Who  was involved in the adverse event or the potential adverse event
-  * @param [props.suspectEntity] {BackboneElement} - The suspected agent causing the adverse event
-  * @param [props.subjectMedicalHistory] {Reference} - AdverseEvent.subjectMedicalHistory
-  * @param [props.referenceDocument] {Reference} - AdverseEvent.referenceDocument
-  * @param [props.study] {Reference} - AdverseEvent.study
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier for the event
+  * @param {string} [props.actuality] - actual | potential
+  * @param {CodeableConcept} [props.category] - product-problem | product-quality | product-use-error | wrong-dose | incorrect-prescribing-information | wrong-technique | wrong-route-of-administration | wrong-rate | wrong-duration | wrong-time | expired-drug | medical-device-use-error | problem-different-manufacturer | unsafe-physical-environment
+  * @param {CodeableConcept} [props.event] - Type of the event itself in relation to the subject
+  * @param {Reference} [props.subject] - Subject impacted by event
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {dateTime} [props.date] - When the event occurred
+  * @param {dateTime} [props.detected] - When the event was detected
+  * @param {dateTime} [props.recordedDate] - When the event was recorded
+  * @param {Reference} [props.resultingCondition] - Effect on the subject due to this event
+  * @param {Reference} [props.location] - Location where adverse event occurred
+  * @param {CodeableConcept} [props.seriousness] - Seriousness of the event
+  * @param {CodeableConcept} [props.severity] - mild | moderate | severe
+  * @param {CodeableConcept} [props.outcome] - resolved | recovering | ongoing | resolvedWithSequelae | fatal | unknown
+  * @param {Reference} [props.recorder] - Who recorded the adverse event
+  * @param {Reference} [props.contributor] - Who  was involved in the adverse event or the potential adverse event
+  * @param {BackboneElement} [props.suspectEntity] - The suspected agent causing the adverse event
+  * @param {Reference} [props.subjectMedicalHistory] - AdverseEvent.subjectMedicalHistory
+  * @param {Reference} [props.referenceDocument] - AdverseEvent.referenceDocument
+  * @param {Reference} [props.study] - AdverseEvent.study
  */
 export function adverseEvent(type: string, props: AdverseEvent_Props);
 
@@ -334,31 +334,31 @@ export function adverseEvent(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External ids for this item
-  * @param [props.clinicalStatus] {CodeableConcept} - active | inactive | resolved
-  * @param [props.verificationStatus] {CodeableConcept} - unconfirmed | confirmed | refuted | entered-in-error
-  * @param [props.type] {string} - allergy | intolerance - Underlying mechanism (if known)
-  * @param [props.category] {string} - food | medication | environment | biologic
-  * @param [props.criticality] {string} - low | high | unable-to-assess
-  * @param [props.code] {CodeableConcept} - Code that identifies the allergy or intolerance
-  * @param [props.patient] {Reference} - Who the sensitivity is for
-  * @param [props.encounter] {Reference} - Encounter when the allergy or intolerance was asserted
-  * @param [props.onset] {dateTime} - When allergy or intolerance was identified
-  * @param [props.recordedDate] {dateTime} - Date first version of the resource instance was recorded
-  * @param [props.recorder] {Reference} - Who recorded the sensitivity
-  * @param [props.asserter] {Reference} - Source of the information about the allergy
-  * @param [props.lastOccurrence] {dateTime} - Date(/time) of last known occurrence of a reaction
-  * @param [props.note] {Annotation} - Additional text not captured in other fields
-  * @param [props.reaction] {BackboneElement} - Adverse Reaction Events linked to exposure to substance
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External ids for this item
+  * @param {CodeableConcept} [props.clinicalStatus] - active | inactive | resolved
+  * @param {CodeableConcept} [props.verificationStatus] - unconfirmed | confirmed | refuted | entered-in-error
+  * @param {string} [props.type] - allergy | intolerance - Underlying mechanism (if known)
+  * @param {string} [props.category] - food | medication | environment | biologic
+  * @param {string} [props.criticality] - low | high | unable-to-assess
+  * @param {CodeableConcept} [props.code] - Code that identifies the allergy or intolerance
+  * @param {Reference} [props.patient] - Who the sensitivity is for
+  * @param {Reference} [props.encounter] - Encounter when the allergy or intolerance was asserted
+  * @param {dateTime} [props.onset] - When allergy or intolerance was identified
+  * @param {dateTime} [props.recordedDate] - Date first version of the resource instance was recorded
+  * @param {Reference} [props.recorder] - Who recorded the sensitivity
+  * @param {Reference} [props.asserter] - Source of the information about the allergy
+  * @param {dateTime} [props.lastOccurrence] - Date(/time) of last known occurrence of a reaction
+  * @param {Annotation} [props.note] - Additional text not captured in other fields
+  * @param {BackboneElement} [props.reaction] - Adverse Reaction Events linked to exposure to substance
  */
 export function allergyIntolerance(type: string, props: AllergyIntolerance_Props);
 
@@ -382,37 +382,37 @@ export function allergyIntolerance(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External Ids for this item
-  * @param [props.status] {string} - proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist
-  * @param [props.cancelationReason] {CodeableConcept} - The coded reason for the appointment being cancelled
-  * @param [props.serviceCategory] {CodeableConcept} - A broad categorization of the service that is to be performed during this appointment
-  * @param [props.serviceType] {CodeableConcept} - The specific service that is to be performed during this appointment
-  * @param [props.specialty] {CodeableConcept} - The specialty of a practitioner that would be required to perform the service requested in this appointment
-  * @param [props.appointmentType] {CodeableConcept} - The style of appointment or patient that has been booked in the slot (not service type)
-  * @param [props.reasonCode] {CodeableConcept} - Coded reason this appointment is scheduled
-  * @param [props.reasonReference] {Reference} - Reason the appointment is to take place (resource)
-  * @param [props.priority] {unsignedInt} - Used to make informed decisions if needing to re-prioritize
-  * @param [props.description] {string} - Shown on a subject line in a meeting request, or appointment list
-  * @param [props.supportingInformation] {Reference} - Additional information to support the appointment
-  * @param [props.start] {instant} - When appointment is to take place
-  * @param [props.end] {instant} - When appointment is to conclude
-  * @param [props.minutesDuration] {number} - Can be less than start/end (e.g. estimate)
-  * @param [props.slot] {Reference} - The slots that this appointment is filling
-  * @param [props.created] {dateTime} - The date that this appointment was initially created
-  * @param [props.comment] {string} - Additional comments
-  * @param [props.patientInstruction] {string} - Detailed information and instructions for the patient
-  * @param [props.basedOn] {Reference} - The service request this appointment is allocated to assess
-  * @param [props.participant] {BackboneElement} - Participants involved in appointment
-  * @param [props.requestedPeriod] {Period} - Potential date/time interval(s) requested to allocate the appointment within
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this item
+  * @param {string} [props.status] - proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist
+  * @param {CodeableConcept} [props.cancelationReason] - The coded reason for the appointment being cancelled
+  * @param {CodeableConcept} [props.serviceCategory] - A broad categorization of the service that is to be performed during this appointment
+  * @param {CodeableConcept} [props.serviceType] - The specific service that is to be performed during this appointment
+  * @param {CodeableConcept} [props.specialty] - The specialty of a practitioner that would be required to perform the service requested in this appointment
+  * @param {CodeableConcept} [props.appointmentType] - The style of appointment or patient that has been booked in the slot (not service type)
+  * @param {CodeableConcept} [props.reasonCode] - Coded reason this appointment is scheduled
+  * @param {Reference} [props.reasonReference] - Reason the appointment is to take place (resource)
+  * @param {unsignedInt} [props.priority] - Used to make informed decisions if needing to re-prioritize
+  * @param {string} [props.description] - Shown on a subject line in a meeting request, or appointment list
+  * @param {Reference} [props.supportingInformation] - Additional information to support the appointment
+  * @param {instant} [props.start] - When appointment is to take place
+  * @param {instant} [props.end] - When appointment is to conclude
+  * @param {number} [props.minutesDuration] - Can be less than start/end (e.g. estimate)
+  * @param {Reference} [props.slot] - The slots that this appointment is filling
+  * @param {dateTime} [props.created] - The date that this appointment was initially created
+  * @param {string} [props.comment] - Additional comments
+  * @param {string} [props.patientInstruction] - Detailed information and instructions for the patient
+  * @param {Reference} [props.basedOn] - The service request this appointment is allocated to assess
+  * @param {BackboneElement} [props.participant] - Participants involved in appointment
+  * @param {Period} [props.requestedPeriod] - Potential date/time interval(s) requested to allocate the appointment within
  */
 export function appointment(type: string, props: Appointment_Props);
 
@@ -436,23 +436,23 @@ export function appointment(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External Ids for this item
-  * @param [props.appointment] {Reference} - Appointment this response relates to
-  * @param [props.start] {instant} - Time from appointment, or requested new start time
-  * @param [props.end] {instant} - Time from appointment, or requested new end time
-  * @param [props.participantType] {CodeableConcept} - Role of participant in the appointment
-  * @param [props.actor] {Reference} - Person, Location, HealthcareService, or Device
-  * @param [props.participantStatus] {string} - accepted | declined | tentative | needs-action
-  * @param [props.comment] {string} - Additional comments
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this item
+  * @param {Reference} [props.appointment] - Appointment this response relates to
+  * @param {instant} [props.start] - Time from appointment, or requested new start time
+  * @param {instant} [props.end] - Time from appointment, or requested new end time
+  * @param {CodeableConcept} [props.participantType] - Role of participant in the appointment
+  * @param {Reference} [props.actor] - Person, Location, HealthcareService, or Device
+  * @param {string} [props.participantStatus] - accepted | declined | tentative | needs-action
+  * @param {string} [props.comment] - Additional comments
  */
 export function appointmentResponse(type: string, props: AppointmentResponse_Props);
 
@@ -476,26 +476,26 @@ export function appointmentResponse(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External ids for this item
-  * @param [props.productCategory] {string} - organ | tissue | fluid | cells | biologicalAgent
-  * @param [props.productCode] {CodeableConcept} - What this biologically derived product is
-  * @param [props.status] {string} - available | unavailable
-  * @param [props.request] {Reference} - Procedure request
-  * @param [props.quantity] {integer} - The amount of this biologically derived product
-  * @param [props.parent] {Reference} - BiologicallyDerivedProduct parent
-  * @param [props.collection] {BackboneElement} - How this product was collected
-  * @param [props.processing] {BackboneElement} - Any processing of the product during collection
-  * @param [props.manipulation] {BackboneElement} - Any manipulation of product post-collection
-  * @param [props.storage] {BackboneElement} - Product storage
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External ids for this item
+  * @param {string} [props.productCategory] - organ | tissue | fluid | cells | biologicalAgent
+  * @param {CodeableConcept} [props.productCode] - What this biologically derived product is
+  * @param {string} [props.status] - available | unavailable
+  * @param {Reference} [props.request] - Procedure request
+  * @param {integer} [props.quantity] - The amount of this biologically derived product
+  * @param {Reference} [props.parent] - BiologicallyDerivedProduct parent
+  * @param {BackboneElement} [props.collection] - How this product was collected
+  * @param {BackboneElement} [props.processing] - Any processing of the product during collection
+  * @param {BackboneElement} [props.manipulation] - Any manipulation of product post-collection
+  * @param {BackboneElement} [props.storage] - Product storage
  */
 export function biologicallyDerivedProduct(type: string, props: BiologicallyDerivedProduct_Props);
 
@@ -519,23 +519,23 @@ export function biologicallyDerivedProduct(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Bodystructure identifier
-  * @param [props.active] {boolean} - Whether this record is in active use
-  * @param [props.morphology] {CodeableConcept} - Kind of Structure
-  * @param [props.location] {CodeableConcept} - Body site
-  * @param [props.locationQualifier] {CodeableConcept} - Body site modifier
-  * @param [props.description] {string} - Text description
-  * @param [props.image] {Attachment} - Attached images
-  * @param [props.patient] {Reference} - Who this is about
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Bodystructure identifier
+  * @param {boolean} [props.active] - Whether this record is in active use
+  * @param {CodeableConcept} [props.morphology] - Kind of Structure
+  * @param {CodeableConcept} [props.location] - Body site
+  * @param {CodeableConcept} [props.locationQualifier] - Body site modifier
+  * @param {string} [props.description] - Text description
+  * @param {Attachment} [props.image] - Attached images
+  * @param {Reference} [props.patient] - Who this is about
  */
 export function bodyStructure(type: string, props: BodyStructure_Props);
 
@@ -559,38 +559,38 @@ export function bodyStructure(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External Ids for this plan
-  * @param [props.instantiatesCanonical] {canonical} - Instantiates FHIR protocol or definition
-  * @param [props.instantiatesUri] {string} - Instantiates external protocol or definition
-  * @param [props.basedOn] {Reference} - Fulfills CarePlan
-  * @param [props.replaces] {Reference} - CarePlan replaced by this CarePlan
-  * @param [props.partOf] {Reference} - Part of referenced CarePlan
-  * @param [props.status] {string} - draft | active | on-hold | revoked | completed | entered-in-error | unknown
-  * @param [props.intent] {string} - proposal | plan | order | option
-  * @param [props.category] {CodeableConcept} - Type of plan
-  * @param [props.title] {string} - Human-friendly name for the care plan
-  * @param [props.description] {string} - Summary of nature of plan
-  * @param [props.subject] {Reference} - Who the care plan is for
-  * @param [props.encounter] {Reference} - Encounter created as part of
-  * @param [props.period] {Period} - Time period plan covers
-  * @param [props.created] {dateTime} - Date record was first recorded
-  * @param [props.author] {Reference} - Who is the designated responsible party
-  * @param [props.contributor] {Reference} - Who provided the content of the care plan
-  * @param [props.careTeam] {Reference} - Who's involved in plan?
-  * @param [props.addresses] {Reference} - Health issues this plan addresses
-  * @param [props.supportingInfo] {Reference} - Information considered as part of plan
-  * @param [props.goal] {Reference} - Desired outcome of plan
-  * @param [props.activity] {BackboneElement} - Action to occur as part of plan
-  * @param [props.note] {Annotation} - Comments about the plan
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this plan
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - Fulfills CarePlan
+  * @param {Reference} [props.replaces] - CarePlan replaced by this CarePlan
+  * @param {Reference} [props.partOf] - Part of referenced CarePlan
+  * @param {string} [props.status] - draft | active | on-hold | revoked | completed | entered-in-error | unknown
+  * @param {string} [props.intent] - proposal | plan | order | option
+  * @param {CodeableConcept} [props.category] - Type of plan
+  * @param {string} [props.title] - Human-friendly name for the care plan
+  * @param {string} [props.description] - Summary of nature of plan
+  * @param {Reference} [props.subject] - Who the care plan is for
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {Period} [props.period] - Time period plan covers
+  * @param {dateTime} [props.created] - Date record was first recorded
+  * @param {Reference} [props.author] - Who is the designated responsible party
+  * @param {Reference} [props.contributor] - Who provided the content of the care plan
+  * @param {Reference} [props.careTeam] - Who's involved in plan?
+  * @param {Reference} [props.addresses] - Health issues this plan addresses
+  * @param {Reference} [props.supportingInfo] - Information considered as part of plan
+  * @param {Reference} [props.goal] - Desired outcome of plan
+  * @param {BackboneElement} [props.activity] - Action to occur as part of plan
+  * @param {Annotation} [props.note] - Comments about the plan
  */
 export function carePlan(type: string, props: CarePlan_Props);
 
@@ -614,28 +614,28 @@ export function carePlan(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External Ids for this team
-  * @param [props.status] {string} - proposed | active | suspended | inactive | entered-in-error
-  * @param [props.category] {CodeableConcept} - Type of team
-  * @param [props.name] {string} - Name of the team, such as crisis assessment team
-  * @param [props.subject] {Reference} - Who care team is for
-  * @param [props.encounter] {Reference} - Encounter created as part of
-  * @param [props.period] {Period} - Time period team covers
-  * @param [props.participant] {BackboneElement} - Members of the team
-  * @param [props.reasonCode] {CodeableConcept} - Why the care team exists
-  * @param [props.reasonReference] {Reference} - Why the care team exists
-  * @param [props.managingOrganization] {Reference} - Organization responsible for the care team
-  * @param [props.telecom] {ContactPoint} - A contact detail for the care team (that applies to all members)
-  * @param [props.note] {Annotation} - Comments made about the CareTeam
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this team
+  * @param {string} [props.status] - proposed | active | suspended | inactive | entered-in-error
+  * @param {CodeableConcept} [props.category] - Type of team
+  * @param {string} [props.name] - Name of the team, such as crisis assessment team
+  * @param {Reference} [props.subject] - Who care team is for
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {Period} [props.period] - Time period team covers
+  * @param {BackboneElement} [props.participant] - Members of the team
+  * @param {CodeableConcept} [props.reasonCode] - Why the care team exists
+  * @param {Reference} [props.reasonReference] - Why the care team exists
+  * @param {Reference} [props.managingOrganization] - Organization responsible for the care team
+  * @param {ContactPoint} [props.telecom] - A contact detail for the care team (that applies to all members)
+  * @param {Annotation} [props.note] - Comments made about the CareTeam
  */
 export function careTeam(type: string, props: CareTeam_Props);
 
@@ -659,41 +659,41 @@ export function careTeam(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for item
-  * @param [props.definitionUri] {string} - Defining information about the code of this charge item
-  * @param [props.definitionCanonical] {canonical} - Resource defining the code of this ChargeItem
-  * @param [props.status] {string} - planned | billable | not-billable | aborted | billed | entered-in-error | unknown
-  * @param [props.partOf] {Reference} - Part of referenced ChargeItem
-  * @param [props.code] {CodeableConcept} - A code that identifies the charge, like a billing code
-  * @param [props.subject] {Reference} - Individual service was done for/to
-  * @param [props.context] {Reference} - Encounter / Episode associated with event
-  * @param [props.occurrence] {dateTime} - When the charged service was applied
-  * @param [props.performer] {BackboneElement} - Who performed charged service
-  * @param [props.performingOrganization] {Reference} - Organization providing the charged service
-  * @param [props.requestingOrganization] {Reference} - Organization requesting the charged service
-  * @param [props.costCenter] {Reference} - Organization that has ownership of the (potential, future) revenue
-  * @param [props.quantity] {Quantity} - Quantity of which the charge item has been serviced
-  * @param [props.bodysite] {CodeableConcept} - Anatomical location, if relevant
-  * @param [props.factorOverride] {decimal} - Factor overriding the associated rules
-  * @param [props.priceOverride] {Money} - Price overriding the associated rules
-  * @param [props.overrideReason] {string} - Reason for overriding the list price/factor
-  * @param [props.enterer] {Reference} - Individual who was entering
-  * @param [props.enteredDate] {dateTime} - Date the charge item was entered
-  * @param [props.reason] {CodeableConcept} - Why was the charged  service rendered?
-  * @param [props.service] {Reference} - Which rendered service is being charged?
-  * @param [props.product] {Reference} - Product charged
-  * @param [props.account] {Reference} - Account to place this charge
-  * @param [props.note] {Annotation} - Comments made about the ChargeItem
-  * @param [props.supportingInformation] {Reference} - Further information supporting this charge
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for item
+  * @param {string} [props.definitionUri] - Defining information about the code of this charge item
+  * @param {canonical} [props.definitionCanonical] - Resource defining the code of this ChargeItem
+  * @param {string} [props.status] - planned | billable | not-billable | aborted | billed | entered-in-error | unknown
+  * @param {Reference} [props.partOf] - Part of referenced ChargeItem
+  * @param {CodeableConcept} [props.code] - A code that identifies the charge, like a billing code
+  * @param {Reference} [props.subject] - Individual service was done for/to
+  * @param {Reference} [props.context] - Encounter / Episode associated with event
+  * @param {dateTime} [props.occurrence] - When the charged service was applied
+  * @param {BackboneElement} [props.performer] - Who performed charged service
+  * @param {Reference} [props.performingOrganization] - Organization providing the charged service
+  * @param {Reference} [props.requestingOrganization] - Organization requesting the charged service
+  * @param {Reference} [props.costCenter] - Organization that has ownership of the (potential, future) revenue
+  * @param {Quantity} [props.quantity] - Quantity of which the charge item has been serviced
+  * @param {CodeableConcept} [props.bodysite] - Anatomical location, if relevant
+  * @param {decimal} [props.factorOverride] - Factor overriding the associated rules
+  * @param {Money} [props.priceOverride] - Price overriding the associated rules
+  * @param {string} [props.overrideReason] - Reason for overriding the list price/factor
+  * @param {Reference} [props.enterer] - Individual who was entering
+  * @param {dateTime} [props.enteredDate] - Date the charge item was entered
+  * @param {CodeableConcept} [props.reason] - Why was the charged  service rendered?
+  * @param {Reference} [props.service] - Which rendered service is being charged?
+  * @param {Reference} [props.product] - Product charged
+  * @param {Reference} [props.account] - Account to place this charge
+  * @param {Annotation} [props.note] - Comments made about the ChargeItem
+  * @param {Reference} [props.supportingInformation] - Further information supporting this charge
  */
 export function chargeItem(type: string, props: ChargeItem_Props);
 
@@ -717,38 +717,38 @@ export function chargeItem(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this charge item definition, represented as a URI (globally unique)
-  * @param [props.identifier] {Identifier} - Additional identifier for the charge item definition
-  * @param [props.version] {string} - Business version of the charge item definition
-  * @param [props.title] {string} - Name for this charge item definition (human friendly)
-  * @param [props.derivedFromUri] {string} - Underlying externally-defined charge item definition
-  * @param [props.partOf] {canonical} - A larger definition of which this particular definition is a component or step
-  * @param [props.replaces] {canonical} - Completed or terminated request(s) whose function is taken by this new request
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.experimental] {boolean} - For testing purposes, not real usage
-  * @param [props.date] {dateTime} - Date last changed
-  * @param [props.publisher] {string} - Name of the publisher (organization or individual)
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher
-  * @param [props.description] {markdown} - Natural language description of the charge item definition
-  * @param [props.useContext] {UsageContext} - The context that the content is intended to support
-  * @param [props.jurisdiction] {CodeableConcept} - Intended jurisdiction for charge item definition (if applicable)
-  * @param [props.copyright] {markdown} - Use and/or publishing restrictions
-  * @param [props.approvalDate] {date} - When the charge item definition was approved by publisher
-  * @param [props.lastReviewDate] {date} - When the charge item definition was last reviewed
-  * @param [props.effectivePeriod] {Period} - When the charge item definition is expected to be used
-  * @param [props.code] {CodeableConcept} - Billing codes or product types this definition applies to
-  * @param [props.instance] {Reference} - Instances this definition applies to
-  * @param [props.applicability] {BackboneElement} - Whether or not the billing code is applicable
-  * @param [props.propertyGroup] {BackboneElement} - Group of properties which are applicable under the same conditions
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this charge item definition, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the charge item definition
+  * @param {string} [props.version] - Business version of the charge item definition
+  * @param {string} [props.title] - Name for this charge item definition (human friendly)
+  * @param {string} [props.derivedFromUri] - Underlying externally-defined charge item definition
+  * @param {canonical} [props.partOf] - A larger definition of which this particular definition is a component or step
+  * @param {canonical} [props.replaces] - Completed or terminated request(s) whose function is taken by this new request
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the charge item definition
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for charge item definition (if applicable)
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the charge item definition was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the charge item definition was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the charge item definition is expected to be used
+  * @param {CodeableConcept} [props.code] - Billing codes or product types this definition applies to
+  * @param {Reference} [props.instance] - Instances this definition applies to
+  * @param {BackboneElement} [props.applicability] - Whether or not the billing code is applicable
+  * @param {BackboneElement} [props.propertyGroup] - Group of properties which are applicable under the same conditions
  */
 export function chargeItemDefinition(type: string, props: ChargeItemDefinition_Props);
 
@@ -772,44 +772,44 @@ export function chargeItemDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this citation, represented as a globally unique URI
-  * @param [props.identifier] {Identifier} - Identifier for the Citation resource itself
-  * @param [props.version] {string} - Business version of the citation
-  * @param [props.name] {string} - Name for this citation (computer friendly)
-  * @param [props.title] {string} - Name for this citation (human friendly)
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.experimental] {boolean} - For testing purposes, not real usage
-  * @param [props.date] {dateTime} - Date last changed
-  * @param [props.publisher] {string} - The publisher of the Citation, not the publisher of the article or artifact being cited
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher of the Citation Resource
-  * @param [props.description] {markdown} - Natural language description of the citation
-  * @param [props.useContext] {UsageContext} - The context that the Citation Resource content is intended to support
-  * @param [props.jurisdiction] {CodeableConcept} - Intended jurisdiction for citation (if applicable)
-  * @param [props.purpose] {markdown} - Why this citation is defined
-  * @param [props.copyright] {markdown} - Use and/or publishing restrictions for the Citation, not for the cited artifact
-  * @param [props.approvalDate] {date} - When the citation was approved by publisher
-  * @param [props.lastReviewDate] {date} - When the citation was last reviewed
-  * @param [props.effectivePeriod] {Period} - When the citation is expected to be used
-  * @param [props.author] {ContactDetail} - Who authored the Citation
-  * @param [props.editor] {ContactDetail} - Who edited the Citation
-  * @param [props.reviewer] {ContactDetail} - Who reviewed the Citation
-  * @param [props.endorser] {ContactDetail} - Who endorsed the Citation
-  * @param [props.summary] {BackboneElement} - A human-readable display of the citation
-  * @param [props.classification] {BackboneElement} - The assignment to an organizing scheme
-  * @param [props.note] {Annotation} - Used for general notes and annotations not coded elsewhere
-  * @param [props.currentState] {CodeableConcept} - The status of the citation
-  * @param [props.statusDate] {BackboneElement} - An effective date or period for a status of the citation
-  * @param [props.relatesTo] {BackboneElement} - Artifact related to the Citation Resource
-  * @param [props.citedArtifact] {BackboneElement} - The article or artifact being described
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this citation, represented as a globally unique URI
+  * @param {Identifier} [props.identifier] - Identifier for the Citation resource itself
+  * @param {string} [props.version] - Business version of the citation
+  * @param {string} [props.name] - Name for this citation (computer friendly)
+  * @param {string} [props.title] - Name for this citation (human friendly)
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - The publisher of the Citation, not the publisher of the article or artifact being cited
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher of the Citation Resource
+  * @param {markdown} [props.description] - Natural language description of the citation
+  * @param {UsageContext} [props.useContext] - The context that the Citation Resource content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for citation (if applicable)
+  * @param {markdown} [props.purpose] - Why this citation is defined
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions for the Citation, not for the cited artifact
+  * @param {date} [props.approvalDate] - When the citation was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the citation was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the citation is expected to be used
+  * @param {ContactDetail} [props.author] - Who authored the Citation
+  * @param {ContactDetail} [props.editor] - Who edited the Citation
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the Citation
+  * @param {ContactDetail} [props.endorser] - Who endorsed the Citation
+  * @param {BackboneElement} [props.summary] - A human-readable display of the citation
+  * @param {BackboneElement} [props.classification] - The assignment to an organizing scheme
+  * @param {Annotation} [props.note] - Used for general notes and annotations not coded elsewhere
+  * @param {CodeableConcept} [props.currentState] - The status of the citation
+  * @param {BackboneElement} [props.statusDate] - An effective date or period for a status of the citation
+  * @param {BackboneElement} [props.relatesTo] - Artifact related to the Citation Resource
+  * @param {BackboneElement} [props.citedArtifact] - The article or artifact being described
  */
 export function citation(type: string, props: Citation_Props);
 
@@ -833,42 +833,42 @@ export function citation(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for claim
-  * @param [props.status] {string} - active | cancelled | draft | entered-in-error
-  * @param [props.type] {CodeableConcept} - Category or discipline
-  * @param [props.subType] {CodeableConcept} - More granular claim type
-  * @param [props.use] {string} - claim | preauthorization | predetermination
-  * @param [props.patient] {Reference} - The recipient of the products and services
-  * @param [props.billablePeriod] {Period} - Relevant time frame for the claim
-  * @param [props.created] {dateTime} - Resource creation date
-  * @param [props.enterer] {Reference} - Author of the claim
-  * @param [props.insurer] {Reference} - Target
-  * @param [props.provider] {Reference} - Party responsible for the claim
-  * @param [props.priority] {CodeableConcept} - Desired processing ugency
-  * @param [props.fundsReserve] {CodeableConcept} - For whom to reserve funds
-  * @param [props.related] {BackboneElement} - Prior or corollary claims
-  * @param [props.prescription] {Reference} - Prescription authorizing services and products
-  * @param [props.originalPrescription] {Reference} - Original prescription if superseded by fulfiller
-  * @param [props.payee] {BackboneElement} - Recipient of benefits payable
-  * @param [props.referral] {Reference} - Treatment referral
-  * @param [props.facility] {Reference} - Servicing facility
-  * @param [props.careTeam] {BackboneElement} - Members of the care team
-  * @param [props.supportingInfo] {BackboneElement} - Supporting information
-  * @param [props.diagnosis] {BackboneElement} - Pertinent diagnosis information
-  * @param [props.procedure] {BackboneElement} - Clinical procedures performed
-  * @param [props.insurance] {BackboneElement} - Patient insurance information
-  * @param [props.accident] {BackboneElement} - Details of the event
-  * @param [props.item] {BackboneElement} - Product or service provided
-  * @param [props.total] {Money} - Total claim cost
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for claim
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {CodeableConcept} [props.type] - Category or discipline
+  * @param {CodeableConcept} [props.subType] - More granular claim type
+  * @param {string} [props.use] - claim | preauthorization | predetermination
+  * @param {Reference} [props.patient] - The recipient of the products and services
+  * @param {Period} [props.billablePeriod] - Relevant time frame for the claim
+  * @param {dateTime} [props.created] - Resource creation date
+  * @param {Reference} [props.enterer] - Author of the claim
+  * @param {Reference} [props.insurer] - Target
+  * @param {Reference} [props.provider] - Party responsible for the claim
+  * @param {CodeableConcept} [props.priority] - Desired processing ugency
+  * @param {CodeableConcept} [props.fundsReserve] - For whom to reserve funds
+  * @param {BackboneElement} [props.related] - Prior or corollary claims
+  * @param {Reference} [props.prescription] - Prescription authorizing services and products
+  * @param {Reference} [props.originalPrescription] - Original prescription if superseded by fulfiller
+  * @param {BackboneElement} [props.payee] - Recipient of benefits payable
+  * @param {Reference} [props.referral] - Treatment referral
+  * @param {Reference} [props.facility] - Servicing facility
+  * @param {BackboneElement} [props.careTeam] - Members of the care team
+  * @param {BackboneElement} [props.supportingInfo] - Supporting information
+  * @param {BackboneElement} [props.diagnosis] - Pertinent diagnosis information
+  * @param {BackboneElement} [props.procedure] - Clinical procedures performed
+  * @param {BackboneElement} [props.insurance] - Patient insurance information
+  * @param {BackboneElement} [props.accident] - Details of the event
+  * @param {BackboneElement} [props.item] - Product or service provided
+  * @param {Money} [props.total] - Total claim cost
  */
 export function claim(type: string, props: Claim_Props);
 
@@ -892,42 +892,42 @@ export function claim(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for a claim response
-  * @param [props.status] {string} - active | cancelled | draft | entered-in-error
-  * @param [props.type] {CodeableConcept} - More granular claim type
-  * @param [props.subType] {CodeableConcept} - More granular claim type
-  * @param [props.use] {string} - claim | preauthorization | predetermination
-  * @param [props.patient] {Reference} - The recipient of the products and services
-  * @param [props.created] {dateTime} - Response creation date
-  * @param [props.insurer] {Reference} - Party responsible for reimbursement
-  * @param [props.requestor] {Reference} - Party responsible for the claim
-  * @param [props.request] {Reference} - Id of resource triggering adjudication
-  * @param [props.outcome] {string} - queued | complete | error | partial
-  * @param [props.disposition] {string} - Disposition Message
-  * @param [props.preAuthRef] {string} - Preauthorization reference
-  * @param [props.preAuthPeriod] {Period} - Preauthorization reference effective period
-  * @param [props.payeeType] {CodeableConcept} - Party to be paid any benefits payable
-  * @param [props.item] {BackboneElement} - Adjudication for claim line items
-  * @param [props.addItem] {BackboneElement} - Insurer added line items
-  * @param [props.adjudication] {undefined} - Header-level adjudication
-  * @param [props.total] {BackboneElement} - Adjudication totals
-  * @param [props.payment] {BackboneElement} - Payment Details
-  * @param [props.fundsReserve] {CodeableConcept} - Funds reserved status
-  * @param [props.formCode] {CodeableConcept} - Printed form identifier
-  * @param [props.form] {Attachment} - Printed reference or actual form
-  * @param [props.processNote] {BackboneElement} - Note concerning adjudication
-  * @param [props.communicationRequest] {Reference} - Request for additional information
-  * @param [props.insurance] {BackboneElement} - Patient insurance information
-  * @param [props.error] {BackboneElement} - Processing errors
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for a claim response
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {CodeableConcept} [props.type] - More granular claim type
+  * @param {CodeableConcept} [props.subType] - More granular claim type
+  * @param {string} [props.use] - claim | preauthorization | predetermination
+  * @param {Reference} [props.patient] - The recipient of the products and services
+  * @param {dateTime} [props.created] - Response creation date
+  * @param {Reference} [props.insurer] - Party responsible for reimbursement
+  * @param {Reference} [props.requestor] - Party responsible for the claim
+  * @param {Reference} [props.request] - Id of resource triggering adjudication
+  * @param {string} [props.outcome] - queued | complete | error | partial
+  * @param {string} [props.disposition] - Disposition Message
+  * @param {string} [props.preAuthRef] - Preauthorization reference
+  * @param {Period} [props.preAuthPeriod] - Preauthorization reference effective period
+  * @param {CodeableConcept} [props.payeeType] - Party to be paid any benefits payable
+  * @param {BackboneElement} [props.item] - Adjudication for claim line items
+  * @param {BackboneElement} [props.addItem] - Insurer added line items
+  * @param {undefined} [props.adjudication] - Header-level adjudication
+  * @param {BackboneElement} [props.total] - Adjudication totals
+  * @param {BackboneElement} [props.payment] - Payment Details
+  * @param {CodeableConcept} [props.fundsReserve] - Funds reserved status
+  * @param {CodeableConcept} [props.formCode] - Printed form identifier
+  * @param {Attachment} [props.form] - Printed reference or actual form
+  * @param {BackboneElement} [props.processNote] - Note concerning adjudication
+  * @param {Reference} [props.communicationRequest] - Request for additional information
+  * @param {BackboneElement} [props.insurance] - Patient insurance information
+  * @param {BackboneElement} [props.error] - Processing errors
  */
 export function claimResponse(type: string, props: ClaimResponse_Props);
 
@@ -951,35 +951,35 @@ export function claimResponse(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier
-  * @param [props.status] {string} - in-progress | completed | entered-in-error
-  * @param [props.statusReason] {CodeableConcept} - Reason for current status
-  * @param [props.code] {CodeableConcept} - Kind of assessment performed
-  * @param [props.description] {string} - Why/how the assessment was performed
-  * @param [props.subject] {Reference} - Patient or group assessed
-  * @param [props.encounter] {Reference} - Encounter created as part of
-  * @param [props.effective] {dateTime} - Time of assessment
-  * @param [props.date] {dateTime} - When the assessment was documented
-  * @param [props.assessor] {Reference} - The clinician performing the assessment
-  * @param [props.previous] {Reference} - Reference to last assessment
-  * @param [props.problem] {Reference} - Relevant impressions of patient state
-  * @param [props.investigation] {BackboneElement} - One or more sets of investigations (signs, symptoms, etc.)
-  * @param [props.protocol] {string} - Clinical Protocol followed
-  * @param [props.summary] {string} - Summary of the assessment
-  * @param [props.finding] {BackboneElement} - Possible or likely findings and diagnoses
-  * @param [props.prognosisCodeableConcept] {CodeableConcept} - Estimate of likely outcome
-  * @param [props.prognosisReference] {Reference} - RiskAssessment expressing likely outcome
-  * @param [props.supportingInfo] {Reference} - Information supporting the clinical impression
-  * @param [props.note] {Annotation} - Comments made about the ClinicalImpression
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {string} [props.status] - in-progress | completed | entered-in-error
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {CodeableConcept} [props.code] - Kind of assessment performed
+  * @param {string} [props.description] - Why/how the assessment was performed
+  * @param {Reference} [props.subject] - Patient or group assessed
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {dateTime} [props.effective] - Time of assessment
+  * @param {dateTime} [props.date] - When the assessment was documented
+  * @param {Reference} [props.assessor] - The clinician performing the assessment
+  * @param {Reference} [props.previous] - Reference to last assessment
+  * @param {Reference} [props.problem] - Relevant impressions of patient state
+  * @param {BackboneElement} [props.investigation] - One or more sets of investigations (signs, symptoms, etc.)
+  * @param {string} [props.protocol] - Clinical Protocol followed
+  * @param {string} [props.summary] - Summary of the assessment
+  * @param {BackboneElement} [props.finding] - Possible or likely findings and diagnoses
+  * @param {CodeableConcept} [props.prognosisCodeableConcept] - Estimate of likely outcome
+  * @param {Reference} [props.prognosisReference] - RiskAssessment expressing likely outcome
+  * @param {Reference} [props.supportingInfo] - Information supporting the clinical impression
+  * @param {Annotation} [props.note] - Comments made about the ClinicalImpression
  */
 export function clinicalImpression(type: string, props: ClinicalImpression_Props);
 
@@ -1003,26 +1003,26 @@ export function clinicalImpression(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier for this issue
-  * @param [props.type] {string} - indication | contraindication | interaction | undesirable-effect | warning
-  * @param [props.category] {CodeableConcept} - A categorisation of the issue, primarily for dividing warnings into subject heading areas such as "Pregnancy", "Overdose"
-  * @param [props.subject] {Reference} - The medication or procedure for which this is an indication
-  * @param [props.status] {CodeableConcept} - Whether this is a current issue or one that has been retired etc
-  * @param [props.contraindication] {BackboneElement} - Specifics for when this is a contraindication
-  * @param [props.indication] {BackboneElement} - Specifics for when this is an indication
-  * @param [props.interaction] {BackboneElement} - Specifics for when this is an interaction
-  * @param [props.population] {Reference} - The population group to which this applies
-  * @param [props.undesirableEffect] {BackboneElement} - A possible negative outcome from the use of this treatment
-  * @param [props.warning] {BackboneElement} - Critical environmental, health or physical risks or hazards. For example 'Do not operate heavy machinery', 'May cause drowsiness'
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier for this issue
+  * @param {string} [props.type] - indication | contraindication | interaction | undesirable-effect | warning
+  * @param {CodeableConcept} [props.category] - A categorisation of the issue, primarily for dividing warnings into subject heading areas such as "Pregnancy", "Overdose"
+  * @param {Reference} [props.subject] - The medication or procedure for which this is an indication
+  * @param {CodeableConcept} [props.status] - Whether this is a current issue or one that has been retired etc
+  * @param {BackboneElement} [props.contraindication] - Specifics for when this is a contraindication
+  * @param {BackboneElement} [props.indication] - Specifics for when this is an indication
+  * @param {BackboneElement} [props.interaction] - Specifics for when this is an interaction
+  * @param {Reference} [props.population] - The population group to which this applies
+  * @param {BackboneElement} [props.undesirableEffect] - A possible negative outcome from the use of this treatment
+  * @param {BackboneElement} [props.warning] - Critical environmental, health or physical risks or hazards. For example 'Do not operate heavy machinery', 'May cause drowsiness'
  */
 export function clinicalUseDefinition(type: string, props: ClinicalUseDefinition_Props);
 
@@ -1046,38 +1046,38 @@ export function clinicalUseDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Unique identifier
-  * @param [props.instantiatesCanonical] {canonical} - Instantiates FHIR protocol or definition
-  * @param [props.instantiatesUri] {string} - Instantiates external protocol or definition
-  * @param [props.basedOn] {Reference} - Request fulfilled by this communication
-  * @param [props.partOf] {Reference} - Part of this action
-  * @param [props.inResponseTo] {Reference} - Reply to
-  * @param [props.status] {string} - preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
-  * @param [props.statusReason] {CodeableConcept} - Reason for current status
-  * @param [props.category] {CodeableConcept} - Message category
-  * @param [props.priority] {string} - routine | urgent | asap | stat
-  * @param [props.medium] {CodeableConcept} - A channel of communication
-  * @param [props.subject] {Reference} - Focus of message
-  * @param [props.topic] {CodeableConcept} - Description of the purpose/content
-  * @param [props.about] {Reference} - Resources that pertain to this communication
-  * @param [props.encounter] {Reference} - Encounter created as part of
-  * @param [props.sent] {dateTime} - When sent
-  * @param [props.received] {dateTime} - When received
-  * @param [props.recipient] {Reference} - Message recipient
-  * @param [props.sender] {Reference} - Message sender
-  * @param [props.reasonCode] {CodeableConcept} - Indication for message
-  * @param [props.reasonReference] {Reference} - Why was communication done?
-  * @param [props.payload] {BackboneElement} - Message payload
-  * @param [props.note] {Annotation} - Comments made about the communication
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique identifier
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - Request fulfilled by this communication
+  * @param {Reference} [props.partOf] - Part of this action
+  * @param {Reference} [props.inResponseTo] - Reply to
+  * @param {string} [props.status] - preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {CodeableConcept} [props.category] - Message category
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {CodeableConcept} [props.medium] - A channel of communication
+  * @param {Reference} [props.subject] - Focus of message
+  * @param {CodeableConcept} [props.topic] - Description of the purpose/content
+  * @param {Reference} [props.about] - Resources that pertain to this communication
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {dateTime} [props.sent] - When sent
+  * @param {dateTime} [props.received] - When received
+  * @param {Reference} [props.recipient] - Message recipient
+  * @param {Reference} [props.sender] - Message sender
+  * @param {CodeableConcept} [props.reasonCode] - Indication for message
+  * @param {Reference} [props.reasonReference] - Why was communication done?
+  * @param {BackboneElement} [props.payload] - Message payload
+  * @param {Annotation} [props.note] - Comments made about the communication
  */
 export function communication(type: string, props: Communication_Props);
 
@@ -1101,37 +1101,37 @@ export function communication(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Unique identifier
-  * @param [props.basedOn] {Reference} - Fulfills plan or proposal
-  * @param [props.replaces] {Reference} - Request(s) replaced by this request
-  * @param [props.groupIdentifier] {Identifier} - Composite request this is part of
-  * @param [props.status] {string} - draft | active | on-hold | revoked | completed | entered-in-error | unknown
-  * @param [props.statusReason] {CodeableConcept} - Reason for current status
-  * @param [props.category] {CodeableConcept} - Message category
-  * @param [props.priority] {string} - routine | urgent | asap | stat
-  * @param [props.doNotPerform] {boolean} - True if request is prohibiting action
-  * @param [props.medium] {CodeableConcept} - A channel of communication
-  * @param [props.subject] {Reference} - Focus of message
-  * @param [props.about] {Reference} - Resources that pertain to this communication request
-  * @param [props.encounter] {Reference} - Encounter created as part of
-  * @param [props.payload] {BackboneElement} - Message payload
-  * @param [props.occurrence] {dateTime} - When scheduled
-  * @param [props.authoredOn] {dateTime} - When request transitioned to being actionable
-  * @param [props.requester] {Reference} - Who/what is requesting service
-  * @param [props.recipient] {Reference} - Message recipient
-  * @param [props.sender] {Reference} - Message sender
-  * @param [props.reasonCode] {CodeableConcept} - Why is communication needed?
-  * @param [props.reasonReference] {Reference} - Why is communication needed?
-  * @param [props.note] {Annotation} - Comments made about communication request
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique identifier
+  * @param {Reference} [props.basedOn] - Fulfills plan or proposal
+  * @param {Reference} [props.replaces] - Request(s) replaced by this request
+  * @param {Identifier} [props.groupIdentifier] - Composite request this is part of
+  * @param {string} [props.status] - draft | active | on-hold | revoked | completed | entered-in-error | unknown
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {CodeableConcept} [props.category] - Message category
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {boolean} [props.doNotPerform] - True if request is prohibiting action
+  * @param {CodeableConcept} [props.medium] - A channel of communication
+  * @param {Reference} [props.subject] - Focus of message
+  * @param {Reference} [props.about] - Resources that pertain to this communication request
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {BackboneElement} [props.payload] - Message payload
+  * @param {dateTime} [props.occurrence] - When scheduled
+  * @param {dateTime} [props.authoredOn] - When request transitioned to being actionable
+  * @param {Reference} [props.requester] - Who/what is requesting service
+  * @param {Reference} [props.recipient] - Message recipient
+  * @param {Reference} [props.sender] - Message sender
+  * @param {CodeableConcept} [props.reasonCode] - Why is communication needed?
+  * @param {Reference} [props.reasonReference] - Why is communication needed?
+  * @param {Annotation} [props.note] - Comments made about communication request
  */
 export function communicationRequest(type: string, props: CommunicationRequest_Props);
 
@@ -1155,32 +1155,32 @@ export function communicationRequest(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External Ids for this condition
-  * @param [props.clinicalStatus] {CodeableConcept} - active | recurrence | relapse | inactive | remission | resolved
-  * @param [props.verificationStatus] {CodeableConcept} - unconfirmed | provisional | differential | confirmed | refuted | entered-in-error
-  * @param [props.category] {CodeableConcept} - problem-list-item | encounter-diagnosis
-  * @param [props.severity] {CodeableConcept} - Subjective severity of condition
-  * @param [props.code] {CodeableConcept} - Identification of the condition, problem or diagnosis
-  * @param [props.bodySite] {CodeableConcept} - Anatomical location, if relevant
-  * @param [props.subject] {Reference} - Who has the condition?
-  * @param [props.encounter] {Reference} - Encounter created as part of
-  * @param [props.onset] {dateTime} - Estimated or actual date,  date-time, or age
-  * @param [props.abatement] {dateTime} - When in resolution/remission
-  * @param [props.recordedDate] {dateTime} - Date record was first recorded
-  * @param [props.recorder] {Reference} - Who recorded the condition
-  * @param [props.asserter] {Reference} - Person who asserts this condition
-  * @param [props.stage] {BackboneElement} - Stage/grade, usually assessed formally
-  * @param [props.evidence] {BackboneElement} - Supporting evidence
-  * @param [props.note] {Annotation} - Additional information about the Condition
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this condition
+  * @param {CodeableConcept} [props.clinicalStatus] - active | recurrence | relapse | inactive | remission | resolved
+  * @param {CodeableConcept} [props.verificationStatus] - unconfirmed | provisional | differential | confirmed | refuted | entered-in-error
+  * @param {CodeableConcept} [props.category] - problem-list-item | encounter-diagnosis
+  * @param {CodeableConcept} [props.severity] - Subjective severity of condition
+  * @param {CodeableConcept} [props.code] - Identification of the condition, problem or diagnosis
+  * @param {CodeableConcept} [props.bodySite] - Anatomical location, if relevant
+  * @param {Reference} [props.subject] - Who has the condition?
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {dateTime} [props.onset] - Estimated or actual date,  date-time, or age
+  * @param {dateTime} [props.abatement] - When in resolution/remission
+  * @param {dateTime} [props.recordedDate] - Date record was first recorded
+  * @param {Reference} [props.recorder] - Who recorded the condition
+  * @param {Reference} [props.asserter] - Person who asserts this condition
+  * @param {BackboneElement} [props.stage] - Stage/grade, usually assessed formally
+  * @param {BackboneElement} [props.evidence] - Supporting evidence
+  * @param {Annotation} [props.note] - Additional information about the Condition
  */
 export function condition(type: string, props: Condition_Props);
 
@@ -1204,48 +1204,48 @@ export function condition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Contract number
-  * @param [props.url] {string} - Basal definition
-  * @param [props.version] {string} - Business edition
-  * @param [props.status] {string} - amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated
-  * @param [props.legalState] {CodeableConcept} - Negotiation status
-  * @param [props.instantiatesCanonical] {Reference} - Source Contract Definition
-  * @param [props.instantiatesUri] {string} - External Contract Definition
-  * @param [props.contentDerivative] {CodeableConcept} - Content derived from the basal information
-  * @param [props.issued] {dateTime} - When this Contract was issued
-  * @param [props.applies] {Period} - Effective time
-  * @param [props.expirationType] {CodeableConcept} - Contract cessation cause
-  * @param [props.subject] {Reference} - Contract Target Entity
-  * @param [props.authority] {Reference} - Authority under which this Contract has standing
-  * @param [props.domain] {Reference} - A sphere of control governed by an authoritative jurisdiction, organization, or person
-  * @param [props.site] {Reference} - Specific Location
-  * @param [props.name] {string} - Computer friendly designation
-  * @param [props.title] {string} - Human Friendly name
-  * @param [props.subtitle] {string} - Subordinate Friendly name
-  * @param [props.alias] {string} - Acronym or short name
-  * @param [props.author] {Reference} - Source of Contract
-  * @param [props.scope] {CodeableConcept} - Range of Legal Concerns
-  * @param [props.topic] {CodeableConcept} - Focus of contract interest
-  * @param [props.type] {CodeableConcept} - Legal instrument category
-  * @param [props.subType] {CodeableConcept} - Subtype within the context of type
-  * @param [props.contentDefinition] {BackboneElement} - Contract precursor content
-  * @param [props.term] {BackboneElement} - Contract Term List
-  * @param [props.supportingInfo] {Reference} - Extra Information
-  * @param [props.relevantHistory] {Reference} - Key event in Contract History
-  * @param [props.signer] {BackboneElement} - Contract Signatory
-  * @param [props.friendly] {BackboneElement} - Contract Friendly Language
-  * @param [props.legal] {BackboneElement} - Contract Legal Language
-  * @param [props.rule] {BackboneElement} - Computable Contract Language
-  * @param [props.legallyBinding] {Attachment} - Binding Contract
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Contract number
+  * @param {string} [props.url] - Basal definition
+  * @param {string} [props.version] - Business edition
+  * @param {string} [props.status] - amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated
+  * @param {CodeableConcept} [props.legalState] - Negotiation status
+  * @param {Reference} [props.instantiatesCanonical] - Source Contract Definition
+  * @param {string} [props.instantiatesUri] - External Contract Definition
+  * @param {CodeableConcept} [props.contentDerivative] - Content derived from the basal information
+  * @param {dateTime} [props.issued] - When this Contract was issued
+  * @param {Period} [props.applies] - Effective time
+  * @param {CodeableConcept} [props.expirationType] - Contract cessation cause
+  * @param {Reference} [props.subject] - Contract Target Entity
+  * @param {Reference} [props.authority] - Authority under which this Contract has standing
+  * @param {Reference} [props.domain] - A sphere of control governed by an authoritative jurisdiction, organization, or person
+  * @param {Reference} [props.site] - Specific Location
+  * @param {string} [props.name] - Computer friendly designation
+  * @param {string} [props.title] - Human Friendly name
+  * @param {string} [props.subtitle] - Subordinate Friendly name
+  * @param {string} [props.alias] - Acronym or short name
+  * @param {Reference} [props.author] - Source of Contract
+  * @param {CodeableConcept} [props.scope] - Range of Legal Concerns
+  * @param {CodeableConcept} [props.topic] - Focus of contract interest
+  * @param {CodeableConcept} [props.type] - Legal instrument category
+  * @param {CodeableConcept} [props.subType] - Subtype within the context of type
+  * @param {BackboneElement} [props.contentDefinition] - Contract precursor content
+  * @param {BackboneElement} [props.term] - Contract Term List
+  * @param {Reference} [props.supportingInfo] - Extra Information
+  * @param {Reference} [props.relevantHistory] - Key event in Contract History
+  * @param {BackboneElement} [props.signer] - Contract Signatory
+  * @param {BackboneElement} [props.friendly] - Contract Friendly Language
+  * @param {BackboneElement} [props.legal] - Contract Legal Language
+  * @param {BackboneElement} [props.rule] - Computable Contract Language
+  * @param {Attachment} [props.legallyBinding] - Binding Contract
  */
 export function contract(type: string, props: Contract_Props);
 
@@ -1269,32 +1269,32 @@ export function contract(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for the coverage
-  * @param [props.status] {string} - active | cancelled | draft | entered-in-error
-  * @param [props.type] {CodeableConcept} - Coverage category such as medical or accident
-  * @param [props.policyHolder] {Reference} - Owner of the policy
-  * @param [props.subscriber] {Reference} - Subscriber to the policy
-  * @param [props.subscriberId] {string} - ID assigned to the subscriber
-  * @param [props.beneficiary] {Reference} - Plan beneficiary
-  * @param [props.dependent] {string} - Dependent number
-  * @param [props.relationship] {CodeableConcept} - Beneficiary relationship to the subscriber
-  * @param [props.period] {Period} - Coverage start and end dates
-  * @param [props.payor] {Reference} - Issuer of the policy
-  * @param [props.class] {BackboneElement} - Additional coverage classifications
-  * @param [props.order] {number} - Relative order of the coverage
-  * @param [props.network] {string} - Insurer network
-  * @param [props.costToBeneficiary] {BackboneElement} - Patient payments for services/products
-  * @param [props.subrogation] {boolean} - Reimbursement to insurer
-  * @param [props.contract] {Reference} - Contract details
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for the coverage
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {CodeableConcept} [props.type] - Coverage category such as medical or accident
+  * @param {Reference} [props.policyHolder] - Owner of the policy
+  * @param {Reference} [props.subscriber] - Subscriber to the policy
+  * @param {string} [props.subscriberId] - ID assigned to the subscriber
+  * @param {Reference} [props.beneficiary] - Plan beneficiary
+  * @param {string} [props.dependent] - Dependent number
+  * @param {CodeableConcept} [props.relationship] - Beneficiary relationship to the subscriber
+  * @param {Period} [props.period] - Coverage start and end dates
+  * @param {Reference} [props.payor] - Issuer of the policy
+  * @param {BackboneElement} [props.class] - Additional coverage classifications
+  * @param {number} [props.order] - Relative order of the coverage
+  * @param {string} [props.network] - Insurer network
+  * @param {BackboneElement} [props.costToBeneficiary] - Patient payments for services/products
+  * @param {boolean} [props.subrogation] - Reimbursement to insurer
+  * @param {Reference} [props.contract] - Contract details
  */
 export function coverage(type: string, props: Coverage_Props);
 
@@ -1318,29 +1318,29 @@ export function coverage(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for coverage eligiblity request
-  * @param [props.status] {string} - active | cancelled | draft | entered-in-error
-  * @param [props.priority] {CodeableConcept} - Desired processing priority
-  * @param [props.purpose] {string} - auth-requirements | benefits | discovery | validation
-  * @param [props.patient] {Reference} - Intended recipient of products and services
-  * @param [props.serviced] {date} - Estimated date or dates of service
-  * @param [props.created] {dateTime} - Creation date
-  * @param [props.enterer] {Reference} - Author
-  * @param [props.provider] {Reference} - Party responsible for the request
-  * @param [props.insurer] {Reference} - Coverage issuer
-  * @param [props.facility] {Reference} - Servicing facility
-  * @param [props.supportingInfo] {BackboneElement} - Supporting information
-  * @param [props.insurance] {BackboneElement} - Patient insurance information
-  * @param [props.item] {BackboneElement} - Item to be evaluated for eligibiity
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for coverage eligiblity request
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {CodeableConcept} [props.priority] - Desired processing priority
+  * @param {string} [props.purpose] - auth-requirements | benefits | discovery | validation
+  * @param {Reference} [props.patient] - Intended recipient of products and services
+  * @param {date} [props.serviced] - Estimated date or dates of service
+  * @param {dateTime} [props.created] - Creation date
+  * @param {Reference} [props.enterer] - Author
+  * @param {Reference} [props.provider] - Party responsible for the request
+  * @param {Reference} [props.insurer] - Coverage issuer
+  * @param {Reference} [props.facility] - Servicing facility
+  * @param {BackboneElement} [props.supportingInfo] - Supporting information
+  * @param {BackboneElement} [props.insurance] - Patient insurance information
+  * @param {BackboneElement} [props.item] - Item to be evaluated for eligibiity
  */
 export function coverageEligibilityRequest(type: string, props: CoverageEligibilityRequest_Props);
 
@@ -1364,30 +1364,30 @@ export function coverageEligibilityRequest(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for coverage eligiblity request
-  * @param [props.status] {string} - active | cancelled | draft | entered-in-error
-  * @param [props.purpose] {string} - auth-requirements | benefits | discovery | validation
-  * @param [props.patient] {Reference} - Intended recipient of products and services
-  * @param [props.serviced] {date} - Estimated date or dates of service
-  * @param [props.created] {dateTime} - Response creation date
-  * @param [props.requestor] {Reference} - Party responsible for the request
-  * @param [props.request] {Reference} - Eligibility request reference
-  * @param [props.outcome] {string} - queued | complete | error | partial
-  * @param [props.disposition] {string} - Disposition Message
-  * @param [props.insurer] {Reference} - Coverage issuer
-  * @param [props.insurance] {BackboneElement} - Patient insurance information
-  * @param [props.preAuthRef] {string} - Preauthorization reference
-  * @param [props.form] {CodeableConcept} - Printed form identifier
-  * @param [props.error] {BackboneElement} - Processing errors
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for coverage eligiblity request
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {string} [props.purpose] - auth-requirements | benefits | discovery | validation
+  * @param {Reference} [props.patient] - Intended recipient of products and services
+  * @param {date} [props.serviced] - Estimated date or dates of service
+  * @param {dateTime} [props.created] - Response creation date
+  * @param {Reference} [props.requestor] - Party responsible for the request
+  * @param {Reference} [props.request] - Eligibility request reference
+  * @param {string} [props.outcome] - queued | complete | error | partial
+  * @param {string} [props.disposition] - Disposition Message
+  * @param {Reference} [props.insurer] - Coverage issuer
+  * @param {BackboneElement} [props.insurance] - Patient insurance information
+  * @param {string} [props.preAuthRef] - Preauthorization reference
+  * @param {CodeableConcept} [props.form] - Printed form identifier
+  * @param {BackboneElement} [props.error] - Processing errors
  */
 export function coverageEligibilityResponse(type: string, props: CoverageEligibilityResponse_Props);
 
@@ -1411,27 +1411,27 @@ export function coverageEligibilityResponse(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Unique id for the detected issue
-  * @param [props.status] {string} - registered | preliminary | final | amended +
-  * @param [props.code] {CodeableConcept} - Issue Category, e.g. drug-drug, duplicate therapy, etc.
-  * @param [props.severity] {string} - high | moderate | low
-  * @param [props.patient] {Reference} - Associated patient
-  * @param [props.identified] {dateTime} - When identified
-  * @param [props.author] {Reference} - The provider or device that identified the issue
-  * @param [props.implicated] {Reference} - Problem resource
-  * @param [props.evidence] {BackboneElement} - Supporting evidence
-  * @param [props.detail] {string} - Description and context
-  * @param [props.reference] {string} - Authority for issue
-  * @param [props.mitigation] {BackboneElement} - Step taken to address
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique id for the detected issue
+  * @param {string} [props.status] - registered | preliminary | final | amended +
+  * @param {CodeableConcept} [props.code] - Issue Category, e.g. drug-drug, duplicate therapy, etc.
+  * @param {string} [props.severity] - high | moderate | low
+  * @param {Reference} [props.patient] - Associated patient
+  * @param {dateTime} [props.identified] - When identified
+  * @param {Reference} [props.author] - The provider or device that identified the issue
+  * @param {Reference} [props.implicated] - Problem resource
+  * @param {BackboneElement} [props.evidence] - Supporting evidence
+  * @param {string} [props.detail] - Description and context
+  * @param {string} [props.reference] - Authority for issue
+  * @param {BackboneElement} [props.mitigation] - Step taken to address
  */
 export function detectedIssue(type: string, props: DetectedIssue_Props);
 
@@ -1455,41 +1455,41 @@ export function detectedIssue(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Instance identifier
-  * @param [props.definition] {Reference} - The reference to the definition for the device
-  * @param [props.udiCarrier] {BackboneElement} - Unique Device Identifier (UDI) Barcode string
-  * @param [props.status] {string} - active | inactive | entered-in-error | unknown
-  * @param [props.statusReason] {CodeableConcept} - online | paused | standby | offline | not-ready | transduc-discon | hw-discon | off
-  * @param [props.distinctIdentifier] {string} - The distinct identification string
-  * @param [props.manufacturer] {string} - Name of device manufacturer
-  * @param [props.manufactureDate] {dateTime} - Date when the device was made
-  * @param [props.expirationDate] {dateTime} - Date and time of expiry of this device (if applicable)
-  * @param [props.lotNumber] {string} - Lot number of manufacture
-  * @param [props.serialNumber] {string} - Serial number assigned by the manufacturer
-  * @param [props.deviceName] {BackboneElement} - The name of the device as given by the manufacturer
-  * @param [props.modelNumber] {string} - The manufacturer's model number for the device
-  * @param [props.partNumber] {string} - The part number or catalog number of the device
-  * @param [props.type] {CodeableConcept} - The kind or type of device
-  * @param [props.specialization] {BackboneElement} - The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication
-  * @param [props.version] {BackboneElement} - The actual design of the device or software version running on the device
-  * @param [props.property] {BackboneElement} - The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties
-  * @param [props.patient] {Reference} - Patient to whom Device is affixed
-  * @param [props.owner] {Reference} - Organization responsible for device
-  * @param [props.contact] {ContactPoint} - Details for human/organization for support
-  * @param [props.location] {Reference} - Where the device is found
-  * @param [props.url] {string} - Network address to contact device
-  * @param [props.note] {Annotation} - Device notes and comments
-  * @param [props.safety] {CodeableConcept} - Safety Characteristics of Device
-  * @param [props.parent] {Reference} - The device that this device is attached to or is part of
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Instance identifier
+  * @param {Reference} [props.definition] - The reference to the definition for the device
+  * @param {BackboneElement} [props.udiCarrier] - Unique Device Identifier (UDI) Barcode string
+  * @param {string} [props.status] - active | inactive | entered-in-error | unknown
+  * @param {CodeableConcept} [props.statusReason] - online | paused | standby | offline | not-ready | transduc-discon | hw-discon | off
+  * @param {string} [props.distinctIdentifier] - The distinct identification string
+  * @param {string} [props.manufacturer] - Name of device manufacturer
+  * @param {dateTime} [props.manufactureDate] - Date when the device was made
+  * @param {dateTime} [props.expirationDate] - Date and time of expiry of this device (if applicable)
+  * @param {string} [props.lotNumber] - Lot number of manufacture
+  * @param {string} [props.serialNumber] - Serial number assigned by the manufacturer
+  * @param {BackboneElement} [props.deviceName] - The name of the device as given by the manufacturer
+  * @param {string} [props.modelNumber] - The manufacturer's model number for the device
+  * @param {string} [props.partNumber] - The part number or catalog number of the device
+  * @param {CodeableConcept} [props.type] - The kind or type of device
+  * @param {BackboneElement} [props.specialization] - The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication
+  * @param {BackboneElement} [props.version] - The actual design of the device or software version running on the device
+  * @param {BackboneElement} [props.property] - The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties
+  * @param {Reference} [props.patient] - Patient to whom Device is affixed
+  * @param {Reference} [props.owner] - Organization responsible for device
+  * @param {ContactPoint} [props.contact] - Details for human/organization for support
+  * @param {Reference} [props.location] - Where the device is found
+  * @param {string} [props.url] - Network address to contact device
+  * @param {Annotation} [props.note] - Device notes and comments
+  * @param {CodeableConcept} [props.safety] - Safety Characteristics of Device
+  * @param {Reference} [props.parent] - The device that this device is attached to or is part of
  */
 export function device(type: string, props: Device_Props);
 
@@ -1513,37 +1513,37 @@ export function device(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Instance identifier
-  * @param [props.udiDeviceIdentifier] {BackboneElement} - Unique Device Identifier (UDI) Barcode string
-  * @param [props.manufacturer] {string} - Name of device manufacturer
-  * @param [props.deviceName] {BackboneElement} - A name given to the device to identify it
-  * @param [props.modelNumber] {string} - The model number for the device
-  * @param [props.type] {CodeableConcept} - What kind of device or device system this is
-  * @param [props.specialization] {BackboneElement} - The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication
-  * @param [props.version] {string} - Available versions
-  * @param [props.safety] {CodeableConcept} - Safety characteristics of the device
-  * @param [props.shelfLifeStorage] {ProductShelfLife} - Shelf Life and storage information
-  * @param [props.physicalCharacteristics] {ProdCharacteristic} - Dimensions, color etc.
-  * @param [props.languageCode] {CodeableConcept} - Language code for the human-readable text strings produced by the device (all supported)
-  * @param [props.capability] {BackboneElement} - Device capabilities
-  * @param [props.property] {BackboneElement} - The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties
-  * @param [props.owner] {Reference} - Organization responsible for device
-  * @param [props.contact] {ContactPoint} - Details for human/organization for support
-  * @param [props.url] {string} - Network address to contact device
-  * @param [props.onlineInformation] {string} - Access to on-line information
-  * @param [props.note] {Annotation} - Device notes and comments
-  * @param [props.quantity] {Quantity} - The quantity of the device present in the packaging (e.g. the number of devices present in a pack, or the number of devices in the same package of the medicinal product)
-  * @param [props.parentDevice] {Reference} - The parent device it can be part of
-  * @param [props.material] {BackboneElement} - A substance used to create the material(s) of which the device is made
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Instance identifier
+  * @param {BackboneElement} [props.udiDeviceIdentifier] - Unique Device Identifier (UDI) Barcode string
+  * @param {string} [props.manufacturer] - Name of device manufacturer
+  * @param {BackboneElement} [props.deviceName] - A name given to the device to identify it
+  * @param {string} [props.modelNumber] - The model number for the device
+  * @param {CodeableConcept} [props.type] - What kind of device or device system this is
+  * @param {BackboneElement} [props.specialization] - The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication
+  * @param {string} [props.version] - Available versions
+  * @param {CodeableConcept} [props.safety] - Safety characteristics of the device
+  * @param {ProductShelfLife} [props.shelfLifeStorage] - Shelf Life and storage information
+  * @param {ProdCharacteristic} [props.physicalCharacteristics] - Dimensions, color etc.
+  * @param {CodeableConcept} [props.languageCode] - Language code for the human-readable text strings produced by the device (all supported)
+  * @param {BackboneElement} [props.capability] - Device capabilities
+  * @param {BackboneElement} [props.property] - The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties
+  * @param {Reference} [props.owner] - Organization responsible for device
+  * @param {ContactPoint} [props.contact] - Details for human/organization for support
+  * @param {string} [props.url] - Network address to contact device
+  * @param {string} [props.onlineInformation] - Access to on-line information
+  * @param {Annotation} [props.note] - Device notes and comments
+  * @param {Quantity} [props.quantity] - The quantity of the device present in the packaging (e.g. the number of devices present in a pack, or the number of devices in the same package of the medicinal product)
+  * @param {Reference} [props.parentDevice] - The parent device it can be part of
+  * @param {BackboneElement} [props.material] - A substance used to create the material(s) of which the device is made
  */
 export function deviceDefinition(type: string, props: DeviceDefinition_Props);
 
@@ -1567,25 +1567,25 @@ export function deviceDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Instance identifier
-  * @param [props.type] {CodeableConcept} - Identity of metric, for example Heart Rate or PEEP Setting
-  * @param [props.unit] {CodeableConcept} - Unit of Measure for the Metric
-  * @param [props.source] {Reference} - Describes the link to the source Device
-  * @param [props.parent] {Reference} - Describes the link to the parent Device
-  * @param [props.operationalStatus] {string} - on | off | standby | entered-in-error
-  * @param [props.color] {string} - black | red | green | yellow | blue | magenta | cyan | white
-  * @param [props.category] {string} - measurement | setting | calculation | unspecified
-  * @param [props.measurementPeriod] {Timing} - Describes the measurement repetition time
-  * @param [props.calibration] {BackboneElement} - Describes the calibrations that have been performed or that are required to be performed
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Instance identifier
+  * @param {CodeableConcept} [props.type] - Identity of metric, for example Heart Rate or PEEP Setting
+  * @param {CodeableConcept} [props.unit] - Unit of Measure for the Metric
+  * @param {Reference} [props.source] - Describes the link to the source Device
+  * @param {Reference} [props.parent] - Describes the link to the parent Device
+  * @param {string} [props.operationalStatus] - on | off | standby | entered-in-error
+  * @param {string} [props.color] - black | red | green | yellow | blue | magenta | cyan | white
+  * @param {string} [props.category] - measurement | setting | calculation | unspecified
+  * @param {Timing} [props.measurementPeriod] - Describes the measurement repetition time
+  * @param {BackboneElement} [props.calibration] - Describes the calibrations that have been performed or that are required to be performed
  */
 export function deviceMetric(type: string, props: DeviceMetric_Props);
 
@@ -1609,39 +1609,39 @@ export function deviceMetric(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External Request identifier
-  * @param [props.instantiatesCanonical] {canonical} - Instantiates FHIR protocol or definition
-  * @param [props.instantiatesUri] {string} - Instantiates external protocol or definition
-  * @param [props.basedOn] {Reference} - What request fulfills
-  * @param [props.priorRequest] {Reference} - What request replaces
-  * @param [props.groupIdentifier] {Identifier} - Identifier of composite request
-  * @param [props.status] {string} - draft | active | on-hold | revoked | completed | entered-in-error | unknown
-  * @param [props.intent] {string} - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
-  * @param [props.priority] {string} - routine | urgent | asap | stat
-  * @param [props.code] {Reference} - Device requested
-  * @param [props.parameter] {BackboneElement} - Device details
-  * @param [props.subject] {Reference} - Focus of request
-  * @param [props.encounter] {Reference} - Encounter motivating request
-  * @param [props.occurrence] {dateTime} - Desired time or schedule for use
-  * @param [props.authoredOn] {dateTime} - When recorded
-  * @param [props.requester] {Reference} - Who/what is requesting diagnostics
-  * @param [props.performerType] {CodeableConcept} - Filler role
-  * @param [props.performer] {Reference} - Requested Filler
-  * @param [props.reasonCode] {CodeableConcept} - Coded Reason for request
-  * @param [props.reasonReference] {Reference} - Linked Reason for request
-  * @param [props.insurance] {Reference} - Associated insurance coverage
-  * @param [props.supportingInfo] {Reference} - Additional clinical information
-  * @param [props.note] {Annotation} - Notes or comments
-  * @param [props.relevantHistory] {Reference} - Request provenance
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Request identifier
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - What request fulfills
+  * @param {Reference} [props.priorRequest] - What request replaces
+  * @param {Identifier} [props.groupIdentifier] - Identifier of composite request
+  * @param {string} [props.status] - draft | active | on-hold | revoked | completed | entered-in-error | unknown
+  * @param {string} [props.intent] - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {Reference} [props.code] - Device requested
+  * @param {BackboneElement} [props.parameter] - Device details
+  * @param {Reference} [props.subject] - Focus of request
+  * @param {Reference} [props.encounter] - Encounter motivating request
+  * @param {dateTime} [props.occurrence] - Desired time or schedule for use
+  * @param {dateTime} [props.authoredOn] - When recorded
+  * @param {Reference} [props.requester] - Who/what is requesting diagnostics
+  * @param {CodeableConcept} [props.performerType] - Filler role
+  * @param {Reference} [props.performer] - Requested Filler
+  * @param {CodeableConcept} [props.reasonCode] - Coded Reason for request
+  * @param {Reference} [props.reasonReference] - Linked Reason for request
+  * @param {Reference} [props.insurance] - Associated insurance coverage
+  * @param {Reference} [props.supportingInfo] - Additional clinical information
+  * @param {Annotation} [props.note] - Notes or comments
+  * @param {Reference} [props.relevantHistory] - Request provenance
  */
 export function deviceRequest(type: string, props: DeviceRequest_Props);
 
@@ -1665,28 +1665,28 @@ export function deviceRequest(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External identifier for this record
-  * @param [props.basedOn] {Reference} - Fulfills plan, proposal or order
-  * @param [props.status] {string} - active | completed | entered-in-error +
-  * @param [props.subject] {Reference} - Patient using device
-  * @param [props.derivedFrom] {Reference} - Supporting information
-  * @param [props.timing] {Timing} - How often  the device was used
-  * @param [props.recordedOn] {dateTime} - When statement was recorded
-  * @param [props.source] {Reference} - Who made the statement
-  * @param [props.device] {Reference} - Reference to device used
-  * @param [props.reasonCode] {CodeableConcept} - Why device was used
-  * @param [props.reasonReference] {Reference} - Why was DeviceUseStatement performed?
-  * @param [props.bodySite] {CodeableConcept} - Target body site
-  * @param [props.note] {Annotation} - Addition details (comments, instructions)
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifier for this record
+  * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
+  * @param {string} [props.status] - active | completed | entered-in-error +
+  * @param {Reference} [props.subject] - Patient using device
+  * @param {Reference} [props.derivedFrom] - Supporting information
+  * @param {Timing} [props.timing] - How often  the device was used
+  * @param {dateTime} [props.recordedOn] - When statement was recorded
+  * @param {Reference} [props.source] - Who made the statement
+  * @param {Reference} [props.device] - Reference to device used
+  * @param {CodeableConcept} [props.reasonCode] - Why device was used
+  * @param {Reference} [props.reasonReference] - Why was DeviceUseStatement performed?
+  * @param {CodeableConcept} [props.bodySite] - Target body site
+  * @param {Annotation} [props.note] - Addition details (comments, instructions)
  */
 export function deviceUseStatement(type: string, props: DeviceUseStatement_Props);
 
@@ -1710,33 +1710,33 @@ export function deviceUseStatement(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier for report
-  * @param [props.basedOn] {Reference} - What was requested
-  * @param [props.status] {string} - registered | partial | preliminary | final +
-  * @param [props.category] {CodeableConcept} - Service category
-  * @param [props.code] {CodeableConcept} - Name/Code for this diagnostic report
-  * @param [props.subject] {Reference} - The subject of the report - usually, but not always, the patient
-  * @param [props.encounter] {Reference} - Health care event when test ordered
-  * @param [props.effective] {dateTime} - Clinically relevant time/time-period for report
-  * @param [props.issued] {instant} - DateTime this version was made
-  * @param [props.performer] {Reference} - Responsible Diagnostic Service
-  * @param [props.resultsInterpreter] {Reference} - Primary result interpreter
-  * @param [props.specimen] {Reference} - Specimens this report is based on
-  * @param [props.result] {Reference} - Observations
-  * @param [props.imagingStudy] {Reference} - Reference to full details of imaging associated with the diagnostic report
-  * @param [props.media] {BackboneElement} - Key images associated with this report
-  * @param [props.conclusion] {string} - Clinical conclusion (interpretation) of test results
-  * @param [props.conclusionCode] {CodeableConcept} - Codes for the clinical conclusion of test results
-  * @param [props.presentedForm] {Attachment} - Entire report as issued
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier for report
+  * @param {Reference} [props.basedOn] - What was requested
+  * @param {string} [props.status] - registered | partial | preliminary | final +
+  * @param {CodeableConcept} [props.category] - Service category
+  * @param {CodeableConcept} [props.code] - Name/Code for this diagnostic report
+  * @param {Reference} [props.subject] - The subject of the report - usually, but not always, the patient
+  * @param {Reference} [props.encounter] - Health care event when test ordered
+  * @param {dateTime} [props.effective] - Clinically relevant time/time-period for report
+  * @param {instant} [props.issued] - DateTime this version was made
+  * @param {Reference} [props.performer] - Responsible Diagnostic Service
+  * @param {Reference} [props.resultsInterpreter] - Primary result interpreter
+  * @param {Reference} [props.specimen] - Specimens this report is based on
+  * @param {Reference} [props.result] - Observations
+  * @param {Reference} [props.imagingStudy] - Reference to full details of imaging associated with the diagnostic report
+  * @param {BackboneElement} [props.media] - Key images associated with this report
+  * @param {string} [props.conclusion] - Clinical conclusion (interpretation) of test results
+  * @param {CodeableConcept} [props.conclusionCode] - Codes for the clinical conclusion of test results
+  * @param {Attachment} [props.presentedForm] - Entire report as issued
  */
 export function diagnosticReport(type: string, props: DiagnosticReport_Props);
 
@@ -1760,15 +1760,15 @@ export function diagnosticReport(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
  */
 export function domainResource(type: string, props: DomainResource_Props);
 
@@ -1792,38 +1792,38 @@ export function domainResource(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Identifier(s) by which this encounter is known
-  * @param [props.status] {string} - planned | arrived | triaged | in-progress | onleave | finished | cancelled +
-  * @param [props.statusHistory] {BackboneElement} - List of past encounter statuses
-  * @param [props.class] {Coding} - Classification of patient encounter
-  * @param [props.classHistory] {BackboneElement} - List of past encounter classes
-  * @param [props.type] {CodeableConcept} - Specific type of encounter
-  * @param [props.serviceType] {CodeableConcept} - Specific type of service
-  * @param [props.priority] {CodeableConcept} - Indicates the urgency of the encounter
-  * @param [props.subject] {Reference} - The patient or group present at the encounter
-  * @param [props.episodeOfCare] {Reference} - Episode(s) of care that this encounter should be recorded against
-  * @param [props.basedOn] {Reference} - The ServiceRequest that initiated this encounter
-  * @param [props.participant] {BackboneElement} - List of participants involved in the encounter
-  * @param [props.appointment] {Reference} - The appointment that scheduled this encounter
-  * @param [props.period] {Period} - The start and end time of the encounter
-  * @param [props.length] {Duration} - Quantity of time the encounter lasted (less time absent)
-  * @param [props.reasonCode] {CodeableConcept} - Coded reason the encounter takes place
-  * @param [props.reasonReference] {Reference} - Reason the encounter takes place (reference)
-  * @param [props.diagnosis] {BackboneElement} - The list of diagnosis relevant to this encounter
-  * @param [props.account] {Reference} - The set of accounts that may be used for billing for this Encounter
-  * @param [props.hospitalization] {BackboneElement} - Details about the admission to a healthcare service
-  * @param [props.location] {BackboneElement} - List of locations where the patient has been
-  * @param [props.serviceProvider] {Reference} - The organization (facility) responsible for this encounter
-  * @param [props.partOf] {Reference} - Another Encounter this encounter is part of
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifier(s) by which this encounter is known
+  * @param {string} [props.status] - planned | arrived | triaged | in-progress | onleave | finished | cancelled +
+  * @param {BackboneElement} [props.statusHistory] - List of past encounter statuses
+  * @param {Coding} [props.class] - Classification of patient encounter
+  * @param {BackboneElement} [props.classHistory] - List of past encounter classes
+  * @param {CodeableConcept} [props.type] - Specific type of encounter
+  * @param {CodeableConcept} [props.serviceType] - Specific type of service
+  * @param {CodeableConcept} [props.priority] - Indicates the urgency of the encounter
+  * @param {Reference} [props.subject] - The patient or group present at the encounter
+  * @param {Reference} [props.episodeOfCare] - Episode(s) of care that this encounter should be recorded against
+  * @param {Reference} [props.basedOn] - The ServiceRequest that initiated this encounter
+  * @param {BackboneElement} [props.participant] - List of participants involved in the encounter
+  * @param {Reference} [props.appointment] - The appointment that scheduled this encounter
+  * @param {Period} [props.period] - The start and end time of the encounter
+  * @param {Duration} [props.length] - Quantity of time the encounter lasted (less time absent)
+  * @param {CodeableConcept} [props.reasonCode] - Coded reason the encounter takes place
+  * @param {Reference} [props.reasonReference] - Reason the encounter takes place (reference)
+  * @param {BackboneElement} [props.diagnosis] - The list of diagnosis relevant to this encounter
+  * @param {Reference} [props.account] - The set of accounts that may be used for billing for this Encounter
+  * @param {BackboneElement} [props.hospitalization] - Details about the admission to a healthcare service
+  * @param {BackboneElement} [props.location] - List of locations where the patient has been
+  * @param {Reference} [props.serviceProvider] - The organization (facility) responsible for this encounter
+  * @param {Reference} [props.partOf] - Another Encounter this encounter is part of
  */
 export function encounter(type: string, props: Encounter_Props);
 
@@ -1847,26 +1847,26 @@ export function encounter(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Identifies this endpoint across multiple systems
-  * @param [props.status] {string} - active | suspended | error | off | entered-in-error | test
-  * @param [props.connectionType] {Coding} - Protocol/Profile/Standard to be used with this endpoint connection
-  * @param [props.name] {string} - A name that this endpoint can be identified by
-  * @param [props.managingOrganization] {Reference} - Organization that manages this endpoint (might not be the organization that exposes the endpoint)
-  * @param [props.contact] {ContactPoint} - Contact details for source (e.g. troubleshooting)
-  * @param [props.period] {Period} - Interval the endpoint is expected to be operational
-  * @param [props.payloadType] {CodeableConcept} - The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)
-  * @param [props.payloadMimeType] {string} - Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
-  * @param [props.address] {url} - The technical base address for connecting to this endpoint
-  * @param [props.header] {string} - Usage depends on the channel type
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifies this endpoint across multiple systems
+  * @param {string} [props.status] - active | suspended | error | off | entered-in-error | test
+  * @param {Coding} [props.connectionType] - Protocol/Profile/Standard to be used with this endpoint connection
+  * @param {string} [props.name] - A name that this endpoint can be identified by
+  * @param {Reference} [props.managingOrganization] - Organization that manages this endpoint (might not be the organization that exposes the endpoint)
+  * @param {ContactPoint} [props.contact] - Contact details for source (e.g. troubleshooting)
+  * @param {Period} [props.period] - Interval the endpoint is expected to be operational
+  * @param {CodeableConcept} [props.payloadType] - The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)
+  * @param {string} [props.payloadMimeType] - Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
+  * @param {url} [props.address] - The technical base address for connecting to this endpoint
+  * @param {string} [props.header] - Usage depends on the channel type
  */
 export function endpoint(type: string, props: Endpoint_Props);
 
@@ -1890,22 +1890,22 @@ export function endpoint(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier
-  * @param [props.status] {string} - active | cancelled | draft | entered-in-error
-  * @param [props.created] {dateTime} - Creation date
-  * @param [props.insurer] {Reference} - Target
-  * @param [props.provider] {Reference} - Responsible practitioner
-  * @param [props.candidate] {Reference} - The subject to be enrolled
-  * @param [props.coverage] {Reference} - Insurance information
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {dateTime} [props.created] - Creation date
+  * @param {Reference} [props.insurer] - Target
+  * @param {Reference} [props.provider] - Responsible practitioner
+  * @param {Reference} [props.candidate] - The subject to be enrolled
+  * @param {Reference} [props.coverage] - Insurance information
  */
 export function enrollmentRequest(type: string, props: EnrollmentRequest_Props);
 
@@ -1929,23 +1929,23 @@ export function enrollmentRequest(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier
-  * @param [props.status] {string} - active | cancelled | draft | entered-in-error
-  * @param [props.request] {Reference} - Claim reference
-  * @param [props.outcome] {string} - queued | complete | error | partial
-  * @param [props.disposition] {string} - Disposition Message
-  * @param [props.created] {dateTime} - Creation date
-  * @param [props.organization] {Reference} - Insurer
-  * @param [props.requestProvider] {Reference} - Responsible practitioner
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {Reference} [props.request] - Claim reference
+  * @param {string} [props.outcome] - queued | complete | error | partial
+  * @param {string} [props.disposition] - Disposition Message
+  * @param {dateTime} [props.created] - Creation date
+  * @param {Reference} [props.organization] - Insurer
+  * @param {Reference} [props.requestProvider] - Responsible practitioner
  */
 export function enrollmentResponse(type: string, props: EnrollmentResponse_Props);
 
@@ -1969,27 +1969,27 @@ export function enrollmentResponse(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier(s) relevant for this EpisodeOfCare
-  * @param [props.status] {string} - planned | waitlist | active | onhold | finished | cancelled | entered-in-error
-  * @param [props.statusHistory] {BackboneElement} - Past list of status codes (the current status may be included to cover the start date of the status)
-  * @param [props.type] {CodeableConcept} - Type/class  - e.g. specialist referral, disease management
-  * @param [props.diagnosis] {BackboneElement} - The list of diagnosis relevant to this episode of care
-  * @param [props.patient] {Reference} - The patient who is the focus of this episode of care
-  * @param [props.managingOrganization] {Reference} - Organization that assumes care
-  * @param [props.period] {Period} - Interval during responsibility is assumed
-  * @param [props.referralRequest] {Reference} - Originating Referral Request(s)
-  * @param [props.careManager] {Reference} - Care manager/care coordinator for the patient
-  * @param [props.team] {Reference} - Other practitioners facilitating this episode of care
-  * @param [props.account] {Reference} - The set of accounts that may be used for billing for this EpisodeOfCare
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier(s) relevant for this EpisodeOfCare
+  * @param {string} [props.status] - planned | waitlist | active | onhold | finished | cancelled | entered-in-error
+  * @param {BackboneElement} [props.statusHistory] - Past list of status codes (the current status may be included to cover the start date of the status)
+  * @param {CodeableConcept} [props.type] - Type/class  - e.g. specialist referral, disease management
+  * @param {BackboneElement} [props.diagnosis] - The list of diagnosis relevant to this episode of care
+  * @param {Reference} [props.patient] - The patient who is the focus of this episode of care
+  * @param {Reference} [props.managingOrganization] - Organization that assumes care
+  * @param {Period} [props.period] - Interval during responsibility is assumed
+  * @param {Reference} [props.referralRequest] - Originating Referral Request(s)
+  * @param {Reference} [props.careManager] - Care manager/care coordinator for the patient
+  * @param {Reference} [props.team] - Other practitioners facilitating this episode of care
+  * @param {Reference} [props.account] - The set of accounts that may be used for billing for this EpisodeOfCare
  */
 export function episodeOfCare(type: string, props: EpisodeOfCare_Props);
 
@@ -2013,43 +2013,43 @@ export function episodeOfCare(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this event definition, represented as a URI (globally unique)
-  * @param [props.identifier] {Identifier} - Additional identifier for the event definition
-  * @param [props.version] {string} - Business version of the event definition
-  * @param [props.name] {string} - Name for this event definition (computer friendly)
-  * @param [props.title] {string} - Name for this event definition (human friendly)
-  * @param [props.subtitle] {string} - Subordinate title of the event definition
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.experimental] {boolean} - For testing purposes, not real usage
-  * @param [props.subject] {CodeableConcept} - Type of individual the event definition is focused on
-  * @param [props.date] {dateTime} - Date last changed
-  * @param [props.publisher] {string} - Name of the publisher (organization or individual)
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher
-  * @param [props.description] {markdown} - Natural language description of the event definition
-  * @param [props.useContext] {UsageContext} - The context that the content is intended to support
-  * @param [props.jurisdiction] {CodeableConcept} - Intended jurisdiction for event definition (if applicable)
-  * @param [props.purpose] {markdown} - Why this event definition is defined
-  * @param [props.usage] {string} - Describes the clinical usage of the event definition
-  * @param [props.copyright] {markdown} - Use and/or publishing restrictions
-  * @param [props.approvalDate] {date} - When the event definition was approved by publisher
-  * @param [props.lastReviewDate] {date} - When the event definition was last reviewed
-  * @param [props.effectivePeriod] {Period} - When the event definition is expected to be used
-  * @param [props.topic] {CodeableConcept} - E.g. Education, Treatment, Assessment, etc.
-  * @param [props.author] {ContactDetail} - Who authored the content
-  * @param [props.editor] {ContactDetail} - Who edited the content
-  * @param [props.reviewer] {ContactDetail} - Who reviewed the content
-  * @param [props.endorser] {ContactDetail} - Who endorsed the content
-  * @param [props.relatedArtifact] {RelatedArtifact} - Additional documentation, citations, etc.
-  * @param [props.trigger] {TriggerDefinition} - "when" the event occurs (multiple = 'or')
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this event definition, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the event definition
+  * @param {string} [props.version] - Business version of the event definition
+  * @param {string} [props.name] - Name for this event definition (computer friendly)
+  * @param {string} [props.title] - Name for this event definition (human friendly)
+  * @param {string} [props.subtitle] - Subordinate title of the event definition
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.subject] - Type of individual the event definition is focused on
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the event definition
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for event definition (if applicable)
+  * @param {markdown} [props.purpose] - Why this event definition is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the event definition
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the event definition was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the event definition was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the event definition is expected to be used
+  * @param {CodeableConcept} [props.topic] - E.g. Education, Treatment, Assessment, etc.
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {TriggerDefinition} [props.trigger] - "when" the event occurs (multiple = 'or')
  */
 export function eventDefinition(type: string, props: EventDefinition_Props);
 
@@ -2073,40 +2073,40 @@ export function eventDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this evidence, represented as a globally unique URI
-  * @param [props.identifier] {Identifier} - Additional identifier for the summary
-  * @param [props.version] {string} - Business version of this summary
-  * @param [props.title] {string} - Name for this summary (human friendly)
-  * @param [props.citeAs] {Reference} - Citation for this evidence
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.date] {dateTime} - Date last changed
-  * @param [props.useContext] {UsageContext} - The context that the content is intended to support
-  * @param [props.approvalDate] {date} - When the summary was approved by publisher
-  * @param [props.lastReviewDate] {date} - When the summary was last reviewed
-  * @param [props.publisher] {string} - Name of the publisher (organization or individual)
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher
-  * @param [props.author] {ContactDetail} - Who authored the content
-  * @param [props.editor] {ContactDetail} - Who edited the content
-  * @param [props.reviewer] {ContactDetail} - Who reviewed the content
-  * @param [props.endorser] {ContactDetail} - Who endorsed the content
-  * @param [props.relatedArtifact] {RelatedArtifact} - Link or citation to artifact associated with the summary
-  * @param [props.description] {markdown} - Description of the particular summary
-  * @param [props.assertion] {markdown} - Declarative description of the Evidence
-  * @param [props.note] {Annotation} - Footnotes and/or explanatory notes
-  * @param [props.variableDefinition] {BackboneElement} - Evidence variable such as population, exposure, or outcome
-  * @param [props.synthesisType] {CodeableConcept} - The method to combine studies
-  * @param [props.studyType] {CodeableConcept} - The type of study that produced this evidence
-  * @param [props.statistic] {BackboneElement} - Values and parameters for a single statistic
-  * @param [props.certainty] {BackboneElement} - Certainty or quality of the evidence
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this evidence, represented as a globally unique URI
+  * @param {Identifier} [props.identifier] - Additional identifier for the summary
+  * @param {string} [props.version] - Business version of this summary
+  * @param {string} [props.title] - Name for this summary (human friendly)
+  * @param {Reference} [props.citeAs] - Citation for this evidence
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {date} [props.approvalDate] - When the summary was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the summary was last reviewed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Link or citation to artifact associated with the summary
+  * @param {markdown} [props.description] - Description of the particular summary
+  * @param {markdown} [props.assertion] - Declarative description of the Evidence
+  * @param {Annotation} [props.note] - Footnotes and/or explanatory notes
+  * @param {BackboneElement} [props.variableDefinition] - Evidence variable such as population, exposure, or outcome
+  * @param {CodeableConcept} [props.synthesisType] - The method to combine studies
+  * @param {CodeableConcept} [props.studyType] - The type of study that produced this evidence
+  * @param {BackboneElement} [props.statistic] - Values and parameters for a single statistic
+  * @param {BackboneElement} [props.certainty] - Certainty or quality of the evidence
  */
 export function evidence(type: string, props: Evidence_Props);
 
@@ -2130,33 +2130,33 @@ export function evidence(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this EvidenceReport, represented as a globally unique URI
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.useContext] {UsageContext} - The context that the content is intended to support
-  * @param [props.identifier] {Identifier} - Unique identifier for the evidence report
-  * @param [props.relatedIdentifier] {Identifier} - Identifiers for articles that may relate to more than one evidence report
-  * @param [props.citeAs] {Reference} - Citation for this report
-  * @param [props.type] {CodeableConcept} - Kind of report
-  * @param [props.note] {Annotation} - Used for footnotes and annotations
-  * @param [props.relatedArtifact] {RelatedArtifact} - Link, description or reference to artifact associated with the report
-  * @param [props.subject] {BackboneElement} - Focus of the report
-  * @param [props.publisher] {string} - Name of the publisher (organization or individual)
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher
-  * @param [props.author] {ContactDetail} - Who authored the content
-  * @param [props.editor] {ContactDetail} - Who edited the content
-  * @param [props.reviewer] {ContactDetail} - Who reviewed the content
-  * @param [props.endorser] {ContactDetail} - Who endorsed the content
-  * @param [props.relatesTo] {BackboneElement} - Relationships to other compositions/documents
-  * @param [props.section] {BackboneElement} - Composition is broken into sections
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this EvidenceReport, represented as a globally unique URI
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {Identifier} [props.identifier] - Unique identifier for the evidence report
+  * @param {Identifier} [props.relatedIdentifier] - Identifiers for articles that may relate to more than one evidence report
+  * @param {Reference} [props.citeAs] - Citation for this report
+  * @param {CodeableConcept} [props.type] - Kind of report
+  * @param {Annotation} [props.note] - Used for footnotes and annotations
+  * @param {RelatedArtifact} [props.relatedArtifact] - Link, description or reference to artifact associated with the report
+  * @param {BackboneElement} [props.subject] - Focus of the report
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {BackboneElement} [props.relatesTo] - Relationships to other compositions/documents
+  * @param {BackboneElement} [props.section] - Composition is broken into sections
  */
 export function evidenceReport(type: string, props: EvidenceReport_Props);
 
@@ -2180,39 +2180,39 @@ export function evidenceReport(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this evidence variable, represented as a URI (globally unique)
-  * @param [props.identifier] {Identifier} - Additional identifier for the evidence variable
-  * @param [props.version] {string} - Business version of the evidence variable
-  * @param [props.name] {string} - Name for this evidence variable (computer friendly)
-  * @param [props.title] {string} - Name for this evidence variable (human friendly)
-  * @param [props.shortTitle] {string} - Title for use in informal contexts
-  * @param [props.subtitle] {string} - Subordinate title of the EvidenceVariable
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.date] {dateTime} - Date last changed
-  * @param [props.description] {markdown} - Natural language description of the evidence variable
-  * @param [props.note] {Annotation} - Used for footnotes or explanatory notes
-  * @param [props.useContext] {UsageContext} - The context that the content is intended to support
-  * @param [props.publisher] {string} - Name of the publisher (organization or individual)
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher
-  * @param [props.author] {ContactDetail} - Who authored the content
-  * @param [props.editor] {ContactDetail} - Who edited the content
-  * @param [props.reviewer] {ContactDetail} - Who reviewed the content
-  * @param [props.endorser] {ContactDetail} - Who endorsed the content
-  * @param [props.relatedArtifact] {RelatedArtifact} - Additional documentation, citations, etc.
-  * @param [props.actual] {boolean} - Actual or conceptual
-  * @param [props.characteristicCombination] {string} - intersection | union
-  * @param [props.characteristic] {BackboneElement} - What defines the members of the evidence element
-  * @param [props.handling] {string} - continuous | dichotomous | ordinal | polychotomous
-  * @param [props.category] {BackboneElement} - A grouping for ordinal or polychotomous variables
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this evidence variable, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the evidence variable
+  * @param {string} [props.version] - Business version of the evidence variable
+  * @param {string} [props.name] - Name for this evidence variable (computer friendly)
+  * @param {string} [props.title] - Name for this evidence variable (human friendly)
+  * @param {string} [props.shortTitle] - Title for use in informal contexts
+  * @param {string} [props.subtitle] - Subordinate title of the EvidenceVariable
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {markdown} [props.description] - Natural language description of the evidence variable
+  * @param {Annotation} [props.note] - Used for footnotes or explanatory notes
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {boolean} [props.actual] - Actual or conceptual
+  * @param {string} [props.characteristicCombination] - intersection | union
+  * @param {BackboneElement} [props.characteristic] - What defines the members of the evidence element
+  * @param {string} [props.handling] - continuous | dichotomous | ordinal | polychotomous
+  * @param {BackboneElement} [props.category] - A grouping for ordinal or polychotomous variables
  */
 export function evidenceVariable(type: string, props: EvidenceVariable_Props);
 
@@ -2236,58 +2236,58 @@ export function evidenceVariable(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for the resource
-  * @param [props.status] {string} - active | cancelled | draft | entered-in-error
-  * @param [props.type] {CodeableConcept} - Category or discipline
-  * @param [props.subType] {CodeableConcept} - More granular claim type
-  * @param [props.use] {string} - claim | preauthorization | predetermination
-  * @param [props.patient] {Reference} - The recipient of the products and services
-  * @param [props.billablePeriod] {Period} - Relevant time frame for the claim
-  * @param [props.created] {dateTime} - Response creation date
-  * @param [props.enterer] {Reference} - Author of the claim
-  * @param [props.insurer] {Reference} - Party responsible for reimbursement
-  * @param [props.provider] {Reference} - Party responsible for the claim
-  * @param [props.priority] {CodeableConcept} - Desired processing urgency
-  * @param [props.fundsReserveRequested] {CodeableConcept} - For whom to reserve funds
-  * @param [props.fundsReserve] {CodeableConcept} - Funds reserved status
-  * @param [props.related] {BackboneElement} - Prior or corollary claims
-  * @param [props.prescription] {Reference} - Prescription authorizing services or products
-  * @param [props.originalPrescription] {Reference} - Original prescription if superceded by fulfiller
-  * @param [props.payee] {BackboneElement} - Recipient of benefits payable
-  * @param [props.referral] {Reference} - Treatment Referral
-  * @param [props.facility] {Reference} - Servicing Facility
-  * @param [props.claim] {Reference} - Claim reference
-  * @param [props.claimResponse] {Reference} - Claim response reference
-  * @param [props.outcome] {string} - queued | complete | error | partial
-  * @param [props.disposition] {string} - Disposition Message
-  * @param [props.preAuthRef] {string} - Preauthorization reference
-  * @param [props.preAuthRefPeriod] {Period} - Preauthorization in-effect period
-  * @param [props.careTeam] {BackboneElement} - Care Team members
-  * @param [props.supportingInfo] {BackboneElement} - Supporting information
-  * @param [props.diagnosis] {BackboneElement} - Pertinent diagnosis information
-  * @param [props.procedure] {BackboneElement} - Clinical procedures performed
-  * @param [props.precedence] {number} - Precedence (primary, secondary, etc.)
-  * @param [props.insurance] {BackboneElement} - Patient insurance information
-  * @param [props.accident] {BackboneElement} - Details of the event
-  * @param [props.item] {BackboneElement} - Product or service provided
-  * @param [props.addItem] {BackboneElement} - Insurer added line items
-  * @param [props.adjudication] {undefined} - Header-level adjudication
-  * @param [props.total] {BackboneElement} - Adjudication totals
-  * @param [props.payment] {BackboneElement} - Payment Details
-  * @param [props.formCode] {CodeableConcept} - Printed form identifier
-  * @param [props.form] {Attachment} - Printed reference or actual form
-  * @param [props.processNote] {BackboneElement} - Note concerning adjudication
-  * @param [props.benefitPeriod] {Period} - When the benefits are applicable
-  * @param [props.benefitBalance] {BackboneElement} - Balance by Benefit Category
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for the resource
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {CodeableConcept} [props.type] - Category or discipline
+  * @param {CodeableConcept} [props.subType] - More granular claim type
+  * @param {string} [props.use] - claim | preauthorization | predetermination
+  * @param {Reference} [props.patient] - The recipient of the products and services
+  * @param {Period} [props.billablePeriod] - Relevant time frame for the claim
+  * @param {dateTime} [props.created] - Response creation date
+  * @param {Reference} [props.enterer] - Author of the claim
+  * @param {Reference} [props.insurer] - Party responsible for reimbursement
+  * @param {Reference} [props.provider] - Party responsible for the claim
+  * @param {CodeableConcept} [props.priority] - Desired processing urgency
+  * @param {CodeableConcept} [props.fundsReserveRequested] - For whom to reserve funds
+  * @param {CodeableConcept} [props.fundsReserve] - Funds reserved status
+  * @param {BackboneElement} [props.related] - Prior or corollary claims
+  * @param {Reference} [props.prescription] - Prescription authorizing services or products
+  * @param {Reference} [props.originalPrescription] - Original prescription if superceded by fulfiller
+  * @param {BackboneElement} [props.payee] - Recipient of benefits payable
+  * @param {Reference} [props.referral] - Treatment Referral
+  * @param {Reference} [props.facility] - Servicing Facility
+  * @param {Reference} [props.claim] - Claim reference
+  * @param {Reference} [props.claimResponse] - Claim response reference
+  * @param {string} [props.outcome] - queued | complete | error | partial
+  * @param {string} [props.disposition] - Disposition Message
+  * @param {string} [props.preAuthRef] - Preauthorization reference
+  * @param {Period} [props.preAuthRefPeriod] - Preauthorization in-effect period
+  * @param {BackboneElement} [props.careTeam] - Care Team members
+  * @param {BackboneElement} [props.supportingInfo] - Supporting information
+  * @param {BackboneElement} [props.diagnosis] - Pertinent diagnosis information
+  * @param {BackboneElement} [props.procedure] - Clinical procedures performed
+  * @param {number} [props.precedence] - Precedence (primary, secondary, etc.)
+  * @param {BackboneElement} [props.insurance] - Patient insurance information
+  * @param {BackboneElement} [props.accident] - Details of the event
+  * @param {BackboneElement} [props.item] - Product or service provided
+  * @param {BackboneElement} [props.addItem] - Insurer added line items
+  * @param {undefined} [props.adjudication] - Header-level adjudication
+  * @param {BackboneElement} [props.total] - Adjudication totals
+  * @param {BackboneElement} [props.payment] - Payment Details
+  * @param {CodeableConcept} [props.formCode] - Printed form identifier
+  * @param {Attachment} [props.form] - Printed reference or actual form
+  * @param {BackboneElement} [props.processNote] - Note concerning adjudication
+  * @param {Period} [props.benefitPeriod] - When the benefits are applicable
+  * @param {BackboneElement} [props.benefitBalance] - Balance by Benefit Category
  */
 export function explanationOfBenefit(type: string, props: ExplanationOfBenefit_Props);
 
@@ -2311,33 +2311,33 @@ export function explanationOfBenefit(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External Id(s) for this record
-  * @param [props.instantiatesCanonical] {canonical} - Instantiates FHIR protocol or definition
-  * @param [props.instantiatesUri] {string} - Instantiates external protocol or definition
-  * @param [props.status] {string} - partial | completed | entered-in-error | health-unknown
-  * @param [props.dataAbsentReason] {CodeableConcept} - subject-unknown | withheld | unable-to-obtain | deferred
-  * @param [props.patient] {Reference} - Patient history is about
-  * @param [props.date] {dateTime} - When history was recorded or last updated
-  * @param [props.name] {string} - The family member described
-  * @param [props.relationship] {CodeableConcept} - Relationship to the subject
-  * @param [props.sex] {CodeableConcept} - male | female | other | unknown
-  * @param [props.born] {Period} - (approximate) date of birth
-  * @param [props.age] {Age} - (approximate) age
-  * @param [props.estimatedAge] {boolean} - Age is estimated?
-  * @param [props.deceased] {boolean} - Dead? How old/when?
-  * @param [props.reasonCode] {CodeableConcept} - Why was family member history performed?
-  * @param [props.reasonReference] {Reference} - Why was family member history performed?
-  * @param [props.note] {Annotation} - General note about related person
-  * @param [props.condition] {BackboneElement} - Condition that the related person had
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Id(s) for this record
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {string} [props.status] - partial | completed | entered-in-error | health-unknown
+  * @param {CodeableConcept} [props.dataAbsentReason] - subject-unknown | withheld | unable-to-obtain | deferred
+  * @param {Reference} [props.patient] - Patient history is about
+  * @param {dateTime} [props.date] - When history was recorded or last updated
+  * @param {string} [props.name] - The family member described
+  * @param {CodeableConcept} [props.relationship] - Relationship to the subject
+  * @param {CodeableConcept} [props.sex] - male | female | other | unknown
+  * @param {Period} [props.born] - (approximate) date of birth
+  * @param {Age} [props.age] - (approximate) age
+  * @param {boolean} [props.estimatedAge] - Age is estimated?
+  * @param {boolean} [props.deceased] - Dead? How old/when?
+  * @param {CodeableConcept} [props.reasonCode] - Why was family member history performed?
+  * @param {Reference} [props.reasonReference] - Why was family member history performed?
+  * @param {Annotation} [props.note] - General note about related person
+  * @param {BackboneElement} [props.condition] - Condition that the related person had
  */
 export function familyMemberHistory(type: string, props: FamilyMemberHistory_Props);
 
@@ -2361,23 +2361,23 @@ export function familyMemberHistory(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier
-  * @param [props.status] {string} - active | inactive | entered-in-error
-  * @param [props.category] {CodeableConcept} - Clinical, administrative, etc.
-  * @param [props.code] {CodeableConcept} - Coded or textual message to display to user
-  * @param [props.subject] {Reference} - Who/What is flag about?
-  * @param [props.period] {Period} - Time period when flag is active
-  * @param [props.encounter] {Reference} - Alert relevant during encounter
-  * @param [props.author] {Reference} - Flag creator
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {string} [props.status] - active | inactive | entered-in-error
+  * @param {CodeableConcept} [props.category] - Clinical, administrative, etc.
+  * @param {CodeableConcept} [props.code] - Coded or textual message to display to user
+  * @param {Reference} [props.subject] - Who/What is flag about?
+  * @param {Period} [props.period] - Time period when flag is active
+  * @param {Reference} [props.encounter] - Alert relevant during encounter
+  * @param {Reference} [props.author] - Flag creator
  */
 export function flag(type: string, props: Flag_Props);
 
@@ -2401,31 +2401,31 @@ export function flag(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External Ids for this goal
-  * @param [props.lifecycleStatus] {string} - proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected
-  * @param [props.achievementStatus] {CodeableConcept} - in-progress | improving | worsening | no-change | achieved | sustaining | not-achieved | no-progress | not-attainable
-  * @param [props.category] {CodeableConcept} - E.g. Treatment, dietary, behavioral, etc.
-  * @param [props.priority] {CodeableConcept} - high-priority | medium-priority | low-priority
-  * @param [props.description] {CodeableConcept} - Code or text describing goal
-  * @param [props.subject] {Reference} - Who this goal is intended for
-  * @param [props.start] {date} - When goal pursuit begins
-  * @param [props.target] {BackboneElement} - Target outcome for the goal
-  * @param [props.statusDate] {date} - When goal status took effect
-  * @param [props.statusReason] {string} - Reason for current status
-  * @param [props.expressedBy] {Reference} - Who's responsible for creating Goal?
-  * @param [props.addresses] {Reference} - Issues addressed by this goal
-  * @param [props.note] {Annotation} - Comments about the goal
-  * @param [props.outcomeCode] {CodeableConcept} - What result was achieved regarding the goal?
-  * @param [props.outcomeReference] {Reference} - Observation that resulted from goal
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this goal
+  * @param {string} [props.lifecycleStatus] - proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected
+  * @param {CodeableConcept} [props.achievementStatus] - in-progress | improving | worsening | no-change | achieved | sustaining | not-achieved | no-progress | not-attainable
+  * @param {CodeableConcept} [props.category] - E.g. Treatment, dietary, behavioral, etc.
+  * @param {CodeableConcept} [props.priority] - high-priority | medium-priority | low-priority
+  * @param {CodeableConcept} [props.description] - Code or text describing goal
+  * @param {Reference} [props.subject] - Who this goal is intended for
+  * @param {date} [props.start] - When goal pursuit begins
+  * @param {BackboneElement} [props.target] - Target outcome for the goal
+  * @param {date} [props.statusDate] - When goal status took effect
+  * @param {string} [props.statusReason] - Reason for current status
+  * @param {Reference} [props.expressedBy] - Who's responsible for creating Goal?
+  * @param {Reference} [props.addresses] - Issues addressed by this goal
+  * @param {Annotation} [props.note] - Comments about the goal
+  * @param {CodeableConcept} [props.outcomeCode] - What result was achieved regarding the goal?
+  * @param {Reference} [props.outcomeReference] - Observation that resulted from goal
  */
 export function goal(type: string, props: Goal_Props);
 
@@ -2449,25 +2449,25 @@ export function goal(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Unique id
-  * @param [props.active] {boolean} - Whether this group's record is in active use
-  * @param [props.type] {string} - person | animal | practitioner | device | medication | substance
-  * @param [props.actual] {boolean} - Descriptive or actual
-  * @param [props.code] {CodeableConcept} - Kind of Group members
-  * @param [props.name] {string} - Label for Group
-  * @param [props.quantity] {unsignedInt} - Number of members
-  * @param [props.managingEntity] {Reference} - Entity that is the custodian of the Group's definition
-  * @param [props.characteristic] {BackboneElement} - Include / Exclude group members by Trait
-  * @param [props.member] {BackboneElement} - Who or what is in group
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique id
+  * @param {boolean} [props.active] - Whether this group's record is in active use
+  * @param {string} [props.type] - person | animal | practitioner | device | medication | substance
+  * @param {boolean} [props.actual] - Descriptive or actual
+  * @param {CodeableConcept} [props.code] - Kind of Group members
+  * @param {string} [props.name] - Label for Group
+  * @param {unsignedInt} [props.quantity] - Number of members
+  * @param {Reference} [props.managingEntity] - Entity that is the custodian of the Group's definition
+  * @param {BackboneElement} [props.characteristic] - Include / Exclude group members by Trait
+  * @param {BackboneElement} [props.member] - Who or what is in group
  */
 export function group(type: string, props: Group_Props);
 
@@ -2491,30 +2491,30 @@ export function group(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.requestIdentifier] {Identifier} - The identifier of the request associated with this response, if any
-  * @param [props.identifier] {Identifier} - Business identifier
-  * @param [props.module] {string} - What guidance was requested
-  * @param [props.status] {string} - success | data-requested | data-required | in-progress | failure | entered-in-error
-  * @param [props.subject] {Reference} - Patient the request was performed for
-  * @param [props.encounter] {Reference} - Encounter during which the response was returned
-  * @param [props.occurrenceDateTime] {dateTime} - When the guidance response was processed
-  * @param [props.performer] {Reference} - Device returning the guidance
-  * @param [props.reasonCode] {CodeableConcept} - Why guidance is needed
-  * @param [props.reasonReference] {Reference} - Why guidance is needed
-  * @param [props.note] {Annotation} - Additional notes about the response
-  * @param [props.evaluationMessage] {Reference} - Messages resulting from the evaluation of the artifact or artifacts
-  * @param [props.outputParameters] {Reference} - The output parameters of the evaluation, if any
-  * @param [props.result] {Reference} - Proposed actions, if any
-  * @param [props.dataRequirement] {DataRequirement} - Additional required data
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.requestIdentifier] - The identifier of the request associated with this response, if any
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {string} [props.module] - What guidance was requested
+  * @param {string} [props.status] - success | data-requested | data-required | in-progress | failure | entered-in-error
+  * @param {Reference} [props.subject] - Patient the request was performed for
+  * @param {Reference} [props.encounter] - Encounter during which the response was returned
+  * @param {dateTime} [props.occurrenceDateTime] - When the guidance response was processed
+  * @param {Reference} [props.performer] - Device returning the guidance
+  * @param {CodeableConcept} [props.reasonCode] - Why guidance is needed
+  * @param {Reference} [props.reasonReference] - Why guidance is needed
+  * @param {Annotation} [props.note] - Additional notes about the response
+  * @param {Reference} [props.evaluationMessage] - Messages resulting from the evaluation of the artifact or artifacts
+  * @param {Reference} [props.outputParameters] - The output parameters of the evaluation, if any
+  * @param {Reference} [props.result] - Proposed actions, if any
+  * @param {DataRequirement} [props.dataRequirement] - Additional required data
  */
 export function guidanceResponse(type: string, props: GuidanceResponse_Props);
 
@@ -2538,39 +2538,39 @@ export function guidanceResponse(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External identifiers for this item
-  * @param [props.active] {boolean} - Whether this HealthcareService record is in active use
-  * @param [props.providedBy] {Reference} - Organization that provides this service
-  * @param [props.category] {CodeableConcept} - Broad category of service being performed or delivered
-  * @param [props.type] {CodeableConcept} - Type of service that may be delivered or performed
-  * @param [props.specialty] {CodeableConcept} - Specialties handled by the HealthcareService
-  * @param [props.location] {Reference} - Location(s) where service may be provided
-  * @param [props.name] {string} - Description of service as presented to a consumer while searching
-  * @param [props.comment] {string} - Additional description and/or any specific issues not covered elsewhere
-  * @param [props.extraDetails] {markdown} - Extra details about the service that can't be placed in the other fields
-  * @param [props.photo] {Attachment} - Facilitates quick identification of the service
-  * @param [props.telecom] {ContactPoint} - Contacts related to the healthcare service
-  * @param [props.coverageArea] {Reference} - Location(s) service is intended for/available to
-  * @param [props.serviceProvisionCode] {CodeableConcept} - Conditions under which service is available/offered
-  * @param [props.eligibility] {BackboneElement} - Specific eligibility requirements required to use the service
-  * @param [props.program] {CodeableConcept} - Programs that this service is applicable to
-  * @param [props.characteristic] {CodeableConcept} - Collection of characteristics (attributes)
-  * @param [props.communication] {CodeableConcept} - The language that this service is offered in
-  * @param [props.referralMethod] {CodeableConcept} - Ways that the service accepts referrals
-  * @param [props.appointmentRequired] {boolean} - If an appointment is required for access to this service
-  * @param [props.availableTime] {BackboneElement} - Times the Service Site is available
-  * @param [props.notAvailable] {BackboneElement} - Not available during this time due to provided reason
-  * @param [props.availabilityExceptions] {string} - Description of availability exceptions
-  * @param [props.endpoint] {Reference} - Technical endpoints providing access to electronic services operated for the healthcare service
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifiers for this item
+  * @param {boolean} [props.active] - Whether this HealthcareService record is in active use
+  * @param {Reference} [props.providedBy] - Organization that provides this service
+  * @param {CodeableConcept} [props.category] - Broad category of service being performed or delivered
+  * @param {CodeableConcept} [props.type] - Type of service that may be delivered or performed
+  * @param {CodeableConcept} [props.specialty] - Specialties handled by the HealthcareService
+  * @param {Reference} [props.location] - Location(s) where service may be provided
+  * @param {string} [props.name] - Description of service as presented to a consumer while searching
+  * @param {string} [props.comment] - Additional description and/or any specific issues not covered elsewhere
+  * @param {markdown} [props.extraDetails] - Extra details about the service that can't be placed in the other fields
+  * @param {Attachment} [props.photo] - Facilitates quick identification of the service
+  * @param {ContactPoint} [props.telecom] - Contacts related to the healthcare service
+  * @param {Reference} [props.coverageArea] - Location(s) service is intended for/available to
+  * @param {CodeableConcept} [props.serviceProvisionCode] - Conditions under which service is available/offered
+  * @param {BackboneElement} [props.eligibility] - Specific eligibility requirements required to use the service
+  * @param {CodeableConcept} [props.program] - Programs that this service is applicable to
+  * @param {CodeableConcept} [props.characteristic] - Collection of characteristics (attributes)
+  * @param {CodeableConcept} [props.communication] - The language that this service is offered in
+  * @param {CodeableConcept} [props.referralMethod] - Ways that the service accepts referrals
+  * @param {boolean} [props.appointmentRequired] - If an appointment is required for access to this service
+  * @param {BackboneElement} [props.availableTime] - Times the Service Site is available
+  * @param {BackboneElement} [props.notAvailable] - Not available during this time due to provided reason
+  * @param {string} [props.availabilityExceptions] - Description of availability exceptions
+  * @param {Reference} [props.endpoint] - Technical endpoints providing access to electronic services operated for the healthcare service
  */
 export function healthcareService(type: string, props: HealthcareService_Props);
 
@@ -2594,35 +2594,35 @@ export function healthcareService(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Identifiers for the whole study
-  * @param [props.status] {string} - registered | available | cancelled | entered-in-error | unknown
-  * @param [props.modality] {Coding} - All series modality if actual acquisition modalities
-  * @param [props.subject] {Reference} - Who or what is the subject of the study
-  * @param [props.encounter] {Reference} - Encounter with which this imaging study is associated
-  * @param [props.started] {dateTime} - When the study was started
-  * @param [props.basedOn] {Reference} - Request fulfilled
-  * @param [props.referrer] {Reference} - Referring physician
-  * @param [props.interpreter] {Reference} - Who interpreted images
-  * @param [props.endpoint] {Reference} - Study access endpoint
-  * @param [props.numberOfSeries] {unsignedInt} - Number of Study Related Series
-  * @param [props.numberOfInstances] {unsignedInt} - Number of Study Related Instances
-  * @param [props.procedureReference] {Reference} - The performed Procedure reference
-  * @param [props.procedureCode] {CodeableConcept} - The performed procedure code
-  * @param [props.location] {Reference} - Where ImagingStudy occurred
-  * @param [props.reasonCode] {CodeableConcept} - Why the study was requested
-  * @param [props.reasonReference] {Reference} - Why was study performed
-  * @param [props.note] {Annotation} - User-defined comments
-  * @param [props.description] {string} - Institution-generated description
-  * @param [props.series] {BackboneElement} - Each study has one or more series of instances
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifiers for the whole study
+  * @param {string} [props.status] - registered | available | cancelled | entered-in-error | unknown
+  * @param {Coding} [props.modality] - All series modality if actual acquisition modalities
+  * @param {Reference} [props.subject] - Who or what is the subject of the study
+  * @param {Reference} [props.encounter] - Encounter with which this imaging study is associated
+  * @param {dateTime} [props.started] - When the study was started
+  * @param {Reference} [props.basedOn] - Request fulfilled
+  * @param {Reference} [props.referrer] - Referring physician
+  * @param {Reference} [props.interpreter] - Who interpreted images
+  * @param {Reference} [props.endpoint] - Study access endpoint
+  * @param {unsignedInt} [props.numberOfSeries] - Number of Study Related Series
+  * @param {unsignedInt} [props.numberOfInstances] - Number of Study Related Instances
+  * @param {Reference} [props.procedureReference] - The performed Procedure reference
+  * @param {CodeableConcept} [props.procedureCode] - The performed procedure code
+  * @param {Reference} [props.location] - Where ImagingStudy occurred
+  * @param {CodeableConcept} [props.reasonCode] - Why the study was requested
+  * @param {Reference} [props.reasonReference] - Why was study performed
+  * @param {Annotation} [props.note] - User-defined comments
+  * @param {string} [props.description] - Institution-generated description
+  * @param {BackboneElement} [props.series] - Each study has one or more series of instances
  */
 export function imagingStudy(type: string, props: ImagingStudy_Props);
 
@@ -2646,43 +2646,43 @@ export function imagingStudy(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier
-  * @param [props.status] {string} - completed | entered-in-error | not-done
-  * @param [props.statusReason] {CodeableConcept} - Reason not done
-  * @param [props.vaccineCode] {CodeableConcept} - Vaccine product administered
-  * @param [props.patient] {Reference} - Who was immunized
-  * @param [props.encounter] {Reference} - Encounter immunization was part of
-  * @param [props.occurrence] {dateTime} - Vaccine administration date
-  * @param [props.recorded] {dateTime} - When the immunization was first captured in the subject's record
-  * @param [props.primarySource] {boolean} - Indicates context the data was recorded in
-  * @param [props.reportOrigin] {CodeableConcept} - Indicates the source of a secondarily reported record
-  * @param [props.location] {Reference} - Where immunization occurred
-  * @param [props.manufacturer] {Reference} - Vaccine manufacturer
-  * @param [props.lotNumber] {string} - Vaccine lot number
-  * @param [props.expirationDate] {date} - Vaccine expiration date
-  * @param [props.site] {CodeableConcept} - Body site vaccine  was administered
-  * @param [props.route] {CodeableConcept} - How vaccine entered body
-  * @param [props.doseQuantity] {Quantity} - Amount of vaccine administered
-  * @param [props.performer] {BackboneElement} - Who performed event
-  * @param [props.note] {Annotation} - Additional immunization notes
-  * @param [props.reasonCode] {CodeableConcept} - Why immunization occurred
-  * @param [props.reasonReference] {Reference} - Why immunization occurred
-  * @param [props.isSubpotent] {boolean} - Dose potency
-  * @param [props.subpotentReason] {CodeableConcept} - Reason for being subpotent
-  * @param [props.education] {BackboneElement} - Educational material presented to patient
-  * @param [props.programEligibility] {CodeableConcept} - Patient eligibility for a vaccination program
-  * @param [props.fundingSource] {CodeableConcept} - Funding source for the vaccine
-  * @param [props.reaction] {BackboneElement} - Details of a reaction that follows immunization
-  * @param [props.protocolApplied] {BackboneElement} - Protocol followed by the provider
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {string} [props.status] - completed | entered-in-error | not-done
+  * @param {CodeableConcept} [props.statusReason] - Reason not done
+  * @param {CodeableConcept} [props.vaccineCode] - Vaccine product administered
+  * @param {Reference} [props.patient] - Who was immunized
+  * @param {Reference} [props.encounter] - Encounter immunization was part of
+  * @param {dateTime} [props.occurrence] - Vaccine administration date
+  * @param {dateTime} [props.recorded] - When the immunization was first captured in the subject's record
+  * @param {boolean} [props.primarySource] - Indicates context the data was recorded in
+  * @param {CodeableConcept} [props.reportOrigin] - Indicates the source of a secondarily reported record
+  * @param {Reference} [props.location] - Where immunization occurred
+  * @param {Reference} [props.manufacturer] - Vaccine manufacturer
+  * @param {string} [props.lotNumber] - Vaccine lot number
+  * @param {date} [props.expirationDate] - Vaccine expiration date
+  * @param {CodeableConcept} [props.site] - Body site vaccine  was administered
+  * @param {CodeableConcept} [props.route] - How vaccine entered body
+  * @param {Quantity} [props.doseQuantity] - Amount of vaccine administered
+  * @param {BackboneElement} [props.performer] - Who performed event
+  * @param {Annotation} [props.note] - Additional immunization notes
+  * @param {CodeableConcept} [props.reasonCode] - Why immunization occurred
+  * @param {Reference} [props.reasonReference] - Why immunization occurred
+  * @param {boolean} [props.isSubpotent] - Dose potency
+  * @param {CodeableConcept} [props.subpotentReason] - Reason for being subpotent
+  * @param {BackboneElement} [props.education] - Educational material presented to patient
+  * @param {CodeableConcept} [props.programEligibility] - Patient eligibility for a vaccination program
+  * @param {CodeableConcept} [props.fundingSource] - Funding source for the vaccine
+  * @param {BackboneElement} [props.reaction] - Details of a reaction that follows immunization
+  * @param {BackboneElement} [props.protocolApplied] - Protocol followed by the provider
  */
 export function immunization(type: string, props: Immunization_Props);
 
@@ -2706,28 +2706,28 @@ export function immunization(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier
-  * @param [props.status] {string} - completed | entered-in-error
-  * @param [props.patient] {Reference} - Who this evaluation is for
-  * @param [props.date] {dateTime} - Date evaluation was performed
-  * @param [props.authority] {Reference} - Who is responsible for publishing the recommendations
-  * @param [props.targetDisease] {CodeableConcept} - Evaluation target disease
-  * @param [props.immunizationEvent] {Reference} - Immunization being evaluated
-  * @param [props.doseStatus] {CodeableConcept} - Status of the dose relative to published recommendations
-  * @param [props.doseStatusReason] {CodeableConcept} - Reason for the dose status
-  * @param [props.description] {string} - Evaluation notes
-  * @param [props.series] {string} - Name of vaccine series
-  * @param [props.doseNumber] {number} - Dose number within series
-  * @param [props.seriesDoses] {number} - Recommended number of doses for immunity
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {string} [props.status] - completed | entered-in-error
+  * @param {Reference} [props.patient] - Who this evaluation is for
+  * @param {dateTime} [props.date] - Date evaluation was performed
+  * @param {Reference} [props.authority] - Who is responsible for publishing the recommendations
+  * @param {CodeableConcept} [props.targetDisease] - Evaluation target disease
+  * @param {Reference} [props.immunizationEvent] - Immunization being evaluated
+  * @param {CodeableConcept} [props.doseStatus] - Status of the dose relative to published recommendations
+  * @param {CodeableConcept} [props.doseStatusReason] - Reason for the dose status
+  * @param {string} [props.description] - Evaluation notes
+  * @param {string} [props.series] - Name of vaccine series
+  * @param {number} [props.doseNumber] - Dose number within series
+  * @param {number} [props.seriesDoses] - Recommended number of doses for immunity
  */
 export function immunizationEvaluation(type: string, props: ImmunizationEvaluation_Props);
 
@@ -2751,20 +2751,20 @@ export function immunizationEvaluation(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier
-  * @param [props.patient] {Reference} - Who this profile is for
-  * @param [props.date] {dateTime} - Date recommendation(s) created
-  * @param [props.authority] {Reference} - Who is responsible for protocol
-  * @param [props.recommendation] {BackboneElement} - Vaccine administration recommendations
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {Reference} [props.patient] - Who this profile is for
+  * @param {dateTime} [props.date] - Date recommendation(s) created
+  * @param {Reference} [props.authority] - Who is responsible for protocol
+  * @param {BackboneElement} [props.recommendation] - Vaccine administration recommendations
  */
 export function immunizationRecommendation(type: string, props: ImmunizationRecommendation_Props);
 
@@ -2788,23 +2788,23 @@ export function immunizationRecommendation(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - An identifier or code by which the ingredient can be referenced
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.for] {Reference} - The product which this ingredient is a constituent part of
-  * @param [props.role] {CodeableConcept} - Purpose of the ingredient within the product, e.g. active, inactive
-  * @param [props.function] {CodeableConcept} - Precise action within the drug product, e.g. antioxidant, alkalizing agent
-  * @param [props.allergenicIndicator] {boolean} - If the ingredient is a known or suspected allergen
-  * @param [props.manufacturer] {BackboneElement} - An organization that manufactures this ingredient
-  * @param [props.substance] {BackboneElement} - The substance that comprises this ingredient
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - An identifier or code by which the ingredient can be referenced
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {Reference} [props.for] - The product which this ingredient is a constituent part of
+  * @param {CodeableConcept} [props.role] - Purpose of the ingredient within the product, e.g. active, inactive
+  * @param {CodeableConcept} [props.function] - Precise action within the drug product, e.g. antioxidant, alkalizing agent
+  * @param {boolean} [props.allergenicIndicator] - If the ingredient is a known or suspected allergen
+  * @param {BackboneElement} [props.manufacturer] - An organization that manufactures this ingredient
+  * @param {BackboneElement} [props.substance] - The substance that comprises this ingredient
  */
 export function ingredient(type: string, props: Ingredient_Props);
 
@@ -2828,29 +2828,29 @@ export function ingredient(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for Product
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.type] {CodeableConcept} - Kind of product
-  * @param [props.name] {string} - Official name
-  * @param [props.alias] {string} - Alternate names
-  * @param [props.period] {Period} - When the product is available
-  * @param [props.ownedBy] {Reference} - Plan issuer
-  * @param [props.administeredBy] {Reference} - Product administrator
-  * @param [props.coverageArea] {Reference} - Where product applies
-  * @param [props.contact] {BackboneElement} - Contact for the product
-  * @param [props.endpoint] {Reference} - Technical endpoint
-  * @param [props.network] {Reference} - What networks are Included
-  * @param [props.coverage] {BackboneElement} - Coverage details
-  * @param [props.plan] {BackboneElement} - Plan details
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for Product
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {CodeableConcept} [props.type] - Kind of product
+  * @param {string} [props.name] - Official name
+  * @param {string} [props.alias] - Alternate names
+  * @param {Period} [props.period] - When the product is available
+  * @param {Reference} [props.ownedBy] - Plan issuer
+  * @param {Reference} [props.administeredBy] - Product administrator
+  * @param {Reference} [props.coverageArea] - Where product applies
+  * @param {BackboneElement} [props.contact] - Contact for the product
+  * @param {Reference} [props.endpoint] - Technical endpoint
+  * @param {Reference} [props.network] - What networks are Included
+  * @param {BackboneElement} [props.coverage] - Coverage details
+  * @param {BackboneElement} [props.plan] - Plan details
  */
 export function insurancePlan(type: string, props: InsurancePlan_Props);
 
@@ -2874,31 +2874,31 @@ export function insurancePlan(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for item
-  * @param [props.status] {string} - draft | issued | balanced | cancelled | entered-in-error
-  * @param [props.cancelledReason] {string} - Reason for cancellation of this Invoice
-  * @param [props.type] {CodeableConcept} - Type of Invoice
-  * @param [props.subject] {Reference} - Recipient(s) of goods and services
-  * @param [props.recipient] {Reference} - Recipient of this invoice
-  * @param [props.date] {dateTime} - Invoice date / posting date
-  * @param [props.participant] {BackboneElement} - Participant in creation of this Invoice
-  * @param [props.issuer] {Reference} - Issuing Organization of Invoice
-  * @param [props.account] {Reference} - Account that is being balanced
-  * @param [props.lineItem] {BackboneElement} - Line items of this Invoice
-  * @param [props.totalPriceComponent] {undefined} - Components of Invoice total
-  * @param [props.totalNet] {Money} - Net total of this Invoice
-  * @param [props.totalGross] {Money} - Gross total of this Invoice
-  * @param [props.paymentTerms] {markdown} - Payment details
-  * @param [props.note] {Annotation} - Comments made about the invoice
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for item
+  * @param {string} [props.status] - draft | issued | balanced | cancelled | entered-in-error
+  * @param {string} [props.cancelledReason] - Reason for cancellation of this Invoice
+  * @param {CodeableConcept} [props.type] - Type of Invoice
+  * @param {Reference} [props.subject] - Recipient(s) of goods and services
+  * @param {Reference} [props.recipient] - Recipient of this invoice
+  * @param {dateTime} [props.date] - Invoice date / posting date
+  * @param {BackboneElement} [props.participant] - Participant in creation of this Invoice
+  * @param {Reference} [props.issuer] - Issuing Organization of Invoice
+  * @param {Reference} [props.account] - Account that is being balanced
+  * @param {BackboneElement} [props.lineItem] - Line items of this Invoice
+  * @param {undefined} [props.totalPriceComponent] - Components of Invoice total
+  * @param {Money} [props.totalNet] - Net total of this Invoice
+  * @param {Money} [props.totalGross] - Gross total of this Invoice
+  * @param {markdown} [props.paymentTerms] - Payment details
+  * @param {Annotation} [props.note] - Comments made about the invoice
  */
 export function invoice(type: string, props: Invoice_Props);
 
@@ -2922,46 +2922,46 @@ export function invoice(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this library, represented as a URI (globally unique)
-  * @param [props.identifier] {Identifier} - Additional identifier for the library
-  * @param [props.version] {string} - Business version of the library
-  * @param [props.name] {string} - Name for this library (computer friendly)
-  * @param [props.title] {string} - Name for this library (human friendly)
-  * @param [props.subtitle] {string} - Subordinate title of the library
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.experimental] {boolean} - For testing purposes, not real usage
-  * @param [props.type] {CodeableConcept} - logic-library | model-definition | asset-collection | module-definition
-  * @param [props.subject] {CodeableConcept} - Type of individual the library content is focused on
-  * @param [props.date] {dateTime} - Date last changed
-  * @param [props.publisher] {string} - Name of the publisher (organization or individual)
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher
-  * @param [props.description] {markdown} - Natural language description of the library
-  * @param [props.useContext] {UsageContext} - The context that the content is intended to support
-  * @param [props.jurisdiction] {CodeableConcept} - Intended jurisdiction for library (if applicable)
-  * @param [props.purpose] {markdown} - Why this library is defined
-  * @param [props.usage] {string} - Describes the clinical usage of the library
-  * @param [props.copyright] {markdown} - Use and/or publishing restrictions
-  * @param [props.approvalDate] {date} - When the library was approved by publisher
-  * @param [props.lastReviewDate] {date} - When the library was last reviewed
-  * @param [props.effectivePeriod] {Period} - When the library is expected to be used
-  * @param [props.topic] {CodeableConcept} - E.g. Education, Treatment, Assessment, etc.
-  * @param [props.author] {ContactDetail} - Who authored the content
-  * @param [props.editor] {ContactDetail} - Who edited the content
-  * @param [props.reviewer] {ContactDetail} - Who reviewed the content
-  * @param [props.endorser] {ContactDetail} - Who endorsed the content
-  * @param [props.relatedArtifact] {RelatedArtifact} - Additional documentation, citations, etc.
-  * @param [props.parameter] {ParameterDefinition} - Parameters defined by the library
-  * @param [props.dataRequirement] {DataRequirement} - What data is referenced by this library
-  * @param [props.content] {Attachment} - Contents of the library, either embedded or referenced
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this library, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the library
+  * @param {string} [props.version] - Business version of the library
+  * @param {string} [props.name] - Name for this library (computer friendly)
+  * @param {string} [props.title] - Name for this library (human friendly)
+  * @param {string} [props.subtitle] - Subordinate title of the library
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.type] - logic-library | model-definition | asset-collection | module-definition
+  * @param {CodeableConcept} [props.subject] - Type of individual the library content is focused on
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the library
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for library (if applicable)
+  * @param {markdown} [props.purpose] - Why this library is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the library
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the library was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the library was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the library is expected to be used
+  * @param {CodeableConcept} [props.topic] - E.g. Education, Treatment, Assessment, etc.
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {ParameterDefinition} [props.parameter] - Parameters defined by the library
+  * @param {DataRequirement} [props.dataRequirement] - What data is referenced by this library
+  * @param {Attachment} [props.content] - Contents of the library, either embedded or referenced
  */
 export function library(type: string, props: Library_Props);
 
@@ -2985,28 +2985,28 @@ export function library(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier
-  * @param [props.status] {string} - current | retired | entered-in-error
-  * @param [props.mode] {string} - working | snapshot | changes
-  * @param [props.title] {string} - Descriptive name for the list
-  * @param [props.code] {CodeableConcept} - What the purpose of this list is
-  * @param [props.subject] {Reference} - If all resources have the same subject
-  * @param [props.encounter] {Reference} - Context in which list created
-  * @param [props.date] {dateTime} - When the list was prepared
-  * @param [props.source] {Reference} - Who and/or what defined the list contents (aka Author)
-  * @param [props.orderedBy] {CodeableConcept} - What order the list has
-  * @param [props.note] {Annotation} - Comments about the list
-  * @param [props.entry] {BackboneElement} - Entries in the list
-  * @param [props.emptyReason] {CodeableConcept} - Why list is empty
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {string} [props.status] - current | retired | entered-in-error
+  * @param {string} [props.mode] - working | snapshot | changes
+  * @param {string} [props.title] - Descriptive name for the list
+  * @param {CodeableConcept} [props.code] - What the purpose of this list is
+  * @param {Reference} [props.subject] - If all resources have the same subject
+  * @param {Reference} [props.encounter] - Context in which list created
+  * @param {dateTime} [props.date] - When the list was prepared
+  * @param {Reference} [props.source] - Who and/or what defined the list contents (aka Author)
+  * @param {CodeableConcept} [props.orderedBy] - What order the list has
+  * @param {Annotation} [props.note] - Comments about the list
+  * @param {BackboneElement} [props.entry] - Entries in the list
+  * @param {CodeableConcept} [props.emptyReason] - Why list is empty
  */
 export function list(type: string, props: List_Props);
 
@@ -3030,32 +3030,32 @@ export function list(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Unique code or number identifying the location to its users
-  * @param [props.status] {string} - active | suspended | inactive
-  * @param [props.operationalStatus] {Coding} - The operational status of the location (typically only for a bed/room)
-  * @param [props.name] {string} - Name of the location as used by humans
-  * @param [props.alias] {string} - A list of alternate names that the location is known as, or was known as, in the past
-  * @param [props.description] {string} - Additional details about the location that could be displayed as further information to identify the location beyond its name
-  * @param [props.mode] {string} - instance | kind
-  * @param [props.type] {CodeableConcept} - Type of function performed
-  * @param [props.telecom] {ContactPoint} - Contact details of the location
-  * @param [props.address] {Address} - Physical location
-  * @param [props.physicalType] {CodeableConcept} - Physical form of the location
-  * @param [props.position] {BackboneElement} - The absolute geographic location
-  * @param [props.managingOrganization] {Reference} - Organization responsible for provisioning and upkeep
-  * @param [props.partOf] {Reference} - Another Location this one is physically a part of
-  * @param [props.hoursOfOperation] {BackboneElement} - What days/times during a week is this location usually open
-  * @param [props.availabilityExceptions] {string} - Description of availability exceptions
-  * @param [props.endpoint] {Reference} - Technical endpoints providing access to services operated for the location
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique code or number identifying the location to its users
+  * @param {string} [props.status] - active | suspended | inactive
+  * @param {Coding} [props.operationalStatus] - The operational status of the location (typically only for a bed/room)
+  * @param {string} [props.name] - Name of the location as used by humans
+  * @param {string} [props.alias] - A list of alternate names that the location is known as, or was known as, in the past
+  * @param {string} [props.description] - Additional details about the location that could be displayed as further information to identify the location beyond its name
+  * @param {string} [props.mode] - instance | kind
+  * @param {CodeableConcept} [props.type] - Type of function performed
+  * @param {ContactPoint} [props.telecom] - Contact details of the location
+  * @param {Address} [props.address] - Physical location
+  * @param {CodeableConcept} [props.physicalType] - Physical form of the location
+  * @param {BackboneElement} [props.position] - The absolute geographic location
+  * @param {Reference} [props.managingOrganization] - Organization responsible for provisioning and upkeep
+  * @param {Reference} [props.partOf] - Another Location this one is physically a part of
+  * @param {BackboneElement} [props.hoursOfOperation] - What days/times during a week is this location usually open
+  * @param {string} [props.availabilityExceptions] - Description of availability exceptions
+  * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the location
  */
 export function location(type: string, props: Location_Props);
 
@@ -3079,22 +3079,22 @@ export function location(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Unique identifier
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.manufacturedDoseForm] {CodeableConcept} - Dose form as manufactured (before any necessary transformation)
-  * @param [props.unitOfPresentation] {CodeableConcept} - The “real world” units in which the quantity of the item is described
-  * @param [props.manufacturer] {Reference} - Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues)
-  * @param [props.ingredient] {CodeableConcept} - The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource
-  * @param [props.property] {BackboneElement} - General characteristics of this item
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique identifier
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {CodeableConcept} [props.manufacturedDoseForm] - Dose form as manufactured (before any necessary transformation)
+  * @param {CodeableConcept} [props.unitOfPresentation] - The “real world” units in which the quantity of the item is described
+  * @param {Reference} [props.manufacturer] - Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues)
+  * @param {CodeableConcept} [props.ingredient] - The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource
+  * @param {BackboneElement} [props.property] - General characteristics of this item
  */
 export function manufacturedItemDefinition(type: string, props: ManufacturedItemDefinition_Props);
 
@@ -3118,56 +3118,56 @@ export function manufacturedItemDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this measure, represented as a URI (globally unique)
-  * @param [props.identifier] {Identifier} - Additional identifier for the measure
-  * @param [props.version] {string} - Business version of the measure
-  * @param [props.name] {string} - Name for this measure (computer friendly)
-  * @param [props.title] {string} - Name for this measure (human friendly)
-  * @param [props.subtitle] {string} - Subordinate title of the measure
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.experimental] {boolean} - For testing purposes, not real usage
-  * @param [props.subject] {CodeableConcept} - E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
-  * @param [props.date] {dateTime} - Date last changed
-  * @param [props.publisher] {string} - Name of the publisher (organization or individual)
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher
-  * @param [props.description] {markdown} - Natural language description of the measure
-  * @param [props.useContext] {UsageContext} - The context that the content is intended to support
-  * @param [props.jurisdiction] {CodeableConcept} - Intended jurisdiction for measure (if applicable)
-  * @param [props.purpose] {markdown} - Why this measure is defined
-  * @param [props.usage] {string} - Describes the clinical usage of the measure
-  * @param [props.copyright] {markdown} - Use and/or publishing restrictions
-  * @param [props.approvalDate] {date} - When the measure was approved by publisher
-  * @param [props.lastReviewDate] {date} - When the measure was last reviewed
-  * @param [props.effectivePeriod] {Period} - When the measure is expected to be used
-  * @param [props.topic] {CodeableConcept} - The category of the measure, such as Education, Treatment, Assessment, etc.
-  * @param [props.author] {ContactDetail} - Who authored the content
-  * @param [props.editor] {ContactDetail} - Who edited the content
-  * @param [props.reviewer] {ContactDetail} - Who reviewed the content
-  * @param [props.endorser] {ContactDetail} - Who endorsed the content
-  * @param [props.relatedArtifact] {RelatedArtifact} - Additional documentation, citations, etc.
-  * @param [props.library] {canonical} - Logic used by the measure
-  * @param [props.disclaimer] {markdown} - Disclaimer for use of the measure or its referenced content
-  * @param [props.scoring] {CodeableConcept} - proportion | ratio | continuous-variable | cohort
-  * @param [props.compositeScoring] {CodeableConcept} - opportunity | all-or-nothing | linear | weighted
-  * @param [props.type] {CodeableConcept} - process | outcome | structure | patient-reported-outcome | composite
-  * @param [props.riskAdjustment] {string} - How risk adjustment is applied for this measure
-  * @param [props.rateAggregation] {string} - How is rate aggregation performed for this measure
-  * @param [props.rationale] {markdown} - Detailed description of why the measure exists
-  * @param [props.clinicalRecommendationStatement] {markdown} - Summary of clinical guidelines
-  * @param [props.improvementNotation] {CodeableConcept} - increase | decrease
-  * @param [props.definition] {markdown} - Defined terms used in the measure documentation
-  * @param [props.guidance] {markdown} - Additional guidance for implementers
-  * @param [props.group] {BackboneElement} - Population criteria group
-  * @param [props.supplementalData] {BackboneElement} - What other data should be reported with the measure
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this measure, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the measure
+  * @param {string} [props.version] - Business version of the measure
+  * @param {string} [props.name] - Name for this measure (computer friendly)
+  * @param {string} [props.title] - Name for this measure (human friendly)
+  * @param {string} [props.subtitle] - Subordinate title of the measure
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.subject] - E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the measure
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for measure (if applicable)
+  * @param {markdown} [props.purpose] - Why this measure is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the measure
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the measure was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the measure was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the measure is expected to be used
+  * @param {CodeableConcept} [props.topic] - The category of the measure, such as Education, Treatment, Assessment, etc.
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {canonical} [props.library] - Logic used by the measure
+  * @param {markdown} [props.disclaimer] - Disclaimer for use of the measure or its referenced content
+  * @param {CodeableConcept} [props.scoring] - proportion | ratio | continuous-variable | cohort
+  * @param {CodeableConcept} [props.compositeScoring] - opportunity | all-or-nothing | linear | weighted
+  * @param {CodeableConcept} [props.type] - process | outcome | structure | patient-reported-outcome | composite
+  * @param {string} [props.riskAdjustment] - How risk adjustment is applied for this measure
+  * @param {string} [props.rateAggregation] - How is rate aggregation performed for this measure
+  * @param {markdown} [props.rationale] - Detailed description of why the measure exists
+  * @param {markdown} [props.clinicalRecommendationStatement] - Summary of clinical guidelines
+  * @param {CodeableConcept} [props.improvementNotation] - increase | decrease
+  * @param {markdown} [props.definition] - Defined terms used in the measure documentation
+  * @param {markdown} [props.guidance] - Additional guidance for implementers
+  * @param {BackboneElement} [props.group] - Population criteria group
+  * @param {BackboneElement} [props.supplementalData] - What other data should be reported with the measure
  */
 export function measure(type: string, props: Measure_Props);
 
@@ -3191,26 +3191,26 @@ export function measure(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Additional identifier for the MeasureReport
-  * @param [props.status] {string} - complete | pending | error
-  * @param [props.type] {string} - individual | subject-list | summary | data-collection
-  * @param [props.measure] {canonical} - What measure was calculated
-  * @param [props.subject] {Reference} - What individual(s) the report is for
-  * @param [props.date] {dateTime} - When the report was generated
-  * @param [props.reporter] {Reference} - Who is reporting the data
-  * @param [props.period] {Period} - What period the report covers
-  * @param [props.improvementNotation] {CodeableConcept} - increase | decrease
-  * @param [props.group] {BackboneElement} - Measure results for each group
-  * @param [props.evaluatedResource] {Reference} - What data was used to calculate the measure score
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Additional identifier for the MeasureReport
+  * @param {string} [props.status] - complete | pending | error
+  * @param {string} [props.type] - individual | subject-list | summary | data-collection
+  * @param {canonical} [props.measure] - What measure was calculated
+  * @param {Reference} [props.subject] - What individual(s) the report is for
+  * @param {dateTime} [props.date] - When the report was generated
+  * @param {Reference} [props.reporter] - Who is reporting the data
+  * @param {Period} [props.period] - What period the report covers
+  * @param {CodeableConcept} [props.improvementNotation] - increase | decrease
+  * @param {BackboneElement} [props.group] - Measure results for each group
+  * @param {Reference} [props.evaluatedResource] - What data was used to calculate the measure score
  */
 export function measureReport(type: string, props: MeasureReport_Props);
 
@@ -3234,37 +3234,37 @@ export function measureReport(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Identifier(s) for the image
-  * @param [props.basedOn] {Reference} - Procedure that caused this media to be created
-  * @param [props.partOf] {Reference} - Part of referenced event
-  * @param [props.status] {string} - preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
-  * @param [props.type] {CodeableConcept} - Classification of media as image, video, or audio
-  * @param [props.modality] {CodeableConcept} - The type of acquisition equipment/process
-  * @param [props.view] {CodeableConcept} - Imaging view, e.g. Lateral or Antero-posterior
-  * @param [props.subject] {Reference} - Who/What this Media is a record of
-  * @param [props.encounter] {Reference} - Encounter associated with media
-  * @param [props.created] {dateTime} - When Media was collected
-  * @param [props.issued] {instant} - Date/Time this version was made available
-  * @param [props.operator] {Reference} - The person who generated the image
-  * @param [props.reasonCode] {CodeableConcept} - Why was event performed?
-  * @param [props.bodySite] {CodeableConcept} - Observed body part
-  * @param [props.deviceName] {string} - Name of the device/manufacturer
-  * @param [props.device] {Reference} - Observing Device
-  * @param [props.height] {number} - Height of the image in pixels (photo/video)
-  * @param [props.width] {number} - Width of the image in pixels (photo/video)
-  * @param [props.frames] {number} - Number of frames if > 1 (photo)
-  * @param [props.duration] {decimal} - Length in seconds (audio / video)
-  * @param [props.content] {Attachment} - Actual Media - reference or data
-  * @param [props.note] {Annotation} - Comments made about the media
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifier(s) for the image
+  * @param {Reference} [props.basedOn] - Procedure that caused this media to be created
+  * @param {Reference} [props.partOf] - Part of referenced event
+  * @param {string} [props.status] - preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
+  * @param {CodeableConcept} [props.type] - Classification of media as image, video, or audio
+  * @param {CodeableConcept} [props.modality] - The type of acquisition equipment/process
+  * @param {CodeableConcept} [props.view] - Imaging view, e.g. Lateral or Antero-posterior
+  * @param {Reference} [props.subject] - Who/What this Media is a record of
+  * @param {Reference} [props.encounter] - Encounter associated with media
+  * @param {dateTime} [props.created] - When Media was collected
+  * @param {instant} [props.issued] - Date/Time this version was made available
+  * @param {Reference} [props.operator] - The person who generated the image
+  * @param {CodeableConcept} [props.reasonCode] - Why was event performed?
+  * @param {CodeableConcept} [props.bodySite] - Observed body part
+  * @param {string} [props.deviceName] - Name of the device/manufacturer
+  * @param {Reference} [props.device] - Observing Device
+  * @param {number} [props.height] - Height of the image in pixels (photo/video)
+  * @param {number} [props.width] - Width of the image in pixels (photo/video)
+  * @param {number} [props.frames] - Number of frames if > 1 (photo)
+  * @param {decimal} [props.duration] - Length in seconds (audio / video)
+  * @param {Attachment} [props.content] - Actual Media - reference or data
+  * @param {Annotation} [props.note] - Comments made about the media
  */
 export function media(type: string, props: Media_Props);
 
@@ -3288,23 +3288,23 @@ export function media(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier for this medication
-  * @param [props.code] {CodeableConcept} - Codes that identify this medication
-  * @param [props.status] {string} - active | inactive | entered-in-error
-  * @param [props.manufacturer] {Reference} - Manufacturer of the item
-  * @param [props.form] {CodeableConcept} - powder | tablets | capsule +
-  * @param [props.amount] {Ratio} - Amount of drug in package
-  * @param [props.ingredient] {BackboneElement} - Active or inactive ingredient
-  * @param [props.batch] {BackboneElement} - Details about packaged medications
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier for this medication
+  * @param {CodeableConcept} [props.code] - Codes that identify this medication
+  * @param {string} [props.status] - active | inactive | entered-in-error
+  * @param {Reference} [props.manufacturer] - Manufacturer of the item
+  * @param {CodeableConcept} [props.form] - powder | tablets | capsule +
+  * @param {Ratio} [props.amount] - Amount of drug in package
+  * @param {BackboneElement} [props.ingredient] - Active or inactive ingredient
+  * @param {BackboneElement} [props.batch] - Details about packaged medications
  */
 export function medication(type: string, props: Medication_Props);
 
@@ -3328,34 +3328,34 @@ export function medication(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External identifier
-  * @param [props.instantiates] {string} - Instantiates protocol or definition
-  * @param [props.partOf] {Reference} - Part of referenced event
-  * @param [props.status] {string} - in-progress | not-done | on-hold | completed | entered-in-error | stopped | unknown
-  * @param [props.statusReason] {CodeableConcept} - Reason administration not performed
-  * @param [props.category] {CodeableConcept} - Type of medication usage
-  * @param [props.medication] {CodeableConcept} - What was administered
-  * @param [props.subject] {Reference} - Who received medication
-  * @param [props.context] {Reference} - Encounter or Episode of Care administered as part of
-  * @param [props.supportingInformation] {Reference} - Additional information to support administration
-  * @param [props.effective] {dateTime} - Start and end time of administration
-  * @param [props.performer] {BackboneElement} - Who performed the medication administration and what they did
-  * @param [props.reasonCode] {CodeableConcept} - Reason administration performed
-  * @param [props.reasonReference] {Reference} - Condition or observation that supports why the medication was administered
-  * @param [props.request] {Reference} - Request administration performed against
-  * @param [props.device] {Reference} - Device used to administer
-  * @param [props.note] {Annotation} - Information about the administration
-  * @param [props.dosage] {BackboneElement} - Details of how medication was taken
-  * @param [props.eventHistory] {Reference} - A list of events of interest in the lifecycle
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifier
+  * @param {string} [props.instantiates] - Instantiates protocol or definition
+  * @param {Reference} [props.partOf] - Part of referenced event
+  * @param {string} [props.status] - in-progress | not-done | on-hold | completed | entered-in-error | stopped | unknown
+  * @param {CodeableConcept} [props.statusReason] - Reason administration not performed
+  * @param {CodeableConcept} [props.category] - Type of medication usage
+  * @param {CodeableConcept} [props.medication] - What was administered
+  * @param {Reference} [props.subject] - Who received medication
+  * @param {Reference} [props.context] - Encounter or Episode of Care administered as part of
+  * @param {Reference} [props.supportingInformation] - Additional information to support administration
+  * @param {dateTime} [props.effective] - Start and end time of administration
+  * @param {BackboneElement} [props.performer] - Who performed the medication administration and what they did
+  * @param {CodeableConcept} [props.reasonCode] - Reason administration performed
+  * @param {Reference} [props.reasonReference] - Condition or observation that supports why the medication was administered
+  * @param {Reference} [props.request] - Request administration performed against
+  * @param {Reference} [props.device] - Device used to administer
+  * @param {Annotation} [props.note] - Information about the administration
+  * @param {BackboneElement} [props.dosage] - Details of how medication was taken
+  * @param {Reference} [props.eventHistory] - A list of events of interest in the lifecycle
  */
 export function medicationAdministration(type: string, props: MedicationAdministration_Props);
 
@@ -3379,39 +3379,39 @@ export function medicationAdministration(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External identifier
-  * @param [props.partOf] {Reference} - Event that dispense is part of
-  * @param [props.status] {string} - preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown
-  * @param [props.statusReason] {CodeableConcept} - Why a dispense was not performed
-  * @param [props.category] {CodeableConcept} - Type of medication dispense
-  * @param [props.medication] {CodeableConcept} - What medication was supplied
-  * @param [props.subject] {Reference} - Who the dispense is for
-  * @param [props.context] {Reference} - Encounter / Episode associated with event
-  * @param [props.supportingInformation] {Reference} - Information that supports the dispensing of the medication
-  * @param [props.performer] {BackboneElement} - Who performed event
-  * @param [props.location] {Reference} - Where the dispense occurred
-  * @param [props.authorizingPrescription] {Reference} - Medication order that authorizes the dispense
-  * @param [props.type] {CodeableConcept} - Trial fill, partial fill, emergency fill, etc.
-  * @param [props.quantity] {Quantity} - Amount dispensed
-  * @param [props.daysSupply] {Quantity} - Amount of medication expressed as a timing amount
-  * @param [props.whenPrepared] {dateTime} - When product was packaged and reviewed
-  * @param [props.whenHandedOver] {dateTime} - When product was given out
-  * @param [props.destination] {Reference} - Where the medication was sent
-  * @param [props.receiver] {Reference} - Who collected the medication
-  * @param [props.note] {Annotation} - Information about the dispense
-  * @param [props.dosageInstruction] {Dosage} - How the medication is to be used by the patient or administered by the caregiver
-  * @param [props.substitution] {BackboneElement} - Whether a substitution was performed on the dispense
-  * @param [props.detectedIssue] {Reference} - Clinical issue with action
-  * @param [props.eventHistory] {Reference} - A list of relevant lifecycle events
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifier
+  * @param {Reference} [props.partOf] - Event that dispense is part of
+  * @param {string} [props.status] - preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown
+  * @param {CodeableConcept} [props.statusReason] - Why a dispense was not performed
+  * @param {CodeableConcept} [props.category] - Type of medication dispense
+  * @param {CodeableConcept} [props.medication] - What medication was supplied
+  * @param {Reference} [props.subject] - Who the dispense is for
+  * @param {Reference} [props.context] - Encounter / Episode associated with event
+  * @param {Reference} [props.supportingInformation] - Information that supports the dispensing of the medication
+  * @param {BackboneElement} [props.performer] - Who performed event
+  * @param {Reference} [props.location] - Where the dispense occurred
+  * @param {Reference} [props.authorizingPrescription] - Medication order that authorizes the dispense
+  * @param {CodeableConcept} [props.type] - Trial fill, partial fill, emergency fill, etc.
+  * @param {Quantity} [props.quantity] - Amount dispensed
+  * @param {Quantity} [props.daysSupply] - Amount of medication expressed as a timing amount
+  * @param {dateTime} [props.whenPrepared] - When product was packaged and reviewed
+  * @param {dateTime} [props.whenHandedOver] - When product was given out
+  * @param {Reference} [props.destination] - Where the medication was sent
+  * @param {Reference} [props.receiver] - Who collected the medication
+  * @param {Annotation} [props.note] - Information about the dispense
+  * @param {Dosage} [props.dosageInstruction] - How the medication is to be used by the patient or administered by the caregiver
+  * @param {BackboneElement} [props.substitution] - Whether a substitution was performed on the dispense
+  * @param {Reference} [props.detectedIssue] - Clinical issue with action
+  * @param {Reference} [props.eventHistory] - A list of relevant lifecycle events
  */
 export function medicationDispense(type: string, props: MedicationDispense_Props);
 
@@ -3435,37 +3435,37 @@ export function medicationDispense(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.code] {CodeableConcept} - Code that identifies this medication
-  * @param [props.status] {string} - active | inactive | entered-in-error
-  * @param [props.manufacturer] {Reference} - Manufacturer of the item
-  * @param [props.doseForm] {CodeableConcept} - powder | tablets | capsule +
-  * @param [props.amount] {Quantity} - Amount of drug in package
-  * @param [props.synonym] {string} - Additional names for a medication
-  * @param [props.relatedMedicationKnowledge] {BackboneElement} - Associated or related medication information
-  * @param [props.associatedMedication] {Reference} - A medication resource that is associated with this medication
-  * @param [props.productType] {CodeableConcept} - Category of the medication or product
-  * @param [props.monograph] {BackboneElement} - Associated documentation about the medication
-  * @param [props.ingredient] {BackboneElement} - Active or inactive ingredient
-  * @param [props.preparationInstruction] {markdown} - The instructions for preparing the medication
-  * @param [props.intendedRoute] {CodeableConcept} - The intended or approved route of administration
-  * @param [props.cost] {BackboneElement} - The pricing of the medication
-  * @param [props.monitoringProgram] {BackboneElement} - Program under which a medication is reviewed
-  * @param [props.administrationGuidelines] {BackboneElement} - Guidelines for administration of the medication
-  * @param [props.medicineClassification] {BackboneElement} - Categorization of the medication within a formulary or classification system
-  * @param [props.packaging] {BackboneElement} - Details about packaged medications
-  * @param [props.drugCharacteristic] {BackboneElement} - Specifies descriptive properties of the medicine
-  * @param [props.contraindication] {Reference} - Potential clinical issue with or between medication(s)
-  * @param [props.regulatory] {BackboneElement} - Regulatory information about a medication
-  * @param [props.kinetics] {BackboneElement} - The time course of drug absorption, distribution, metabolism and excretion of a medication from the body
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {CodeableConcept} [props.code] - Code that identifies this medication
+  * @param {string} [props.status] - active | inactive | entered-in-error
+  * @param {Reference} [props.manufacturer] - Manufacturer of the item
+  * @param {CodeableConcept} [props.doseForm] - powder | tablets | capsule +
+  * @param {Quantity} [props.amount] - Amount of drug in package
+  * @param {string} [props.synonym] - Additional names for a medication
+  * @param {BackboneElement} [props.relatedMedicationKnowledge] - Associated or related medication information
+  * @param {Reference} [props.associatedMedication] - A medication resource that is associated with this medication
+  * @param {CodeableConcept} [props.productType] - Category of the medication or product
+  * @param {BackboneElement} [props.monograph] - Associated documentation about the medication
+  * @param {BackboneElement} [props.ingredient] - Active or inactive ingredient
+  * @param {markdown} [props.preparationInstruction] - The instructions for preparing the medication
+  * @param {CodeableConcept} [props.intendedRoute] - The intended or approved route of administration
+  * @param {BackboneElement} [props.cost] - The pricing of the medication
+  * @param {BackboneElement} [props.monitoringProgram] - Program under which a medication is reviewed
+  * @param {BackboneElement} [props.administrationGuidelines] - Guidelines for administration of the medication
+  * @param {BackboneElement} [props.medicineClassification] - Categorization of the medication within a formulary or classification system
+  * @param {BackboneElement} [props.packaging] - Details about packaged medications
+  * @param {BackboneElement} [props.drugCharacteristic] - Specifies descriptive properties of the medicine
+  * @param {Reference} [props.contraindication] - Potential clinical issue with or between medication(s)
+  * @param {BackboneElement} [props.regulatory] - Regulatory information about a medication
+  * @param {BackboneElement} [props.kinetics] - The time course of drug absorption, distribution, metabolism and excretion of a medication from the body
  */
 export function medicationKnowledge(type: string, props: MedicationKnowledge_Props);
 
@@ -3489,47 +3489,47 @@ export function medicationKnowledge(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External ids for this request
-  * @param [props.status] {string} - active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
-  * @param [props.statusReason] {CodeableConcept} - Reason for current status
-  * @param [props.intent] {string} - proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
-  * @param [props.category] {CodeableConcept} - Type of medication usage
-  * @param [props.priority] {string} - routine | urgent | asap | stat
-  * @param [props.doNotPerform] {boolean} - True if request is prohibiting action
-  * @param [props.reported] {boolean} - Reported rather than primary record
-  * @param [props.medication] {CodeableConcept} - Medication to be taken
-  * @param [props.subject] {Reference} - Who or group medication request is for
-  * @param [props.encounter] {Reference} - Encounter created as part of encounter/admission/stay
-  * @param [props.supportingInformation] {Reference} - Information to support ordering of the medication
-  * @param [props.authoredOn] {dateTime} - When request was initially authored
-  * @param [props.requester] {Reference} - Who/What requested the Request
-  * @param [props.performer] {Reference} - Intended performer of administration
-  * @param [props.performerType] {CodeableConcept} - Desired kind of performer of the medication administration
-  * @param [props.recorder] {Reference} - Person who entered the request
-  * @param [props.reasonCode] {CodeableConcept} - Reason or indication for ordering or not ordering the medication
-  * @param [props.reasonReference] {Reference} - Condition or observation that supports why the prescription is being written
-  * @param [props.instantiatesCanonical] {canonical} - Instantiates FHIR protocol or definition
-  * @param [props.instantiatesUri] {string} - Instantiates external protocol or definition
-  * @param [props.basedOn] {Reference} - What request fulfills
-  * @param [props.groupIdentifier] {Identifier} - Composite request this is part of
-  * @param [props.courseOfTherapyType] {CodeableConcept} - Overall pattern of medication administration
-  * @param [props.insurance] {Reference} - Associated insurance coverage
-  * @param [props.note] {Annotation} - Information about the prescription
-  * @param [props.dosageInstruction] {Dosage} - How the medication should be taken
-  * @param [props.dispenseRequest] {BackboneElement} - Medication supply authorization
-  * @param [props.substitution] {BackboneElement} - Any restrictions on medication substitution
-  * @param [props.priorPrescription] {Reference} - An order/prescription that is being replaced
-  * @param [props.detectedIssue] {Reference} - Clinical Issue with action
-  * @param [props.eventHistory] {Reference} - A list of events of interest in the lifecycle
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External ids for this request
+  * @param {string} [props.status] - active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {string} [props.intent] - proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {CodeableConcept} [props.category] - Type of medication usage
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {boolean} [props.doNotPerform] - True if request is prohibiting action
+  * @param {boolean} [props.reported] - Reported rather than primary record
+  * @param {CodeableConcept} [props.medication] - Medication to be taken
+  * @param {Reference} [props.subject] - Who or group medication request is for
+  * @param {Reference} [props.encounter] - Encounter created as part of encounter/admission/stay
+  * @param {Reference} [props.supportingInformation] - Information to support ordering of the medication
+  * @param {dateTime} [props.authoredOn] - When request was initially authored
+  * @param {Reference} [props.requester] - Who/What requested the Request
+  * @param {Reference} [props.performer] - Intended performer of administration
+  * @param {CodeableConcept} [props.performerType] - Desired kind of performer of the medication administration
+  * @param {Reference} [props.recorder] - Person who entered the request
+  * @param {CodeableConcept} [props.reasonCode] - Reason or indication for ordering or not ordering the medication
+  * @param {Reference} [props.reasonReference] - Condition or observation that supports why the prescription is being written
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - What request fulfills
+  * @param {Identifier} [props.groupIdentifier] - Composite request this is part of
+  * @param {CodeableConcept} [props.courseOfTherapyType] - Overall pattern of medication administration
+  * @param {Reference} [props.insurance] - Associated insurance coverage
+  * @param {Annotation} [props.note] - Information about the prescription
+  * @param {Dosage} [props.dosageInstruction] - How the medication should be taken
+  * @param {BackboneElement} [props.dispenseRequest] - Medication supply authorization
+  * @param {BackboneElement} [props.substitution] - Any restrictions on medication substitution
+  * @param {Reference} [props.priorPrescription] - An order/prescription that is being replaced
+  * @param {Reference} [props.detectedIssue] - Clinical Issue with action
+  * @param {Reference} [props.eventHistory] - A list of events of interest in the lifecycle
  */
 export function medicationRequest(type: string, props: MedicationRequest_Props);
 
@@ -3553,32 +3553,32 @@ export function medicationRequest(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External identifier
-  * @param [props.basedOn] {Reference} - Fulfils plan, proposal or order
-  * @param [props.partOf] {Reference} - Part of referenced event
-  * @param [props.status] {string} - active | completed | entered-in-error | intended | stopped | on-hold | unknown | not-taken
-  * @param [props.statusReason] {CodeableConcept} - Reason for current status
-  * @param [props.category] {CodeableConcept} - Type of medication usage
-  * @param [props.medication] {CodeableConcept} - What medication was taken
-  * @param [props.subject] {Reference} - Who is/was taking  the medication
-  * @param [props.context] {Reference} - Encounter / Episode associated with MedicationStatement
-  * @param [props.effective] {dateTime} - The date/time or interval when the medication is/was/will be taken
-  * @param [props.dateAsserted] {dateTime} - When the statement was asserted?
-  * @param [props.informationSource] {Reference} - Person or organization that provided the information about the taking of this medication
-  * @param [props.derivedFrom] {Reference} - Additional supporting information
-  * @param [props.reasonCode] {CodeableConcept} - Reason for why the medication is being/was taken
-  * @param [props.reasonReference] {Reference} - Condition or observation that supports why the medication is being/was taken
-  * @param [props.note] {Annotation} - Further information about the statement
-  * @param [props.dosage] {Dosage} - Details of how medication is/was taken or should be taken
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifier
+  * @param {Reference} [props.basedOn] - Fulfils plan, proposal or order
+  * @param {Reference} [props.partOf] - Part of referenced event
+  * @param {string} [props.status] - active | completed | entered-in-error | intended | stopped | on-hold | unknown | not-taken
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {CodeableConcept} [props.category] - Type of medication usage
+  * @param {CodeableConcept} [props.medication] - What medication was taken
+  * @param {Reference} [props.subject] - Who is/was taking  the medication
+  * @param {Reference} [props.context] - Encounter / Episode associated with MedicationStatement
+  * @param {dateTime} [props.effective] - The date/time or interval when the medication is/was/will be taken
+  * @param {dateTime} [props.dateAsserted] - When the statement was asserted?
+  * @param {Reference} [props.informationSource] - Person or organization that provided the information about the taking of this medication
+  * @param {Reference} [props.derivedFrom] - Additional supporting information
+  * @param {CodeableConcept} [props.reasonCode] - Reason for why the medication is being/was taken
+  * @param {Reference} [props.reasonReference] - Condition or observation that supports why the medication is being/was taken
+  * @param {Annotation} [props.note] - Further information about the statement
+  * @param {Dosage} [props.dosage] - Details of how medication is/was taken or should be taken
  */
 export function medicationStatement(type: string, props: MedicationStatement_Props);
 
@@ -3602,43 +3602,43 @@ export function medicationStatement(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier for this product. Could be an MPID
-  * @param [props.type] {CodeableConcept} - Regulatory type, e.g. Investigational or Authorized
-  * @param [props.domain] {CodeableConcept} - If this medicine applies to human or veterinary uses
-  * @param [props.version] {string} - A business identifier relating to a specific version of the product
-  * @param [props.status] {CodeableConcept} - The status within the lifecycle of this product record
-  * @param [props.statusDate] {dateTime} - The date at which the given status became applicable
-  * @param [props.description] {markdown} - General description of this product
-  * @param [props.combinedPharmaceuticalDoseForm] {CodeableConcept} - The dose form for a single part product, or combined form of a multiple part product
-  * @param [props.route] {CodeableConcept} - The path by which the product is taken into or makes contact with the body
-  * @param [props.indication] {markdown} - Description of indication(s) for this product, used when structured indications are not required
-  * @param [props.legalStatusOfSupply] {CodeableConcept} - The legal status of supply of the medicinal product as classified by the regulator
-  * @param [props.additionalMonitoringIndicator] {CodeableConcept} - Whether the Medicinal Product is subject to additional monitoring for regulatory reasons
-  * @param [props.specialMeasures] {CodeableConcept} - Whether the Medicinal Product is subject to special measures for regulatory reasons
-  * @param [props.pediatricUseIndicator] {CodeableConcept} - If authorised for use in children
-  * @param [props.classification] {CodeableConcept} - Allows the product to be classified by various systems
-  * @param [props.marketingStatus] {MarketingStatus} - Marketing status of the medicinal product, in contrast to marketing authorization
-  * @param [props.packagedMedicinalProduct] {CodeableConcept} - Package type for the product
-  * @param [props.ingredient] {CodeableConcept} - The ingredients of this medicinal product - when not detailed in other resources
-  * @param [props.impurity] {CodeableReference} - Any component of the drug product which is not the chemical entity defined as the drug substance, or an excipient in the drug product
-  * @param [props.attachedDocument] {Reference} - Additional documentation about the medicinal product
-  * @param [props.masterFile] {Reference} - A master file for the medicinal product (e.g. Pharmacovigilance System Master File)
-  * @param [props.contact] {BackboneElement} - A product specific contact, person (in a role), or an organization
-  * @param [props.clinicalTrial] {Reference} - Clinical trials or studies that this product is involved in
-  * @param [props.code] {Coding} - A code that this product is known by, within some formal terminology
-  * @param [props.name] {BackboneElement} - The product's name, including full name and possibly coded parts
-  * @param [props.crossReference] {BackboneElement} - Reference to another product, e.g. for linking authorised to investigational product
-  * @param [props.operation] {BackboneElement} - A manufacturing or administrative process for the medicinal product
-  * @param [props.characteristic] {BackboneElement} - Key product features such as "sugar free", "modified release"
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier for this product. Could be an MPID
+  * @param {CodeableConcept} [props.type] - Regulatory type, e.g. Investigational or Authorized
+  * @param {CodeableConcept} [props.domain] - If this medicine applies to human or veterinary uses
+  * @param {string} [props.version] - A business identifier relating to a specific version of the product
+  * @param {CodeableConcept} [props.status] - The status within the lifecycle of this product record
+  * @param {dateTime} [props.statusDate] - The date at which the given status became applicable
+  * @param {markdown} [props.description] - General description of this product
+  * @param {CodeableConcept} [props.combinedPharmaceuticalDoseForm] - The dose form for a single part product, or combined form of a multiple part product
+  * @param {CodeableConcept} [props.route] - The path by which the product is taken into or makes contact with the body
+  * @param {markdown} [props.indication] - Description of indication(s) for this product, used when structured indications are not required
+  * @param {CodeableConcept} [props.legalStatusOfSupply] - The legal status of supply of the medicinal product as classified by the regulator
+  * @param {CodeableConcept} [props.additionalMonitoringIndicator] - Whether the Medicinal Product is subject to additional monitoring for regulatory reasons
+  * @param {CodeableConcept} [props.specialMeasures] - Whether the Medicinal Product is subject to special measures for regulatory reasons
+  * @param {CodeableConcept} [props.pediatricUseIndicator] - If authorised for use in children
+  * @param {CodeableConcept} [props.classification] - Allows the product to be classified by various systems
+  * @param {MarketingStatus} [props.marketingStatus] - Marketing status of the medicinal product, in contrast to marketing authorization
+  * @param {CodeableConcept} [props.packagedMedicinalProduct] - Package type for the product
+  * @param {CodeableConcept} [props.ingredient] - The ingredients of this medicinal product - when not detailed in other resources
+  * @param {CodeableReference} [props.impurity] - Any component of the drug product which is not the chemical entity defined as the drug substance, or an excipient in the drug product
+  * @param {Reference} [props.attachedDocument] - Additional documentation about the medicinal product
+  * @param {Reference} [props.masterFile] - A master file for the medicinal product (e.g. Pharmacovigilance System Master File)
+  * @param {BackboneElement} [props.contact] - A product specific contact, person (in a role), or an organization
+  * @param {Reference} [props.clinicalTrial] - Clinical trials or studies that this product is involved in
+  * @param {Coding} [props.code] - A code that this product is known by, within some formal terminology
+  * @param {BackboneElement} [props.name] - The product's name, including full name and possibly coded parts
+  * @param {BackboneElement} [props.crossReference] - Reference to another product, e.g. for linking authorised to investigational product
+  * @param {BackboneElement} [props.operation] - A manufacturing or administrative process for the medicinal product
+  * @param {BackboneElement} [props.characteristic] - Key product features such as "sugar free", "modified release"
  */
 export function medicinalProductDefinition(type: string, props: MedicinalProductDefinition_Props);
 
@@ -3662,31 +3662,31 @@ export function medicinalProductDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Unique ID for this particular sequence. This is a FHIR-defined id
-  * @param [props.type] {string} - aa | dna | rna
-  * @param [props.coordinateSystem] {integer} - Base number of coordinate system (0 for 0-based numbering or coordinates, inclusive start, exclusive end, 1 for 1-based numbering, inclusive start, inclusive end)
-  * @param [props.patient] {Reference} - Who and/or what this is about
-  * @param [props.specimen] {Reference} - Specimen used for sequencing
-  * @param [props.device] {Reference} - The method for sequencing
-  * @param [props.performer] {Reference} - Who should be responsible for test result
-  * @param [props.quantity] {Quantity} - The number of copies of the sequence of interest.  (RNASeq)
-  * @param [props.referenceSeq] {BackboneElement} - A sequence used as reference
-  * @param [props.variant] {BackboneElement} - Variant in sequence
-  * @param [props.observedSeq] {string} - Sequence that was observed
-  * @param [props.quality] {BackboneElement} - An set of value as quality of sequence
-  * @param [props.readCoverage] {integer} - Average number of reads representing a given nucleotide in the reconstructed sequence
-  * @param [props.repository] {BackboneElement} - External repository which contains detailed report related with observedSeq in this resource
-  * @param [props.pointer] {Reference} - Pointer to next atomic sequence
-  * @param [props.structureVariant] {BackboneElement} - Structural variant
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique ID for this particular sequence. This is a FHIR-defined id
+  * @param {string} [props.type] - aa | dna | rna
+  * @param {integer} [props.coordinateSystem] - Base number of coordinate system (0 for 0-based numbering or coordinates, inclusive start, exclusive end, 1 for 1-based numbering, inclusive start, inclusive end)
+  * @param {Reference} [props.patient] - Who and/or what this is about
+  * @param {Reference} [props.specimen] - Specimen used for sequencing
+  * @param {Reference} [props.device] - The method for sequencing
+  * @param {Reference} [props.performer] - Who should be responsible for test result
+  * @param {Quantity} [props.quantity] - The number of copies of the sequence of interest.  (RNASeq)
+  * @param {BackboneElement} [props.referenceSeq] - A sequence used as reference
+  * @param {BackboneElement} [props.variant] - Variant in sequence
+  * @param {string} [props.observedSeq] - Sequence that was observed
+  * @param {BackboneElement} [props.quality] - An set of value as quality of sequence
+  * @param {integer} [props.readCoverage] - Average number of reads representing a given nucleotide in the reconstructed sequence
+  * @param {BackboneElement} [props.repository] - External repository which contains detailed report related with observedSeq in this resource
+  * @param {Reference} [props.pointer] - Pointer to next atomic sequence
+  * @param {BackboneElement} [props.structureVariant] - Structural variant
  */
 export function molecularSequence(type: string, props: MolecularSequence_Props);
 
@@ -3710,32 +3710,32 @@ export function molecularSequence(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Identifiers assigned to this order
-  * @param [props.instantiatesCanonical] {canonical} - Instantiates FHIR protocol or definition
-  * @param [props.instantiatesUri] {string} - Instantiates external protocol or definition
-  * @param [props.instantiates] {string} - Instantiates protocol or definition
-  * @param [props.status] {string} - draft | active | on-hold | revoked | completed | entered-in-error | unknown
-  * @param [props.intent] {string} - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
-  * @param [props.patient] {Reference} - The person who requires the diet, formula or nutritional supplement
-  * @param [props.encounter] {Reference} - The encounter associated with this nutrition order
-  * @param [props.dateTime] {dateTime} - Date and time the nutrition order was requested
-  * @param [props.orderer] {Reference} - Who ordered the diet, formula or nutritional supplement
-  * @param [props.allergyIntolerance] {Reference} - List of the patient's food and nutrition-related allergies and intolerances
-  * @param [props.foodPreferenceModifier] {CodeableConcept} - Order-specific modifier about the type of food that should be given
-  * @param [props.excludeFoodModifier] {CodeableConcept} - Order-specific modifier about the type of food that should not be given
-  * @param [props.oralDiet] {BackboneElement} - Oral diet components
-  * @param [props.supplement] {BackboneElement} - Supplement components
-  * @param [props.enteralFormula] {BackboneElement} - Enteral formula components
-  * @param [props.note] {Annotation} - Comments
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifiers assigned to this order
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {string} [props.instantiates] - Instantiates protocol or definition
+  * @param {string} [props.status] - draft | active | on-hold | revoked | completed | entered-in-error | unknown
+  * @param {string} [props.intent] - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {Reference} [props.patient] - The person who requires the diet, formula or nutritional supplement
+  * @param {Reference} [props.encounter] - The encounter associated with this nutrition order
+  * @param {dateTime} [props.dateTime] - Date and time the nutrition order was requested
+  * @param {Reference} [props.orderer] - Who ordered the diet, formula or nutritional supplement
+  * @param {Reference} [props.allergyIntolerance] - List of the patient's food and nutrition-related allergies and intolerances
+  * @param {CodeableConcept} [props.foodPreferenceModifier] - Order-specific modifier about the type of food that should be given
+  * @param {CodeableConcept} [props.excludeFoodModifier] - Order-specific modifier about the type of food that should not be given
+  * @param {BackboneElement} [props.oralDiet] - Oral diet components
+  * @param {BackboneElement} [props.supplement] - Supplement components
+  * @param {BackboneElement} [props.enteralFormula] - Enteral formula components
+  * @param {Annotation} [props.note] - Comments
  */
 export function nutritionOrder(type: string, props: NutritionOrder_Props);
 
@@ -3759,25 +3759,25 @@ export function nutritionOrder(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.status] {string} - active | inactive | entered-in-error
-  * @param [props.category] {CodeableConcept} - A category or class of the nutrition product (halal, kosher, gluten free, vegan, etc)
-  * @param [props.code] {CodeableConcept} - A code designating a specific type of nutritional product
-  * @param [props.manufacturer] {Reference} - Manufacturer, representative or officially responsible for the product
-  * @param [props.nutrient] {BackboneElement} - The product's nutritional information expressed by the nutrients
-  * @param [props.ingredient] {BackboneElement} - Ingredients contained in this product
-  * @param [props.knownAllergen] {CodeableReference} - Known or suspected allergens that are a part of this product
-  * @param [props.productCharacteristic] {BackboneElement} - Specifies descriptive properties of the nutrition product
-  * @param [props.instance] {BackboneElement} - One or several physical instances or occurrences of the nutrition product
-  * @param [props.note] {Annotation} - Comments made about the product
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.status] - active | inactive | entered-in-error
+  * @param {CodeableConcept} [props.category] - A category or class of the nutrition product (halal, kosher, gluten free, vegan, etc)
+  * @param {CodeableConcept} [props.code] - A code designating a specific type of nutritional product
+  * @param {Reference} [props.manufacturer] - Manufacturer, representative or officially responsible for the product
+  * @param {BackboneElement} [props.nutrient] - The product's nutritional information expressed by the nutrients
+  * @param {BackboneElement} [props.ingredient] - Ingredients contained in this product
+  * @param {CodeableReference} [props.knownAllergen] - Known or suspected allergens that are a part of this product
+  * @param {BackboneElement} [props.productCharacteristic] - Specifies descriptive properties of the nutrition product
+  * @param {BackboneElement} [props.instance] - One or several physical instances or occurrences of the nutrition product
+  * @param {Annotation} [props.note] - Comments made about the product
  */
 export function nutritionProduct(type: string, props: NutritionProduct_Props);
 
@@ -3801,39 +3801,39 @@ export function nutritionProduct(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for observation
-  * @param [props.basedOn] {Reference} - Fulfills plan, proposal or order
-  * @param [props.partOf] {Reference} - Part of referenced event
-  * @param [props.status] {string} - registered | preliminary | final | amended +
-  * @param [props.category] {CodeableConcept} - Classification of  type of observation
-  * @param [props.code] {CodeableConcept} - Type of observation (code / type)
-  * @param [props.subject] {Reference} - Who and/or what the observation is about
-  * @param [props.focus] {Reference} - What the observation is about, when it is not about the subject of record
-  * @param [props.encounter] {Reference} - Healthcare event during which this observation is made
-  * @param [props.effective] {dateTime} - Clinically relevant time/time-period for observation
-  * @param [props.issued] {instant} - Date/Time this version was made available
-  * @param [props.performer] {Reference} - Who is responsible for the observation
-  * @param [props.value] {Quantity} - Actual result
-  * @param [props.dataAbsentReason] {CodeableConcept} - Why the result is missing
-  * @param [props.interpretation] {CodeableConcept} - High, low, normal, etc.
-  * @param [props.note] {Annotation} - Comments about the observation
-  * @param [props.bodySite] {CodeableConcept} - Observed body part
-  * @param [props.method] {CodeableConcept} - How it was done
-  * @param [props.specimen] {Reference} - Specimen used for this observation
-  * @param [props.device] {Reference} - (Measurement) Device
-  * @param [props.referenceRange] {BackboneElement} - Provides guide for interpretation
-  * @param [props.hasMember] {Reference} - Related resource that belongs to the Observation group
-  * @param [props.derivedFrom] {Reference} - Related measurements the observation is made from
-  * @param [props.component] {BackboneElement} - Component results
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for observation
+  * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
+  * @param {Reference} [props.partOf] - Part of referenced event
+  * @param {string} [props.status] - registered | preliminary | final | amended +
+  * @param {CodeableConcept} [props.category] - Classification of  type of observation
+  * @param {CodeableConcept} [props.code] - Type of observation (code / type)
+  * @param {Reference} [props.subject] - Who and/or what the observation is about
+  * @param {Reference} [props.focus] - What the observation is about, when it is not about the subject of record
+  * @param {Reference} [props.encounter] - Healthcare event during which this observation is made
+  * @param {dateTime} [props.effective] - Clinically relevant time/time-period for observation
+  * @param {instant} [props.issued] - Date/Time this version was made available
+  * @param {Reference} [props.performer] - Who is responsible for the observation
+  * @param {Quantity} [props.value] - Actual result
+  * @param {CodeableConcept} [props.dataAbsentReason] - Why the result is missing
+  * @param {CodeableConcept} [props.interpretation] - High, low, normal, etc.
+  * @param {Annotation} [props.note] - Comments about the observation
+  * @param {CodeableConcept} [props.bodySite] - Observed body part
+  * @param {CodeableConcept} [props.method] - How it was done
+  * @param {Reference} [props.specimen] - Specimen used for this observation
+  * @param {Reference} [props.device] - (Measurement) Device
+  * @param {BackboneElement} [props.referenceRange] - Provides guide for interpretation
+  * @param {Reference} [props.hasMember] - Related resource that belongs to the Observation group
+  * @param {Reference} [props.derivedFrom] - Related measurements the observation is made from
+  * @param {BackboneElement} [props.component] - Component results
  */
 export function observation(type: string, props: Observation_Props);
 
@@ -3857,28 +3857,28 @@ export function observation(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.category] {CodeableConcept} - Category of observation
-  * @param [props.code] {CodeableConcept} - Type of observation (code / type)
-  * @param [props.identifier] {Identifier} - Business identifier for this ObservationDefinition instance
-  * @param [props.permittedDataType] {string} - Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period
-  * @param [props.multipleResultsAllowed] {boolean} - Multiple results allowed
-  * @param [props.method] {CodeableConcept} - Method used to produce the observation
-  * @param [props.preferredReportName] {string} - Preferred report name
-  * @param [props.quantitativeDetails] {BackboneElement} - Characteristics of quantitative results
-  * @param [props.qualifiedInterval] {BackboneElement} - Qualified range for continuous and ordinal observation results
-  * @param [props.validCodedValueSet] {Reference} - Value set of valid coded values for the observations conforming to this ObservationDefinition
-  * @param [props.normalCodedValueSet] {Reference} - Value set of normal coded values for the observations conforming to this ObservationDefinition
-  * @param [props.abnormalCodedValueSet] {Reference} - Value set of abnormal coded values for the observations conforming to this ObservationDefinition
-  * @param [props.criticalCodedValueSet] {Reference} - Value set of critical coded values for the observations conforming to this ObservationDefinition
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {CodeableConcept} [props.category] - Category of observation
+  * @param {CodeableConcept} [props.code] - Type of observation (code / type)
+  * @param {Identifier} [props.identifier] - Business identifier for this ObservationDefinition instance
+  * @param {string} [props.permittedDataType] - Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period
+  * @param {boolean} [props.multipleResultsAllowed] - Multiple results allowed
+  * @param {CodeableConcept} [props.method] - Method used to produce the observation
+  * @param {string} [props.preferredReportName] - Preferred report name
+  * @param {BackboneElement} [props.quantitativeDetails] - Characteristics of quantitative results
+  * @param {BackboneElement} [props.qualifiedInterval] - Qualified range for continuous and ordinal observation results
+  * @param {Reference} [props.validCodedValueSet] - Value set of valid coded values for the observations conforming to this ObservationDefinition
+  * @param {Reference} [props.normalCodedValueSet] - Value set of normal coded values for the observations conforming to this ObservationDefinition
+  * @param {Reference} [props.abnormalCodedValueSet] - Value set of abnormal coded values for the observations conforming to this ObservationDefinition
+  * @param {Reference} [props.criticalCodedValueSet] - Value set of critical coded values for the observations conforming to this ObservationDefinition
  */
 export function observationDefinition(type: string, props: ObservationDefinition_Props);
 
@@ -3902,25 +3902,25 @@ export function observationDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Identifies this organization  across multiple systems
-  * @param [props.active] {boolean} - Whether the organization's record is still in active use
-  * @param [props.type] {CodeableConcept} - Kind of organization
-  * @param [props.name] {string} - Name used for the organization
-  * @param [props.alias] {string} - A list of alternate names that the organization is known as, or was known as in the past
-  * @param [props.telecom] {ContactPoint} - A contact detail for the organization
-  * @param [props.address] {Address} - An address for the organization
-  * @param [props.partOf] {Reference} - The organization of which this organization forms a part
-  * @param [props.contact] {BackboneElement} - Contact for the organization for a certain purpose
-  * @param [props.endpoint] {Reference} - Technical endpoints providing access to services operated for the organization
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifies this organization  across multiple systems
+  * @param {boolean} [props.active] - Whether the organization's record is still in active use
+  * @param {CodeableConcept} [props.type] - Kind of organization
+  * @param {string} [props.name] - Name used for the organization
+  * @param {string} [props.alias] - A list of alternate names that the organization is known as, or was known as in the past
+  * @param {ContactPoint} [props.telecom] - A contact detail for the organization
+  * @param {Address} [props.address] - An address for the organization
+  * @param {Reference} [props.partOf] - The organization of which this organization forms a part
+  * @param {BackboneElement} [props.contact] - Contact for the organization for a certain purpose
+  * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the organization
  */
 export function organization(type: string, props: Organization_Props);
 
@@ -3944,27 +3944,27 @@ export function organization(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifiers that are specific to this role
-  * @param [props.active] {boolean} - Whether this organization affiliation record is in active use
-  * @param [props.period] {Period} - The period during which the participatingOrganization is affiliated with the primary organization
-  * @param [props.organization] {Reference} - Organization where the role is available
-  * @param [props.participatingOrganization] {Reference} - Organization that provides/performs the role (e.g. providing services or is a member of)
-  * @param [props.network] {Reference} - Health insurance provider network in which the participatingOrganization provides the role's services (if defined) at the indicated locations (if defined)
-  * @param [props.code] {CodeableConcept} - Definition of the role the participatingOrganization plays
-  * @param [props.specialty] {CodeableConcept} - Specific specialty of the participatingOrganization in the context of the role
-  * @param [props.location] {Reference} - The location(s) at which the role occurs
-  * @param [props.healthcareService] {Reference} - Healthcare services provided through the role
-  * @param [props.telecom] {ContactPoint} - Contact details at the participatingOrganization relevant to this Affiliation
-  * @param [props.endpoint] {Reference} - Technical endpoints providing access to services operated for this role
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifiers that are specific to this role
+  * @param {boolean} [props.active] - Whether this organization affiliation record is in active use
+  * @param {Period} [props.period] - The period during which the participatingOrganization is affiliated with the primary organization
+  * @param {Reference} [props.organization] - Organization where the role is available
+  * @param {Reference} [props.participatingOrganization] - Organization that provides/performs the role (e.g. providing services or is a member of)
+  * @param {Reference} [props.network] - Health insurance provider network in which the participatingOrganization provides the role's services (if defined) at the indicated locations (if defined)
+  * @param {CodeableConcept} [props.code] - Definition of the role the participatingOrganization plays
+  * @param {CodeableConcept} [props.specialty] - Specific specialty of the participatingOrganization in the context of the role
+  * @param {Reference} [props.location] - The location(s) at which the role occurs
+  * @param {Reference} [props.healthcareService] - Healthcare services provided through the role
+  * @param {ContactPoint} [props.telecom] - Contact details at the participatingOrganization relevant to this Affiliation
+  * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for this role
  */
 export function organizationAffiliation(type: string, props: OrganizationAffiliation_Props);
 
@@ -3988,29 +3988,29 @@ export function organizationAffiliation(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - A unique identifier for this package as whole
-  * @param [props.name] {string} - A name for this package. Typically as listed in a drug formulary, catalogue, inventory etc
-  * @param [props.type] {CodeableConcept} - A high level category e.g. medicinal product, raw material, shipping container etc
-  * @param [props.packageFor] {Reference} - The product that this is a pack for
-  * @param [props.status] {CodeableConcept} - The status within the lifecycle of this item. High level - not intended to duplicate details elsewhere e.g. legal status, or authorization/marketing status
-  * @param [props.statusDate] {dateTime} - The date at which the given status became applicable
-  * @param [props.containedItemQuantity] {Quantity} - A total of the complete count of contained items of a particular type/form, independent of sub-packaging or organization. This can be considered as the pack size
-  * @param [props.description] {markdown} - Textual description. Note that this is not the name of the package or product
-  * @param [props.legalStatusOfSupply] {BackboneElement} - The legal status of supply of the packaged item as classified by the regulator
-  * @param [props.marketingStatus] {MarketingStatus} - Allows specifying that an item is on the market for sale, or that it is not available, and the dates and locations associated
-  * @param [props.characteristic] {CodeableConcept} - Allows the key features to be recorded, such as "hospital pack", "nurse prescribable"
-  * @param [props.copackagedIndicator] {boolean} - If the drug product is supplied with another item such as a diluent or adjuvant
-  * @param [props.manufacturer] {Reference} - Manufacturer of this package type (multiple means these are all possible manufacturers)
-  * @param [props.package] {BackboneElement} - A packaging item, as a container for medically related items, possibly with other packaging items within, or a packaging component, such as bottle cap
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - A unique identifier for this package as whole
+  * @param {string} [props.name] - A name for this package. Typically as listed in a drug formulary, catalogue, inventory etc
+  * @param {CodeableConcept} [props.type] - A high level category e.g. medicinal product, raw material, shipping container etc
+  * @param {Reference} [props.packageFor] - The product that this is a pack for
+  * @param {CodeableConcept} [props.status] - The status within the lifecycle of this item. High level - not intended to duplicate details elsewhere e.g. legal status, or authorization/marketing status
+  * @param {dateTime} [props.statusDate] - The date at which the given status became applicable
+  * @param {Quantity} [props.containedItemQuantity] - A total of the complete count of contained items of a particular type/form, independent of sub-packaging or organization. This can be considered as the pack size
+  * @param {markdown} [props.description] - Textual description. Note that this is not the name of the package or product
+  * @param {BackboneElement} [props.legalStatusOfSupply] - The legal status of supply of the packaged item as classified by the regulator
+  * @param {MarketingStatus} [props.marketingStatus] - Allows specifying that an item is on the market for sale, or that it is not available, and the dates and locations associated
+  * @param {CodeableConcept} [props.characteristic] - Allows the key features to be recorded, such as "hospital pack", "nurse prescribable"
+  * @param {boolean} [props.copackagedIndicator] - If the drug product is supplied with another item such as a diluent or adjuvant
+  * @param {Reference} [props.manufacturer] - Manufacturer of this package type (multiple means these are all possible manufacturers)
+  * @param {BackboneElement} [props.package] - A packaging item, as a container for medically related items, possibly with other packaging items within, or a packaging component, such as bottle cap
  */
 export function packagedProductDefinition(type: string, props: PackagedProductDefinition_Props);
 
@@ -4034,31 +4034,31 @@ export function packagedProductDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - An identifier for this patient
-  * @param [props.active] {boolean} - Whether this patient's record is in active use
-  * @param [props.name] {HumanName} - A name associated with the patient
-  * @param [props.telecom] {ContactPoint} - A contact detail for the individual
-  * @param [props.gender] {string} - male | female | other | unknown
-  * @param [props.birthDate] {date} - The date of birth for the individual
-  * @param [props.deceased] {boolean} - Indicates if the individual is deceased or not
-  * @param [props.address] {Address} - An address for the individual
-  * @param [props.maritalStatus] {CodeableConcept} - Marital (civil) status of a patient
-  * @param [props.multipleBirth] {boolean} - Whether patient is part of a multiple birth
-  * @param [props.photo] {Attachment} - Image of the patient
-  * @param [props.contact] {BackboneElement} - A contact party (e.g. guardian, partner, friend) for the patient
-  * @param [props.communication] {BackboneElement} - A language which may be used to communicate with the patient about his or her health
-  * @param [props.generalPractitioner] {Reference} - Patient's nominated primary care provider
-  * @param [props.managingOrganization] {Reference} - Organization that is the custodian of the patient record
-  * @param [props.link] {BackboneElement} - Link to another patient resource that concerns the same actual person
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - An identifier for this patient
+  * @param {boolean} [props.active] - Whether this patient's record is in active use
+  * @param {HumanName} [props.name] - A name associated with the patient
+  * @param {ContactPoint} [props.telecom] - A contact detail for the individual
+  * @param {string} [props.gender] - male | female | other | unknown
+  * @param {date} [props.birthDate] - The date of birth for the individual
+  * @param {boolean} [props.deceased] - Indicates if the individual is deceased or not
+  * @param {Address} [props.address] - An address for the individual
+  * @param {CodeableConcept} [props.maritalStatus] - Marital (civil) status of a patient
+  * @param {boolean} [props.multipleBirth] - Whether patient is part of a multiple birth
+  * @param {Attachment} [props.photo] - Image of the patient
+  * @param {BackboneElement} [props.contact] - A contact party (e.g. guardian, partner, friend) for the patient
+  * @param {BackboneElement} [props.communication] - A language which may be used to communicate with the patient about his or her health
+  * @param {Reference} [props.generalPractitioner] - Patient's nominated primary care provider
+  * @param {Reference} [props.managingOrganization] - Organization that is the custodian of the patient record
+  * @param {BackboneElement} [props.link] - Link to another patient resource that concerns the same actual person
  */
 export function patient(type: string, props: Patient_Props);
 
@@ -4082,27 +4082,27 @@ export function patient(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for the payment noctice
-  * @param [props.status] {string} - active | cancelled | draft | entered-in-error
-  * @param [props.request] {Reference} - Request reference
-  * @param [props.response] {Reference} - Response reference
-  * @param [props.created] {dateTime} - Creation date
-  * @param [props.provider] {Reference} - Responsible practitioner
-  * @param [props.payment] {Reference} - Payment reference
-  * @param [props.paymentDate] {date} - Payment or clearing date
-  * @param [props.payee] {Reference} - Party being paid
-  * @param [props.recipient] {Reference} - Party being notified
-  * @param [props.amount] {Money} - Monetary amount of the payment
-  * @param [props.paymentStatus] {CodeableConcept} - Issued or cleared Status of the payment
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for the payment noctice
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {Reference} [props.request] - Request reference
+  * @param {Reference} [props.response] - Response reference
+  * @param {dateTime} [props.created] - Creation date
+  * @param {Reference} [props.provider] - Responsible practitioner
+  * @param {Reference} [props.payment] - Payment reference
+  * @param {date} [props.paymentDate] - Payment or clearing date
+  * @param {Reference} [props.payee] - Party being paid
+  * @param {Reference} [props.recipient] - Party being notified
+  * @param {Money} [props.amount] - Monetary amount of the payment
+  * @param {CodeableConcept} [props.paymentStatus] - Issued or cleared Status of the payment
  */
 export function paymentNotice(type: string, props: PaymentNotice_Props);
 
@@ -4126,30 +4126,30 @@ export function paymentNotice(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for a payment reconciliation
-  * @param [props.status] {string} - active | cancelled | draft | entered-in-error
-  * @param [props.period] {Period} - Period covered
-  * @param [props.created] {dateTime} - Creation date
-  * @param [props.paymentIssuer] {Reference} - Party generating payment
-  * @param [props.request] {Reference} - Reference to requesting resource
-  * @param [props.requestor] {Reference} - Responsible practitioner
-  * @param [props.outcome] {string} - queued | complete | error | partial
-  * @param [props.disposition] {string} - Disposition message
-  * @param [props.paymentDate] {date} - When payment issued
-  * @param [props.paymentAmount] {Money} - Total amount of Payment
-  * @param [props.paymentIdentifier] {Identifier} - Business identifier for the payment
-  * @param [props.detail] {BackboneElement} - Settlement particulars
-  * @param [props.formCode] {CodeableConcept} - Printed form identifier
-  * @param [props.processNote] {BackboneElement} - Note concerning processing
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for a payment reconciliation
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {Period} [props.period] - Period covered
+  * @param {dateTime} [props.created] - Creation date
+  * @param {Reference} [props.paymentIssuer] - Party generating payment
+  * @param {Reference} [props.request] - Reference to requesting resource
+  * @param {Reference} [props.requestor] - Responsible practitioner
+  * @param {string} [props.outcome] - queued | complete | error | partial
+  * @param {string} [props.disposition] - Disposition message
+  * @param {date} [props.paymentDate] - When payment issued
+  * @param {Money} [props.paymentAmount] - Total amount of Payment
+  * @param {Identifier} [props.paymentIdentifier] - Business identifier for the payment
+  * @param {BackboneElement} [props.detail] - Settlement particulars
+  * @param {CodeableConcept} [props.formCode] - Printed form identifier
+  * @param {BackboneElement} [props.processNote] - Note concerning processing
  */
 export function paymentReconciliation(type: string, props: PaymentReconciliation_Props);
 
@@ -4173,25 +4173,25 @@ export function paymentReconciliation(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - A human identifier for this person
-  * @param [props.name] {HumanName} - A name associated with the person
-  * @param [props.telecom] {ContactPoint} - A contact detail for the person
-  * @param [props.gender] {string} - male | female | other | unknown
-  * @param [props.birthDate] {date} - The date on which the person was born
-  * @param [props.address] {Address} - One or more addresses for the person
-  * @param [props.photo] {Attachment} - Image of the person
-  * @param [props.managingOrganization] {Reference} - The organization that is the custodian of the person record
-  * @param [props.active] {boolean} - This person's record is in active use
-  * @param [props.link] {BackboneElement} - Link to a resource that concerns the same actual person
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - A human identifier for this person
+  * @param {HumanName} [props.name] - A name associated with the person
+  * @param {ContactPoint} [props.telecom] - A contact detail for the person
+  * @param {string} [props.gender] - male | female | other | unknown
+  * @param {date} [props.birthDate] - The date on which the person was born
+  * @param {Address} [props.address] - One or more addresses for the person
+  * @param {Attachment} [props.photo] - Image of the person
+  * @param {Reference} [props.managingOrganization] - The organization that is the custodian of the person record
+  * @param {boolean} [props.active] - This person's record is in active use
+  * @param {BackboneElement} [props.link] - Link to a resource that concerns the same actual person
  */
 export function person(type: string, props: Person_Props);
 
@@ -4215,46 +4215,46 @@ export function person(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this plan definition, represented as a URI (globally unique)
-  * @param [props.identifier] {Identifier} - Additional identifier for the plan definition
-  * @param [props.version] {string} - Business version of the plan definition
-  * @param [props.name] {string} - Name for this plan definition (computer friendly)
-  * @param [props.title] {string} - Name for this plan definition (human friendly)
-  * @param [props.subtitle] {string} - Subordinate title of the plan definition
-  * @param [props.type] {CodeableConcept} - order-set | clinical-protocol | eca-rule | workflow-definition
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.experimental] {boolean} - For testing purposes, not real usage
-  * @param [props.subject] {CodeableConcept} - Type of individual the plan definition is focused on
-  * @param [props.date] {dateTime} - Date last changed
-  * @param [props.publisher] {string} - Name of the publisher (organization or individual)
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher
-  * @param [props.description] {markdown} - Natural language description of the plan definition
-  * @param [props.useContext] {UsageContext} - The context that the content is intended to support
-  * @param [props.jurisdiction] {CodeableConcept} - Intended jurisdiction for plan definition (if applicable)
-  * @param [props.purpose] {markdown} - Why this plan definition is defined
-  * @param [props.usage] {string} - Describes the clinical usage of the plan
-  * @param [props.copyright] {markdown} - Use and/or publishing restrictions
-  * @param [props.approvalDate] {date} - When the plan definition was approved by publisher
-  * @param [props.lastReviewDate] {date} - When the plan definition was last reviewed
-  * @param [props.effectivePeriod] {Period} - When the plan definition is expected to be used
-  * @param [props.topic] {CodeableConcept} - E.g. Education, Treatment, Assessment
-  * @param [props.author] {ContactDetail} - Who authored the content
-  * @param [props.editor] {ContactDetail} - Who edited the content
-  * @param [props.reviewer] {ContactDetail} - Who reviewed the content
-  * @param [props.endorser] {ContactDetail} - Who endorsed the content
-  * @param [props.relatedArtifact] {RelatedArtifact} - Additional documentation, citations
-  * @param [props.library] {canonical} - Logic used by the plan definition
-  * @param [props.goal] {BackboneElement} - What the plan is trying to accomplish
-  * @param [props.action] {BackboneElement} - Action defined by the plan
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this plan definition, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the plan definition
+  * @param {string} [props.version] - Business version of the plan definition
+  * @param {string} [props.name] - Name for this plan definition (computer friendly)
+  * @param {string} [props.title] - Name for this plan definition (human friendly)
+  * @param {string} [props.subtitle] - Subordinate title of the plan definition
+  * @param {CodeableConcept} [props.type] - order-set | clinical-protocol | eca-rule | workflow-definition
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.subject] - Type of individual the plan definition is focused on
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the plan definition
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for plan definition (if applicable)
+  * @param {markdown} [props.purpose] - Why this plan definition is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the plan
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the plan definition was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the plan definition was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the plan definition is expected to be used
+  * @param {CodeableConcept} [props.topic] - E.g. Education, Treatment, Assessment
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations
+  * @param {canonical} [props.library] - Logic used by the plan definition
+  * @param {BackboneElement} [props.goal] - What the plan is trying to accomplish
+  * @param {BackboneElement} [props.action] - Action defined by the plan
  */
 export function planDefinition(type: string, props: PlanDefinition_Props);
 
@@ -4278,25 +4278,25 @@ export function planDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - An identifier for the person as this agent
-  * @param [props.active] {boolean} - Whether this practitioner's record is in active use
-  * @param [props.name] {HumanName} - The name(s) associated with the practitioner
-  * @param [props.telecom] {ContactPoint} - A contact detail for the practitioner (that apply to all roles)
-  * @param [props.address] {Address} - Address(es) of the practitioner that are not role specific (typically home address)
-  * @param [props.gender] {string} - male | female | other | unknown
-  * @param [props.birthDate] {date} - The date  on which the practitioner was born
-  * @param [props.photo] {Attachment} - Image of the person
-  * @param [props.qualification] {BackboneElement} - Certification, licenses, or training pertaining to the provision of care
-  * @param [props.communication] {CodeableConcept} - A language the practitioner can use in patient communication
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - An identifier for the person as this agent
+  * @param {boolean} [props.active] - Whether this practitioner's record is in active use
+  * @param {HumanName} [props.name] - The name(s) associated with the practitioner
+  * @param {ContactPoint} [props.telecom] - A contact detail for the practitioner (that apply to all roles)
+  * @param {Address} [props.address] - Address(es) of the practitioner that are not role specific (typically home address)
+  * @param {string} [props.gender] - male | female | other | unknown
+  * @param {date} [props.birthDate] - The date  on which the practitioner was born
+  * @param {Attachment} [props.photo] - Image of the person
+  * @param {BackboneElement} [props.qualification] - Certification, licenses, or training pertaining to the provision of care
+  * @param {CodeableConcept} [props.communication] - A language the practitioner can use in patient communication
  */
 export function practitioner(type: string, props: Practitioner_Props);
 
@@ -4320,29 +4320,29 @@ export function practitioner(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifiers that are specific to a role/location
-  * @param [props.active] {boolean} - Whether this practitioner role record is in active use
-  * @param [props.period] {Period} - The period during which the practitioner is authorized to perform in these role(s)
-  * @param [props.practitioner] {Reference} - Practitioner that is able to provide the defined services for the organization
-  * @param [props.organization] {Reference} - Organization where the roles are available
-  * @param [props.code] {CodeableConcept} - Roles which this practitioner may perform
-  * @param [props.specialty] {CodeableConcept} - Specific specialty of the practitioner
-  * @param [props.location] {Reference} - The location(s) at which this practitioner provides care
-  * @param [props.healthcareService] {Reference} - The list of healthcare services that this worker provides for this role's Organization/Location(s)
-  * @param [props.telecom] {ContactPoint} - Contact details that are specific to the role/location/service
-  * @param [props.availableTime] {BackboneElement} - Times the Service Site is available
-  * @param [props.notAvailable] {BackboneElement} - Not available during this time due to provided reason
-  * @param [props.availabilityExceptions] {string} - Description of availability exceptions
-  * @param [props.endpoint] {Reference} - Technical endpoints providing access to services operated for the practitioner with this role
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifiers that are specific to a role/location
+  * @param {boolean} [props.active] - Whether this practitioner role record is in active use
+  * @param {Period} [props.period] - The period during which the practitioner is authorized to perform in these role(s)
+  * @param {Reference} [props.practitioner] - Practitioner that is able to provide the defined services for the organization
+  * @param {Reference} [props.organization] - Organization where the roles are available
+  * @param {CodeableConcept} [props.code] - Roles which this practitioner may perform
+  * @param {CodeableConcept} [props.specialty] - Specific specialty of the practitioner
+  * @param {Reference} [props.location] - The location(s) at which this practitioner provides care
+  * @param {Reference} [props.healthcareService] - The list of healthcare services that this worker provides for this role's Organization/Location(s)
+  * @param {ContactPoint} [props.telecom] - Contact details that are specific to the role/location/service
+  * @param {BackboneElement} [props.availableTime] - Times the Service Site is available
+  * @param {BackboneElement} [props.notAvailable] - Not available during this time due to provided reason
+  * @param {string} [props.availabilityExceptions] - Description of availability exceptions
+  * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the practitioner with this role
  */
 export function practitionerRole(type: string, props: PractitionerRole_Props);
 
@@ -4366,43 +4366,43 @@ export function practitionerRole(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External Identifiers for this procedure
-  * @param [props.instantiatesCanonical] {canonical} - Instantiates FHIR protocol or definition
-  * @param [props.instantiatesUri] {string} - Instantiates external protocol or definition
-  * @param [props.basedOn] {Reference} - A request for this procedure
-  * @param [props.partOf] {Reference} - Part of referenced event
-  * @param [props.status] {string} - preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
-  * @param [props.statusReason] {CodeableConcept} - Reason for current status
-  * @param [props.category] {CodeableConcept} - Classification of the procedure
-  * @param [props.code] {CodeableConcept} - Identification of the procedure
-  * @param [props.subject] {Reference} - Who the procedure was performed on
-  * @param [props.encounter] {Reference} - Encounter created as part of
-  * @param [props.performed] {dateTime} - When the procedure was performed
-  * @param [props.recorder] {Reference} - Who recorded the procedure
-  * @param [props.asserter] {Reference} - Person who asserts this procedure
-  * @param [props.performer] {BackboneElement} - The people who performed the procedure
-  * @param [props.location] {Reference} - Where the procedure happened
-  * @param [props.reasonCode] {CodeableConcept} - Coded reason procedure performed
-  * @param [props.reasonReference] {Reference} - The justification that the procedure was performed
-  * @param [props.bodySite] {CodeableConcept} - Target body sites
-  * @param [props.outcome] {CodeableConcept} - The result of procedure
-  * @param [props.report] {Reference} - Any report resulting from the procedure
-  * @param [props.complication] {CodeableConcept} - Complication following the procedure
-  * @param [props.complicationDetail] {Reference} - A condition that is a result of the procedure
-  * @param [props.followUp] {CodeableConcept} - Instructions for follow up
-  * @param [props.note] {Annotation} - Additional information about the procedure
-  * @param [props.focalDevice] {BackboneElement} - Manipulated, implanted, or removed device
-  * @param [props.usedReference] {Reference} - Items used during procedure
-  * @param [props.usedCode] {CodeableConcept} - Coded items used during the procedure
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Identifiers for this procedure
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - A request for this procedure
+  * @param {Reference} [props.partOf] - Part of referenced event
+  * @param {string} [props.status] - preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {CodeableConcept} [props.category] - Classification of the procedure
+  * @param {CodeableConcept} [props.code] - Identification of the procedure
+  * @param {Reference} [props.subject] - Who the procedure was performed on
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {dateTime} [props.performed] - When the procedure was performed
+  * @param {Reference} [props.recorder] - Who recorded the procedure
+  * @param {Reference} [props.asserter] - Person who asserts this procedure
+  * @param {BackboneElement} [props.performer] - The people who performed the procedure
+  * @param {Reference} [props.location] - Where the procedure happened
+  * @param {CodeableConcept} [props.reasonCode] - Coded reason procedure performed
+  * @param {Reference} [props.reasonReference] - The justification that the procedure was performed
+  * @param {CodeableConcept} [props.bodySite] - Target body sites
+  * @param {CodeableConcept} [props.outcome] - The result of procedure
+  * @param {Reference} [props.report] - Any report resulting from the procedure
+  * @param {CodeableConcept} [props.complication] - Complication following the procedure
+  * @param {Reference} [props.complicationDetail] - A condition that is a result of the procedure
+  * @param {CodeableConcept} [props.followUp] - Instructions for follow up
+  * @param {Annotation} [props.note] - Additional information about the procedure
+  * @param {BackboneElement} [props.focalDevice] - Manipulated, implanted, or removed device
+  * @param {Reference} [props.usedReference] - Items used during procedure
+  * @param {CodeableConcept} [props.usedCode] - Coded items used during the procedure
  */
 export function procedure(type: string, props: Procedure_Props);
 
@@ -4426,37 +4426,37 @@ export function procedure(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this questionnaire, represented as a URI (globally unique)
-  * @param [props.identifier] {Identifier} - Additional identifier for the questionnaire
-  * @param [props.version] {string} - Business version of the questionnaire
-  * @param [props.name] {string} - Name for this questionnaire (computer friendly)
-  * @param [props.title] {string} - Name for this questionnaire (human friendly)
-  * @param [props.derivedFrom] {canonical} - Instantiates protocol or definition
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.experimental] {boolean} - For testing purposes, not real usage
-  * @param [props.subjectType] {string} - Resource that can be subject of QuestionnaireResponse
-  * @param [props.date] {dateTime} - Date last changed
-  * @param [props.publisher] {string} - Name of the publisher (organization or individual)
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher
-  * @param [props.description] {markdown} - Natural language description of the questionnaire
-  * @param [props.useContext] {UsageContext} - The context that the content is intended to support
-  * @param [props.jurisdiction] {CodeableConcept} - Intended jurisdiction for questionnaire (if applicable)
-  * @param [props.purpose] {markdown} - Why this questionnaire is defined
-  * @param [props.copyright] {markdown} - Use and/or publishing restrictions
-  * @param [props.approvalDate] {date} - When the questionnaire was approved by publisher
-  * @param [props.lastReviewDate] {date} - When the questionnaire was last reviewed
-  * @param [props.effectivePeriod] {Period} - When the questionnaire is expected to be used
-  * @param [props.code] {Coding} - Concept that represents the overall questionnaire
-  * @param [props.item] {BackboneElement} - Questions and sections within the Questionnaire
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this questionnaire, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the questionnaire
+  * @param {string} [props.version] - Business version of the questionnaire
+  * @param {string} [props.name] - Name for this questionnaire (computer friendly)
+  * @param {string} [props.title] - Name for this questionnaire (human friendly)
+  * @param {canonical} [props.derivedFrom] - Instantiates protocol or definition
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {string} [props.subjectType] - Resource that can be subject of QuestionnaireResponse
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the questionnaire
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for questionnaire (if applicable)
+  * @param {markdown} [props.purpose] - Why this questionnaire is defined
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the questionnaire was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the questionnaire was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the questionnaire is expected to be used
+  * @param {Coding} [props.code] - Concept that represents the overall questionnaire
+  * @param {BackboneElement} [props.item] - Questions and sections within the Questionnaire
  */
 export function questionnaire(type: string, props: Questionnaire_Props);
 
@@ -4480,26 +4480,26 @@ export function questionnaire(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Unique id for this set of answers
-  * @param [props.basedOn] {Reference} - Request fulfilled by this QuestionnaireResponse
-  * @param [props.partOf] {Reference} - Part of this action
-  * @param [props.questionnaire] {canonical} - Form being answered
-  * @param [props.status] {string} - in-progress | completed | amended | entered-in-error | stopped
-  * @param [props.subject] {Reference} - The subject of the questions
-  * @param [props.encounter] {Reference} - Encounter created as part of
-  * @param [props.authored] {dateTime} - Date the answers were gathered
-  * @param [props.author] {Reference} - Person who received and recorded the answers
-  * @param [props.source] {Reference} - The person who answered the questions
-  * @param [props.item] {BackboneElement} - Groups and questions
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique id for this set of answers
+  * @param {Reference} [props.basedOn] - Request fulfilled by this QuestionnaireResponse
+  * @param {Reference} [props.partOf] - Part of this action
+  * @param {canonical} [props.questionnaire] - Form being answered
+  * @param {string} [props.status] - in-progress | completed | amended | entered-in-error | stopped
+  * @param {Reference} [props.subject] - The subject of the questions
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {dateTime} [props.authored] - Date the answers were gathered
+  * @param {Reference} [props.author] - Person who received and recorded the answers
+  * @param {Reference} [props.source] - The person who answered the questions
+  * @param {BackboneElement} [props.item] - Groups and questions
  */
 export function questionnaireResponse(type: string, props: QuestionnaireResponse_Props);
 
@@ -4523,29 +4523,29 @@ export function questionnaireResponse(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier for the authorization, typically assigned by the authorizing body
-  * @param [props.subject] {Reference} - The product type, treatment, facility or activity that is being authorized
-  * @param [props.type] {CodeableConcept} - Overall type of this authorization, for example drug marketing approval, orphan drug designation
-  * @param [props.description] {markdown} - General textual supporting information
-  * @param [props.region] {CodeableConcept} - The territory in which the authorization has been granted
-  * @param [props.status] {CodeableConcept} - The status that is authorised e.g. approved. Intermediate states can be tracked with cases and applications
-  * @param [props.statusDate] {dateTime} - The date at which the current status was assigned
-  * @param [props.validityPeriod] {Period} - The time period in which the regulatory approval etc. is in effect, e.g. a Marketing Authorization includes the date of authorization and/or expiration date
-  * @param [props.indication] {CodeableReference} - Condition for which the use of the regulated product applies
-  * @param [props.intendedUse] {CodeableConcept} - The intended use of the product, e.g. prevention, treatment
-  * @param [props.basis] {CodeableConcept} - The legal/regulatory framework or reasons under which this authorization is granted
-  * @param [props.holder] {Reference} - The organization that has been granted this authorization, by the regulator
-  * @param [props.regulator] {Reference} - The regulatory authority or authorizing body granting the authorization
-  * @param [props.case] {BackboneElement} - The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page)
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier for the authorization, typically assigned by the authorizing body
+  * @param {Reference} [props.subject] - The product type, treatment, facility or activity that is being authorized
+  * @param {CodeableConcept} [props.type] - Overall type of this authorization, for example drug marketing approval, orphan drug designation
+  * @param {markdown} [props.description] - General textual supporting information
+  * @param {CodeableConcept} [props.region] - The territory in which the authorization has been granted
+  * @param {CodeableConcept} [props.status] - The status that is authorised e.g. approved. Intermediate states can be tracked with cases and applications
+  * @param {dateTime} [props.statusDate] - The date at which the current status was assigned
+  * @param {Period} [props.validityPeriod] - The time period in which the regulatory approval etc. is in effect, e.g. a Marketing Authorization includes the date of authorization and/or expiration date
+  * @param {CodeableReference} [props.indication] - Condition for which the use of the regulated product applies
+  * @param {CodeableConcept} [props.intendedUse] - The intended use of the product, e.g. prevention, treatment
+  * @param {CodeableConcept} [props.basis] - The legal/regulatory framework or reasons under which this authorization is granted
+  * @param {Reference} [props.holder] - The organization that has been granted this authorization, by the regulator
+  * @param {Reference} [props.regulator] - The regulatory authority or authorizing body granting the authorization
+  * @param {BackboneElement} [props.case] - The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page)
  */
 export function regulatedAuthorization(type: string, props: RegulatedAuthorization_Props);
 
@@ -4569,27 +4569,27 @@ export function regulatedAuthorization(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - A human identifier for this person
-  * @param [props.active] {boolean} - Whether this related person's record is in active use
-  * @param [props.patient] {Reference} - The patient this person is related to
-  * @param [props.relationship] {CodeableConcept} - The nature of the relationship
-  * @param [props.name] {HumanName} - A name associated with the person
-  * @param [props.telecom] {ContactPoint} - A contact detail for the person
-  * @param [props.gender] {string} - male | female | other | unknown
-  * @param [props.birthDate] {date} - The date on which the related person was born
-  * @param [props.address] {Address} - Address where the related person can be contacted or visited
-  * @param [props.photo] {Attachment} - Image of the person
-  * @param [props.period] {Period} - Period of time that this relationship is considered valid
-  * @param [props.communication] {BackboneElement} - A language which may be used to communicate with about the patient's health
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - A human identifier for this person
+  * @param {boolean} [props.active] - Whether this related person's record is in active use
+  * @param {Reference} [props.patient] - The patient this person is related to
+  * @param {CodeableConcept} [props.relationship] - The nature of the relationship
+  * @param {HumanName} [props.name] - A name associated with the person
+  * @param {ContactPoint} [props.telecom] - A contact detail for the person
+  * @param {string} [props.gender] - male | female | other | unknown
+  * @param {date} [props.birthDate] - The date on which the related person was born
+  * @param {Address} [props.address] - Address where the related person can be contacted or visited
+  * @param {Attachment} [props.photo] - Image of the person
+  * @param {Period} [props.period] - Period of time that this relationship is considered valid
+  * @param {BackboneElement} [props.communication] - A language which may be used to communicate with about the patient's health
  */
 export function relatedPerson(type: string, props: RelatedPerson_Props);
 
@@ -4613,33 +4613,33 @@ export function relatedPerson(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier
-  * @param [props.instantiatesCanonical] {canonical} - Instantiates FHIR protocol or definition
-  * @param [props.instantiatesUri] {string} - Instantiates external protocol or definition
-  * @param [props.basedOn] {Reference} - Fulfills plan, proposal, or order
-  * @param [props.replaces] {Reference} - Request(s) replaced by this request
-  * @param [props.groupIdentifier] {Identifier} - Composite request this is part of
-  * @param [props.status] {string} - draft | active | on-hold | revoked | completed | entered-in-error | unknown
-  * @param [props.intent] {string} - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
-  * @param [props.priority] {string} - routine | urgent | asap | stat
-  * @param [props.code] {CodeableConcept} - What's being requested/ordered
-  * @param [props.subject] {Reference} - Who the request group is about
-  * @param [props.encounter] {Reference} - Created as part of
-  * @param [props.authoredOn] {dateTime} - When the request group was authored
-  * @param [props.author] {Reference} - Device or practitioner that authored the request group
-  * @param [props.reasonCode] {CodeableConcept} - Why the request group is needed
-  * @param [props.reasonReference] {Reference} - Why the request group is needed
-  * @param [props.note] {Annotation} - Additional notes about the response
-  * @param [props.action] {BackboneElement} - Proposed actions, if any
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - Fulfills plan, proposal, or order
+  * @param {Reference} [props.replaces] - Request(s) replaced by this request
+  * @param {Identifier} [props.groupIdentifier] - Composite request this is part of
+  * @param {string} [props.status] - draft | active | on-hold | revoked | completed | entered-in-error | unknown
+  * @param {string} [props.intent] - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {CodeableConcept} [props.code] - What's being requested/ordered
+  * @param {Reference} [props.subject] - Who the request group is about
+  * @param {Reference} [props.encounter] - Created as part of
+  * @param {dateTime} [props.authoredOn] - When the request group was authored
+  * @param {Reference} [props.author] - Device or practitioner that authored the request group
+  * @param {CodeableConcept} [props.reasonCode] - Why the request group is needed
+  * @param {Reference} [props.reasonReference] - Why the request group is needed
+  * @param {Annotation} [props.note] - Additional notes about the response
+  * @param {BackboneElement} [props.action] - Proposed actions, if any
  */
 export function requestGroup(type: string, props: RequestGroup_Props);
 
@@ -4663,49 +4663,49 @@ export function requestGroup(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this research definition, represented as a URI (globally unique)
-  * @param [props.identifier] {Identifier} - Additional identifier for the research definition
-  * @param [props.version] {string} - Business version of the research definition
-  * @param [props.name] {string} - Name for this research definition (computer friendly)
-  * @param [props.title] {string} - Name for this research definition (human friendly)
-  * @param [props.shortTitle] {string} - Title for use in informal contexts
-  * @param [props.subtitle] {string} - Subordinate title of the ResearchDefinition
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.experimental] {boolean} - For testing purposes, not real usage
-  * @param [props.subject] {CodeableConcept} - E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
-  * @param [props.date] {dateTime} - Date last changed
-  * @param [props.publisher] {string} - Name of the publisher (organization or individual)
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher
-  * @param [props.description] {markdown} - Natural language description of the research definition
-  * @param [props.comment] {string} - Used for footnotes or explanatory notes
-  * @param [props.useContext] {UsageContext} - The context that the content is intended to support
-  * @param [props.jurisdiction] {CodeableConcept} - Intended jurisdiction for research definition (if applicable)
-  * @param [props.purpose] {markdown} - Why this research definition is defined
-  * @param [props.usage] {string} - Describes the clinical usage of the ResearchDefinition
-  * @param [props.copyright] {markdown} - Use and/or publishing restrictions
-  * @param [props.approvalDate] {date} - When the research definition was approved by publisher
-  * @param [props.lastReviewDate] {date} - When the research definition was last reviewed
-  * @param [props.effectivePeriod] {Period} - When the research definition is expected to be used
-  * @param [props.topic] {CodeableConcept} - The category of the ResearchDefinition, such as Education, Treatment, Assessment, etc.
-  * @param [props.author] {ContactDetail} - Who authored the content
-  * @param [props.editor] {ContactDetail} - Who edited the content
-  * @param [props.reviewer] {ContactDetail} - Who reviewed the content
-  * @param [props.endorser] {ContactDetail} - Who endorsed the content
-  * @param [props.relatedArtifact] {RelatedArtifact} - Additional documentation, citations, etc.
-  * @param [props.library] {canonical} - Logic used by the ResearchDefinition
-  * @param [props.population] {Reference} - What population?
-  * @param [props.exposure] {Reference} - What exposure?
-  * @param [props.exposureAlternative] {Reference} - What alternative exposure state?
-  * @param [props.outcome] {Reference} - What outcome?
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this research definition, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the research definition
+  * @param {string} [props.version] - Business version of the research definition
+  * @param {string} [props.name] - Name for this research definition (computer friendly)
+  * @param {string} [props.title] - Name for this research definition (human friendly)
+  * @param {string} [props.shortTitle] - Title for use in informal contexts
+  * @param {string} [props.subtitle] - Subordinate title of the ResearchDefinition
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.subject] - E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the research definition
+  * @param {string} [props.comment] - Used for footnotes or explanatory notes
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for research definition (if applicable)
+  * @param {markdown} [props.purpose] - Why this research definition is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the ResearchDefinition
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the research definition was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the research definition was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the research definition is expected to be used
+  * @param {CodeableConcept} [props.topic] - The category of the ResearchDefinition, such as Education, Treatment, Assessment, etc.
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {canonical} [props.library] - Logic used by the ResearchDefinition
+  * @param {Reference} [props.population] - What population?
+  * @param {Reference} [props.exposure] - What exposure?
+  * @param {Reference} [props.exposureAlternative] - What alternative exposure state?
+  * @param {Reference} [props.outcome] - What outcome?
  */
 export function researchDefinition(type: string, props: ResearchDefinition_Props);
 
@@ -4729,48 +4729,48 @@ export function researchDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this research element definition, represented as a URI (globally unique)
-  * @param [props.identifier] {Identifier} - Additional identifier for the research element definition
-  * @param [props.version] {string} - Business version of the research element definition
-  * @param [props.name] {string} - Name for this research element definition (computer friendly)
-  * @param [props.title] {string} - Name for this research element definition (human friendly)
-  * @param [props.shortTitle] {string} - Title for use in informal contexts
-  * @param [props.subtitle] {string} - Subordinate title of the ResearchElementDefinition
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.experimental] {boolean} - For testing purposes, not real usage
-  * @param [props.subject] {CodeableConcept} - E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
-  * @param [props.date] {dateTime} - Date last changed
-  * @param [props.publisher] {string} - Name of the publisher (organization or individual)
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher
-  * @param [props.description] {markdown} - Natural language description of the research element definition
-  * @param [props.comment] {string} - Used for footnotes or explanatory notes
-  * @param [props.useContext] {UsageContext} - The context that the content is intended to support
-  * @param [props.jurisdiction] {CodeableConcept} - Intended jurisdiction for research element definition (if applicable)
-  * @param [props.purpose] {markdown} - Why this research element definition is defined
-  * @param [props.usage] {string} - Describes the clinical usage of the ResearchElementDefinition
-  * @param [props.copyright] {markdown} - Use and/or publishing restrictions
-  * @param [props.approvalDate] {date} - When the research element definition was approved by publisher
-  * @param [props.lastReviewDate] {date} - When the research element definition was last reviewed
-  * @param [props.effectivePeriod] {Period} - When the research element definition is expected to be used
-  * @param [props.topic] {CodeableConcept} - The category of the ResearchElementDefinition, such as Education, Treatment, Assessment, etc.
-  * @param [props.author] {ContactDetail} - Who authored the content
-  * @param [props.editor] {ContactDetail} - Who edited the content
-  * @param [props.reviewer] {ContactDetail} - Who reviewed the content
-  * @param [props.endorser] {ContactDetail} - Who endorsed the content
-  * @param [props.relatedArtifact] {RelatedArtifact} - Additional documentation, citations, etc.
-  * @param [props.library] {canonical} - Logic used by the ResearchElementDefinition
-  * @param [props.type] {string} - population | exposure | outcome
-  * @param [props.variableType] {string} - dichotomous | continuous | descriptive
-  * @param [props.characteristic] {BackboneElement} - What defines the members of the research element
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this research element definition, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the research element definition
+  * @param {string} [props.version] - Business version of the research element definition
+  * @param {string} [props.name] - Name for this research element definition (computer friendly)
+  * @param {string} [props.title] - Name for this research element definition (human friendly)
+  * @param {string} [props.shortTitle] - Title for use in informal contexts
+  * @param {string} [props.subtitle] - Subordinate title of the ResearchElementDefinition
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.subject] - E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the research element definition
+  * @param {string} [props.comment] - Used for footnotes or explanatory notes
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for research element definition (if applicable)
+  * @param {markdown} [props.purpose] - Why this research element definition is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the ResearchElementDefinition
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the research element definition was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the research element definition was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the research element definition is expected to be used
+  * @param {CodeableConcept} [props.topic] - The category of the ResearchElementDefinition, such as Education, Treatment, Assessment, etc.
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {canonical} [props.library] - Logic used by the ResearchElementDefinition
+  * @param {string} [props.type] - population | exposure | outcome
+  * @param {string} [props.variableType] - dichotomous | continuous | descriptive
+  * @param {BackboneElement} [props.characteristic] - What defines the members of the research element
  */
 export function researchElementDefinition(type: string, props: ResearchElementDefinition_Props);
 
@@ -4794,39 +4794,39 @@ export function researchElementDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for study
-  * @param [props.title] {string} - Name for this study
-  * @param [props.protocol] {Reference} - Steps followed in executing study
-  * @param [props.partOf] {Reference} - Part of larger study
-  * @param [props.status] {string} - active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn
-  * @param [props.primaryPurposeType] {CodeableConcept} - treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility
-  * @param [props.phase] {CodeableConcept} - n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4
-  * @param [props.category] {CodeableConcept} - Classifications for the study
-  * @param [props.focus] {CodeableConcept} - Drugs, devices, etc. under study
-  * @param [props.condition] {CodeableConcept} - Condition being studied
-  * @param [props.contact] {ContactDetail} - Contact details for the study
-  * @param [props.relatedArtifact] {RelatedArtifact} - References and dependencies
-  * @param [props.keyword] {CodeableConcept} - Used to search for the study
-  * @param [props.location] {CodeableConcept} - Geographic region(s) for study
-  * @param [props.description] {markdown} - What this is study doing
-  * @param [props.enrollment] {Reference} - Inclusion & exclusion criteria
-  * @param [props.period] {Period} - When the study began and ended
-  * @param [props.sponsor] {Reference} - Organization that initiates and is legally responsible for the study
-  * @param [props.principalInvestigator] {Reference} - Researcher who oversees multiple aspects of the study
-  * @param [props.site] {Reference} - Facility where study activities are conducted
-  * @param [props.reasonStopped] {CodeableConcept} - accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design
-  * @param [props.note] {Annotation} - Comments made about the study
-  * @param [props.arm] {BackboneElement} - Defined path through the study for a subject
-  * @param [props.objective] {BackboneElement} - A goal for the study
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for study
+  * @param {string} [props.title] - Name for this study
+  * @param {Reference} [props.protocol] - Steps followed in executing study
+  * @param {Reference} [props.partOf] - Part of larger study
+  * @param {string} [props.status] - active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn
+  * @param {CodeableConcept} [props.primaryPurposeType] - treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility
+  * @param {CodeableConcept} [props.phase] - n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4
+  * @param {CodeableConcept} [props.category] - Classifications for the study
+  * @param {CodeableConcept} [props.focus] - Drugs, devices, etc. under study
+  * @param {CodeableConcept} [props.condition] - Condition being studied
+  * @param {ContactDetail} [props.contact] - Contact details for the study
+  * @param {RelatedArtifact} [props.relatedArtifact] - References and dependencies
+  * @param {CodeableConcept} [props.keyword] - Used to search for the study
+  * @param {CodeableConcept} [props.location] - Geographic region(s) for study
+  * @param {markdown} [props.description] - What this is study doing
+  * @param {Reference} [props.enrollment] - Inclusion & exclusion criteria
+  * @param {Period} [props.period] - When the study began and ended
+  * @param {Reference} [props.sponsor] - Organization that initiates and is legally responsible for the study
+  * @param {Reference} [props.principalInvestigator] - Researcher who oversees multiple aspects of the study
+  * @param {Reference} [props.site] - Facility where study activities are conducted
+  * @param {CodeableConcept} [props.reasonStopped] - accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design
+  * @param {Annotation} [props.note] - Comments made about the study
+  * @param {BackboneElement} [props.arm] - Defined path through the study for a subject
+  * @param {BackboneElement} [props.objective] - A goal for the study
  */
 export function researchStudy(type: string, props: ResearchStudy_Props);
 
@@ -4850,23 +4850,23 @@ export function researchStudy(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for research subject in a study
-  * @param [props.status] {string} - candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
-  * @param [props.period] {Period} - Start and end of participation
-  * @param [props.study] {Reference} - Study subject is part of
-  * @param [props.individual] {Reference} - Who is part of study
-  * @param [props.assignedArm] {string} - What path should be followed
-  * @param [props.actualArm] {string} - What path was followed
-  * @param [props.consent] {Reference} - Agreement to participate in study
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for research subject in a study
+  * @param {string} [props.status] - candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
+  * @param {Period} [props.period] - Start and end of participation
+  * @param {Reference} [props.study] - Study subject is part of
+  * @param {Reference} [props.individual] - Who is part of study
+  * @param {string} [props.assignedArm] - What path should be followed
+  * @param {string} [props.actualArm] - What path was followed
+  * @param {Reference} [props.consent] - Agreement to participate in study
  */
 export function researchSubject(type: string, props: ResearchSubject_Props);
 
@@ -4890,11 +4890,11 @@ export function researchSubject(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
  */
 export function resource(type: string, props: Resource_Props);
 
@@ -4918,32 +4918,32 @@ export function resource(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Unique identifier for the assessment
-  * @param [props.basedOn] {Reference} - Request fulfilled by this assessment
-  * @param [props.parent] {Reference} - Part of this occurrence
-  * @param [props.status] {string} - registered | preliminary | final | amended +
-  * @param [props.method] {CodeableConcept} - Evaluation mechanism
-  * @param [props.code] {CodeableConcept} - Type of assessment
-  * @param [props.subject] {Reference} - Who/what does assessment apply to?
-  * @param [props.encounter] {Reference} - Where was assessment performed?
-  * @param [props.occurrence] {dateTime} - When was assessment made?
-  * @param [props.condition] {Reference} - Condition assessed
-  * @param [props.performer] {Reference} - Who did assessment?
-  * @param [props.reasonCode] {CodeableConcept} - Why the assessment was necessary?
-  * @param [props.reasonReference] {Reference} - Why the assessment was necessary?
-  * @param [props.basis] {Reference} - Information used in assessment
-  * @param [props.prediction] {BackboneElement} - Outcome predicted
-  * @param [props.mitigation] {string} - How to reduce risk
-  * @param [props.note] {Annotation} - Comments on the risk assessment
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique identifier for the assessment
+  * @param {Reference} [props.basedOn] - Request fulfilled by this assessment
+  * @param {Reference} [props.parent] - Part of this occurrence
+  * @param {string} [props.status] - registered | preliminary | final | amended +
+  * @param {CodeableConcept} [props.method] - Evaluation mechanism
+  * @param {CodeableConcept} [props.code] - Type of assessment
+  * @param {Reference} [props.subject] - Who/what does assessment apply to?
+  * @param {Reference} [props.encounter] - Where was assessment performed?
+  * @param {dateTime} [props.occurrence] - When was assessment made?
+  * @param {Reference} [props.condition] - Condition assessed
+  * @param {Reference} [props.performer] - Who did assessment?
+  * @param {CodeableConcept} [props.reasonCode] - Why the assessment was necessary?
+  * @param {Reference} [props.reasonReference] - Why the assessment was necessary?
+  * @param {Reference} [props.basis] - Information used in assessment
+  * @param {BackboneElement} [props.prediction] - Outcome predicted
+  * @param {string} [props.mitigation] - How to reduce risk
+  * @param {Annotation} [props.note] - Comments on the risk assessment
  */
 export function riskAssessment(type: string, props: RiskAssessment_Props);
 
@@ -4967,23 +4967,23 @@ export function riskAssessment(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External Ids for this item
-  * @param [props.active] {boolean} - Whether this schedule is in active use
-  * @param [props.serviceCategory] {CodeableConcept} - High-level category
-  * @param [props.serviceType] {CodeableConcept} - Specific service
-  * @param [props.specialty] {CodeableConcept} - Type of specialty needed
-  * @param [props.actor] {Reference} - Resource(s) that availability information is being provided for
-  * @param [props.planningHorizon] {Period} - Period of time covered by schedule
-  * @param [props.comment] {string} - Comments on availability
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this item
+  * @param {boolean} [props.active] - Whether this schedule is in active use
+  * @param {CodeableConcept} [props.serviceCategory] - High-level category
+  * @param {CodeableConcept} [props.serviceType] - Specific service
+  * @param {CodeableConcept} [props.specialty] - Type of specialty needed
+  * @param {Reference} [props.actor] - Resource(s) that availability information is being provided for
+  * @param {Period} [props.planningHorizon] - Period of time covered by schedule
+  * @param {string} [props.comment] - Comments on availability
  */
 export function schedule(type: string, props: Schedule_Props);
 
@@ -5007,48 +5007,48 @@ export function schedule(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Identifiers assigned to this order
-  * @param [props.instantiatesCanonical] {canonical} - Instantiates FHIR protocol or definition
-  * @param [props.instantiatesUri] {string} - Instantiates external protocol or definition
-  * @param [props.basedOn] {Reference} - What request fulfills
-  * @param [props.replaces] {Reference} - What request replaces
-  * @param [props.requisition] {Identifier} - Composite Request ID
-  * @param [props.status] {string} - draft | active | on-hold | revoked | completed | entered-in-error | unknown
-  * @param [props.intent] {string} - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
-  * @param [props.category] {CodeableConcept} - Classification of service
-  * @param [props.priority] {string} - routine | urgent | asap | stat
-  * @param [props.doNotPerform] {boolean} - True if service/procedure should not be performed
-  * @param [props.code] {CodeableConcept} - What is being requested/ordered
-  * @param [props.orderDetail] {CodeableConcept} - Additional order information
-  * @param [props.quantity] {Quantity} - Service amount
-  * @param [props.subject] {Reference} - Individual or Entity the service is ordered for
-  * @param [props.encounter] {Reference} - Encounter in which the request was created
-  * @param [props.occurrence] {dateTime} - When service should occur
-  * @param [props.asNeeded] {boolean} - Preconditions for service
-  * @param [props.authoredOn] {dateTime} - Date request signed
-  * @param [props.requester] {Reference} - Who/what is requesting service
-  * @param [props.performerType] {CodeableConcept} - Performer role
-  * @param [props.performer] {Reference} - Requested performer
-  * @param [props.locationCode] {CodeableConcept} - Requested location
-  * @param [props.locationReference] {Reference} - Requested location
-  * @param [props.reasonCode] {CodeableConcept} - Explanation/Justification for procedure or service
-  * @param [props.reasonReference] {Reference} - Explanation/Justification for service or service
-  * @param [props.insurance] {Reference} - Associated insurance coverage
-  * @param [props.supportingInfo] {Reference} - Additional clinical information
-  * @param [props.specimen] {Reference} - Procedure Samples
-  * @param [props.bodySite] {CodeableConcept} - Location on Body
-  * @param [props.note] {Annotation} - Comments
-  * @param [props.patientInstruction] {string} - Patient or consumer-oriented instructions
-  * @param [props.relevantHistory] {Reference} - Request provenance
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifiers assigned to this order
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - What request fulfills
+  * @param {Reference} [props.replaces] - What request replaces
+  * @param {Identifier} [props.requisition] - Composite Request ID
+  * @param {string} [props.status] - draft | active | on-hold | revoked | completed | entered-in-error | unknown
+  * @param {string} [props.intent] - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {CodeableConcept} [props.category] - Classification of service
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {boolean} [props.doNotPerform] - True if service/procedure should not be performed
+  * @param {CodeableConcept} [props.code] - What is being requested/ordered
+  * @param {CodeableConcept} [props.orderDetail] - Additional order information
+  * @param {Quantity} [props.quantity] - Service amount
+  * @param {Reference} [props.subject] - Individual or Entity the service is ordered for
+  * @param {Reference} [props.encounter] - Encounter in which the request was created
+  * @param {dateTime} [props.occurrence] - When service should occur
+  * @param {boolean} [props.asNeeded] - Preconditions for service
+  * @param {dateTime} [props.authoredOn] - Date request signed
+  * @param {Reference} [props.requester] - Who/what is requesting service
+  * @param {CodeableConcept} [props.performerType] - Performer role
+  * @param {Reference} [props.performer] - Requested performer
+  * @param {CodeableConcept} [props.locationCode] - Requested location
+  * @param {Reference} [props.locationReference] - Requested location
+  * @param {CodeableConcept} [props.reasonCode] - Explanation/Justification for procedure or service
+  * @param {Reference} [props.reasonReference] - Explanation/Justification for service or service
+  * @param {Reference} [props.insurance] - Associated insurance coverage
+  * @param {Reference} [props.supportingInfo] - Additional clinical information
+  * @param {Reference} [props.specimen] - Procedure Samples
+  * @param {CodeableConcept} [props.bodySite] - Location on Body
+  * @param {Annotation} [props.note] - Comments
+  * @param {string} [props.patientInstruction] - Patient or consumer-oriented instructions
+  * @param {Reference} [props.relevantHistory] - Request provenance
  */
 export function serviceRequest(type: string, props: ServiceRequest_Props);
 
@@ -5072,26 +5072,26 @@ export function serviceRequest(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External Ids for this item
-  * @param [props.serviceCategory] {CodeableConcept} - A broad categorization of the service that is to be performed during this appointment
-  * @param [props.serviceType] {CodeableConcept} - The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource
-  * @param [props.specialty] {CodeableConcept} - The specialty of a practitioner that would be required to perform the service requested in this appointment
-  * @param [props.appointmentType] {CodeableConcept} - The style of appointment or patient that may be booked in the slot (not service type)
-  * @param [props.schedule] {Reference} - The schedule resource that this slot defines an interval of status information
-  * @param [props.status] {string} - busy | free | busy-unavailable | busy-tentative | entered-in-error
-  * @param [props.start] {instant} - Date/Time that the slot is to begin
-  * @param [props.end] {instant} - Date/Time that the slot is to conclude
-  * @param [props.overbooked] {boolean} - This slot has already been overbooked, appointments are unlikely to be accepted for this time
-  * @param [props.comment] {string} - Comments on the slot to describe any extended information. Such as custom constraints on the slot
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this item
+  * @param {CodeableConcept} [props.serviceCategory] - A broad categorization of the service that is to be performed during this appointment
+  * @param {CodeableConcept} [props.serviceType] - The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource
+  * @param {CodeableConcept} [props.specialty] - The specialty of a practitioner that would be required to perform the service requested in this appointment
+  * @param {CodeableConcept} [props.appointmentType] - The style of appointment or patient that may be booked in the slot (not service type)
+  * @param {Reference} [props.schedule] - The schedule resource that this slot defines an interval of status information
+  * @param {string} [props.status] - busy | free | busy-unavailable | busy-tentative | entered-in-error
+  * @param {instant} [props.start] - Date/Time that the slot is to begin
+  * @param {instant} [props.end] - Date/Time that the slot is to conclude
+  * @param {boolean} [props.overbooked] - This slot has already been overbooked, appointments are unlikely to be accepted for this time
+  * @param {string} [props.comment] - Comments on the slot to describe any extended information. Such as custom constraints on the slot
  */
 export function slot(type: string, props: Slot_Props);
 
@@ -5115,28 +5115,28 @@ export function slot(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External Identifier
-  * @param [props.accessionIdentifier] {Identifier} - Identifier assigned by the lab
-  * @param [props.status] {string} - available | unavailable | unsatisfactory | entered-in-error
-  * @param [props.type] {CodeableConcept} - Kind of material that forms the specimen
-  * @param [props.subject] {Reference} - Where the specimen came from. This may be from patient(s), from a location (e.g., the source of an environmental sample), or a sampling of a substance or a device
-  * @param [props.receivedTime] {dateTime} - The time when specimen was received for processing
-  * @param [props.parent] {Reference} - Specimen from which this specimen originated
-  * @param [props.request] {Reference} - Why the specimen was collected
-  * @param [props.collection] {BackboneElement} - Collection details
-  * @param [props.processing] {BackboneElement} - Processing and processing step details
-  * @param [props.container] {BackboneElement} - Direct container of specimen (tube/slide, etc.)
-  * @param [props.condition] {CodeableConcept} - State of the specimen
-  * @param [props.note] {Annotation} - Comments
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Identifier
+  * @param {Identifier} [props.accessionIdentifier] - Identifier assigned by the lab
+  * @param {string} [props.status] - available | unavailable | unsatisfactory | entered-in-error
+  * @param {CodeableConcept} [props.type] - Kind of material that forms the specimen
+  * @param {Reference} [props.subject] - Where the specimen came from. This may be from patient(s), from a location (e.g., the source of an environmental sample), or a sampling of a substance or a device
+  * @param {dateTime} [props.receivedTime] - The time when specimen was received for processing
+  * @param {Reference} [props.parent] - Specimen from which this specimen originated
+  * @param {Reference} [props.request] - Why the specimen was collected
+  * @param {BackboneElement} [props.collection] - Collection details
+  * @param {BackboneElement} [props.processing] - Processing and processing step details
+  * @param {BackboneElement} [props.container] - Direct container of specimen (tube/slide, etc.)
+  * @param {CodeableConcept} [props.condition] - State of the specimen
+  * @param {Annotation} [props.note] - Comments
  */
 export function specimen(type: string, props: Specimen_Props);
 
@@ -5160,21 +5160,21 @@ export function specimen(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business identifier of a kind of specimen
-  * @param [props.typeCollected] {CodeableConcept} - Kind of material to collect
-  * @param [props.patientPreparation] {CodeableConcept} - Patient preparation for collection
-  * @param [props.timeAspect] {string} - Time aspect for collection
-  * @param [props.collection] {CodeableConcept} - Specimen collection procedure
-  * @param [props.typeTested] {BackboneElement} - Specimen in container intended for testing by lab
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier of a kind of specimen
+  * @param {CodeableConcept} [props.typeCollected] - Kind of material to collect
+  * @param {CodeableConcept} [props.patientPreparation] - Patient preparation for collection
+  * @param {string} [props.timeAspect] - Time aspect for collection
+  * @param {CodeableConcept} [props.collection] - Specimen collection procedure
+  * @param {BackboneElement} [props.typeTested] - Specimen in container intended for testing by lab
  */
 export function specimenDefinition(type: string, props: SpecimenDefinition_Props);
 
@@ -5198,22 +5198,22 @@ export function specimenDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Unique identifier
-  * @param [props.status] {string} - active | inactive | entered-in-error
-  * @param [props.category] {CodeableConcept} - What class/type of substance this is
-  * @param [props.code] {CodeableConcept} - What substance this is
-  * @param [props.description] {string} - Textual description of the substance, comments
-  * @param [props.instance] {BackboneElement} - If this describes a specific package/container of the substance
-  * @param [props.ingredient] {BackboneElement} - Composition information about the substance
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique identifier
+  * @param {string} [props.status] - active | inactive | entered-in-error
+  * @param {CodeableConcept} [props.category] - What class/type of substance this is
+  * @param {CodeableConcept} [props.code] - What substance this is
+  * @param {string} [props.description] - Textual description of the substance, comments
+  * @param {BackboneElement} [props.instance] - If this describes a specific package/container of the substance
+  * @param {BackboneElement} [props.ingredient] - Composition information about the substance
  */
 export function substance(type: string, props: Substance_Props);
 
@@ -5237,34 +5237,34 @@ export function substance(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Identifier by which this substance is known
-  * @param [props.version] {string} - A business level version identifier of the substance
-  * @param [props.status] {CodeableConcept} - Status of substance within the catalogue e.g. active, retired
-  * @param [props.classification] {CodeableConcept} - A categorization, high level e.g. polymer or nucleic acid, or food, chemical, biological, or lower e.g. polymer linear or branch chain, or type of impurity
-  * @param [props.domain] {CodeableConcept} - If the substance applies to human or veterinary use
-  * @param [props.grade] {CodeableConcept} - The quality standard, established benchmark, to which substance complies (e.g. USP/NF, BP)
-  * @param [props.description] {markdown} - Textual description of the substance
-  * @param [props.informationSource] {Reference} - Supporting literature
-  * @param [props.note] {Annotation} - Textual comment about the substance's catalogue or registry record
-  * @param [props.manufacturer] {Reference} - The entity that creates, makes, produces or fabricates the substance
-  * @param [props.supplier] {Reference} - An entity that is the source for the substance. It may be different from the manufacturer
-  * @param [props.moiety] {BackboneElement} - Moiety, for structural modifications
-  * @param [props.property] {BackboneElement} - General specifications for this substance
-  * @param [props.molecularWeight] {BackboneElement} - The molecular weight or weight range
-  * @param [props.structure] {BackboneElement} - Structural information
-  * @param [props.code] {BackboneElement} - Codes associated with the substance
-  * @param [props.name] {BackboneElement} - Names applicable to this substance
-  * @param [props.relationship] {BackboneElement} - A link between this substance and another
-  * @param [props.sourceMaterial] {BackboneElement} - Material or taxonomic/anatomical source
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifier by which this substance is known
+  * @param {string} [props.version] - A business level version identifier of the substance
+  * @param {CodeableConcept} [props.status] - Status of substance within the catalogue e.g. active, retired
+  * @param {CodeableConcept} [props.classification] - A categorization, high level e.g. polymer or nucleic acid, or food, chemical, biological, or lower e.g. polymer linear or branch chain, or type of impurity
+  * @param {CodeableConcept} [props.domain] - If the substance applies to human or veterinary use
+  * @param {CodeableConcept} [props.grade] - The quality standard, established benchmark, to which substance complies (e.g. USP/NF, BP)
+  * @param {markdown} [props.description] - Textual description of the substance
+  * @param {Reference} [props.informationSource] - Supporting literature
+  * @param {Annotation} [props.note] - Textual comment about the substance's catalogue or registry record
+  * @param {Reference} [props.manufacturer] - The entity that creates, makes, produces or fabricates the substance
+  * @param {Reference} [props.supplier] - An entity that is the source for the substance. It may be different from the manufacturer
+  * @param {BackboneElement} [props.moiety] - Moiety, for structural modifications
+  * @param {BackboneElement} [props.property] - General specifications for this substance
+  * @param {BackboneElement} [props.molecularWeight] - The molecular weight or weight range
+  * @param {BackboneElement} [props.structure] - Structural information
+  * @param {BackboneElement} [props.code] - Codes associated with the substance
+  * @param {BackboneElement} [props.name] - Names applicable to this substance
+  * @param {BackboneElement} [props.relationship] - A link between this substance and another
+  * @param {BackboneElement} [props.sourceMaterial] - Material or taxonomic/anatomical source
  */
 export function substanceDefinition(type: string, props: SubstanceDefinition_Props);
 
@@ -5288,26 +5288,26 @@ export function substanceDefinition(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External identifier
-  * @param [props.basedOn] {Reference} - Fulfills plan, proposal or order
-  * @param [props.partOf] {Reference} - Part of referenced event
-  * @param [props.status] {string} - in-progress | completed | abandoned | entered-in-error
-  * @param [props.patient] {Reference} - Patient for whom the item is supplied
-  * @param [props.type] {CodeableConcept} - Category of dispense event
-  * @param [props.suppliedItem] {BackboneElement} - The item that is delivered or supplied
-  * @param [props.occurrence] {dateTime} - When event occurred
-  * @param [props.supplier] {Reference} - Dispenser
-  * @param [props.destination] {Reference} - Where the Supply was sent
-  * @param [props.receiver] {Reference} - Who collected the Supply
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifier
+  * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
+  * @param {Reference} [props.partOf] - Part of referenced event
+  * @param {string} [props.status] - in-progress | completed | abandoned | entered-in-error
+  * @param {Reference} [props.patient] - Patient for whom the item is supplied
+  * @param {CodeableConcept} [props.type] - Category of dispense event
+  * @param {BackboneElement} [props.suppliedItem] - The item that is delivered or supplied
+  * @param {dateTime} [props.occurrence] - When event occurred
+  * @param {Reference} [props.supplier] - Dispenser
+  * @param {Reference} [props.destination] - Where the Supply was sent
+  * @param {Reference} [props.receiver] - Who collected the Supply
  */
 export function supplyDelivery(type: string, props: SupplyDelivery_Props);
 
@@ -5331,30 +5331,30 @@ export function supplyDelivery(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Business Identifier for SupplyRequest
-  * @param [props.status] {string} - draft | active | suspended +
-  * @param [props.category] {CodeableConcept} - The kind of supply (central, non-stock, etc.)
-  * @param [props.priority] {string} - routine | urgent | asap | stat
-  * @param [props.item] {CodeableConcept} - Medication, Substance, or Device requested to be supplied
-  * @param [props.quantity] {Quantity} - The requested amount of the item indicated
-  * @param [props.parameter] {BackboneElement} - Ordered item details
-  * @param [props.occurrence] {dateTime} - When the request should be fulfilled
-  * @param [props.authoredOn] {dateTime} - When the request was made
-  * @param [props.requester] {Reference} - Individual making the request
-  * @param [props.supplier] {Reference} - Who is intended to fulfill the request
-  * @param [props.reasonCode] {CodeableConcept} - The reason why the supply item was requested
-  * @param [props.reasonReference] {Reference} - The reason why the supply item was requested
-  * @param [props.deliverFrom] {Reference} - The origin of the supply
-  * @param [props.deliverTo] {Reference} - The destination of the supply
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for SupplyRequest
+  * @param {string} [props.status] - draft | active | suspended +
+  * @param {CodeableConcept} [props.category] - The kind of supply (central, non-stock, etc.)
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {CodeableConcept} [props.item] - Medication, Substance, or Device requested to be supplied
+  * @param {Quantity} [props.quantity] - The requested amount of the item indicated
+  * @param {BackboneElement} [props.parameter] - Ordered item details
+  * @param {dateTime} [props.occurrence] - When the request should be fulfilled
+  * @param {dateTime} [props.authoredOn] - When the request was made
+  * @param {Reference} [props.requester] - Individual making the request
+  * @param {Reference} [props.supplier] - Who is intended to fulfill the request
+  * @param {CodeableConcept} [props.reasonCode] - The reason why the supply item was requested
+  * @param {Reference} [props.reasonReference] - The reason why the supply item was requested
+  * @param {Reference} [props.deliverFrom] - The origin of the supply
+  * @param {Reference} [props.deliverTo] - The destination of the supply
  */
 export function supplyRequest(type: string, props: SupplyRequest_Props);
 
@@ -5378,46 +5378,46 @@ export function supplyRequest(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - Task Instance Identifier
-  * @param [props.instantiatesCanonical] {canonical} - Formal definition of task
-  * @param [props.instantiatesUri] {string} - Formal definition of task
-  * @param [props.basedOn] {Reference} - Request fulfilled by this task
-  * @param [props.groupIdentifier] {Identifier} - Requisition or grouper id
-  * @param [props.partOf] {Reference} - Composite task
-  * @param [props.status] {string} - draft | requested | received | accepted | +
-  * @param [props.statusReason] {CodeableConcept} - Reason for current status
-  * @param [props.businessStatus] {CodeableConcept} - E.g. "Specimen collected", "IV prepped"
-  * @param [props.intent] {string} - unknown | proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
-  * @param [props.priority] {string} - routine | urgent | asap | stat
-  * @param [props.code] {CodeableConcept} - Task Type
-  * @param [props.description] {string} - Human-readable explanation of task
-  * @param [props.focus] {Reference} - What task is acting on
-  * @param [props.for] {Reference} - Beneficiary of the Task
-  * @param [props.encounter] {Reference} - Healthcare event during which this task originated
-  * @param [props.executionPeriod] {Period} - Start and end time of execution
-  * @param [props.authoredOn] {dateTime} - Task Creation Date
-  * @param [props.lastModified] {dateTime} - Task Last Modified Date
-  * @param [props.requester] {Reference} - Who is asking for task to be done
-  * @param [props.performerType] {CodeableConcept} - Requested performer
-  * @param [props.owner] {Reference} - Responsible individual
-  * @param [props.location] {Reference} - Where task occurs
-  * @param [props.reasonCode] {CodeableConcept} - Why task is needed
-  * @param [props.reasonReference] {Reference} - Why task is needed
-  * @param [props.insurance] {Reference} - Associated insurance coverage
-  * @param [props.note] {Annotation} - Comments made about the task
-  * @param [props.relevantHistory] {Reference} - Key events in history of the Task
-  * @param [props.restriction] {BackboneElement} - Constraints on fulfillment tasks
-  * @param [props.input] {BackboneElement} - Information used to perform task
-  * @param [props.output] {BackboneElement} - Information produced as part of task
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Task Instance Identifier
+  * @param {canonical} [props.instantiatesCanonical] - Formal definition of task
+  * @param {string} [props.instantiatesUri] - Formal definition of task
+  * @param {Reference} [props.basedOn] - Request fulfilled by this task
+  * @param {Identifier} [props.groupIdentifier] - Requisition or grouper id
+  * @param {Reference} [props.partOf] - Composite task
+  * @param {string} [props.status] - draft | requested | received | accepted | +
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {CodeableConcept} [props.businessStatus] - E.g. "Specimen collected", "IV prepped"
+  * @param {string} [props.intent] - unknown | proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {CodeableConcept} [props.code] - Task Type
+  * @param {string} [props.description] - Human-readable explanation of task
+  * @param {Reference} [props.focus] - What task is acting on
+  * @param {Reference} [props.for] - Beneficiary of the Task
+  * @param {Reference} [props.encounter] - Healthcare event during which this task originated
+  * @param {Period} [props.executionPeriod] - Start and end time of execution
+  * @param {dateTime} [props.authoredOn] - Task Creation Date
+  * @param {dateTime} [props.lastModified] - Task Last Modified Date
+  * @param {Reference} [props.requester] - Who is asking for task to be done
+  * @param {CodeableConcept} [props.performerType] - Requested performer
+  * @param {Reference} [props.owner] - Responsible individual
+  * @param {Reference} [props.location] - Where task occurs
+  * @param {CodeableConcept} [props.reasonCode] - Why task is needed
+  * @param {Reference} [props.reasonReference] - Why task is needed
+  * @param {Reference} [props.insurance] - Associated insurance coverage
+  * @param {Annotation} [props.note] - Comments made about the task
+  * @param {Reference} [props.relevantHistory] - Key events in history of the Task
+  * @param {BackboneElement} [props.restriction] - Constraints on fulfillment tasks
+  * @param {BackboneElement} [props.input] - Information used to perform task
+  * @param {BackboneElement} [props.output] - Information produced as part of task
  */
 export function task(type: string, props: Task_Props);
 
@@ -5441,27 +5441,27 @@ export function task(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.identifier] {Identifier} - External identifier
-  * @param [props.name] {string} - Informal name of the executed TestScript
-  * @param [props.status] {string} - completed | in-progress | waiting | stopped | entered-in-error
-  * @param [props.testScript] {Reference} - Reference to the  version-specific TestScript that was executed to produce this TestReport
-  * @param [props.result] {string} - pass | fail | pending
-  * @param [props.score] {decimal} - The final score (percentage of tests passed) resulting from the execution of the TestScript
-  * @param [props.tester] {string} - Name of the tester producing this report (Organization or individual)
-  * @param [props.issued] {dateTime} - When the TestScript was executed and this TestReport was generated
-  * @param [props.participant] {BackboneElement} - A participant in the test execution, either the execution engine, a client, or a server
-  * @param [props.setup] {BackboneElement} - The results of the series of required setup operations before the tests were executed
-  * @param [props.test] {BackboneElement} - A test executed from the test script
-  * @param [props.teardown] {BackboneElement} - The results of running the series of required clean up steps
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifier
+  * @param {string} [props.name] - Informal name of the executed TestScript
+  * @param {string} [props.status] - completed | in-progress | waiting | stopped | entered-in-error
+  * @param {Reference} [props.testScript] - Reference to the  version-specific TestScript that was executed to produce this TestReport
+  * @param {string} [props.result] - pass | fail | pending
+  * @param {decimal} [props.score] - The final score (percentage of tests passed) resulting from the execution of the TestScript
+  * @param {string} [props.tester] - Name of the tester producing this report (Organization or individual)
+  * @param {dateTime} [props.issued] - When the TestScript was executed and this TestReport was generated
+  * @param {BackboneElement} [props.participant] - A participant in the test execution, either the execution engine, a client, or a server
+  * @param {BackboneElement} [props.setup] - The results of the series of required setup operations before the tests were executed
+  * @param {BackboneElement} [props.test] - A test executed from the test script
+  * @param {BackboneElement} [props.teardown] - The results of running the series of required clean up steps
  */
 export function testReport(type: string, props: TestReport_Props);
 
@@ -5485,39 +5485,39 @@ export function testReport(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.url] {string} - Canonical identifier for this test script, represented as a URI (globally unique)
-  * @param [props.identifier] {Identifier} - Additional identifier for the test script
-  * @param [props.version] {string} - Business version of the test script
-  * @param [props.name] {string} - Name for this test script (computer friendly)
-  * @param [props.title] {string} - Name for this test script (human friendly)
-  * @param [props.status] {string} - draft | active | retired | unknown
-  * @param [props.experimental] {boolean} - For testing purposes, not real usage
-  * @param [props.date] {dateTime} - Date last changed
-  * @param [props.publisher] {string} - Name of the publisher (organization or individual)
-  * @param [props.contact] {ContactDetail} - Contact details for the publisher
-  * @param [props.description] {markdown} - Natural language description of the test script
-  * @param [props.useContext] {UsageContext} - The context that the content is intended to support
-  * @param [props.jurisdiction] {CodeableConcept} - Intended jurisdiction for test script (if applicable)
-  * @param [props.purpose] {markdown} - Why this test script is defined
-  * @param [props.copyright] {markdown} - Use and/or publishing restrictions
-  * @param [props.origin] {BackboneElement} - An abstract server representing a client or sender in a message exchange
-  * @param [props.destination] {BackboneElement} - An abstract server representing a destination or receiver in a message exchange
-  * @param [props.metadata] {BackboneElement} - Required capability that is assumed to function correctly on the FHIR server being tested
-  * @param [props.fixture] {BackboneElement} - Fixture in the test script - by reference (uri)
-  * @param [props.profile] {Reference} - Reference of the validation profile
-  * @param [props.variable] {BackboneElement} - Placeholder for evaluated elements
-  * @param [props.setup] {BackboneElement} - A series of required setup operations before tests are executed
-  * @param [props.test] {BackboneElement} - A test in this script
-  * @param [props.teardown] {BackboneElement} - A series of required clean up steps
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this test script, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the test script
+  * @param {string} [props.version] - Business version of the test script
+  * @param {string} [props.name] - Name for this test script (computer friendly)
+  * @param {string} [props.title] - Name for this test script (human friendly)
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the test script
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for test script (if applicable)
+  * @param {markdown} [props.purpose] - Why this test script is defined
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {BackboneElement} [props.origin] - An abstract server representing a client or sender in a message exchange
+  * @param {BackboneElement} [props.destination] - An abstract server representing a destination or receiver in a message exchange
+  * @param {BackboneElement} [props.metadata] - Required capability that is assumed to function correctly on the FHIR server being tested
+  * @param {BackboneElement} [props.fixture] - Fixture in the test script - by reference (uri)
+  * @param {Reference} [props.profile] - Reference of the validation profile
+  * @param {BackboneElement} [props.variable] - Placeholder for evaluated elements
+  * @param {BackboneElement} [props.setup] - A series of required setup operations before tests are executed
+  * @param {BackboneElement} [props.test] - A test in this script
+  * @param {BackboneElement} [props.teardown] - A series of required clean up steps
  */
 export function testScript(type: string, props: TestScript_Props);
 
@@ -5541,29 +5541,29 @@ export function testScript(type: any, props?: any) {
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant. Optional.
-  * @param props {object} - Properties to apply to the resource
-  * @param [props.id] {string} - Logical id of this artifact
-  * @param [props.meta] {Meta} - Metadata about the resource
-  * @param [props.implicitRules] {string} - A set of rules under which this content was created
-  * @param [props.language] {string} - Language of the resource content
-  * @param [props.text] {Narrative} - Text summary of the resource, for human interpretation
-  * @param [props.contained] {Resource} - Contained, inline Resources
-  * @param [props.extension] {Extension} - Additional content defined by implementations
-  * @param [props.modifierExtension] {Extension} - Extensions that cannot be ignored
-  * @param [props.target] {Reference} - A resource that was validated
-  * @param [props.targetLocation] {string} - The fhirpath location(s) within the resource that was validated
-  * @param [props.need] {CodeableConcept} - none | initial | periodic
-  * @param [props.status] {string} - attested | validated | in-process | req-revalid | val-fail | reval-fail
-  * @param [props.statusDate] {dateTime} - When the validation status was updated
-  * @param [props.validationType] {CodeableConcept} - nothing | primary | multiple
-  * @param [props.validationProcess] {CodeableConcept} - The primary process by which the target is validated (edit check; value set; primary source; multiple sources; standalone; in context)
-  * @param [props.frequency] {Timing} - Frequency of revalidation
-  * @param [props.lastPerformed] {dateTime} - The date/time validation was last completed (including failed validations)
-  * @param [props.nextScheduled] {date} - The date when target is next validated, if appropriate
-  * @param [props.failureAction] {CodeableConcept} - fatal | warn | rec-only | none
-  * @param [props.primarySource] {BackboneElement} - Information about the primary source(s) involved in validation
-  * @param [props.attestation] {BackboneElement} - Information about the entity attesting to information
-  * @param [props.validator] {BackboneElement} - Information about the entity validating information
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Reference} [props.target] - A resource that was validated
+  * @param {string} [props.targetLocation] - The fhirpath location(s) within the resource that was validated
+  * @param {CodeableConcept} [props.need] - none | initial | periodic
+  * @param {string} [props.status] - attested | validated | in-process | req-revalid | val-fail | reval-fail
+  * @param {dateTime} [props.statusDate] - When the validation status was updated
+  * @param {CodeableConcept} [props.validationType] - nothing | primary | multiple
+  * @param {CodeableConcept} [props.validationProcess] - The primary process by which the target is validated (edit check; value set; primary source; multiple sources; standalone; in context)
+  * @param {Timing} [props.frequency] - Frequency of revalidation
+  * @param {dateTime} [props.lastPerformed] - The date/time validation was last completed (including failed validations)
+  * @param {date} [props.nextScheduled] - The date when target is next validated, if appropriate
+  * @param {CodeableConcept} [props.failureAction] - fatal | warn | rec-only | none
+  * @param {BackboneElement} [props.primarySource] - Information about the primary source(s) involved in validation
+  * @param {BackboneElement} [props.attestation] - Information about the entity attesting to information
+  * @param {BackboneElement} [props.validator] - Information about the entity validating information
  */
 export function verificationResult(type: string, props: VerificationResult_Props);
 

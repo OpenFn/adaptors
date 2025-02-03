@@ -113,7 +113,7 @@ const generateJsDocs = (schema: Schema[]) => {
   for (const propName in profile.props) {
     const prop = profile.props[propName];
     // TODO do I need the typemap here?
-    props.push(`[props.${propName}] {${prop.type}} - ${prop.desc}`);
+    props.push(`{${prop.type}} [props.${propName}] - ${prop.desc}`);
   }
 
   return props.map(p => `  * @param ${p}`).join('\n');
@@ -135,7 +135,7 @@ const generateEntry = (
   * @param {string} type - The profile id for the resource variant.${
     simpleSignatures ? ' Optional.' : ''
   }
-  * @param props {object} - Properties to apply to the resource
+  * @param {object} props - Properties to apply to the resource
 ${generateJsDocs(variants)}
  */
 `);
