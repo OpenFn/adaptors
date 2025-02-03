@@ -1,6 +1,63 @@
 {
   "operations": [
     {
+      "name": "get",
+      "params": [
+        "path",
+        "query"
+      ],
+      "docs": {
+        "description": "Make a GET request",
+        "tags": [
+          {
+            "title": "example",
+            "description": "get(\"patient\");"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "An object of query parameters to be encoded into the URL.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "post",
       "params": [
         "path",

@@ -313,79 +313,66 @@
         "callback"
       ],
       "docs": {
-        "description": "Options provided to the createTaskStory request",
+        "description": "Create a story to a specific task.",
         "tags": [
-          {
-            "title": "typedef",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "StoryOptions"
-          },
           {
             "title": "public",
             "description": null,
             "type": null
           },
           {
-            "title": "property",
-            "description": "The plain text of the comment to add. Cannot be used with html_text.",
+            "title": "example",
+            "description": "createTaskStory(\"1206933955023739\", {\n  text: \"This is a comment\",\n});",
+            "caption": "Create a plain text comment"
+          },
+          {
+            "title": "example",
+            "description": "createTaskStory(\"1206933955023739\", {\n  html_text: \"<body>This is a comment</body>\",\n});",
+            "caption": "Create a HTML formatted text comment"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Globally unique identifier for the task",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "text"
+            "name": "taskGid"
           },
           {
-            "title": "property",
-            "description": "Opt In. HTML formatted text for a comment. This will not include the name of the creator.",
+            "title": "param",
+            "description": "Story parameters",
             "type": {
               "type": "NameExpression",
-              "name": "string"
+              "name": "StoryOptions"
             },
-            "name": "html_text"
+            "name": "params"
           },
           {
-            "title": "property",
-            "description": "Default to `false`. Whether the story should be pinned on the resource.",
+            "title": "param",
+            "description": "(Optional) callback function",
             "type": {
               "type": "NameExpression",
-              "name": "boolean"
+              "name": "function"
             },
-            "name": "is_pinned"
+            "name": "callback"
           },
           {
-            "title": "property",
-            "description": "The name of the sticker in this story. `null` if there is no sticker.",
+            "title": "returns",
+            "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "sticker_name"
-          },
-          {
-            "title": "property",
-            "description": "Opt In. This endpoint returns a compact resource, which excludes some properties by default. To include those optional properties, set this query parameter to a comma-separated list of the properties you wish to include.",
-            "type": {
-              "type": "NameExpression",
-              "name": "array"
-            },
-            "name": "opt_fields"
-          },
-          {
-            "title": "property",
-            "description": "Defaults to `false`. Provides the response in a “pretty” format. In the case of JSON this means doing proper line breaking and indentation to make it readable. This will take extra time and increase the response size so it is advisable only to use this during debugging.",
-            "type": {
-              "type": "NameExpression",
-              "name": "boolean"
-            },
-            "name": "opt_pretty"
+              "name": "Operation"
+            }
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "request",
@@ -395,52 +382,68 @@
         "callback"
       ],
       "docs": {
-        "description": "Options provided to the Asana API request",
+        "description": "Make a HTTP request against the Asana API.",
         "tags": [
-          {
-            "title": "typedef",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "RequestOptions"
-          },
           {
             "title": "public",
             "description": null,
             "type": null
           },
           {
-            "title": "property",
-            "description": "Body data to append to the request.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
+            "title": "example",
+            "description": "Get a task by id\nrequest(\"/tasks/1234\");"
           },
           {
-            "title": "property",
-            "description": "An object of query parameters to be encoded into the URL.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "query"
+            "title": "example",
+            "description": "Query for tasks in a given project\nrequest(\"/tasks\", {\n  query: { project: \"abc\" },\n});"
           },
           {
-            "title": "property",
-            "description": "The HTTP method to use. Defaults to `GET`",
+            "title": "example",
+            "description": "Create a new task\nrequest(\"/tasks\", {\n  method: \"POST\",\n  body: { data: { name: \"do the thing\", completed: false } },\n});"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource (excluding api/version)",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "method"
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Query, body and method parameters",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],
