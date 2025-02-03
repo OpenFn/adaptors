@@ -154,7 +154,10 @@ export function account(type: any, props?: any) {
       props = type;
       type = "Account";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -232,7 +235,10 @@ export function activityDefinition(type: any, props?: any) {
       props = type;
       type = "ActivityDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -274,7 +280,10 @@ export function administrableProductDefinition(type: any, props?: any) {
       props = type;
       type = "AdministrableProductDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -326,7 +335,10 @@ export function adverseEvent(type: any, props?: any) {
       props = type;
       type = "AdverseEvent";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -374,7 +386,10 @@ export function allergyIntolerance(type: any, props?: any) {
       props = type;
       type = "AllergyIntolerance";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -428,7 +443,10 @@ export function appointment(type: any, props?: any) {
       props = type;
       type = "Appointment";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -468,7 +486,10 @@ export function appointmentResponse(type: any, props?: any) {
       props = type;
       type = "AppointmentResponse";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -511,7 +532,10 @@ export function biologicallyDerivedProduct(type: any, props?: any) {
       props = type;
       type = "BiologicallyDerivedProduct";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -551,7 +575,10 @@ export function bodyStructure(type: any, props?: any) {
       props = type;
       type = "BodyStructure";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -606,7 +633,10 @@ export function carePlan(type: any, props?: any) {
       props = type;
       type = "CarePlan";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -651,7 +681,10 @@ export function careTeam(type: any, props?: any) {
       props = type;
       type = "CareTeam";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -709,7 +742,10 @@ export function chargeItem(type: any, props?: any) {
       props = type;
       type = "ChargeItem";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -764,7 +800,10 @@ export function chargeItemDefinition(type: any, props?: any) {
       props = type;
       type = "ChargeItemDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -825,7 +864,10 @@ export function citation(type: any, props?: any) {
       props = type;
       type = "Citation";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -884,7 +926,10 @@ export function claim(type: any, props?: any) {
       props = type;
       type = "Claim";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -943,7 +988,10 @@ export function claimResponse(type: any, props?: any) {
       props = type;
       type = "ClaimResponse";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -995,7 +1043,10 @@ export function clinicalImpression(type: any, props?: any) {
       props = type;
       type = "ClinicalImpression";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1038,7 +1089,10 @@ export function clinicalUseDefinition(type: any, props?: any) {
       props = type;
       type = "ClinicalUseDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1093,7 +1147,10 @@ export function communication(type: any, props?: any) {
       props = type;
       type = "Communication";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1147,7 +1204,10 @@ export function communicationRequest(type: any, props?: any) {
       props = type;
       type = "CommunicationRequest";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1196,7 +1256,10 @@ export function condition(type: any, props?: any) {
       props = type;
       type = "Condition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1261,7 +1324,10 @@ export function contract(type: any, props?: any) {
       props = type;
       type = "Contract";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1310,7 +1376,10 @@ export function coverage(type: any, props?: any) {
       props = type;
       type = "Coverage";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1356,7 +1425,10 @@ export function coverageEligibilityRequest(type: any, props?: any) {
       props = type;
       type = "CoverageEligibilityRequest";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1403,7 +1475,10 @@ export function coverageEligibilityResponse(type: any, props?: any) {
       props = type;
       type = "CoverageEligibilityResponse";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1447,7 +1522,10 @@ export function detectedIssue(type: any, props?: any) {
       props = type;
       type = "DetectedIssue";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1505,7 +1583,10 @@ export function device(type: any, props?: any) {
       props = type;
       type = "Device";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1559,7 +1640,10 @@ export function deviceDefinition(type: any, props?: any) {
       props = type;
       type = "DeviceDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1601,7 +1685,10 @@ export function deviceMetric(type: any, props?: any) {
       props = type;
       type = "DeviceMetric";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1657,7 +1744,10 @@ export function deviceRequest(type: any, props?: any) {
       props = type;
       type = "DeviceRequest";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1702,7 +1792,10 @@ export function deviceUseStatement(type: any, props?: any) {
       props = type;
       type = "DeviceUseStatement";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1752,7 +1845,10 @@ export function diagnosticReport(type: any, props?: any) {
       props = type;
       type = "DiagnosticReport";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1784,7 +1880,10 @@ export function domainResource(type: any, props?: any) {
       props = type;
       type = "DomainResource";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1839,7 +1938,10 @@ export function encounter(type: any, props?: any) {
       props = type;
       type = "Encounter";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1882,7 +1984,10 @@ export function endpoint(type: any, props?: any) {
       props = type;
       type = "Endpoint";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1921,7 +2026,10 @@ export function enrollmentRequest(type: any, props?: any) {
       props = type;
       type = "EnrollmentRequest";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -1961,7 +2069,10 @@ export function enrollmentResponse(type: any, props?: any) {
       props = type;
       type = "EnrollmentResponse";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2005,7 +2116,10 @@ export function episodeOfCare(type: any, props?: any) {
       props = type;
       type = "EpisodeOfCare";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2065,7 +2179,10 @@ export function eventDefinition(type: any, props?: any) {
       props = type;
       type = "EventDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2122,7 +2239,10 @@ export function evidence(type: any, props?: any) {
       props = type;
       type = "Evidence";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2172,7 +2292,10 @@ export function evidenceReport(type: any, props?: any) {
       props = type;
       type = "EvidenceReport";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2228,7 +2351,10 @@ export function evidenceVariable(type: any, props?: any) {
       props = type;
       type = "EvidenceVariable";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2303,7 +2429,10 @@ export function explanationOfBenefit(type: any, props?: any) {
       props = type;
       type = "ExplanationOfBenefit";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2353,7 +2482,10 @@ export function familyMemberHistory(type: any, props?: any) {
       props = type;
       type = "FamilyMemberHistory";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2393,7 +2525,10 @@ export function flag(type: any, props?: any) {
       props = type;
       type = "Flag";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2441,7 +2576,10 @@ export function goal(type: any, props?: any) {
       props = type;
       type = "Goal";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2483,7 +2621,10 @@ export function group(type: any, props?: any) {
       props = type;
       type = "Group";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2530,7 +2671,10 @@ export function guidanceResponse(type: any, props?: any) {
       props = type;
       type = "GuidanceResponse";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2586,7 +2730,10 @@ export function healthcareService(type: any, props?: any) {
       props = type;
       type = "HealthcareService";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2638,7 +2785,10 @@ export function imagingStudy(type: any, props?: any) {
       props = type;
       type = "ImagingStudy";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2698,7 +2848,10 @@ export function immunization(type: any, props?: any) {
       props = type;
       type = "Immunization";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2743,7 +2896,10 @@ export function immunizationEvaluation(type: any, props?: any) {
       props = type;
       type = "ImmunizationEvaluation";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2780,7 +2936,10 @@ export function immunizationRecommendation(type: any, props?: any) {
       props = type;
       type = "ImmunizationRecommendation";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2820,7 +2979,10 @@ export function ingredient(type: any, props?: any) {
       props = type;
       type = "Ingredient";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2866,7 +3028,10 @@ export function insurancePlan(type: any, props?: any) {
       props = type;
       type = "InsurancePlan";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2914,7 +3079,10 @@ export function invoice(type: any, props?: any) {
       props = type;
       type = "Invoice";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -2977,7 +3145,10 @@ export function library(type: any, props?: any) {
       props = type;
       type = "Library";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3022,7 +3193,10 @@ export function list(type: any, props?: any) {
       props = type;
       type = "List";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3071,7 +3245,10 @@ export function location(type: any, props?: any) {
       props = type;
       type = "Location";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3110,7 +3287,10 @@ export function manufacturedItemDefinition(type: any, props?: any) {
       props = type;
       type = "ManufacturedItemDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3183,7 +3363,10 @@ export function measure(type: any, props?: any) {
       props = type;
       type = "Measure";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3226,7 +3409,10 @@ export function measureReport(type: any, props?: any) {
       props = type;
       type = "MeasureReport";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3280,7 +3466,10 @@ export function media(type: any, props?: any) {
       props = type;
       type = "Media";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3320,7 +3509,10 @@ export function medication(type: any, props?: any) {
       props = type;
       type = "Medication";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3371,7 +3563,10 @@ export function medicationAdministration(type: any, props?: any) {
       props = type;
       type = "MedicationAdministration";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3427,7 +3622,10 @@ export function medicationDispense(type: any, props?: any) {
       props = type;
       type = "MedicationDispense";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3481,7 +3679,10 @@ export function medicationKnowledge(type: any, props?: any) {
       props = type;
       type = "MedicationKnowledge";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3545,7 +3746,10 @@ export function medicationRequest(type: any, props?: any) {
       props = type;
       type = "MedicationRequest";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3594,7 +3798,10 @@ export function medicationStatement(type: any, props?: any) {
       props = type;
       type = "MedicationStatement";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3654,7 +3861,10 @@ export function medicinalProductDefinition(type: any, props?: any) {
       props = type;
       type = "MedicinalProductDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3702,7 +3912,10 @@ export function molecularSequence(type: any, props?: any) {
       props = type;
       type = "MolecularSequence";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3751,7 +3964,10 @@ export function nutritionOrder(type: any, props?: any) {
       props = type;
       type = "NutritionOrder";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3793,7 +4009,10 @@ export function nutritionProduct(type: any, props?: any) {
       props = type;
       type = "NutritionProduct";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3849,7 +4068,10 @@ export function observation(type: any, props?: any) {
       props = type;
       type = "Observation";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3894,7 +4116,10 @@ export function observationDefinition(type: any, props?: any) {
       props = type;
       type = "ObservationDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3936,7 +4161,10 @@ export function organization(type: any, props?: any) {
       props = type;
       type = "Organization";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -3980,7 +4208,10 @@ export function organizationAffiliation(type: any, props?: any) {
       props = type;
       type = "OrganizationAffiliation";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4026,7 +4257,10 @@ export function packagedProductDefinition(type: any, props?: any) {
       props = type;
       type = "PackagedProductDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4074,7 +4308,10 @@ export function patient(type: any, props?: any) {
       props = type;
       type = "Patient";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4118,7 +4355,10 @@ export function paymentNotice(type: any, props?: any) {
       props = type;
       type = "PaymentNotice";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4165,7 +4405,10 @@ export function paymentReconciliation(type: any, props?: any) {
       props = type;
       type = "PaymentReconciliation";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4207,7 +4450,10 @@ export function person(type: any, props?: any) {
       props = type;
       type = "Person";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4270,7 +4516,10 @@ export function planDefinition(type: any, props?: any) {
       props = type;
       type = "PlanDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4312,7 +4561,10 @@ export function practitioner(type: any, props?: any) {
       props = type;
       type = "Practitioner";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4358,7 +4610,10 @@ export function practitionerRole(type: any, props?: any) {
       props = type;
       type = "PractitionerRole";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4418,7 +4673,10 @@ export function procedure(type: any, props?: any) {
       props = type;
       type = "Procedure";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4472,7 +4730,10 @@ export function questionnaire(type: any, props?: any) {
       props = type;
       type = "Questionnaire";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4515,7 +4776,10 @@ export function questionnaireResponse(type: any, props?: any) {
       props = type;
       type = "QuestionnaireResponse";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4561,7 +4825,10 @@ export function regulatedAuthorization(type: any, props?: any) {
       props = type;
       type = "RegulatedAuthorization";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4605,7 +4872,10 @@ export function relatedPerson(type: any, props?: any) {
       props = type;
       type = "RelatedPerson";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4655,7 +4925,10 @@ export function requestGroup(type: any, props?: any) {
       props = type;
       type = "RequestGroup";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4721,7 +4994,10 @@ export function researchDefinition(type: any, props?: any) {
       props = type;
       type = "ResearchDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4786,7 +5062,10 @@ export function researchElementDefinition(type: any, props?: any) {
       props = type;
       type = "ResearchElementDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4842,7 +5121,10 @@ export function researchStudy(type: any, props?: any) {
       props = type;
       type = "ResearchStudy";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4882,7 +5164,10 @@ export function researchSubject(type: any, props?: any) {
       props = type;
       type = "ResearchSubject";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4910,7 +5195,10 @@ export function resource(type: any, props?: any) {
       props = type;
       type = "Resource";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4959,7 +5247,10 @@ export function riskAssessment(type: any, props?: any) {
       props = type;
       type = "RiskAssessment";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -4999,7 +5290,10 @@ export function schedule(type: any, props?: any) {
       props = type;
       type = "Schedule";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -5064,7 +5358,10 @@ export function serviceRequest(type: any, props?: any) {
       props = type;
       type = "ServiceRequest";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -5107,7 +5404,10 @@ export function slot(type: any, props?: any) {
       props = type;
       type = "Slot";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -5152,7 +5452,10 @@ export function specimen(type: any, props?: any) {
       props = type;
       type = "Specimen";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -5190,7 +5493,10 @@ export function specimenDefinition(type: any, props?: any) {
       props = type;
       type = "SpecimenDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -5229,7 +5535,10 @@ export function substance(type: any, props?: any) {
       props = type;
       type = "Substance";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -5280,7 +5589,10 @@ export function substanceDefinition(type: any, props?: any) {
       props = type;
       type = "SubstanceDefinition";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -5323,7 +5635,10 @@ export function supplyDelivery(type: any, props?: any) {
       props = type;
       type = "SupplyDelivery";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -5370,7 +5685,10 @@ export function supplyRequest(type: any, props?: any) {
       props = type;
       type = "SupplyRequest";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -5433,7 +5751,10 @@ export function task(type: any, props?: any) {
       props = type;
       type = "Task";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -5477,7 +5798,10 @@ export function testReport(type: any, props?: any) {
       props = type;
       type = "TestReport";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -5533,7 +5857,10 @@ export function testScript(type: any, props?: any) {
       props = type;
       type = "TestScript";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }
 
 /**
@@ -5579,5 +5906,8 @@ export function verificationResult(type: any, props?: any) {
       props = type;
       type = "VerificationResult";
     }
-    return mappings[type](props)
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
 }

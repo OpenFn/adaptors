@@ -208,9 +208,11 @@ ${generateJsDocs(variants)}
     declarations.push(override);
   }
 
-  // TODO handle errors for invalid types
   const mapper = parse(`
-return mappings[type](props)
+  if (type in mappings) {
+      return mappings[type](props)
+  }
+  throw new Error(\`Error: profile "\${type}" not recognised\`)
 `);
   statements.push(...mapper.program.body);
 
