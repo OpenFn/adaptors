@@ -200,7 +200,7 @@ export default function generate(filename, outputPath) {
       return item.type == 'VariableDeclaration';
     })
     .filter(function (item) {
-      if (item.declarations[0].init.callee) {
+      if (item.declarations[0].init?.callee) {
         return (
           item.declarations[0].init.callee.name == 'require' &&
           item.declarations[0].init.arguments[0].value.includes('./')
