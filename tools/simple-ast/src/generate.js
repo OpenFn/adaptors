@@ -49,7 +49,7 @@ export default function generate(filename, outputPath) {
       .filter(i => i.type == 'ExportNamedDeclaration')
       .filter(i => i.specifiers.length > 0)
       // .filter(i => i.source.value == '@openfn/language-common')
-      .map(i => i.specifiers.map(s => {}))
+      .map(i => i.specifiers.map(s => s.exported.name))
       .flat();
 
     return { exportedFunctions, exportedVariables, externalFunctions };
@@ -224,9 +224,6 @@ export default function generate(filename, outputPath) {
   });
 
   //Imports function from language-common AST
-  // TODO Joe: will this work in the monorepo?
-  // We should use the adaptor's _actual_ common,
-  // not the source package
   let commonAst = [];
   if (
     !filename.includes('language-common') &&
@@ -285,6 +282,7 @@ export default function generate(filename, outputPath) {
     return exp;
   });
 
+  // Checks for exported functions from language-common
   const commons = commonAst.filter(i =>
     adaptorAst.externalFunctions.includes(i.name)
   );
