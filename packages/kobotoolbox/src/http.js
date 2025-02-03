@@ -15,7 +15,7 @@ import * as util from './Utils';
  * @function
  * @example <caption>GET forms resource</caption>
  * http.get(
- *  "/assets",
+ *  "/assets/",
  *  {
  *    query: {
  *      format: json
