@@ -28,6 +28,12 @@ const configuration = {
   instanceUrl: 'https://fn.openmrs.org',
 };
 
+const state = {
+  configuration,
+  patient: testData.patient,
+  encounter: testData.encounter
+};
+
 describe('execute', () => {
   it('executes each operation in sequence', done => {
     let state = { configuration };
@@ -73,14 +79,13 @@ describe('http', () => {
         query: { q: 'Sarah 1' },
         method: 'GET',
       })
-      .reply(200, { results: [{ display: 'Sarah 1' }] }, { ...jsonHeaders });
-    const state = { configuration };
+      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
 
     const { data } = await http.request('GET', '/ws/rest/v1/patient', {
       query: { q: 'Sarah 1' },
     })(state);
 
-    expect(data.results[0].display).to.eql('Sarah 1');
+    expect(data.results[0].display).to.eql(testData.patientResults[0].display);
   });
 
   it('should auto-fetch patients with a limit', async () => {
@@ -118,7 +123,6 @@ describe('http', () => {
         { ...jsonHeaders }
       );
 
-    const state = { configuration };
     const { data } = await http.request('GET', '/ws/rest/v1/patient', {
       query: { q: 'Sarah', limit: 1 },
     })(state);
@@ -161,8 +165,6 @@ describe('http.get', () => {
       );
   });
 
-  const state = { configuration };
-
   it('should make http request with the "GET" verb', async () => {
     const response = await http.get('/ws/rest/v1/patient')(state);
     expect(response.response.method).to.eql('GET');
@@ -204,8 +206,6 @@ describe('http.post', () =>{
       .reply(404, { ...jsonHeaders });
   });
 
-  const state = { configuration };
-
   it('should make http request with the "POST" verb', async () => {
     const response = await http.post('/ws/rest/v1/patient', testData.newPatient)(state);
     expect(response.response.method).to.eql('POST');
@@ -244,8 +244,6 @@ describe('http.delete', () =>{
       .reply(404, { ...jsonHeaders });
   });
 
-  const state = { configuration };
-
   it('should make http request with the "DELETE" verb', async () => {
     const response = await http.delete('/ws/rest/v1/patient/abc')(state);
     expect(response.response.method).to.eql('DELETE');
@@ -274,7 +272,7 @@ describe('fhir', () => {
         method: 'GET',
       })
       .reply(200, { entry: [{ display: 'Sarah 1' }] }, { ...jsonHeaders });
-    const state = { configuration };
+
     const { data } = await fhir.get('Patient', { q: 'Sarah 1' })(state);
     expect(data.entry[0].display).to.eql('Sarah 1');
   });
@@ -315,7 +313,6 @@ describe('fhir', () => {
         { ...jsonHeaders }
       );
 
-    const state = { configuration };
     const { data } = await fhir.get('Practitioner', { count: 1 })(state);
     expect(data.entry[0].display).to.eql('Sarah 1');
     expect(data.entry[1].display).to.eql('Sarah 2');
@@ -329,15 +326,14 @@ describe('request', () => {
         query: { q: 'Sarah 1' },
         method: 'GET',
       })
-      .reply(200, { results: [{ display: 'Sarah 1' }] }, { ...jsonHeaders });
-    const state = { configuration };
+      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
 
     const { body } = await request(state, 'GET', '/ws/rest/v1/patient', {
       query: { q: 'Sarah 1' },
       baseUrl: state.configuration.instanceUrl,
     });
 
-    expect(body.results[0].display).to.eql('Sarah 1');
+    expect(body.results[0].display).to.eql(testData.patientResults[0].display);
   });
   it('should auto-fetch patients with a limit', async () => {
     testServer
@@ -374,7 +370,6 @@ describe('request', () => {
         { ...jsonHeaders }
       );
 
-    const state = { configuration };
     const { body } = await request(state, 'GET', '/ws/rest/v1/patient', {
       query: { q: 'Sarah', limit: 1 },
       baseUrl: state.configuration.instanceUrl,
@@ -384,7 +379,7 @@ describe('request', () => {
     expect(body.results[1].display).to.eql('Sarah 2');
   });
 
-  it('should not auto-fetch if the user sets startIdex', async () => {
+  it('should not auto-fetch if the user sets startIndex', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/patient',
@@ -419,7 +414,6 @@ describe('request', () => {
         { ...jsonHeaders }
       );
 
-    const state = { configuration };
     const { body } = await request(state, 'GET', '/ws/rest/v1/patient', {
       query: { q: 'Sarah', limit: 1, startIndex: 1 },
       baseUrl: state.configuration.instanceUrl,
@@ -439,7 +433,6 @@ describe('get', () => {
       })
       .reply(200, { uuid: '123' }, { ...jsonHeaders });
 
-    const state = { configuration };
     const { data } = await execute(get('encounter/123'))(state);
 
     expect(data.uuid).to.eql('123');
@@ -457,8 +450,6 @@ describe('post', () => {
         ...jsonHeaders,
       });
 
-    const { encounter } = testData;
-    const state = { configuration, encounter };
     const { data } = await execute(post('encounter', state => state.encounter))(
       state
     );
@@ -478,12 +469,10 @@ describe('create', () => {
         ...jsonHeaders,
       });
 
-    const { patient } = testData;
-    const state = { configuration, patient };
     const { data } = await execute(create('patient', state => state.patient))(
       state
     );
-    expect(data.results[0].display).to.include('Sarah Lewis');
+    expect(data.results[0].display).to.eql(testData.patient.display);
   });
   it('should throw an error if the resource is not found', async () => {
     testServer
@@ -493,7 +482,6 @@ describe('create', () => {
       })
       .reply(404, { error: 'Not Found' }, { ...jsonHeaders });
 
-    const state = { configuration };
     try {
       await execute(create('wrong-resource'))(state);
     } catch (error) {
@@ -518,7 +506,6 @@ describe('create', () => {
         }
       );
 
-    const state = { configuration, patient };
     await execute(create('patient', state => state.patient))(state);
   });
 });
@@ -536,7 +523,6 @@ describe('getPatient', () => {
         { ...jsonHeaders }
       );
 
-    const state = { configuration };
     const { data } = await execute(
       getPatient('b52ec6f9-0e26-424c-a4a1-c64f9d571eb3')
     )(state);
@@ -553,7 +539,6 @@ describe('searchPerson', () => {
         method: 'GET',
       })
       .reply(200, { results: [{ display: 'Sarah' }] }, { ...jsonHeaders });
-    const state = { configuration };
 
     const { data } = await execute(
       searchPerson({
@@ -572,16 +557,15 @@ describe('searchPatient', () => {
         path: '/ws/rest/v1/patient?q=Sarah',
         method: 'GET',
       })
-      .reply(200, { results: [{ display: 'Sarah' }] }, { ...jsonHeaders });
+      .reply(200, { results: [testData.patient] }, { ...jsonHeaders });
 
-    const state = { configuration };
     const { data } = await execute(
       searchPatient({
         q: 'Sarah',
       })
     )(state);
 
-    expect(data.results[0].display).to.eql('Sarah');
+    expect(data.results[0].display).to.eql(testData.patient.display);
   });
 });
 
@@ -604,11 +588,6 @@ describe('upsert', () => {
         ...jsonHeaders,
       });
 
-    const state = {
-      configuration,
-      patient: testData.patient,
-    };
-
     const result = await upsert(
       'patient',
       state => ({
@@ -617,7 +596,7 @@ describe('upsert', () => {
       state => state.patient
     )(state);
 
-    expect(result.data.person.display).to.eql('Sarah Lewis');
+    expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
   it('should create a patient', async () => {
     testServer
@@ -637,11 +616,6 @@ describe('upsert', () => {
         ...jsonHeaders,
       });
 
-    const state = {
-      configuration,
-      patient: testData.patient,
-    };
-
     const result = await upsert(
       'patient',
       state => ({
@@ -650,6 +624,6 @@ describe('upsert', () => {
       state => state.patient
     )(state);
 
-    expect(result.data.person.display).to.eql('Sarah Lewis');
+    expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
 });
