@@ -59,7 +59,11 @@ export default function generate(filename, outputPath) {
     const docs = item.leadingComments
       ? item.leadingComments
           .filter(function (item) {
-            return item.type == 'CommentBlock';
+            return (
+              item.type == 'CommentBlock' &&
+              item.value.match('@public') &&
+              !item.value.match('@typedef')
+            );
           })
           .map(function (item) {
             return doctrine.parse(item.value, { unwrap: true, sloppy: true });
