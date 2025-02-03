@@ -27,7 +27,6 @@
     "undici": "^5.28.5"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "^1.1.0",
     "chai": "^4.3.6",
     "deep-eql": "^0.1.3",
