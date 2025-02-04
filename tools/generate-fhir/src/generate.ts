@@ -1,12 +1,15 @@
 import { writeFile, mkdir, access, readFile, rm } from 'node:fs/promises';
 import { exec } from 'node:child_process';
 import path from 'node:path';
+import dts from 'rollup-plugin-dts';
+import { rollup } from 'rollup';
+
 import generatePackage from './generate-package';
 import fetchSpec, { Meta } from './fetch-spec';
 import generateSchema from './generate-schema';
 import generateCode from './generate-code';
 import withDisclaimer from './util/disclaimer';
-import generateDTS from './generate-dts';
+import generateDTS, { generateDataTypes } from './generate-dts';
 import generateTests from './generate-tests';
 
 import toolPkg from '../package.json' assert { type: 'json' };
@@ -82,12 +85,16 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   let mappings;
   let meta;
 
-  // // Determine whether to setup the initial template and/or re-download the spec
+  // Determine whether to setup the initial template and/or re-download the spec
   try {
     const pkg = await readPkg();
     mappings = await loadMappings();
     if (respec || spec) {
-      meta = await fetchSpec(adaptorPath, spec ?? pkg.fhir.specUrl, mappings);
+      try {
+        meta = await fetchSpec(adaptorPath, spec ?? pkg.fhir.specUrl, mappings);
+      } catch (e) {
+        process.exit(1);
+      }
     }
   } catch (error: any) {
     console.log(`Package ${adaptorName} does not exist: generating...`);
@@ -102,7 +109,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log(`Package ${adaptorName} generated!`);
   }
 
-  // // Now generate from the spec
+  // Now generate from the spec
   const specPath = path.resolve(adaptorPath, 'spec', 'spec.json');
   try {
     await access(specPath);
@@ -114,23 +121,40 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log(e);
   }
 
+  let fhirTypes = {};
+  try {
+    await access(specPath);
+    console.log('Generating datatype schemas');
+    const dtSpecPath = path.resolve(adaptorPath, 'spec', 'spec-types.json');
+    // Note: when generating datatypes we ignore the user's mappings and generate everything
+    // maybe we need to take a different mappings object?
+    const dtSchema = await generateSchema(dtSpecPath);
+    const { src, index } = generateDataTypes(dtSchema);
+    fhirTypes = index;
+    const dtsPath = path.resolve(adaptorPath, 'src/fhir.ts');
+    console.log('Writing datatype schemas to ', dtsPath);
+    await writeFile(dtsPath, withDisclaimer(src));
+  } catch (e) {
+    console.log('Skipping datatype generation');
+    console.log(e);
+  }
+
+  console.log('Generating resource schemas');
   const schema = await generateSchema(specPath, mappings);
+
   console.log('Generating code');
   const src = generateCode(schema, mappings, {
     simpleSignatures: simpleBuilders,
-  });
-  console.log('Generating DTS');
-  const dts = generateDTS(schema, mappings, {
-    simpleSignatures: simpleBuilders,
+    fhirTypes,
   });
 
-  const srcPath = path.resolve(adaptorPath, 'src/builders.js');
+  const srcPath = path.resolve(adaptorPath, 'src/builders.ts');
   console.log('Writing source to ', srcPath);
   await writeFile(srcPath, withDisclaimer(src.builders));
   await mkdir(path.resolve(adaptorPath, 'src/profiles'), { recursive: true });
   for (const profile in src.profiles) {
     await writeFile(
-      path.resolve(adaptorPath, 'src/profiles', `${profile}.js`),
+      path.resolve(adaptorPath, 'src/profiles', `${profile}.ts`),
       withDisclaimer(src.profiles[profile])
     );
   }
@@ -170,33 +194,36 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   });
 
   const pathToEntry = path.resolve(adaptorPath, 'src', 'index.ts');
+
   // Now build typings for index and utils
   exec(
     `pnpm exec tsc ${tscArgs.join(' ')} ${pathToEntry}`,
     {},
-    (err, stderr) => {
-      // // TODO ignore tsc output for now
-      // if (err) {
-      //   console.log('tsc build failed!');
-      //   console.log(stderr);
-      // }
-      setTimeout(async () => {
-        // TODO a more elegant way to do this?
-        // Can we prevent them being generated in the first place?
-        console.log('Removing TS profiles');
-        await rm(path.resolve(adaptorPath, 'types/profiles'), {
-          recursive: true,
-          force: true,
-        });
+    async (err, stderr) => {
+      // console.log('>', err);
+      // console.log('>', stderr);
+      console.log('Bundling DTS files');
+      const bundle = await rollup({
+        // Only bundle builders and profile together
+        // If we bundle everything into one file, then everything gets exported globally
+        input: path.resolve(adaptorPath, 'types', 'builders.d.ts'),
+        plugins: [dts()],
+      });
+      const dtsBundle = await bundle.generate({
+        format: 'es',
+      });
 
-        console.log('Writing builders.d.ts');
-        // Overwrite builders.d.ts because typescript makes a mess of it
-        await writeFile(
-          path.resolve(adaptorPath, 'types/builders.d.ts'),
-          withDisclaimer(dts)
-        );
-      }, 500);
-      // }
+      await writeFile(
+        path.resolve(adaptorPath, 'types', 'builders.d.ts'),
+        withDisclaimer(dtsBundle.output[0].code)
+      );
+
+      // finally remove the profiles and core fhir types
+      await rm(path.resolve(adaptorPath, 'types', 'profiles'), {
+        recursive: true,
+        force: true,
+      });
+      await rm(path.resolve(adaptorPath, 'types', 'fhir.d.ts'));
     }
   );
 };

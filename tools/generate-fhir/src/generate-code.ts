@@ -1,9 +1,16 @@
 import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 import { print, parse } from 'recast';
 
+// TODO this is a strange type - shouldn't it be n.statement?
 import { StatementKind } from 'ast-types/gen/kinds';
-import { getBuilderName, getTypeName, sortKeys } from './util';
+import {
+  getBuilderName,
+  getInterfaceName,
+  getTypeName,
+  sortKeys,
+} from './util';
 import { Mapping, MappingSpec, Schema } from './types';
+import { generateType } from './generate-types';
 
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
@@ -11,7 +18,10 @@ const INPUT_NAME = 'props';
 const generateCode = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {},
-  options: { simpleSignatures?: boolean } = {}
+  options: {
+    simpleSignatures?: boolean;
+    fhirTypes?: Record<string, true>;
+  } = {}
 ): { builders: string; profiles: Record<string, string> } => {
   const statements: n.Statement[] = [];
 
@@ -27,21 +37,26 @@ const generateCode = (
     for (const profile of sortedProfiles) {
       // import this builder
       const name = getTypeName(profile);
+      const iface = getInterfaceName(profile);
       imports.push(
         b.importDeclaration(
-          [b.importDefaultSpecifier(b.identifier(name))],
+          [
+            b.importDefaultSpecifier(b.identifier(name)),
+            b.importSpecifier(b.identifier(iface)),
+          ],
           b.stringLiteral(`./profiles/${profile.id}`)
         )
       );
 
       profiles[profile.id] = generateProfile(
         profile,
-        mappings.overrides?.[resourceType] ?? {}
+        mappings.overrides?.[resourceType] ?? {},
+        options.fhirTypes
       );
 
       // Generate an entrypoint function
       statements.push(
-        generateEntry(
+        ...generateEntry(
           name,
           resourceType,
           schema[resourceType],
@@ -58,7 +73,11 @@ const generateCode = (
   return { builders, profiles };
 };
 
-const generateProfile = (profile: Schema, mappings: MappingSpec) => {
+const generateProfile = (
+  profile: Schema,
+  mappings: MappingSpec,
+  fhirTypes: Record<string, true> = {}
+) => {
   const statements = [];
 
   const overrides = Object.assign({}, mappings.any, mappings[profile.id]);
@@ -66,7 +85,7 @@ const generateProfile = (profile: Schema, mappings: MappingSpec) => {
   statements.push(
     b.importDeclaration(
       [b.importNamespaceSpecifier(b.identifier('dt'))],
-      b.stringLiteral('../datatypes.js')
+      b.stringLiteral('../datatypes')
     )
   );
   statements.push(
@@ -75,6 +94,16 @@ const generateProfile = (profile: Schema, mappings: MappingSpec) => {
       b.stringLiteral('lodash')
     )
   );
+  statements.push(
+    b.importDeclaration(
+      [b.importNamespaceSpecifier(b.identifier('FHIR'))],
+      b.stringLiteral('../fhir')
+    )
+  );
+
+  const typedef = generateType(profile.type, profile, mappings, fhirTypes);
+
+  statements.push(typedef);
 
   const fn = generateBuilder(profile, overrides);
 
@@ -98,7 +127,7 @@ const generateJsDocs = (schema: Schema[]) => {
   for (const propName in profile.props) {
     const prop = profile.props[propName];
     // TODO do I need the typemap here?
-    props.push(`[props.${propName}] {${prop.type}} - ${prop.desc}`);
+    props.push(`{${prop.type}} [props.${propName}] - ${prop.desc}`);
   }
 
   return props.map(p => `  * @param ${p}`).join('\n');
@@ -110,6 +139,8 @@ const generateEntry = (
   variants: Schema[],
   simpleSignatures?: boolean
 ) => {
+  const declarations = [];
+
   const statements = [];
   const comment = parse(`/**
   * Create a FHIR ${resourceType} resource.
@@ -118,7 +149,7 @@ const generateEntry = (
   * @param {string} type - The profile id for the resource variant.${
     simpleSignatures ? ' Optional.' : ''
   }
-  * @param props {object} - Properties to apply to the resource
+  * @param {object} props - Properties to apply to the resource
 ${generateJsDocs(variants)}
  */
 `);
@@ -135,6 +166,29 @@ ${generateJsDocs(variants)}
   ]);
   statements.push(map);
 
+  // Generate the main tssignature
+  // Also push an override for the simple interface
+  const signature = b.exportDeclaration(
+    false,
+    b.tsDeclareFunction(b.identifier(getBuilderName(resourceType)), [
+      b.tsParameterProperty(
+        b.identifier.from({
+          name: 'type',
+          typeAnnotation: b.tsTypeAnnotation(b.tsStringKeyword()),
+        })
+      ),
+      b.tsParameterProperty(
+        b.identifier.from({
+          name: INPUT_NAME,
+          typeAnnotation: b.tsTypeAnnotation(
+            b.tsTypeReference(b.identifier(getInterfaceName(variants[0])))
+          ),
+        })
+      ),
+    ])
+  );
+  declarations.push(signature);
+
   if (simpleSignatures) {
     // TODO how do we know the default type?
     const handleOptionalType = parse(`// Handle optional type parameter
@@ -143,27 +197,69 @@ ${generateJsDocs(variants)}
     type = "${variants[0].id}";
   }`);
     statements.push(...handleOptionalType.program.body);
+
+    const override = b.exportDeclaration(
+      false,
+      b.tsDeclareFunction(
+        b.identifier(getBuilderName(resourceType)),
+        [
+          b.tsParameterProperty(
+            // TODO need a full type for this. Where do we get it?
+            b.identifier.from({
+              name: INPUT_NAME,
+              typeAnnotation: b.tsTypeAnnotation(
+                b.tsTypeReference(b.identifier(getInterfaceName(variants[0])))
+              ),
+            })
+          ),
+        ]
+        // What is the return type?
+        // It's not the same as our props - it's a fhir object
+        // b.tsTypeAnnotation(b.tsTypeReference(b.identifier('Patient')))
+      )
+    );
+
+    declarations.push(override);
   }
 
-  // TODO handle errors for invalid types
   const mapper = parse(`
-return mappings[type](props)
+  if (type in mappings) {
+      return mappings[type](props)
+  }
+  throw new Error(\`Error: profile "\${type}" not recognised\`)
 `);
   statements.push(...mapper.program.body);
 
-  const ex = b.exportDeclaration(
+  const impl = b.exportDeclaration(
     false,
     b.functionDeclaration(
       b.identifier(getBuilderName(resourceType)),
-      [b.identifier('type'), b.identifier(INPUT_NAME)],
+      [
+        b.tsParameterProperty(
+          b.identifier.from({
+            name: 'type',
+            typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
+          })
+        ),
+        b.tsParameterProperty(
+          // TODO need a full type for this. Where do we get it?
+          b.identifier.from({
+            name: INPUT_NAME,
+            typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
+            optional: true,
+          })
+        ),
+      ],
       b.blockStatement(statements)
     )
   );
+  declarations.push(impl);
 
-  ex.comments = comment.program.comments;
-  ex.comments[0].leading = true;
+  // Add the comment to the first declaration
+  declarations[0].comments = comment.program.comments;
+  declarations[0].comments![0].leading = true;
 
-  return ex;
+  return declarations;
 };
 
 const generateBuilder = (schema, mappings) => {
@@ -183,7 +279,19 @@ const generateBuilder = (schema, mappings) => {
 
   const fn = b.functionDeclaration(
     null,
-    [b.identifier(INPUT_NAME)],
+    [
+      b.identifier.from({
+        name: INPUT_NAME,
+        typeAnnotation: b.tsTypeAnnotation(
+          b.tsTypeReference(
+            b.identifier('Partial'),
+            b.tsTypeParameterInstantiation([
+              b.tsTypeReference(b.identifier(`${schema.type}_Props`)),
+            ])
+          )
+        ),
+      }),
+    ],
     b.blockStatement(body)
   );
 
@@ -211,7 +319,8 @@ const mapProps = (schema, mappings) => {
         switch (spec.type) {
           case 'string':
           case 'Period':
-            props.push(mapSimpleProp(key, mappings[key], spec));
+          case 'CodeableConcept':
+            // Do nothing - the prop will be spread to the resource
             break;
           case 'Reference':
             props.push(mapReference(key, mappings[key], spec));
@@ -219,15 +328,9 @@ const mapProps = (schema, mappings) => {
           case 'Identifier':
             props.push(mapIdentifier(key, mappings[key] || {}, spec));
             break;
-          case 'CodeableConcept':
-            props.push(mapCodeableConcept(key, mappings[key] || {}, spec));
-            break;
           default:
-            // console.warn(
-            //   `WARNING: using simple mapping for ${schema.id}.${key}`
-            // );
-            props.push(mapSimpleProp(key, mappings[key], spec));
-          // TODO: warn unused type
+            // Do nothing - the prop will be spread to the resource
+            break;
         }
       }
     } else {
@@ -298,8 +401,6 @@ const addDefaults = (propName: string, mapping: Mapping, schema: Schema) => {
 // A simple prop will just take what's in the input and map it right across
 // Mapping rules could add extra complications here, like aliasing and converting
 const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
-  if (propName === 'code') {
-  }
   // This is the actual assignment
   const assignProp = assignToInput(
     propName,
@@ -352,7 +453,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          b.objectExpression([])
+          b.objectExpression([b.spreadProperty(b.identifier('item'))])
         ),
       ])
     );
@@ -384,19 +485,11 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           )
         )
       );
+      assignments.push(ifPropInInput(prop, body, alts, inputName));
     } else {
-      body.push(
-        b.expressionStatement(
-          b.assignmentExpression(
-            '=',
-            b.memberExpression(b.identifier(safePropName), b.identifier(prop)),
-            sourceValue
-          )
-        )
-      );
+      // Don't bother to explicitly map simple assignments
+      // TODO: handle datatypes and special things here too
     }
-
-    assignments.push(ifPropInInput(prop, body, alts, inputName));
   }
 
   if (schema.hasSystem) {
@@ -421,7 +514,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          b.objectExpression([])
+          b.objectExpression([b.spreadProperty(b.identifier('item'))])
         ),
       ])
     );
@@ -592,7 +685,7 @@ const initResource = (resourceType: string) => {
   return b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier(RESOURCE_NAME),
-      b.objectExpression([rt, text])
+      b.objectExpression([rt, text, b.spreadProperty(b.identifier(INPUT_NAME))])
     ),
   ]);
 };

@@ -1,0 +1,122 @@
+
+// THIS FILE WAS AUTO-GENERATED
+// DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
+// SEE THE README FILE FOR DETAILS
+
+import * as dt from "../datatypes";
+import _ from "lodash";
+import * as FHIR from "../fhir";
+
+export type InsurancePlan_Props = {
+    id?: string;
+    meta?: FHIR.Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    status?: string;
+    type?: FHIR.CodeableConcept;
+    name?: string;
+    alias?: string;
+    period?: FHIR.Period;
+    ownedBy?: FHIR.Reference;
+    administeredBy?: FHIR.Reference;
+    coverageArea?: FHIR.Reference;
+    contact?: FHIR.BackboneElement;
+    endpoint?: FHIR.Reference;
+    network?: FHIR.Reference;
+    coverage?: FHIR.BackboneElement;
+    plan?: FHIR.BackboneElement;
+};
+
+export default function(props: Partial<InsurancePlan_Props>) {
+    const resource = {
+        resourceType: "InsurancePlan",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>InsurancePlan</b></p></div>"
+        },
+
+        ...props
+    };
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = dt.identifier(props.identifier);
+    }
+
+    if (!_.isNil(props.ownedBy)) {
+        resource.ownedBy = dt.reference(props.ownedBy);
+    }
+
+    if (!_.isNil(props.administeredBy)) {
+        resource.administeredBy = dt.reference(props.administeredBy);
+    }
+
+    if (!_.isNil(props.coverageArea)) {
+        if (!Array.isArray(props.coverageArea)) { props.coverageArea = [props.coverageArea]; }
+        resource.coverageArea = dt.reference(props.coverageArea);
+    }
+
+    if (!_.isNil(props.contact)) {
+        let src = props.contact;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.contact = [];
+
+        for (let item of src) {
+            let _contact = {
+                ...item
+            };
+
+            resource.contact.push(_contact);
+        }
+    }
+
+    if (!_.isNil(props.endpoint)) {
+        if (!Array.isArray(props.endpoint)) { props.endpoint = [props.endpoint]; }
+        resource.endpoint = dt.reference(props.endpoint);
+    }
+
+    if (!_.isNil(props.network)) {
+        if (!Array.isArray(props.network)) { props.network = [props.network]; }
+        resource.network = dt.reference(props.network);
+    }
+
+    if (!_.isNil(props.coverage)) {
+        let src = props.coverage;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.coverage = [];
+
+        for (let item of src) {
+            let _coverage = {
+                ...item
+            };
+
+            resource.coverage.push(_coverage);
+        }
+    }
+
+    if (!_.isNil(props.plan)) {
+        let src = props.plan;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.plan = [];
+
+        for (let item of src) {
+            let _plan = {
+                ...item
+            };
+
+            resource.plan.push(_plan);
+        }
+    }
+
+    resource.meta = {
+        profile: ["http://hl7.org/fhir/StructureDefinition/InsurancePlan"]
+    };
+
+    return resource;
+}

@@ -1,0 +1,99 @@
+
+// THIS FILE WAS AUTO-GENERATED
+// DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
+// SEE THE README FILE FOR DETAILS
+
+import * as dt from "../datatypes";
+import _ from "lodash";
+import * as FHIR from "../fhir";
+
+export type ChargeItemDefinition_Props = {
+    id?: string;
+    meta?: FHIR.Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    url?: string;
+    identifier?: FHIR.Identifier;
+    version?: string;
+    title?: string;
+    derivedFromUri?: string;
+    partOf?: any;
+    replaces?: any;
+    status?: string;
+    experimental?: boolean;
+    date?: string;
+    publisher?: string;
+    contact?: FHIR.ContactDetail;
+    description?: FHIR.markdown;
+    useContext?: FHIR.UsageContext;
+    jurisdiction?: FHIR.CodeableConcept;
+    copyright?: FHIR.markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: FHIR.Period;
+    code?: FHIR.CodeableConcept;
+    instance?: FHIR.Reference;
+    applicability?: FHIR.BackboneElement;
+    propertyGroup?: FHIR.BackboneElement;
+};
+
+export default function(props: Partial<ChargeItemDefinition_Props>) {
+    const resource = {
+        resourceType: "ChargeItemDefinition",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ChargeItemDefinition</b></p></div>"
+        },
+
+        ...props
+    };
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = dt.identifier(props.identifier);
+    }
+
+    if (!_.isNil(props.instance)) {
+        if (!Array.isArray(props.instance)) { props.instance = [props.instance]; }
+        resource.instance = dt.reference(props.instance);
+    }
+
+    if (!_.isNil(props.applicability)) {
+        let src = props.applicability;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.applicability = [];
+
+        for (let item of src) {
+            let _applicability = {
+                ...item
+            };
+
+            resource.applicability.push(_applicability);
+        }
+    }
+
+    if (!_.isNil(props.propertyGroup)) {
+        let src = props.propertyGroup;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.propertyGroup = [];
+
+        for (let item of src) {
+            let _propertyGroup = {
+                ...item
+            };
+
+            resource.propertyGroup.push(_propertyGroup);
+        }
+    }
+
+    resource.meta = {
+        profile: ["http://hl7.org/fhir/StructureDefinition/ChargeItemDefinition"]
+    };
+
+    return resource;
+}

@@ -1,0 +1,145 @@
+
+// THIS FILE WAS AUTO-GENERATED
+// DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
+// SEE THE README FILE FOR DETAILS
+
+import * as dt from "../datatypes";
+import _ from "lodash";
+import * as FHIR from "../fhir";
+
+export type MedicationDispense_Props = {
+    id?: string;
+    meta?: FHIR.Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    partOf?: FHIR.Reference;
+    status?: string;
+    statusReason?: FHIR.CodeableConcept;
+    category?: FHIR.CodeableConcept;
+    medication?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    context?: FHIR.Reference;
+    supportingInformation?: FHIR.Reference;
+    performer?: FHIR.BackboneElement;
+    location?: FHIR.Reference;
+    authorizingPrescription?: FHIR.Reference;
+    type?: FHIR.CodeableConcept;
+    quantity?: FHIR.Quantity;
+    daysSupply?: FHIR.Quantity;
+    whenPrepared?: string;
+    whenHandedOver?: string;
+    destination?: FHIR.Reference;
+    receiver?: FHIR.Reference;
+    note?: FHIR.Annotation;
+    dosageInstruction?: FHIR.Dosage;
+    substitution?: FHIR.BackboneElement;
+    detectedIssue?: FHIR.Reference;
+    eventHistory?: FHIR.Reference;
+};
+
+export default function(props: Partial<MedicationDispense_Props>) {
+    const resource = {
+        resourceType: "MedicationDispense",
+
+        text: {
+            status: "generated",
+            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationDispense</b></p></div>"
+        },
+
+        ...props
+    };
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = dt.identifier(props.identifier);
+    }
+
+    if (!_.isNil(props.partOf)) {
+        if (!Array.isArray(props.partOf)) { props.partOf = [props.partOf]; }
+        resource.partOf = dt.reference(props.partOf);
+    }
+
+    if (!_.isNil(props.statusReason)) {
+        dt.composite(resource, "statusReason", props.statusReason);
+    }
+
+    if (!_.isNil(props.medication)) {
+        dt.composite(resource, "medication", props.medication);
+    }
+
+    if (!_.isNil(props.subject)) {
+        resource.subject = dt.reference(props.subject);
+    }
+
+    if (!_.isNil(props.context)) {
+        resource.context = dt.reference(props.context);
+    }
+
+    if (!_.isNil(props.supportingInformation)) {
+        if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
+        resource.supportingInformation = dt.reference(props.supportingInformation);
+    }
+
+    if (!_.isNil(props.performer)) {
+        let src = props.performer;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.performer = [];
+
+        for (let item of src) {
+            let _performer = {
+                ...item
+            };
+
+            resource.performer.push(_performer);
+        }
+    }
+
+    if (!_.isNil(props.location)) {
+        resource.location = dt.reference(props.location);
+    }
+
+    if (!_.isNil(props.authorizingPrescription)) {
+        if (!Array.isArray(props.authorizingPrescription)) { props.authorizingPrescription = [props.authorizingPrescription]; }
+        resource.authorizingPrescription = dt.reference(props.authorizingPrescription);
+    }
+
+    if (!_.isNil(props.destination)) {
+        resource.destination = dt.reference(props.destination);
+    }
+
+    if (!_.isNil(props.receiver)) {
+        if (!Array.isArray(props.receiver)) { props.receiver = [props.receiver]; }
+        resource.receiver = dt.reference(props.receiver);
+    }
+
+    if (!_.isNil(props.substitution)) {
+        let src = props.substitution;
+
+        let _substitution = {
+            ...item
+        };
+
+        resource.substitution = _substitution;
+    }
+
+    if (!_.isNil(props.detectedIssue)) {
+        if (!Array.isArray(props.detectedIssue)) { props.detectedIssue = [props.detectedIssue]; }
+        resource.detectedIssue = dt.reference(props.detectedIssue);
+    }
+
+    if (!_.isNil(props.eventHistory)) {
+        if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
+        resource.eventHistory = dt.reference(props.eventHistory);
+    }
+
+    resource.meta = {
+        profile: ["http://hl7.org/fhir/StructureDefinition/MedicationDispense"]
+    };
+
+    return resource;
+}

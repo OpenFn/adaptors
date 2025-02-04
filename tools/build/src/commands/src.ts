@@ -35,10 +35,12 @@ export default async (lang: string, options: Options = {}) => {
   };
 
   const overrides = await fetchConfig(p);
+  console.log('build config:', overrides);
 
   return build({
     ...defaultBuildConfig,
     ...overrides,
+
     watch: options.watch,
   });
 };

@@ -25,7 +25,7 @@ const generate = (
   for (const resourceType of orderedResources) {
     const sortedProfiles = sortKeys(schema[resourceType]);
 
-    const testPath = `test/resources/${resourceType}.test.js`;
+    const testPath = `test/resources/${resourceType}.test.ts`;
     const statements: n.Statement[] = [];
 
     statements.push(
@@ -41,7 +41,7 @@ const generate = (
     statements.push(
       b.importDeclaration(
         [b.importSpecifier(b.identifier('builders'))],
-        b.stringLiteral(`@openfn/language-${options.name}`)
+        b.stringLiteral(`../../src/index`)
       )
     );
 

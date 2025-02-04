@@ -2,7 +2,7 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import process from 'node:process';
-import promptForBranchChange from './prompt-branch-change';
+import promptForBranchChange from './util/prompt-branch-change';
 import generate from './generate';
 
 const run = async (args: any) => {

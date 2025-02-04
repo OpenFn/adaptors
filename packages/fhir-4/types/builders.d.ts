@@ -3,18929 +3,8154 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import "./globals";
-
-type Account_Account_Props = {
+declare type Address = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * home | work | temp | old | billing - purpose of this address
      *  */
-    modifierExtension: Extension;
+    use?: string;
     /**
-     * Account number
+     * postal | physical | both
      *  */
-    identifier: Identifier;
+    type?: string;
     /**
-     * active | inactive | entered-in-error | on-hold | unknown
+     * Text representation of the address
      *  */
-    status: string;
+    text?: string;
     /**
-     * E.g. patient, expense, depreciation
+     * Street name, number, direction & P.O. Box etc.
      *  */
-    type: CodeableConcept;
+    line?: string;
     /**
-     * Human-readable label
+     * Name of city, town etc.
      *  */
-    name: string;
+    city?: string;
     /**
-     * The entity that caused the expenses
+     * District name (aka county)
      *  */
-    subject: Reference;
+    district?: string;
     /**
-     * Transaction window
+     * Sub-unit of country (abbreviations ok)
      *  */
-    servicePeriod: Period;
+    state?: string;
     /**
-     * The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account
+     * Postal code for area
      *  */
-    coverage: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The party(s), such as insurances, that may contribute to the payment of this account
-         *  */
-        coverage: Reference;
-        /**
-         * The priority of the coverage in the context of this account
-         *  */
-        priority: number;
-    };
+    postalCode?: string;
     /**
-     * Entity managing the Account
+     * Country (e.g. can be ISO 3166 2 or 3 letter code)
      *  */
-    owner: Reference;
+    country?: string;
     /**
-     * Explanation of purpose/use
+     * Time period when address was/is in use
      *  */
-    description: string;
-    /**
-     * The parties ultimately responsible for balancing the Account
-     *  */
-    guarantor: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Responsible entity
-         *  */
-        party: Reference;
-        /**
-         * Credit or other hold applied
-         *  */
-        onHold: boolean;
-        /**
-         * Guarantee account during
-         *  */
-        period: Period;
-    };
-    /**
-     * Reference to a parent Account
-     *  */
-    partOf: Reference;
+    period?: Period;
 };
-
-type Account__lookups = {
-    "Account": Account_Account_Props;
-};
-
-export declare function account(props: Account_Account_Props);;
-
-export declare function account<T extends keyof Account__lookups>(type: T, props: Account__lookups[T]);;
-
-type ActivityDefinition_ActivityDefinition_Props = {
+declare type Age = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Numerical value (with implicit precision)
      *  */
-    modifierExtension: Extension;
+    value?: number;
     /**
-     * Canonical identifier for this activity definition, represented as a URI (globally unique)
+     * < | <= | >= | > - how to understand the value
      *  */
-    url: string;
+    comparator?: string;
     /**
-     * Additional identifier for the activity definition
+     * Unit representation
      *  */
-    identifier: Identifier;
+    unit?: string;
     /**
-     * Business version of the activity definition
+     * System that defines coded unit form
      *  */
-    version: string;
+    system?: string;
     /**
-     * Name for this activity definition (computer friendly)
+     * Coded form of the unit
      *  */
-    name: string;
-    /**
-     * Name for this activity definition (human friendly)
-     *  */
-    title: string;
-    /**
-     * Subordinate title of the activity definition
-     *  */
-    subtitle: string;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * For testing purposes, not real usage
-     *  */
-    experimental: boolean;
-    /**
-     * Type of individual the activity definition is intended for
-     *  */
-    subject: CodeableConcept;
-    /**
-     * Date last changed
-     *  */
-    date: string;
-    /**
-     * Name of the publisher (organization or individual)
-     *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher
-     *  */
-    contact: ContactDetail;
-    /**
-     * Natural language description of the activity definition
-     *  */
-    description: markdown;
-    /**
-     * The context that the content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * Intended jurisdiction for activity definition (if applicable)
-     *  */
-    jurisdiction: CodeableConcept;
-    /**
-     * Why this activity definition is defined
-     *  */
-    purpose: markdown;
-    /**
-     * Describes the clinical usage of the activity definition
-     *  */
-    usage: string;
-    /**
-     * Use and/or publishing restrictions
-     *  */
-    copyright: markdown;
-    /**
-     * When the activity definition was approved by publisher
-     *  */
-    approvalDate: string;
-    /**
-     * When the activity definition was last reviewed
-     *  */
-    lastReviewDate: string;
-    /**
-     * When the activity definition is expected to be used
-     *  */
-    effectivePeriod: Period;
-    /**
-     * E.g. Education, Treatment, Assessment, etc.
-     *  */
-    topic: CodeableConcept;
-    /**
-     * Who authored the content
-     *  */
-    author: ContactDetail;
-    /**
-     * Who edited the content
-     *  */
-    editor: ContactDetail;
-    /**
-     * Who reviewed the content
-     *  */
-    reviewer: ContactDetail;
-    /**
-     * Who endorsed the content
-     *  */
-    endorser: ContactDetail;
-    /**
-     * Additional documentation, citations, etc.
-     *  */
-    relatedArtifact: RelatedArtifact;
-    /**
-     * Logic used by the activity definition
-     *  */
-    library: any;
-    /**
-     * Kind of resource
-     *  */
-    kind: string;
-    /**
-     * What profile the resource needs to conform to
-     *  */
-    profile: any;
-    /**
-     * Detail type of activity
-     *  */
-    code: CodeableConcept;
-    /**
-     * proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
-     *  */
-    intent: string;
-    /**
-     * routine | urgent | asap | stat
-     *  */
-    priority: string;
-    /**
-     * True if the activity should not be performed
-     *  */
-    doNotPerform: boolean;
-    /**
-     * When activity is to occur
-     *  */
-    timing: Timing;
-    /**
-     * Where it should happen
-     *  */
-    location: Reference;
-    /**
-     * Who should participate in the action
-     *  */
-    participant: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * patient | practitioner | related-person | device
-         *  */
-        type: string;
-        /**
-         * E.g. Nurse, Surgeon, Parent, etc.
-         *  */
-        role: CodeableConcept;
-    };
-    /**
-     * What's administered/supplied
-     *  */
-    product: Reference;
-    /**
-     * How much is administered/consumed/supplied
-     *  */
-    quantity: Quantity;
-    /**
-     * Detailed dosage instructions
-     *  */
-    dosage: Dosage;
-    /**
-     * What part of body to perform on
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * What specimens are required to perform this action
-     *  */
-    specimenRequirement: Reference;
-    /**
-     * What observations are required to perform this action
-     *  */
-    observationRequirement: Reference;
-    /**
-     * What observations must be produced by this action
-     *  */
-    observationResultRequirement: Reference;
-    /**
-     * Transform to apply the template
-     *  */
-    transform: any;
-    /**
-     * Dynamic aspects of the definition
-     *  */
-    dynamicValue: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The path to the element to be set dynamically
-         *  */
-        path: string;
-        /**
-         * An expression that provides the dynamic value for the customization
-         *  */
-        expression: Expression;
-    };
+    code?: string;
 };
-
-type ActivityDefinition__lookups = {
-    "ActivityDefinition": ActivityDefinition_ActivityDefinition_Props;
-};
-
-export declare function activityDefinition(props: ActivityDefinition_ActivityDefinition_Props);;
-
-export declare function activityDefinition<T extends keyof ActivityDefinition__lookups>(type: T, props: ActivityDefinition__lookups[T]);;
-
-type AdministrableProductDefinition_AdministrableProductDefinition_Props = {
+declare type Annotation = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Individual responsible for the annotation
      *  */
-    modifierExtension: Extension;
+    author?: Reference;
     /**
-     * An identifier for the administrable product
+     * When the annotation was made
      *  */
-    identifier: Identifier;
+    time?: string;
     /**
-     * draft | active | retired | unknown
+     * The annotation  - text content (as markdown)
      *  */
-    status: string;
-    /**
-     * References a product from which one or more of the constituent parts of that product can be prepared and used as described by this administrable product
-     *  */
-    formOf: Reference;
-    /**
-     * The dose form of the final product after necessary reconstitution or processing
-     *  */
-    administrableDoseForm: CodeableConcept;
-    /**
-     * The presentation type in which this item is given to a patient. e.g. for a spray - 'puff'
-     *  */
-    unitOfPresentation: CodeableConcept;
-    /**
-     * Indicates the specific manufactured items that are part of the 'formOf' product that are used in the preparation of this specific administrable form
-     *  */
-    producedFrom: Reference;
-    /**
-     * The ingredients of this administrable medicinal product. This is only needed if the ingredients are not specified either using ManufacturedItemDefiniton, or using by incoming references from the Ingredient resource
-     *  */
-    ingredient: CodeableConcept;
-    /**
-     * A device that is integral to the medicinal product, in effect being considered as an "ingredient" of the medicinal product
-     *  */
-    device: Reference;
-    /**
-     * Characteristics e.g. a product's onset of action
-     *  */
-    property: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * A code expressing the type of characteristic
-         *  */
-        type: CodeableConcept;
-        /**
-         * A value for the characteristic
-         *  */
-        value: CodeableConcept;
-        /**
-         * The status of characteristic e.g. assigned or pending
-         *  */
-        status: CodeableConcept;
-    };
-    /**
-     * The path by which the product is taken into or makes contact with the body
-     *  */
-    routeOfAdministration: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Coded expression for the route
-         *  */
-        code: CodeableConcept;
-        /**
-         * The first dose (dose quantity) administered can be specified for the product
-         *  */
-        firstDose: Quantity;
-        /**
-         * The maximum single dose that can be administered
-         *  */
-        maxSingleDose: Quantity;
-        /**
-         * The maximum dose quantity to be administered in any one 24-h period
-         *  */
-        maxDosePerDay: Quantity;
-        /**
-         * The maximum dose per treatment period that can be administered
-         *  */
-        maxDosePerTreatmentPeriod: Ratio;
-        /**
-         * The maximum treatment period during which the product can be administered
-         *  */
-        maxTreatmentPeriod: Duration;
-        /**
-         * Extra information about the withdrawal period
-         *  */
-        targetSpecies: string;
-    };
+    text?: markdown;
 };
-
-type AdministrableProductDefinition__lookups = {
-    "AdministrableProductDefinition": AdministrableProductDefinition_AdministrableProductDefinition_Props;
-};
-
-export declare function administrableProductDefinition(props: AdministrableProductDefinition_AdministrableProductDefinition_Props);;
-
-export declare function administrableProductDefinition<T extends keyof AdministrableProductDefinition__lookups>(type: T, props: AdministrableProductDefinition__lookups[T]);;
-
-type AdverseEvent_AdverseEvent_Props = {
+declare type Attachment = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Mime type of the content, with charset etc.
      *  */
-    modifierExtension: Extension;
+    contentType?: string;
     /**
-     * Business identifier for the event
+     * Human language of the content (BCP-47)
      *  */
-    identifier: Identifier;
+    language?: string;
     /**
-     * actual | potential
+     * Data inline, base64ed
      *  */
-    actuality: string;
+    data?: base64Binary;
     /**
-     * product-problem | product-quality | product-use-error | wrong-dose | incorrect-prescribing-information | wrong-technique | wrong-route-of-administration | wrong-rate | wrong-duration | wrong-time | expired-drug | medical-device-use-error | problem-different-manufacturer | unsafe-physical-environment
+     * Uri where the data can be found
      *  */
-    category: CodeableConcept;
+    url?: url;
     /**
-     * Type of the event itself in relation to the subject
+     * Number of bytes of content (if url provided)
      *  */
-    event: CodeableConcept;
+    size?: number;
     /**
-     * Subject impacted by event
+     * Hash of the data (sha-1, base64ed)
      *  */
-    subject: Reference;
+    hash?: base64Binary;
     /**
-     * Encounter created as part of
+     * Label to display in place of the data
      *  */
-    encounter: Reference;
+    title?: string;
     /**
-     * When the event occurred
+     * Date attachment was first created
      *  */
-    date: string;
-    /**
-     * When the event was detected
-     *  */
-    detected: string;
-    /**
-     * When the event was recorded
-     *  */
-    recordedDate: string;
-    /**
-     * Effect on the subject due to this event
-     *  */
-    resultingCondition: Reference;
-    /**
-     * Location where adverse event occurred
-     *  */
-    location: Reference;
-    /**
-     * Seriousness of the event
-     *  */
-    seriousness: CodeableConcept;
-    /**
-     * mild | moderate | severe
-     *  */
-    severity: CodeableConcept;
-    /**
-     * resolved | recovering | ongoing | resolvedWithSequelae | fatal | unknown
-     *  */
-    outcome: CodeableConcept;
-    /**
-     * Who recorded the adverse event
-     *  */
-    recorder: Reference;
-    /**
-     * Who  was involved in the adverse event or the potential adverse event
-     *  */
-    contributor: Reference;
-    /**
-     * The suspected agent causing the adverse event
-     *  */
-    suspectEntity: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Refers to the specific entity that caused the adverse event
-         *  */
-        instance: Reference;
-        /**
-         * ProbabilityScale | Bayesian | Checklist
-         *  */
-        causality: CodeableConcept;
-    };
-    /**
-     * AdverseEvent.subjectMedicalHistory
-     *  */
-    subjectMedicalHistory: Reference;
-    /**
-     * AdverseEvent.referenceDocument
-     *  */
-    referenceDocument: Reference;
-    /**
-     * AdverseEvent.study
-     *  */
-    study: Reference;
+    creation?: string;
 };
-
-type AdverseEvent__lookups = {
-    "AdverseEvent": AdverseEvent_AdverseEvent_Props;
-};
-
-export declare function adverseEvent(props: AdverseEvent_AdverseEvent_Props);;
-
-export declare function adverseEvent<T extends keyof AdverseEvent__lookups>(type: T, props: AdverseEvent__lookups[T]);;
-
-type AllergyIntolerance_AllergyIntolerance_Props = {
+declare type BackboneElement = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension: Extension;
-    /**
-     * External ids for this item
-     *  */
-    identifier: Identifier;
-    /**
-     * active | inactive | resolved
-     *  */
-    clinicalStatus: CodeableConcept;
-    /**
-     * unconfirmed | confirmed | refuted | entered-in-error
-     *  */
-    verificationStatus: CodeableConcept;
-    /**
-     * allergy | intolerance - Underlying mechanism (if known)
-     *  */
-    type: string;
-    /**
-     * food | medication | environment | biologic
-     *  */
-    category: string;
-    /**
-     * low | high | unable-to-assess
-     *  */
-    criticality: string;
-    /**
-     * Code that identifies the allergy or intolerance
-     *  */
-    code: CodeableConcept;
-    /**
-     * Who the sensitivity is for
-     *  */
-    patient: Reference;
-    /**
-     * Encounter when the allergy or intolerance was asserted
-     *  */
-    encounter: Reference;
-    /**
-     * When allergy or intolerance was identified
-     *  */
-    onset: string;
-    /**
-     * Date first version of the resource instance was recorded
-     *  */
-    recordedDate: string;
-    /**
-     * Who recorded the sensitivity
-     *  */
-    recorder: Reference;
-    /**
-     * Source of the information about the allergy
-     *  */
-    asserter: Reference;
-    /**
-     * Date(/time) of last known occurrence of a reaction
-     *  */
-    lastOccurrence: string;
-    /**
-     * Additional text not captured in other fields
-     *  */
-    note: Annotation;
-    /**
-     * Adverse Reaction Events linked to exposure to substance
-     *  */
-    reaction: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Specific substance or pharmaceutical product considered to be responsible for event
-         *  */
-        substance: CodeableConcept;
-        /**
-         * Clinical symptoms/signs associated with the Event
-         *  */
-        manifestation: CodeableConcept;
-        /**
-         * Description of the event as a whole
-         *  */
-        description: string;
-        /**
-         * Date(/time) when manifestations showed
-         *  */
-        onset: string;
-        /**
-         * mild | moderate | severe (of event as a whole)
-         *  */
-        severity: string;
-        /**
-         * How the subject was exposed to the substance
-         *  */
-        exposureRoute: CodeableConcept;
-        /**
-         * Text about event not captured in other fields
-         *  */
-        note: Annotation;
-    };
+    modifierExtension?: Extension;
 };
-
-type AllergyIntolerance__lookups = {
-    "AllergyIntolerance": AllergyIntolerance_AllergyIntolerance_Props;
-};
-
-export declare function allergyIntolerance(props: AllergyIntolerance_AllergyIntolerance_Props);;
-
-export declare function allergyIntolerance<T extends keyof AllergyIntolerance__lookups>(type: T, props: AllergyIntolerance__lookups[T]);;
-
-type Appointment_Appointment_Props = {
+declare type CodeableConcept = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Code defined by a terminology system
      *  */
-    modifierExtension: Extension;
+    coding?: Coding;
     /**
-     * External Ids for this item
+     * Plain text representation of the concept
      *  */
-    identifier: Identifier;
-    /**
-     * proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist
-     *  */
-    status: string;
-    /**
-     * The coded reason for the appointment being cancelled
-     *  */
-    cancelationReason: CodeableConcept;
-    /**
-     * A broad categorization of the service that is to be performed during this appointment
-     *  */
-    serviceCategory: CodeableConcept;
-    /**
-     * The specific service that is to be performed during this appointment
-     *  */
-    serviceType: CodeableConcept;
-    /**
-     * The specialty of a practitioner that would be required to perform the service requested in this appointment
-     *  */
-    specialty: CodeableConcept;
-    /**
-     * The style of appointment or patient that has been booked in the slot (not service type)
-     *  */
-    appointmentType: CodeableConcept;
-    /**
-     * Coded reason this appointment is scheduled
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Reason the appointment is to take place (resource)
-     *  */
-    reasonReference: Reference;
-    /**
-     * Used to make informed decisions if needing to re-prioritize
-     *  */
-    priority: number;
-    /**
-     * Shown on a subject line in a meeting request, or appointment list
-     *  */
-    description: string;
-    /**
-     * Additional information to support the appointment
-     *  */
-    supportingInformation: Reference;
-    /**
-     * When appointment is to take place
-     *  */
-    start: string;
-    /**
-     * When appointment is to conclude
-     *  */
-    end: string;
-    /**
-     * Can be less than start/end (e.g. estimate)
-     *  */
-    minutesDuration: number;
-    /**
-     * The slots that this appointment is filling
-     *  */
-    slot: Reference;
-    /**
-     * The date that this appointment was initially created
-     *  */
-    created: string;
-    /**
-     * Additional comments
-     *  */
-    comment: string;
-    /**
-     * Detailed information and instructions for the patient
-     *  */
-    patientInstruction: string;
-    /**
-     * The service request this appointment is allocated to assess
-     *  */
-    basedOn: Reference;
-    /**
-     * Participants involved in appointment
-     *  */
-    participant: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Role of participant in the appointment
-         *  */
-        type: CodeableConcept;
-        /**
-         * Person, Location/HealthcareService or Device
-         *  */
-        actor: Reference;
-        /**
-         * required | optional | information-only
-         *  */
-        required: string;
-        /**
-         * accepted | declined | tentative | needs-action
-         *  */
-        status: string;
-        /**
-         * Participation period of the actor
-         *  */
-        period: Period;
-    };
-    /**
-     * Potential date/time interval(s) requested to allocate the appointment within
-     *  */
-    requestedPeriod: Period;
+    text?: string;
 };
-
-type Appointment__lookups = {
-    "Appointment": Appointment_Appointment_Props;
-};
-
-export declare function appointment(props: Appointment_Appointment_Props);;
-
-export declare function appointment<T extends keyof Appointment__lookups>(type: T, props: Appointment__lookups[T]);;
-
-type AppointmentResponse_AppointmentResponse_Props = {
+declare type CodeableReference = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Reference to a concept (by class)
      *  */
-    modifierExtension: Extension;
+    concept?: CodeableConcept;
     /**
-     * External Ids for this item
+     * Reference to a resource (by instance)
      *  */
-    identifier: Identifier;
-    /**
-     * Appointment this response relates to
-     *  */
-    appointment: Reference;
-    /**
-     * Time from appointment, or requested new start time
-     *  */
-    start: string;
-    /**
-     * Time from appointment, or requested new end time
-     *  */
-    end: string;
-    /**
-     * Role of participant in the appointment
-     *  */
-    participantType: CodeableConcept;
-    /**
-     * Person, Location, HealthcareService, or Device
-     *  */
-    actor: Reference;
-    /**
-     * accepted | declined | tentative | needs-action
-     *  */
-    participantStatus: string;
-    /**
-     * Additional comments
-     *  */
-    comment: string;
+    reference?: Reference;
 };
-
-type AppointmentResponse__lookups = {
-    "AppointmentResponse": AppointmentResponse_AppointmentResponse_Props;
-};
-
-export declare function appointmentResponse(props: AppointmentResponse_AppointmentResponse_Props);;
-
-export declare function appointmentResponse<T extends keyof AppointmentResponse__lookups>(type: T, props: AppointmentResponse__lookups[T]);;
-
-type BiologicallyDerivedProduct_BiologicallyDerivedProduct_Props = {
+declare type Coding = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Identity of the terminology system
      *  */
-    modifierExtension: Extension;
+    system?: string;
     /**
-     * External ids for this item
+     * Version of the system - if relevant
      *  */
-    identifier: Identifier;
+    version?: string;
     /**
-     * organ | tissue | fluid | cells | biologicalAgent
+     * Symbol in syntax defined by the system
      *  */
-    productCategory: string;
+    code?: string;
     /**
-     * What this biologically derived product is
+     * Representation defined by the system
      *  */
-    productCode: CodeableConcept;
+    display?: string;
     /**
-     * available | unavailable
+     * If this coding was chosen directly by the user
      *  */
-    status: string;
-    /**
-     * Procedure request
-     *  */
-    request: Reference;
-    /**
-     * The amount of this biologically derived product
-     *  */
-    quantity: number;
-    /**
-     * BiologicallyDerivedProduct parent
-     *  */
-    parent: Reference;
-    /**
-     * How this product was collected
-     *  */
-    collection: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Individual performing collection
-         *  */
-        collector: Reference;
-        /**
-         * Who is product from
-         *  */
-        source: Reference;
-        /**
-         * Time of product collection
-         *  */
-        collected: string;
-    };
-    /**
-     * Any processing of the product during collection
-     *  */
-    processing: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Description of of processing
-         *  */
-        description: string;
-        /**
-         * Procesing code
-         *  */
-        procedure: CodeableConcept;
-        /**
-         * Substance added during processing
-         *  */
-        additive: Reference;
-        /**
-         * Time of processing
-         *  */
-        time: string;
-    };
-    /**
-     * Any manipulation of product post-collection
-     *  */
-    manipulation: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Description of manipulation
-         *  */
-        description: string;
-        /**
-         * Time of manipulation
-         *  */
-        time: string;
-    };
-    /**
-     * Product storage
-     *  */
-    storage: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Description of storage
-         *  */
-        description: string;
-        /**
-         * Storage temperature
-         *  */
-        temperature: number;
-        /**
-         * farenheit | celsius | kelvin
-         *  */
-        scale: string;
-        /**
-         * Storage timeperiod
-         *  */
-        duration: Period;
-    };
+    userSelected?: boolean;
 };
-
-type BiologicallyDerivedProduct__lookups = {
-    "BiologicallyDerivedProduct": BiologicallyDerivedProduct_BiologicallyDerivedProduct_Props;
-};
-
-export declare function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_BiologicallyDerivedProduct_Props);;
-
-export declare function biologicallyDerivedProduct<T extends keyof BiologicallyDerivedProduct__lookups>(type: T, props: BiologicallyDerivedProduct__lookups[T]);;
-
-type BodyStructure_BodyStructure_Props = {
+declare type ContactDetail = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Name of an individual to contact
      *  */
-    modifierExtension: Extension;
+    name?: string;
     /**
-     * Bodystructure identifier
+     * Contact details for individual or organization
      *  */
-    identifier: Identifier;
-    /**
-     * Whether this record is in active use
-     *  */
-    active: boolean;
-    /**
-     * Kind of Structure
-     *  */
-    morphology: CodeableConcept;
-    /**
-     * Body site
-     *  */
-    location: CodeableConcept;
-    /**
-     * Body site modifier
-     *  */
-    locationQualifier: CodeableConcept;
-    /**
-     * Text description
-     *  */
-    description: string;
-    /**
-     * Attached images
-     *  */
-    image: Attachment;
-    /**
-     * Who this is about
-     *  */
-    patient: Reference;
+    telecom?: ContactPoint;
 };
-
-type BodyStructure__lookups = {
-    "BodyStructure": BodyStructure_BodyStructure_Props;
-};
-
-export declare function bodyStructure(props: BodyStructure_BodyStructure_Props);;
-
-export declare function bodyStructure<T extends keyof BodyStructure__lookups>(type: T, props: BodyStructure__lookups[T]);;
-
-type CarePlan_CarePlan_Props = {
+declare type ContactPoint = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * phone | fax | email | pager | url | sms | other
      *  */
-    modifierExtension: Extension;
+    system?: string;
     /**
-     * External Ids for this plan
+     * The actual contact point details
      *  */
-    identifier: Identifier;
+    value?: string;
     /**
-     * Instantiates FHIR protocol or definition
+     * home | work | temp | old | mobile - purpose of this contact point
      *  */
-    instantiatesCanonical: any;
+    use?: string;
     /**
-     * Instantiates external protocol or definition
+     * Specify preferred order of use (1 = highest)
      *  */
-    instantiatesUri: string;
+    rank?: number;
     /**
-     * Fulfills CarePlan
+     * Time period when the contact point was/is in use
      *  */
-    basedOn: Reference;
-    /**
-     * CarePlan replaced by this CarePlan
-     *  */
-    replaces: Reference;
-    /**
-     * Part of referenced CarePlan
-     *  */
-    partOf: Reference;
-    /**
-     * draft | active | on-hold | revoked | completed | entered-in-error | unknown
-     *  */
-    status: string;
-    /**
-     * proposal | plan | order | option
-     *  */
-    intent: string;
-    /**
-     * Type of plan
-     *  */
-    category: CodeableConcept;
-    /**
-     * Human-friendly name for the care plan
-     *  */
-    title: string;
-    /**
-     * Summary of nature of plan
-     *  */
-    description: string;
-    /**
-     * Who the care plan is for
-     *  */
-    subject: Reference;
-    /**
-     * Encounter created as part of
-     *  */
-    encounter: Reference;
-    /**
-     * Time period plan covers
-     *  */
-    period: Period;
-    /**
-     * Date record was first recorded
-     *  */
-    created: string;
-    /**
-     * Who is the designated responsible party
-     *  */
-    author: Reference;
-    /**
-     * Who provided the content of the care plan
-     *  */
-    contributor: Reference;
-    /**
-     * Who's involved in plan?
-     *  */
-    careTeam: Reference;
-    /**
-     * Health issues this plan addresses
-     *  */
-    addresses: Reference;
-    /**
-     * Information considered as part of plan
-     *  */
-    supportingInfo: Reference;
-    /**
-     * Desired outcome of plan
-     *  */
-    goal: Reference;
-    /**
-     * Action to occur as part of plan
-     *  */
-    activity: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Results of the activity
-         *  */
-        outcomeCodeableConcept: CodeableConcept;
-        /**
-         * Appointment, Encounter, Procedure, etc.
-         *  */
-        outcomeReference: Reference;
-        /**
-         * Comments about the activity status/progress
-         *  */
-        progress: Annotation;
-        /**
-         * Activity details defined in specific resource
-         *  */
-        reference: Reference;
-        /**
-         * Extra info describing activity to perform
-         *  */
-        detail: string;
-    };
-    /**
-     * Comments about the plan
-     *  */
-    note: Annotation;
+    period?: Period;
 };
-
-type CarePlan__lookups = {
-    "CarePlan": CarePlan_CarePlan_Props;
-};
-
-export declare function carePlan(props: CarePlan_CarePlan_Props);;
-
-export declare function carePlan<T extends keyof CarePlan__lookups>(type: T, props: CarePlan__lookups[T]);;
-
-type CareTeam_CareTeam_Props = {
+declare type DataRequirement = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * The type of the required data
      *  */
-    modifierExtension: Extension;
+    type?: string;
     /**
-     * External Ids for this team
+     * The profile of the required data
      *  */
-    identifier: Identifier;
-    /**
-     * proposed | active | suspended | inactive | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Type of team
-     *  */
-    category: CodeableConcept;
-    /**
-     * Name of the team, such as crisis assessment team
-     *  */
-    name: string;
-    /**
-     * Who care team is for
-     *  */
-    subject: Reference;
-    /**
-     * Encounter created as part of
-     *  */
-    encounter: Reference;
-    /**
-     * Time period team covers
-     *  */
-    period: Period;
-    /**
-     * Members of the team
-     *  */
-    participant: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of involvement
-         *  */
-        role: CodeableConcept;
-        /**
-         * Who is involved
-         *  */
-        member: Reference;
-        /**
-         * Organization of the practitioner
-         *  */
-        onBehalfOf: Reference;
-        /**
-         * Time period of participant
-         *  */
-        period: Period;
-    };
-    /**
-     * Why the care team exists
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Why the care team exists
-     *  */
-    reasonReference: Reference;
-    /**
-     * Organization responsible for the care team
-     *  */
-    managingOrganization: Reference;
-    /**
-     * A contact detail for the care team (that applies to all members)
-     *  */
-    telecom: ContactPoint;
-    /**
-     * Comments made about the CareTeam
-     *  */
-    note: Annotation;
-};
-
-type CareTeam__lookups = {
-    "CareTeam": CareTeam_CareTeam_Props;
-};
-
-export declare function careTeam(props: CareTeam_CareTeam_Props);;
-
-export declare function careTeam<T extends keyof CareTeam__lookups>(type: T, props: CareTeam__lookups[T]);;
-
-type ChargeItem_ChargeItem_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for item
-     *  */
-    identifier: Identifier;
-    /**
-     * Defining information about the code of this charge item
-     *  */
-    definitionUri: string;
-    /**
-     * Resource defining the code of this ChargeItem
-     *  */
-    definitionCanonical: any;
-    /**
-     * planned | billable | not-billable | aborted | billed | entered-in-error | unknown
-     *  */
-    status: string;
-    /**
-     * Part of referenced ChargeItem
-     *  */
-    partOf: Reference;
-    /**
-     * A code that identifies the charge, like a billing code
-     *  */
-    code: CodeableConcept;
-    /**
-     * Individual service was done for/to
-     *  */
-    subject: Reference;
-    /**
-     * Encounter / Episode associated with event
-     *  */
-    context: Reference;
-    /**
-     * When the charged service was applied
-     *  */
-    occurrence: string;
-    /**
-     * Who performed charged service
-     *  */
-    performer: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * What type of performance was done
-         *  */
-        function: CodeableConcept;
-        /**
-         * Individual who was performing
-         *  */
-        actor: Reference;
-    };
-    /**
-     * Organization providing the charged service
-     *  */
-    performingOrganization: Reference;
-    /**
-     * Organization requesting the charged service
-     *  */
-    requestingOrganization: Reference;
-    /**
-     * Organization that has ownership of the (potential, future) revenue
-     *  */
-    costCenter: Reference;
-    /**
-     * Quantity of which the charge item has been serviced
-     *  */
-    quantity: Quantity;
-    /**
-     * Anatomical location, if relevant
-     *  */
-    bodysite: CodeableConcept;
-    /**
-     * Factor overriding the associated rules
-     *  */
-    factorOverride: number;
-    /**
-     * Price overriding the associated rules
-     *  */
-    priceOverride: Money;
-    /**
-     * Reason for overriding the list price/factor
-     *  */
-    overrideReason: string;
-    /**
-     * Individual who was entering
-     *  */
-    enterer: Reference;
-    /**
-     * Date the charge item was entered
-     *  */
-    enteredDate: string;
-    /**
-     * Why was the charged  service rendered?
-     *  */
-    reason: CodeableConcept;
-    /**
-     * Which rendered service is being charged?
-     *  */
-    service: Reference;
-    /**
-     * Product charged
-     *  */
-    product: Reference;
-    /**
-     * Account to place this charge
-     *  */
-    account: Reference;
-    /**
-     * Comments made about the ChargeItem
-     *  */
-    note: Annotation;
-    /**
-     * Further information supporting this charge
-     *  */
-    supportingInformation: Reference;
-};
-
-type ChargeItem__lookups = {
-    "ChargeItem": ChargeItem_ChargeItem_Props;
-};
-
-export declare function chargeItem(props: ChargeItem_ChargeItem_Props);;
-
-export declare function chargeItem<T extends keyof ChargeItem__lookups>(type: T, props: ChargeItem__lookups[T]);;
-
-type ChargeItemDefinition_ChargeItemDefinition_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Canonical identifier for this charge item definition, represented as a URI (globally unique)
-     *  */
-    url: string;
-    /**
-     * Additional identifier for the charge item definition
-     *  */
-    identifier: Identifier;
-    /**
-     * Business version of the charge item definition
-     *  */
-    version: string;
-    /**
-     * Name for this charge item definition (human friendly)
-     *  */
-    title: string;
-    /**
-     * Underlying externally-defined charge item definition
-     *  */
-    derivedFromUri: string;
-    /**
-     * A larger definition of which this particular definition is a component or step
-     *  */
-    partOf: any;
-    /**
-     * Completed or terminated request(s) whose function is taken by this new request
-     *  */
-    replaces: any;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * For testing purposes, not real usage
-     *  */
-    experimental: boolean;
-    /**
-     * Date last changed
-     *  */
-    date: string;
-    /**
-     * Name of the publisher (organization or individual)
-     *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher
-     *  */
-    contact: ContactDetail;
-    /**
-     * Natural language description of the charge item definition
-     *  */
-    description: markdown;
-    /**
-     * The context that the content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * Intended jurisdiction for charge item definition (if applicable)
-     *  */
-    jurisdiction: CodeableConcept;
-    /**
-     * Use and/or publishing restrictions
-     *  */
-    copyright: markdown;
-    /**
-     * When the charge item definition was approved by publisher
-     *  */
-    approvalDate: string;
-    /**
-     * When the charge item definition was last reviewed
-     *  */
-    lastReviewDate: string;
-    /**
-     * When the charge item definition is expected to be used
-     *  */
-    effectivePeriod: Period;
-    /**
-     * Billing codes or product types this definition applies to
-     *  */
-    code: CodeableConcept;
-    /**
-     * Instances this definition applies to
-     *  */
-    instance: Reference;
-    /**
-     * Whether or not the billing code is applicable
-     *  */
-    applicability: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Natural language description of the condition
-         *  */
-        description: string;
-        /**
-         * Language of the expression
-         *  */
-        language: string;
-        /**
-         * Boolean-valued expression
-         *  */
-        expression: string;
-    };
-    /**
-     * Group of properties which are applicable under the same conditions
-     *  */
-    propertyGroup: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Monetary amount associated with this component
-         *  */
-        priceComponent: Money;
-    };
-};
-
-type ChargeItemDefinition__lookups = {
-    "ChargeItemDefinition": ChargeItemDefinition_ChargeItemDefinition_Props;
-};
-
-export declare function chargeItemDefinition(props: ChargeItemDefinition_ChargeItemDefinition_Props);;
-
-export declare function chargeItemDefinition<T extends keyof ChargeItemDefinition__lookups>(type: T, props: ChargeItemDefinition__lookups[T]);;
-
-type Citation_Citation_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Canonical identifier for this citation, represented as a globally unique URI
-     *  */
-    url: string;
-    /**
-     * Identifier for the Citation resource itself
-     *  */
-    identifier: Identifier;
-    /**
-     * Business version of the citation
-     *  */
-    version: string;
-    /**
-     * Name for this citation (computer friendly)
-     *  */
-    name: string;
-    /**
-     * Name for this citation (human friendly)
-     *  */
-    title: string;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * For testing purposes, not real usage
-     *  */
-    experimental: boolean;
-    /**
-     * Date last changed
-     *  */
-    date: string;
-    /**
-     * The publisher of the Citation, not the publisher of the article or artifact being cited
-     *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher of the Citation Resource
-     *  */
-    contact: ContactDetail;
-    /**
-     * Natural language description of the citation
-     *  */
-    description: markdown;
-    /**
-     * The context that the Citation Resource content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * Intended jurisdiction for citation (if applicable)
-     *  */
-    jurisdiction: CodeableConcept;
-    /**
-     * Why this citation is defined
-     *  */
-    purpose: markdown;
-    /**
-     * Use and/or publishing restrictions for the Citation, not for the cited artifact
-     *  */
-    copyright: markdown;
-    /**
-     * When the citation was approved by publisher
-     *  */
-    approvalDate: string;
-    /**
-     * When the citation was last reviewed
-     *  */
-    lastReviewDate: string;
-    /**
-     * When the citation is expected to be used
-     *  */
-    effectivePeriod: Period;
-    /**
-     * Who authored the Citation
-     *  */
-    author: ContactDetail;
-    /**
-     * Who edited the Citation
-     *  */
-    editor: ContactDetail;
-    /**
-     * Who reviewed the Citation
-     *  */
-    reviewer: ContactDetail;
-    /**
-     * Who endorsed the Citation
-     *  */
-    endorser: ContactDetail;
-    /**
-     * A human-readable display of the citation
-     *  */
-    summary: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Format for display of the citation
-         *  */
-        style: CodeableConcept;
-        /**
-         * The human-readable display of the citation
-         *  */
-        text: markdown;
-    };
-    /**
-     * The assignment to an organizing scheme
-     *  */
-    classification: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The kind of classifier (e.g. publication type, keyword)
-         *  */
-        type: CodeableConcept;
-        /**
-         * The specific classification value
-         *  */
-        classifier: CodeableConcept;
-    };
-    /**
-     * Used for general notes and annotations not coded elsewhere
-     *  */
-    note: Annotation;
-    /**
-     * The status of the citation
-     *  */
-    currentState: CodeableConcept;
-    /**
-     * An effective date or period for a status of the citation
-     *  */
-    statusDate: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Classification of the status
-         *  */
-        activity: CodeableConcept;
-        /**
-         * Either occurred or expected
-         *  */
-        actual: boolean;
-        /**
-         * When the status started and/or ended
-         *  */
-        period: Period;
-    };
-    /**
-     * Artifact related to the Citation Resource
-     *  */
-    relatesTo: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * How the Citation resource relates to the target artifact
-         *  */
-        relationshipType: CodeableConcept;
-        /**
-         * The clasification of the related artifact
-         *  */
-        targetClassifier: CodeableConcept;
-        /**
-         * The article or artifact that the Citation Resource is related to
-         *  */
-        target: string;
-    };
-    /**
-     * The article or artifact being described
-     *  */
-    citedArtifact: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * May include DOI, PMID, PMCID, etc.
-         *  */
-        identifier: Identifier;
-        /**
-         * May include trial registry identifiers
-         *  */
-        relatedIdentifier: Identifier;
-        /**
-         * When the cited artifact was accessed
-         *  */
-        dateAccessed: string;
-        /**
-         * Citation for the main version of the cited artifact
-         *  */
-        version: Reference;
-        /**
-         * The status of the cited artifact
-         *  */
-        currentState: CodeableConcept;
-        /**
-         * When the status started and/or ended
-         *  */
-        statusDate: Period;
-        /**
-         * The title of the article or artifact
-         *  */
-        title: markdown;
-        /**
-         * Copyright notice for the abstract
-         *  */
-        abstract: markdown;
-        /**
-         * The citation for the full article or artifact
-         *  */
-        part: Reference;
-        /**
-         * The article or artifact that the cited artifact is related to
-         *  */
-        relatesTo: string;
-        /**
-         * Copyright notice for the full article or artifact
-         *  */
-        publicationForm: markdown;
-        /**
-         * The specific URL
-         *  */
-        webLocation: string;
-        /**
-         * Acceptable to re-use the classification
-         *  */
-        classification: boolean;
-        /**
-         * The display string for the author list, contributor list, or contributorship statement
-         *  */
-        contributorship: markdown;
-        /**
-         * Any additional information or content for the article or artifact
-         *  */
-        note: Annotation;
-    };
-};
-
-type Citation__lookups = {
-    "Citation": Citation_Citation_Props;
-};
-
-export declare function citation(props: Citation_Citation_Props);;
-
-export declare function citation<T extends keyof Citation__lookups>(type: T, props: Citation__lookups[T]);;
-
-type Claim_Claim_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for claim
-     *  */
-    identifier: Identifier;
-    /**
-     * active | cancelled | draft | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Category or discipline
-     *  */
-    type: CodeableConcept;
-    /**
-     * More granular claim type
-     *  */
-    subType: CodeableConcept;
-    /**
-     * claim | preauthorization | predetermination
-     *  */
-    use: string;
-    /**
-     * The recipient of the products and services
-     *  */
-    patient: Reference;
-    /**
-     * Relevant time frame for the claim
-     *  */
-    billablePeriod: Period;
-    /**
-     * Resource creation date
-     *  */
-    created: string;
-    /**
-     * Author of the claim
-     *  */
-    enterer: Reference;
-    /**
-     * Target
-     *  */
-    insurer: Reference;
-    /**
-     * Party responsible for the claim
-     *  */
-    provider: Reference;
-    /**
-     * Desired processing ugency
-     *  */
-    priority: CodeableConcept;
-    /**
-     * For whom to reserve funds
-     *  */
-    fundsReserve: CodeableConcept;
-    /**
-     * Prior or corollary claims
-     *  */
-    related: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Reference to the related claim
-         *  */
-        claim: Reference;
-        /**
-         * How the reference claim is related
-         *  */
-        relationship: CodeableConcept;
-        /**
-         * File or case reference
-         *  */
-        reference: Identifier;
-    };
-    /**
-     * Prescription authorizing services and products
-     *  */
-    prescription: Reference;
-    /**
-     * Original prescription if superseded by fulfiller
-     *  */
-    originalPrescription: Reference;
-    /**
-     * Recipient of benefits payable
-     *  */
-    payee: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Category of recipient
-         *  */
-        type: CodeableConcept;
-        /**
-         * Recipient reference
-         *  */
-        party: Reference;
-    };
-    /**
-     * Treatment referral
-     *  */
-    referral: Reference;
-    /**
-     * Servicing facility
-     *  */
-    facility: Reference;
-    /**
-     * Members of the care team
-     *  */
-    careTeam: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Order of care team
-         *  */
-        sequence: number;
-        /**
-         * Practitioner or organization
-         *  */
-        provider: Reference;
-        /**
-         * Indicator of the lead practitioner
-         *  */
-        responsible: boolean;
-        /**
-         * Function within the team
-         *  */
-        role: CodeableConcept;
-        /**
-         * Practitioner credential or specialization
-         *  */
-        qualification: CodeableConcept;
-    };
-    /**
-     * Supporting information
-     *  */
-    supportingInfo: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Information instance identifier
-         *  */
-        sequence: number;
-        /**
-         * Classification of the supplied information
-         *  */
-        category: CodeableConcept;
-        /**
-         * Type of information
-         *  */
-        code: CodeableConcept;
-        /**
-         * When it occurred
-         *  */
-        timing: string;
-        /**
-         * Data to be provided
-         *  */
-        value: boolean;
-        /**
-         * Explanation for the information
-         *  */
-        reason: CodeableConcept;
-    };
-    /**
-     * Pertinent diagnosis information
-     *  */
-    diagnosis: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Diagnosis instance identifier
-         *  */
-        sequence: number;
-        /**
-         * Nature of illness or problem
-         *  */
-        diagnosis: CodeableConcept;
-        /**
-         * Timing or nature of the diagnosis
-         *  */
-        type: CodeableConcept;
-        /**
-         * Present on admission
-         *  */
-        onAdmission: CodeableConcept;
-        /**
-         * Package billing code
-         *  */
-        packageCode: CodeableConcept;
-    };
-    /**
-     * Clinical procedures performed
-     *  */
-    procedure: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Procedure instance identifier
-         *  */
-        sequence: number;
-        /**
-         * Category of Procedure
-         *  */
-        type: CodeableConcept;
-        /**
-         * When the procedure was performed
-         *  */
-        date: string;
-        /**
-         * Specific clinical procedure
-         *  */
-        procedure: CodeableConcept;
-        /**
-         * Unique device identifier
-         *  */
-        udi: Reference;
-    };
-    /**
-     * Patient insurance information
-     *  */
-    insurance: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Insurance instance identifier
-         *  */
-        sequence: number;
-        /**
-         * Coverage to be used for adjudication
-         *  */
-        focal: boolean;
-        /**
-         * Pre-assigned Claim number
-         *  */
-        identifier: Identifier;
-        /**
-         * Insurance information
-         *  */
-        coverage: Reference;
-        /**
-         * Additional provider contract number
-         *  */
-        businessArrangement: string;
-        /**
-         * Prior authorization reference number
-         *  */
-        preAuthRef: string;
-        /**
-         * Adjudication results
-         *  */
-        claimResponse: Reference;
-    };
-    /**
-     * Details of the event
-     *  */
-    accident: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * When the incident occurred
-         *  */
-        date: string;
-        /**
-         * The nature of the accident
-         *  */
-        type: CodeableConcept;
-        /**
-         * Where the event occurred
-         *  */
-        location: Address;
-    };
-    /**
-     * Product or service provided
-     *  */
-    item: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Item instance identifier
-         *  */
-        sequence: number;
-        /**
-         * Applicable careTeam members
-         *  */
-        careTeamSequence: number;
-        /**
-         * Applicable diagnoses
-         *  */
-        diagnosisSequence: number;
-        /**
-         * Applicable procedures
-         *  */
-        procedureSequence: number;
-        /**
-         * Applicable exception and supporting information
-         *  */
-        informationSequence: number;
-        /**
-         * Revenue or cost center code
-         *  */
-        revenue: CodeableConcept;
-        /**
-         * Benefit classification
-         *  */
-        category: CodeableConcept;
-        /**
-         * Billing, service, product, or drug code
-         *  */
-        productOrService: CodeableConcept;
-        /**
-         * Product or service billing modifiers
-         *  */
-        modifier: CodeableConcept;
-        /**
-         * Program the product or service is provided under
-         *  */
-        programCode: CodeableConcept;
-        /**
-         * Date or dates of service or product delivery
-         *  */
-        serviced: string;
-        /**
-         * Place of service or where product was supplied
-         *  */
-        location: CodeableConcept;
-        /**
-         * Count of products or services
-         *  */
-        quantity: Quantity;
-        /**
-         * Fee, charge or cost per item
-         *  */
-        unitPrice: Money;
-        /**
-         * Price scaling factor
-         *  */
-        factor: number;
-        /**
-         * Total item cost
-         *  */
-        net: Money;
-        /**
-         * Unique device identifier
-         *  */
-        udi: Reference;
-        /**
-         * Anatomical location
-         *  */
-        bodySite: CodeableConcept;
-        /**
-         * Anatomical sub-location
-         *  */
-        subSite: CodeableConcept;
-        /**
-         * Encounters related to this billed item
-         *  */
-        encounter: Reference;
-        /**
-         * Unique device identifier
-         *  */
-        detail: Reference;
-    };
-    /**
-     * Total claim cost
-     *  */
-    total: Money;
-};
-
-type Claim__lookups = {
-    "Claim": Claim_Claim_Props;
-};
-
-export declare function claim(props: Claim_Claim_Props);;
-
-export declare function claim<T extends keyof Claim__lookups>(type: T, props: Claim__lookups[T]);;
-
-type ClaimResponse_ClaimResponse_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for a claim response
-     *  */
-    identifier: Identifier;
-    /**
-     * active | cancelled | draft | entered-in-error
-     *  */
-    status: string;
-    /**
-     * More granular claim type
-     *  */
-    type: CodeableConcept;
-    /**
-     * More granular claim type
-     *  */
-    subType: CodeableConcept;
-    /**
-     * claim | preauthorization | predetermination
-     *  */
-    use: string;
-    /**
-     * The recipient of the products and services
-     *  */
-    patient: Reference;
-    /**
-     * Response creation date
-     *  */
-    created: string;
-    /**
-     * Party responsible for reimbursement
-     *  */
-    insurer: Reference;
-    /**
-     * Party responsible for the claim
-     *  */
-    requestor: Reference;
-    /**
-     * Id of resource triggering adjudication
-     *  */
-    request: Reference;
-    /**
-     * queued | complete | error | partial
-     *  */
-    outcome: string;
-    /**
-     * Disposition Message
-     *  */
-    disposition: string;
-    /**
-     * Preauthorization reference
-     *  */
-    preAuthRef: string;
-    /**
-     * Preauthorization reference effective period
-     *  */
-    preAuthPeriod: Period;
-    /**
-     * Party to be paid any benefits payable
-     *  */
-    payeeType: CodeableConcept;
-    /**
-     * Adjudication for claim line items
-     *  */
-    item: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Claim item instance identifier
-         *  */
-        itemSequence: number;
-        /**
-         * Applicable note numbers
-         *  */
-        noteNumber: number;
-        /**
-         * Non-monetary value
-         *  */
-        adjudication: number;
-        /**
-         * Applicable note numbers
-         *  */
-        detail: number;
-    };
-    /**
-     * Insurer added line items
-     *  */
-    addItem: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Item sequence number
-         *  */
-        itemSequence: number;
-        /**
-         * Detail sequence number
-         *  */
-        detailSequence: number;
-        /**
-         * Subdetail sequence number
-         *  */
-        subdetailSequence: number;
-        /**
-         * Authorized providers
-         *  */
-        provider: Reference;
-        /**
-         * Billing, service, product, or drug code
-         *  */
-        productOrService: CodeableConcept;
-        /**
-         * Service/Product billing modifiers
-         *  */
-        modifier: CodeableConcept;
-        /**
-         * Program the product or service is provided under
-         *  */
-        programCode: CodeableConcept;
-        /**
-         * Date or dates of service or product delivery
-         *  */
-        serviced: string;
-        /**
-         * Place of service or where product was supplied
-         *  */
-        location: CodeableConcept;
-        /**
-         * Count of products or services
-         *  */
-        quantity: Quantity;
-        /**
-         * Fee, charge or cost per item
-         *  */
-        unitPrice: Money;
-        /**
-         * Price scaling factor
-         *  */
-        factor: number;
-        /**
-         * Total item cost
-         *  */
-        net: Money;
-        /**
-         * Anatomical location
-         *  */
-        bodySite: CodeableConcept;
-        /**
-         * Anatomical sub-location
-         *  */
-        subSite: CodeableConcept;
-        /**
-         * Applicable note numbers
-         *  */
-        noteNumber: number;
-        /**
-         * Applicable note numbers
-         *  */
-        detail: number;
-    };
-    /**
-     * Header-level adjudication
-     *  */
-    adjudication: any;
-    /**
-     * Adjudication totals
-     *  */
-    total: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of adjudication information
-         *  */
-        category: CodeableConcept;
-        /**
-         * Financial total for the category
-         *  */
-        amount: Money;
-    };
-    /**
-     * Payment Details
-     *  */
-    payment: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Partial or complete payment
-         *  */
-        type: CodeableConcept;
-        /**
-         * Payment adjustment for non-claim issues
-         *  */
-        adjustment: Money;
-        /**
-         * Explanation for the adjustment
-         *  */
-        adjustmentReason: CodeableConcept;
-        /**
-         * Expected date of payment
-         *  */
-        date: string;
-        /**
-         * Payable amount after adjustment
-         *  */
-        amount: Money;
-        /**
-         * Business identifier for the payment
-         *  */
-        identifier: Identifier;
-    };
-    /**
-     * Funds reserved status
-     *  */
-    fundsReserve: CodeableConcept;
-    /**
-     * Printed form identifier
-     *  */
-    formCode: CodeableConcept;
-    /**
-     * Printed reference or actual form
-     *  */
-    form: Attachment;
-    /**
-     * Note concerning adjudication
-     *  */
-    processNote: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Note instance identifier
-         *  */
-        number: number;
-        /**
-         * display | print | printoper
-         *  */
-        type: string;
-        /**
-         * Note explanatory text
-         *  */
-        text: string;
-        /**
-         * Language of the text
-         *  */
-        language: CodeableConcept;
-    };
-    /**
-     * Request for additional information
-     *  */
-    communicationRequest: Reference;
-    /**
-     * Patient insurance information
-     *  */
-    insurance: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Insurance instance identifier
-         *  */
-        sequence: number;
-        /**
-         * Coverage to be used for adjudication
-         *  */
-        focal: boolean;
-        /**
-         * Insurance information
-         *  */
-        coverage: Reference;
-        /**
-         * Additional provider contract number
-         *  */
-        businessArrangement: string;
-        /**
-         * Adjudication results
-         *  */
-        claimResponse: Reference;
-    };
-    /**
-     * Processing errors
-     *  */
-    error: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Item sequence number
-         *  */
-        itemSequence: number;
-        /**
-         * Detail sequence number
-         *  */
-        detailSequence: number;
-        /**
-         * Subdetail sequence number
-         *  */
-        subDetailSequence: number;
-        /**
-         * Error code detailing processing issues
-         *  */
-        code: CodeableConcept;
-    };
-};
-
-type ClaimResponse__lookups = {
-    "ClaimResponse": ClaimResponse_ClaimResponse_Props;
-};
-
-export declare function claimResponse(props: ClaimResponse_ClaimResponse_Props);;
-
-export declare function claimResponse<T extends keyof ClaimResponse__lookups>(type: T, props: ClaimResponse__lookups[T]);;
-
-type ClinicalImpression_ClinicalImpression_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * in-progress | completed | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Reason for current status
-     *  */
-    statusReason: CodeableConcept;
-    /**
-     * Kind of assessment performed
-     *  */
-    code: CodeableConcept;
-    /**
-     * Why/how the assessment was performed
-     *  */
-    description: string;
-    /**
-     * Patient or group assessed
-     *  */
-    subject: Reference;
-    /**
-     * Encounter created as part of
-     *  */
-    encounter: Reference;
-    /**
-     * Time of assessment
-     *  */
-    effective: string;
-    /**
-     * When the assessment was documented
-     *  */
-    date: string;
-    /**
-     * The clinician performing the assessment
-     *  */
-    assessor: Reference;
-    /**
-     * Reference to last assessment
-     *  */
-    previous: Reference;
-    /**
-     * Relevant impressions of patient state
-     *  */
-    problem: Reference;
-    /**
-     * One or more sets of investigations (signs, symptoms, etc.)
-     *  */
-    investigation: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * A name/code for the set
-         *  */
-        code: CodeableConcept;
-        /**
-         * Record of a specific investigation
-         *  */
-        item: Reference;
-    };
-    /**
-     * Clinical Protocol followed
-     *  */
-    protocol: string;
-    /**
-     * Summary of the assessment
-     *  */
-    summary: string;
-    /**
-     * Possible or likely findings and diagnoses
-     *  */
-    finding: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * What was found
-         *  */
-        itemCodeableConcept: CodeableConcept;
-        /**
-         * What was found
-         *  */
-        itemReference: Reference;
-        /**
-         * Which investigations support finding
-         *  */
-        basis: string;
-    };
-    /**
-     * Estimate of likely outcome
-     *  */
-    prognosisCodeableConcept: CodeableConcept;
-    /**
-     * RiskAssessment expressing likely outcome
-     *  */
-    prognosisReference: Reference;
-    /**
-     * Information supporting the clinical impression
-     *  */
-    supportingInfo: Reference;
-    /**
-     * Comments made about the ClinicalImpression
-     *  */
-    note: Annotation;
-};
-
-type ClinicalImpression__lookups = {
-    "ClinicalImpression": ClinicalImpression_ClinicalImpression_Props;
-};
-
-export declare function clinicalImpression(props: ClinicalImpression_ClinicalImpression_Props);;
-
-export declare function clinicalImpression<T extends keyof ClinicalImpression__lookups>(type: T, props: ClinicalImpression__lookups[T]);;
-
-type ClinicalUseDefinition_ClinicalUseDefinition_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business identifier for this issue
-     *  */
-    identifier: Identifier;
-    /**
-     * indication | contraindication | interaction | undesirable-effect | warning
-     *  */
-    type: string;
-    /**
-     * A categorisation of the issue, primarily for dividing warnings into subject heading areas such as "Pregnancy", "Overdose"
-     *  */
-    category: CodeableConcept;
-    /**
-     * The medication or procedure for which this is an indication
-     *  */
-    subject: Reference;
-    /**
-     * Whether this is a current issue or one that has been retired etc
-     *  */
-    status: CodeableConcept;
-    /**
-     * Specifics for when this is a contraindication
-     *  */
-    contraindication: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The situation that is being documented as contraindicating against this item
-         *  */
-        diseaseSymptomProcedure: CodeableReference;
-        /**
-         * The status of the disease or symptom for the contraindication
-         *  */
-        diseaseStatus: CodeableReference;
-        /**
-         * A comorbidity (concurrent condition) or coinfection
-         *  */
-        comorbidity: CodeableReference;
-        /**
-         * The indication which this is a contraidication for
-         *  */
-        indication: Reference;
-        /**
-         * Reference to a specific medication as part of an indication or contraindication
-         *  */
-        otherTherapy: CodeableReference;
-    };
-    /**
-     * Specifics for when this is an indication
-     *  */
-    indication: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The situation that is being documented as an indicaton for this item
-         *  */
-        diseaseSymptomProcedure: CodeableReference;
-        /**
-         * The status of the disease or symptom for the indication
-         *  */
-        diseaseStatus: CodeableReference;
-        /**
-         * A comorbidity or coinfection as part of the indication
-         *  */
-        comorbidity: CodeableReference;
-        /**
-         * The intended effect, aim or strategy to be achieved
-         *  */
-        intendedEffect: CodeableReference;
-        /**
-         * Timing or duration information
-         *  */
-        duration: Range;
-        /**
-         * An unwanted side effect or negative outcome of the subject of this resource when being used for this indication
-         *  */
-        undesirableEffect: Reference;
-    };
-    /**
-     * Specifics for when this is an interaction
-     *  */
-    interaction: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The specific medication, food or laboratory test that interacts
-         *  */
-        interactant: Reference;
-        /**
-         * The type of the interaction e.g. drug-drug interaction, drug-lab test interaction
-         *  */
-        type: CodeableConcept;
-        /**
-         * The effect of the interaction, for example "reduced gastric absorption of primary medication"
-         *  */
-        effect: CodeableReference;
-        /**
-         * The incidence of the interaction, e.g. theoretical, observed
-         *  */
-        incidence: CodeableConcept;
-        /**
-         * Actions for managing the interaction
-         *  */
-        management: CodeableConcept;
-    };
-    /**
-     * The population group to which this applies
-     *  */
-    population: Reference;
-    /**
-     * A possible negative outcome from the use of this treatment
-     *  */
-    undesirableEffect: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The situation in which the undesirable effect may manifest
-         *  */
-        symptomConditionEffect: CodeableReference;
-        /**
-         * High level classification of the effect
-         *  */
-        classification: CodeableConcept;
-        /**
-         * How often the effect is seen
-         *  */
-        frequencyOfOccurrence: CodeableConcept;
-    };
-    /**
-     * Critical environmental, health or physical risks or hazards. For example 'Do not operate heavy machinery', 'May cause drowsiness'
-     *  */
-    warning: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * A textual definition of this warning, with formatting
-         *  */
-        description: markdown;
-        /**
-         * A coded or unformatted textual definition of this warning
-         *  */
-        code: CodeableConcept;
-    };
-};
-
-type ClinicalUseDefinition__lookups = {
-    "ClinicalUseDefinition": ClinicalUseDefinition_ClinicalUseDefinition_Props;
-};
-
-export declare function clinicalUseDefinition(props: ClinicalUseDefinition_ClinicalUseDefinition_Props);;
-
-export declare function clinicalUseDefinition<T extends keyof ClinicalUseDefinition__lookups>(type: T, props: ClinicalUseDefinition__lookups[T]);;
-
-type Communication_Communication_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Unique identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * Instantiates FHIR protocol or definition
-     *  */
-    instantiatesCanonical: any;
-    /**
-     * Instantiates external protocol or definition
-     *  */
-    instantiatesUri: string;
-    /**
-     * Request fulfilled by this communication
-     *  */
-    basedOn: Reference;
-    /**
-     * Part of this action
-     *  */
-    partOf: Reference;
-    /**
-     * Reply to
-     *  */
-    inResponseTo: Reference;
-    /**
-     * preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
-     *  */
-    status: string;
-    /**
-     * Reason for current status
-     *  */
-    statusReason: CodeableConcept;
-    /**
-     * Message category
-     *  */
-    category: CodeableConcept;
-    /**
-     * routine | urgent | asap | stat
-     *  */
-    priority: string;
-    /**
-     * A channel of communication
-     *  */
-    medium: CodeableConcept;
-    /**
-     * Focus of message
-     *  */
-    subject: Reference;
-    /**
-     * Description of the purpose/content
-     *  */
-    topic: CodeableConcept;
-    /**
-     * Resources that pertain to this communication
-     *  */
-    about: Reference;
-    /**
-     * Encounter created as part of
-     *  */
-    encounter: Reference;
-    /**
-     * When sent
-     *  */
-    sent: string;
-    /**
-     * When received
-     *  */
-    received: string;
-    /**
-     * Message recipient
-     *  */
-    recipient: Reference;
-    /**
-     * Message sender
-     *  */
-    sender: Reference;
-    /**
-     * Indication for message
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Why was communication done?
-     *  */
-    reasonReference: Reference;
-    /**
-     * Message payload
-     *  */
-    payload: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Message part content
-         *  */
-        content: string;
-    };
-    /**
-     * Comments made about the communication
-     *  */
-    note: Annotation;
-};
-
-type Communication__lookups = {
-    "Communication": Communication_Communication_Props;
-};
-
-export declare function communication(props: Communication_Communication_Props);;
-
-export declare function communication<T extends keyof Communication__lookups>(type: T, props: Communication__lookups[T]);;
-
-type CommunicationRequest_CommunicationRequest_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Unique identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * Fulfills plan or proposal
-     *  */
-    basedOn: Reference;
-    /**
-     * Request(s) replaced by this request
-     *  */
-    replaces: Reference;
-    /**
-     * Composite request this is part of
-     *  */
-    groupIdentifier: Identifier;
-    /**
-     * draft | active | on-hold | revoked | completed | entered-in-error | unknown
-     *  */
-    status: string;
-    /**
-     * Reason for current status
-     *  */
-    statusReason: CodeableConcept;
-    /**
-     * Message category
-     *  */
-    category: CodeableConcept;
-    /**
-     * routine | urgent | asap | stat
-     *  */
-    priority: string;
-    /**
-     * True if request is prohibiting action
-     *  */
-    doNotPerform: boolean;
-    /**
-     * A channel of communication
-     *  */
-    medium: CodeableConcept;
-    /**
-     * Focus of message
-     *  */
-    subject: Reference;
-    /**
-     * Resources that pertain to this communication request
-     *  */
-    about: Reference;
-    /**
-     * Encounter created as part of
-     *  */
-    encounter: Reference;
-    /**
-     * Message payload
-     *  */
-    payload: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Message part content
-         *  */
-        content: string;
-    };
-    /**
-     * When scheduled
-     *  */
-    occurrence: string;
-    /**
-     * When request transitioned to being actionable
-     *  */
-    authoredOn: string;
-    /**
-     * Who/what is requesting service
-     *  */
-    requester: Reference;
-    /**
-     * Message recipient
-     *  */
-    recipient: Reference;
-    /**
-     * Message sender
-     *  */
-    sender: Reference;
-    /**
-     * Why is communication needed?
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Why is communication needed?
-     *  */
-    reasonReference: Reference;
-    /**
-     * Comments made about communication request
-     *  */
-    note: Annotation;
-};
-
-type CommunicationRequest__lookups = {
-    "CommunicationRequest": CommunicationRequest_CommunicationRequest_Props;
-};
-
-export declare function communicationRequest(props: CommunicationRequest_CommunicationRequest_Props);;
-
-export declare function communicationRequest<T extends keyof CommunicationRequest__lookups>(type: T, props: CommunicationRequest__lookups[T]);;
-
-type Condition_Condition_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * External Ids for this condition
-     *  */
-    identifier: Identifier;
-    /**
-     * active | recurrence | relapse | inactive | remission | resolved
-     *  */
-    clinicalStatus: CodeableConcept;
-    /**
-     * unconfirmed | provisional | differential | confirmed | refuted | entered-in-error
-     *  */
-    verificationStatus: CodeableConcept;
-    /**
-     * problem-list-item | encounter-diagnosis
-     *  */
-    category: CodeableConcept;
-    /**
-     * Subjective severity of condition
-     *  */
-    severity: CodeableConcept;
-    /**
-     * Identification of the condition, problem or diagnosis
-     *  */
-    code: CodeableConcept;
-    /**
-     * Anatomical location, if relevant
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * Who has the condition?
-     *  */
-    subject: Reference;
-    /**
-     * Encounter created as part of
-     *  */
-    encounter: Reference;
-    /**
-     * Estimated or actual date,  date-time, or age
-     *  */
-    onset: string;
-    /**
-     * When in resolution/remission
-     *  */
-    abatement: string;
-    /**
-     * Date record was first recorded
-     *  */
-    recordedDate: string;
-    /**
-     * Who recorded the condition
-     *  */
-    recorder: Reference;
-    /**
-     * Person who asserts this condition
-     *  */
-    asserter: Reference;
-    /**
-     * Stage/grade, usually assessed formally
-     *  */
-    stage: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Simple summary (disease specific)
-         *  */
-        summary: CodeableConcept;
-        /**
-         * Formal record of assessment
-         *  */
-        assessment: Reference;
-        /**
-         * Kind of staging
-         *  */
-        type: CodeableConcept;
-    };
-    /**
-     * Supporting evidence
-     *  */
-    evidence: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Manifestation/symptom
-         *  */
-        code: CodeableConcept;
-        /**
-         * Supporting information found elsewhere
-         *  */
-        detail: Reference;
-    };
-    /**
-     * Additional information about the Condition
-     *  */
-    note: Annotation;
-};
-
-type Condition__lookups = {
-    "Condition": Condition_Condition_Props;
-};
-
-export declare function condition(props: Condition_Condition_Props);;
-
-export declare function condition<T extends keyof Condition__lookups>(type: T, props: Condition__lookups[T]);;
-
-type Contract_Contract_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Contract number
-     *  */
-    identifier: Identifier;
-    /**
-     * Basal definition
-     *  */
-    url: string;
-    /**
-     * Business edition
-     *  */
-    version: string;
-    /**
-     * amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated
-     *  */
-    status: string;
-    /**
-     * Negotiation status
-     *  */
-    legalState: CodeableConcept;
-    /**
-     * Source Contract Definition
-     *  */
-    instantiatesCanonical: Reference;
-    /**
-     * External Contract Definition
-     *  */
-    instantiatesUri: string;
-    /**
-     * Content derived from the basal information
-     *  */
-    contentDerivative: CodeableConcept;
-    /**
-     * When this Contract was issued
-     *  */
-    issued: string;
-    /**
-     * Effective time
-     *  */
-    applies: Period;
-    /**
-     * Contract cessation cause
-     *  */
-    expirationType: CodeableConcept;
-    /**
-     * Contract Target Entity
-     *  */
-    subject: Reference;
-    /**
-     * Authority under which this Contract has standing
-     *  */
-    authority: Reference;
-    /**
-     * A sphere of control governed by an authoritative jurisdiction, organization, or person
-     *  */
-    domain: Reference;
-    /**
-     * Specific Location
-     *  */
-    site: Reference;
-    /**
-     * Computer friendly designation
-     *  */
-    name: string;
-    /**
-     * Human Friendly name
-     *  */
-    title: string;
-    /**
-     * Subordinate Friendly name
-     *  */
-    subtitle: string;
-    /**
-     * Acronym or short name
-     *  */
-    alias: string;
-    /**
-     * Source of Contract
-     *  */
-    author: Reference;
-    /**
-     * Range of Legal Concerns
-     *  */
-    scope: CodeableConcept;
-    /**
-     * Focus of contract interest
-     *  */
-    topic: CodeableConcept;
-    /**
-     * Legal instrument category
-     *  */
-    type: CodeableConcept;
-    /**
-     * Subtype within the context of type
-     *  */
-    subType: CodeableConcept;
-    /**
-     * Contract precursor content
-     *  */
-    contentDefinition: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Content structure and use
-         *  */
-        type: CodeableConcept;
-        /**
-         * Detailed Content Type Definition
-         *  */
-        subType: CodeableConcept;
-        /**
-         * Publisher Entity
-         *  */
-        publisher: Reference;
-        /**
-         * When published
-         *  */
-        publicationDate: string;
-        /**
-         * amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated
-         *  */
-        publicationStatus: string;
-        /**
-         * Publication Ownership
-         *  */
-        copyright: markdown;
-    };
-    /**
-     * Contract Term List
-     *  */
-    term: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Contract Term Number
-         *  */
-        identifier: Identifier;
-        /**
-         * Contract Term Issue Date Time
-         *  */
-        issued: string;
-        /**
-         * Contract Term Effective Time
-         *  */
-        applies: Period;
-        /**
-         * Term Concern
-         *  */
-        topic: CodeableConcept;
-        /**
-         * Contract Term Type or Form
-         *  */
-        type: CodeableConcept;
-        /**
-         * Contract Term Type specific classification
-         *  */
-        subType: CodeableConcept;
-        /**
-         * Term Statement
-         *  */
-        text: string;
-        /**
-         * Handling Instructions
-         *  */
-        securityLabel: Coding;
-        /**
-         * Offer restriction numbers
-         *  */
-        offer: number;
-        /**
-         * Security Labels that define affected terms
-         *  */
-        asset: number;
-        /**
-         * Action restriction numbers
-         *  */
-        action: number;
-    };
-    /**
-     * Extra Information
-     *  */
-    supportingInfo: Reference;
-    /**
-     * Key event in Contract History
-     *  */
-    relevantHistory: Reference;
-    /**
-     * Contract Signatory
-     *  */
-    signer: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Contract Signatory Role
-         *  */
-        type: Coding;
-        /**
-         * Contract Signatory Party
-         *  */
-        party: Reference;
-        /**
-         * Contract Documentation Signature
-         *  */
-        signature: Signature;
-    };
-    /**
-     * Contract Friendly Language
-     *  */
-    friendly: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Easily comprehended representation of this Contract
-         *  */
-        content: Attachment;
-    };
-    /**
-     * Contract Legal Language
-     *  */
-    legal: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Contract Legal Text
-         *  */
-        content: Attachment;
-    };
-    /**
-     * Computable Contract Language
-     *  */
-    rule: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Computable Contract Rules
-         *  */
-        content: Attachment;
-    };
-    /**
-     * Binding Contract
-     *  */
-    legallyBinding: Attachment;
-};
-
-type Contract__lookups = {
-    "Contract": Contract_Contract_Props;
-};
-
-export declare function contract(props: Contract_Contract_Props);;
-
-export declare function contract<T extends keyof Contract__lookups>(type: T, props: Contract__lookups[T]);;
-
-type Coverage_Coverage_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for the coverage
-     *  */
-    identifier: Identifier;
-    /**
-     * active | cancelled | draft | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Coverage category such as medical or accident
-     *  */
-    type: CodeableConcept;
-    /**
-     * Owner of the policy
-     *  */
-    policyHolder: Reference;
-    /**
-     * Subscriber to the policy
-     *  */
-    subscriber: Reference;
-    /**
-     * ID assigned to the subscriber
-     *  */
-    subscriberId: string;
-    /**
-     * Plan beneficiary
-     *  */
-    beneficiary: Reference;
-    /**
-     * Dependent number
-     *  */
-    dependent: string;
-    /**
-     * Beneficiary relationship to the subscriber
-     *  */
-    relationship: CodeableConcept;
-    /**
-     * Coverage start and end dates
-     *  */
-    period: Period;
-    /**
-     * Issuer of the policy
-     *  */
-    payor: Reference;
-    /**
-     * Additional coverage classifications
-     *  */
-    class: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of class such as 'group' or 'plan'
-         *  */
-        type: CodeableConcept;
-        /**
-         * Value associated with the type
-         *  */
-        value: string;
-        /**
-         * Human readable description of the type and value
-         *  */
-        name: string;
-    };
-    /**
-     * Relative order of the coverage
-     *  */
-    order: number;
-    /**
-     * Insurer network
-     *  */
-    network: string;
-    /**
-     * Patient payments for services/products
-     *  */
-    costToBeneficiary: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Cost category
-         *  */
-        type: CodeableConcept;
-        /**
-         * The amount or percentage due from the beneficiary
-         *  */
-        value: Quantity;
-        /**
-         * The effective period of the exception
-         *  */
-        exception: Period;
-    };
-    /**
-     * Reimbursement to insurer
-     *  */
-    subrogation: boolean;
-    /**
-     * Contract details
-     *  */
-    contract: Reference;
-};
-
-type Coverage__lookups = {
-    "Coverage": Coverage_Coverage_Props;
-};
-
-export declare function coverage(props: Coverage_Coverage_Props);;
-
-export declare function coverage<T extends keyof Coverage__lookups>(type: T, props: Coverage__lookups[T]);;
-
-type CoverageEligibilityRequest_CoverageEligibilityRequest_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for coverage eligiblity request
-     *  */
-    identifier: Identifier;
-    /**
-     * active | cancelled | draft | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Desired processing priority
-     *  */
-    priority: CodeableConcept;
-    /**
-     * auth-requirements | benefits | discovery | validation
-     *  */
-    purpose: string;
-    /**
-     * Intended recipient of products and services
-     *  */
-    patient: Reference;
-    /**
-     * Estimated date or dates of service
-     *  */
-    serviced: string;
-    /**
-     * Creation date
-     *  */
-    created: string;
-    /**
-     * Author
-     *  */
-    enterer: Reference;
-    /**
-     * Party responsible for the request
-     *  */
-    provider: Reference;
-    /**
-     * Coverage issuer
-     *  */
-    insurer: Reference;
-    /**
-     * Servicing facility
-     *  */
-    facility: Reference;
-    /**
-     * Supporting information
-     *  */
-    supportingInfo: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Information instance identifier
-         *  */
-        sequence: number;
-        /**
-         * Data to be provided
-         *  */
-        information: Reference;
-        /**
-         * Applies to all items
-         *  */
-        appliesToAll: boolean;
-    };
-    /**
-     * Patient insurance information
-     *  */
-    insurance: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Applicable coverage
-         *  */
-        focal: boolean;
-        /**
-         * Insurance information
-         *  */
-        coverage: Reference;
-        /**
-         * Additional provider contract number
-         *  */
-        businessArrangement: string;
-    };
-    /**
-     * Item to be evaluated for eligibiity
-     *  */
-    item: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Applicable exception or supporting information
-         *  */
-        supportingInfoSequence: number;
-        /**
-         * Benefit classification
-         *  */
-        category: CodeableConcept;
-        /**
-         * Billing, service, product, or drug code
-         *  */
-        productOrService: CodeableConcept;
-        /**
-         * Product or service billing modifiers
-         *  */
-        modifier: CodeableConcept;
-        /**
-         * Perfoming practitioner
-         *  */
-        provider: Reference;
-        /**
-         * Count of products or services
-         *  */
-        quantity: Quantity;
-        /**
-         * Fee, charge or cost per item
-         *  */
-        unitPrice: Money;
-        /**
-         * Servicing facility
-         *  */
-        facility: Reference;
-        /**
-         * Nature of illness or problem
-         *  */
-        diagnosis: CodeableConcept;
-        /**
-         * Product or service details
-         *  */
-        detail: Reference;
-    };
-};
-
-type CoverageEligibilityRequest__lookups = {
-    "CoverageEligibilityRequest": CoverageEligibilityRequest_CoverageEligibilityRequest_Props;
-};
-
-export declare function coverageEligibilityRequest(props: CoverageEligibilityRequest_CoverageEligibilityRequest_Props);;
-
-export declare function coverageEligibilityRequest<T extends keyof CoverageEligibilityRequest__lookups>(type: T, props: CoverageEligibilityRequest__lookups[T]);;
-
-type CoverageEligibilityResponse_CoverageEligibilityResponse_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for coverage eligiblity request
-     *  */
-    identifier: Identifier;
-    /**
-     * active | cancelled | draft | entered-in-error
-     *  */
-    status: string;
-    /**
-     * auth-requirements | benefits | discovery | validation
-     *  */
-    purpose: string;
-    /**
-     * Intended recipient of products and services
-     *  */
-    patient: Reference;
-    /**
-     * Estimated date or dates of service
-     *  */
-    serviced: string;
-    /**
-     * Response creation date
-     *  */
-    created: string;
-    /**
-     * Party responsible for the request
-     *  */
-    requestor: Reference;
-    /**
-     * Eligibility request reference
-     *  */
-    request: Reference;
-    /**
-     * queued | complete | error | partial
-     *  */
-    outcome: string;
-    /**
-     * Disposition Message
-     *  */
-    disposition: string;
-    /**
-     * Coverage issuer
-     *  */
-    insurer: Reference;
-    /**
-     * Patient insurance information
-     *  */
-    insurance: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Insurance information
-         *  */
-        coverage: Reference;
-        /**
-         * Coverage inforce indicator
-         *  */
-        inforce: boolean;
-        /**
-         * When the benefits are applicable
-         *  */
-        benefitPeriod: Period;
-        /**
-         * Preauthorization requirements endpoint
-         *  */
-        item: string;
-    };
-    /**
-     * Preauthorization reference
-     *  */
-    preAuthRef: string;
-    /**
-     * Printed form identifier
-     *  */
-    form: CodeableConcept;
-    /**
-     * Processing errors
-     *  */
-    error: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Error code detailing processing issues
-         *  */
-        code: CodeableConcept;
-    };
-};
-
-type CoverageEligibilityResponse__lookups = {
-    "CoverageEligibilityResponse": CoverageEligibilityResponse_CoverageEligibilityResponse_Props;
-};
-
-export declare function coverageEligibilityResponse(props: CoverageEligibilityResponse_CoverageEligibilityResponse_Props);;
-
-export declare function coverageEligibilityResponse<T extends keyof CoverageEligibilityResponse__lookups>(type: T, props: CoverageEligibilityResponse__lookups[T]);;
-
-type DetectedIssue_DetectedIssue_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Unique id for the detected issue
-     *  */
-    identifier: Identifier;
-    /**
-     * registered | preliminary | final | amended +
-     *  */
-    status: string;
-    /**
-     * Issue Category, e.g. drug-drug, duplicate therapy, etc.
-     *  */
-    code: CodeableConcept;
-    /**
-     * high | moderate | low
-     *  */
-    severity: string;
-    /**
-     * Associated patient
-     *  */
-    patient: Reference;
-    /**
-     * When identified
-     *  */
-    identified: string;
-    /**
-     * The provider or device that identified the issue
-     *  */
-    author: Reference;
-    /**
-     * Problem resource
-     *  */
-    implicated: Reference;
-    /**
-     * Supporting evidence
-     *  */
-    evidence: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Manifestation
-         *  */
-        code: CodeableConcept;
-        /**
-         * Supporting information
-         *  */
-        detail: Reference;
-    };
-    /**
-     * Description and context
-     *  */
-    detail: string;
-    /**
-     * Authority for issue
-     *  */
-    reference: string;
-    /**
-     * Step taken to address
-     *  */
-    mitigation: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * What mitigation?
-         *  */
-        action: CodeableConcept;
-        /**
-         * Date committed
-         *  */
-        date: string;
-        /**
-         * Who is committing?
-         *  */
-        author: Reference;
-    };
-};
-
-type DetectedIssue__lookups = {
-    "DetectedIssue": DetectedIssue_DetectedIssue_Props;
-};
-
-export declare function detectedIssue(props: DetectedIssue_DetectedIssue_Props);;
-
-export declare function detectedIssue<T extends keyof DetectedIssue__lookups>(type: T, props: DetectedIssue__lookups[T]);;
-
-type Device_Device_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Instance identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * The reference to the definition for the device
-     *  */
-    definition: Reference;
-    /**
-     * Unique Device Identifier (UDI) Barcode string
-     *  */
-    udiCarrier: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Mandatory fixed portion of UDI
-         *  */
-        deviceIdentifier: string;
-        /**
-         * UDI Issuing Organization
-         *  */
-        issuer: string;
-        /**
-         * Regional UDI authority
-         *  */
-        jurisdiction: string;
-        /**
-         * UDI Machine Readable Barcode String
-         *  */
-        carrierAIDC: base64Binary;
-        /**
-         * UDI Human Readable Barcode String
-         *  */
-        carrierHRF: string;
-        /**
-         * barcode | rfid | manual +
-         *  */
-        entryType: string;
-    };
-    /**
-     * active | inactive | entered-in-error | unknown
-     *  */
-    status: string;
-    /**
-     * online | paused | standby | offline | not-ready | transduc-discon | hw-discon | off
-     *  */
-    statusReason: CodeableConcept;
-    /**
-     * The distinct identification string
-     *  */
-    distinctIdentifier: string;
-    /**
-     * Name of device manufacturer
-     *  */
-    manufacturer: string;
-    /**
-     * Date when the device was made
-     *  */
-    manufactureDate: string;
-    /**
-     * Date and time of expiry of this device (if applicable)
-     *  */
-    expirationDate: string;
-    /**
-     * Lot number of manufacture
-     *  */
-    lotNumber: string;
-    /**
-     * Serial number assigned by the manufacturer
-     *  */
-    serialNumber: string;
-    /**
-     * The name of the device as given by the manufacturer
-     *  */
-    deviceName: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The name that identifies the device
-         *  */
-        name: string;
-        /**
-         * udi-label-name | user-friendly-name | patient-reported-name | manufacturer-name | model-name | other
-         *  */
-        type: string;
-    };
-    /**
-     * The manufacturer's model number for the device
-     *  */
-    modelNumber: string;
-    /**
-     * The part number or catalog number of the device
-     *  */
-    partNumber: string;
-    /**
-     * The kind or type of device
-     *  */
-    type: CodeableConcept;
-    /**
-     * The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication
-     *  */
-    specialization: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The standard that is used to operate and communicate
-         *  */
-        systemType: CodeableConcept;
-        /**
-         * The version of the standard that is used to operate and communicate
-         *  */
-        version: string;
-    };
-    /**
-     * The actual design of the device or software version running on the device
-     *  */
-    version: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The type of the device version, e.g. manufacturer, approved, internal
-         *  */
-        type: CodeableConcept;
-        /**
-         * A single component of the device version
-         *  */
-        component: Identifier;
-        /**
-         * The version text
-         *  */
-        value: string;
-    };
-    /**
-     * The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties
-     *  */
-    property: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Code that specifies the property DeviceDefinitionPropetyCode (Extensible)
-         *  */
-        type: CodeableConcept;
-        /**
-         * Property value as a quantity
-         *  */
-        valueQuantity: Quantity;
-        /**
-         * Property value as a code, e.g., NTP4 (synced to NTP)
-         *  */
-        valueCode: CodeableConcept;
-    };
-    /**
-     * Patient to whom Device is affixed
-     *  */
-    patient: Reference;
-    /**
-     * Organization responsible for device
-     *  */
-    owner: Reference;
-    /**
-     * Details for human/organization for support
-     *  */
-    contact: ContactPoint;
-    /**
-     * Where the device is found
-     *  */
-    location: Reference;
-    /**
-     * Network address to contact device
-     *  */
-    url: string;
-    /**
-     * Device notes and comments
-     *  */
-    note: Annotation;
-    /**
-     * Safety Characteristics of Device
-     *  */
-    safety: CodeableConcept;
-    /**
-     * The device that this device is attached to or is part of
-     *  */
-    parent: Reference;
-};
-
-type Device__lookups = {
-    "Device": Device_Device_Props;
-};
-
-export declare function device(props: Device_Device_Props);;
-
-export declare function device<T extends keyof Device__lookups>(type: T, props: Device__lookups[T]);;
-
-type DeviceDefinition_DeviceDefinition_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Instance identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * Unique Device Identifier (UDI) Barcode string
-     *  */
-    udiDeviceIdentifier: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The identifier that is to be associated with every Device that references this DeviceDefintiion for the issuer and jurisdication porvided in the DeviceDefinition.udiDeviceIdentifier
-         *  */
-        deviceIdentifier: string;
-        /**
-         * The organization that assigns the identifier algorithm
-         *  */
-        issuer: string;
-        /**
-         * The jurisdiction to which the deviceIdentifier applies
-         *  */
-        jurisdiction: string;
-    };
-    /**
-     * Name of device manufacturer
-     *  */
-    manufacturer: string;
-    /**
-     * A name given to the device to identify it
-     *  */
-    deviceName: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The name of the device
-         *  */
-        name: string;
-        /**
-         * udi-label-name | user-friendly-name | patient-reported-name | manufacturer-name | model-name | other
-         *  */
-        type: string;
-    };
-    /**
-     * The model number for the device
-     *  */
-    modelNumber: string;
-    /**
-     * What kind of device or device system this is
-     *  */
-    type: CodeableConcept;
-    /**
-     * The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication
-     *  */
-    specialization: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The standard that is used to operate and communicate
-         *  */
-        systemType: string;
-        /**
-         * The version of the standard that is used to operate and communicate
-         *  */
-        version: string;
-    };
-    /**
-     * Available versions
-     *  */
-    version: string;
-    /**
-     * Safety characteristics of the device
-     *  */
-    safety: CodeableConcept;
-    /**
-     * Shelf Life and storage information
-     *  */
-    shelfLifeStorage: ProductShelfLife;
-    /**
-     * Dimensions, color etc.
-     *  */
-    physicalCharacteristics: ProdCharacteristic;
-    /**
-     * Language code for the human-readable text strings produced by the device (all supported)
-     *  */
-    languageCode: CodeableConcept;
-    /**
-     * Device capabilities
-     *  */
-    capability: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of capability
-         *  */
-        type: CodeableConcept;
-        /**
-         * Description of capability
-         *  */
-        description: CodeableConcept;
-    };
-    /**
-     * The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties
-     *  */
-    property: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Code that specifies the property DeviceDefinitionPropetyCode (Extensible)
-         *  */
-        type: CodeableConcept;
-        /**
-         * Property value as a quantity
-         *  */
-        valueQuantity: Quantity;
-        /**
-         * Property value as a code, e.g., NTP4 (synced to NTP)
-         *  */
-        valueCode: CodeableConcept;
-    };
-    /**
-     * Organization responsible for device
-     *  */
-    owner: Reference;
-    /**
-     * Details for human/organization for support
-     *  */
-    contact: ContactPoint;
-    /**
-     * Network address to contact device
-     *  */
-    url: string;
-    /**
-     * Access to on-line information
-     *  */
-    onlineInformation: string;
-    /**
-     * Device notes and comments
-     *  */
-    note: Annotation;
-    /**
-     * The quantity of the device present in the packaging (e.g. the number of devices present in a pack, or the number of devices in the same package of the medicinal product)
-     *  */
-    quantity: Quantity;
-    /**
-     * The parent device it can be part of
-     *  */
-    parentDevice: Reference;
-    /**
-     * A substance used to create the material(s) of which the device is made
-     *  */
-    material: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The substance
-         *  */
-        substance: CodeableConcept;
-        /**
-         * Indicates an alternative material of the device
-         *  */
-        alternate: boolean;
-        /**
-         * Whether the substance is a known or suspected allergen
-         *  */
-        allergenicIndicator: boolean;
-    };
-};
-
-type DeviceDefinition__lookups = {
-    "DeviceDefinition": DeviceDefinition_DeviceDefinition_Props;
-};
-
-export declare function deviceDefinition(props: DeviceDefinition_DeviceDefinition_Props);;
-
-export declare function deviceDefinition<T extends keyof DeviceDefinition__lookups>(type: T, props: DeviceDefinition__lookups[T]);;
-
-type DeviceMetric_DeviceMetric_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Instance identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * Identity of metric, for example Heart Rate or PEEP Setting
-     *  */
-    type: CodeableConcept;
-    /**
-     * Unit of Measure for the Metric
-     *  */
-    unit: CodeableConcept;
-    /**
-     * Describes the link to the source Device
-     *  */
-    source: Reference;
-    /**
-     * Describes the link to the parent Device
-     *  */
-    parent: Reference;
-    /**
-     * on | off | standby | entered-in-error
-     *  */
-    operationalStatus: string;
-    /**
-     * black | red | green | yellow | blue | magenta | cyan | white
-     *  */
-    color: string;
-    /**
-     * measurement | setting | calculation | unspecified
-     *  */
-    category: string;
-    /**
-     * Describes the measurement repetition time
-     *  */
-    measurementPeriod: Timing;
-    /**
-     * Describes the calibrations that have been performed or that are required to be performed
-     *  */
-    calibration: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * unspecified | offset | gain | two-point
-         *  */
-        type: string;
-        /**
-         * not-calibrated | calibration-required | calibrated | unspecified
-         *  */
-        state: string;
-        /**
-         * Describes the time last calibration has been performed
-         *  */
-        time: string;
-    };
-};
-
-type DeviceMetric__lookups = {
-    "DeviceMetric": DeviceMetric_DeviceMetric_Props;
-};
-
-export declare function deviceMetric(props: DeviceMetric_DeviceMetric_Props);;
-
-export declare function deviceMetric<T extends keyof DeviceMetric__lookups>(type: T, props: DeviceMetric__lookups[T]);;
-
-type DeviceRequest_DeviceRequest_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * External Request identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * Instantiates FHIR protocol or definition
-     *  */
-    instantiatesCanonical: any;
-    /**
-     * Instantiates external protocol or definition
-     *  */
-    instantiatesUri: string;
-    /**
-     * What request fulfills
-     *  */
-    basedOn: Reference;
-    /**
-     * What request replaces
-     *  */
-    priorRequest: Reference;
-    /**
-     * Identifier of composite request
-     *  */
-    groupIdentifier: Identifier;
-    /**
-     * draft | active | on-hold | revoked | completed | entered-in-error | unknown
-     *  */
-    status: string;
-    /**
-     * proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
-     *  */
-    intent: string;
-    /**
-     * routine | urgent | asap | stat
-     *  */
-    priority: string;
-    /**
-     * Device requested
-     *  */
-    code: Reference;
-    /**
-     * Device details
-     *  */
-    parameter: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Device detail
-         *  */
-        code: CodeableConcept;
-        /**
-         * Value of detail
-         *  */
-        value: CodeableConcept;
-    };
-    /**
-     * Focus of request
-     *  */
-    subject: Reference;
-    /**
-     * Encounter motivating request
-     *  */
-    encounter: Reference;
-    /**
-     * Desired time or schedule for use
-     *  */
-    occurrence: string;
-    /**
-     * When recorded
-     *  */
-    authoredOn: string;
-    /**
-     * Who/what is requesting diagnostics
-     *  */
-    requester: Reference;
-    /**
-     * Filler role
-     *  */
-    performerType: CodeableConcept;
-    /**
-     * Requested Filler
-     *  */
-    performer: Reference;
-    /**
-     * Coded Reason for request
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Linked Reason for request
-     *  */
-    reasonReference: Reference;
-    /**
-     * Associated insurance coverage
-     *  */
-    insurance: Reference;
-    /**
-     * Additional clinical information
-     *  */
-    supportingInfo: Reference;
-    /**
-     * Notes or comments
-     *  */
-    note: Annotation;
-    /**
-     * Request provenance
-     *  */
-    relevantHistory: Reference;
-};
-
-type DeviceRequest__lookups = {
-    "DeviceRequest": DeviceRequest_DeviceRequest_Props;
-};
-
-export declare function deviceRequest(props: DeviceRequest_DeviceRequest_Props);;
-
-export declare function deviceRequest<T extends keyof DeviceRequest__lookups>(type: T, props: DeviceRequest__lookups[T]);;
-
-type DeviceUseStatement_DeviceUseStatement_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * External identifier for this record
-     *  */
-    identifier: Identifier;
-    /**
-     * Fulfills plan, proposal or order
-     *  */
-    basedOn: Reference;
-    /**
-     * active | completed | entered-in-error +
-     *  */
-    status: string;
-    /**
-     * Patient using device
-     *  */
-    subject: Reference;
-    /**
-     * Supporting information
-     *  */
-    derivedFrom: Reference;
-    /**
-     * How often  the device was used
-     *  */
-    timing: Timing;
-    /**
-     * When statement was recorded
-     *  */
-    recordedOn: string;
-    /**
-     * Who made the statement
-     *  */
-    source: Reference;
-    /**
-     * Reference to device used
-     *  */
-    device: Reference;
-    /**
-     * Why device was used
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Why was DeviceUseStatement performed?
-     *  */
-    reasonReference: Reference;
-    /**
-     * Target body site
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * Addition details (comments, instructions)
-     *  */
-    note: Annotation;
-};
-
-type DeviceUseStatement__lookups = {
-    "DeviceUseStatement": DeviceUseStatement_DeviceUseStatement_Props;
-};
-
-export declare function deviceUseStatement(props: DeviceUseStatement_DeviceUseStatement_Props);;
-
-export declare function deviceUseStatement<T extends keyof DeviceUseStatement__lookups>(type: T, props: DeviceUseStatement__lookups[T]);;
-
-type DiagnosticReport_DiagnosticReport_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business identifier for report
-     *  */
-    identifier: Identifier;
-    /**
-     * What was requested
-     *  */
-    basedOn: Reference;
-    /**
-     * registered | partial | preliminary | final +
-     *  */
-    status: string;
-    /**
-     * Service category
-     *  */
-    category: CodeableConcept;
-    /**
-     * Name/Code for this diagnostic report
-     *  */
-    code: CodeableConcept;
-    /**
-     * The subject of the report - usually, but not always, the patient
-     *  */
-    subject: Reference;
-    /**
-     * Health care event when test ordered
-     *  */
-    encounter: Reference;
-    /**
-     * Clinically relevant time/time-period for report
-     *  */
-    effective: string;
-    /**
-     * DateTime this version was made
-     *  */
-    issued: string;
-    /**
-     * Responsible Diagnostic Service
-     *  */
-    performer: Reference;
-    /**
-     * Primary result interpreter
-     *  */
-    resultsInterpreter: Reference;
-    /**
-     * Specimens this report is based on
-     *  */
-    specimen: Reference;
-    /**
-     * Observations
-     *  */
-    result: Reference;
-    /**
-     * Reference to full details of imaging associated with the diagnostic report
-     *  */
-    imagingStudy: Reference;
-    /**
-     * Key images associated with this report
-     *  */
-    media: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Comment about the image (e.g. explanation)
-         *  */
-        comment: string;
-        /**
-         * Reference to the image source
-         *  */
-        link: Reference;
-    };
-    /**
-     * Clinical conclusion (interpretation) of test results
-     *  */
-    conclusion: string;
-    /**
-     * Codes for the clinical conclusion of test results
-     *  */
-    conclusionCode: CodeableConcept;
-    /**
-     * Entire report as issued
-     *  */
-    presentedForm: Attachment;
-};
-
-type DiagnosticReport__lookups = {
-    "DiagnosticReport": DiagnosticReport_DiagnosticReport_Props;
-};
-
-export declare function diagnosticReport(props: DiagnosticReport_DiagnosticReport_Props);;
-
-export declare function diagnosticReport<T extends keyof DiagnosticReport__lookups>(type: T, props: DiagnosticReport__lookups[T]);;
-
-type DomainResource_DomainResource_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-};
-
-type DomainResource__lookups = {
-    "DomainResource": DomainResource_DomainResource_Props;
-};
-
-export declare function domainResource(props: DomainResource_DomainResource_Props);;
-
-export declare function domainResource<T extends keyof DomainResource__lookups>(type: T, props: DomainResource__lookups[T]);;
-
-type Encounter_Encounter_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Identifier(s) by which this encounter is known
-     *  */
-    identifier: Identifier;
-    /**
-     * planned | arrived | triaged | in-progress | onleave | finished | cancelled +
-     *  */
-    status: string;
-    /**
-     * List of past encounter statuses
-     *  */
-    statusHistory: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * planned | arrived | triaged | in-progress | onleave | finished | cancelled +
-         *  */
-        status: string;
-        /**
-         * The time that the episode was in the specified status
-         *  */
-        period: Period;
-    };
-    /**
-     * Classification of patient encounter
-     *  */
-    class: Coding;
-    /**
-     * List of past encounter classes
-     *  */
-    classHistory: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * inpatient | outpatient | ambulatory | emergency +
-         *  */
-        class: Coding;
-        /**
-         * The time that the episode was in the specified class
-         *  */
-        period: Period;
-    };
-    /**
-     * Specific type of encounter
-     *  */
-    type: CodeableConcept;
-    /**
-     * Specific type of service
-     *  */
-    serviceType: CodeableConcept;
-    /**
-     * Indicates the urgency of the encounter
-     *  */
-    priority: CodeableConcept;
-    /**
-     * The patient or group present at the encounter
-     *  */
-    subject: Reference;
-    /**
-     * Episode(s) of care that this encounter should be recorded against
-     *  */
-    episodeOfCare: Reference;
-    /**
-     * The ServiceRequest that initiated this encounter
-     *  */
-    basedOn: Reference;
-    /**
-     * List of participants involved in the encounter
-     *  */
-    participant: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Role of participant in encounter
-         *  */
-        type: CodeableConcept;
-        /**
-         * Period of time during the encounter that the participant participated
-         *  */
-        period: Period;
-        /**
-         * Persons involved in the encounter other than the patient
-         *  */
-        individual: Reference;
-    };
-    /**
-     * The appointment that scheduled this encounter
-     *  */
-    appointment: Reference;
-    /**
-     * The start and end time of the encounter
-     *  */
-    period: Period;
-    /**
-     * Quantity of time the encounter lasted (less time absent)
-     *  */
-    length: Duration;
-    /**
-     * Coded reason the encounter takes place
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Reason the encounter takes place (reference)
-     *  */
-    reasonReference: Reference;
-    /**
-     * The list of diagnosis relevant to this encounter
-     *  */
-    diagnosis: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The diagnosis or procedure relevant to the encounter
-         *  */
-        condition: Reference;
-        /**
-         * Role that this diagnosis has within the encounter (e.g. admission, billing, discharge …)
-         *  */
-        use: CodeableConcept;
-        /**
-         * Ranking of the diagnosis (for each role type)
-         *  */
-        rank: number;
-    };
-    /**
-     * The set of accounts that may be used for billing for this Encounter
-     *  */
-    account: Reference;
-    /**
-     * Details about the admission to a healthcare service
-     *  */
-    hospitalization: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Pre-admission identifier
-         *  */
-        preAdmissionIdentifier: Identifier;
-        /**
-         * The location/organization from which the patient came before admission
-         *  */
-        origin: Reference;
-        /**
-         * From where patient was admitted (physician referral, transfer)
-         *  */
-        admitSource: CodeableConcept;
-        /**
-         * The type of hospital re-admission that has occurred (if any). If the value is absent, then this is not identified as a readmission
-         *  */
-        reAdmission: CodeableConcept;
-        /**
-         * Diet preferences reported by the patient
-         *  */
-        dietPreference: CodeableConcept;
-        /**
-         * Special courtesies (VIP, board member)
-         *  */
-        specialCourtesy: CodeableConcept;
-        /**
-         * Wheelchair, translator, stretcher, etc.
-         *  */
-        specialArrangement: CodeableConcept;
-        /**
-         * Location/organization to which the patient is discharged
-         *  */
-        destination: Reference;
-        /**
-         * Category or kind of location after discharge
-         *  */
-        dischargeDisposition: CodeableConcept;
-    };
-    /**
-     * List of locations where the patient has been
-     *  */
-    location: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Location the encounter takes place
-         *  */
-        location: Reference;
-        /**
-         * planned | active | reserved | completed
-         *  */
-        status: string;
-        /**
-         * The physical type of the location (usually the level in the location hierachy - bed room ward etc.)
-         *  */
-        physicalType: CodeableConcept;
-        /**
-         * Time period during which the patient was present at the location
-         *  */
-        period: Period;
-    };
-    /**
-     * The organization (facility) responsible for this encounter
-     *  */
-    serviceProvider: Reference;
-    /**
-     * Another Encounter this encounter is part of
-     *  */
-    partOf: Reference;
-};
-
-type Encounter__lookups = {
-    "Encounter": Encounter_Encounter_Props;
-};
-
-export declare function encounter(props: Encounter_Encounter_Props);;
-
-export declare function encounter<T extends keyof Encounter__lookups>(type: T, props: Encounter__lookups[T]);;
-
-type Endpoint_Endpoint_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Identifies this endpoint across multiple systems
-     *  */
-    identifier: Identifier;
-    /**
-     * active | suspended | error | off | entered-in-error | test
-     *  */
-    status: string;
-    /**
-     * Protocol/Profile/Standard to be used with this endpoint connection
-     *  */
-    connectionType: Coding;
-    /**
-     * A name that this endpoint can be identified by
-     *  */
-    name: string;
-    /**
-     * Organization that manages this endpoint (might not be the organization that exposes the endpoint)
-     *  */
-    managingOrganization: Reference;
-    /**
-     * Contact details for source (e.g. troubleshooting)
-     *  */
-    contact: ContactPoint;
-    /**
-     * Interval the endpoint is expected to be operational
-     *  */
-    period: Period;
-    /**
-     * The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)
-     *  */
-    payloadType: CodeableConcept;
-    /**
-     * Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
-     *  */
-    payloadMimeType: string;
-    /**
-     * The technical base address for connecting to this endpoint
-     *  */
-    address: url;
-    /**
-     * Usage depends on the channel type
-     *  */
-    header: string;
-};
-
-type Endpoint__lookups = {
-    "Endpoint": Endpoint_Endpoint_Props;
-};
-
-export declare function endpoint(props: Endpoint_Endpoint_Props);;
-
-export declare function endpoint<T extends keyof Endpoint__lookups>(type: T, props: Endpoint__lookups[T]);;
-
-type EnrollmentRequest_EnrollmentRequest_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * active | cancelled | draft | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Creation date
-     *  */
-    created: string;
-    /**
-     * Target
-     *  */
-    insurer: Reference;
-    /**
-     * Responsible practitioner
-     *  */
-    provider: Reference;
-    /**
-     * The subject to be enrolled
-     *  */
-    candidate: Reference;
-    /**
-     * Insurance information
-     *  */
-    coverage: Reference;
-};
-
-type EnrollmentRequest__lookups = {
-    "EnrollmentRequest": EnrollmentRequest_EnrollmentRequest_Props;
-};
-
-export declare function enrollmentRequest(props: EnrollmentRequest_EnrollmentRequest_Props);;
-
-export declare function enrollmentRequest<T extends keyof EnrollmentRequest__lookups>(type: T, props: EnrollmentRequest__lookups[T]);;
-
-type EnrollmentResponse_EnrollmentResponse_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * active | cancelled | draft | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Claim reference
-     *  */
-    request: Reference;
-    /**
-     * queued | complete | error | partial
-     *  */
-    outcome: string;
-    /**
-     * Disposition Message
-     *  */
-    disposition: string;
-    /**
-     * Creation date
-     *  */
-    created: string;
-    /**
-     * Insurer
-     *  */
-    organization: Reference;
-    /**
-     * Responsible practitioner
-     *  */
-    requestProvider: Reference;
-};
-
-type EnrollmentResponse__lookups = {
-    "EnrollmentResponse": EnrollmentResponse_EnrollmentResponse_Props;
-};
-
-export declare function enrollmentResponse(props: EnrollmentResponse_EnrollmentResponse_Props);;
-
-export declare function enrollmentResponse<T extends keyof EnrollmentResponse__lookups>(type: T, props: EnrollmentResponse__lookups[T]);;
-
-type EpisodeOfCare_EpisodeOfCare_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier(s) relevant for this EpisodeOfCare
-     *  */
-    identifier: Identifier;
-    /**
-     * planned | waitlist | active | onhold | finished | cancelled | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Past list of status codes (the current status may be included to cover the start date of the status)
-     *  */
-    statusHistory: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * planned | waitlist | active | onhold | finished | cancelled | entered-in-error
-         *  */
-        status: string;
-        /**
-         * Duration the EpisodeOfCare was in the specified status
-         *  */
-        period: Period;
-    };
-    /**
-     * Type/class  - e.g. specialist referral, disease management
-     *  */
-    type: CodeableConcept;
-    /**
-     * The list of diagnosis relevant to this episode of care
-     *  */
-    diagnosis: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Conditions/problems/diagnoses this episode of care is for
-         *  */
-        condition: Reference;
-        /**
-         * Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …)
-         *  */
-        role: CodeableConcept;
-        /**
-         * Ranking of the diagnosis (for each role type)
-         *  */
-        rank: number;
-    };
-    /**
-     * The patient who is the focus of this episode of care
-     *  */
-    patient: Reference;
-    /**
-     * Organization that assumes care
-     *  */
-    managingOrganization: Reference;
-    /**
-     * Interval during responsibility is assumed
-     *  */
-    period: Period;
-    /**
-     * Originating Referral Request(s)
-     *  */
-    referralRequest: Reference;
-    /**
-     * Care manager/care coordinator for the patient
-     *  */
-    careManager: Reference;
-    /**
-     * Other practitioners facilitating this episode of care
-     *  */
-    team: Reference;
-    /**
-     * The set of accounts that may be used for billing for this EpisodeOfCare
-     *  */
-    account: Reference;
-};
-
-type EpisodeOfCare__lookups = {
-    "EpisodeOfCare": EpisodeOfCare_EpisodeOfCare_Props;
-};
-
-export declare function episodeOfCare(props: EpisodeOfCare_EpisodeOfCare_Props);;
-
-export declare function episodeOfCare<T extends keyof EpisodeOfCare__lookups>(type: T, props: EpisodeOfCare__lookups[T]);;
-
-type EventDefinition_EventDefinition_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Canonical identifier for this event definition, represented as a URI (globally unique)
-     *  */
-    url: string;
-    /**
-     * Additional identifier for the event definition
-     *  */
-    identifier: Identifier;
-    /**
-     * Business version of the event definition
-     *  */
-    version: string;
-    /**
-     * Name for this event definition (computer friendly)
-     *  */
-    name: string;
-    /**
-     * Name for this event definition (human friendly)
-     *  */
-    title: string;
-    /**
-     * Subordinate title of the event definition
-     *  */
-    subtitle: string;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * For testing purposes, not real usage
-     *  */
-    experimental: boolean;
-    /**
-     * Type of individual the event definition is focused on
-     *  */
-    subject: CodeableConcept;
-    /**
-     * Date last changed
-     *  */
-    date: string;
-    /**
-     * Name of the publisher (organization or individual)
-     *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher
-     *  */
-    contact: ContactDetail;
-    /**
-     * Natural language description of the event definition
-     *  */
-    description: markdown;
-    /**
-     * The context that the content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * Intended jurisdiction for event definition (if applicable)
-     *  */
-    jurisdiction: CodeableConcept;
-    /**
-     * Why this event definition is defined
-     *  */
-    purpose: markdown;
-    /**
-     * Describes the clinical usage of the event definition
-     *  */
-    usage: string;
-    /**
-     * Use and/or publishing restrictions
-     *  */
-    copyright: markdown;
-    /**
-     * When the event definition was approved by publisher
-     *  */
-    approvalDate: string;
-    /**
-     * When the event definition was last reviewed
-     *  */
-    lastReviewDate: string;
-    /**
-     * When the event definition is expected to be used
-     *  */
-    effectivePeriod: Period;
-    /**
-     * E.g. Education, Treatment, Assessment, etc.
-     *  */
-    topic: CodeableConcept;
-    /**
-     * Who authored the content
-     *  */
-    author: ContactDetail;
-    /**
-     * Who edited the content
-     *  */
-    editor: ContactDetail;
-    /**
-     * Who reviewed the content
-     *  */
-    reviewer: ContactDetail;
-    /**
-     * Who endorsed the content
-     *  */
-    endorser: ContactDetail;
-    /**
-     * Additional documentation, citations, etc.
-     *  */
-    relatedArtifact: RelatedArtifact;
-    /**
-     * "when" the event occurs (multiple = 'or')
-     *  */
-    trigger: TriggerDefinition;
-};
-
-type EventDefinition__lookups = {
-    "EventDefinition": EventDefinition_EventDefinition_Props;
-};
-
-export declare function eventDefinition(props: EventDefinition_EventDefinition_Props);;
-
-export declare function eventDefinition<T extends keyof EventDefinition__lookups>(type: T, props: EventDefinition__lookups[T]);;
-
-type Evidence_Evidence_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Canonical identifier for this evidence, represented as a globally unique URI
-     *  */
-    url: string;
-    /**
-     * Additional identifier for the summary
-     *  */
-    identifier: Identifier;
-    /**
-     * Business version of this summary
-     *  */
-    version: string;
-    /**
-     * Name for this summary (human friendly)
-     *  */
-    title: string;
-    /**
-     * Citation for this evidence
-     *  */
-    citeAs: Reference;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * Date last changed
-     *  */
-    date: string;
-    /**
-     * The context that the content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * When the summary was approved by publisher
-     *  */
-    approvalDate: string;
-    /**
-     * When the summary was last reviewed
-     *  */
-    lastReviewDate: string;
-    /**
-     * Name of the publisher (organization or individual)
-     *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher
-     *  */
-    contact: ContactDetail;
-    /**
-     * Who authored the content
-     *  */
-    author: ContactDetail;
-    /**
-     * Who edited the content
-     *  */
-    editor: ContactDetail;
-    /**
-     * Who reviewed the content
-     *  */
-    reviewer: ContactDetail;
-    /**
-     * Who endorsed the content
-     *  */
-    endorser: ContactDetail;
-    /**
-     * Link or citation to artifact associated with the summary
-     *  */
-    relatedArtifact: RelatedArtifact;
-    /**
-     * Description of the particular summary
-     *  */
-    description: markdown;
-    /**
-     * Declarative description of the Evidence
-     *  */
-    assertion: markdown;
-    /**
-     * Footnotes and/or explanatory notes
-     *  */
-    note: Annotation;
-    /**
-     * Evidence variable such as population, exposure, or outcome
-     *  */
-    variableDefinition: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * A text description or summary of the variable
-         *  */
-        description: markdown;
-        /**
-         * Footnotes and/or explanatory notes
-         *  */
-        note: Annotation;
-        /**
-         * population | subpopulation | exposure | referenceExposure | measuredVariable | confounder
-         *  */
-        variableRole: CodeableConcept;
-        /**
-         * Definition of the actual variable related to the statistic(s)
-         *  */
-        observed: Reference;
-        /**
-         * Definition of the intended variable related to the Evidence
-         *  */
-        intended: Reference;
-        /**
-         * low | moderate | high | exact
-         *  */
-        directnessMatch: CodeableConcept;
-    };
-    /**
-     * The method to combine studies
-     *  */
-    synthesisType: CodeableConcept;
-    /**
-     * The type of study that produced this evidence
-     *  */
-    studyType: CodeableConcept;
-    /**
-     * Values and parameters for a single statistic
-     *  */
-    statistic: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Description of content
-         *  */
-        description: string;
-        /**
-         * Footnotes and/or explanatory notes
-         *  */
-        note: Annotation;
-        /**
-         * Type of statistic, eg relative risk
-         *  */
-        statisticType: CodeableConcept;
-        /**
-         * Associated category for categorical variable
-         *  */
-        category: CodeableConcept;
-        /**
-         * Statistic value
-         *  */
-        quantity: Quantity;
-        /**
-         * The number of events associated with the statistic
-         *  */
-        numberOfEvents: number;
-        /**
-         * The number of participants affected
-         *  */
-        numberAffected: number;
-        /**
-         * Number of participants with known results for measured variables
-         *  */
-        sampleSize: number;
-        /**
-         * Lower and upper bound values of the attribute estimate
-         *  */
-        attributeEstimate: Range;
-        /**
-         * Range of values for grouping of ordinal or polychotomous variables
-         *  */
-        modelCharacteristic: Range;
-    };
-    /**
-     * Certainty or quality of the evidence
-     *  */
-    certainty: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Textual description of certainty
-         *  */
-        description: string;
-        /**
-         * Footnotes and/or explanatory notes
-         *  */
-        note: Annotation;
-        /**
-         * Aspect of certainty being rated
-         *  */
-        type: CodeableConcept;
-        /**
-         * Assessment or judgement of the aspect
-         *  */
-        rating: CodeableConcept;
-        /**
-         * Individual or group who did the rating
-         *  */
-        rater: string;
-    };
-};
-
-type Evidence__lookups = {
-    "Evidence": Evidence_Evidence_Props;
-};
-
-export declare function evidence(props: Evidence_Evidence_Props);;
-
-export declare function evidence<T extends keyof Evidence__lookups>(type: T, props: Evidence__lookups[T]);;
-
-type EvidenceReport_EvidenceReport_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Canonical identifier for this EvidenceReport, represented as a globally unique URI
-     *  */
-    url: string;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * The context that the content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * Unique identifier for the evidence report
-     *  */
-    identifier: Identifier;
-    /**
-     * Identifiers for articles that may relate to more than one evidence report
-     *  */
-    relatedIdentifier: Identifier;
-    /**
-     * Citation for this report
-     *  */
-    citeAs: Reference;
-    /**
-     * Kind of report
-     *  */
-    type: CodeableConcept;
-    /**
-     * Used for footnotes and annotations
-     *  */
-    note: Annotation;
-    /**
-     * Link, description or reference to artifact associated with the report
-     *  */
-    relatedArtifact: RelatedArtifact;
-    /**
-     * Focus of the report
-     *  */
-    subject: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Timeframe for the characteristic
-         *  */
-        characteristic: Period;
-        /**
-         * Footnotes and/or explanatory notes
-         *  */
-        note: Annotation;
-    };
-    /**
-     * Name of the publisher (organization or individual)
-     *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher
-     *  */
-    contact: ContactDetail;
-    /**
-     * Who authored the content
-     *  */
-    author: ContactDetail;
-    /**
-     * Who edited the content
-     *  */
-    editor: ContactDetail;
-    /**
-     * Who reviewed the content
-     *  */
-    reviewer: ContactDetail;
-    /**
-     * Who endorsed the content
-     *  */
-    endorser: ContactDetail;
-    /**
-     * Relationships to other compositions/documents
-     *  */
-    relatesTo: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * replaces | amends | appends | transforms | replacedWith | amendedWith | appendedWith | transformedWith
-         *  */
-        code: string;
-        /**
-         * Target of the relationship
-         *  */
-        target: Identifier;
-    };
-    /**
-     * Composition is broken into sections
-     *  */
-    section: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Label for section (e.g. for ToC)
-         *  */
-        title: string;
-        /**
-         * Classification of section (recommended)
-         *  */
-        focus: CodeableConcept;
-        /**
-         * Classification of section by Resource
-         *  */
-        focusReference: Reference;
-        /**
-         * Who and/or what authored the section
-         *  */
-        author: Reference;
-        /**
-         * Text summary of the section, for human interpretation
-         *  */
-        text: Narrative;
-        /**
-         * working | snapshot | changes
-         *  */
-        mode: string;
-        /**
-         * Order of section entries
-         *  */
-        orderedBy: CodeableConcept;
-        /**
-         * Extensible classifiers as content
-         *  */
-        entryClassifier: CodeableConcept;
-        /**
-         * Reference to resources as content
-         *  */
-        entryReference: Reference;
-        /**
-         * Quantity as content
-         *  */
-        entryQuantity: Quantity;
-        /**
-         * Why the section is empty
-         *  */
-        emptyReason: CodeableConcept;
-    };
-};
-
-type EvidenceReport__lookups = {
-    "EvidenceReport": EvidenceReport_EvidenceReport_Props;
-};
-
-export declare function evidenceReport(props: EvidenceReport_EvidenceReport_Props);;
-
-export declare function evidenceReport<T extends keyof EvidenceReport__lookups>(type: T, props: EvidenceReport__lookups[T]);;
-
-type EvidenceVariable_EvidenceVariable_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Canonical identifier for this evidence variable, represented as a URI (globally unique)
-     *  */
-    url: string;
-    /**
-     * Additional identifier for the evidence variable
-     *  */
-    identifier: Identifier;
-    /**
-     * Business version of the evidence variable
-     *  */
-    version: string;
-    /**
-     * Name for this evidence variable (computer friendly)
-     *  */
-    name: string;
-    /**
-     * Name for this evidence variable (human friendly)
-     *  */
-    title: string;
-    /**
-     * Title for use in informal contexts
-     *  */
-    shortTitle: string;
-    /**
-     * Subordinate title of the EvidenceVariable
-     *  */
-    subtitle: string;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * Date last changed
-     *  */
-    date: string;
-    /**
-     * Natural language description of the evidence variable
-     *  */
-    description: markdown;
-    /**
-     * Used for footnotes or explanatory notes
-     *  */
-    note: Annotation;
-    /**
-     * The context that the content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * Name of the publisher (organization or individual)
-     *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher
-     *  */
-    contact: ContactDetail;
-    /**
-     * Who authored the content
-     *  */
-    author: ContactDetail;
-    /**
-     * Who edited the content
-     *  */
-    editor: ContactDetail;
-    /**
-     * Who reviewed the content
-     *  */
-    reviewer: ContactDetail;
-    /**
-     * Who endorsed the content
-     *  */
-    endorser: ContactDetail;
-    /**
-     * Additional documentation, citations, etc.
-     *  */
-    relatedArtifact: RelatedArtifact;
-    /**
-     * Actual or conceptual
-     *  */
-    actual: boolean;
-    /**
-     * intersection | union
-     *  */
-    characteristicCombination: string;
-    /**
-     * What defines the members of the evidence element
-     *  */
-    characteristic: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Natural language description of the characteristic
-         *  */
-        description: string;
-        /**
-         * What code or expression defines members?
-         *  */
-        definition: Reference;
-        /**
-         * Method used for describing characteristic
-         *  */
-        method: CodeableConcept;
-        /**
-         * Device used for determining characteristic
-         *  */
-        device: Reference;
-        /**
-         * Whether the characteristic includes or excludes members
-         *  */
-        exclude: boolean;
-        /**
-         * Used for footnotes or explanatory notes
-         *  */
-        timeFromStart: Annotation;
-        /**
-         * mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
-         *  */
-        groupMeasure: string;
-    };
-    /**
-     * continuous | dichotomous | ordinal | polychotomous
-     *  */
-    handling: string;
-    /**
-     * A grouping for ordinal or polychotomous variables
-     *  */
-    category: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Description of the grouping
-         *  */
-        name: string;
-        /**
-         * Definition of the grouping
-         *  */
-        value: CodeableConcept;
-    };
-};
-
-type EvidenceVariable__lookups = {
-    "EvidenceVariable": EvidenceVariable_EvidenceVariable_Props;
-};
-
-export declare function evidenceVariable(props: EvidenceVariable_EvidenceVariable_Props);;
-
-export declare function evidenceVariable<T extends keyof EvidenceVariable__lookups>(type: T, props: EvidenceVariable__lookups[T]);;
-
-type ExplanationOfBenefit_ExplanationOfBenefit_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for the resource
-     *  */
-    identifier: Identifier;
-    /**
-     * active | cancelled | draft | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Category or discipline
-     *  */
-    type: CodeableConcept;
-    /**
-     * More granular claim type
-     *  */
-    subType: CodeableConcept;
-    /**
-     * claim | preauthorization | predetermination
-     *  */
-    use: string;
-    /**
-     * The recipient of the products and services
-     *  */
-    patient: Reference;
-    /**
-     * Relevant time frame for the claim
-     *  */
-    billablePeriod: Period;
-    /**
-     * Response creation date
-     *  */
-    created: string;
-    /**
-     * Author of the claim
-     *  */
-    enterer: Reference;
-    /**
-     * Party responsible for reimbursement
-     *  */
-    insurer: Reference;
-    /**
-     * Party responsible for the claim
-     *  */
-    provider: Reference;
-    /**
-     * Desired processing urgency
-     *  */
-    priority: CodeableConcept;
-    /**
-     * For whom to reserve funds
-     *  */
-    fundsReserveRequested: CodeableConcept;
-    /**
-     * Funds reserved status
-     *  */
-    fundsReserve: CodeableConcept;
-    /**
-     * Prior or corollary claims
-     *  */
-    related: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Reference to the related claim
-         *  */
-        claim: Reference;
-        /**
-         * How the reference claim is related
-         *  */
-        relationship: CodeableConcept;
-        /**
-         * File or case reference
-         *  */
-        reference: Identifier;
-    };
-    /**
-     * Prescription authorizing services or products
-     *  */
-    prescription: Reference;
-    /**
-     * Original prescription if superceded by fulfiller
-     *  */
-    originalPrescription: Reference;
-    /**
-     * Recipient of benefits payable
-     *  */
-    payee: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Category of recipient
-         *  */
-        type: CodeableConcept;
-        /**
-         * Recipient reference
-         *  */
-        party: Reference;
-    };
-    /**
-     * Treatment Referral
-     *  */
-    referral: Reference;
-    /**
-     * Servicing Facility
-     *  */
-    facility: Reference;
-    /**
-     * Claim reference
-     *  */
-    claim: Reference;
-    /**
-     * Claim response reference
-     *  */
-    claimResponse: Reference;
-    /**
-     * queued | complete | error | partial
-     *  */
-    outcome: string;
-    /**
-     * Disposition Message
-     *  */
-    disposition: string;
-    /**
-     * Preauthorization reference
-     *  */
-    preAuthRef: string;
-    /**
-     * Preauthorization in-effect period
-     *  */
-    preAuthRefPeriod: Period;
-    /**
-     * Care Team members
-     *  */
-    careTeam: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Order of care team
-         *  */
-        sequence: number;
-        /**
-         * Practitioner or organization
-         *  */
-        provider: Reference;
-        /**
-         * Indicator of the lead practitioner
-         *  */
-        responsible: boolean;
-        /**
-         * Function within the team
-         *  */
-        role: CodeableConcept;
-        /**
-         * Practitioner credential or specialization
-         *  */
-        qualification: CodeableConcept;
-    };
-    /**
-     * Supporting information
-     *  */
-    supportingInfo: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Information instance identifier
-         *  */
-        sequence: number;
-        /**
-         * Classification of the supplied information
-         *  */
-        category: CodeableConcept;
-        /**
-         * Type of information
-         *  */
-        code: CodeableConcept;
-        /**
-         * When it occurred
-         *  */
-        timing: string;
-        /**
-         * Data to be provided
-         *  */
-        value: boolean;
-        /**
-         * Explanation for the information
-         *  */
-        reason: Coding;
-    };
-    /**
-     * Pertinent diagnosis information
-     *  */
-    diagnosis: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Diagnosis instance identifier
-         *  */
-        sequence: number;
-        /**
-         * Nature of illness or problem
-         *  */
-        diagnosis: CodeableConcept;
-        /**
-         * Timing or nature of the diagnosis
-         *  */
-        type: CodeableConcept;
-        /**
-         * Present on admission
-         *  */
-        onAdmission: CodeableConcept;
-        /**
-         * Package billing code
-         *  */
-        packageCode: CodeableConcept;
-    };
-    /**
-     * Clinical procedures performed
-     *  */
-    procedure: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Procedure instance identifier
-         *  */
-        sequence: number;
-        /**
-         * Category of Procedure
-         *  */
-        type: CodeableConcept;
-        /**
-         * When the procedure was performed
-         *  */
-        date: string;
-        /**
-         * Specific clinical procedure
-         *  */
-        procedure: CodeableConcept;
-        /**
-         * Unique device identifier
-         *  */
-        udi: Reference;
-    };
-    /**
-     * Precedence (primary, secondary, etc.)
-     *  */
-    precedence: number;
-    /**
-     * Patient insurance information
-     *  */
-    insurance: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Coverage to be used for adjudication
-         *  */
-        focal: boolean;
-        /**
-         * Insurance information
-         *  */
-        coverage: Reference;
-        /**
-         * Prior authorization reference number
-         *  */
-        preAuthRef: string;
-    };
-    /**
-     * Details of the event
-     *  */
-    accident: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * When the incident occurred
-         *  */
-        date: string;
-        /**
-         * The nature of the accident
-         *  */
-        type: CodeableConcept;
-        /**
-         * Where the event occurred
-         *  */
-        location: Address;
-    };
-    /**
-     * Product or service provided
-     *  */
-    item: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Item instance identifier
-         *  */
-        sequence: number;
-        /**
-         * Applicable care team members
-         *  */
-        careTeamSequence: number;
-        /**
-         * Applicable diagnoses
-         *  */
-        diagnosisSequence: number;
-        /**
-         * Applicable procedures
-         *  */
-        procedureSequence: number;
-        /**
-         * Applicable exception and supporting information
-         *  */
-        informationSequence: number;
-        /**
-         * Revenue or cost center code
-         *  */
-        revenue: CodeableConcept;
-        /**
-         * Benefit classification
-         *  */
-        category: CodeableConcept;
-        /**
-         * Billing, service, product, or drug code
-         *  */
-        productOrService: CodeableConcept;
-        /**
-         * Product or service billing modifiers
-         *  */
-        modifier: CodeableConcept;
-        /**
-         * Program the product or service is provided under
-         *  */
-        programCode: CodeableConcept;
-        /**
-         * Date or dates of service or product delivery
-         *  */
-        serviced: string;
-        /**
-         * Place of service or where product was supplied
-         *  */
-        location: CodeableConcept;
-        /**
-         * Count of products or services
-         *  */
-        quantity: Quantity;
-        /**
-         * Fee, charge or cost per item
-         *  */
-        unitPrice: Money;
-        /**
-         * Price scaling factor
-         *  */
-        factor: number;
-        /**
-         * Total item cost
-         *  */
-        net: Money;
-        /**
-         * Unique device identifier
-         *  */
-        udi: Reference;
-        /**
-         * Anatomical location
-         *  */
-        bodySite: CodeableConcept;
-        /**
-         * Anatomical sub-location
-         *  */
-        subSite: CodeableConcept;
-        /**
-         * Encounters related to this billed item
-         *  */
-        encounter: Reference;
-        /**
-         * Applicable note numbers
-         *  */
-        noteNumber: number;
-        /**
-         * Non-monitary value
-         *  */
-        adjudication: number;
-        /**
-         * Applicable note numbers
-         *  */
-        detail: number;
-    };
-    /**
-     * Insurer added line items
-     *  */
-    addItem: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Item sequence number
-         *  */
-        itemSequence: number;
-        /**
-         * Detail sequence number
-         *  */
-        detailSequence: number;
-        /**
-         * Subdetail sequence number
-         *  */
-        subDetailSequence: number;
-        /**
-         * Authorized providers
-         *  */
-        provider: Reference;
-        /**
-         * Billing, service, product, or drug code
-         *  */
-        productOrService: CodeableConcept;
-        /**
-         * Service/Product billing modifiers
-         *  */
-        modifier: CodeableConcept;
-        /**
-         * Program the product or service is provided under
-         *  */
-        programCode: CodeableConcept;
-        /**
-         * Date or dates of service or product delivery
-         *  */
-        serviced: string;
-        /**
-         * Place of service or where product was supplied
-         *  */
-        location: CodeableConcept;
-        /**
-         * Count of products or services
-         *  */
-        quantity: Quantity;
-        /**
-         * Fee, charge or cost per item
-         *  */
-        unitPrice: Money;
-        /**
-         * Price scaling factor
-         *  */
-        factor: number;
-        /**
-         * Total item cost
-         *  */
-        net: Money;
-        /**
-         * Anatomical location
-         *  */
-        bodySite: CodeableConcept;
-        /**
-         * Anatomical sub-location
-         *  */
-        subSite: CodeableConcept;
-        /**
-         * Applicable note numbers
-         *  */
-        noteNumber: number;
-        /**
-         * Applicable note numbers
-         *  */
-        detail: number;
-    };
-    /**
-     * Header-level adjudication
-     *  */
-    adjudication: any;
-    /**
-     * Adjudication totals
-     *  */
-    total: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of adjudication information
-         *  */
-        category: CodeableConcept;
-        /**
-         * Financial total for the category
-         *  */
-        amount: Money;
-    };
-    /**
-     * Payment Details
-     *  */
-    payment: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Partial or complete payment
-         *  */
-        type: CodeableConcept;
-        /**
-         * Payment adjustment for non-claim issues
-         *  */
-        adjustment: Money;
-        /**
-         * Explanation for the variance
-         *  */
-        adjustmentReason: CodeableConcept;
-        /**
-         * Expected date of payment
-         *  */
-        date: string;
-        /**
-         * Payable amount after adjustment
-         *  */
-        amount: Money;
-        /**
-         * Business identifier for the payment
-         *  */
-        identifier: Identifier;
-    };
-    /**
-     * Printed form identifier
-     *  */
-    formCode: CodeableConcept;
-    /**
-     * Printed reference or actual form
-     *  */
-    form: Attachment;
-    /**
-     * Note concerning adjudication
-     *  */
-    processNote: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Note instance identifier
-         *  */
-        number: number;
-        /**
-         * display | print | printoper
-         *  */
-        type: string;
-        /**
-         * Note explanatory text
-         *  */
-        text: string;
-        /**
-         * Language of the text
-         *  */
-        language: CodeableConcept;
-    };
-    /**
-     * When the benefits are applicable
-     *  */
-    benefitPeriod: Period;
-    /**
-     * Balance by Benefit Category
-     *  */
-    benefitBalance: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Benefit classification
-         *  */
-        category: CodeableConcept;
-        /**
-         * Excluded from the plan
-         *  */
-        excluded: boolean;
-        /**
-         * Short name for the benefit
-         *  */
-        name: string;
-        /**
-         * Description of the benefit or services covered
-         *  */
-        description: string;
-        /**
-         * In or out of network
-         *  */
-        network: CodeableConcept;
-        /**
-         * Individual or family
-         *  */
-        unit: CodeableConcept;
-        /**
-         * Annual or lifetime
-         *  */
-        term: CodeableConcept;
-        /**
-         * Benefits used
-         *  */
-        financial: number;
-    };
-};
-
-type ExplanationOfBenefit__lookups = {
-    "ExplanationOfBenefit": ExplanationOfBenefit_ExplanationOfBenefit_Props;
-};
-
-export declare function explanationOfBenefit(props: ExplanationOfBenefit_ExplanationOfBenefit_Props);;
-
-export declare function explanationOfBenefit<T extends keyof ExplanationOfBenefit__lookups>(type: T, props: ExplanationOfBenefit__lookups[T]);;
-
-type FamilyMemberHistory_FamilyMemberHistory_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * External Id(s) for this record
-     *  */
-    identifier: Identifier;
-    /**
-     * Instantiates FHIR protocol or definition
-     *  */
-    instantiatesCanonical: any;
-    /**
-     * Instantiates external protocol or definition
-     *  */
-    instantiatesUri: string;
-    /**
-     * partial | completed | entered-in-error | health-unknown
-     *  */
-    status: string;
-    /**
-     * subject-unknown | withheld | unable-to-obtain | deferred
-     *  */
-    dataAbsentReason: CodeableConcept;
-    /**
-     * Patient history is about
-     *  */
-    patient: Reference;
-    /**
-     * When history was recorded or last updated
-     *  */
-    date: string;
-    /**
-     * The family member described
-     *  */
-    name: string;
-    /**
-     * Relationship to the subject
-     *  */
-    relationship: CodeableConcept;
-    /**
-     * male | female | other | unknown
-     *  */
-    sex: CodeableConcept;
-    /**
-     * (approximate) date of birth
-     *  */
-    born: Period;
-    /**
-     * (approximate) age
-     *  */
-    age: Age;
-    /**
-     * Age is estimated?
-     *  */
-    estimatedAge: boolean;
-    /**
-     * Dead? How old/when?
-     *  */
-    deceased: boolean;
-    /**
-     * Why was family member history performed?
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Why was family member history performed?
-     *  */
-    reasonReference: Reference;
-    /**
-     * General note about related person
-     *  */
-    note: Annotation;
-    /**
-     * Condition that the related person had
-     *  */
-    condition: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Condition suffered by relation
-         *  */
-        code: CodeableConcept;
-        /**
-         * deceased | permanent disability | etc.
-         *  */
-        outcome: CodeableConcept;
-        /**
-         * Whether the condition contributed to the cause of death
-         *  */
-        contributedToDeath: boolean;
-        /**
-         * When condition first manifested
-         *  */
-        onset: Age;
-        /**
-         * Extra information about condition
-         *  */
-        note: Annotation;
-    };
-};
-
-type FamilyMemberHistory__lookups = {
-    "FamilyMemberHistory": FamilyMemberHistory_FamilyMemberHistory_Props;
-};
-
-export declare function familyMemberHistory(props: FamilyMemberHistory_FamilyMemberHistory_Props);;
-
-export declare function familyMemberHistory<T extends keyof FamilyMemberHistory__lookups>(type: T, props: FamilyMemberHistory__lookups[T]);;
-
-type Flag_Flag_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * active | inactive | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Clinical, administrative, etc.
-     *  */
-    category: CodeableConcept;
-    /**
-     * Coded or textual message to display to user
-     *  */
-    code: CodeableConcept;
-    /**
-     * Who/What is flag about?
-     *  */
-    subject: Reference;
-    /**
-     * Time period when flag is active
-     *  */
-    period: Period;
-    /**
-     * Alert relevant during encounter
-     *  */
-    encounter: Reference;
-    /**
-     * Flag creator
-     *  */
-    author: Reference;
-};
-
-type Flag__lookups = {
-    "Flag": Flag_Flag_Props;
-};
-
-export declare function flag(props: Flag_Flag_Props);;
-
-export declare function flag<T extends keyof Flag__lookups>(type: T, props: Flag__lookups[T]);;
-
-type Goal_Goal_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * External Ids for this goal
-     *  */
-    identifier: Identifier;
-    /**
-     * proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected
-     *  */
-    lifecycleStatus: string;
-    /**
-     * in-progress | improving | worsening | no-change | achieved | sustaining | not-achieved | no-progress | not-attainable
-     *  */
-    achievementStatus: CodeableConcept;
-    /**
-     * E.g. Treatment, dietary, behavioral, etc.
-     *  */
-    category: CodeableConcept;
-    /**
-     * high-priority | medium-priority | low-priority
-     *  */
-    priority: CodeableConcept;
-    /**
-     * Code or text describing goal
-     *  */
-    description: CodeableConcept;
-    /**
-     * Who this goal is intended for
-     *  */
-    subject: Reference;
-    /**
-     * When goal pursuit begins
-     *  */
-    start: string;
-    /**
-     * Target outcome for the goal
-     *  */
-    target: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The parameter whose value is being tracked
-         *  */
-        measure: CodeableConcept;
-        /**
-         * The target value to be achieved
-         *  */
-        detail: Quantity;
-        /**
-         * Reach goal on or before
-         *  */
-        due: string;
-    };
-    /**
-     * When goal status took effect
-     *  */
-    statusDate: string;
-    /**
-     * Reason for current status
-     *  */
-    statusReason: string;
-    /**
-     * Who's responsible for creating Goal?
-     *  */
-    expressedBy: Reference;
-    /**
-     * Issues addressed by this goal
-     *  */
-    addresses: Reference;
-    /**
-     * Comments about the goal
-     *  */
-    note: Annotation;
-    /**
-     * What result was achieved regarding the goal?
-     *  */
-    outcomeCode: CodeableConcept;
-    /**
-     * Observation that resulted from goal
-     *  */
-    outcomeReference: Reference;
-};
-
-type Goal__lookups = {
-    "Goal": Goal_Goal_Props;
-};
-
-export declare function goal(props: Goal_Goal_Props);;
-
-export declare function goal<T extends keyof Goal__lookups>(type: T, props: Goal__lookups[T]);;
-
-type Group_Group_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Unique id
-     *  */
-    identifier: Identifier;
-    /**
-     * Whether this group's record is in active use
-     *  */
-    active: boolean;
-    /**
-     * person | animal | practitioner | device | medication | substance
-     *  */
-    type: string;
-    /**
-     * Descriptive or actual
-     *  */
-    actual: boolean;
-    /**
-     * Kind of Group members
-     *  */
-    code: CodeableConcept;
-    /**
-     * Label for Group
-     *  */
-    name: string;
-    /**
-     * Number of members
-     *  */
-    quantity: number;
-    /**
-     * Entity that is the custodian of the Group's definition
-     *  */
-    managingEntity: Reference;
-    /**
-     * Include / Exclude group members by Trait
-     *  */
-    characteristic: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Kind of characteristic
-         *  */
-        code: CodeableConcept;
-        /**
-         * Value held by characteristic
-         *  */
-        value: CodeableConcept;
-        /**
-         * Group includes or excludes
-         *  */
-        exclude: boolean;
-        /**
-         * Period over which characteristic is tested
-         *  */
-        period: Period;
-    };
-    /**
-     * Who or what is in group
-     *  */
-    member: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Reference to the group member
-         *  */
-        entity: Reference;
-        /**
-         * Period member belonged to the group
-         *  */
-        period: Period;
-        /**
-         * If member is no longer in group
-         *  */
-        inactive: boolean;
-    };
-};
-
-type Group__lookups = {
-    "Group": Group_Group_Props;
-};
-
-export declare function group(props: Group_Group_Props);;
-
-export declare function group<T extends keyof Group__lookups>(type: T, props: Group__lookups[T]);;
-
-type GuidanceResponse_GuidanceResponse_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * The identifier of the request associated with this response, if any
-     *  */
-    requestIdentifier: Identifier;
-    /**
-     * Business identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * What guidance was requested
-     *  */
-    module: string;
-    /**
-     * success | data-requested | data-required | in-progress | failure | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Patient the request was performed for
-     *  */
-    subject: Reference;
-    /**
-     * Encounter during which the response was returned
-     *  */
-    encounter: Reference;
-    /**
-     * When the guidance response was processed
-     *  */
-    occurrenceDateTime: string;
-    /**
-     * Device returning the guidance
-     *  */
-    performer: Reference;
-    /**
-     * Why guidance is needed
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Why guidance is needed
-     *  */
-    reasonReference: Reference;
-    /**
-     * Additional notes about the response
-     *  */
-    note: Annotation;
-    /**
-     * Messages resulting from the evaluation of the artifact or artifacts
-     *  */
-    evaluationMessage: Reference;
-    /**
-     * The output parameters of the evaluation, if any
-     *  */
-    outputParameters: Reference;
-    /**
-     * Proposed actions, if any
-     *  */
-    result: Reference;
-    /**
-     * Additional required data
-     *  */
-    dataRequirement: DataRequirement;
-};
-
-type GuidanceResponse__lookups = {
-    "GuidanceResponse": GuidanceResponse_GuidanceResponse_Props;
-};
-
-export declare function guidanceResponse(props: GuidanceResponse_GuidanceResponse_Props);;
-
-export declare function guidanceResponse<T extends keyof GuidanceResponse__lookups>(type: T, props: GuidanceResponse__lookups[T]);;
-
-type HealthcareService_HealthcareService_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * External identifiers for this item
-     *  */
-    identifier: Identifier;
-    /**
-     * Whether this HealthcareService record is in active use
-     *  */
-    active: boolean;
-    /**
-     * Organization that provides this service
-     *  */
-    providedBy: Reference;
-    /**
-     * Broad category of service being performed or delivered
-     *  */
-    category: CodeableConcept;
-    /**
-     * Type of service that may be delivered or performed
-     *  */
-    type: CodeableConcept;
-    /**
-     * Specialties handled by the HealthcareService
-     *  */
-    specialty: CodeableConcept;
-    /**
-     * Location(s) where service may be provided
-     *  */
-    location: Reference;
-    /**
-     * Description of service as presented to a consumer while searching
-     *  */
-    name: string;
-    /**
-     * Additional description and/or any specific issues not covered elsewhere
-     *  */
-    comment: string;
-    /**
-     * Extra details about the service that can't be placed in the other fields
-     *  */
-    extraDetails: markdown;
-    /**
-     * Facilitates quick identification of the service
-     *  */
-    photo: Attachment;
-    /**
-     * Contacts related to the healthcare service
-     *  */
-    telecom: ContactPoint;
-    /**
-     * Location(s) service is intended for/available to
-     *  */
-    coverageArea: Reference;
-    /**
-     * Conditions under which service is available/offered
-     *  */
-    serviceProvisionCode: CodeableConcept;
-    /**
-     * Specific eligibility requirements required to use the service
-     *  */
-    eligibility: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Coded value for the eligibility
-         *  */
-        code: CodeableConcept;
-        /**
-         * Describes the eligibility conditions for the service
-         *  */
-        comment: markdown;
-    };
-    /**
-     * Programs that this service is applicable to
-     *  */
-    program: CodeableConcept;
-    /**
-     * Collection of characteristics (attributes)
-     *  */
-    characteristic: CodeableConcept;
-    /**
-     * The language that this service is offered in
-     *  */
-    communication: CodeableConcept;
-    /**
-     * Ways that the service accepts referrals
-     *  */
-    referralMethod: CodeableConcept;
-    /**
-     * If an appointment is required for access to this service
-     *  */
-    appointmentRequired: boolean;
-    /**
-     * Times the Service Site is available
-     *  */
-    availableTime: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * mon | tue | wed | thu | fri | sat | sun
-         *  */
-        daysOfWeek: string;
-        /**
-         * Always available? e.g. 24 hour service
-         *  */
-        allDay: boolean;
-        /**
-         * Opening time of day (ignored if allDay = true)
-         *  */
-        availableStartTime: time;
-        /**
-         * Closing time of day (ignored if allDay = true)
-         *  */
-        availableEndTime: time;
-    };
-    /**
-     * Not available during this time due to provided reason
-     *  */
-    notAvailable: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Reason presented to the user explaining why time not available
-         *  */
-        description: string;
-        /**
-         * Service not available from this date
-         *  */
-        during: Period;
-    };
-    /**
-     * Description of availability exceptions
-     *  */
-    availabilityExceptions: string;
-    /**
-     * Technical endpoints providing access to electronic services operated for the healthcare service
-     *  */
-    endpoint: Reference;
-};
-
-type HealthcareService__lookups = {
-    "HealthcareService": HealthcareService_HealthcareService_Props;
-};
-
-export declare function healthcareService(props: HealthcareService_HealthcareService_Props);;
-
-export declare function healthcareService<T extends keyof HealthcareService__lookups>(type: T, props: HealthcareService__lookups[T]);;
-
-type ImagingStudy_ImagingStudy_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Identifiers for the whole study
-     *  */
-    identifier: Identifier;
-    /**
-     * registered | available | cancelled | entered-in-error | unknown
-     *  */
-    status: string;
-    /**
-     * All series modality if actual acquisition modalities
-     *  */
-    modality: Coding;
-    /**
-     * Who or what is the subject of the study
-     *  */
-    subject: Reference;
-    /**
-     * Encounter with which this imaging study is associated
-     *  */
-    encounter: Reference;
-    /**
-     * When the study was started
-     *  */
-    started: string;
-    /**
-     * Request fulfilled
-     *  */
-    basedOn: Reference;
-    /**
-     * Referring physician
-     *  */
-    referrer: Reference;
-    /**
-     * Who interpreted images
-     *  */
-    interpreter: Reference;
-    /**
-     * Study access endpoint
-     *  */
-    endpoint: Reference;
-    /**
-     * Number of Study Related Series
-     *  */
-    numberOfSeries: number;
-    /**
-     * Number of Study Related Instances
-     *  */
-    numberOfInstances: number;
-    /**
-     * The performed Procedure reference
-     *  */
-    procedureReference: Reference;
-    /**
-     * The performed procedure code
-     *  */
-    procedureCode: CodeableConcept;
-    /**
-     * Where ImagingStudy occurred
-     *  */
-    location: Reference;
-    /**
-     * Why the study was requested
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Why was study performed
-     *  */
-    reasonReference: Reference;
-    /**
-     * User-defined comments
-     *  */
-    note: Annotation;
-    /**
-     * Institution-generated description
-     *  */
-    description: string;
-    /**
-     * Each study has one or more series of instances
-     *  */
-    series: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * DICOM Series Instance UID for the series
-         *  */
-        uid: string;
-        /**
-         * Numeric identifier of this series
-         *  */
-        number: number;
-        /**
-         * The modality of the instances in the series
-         *  */
-        modality: Coding;
-        /**
-         * A short human readable summary of the series
-         *  */
-        description: string;
-        /**
-         * Number of Series Related Instances
-         *  */
-        numberOfInstances: number;
-        /**
-         * Series access endpoint
-         *  */
-        endpoint: Reference;
-        /**
-         * Body part examined
-         *  */
-        bodySite: Coding;
-        /**
-         * Body part laterality
-         *  */
-        laterality: Coding;
-        /**
-         * Specimen imaged
-         *  */
-        specimen: Reference;
-        /**
-         * When the series started
-         *  */
-        started: string;
-        /**
-         * Who performed the series
-         *  */
-        performer: Reference;
-        /**
-         * Description of instance
-         *  */
-        instance: string;
-    };
-};
-
-type ImagingStudy__lookups = {
-    "ImagingStudy": ImagingStudy_ImagingStudy_Props;
-};
-
-export declare function imagingStudy(props: ImagingStudy_ImagingStudy_Props);;
-
-export declare function imagingStudy<T extends keyof ImagingStudy__lookups>(type: T, props: ImagingStudy__lookups[T]);;
-
-type Immunization_Immunization_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * completed | entered-in-error | not-done
-     *  */
-    status: string;
-    /**
-     * Reason not done
-     *  */
-    statusReason: CodeableConcept;
-    /**
-     * Vaccine product administered
-     *  */
-    vaccineCode: CodeableConcept;
-    /**
-     * Who was immunized
-     *  */
-    patient: Reference;
-    /**
-     * Encounter immunization was part of
-     *  */
-    encounter: Reference;
-    /**
-     * Vaccine administration date
-     *  */
-    occurrence: string;
-    /**
-     * When the immunization was first captured in the subject's record
-     *  */
-    recorded: string;
-    /**
-     * Indicates context the data was recorded in
-     *  */
-    primarySource: boolean;
-    /**
-     * Indicates the source of a secondarily reported record
-     *  */
-    reportOrigin: CodeableConcept;
-    /**
-     * Where immunization occurred
-     *  */
-    location: Reference;
-    /**
-     * Vaccine manufacturer
-     *  */
-    manufacturer: Reference;
-    /**
-     * Vaccine lot number
-     *  */
-    lotNumber: string;
-    /**
-     * Vaccine expiration date
-     *  */
-    expirationDate: string;
-    /**
-     * Body site vaccine  was administered
-     *  */
-    site: CodeableConcept;
-    /**
-     * How vaccine entered body
-     *  */
-    route: CodeableConcept;
-    /**
-     * Amount of vaccine administered
-     *  */
-    doseQuantity: Quantity;
-    /**
-     * Who performed event
-     *  */
-    performer: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * What type of performance was done
-         *  */
-        function: CodeableConcept;
-        /**
-         * Individual or organization who was performing
-         *  */
-        actor: Reference;
-    };
-    /**
-     * Additional immunization notes
-     *  */
-    note: Annotation;
-    /**
-     * Why immunization occurred
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Why immunization occurred
-     *  */
-    reasonReference: Reference;
-    /**
-     * Dose potency
-     *  */
-    isSubpotent: boolean;
-    /**
-     * Reason for being subpotent
-     *  */
-    subpotentReason: CodeableConcept;
-    /**
-     * Educational material presented to patient
-     *  */
-    education: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Educational material document identifier
-         *  */
-        documentType: string;
-        /**
-         * Educational material reference pointer
-         *  */
-        reference: string;
-        /**
-         * Educational material publication date
-         *  */
-        publicationDate: string;
-        /**
-         * Educational material presentation date
-         *  */
-        presentationDate: string;
-    };
-    /**
-     * Patient eligibility for a vaccination program
-     *  */
-    programEligibility: CodeableConcept;
-    /**
-     * Funding source for the vaccine
-     *  */
-    fundingSource: CodeableConcept;
-    /**
-     * Details of a reaction that follows immunization
-     *  */
-    reaction: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * When reaction started
-         *  */
-        date: string;
-        /**
-         * Additional information on reaction
-         *  */
-        detail: Reference;
-        /**
-         * Indicates self-reported reaction
-         *  */
-        reported: boolean;
-    };
-    /**
-     * Protocol followed by the provider
-     *  */
-    protocolApplied: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Name of vaccine series
-         *  */
-        series: string;
-        /**
-         * Who is responsible for publishing the recommendations
-         *  */
-        authority: Reference;
-        /**
-         * Vaccine preventatable disease being targetted
-         *  */
-        targetDisease: CodeableConcept;
-        /**
-         * Dose number within series
-         *  */
-        doseNumber: number;
-        /**
-         * Recommended number of doses for immunity
-         *  */
-        seriesDoses: number;
-    };
-};
-
-type Immunization__lookups = {
-    "Immunization": Immunization_Immunization_Props;
-};
-
-export declare function immunization(props: Immunization_Immunization_Props);;
-
-export declare function immunization<T extends keyof Immunization__lookups>(type: T, props: Immunization__lookups[T]);;
-
-type ImmunizationEvaluation_ImmunizationEvaluation_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * completed | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Who this evaluation is for
-     *  */
-    patient: Reference;
-    /**
-     * Date evaluation was performed
-     *  */
-    date: string;
-    /**
-     * Who is responsible for publishing the recommendations
-     *  */
-    authority: Reference;
-    /**
-     * Evaluation target disease
-     *  */
-    targetDisease: CodeableConcept;
-    /**
-     * Immunization being evaluated
-     *  */
-    immunizationEvent: Reference;
-    /**
-     * Status of the dose relative to published recommendations
-     *  */
-    doseStatus: CodeableConcept;
-    /**
-     * Reason for the dose status
-     *  */
-    doseStatusReason: CodeableConcept;
-    /**
-     * Evaluation notes
-     *  */
-    description: string;
-    /**
-     * Name of vaccine series
-     *  */
-    series: string;
-    /**
-     * Dose number within series
-     *  */
-    doseNumber: number;
-    /**
-     * Recommended number of doses for immunity
-     *  */
-    seriesDoses: number;
-};
-
-type ImmunizationEvaluation__lookups = {
-    "ImmunizationEvaluation": ImmunizationEvaluation_ImmunizationEvaluation_Props;
-};
-
-export declare function immunizationEvaluation(props: ImmunizationEvaluation_ImmunizationEvaluation_Props);;
-
-export declare function immunizationEvaluation<T extends keyof ImmunizationEvaluation__lookups>(type: T, props: ImmunizationEvaluation__lookups[T]);;
-
-type ImmunizationRecommendation_ImmunizationRecommendation_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * Who this profile is for
-     *  */
-    patient: Reference;
-    /**
-     * Date recommendation(s) created
-     *  */
-    date: string;
-    /**
-     * Who is responsible for protocol
-     *  */
-    authority: Reference;
-    /**
-     * Vaccine administration recommendations
-     *  */
-    recommendation: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Vaccine  or vaccine group recommendation applies to
-         *  */
-        vaccineCode: CodeableConcept;
-        /**
-         * Disease to be immunized against
-         *  */
-        targetDisease: CodeableConcept;
-        /**
-         * Vaccine which is contraindicated to fulfill the recommendation
-         *  */
-        contraindicatedVaccineCode: CodeableConcept;
-        /**
-         * Vaccine recommendation status
-         *  */
-        forecastStatus: CodeableConcept;
-        /**
-         * Vaccine administration status reason
-         *  */
-        forecastReason: CodeableConcept;
-        /**
-         * Recommended date
-         *  */
-        dateCriterion: string;
-        /**
-         * Protocol details
-         *  */
-        description: string;
-        /**
-         * Name of vaccination series
-         *  */
-        series: string;
-        /**
-         * Recommended dose number within series
-         *  */
-        doseNumber: number;
-        /**
-         * Recommended number of doses for immunity
-         *  */
-        seriesDoses: number;
-        /**
-         * Past immunizations supporting recommendation
-         *  */
-        supportingImmunization: Reference;
-        /**
-         * Patient observations supporting recommendation
-         *  */
-        supportingPatientInformation: Reference;
-    };
-};
-
-type ImmunizationRecommendation__lookups = {
-    "ImmunizationRecommendation": ImmunizationRecommendation_ImmunizationRecommendation_Props;
-};
-
-export declare function immunizationRecommendation(props: ImmunizationRecommendation_ImmunizationRecommendation_Props);;
-
-export declare function immunizationRecommendation<T extends keyof ImmunizationRecommendation__lookups>(type: T, props: ImmunizationRecommendation__lookups[T]);;
-
-type Ingredient_Ingredient_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * An identifier or code by which the ingredient can be referenced
-     *  */
-    identifier: Identifier;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * The product which this ingredient is a constituent part of
-     *  */
-    for: Reference;
-    /**
-     * Purpose of the ingredient within the product, e.g. active, inactive
-     *  */
-    role: CodeableConcept;
-    /**
-     * Precise action within the drug product, e.g. antioxidant, alkalizing agent
-     *  */
-    function: CodeableConcept;
-    /**
-     * If the ingredient is a known or suspected allergen
-     *  */
-    allergenicIndicator: boolean;
-    /**
-     * An organization that manufactures this ingredient
-     *  */
-    manufacturer: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * allowed | possible | actual
-         *  */
-        role: string;
-        /**
-         * An organization that manufactures this ingredient
-         *  */
-        manufacturer: Reference;
-    };
-    /**
-     * The substance that comprises this ingredient
-     *  */
-    substance: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * A code or full resource that represents the ingredient substance
-         *  */
-        code: CodeableReference;
-        /**
-         * Where the strength range applies
-         *  */
-        strength: CodeableConcept;
-    };
-};
-
-type Ingredient__lookups = {
-    "Ingredient": Ingredient_Ingredient_Props;
-};
-
-export declare function ingredient(props: Ingredient_Ingredient_Props);;
-
-export declare function ingredient<T extends keyof Ingredient__lookups>(type: T, props: Ingredient__lookups[T]);;
-
-type InsurancePlan_InsurancePlan_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for Product
-     *  */
-    identifier: Identifier;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * Kind of product
-     *  */
-    type: CodeableConcept;
-    /**
-     * Official name
-     *  */
-    name: string;
-    /**
-     * Alternate names
-     *  */
-    alias: string;
-    /**
-     * When the product is available
-     *  */
-    period: Period;
-    /**
-     * Plan issuer
-     *  */
-    ownedBy: Reference;
-    /**
-     * Product administrator
-     *  */
-    administeredBy: Reference;
-    /**
-     * Where product applies
-     *  */
-    coverageArea: Reference;
-    /**
-     * Contact for the product
-     *  */
-    contact: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The type of contact
-         *  */
-        purpose: CodeableConcept;
-        /**
-         * A name associated with the contact
-         *  */
-        name: HumanName;
-        /**
-         * Contact details (telephone, email, etc.)  for a contact
-         *  */
-        telecom: ContactPoint;
-        /**
-         * Visiting or postal addresses for the contact
-         *  */
-        address: Address;
-    };
-    /**
-     * Technical endpoint
-     *  */
-    endpoint: Reference;
-    /**
-     * What networks are Included
-     *  */
-    network: Reference;
-    /**
-     * Coverage details
-     *  */
-    coverage: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of coverage
-         *  */
-        type: CodeableConcept;
-        /**
-         * What networks provide coverage
-         *  */
-        network: Reference;
-        /**
-         * Benefit limit details
-         *  */
-        benefit: CodeableConcept;
-    };
-    /**
-     * Plan details
-     *  */
-    plan: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Business Identifier for Product
-         *  */
-        identifier: Identifier;
-        /**
-         * Type of plan
-         *  */
-        type: CodeableConcept;
-        /**
-         * Where product applies
-         *  */
-        coverageArea: Reference;
-        /**
-         * What networks provide coverage
-         *  */
-        network: Reference;
-        /**
-         * Additional cost information
-         *  */
-        generalCost: string;
-        /**
-         * The actual cost value
-         *  */
-        specificCost: Quantity;
-    };
-};
-
-type InsurancePlan__lookups = {
-    "InsurancePlan": InsurancePlan_InsurancePlan_Props;
-};
-
-export declare function insurancePlan(props: InsurancePlan_InsurancePlan_Props);;
-
-export declare function insurancePlan<T extends keyof InsurancePlan__lookups>(type: T, props: InsurancePlan__lookups[T]);;
-
-type Invoice_Invoice_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for item
-     *  */
-    identifier: Identifier;
-    /**
-     * draft | issued | balanced | cancelled | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Reason for cancellation of this Invoice
-     *  */
-    cancelledReason: string;
-    /**
-     * Type of Invoice
-     *  */
-    type: CodeableConcept;
-    /**
-     * Recipient(s) of goods and services
-     *  */
-    subject: Reference;
-    /**
-     * Recipient of this invoice
-     *  */
-    recipient: Reference;
-    /**
-     * Invoice date / posting date
-     *  */
-    date: string;
-    /**
-     * Participant in creation of this Invoice
-     *  */
-    participant: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of involvement in creation of this Invoice
-         *  */
-        role: CodeableConcept;
-        /**
-         * Individual who was involved
-         *  */
-        actor: Reference;
-    };
-    /**
-     * Issuing Organization of Invoice
-     *  */
-    issuer: Reference;
-    /**
-     * Account that is being balanced
-     *  */
-    account: Reference;
-    /**
-     * Line items of this Invoice
-     *  */
-    lineItem: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Sequence number of line item
-         *  */
-        sequence: number;
-        /**
-         * Reference to ChargeItem containing details of this line item or an inline billing code
-         *  */
-        chargeItem: Reference;
-        /**
-         * Monetary amount associated with this component
-         *  */
-        priceComponent: Money;
-    };
-    /**
-     * Components of Invoice total
-     *  */
-    totalPriceComponent: any;
-    /**
-     * Net total of this Invoice
-     *  */
-    totalNet: Money;
-    /**
-     * Gross total of this Invoice
-     *  */
-    totalGross: Money;
-    /**
-     * Payment details
-     *  */
-    paymentTerms: markdown;
-    /**
-     * Comments made about the invoice
-     *  */
-    note: Annotation;
-};
-
-type Invoice__lookups = {
-    "Invoice": Invoice_Invoice_Props;
-};
-
-export declare function invoice(props: Invoice_Invoice_Props);;
-
-export declare function invoice<T extends keyof Invoice__lookups>(type: T, props: Invoice__lookups[T]);;
-
-type Library_Library_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Canonical identifier for this library, represented as a URI (globally unique)
-     *  */
-    url: string;
-    /**
-     * Additional identifier for the library
-     *  */
-    identifier: Identifier;
-    /**
-     * Business version of the library
-     *  */
-    version: string;
-    /**
-     * Name for this library (computer friendly)
-     *  */
-    name: string;
-    /**
-     * Name for this library (human friendly)
-     *  */
-    title: string;
-    /**
-     * Subordinate title of the library
-     *  */
-    subtitle: string;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * For testing purposes, not real usage
-     *  */
-    experimental: boolean;
-    /**
-     * logic-library | model-definition | asset-collection | module-definition
-     *  */
-    type: CodeableConcept;
-    /**
-     * Type of individual the library content is focused on
-     *  */
-    subject: CodeableConcept;
-    /**
-     * Date last changed
-     *  */
-    date: string;
-    /**
-     * Name of the publisher (organization or individual)
-     *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher
-     *  */
-    contact: ContactDetail;
-    /**
-     * Natural language description of the library
-     *  */
-    description: markdown;
-    /**
-     * The context that the content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * Intended jurisdiction for library (if applicable)
-     *  */
-    jurisdiction: CodeableConcept;
-    /**
-     * Why this library is defined
-     *  */
-    purpose: markdown;
-    /**
-     * Describes the clinical usage of the library
-     *  */
-    usage: string;
-    /**
-     * Use and/or publishing restrictions
-     *  */
-    copyright: markdown;
-    /**
-     * When the library was approved by publisher
-     *  */
-    approvalDate: string;
-    /**
-     * When the library was last reviewed
-     *  */
-    lastReviewDate: string;
-    /**
-     * When the library is expected to be used
-     *  */
-    effectivePeriod: Period;
-    /**
-     * E.g. Education, Treatment, Assessment, etc.
-     *  */
-    topic: CodeableConcept;
-    /**
-     * Who authored the content
-     *  */
-    author: ContactDetail;
-    /**
-     * Who edited the content
-     *  */
-    editor: ContactDetail;
-    /**
-     * Who reviewed the content
-     *  */
-    reviewer: ContactDetail;
-    /**
-     * Who endorsed the content
-     *  */
-    endorser: ContactDetail;
-    /**
-     * Additional documentation, citations, etc.
-     *  */
-    relatedArtifact: RelatedArtifact;
-    /**
-     * Parameters defined by the library
-     *  */
-    parameter: ParameterDefinition;
-    /**
-     * What data is referenced by this library
-     *  */
-    dataRequirement: DataRequirement;
-    /**
-     * Contents of the library, either embedded or referenced
-     *  */
-    content: Attachment;
-};
-
-type Library__lookups = {
-    "Library": Library_Library_Props;
-};
-
-export declare function library(props: Library_Library_Props);;
-
-export declare function library<T extends keyof Library__lookups>(type: T, props: Library__lookups[T]);;
-
-type List_List_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * current | retired | entered-in-error
-     *  */
-    status: string;
-    /**
-     * working | snapshot | changes
-     *  */
-    mode: string;
-    /**
-     * Descriptive name for the list
-     *  */
-    title: string;
-    /**
-     * What the purpose of this list is
-     *  */
-    code: CodeableConcept;
-    /**
-     * If all resources have the same subject
-     *  */
-    subject: Reference;
-    /**
-     * Context in which list created
-     *  */
-    encounter: Reference;
-    /**
-     * When the list was prepared
-     *  */
-    date: string;
-    /**
-     * Who and/or what defined the list contents (aka Author)
-     *  */
-    source: Reference;
-    /**
-     * What order the list has
-     *  */
-    orderedBy: CodeableConcept;
-    /**
-     * Comments about the list
-     *  */
-    note: Annotation;
-    /**
-     * Entries in the list
-     *  */
-    entry: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Status/Workflow information about this item
-         *  */
-        flag: CodeableConcept;
-        /**
-         * If this item is actually marked as deleted
-         *  */
-        deleted: boolean;
-        /**
-         * When item added to list
-         *  */
-        date: string;
-        /**
-         * Actual entry
-         *  */
-        item: Reference;
-    };
-    /**
-     * Why list is empty
-     *  */
-    emptyReason: CodeableConcept;
-};
-
-type List__lookups = {
-    "List": List_List_Props;
-};
-
-export declare function list(props: List_List_Props);;
-
-export declare function list<T extends keyof List__lookups>(type: T, props: List__lookups[T]);;
-
-type Location_Location_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Unique code or number identifying the location to its users
-     *  */
-    identifier: Identifier;
-    /**
-     * active | suspended | inactive
-     *  */
-    status: string;
-    /**
-     * The operational status of the location (typically only for a bed/room)
-     *  */
-    operationalStatus: Coding;
-    /**
-     * Name of the location as used by humans
-     *  */
-    name: string;
-    /**
-     * A list of alternate names that the location is known as, or was known as, in the past
-     *  */
-    alias: string;
-    /**
-     * Additional details about the location that could be displayed as further information to identify the location beyond its name
-     *  */
-    description: string;
-    /**
-     * instance | kind
-     *  */
-    mode: string;
-    /**
-     * Type of function performed
-     *  */
-    type: CodeableConcept;
-    /**
-     * Contact details of the location
-     *  */
-    telecom: ContactPoint;
-    /**
-     * Physical location
-     *  */
-    address: Address;
-    /**
-     * Physical form of the location
-     *  */
-    physicalType: CodeableConcept;
-    /**
-     * The absolute geographic location
-     *  */
-    position: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Longitude with WGS84 datum
-         *  */
-        longitude: number;
-        /**
-         * Latitude with WGS84 datum
-         *  */
-        latitude: number;
-        /**
-         * Altitude with WGS84 datum
-         *  */
-        altitude: number;
-    };
-    /**
-     * Organization responsible for provisioning and upkeep
-     *  */
-    managingOrganization: Reference;
-    /**
-     * Another Location this one is physically a part of
-     *  */
-    partOf: Reference;
-    /**
-     * What days/times during a week is this location usually open
-     *  */
-    hoursOfOperation: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * mon | tue | wed | thu | fri | sat | sun
-         *  */
-        daysOfWeek: string;
-        /**
-         * The Location is open all day
-         *  */
-        allDay: boolean;
-        /**
-         * Time that the Location opens
-         *  */
-        openingTime: time;
-        /**
-         * Time that the Location closes
-         *  */
-        closingTime: time;
-    };
-    /**
-     * Description of availability exceptions
-     *  */
-    availabilityExceptions: string;
-    /**
-     * Technical endpoints providing access to services operated for the location
-     *  */
-    endpoint: Reference;
-};
-
-type Location__lookups = {
-    "Location": Location_Location_Props;
-};
-
-export declare function location(props: Location_Location_Props);;
-
-export declare function location<T extends keyof Location__lookups>(type: T, props: Location__lookups[T]);;
-
-type ManufacturedItemDefinition_ManufacturedItemDefinition_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Unique identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * Dose form as manufactured (before any necessary transformation)
-     *  */
-    manufacturedDoseForm: CodeableConcept;
-    /**
-     * The “real world” units in which the quantity of the item is described
-     *  */
-    unitOfPresentation: CodeableConcept;
-    /**
-     * Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues)
-     *  */
-    manufacturer: Reference;
-    /**
-     * The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource
-     *  */
-    ingredient: CodeableConcept;
-    /**
-     * General characteristics of this item
-     *  */
-    property: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * A code expressing the type of characteristic
-         *  */
-        type: CodeableConcept;
-        /**
-         * A value for the characteristic
-         *  */
-        value: CodeableConcept;
-    };
-};
-
-type ManufacturedItemDefinition__lookups = {
-    "ManufacturedItemDefinition": ManufacturedItemDefinition_ManufacturedItemDefinition_Props;
-};
-
-export declare function manufacturedItemDefinition(props: ManufacturedItemDefinition_ManufacturedItemDefinition_Props);;
-
-export declare function manufacturedItemDefinition<T extends keyof ManufacturedItemDefinition__lookups>(type: T, props: ManufacturedItemDefinition__lookups[T]);;
-
-type Measure_Measure_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Canonical identifier for this measure, represented as a URI (globally unique)
-     *  */
-    url: string;
-    /**
-     * Additional identifier for the measure
-     *  */
-    identifier: Identifier;
-    /**
-     * Business version of the measure
-     *  */
-    version: string;
-    /**
-     * Name for this measure (computer friendly)
-     *  */
-    name: string;
-    /**
-     * Name for this measure (human friendly)
-     *  */
-    title: string;
-    /**
-     * Subordinate title of the measure
-     *  */
-    subtitle: string;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * For testing purposes, not real usage
-     *  */
-    experimental: boolean;
+    profile?: any;
     /**
      * E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
      *  */
-    subject: CodeableConcept;
+    subject?: CodeableConcept;
     /**
-     * Date last changed
+     * Indicates specific structure elements that are referenced by the knowledge module
      *  */
-    date: string;
+    mustSupport?: string;
     /**
-     * Name of the publisher (organization or individual)
+     * What codes are expected
      *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher
-     *  */
-    contact: ContactDetail;
-    /**
-     * Natural language description of the measure
-     *  */
-    description: markdown;
-    /**
-     * The context that the content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * Intended jurisdiction for measure (if applicable)
-     *  */
-    jurisdiction: CodeableConcept;
-    /**
-     * Why this measure is defined
-     *  */
-    purpose: markdown;
-    /**
-     * Describes the clinical usage of the measure
-     *  */
-    usage: string;
-    /**
-     * Use and/or publishing restrictions
-     *  */
-    copyright: markdown;
-    /**
-     * When the measure was approved by publisher
-     *  */
-    approvalDate: string;
-    /**
-     * When the measure was last reviewed
-     *  */
-    lastReviewDate: string;
-    /**
-     * When the measure is expected to be used
-     *  */
-    effectivePeriod: Period;
-    /**
-     * The category of the measure, such as Education, Treatment, Assessment, etc.
-     *  */
-    topic: CodeableConcept;
-    /**
-     * Who authored the content
-     *  */
-    author: ContactDetail;
-    /**
-     * Who edited the content
-     *  */
-    editor: ContactDetail;
-    /**
-     * Who reviewed the content
-     *  */
-    reviewer: ContactDetail;
-    /**
-     * Who endorsed the content
-     *  */
-    endorser: ContactDetail;
-    /**
-     * Additional documentation, citations, etc.
-     *  */
-    relatedArtifact: RelatedArtifact;
-    /**
-     * Logic used by the measure
-     *  */
-    library: any;
-    /**
-     * Disclaimer for use of the measure or its referenced content
-     *  */
-    disclaimer: markdown;
-    /**
-     * proportion | ratio | continuous-variable | cohort
-     *  */
-    scoring: CodeableConcept;
-    /**
-     * opportunity | all-or-nothing | linear | weighted
-     *  */
-    compositeScoring: CodeableConcept;
-    /**
-     * process | outcome | structure | patient-reported-outcome | composite
-     *  */
-    type: CodeableConcept;
-    /**
-     * How risk adjustment is applied for this measure
-     *  */
-    riskAdjustment: string;
-    /**
-     * How is rate aggregation performed for this measure
-     *  */
-    rateAggregation: string;
-    /**
-     * Detailed description of why the measure exists
-     *  */
-    rationale: markdown;
-    /**
-     * Summary of clinical guidelines
-     *  */
-    clinicalRecommendationStatement: markdown;
-    /**
-     * increase | decrease
-     *  */
-    improvementNotation: CodeableConcept;
-    /**
-     * Defined terms used in the measure documentation
-     *  */
-    definition: markdown;
-    /**
-     * Additional guidance for implementers
-     *  */
-    guidance: markdown;
-    /**
-     * Population criteria group
-     *  */
-    group: {
+    codeFilter?: {
         /**
          * Unique id for inter-element referencing
          *  */
         id: string;
         /**
-         * Extensions that cannot be ignored even if unrecognized
+         * A code-valued attribute to filter on
          *  */
-        modifierExtension: Extension;
+        path: string;
         /**
-         * Meaning of the group
+         * A coded (token) parameter to search on
          *  */
-        code: CodeableConcept;
+        searchParam: string;
         /**
-         * Summary description
+         * Valueset for the filter
          *  */
-        description: string;
+        valueSet: any;
         /**
-         * The criteria that defines this population
+         * What code is expected
          *  */
-        population: Expression;
-        /**
-         * Component of how the measure should be stratified
-         *  */
-        stratifier: Expression;
+        code: Coding;
     };
     /**
-     * What other data should be reported with the measure
+     * What dates/date ranges are expected
      *  */
-    supplementalData: {
+    dateFilter?: {
         /**
          * Unique id for inter-element referencing
          *  */
         id: string;
         /**
-         * Extensions that cannot be ignored even if unrecognized
+         * A date-valued attribute to filter on
          *  */
-        modifierExtension: Extension;
+        path: string;
         /**
-         * Meaning of the supplemental data
+         * A date valued parameter to search on
          *  */
-        code: CodeableConcept;
+        searchParam: string;
         /**
-         * supplemental-data | risk-adjustment-factor
+         * The value of the filter, as a Period, DateTime, or Duration value
          *  */
-        usage: CodeableConcept;
+        value: string;
+    };
+    /**
+     * Number of results
+     *  */
+    limit?: number;
+    /**
+     * Order of the results
+     *  */
+    sort?: {
         /**
-         * The human readable description of this supplemental data
+         * Unique id for inter-element referencing
          *  */
-        description: string;
+        id: string;
         /**
-         * Expression describing additional data to be reported
+         * The name of the attribute to perform the sort
          *  */
-        criteria: Expression;
+        path: string;
+        /**
+         * ascending | descending
+         *  */
+        direction: string;
     };
 };
-
-type Measure__lookups = {
-    "Measure": Measure_Measure_Props;
-};
-
-export declare function measure(props: Measure_Measure_Props);;
-
-export declare function measure<T extends keyof Measure__lookups>(type: T, props: Measure__lookups[T]);;
-
-type MeasureReport_MeasureReport_Props = {
+declare type Dosage = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension: Extension;
+    modifierExtension?: Extension;
     /**
-     * Additional identifier for the MeasureReport
+     * The order of the dosage instructions
      *  */
-    identifier: Identifier;
+    sequence?: number;
     /**
-     * complete | pending | error
+     * Free text dosage instructions e.g. SIG
      *  */
-    status: string;
+    text?: string;
     /**
-     * individual | subject-list | summary | data-collection
+     * Supplemental instruction or warnings to the patient - e.g. "with meals", "may cause drowsiness"
      *  */
-    type: string;
+    additionalInstruction?: CodeableConcept;
     /**
-     * What measure was calculated
+     * Patient or consumer oriented instructions
      *  */
-    measure: any;
+    patientInstruction?: string;
     /**
-     * What individual(s) the report is for
+     * When medication should be administered
      *  */
-    subject: Reference;
+    timing?: Timing;
     /**
-     * When the report was generated
+     * Take "as needed" (for x)
      *  */
-    date: string;
+    asNeeded?: boolean;
     /**
-     * Who is reporting the data
+     * Body site to administer to
      *  */
-    reporter: Reference;
+    site?: CodeableConcept;
     /**
-     * What period the report covers
+     * How drug should enter body
      *  */
-    period: Period;
+    route?: CodeableConcept;
     /**
-     * increase | decrease
+     * Technique for administering medication
      *  */
-    improvementNotation: CodeableConcept;
+    method?: CodeableConcept;
     /**
-     * Measure results for each group
+     * Amount of medication administered
      *  */
-    group: {
+    doseAndRate?: {
         /**
          * Unique id for inter-element referencing
          *  */
         id: string;
         /**
-         * Extensions that cannot be ignored even if unrecognized
+         * The kind of dose or rate specified
          *  */
-        modifierExtension: Extension;
-        /**
-         * Meaning of the group
-         *  */
-        code: CodeableConcept;
-        /**
-         * For subject-list reports, the subject results in this population
-         *  */
-        population: Reference;
-        /**
-         * What score this group achieved
-         *  */
-        measureScore: Quantity;
-        /**
-         * What score this stratum achieved
-         *  */
-        stratifier: Quantity;
-    };
-    /**
-     * What data was used to calculate the measure score
-     *  */
-    evaluatedResource: Reference;
-};
-
-type MeasureReport__lookups = {
-    "MeasureReport": MeasureReport_MeasureReport_Props;
-};
-
-export declare function measureReport(props: MeasureReport_MeasureReport_Props);;
-
-export declare function measureReport<T extends keyof MeasureReport__lookups>(type: T, props: MeasureReport__lookups[T]);;
-
-type Media_Media_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Identifier(s) for the image
-     *  */
-    identifier: Identifier;
-    /**
-     * Procedure that caused this media to be created
-     *  */
-    basedOn: Reference;
-    /**
-     * Part of referenced event
-     *  */
-    partOf: Reference;
-    /**
-     * preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
-     *  */
-    status: string;
-    /**
-     * Classification of media as image, video, or audio
-     *  */
-    type: CodeableConcept;
-    /**
-     * The type of acquisition equipment/process
-     *  */
-    modality: CodeableConcept;
-    /**
-     * Imaging view, e.g. Lateral or Antero-posterior
-     *  */
-    view: CodeableConcept;
-    /**
-     * Who/What this Media is a record of
-     *  */
-    subject: Reference;
-    /**
-     * Encounter associated with media
-     *  */
-    encounter: Reference;
-    /**
-     * When Media was collected
-     *  */
-    created: string;
-    /**
-     * Date/Time this version was made available
-     *  */
-    issued: string;
-    /**
-     * The person who generated the image
-     *  */
-    operator: Reference;
-    /**
-     * Why was event performed?
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Observed body part
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * Name of the device/manufacturer
-     *  */
-    deviceName: string;
-    /**
-     * Observing Device
-     *  */
-    device: Reference;
-    /**
-     * Height of the image in pixels (photo/video)
-     *  */
-    height: number;
-    /**
-     * Width of the image in pixels (photo/video)
-     *  */
-    width: number;
-    /**
-     * Number of frames if > 1 (photo)
-     *  */
-    frames: number;
-    /**
-     * Length in seconds (audio / video)
-     *  */
-    duration: number;
-    /**
-     * Actual Media - reference or data
-     *  */
-    content: Attachment;
-    /**
-     * Comments made about the media
-     *  */
-    note: Annotation;
-};
-
-type Media__lookups = {
-    "Media": Media_Media_Props;
-};
-
-export declare function media(props: Media_Media_Props);;
-
-export declare function media<T extends keyof Media__lookups>(type: T, props: Media__lookups[T]);;
-
-type Medication_Medication_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business identifier for this medication
-     *  */
-    identifier: Identifier;
-    /**
-     * Codes that identify this medication
-     *  */
-    code: CodeableConcept;
-    /**
-     * active | inactive | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Manufacturer of the item
-     *  */
-    manufacturer: Reference;
-    /**
-     * powder | tablets | capsule +
-     *  */
-    form: CodeableConcept;
-    /**
-     * Amount of drug in package
-     *  */
-    amount: Ratio;
-    /**
-     * Active or inactive ingredient
-     *  */
-    ingredient: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The actual ingredient or content
-         *  */
-        item: CodeableConcept;
-        /**
-         * Active ingredient indicator
-         *  */
-        isActive: boolean;
-        /**
-         * Quantity of ingredient present
-         *  */
-        strength: Ratio;
-    };
-    /**
-     * Details about packaged medications
-     *  */
-    batch: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Identifier assigned to batch
-         *  */
-        lotNumber: string;
-        /**
-         * When batch will expire
-         *  */
-        expirationDate: string;
-    };
-};
-
-type Medication__lookups = {
-    "Medication": Medication_Medication_Props;
-};
-
-export declare function medication(props: Medication_Medication_Props);;
-
-export declare function medication<T extends keyof Medication__lookups>(type: T, props: Medication__lookups[T]);;
-
-type MedicationAdministration_MedicationAdministration_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * External identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * Instantiates protocol or definition
-     *  */
-    instantiates: string;
-    /**
-     * Part of referenced event
-     *  */
-    partOf: Reference;
-    /**
-     * in-progress | not-done | on-hold | completed | entered-in-error | stopped | unknown
-     *  */
-    status: string;
-    /**
-     * Reason administration not performed
-     *  */
-    statusReason: CodeableConcept;
-    /**
-     * Type of medication usage
-     *  */
-    category: CodeableConcept;
-    /**
-     * What was administered
-     *  */
-    medication: CodeableConcept;
-    /**
-     * Who received medication
-     *  */
-    subject: Reference;
-    /**
-     * Encounter or Episode of Care administered as part of
-     *  */
-    context: Reference;
-    /**
-     * Additional information to support administration
-     *  */
-    supportingInformation: Reference;
-    /**
-     * Start and end time of administration
-     *  */
-    effective: string;
-    /**
-     * Who performed the medication administration and what they did
-     *  */
-    performer: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of performance
-         *  */
-        function: CodeableConcept;
-        /**
-         * Who performed the medication administration
-         *  */
-        actor: Reference;
-    };
-    /**
-     * Reason administration performed
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Condition or observation that supports why the medication was administered
-     *  */
-    reasonReference: Reference;
-    /**
-     * Request administration performed against
-     *  */
-    request: Reference;
-    /**
-     * Device used to administer
-     *  */
-    device: Reference;
-    /**
-     * Information about the administration
-     *  */
-    note: Annotation;
-    /**
-     * Details of how medication was taken
-     *  */
-    dosage: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Free text dosage instructions e.g. SIG
-         *  */
-        text: string;
-        /**
-         * Body site administered to
-         *  */
-        site: CodeableConcept;
-        /**
-         * Path of substance into body
-         *  */
-        route: CodeableConcept;
-        /**
-         * How drug was administered
-         *  */
-        method: CodeableConcept;
+        type: CodeableConcept;
         /**
          * Amount of medication per dose
          *  */
-        dose: Quantity;
+        dose: Range;
         /**
-         * Dose quantity per unit of time
+         * Amount of medication per unit of time
          *  */
         rate: Ratio;
     };
     /**
-     * A list of events of interest in the lifecycle
+     * Upper limit on medication per unit of time
      *  */
-    eventHistory: Reference;
+    maxDosePerPeriod?: Ratio;
+    /**
+     * Upper limit on medication per administration
+     *  */
+    maxDosePerAdministration?: Quantity;
+    /**
+     * Upper limit on medication per lifetime of the patient
+     *  */
+    maxDosePerLifetime?: Quantity;
 };
-
-type MedicationAdministration__lookups = {
-    "MedicationAdministration": MedicationAdministration_MedicationAdministration_Props;
-};
-
-export declare function medicationAdministration(props: MedicationAdministration_MedicationAdministration_Props);;
-
-export declare function medicationAdministration<T extends keyof MedicationAdministration__lookups>(type: T, props: MedicationAdministration__lookups[T]);;
-
-type MedicationDispense_MedicationDispense_Props = {
+declare type Duration = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Numerical value (with implicit precision)
      *  */
-    modifierExtension: Extension;
+    value?: number;
     /**
-     * External identifier
+     * < | <= | >= | > - how to understand the value
      *  */
-    identifier: Identifier;
+    comparator?: string;
     /**
-     * Event that dispense is part of
+     * Unit representation
      *  */
-    partOf: Reference;
+    unit?: string;
     /**
-     * preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown
+     * System that defines coded unit form
      *  */
-    status: string;
+    system?: string;
     /**
-     * Why a dispense was not performed
+     * Coded form of the unit
      *  */
-    statusReason: CodeableConcept;
-    /**
-     * Type of medication dispense
-     *  */
-    category: CodeableConcept;
-    /**
-     * What medication was supplied
-     *  */
-    medication: CodeableConcept;
-    /**
-     * Who the dispense is for
-     *  */
-    subject: Reference;
-    /**
-     * Encounter / Episode associated with event
-     *  */
-    context: Reference;
-    /**
-     * Information that supports the dispensing of the medication
-     *  */
-    supportingInformation: Reference;
-    /**
-     * Who performed event
-     *  */
-    performer: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Who performed the dispense and what they did
-         *  */
-        function: CodeableConcept;
-        /**
-         * Individual who was performing
-         *  */
-        actor: Reference;
-    };
-    /**
-     * Where the dispense occurred
-     *  */
-    location: Reference;
-    /**
-     * Medication order that authorizes the dispense
-     *  */
-    authorizingPrescription: Reference;
-    /**
-     * Trial fill, partial fill, emergency fill, etc.
-     *  */
-    type: CodeableConcept;
-    /**
-     * Amount dispensed
-     *  */
-    quantity: Quantity;
-    /**
-     * Amount of medication expressed as a timing amount
-     *  */
-    daysSupply: Quantity;
-    /**
-     * When product was packaged and reviewed
-     *  */
-    whenPrepared: string;
-    /**
-     * When product was given out
-     *  */
-    whenHandedOver: string;
-    /**
-     * Where the medication was sent
-     *  */
-    destination: Reference;
-    /**
-     * Who collected the medication
-     *  */
-    receiver: Reference;
-    /**
-     * Information about the dispense
-     *  */
-    note: Annotation;
-    /**
-     * How the medication is to be used by the patient or administered by the caregiver
-     *  */
-    dosageInstruction: Dosage;
-    /**
-     * Whether a substitution was performed on the dispense
-     *  */
-    substitution: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Whether a substitution was or was not performed on the dispense
-         *  */
-        wasSubstituted: boolean;
-        /**
-         * Code signifying whether a different drug was dispensed from what was prescribed
-         *  */
-        type: CodeableConcept;
-        /**
-         * Why was substitution made
-         *  */
-        reason: CodeableConcept;
-        /**
-         * Who is responsible for the substitution
-         *  */
-        responsibleParty: Reference;
-    };
-    /**
-     * Clinical issue with action
-     *  */
-    detectedIssue: Reference;
-    /**
-     * A list of relevant lifecycle events
-     *  */
-    eventHistory: Reference;
+    code?: string;
 };
-
-type MedicationDispense__lookups = {
-    "MedicationDispense": MedicationDispense_MedicationDispense_Props;
-};
-
-export declare function medicationDispense(props: MedicationDispense_MedicationDispense_Props);;
-
-export declare function medicationDispense<T extends keyof MedicationDispense__lookups>(type: T, props: MedicationDispense__lookups[T]);;
-
-type MedicationKnowledge_MedicationKnowledge_Props = {
+declare type Expression = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Natural language description of the condition
      *  */
-    modifierExtension: Extension;
+    description?: string;
     /**
-     * Code that identifies this medication
+     * Short name assigned to expression for reuse
      *  */
-    code: CodeableConcept;
+    name?: string;
     /**
-     * active | inactive | entered-in-error
+     * text/cql | text/fhirpath | application/x-fhir-query | text/cql-identifier | text/cql-expression | etc.
      *  */
-    status: string;
+    language?: string;
     /**
-     * Manufacturer of the item
+     * Expression in specified language
      *  */
-    manufacturer: Reference;
+    expression?: string;
     /**
-     * powder | tablets | capsule +
+     * Where the expression is found
      *  */
-    doseForm: CodeableConcept;
-    /**
-     * Amount of drug in package
-     *  */
-    amount: Quantity;
-    /**
-     * Additional names for a medication
-     *  */
-    synonym: string;
-    /**
-     * Associated or related medication information
-     *  */
-    relatedMedicationKnowledge: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Category of medicationKnowledge
-         *  */
-        type: CodeableConcept;
-        /**
-         * Associated documentation about the associated medication knowledge
-         *  */
-        reference: Reference;
-    };
-    /**
-     * A medication resource that is associated with this medication
-     *  */
-    associatedMedication: Reference;
-    /**
-     * Category of the medication or product
-     *  */
-    productType: CodeableConcept;
-    /**
-     * Associated documentation about the medication
-     *  */
-    monograph: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The category of medication document
-         *  */
-        type: CodeableConcept;
-        /**
-         * Associated documentation about the medication
-         *  */
-        source: Reference;
-    };
-    /**
-     * Active or inactive ingredient
-     *  */
-    ingredient: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Medication(s) or substance(s) contained in the medication
-         *  */
-        item: CodeableConcept;
-        /**
-         * Active ingredient indicator
-         *  */
-        isActive: boolean;
-        /**
-         * Quantity of ingredient present
-         *  */
-        strength: Ratio;
-    };
-    /**
-     * The instructions for preparing the medication
-     *  */
-    preparationInstruction: markdown;
-    /**
-     * The intended or approved route of administration
-     *  */
-    intendedRoute: CodeableConcept;
-    /**
-     * The pricing of the medication
-     *  */
-    cost: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The category of the cost information
-         *  */
-        type: CodeableConcept;
-        /**
-         * The source or owner for the price information
-         *  */
-        source: string;
-        /**
-         * The price of the medication
-         *  */
-        cost: Money;
-    };
-    /**
-     * Program under which a medication is reviewed
-     *  */
-    monitoringProgram: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of program under which the medication is monitored
-         *  */
-        type: CodeableConcept;
-        /**
-         * Name of the reviewing program
-         *  */
-        name: string;
-    };
-    /**
-     * Guidelines for administration of the medication
-     *  */
-    administrationGuidelines: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Dosage for the medication for the specific guidelines
-         *  */
-        dosage: Dosage;
-        /**
-         * Indication for use that apply to the specific administration guidelines
-         *  */
-        indication: CodeableConcept;
-        /**
-         * The specific characteristic
-         *  */
-        patientCharacteristics: string;
-    };
-    /**
-     * Categorization of the medication within a formulary or classification system
-     *  */
-    medicineClassification: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The type of category for the medication (for example, therapeutic classification, therapeutic sub-classification)
-         *  */
-        type: CodeableConcept;
-        /**
-         * Specific category assigned to the medication
-         *  */
-        classification: CodeableConcept;
-    };
-    /**
-     * Details about packaged medications
-     *  */
-    packaging: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * A code that defines the specific type of packaging that the medication can be found in
-         *  */
-        type: CodeableConcept;
-        /**
-         * The number of product units the package would contain if fully loaded
-         *  */
-        quantity: Quantity;
-    };
-    /**
-     * Specifies descriptive properties of the medicine
-     *  */
-    drugCharacteristic: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Code specifying the type of characteristic of medication
-         *  */
-        type: CodeableConcept;
-        /**
-         * Description of the characteristic
-         *  */
-        value: CodeableConcept;
-    };
-    /**
-     * Potential clinical issue with or between medication(s)
-     *  */
-    contraindication: Reference;
-    /**
-     * Regulatory information about a medication
-     *  */
-    regulatory: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Specifies the authority of the regulation
-         *  */
-        regulatoryAuthority: Reference;
-        /**
-         * Specifies if regulation allows for changes in the medication when dispensing
-         *  */
-        substitution: boolean;
-        /**
-         * Specifies the specific drug schedule
-         *  */
-        schedule: CodeableConcept;
-        /**
-         * The period that applies to the maximum number of units
-         *  */
-        maxDispense: Duration;
-    };
-    /**
-     * The time course of drug absorption, distribution, metabolism and excretion of a medication from the body
-     *  */
-    kinetics: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The drug concentration measured at certain discrete points in time
-         *  */
-        areaUnderCurve: Quantity;
-        /**
-         * The median lethal dose of a drug
-         *  */
-        lethalDose50: Quantity;
-        /**
-         * Time required for concentration in the body to decrease by half
-         *  */
-        halfLifePeriod: Duration;
-    };
+    reference?: string;
 };
-
-type MedicationKnowledge__lookups = {
-    "MedicationKnowledge": MedicationKnowledge_MedicationKnowledge_Props;
-};
-
-export declare function medicationKnowledge(props: MedicationKnowledge_MedicationKnowledge_Props);;
-
-export declare function medicationKnowledge<T extends keyof MedicationKnowledge__lookups>(type: T, props: MedicationKnowledge__lookups[T]);;
-
-type MedicationRequest_MedicationRequest_Props = {
+declare type Extension = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * identifies the meaning of the extension
      *  */
-    modifierExtension: Extension;
+    url?: string;
     /**
-     * External ids for this request
+     * Value of extension
      *  */
-    identifier: Identifier;
-    /**
-     * active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
-     *  */
-    status: string;
-    /**
-     * Reason for current status
-     *  */
-    statusReason: CodeableConcept;
-    /**
-     * proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
-     *  */
-    intent: string;
-    /**
-     * Type of medication usage
-     *  */
-    category: CodeableConcept;
-    /**
-     * routine | urgent | asap | stat
-     *  */
-    priority: string;
-    /**
-     * True if request is prohibiting action
-     *  */
-    doNotPerform: boolean;
-    /**
-     * Reported rather than primary record
-     *  */
-    reported: boolean;
-    /**
-     * Medication to be taken
-     *  */
-    medication: CodeableConcept;
-    /**
-     * Who or group medication request is for
-     *  */
-    subject: Reference;
-    /**
-     * Encounter created as part of encounter/admission/stay
-     *  */
-    encounter: Reference;
-    /**
-     * Information to support ordering of the medication
-     *  */
-    supportingInformation: Reference;
-    /**
-     * When request was initially authored
-     *  */
-    authoredOn: string;
-    /**
-     * Who/What requested the Request
-     *  */
-    requester: Reference;
-    /**
-     * Intended performer of administration
-     *  */
-    performer: Reference;
-    /**
-     * Desired kind of performer of the medication administration
-     *  */
-    performerType: CodeableConcept;
-    /**
-     * Person who entered the request
-     *  */
-    recorder: Reference;
-    /**
-     * Reason or indication for ordering or not ordering the medication
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Condition or observation that supports why the prescription is being written
-     *  */
-    reasonReference: Reference;
-    /**
-     * Instantiates FHIR protocol or definition
-     *  */
-    instantiatesCanonical: any;
-    /**
-     * Instantiates external protocol or definition
-     *  */
-    instantiatesUri: string;
-    /**
-     * What request fulfills
-     *  */
-    basedOn: Reference;
-    /**
-     * Composite request this is part of
-     *  */
-    groupIdentifier: Identifier;
-    /**
-     * Overall pattern of medication administration
-     *  */
-    courseOfTherapyType: CodeableConcept;
-    /**
-     * Associated insurance coverage
-     *  */
-    insurance: Reference;
-    /**
-     * Information about the prescription
-     *  */
-    note: Annotation;
-    /**
-     * How the medication should be taken
-     *  */
-    dosageInstruction: Dosage;
-    /**
-     * Medication supply authorization
-     *  */
-    dispenseRequest: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * First fill duration
-         *  */
-        initialFill: Duration;
-        /**
-         * Minimum period of time between dispenses
-         *  */
-        dispenseInterval: Duration;
-        /**
-         * Time period supply is authorized for
-         *  */
-        validityPeriod: Period;
-        /**
-         * Number of refills authorized
-         *  */
-        numberOfRepeatsAllowed: number;
-        /**
-         * Amount of medication to supply per dispense
-         *  */
-        quantity: Quantity;
-        /**
-         * Number of days supply per dispense
-         *  */
-        expectedSupplyDuration: Duration;
-        /**
-         * Intended dispenser
-         *  */
-        performer: Reference;
-    };
-    /**
-     * Any restrictions on medication substitution
-     *  */
-    substitution: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Whether substitution is allowed or not
-         *  */
-        allowed: boolean;
-        /**
-         * Why should (not) substitution be made
-         *  */
-        reason: CodeableConcept;
-    };
-    /**
-     * An order/prescription that is being replaced
-     *  */
-    priorPrescription: Reference;
-    /**
-     * Clinical Issue with action
-     *  */
-    detectedIssue: Reference;
-    /**
-     * A list of events of interest in the lifecycle
-     *  */
-    eventHistory: Reference;
+    value?: base64Binary;
 };
-
-type MedicationRequest__lookups = {
-    "MedicationRequest": MedicationRequest_MedicationRequest_Props;
-};
-
-export declare function medicationRequest(props: MedicationRequest_MedicationRequest_Props);;
-
-export declare function medicationRequest<T extends keyof MedicationRequest__lookups>(type: T, props: MedicationRequest__lookups[T]);;
-
-type MedicationStatement_MedicationStatement_Props = {
+declare type HumanName = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * usual | official | temp | nickname | anonymous | old | maiden
      *  */
-    modifierExtension: Extension;
+    use?: string;
     /**
-     * External identifier
+     * Text representation of the full name
      *  */
-    identifier: Identifier;
+    text?: string;
     /**
-     * Fulfils plan, proposal or order
+     * Family name (often called 'Surname')
      *  */
-    basedOn: Reference;
+    family?: string;
     /**
-     * Part of referenced event
+     * Given names (not always 'first'). Includes middle names
      *  */
-    partOf: Reference;
+    given?: string;
     /**
-     * active | completed | entered-in-error | intended | stopped | on-hold | unknown | not-taken
+     * Parts that come before the name
      *  */
-    status: string;
+    prefix?: string;
     /**
-     * Reason for current status
+     * Parts that come after the name
      *  */
-    statusReason: CodeableConcept;
+    suffix?: string;
     /**
-     * Type of medication usage
+     * Time period when name was/is in use
      *  */
-    category: CodeableConcept;
-    /**
-     * What medication was taken
-     *  */
-    medication: CodeableConcept;
-    /**
-     * Who is/was taking  the medication
-     *  */
-    subject: Reference;
-    /**
-     * Encounter / Episode associated with MedicationStatement
-     *  */
-    context: Reference;
-    /**
-     * The date/time or interval when the medication is/was/will be taken
-     *  */
-    effective: string;
-    /**
-     * When the statement was asserted?
-     *  */
-    dateAsserted: string;
-    /**
-     * Person or organization that provided the information about the taking of this medication
-     *  */
-    informationSource: Reference;
-    /**
-     * Additional supporting information
-     *  */
-    derivedFrom: Reference;
-    /**
-     * Reason for why the medication is being/was taken
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Condition or observation that supports why the medication is being/was taken
-     *  */
-    reasonReference: Reference;
-    /**
-     * Further information about the statement
-     *  */
-    note: Annotation;
-    /**
-     * Details of how medication is/was taken or should be taken
-     *  */
-    dosage: Dosage;
+    period?: Period;
 };
-
-type MedicationStatement__lookups = {
-    "MedicationStatement": MedicationStatement_MedicationStatement_Props;
-};
-
-export declare function medicationStatement(props: MedicationStatement_MedicationStatement_Props);;
-
-export declare function medicationStatement<T extends keyof MedicationStatement__lookups>(type: T, props: MedicationStatement__lookups[T]);;
-
-type MedicinalProductDefinition_MedicinalProductDefinition_Props = {
+declare type Identifier = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * usual | official | temp | secondary | old (If known)
      *  */
-    modifierExtension: Extension;
+    use?: string;
     /**
-     * Business identifier for this product. Could be an MPID
+     * Description of identifier
      *  */
-    identifier: Identifier;
+    type?: CodeableConcept;
     /**
-     * Regulatory type, e.g. Investigational or Authorized
+     * The namespace for the identifier value
      *  */
-    type: CodeableConcept;
+    system?: string;
     /**
-     * If this medicine applies to human or veterinary uses
+     * The value that is unique
      *  */
-    domain: CodeableConcept;
+    value?: string;
     /**
-     * A business identifier relating to a specific version of the product
+     * Time period when id is/was valid for use
      *  */
-    version: string;
+    period?: Period;
     /**
-     * The status within the lifecycle of this product record
+     * Organization that issued id (may be just text)
      *  */
-    status: CodeableConcept;
-    /**
-     * The date at which the given status became applicable
-     *  */
-    statusDate: string;
-    /**
-     * General description of this product
-     *  */
-    description: markdown;
-    /**
-     * The dose form for a single part product, or combined form of a multiple part product
-     *  */
-    combinedPharmaceuticalDoseForm: CodeableConcept;
-    /**
-     * The path by which the product is taken into or makes contact with the body
-     *  */
-    route: CodeableConcept;
-    /**
-     * Description of indication(s) for this product, used when structured indications are not required
-     *  */
-    indication: markdown;
-    /**
-     * The legal status of supply of the medicinal product as classified by the regulator
-     *  */
-    legalStatusOfSupply: CodeableConcept;
-    /**
-     * Whether the Medicinal Product is subject to additional monitoring for regulatory reasons
-     *  */
-    additionalMonitoringIndicator: CodeableConcept;
-    /**
-     * Whether the Medicinal Product is subject to special measures for regulatory reasons
-     *  */
-    specialMeasures: CodeableConcept;
-    /**
-     * If authorised for use in children
-     *  */
-    pediatricUseIndicator: CodeableConcept;
-    /**
-     * Allows the product to be classified by various systems
-     *  */
-    classification: CodeableConcept;
-    /**
-     * Marketing status of the medicinal product, in contrast to marketing authorization
-     *  */
-    marketingStatus: MarketingStatus;
-    /**
-     * Package type for the product
-     *  */
-    packagedMedicinalProduct: CodeableConcept;
-    /**
-     * The ingredients of this medicinal product - when not detailed in other resources
-     *  */
-    ingredient: CodeableConcept;
-    /**
-     * Any component of the drug product which is not the chemical entity defined as the drug substance, or an excipient in the drug product
-     *  */
-    impurity: CodeableReference;
-    /**
-     * Additional documentation about the medicinal product
-     *  */
-    attachedDocument: Reference;
-    /**
-     * A master file for the medicinal product (e.g. Pharmacovigilance System Master File)
-     *  */
-    masterFile: Reference;
-    /**
-     * A product specific contact, person (in a role), or an organization
-     *  */
-    contact: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Allows the contact to be classified, for example QPPV, Pharmacovigilance Enquiry Information
-         *  */
-        type: CodeableConcept;
-        /**
-         * A product specific contact, person (in a role), or an organization
-         *  */
-        contact: Reference;
-    };
-    /**
-     * Clinical trials or studies that this product is involved in
-     *  */
-    clinicalTrial: Reference;
-    /**
-     * A code that this product is known by, within some formal terminology
-     *  */
-    code: Coding;
-    /**
-     * The product's name, including full name and possibly coded parts
-     *  */
-    name: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The full product name
-         *  */
-        productName: string;
-        /**
-         * Type of product name, such as rINN, BAN, Proprietary, Non-Proprietary
-         *  */
-        type: CodeableConcept;
-        /**
-         * Identifying type for this part of the name (e.g. strength part)
-         *  */
-        namePart: CodeableConcept;
-        /**
-         * Language code for this name
-         *  */
-        countryLanguage: CodeableConcept;
-    };
-    /**
-     * Reference to another product, e.g. for linking authorised to investigational product
-     *  */
-    crossReference: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Reference to another product, e.g. for linking authorised to investigational product
-         *  */
-        product: CodeableReference;
-        /**
-         * The type of relationship, for instance branded to generic or virtual to actual product
-         *  */
-        type: CodeableConcept;
-    };
-    /**
-     * A manufacturing or administrative process for the medicinal product
-     *  */
-    operation: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The type of manufacturing operation e.g. manufacturing itself, re-packaging
-         *  */
-        type: CodeableReference;
-        /**
-         * Date range of applicability
-         *  */
-        effectiveDate: Period;
-        /**
-         * The organization responsible for the particular process, e.g. the manufacturer or importer
-         *  */
-        organization: Reference;
-        /**
-         * Specifies whether this process is considered proprietary or confidential
-         *  */
-        confidentialityIndicator: CodeableConcept;
-    };
-    /**
-     * Key product features such as "sugar free", "modified release"
-     *  */
-    characteristic: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * A code expressing the type of characteristic
-         *  */
-        type: CodeableConcept;
-        /**
-         * A value for the characteristic
-         *  */
-        value: CodeableConcept;
-    };
+    assigner?: Reference;
 };
-
-type MedicinalProductDefinition__lookups = {
-    "MedicinalProductDefinition": MedicinalProductDefinition_MedicinalProductDefinition_Props;
-};
-
-export declare function medicinalProductDefinition(props: MedicinalProductDefinition_MedicinalProductDefinition_Props);;
-
-export declare function medicinalProductDefinition<T extends keyof MedicinalProductDefinition__lookups>(type: T, props: MedicinalProductDefinition__lookups[T]);;
-
-type MolecularSequence_MolecularSequence_Props = {
+declare type MarketingStatus = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension: Extension;
+    modifierExtension?: Extension;
     /**
-     * Unique ID for this particular sequence. This is a FHIR-defined id
+     * The country in which the marketing authorisation has been granted shall be specified It should be specified using the ISO 3166 ‑ 1 alpha-2 code elements
      *  */
-    identifier: Identifier;
+    country?: CodeableConcept;
     /**
-     * aa | dna | rna
+     * Where a Medicines Regulatory Agency has granted a marketing authorisation for which specific provisions within a jurisdiction apply, the jurisdiction can be specified using an appropriate controlled terminology The controlled term and the controlled term identifier shall be specified
      *  */
-    type: string;
+    jurisdiction?: CodeableConcept;
     /**
-     * Base number of coordinate system (0 for 0-based numbering or coordinates, inclusive start, exclusive end, 1 for 1-based numbering, inclusive start, inclusive end)
+     * This attribute provides information on the status of the marketing of the medicinal product See ISO/TS 20443 for more information and examples
      *  */
-    coordinateSystem: number;
+    status?: CodeableConcept;
     /**
-     * Who and/or what this is about
+     * The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
      *  */
-    patient: Reference;
+    dateRange?: Period;
     /**
-     * Specimen used for sequencing
+     * The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
      *  */
-    specimen: Reference;
-    /**
-     * The method for sequencing
-     *  */
-    device: Reference;
-    /**
-     * Who should be responsible for test result
-     *  */
-    performer: Reference;
-    /**
-     * The number of copies of the sequence of interest.  (RNASeq)
-     *  */
-    quantity: Quantity;
-    /**
-     * A sequence used as reference
-     *  */
-    referenceSeq: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Chromosome containing genetic finding
-         *  */
-        chromosome: CodeableConcept;
-        /**
-         * The Genome Build used for reference, following GRCh build versions e.g. 'GRCh 37'
-         *  */
-        genomeBuild: string;
-        /**
-         * sense | antisense
-         *  */
-        orientation: string;
-        /**
-         * Reference identifier
-         *  */
-        referenceSeqId: CodeableConcept;
-        /**
-         * A pointer to another MolecularSequence entity as reference sequence
-         *  */
-        referenceSeqPointer: Reference;
-        /**
-         * A string to represent reference sequence
-         *  */
-        referenceSeqString: string;
-        /**
-         * watson | crick
-         *  */
-        strand: string;
-        /**
-         * Start position of the window on the  reference sequence
-         *  */
-        windowStart: number;
-        /**
-         * End position of the window on the reference sequence
-         *  */
-        windowEnd: number;
-    };
-    /**
-     * Variant in sequence
-     *  */
-    variant: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Start position of the variant on the  reference sequence
-         *  */
-        start: number;
-        /**
-         * End position of the variant on the reference sequence
-         *  */
-        end: number;
-        /**
-         * Allele that was observed
-         *  */
-        observedAllele: string;
-        /**
-         * Allele in the reference sequence
-         *  */
-        referenceAllele: string;
-        /**
-         * Extended CIGAR string for aligning the sequence with reference bases
-         *  */
-        cigar: string;
-        /**
-         * Pointer to observed variant information
-         *  */
-        variantPointer: Reference;
-    };
-    /**
-     * Sequence that was observed
-     *  */
-    observedSeq: string;
-    /**
-     * An set of value as quality of sequence
-     *  */
-    quality: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * indel | snp | unknown
-         *  */
-        type: string;
-        /**
-         * Standard sequence for comparison
-         *  */
-        standardSequence: CodeableConcept;
-        /**
-         * Start position of the sequence
-         *  */
-        start: number;
-        /**
-         * End position of the sequence
-         *  */
-        end: number;
-        /**
-         * Quality score for the comparison
-         *  */
-        score: Quantity;
-        /**
-         * Method to get quality
-         *  */
-        method: CodeableConcept;
-        /**
-         * True positives from the perspective of the truth data
-         *  */
-        truthTP: number;
-        /**
-         * True positives from the perspective of the query data
-         *  */
-        queryTP: number;
-        /**
-         * False negatives
-         *  */
-        truthFN: number;
-        /**
-         * False positives
-         *  */
-        queryFP: number;
-        /**
-         * False positives where the non-REF alleles in the Truth and Query Call Sets match
-         *  */
-        gtFP: number;
-        /**
-         * Precision of comparison
-         *  */
-        precision: number;
-        /**
-         * Recall of comparison
-         *  */
-        recall: number;
-        /**
-         * F-score
-         *  */
-        fScore: number;
-        /**
-         * FScore of the GQ score
-         *  */
-        roc: number;
-    };
-    /**
-     * Average number of reads representing a given nucleotide in the reconstructed sequence
-     *  */
-    readCoverage: number;
-    /**
-     * External repository which contains detailed report related with observedSeq in this resource
-     *  */
-    repository: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * directlink | openapi | login | oauth | other
-         *  */
-        type: string;
-        /**
-         * URI of the repository
-         *  */
-        url: string;
-        /**
-         * Repository's name
-         *  */
-        name: string;
-        /**
-         * Id of the dataset that used to call for dataset in repository
-         *  */
-        datasetId: string;
-        /**
-         * Id of the variantset that used to call for variantset in repository
-         *  */
-        variantsetId: string;
-        /**
-         * Id of the read
-         *  */
-        readsetId: string;
-    };
-    /**
-     * Pointer to next atomic sequence
-     *  */
-    pointer: Reference;
-    /**
-     * Structural variant
-     *  */
-    structureVariant: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Structural variant change type
-         *  */
-        variantType: CodeableConcept;
-        /**
-         * Does the structural variant have base pair resolution breakpoints?
-         *  */
-        exact: boolean;
-        /**
-         * Structural variant length
-         *  */
-        length: number;
-        /**
-         * Structural variant outer end
-         *  */
-        outer: number;
-        /**
-         * Structural variant inner end
-         *  */
-        inner: number;
-    };
+    restoreDate?: string;
 };
-
-type MolecularSequence__lookups = {
-    "MolecularSequence": MolecularSequence_MolecularSequence_Props;
-};
-
-export declare function molecularSequence(props: MolecularSequence_MolecularSequence_Props);;
-
-export declare function molecularSequence<T extends keyof MolecularSequence__lookups>(type: T, props: MolecularSequence__lookups[T]);;
-
-type NutritionOrder_NutritionOrder_Props = {
+declare type Meta = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Version specific identifier
      *  */
-    modifierExtension: Extension;
+    versionId?: string;
     /**
-     * Identifiers assigned to this order
+     * When the resource version last changed
      *  */
-    identifier: Identifier;
+    lastUpdated?: string;
     /**
-     * Instantiates FHIR protocol or definition
+     * Identifies where the resource comes from
      *  */
-    instantiatesCanonical: any;
+    source?: string;
     /**
-     * Instantiates external protocol or definition
+     * Profiles this resource claims to conform to
      *  */
-    instantiatesUri: string;
+    profile?: any;
     /**
-     * Instantiates protocol or definition
+     * Security Labels applied to this resource
      *  */
-    instantiates: string;
+    security?: Coding;
     /**
-     * draft | active | on-hold | revoked | completed | entered-in-error | unknown
+     * Tags applied to this resource
      *  */
-    status: string;
-    /**
-     * proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
-     *  */
-    intent: string;
-    /**
-     * The person who requires the diet, formula or nutritional supplement
-     *  */
-    patient: Reference;
-    /**
-     * The encounter associated with this nutrition order
-     *  */
-    encounter: Reference;
-    /**
-     * Date and time the nutrition order was requested
-     *  */
-    dateTime: string;
-    /**
-     * Who ordered the diet, formula or nutritional supplement
-     *  */
-    orderer: Reference;
-    /**
-     * List of the patient's food and nutrition-related allergies and intolerances
-     *  */
-    allergyIntolerance: Reference;
-    /**
-     * Order-specific modifier about the type of food that should be given
-     *  */
-    foodPreferenceModifier: CodeableConcept;
-    /**
-     * Order-specific modifier about the type of food that should not be given
-     *  */
-    excludeFoodModifier: CodeableConcept;
-    /**
-     * Oral diet components
-     *  */
-    oralDiet: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of oral diet or diet restrictions that describe what can be consumed orally
-         *  */
-        type: CodeableConcept;
-        /**
-         * Scheduled frequency of diet
-         *  */
-        schedule: Timing;
-        /**
-         * Quantity of the specified nutrient
-         *  */
-        nutrient: Quantity;
-        /**
-         * Concepts that are used to identify an entity that is ingested for nutritional purposes
-         *  */
-        texture: CodeableConcept;
-        /**
-         * The required consistency of fluids and liquids provided to the patient
-         *  */
-        fluidConsistencyType: CodeableConcept;
-        /**
-         * Instructions or additional information about the oral diet
-         *  */
-        instruction: string;
-    };
-    /**
-     * Supplement components
-     *  */
-    supplement: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of supplement product requested
-         *  */
-        type: CodeableConcept;
-        /**
-         * Product or brand name of the nutritional supplement
-         *  */
-        productName: string;
-        /**
-         * Scheduled frequency of supplement
-         *  */
-        schedule: Timing;
-        /**
-         * Amount of the nutritional supplement
-         *  */
-        quantity: Quantity;
-        /**
-         * Instructions or additional information about the oral supplement
-         *  */
-        instruction: string;
-    };
-    /**
-     * Enteral formula components
-     *  */
-    enteralFormula: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of enteral or infant formula
-         *  */
-        baseFormulaType: CodeableConcept;
-        /**
-         * Product or brand name of the enteral or infant formula
-         *  */
-        baseFormulaProductName: string;
-        /**
-         * Type of modular component to add to the feeding
-         *  */
-        additiveType: CodeableConcept;
-        /**
-         * Product or brand name of the modular additive
-         *  */
-        additiveProductName: string;
-        /**
-         * Amount of energy per specified volume that is required
-         *  */
-        caloricDensity: Quantity;
-        /**
-         * How the formula should enter the patient's gastrointestinal tract
-         *  */
-        routeofAdministration: CodeableConcept;
-        /**
-         * Speed with which the formula is provided per period of time
-         *  */
-        administration: Quantity;
-        /**
-         * Upper limit on formula volume per unit of time
-         *  */
-        maxVolumeToDeliver: Quantity;
-        /**
-         * Formula feeding instructions expressed as text
-         *  */
-        administrationInstruction: string;
-    };
-    /**
-     * Comments
-     *  */
-    note: Annotation;
+    tag?: Coding;
 };
-
-type NutritionOrder__lookups = {
-    "NutritionOrder": NutritionOrder_NutritionOrder_Props;
-};
-
-export declare function nutritionOrder(props: NutritionOrder_NutritionOrder_Props);;
-
-export declare function nutritionOrder<T extends keyof NutritionOrder__lookups>(type: T, props: NutritionOrder__lookups[T]);;
-
-type NutritionProduct_NutritionProduct_Props = {
+declare type Money = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Numerical value (with implicit precision)
      *  */
-    modifierExtension: Extension;
+    value?: number;
     /**
-     * active | inactive | entered-in-error
+     * ISO 4217 Currency Code
      *  */
-    status: string;
-    /**
-     * A category or class of the nutrition product (halal, kosher, gluten free, vegan, etc)
-     *  */
-    category: CodeableConcept;
-    /**
-     * A code designating a specific type of nutritional product
-     *  */
-    code: CodeableConcept;
-    /**
-     * Manufacturer, representative or officially responsible for the product
-     *  */
-    manufacturer: Reference;
-    /**
-     * The product's nutritional information expressed by the nutrients
-     *  */
-    nutrient: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The (relevant) nutrients in the product
-         *  */
-        item: CodeableReference;
-        /**
-         * The amount of nutrient expressed in one or more units: X per pack / per serving / per dose
-         *  */
-        amount: Ratio;
-    };
-    /**
-     * Ingredients contained in this product
-     *  */
-    ingredient: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The ingredient contained in the product
-         *  */
-        item: CodeableReference;
-        /**
-         * The amount of ingredient that is in the product
-         *  */
-        amount: Ratio;
-    };
-    /**
-     * Known or suspected allergens that are a part of this product
-     *  */
-    knownAllergen: CodeableReference;
-    /**
-     * Specifies descriptive properties of the nutrition product
-     *  */
-    productCharacteristic: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Code specifying the type of characteristic
-         *  */
-        type: CodeableConcept;
-        /**
-         * The value of the characteristic
-         *  */
-        value: CodeableConcept;
-    };
-    /**
-     * One or several physical instances or occurrences of the nutrition product
-     *  */
-    instance: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The amount of items or instances
-         *  */
-        quantity: Quantity;
-        /**
-         * The identifier for the physical instance, typically a serial number
-         *  */
-        identifier: Identifier;
-        /**
-         * The identification of the batch or lot of the product
-         *  */
-        lotNumber: string;
-        /**
-         * The expiry date or date and time for the product
-         *  */
-        expiry: string;
-        /**
-         * The date until which the product is expected to be good for consumption
-         *  */
-        useBy: string;
-    };
-    /**
-     * Comments made about the product
-     *  */
-    note: Annotation;
+    currency?: string;
 };
-
-type NutritionProduct__lookups = {
-    "NutritionProduct": NutritionProduct_NutritionProduct_Props;
-};
-
-export declare function nutritionProduct(props: NutritionProduct_NutritionProduct_Props);;
-
-export declare function nutritionProduct<T extends keyof NutritionProduct__lookups>(type: T, props: NutritionProduct__lookups[T]);;
-
-type Observation_Observation_Props = {
+declare type Quantity = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Numerical value (with implicit precision)
      *  */
-    modifierExtension: Extension;
+    value?: number;
     /**
-     * Business Identifier for observation
+     * < | <= | >= | > - how to understand the value
      *  */
-    identifier: Identifier;
+    comparator?: string;
     /**
-     * Fulfills plan, proposal or order
+     * Unit representation
      *  */
-    basedOn: Reference;
+    unit?: string;
     /**
-     * Part of referenced event
+     * System that defines coded unit form
      *  */
-    partOf: Reference;
+    system?: string;
     /**
-     * registered | preliminary | final | amended +
+     * Coded form of the unit
      *  */
-    status: string;
-    /**
-     * Classification of  type of observation
-     *  */
-    category: CodeableConcept;
-    /**
-     * Type of observation (code / type)
-     *  */
-    code: CodeableConcept;
-    /**
-     * Who and/or what the observation is about
-     *  */
-    subject: Reference;
-    /**
-     * What the observation is about, when it is not about the subject of record
-     *  */
-    focus: Reference;
-    /**
-     * Healthcare event during which this observation is made
-     *  */
-    encounter: Reference;
-    /**
-     * Clinically relevant time/time-period for observation
-     *  */
-    effective: string;
-    /**
-     * Date/Time this version was made available
-     *  */
-    issued: string;
-    /**
-     * Who is responsible for the observation
-     *  */
-    performer: Reference;
-    /**
-     * Actual result
-     *  */
-    value: Quantity;
-    /**
-     * Why the result is missing
-     *  */
-    dataAbsentReason: CodeableConcept;
-    /**
-     * High, low, normal, etc.
-     *  */
-    interpretation: CodeableConcept;
-    /**
-     * Comments about the observation
-     *  */
-    note: Annotation;
-    /**
-     * Observed body part
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * How it was done
-     *  */
-    method: CodeableConcept;
-    /**
-     * Specimen used for this observation
-     *  */
-    specimen: Reference;
-    /**
-     * (Measurement) Device
-     *  */
-    device: Reference;
-    /**
-     * Provides guide for interpretation
-     *  */
-    referenceRange: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Low Range, if relevant
-         *  */
-        low: Quantity;
-        /**
-         * High Range, if relevant
-         *  */
-        high: Quantity;
-        /**
-         * Reference range qualifier
-         *  */
-        type: CodeableConcept;
-        /**
-         * Reference range population
-         *  */
-        appliesTo: CodeableConcept;
-        /**
-         * Applicable age range, if relevant
-         *  */
-        age: Range;
-        /**
-         * Text based reference range in an observation
-         *  */
-        text: string;
-    };
-    /**
-     * Related resource that belongs to the Observation group
-     *  */
-    hasMember: Reference;
-    /**
-     * Related measurements the observation is made from
-     *  */
-    derivedFrom: Reference;
-    /**
-     * Component results
-     *  */
-    component: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of component observation (code / type)
-         *  */
-        code: CodeableConcept;
-        /**
-         * Actual component result
-         *  */
-        value: Quantity;
-        /**
-         * Why the component result is missing
-         *  */
-        dataAbsentReason: CodeableConcept;
-        /**
-         * High, low, normal, etc.
-         *  */
-        interpretation: CodeableConcept;
-    };
+    code?: string;
 };
-
-type Observation__lookups = {
-    "Observation": Observation_Observation_Props;
-};
-
-export declare function observation(props: Observation_Observation_Props);;
-
-export declare function observation<T extends keyof Observation__lookups>(type: T, props: Observation__lookups[T]);;
-
-type ObservationDefinition_ObservationDefinition_Props = {
+declare type Narrative = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * generated | extensions | additional | empty
      *  */
-    modifierExtension: Extension;
+    status?: string;
     /**
-     * Category of observation
+     * Limited xhtml content
      *  */
-    category: CodeableConcept;
-    /**
-     * Type of observation (code / type)
-     *  */
-    code: CodeableConcept;
-    /**
-     * Business identifier for this ObservationDefinition instance
-     *  */
-    identifier: Identifier;
-    /**
-     * Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period
-     *  */
-    permittedDataType: string;
-    /**
-     * Multiple results allowed
-     *  */
-    multipleResultsAllowed: boolean;
-    /**
-     * Method used to produce the observation
-     *  */
-    method: CodeableConcept;
-    /**
-     * Preferred report name
-     *  */
-    preferredReportName: string;
-    /**
-     * Characteristics of quantitative results
-     *  */
-    quantitativeDetails: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Customary unit for quantitative results
-         *  */
-        customaryUnit: CodeableConcept;
-        /**
-         * SI unit for quantitative results
-         *  */
-        unit: CodeableConcept;
-        /**
-         * SI to Customary unit conversion factor
-         *  */
-        conversionFactor: number;
-        /**
-         * Decimal precision of observation quantitative results
-         *  */
-        decimalPrecision: number;
-    };
-    /**
-     * Qualified range for continuous and ordinal observation results
-     *  */
-    qualifiedInterval: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * reference | critical | absolute
-         *  */
-        category: string;
-        /**
-         * The interval itself, for continuous or ordinal observations
-         *  */
-        range: Range;
-        /**
-         * Range context qualifier
-         *  */
-        context: CodeableConcept;
-        /**
-         * Targetted population of the range
-         *  */
-        appliesTo: CodeableConcept;
-        /**
-         * male | female | other | unknown
-         *  */
-        gender: string;
-        /**
-         * Applicable age range, if relevant
-         *  */
-        age: Range;
-        /**
-         * Applicable gestational age range, if relevant
-         *  */
-        gestationalAge: Range;
-        /**
-         * Condition associated with the reference range
-         *  */
-        condition: string;
-    };
-    /**
-     * Value set of valid coded values for the observations conforming to this ObservationDefinition
-     *  */
-    validCodedValueSet: Reference;
-    /**
-     * Value set of normal coded values for the observations conforming to this ObservationDefinition
-     *  */
-    normalCodedValueSet: Reference;
-    /**
-     * Value set of abnormal coded values for the observations conforming to this ObservationDefinition
-     *  */
-    abnormalCodedValueSet: Reference;
-    /**
-     * Value set of critical coded values for the observations conforming to this ObservationDefinition
-     *  */
-    criticalCodedValueSet: Reference;
+    div?: xhtml;
 };
-
-type ObservationDefinition__lookups = {
-    "ObservationDefinition": ObservationDefinition_ObservationDefinition_Props;
-};
-
-export declare function observationDefinition(props: ObservationDefinition_ObservationDefinition_Props);;
-
-export declare function observationDefinition<T extends keyof ObservationDefinition__lookups>(type: T, props: ObservationDefinition__lookups[T]);;
-
-type Organization_Organization_Props = {
+declare type ParameterDefinition = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Name used to access the parameter value
      *  */
-    modifierExtension: Extension;
+    name?: string;
     /**
-     * Identifies this organization  across multiple systems
+     * in | out
      *  */
-    identifier: Identifier;
+    use?: string;
     /**
-     * Whether the organization's record is still in active use
+     * Minimum cardinality
      *  */
-    active: boolean;
+    min?: number;
     /**
-     * Kind of organization
+     * Maximum cardinality (a number of *)
      *  */
-    type: CodeableConcept;
+    max?: string;
     /**
-     * Name used for the organization
+     * A brief description of the parameter
      *  */
-    name: string;
+    documentation?: string;
     /**
-     * A list of alternate names that the organization is known as, or was known as in the past
+     * What type of value
      *  */
-    alias: string;
+    type?: string;
     /**
-     * A contact detail for the organization
+     * What profile the value is expected to be
      *  */
-    telecom: ContactPoint;
-    /**
-     * An address for the organization
-     *  */
-    address: Address;
-    /**
-     * The organization of which this organization forms a part
-     *  */
-    partOf: Reference;
-    /**
-     * Contact for the organization for a certain purpose
-     *  */
-    contact: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The type of contact
-         *  */
-        purpose: CodeableConcept;
-        /**
-         * A name associated with the contact
-         *  */
-        name: HumanName;
-        /**
-         * Contact details (telephone, email, etc.)  for a contact
-         *  */
-        telecom: ContactPoint;
-        /**
-         * Visiting or postal addresses for the contact
-         *  */
-        address: Address;
-    };
-    /**
-     * Technical endpoints providing access to services operated for the organization
-     *  */
-    endpoint: Reference;
+    profile?: any;
 };
-
-type Organization__lookups = {
-    "Organization": Organization_Organization_Props;
-};
-
-export declare function organization(props: Organization_Organization_Props);;
-
-export declare function organization<T extends keyof Organization__lookups>(type: T, props: Organization__lookups[T]);;
-
-type OrganizationAffiliation_OrganizationAffiliation_Props = {
+declare type Period = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Starting time with inclusive boundary
      *  */
-    modifierExtension: Extension;
+    start?: string;
     /**
-     * Business identifiers that are specific to this role
+     * End time with inclusive boundary, if not ongoing
      *  */
-    identifier: Identifier;
-    /**
-     * Whether this organization affiliation record is in active use
-     *  */
-    active: boolean;
-    /**
-     * The period during which the participatingOrganization is affiliated with the primary organization
-     *  */
-    period: Period;
-    /**
-     * Organization where the role is available
-     *  */
-    organization: Reference;
-    /**
-     * Organization that provides/performs the role (e.g. providing services or is a member of)
-     *  */
-    participatingOrganization: Reference;
-    /**
-     * Health insurance provider network in which the participatingOrganization provides the role's services (if defined) at the indicated locations (if defined)
-     *  */
-    network: Reference;
-    /**
-     * Definition of the role the participatingOrganization plays
-     *  */
-    code: CodeableConcept;
-    /**
-     * Specific specialty of the participatingOrganization in the context of the role
-     *  */
-    specialty: CodeableConcept;
-    /**
-     * The location(s) at which the role occurs
-     *  */
-    location: Reference;
-    /**
-     * Healthcare services provided through the role
-     *  */
-    healthcareService: Reference;
-    /**
-     * Contact details at the participatingOrganization relevant to this Affiliation
-     *  */
-    telecom: ContactPoint;
-    /**
-     * Technical endpoints providing access to services operated for this role
-     *  */
-    endpoint: Reference;
+    end?: string;
 };
-
-type OrganizationAffiliation__lookups = {
-    "OrganizationAffiliation": OrganizationAffiliation_OrganizationAffiliation_Props;
-};
-
-export declare function organizationAffiliation(props: OrganizationAffiliation_OrganizationAffiliation_Props);;
-
-export declare function organizationAffiliation<T extends keyof OrganizationAffiliation__lookups>(type: T, props: OrganizationAffiliation__lookups[T]);;
-
-type PackagedProductDefinition_PackagedProductDefinition_Props = {
+declare type ProdCharacteristic = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension: Extension;
+    modifierExtension?: Extension;
     /**
-     * A unique identifier for this package as whole
+     * Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
      *  */
-    identifier: Identifier;
+    height?: Quantity;
     /**
-     * A name for this package. Typically as listed in a drug formulary, catalogue, inventory etc
+     * Where applicable, the width can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
      *  */
-    name: string;
+    width?: Quantity;
     /**
-     * A high level category e.g. medicinal product, raw material, shipping container etc
+     * Where applicable, the depth can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
      *  */
-    type: CodeableConcept;
+    depth?: Quantity;
     /**
-     * The product that this is a pack for
+     * Where applicable, the weight can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
      *  */
-    packageFor: Reference;
+    weight?: Quantity;
     /**
-     * The status within the lifecycle of this item. High level - not intended to duplicate details elsewhere e.g. legal status, or authorization/marketing status
+     * Where applicable, the nominal volume can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
      *  */
-    status: CodeableConcept;
+    nominalVolume?: Quantity;
     /**
-     * The date at which the given status became applicable
+     * Where applicable, the external diameter can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
      *  */
-    statusDate: string;
+    externalDiameter?: Quantity;
     /**
-     * A total of the complete count of contained items of a particular type/form, independent of sub-packaging or organization. This can be considered as the pack size
+     * Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
      *  */
-    containedItemQuantity: Quantity;
+    shape?: string;
     /**
-     * Textual description. Note that this is not the name of the package or product
+     * Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
      *  */
-    description: markdown;
+    color?: string;
     /**
-     * The legal status of supply of the packaged item as classified by the regulator
+     * Where applicable, the imprint can be specified as text
      *  */
-    legalStatusOfSupply: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The actual status of supply. In what situation this package type may be supplied for use
-         *  */
-        code: CodeableConcept;
-        /**
-         * The place where the legal status of supply applies
-         *  */
-        jurisdiction: CodeableConcept;
-    };
+    imprint?: string;
     /**
-     * Allows specifying that an item is on the market for sale, or that it is not available, and the dates and locations associated
+     * Where applicable, the image can be provided The format of the image attachment shall be specified by regional implementations
      *  */
-    marketingStatus: MarketingStatus;
+    image?: Attachment;
     /**
-     * Allows the key features to be recorded, such as "hospital pack", "nurse prescribable"
+     * Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
      *  */
-    characteristic: CodeableConcept;
-    /**
-     * If the drug product is supplied with another item such as a diluent or adjuvant
-     *  */
-    copackagedIndicator: boolean;
-    /**
-     * Manufacturer of this package type (multiple means these are all possible manufacturers)
-     *  */
-    manufacturer: Reference;
-    /**
-     * A packaging item, as a container for medically related items, possibly with other packaging items within, or a packaging component, such as bottle cap
-     *  */
-    package: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * An identifier that is specific to this particular part of the packaging. Including possibly a Data Carrier Identifier
-         *  */
-        identifier: Identifier;
-        /**
-         * The physical type of the container of the items
-         *  */
-        type: CodeableConcept;
-        /**
-         * The quantity of this level of packaging in the package that contains it (with the outermost level being 1)
-         *  */
-        quantity: number;
-        /**
-         * Material type of the package item
-         *  */
-        material: CodeableConcept;
-        /**
-         * A possible alternate material for this part of the packaging, that is allowed to be used instead of the usual material
-         *  */
-        alternateMaterial: CodeableConcept;
-        /**
-         * Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary. The controlled term and the controlled term identifier shall be specified
-         *  */
-        shelfLifeStorage: CodeableConcept;
-        /**
-         * Manufacturer of this package Item (multiple means these are all possible manufacturers)
-         *  */
-        manufacturer: Reference;
-        /**
-         * A value for the characteristic
-         *  */
-        property: CodeableConcept;
-        /**
-         * The number of this type of item within this packaging
-         *  */
-        containedItem: Quantity;
-    };
+    scoring?: CodeableConcept;
 };
-
-type PackagedProductDefinition__lookups = {
-    "PackagedProductDefinition": PackagedProductDefinition_PackagedProductDefinition_Props;
-};
-
-export declare function packagedProductDefinition(props: PackagedProductDefinition_PackagedProductDefinition_Props);;
-
-export declare function packagedProductDefinition<T extends keyof PackagedProductDefinition__lookups>(type: T, props: PackagedProductDefinition__lookups[T]);;
-
-type Patient_Patient_Props = {
+declare type ProductShelfLife = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension: Extension;
+    modifierExtension?: Extension;
     /**
-     * An identifier for this patient
+     * Unique identifier for the packaged Medicinal Product
      *  */
-    identifier: Identifier;
+    identifier?: Identifier;
     /**
-     * Whether this patient's record is in active use
+     * This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
      *  */
-    active: boolean;
+    type?: CodeableConcept;
     /**
-     * A name associated with the patient
+     * The shelf life time period can be specified using a numerical value for the period of time and its unit of time measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
      *  */
-    name: HumanName;
+    period?: Quantity;
     /**
-     * A contact detail for the individual
+     * Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
      *  */
-    telecom: ContactPoint;
-    /**
-     * male | female | other | unknown
-     *  */
-    gender: string;
-    /**
-     * The date of birth for the individual
-     *  */
-    birthDate: string;
-    /**
-     * Indicates if the individual is deceased or not
-     *  */
-    deceased: boolean;
-    /**
-     * An address for the individual
-     *  */
-    address: Address;
-    /**
-     * Marital (civil) status of a patient
-     *  */
-    maritalStatus: CodeableConcept;
-    /**
-     * Whether patient is part of a multiple birth
-     *  */
-    multipleBirth: boolean;
-    /**
-     * Image of the patient
-     *  */
-    photo: Attachment;
-    /**
-     * A contact party (e.g. guardian, partner, friend) for the patient
-     *  */
-    contact: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The kind of relationship
-         *  */
-        relationship: CodeableConcept;
-        /**
-         * A name associated with the contact person
-         *  */
-        name: HumanName;
-        /**
-         * A contact detail for the person
-         *  */
-        telecom: ContactPoint;
-        /**
-         * Address for the contact person
-         *  */
-        address: Address;
-        /**
-         * male | female | other | unknown
-         *  */
-        gender: string;
-        /**
-         * Organization that is associated with the contact
-         *  */
-        organization: Reference;
-        /**
-         * The period during which this contact person or organization is valid to be contacted relating to this patient
-         *  */
-        period: Period;
-    };
-    /**
-     * A language which may be used to communicate with the patient about his or her health
-     *  */
-    communication: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The language which can be used to communicate with the patient about his or her health
-         *  */
-        language: CodeableConcept;
-        /**
-         * Language preference indicator
-         *  */
-        preferred: boolean;
-    };
-    /**
-     * Patient's nominated primary care provider
-     *  */
-    generalPractitioner: Reference;
-    /**
-     * Organization that is the custodian of the patient record
-     *  */
-    managingOrganization: Reference;
-    /**
-     * Link to another patient resource that concerns the same actual person
-     *  */
-    link: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The other patient or related person resource that the link refers to
-         *  */
-        other: Reference;
-        /**
-         * replaced-by | replaces | refer | seealso
-         *  */
-        type: string;
-    };
+    specialPrecautionsForStorage?: CodeableConcept;
 };
-
-type Patient__lookups = {
-    "Patient": Patient_Patient_Props;
-};
-
-export declare function patient(props: Patient_Patient_Props);;
-
-export declare function patient<T extends keyof Patient__lookups>(type: T, props: Patient__lookups[T]);;
-
-type PaymentNotice_PaymentNotice_Props = {
+declare type Range = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Low limit
      *  */
-    modifierExtension: Extension;
+    low?: Quantity;
     /**
-     * Business Identifier for the payment noctice
+     * High limit
      *  */
-    identifier: Identifier;
-    /**
-     * active | cancelled | draft | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Request reference
-     *  */
-    request: Reference;
-    /**
-     * Response reference
-     *  */
-    response: Reference;
-    /**
-     * Creation date
-     *  */
-    created: string;
-    /**
-     * Responsible practitioner
-     *  */
-    provider: Reference;
-    /**
-     * Payment reference
-     *  */
-    payment: Reference;
-    /**
-     * Payment or clearing date
-     *  */
-    paymentDate: string;
-    /**
-     * Party being paid
-     *  */
-    payee: Reference;
-    /**
-     * Party being notified
-     *  */
-    recipient: Reference;
-    /**
-     * Monetary amount of the payment
-     *  */
-    amount: Money;
-    /**
-     * Issued or cleared Status of the payment
-     *  */
-    paymentStatus: CodeableConcept;
+    high?: Quantity;
 };
-
-type PaymentNotice__lookups = {
-    "PaymentNotice": PaymentNotice_PaymentNotice_Props;
-};
-
-export declare function paymentNotice(props: PaymentNotice_PaymentNotice_Props);;
-
-export declare function paymentNotice<T extends keyof PaymentNotice__lookups>(type: T, props: PaymentNotice__lookups[T]);;
-
-type PaymentReconciliation_PaymentReconciliation_Props = {
+declare type Ratio = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Numerator value
      *  */
-    modifierExtension: Extension;
+    numerator?: Quantity;
     /**
-     * Business Identifier for a payment reconciliation
+     * Denominator value
      *  */
-    identifier: Identifier;
-    /**
-     * active | cancelled | draft | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Period covered
-     *  */
-    period: Period;
-    /**
-     * Creation date
-     *  */
-    created: string;
-    /**
-     * Party generating payment
-     *  */
-    paymentIssuer: Reference;
-    /**
-     * Reference to requesting resource
-     *  */
-    request: Reference;
-    /**
-     * Responsible practitioner
-     *  */
-    requestor: Reference;
-    /**
-     * queued | complete | error | partial
-     *  */
-    outcome: string;
-    /**
-     * Disposition message
-     *  */
-    disposition: string;
-    /**
-     * When payment issued
-     *  */
-    paymentDate: string;
-    /**
-     * Total amount of Payment
-     *  */
-    paymentAmount: Money;
-    /**
-     * Business identifier for the payment
-     *  */
-    paymentIdentifier: Identifier;
-    /**
-     * Settlement particulars
-     *  */
-    detail: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Business identifier of the payment detail
-         *  */
-        identifier: Identifier;
-        /**
-         * Business identifier of the prior payment detail
-         *  */
-        predecessor: Identifier;
-        /**
-         * Category of payment
-         *  */
-        type: CodeableConcept;
-        /**
-         * Request giving rise to the payment
-         *  */
-        request: Reference;
-        /**
-         * Submitter of the request
-         *  */
-        submitter: Reference;
-        /**
-         * Response committing to a payment
-         *  */
-        response: Reference;
-        /**
-         * Date of commitment to pay
-         *  */
-        date: string;
-        /**
-         * Contact for the response
-         *  */
-        responsible: Reference;
-        /**
-         * Recipient of the payment
-         *  */
-        payee: Reference;
-        /**
-         * Amount allocated to this payable
-         *  */
-        amount: Money;
-    };
-    /**
-     * Printed form identifier
-     *  */
-    formCode: CodeableConcept;
-    /**
-     * Note concerning processing
-     *  */
-    processNote: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * display | print | printoper
-         *  */
-        type: string;
-        /**
-         * Note explanatory text
-         *  */
-        text: string;
-    };
+    denominator?: Quantity;
 };
-
-type PaymentReconciliation__lookups = {
-    "PaymentReconciliation": PaymentReconciliation_PaymentReconciliation_Props;
-};
-
-export declare function paymentReconciliation(props: PaymentReconciliation_PaymentReconciliation_Props);;
-
-export declare function paymentReconciliation<T extends keyof PaymentReconciliation__lookups>(type: T, props: PaymentReconciliation__lookups[T]);;
-
-type Person_Person_Props = {
+declare type Reference = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Literal reference, Relative, internal or absolute URL
      *  */
-    modifierExtension: Extension;
+    reference?: string;
     /**
-     * A human identifier for this person
+     * Type the reference refers to (e.g. "Patient")
      *  */
-    identifier: Identifier;
+    type?: string;
     /**
-     * A name associated with the person
+     * Logical reference, when literal reference is not known
      *  */
-    name: HumanName;
+    identifier?: Identifier;
     /**
-     * A contact detail for the person
+     * Text alternative for the resource
      *  */
-    telecom: ContactPoint;
-    /**
-     * male | female | other | unknown
-     *  */
-    gender: string;
-    /**
-     * The date on which the person was born
-     *  */
-    birthDate: string;
-    /**
-     * One or more addresses for the person
-     *  */
-    address: Address;
-    /**
-     * Image of the person
-     *  */
-    photo: Attachment;
-    /**
-     * The organization that is the custodian of the person record
-     *  */
-    managingOrganization: Reference;
-    /**
-     * This person's record is in active use
-     *  */
-    active: boolean;
-    /**
-     * Link to a resource that concerns the same actual person
-     *  */
-    link: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The resource to which this actual person is associated
-         *  */
-        target: Reference;
-        /**
-         * level1 | level2 | level3 | level4
-         *  */
-        assurance: string;
-    };
+    display?: string;
 };
-
-type Person__lookups = {
-    "Person": Person_Person_Props;
-};
-
-export declare function person(props: Person_Person_Props);;
-
-export declare function person<T extends keyof Person__lookups>(type: T, props: Person__lookups[T]);;
-
-type PlanDefinition_PlanDefinition_Props = {
+declare type RelatedArtifact = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
      *  */
-    modifierExtension: Extension;
+    type?: string;
     /**
-     * Canonical identifier for this plan definition, represented as a URI (globally unique)
+     * Short label
      *  */
-    url: string;
+    label?: string;
     /**
-     * Additional identifier for the plan definition
+     * Brief description of the related artifact
      *  */
-    identifier: Identifier;
+    display?: string;
     /**
-     * Business version of the plan definition
+     * Bibliographic citation for the artifact
      *  */
-    version: string;
+    citation?: markdown;
     /**
-     * Name for this plan definition (computer friendly)
+     * Where the artifact can be accessed
      *  */
-    name: string;
+    url?: url;
     /**
-     * Name for this plan definition (human friendly)
+     * What document is being referenced
      *  */
-    title: string;
+    document?: Attachment;
     /**
-     * Subordinate title of the plan definition
+     * What resource is being referenced
      *  */
-    subtitle: string;
-    /**
-     * order-set | clinical-protocol | eca-rule | workflow-definition
-     *  */
-    type: CodeableConcept;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * For testing purposes, not real usage
-     *  */
-    experimental: boolean;
-    /**
-     * Type of individual the plan definition is focused on
-     *  */
-    subject: CodeableConcept;
-    /**
-     * Date last changed
-     *  */
-    date: string;
-    /**
-     * Name of the publisher (organization or individual)
-     *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher
-     *  */
-    contact: ContactDetail;
-    /**
-     * Natural language description of the plan definition
-     *  */
-    description: markdown;
-    /**
-     * The context that the content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * Intended jurisdiction for plan definition (if applicable)
-     *  */
-    jurisdiction: CodeableConcept;
-    /**
-     * Why this plan definition is defined
-     *  */
-    purpose: markdown;
-    /**
-     * Describes the clinical usage of the plan
-     *  */
-    usage: string;
-    /**
-     * Use and/or publishing restrictions
-     *  */
-    copyright: markdown;
-    /**
-     * When the plan definition was approved by publisher
-     *  */
-    approvalDate: string;
-    /**
-     * When the plan definition was last reviewed
-     *  */
-    lastReviewDate: string;
-    /**
-     * When the plan definition is expected to be used
-     *  */
-    effectivePeriod: Period;
-    /**
-     * E.g. Education, Treatment, Assessment
-     *  */
-    topic: CodeableConcept;
-    /**
-     * Who authored the content
-     *  */
-    author: ContactDetail;
-    /**
-     * Who edited the content
-     *  */
-    editor: ContactDetail;
-    /**
-     * Who reviewed the content
-     *  */
-    reviewer: ContactDetail;
-    /**
-     * Who endorsed the content
-     *  */
-    endorser: ContactDetail;
-    /**
-     * Additional documentation, citations
-     *  */
-    relatedArtifact: RelatedArtifact;
-    /**
-     * Logic used by the plan definition
-     *  */
-    library: any;
-    /**
-     * What the plan is trying to accomplish
-     *  */
-    goal: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * E.g. Treatment, dietary, behavioral
-         *  */
-        category: CodeableConcept;
-        /**
-         * Code or text describing the goal
-         *  */
-        description: CodeableConcept;
-        /**
-         * high-priority | medium-priority | low-priority
-         *  */
-        priority: CodeableConcept;
-        /**
-         * When goal pursuit begins
-         *  */
-        start: CodeableConcept;
-        /**
-         * What does the goal address
-         *  */
-        addresses: CodeableConcept;
-        /**
-         * Supporting documentation for the goal
-         *  */
-        documentation: RelatedArtifact;
-        /**
-         * Reach goal within
-         *  */
-        target: Duration;
-    };
-    /**
-     * Action defined by the plan
-     *  */
-    action: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * User-visible prefix for the action (e.g. 1. or A.)
-         *  */
-        prefix: string;
-        /**
-         * User-visible title
-         *  */
-        title: string;
-        /**
-         * Brief description of the action
-         *  */
-        description: string;
-        /**
-         * Static text equivalent of the action, used if the dynamic aspects cannot be interpreted by the receiving system
-         *  */
-        textEquivalent: string;
-        /**
-         * routine | urgent | asap | stat
-         *  */
-        priority: string;
-        /**
-         * Code representing the meaning of the action or sub-actions
-         *  */
-        code: CodeableConcept;
-        /**
-         * Why the action should be performed
-         *  */
-        reason: CodeableConcept;
-        /**
-         * Supporting documentation for the intended performer of the action
-         *  */
-        documentation: RelatedArtifact;
-        /**
-         * What goals this action supports
-         *  */
-        goalId: string;
-        /**
-         * Type of individual the action is focused on
-         *  */
-        subject: CodeableConcept;
-        /**
-         * When the action should be triggered
-         *  */
-        trigger: TriggerDefinition;
-        /**
-         * Boolean-valued expression
-         *  */
-        condition: Expression;
-        /**
-         * Input data requirements
-         *  */
-        input: DataRequirement;
-        /**
-         * Output data definition
-         *  */
-        output: DataRequirement;
-        /**
-         * Time offset for the relationship
-         *  */
-        relatedAction: Duration;
-        /**
-         * When the action should take place
-         *  */
-        timing: string;
-        /**
-         * E.g. Nurse, Surgeon, Parent
-         *  */
-        participant: CodeableConcept;
-        /**
-         * create | update | remove | fire-event
-         *  */
-        type: CodeableConcept;
-        /**
-         * visual-group | logical-group | sentence-group
-         *  */
-        groupingBehavior: string;
-        /**
-         * any | all | all-or-none | exactly-one | at-most-one | one-or-more
-         *  */
-        selectionBehavior: string;
-        /**
-         * must | could | must-unless-documented
-         *  */
-        requiredBehavior: string;
-        /**
-         * yes | no
-         *  */
-        precheckBehavior: string;
-        /**
-         * single | multiple
-         *  */
-        cardinalityBehavior: string;
-        /**
-         * Description of the activity to be performed
-         *  */
-        definition: any;
-        /**
-         * Transform to apply the template
-         *  */
-        transform: any;
-        /**
-         * An expression that provides the dynamic value for the customization
-         *  */
-        dynamicValue: Expression;
-    };
+    resource?: any;
 };
-
-type PlanDefinition__lookups = {
-    "PlanDefinition": PlanDefinition_PlanDefinition_Props;
-};
-
-export declare function planDefinition(props: PlanDefinition_PlanDefinition_Props);;
-
-export declare function planDefinition<T extends keyof PlanDefinition__lookups>(type: T, props: PlanDefinition__lookups[T]);;
-
-type Practitioner_Practitioner_Props = {
+declare type Timing = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension: Extension;
+    modifierExtension?: Extension;
     /**
-     * An identifier for the person as this agent
+     * When the event occurs
      *  */
-    identifier: Identifier;
+    event?: string;
     /**
-     * Whether this practitioner's record is in active use
+     * When the event is to occur
      *  */
-    active: boolean;
-    /**
-     * The name(s) associated with the practitioner
-     *  */
-    name: HumanName;
-    /**
-     * A contact detail for the practitioner (that apply to all roles)
-     *  */
-    telecom: ContactPoint;
-    /**
-     * Address(es) of the practitioner that are not role specific (typically home address)
-     *  */
-    address: Address;
-    /**
-     * male | female | other | unknown
-     *  */
-    gender: string;
-    /**
-     * The date  on which the practitioner was born
-     *  */
-    birthDate: string;
-    /**
-     * Image of the person
-     *  */
-    photo: Attachment;
-    /**
-     * Certification, licenses, or training pertaining to the provision of care
-     *  */
-    qualification: {
+    repeat?: {
         /**
          * Unique id for inter-element referencing
          *  */
         id: string;
         /**
-         * Extensions that cannot be ignored even if unrecognized
+         * Length/Range of lengths, or (Start and/or end) limits
          *  */
-        modifierExtension: Extension;
+        bounds: Duration;
         /**
-         * An identifier for this qualification for the practitioner
+         * Number of times to repeat
          *  */
-        identifier: Identifier;
+        count: number;
         /**
-         * Coded representation of the qualification
+         * Maximum number of times to repeat
          *  */
-        code: CodeableConcept;
+        countMax: number;
         /**
-         * Period during which the qualification is valid
+         * How long when it happens
          *  */
-        period: Period;
+        duration: number;
         /**
-         * Organization that regulates and issues the qualification
+         * How long when it happens (Max)
          *  */
-        issuer: Reference;
-    };
-    /**
-     * A language the practitioner can use in patient communication
-     *  */
-    communication: CodeableConcept;
-};
-
-type Practitioner__lookups = {
-    "Practitioner": Practitioner_Practitioner_Props;
-};
-
-export declare function practitioner(props: Practitioner_Practitioner_Props);;
-
-export declare function practitioner<T extends keyof Practitioner__lookups>(type: T, props: Practitioner__lookups[T]);;
-
-type PractitionerRole_PractitionerRole_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifiers that are specific to a role/location
-     *  */
-    identifier: Identifier;
-    /**
-     * Whether this practitioner role record is in active use
-     *  */
-    active: boolean;
-    /**
-     * The period during which the practitioner is authorized to perform in these role(s)
-     *  */
-    period: Period;
-    /**
-     * Practitioner that is able to provide the defined services for the organization
-     *  */
-    practitioner: Reference;
-    /**
-     * Organization where the roles are available
-     *  */
-    organization: Reference;
-    /**
-     * Roles which this practitioner may perform
-     *  */
-    code: CodeableConcept;
-    /**
-     * Specific specialty of the practitioner
-     *  */
-    specialty: CodeableConcept;
-    /**
-     * The location(s) at which this practitioner provides care
-     *  */
-    location: Reference;
-    /**
-     * The list of healthcare services that this worker provides for this role's Organization/Location(s)
-     *  */
-    healthcareService: Reference;
-    /**
-     * Contact details that are specific to the role/location/service
-     *  */
-    telecom: ContactPoint;
-    /**
-     * Times the Service Site is available
-     *  */
-    availableTime: {
+        durationMax: number;
         /**
-         * Unique id for inter-element referencing
+         * s | min | h | d | wk | mo | a - unit of time (UCUM)
          *  */
-        id: string;
+        durationUnit: string;
         /**
-         * Extensions that cannot be ignored even if unrecognized
+         * Event occurs frequency times per period
          *  */
-        modifierExtension: Extension;
+        frequency: number;
+        /**
+         * Event occurs up to frequencyMax times per period
+         *  */
+        frequencyMax: number;
+        /**
+         * Event occurs frequency times per period
+         *  */
+        period: number;
+        /**
+         * Upper limit of period (3-4 hours)
+         *  */
+        periodMax: number;
+        /**
+         * s | min | h | d | wk | mo | a - unit of time (UCUM)
+         *  */
+        periodUnit: string;
         /**
          * mon | tue | wed | thu | fri | sat | sun
          *  */
-        daysOfWeek: string;
+        dayOfWeek: string;
         /**
-         * Always available? e.g. 24 hour service
+         * Time of day for action
          *  */
-        allDay: boolean;
+        timeOfDay: string;
         /**
-         * Opening time of day (ignored if allDay = true)
+         * Code for time period of occurrence
          *  */
-        availableStartTime: time;
+        when: string;
         /**
-         * Closing time of day (ignored if allDay = true)
+         * Minutes from event (before or after)
          *  */
-        availableEndTime: time;
+        offset: number;
     };
     /**
-     * Not available during this time due to provided reason
+     * BID | TID | QID | AM | PM | QD | QOD | +
      *  */
-    notAvailable: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Reason presented to the user explaining why time not available
-         *  */
-        description: string;
-        /**
-         * Service not available from this date
-         *  */
-        during: Period;
-    };
-    /**
-     * Description of availability exceptions
-     *  */
-    availabilityExceptions: string;
-    /**
-     * Technical endpoints providing access to services operated for the practitioner with this role
-     *  */
-    endpoint: Reference;
+    code?: CodeableConcept;
 };
-
-type PractitionerRole__lookups = {
-    "PractitionerRole": PractitionerRole_PractitionerRole_Props;
-};
-
-export declare function practitionerRole(props: PractitionerRole_PractitionerRole_Props);;
-
-export declare function practitionerRole<T extends keyof PractitionerRole__lookups>(type: T, props: PractitionerRole__lookups[T]);;
-
-type Procedure_Procedure_Props = {
+declare type TriggerDefinition = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended
      *  */
-    modifierExtension: Extension;
+    type?: string;
     /**
-     * External Identifiers for this procedure
+     * Name or URI that identifies the event
      *  */
-    identifier: Identifier;
+    name?: string;
     /**
-     * Instantiates FHIR protocol or definition
+     * Timing of the event
      *  */
-    instantiatesCanonical: any;
+    timing?: Timing;
     /**
-     * Instantiates external protocol or definition
+     * Triggering data of the event (multiple = 'and')
      *  */
-    instantiatesUri: string;
+    data?: DataRequirement;
     /**
-     * A request for this procedure
+     * Whether the event triggers (boolean expression)
      *  */
-    basedOn: Reference;
-    /**
-     * Part of referenced event
-     *  */
-    partOf: Reference;
-    /**
-     * preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
-     *  */
-    status: string;
-    /**
-     * Reason for current status
-     *  */
-    statusReason: CodeableConcept;
-    /**
-     * Classification of the procedure
-     *  */
-    category: CodeableConcept;
-    /**
-     * Identification of the procedure
-     *  */
-    code: CodeableConcept;
-    /**
-     * Who the procedure was performed on
-     *  */
-    subject: Reference;
-    /**
-     * Encounter created as part of
-     *  */
-    encounter: Reference;
-    /**
-     * When the procedure was performed
-     *  */
-    performed: string;
-    /**
-     * Who recorded the procedure
-     *  */
-    recorder: Reference;
-    /**
-     * Person who asserts this procedure
-     *  */
-    asserter: Reference;
-    /**
-     * The people who performed the procedure
-     *  */
-    performer: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Type of performance
-         *  */
-        function: CodeableConcept;
-        /**
-         * The reference to the practitioner
-         *  */
-        actor: Reference;
-        /**
-         * Organization the device or practitioner was acting for
-         *  */
-        onBehalfOf: Reference;
-    };
-    /**
-     * Where the procedure happened
-     *  */
-    location: Reference;
-    /**
-     * Coded reason procedure performed
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * The justification that the procedure was performed
-     *  */
-    reasonReference: Reference;
-    /**
-     * Target body sites
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * The result of procedure
-     *  */
-    outcome: CodeableConcept;
-    /**
-     * Any report resulting from the procedure
-     *  */
-    report: Reference;
-    /**
-     * Complication following the procedure
-     *  */
-    complication: CodeableConcept;
-    /**
-     * A condition that is a result of the procedure
-     *  */
-    complicationDetail: Reference;
-    /**
-     * Instructions for follow up
-     *  */
-    followUp: CodeableConcept;
-    /**
-     * Additional information about the procedure
-     *  */
-    note: Annotation;
-    /**
-     * Manipulated, implanted, or removed device
-     *  */
-    focalDevice: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Kind of change to device
-         *  */
-        action: CodeableConcept;
-        /**
-         * Device that was changed
-         *  */
-        manipulated: Reference;
-    };
-    /**
-     * Items used during procedure
-     *  */
-    usedReference: Reference;
-    /**
-     * Coded items used during the procedure
-     *  */
-    usedCode: CodeableConcept;
+    condition?: Expression;
 };
-
-type Procedure__lookups = {
-    "Procedure": Procedure_Procedure_Props;
-};
-
-export declare function procedure(props: Procedure_Procedure_Props);;
-
-export declare function procedure<T extends keyof Procedure__lookups>(type: T, props: Procedure__lookups[T]);;
-
-type Questionnaire_Questionnaire_Props = {
+declare type UsageContext = {
     /**
-     * Logical id of this artifact
+     * Unique id for inter-element referencing
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Type of context being specified
      *  */
-    modifierExtension: Extension;
+    code?: Coding;
     /**
-     * Canonical identifier for this questionnaire, represented as a URI (globally unique)
+     * Value that defines the context
      *  */
-    url: string;
-    /**
-     * Additional identifier for the questionnaire
-     *  */
-    identifier: Identifier;
-    /**
-     * Business version of the questionnaire
-     *  */
-    version: string;
-    /**
-     * Name for this questionnaire (computer friendly)
-     *  */
-    name: string;
-    /**
-     * Name for this questionnaire (human friendly)
-     *  */
-    title: string;
-    /**
-     * Instantiates protocol or definition
-     *  */
-    derivedFrom: any;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * For testing purposes, not real usage
-     *  */
-    experimental: boolean;
-    /**
-     * Resource that can be subject of QuestionnaireResponse
-     *  */
-    subjectType: string;
-    /**
-     * Date last changed
-     *  */
-    date: string;
-    /**
-     * Name of the publisher (organization or individual)
-     *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher
-     *  */
-    contact: ContactDetail;
-    /**
-     * Natural language description of the questionnaire
-     *  */
-    description: markdown;
-    /**
-     * The context that the content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * Intended jurisdiction for questionnaire (if applicable)
-     *  */
-    jurisdiction: CodeableConcept;
-    /**
-     * Why this questionnaire is defined
-     *  */
-    purpose: markdown;
-    /**
-     * Use and/or publishing restrictions
-     *  */
-    copyright: markdown;
-    /**
-     * When the questionnaire was approved by publisher
-     *  */
-    approvalDate: string;
-    /**
-     * When the questionnaire was last reviewed
-     *  */
-    lastReviewDate: string;
-    /**
-     * When the questionnaire is expected to be used
-     *  */
-    effectivePeriod: Period;
-    /**
-     * Concept that represents the overall questionnaire
-     *  */
-    code: Coding;
-    /**
-     * Questions and sections within the Questionnaire
-     *  */
-    item: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Unique id for item in questionnaire
-         *  */
-        linkId: string;
-        /**
-         * ElementDefinition - details for the item
-         *  */
-        definition: string;
-        /**
-         * Corresponding concept for this item in a terminology
-         *  */
-        code: Coding;
-        /**
-         * E.g. "1(a)", "2.5.3"
-         *  */
-        prefix: string;
-        /**
-         * Primary text for the item
-         *  */
-        text: string;
-        /**
-         * group | display | boolean | decimal | integer | date | dateTime +
-         *  */
-        type: string;
-        /**
-         * Value for question comparison based on operator
-         *  */
-        enableWhen: boolean;
-        /**
-         * all | any
-         *  */
-        enableBehavior: string;
-        /**
-         * Whether the item must be included in data results
-         *  */
-        required: boolean;
-        /**
-         * Whether the item may repeat
-         *  */
-        repeats: boolean;
-        /**
-         * Don't allow human editing
-         *  */
-        readOnly: boolean;
-        /**
-         * No more than this many characters
-         *  */
-        maxLength: number;
-        /**
-         * Valueset containing permitted answers
-         *  */
-        answerValueSet: any;
-        /**
-         * Whether option is selected by default
-         *  */
-        answerOption: boolean;
-        /**
-         * Actual value for initializing the question
-         *  */
-        initial: boolean;
-    };
+    value?: CodeableConcept;
 };
-
-type Questionnaire__lookups = {
-    "Questionnaire": Questionnaire_Questionnaire_Props;
-};
-
-export declare function questionnaire(props: Questionnaire_Questionnaire_Props);;
-
-export declare function questionnaire<T extends keyof Questionnaire__lookups>(type: T, props: Questionnaire__lookups[T]);;
-
-type QuestionnaireResponse_QuestionnaireResponse_Props = {
+declare type base64Binary = {
     /**
-     * Logical id of this artifact
+     * xml:id (or equivalent in JSON)
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Primitive value for base64Binary
      *  */
-    modifierExtension: Extension;
-    /**
-     * Unique id for this set of answers
-     *  */
-    identifier: Identifier;
-    /**
-     * Request fulfilled by this QuestionnaireResponse
-     *  */
-    basedOn: Reference;
-    /**
-     * Part of this action
-     *  */
-    partOf: Reference;
-    /**
-     * Form being answered
-     *  */
-    questionnaire: any;
-    /**
-     * in-progress | completed | amended | entered-in-error | stopped
-     *  */
-    status: string;
-    /**
-     * The subject of the questions
-     *  */
-    subject: Reference;
-    /**
-     * Encounter created as part of
-     *  */
-    encounter: Reference;
-    /**
-     * Date the answers were gathered
-     *  */
-    authored: string;
-    /**
-     * Person who received and recorded the answers
-     *  */
-    author: Reference;
-    /**
-     * The person who answered the questions
-     *  */
-    source: Reference;
-    /**
-     * Groups and questions
-     *  */
-    item: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Pointer to specific item from Questionnaire
-         *  */
-        linkId: string;
-        /**
-         * ElementDefinition - details for the item
-         *  */
-        definition: string;
-        /**
-         * Name for group or question text
-         *  */
-        text: string;
-        /**
-         * Single-valued answer to the question
-         *  */
-        answer: boolean;
-    };
+    value?: string;
 };
-
-type QuestionnaireResponse__lookups = {
-    "QuestionnaireResponse": QuestionnaireResponse_QuestionnaireResponse_Props;
-};
-
-export declare function questionnaireResponse(props: QuestionnaireResponse_QuestionnaireResponse_Props);;
-
-export declare function questionnaireResponse<T extends keyof QuestionnaireResponse__lookups>(type: T, props: QuestionnaireResponse__lookups[T]);;
-
-type RegulatedAuthorization_RegulatedAuthorization_Props = {
+declare type markdown = {
     /**
-     * Logical id of this artifact
+     * xml:id (or equivalent in JSON)
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Primitive value for markdown
      *  */
-    modifierExtension: Extension;
-    /**
-     * Business identifier for the authorization, typically assigned by the authorizing body
-     *  */
-    identifier: Identifier;
-    /**
-     * The product type, treatment, facility or activity that is being authorized
-     *  */
-    subject: Reference;
-    /**
-     * Overall type of this authorization, for example drug marketing approval, orphan drug designation
-     *  */
-    type: CodeableConcept;
-    /**
-     * General textual supporting information
-     *  */
-    description: markdown;
-    /**
-     * The territory in which the authorization has been granted
-     *  */
-    region: CodeableConcept;
-    /**
-     * The status that is authorised e.g. approved. Intermediate states can be tracked with cases and applications
-     *  */
-    status: CodeableConcept;
-    /**
-     * The date at which the current status was assigned
-     *  */
-    statusDate: string;
-    /**
-     * The time period in which the regulatory approval etc. is in effect, e.g. a Marketing Authorization includes the date of authorization and/or expiration date
-     *  */
-    validityPeriod: Period;
-    /**
-     * Condition for which the use of the regulated product applies
-     *  */
-    indication: CodeableReference;
-    /**
-     * The intended use of the product, e.g. prevention, treatment
-     *  */
-    intendedUse: CodeableConcept;
-    /**
-     * The legal/regulatory framework or reasons under which this authorization is granted
-     *  */
-    basis: CodeableConcept;
-    /**
-     * The organization that has been granted this authorization, by the regulator
-     *  */
-    holder: Reference;
-    /**
-     * The regulatory authority or authorizing body granting the authorization
-     *  */
-    regulator: Reference;
-    /**
-     * The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page)
-     *  */
-    case: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Identifier by which this case can be referenced
-         *  */
-        identifier: Identifier;
-        /**
-         * The defining type of case
-         *  */
-        type: CodeableConcept;
-        /**
-         * The status associated with the case
-         *  */
-        status: CodeableConcept;
-        /**
-         * Relevant date for this case
-         *  */
-        date: Period;
-    };
+    value?: string;
 };
-
-type RegulatedAuthorization__lookups = {
-    "RegulatedAuthorization": RegulatedAuthorization_RegulatedAuthorization_Props;
-};
-
-export declare function regulatedAuthorization(props: RegulatedAuthorization_RegulatedAuthorization_Props);;
-
-export declare function regulatedAuthorization<T extends keyof RegulatedAuthorization__lookups>(type: T, props: RegulatedAuthorization__lookups[T]);;
-
-type RelatedPerson_RelatedPerson_Props = {
+declare type url = {
     /**
-     * Logical id of this artifact
+     * xml:id (or equivalent in JSON)
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Primitive value for url
      *  */
-    modifierExtension: Extension;
-    /**
-     * A human identifier for this person
-     *  */
-    identifier: Identifier;
-    /**
-     * Whether this related person's record is in active use
-     *  */
-    active: boolean;
-    /**
-     * The patient this person is related to
-     *  */
-    patient: Reference;
-    /**
-     * The nature of the relationship
-     *  */
-    relationship: CodeableConcept;
-    /**
-     * A name associated with the person
-     *  */
-    name: HumanName;
-    /**
-     * A contact detail for the person
-     *  */
-    telecom: ContactPoint;
-    /**
-     * male | female | other | unknown
-     *  */
-    gender: string;
-    /**
-     * The date on which the related person was born
-     *  */
-    birthDate: string;
-    /**
-     * Address where the related person can be contacted or visited
-     *  */
-    address: Address;
-    /**
-     * Image of the person
-     *  */
-    photo: Attachment;
-    /**
-     * Period of time that this relationship is considered valid
-     *  */
-    period: Period;
-    /**
-     * A language which may be used to communicate with about the patient's health
-     *  */
-    communication: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The language which can be used to communicate with the patient about his or her health
-         *  */
-        language: CodeableConcept;
-        /**
-         * Language preference indicator
-         *  */
-        preferred: boolean;
-    };
+    value?: string;
 };
-
-type RelatedPerson__lookups = {
-    "RelatedPerson": RelatedPerson_RelatedPerson_Props;
-};
-
-export declare function relatedPerson(props: RelatedPerson_RelatedPerson_Props);;
-
-export declare function relatedPerson<T extends keyof RelatedPerson__lookups>(type: T, props: RelatedPerson__lookups[T]);;
-
-type RequestGroup_RequestGroup_Props = {
+declare type xhtml = {
     /**
-     * Logical id of this artifact
+     * xml:id (or equivalent in JSON)
      *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
+    id?: string;
     /**
      * Additional content defined by implementations
      *  */
-    extension: Extension;
+    extension?: Extension;
     /**
-     * Extensions that cannot be ignored
+     * Actual xhtml
      *  */
-    modifierExtension: Extension;
-    /**
-     * Business identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * Instantiates FHIR protocol or definition
-     *  */
-    instantiatesCanonical: any;
-    /**
-     * Instantiates external protocol or definition
-     *  */
-    instantiatesUri: string;
-    /**
-     * Fulfills plan, proposal, or order
-     *  */
-    basedOn: Reference;
-    /**
-     * Request(s) replaced by this request
-     *  */
-    replaces: Reference;
-    /**
-     * Composite request this is part of
-     *  */
-    groupIdentifier: Identifier;
-    /**
-     * draft | active | on-hold | revoked | completed | entered-in-error | unknown
-     *  */
-    status: string;
-    /**
-     * proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
-     *  */
-    intent: string;
-    /**
-     * routine | urgent | asap | stat
-     *  */
-    priority: string;
-    /**
-     * What's being requested/ordered
-     *  */
-    code: CodeableConcept;
-    /**
-     * Who the request group is about
-     *  */
-    subject: Reference;
-    /**
-     * Created as part of
-     *  */
-    encounter: Reference;
-    /**
-     * When the request group was authored
-     *  */
-    authoredOn: string;
-    /**
-     * Device or practitioner that authored the request group
-     *  */
-    author: Reference;
-    /**
-     * Why the request group is needed
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Why the request group is needed
-     *  */
-    reasonReference: Reference;
-    /**
-     * Additional notes about the response
-     *  */
-    note: Annotation;
-    /**
-     * Proposed actions, if any
-     *  */
-    action: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * User-visible prefix for the action (e.g. 1. or A.)
-         *  */
-        prefix: string;
-        /**
-         * User-visible title
-         *  */
-        title: string;
-        /**
-         * Short description of the action
-         *  */
-        description: string;
-        /**
-         * Static text equivalent of the action, used if the dynamic aspects cannot be interpreted by the receiving system
-         *  */
-        textEquivalent: string;
-        /**
-         * routine | urgent | asap | stat
-         *  */
-        priority: string;
-        /**
-         * Code representing the meaning of the action or sub-actions
-         *  */
-        code: CodeableConcept;
-        /**
-         * Supporting documentation for the intended performer of the action
-         *  */
-        documentation: RelatedArtifact;
-        /**
-         * Boolean-valued expression
-         *  */
-        condition: Expression;
-        /**
-         * Time offset for the relationship
-         *  */
-        relatedAction: Duration;
-        /**
-         * When the action should take place
-         *  */
-        timing: string;
-        /**
-         * Who should perform the action
-         *  */
-        participant: Reference;
-        /**
-         * create | update | remove | fire-event
-         *  */
-        type: CodeableConcept;
-        /**
-         * visual-group | logical-group | sentence-group
-         *  */
-        groupingBehavior: string;
-        /**
-         * any | all | all-or-none | exactly-one | at-most-one | one-or-more
-         *  */
-        selectionBehavior: string;
-        /**
-         * must | could | must-unless-documented
-         *  */
-        requiredBehavior: string;
-        /**
-         * yes | no
-         *  */
-        precheckBehavior: string;
-        /**
-         * single | multiple
-         *  */
-        cardinalityBehavior: string;
-        /**
-         * The target of the action
-         *  */
-        resource: Reference;
-    };
+    value?: string;
 };
 
-type RequestGroup__lookups = {
-    "RequestGroup": RequestGroup_RequestGroup_Props;
+declare type Account_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    type?: CodeableConcept;
+    name?: string;
+    subject?: Reference;
+    servicePeriod?: Period;
+    coverage?: BackboneElement;
+    owner?: Reference;
+    description?: string;
+    guarantor?: BackboneElement;
+    partOf?: Reference;
 };
 
-export declare function requestGroup(props: RequestGroup_RequestGroup_Props);;
-
-export declare function requestGroup<T extends keyof RequestGroup__lookups>(type: T, props: RequestGroup__lookups[T]);;
-
-type ResearchDefinition_ResearchDefinition_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Canonical identifier for this research definition, represented as a URI (globally unique)
-     *  */
-    url: string;
-    /**
-     * Additional identifier for the research definition
-     *  */
-    identifier: Identifier;
-    /**
-     * Business version of the research definition
-     *  */
-    version: string;
-    /**
-     * Name for this research definition (computer friendly)
-     *  */
-    name: string;
-    /**
-     * Name for this research definition (human friendly)
-     *  */
-    title: string;
-    /**
-     * Title for use in informal contexts
-     *  */
-    shortTitle: string;
-    /**
-     * Subordinate title of the ResearchDefinition
-     *  */
-    subtitle: string;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * For testing purposes, not real usage
-     *  */
-    experimental: boolean;
-    /**
-     * E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
-     *  */
-    subject: CodeableConcept;
-    /**
-     * Date last changed
-     *  */
-    date: string;
-    /**
-     * Name of the publisher (organization or individual)
-     *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher
-     *  */
-    contact: ContactDetail;
-    /**
-     * Natural language description of the research definition
-     *  */
-    description: markdown;
-    /**
-     * Used for footnotes or explanatory notes
-     *  */
-    comment: string;
-    /**
-     * The context that the content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * Intended jurisdiction for research definition (if applicable)
-     *  */
-    jurisdiction: CodeableConcept;
-    /**
-     * Why this research definition is defined
-     *  */
-    purpose: markdown;
-    /**
-     * Describes the clinical usage of the ResearchDefinition
-     *  */
-    usage: string;
-    /**
-     * Use and/or publishing restrictions
-     *  */
-    copyright: markdown;
-    /**
-     * When the research definition was approved by publisher
-     *  */
-    approvalDate: string;
-    /**
-     * When the research definition was last reviewed
-     *  */
-    lastReviewDate: string;
-    /**
-     * When the research definition is expected to be used
-     *  */
-    effectivePeriod: Period;
-    /**
-     * The category of the ResearchDefinition, such as Education, Treatment, Assessment, etc.
-     *  */
-    topic: CodeableConcept;
-    /**
-     * Who authored the content
-     *  */
-    author: ContactDetail;
-    /**
-     * Who edited the content
-     *  */
-    editor: ContactDetail;
-    /**
-     * Who reviewed the content
-     *  */
-    reviewer: ContactDetail;
-    /**
-     * Who endorsed the content
-     *  */
-    endorser: ContactDetail;
-    /**
-     * Additional documentation, citations, etc.
-     *  */
-    relatedArtifact: RelatedArtifact;
-    /**
-     * Logic used by the ResearchDefinition
-     *  */
-    library: any;
-    /**
-     * What population?
-     *  */
-    population: Reference;
-    /**
-     * What exposure?
-     *  */
-    exposure: Reference;
-    /**
-     * What alternative exposure state?
-     *  */
-    exposureAlternative: Reference;
-    /**
-     * What outcome?
-     *  */
-    outcome: Reference;
+declare type ActivityDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    name?: string;
+    title?: string;
+    subtitle?: string;
+    status?: string;
+    experimental?: boolean;
+    subject?: CodeableConcept;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    purpose?: markdown;
+    usage?: string;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    topic?: CodeableConcept;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    relatedArtifact?: RelatedArtifact;
+    library?: any;
+    kind?: string;
+    profile?: any;
+    code?: CodeableConcept;
+    intent?: string;
+    priority?: string;
+    doNotPerform?: boolean;
+    timing?: Timing;
+    location?: Reference;
+    participant?: BackboneElement;
+    product?: Reference;
+    quantity?: Quantity;
+    dosage?: Dosage;
+    bodySite?: CodeableConcept;
+    specimenRequirement?: Reference;
+    observationRequirement?: Reference;
+    observationResultRequirement?: Reference;
+    transform?: any;
+    dynamicValue?: BackboneElement;
 };
 
-type ResearchDefinition__lookups = {
-    "ResearchDefinition": ResearchDefinition_ResearchDefinition_Props;
+declare type AdministrableProductDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    formOf?: Reference;
+    administrableDoseForm?: CodeableConcept;
+    unitOfPresentation?: CodeableConcept;
+    producedFrom?: Reference;
+    ingredient?: CodeableConcept;
+    device?: Reference;
+    property?: BackboneElement;
+    routeOfAdministration?: BackboneElement;
 };
 
-export declare function researchDefinition(props: ResearchDefinition_ResearchDefinition_Props);;
-
-export declare function researchDefinition<T extends keyof ResearchDefinition__lookups>(type: T, props: ResearchDefinition__lookups[T]);;
-
-type ResearchElementDefinition_ResearchElementDefinition_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Canonical identifier for this research element definition, represented as a URI (globally unique)
-     *  */
-    url: string;
-    /**
-     * Additional identifier for the research element definition
-     *  */
-    identifier: Identifier;
-    /**
-     * Business version of the research element definition
-     *  */
-    version: string;
-    /**
-     * Name for this research element definition (computer friendly)
-     *  */
-    name: string;
-    /**
-     * Name for this research element definition (human friendly)
-     *  */
-    title: string;
-    /**
-     * Title for use in informal contexts
-     *  */
-    shortTitle: string;
-    /**
-     * Subordinate title of the ResearchElementDefinition
-     *  */
-    subtitle: string;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * For testing purposes, not real usage
-     *  */
-    experimental: boolean;
-    /**
-     * E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
-     *  */
-    subject: CodeableConcept;
-    /**
-     * Date last changed
-     *  */
-    date: string;
-    /**
-     * Name of the publisher (organization or individual)
-     *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher
-     *  */
-    contact: ContactDetail;
-    /**
-     * Natural language description of the research element definition
-     *  */
-    description: markdown;
-    /**
-     * Used for footnotes or explanatory notes
-     *  */
-    comment: string;
-    /**
-     * The context that the content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * Intended jurisdiction for research element definition (if applicable)
-     *  */
-    jurisdiction: CodeableConcept;
-    /**
-     * Why this research element definition is defined
-     *  */
-    purpose: markdown;
-    /**
-     * Describes the clinical usage of the ResearchElementDefinition
-     *  */
-    usage: string;
-    /**
-     * Use and/or publishing restrictions
-     *  */
-    copyright: markdown;
-    /**
-     * When the research element definition was approved by publisher
-     *  */
-    approvalDate: string;
-    /**
-     * When the research element definition was last reviewed
-     *  */
-    lastReviewDate: string;
-    /**
-     * When the research element definition is expected to be used
-     *  */
-    effectivePeriod: Period;
-    /**
-     * The category of the ResearchElementDefinition, such as Education, Treatment, Assessment, etc.
-     *  */
-    topic: CodeableConcept;
-    /**
-     * Who authored the content
-     *  */
-    author: ContactDetail;
-    /**
-     * Who edited the content
-     *  */
-    editor: ContactDetail;
-    /**
-     * Who reviewed the content
-     *  */
-    reviewer: ContactDetail;
-    /**
-     * Who endorsed the content
-     *  */
-    endorser: ContactDetail;
-    /**
-     * Additional documentation, citations, etc.
-     *  */
-    relatedArtifact: RelatedArtifact;
-    /**
-     * Logic used by the ResearchElementDefinition
-     *  */
-    library: any;
-    /**
-     * population | exposure | outcome
-     *  */
-    type: string;
-    /**
-     * dichotomous | continuous | descriptive
-     *  */
-    variableType: string;
-    /**
-     * What defines the members of the research element
-     *  */
-    characteristic: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * What code or expression defines members?
-         *  */
-        definition: CodeableConcept;
-        /**
-         * What code/value pairs define members?
-         *  */
-        usageContext: UsageContext;
-        /**
-         * Whether the characteristic includes or excludes members
-         *  */
-        exclude: boolean;
-        /**
-         * What unit is the outcome described in?
-         *  */
-        unitOfMeasure: CodeableConcept;
-        /**
-         * What time period does the study cover
-         *  */
-        studyEffectiveDescription: string;
-        /**
-         * What time period does the study cover
-         *  */
-        studyEffective: string;
-        /**
-         * Observation time from study start
-         *  */
-        studyEffectiveTimeFromStart: Duration;
-        /**
-         * mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
-         *  */
-        studyEffectiveGroupMeasure: string;
-        /**
-         * What time period do participants cover
-         *  */
-        participantEffectiveDescription: string;
-        /**
-         * What time period do participants cover
-         *  */
-        participantEffective: string;
-        /**
-         * Observation time from study start
-         *  */
-        participantEffectiveTimeFromStart: Duration;
-        /**
-         * mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
-         *  */
-        participantEffectiveGroupMeasure: string;
-    };
+declare type AdverseEvent_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    actuality?: string;
+    category?: CodeableConcept;
+    event?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    date?: string;
+    detected?: string;
+    recordedDate?: string;
+    resultingCondition?: Reference;
+    location?: Reference;
+    seriousness?: CodeableConcept;
+    severity?: CodeableConcept;
+    outcome?: CodeableConcept;
+    recorder?: Reference;
+    contributor?: Reference;
+    suspectEntity?: BackboneElement;
+    subjectMedicalHistory?: Reference;
+    referenceDocument?: Reference;
+    study?: Reference;
 };
 
-type ResearchElementDefinition__lookups = {
-    "ResearchElementDefinition": ResearchElementDefinition_ResearchElementDefinition_Props;
+declare type AllergyIntolerance_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    clinicalStatus?: CodeableConcept;
+    verificationStatus?: CodeableConcept;
+    type?: string;
+    category?: string;
+    criticality?: string;
+    code?: CodeableConcept;
+    patient?: Reference;
+    encounter?: Reference;
+    onset?: string;
+    recordedDate?: string;
+    recorder?: Reference;
+    asserter?: Reference;
+    lastOccurrence?: string;
+    note?: Annotation;
+    reaction?: BackboneElement;
 };
 
-export declare function researchElementDefinition(props: ResearchElementDefinition_ResearchElementDefinition_Props);;
-
-export declare function researchElementDefinition<T extends keyof ResearchElementDefinition__lookups>(type: T, props: ResearchElementDefinition__lookups[T]);;
-
-type ResearchStudy_ResearchStudy_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for study
-     *  */
-    identifier: Identifier;
-    /**
-     * Name for this study
-     *  */
-    title: string;
-    /**
-     * Steps followed in executing study
-     *  */
-    protocol: Reference;
-    /**
-     * Part of larger study
-     *  */
-    partOf: Reference;
-    /**
-     * active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn
-     *  */
-    status: string;
-    /**
-     * treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility
-     *  */
-    primaryPurposeType: CodeableConcept;
-    /**
-     * n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4
-     *  */
-    phase: CodeableConcept;
-    /**
-     * Classifications for the study
-     *  */
-    category: CodeableConcept;
-    /**
-     * Drugs, devices, etc. under study
-     *  */
-    focus: CodeableConcept;
-    /**
-     * Condition being studied
-     *  */
-    condition: CodeableConcept;
-    /**
-     * Contact details for the study
-     *  */
-    contact: ContactDetail;
-    /**
-     * References and dependencies
-     *  */
-    relatedArtifact: RelatedArtifact;
-    /**
-     * Used to search for the study
-     *  */
-    keyword: CodeableConcept;
-    /**
-     * Geographic region(s) for study
-     *  */
-    location: CodeableConcept;
-    /**
-     * What this is study doing
-     *  */
-    description: markdown;
-    /**
-     * Inclusion & exclusion criteria
-     *  */
-    enrollment: Reference;
-    /**
-     * When the study began and ended
-     *  */
-    period: Period;
-    /**
-     * Organization that initiates and is legally responsible for the study
-     *  */
-    sponsor: Reference;
-    /**
-     * Researcher who oversees multiple aspects of the study
-     *  */
-    principalInvestigator: Reference;
-    /**
-     * Facility where study activities are conducted
-     *  */
-    site: Reference;
-    /**
-     * accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design
-     *  */
-    reasonStopped: CodeableConcept;
-    /**
-     * Comments made about the study
-     *  */
-    note: Annotation;
-    /**
-     * Defined path through the study for a subject
-     *  */
-    arm: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Label for study arm
-         *  */
-        name: string;
-        /**
-         * Categorization of study arm
-         *  */
-        type: CodeableConcept;
-        /**
-         * Short explanation of study path
-         *  */
-        description: string;
-    };
-    /**
-     * A goal for the study
-     *  */
-    objective: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Label for the objective
-         *  */
-        name: string;
-        /**
-         * primary | secondary | exploratory
-         *  */
-        type: CodeableConcept;
-    };
+declare type Appointment_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    cancelationReason?: CodeableConcept;
+    serviceCategory?: CodeableConcept;
+    serviceType?: CodeableConcept;
+    specialty?: CodeableConcept;
+    appointmentType?: CodeableConcept;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    priority?: number;
+    description?: string;
+    supportingInformation?: Reference;
+    start?: string;
+    end?: string;
+    minutesDuration?: number;
+    slot?: Reference;
+    created?: string;
+    comment?: string;
+    patientInstruction?: string;
+    basedOn?: Reference;
+    participant?: BackboneElement;
+    requestedPeriod?: Period;
 };
 
-type ResearchStudy__lookups = {
-    "ResearchStudy": ResearchStudy_ResearchStudy_Props;
+declare type AppointmentResponse_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    appointment?: Reference;
+    start?: string;
+    end?: string;
+    participantType?: CodeableConcept;
+    actor?: Reference;
+    participantStatus?: string;
+    comment?: string;
 };
 
-export declare function researchStudy(props: ResearchStudy_ResearchStudy_Props);;
-
-export declare function researchStudy<T extends keyof ResearchStudy__lookups>(type: T, props: ResearchStudy__lookups[T]);;
-
-type ResearchSubject_ResearchSubject_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for research subject in a study
-     *  */
-    identifier: Identifier;
-    /**
-     * candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
-     *  */
-    status: string;
-    /**
-     * Start and end of participation
-     *  */
-    period: Period;
-    /**
-     * Study subject is part of
-     *  */
-    study: Reference;
-    /**
-     * Who is part of study
-     *  */
-    individual: Reference;
-    /**
-     * What path should be followed
-     *  */
-    assignedArm: string;
-    /**
-     * What path was followed
-     *  */
-    actualArm: string;
-    /**
-     * Agreement to participate in study
-     *  */
-    consent: Reference;
+declare type BiologicallyDerivedProduct_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    productCategory?: string;
+    productCode?: CodeableConcept;
+    status?: string;
+    request?: Reference;
+    quantity?: number;
+    parent?: Reference;
+    collection?: BackboneElement;
+    processing?: BackboneElement;
+    manipulation?: BackboneElement;
+    storage?: BackboneElement;
 };
 
-type ResearchSubject__lookups = {
-    "ResearchSubject": ResearchSubject_ResearchSubject_Props;
+declare type BodyStructure_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    morphology?: CodeableConcept;
+    location?: CodeableConcept;
+    locationQualifier?: CodeableConcept;
+    description?: string;
+    image?: Attachment;
+    patient?: Reference;
 };
 
-export declare function researchSubject(props: ResearchSubject_ResearchSubject_Props);;
-
-export declare function researchSubject<T extends keyof ResearchSubject__lookups>(type: T, props: ResearchSubject__lookups[T]);;
-
-type Resource_Resource_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
+declare type CarePlan_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    instantiatesCanonical?: any;
+    instantiatesUri?: string;
+    basedOn?: Reference;
+    replaces?: Reference;
+    partOf?: Reference;
+    status?: string;
+    intent?: string;
+    category?: CodeableConcept;
+    title?: string;
+    description?: string;
+    subject?: Reference;
+    encounter?: Reference;
+    period?: Period;
+    created?: string;
+    author?: Reference;
+    contributor?: Reference;
+    careTeam?: Reference;
+    addresses?: Reference;
+    supportingInfo?: Reference;
+    goal?: Reference;
+    activity?: BackboneElement;
+    note?: Annotation;
 };
 
-type Resource__lookups = {
-    "Resource": Resource_Resource_Props;
+declare type CareTeam_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    category?: CodeableConcept;
+    name?: string;
+    subject?: Reference;
+    encounter?: Reference;
+    period?: Period;
+    participant?: BackboneElement;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    managingOrganization?: Reference;
+    telecom?: ContactPoint;
+    note?: Annotation;
 };
 
-export declare function resource(props: Resource_Resource_Props);;
-
-export declare function resource<T extends keyof Resource__lookups>(type: T, props: Resource__lookups[T]);;
-
-type RiskAssessment_RiskAssessment_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Unique identifier for the assessment
-     *  */
-    identifier: Identifier;
-    /**
-     * Request fulfilled by this assessment
-     *  */
-    basedOn: Reference;
-    /**
-     * Part of this occurrence
-     *  */
-    parent: Reference;
-    /**
-     * registered | preliminary | final | amended +
-     *  */
-    status: string;
-    /**
-     * Evaluation mechanism
-     *  */
-    method: CodeableConcept;
-    /**
-     * Type of assessment
-     *  */
-    code: CodeableConcept;
-    /**
-     * Who/what does assessment apply to?
-     *  */
-    subject: Reference;
-    /**
-     * Where was assessment performed?
-     *  */
-    encounter: Reference;
-    /**
-     * When was assessment made?
-     *  */
-    occurrence: string;
-    /**
-     * Condition assessed
-     *  */
-    condition: Reference;
-    /**
-     * Who did assessment?
-     *  */
-    performer: Reference;
-    /**
-     * Why the assessment was necessary?
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Why the assessment was necessary?
-     *  */
-    reasonReference: Reference;
-    /**
-     * Information used in assessment
-     *  */
-    basis: Reference;
-    /**
-     * Outcome predicted
-     *  */
-    prediction: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Possible outcome for the subject
-         *  */
-        outcome: CodeableConcept;
-        /**
-         * Likelihood of specified outcome
-         *  */
-        probability: number;
-        /**
-         * Likelihood of specified outcome as a qualitative value
-         *  */
-        qualitativeRisk: CodeableConcept;
-        /**
-         * Relative likelihood
-         *  */
-        relativeRisk: number;
-        /**
-         * Timeframe or age range
-         *  */
-        when: Period;
-        /**
-         * Explanation of prediction
-         *  */
-        rationale: string;
-    };
-    /**
-     * How to reduce risk
-     *  */
-    mitigation: string;
-    /**
-     * Comments on the risk assessment
-     *  */
-    note: Annotation;
+declare type ChargeItem_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    definitionUri?: string;
+    definitionCanonical?: any;
+    status?: string;
+    partOf?: Reference;
+    code?: CodeableConcept;
+    subject?: Reference;
+    context?: Reference;
+    occurrence?: string;
+    performer?: BackboneElement;
+    performingOrganization?: Reference;
+    requestingOrganization?: Reference;
+    costCenter?: Reference;
+    quantity?: Quantity;
+    bodysite?: CodeableConcept;
+    factorOverride?: number;
+    priceOverride?: Money;
+    overrideReason?: string;
+    enterer?: Reference;
+    enteredDate?: string;
+    reason?: CodeableConcept;
+    service?: Reference;
+    product?: Reference;
+    account?: Reference;
+    note?: Annotation;
+    supportingInformation?: Reference;
 };
 
-type RiskAssessment__lookups = {
-    "RiskAssessment": RiskAssessment_RiskAssessment_Props;
+declare type ChargeItemDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    title?: string;
+    derivedFromUri?: string;
+    partOf?: any;
+    replaces?: any;
+    status?: string;
+    experimental?: boolean;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    code?: CodeableConcept;
+    instance?: Reference;
+    applicability?: BackboneElement;
+    propertyGroup?: BackboneElement;
 };
 
-export declare function riskAssessment(props: RiskAssessment_RiskAssessment_Props);;
-
-export declare function riskAssessment<T extends keyof RiskAssessment__lookups>(type: T, props: RiskAssessment__lookups[T]);;
-
-type Schedule_Schedule_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * External Ids for this item
-     *  */
-    identifier: Identifier;
-    /**
-     * Whether this schedule is in active use
-     *  */
-    active: boolean;
-    /**
-     * High-level category
-     *  */
-    serviceCategory: CodeableConcept;
-    /**
-     * Specific service
-     *  */
-    serviceType: CodeableConcept;
-    /**
-     * Type of specialty needed
-     *  */
-    specialty: CodeableConcept;
-    /**
-     * Resource(s) that availability information is being provided for
-     *  */
-    actor: Reference;
-    /**
-     * Period of time covered by schedule
-     *  */
-    planningHorizon: Period;
-    /**
-     * Comments on availability
-     *  */
-    comment: string;
+declare type Citation_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    name?: string;
+    title?: string;
+    status?: string;
+    experimental?: boolean;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    purpose?: markdown;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    summary?: BackboneElement;
+    classification?: BackboneElement;
+    note?: Annotation;
+    currentState?: CodeableConcept;
+    statusDate?: BackboneElement;
+    relatesTo?: BackboneElement;
+    citedArtifact?: BackboneElement;
 };
 
-type Schedule__lookups = {
-    "Schedule": Schedule_Schedule_Props;
+declare type Claim_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    type?: CodeableConcept;
+    subType?: CodeableConcept;
+    use?: string;
+    patient?: Reference;
+    billablePeriod?: Period;
+    created?: string;
+    enterer?: Reference;
+    insurer?: Reference;
+    provider?: Reference;
+    priority?: CodeableConcept;
+    fundsReserve?: CodeableConcept;
+    related?: BackboneElement;
+    prescription?: Reference;
+    originalPrescription?: Reference;
+    payee?: BackboneElement;
+    referral?: Reference;
+    facility?: Reference;
+    careTeam?: BackboneElement;
+    supportingInfo?: BackboneElement;
+    diagnosis?: BackboneElement;
+    procedure?: BackboneElement;
+    insurance?: BackboneElement;
+    accident?: BackboneElement;
+    item?: BackboneElement;
+    total?: Money;
 };
 
-export declare function schedule(props: Schedule_Schedule_Props);;
-
-export declare function schedule<T extends keyof Schedule__lookups>(type: T, props: Schedule__lookups[T]);;
-
-type ServiceRequest_ServiceRequest_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Identifiers assigned to this order
-     *  */
-    identifier: Identifier;
-    /**
-     * Instantiates FHIR protocol or definition
-     *  */
-    instantiatesCanonical: any;
-    /**
-     * Instantiates external protocol or definition
-     *  */
-    instantiatesUri: string;
-    /**
-     * What request fulfills
-     *  */
-    basedOn: Reference;
-    /**
-     * What request replaces
-     *  */
-    replaces: Reference;
-    /**
-     * Composite Request ID
-     *  */
-    requisition: Identifier;
-    /**
-     * draft | active | on-hold | revoked | completed | entered-in-error | unknown
-     *  */
-    status: string;
-    /**
-     * proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
-     *  */
-    intent: string;
-    /**
-     * Classification of service
-     *  */
-    category: CodeableConcept;
-    /**
-     * routine | urgent | asap | stat
-     *  */
-    priority: string;
-    /**
-     * True if service/procedure should not be performed
-     *  */
-    doNotPerform: boolean;
-    /**
-     * What is being requested/ordered
-     *  */
-    code: CodeableConcept;
-    /**
-     * Additional order information
-     *  */
-    orderDetail: CodeableConcept;
-    /**
-     * Service amount
-     *  */
-    quantity: Quantity;
-    /**
-     * Individual or Entity the service is ordered for
-     *  */
-    subject: Reference;
-    /**
-     * Encounter in which the request was created
-     *  */
-    encounter: Reference;
-    /**
-     * When service should occur
-     *  */
-    occurrence: string;
-    /**
-     * Preconditions for service
-     *  */
-    asNeeded: boolean;
-    /**
-     * Date request signed
-     *  */
-    authoredOn: string;
-    /**
-     * Who/what is requesting service
-     *  */
-    requester: Reference;
-    /**
-     * Performer role
-     *  */
-    performerType: CodeableConcept;
-    /**
-     * Requested performer
-     *  */
-    performer: Reference;
-    /**
-     * Requested location
-     *  */
-    locationCode: CodeableConcept;
-    /**
-     * Requested location
-     *  */
-    locationReference: Reference;
-    /**
-     * Explanation/Justification for procedure or service
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Explanation/Justification for service or service
-     *  */
-    reasonReference: Reference;
-    /**
-     * Associated insurance coverage
-     *  */
-    insurance: Reference;
-    /**
-     * Additional clinical information
-     *  */
-    supportingInfo: Reference;
-    /**
-     * Procedure Samples
-     *  */
-    specimen: Reference;
-    /**
-     * Location on Body
-     *  */
-    bodySite: CodeableConcept;
-    /**
-     * Comments
-     *  */
-    note: Annotation;
-    /**
-     * Patient or consumer-oriented instructions
-     *  */
-    patientInstruction: string;
-    /**
-     * Request provenance
-     *  */
-    relevantHistory: Reference;
+declare type ClaimResponse_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    type?: CodeableConcept;
+    subType?: CodeableConcept;
+    use?: string;
+    patient?: Reference;
+    created?: string;
+    insurer?: Reference;
+    requestor?: Reference;
+    request?: Reference;
+    outcome?: string;
+    disposition?: string;
+    preAuthRef?: string;
+    preAuthPeriod?: Period;
+    payeeType?: CodeableConcept;
+    item?: BackboneElement;
+    addItem?: BackboneElement;
+    adjudication?: any;
+    total?: BackboneElement;
+    payment?: BackboneElement;
+    fundsReserve?: CodeableConcept;
+    formCode?: CodeableConcept;
+    form?: Attachment;
+    processNote?: BackboneElement;
+    communicationRequest?: Reference;
+    insurance?: BackboneElement;
+    error?: BackboneElement;
 };
 
-type ServiceRequest__lookups = {
-    "ServiceRequest": ServiceRequest_ServiceRequest_Props;
+declare type ClinicalImpression_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    statusReason?: CodeableConcept;
+    code?: CodeableConcept;
+    description?: string;
+    subject?: Reference;
+    encounter?: Reference;
+    effective?: string;
+    date?: string;
+    assessor?: Reference;
+    previous?: Reference;
+    problem?: Reference;
+    investigation?: BackboneElement;
+    protocol?: string;
+    summary?: string;
+    finding?: BackboneElement;
+    prognosisCodeableConcept?: CodeableConcept;
+    prognosisReference?: Reference;
+    supportingInfo?: Reference;
+    note?: Annotation;
 };
 
-export declare function serviceRequest(props: ServiceRequest_ServiceRequest_Props);;
-
-export declare function serviceRequest<T extends keyof ServiceRequest__lookups>(type: T, props: ServiceRequest__lookups[T]);;
-
-type Slot_Slot_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * External Ids for this item
-     *  */
-    identifier: Identifier;
-    /**
-     * A broad categorization of the service that is to be performed during this appointment
-     *  */
-    serviceCategory: CodeableConcept;
-    /**
-     * The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource
-     *  */
-    serviceType: CodeableConcept;
-    /**
-     * The specialty of a practitioner that would be required to perform the service requested in this appointment
-     *  */
-    specialty: CodeableConcept;
-    /**
-     * The style of appointment or patient that may be booked in the slot (not service type)
-     *  */
-    appointmentType: CodeableConcept;
-    /**
-     * The schedule resource that this slot defines an interval of status information
-     *  */
-    schedule: Reference;
-    /**
-     * busy | free | busy-unavailable | busy-tentative | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Date/Time that the slot is to begin
-     *  */
-    start: string;
-    /**
-     * Date/Time that the slot is to conclude
-     *  */
-    end: string;
-    /**
-     * This slot has already been overbooked, appointments are unlikely to be accepted for this time
-     *  */
-    overbooked: boolean;
-    /**
-     * Comments on the slot to describe any extended information. Such as custom constraints on the slot
-     *  */
-    comment: string;
+declare type ClinicalUseDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    type?: string;
+    category?: CodeableConcept;
+    subject?: Reference;
+    status?: CodeableConcept;
+    contraindication?: BackboneElement;
+    indication?: BackboneElement;
+    interaction?: BackboneElement;
+    population?: Reference;
+    undesirableEffect?: BackboneElement;
+    warning?: BackboneElement;
 };
 
-type Slot__lookups = {
-    "Slot": Slot_Slot_Props;
+declare type Communication_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    instantiatesCanonical?: any;
+    instantiatesUri?: string;
+    basedOn?: Reference;
+    partOf?: Reference;
+    inResponseTo?: Reference;
+    status?: string;
+    statusReason?: CodeableConcept;
+    category?: CodeableConcept;
+    priority?: string;
+    medium?: CodeableConcept;
+    subject?: Reference;
+    topic?: CodeableConcept;
+    about?: Reference;
+    encounter?: Reference;
+    sent?: string;
+    received?: string;
+    recipient?: Reference;
+    sender?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    payload?: BackboneElement;
+    note?: Annotation;
 };
 
-export declare function slot(props: Slot_Slot_Props);;
-
-export declare function slot<T extends keyof Slot__lookups>(type: T, props: Slot__lookups[T]);;
-
-type Specimen_Specimen_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * External Identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * Identifier assigned by the lab
-     *  */
-    accessionIdentifier: Identifier;
-    /**
-     * available | unavailable | unsatisfactory | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Kind of material that forms the specimen
-     *  */
-    type: CodeableConcept;
-    /**
-     * Where the specimen came from. This may be from patient(s), from a location (e.g., the source of an environmental sample), or a sampling of a substance or a device
-     *  */
-    subject: Reference;
-    /**
-     * The time when specimen was received for processing
-     *  */
-    receivedTime: string;
-    /**
-     * Specimen from which this specimen originated
-     *  */
-    parent: Reference;
-    /**
-     * Why the specimen was collected
-     *  */
-    request: Reference;
-    /**
-     * Collection details
-     *  */
-    collection: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Who collected the specimen
-         *  */
-        collector: Reference;
-        /**
-         * Collection time
-         *  */
-        collected: string;
-        /**
-         * How long it took to collect specimen
-         *  */
-        duration: Duration;
-        /**
-         * The quantity of specimen collected
-         *  */
-        quantity: Quantity;
-        /**
-         * Technique used to perform collection
-         *  */
-        method: CodeableConcept;
-        /**
-         * Anatomical collection site
-         *  */
-        bodySite: CodeableConcept;
-        /**
-         * Whether or how long patient abstained from food and/or drink
-         *  */
-        fastingStatus: CodeableConcept;
-    };
-    /**
-     * Processing and processing step details
-     *  */
-    processing: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Textual description of procedure
-         *  */
-        description: string;
-        /**
-         * Indicates the treatment step  applied to the specimen
-         *  */
-        procedure: CodeableConcept;
-        /**
-         * Material used in the processing step
-         *  */
-        additive: Reference;
-        /**
-         * Date and time of specimen processing
-         *  */
-        time: string;
-    };
-    /**
-     * Direct container of specimen (tube/slide, etc.)
-     *  */
-    container: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Id for the container
-         *  */
-        identifier: Identifier;
-        /**
-         * Textual description of the container
-         *  */
-        description: string;
-        /**
-         * Kind of container directly associated with specimen
-         *  */
-        type: CodeableConcept;
-        /**
-         * Container volume or size
-         *  */
-        capacity: Quantity;
-        /**
-         * Quantity of specimen within container
-         *  */
-        specimenQuantity: Quantity;
-        /**
-         * Additive associated with container
-         *  */
-        additive: CodeableConcept;
-    };
-    /**
-     * State of the specimen
-     *  */
-    condition: CodeableConcept;
-    /**
-     * Comments
-     *  */
-    note: Annotation;
+declare type CommunicationRequest_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    replaces?: Reference;
+    groupIdentifier?: Identifier;
+    status?: string;
+    statusReason?: CodeableConcept;
+    category?: CodeableConcept;
+    priority?: string;
+    doNotPerform?: boolean;
+    medium?: CodeableConcept;
+    subject?: Reference;
+    about?: Reference;
+    encounter?: Reference;
+    payload?: BackboneElement;
+    occurrence?: string;
+    authoredOn?: string;
+    requester?: Reference;
+    recipient?: Reference;
+    sender?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    note?: Annotation;
 };
 
-type Specimen__lookups = {
-    "Specimen": Specimen_Specimen_Props;
+declare type Condition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    clinicalStatus?: CodeableConcept;
+    verificationStatus?: CodeableConcept;
+    category?: CodeableConcept;
+    severity?: CodeableConcept;
+    code?: CodeableConcept;
+    bodySite?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    onset?: string;
+    abatement?: string;
+    recordedDate?: string;
+    recorder?: Reference;
+    asserter?: Reference;
+    stage?: BackboneElement;
+    evidence?: BackboneElement;
+    note?: Annotation;
 };
 
-export declare function specimen(props: Specimen_Specimen_Props);;
-
-export declare function specimen<T extends keyof Specimen__lookups>(type: T, props: Specimen__lookups[T]);;
-
-type SpecimenDefinition_SpecimenDefinition_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business identifier of a kind of specimen
-     *  */
-    identifier: Identifier;
-    /**
-     * Kind of material to collect
-     *  */
-    typeCollected: CodeableConcept;
-    /**
-     * Patient preparation for collection
-     *  */
-    patientPreparation: CodeableConcept;
-    /**
-     * Time aspect for collection
-     *  */
-    timeAspect: string;
-    /**
-     * Specimen collection procedure
-     *  */
-    collection: CodeableConcept;
-    /**
-     * Specimen in container intended for testing by lab
-     *  */
-    typeTested: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Primary or secondary specimen
-         *  */
-        isDerived: boolean;
-        /**
-         * Type of intended specimen
-         *  */
-        type: CodeableConcept;
-        /**
-         * preferred | alternate
-         *  */
-        preference: string;
-        /**
-         * Specimen container preparation
-         *  */
-        container: string;
-        /**
-         * Specimen requirements
-         *  */
-        requirement: string;
-        /**
-         * Specimen retention time
-         *  */
-        retentionTime: Duration;
-        /**
-         * Rejection criterion
-         *  */
-        rejectionCriterion: CodeableConcept;
-        /**
-         * Preservation instruction
-         *  */
-        handling: string;
-    };
+declare type Contract_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    url?: string;
+    version?: string;
+    status?: string;
+    legalState?: CodeableConcept;
+    instantiatesCanonical?: Reference;
+    instantiatesUri?: string;
+    contentDerivative?: CodeableConcept;
+    issued?: string;
+    applies?: Period;
+    expirationType?: CodeableConcept;
+    subject?: Reference;
+    authority?: Reference;
+    domain?: Reference;
+    site?: Reference;
+    name?: string;
+    title?: string;
+    subtitle?: string;
+    alias?: string;
+    author?: Reference;
+    scope?: CodeableConcept;
+    topic?: CodeableConcept;
+    type?: CodeableConcept;
+    subType?: CodeableConcept;
+    contentDefinition?: BackboneElement;
+    term?: BackboneElement;
+    supportingInfo?: Reference;
+    relevantHistory?: Reference;
+    signer?: BackboneElement;
+    friendly?: BackboneElement;
+    legal?: BackboneElement;
+    rule?: BackboneElement;
+    legallyBinding?: Attachment;
 };
 
-type SpecimenDefinition__lookups = {
-    "SpecimenDefinition": SpecimenDefinition_SpecimenDefinition_Props;
+declare type Coverage_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    type?: CodeableConcept;
+    policyHolder?: Reference;
+    subscriber?: Reference;
+    subscriberId?: string;
+    beneficiary?: Reference;
+    dependent?: string;
+    relationship?: CodeableConcept;
+    period?: Period;
+    payor?: Reference;
+    class?: BackboneElement;
+    order?: number;
+    network?: string;
+    costToBeneficiary?: BackboneElement;
+    subrogation?: boolean;
+    contract?: Reference;
 };
 
-export declare function specimenDefinition(props: SpecimenDefinition_SpecimenDefinition_Props);;
-
-export declare function specimenDefinition<T extends keyof SpecimenDefinition__lookups>(type: T, props: SpecimenDefinition__lookups[T]);;
-
-type Substance_Substance_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Unique identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * active | inactive | entered-in-error
-     *  */
-    status: string;
-    /**
-     * What class/type of substance this is
-     *  */
-    category: CodeableConcept;
-    /**
-     * What substance this is
-     *  */
-    code: CodeableConcept;
-    /**
-     * Textual description of the substance, comments
-     *  */
-    description: string;
-    /**
-     * If this describes a specific package/container of the substance
-     *  */
-    instance: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Identifier of the package/container
-         *  */
-        identifier: Identifier;
-        /**
-         * When no longer valid to use
-         *  */
-        expiry: string;
-        /**
-         * Amount of substance in the package
-         *  */
-        quantity: Quantity;
-    };
-    /**
-     * Composition information about the substance
-     *  */
-    ingredient: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Optional amount (concentration)
-         *  */
-        quantity: Ratio;
-        /**
-         * A component of the substance
-         *  */
-        substance: CodeableConcept;
-    };
+declare type CoverageEligibilityRequest_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    priority?: CodeableConcept;
+    purpose?: string;
+    patient?: Reference;
+    serviced?: string;
+    created?: string;
+    enterer?: Reference;
+    provider?: Reference;
+    insurer?: Reference;
+    facility?: Reference;
+    supportingInfo?: BackboneElement;
+    insurance?: BackboneElement;
+    item?: BackboneElement;
 };
 
-type Substance__lookups = {
-    "Substance": Substance_Substance_Props;
+declare type CoverageEligibilityResponse_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    purpose?: string;
+    patient?: Reference;
+    serviced?: string;
+    created?: string;
+    requestor?: Reference;
+    request?: Reference;
+    outcome?: string;
+    disposition?: string;
+    insurer?: Reference;
+    insurance?: BackboneElement;
+    preAuthRef?: string;
+    form?: CodeableConcept;
+    error?: BackboneElement;
 };
 
-export declare function substance(props: Substance_Substance_Props);;
-
-export declare function substance<T extends keyof Substance__lookups>(type: T, props: Substance__lookups[T]);;
-
-type SubstanceDefinition_SubstanceDefinition_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Identifier by which this substance is known
-     *  */
-    identifier: Identifier;
-    /**
-     * A business level version identifier of the substance
-     *  */
-    version: string;
-    /**
-     * Status of substance within the catalogue e.g. active, retired
-     *  */
-    status: CodeableConcept;
-    /**
-     * A categorization, high level e.g. polymer or nucleic acid, or food, chemical, biological, or lower e.g. polymer linear or branch chain, or type of impurity
-     *  */
-    classification: CodeableConcept;
-    /**
-     * If the substance applies to human or veterinary use
-     *  */
-    domain: CodeableConcept;
-    /**
-     * The quality standard, established benchmark, to which substance complies (e.g. USP/NF, BP)
-     *  */
-    grade: CodeableConcept;
-    /**
-     * Textual description of the substance
-     *  */
-    description: markdown;
-    /**
-     * Supporting literature
-     *  */
-    informationSource: Reference;
-    /**
-     * Textual comment about the substance's catalogue or registry record
-     *  */
-    note: Annotation;
-    /**
-     * The entity that creates, makes, produces or fabricates the substance
-     *  */
-    manufacturer: Reference;
-    /**
-     * An entity that is the source for the substance. It may be different from the manufacturer
-     *  */
-    supplier: Reference;
-    /**
-     * Moiety, for structural modifications
-     *  */
-    moiety: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Role that the moiety is playing
-         *  */
-        role: CodeableConcept;
-        /**
-         * Identifier by which this moiety substance is known
-         *  */
-        identifier: Identifier;
-        /**
-         * Textual name for this moiety substance
-         *  */
-        name: string;
-        /**
-         * Stereochemistry type
-         *  */
-        stereochemistry: CodeableConcept;
-        /**
-         * Optical activity type
-         *  */
-        opticalActivity: CodeableConcept;
-        /**
-         * Molecular formula for this moiety (e.g. with the Hill system)
-         *  */
-        molecularFormula: string;
-        /**
-         * Quantitative value for this moiety
-         *  */
-        amount: Quantity;
-        /**
-         * The measurement type of the quantitative value
-         *  */
-        measurementType: CodeableConcept;
-    };
-    /**
-     * General specifications for this substance
-     *  */
-    property: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * A code expressing the type of property
-         *  */
-        type: CodeableConcept;
-        /**
-         * A value for the property
-         *  */
-        value: CodeableConcept;
-    };
-    /**
-     * The molecular weight or weight range
-     *  */
-    molecularWeight: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The method by which the weight was determined
-         *  */
-        method: CodeableConcept;
-        /**
-         * Type of molecular weight e.g. exact, average, weight average
-         *  */
-        type: CodeableConcept;
-        /**
-         * Used to capture quantitative values for a variety of elements
-         *  */
-        amount: Quantity;
-    };
-    /**
-     * Structural information
-     *  */
-    structure: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Stereochemistry type
-         *  */
-        stereochemistry: CodeableConcept;
-        /**
-         * Optical activity type
-         *  */
-        opticalActivity: CodeableConcept;
-        /**
-         * Molecular formula (e.g. using the Hill system)
-         *  */
-        molecularFormula: string;
-        /**
-         * Specified per moiety according to the Hill system
-         *  */
-        molecularFormulaByMoiety: string;
-        /**
-         * The method used to find the structure e.g. X-ray, NMR
-         *  */
-        technique: CodeableConcept;
-        /**
-         * Source of information for the structure
-         *  */
-        sourceDocument: Reference;
-        /**
-         * An attachment with the structural representation e.g. a structure graphic or AnIML file
-         *  */
-        representation: Reference;
-    };
-    /**
-     * Codes associated with the substance
-     *  */
-    code: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The specific code
-         *  */
-        code: CodeableConcept;
-        /**
-         * Status of the code assignment, for example 'provisional', 'approved'
-         *  */
-        status: CodeableConcept;
-        /**
-         * The date at which the code status was changed
-         *  */
-        statusDate: string;
-        /**
-         * Any comment can be provided in this field
-         *  */
-        note: Annotation;
-        /**
-         * Supporting literature
-         *  */
-        source: Reference;
-    };
-    /**
-     * Names applicable to this substance
-     *  */
-    name: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The actual name
-         *  */
-        name: string;
-        /**
-         * Name type e.g. 'systematic',  'scientific, 'brand'
-         *  */
-        type: CodeableConcept;
-        /**
-         * The status of the name e.g. 'current', 'proposed'
-         *  */
-        status: CodeableConcept;
-        /**
-         * If this is the preferred name for this substance
-         *  */
-        preferred: boolean;
-        /**
-         * Human language that the name is written in
-         *  */
-        language: CodeableConcept;
-        /**
-         * The use context of this name e.g. as an active ingredient or as a food colour additive
-         *  */
-        domain: CodeableConcept;
-        /**
-         * The jurisdiction where this name applies
-         *  */
-        jurisdiction: CodeableConcept;
-        /**
-         * Date of official name change
-         *  */
-        official: string;
-        /**
-         * Supporting literature
-         *  */
-        source: Reference;
-    };
-    /**
-     * A link between this substance and another
-     *  */
-    relationship: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * A pointer to another substance, as a resource or a representational code
-         *  */
-        substanceDefinition: Reference;
-        /**
-         * For example "salt to parent", "active moiety"
-         *  */
-        type: CodeableConcept;
-        /**
-         * For example where an enzyme strongly bonds with a particular substance, this is a defining relationship for that enzyme, out of several possible relationships
-         *  */
-        isDefining: boolean;
-        /**
-         * A numeric factor for the relationship, e.g. that a substance salt has some percentage of active substance in relation to some other
-         *  */
-        amount: Quantity;
-        /**
-         * For use when the numeric has an uncertain range
-         *  */
-        ratioHighLimitAmount: Ratio;
-        /**
-         * An operator for the amount, for example "average", "approximately", "less than"
-         *  */
-        comparator: CodeableConcept;
-        /**
-         * Supporting literature
-         *  */
-        source: Reference;
-    };
-    /**
-     * Material or taxonomic/anatomical source
-     *  */
-    sourceMaterial: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Classification of the origin of the raw material. e.g. cat hair is an Animal source type
-         *  */
-        type: CodeableConcept;
-        /**
-         * The genus of an organism e.g. the Latin epithet of the plant/animal scientific name
-         *  */
-        genus: CodeableConcept;
-        /**
-         * The species of an organism e.g. the Latin epithet of the species of the plant/animal
-         *  */
-        species: CodeableConcept;
-        /**
-         * An anatomical origin of the source material within an organism
-         *  */
-        part: CodeableConcept;
-        /**
-         * The country or countries where the material is harvested
-         *  */
-        countryOfOrigin: CodeableConcept;
-    };
+declare type DetectedIssue_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    code?: CodeableConcept;
+    severity?: string;
+    patient?: Reference;
+    identified?: string;
+    author?: Reference;
+    implicated?: Reference;
+    evidence?: BackboneElement;
+    detail?: string;
+    reference?: string;
+    mitigation?: BackboneElement;
 };
 
-type SubstanceDefinition__lookups = {
-    "SubstanceDefinition": SubstanceDefinition_SubstanceDefinition_Props;
+declare type Device_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    definition?: Reference;
+    udiCarrier?: BackboneElement;
+    status?: string;
+    statusReason?: CodeableConcept;
+    distinctIdentifier?: string;
+    manufacturer?: string;
+    manufactureDate?: string;
+    expirationDate?: string;
+    lotNumber?: string;
+    serialNumber?: string;
+    deviceName?: BackboneElement;
+    modelNumber?: string;
+    partNumber?: string;
+    type?: CodeableConcept;
+    specialization?: BackboneElement;
+    version?: BackboneElement;
+    property?: BackboneElement;
+    patient?: Reference;
+    owner?: Reference;
+    contact?: ContactPoint;
+    location?: Reference;
+    url?: string;
+    note?: Annotation;
+    safety?: CodeableConcept;
+    parent?: Reference;
 };
 
-export declare function substanceDefinition(props: SubstanceDefinition_SubstanceDefinition_Props);;
-
-export declare function substanceDefinition<T extends keyof SubstanceDefinition__lookups>(type: T, props: SubstanceDefinition__lookups[T]);;
-
-type SupplyDelivery_SupplyDelivery_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * External identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * Fulfills plan, proposal or order
-     *  */
-    basedOn: Reference;
-    /**
-     * Part of referenced event
-     *  */
-    partOf: Reference;
-    /**
-     * in-progress | completed | abandoned | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Patient for whom the item is supplied
-     *  */
-    patient: Reference;
-    /**
-     * Category of dispense event
-     *  */
-    type: CodeableConcept;
-    /**
-     * The item that is delivered or supplied
-     *  */
-    suppliedItem: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Amount dispensed
-         *  */
-        quantity: Quantity;
-        /**
-         * Medication, Substance, or Device supplied
-         *  */
-        item: CodeableConcept;
-    };
-    /**
-     * When event occurred
-     *  */
-    occurrence: string;
-    /**
-     * Dispenser
-     *  */
-    supplier: Reference;
-    /**
-     * Where the Supply was sent
-     *  */
-    destination: Reference;
-    /**
-     * Who collected the Supply
-     *  */
-    receiver: Reference;
+declare type DeviceDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    udiDeviceIdentifier?: BackboneElement;
+    manufacturer?: string;
+    deviceName?: BackboneElement;
+    modelNumber?: string;
+    type?: CodeableConcept;
+    specialization?: BackboneElement;
+    version?: string;
+    safety?: CodeableConcept;
+    shelfLifeStorage?: ProductShelfLife;
+    physicalCharacteristics?: ProdCharacteristic;
+    languageCode?: CodeableConcept;
+    capability?: BackboneElement;
+    property?: BackboneElement;
+    owner?: Reference;
+    contact?: ContactPoint;
+    url?: string;
+    onlineInformation?: string;
+    note?: Annotation;
+    quantity?: Quantity;
+    parentDevice?: Reference;
+    material?: BackboneElement;
 };
 
-type SupplyDelivery__lookups = {
-    "SupplyDelivery": SupplyDelivery_SupplyDelivery_Props;
+declare type DeviceMetric_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    type?: CodeableConcept;
+    unit?: CodeableConcept;
+    source?: Reference;
+    parent?: Reference;
+    operationalStatus?: string;
+    color?: string;
+    category?: string;
+    measurementPeriod?: Timing;
+    calibration?: BackboneElement;
 };
 
-export declare function supplyDelivery(props: SupplyDelivery_SupplyDelivery_Props);;
-
-export declare function supplyDelivery<T extends keyof SupplyDelivery__lookups>(type: T, props: SupplyDelivery__lookups[T]);;
-
-type SupplyRequest_SupplyRequest_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for SupplyRequest
-     *  */
-    identifier: Identifier;
-    /**
-     * draft | active | suspended +
-     *  */
-    status: string;
-    /**
-     * The kind of supply (central, non-stock, etc.)
-     *  */
-    category: CodeableConcept;
-    /**
-     * routine | urgent | asap | stat
-     *  */
-    priority: string;
-    /**
-     * Medication, Substance, or Device requested to be supplied
-     *  */
-    item: CodeableConcept;
-    /**
-     * The requested amount of the item indicated
-     *  */
-    quantity: Quantity;
-    /**
-     * Ordered item details
-     *  */
-    parameter: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Item detail
-         *  */
-        code: CodeableConcept;
-        /**
-         * Value of detail
-         *  */
-        value: CodeableConcept;
-    };
-    /**
-     * When the request should be fulfilled
-     *  */
-    occurrence: string;
-    /**
-     * When the request was made
-     *  */
-    authoredOn: string;
-    /**
-     * Individual making the request
-     *  */
-    requester: Reference;
-    /**
-     * Who is intended to fulfill the request
-     *  */
-    supplier: Reference;
-    /**
-     * The reason why the supply item was requested
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * The reason why the supply item was requested
-     *  */
-    reasonReference: Reference;
-    /**
-     * The origin of the supply
-     *  */
-    deliverFrom: Reference;
-    /**
-     * The destination of the supply
-     *  */
-    deliverTo: Reference;
+declare type DeviceRequest_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    instantiatesCanonical?: any;
+    instantiatesUri?: string;
+    basedOn?: Reference;
+    priorRequest?: Reference;
+    groupIdentifier?: Identifier;
+    status?: string;
+    intent?: string;
+    priority?: string;
+    code?: Reference;
+    parameter?: BackboneElement;
+    subject?: Reference;
+    encounter?: Reference;
+    occurrence?: string;
+    authoredOn?: string;
+    requester?: Reference;
+    performerType?: CodeableConcept;
+    performer?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    insurance?: Reference;
+    supportingInfo?: Reference;
+    note?: Annotation;
+    relevantHistory?: Reference;
 };
 
-type SupplyRequest__lookups = {
-    "SupplyRequest": SupplyRequest_SupplyRequest_Props;
+declare type DeviceUseStatement_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    status?: string;
+    subject?: Reference;
+    derivedFrom?: Reference;
+    timing?: Timing;
+    recordedOn?: string;
+    source?: Reference;
+    device?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    bodySite?: CodeableConcept;
+    note?: Annotation;
 };
 
-export declare function supplyRequest(props: SupplyRequest_SupplyRequest_Props);;
-
-export declare function supplyRequest<T extends keyof SupplyRequest__lookups>(type: T, props: SupplyRequest__lookups[T]);;
-
-type Task_Task_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Task Instance Identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * Formal definition of task
-     *  */
-    instantiatesCanonical: any;
-    /**
-     * Formal definition of task
-     *  */
-    instantiatesUri: string;
-    /**
-     * Request fulfilled by this task
-     *  */
-    basedOn: Reference;
-    /**
-     * Requisition or grouper id
-     *  */
-    groupIdentifier: Identifier;
-    /**
-     * Composite task
-     *  */
-    partOf: Reference;
-    /**
-     * draft | requested | received | accepted | +
-     *  */
-    status: string;
-    /**
-     * Reason for current status
-     *  */
-    statusReason: CodeableConcept;
-    /**
-     * E.g. "Specimen collected", "IV prepped"
-     *  */
-    businessStatus: CodeableConcept;
-    /**
-     * unknown | proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
-     *  */
-    intent: string;
-    /**
-     * routine | urgent | asap | stat
-     *  */
-    priority: string;
-    /**
-     * Task Type
-     *  */
-    code: CodeableConcept;
-    /**
-     * Human-readable explanation of task
-     *  */
-    description: string;
-    /**
-     * What task is acting on
-     *  */
-    focus: Reference;
-    /**
-     * Beneficiary of the Task
-     *  */
-    for: Reference;
-    /**
-     * Healthcare event during which this task originated
-     *  */
-    encounter: Reference;
-    /**
-     * Start and end time of execution
-     *  */
-    executionPeriod: Period;
-    /**
-     * Task Creation Date
-     *  */
-    authoredOn: string;
-    /**
-     * Task Last Modified Date
-     *  */
-    lastModified: string;
-    /**
-     * Who is asking for task to be done
-     *  */
-    requester: Reference;
-    /**
-     * Requested performer
-     *  */
-    performerType: CodeableConcept;
-    /**
-     * Responsible individual
-     *  */
-    owner: Reference;
-    /**
-     * Where task occurs
-     *  */
-    location: Reference;
-    /**
-     * Why task is needed
-     *  */
-    reasonCode: CodeableConcept;
-    /**
-     * Why task is needed
-     *  */
-    reasonReference: Reference;
-    /**
-     * Associated insurance coverage
-     *  */
-    insurance: Reference;
-    /**
-     * Comments made about the task
-     *  */
-    note: Annotation;
-    /**
-     * Key events in history of the Task
-     *  */
-    relevantHistory: Reference;
-    /**
-     * Constraints on fulfillment tasks
-     *  */
-    restriction: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * How many times to repeat
-         *  */
-        repetitions: number;
-        /**
-         * When fulfillment sought
-         *  */
-        period: Period;
-        /**
-         * For whom is fulfillment sought?
-         *  */
-        recipient: Reference;
-    };
-    /**
-     * Information used to perform task
-     *  */
-    input: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Label for the input
-         *  */
-        type: CodeableConcept;
-        /**
-         * Content to use in performing the task
-         *  */
-        value: base64Binary;
-    };
-    /**
-     * Information produced as part of task
-     *  */
-    output: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Label for output
-         *  */
-        type: CodeableConcept;
-        /**
-         * Result of output
-         *  */
-        value: base64Binary;
-    };
+declare type DiagnosticReport_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    status?: string;
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    effective?: string;
+    issued?: string;
+    performer?: Reference;
+    resultsInterpreter?: Reference;
+    specimen?: Reference;
+    result?: Reference;
+    imagingStudy?: Reference;
+    media?: BackboneElement;
+    conclusion?: string;
+    conclusionCode?: CodeableConcept;
+    presentedForm?: Attachment;
 };
 
-type Task__lookups = {
-    "Task": Task_Task_Props;
+declare type DomainResource_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
 };
 
-export declare function task(props: Task_Task_Props);;
-
-export declare function task<T extends keyof Task__lookups>(type: T, props: Task__lookups[T]);;
-
-type TestReport_TestReport_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * External identifier
-     *  */
-    identifier: Identifier;
-    /**
-     * Informal name of the executed TestScript
-     *  */
-    name: string;
-    /**
-     * completed | in-progress | waiting | stopped | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Reference to the  version-specific TestScript that was executed to produce this TestReport
-     *  */
-    testScript: Reference;
-    /**
-     * pass | fail | pending
-     *  */
-    result: string;
-    /**
-     * The final score (percentage of tests passed) resulting from the execution of the TestScript
-     *  */
-    score: number;
-    /**
-     * Name of the tester producing this report (Organization or individual)
-     *  */
-    tester: string;
-    /**
-     * When the TestScript was executed and this TestReport was generated
-     *  */
-    issued: string;
-    /**
-     * A participant in the test execution, either the execution engine, a client, or a server
-     *  */
-    participant: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * test-engine | client | server
-         *  */
-        type: string;
-        /**
-         * The uri of the participant. An absolute URL is preferred
-         *  */
-        uri: string;
-        /**
-         * The display name of the participant
-         *  */
-        display: string;
-    };
-    /**
-     * The results of the series of required setup operations before the tests were executed
-     *  */
-    setup: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * A link to further details on the result
-         *  */
-        action: string;
-    };
-    /**
-     * A test executed from the test script
-     *  */
-    test: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Tracking/logging name of this test
-         *  */
-        name: string;
-        /**
-         * Tracking/reporting short description of the test
-         *  */
-        description: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        action: Extension;
-    };
-    /**
-     * The results of running the series of required clean up steps
-     *  */
-    teardown: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        action: Extension;
-    };
+declare type Encounter_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    statusHistory?: BackboneElement;
+    class?: Coding;
+    classHistory?: BackboneElement;
+    type?: CodeableConcept;
+    serviceType?: CodeableConcept;
+    priority?: CodeableConcept;
+    subject?: Reference;
+    episodeOfCare?: Reference;
+    basedOn?: Reference;
+    participant?: BackboneElement;
+    appointment?: Reference;
+    period?: Period;
+    length?: Duration;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    diagnosis?: BackboneElement;
+    account?: Reference;
+    hospitalization?: BackboneElement;
+    location?: BackboneElement;
+    serviceProvider?: Reference;
+    partOf?: Reference;
 };
 
-type TestReport__lookups = {
-    "TestReport": TestReport_TestReport_Props;
+declare type Endpoint_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    connectionType?: Coding;
+    name?: string;
+    managingOrganization?: Reference;
+    contact?: ContactPoint;
+    period?: Period;
+    payloadType?: CodeableConcept;
+    payloadMimeType?: string;
+    address?: url;
+    header?: string;
 };
 
-export declare function testReport(props: TestReport_TestReport_Props);;
-
-export declare function testReport<T extends keyof TestReport__lookups>(type: T, props: TestReport__lookups[T]);;
-
-type TestScript_TestScript_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Canonical identifier for this test script, represented as a URI (globally unique)
-     *  */
-    url: string;
-    /**
-     * Additional identifier for the test script
-     *  */
-    identifier: Identifier;
-    /**
-     * Business version of the test script
-     *  */
-    version: string;
-    /**
-     * Name for this test script (computer friendly)
-     *  */
-    name: string;
-    /**
-     * Name for this test script (human friendly)
-     *  */
-    title: string;
-    /**
-     * draft | active | retired | unknown
-     *  */
-    status: string;
-    /**
-     * For testing purposes, not real usage
-     *  */
-    experimental: boolean;
-    /**
-     * Date last changed
-     *  */
-    date: string;
-    /**
-     * Name of the publisher (organization or individual)
-     *  */
-    publisher: string;
-    /**
-     * Contact details for the publisher
-     *  */
-    contact: ContactDetail;
-    /**
-     * Natural language description of the test script
-     *  */
-    description: markdown;
-    /**
-     * The context that the content is intended to support
-     *  */
-    useContext: UsageContext;
-    /**
-     * Intended jurisdiction for test script (if applicable)
-     *  */
-    jurisdiction: CodeableConcept;
-    /**
-     * Why this test script is defined
-     *  */
-    purpose: markdown;
-    /**
-     * Use and/or publishing restrictions
-     *  */
-    copyright: markdown;
-    /**
-     * An abstract server representing a client or sender in a message exchange
-     *  */
-    origin: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The index of the abstract origin server starting at 1
-         *  */
-        index: number;
-        /**
-         * FHIR-Client | FHIR-SDC-FormFiller
-         *  */
-        profile: Coding;
-    };
-    /**
-     * An abstract server representing a destination or receiver in a message exchange
-     *  */
-    destination: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The index of the abstract destination server starting at 1
-         *  */
-        index: number;
-        /**
-         * FHIR-Server | FHIR-SDC-FormManager | FHIR-SDC-FormReceiver | FHIR-SDC-FormProcessor
-         *  */
-        profile: Coding;
-    };
-    /**
-     * Required capability that is assumed to function correctly on the FHIR server being tested
-     *  */
-    metadata: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Short description
-         *  */
-        link: string;
-        /**
-         * Required Capability Statement
-         *  */
-        capability: any;
-    };
-    /**
-     * Fixture in the test script - by reference (uri)
-     *  */
-    fixture: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Whether or not to implicitly create the fixture during setup
-         *  */
-        autocreate: boolean;
-        /**
-         * Whether or not to implicitly delete the fixture during teardown
-         *  */
-        autodelete: boolean;
-        /**
-         * Reference of the resource
-         *  */
-        resource: Reference;
-    };
-    /**
-     * Reference of the validation profile
-     *  */
-    profile: Reference;
-    /**
-     * Placeholder for evaluated elements
-     *  */
-    variable: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Descriptive name for this variable
-         *  */
-        name: string;
-        /**
-         * Default, hard-coded, or user-defined value for this variable
-         *  */
-        defaultValue: string;
-        /**
-         * Natural language description of the variable
-         *  */
-        description: string;
-        /**
-         * The FHIRPath expression against the fixture body
-         *  */
-        expression: string;
-        /**
-         * HTTP header field name for source
-         *  */
-        headerField: string;
-        /**
-         * Hint help text for default value to enter
-         *  */
-        hint: string;
-        /**
-         * XPath or JSONPath against the fixture body
-         *  */
-        path: string;
-        /**
-         * Fixture Id of source expression or headerField within this variable
-         *  */
-        sourceId: string;
-    };
-    /**
-     * A series of required setup operations before tests are executed
-     *  */
-    setup: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Will this assert produce a warning only on error?
-         *  */
-        action: boolean;
-    };
-    /**
-     * A test in this script
-     *  */
-    test: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Tracking/logging name of this test
-         *  */
-        name: string;
-        /**
-         * Tracking/reporting short description of the test
-         *  */
-        description: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        action: Extension;
-    };
-    /**
-     * A series of required clean up steps
-     *  */
-    teardown: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        action: Extension;
-    };
+declare type EnrollmentRequest_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    created?: string;
+    insurer?: Reference;
+    provider?: Reference;
+    candidate?: Reference;
+    coverage?: Reference;
 };
 
-type TestScript__lookups = {
-    "TestScript": TestScript_TestScript_Props;
+declare type EnrollmentResponse_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    request?: Reference;
+    outcome?: string;
+    disposition?: string;
+    created?: string;
+    organization?: Reference;
+    requestProvider?: Reference;
 };
 
-export declare function testScript(props: TestScript_TestScript_Props);;
-
-export declare function testScript<T extends keyof TestScript__lookups>(type: T, props: TestScript__lookups[T]);;
-
-type VerificationResult_VerificationResult_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * A resource that was validated
-     *  */
-    target: Reference;
-    /**
-     * The fhirpath location(s) within the resource that was validated
-     *  */
-    targetLocation: string;
-    /**
-     * none | initial | periodic
-     *  */
-    need: CodeableConcept;
-    /**
-     * attested | validated | in-process | req-revalid | val-fail | reval-fail
-     *  */
-    status: string;
-    /**
-     * When the validation status was updated
-     *  */
-    statusDate: string;
-    /**
-     * nothing | primary | multiple
-     *  */
-    validationType: CodeableConcept;
-    /**
-     * The primary process by which the target is validated (edit check; value set; primary source; multiple sources; standalone; in context)
-     *  */
-    validationProcess: CodeableConcept;
-    /**
-     * Frequency of revalidation
-     *  */
-    frequency: Timing;
-    /**
-     * The date/time validation was last completed (including failed validations)
-     *  */
-    lastPerformed: string;
-    /**
-     * The date when target is next validated, if appropriate
-     *  */
-    nextScheduled: string;
-    /**
-     * fatal | warn | rec-only | none
-     *  */
-    failureAction: CodeableConcept;
-    /**
-     * Information about the primary source(s) involved in validation
-     *  */
-    primarySource: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Reference to the primary source
-         *  */
-        who: Reference;
-        /**
-         * Type of primary source (License Board; Primary Education; Continuing Education; Postal Service; Relationship owner; Registration Authority; legal source; issuing source; authoritative source)
-         *  */
-        type: CodeableConcept;
-        /**
-         * Method for exchanging information with the primary source
-         *  */
-        communicationMethod: CodeableConcept;
-        /**
-         * successful | failed | unknown
-         *  */
-        validationStatus: CodeableConcept;
-        /**
-         * When the target was validated against the primary source
-         *  */
-        validationDate: string;
-        /**
-         * yes | no | undetermined
-         *  */
-        canPushUpdates: CodeableConcept;
-        /**
-         * specific | any | source
-         *  */
-        pushTypeAvailable: CodeableConcept;
-    };
-    /**
-     * Information about the entity attesting to information
-     *  */
-    attestation: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * The individual or organization attesting to information
-         *  */
-        who: Reference;
-        /**
-         * When the who is asserting on behalf of another (organization or individual)
-         *  */
-        onBehalfOf: Reference;
-        /**
-         * The method by which attested information was submitted/retrieved
-         *  */
-        communicationMethod: CodeableConcept;
-        /**
-         * The date the information was attested to
-         *  */
-        date: string;
-        /**
-         * A digital identity certificate associated with the attestation source
-         *  */
-        sourceIdentityCertificate: string;
-        /**
-         * A digital identity certificate associated with the proxy entity submitting attested information on behalf of the attestation source
-         *  */
-        proxyIdentityCertificate: string;
-        /**
-         * Proxy signature
-         *  */
-        proxySignature: Signature;
-        /**
-         * Attester signature
-         *  */
-        sourceSignature: Signature;
-    };
-    /**
-     * Information about the entity validating information
-     *  */
-    validator: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Reference to the organization validating information
-         *  */
-        organization: Reference;
-        /**
-         * A digital identity certificate associated with the validator
-         *  */
-        identityCertificate: string;
-        /**
-         * Validator signature
-         *  */
-        attestationSignature: Signature;
-    };
+declare type EpisodeOfCare_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    statusHistory?: BackboneElement;
+    type?: CodeableConcept;
+    diagnosis?: BackboneElement;
+    patient?: Reference;
+    managingOrganization?: Reference;
+    period?: Period;
+    referralRequest?: Reference;
+    careManager?: Reference;
+    team?: Reference;
+    account?: Reference;
 };
 
-type VerificationResult__lookups = {
-    "VerificationResult": VerificationResult_VerificationResult_Props;
+declare type EventDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    name?: string;
+    title?: string;
+    subtitle?: string;
+    status?: string;
+    experimental?: boolean;
+    subject?: CodeableConcept;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    purpose?: markdown;
+    usage?: string;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    topic?: CodeableConcept;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    relatedArtifact?: RelatedArtifact;
+    trigger?: TriggerDefinition;
 };
 
-export declare function verificationResult(props: VerificationResult_VerificationResult_Props);;
-
-export declare function verificationResult<T extends keyof VerificationResult__lookups>(type: T, props: VerificationResult__lookups[T]);;
-
-type VisionPrescription_VisionPrescription_Props = {
-    /**
-     * Logical id of this artifact
-     *  */
-    id: string;
-    /**
-     * Metadata about the resource
-     *  */
-    meta: Meta;
-    /**
-     * A set of rules under which this content was created
-     *  */
-    implicitRules: string;
-    /**
-     * Language of the resource content
-     *  */
-    language: string;
-    /**
-     * Text summary of the resource, for human interpretation
-     *  */
-    text: Narrative;
-    /**
-     * Contained, inline Resources
-     *  */
-    contained: Resource;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension: Extension;
-    /**
-     * Extensions that cannot be ignored
-     *  */
-    modifierExtension: Extension;
-    /**
-     * Business Identifier for vision prescription
-     *  */
-    identifier: Identifier;
-    /**
-     * active | cancelled | draft | entered-in-error
-     *  */
-    status: string;
-    /**
-     * Response creation date
-     *  */
-    created: string;
-    /**
-     * Who prescription is for
-     *  */
-    patient: Reference;
-    /**
-     * Created during encounter / admission / stay
-     *  */
-    encounter: Reference;
-    /**
-     * When prescription was authorized
-     *  */
-    dateWritten: string;
-    /**
-     * Who authorized the vision prescription
-     *  */
-    prescriber: Reference;
-    /**
-     * Vision lens authorization
-     *  */
-    lensSpecification: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Extensions that cannot be ignored even if unrecognized
-         *  */
-        modifierExtension: Extension;
-        /**
-         * Product to be supplied
-         *  */
-        product: CodeableConcept;
-        /**
-         * right | left
-         *  */
-        eye: string;
-        /**
-         * Power of the lens
-         *  */
-        sphere: number;
-        /**
-         * Lens power for astigmatism
-         *  */
-        cylinder: number;
-        /**
-         * Lens meridian which contain no power for astigmatism
-         *  */
-        axis: number;
-        /**
-         * up | down | in | out
-         *  */
-        prism: string;
-        /**
-         * Added power for multifocal levels
-         *  */
-        add: number;
-        /**
-         * Contact lens power
-         *  */
-        power: number;
-        /**
-         * Contact lens back curvature
-         *  */
-        backCurve: number;
-        /**
-         * Contact lens diameter
-         *  */
-        diameter: number;
-        /**
-         * Lens wear duration
-         *  */
-        duration: Quantity;
-        /**
-         * Color required
-         *  */
-        color: string;
-        /**
-         * Brand required
-         *  */
-        brand: string;
-        /**
-         * Notes for coatings
-         *  */
-        note: Annotation;
-    };
+declare type Evidence_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    title?: string;
+    citeAs?: Reference;
+    status?: string;
+    date?: string;
+    useContext?: UsageContext;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    relatedArtifact?: RelatedArtifact;
+    description?: markdown;
+    assertion?: markdown;
+    note?: Annotation;
+    variableDefinition?: BackboneElement;
+    synthesisType?: CodeableConcept;
+    studyType?: CodeableConcept;
+    statistic?: BackboneElement;
+    certainty?: BackboneElement;
 };
 
-type VisionPrescription__lookups = {
-    "VisionPrescription": VisionPrescription_VisionPrescription_Props;
+declare type EvidenceReport_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    status?: string;
+    useContext?: UsageContext;
+    identifier?: Identifier;
+    relatedIdentifier?: Identifier;
+    citeAs?: Reference;
+    type?: CodeableConcept;
+    note?: Annotation;
+    relatedArtifact?: RelatedArtifact;
+    subject?: BackboneElement;
+    publisher?: string;
+    contact?: ContactDetail;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    relatesTo?: BackboneElement;
+    section?: BackboneElement;
 };
 
-export declare function visionPrescription(props: VisionPrescription_VisionPrescription_Props);;
+declare type EvidenceVariable_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    name?: string;
+    title?: string;
+    shortTitle?: string;
+    subtitle?: string;
+    status?: string;
+    date?: string;
+    description?: markdown;
+    note?: Annotation;
+    useContext?: UsageContext;
+    publisher?: string;
+    contact?: ContactDetail;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    relatedArtifact?: RelatedArtifact;
+    actual?: boolean;
+    characteristicCombination?: string;
+    characteristic?: BackboneElement;
+    handling?: string;
+    category?: BackboneElement;
+};
 
-export declare function visionPrescription<T extends keyof VisionPrescription__lookups>(type: T, props: VisionPrescription__lookups[T]);;
+declare type ExplanationOfBenefit_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    type?: CodeableConcept;
+    subType?: CodeableConcept;
+    use?: string;
+    patient?: Reference;
+    billablePeriod?: Period;
+    created?: string;
+    enterer?: Reference;
+    insurer?: Reference;
+    provider?: Reference;
+    priority?: CodeableConcept;
+    fundsReserveRequested?: CodeableConcept;
+    fundsReserve?: CodeableConcept;
+    related?: BackboneElement;
+    prescription?: Reference;
+    originalPrescription?: Reference;
+    payee?: BackboneElement;
+    referral?: Reference;
+    facility?: Reference;
+    claim?: Reference;
+    claimResponse?: Reference;
+    outcome?: string;
+    disposition?: string;
+    preAuthRef?: string;
+    preAuthRefPeriod?: Period;
+    careTeam?: BackboneElement;
+    supportingInfo?: BackboneElement;
+    diagnosis?: BackboneElement;
+    procedure?: BackboneElement;
+    precedence?: number;
+    insurance?: BackboneElement;
+    accident?: BackboneElement;
+    item?: BackboneElement;
+    addItem?: BackboneElement;
+    adjudication?: any;
+    total?: BackboneElement;
+    payment?: BackboneElement;
+    formCode?: CodeableConcept;
+    form?: Attachment;
+    processNote?: BackboneElement;
+    benefitPeriod?: Period;
+    benefitBalance?: BackboneElement;
+};
+
+declare type FamilyMemberHistory_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    instantiatesCanonical?: any;
+    instantiatesUri?: string;
+    status?: string;
+    dataAbsentReason?: CodeableConcept;
+    patient?: Reference;
+    date?: string;
+    name?: string;
+    relationship?: CodeableConcept;
+    sex?: CodeableConcept;
+    born?: Period;
+    age?: Age;
+    estimatedAge?: boolean;
+    deceased?: boolean;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    note?: Annotation;
+    condition?: BackboneElement;
+};
+
+declare type Flag_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    subject?: Reference;
+    period?: Period;
+    encounter?: Reference;
+    author?: Reference;
+};
+
+declare type Goal_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    lifecycleStatus?: string;
+    achievementStatus?: CodeableConcept;
+    category?: CodeableConcept;
+    priority?: CodeableConcept;
+    description?: CodeableConcept;
+    subject?: Reference;
+    start?: string;
+    target?: BackboneElement;
+    statusDate?: string;
+    statusReason?: string;
+    expressedBy?: Reference;
+    addresses?: Reference;
+    note?: Annotation;
+    outcomeCode?: CodeableConcept;
+    outcomeReference?: Reference;
+};
+
+declare type Group_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    type?: string;
+    actual?: boolean;
+    code?: CodeableConcept;
+    name?: string;
+    quantity?: number;
+    managingEntity?: Reference;
+    characteristic?: BackboneElement;
+    member?: BackboneElement;
+};
+
+declare type GuidanceResponse_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    requestIdentifier?: Identifier;
+    identifier?: Identifier;
+    module?: string;
+    status?: string;
+    subject?: Reference;
+    encounter?: Reference;
+    occurrenceDateTime?: string;
+    performer?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    note?: Annotation;
+    evaluationMessage?: Reference;
+    outputParameters?: Reference;
+    result?: Reference;
+    dataRequirement?: DataRequirement;
+};
+
+declare type HealthcareService_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    providedBy?: Reference;
+    category?: CodeableConcept;
+    type?: CodeableConcept;
+    specialty?: CodeableConcept;
+    location?: Reference;
+    name?: string;
+    comment?: string;
+    extraDetails?: markdown;
+    photo?: Attachment;
+    telecom?: ContactPoint;
+    coverageArea?: Reference;
+    serviceProvisionCode?: CodeableConcept;
+    eligibility?: BackboneElement;
+    program?: CodeableConcept;
+    characteristic?: CodeableConcept;
+    communication?: CodeableConcept;
+    referralMethod?: CodeableConcept;
+    appointmentRequired?: boolean;
+    availableTime?: BackboneElement;
+    notAvailable?: BackboneElement;
+    availabilityExceptions?: string;
+    endpoint?: Reference;
+};
+
+declare type ImagingStudy_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    modality?: Coding;
+    subject?: Reference;
+    encounter?: Reference;
+    started?: string;
+    basedOn?: Reference;
+    referrer?: Reference;
+    interpreter?: Reference;
+    endpoint?: Reference;
+    numberOfSeries?: number;
+    numberOfInstances?: number;
+    procedureReference?: Reference;
+    procedureCode?: CodeableConcept;
+    location?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    note?: Annotation;
+    description?: string;
+    series?: BackboneElement;
+};
+
+declare type Immunization_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    statusReason?: CodeableConcept;
+    vaccineCode?: CodeableConcept;
+    patient?: Reference;
+    encounter?: Reference;
+    occurrence?: string;
+    recorded?: string;
+    primarySource?: boolean;
+    reportOrigin?: CodeableConcept;
+    location?: Reference;
+    manufacturer?: Reference;
+    lotNumber?: string;
+    expirationDate?: string;
+    site?: CodeableConcept;
+    route?: CodeableConcept;
+    doseQuantity?: Quantity;
+    performer?: BackboneElement;
+    note?: Annotation;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    isSubpotent?: boolean;
+    subpotentReason?: CodeableConcept;
+    education?: BackboneElement;
+    programEligibility?: CodeableConcept;
+    fundingSource?: CodeableConcept;
+    reaction?: BackboneElement;
+    protocolApplied?: BackboneElement;
+};
+
+declare type ImmunizationEvaluation_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    patient?: Reference;
+    date?: string;
+    authority?: Reference;
+    targetDisease?: CodeableConcept;
+    immunizationEvent?: Reference;
+    doseStatus?: CodeableConcept;
+    doseStatusReason?: CodeableConcept;
+    description?: string;
+    series?: string;
+    doseNumber?: number;
+    seriesDoses?: number;
+};
+
+declare type ImmunizationRecommendation_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    patient?: Reference;
+    date?: string;
+    authority?: Reference;
+    recommendation?: BackboneElement;
+};
+
+declare type Ingredient_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    for?: Reference;
+    role?: CodeableConcept;
+    function?: CodeableConcept;
+    allergenicIndicator?: boolean;
+    manufacturer?: BackboneElement;
+    substance?: BackboneElement;
+};
+
+declare type InsurancePlan_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    type?: CodeableConcept;
+    name?: string;
+    alias?: string;
+    period?: Period;
+    ownedBy?: Reference;
+    administeredBy?: Reference;
+    coverageArea?: Reference;
+    contact?: BackboneElement;
+    endpoint?: Reference;
+    network?: Reference;
+    coverage?: BackboneElement;
+    plan?: BackboneElement;
+};
+
+declare type Invoice_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    cancelledReason?: string;
+    type?: CodeableConcept;
+    subject?: Reference;
+    recipient?: Reference;
+    date?: string;
+    participant?: BackboneElement;
+    issuer?: Reference;
+    account?: Reference;
+    lineItem?: BackboneElement;
+    totalPriceComponent?: any;
+    totalNet?: Money;
+    totalGross?: Money;
+    paymentTerms?: markdown;
+    note?: Annotation;
+};
+
+declare type Library_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    name?: string;
+    title?: string;
+    subtitle?: string;
+    status?: string;
+    experimental?: boolean;
+    type?: CodeableConcept;
+    subject?: CodeableConcept;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    purpose?: markdown;
+    usage?: string;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    topic?: CodeableConcept;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    relatedArtifact?: RelatedArtifact;
+    parameter?: ParameterDefinition;
+    dataRequirement?: DataRequirement;
+    content?: Attachment;
+};
+
+declare type List_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    mode?: string;
+    title?: string;
+    code?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    date?: string;
+    source?: Reference;
+    orderedBy?: CodeableConcept;
+    note?: Annotation;
+    entry?: BackboneElement;
+    emptyReason?: CodeableConcept;
+};
+
+declare type Location_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    operationalStatus?: Coding;
+    name?: string;
+    alias?: string;
+    description?: string;
+    mode?: string;
+    type?: CodeableConcept;
+    telecom?: ContactPoint;
+    address?: Address;
+    physicalType?: CodeableConcept;
+    position?: BackboneElement;
+    managingOrganization?: Reference;
+    partOf?: Reference;
+    hoursOfOperation?: BackboneElement;
+    availabilityExceptions?: string;
+    endpoint?: Reference;
+};
+
+declare type ManufacturedItemDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    manufacturedDoseForm?: CodeableConcept;
+    unitOfPresentation?: CodeableConcept;
+    manufacturer?: Reference;
+    ingredient?: CodeableConcept;
+    property?: BackboneElement;
+};
+
+declare type Measure_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    name?: string;
+    title?: string;
+    subtitle?: string;
+    status?: string;
+    experimental?: boolean;
+    subject?: CodeableConcept;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    purpose?: markdown;
+    usage?: string;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    topic?: CodeableConcept;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    relatedArtifact?: RelatedArtifact;
+    library?: any;
+    disclaimer?: markdown;
+    scoring?: CodeableConcept;
+    compositeScoring?: CodeableConcept;
+    type?: CodeableConcept;
+    riskAdjustment?: string;
+    rateAggregation?: string;
+    rationale?: markdown;
+    clinicalRecommendationStatement?: markdown;
+    improvementNotation?: CodeableConcept;
+    definition?: markdown;
+    guidance?: markdown;
+    group?: BackboneElement;
+    supplementalData?: BackboneElement;
+};
+
+declare type MeasureReport_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    type?: string;
+    measure?: any;
+    subject?: Reference;
+    date?: string;
+    reporter?: Reference;
+    period?: Period;
+    improvementNotation?: CodeableConcept;
+    group?: BackboneElement;
+    evaluatedResource?: Reference;
+};
+
+declare type Media_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    partOf?: Reference;
+    status?: string;
+    type?: CodeableConcept;
+    modality?: CodeableConcept;
+    view?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    created?: string;
+    issued?: string;
+    operator?: Reference;
+    reasonCode?: CodeableConcept;
+    bodySite?: CodeableConcept;
+    deviceName?: string;
+    device?: Reference;
+    height?: number;
+    width?: number;
+    frames?: number;
+    duration?: number;
+    content?: Attachment;
+    note?: Annotation;
+};
+
+declare type Medication_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    code?: CodeableConcept;
+    status?: string;
+    manufacturer?: Reference;
+    form?: CodeableConcept;
+    amount?: Ratio;
+    ingredient?: BackboneElement;
+    batch?: BackboneElement;
+};
+
+declare type MedicationAdministration_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    instantiates?: string;
+    partOf?: Reference;
+    status?: string;
+    statusReason?: CodeableConcept;
+    category?: CodeableConcept;
+    medication?: CodeableConcept;
+    subject?: Reference;
+    context?: Reference;
+    supportingInformation?: Reference;
+    effective?: string;
+    performer?: BackboneElement;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    request?: Reference;
+    device?: Reference;
+    note?: Annotation;
+    dosage?: BackboneElement;
+    eventHistory?: Reference;
+};
+
+declare type MedicationDispense_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    partOf?: Reference;
+    status?: string;
+    statusReason?: CodeableConcept;
+    category?: CodeableConcept;
+    medication?: CodeableConcept;
+    subject?: Reference;
+    context?: Reference;
+    supportingInformation?: Reference;
+    performer?: BackboneElement;
+    location?: Reference;
+    authorizingPrescription?: Reference;
+    type?: CodeableConcept;
+    quantity?: Quantity;
+    daysSupply?: Quantity;
+    whenPrepared?: string;
+    whenHandedOver?: string;
+    destination?: Reference;
+    receiver?: Reference;
+    note?: Annotation;
+    dosageInstruction?: Dosage;
+    substitution?: BackboneElement;
+    detectedIssue?: Reference;
+    eventHistory?: Reference;
+};
+
+declare type MedicationKnowledge_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    code?: CodeableConcept;
+    status?: string;
+    manufacturer?: Reference;
+    doseForm?: CodeableConcept;
+    amount?: Quantity;
+    synonym?: string;
+    relatedMedicationKnowledge?: BackboneElement;
+    associatedMedication?: Reference;
+    productType?: CodeableConcept;
+    monograph?: BackboneElement;
+    ingredient?: BackboneElement;
+    preparationInstruction?: markdown;
+    intendedRoute?: CodeableConcept;
+    cost?: BackboneElement;
+    monitoringProgram?: BackboneElement;
+    administrationGuidelines?: BackboneElement;
+    medicineClassification?: BackboneElement;
+    packaging?: BackboneElement;
+    drugCharacteristic?: BackboneElement;
+    contraindication?: Reference;
+    regulatory?: BackboneElement;
+    kinetics?: BackboneElement;
+};
+
+declare type MedicationRequest_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    statusReason?: CodeableConcept;
+    intent?: string;
+    category?: CodeableConcept;
+    priority?: string;
+    doNotPerform?: boolean;
+    reported?: boolean;
+    medication?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    supportingInformation?: Reference;
+    authoredOn?: string;
+    requester?: Reference;
+    performer?: Reference;
+    performerType?: CodeableConcept;
+    recorder?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    instantiatesCanonical?: any;
+    instantiatesUri?: string;
+    basedOn?: Reference;
+    groupIdentifier?: Identifier;
+    courseOfTherapyType?: CodeableConcept;
+    insurance?: Reference;
+    note?: Annotation;
+    dosageInstruction?: Dosage;
+    dispenseRequest?: BackboneElement;
+    substitution?: BackboneElement;
+    priorPrescription?: Reference;
+    detectedIssue?: Reference;
+    eventHistory?: Reference;
+};
+
+declare type MedicationStatement_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    partOf?: Reference;
+    status?: string;
+    statusReason?: CodeableConcept;
+    category?: CodeableConcept;
+    medication?: CodeableConcept;
+    subject?: Reference;
+    context?: Reference;
+    effective?: string;
+    dateAsserted?: string;
+    informationSource?: Reference;
+    derivedFrom?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    note?: Annotation;
+    dosage?: Dosage;
+};
+
+declare type MedicinalProductDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    type?: CodeableConcept;
+    domain?: CodeableConcept;
+    version?: string;
+    status?: CodeableConcept;
+    statusDate?: string;
+    description?: markdown;
+    combinedPharmaceuticalDoseForm?: CodeableConcept;
+    route?: CodeableConcept;
+    indication?: markdown;
+    legalStatusOfSupply?: CodeableConcept;
+    additionalMonitoringIndicator?: CodeableConcept;
+    specialMeasures?: CodeableConcept;
+    pediatricUseIndicator?: CodeableConcept;
+    classification?: CodeableConcept;
+    marketingStatus?: MarketingStatus;
+    packagedMedicinalProduct?: CodeableConcept;
+    ingredient?: CodeableConcept;
+    impurity?: CodeableReference;
+    attachedDocument?: Reference;
+    masterFile?: Reference;
+    contact?: BackboneElement;
+    clinicalTrial?: Reference;
+    code?: Coding;
+    name?: BackboneElement;
+    crossReference?: BackboneElement;
+    operation?: BackboneElement;
+    characteristic?: BackboneElement;
+};
+
+declare type MolecularSequence_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    type?: string;
+    coordinateSystem?: number;
+    patient?: Reference;
+    specimen?: Reference;
+    device?: Reference;
+    performer?: Reference;
+    quantity?: Quantity;
+    referenceSeq?: BackboneElement;
+    variant?: BackboneElement;
+    observedSeq?: string;
+    quality?: BackboneElement;
+    readCoverage?: number;
+    repository?: BackboneElement;
+    pointer?: Reference;
+    structureVariant?: BackboneElement;
+};
+
+declare type NutritionOrder_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    instantiatesCanonical?: any;
+    instantiatesUri?: string;
+    instantiates?: string;
+    status?: string;
+    intent?: string;
+    patient?: Reference;
+    encounter?: Reference;
+    dateTime?: string;
+    orderer?: Reference;
+    allergyIntolerance?: Reference;
+    foodPreferenceModifier?: CodeableConcept;
+    excludeFoodModifier?: CodeableConcept;
+    oralDiet?: BackboneElement;
+    supplement?: BackboneElement;
+    enteralFormula?: BackboneElement;
+    note?: Annotation;
+};
+
+declare type NutritionProduct_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    status?: string;
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    manufacturer?: Reference;
+    nutrient?: BackboneElement;
+    ingredient?: BackboneElement;
+    knownAllergen?: CodeableReference;
+    productCharacteristic?: BackboneElement;
+    instance?: BackboneElement;
+    note?: Annotation;
+};
+
+declare type Observation_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    partOf?: Reference;
+    status?: string;
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    subject?: Reference;
+    focus?: Reference;
+    encounter?: Reference;
+    effective?: string;
+    issued?: string;
+    performer?: Reference;
+    value?: Quantity;
+    dataAbsentReason?: CodeableConcept;
+    interpretation?: CodeableConcept;
+    note?: Annotation;
+    bodySite?: CodeableConcept;
+    method?: CodeableConcept;
+    specimen?: Reference;
+    device?: Reference;
+    referenceRange?: BackboneElement;
+    hasMember?: Reference;
+    derivedFrom?: Reference;
+    component?: BackboneElement;
+};
+
+declare type ObservationDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    identifier?: Identifier;
+    permittedDataType?: string;
+    multipleResultsAllowed?: boolean;
+    method?: CodeableConcept;
+    preferredReportName?: string;
+    quantitativeDetails?: BackboneElement;
+    qualifiedInterval?: BackboneElement;
+    validCodedValueSet?: Reference;
+    normalCodedValueSet?: Reference;
+    abnormalCodedValueSet?: Reference;
+    criticalCodedValueSet?: Reference;
+};
+
+declare type Organization_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    type?: CodeableConcept;
+    name?: string;
+    alias?: string;
+    telecom?: ContactPoint;
+    address?: Address;
+    partOf?: Reference;
+    contact?: BackboneElement;
+    endpoint?: Reference;
+};
+
+declare type OrganizationAffiliation_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    period?: Period;
+    organization?: Reference;
+    participatingOrganization?: Reference;
+    network?: Reference;
+    code?: CodeableConcept;
+    specialty?: CodeableConcept;
+    location?: Reference;
+    healthcareService?: Reference;
+    telecom?: ContactPoint;
+    endpoint?: Reference;
+};
+
+declare type PackagedProductDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    name?: string;
+    type?: CodeableConcept;
+    packageFor?: Reference;
+    status?: CodeableConcept;
+    statusDate?: string;
+    containedItemQuantity?: Quantity;
+    description?: markdown;
+    legalStatusOfSupply?: BackboneElement;
+    marketingStatus?: MarketingStatus;
+    characteristic?: CodeableConcept;
+    copackagedIndicator?: boolean;
+    manufacturer?: Reference;
+    package?: BackboneElement;
+};
+
+declare type Patient_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    name?: HumanName;
+    telecom?: ContactPoint;
+    gender?: string;
+    birthDate?: string;
+    deceased?: boolean;
+    address?: Address;
+    maritalStatus?: CodeableConcept;
+    multipleBirth?: boolean;
+    photo?: Attachment;
+    contact?: BackboneElement;
+    communication?: BackboneElement;
+    generalPractitioner?: Reference;
+    managingOrganization?: Reference;
+    link?: BackboneElement;
+};
+
+declare type PaymentNotice_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    request?: Reference;
+    response?: Reference;
+    created?: string;
+    provider?: Reference;
+    payment?: Reference;
+    paymentDate?: string;
+    payee?: Reference;
+    recipient?: Reference;
+    amount?: Money;
+    paymentStatus?: CodeableConcept;
+};
+
+declare type PaymentReconciliation_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    period?: Period;
+    created?: string;
+    paymentIssuer?: Reference;
+    request?: Reference;
+    requestor?: Reference;
+    outcome?: string;
+    disposition?: string;
+    paymentDate?: string;
+    paymentAmount?: Money;
+    paymentIdentifier?: Identifier;
+    detail?: BackboneElement;
+    formCode?: CodeableConcept;
+    processNote?: BackboneElement;
+};
+
+declare type Person_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    name?: HumanName;
+    telecom?: ContactPoint;
+    gender?: string;
+    birthDate?: string;
+    address?: Address;
+    photo?: Attachment;
+    managingOrganization?: Reference;
+    active?: boolean;
+    link?: BackboneElement;
+};
+
+declare type PlanDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    name?: string;
+    title?: string;
+    subtitle?: string;
+    type?: CodeableConcept;
+    status?: string;
+    experimental?: boolean;
+    subject?: CodeableConcept;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    purpose?: markdown;
+    usage?: string;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    topic?: CodeableConcept;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    relatedArtifact?: RelatedArtifact;
+    library?: any;
+    goal?: BackboneElement;
+    action?: BackboneElement;
+};
+
+declare type Practitioner_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    name?: HumanName;
+    telecom?: ContactPoint;
+    address?: Address;
+    gender?: string;
+    birthDate?: string;
+    photo?: Attachment;
+    qualification?: BackboneElement;
+    communication?: CodeableConcept;
+};
+
+declare type PractitionerRole_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    period?: Period;
+    practitioner?: Reference;
+    organization?: Reference;
+    code?: CodeableConcept;
+    specialty?: CodeableConcept;
+    location?: Reference;
+    healthcareService?: Reference;
+    telecom?: ContactPoint;
+    availableTime?: BackboneElement;
+    notAvailable?: BackboneElement;
+    availabilityExceptions?: string;
+    endpoint?: Reference;
+};
+
+declare type Procedure_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    instantiatesCanonical?: any;
+    instantiatesUri?: string;
+    basedOn?: Reference;
+    partOf?: Reference;
+    status?: string;
+    statusReason?: CodeableConcept;
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    performed?: string;
+    recorder?: Reference;
+    asserter?: Reference;
+    performer?: BackboneElement;
+    location?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    bodySite?: CodeableConcept;
+    outcome?: CodeableConcept;
+    report?: Reference;
+    complication?: CodeableConcept;
+    complicationDetail?: Reference;
+    followUp?: CodeableConcept;
+    note?: Annotation;
+    focalDevice?: BackboneElement;
+    usedReference?: Reference;
+    usedCode?: CodeableConcept;
+};
+
+declare type Questionnaire_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    name?: string;
+    title?: string;
+    derivedFrom?: any;
+    status?: string;
+    experimental?: boolean;
+    subjectType?: string;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    purpose?: markdown;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    code?: Coding;
+    item?: BackboneElement;
+};
+
+declare type QuestionnaireResponse_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    partOf?: Reference;
+    questionnaire?: any;
+    status?: string;
+    subject?: Reference;
+    encounter?: Reference;
+    authored?: string;
+    author?: Reference;
+    source?: Reference;
+    item?: BackboneElement;
+};
+
+declare type RegulatedAuthorization_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    subject?: Reference;
+    type?: CodeableConcept;
+    description?: markdown;
+    region?: CodeableConcept;
+    status?: CodeableConcept;
+    statusDate?: string;
+    validityPeriod?: Period;
+    indication?: CodeableReference;
+    intendedUse?: CodeableConcept;
+    basis?: CodeableConcept;
+    holder?: Reference;
+    regulator?: Reference;
+    case?: BackboneElement;
+};
+
+declare type RelatedPerson_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    patient?: Reference;
+    relationship?: CodeableConcept;
+    name?: HumanName;
+    telecom?: ContactPoint;
+    gender?: string;
+    birthDate?: string;
+    address?: Address;
+    photo?: Attachment;
+    period?: Period;
+    communication?: BackboneElement;
+};
+
+declare type RequestGroup_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    instantiatesCanonical?: any;
+    instantiatesUri?: string;
+    basedOn?: Reference;
+    replaces?: Reference;
+    groupIdentifier?: Identifier;
+    status?: string;
+    intent?: string;
+    priority?: string;
+    code?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    authoredOn?: string;
+    author?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    note?: Annotation;
+    action?: BackboneElement;
+};
+
+declare type ResearchDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    name?: string;
+    title?: string;
+    shortTitle?: string;
+    subtitle?: string;
+    status?: string;
+    experimental?: boolean;
+    subject?: CodeableConcept;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    comment?: string;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    purpose?: markdown;
+    usage?: string;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    topic?: CodeableConcept;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    relatedArtifact?: RelatedArtifact;
+    library?: any;
+    population?: Reference;
+    exposure?: Reference;
+    exposureAlternative?: Reference;
+    outcome?: Reference;
+};
+
+declare type ResearchElementDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    name?: string;
+    title?: string;
+    shortTitle?: string;
+    subtitle?: string;
+    status?: string;
+    experimental?: boolean;
+    subject?: CodeableConcept;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    comment?: string;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    purpose?: markdown;
+    usage?: string;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    topic?: CodeableConcept;
+    author?: ContactDetail;
+    editor?: ContactDetail;
+    reviewer?: ContactDetail;
+    endorser?: ContactDetail;
+    relatedArtifact?: RelatedArtifact;
+    library?: any;
+    type?: string;
+    variableType?: string;
+    characteristic?: BackboneElement;
+};
+
+declare type ResearchStudy_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    title?: string;
+    protocol?: Reference;
+    partOf?: Reference;
+    status?: string;
+    primaryPurposeType?: CodeableConcept;
+    phase?: CodeableConcept;
+    category?: CodeableConcept;
+    focus?: CodeableConcept;
+    condition?: CodeableConcept;
+    contact?: ContactDetail;
+    relatedArtifact?: RelatedArtifact;
+    keyword?: CodeableConcept;
+    location?: CodeableConcept;
+    description?: markdown;
+    enrollment?: Reference;
+    period?: Period;
+    sponsor?: Reference;
+    principalInvestigator?: Reference;
+    site?: Reference;
+    reasonStopped?: CodeableConcept;
+    note?: Annotation;
+    arm?: BackboneElement;
+    objective?: BackboneElement;
+};
+
+declare type ResearchSubject_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    period?: Period;
+    study?: Reference;
+    individual?: Reference;
+    assignedArm?: string;
+    actualArm?: string;
+    consent?: Reference;
+};
+
+declare type Resource_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+};
+
+declare type RiskAssessment_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    parent?: Reference;
+    status?: string;
+    method?: CodeableConcept;
+    code?: CodeableConcept;
+    subject?: Reference;
+    encounter?: Reference;
+    occurrence?: string;
+    condition?: Reference;
+    performer?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    basis?: Reference;
+    prediction?: BackboneElement;
+    mitigation?: string;
+    note?: Annotation;
+};
+
+declare type Schedule_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    active?: boolean;
+    serviceCategory?: CodeableConcept;
+    serviceType?: CodeableConcept;
+    specialty?: CodeableConcept;
+    actor?: Reference;
+    planningHorizon?: Period;
+    comment?: string;
+};
+
+declare type ServiceRequest_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    instantiatesCanonical?: any;
+    instantiatesUri?: string;
+    basedOn?: Reference;
+    replaces?: Reference;
+    requisition?: Identifier;
+    status?: string;
+    intent?: string;
+    category?: CodeableConcept;
+    priority?: string;
+    doNotPerform?: boolean;
+    code?: CodeableConcept;
+    orderDetail?: CodeableConcept;
+    quantity?: Quantity;
+    subject?: Reference;
+    encounter?: Reference;
+    occurrence?: string;
+    asNeeded?: boolean;
+    authoredOn?: string;
+    requester?: Reference;
+    performerType?: CodeableConcept;
+    performer?: Reference;
+    locationCode?: CodeableConcept;
+    locationReference?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    insurance?: Reference;
+    supportingInfo?: Reference;
+    specimen?: Reference;
+    bodySite?: CodeableConcept;
+    note?: Annotation;
+    patientInstruction?: string;
+    relevantHistory?: Reference;
+};
+
+declare type Slot_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    serviceCategory?: CodeableConcept;
+    serviceType?: CodeableConcept;
+    specialty?: CodeableConcept;
+    appointmentType?: CodeableConcept;
+    schedule?: Reference;
+    status?: string;
+    start?: string;
+    end?: string;
+    overbooked?: boolean;
+    comment?: string;
+};
+
+declare type Specimen_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    accessionIdentifier?: Identifier;
+    status?: string;
+    type?: CodeableConcept;
+    subject?: Reference;
+    receivedTime?: string;
+    parent?: Reference;
+    request?: Reference;
+    collection?: BackboneElement;
+    processing?: BackboneElement;
+    container?: BackboneElement;
+    condition?: CodeableConcept;
+    note?: Annotation;
+};
+
+declare type SpecimenDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    typeCollected?: CodeableConcept;
+    patientPreparation?: CodeableConcept;
+    timeAspect?: string;
+    collection?: CodeableConcept;
+    typeTested?: BackboneElement;
+};
+
+declare type Substance_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    category?: CodeableConcept;
+    code?: CodeableConcept;
+    description?: string;
+    instance?: BackboneElement;
+    ingredient?: BackboneElement;
+};
+
+declare type SubstanceDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    version?: string;
+    status?: CodeableConcept;
+    classification?: CodeableConcept;
+    domain?: CodeableConcept;
+    grade?: CodeableConcept;
+    description?: markdown;
+    informationSource?: Reference;
+    note?: Annotation;
+    manufacturer?: Reference;
+    supplier?: Reference;
+    moiety?: BackboneElement;
+    property?: BackboneElement;
+    molecularWeight?: BackboneElement;
+    structure?: BackboneElement;
+    code?: BackboneElement;
+    name?: BackboneElement;
+    relationship?: BackboneElement;
+    sourceMaterial?: BackboneElement;
+};
+
+declare type SupplyDelivery_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    basedOn?: Reference;
+    partOf?: Reference;
+    status?: string;
+    patient?: Reference;
+    type?: CodeableConcept;
+    suppliedItem?: BackboneElement;
+    occurrence?: string;
+    supplier?: Reference;
+    destination?: Reference;
+    receiver?: Reference;
+};
+
+declare type SupplyRequest_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    category?: CodeableConcept;
+    priority?: string;
+    item?: CodeableConcept;
+    quantity?: Quantity;
+    parameter?: BackboneElement;
+    occurrence?: string;
+    authoredOn?: string;
+    requester?: Reference;
+    supplier?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    deliverFrom?: Reference;
+    deliverTo?: Reference;
+};
+
+declare type Task_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    instantiatesCanonical?: any;
+    instantiatesUri?: string;
+    basedOn?: Reference;
+    groupIdentifier?: Identifier;
+    partOf?: Reference;
+    status?: string;
+    statusReason?: CodeableConcept;
+    businessStatus?: CodeableConcept;
+    intent?: string;
+    priority?: string;
+    code?: CodeableConcept;
+    description?: string;
+    focus?: Reference;
+    for?: Reference;
+    encounter?: Reference;
+    executionPeriod?: Period;
+    authoredOn?: string;
+    lastModified?: string;
+    requester?: Reference;
+    performerType?: CodeableConcept;
+    owner?: Reference;
+    location?: Reference;
+    reasonCode?: CodeableConcept;
+    reasonReference?: Reference;
+    insurance?: Reference;
+    note?: Annotation;
+    relevantHistory?: Reference;
+    restriction?: BackboneElement;
+    input?: BackboneElement;
+    output?: BackboneElement;
+};
+
+declare type TestReport_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    name?: string;
+    status?: string;
+    testScript?: Reference;
+    result?: string;
+    score?: number;
+    tester?: string;
+    issued?: string;
+    participant?: BackboneElement;
+    setup?: BackboneElement;
+    test?: BackboneElement;
+    teardown?: BackboneElement;
+};
+
+declare type TestScript_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    url?: string;
+    identifier?: Identifier;
+    version?: string;
+    name?: string;
+    title?: string;
+    status?: string;
+    experimental?: boolean;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail;
+    description?: markdown;
+    useContext?: UsageContext;
+    jurisdiction?: CodeableConcept;
+    purpose?: markdown;
+    copyright?: markdown;
+    origin?: BackboneElement;
+    destination?: BackboneElement;
+    metadata?: BackboneElement;
+    fixture?: BackboneElement;
+    profile?: Reference;
+    variable?: BackboneElement;
+    setup?: BackboneElement;
+    test?: BackboneElement;
+    teardown?: BackboneElement;
+};
+
+declare type VerificationResult_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    target?: Reference;
+    targetLocation?: string;
+    need?: CodeableConcept;
+    status?: string;
+    statusDate?: string;
+    validationType?: CodeableConcept;
+    validationProcess?: CodeableConcept;
+    frequency?: Timing;
+    lastPerformed?: string;
+    nextScheduled?: string;
+    failureAction?: CodeableConcept;
+    primarySource?: BackboneElement;
+    attestation?: BackboneElement;
+    validator?: BackboneElement;
+};
+
+/**
+  * Create a FHIR Account resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Account number
+  * @param {string} [props.status] - active | inactive | entered-in-error | on-hold | unknown
+  * @param {CodeableConcept} [props.type] - E.g. patient, expense, depreciation
+  * @param {string} [props.name] - Human-readable label
+  * @param {Reference} [props.subject] - The entity that caused the expenses
+  * @param {Period} [props.servicePeriod] - Transaction window
+  * @param {BackboneElement} [props.coverage] - The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account
+  * @param {Reference} [props.owner] - Entity managing the Account
+  * @param {string} [props.description] - Explanation of purpose/use
+  * @param {BackboneElement} [props.guarantor] - The parties ultimately responsible for balancing the Account
+  * @param {Reference} [props.partOf] - Reference to a parent Account
+ */
+declare function account(type: string, props: Account_Props): any;
+declare function account(props: Account_Props): any;
+/**
+  * Create a FHIR ActivityDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this activity definition, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the activity definition
+  * @param {string} [props.version] - Business version of the activity definition
+  * @param {string} [props.name] - Name for this activity definition (computer friendly)
+  * @param {string} [props.title] - Name for this activity definition (human friendly)
+  * @param {string} [props.subtitle] - Subordinate title of the activity definition
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.subject] - Type of individual the activity definition is intended for
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the activity definition
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for activity definition (if applicable)
+  * @param {markdown} [props.purpose] - Why this activity definition is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the activity definition
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the activity definition was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the activity definition was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the activity definition is expected to be used
+  * @param {CodeableConcept} [props.topic] - E.g. Education, Treatment, Assessment, etc.
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {canonical} [props.library] - Logic used by the activity definition
+  * @param {string} [props.kind] - Kind of resource
+  * @param {canonical} [props.profile] - What profile the resource needs to conform to
+  * @param {CodeableConcept} [props.code] - Detail type of activity
+  * @param {string} [props.intent] - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {boolean} [props.doNotPerform] - True if the activity should not be performed
+  * @param {Timing} [props.timing] - When activity is to occur
+  * @param {Reference} [props.location] - Where it should happen
+  * @param {BackboneElement} [props.participant] - Who should participate in the action
+  * @param {Reference} [props.product] - What's administered/supplied
+  * @param {Quantity} [props.quantity] - How much is administered/consumed/supplied
+  * @param {Dosage} [props.dosage] - Detailed dosage instructions
+  * @param {CodeableConcept} [props.bodySite] - What part of body to perform on
+  * @param {Reference} [props.specimenRequirement] - What specimens are required to perform this action
+  * @param {Reference} [props.observationRequirement] - What observations are required to perform this action
+  * @param {Reference} [props.observationResultRequirement] - What observations must be produced by this action
+  * @param {canonical} [props.transform] - Transform to apply the template
+  * @param {BackboneElement} [props.dynamicValue] - Dynamic aspects of the definition
+ */
+declare function activityDefinition(type: string, props: ActivityDefinition_Props): any;
+declare function activityDefinition(props: ActivityDefinition_Props): any;
+/**
+  * Create a FHIR AdministrableProductDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - An identifier for the administrable product
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {Reference} [props.formOf] - References a product from which one or more of the constituent parts of that product can be prepared and used as described by this administrable product
+  * @param {CodeableConcept} [props.administrableDoseForm] - The dose form of the final product after necessary reconstitution or processing
+  * @param {CodeableConcept} [props.unitOfPresentation] - The presentation type in which this item is given to a patient. e.g. for a spray - 'puff'
+  * @param {Reference} [props.producedFrom] - Indicates the specific manufactured items that are part of the 'formOf' product that are used in the preparation of this specific administrable form
+  * @param {CodeableConcept} [props.ingredient] - The ingredients of this administrable medicinal product. This is only needed if the ingredients are not specified either using ManufacturedItemDefiniton, or using by incoming references from the Ingredient resource
+  * @param {Reference} [props.device] - A device that is integral to the medicinal product, in effect being considered as an "ingredient" of the medicinal product
+  * @param {BackboneElement} [props.property] - Characteristics e.g. a product's onset of action
+  * @param {BackboneElement} [props.routeOfAdministration] - The path by which the product is taken into or makes contact with the body
+ */
+declare function administrableProductDefinition(type: string, props: AdministrableProductDefinition_Props): any;
+declare function administrableProductDefinition(props: AdministrableProductDefinition_Props): any;
+/**
+  * Create a FHIR AdverseEvent resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier for the event
+  * @param {string} [props.actuality] - actual | potential
+  * @param {CodeableConcept} [props.category] - product-problem | product-quality | product-use-error | wrong-dose | incorrect-prescribing-information | wrong-technique | wrong-route-of-administration | wrong-rate | wrong-duration | wrong-time | expired-drug | medical-device-use-error | problem-different-manufacturer | unsafe-physical-environment
+  * @param {CodeableConcept} [props.event] - Type of the event itself in relation to the subject
+  * @param {Reference} [props.subject] - Subject impacted by event
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {dateTime} [props.date] - When the event occurred
+  * @param {dateTime} [props.detected] - When the event was detected
+  * @param {dateTime} [props.recordedDate] - When the event was recorded
+  * @param {Reference} [props.resultingCondition] - Effect on the subject due to this event
+  * @param {Reference} [props.location] - Location where adverse event occurred
+  * @param {CodeableConcept} [props.seriousness] - Seriousness of the event
+  * @param {CodeableConcept} [props.severity] - mild | moderate | severe
+  * @param {CodeableConcept} [props.outcome] - resolved | recovering | ongoing | resolvedWithSequelae | fatal | unknown
+  * @param {Reference} [props.recorder] - Who recorded the adverse event
+  * @param {Reference} [props.contributor] - Who  was involved in the adverse event or the potential adverse event
+  * @param {BackboneElement} [props.suspectEntity] - The suspected agent causing the adverse event
+  * @param {Reference} [props.subjectMedicalHistory] - AdverseEvent.subjectMedicalHistory
+  * @param {Reference} [props.referenceDocument] - AdverseEvent.referenceDocument
+  * @param {Reference} [props.study] - AdverseEvent.study
+ */
+declare function adverseEvent(type: string, props: AdverseEvent_Props): any;
+declare function adverseEvent(props: AdverseEvent_Props): any;
+/**
+  * Create a FHIR AllergyIntolerance resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External ids for this item
+  * @param {CodeableConcept} [props.clinicalStatus] - active | inactive | resolved
+  * @param {CodeableConcept} [props.verificationStatus] - unconfirmed | confirmed | refuted | entered-in-error
+  * @param {string} [props.type] - allergy | intolerance - Underlying mechanism (if known)
+  * @param {string} [props.category] - food | medication | environment | biologic
+  * @param {string} [props.criticality] - low | high | unable-to-assess
+  * @param {CodeableConcept} [props.code] - Code that identifies the allergy or intolerance
+  * @param {Reference} [props.patient] - Who the sensitivity is for
+  * @param {Reference} [props.encounter] - Encounter when the allergy or intolerance was asserted
+  * @param {dateTime} [props.onset] - When allergy or intolerance was identified
+  * @param {dateTime} [props.recordedDate] - Date first version of the resource instance was recorded
+  * @param {Reference} [props.recorder] - Who recorded the sensitivity
+  * @param {Reference} [props.asserter] - Source of the information about the allergy
+  * @param {dateTime} [props.lastOccurrence] - Date(/time) of last known occurrence of a reaction
+  * @param {Annotation} [props.note] - Additional text not captured in other fields
+  * @param {BackboneElement} [props.reaction] - Adverse Reaction Events linked to exposure to substance
+ */
+declare function allergyIntolerance(type: string, props: AllergyIntolerance_Props): any;
+declare function allergyIntolerance(props: AllergyIntolerance_Props): any;
+/**
+  * Create a FHIR Appointment resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this item
+  * @param {string} [props.status] - proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist
+  * @param {CodeableConcept} [props.cancelationReason] - The coded reason for the appointment being cancelled
+  * @param {CodeableConcept} [props.serviceCategory] - A broad categorization of the service that is to be performed during this appointment
+  * @param {CodeableConcept} [props.serviceType] - The specific service that is to be performed during this appointment
+  * @param {CodeableConcept} [props.specialty] - The specialty of a practitioner that would be required to perform the service requested in this appointment
+  * @param {CodeableConcept} [props.appointmentType] - The style of appointment or patient that has been booked in the slot (not service type)
+  * @param {CodeableConcept} [props.reasonCode] - Coded reason this appointment is scheduled
+  * @param {Reference} [props.reasonReference] - Reason the appointment is to take place (resource)
+  * @param {unsignedInt} [props.priority] - Used to make informed decisions if needing to re-prioritize
+  * @param {string} [props.description] - Shown on a subject line in a meeting request, or appointment list
+  * @param {Reference} [props.supportingInformation] - Additional information to support the appointment
+  * @param {instant} [props.start] - When appointment is to take place
+  * @param {instant} [props.end] - When appointment is to conclude
+  * @param {number} [props.minutesDuration] - Can be less than start/end (e.g. estimate)
+  * @param {Reference} [props.slot] - The slots that this appointment is filling
+  * @param {dateTime} [props.created] - The date that this appointment was initially created
+  * @param {string} [props.comment] - Additional comments
+  * @param {string} [props.patientInstruction] - Detailed information and instructions for the patient
+  * @param {Reference} [props.basedOn] - The service request this appointment is allocated to assess
+  * @param {BackboneElement} [props.participant] - Participants involved in appointment
+  * @param {Period} [props.requestedPeriod] - Potential date/time interval(s) requested to allocate the appointment within
+ */
+declare function appointment(type: string, props: Appointment_Props): any;
+declare function appointment(props: Appointment_Props): any;
+/**
+  * Create a FHIR AppointmentResponse resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this item
+  * @param {Reference} [props.appointment] - Appointment this response relates to
+  * @param {instant} [props.start] - Time from appointment, or requested new start time
+  * @param {instant} [props.end] - Time from appointment, or requested new end time
+  * @param {CodeableConcept} [props.participantType] - Role of participant in the appointment
+  * @param {Reference} [props.actor] - Person, Location, HealthcareService, or Device
+  * @param {string} [props.participantStatus] - accepted | declined | tentative | needs-action
+  * @param {string} [props.comment] - Additional comments
+ */
+declare function appointmentResponse(type: string, props: AppointmentResponse_Props): any;
+declare function appointmentResponse(props: AppointmentResponse_Props): any;
+/**
+  * Create a FHIR BiologicallyDerivedProduct resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External ids for this item
+  * @param {string} [props.productCategory] - organ | tissue | fluid | cells | biologicalAgent
+  * @param {CodeableConcept} [props.productCode] - What this biologically derived product is
+  * @param {string} [props.status] - available | unavailable
+  * @param {Reference} [props.request] - Procedure request
+  * @param {integer} [props.quantity] - The amount of this biologically derived product
+  * @param {Reference} [props.parent] - BiologicallyDerivedProduct parent
+  * @param {BackboneElement} [props.collection] - How this product was collected
+  * @param {BackboneElement} [props.processing] - Any processing of the product during collection
+  * @param {BackboneElement} [props.manipulation] - Any manipulation of product post-collection
+  * @param {BackboneElement} [props.storage] - Product storage
+ */
+declare function biologicallyDerivedProduct(type: string, props: BiologicallyDerivedProduct_Props): any;
+declare function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Props): any;
+/**
+  * Create a FHIR BodyStructure resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Bodystructure identifier
+  * @param {boolean} [props.active] - Whether this record is in active use
+  * @param {CodeableConcept} [props.morphology] - Kind of Structure
+  * @param {CodeableConcept} [props.location] - Body site
+  * @param {CodeableConcept} [props.locationQualifier] - Body site modifier
+  * @param {string} [props.description] - Text description
+  * @param {Attachment} [props.image] - Attached images
+  * @param {Reference} [props.patient] - Who this is about
+ */
+declare function bodyStructure(type: string, props: BodyStructure_Props): any;
+declare function bodyStructure(props: BodyStructure_Props): any;
+/**
+  * Create a FHIR CarePlan resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this plan
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - Fulfills CarePlan
+  * @param {Reference} [props.replaces] - CarePlan replaced by this CarePlan
+  * @param {Reference} [props.partOf] - Part of referenced CarePlan
+  * @param {string} [props.status] - draft | active | on-hold | revoked | completed | entered-in-error | unknown
+  * @param {string} [props.intent] - proposal | plan | order | option
+  * @param {CodeableConcept} [props.category] - Type of plan
+  * @param {string} [props.title] - Human-friendly name for the care plan
+  * @param {string} [props.description] - Summary of nature of plan
+  * @param {Reference} [props.subject] - Who the care plan is for
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {Period} [props.period] - Time period plan covers
+  * @param {dateTime} [props.created] - Date record was first recorded
+  * @param {Reference} [props.author] - Who is the designated responsible party
+  * @param {Reference} [props.contributor] - Who provided the content of the care plan
+  * @param {Reference} [props.careTeam] - Who's involved in plan?
+  * @param {Reference} [props.addresses] - Health issues this plan addresses
+  * @param {Reference} [props.supportingInfo] - Information considered as part of plan
+  * @param {Reference} [props.goal] - Desired outcome of plan
+  * @param {BackboneElement} [props.activity] - Action to occur as part of plan
+  * @param {Annotation} [props.note] - Comments about the plan
+ */
+declare function carePlan(type: string, props: CarePlan_Props): any;
+declare function carePlan(props: CarePlan_Props): any;
+/**
+  * Create a FHIR CareTeam resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this team
+  * @param {string} [props.status] - proposed | active | suspended | inactive | entered-in-error
+  * @param {CodeableConcept} [props.category] - Type of team
+  * @param {string} [props.name] - Name of the team, such as crisis assessment team
+  * @param {Reference} [props.subject] - Who care team is for
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {Period} [props.period] - Time period team covers
+  * @param {BackboneElement} [props.participant] - Members of the team
+  * @param {CodeableConcept} [props.reasonCode] - Why the care team exists
+  * @param {Reference} [props.reasonReference] - Why the care team exists
+  * @param {Reference} [props.managingOrganization] - Organization responsible for the care team
+  * @param {ContactPoint} [props.telecom] - A contact detail for the care team (that applies to all members)
+  * @param {Annotation} [props.note] - Comments made about the CareTeam
+ */
+declare function careTeam(type: string, props: CareTeam_Props): any;
+declare function careTeam(props: CareTeam_Props): any;
+/**
+  * Create a FHIR ChargeItem resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for item
+  * @param {string} [props.definitionUri] - Defining information about the code of this charge item
+  * @param {canonical} [props.definitionCanonical] - Resource defining the code of this ChargeItem
+  * @param {string} [props.status] - planned | billable | not-billable | aborted | billed | entered-in-error | unknown
+  * @param {Reference} [props.partOf] - Part of referenced ChargeItem
+  * @param {CodeableConcept} [props.code] - A code that identifies the charge, like a billing code
+  * @param {Reference} [props.subject] - Individual service was done for/to
+  * @param {Reference} [props.context] - Encounter / Episode associated with event
+  * @param {dateTime} [props.occurrence] - When the charged service was applied
+  * @param {BackboneElement} [props.performer] - Who performed charged service
+  * @param {Reference} [props.performingOrganization] - Organization providing the charged service
+  * @param {Reference} [props.requestingOrganization] - Organization requesting the charged service
+  * @param {Reference} [props.costCenter] - Organization that has ownership of the (potential, future) revenue
+  * @param {Quantity} [props.quantity] - Quantity of which the charge item has been serviced
+  * @param {CodeableConcept} [props.bodysite] - Anatomical location, if relevant
+  * @param {decimal} [props.factorOverride] - Factor overriding the associated rules
+  * @param {Money} [props.priceOverride] - Price overriding the associated rules
+  * @param {string} [props.overrideReason] - Reason for overriding the list price/factor
+  * @param {Reference} [props.enterer] - Individual who was entering
+  * @param {dateTime} [props.enteredDate] - Date the charge item was entered
+  * @param {CodeableConcept} [props.reason] - Why was the charged  service rendered?
+  * @param {Reference} [props.service] - Which rendered service is being charged?
+  * @param {Reference} [props.product] - Product charged
+  * @param {Reference} [props.account] - Account to place this charge
+  * @param {Annotation} [props.note] - Comments made about the ChargeItem
+  * @param {Reference} [props.supportingInformation] - Further information supporting this charge
+ */
+declare function chargeItem(type: string, props: ChargeItem_Props): any;
+declare function chargeItem(props: ChargeItem_Props): any;
+/**
+  * Create a FHIR ChargeItemDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this charge item definition, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the charge item definition
+  * @param {string} [props.version] - Business version of the charge item definition
+  * @param {string} [props.title] - Name for this charge item definition (human friendly)
+  * @param {string} [props.derivedFromUri] - Underlying externally-defined charge item definition
+  * @param {canonical} [props.partOf] - A larger definition of which this particular definition is a component or step
+  * @param {canonical} [props.replaces] - Completed or terminated request(s) whose function is taken by this new request
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the charge item definition
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for charge item definition (if applicable)
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the charge item definition was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the charge item definition was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the charge item definition is expected to be used
+  * @param {CodeableConcept} [props.code] - Billing codes or product types this definition applies to
+  * @param {Reference} [props.instance] - Instances this definition applies to
+  * @param {BackboneElement} [props.applicability] - Whether or not the billing code is applicable
+  * @param {BackboneElement} [props.propertyGroup] - Group of properties which are applicable under the same conditions
+ */
+declare function chargeItemDefinition(type: string, props: ChargeItemDefinition_Props): any;
+declare function chargeItemDefinition(props: ChargeItemDefinition_Props): any;
+/**
+  * Create a FHIR Citation resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this citation, represented as a globally unique URI
+  * @param {Identifier} [props.identifier] - Identifier for the Citation resource itself
+  * @param {string} [props.version] - Business version of the citation
+  * @param {string} [props.name] - Name for this citation (computer friendly)
+  * @param {string} [props.title] - Name for this citation (human friendly)
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - The publisher of the Citation, not the publisher of the article or artifact being cited
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher of the Citation Resource
+  * @param {markdown} [props.description] - Natural language description of the citation
+  * @param {UsageContext} [props.useContext] - The context that the Citation Resource content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for citation (if applicable)
+  * @param {markdown} [props.purpose] - Why this citation is defined
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions for the Citation, not for the cited artifact
+  * @param {date} [props.approvalDate] - When the citation was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the citation was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the citation is expected to be used
+  * @param {ContactDetail} [props.author] - Who authored the Citation
+  * @param {ContactDetail} [props.editor] - Who edited the Citation
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the Citation
+  * @param {ContactDetail} [props.endorser] - Who endorsed the Citation
+  * @param {BackboneElement} [props.summary] - A human-readable display of the citation
+  * @param {BackboneElement} [props.classification] - The assignment to an organizing scheme
+  * @param {Annotation} [props.note] - Used for general notes and annotations not coded elsewhere
+  * @param {CodeableConcept} [props.currentState] - The status of the citation
+  * @param {BackboneElement} [props.statusDate] - An effective date or period for a status of the citation
+  * @param {BackboneElement} [props.relatesTo] - Artifact related to the Citation Resource
+  * @param {BackboneElement} [props.citedArtifact] - The article or artifact being described
+ */
+declare function citation(type: string, props: Citation_Props): any;
+declare function citation(props: Citation_Props): any;
+/**
+  * Create a FHIR Claim resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for claim
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {CodeableConcept} [props.type] - Category or discipline
+  * @param {CodeableConcept} [props.subType] - More granular claim type
+  * @param {string} [props.use] - claim | preauthorization | predetermination
+  * @param {Reference} [props.patient] - The recipient of the products and services
+  * @param {Period} [props.billablePeriod] - Relevant time frame for the claim
+  * @param {dateTime} [props.created] - Resource creation date
+  * @param {Reference} [props.enterer] - Author of the claim
+  * @param {Reference} [props.insurer] - Target
+  * @param {Reference} [props.provider] - Party responsible for the claim
+  * @param {CodeableConcept} [props.priority] - Desired processing ugency
+  * @param {CodeableConcept} [props.fundsReserve] - For whom to reserve funds
+  * @param {BackboneElement} [props.related] - Prior or corollary claims
+  * @param {Reference} [props.prescription] - Prescription authorizing services and products
+  * @param {Reference} [props.originalPrescription] - Original prescription if superseded by fulfiller
+  * @param {BackboneElement} [props.payee] - Recipient of benefits payable
+  * @param {Reference} [props.referral] - Treatment referral
+  * @param {Reference} [props.facility] - Servicing facility
+  * @param {BackboneElement} [props.careTeam] - Members of the care team
+  * @param {BackboneElement} [props.supportingInfo] - Supporting information
+  * @param {BackboneElement} [props.diagnosis] - Pertinent diagnosis information
+  * @param {BackboneElement} [props.procedure] - Clinical procedures performed
+  * @param {BackboneElement} [props.insurance] - Patient insurance information
+  * @param {BackboneElement} [props.accident] - Details of the event
+  * @param {BackboneElement} [props.item] - Product or service provided
+  * @param {Money} [props.total] - Total claim cost
+ */
+declare function claim(type: string, props: Claim_Props): any;
+declare function claim(props: Claim_Props): any;
+/**
+  * Create a FHIR ClaimResponse resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for a claim response
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {CodeableConcept} [props.type] - More granular claim type
+  * @param {CodeableConcept} [props.subType] - More granular claim type
+  * @param {string} [props.use] - claim | preauthorization | predetermination
+  * @param {Reference} [props.patient] - The recipient of the products and services
+  * @param {dateTime} [props.created] - Response creation date
+  * @param {Reference} [props.insurer] - Party responsible for reimbursement
+  * @param {Reference} [props.requestor] - Party responsible for the claim
+  * @param {Reference} [props.request] - Id of resource triggering adjudication
+  * @param {string} [props.outcome] - queued | complete | error | partial
+  * @param {string} [props.disposition] - Disposition Message
+  * @param {string} [props.preAuthRef] - Preauthorization reference
+  * @param {Period} [props.preAuthPeriod] - Preauthorization reference effective period
+  * @param {CodeableConcept} [props.payeeType] - Party to be paid any benefits payable
+  * @param {BackboneElement} [props.item] - Adjudication for claim line items
+  * @param {BackboneElement} [props.addItem] - Insurer added line items
+  * @param {undefined} [props.adjudication] - Header-level adjudication
+  * @param {BackboneElement} [props.total] - Adjudication totals
+  * @param {BackboneElement} [props.payment] - Payment Details
+  * @param {CodeableConcept} [props.fundsReserve] - Funds reserved status
+  * @param {CodeableConcept} [props.formCode] - Printed form identifier
+  * @param {Attachment} [props.form] - Printed reference or actual form
+  * @param {BackboneElement} [props.processNote] - Note concerning adjudication
+  * @param {Reference} [props.communicationRequest] - Request for additional information
+  * @param {BackboneElement} [props.insurance] - Patient insurance information
+  * @param {BackboneElement} [props.error] - Processing errors
+ */
+declare function claimResponse(type: string, props: ClaimResponse_Props): any;
+declare function claimResponse(props: ClaimResponse_Props): any;
+/**
+  * Create a FHIR ClinicalImpression resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {string} [props.status] - in-progress | completed | entered-in-error
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {CodeableConcept} [props.code] - Kind of assessment performed
+  * @param {string} [props.description] - Why/how the assessment was performed
+  * @param {Reference} [props.subject] - Patient or group assessed
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {dateTime} [props.effective] - Time of assessment
+  * @param {dateTime} [props.date] - When the assessment was documented
+  * @param {Reference} [props.assessor] - The clinician performing the assessment
+  * @param {Reference} [props.previous] - Reference to last assessment
+  * @param {Reference} [props.problem] - Relevant impressions of patient state
+  * @param {BackboneElement} [props.investigation] - One or more sets of investigations (signs, symptoms, etc.)
+  * @param {string} [props.protocol] - Clinical Protocol followed
+  * @param {string} [props.summary] - Summary of the assessment
+  * @param {BackboneElement} [props.finding] - Possible or likely findings and diagnoses
+  * @param {CodeableConcept} [props.prognosisCodeableConcept] - Estimate of likely outcome
+  * @param {Reference} [props.prognosisReference] - RiskAssessment expressing likely outcome
+  * @param {Reference} [props.supportingInfo] - Information supporting the clinical impression
+  * @param {Annotation} [props.note] - Comments made about the ClinicalImpression
+ */
+declare function clinicalImpression(type: string, props: ClinicalImpression_Props): any;
+declare function clinicalImpression(props: ClinicalImpression_Props): any;
+/**
+  * Create a FHIR ClinicalUseDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier for this issue
+  * @param {string} [props.type] - indication | contraindication | interaction | undesirable-effect | warning
+  * @param {CodeableConcept} [props.category] - A categorisation of the issue, primarily for dividing warnings into subject heading areas such as "Pregnancy", "Overdose"
+  * @param {Reference} [props.subject] - The medication or procedure for which this is an indication
+  * @param {CodeableConcept} [props.status] - Whether this is a current issue or one that has been retired etc
+  * @param {BackboneElement} [props.contraindication] - Specifics for when this is a contraindication
+  * @param {BackboneElement} [props.indication] - Specifics for when this is an indication
+  * @param {BackboneElement} [props.interaction] - Specifics for when this is an interaction
+  * @param {Reference} [props.population] - The population group to which this applies
+  * @param {BackboneElement} [props.undesirableEffect] - A possible negative outcome from the use of this treatment
+  * @param {BackboneElement} [props.warning] - Critical environmental, health or physical risks or hazards. For example 'Do not operate heavy machinery', 'May cause drowsiness'
+ */
+declare function clinicalUseDefinition(type: string, props: ClinicalUseDefinition_Props): any;
+declare function clinicalUseDefinition(props: ClinicalUseDefinition_Props): any;
+/**
+  * Create a FHIR Communication resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique identifier
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - Request fulfilled by this communication
+  * @param {Reference} [props.partOf] - Part of this action
+  * @param {Reference} [props.inResponseTo] - Reply to
+  * @param {string} [props.status] - preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {CodeableConcept} [props.category] - Message category
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {CodeableConcept} [props.medium] - A channel of communication
+  * @param {Reference} [props.subject] - Focus of message
+  * @param {CodeableConcept} [props.topic] - Description of the purpose/content
+  * @param {Reference} [props.about] - Resources that pertain to this communication
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {dateTime} [props.sent] - When sent
+  * @param {dateTime} [props.received] - When received
+  * @param {Reference} [props.recipient] - Message recipient
+  * @param {Reference} [props.sender] - Message sender
+  * @param {CodeableConcept} [props.reasonCode] - Indication for message
+  * @param {Reference} [props.reasonReference] - Why was communication done?
+  * @param {BackboneElement} [props.payload] - Message payload
+  * @param {Annotation} [props.note] - Comments made about the communication
+ */
+declare function communication(type: string, props: Communication_Props): any;
+declare function communication(props: Communication_Props): any;
+/**
+  * Create a FHIR CommunicationRequest resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique identifier
+  * @param {Reference} [props.basedOn] - Fulfills plan or proposal
+  * @param {Reference} [props.replaces] - Request(s) replaced by this request
+  * @param {Identifier} [props.groupIdentifier] - Composite request this is part of
+  * @param {string} [props.status] - draft | active | on-hold | revoked | completed | entered-in-error | unknown
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {CodeableConcept} [props.category] - Message category
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {boolean} [props.doNotPerform] - True if request is prohibiting action
+  * @param {CodeableConcept} [props.medium] - A channel of communication
+  * @param {Reference} [props.subject] - Focus of message
+  * @param {Reference} [props.about] - Resources that pertain to this communication request
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {BackboneElement} [props.payload] - Message payload
+  * @param {dateTime} [props.occurrence] - When scheduled
+  * @param {dateTime} [props.authoredOn] - When request transitioned to being actionable
+  * @param {Reference} [props.requester] - Who/what is requesting service
+  * @param {Reference} [props.recipient] - Message recipient
+  * @param {Reference} [props.sender] - Message sender
+  * @param {CodeableConcept} [props.reasonCode] - Why is communication needed?
+  * @param {Reference} [props.reasonReference] - Why is communication needed?
+  * @param {Annotation} [props.note] - Comments made about communication request
+ */
+declare function communicationRequest(type: string, props: CommunicationRequest_Props): any;
+declare function communicationRequest(props: CommunicationRequest_Props): any;
+/**
+  * Create a FHIR Condition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this condition
+  * @param {CodeableConcept} [props.clinicalStatus] - active | recurrence | relapse | inactive | remission | resolved
+  * @param {CodeableConcept} [props.verificationStatus] - unconfirmed | provisional | differential | confirmed | refuted | entered-in-error
+  * @param {CodeableConcept} [props.category] - problem-list-item | encounter-diagnosis
+  * @param {CodeableConcept} [props.severity] - Subjective severity of condition
+  * @param {CodeableConcept} [props.code] - Identification of the condition, problem or diagnosis
+  * @param {CodeableConcept} [props.bodySite] - Anatomical location, if relevant
+  * @param {Reference} [props.subject] - Who has the condition?
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {dateTime} [props.onset] - Estimated or actual date,  date-time, or age
+  * @param {dateTime} [props.abatement] - When in resolution/remission
+  * @param {dateTime} [props.recordedDate] - Date record was first recorded
+  * @param {Reference} [props.recorder] - Who recorded the condition
+  * @param {Reference} [props.asserter] - Person who asserts this condition
+  * @param {BackboneElement} [props.stage] - Stage/grade, usually assessed formally
+  * @param {BackboneElement} [props.evidence] - Supporting evidence
+  * @param {Annotation} [props.note] - Additional information about the Condition
+ */
+declare function condition(type: string, props: Condition_Props): any;
+declare function condition(props: Condition_Props): any;
+/**
+  * Create a FHIR Contract resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Contract number
+  * @param {string} [props.url] - Basal definition
+  * @param {string} [props.version] - Business edition
+  * @param {string} [props.status] - amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated
+  * @param {CodeableConcept} [props.legalState] - Negotiation status
+  * @param {Reference} [props.instantiatesCanonical] - Source Contract Definition
+  * @param {string} [props.instantiatesUri] - External Contract Definition
+  * @param {CodeableConcept} [props.contentDerivative] - Content derived from the basal information
+  * @param {dateTime} [props.issued] - When this Contract was issued
+  * @param {Period} [props.applies] - Effective time
+  * @param {CodeableConcept} [props.expirationType] - Contract cessation cause
+  * @param {Reference} [props.subject] - Contract Target Entity
+  * @param {Reference} [props.authority] - Authority under which this Contract has standing
+  * @param {Reference} [props.domain] - A sphere of control governed by an authoritative jurisdiction, organization, or person
+  * @param {Reference} [props.site] - Specific Location
+  * @param {string} [props.name] - Computer friendly designation
+  * @param {string} [props.title] - Human Friendly name
+  * @param {string} [props.subtitle] - Subordinate Friendly name
+  * @param {string} [props.alias] - Acronym or short name
+  * @param {Reference} [props.author] - Source of Contract
+  * @param {CodeableConcept} [props.scope] - Range of Legal Concerns
+  * @param {CodeableConcept} [props.topic] - Focus of contract interest
+  * @param {CodeableConcept} [props.type] - Legal instrument category
+  * @param {CodeableConcept} [props.subType] - Subtype within the context of type
+  * @param {BackboneElement} [props.contentDefinition] - Contract precursor content
+  * @param {BackboneElement} [props.term] - Contract Term List
+  * @param {Reference} [props.supportingInfo] - Extra Information
+  * @param {Reference} [props.relevantHistory] - Key event in Contract History
+  * @param {BackboneElement} [props.signer] - Contract Signatory
+  * @param {BackboneElement} [props.friendly] - Contract Friendly Language
+  * @param {BackboneElement} [props.legal] - Contract Legal Language
+  * @param {BackboneElement} [props.rule] - Computable Contract Language
+  * @param {Attachment} [props.legallyBinding] - Binding Contract
+ */
+declare function contract(type: string, props: Contract_Props): any;
+declare function contract(props: Contract_Props): any;
+/**
+  * Create a FHIR Coverage resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for the coverage
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {CodeableConcept} [props.type] - Coverage category such as medical or accident
+  * @param {Reference} [props.policyHolder] - Owner of the policy
+  * @param {Reference} [props.subscriber] - Subscriber to the policy
+  * @param {string} [props.subscriberId] - ID assigned to the subscriber
+  * @param {Reference} [props.beneficiary] - Plan beneficiary
+  * @param {string} [props.dependent] - Dependent number
+  * @param {CodeableConcept} [props.relationship] - Beneficiary relationship to the subscriber
+  * @param {Period} [props.period] - Coverage start and end dates
+  * @param {Reference} [props.payor] - Issuer of the policy
+  * @param {BackboneElement} [props.class] - Additional coverage classifications
+  * @param {number} [props.order] - Relative order of the coverage
+  * @param {string} [props.network] - Insurer network
+  * @param {BackboneElement} [props.costToBeneficiary] - Patient payments for services/products
+  * @param {boolean} [props.subrogation] - Reimbursement to insurer
+  * @param {Reference} [props.contract] - Contract details
+ */
+declare function coverage(type: string, props: Coverage_Props): any;
+declare function coverage(props: Coverage_Props): any;
+/**
+  * Create a FHIR CoverageEligibilityRequest resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for coverage eligiblity request
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {CodeableConcept} [props.priority] - Desired processing priority
+  * @param {string} [props.purpose] - auth-requirements | benefits | discovery | validation
+  * @param {Reference} [props.patient] - Intended recipient of products and services
+  * @param {date} [props.serviced] - Estimated date or dates of service
+  * @param {dateTime} [props.created] - Creation date
+  * @param {Reference} [props.enterer] - Author
+  * @param {Reference} [props.provider] - Party responsible for the request
+  * @param {Reference} [props.insurer] - Coverage issuer
+  * @param {Reference} [props.facility] - Servicing facility
+  * @param {BackboneElement} [props.supportingInfo] - Supporting information
+  * @param {BackboneElement} [props.insurance] - Patient insurance information
+  * @param {BackboneElement} [props.item] - Item to be evaluated for eligibiity
+ */
+declare function coverageEligibilityRequest(type: string, props: CoverageEligibilityRequest_Props): any;
+declare function coverageEligibilityRequest(props: CoverageEligibilityRequest_Props): any;
+/**
+  * Create a FHIR CoverageEligibilityResponse resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for coverage eligiblity request
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {string} [props.purpose] - auth-requirements | benefits | discovery | validation
+  * @param {Reference} [props.patient] - Intended recipient of products and services
+  * @param {date} [props.serviced] - Estimated date or dates of service
+  * @param {dateTime} [props.created] - Response creation date
+  * @param {Reference} [props.requestor] - Party responsible for the request
+  * @param {Reference} [props.request] - Eligibility request reference
+  * @param {string} [props.outcome] - queued | complete | error | partial
+  * @param {string} [props.disposition] - Disposition Message
+  * @param {Reference} [props.insurer] - Coverage issuer
+  * @param {BackboneElement} [props.insurance] - Patient insurance information
+  * @param {string} [props.preAuthRef] - Preauthorization reference
+  * @param {CodeableConcept} [props.form] - Printed form identifier
+  * @param {BackboneElement} [props.error] - Processing errors
+ */
+declare function coverageEligibilityResponse(type: string, props: CoverageEligibilityResponse_Props): any;
+declare function coverageEligibilityResponse(props: CoverageEligibilityResponse_Props): any;
+/**
+  * Create a FHIR DetectedIssue resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique id for the detected issue
+  * @param {string} [props.status] - registered | preliminary | final | amended +
+  * @param {CodeableConcept} [props.code] - Issue Category, e.g. drug-drug, duplicate therapy, etc.
+  * @param {string} [props.severity] - high | moderate | low
+  * @param {Reference} [props.patient] - Associated patient
+  * @param {dateTime} [props.identified] - When identified
+  * @param {Reference} [props.author] - The provider or device that identified the issue
+  * @param {Reference} [props.implicated] - Problem resource
+  * @param {BackboneElement} [props.evidence] - Supporting evidence
+  * @param {string} [props.detail] - Description and context
+  * @param {string} [props.reference] - Authority for issue
+  * @param {BackboneElement} [props.mitigation] - Step taken to address
+ */
+declare function detectedIssue(type: string, props: DetectedIssue_Props): any;
+declare function detectedIssue(props: DetectedIssue_Props): any;
+/**
+  * Create a FHIR Device resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Instance identifier
+  * @param {Reference} [props.definition] - The reference to the definition for the device
+  * @param {BackboneElement} [props.udiCarrier] - Unique Device Identifier (UDI) Barcode string
+  * @param {string} [props.status] - active | inactive | entered-in-error | unknown
+  * @param {CodeableConcept} [props.statusReason] - online | paused | standby | offline | not-ready | transduc-discon | hw-discon | off
+  * @param {string} [props.distinctIdentifier] - The distinct identification string
+  * @param {string} [props.manufacturer] - Name of device manufacturer
+  * @param {dateTime} [props.manufactureDate] - Date when the device was made
+  * @param {dateTime} [props.expirationDate] - Date and time of expiry of this device (if applicable)
+  * @param {string} [props.lotNumber] - Lot number of manufacture
+  * @param {string} [props.serialNumber] - Serial number assigned by the manufacturer
+  * @param {BackboneElement} [props.deviceName] - The name of the device as given by the manufacturer
+  * @param {string} [props.modelNumber] - The manufacturer's model number for the device
+  * @param {string} [props.partNumber] - The part number or catalog number of the device
+  * @param {CodeableConcept} [props.type] - The kind or type of device
+  * @param {BackboneElement} [props.specialization] - The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication
+  * @param {BackboneElement} [props.version] - The actual design of the device or software version running on the device
+  * @param {BackboneElement} [props.property] - The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties
+  * @param {Reference} [props.patient] - Patient to whom Device is affixed
+  * @param {Reference} [props.owner] - Organization responsible for device
+  * @param {ContactPoint} [props.contact] - Details for human/organization for support
+  * @param {Reference} [props.location] - Where the device is found
+  * @param {string} [props.url] - Network address to contact device
+  * @param {Annotation} [props.note] - Device notes and comments
+  * @param {CodeableConcept} [props.safety] - Safety Characteristics of Device
+  * @param {Reference} [props.parent] - The device that this device is attached to or is part of
+ */
+declare function device(type: string, props: Device_Props): any;
+declare function device(props: Device_Props): any;
+/**
+  * Create a FHIR DeviceDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Instance identifier
+  * @param {BackboneElement} [props.udiDeviceIdentifier] - Unique Device Identifier (UDI) Barcode string
+  * @param {string} [props.manufacturer] - Name of device manufacturer
+  * @param {BackboneElement} [props.deviceName] - A name given to the device to identify it
+  * @param {string} [props.modelNumber] - The model number for the device
+  * @param {CodeableConcept} [props.type] - What kind of device or device system this is
+  * @param {BackboneElement} [props.specialization] - The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication
+  * @param {string} [props.version] - Available versions
+  * @param {CodeableConcept} [props.safety] - Safety characteristics of the device
+  * @param {ProductShelfLife} [props.shelfLifeStorage] - Shelf Life and storage information
+  * @param {ProdCharacteristic} [props.physicalCharacteristics] - Dimensions, color etc.
+  * @param {CodeableConcept} [props.languageCode] - Language code for the human-readable text strings produced by the device (all supported)
+  * @param {BackboneElement} [props.capability] - Device capabilities
+  * @param {BackboneElement} [props.property] - The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties
+  * @param {Reference} [props.owner] - Organization responsible for device
+  * @param {ContactPoint} [props.contact] - Details for human/organization for support
+  * @param {string} [props.url] - Network address to contact device
+  * @param {string} [props.onlineInformation] - Access to on-line information
+  * @param {Annotation} [props.note] - Device notes and comments
+  * @param {Quantity} [props.quantity] - The quantity of the device present in the packaging (e.g. the number of devices present in a pack, or the number of devices in the same package of the medicinal product)
+  * @param {Reference} [props.parentDevice] - The parent device it can be part of
+  * @param {BackboneElement} [props.material] - A substance used to create the material(s) of which the device is made
+ */
+declare function deviceDefinition(type: string, props: DeviceDefinition_Props): any;
+declare function deviceDefinition(props: DeviceDefinition_Props): any;
+/**
+  * Create a FHIR DeviceMetric resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Instance identifier
+  * @param {CodeableConcept} [props.type] - Identity of metric, for example Heart Rate or PEEP Setting
+  * @param {CodeableConcept} [props.unit] - Unit of Measure for the Metric
+  * @param {Reference} [props.source] - Describes the link to the source Device
+  * @param {Reference} [props.parent] - Describes the link to the parent Device
+  * @param {string} [props.operationalStatus] - on | off | standby | entered-in-error
+  * @param {string} [props.color] - black | red | green | yellow | blue | magenta | cyan | white
+  * @param {string} [props.category] - measurement | setting | calculation | unspecified
+  * @param {Timing} [props.measurementPeriod] - Describes the measurement repetition time
+  * @param {BackboneElement} [props.calibration] - Describes the calibrations that have been performed or that are required to be performed
+ */
+declare function deviceMetric(type: string, props: DeviceMetric_Props): any;
+declare function deviceMetric(props: DeviceMetric_Props): any;
+/**
+  * Create a FHIR DeviceRequest resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Request identifier
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - What request fulfills
+  * @param {Reference} [props.priorRequest] - What request replaces
+  * @param {Identifier} [props.groupIdentifier] - Identifier of composite request
+  * @param {string} [props.status] - draft | active | on-hold | revoked | completed | entered-in-error | unknown
+  * @param {string} [props.intent] - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {Reference} [props.code] - Device requested
+  * @param {BackboneElement} [props.parameter] - Device details
+  * @param {Reference} [props.subject] - Focus of request
+  * @param {Reference} [props.encounter] - Encounter motivating request
+  * @param {dateTime} [props.occurrence] - Desired time or schedule for use
+  * @param {dateTime} [props.authoredOn] - When recorded
+  * @param {Reference} [props.requester] - Who/what is requesting diagnostics
+  * @param {CodeableConcept} [props.performerType] - Filler role
+  * @param {Reference} [props.performer] - Requested Filler
+  * @param {CodeableConcept} [props.reasonCode] - Coded Reason for request
+  * @param {Reference} [props.reasonReference] - Linked Reason for request
+  * @param {Reference} [props.insurance] - Associated insurance coverage
+  * @param {Reference} [props.supportingInfo] - Additional clinical information
+  * @param {Annotation} [props.note] - Notes or comments
+  * @param {Reference} [props.relevantHistory] - Request provenance
+ */
+declare function deviceRequest(type: string, props: DeviceRequest_Props): any;
+declare function deviceRequest(props: DeviceRequest_Props): any;
+/**
+  * Create a FHIR DeviceUseStatement resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifier for this record
+  * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
+  * @param {string} [props.status] - active | completed | entered-in-error +
+  * @param {Reference} [props.subject] - Patient using device
+  * @param {Reference} [props.derivedFrom] - Supporting information
+  * @param {Timing} [props.timing] - How often  the device was used
+  * @param {dateTime} [props.recordedOn] - When statement was recorded
+  * @param {Reference} [props.source] - Who made the statement
+  * @param {Reference} [props.device] - Reference to device used
+  * @param {CodeableConcept} [props.reasonCode] - Why device was used
+  * @param {Reference} [props.reasonReference] - Why was DeviceUseStatement performed?
+  * @param {CodeableConcept} [props.bodySite] - Target body site
+  * @param {Annotation} [props.note] - Addition details (comments, instructions)
+ */
+declare function deviceUseStatement(type: string, props: DeviceUseStatement_Props): any;
+declare function deviceUseStatement(props: DeviceUseStatement_Props): any;
+/**
+  * Create a FHIR DiagnosticReport resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier for report
+  * @param {Reference} [props.basedOn] - What was requested
+  * @param {string} [props.status] - registered | partial | preliminary | final +
+  * @param {CodeableConcept} [props.category] - Service category
+  * @param {CodeableConcept} [props.code] - Name/Code for this diagnostic report
+  * @param {Reference} [props.subject] - The subject of the report - usually, but not always, the patient
+  * @param {Reference} [props.encounter] - Health care event when test ordered
+  * @param {dateTime} [props.effective] - Clinically relevant time/time-period for report
+  * @param {instant} [props.issued] - DateTime this version was made
+  * @param {Reference} [props.performer] - Responsible Diagnostic Service
+  * @param {Reference} [props.resultsInterpreter] - Primary result interpreter
+  * @param {Reference} [props.specimen] - Specimens this report is based on
+  * @param {Reference} [props.result] - Observations
+  * @param {Reference} [props.imagingStudy] - Reference to full details of imaging associated with the diagnostic report
+  * @param {BackboneElement} [props.media] - Key images associated with this report
+  * @param {string} [props.conclusion] - Clinical conclusion (interpretation) of test results
+  * @param {CodeableConcept} [props.conclusionCode] - Codes for the clinical conclusion of test results
+  * @param {Attachment} [props.presentedForm] - Entire report as issued
+ */
+declare function diagnosticReport(type: string, props: DiagnosticReport_Props): any;
+declare function diagnosticReport(props: DiagnosticReport_Props): any;
+/**
+  * Create a FHIR DomainResource resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+ */
+declare function domainResource(type: string, props: DomainResource_Props): any;
+declare function domainResource(props: DomainResource_Props): any;
+/**
+  * Create a FHIR Encounter resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifier(s) by which this encounter is known
+  * @param {string} [props.status] - planned | arrived | triaged | in-progress | onleave | finished | cancelled +
+  * @param {BackboneElement} [props.statusHistory] - List of past encounter statuses
+  * @param {Coding} [props.class] - Classification of patient encounter
+  * @param {BackboneElement} [props.classHistory] - List of past encounter classes
+  * @param {CodeableConcept} [props.type] - Specific type of encounter
+  * @param {CodeableConcept} [props.serviceType] - Specific type of service
+  * @param {CodeableConcept} [props.priority] - Indicates the urgency of the encounter
+  * @param {Reference} [props.subject] - The patient or group present at the encounter
+  * @param {Reference} [props.episodeOfCare] - Episode(s) of care that this encounter should be recorded against
+  * @param {Reference} [props.basedOn] - The ServiceRequest that initiated this encounter
+  * @param {BackboneElement} [props.participant] - List of participants involved in the encounter
+  * @param {Reference} [props.appointment] - The appointment that scheduled this encounter
+  * @param {Period} [props.period] - The start and end time of the encounter
+  * @param {Duration} [props.length] - Quantity of time the encounter lasted (less time absent)
+  * @param {CodeableConcept} [props.reasonCode] - Coded reason the encounter takes place
+  * @param {Reference} [props.reasonReference] - Reason the encounter takes place (reference)
+  * @param {BackboneElement} [props.diagnosis] - The list of diagnosis relevant to this encounter
+  * @param {Reference} [props.account] - The set of accounts that may be used for billing for this Encounter
+  * @param {BackboneElement} [props.hospitalization] - Details about the admission to a healthcare service
+  * @param {BackboneElement} [props.location] - List of locations where the patient has been
+  * @param {Reference} [props.serviceProvider] - The organization (facility) responsible for this encounter
+  * @param {Reference} [props.partOf] - Another Encounter this encounter is part of
+ */
+declare function encounter(type: string, props: Encounter_Props): any;
+declare function encounter(props: Encounter_Props): any;
+/**
+  * Create a FHIR Endpoint resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifies this endpoint across multiple systems
+  * @param {string} [props.status] - active | suspended | error | off | entered-in-error | test
+  * @param {Coding} [props.connectionType] - Protocol/Profile/Standard to be used with this endpoint connection
+  * @param {string} [props.name] - A name that this endpoint can be identified by
+  * @param {Reference} [props.managingOrganization] - Organization that manages this endpoint (might not be the organization that exposes the endpoint)
+  * @param {ContactPoint} [props.contact] - Contact details for source (e.g. troubleshooting)
+  * @param {Period} [props.period] - Interval the endpoint is expected to be operational
+  * @param {CodeableConcept} [props.payloadType] - The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)
+  * @param {string} [props.payloadMimeType] - Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
+  * @param {url} [props.address] - The technical base address for connecting to this endpoint
+  * @param {string} [props.header] - Usage depends on the channel type
+ */
+declare function endpoint(type: string, props: Endpoint_Props): any;
+declare function endpoint(props: Endpoint_Props): any;
+/**
+  * Create a FHIR EnrollmentRequest resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {dateTime} [props.created] - Creation date
+  * @param {Reference} [props.insurer] - Target
+  * @param {Reference} [props.provider] - Responsible practitioner
+  * @param {Reference} [props.candidate] - The subject to be enrolled
+  * @param {Reference} [props.coverage] - Insurance information
+ */
+declare function enrollmentRequest(type: string, props: EnrollmentRequest_Props): any;
+declare function enrollmentRequest(props: EnrollmentRequest_Props): any;
+/**
+  * Create a FHIR EnrollmentResponse resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {Reference} [props.request] - Claim reference
+  * @param {string} [props.outcome] - queued | complete | error | partial
+  * @param {string} [props.disposition] - Disposition Message
+  * @param {dateTime} [props.created] - Creation date
+  * @param {Reference} [props.organization] - Insurer
+  * @param {Reference} [props.requestProvider] - Responsible practitioner
+ */
+declare function enrollmentResponse(type: string, props: EnrollmentResponse_Props): any;
+declare function enrollmentResponse(props: EnrollmentResponse_Props): any;
+/**
+  * Create a FHIR EpisodeOfCare resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier(s) relevant for this EpisodeOfCare
+  * @param {string} [props.status] - planned | waitlist | active | onhold | finished | cancelled | entered-in-error
+  * @param {BackboneElement} [props.statusHistory] - Past list of status codes (the current status may be included to cover the start date of the status)
+  * @param {CodeableConcept} [props.type] - Type/class  - e.g. specialist referral, disease management
+  * @param {BackboneElement} [props.diagnosis] - The list of diagnosis relevant to this episode of care
+  * @param {Reference} [props.patient] - The patient who is the focus of this episode of care
+  * @param {Reference} [props.managingOrganization] - Organization that assumes care
+  * @param {Period} [props.period] - Interval during responsibility is assumed
+  * @param {Reference} [props.referralRequest] - Originating Referral Request(s)
+  * @param {Reference} [props.careManager] - Care manager/care coordinator for the patient
+  * @param {Reference} [props.team] - Other practitioners facilitating this episode of care
+  * @param {Reference} [props.account] - The set of accounts that may be used for billing for this EpisodeOfCare
+ */
+declare function episodeOfCare(type: string, props: EpisodeOfCare_Props): any;
+declare function episodeOfCare(props: EpisodeOfCare_Props): any;
+/**
+  * Create a FHIR EventDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this event definition, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the event definition
+  * @param {string} [props.version] - Business version of the event definition
+  * @param {string} [props.name] - Name for this event definition (computer friendly)
+  * @param {string} [props.title] - Name for this event definition (human friendly)
+  * @param {string} [props.subtitle] - Subordinate title of the event definition
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.subject] - Type of individual the event definition is focused on
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the event definition
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for event definition (if applicable)
+  * @param {markdown} [props.purpose] - Why this event definition is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the event definition
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the event definition was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the event definition was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the event definition is expected to be used
+  * @param {CodeableConcept} [props.topic] - E.g. Education, Treatment, Assessment, etc.
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {TriggerDefinition} [props.trigger] - "when" the event occurs (multiple = 'or')
+ */
+declare function eventDefinition(type: string, props: EventDefinition_Props): any;
+declare function eventDefinition(props: EventDefinition_Props): any;
+/**
+  * Create a FHIR Evidence resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this evidence, represented as a globally unique URI
+  * @param {Identifier} [props.identifier] - Additional identifier for the summary
+  * @param {string} [props.version] - Business version of this summary
+  * @param {string} [props.title] - Name for this summary (human friendly)
+  * @param {Reference} [props.citeAs] - Citation for this evidence
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {date} [props.approvalDate] - When the summary was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the summary was last reviewed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Link or citation to artifact associated with the summary
+  * @param {markdown} [props.description] - Description of the particular summary
+  * @param {markdown} [props.assertion] - Declarative description of the Evidence
+  * @param {Annotation} [props.note] - Footnotes and/or explanatory notes
+  * @param {BackboneElement} [props.variableDefinition] - Evidence variable such as population, exposure, or outcome
+  * @param {CodeableConcept} [props.synthesisType] - The method to combine studies
+  * @param {CodeableConcept} [props.studyType] - The type of study that produced this evidence
+  * @param {BackboneElement} [props.statistic] - Values and parameters for a single statistic
+  * @param {BackboneElement} [props.certainty] - Certainty or quality of the evidence
+ */
+declare function evidence(type: string, props: Evidence_Props): any;
+declare function evidence(props: Evidence_Props): any;
+/**
+  * Create a FHIR EvidenceReport resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this EvidenceReport, represented as a globally unique URI
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {Identifier} [props.identifier] - Unique identifier for the evidence report
+  * @param {Identifier} [props.relatedIdentifier] - Identifiers for articles that may relate to more than one evidence report
+  * @param {Reference} [props.citeAs] - Citation for this report
+  * @param {CodeableConcept} [props.type] - Kind of report
+  * @param {Annotation} [props.note] - Used for footnotes and annotations
+  * @param {RelatedArtifact} [props.relatedArtifact] - Link, description or reference to artifact associated with the report
+  * @param {BackboneElement} [props.subject] - Focus of the report
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {BackboneElement} [props.relatesTo] - Relationships to other compositions/documents
+  * @param {BackboneElement} [props.section] - Composition is broken into sections
+ */
+declare function evidenceReport(type: string, props: EvidenceReport_Props): any;
+declare function evidenceReport(props: EvidenceReport_Props): any;
+/**
+  * Create a FHIR EvidenceVariable resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this evidence variable, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the evidence variable
+  * @param {string} [props.version] - Business version of the evidence variable
+  * @param {string} [props.name] - Name for this evidence variable (computer friendly)
+  * @param {string} [props.title] - Name for this evidence variable (human friendly)
+  * @param {string} [props.shortTitle] - Title for use in informal contexts
+  * @param {string} [props.subtitle] - Subordinate title of the EvidenceVariable
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {markdown} [props.description] - Natural language description of the evidence variable
+  * @param {Annotation} [props.note] - Used for footnotes or explanatory notes
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {boolean} [props.actual] - Actual or conceptual
+  * @param {string} [props.characteristicCombination] - intersection | union
+  * @param {BackboneElement} [props.characteristic] - What defines the members of the evidence element
+  * @param {string} [props.handling] - continuous | dichotomous | ordinal | polychotomous
+  * @param {BackboneElement} [props.category] - A grouping for ordinal or polychotomous variables
+ */
+declare function evidenceVariable(type: string, props: EvidenceVariable_Props): any;
+declare function evidenceVariable(props: EvidenceVariable_Props): any;
+/**
+  * Create a FHIR ExplanationOfBenefit resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for the resource
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {CodeableConcept} [props.type] - Category or discipline
+  * @param {CodeableConcept} [props.subType] - More granular claim type
+  * @param {string} [props.use] - claim | preauthorization | predetermination
+  * @param {Reference} [props.patient] - The recipient of the products and services
+  * @param {Period} [props.billablePeriod] - Relevant time frame for the claim
+  * @param {dateTime} [props.created] - Response creation date
+  * @param {Reference} [props.enterer] - Author of the claim
+  * @param {Reference} [props.insurer] - Party responsible for reimbursement
+  * @param {Reference} [props.provider] - Party responsible for the claim
+  * @param {CodeableConcept} [props.priority] - Desired processing urgency
+  * @param {CodeableConcept} [props.fundsReserveRequested] - For whom to reserve funds
+  * @param {CodeableConcept} [props.fundsReserve] - Funds reserved status
+  * @param {BackboneElement} [props.related] - Prior or corollary claims
+  * @param {Reference} [props.prescription] - Prescription authorizing services or products
+  * @param {Reference} [props.originalPrescription] - Original prescription if superceded by fulfiller
+  * @param {BackboneElement} [props.payee] - Recipient of benefits payable
+  * @param {Reference} [props.referral] - Treatment Referral
+  * @param {Reference} [props.facility] - Servicing Facility
+  * @param {Reference} [props.claim] - Claim reference
+  * @param {Reference} [props.claimResponse] - Claim response reference
+  * @param {string} [props.outcome] - queued | complete | error | partial
+  * @param {string} [props.disposition] - Disposition Message
+  * @param {string} [props.preAuthRef] - Preauthorization reference
+  * @param {Period} [props.preAuthRefPeriod] - Preauthorization in-effect period
+  * @param {BackboneElement} [props.careTeam] - Care Team members
+  * @param {BackboneElement} [props.supportingInfo] - Supporting information
+  * @param {BackboneElement} [props.diagnosis] - Pertinent diagnosis information
+  * @param {BackboneElement} [props.procedure] - Clinical procedures performed
+  * @param {number} [props.precedence] - Precedence (primary, secondary, etc.)
+  * @param {BackboneElement} [props.insurance] - Patient insurance information
+  * @param {BackboneElement} [props.accident] - Details of the event
+  * @param {BackboneElement} [props.item] - Product or service provided
+  * @param {BackboneElement} [props.addItem] - Insurer added line items
+  * @param {undefined} [props.adjudication] - Header-level adjudication
+  * @param {BackboneElement} [props.total] - Adjudication totals
+  * @param {BackboneElement} [props.payment] - Payment Details
+  * @param {CodeableConcept} [props.formCode] - Printed form identifier
+  * @param {Attachment} [props.form] - Printed reference or actual form
+  * @param {BackboneElement} [props.processNote] - Note concerning adjudication
+  * @param {Period} [props.benefitPeriod] - When the benefits are applicable
+  * @param {BackboneElement} [props.benefitBalance] - Balance by Benefit Category
+ */
+declare function explanationOfBenefit(type: string, props: ExplanationOfBenefit_Props): any;
+declare function explanationOfBenefit(props: ExplanationOfBenefit_Props): any;
+/**
+  * Create a FHIR FamilyMemberHistory resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Id(s) for this record
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {string} [props.status] - partial | completed | entered-in-error | health-unknown
+  * @param {CodeableConcept} [props.dataAbsentReason] - subject-unknown | withheld | unable-to-obtain | deferred
+  * @param {Reference} [props.patient] - Patient history is about
+  * @param {dateTime} [props.date] - When history was recorded or last updated
+  * @param {string} [props.name] - The family member described
+  * @param {CodeableConcept} [props.relationship] - Relationship to the subject
+  * @param {CodeableConcept} [props.sex] - male | female | other | unknown
+  * @param {Period} [props.born] - (approximate) date of birth
+  * @param {Age} [props.age] - (approximate) age
+  * @param {boolean} [props.estimatedAge] - Age is estimated?
+  * @param {boolean} [props.deceased] - Dead? How old/when?
+  * @param {CodeableConcept} [props.reasonCode] - Why was family member history performed?
+  * @param {Reference} [props.reasonReference] - Why was family member history performed?
+  * @param {Annotation} [props.note] - General note about related person
+  * @param {BackboneElement} [props.condition] - Condition that the related person had
+ */
+declare function familyMemberHistory(type: string, props: FamilyMemberHistory_Props): any;
+declare function familyMemberHistory(props: FamilyMemberHistory_Props): any;
+/**
+  * Create a FHIR Flag resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {string} [props.status] - active | inactive | entered-in-error
+  * @param {CodeableConcept} [props.category] - Clinical, administrative, etc.
+  * @param {CodeableConcept} [props.code] - Coded or textual message to display to user
+  * @param {Reference} [props.subject] - Who/What is flag about?
+  * @param {Period} [props.period] - Time period when flag is active
+  * @param {Reference} [props.encounter] - Alert relevant during encounter
+  * @param {Reference} [props.author] - Flag creator
+ */
+declare function flag(type: string, props: Flag_Props): any;
+declare function flag(props: Flag_Props): any;
+/**
+  * Create a FHIR Goal resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this goal
+  * @param {string} [props.lifecycleStatus] - proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected
+  * @param {CodeableConcept} [props.achievementStatus] - in-progress | improving | worsening | no-change | achieved | sustaining | not-achieved | no-progress | not-attainable
+  * @param {CodeableConcept} [props.category] - E.g. Treatment, dietary, behavioral, etc.
+  * @param {CodeableConcept} [props.priority] - high-priority | medium-priority | low-priority
+  * @param {CodeableConcept} [props.description] - Code or text describing goal
+  * @param {Reference} [props.subject] - Who this goal is intended for
+  * @param {date} [props.start] - When goal pursuit begins
+  * @param {BackboneElement} [props.target] - Target outcome for the goal
+  * @param {date} [props.statusDate] - When goal status took effect
+  * @param {string} [props.statusReason] - Reason for current status
+  * @param {Reference} [props.expressedBy] - Who's responsible for creating Goal?
+  * @param {Reference} [props.addresses] - Issues addressed by this goal
+  * @param {Annotation} [props.note] - Comments about the goal
+  * @param {CodeableConcept} [props.outcomeCode] - What result was achieved regarding the goal?
+  * @param {Reference} [props.outcomeReference] - Observation that resulted from goal
+ */
+declare function goal(type: string, props: Goal_Props): any;
+declare function goal(props: Goal_Props): any;
+/**
+  * Create a FHIR Group resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique id
+  * @param {boolean} [props.active] - Whether this group's record is in active use
+  * @param {string} [props.type] - person | animal | practitioner | device | medication | substance
+  * @param {boolean} [props.actual] - Descriptive or actual
+  * @param {CodeableConcept} [props.code] - Kind of Group members
+  * @param {string} [props.name] - Label for Group
+  * @param {unsignedInt} [props.quantity] - Number of members
+  * @param {Reference} [props.managingEntity] - Entity that is the custodian of the Group's definition
+  * @param {BackboneElement} [props.characteristic] - Include / Exclude group members by Trait
+  * @param {BackboneElement} [props.member] - Who or what is in group
+ */
+declare function group(type: string, props: Group_Props): any;
+declare function group(props: Group_Props): any;
+/**
+  * Create a FHIR GuidanceResponse resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.requestIdentifier] - The identifier of the request associated with this response, if any
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {string} [props.module] - What guidance was requested
+  * @param {string} [props.status] - success | data-requested | data-required | in-progress | failure | entered-in-error
+  * @param {Reference} [props.subject] - Patient the request was performed for
+  * @param {Reference} [props.encounter] - Encounter during which the response was returned
+  * @param {dateTime} [props.occurrenceDateTime] - When the guidance response was processed
+  * @param {Reference} [props.performer] - Device returning the guidance
+  * @param {CodeableConcept} [props.reasonCode] - Why guidance is needed
+  * @param {Reference} [props.reasonReference] - Why guidance is needed
+  * @param {Annotation} [props.note] - Additional notes about the response
+  * @param {Reference} [props.evaluationMessage] - Messages resulting from the evaluation of the artifact or artifacts
+  * @param {Reference} [props.outputParameters] - The output parameters of the evaluation, if any
+  * @param {Reference} [props.result] - Proposed actions, if any
+  * @param {DataRequirement} [props.dataRequirement] - Additional required data
+ */
+declare function guidanceResponse(type: string, props: GuidanceResponse_Props): any;
+declare function guidanceResponse(props: GuidanceResponse_Props): any;
+/**
+  * Create a FHIR HealthcareService resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifiers for this item
+  * @param {boolean} [props.active] - Whether this HealthcareService record is in active use
+  * @param {Reference} [props.providedBy] - Organization that provides this service
+  * @param {CodeableConcept} [props.category] - Broad category of service being performed or delivered
+  * @param {CodeableConcept} [props.type] - Type of service that may be delivered or performed
+  * @param {CodeableConcept} [props.specialty] - Specialties handled by the HealthcareService
+  * @param {Reference} [props.location] - Location(s) where service may be provided
+  * @param {string} [props.name] - Description of service as presented to a consumer while searching
+  * @param {string} [props.comment] - Additional description and/or any specific issues not covered elsewhere
+  * @param {markdown} [props.extraDetails] - Extra details about the service that can't be placed in the other fields
+  * @param {Attachment} [props.photo] - Facilitates quick identification of the service
+  * @param {ContactPoint} [props.telecom] - Contacts related to the healthcare service
+  * @param {Reference} [props.coverageArea] - Location(s) service is intended for/available to
+  * @param {CodeableConcept} [props.serviceProvisionCode] - Conditions under which service is available/offered
+  * @param {BackboneElement} [props.eligibility] - Specific eligibility requirements required to use the service
+  * @param {CodeableConcept} [props.program] - Programs that this service is applicable to
+  * @param {CodeableConcept} [props.characteristic] - Collection of characteristics (attributes)
+  * @param {CodeableConcept} [props.communication] - The language that this service is offered in
+  * @param {CodeableConcept} [props.referralMethod] - Ways that the service accepts referrals
+  * @param {boolean} [props.appointmentRequired] - If an appointment is required for access to this service
+  * @param {BackboneElement} [props.availableTime] - Times the Service Site is available
+  * @param {BackboneElement} [props.notAvailable] - Not available during this time due to provided reason
+  * @param {string} [props.availabilityExceptions] - Description of availability exceptions
+  * @param {Reference} [props.endpoint] - Technical endpoints providing access to electronic services operated for the healthcare service
+ */
+declare function healthcareService(type: string, props: HealthcareService_Props): any;
+declare function healthcareService(props: HealthcareService_Props): any;
+/**
+  * Create a FHIR ImagingStudy resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifiers for the whole study
+  * @param {string} [props.status] - registered | available | cancelled | entered-in-error | unknown
+  * @param {Coding} [props.modality] - All series modality if actual acquisition modalities
+  * @param {Reference} [props.subject] - Who or what is the subject of the study
+  * @param {Reference} [props.encounter] - Encounter with which this imaging study is associated
+  * @param {dateTime} [props.started] - When the study was started
+  * @param {Reference} [props.basedOn] - Request fulfilled
+  * @param {Reference} [props.referrer] - Referring physician
+  * @param {Reference} [props.interpreter] - Who interpreted images
+  * @param {Reference} [props.endpoint] - Study access endpoint
+  * @param {unsignedInt} [props.numberOfSeries] - Number of Study Related Series
+  * @param {unsignedInt} [props.numberOfInstances] - Number of Study Related Instances
+  * @param {Reference} [props.procedureReference] - The performed Procedure reference
+  * @param {CodeableConcept} [props.procedureCode] - The performed procedure code
+  * @param {Reference} [props.location] - Where ImagingStudy occurred
+  * @param {CodeableConcept} [props.reasonCode] - Why the study was requested
+  * @param {Reference} [props.reasonReference] - Why was study performed
+  * @param {Annotation} [props.note] - User-defined comments
+  * @param {string} [props.description] - Institution-generated description
+  * @param {BackboneElement} [props.series] - Each study has one or more series of instances
+ */
+declare function imagingStudy(type: string, props: ImagingStudy_Props): any;
+declare function imagingStudy(props: ImagingStudy_Props): any;
+/**
+  * Create a FHIR Immunization resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {string} [props.status] - completed | entered-in-error | not-done
+  * @param {CodeableConcept} [props.statusReason] - Reason not done
+  * @param {CodeableConcept} [props.vaccineCode] - Vaccine product administered
+  * @param {Reference} [props.patient] - Who was immunized
+  * @param {Reference} [props.encounter] - Encounter immunization was part of
+  * @param {dateTime} [props.occurrence] - Vaccine administration date
+  * @param {dateTime} [props.recorded] - When the immunization was first captured in the subject's record
+  * @param {boolean} [props.primarySource] - Indicates context the data was recorded in
+  * @param {CodeableConcept} [props.reportOrigin] - Indicates the source of a secondarily reported record
+  * @param {Reference} [props.location] - Where immunization occurred
+  * @param {Reference} [props.manufacturer] - Vaccine manufacturer
+  * @param {string} [props.lotNumber] - Vaccine lot number
+  * @param {date} [props.expirationDate] - Vaccine expiration date
+  * @param {CodeableConcept} [props.site] - Body site vaccine  was administered
+  * @param {CodeableConcept} [props.route] - How vaccine entered body
+  * @param {Quantity} [props.doseQuantity] - Amount of vaccine administered
+  * @param {BackboneElement} [props.performer] - Who performed event
+  * @param {Annotation} [props.note] - Additional immunization notes
+  * @param {CodeableConcept} [props.reasonCode] - Why immunization occurred
+  * @param {Reference} [props.reasonReference] - Why immunization occurred
+  * @param {boolean} [props.isSubpotent] - Dose potency
+  * @param {CodeableConcept} [props.subpotentReason] - Reason for being subpotent
+  * @param {BackboneElement} [props.education] - Educational material presented to patient
+  * @param {CodeableConcept} [props.programEligibility] - Patient eligibility for a vaccination program
+  * @param {CodeableConcept} [props.fundingSource] - Funding source for the vaccine
+  * @param {BackboneElement} [props.reaction] - Details of a reaction that follows immunization
+  * @param {BackboneElement} [props.protocolApplied] - Protocol followed by the provider
+ */
+declare function immunization(type: string, props: Immunization_Props): any;
+declare function immunization(props: Immunization_Props): any;
+/**
+  * Create a FHIR ImmunizationEvaluation resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {string} [props.status] - completed | entered-in-error
+  * @param {Reference} [props.patient] - Who this evaluation is for
+  * @param {dateTime} [props.date] - Date evaluation was performed
+  * @param {Reference} [props.authority] - Who is responsible for publishing the recommendations
+  * @param {CodeableConcept} [props.targetDisease] - Evaluation target disease
+  * @param {Reference} [props.immunizationEvent] - Immunization being evaluated
+  * @param {CodeableConcept} [props.doseStatus] - Status of the dose relative to published recommendations
+  * @param {CodeableConcept} [props.doseStatusReason] - Reason for the dose status
+  * @param {string} [props.description] - Evaluation notes
+  * @param {string} [props.series] - Name of vaccine series
+  * @param {number} [props.doseNumber] - Dose number within series
+  * @param {number} [props.seriesDoses] - Recommended number of doses for immunity
+ */
+declare function immunizationEvaluation(type: string, props: ImmunizationEvaluation_Props): any;
+declare function immunizationEvaluation(props: ImmunizationEvaluation_Props): any;
+/**
+  * Create a FHIR ImmunizationRecommendation resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {Reference} [props.patient] - Who this profile is for
+  * @param {dateTime} [props.date] - Date recommendation(s) created
+  * @param {Reference} [props.authority] - Who is responsible for protocol
+  * @param {BackboneElement} [props.recommendation] - Vaccine administration recommendations
+ */
+declare function immunizationRecommendation(type: string, props: ImmunizationRecommendation_Props): any;
+declare function immunizationRecommendation(props: ImmunizationRecommendation_Props): any;
+/**
+  * Create a FHIR Ingredient resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - An identifier or code by which the ingredient can be referenced
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {Reference} [props.for] - The product which this ingredient is a constituent part of
+  * @param {CodeableConcept} [props.role] - Purpose of the ingredient within the product, e.g. active, inactive
+  * @param {CodeableConcept} [props.function] - Precise action within the drug product, e.g. antioxidant, alkalizing agent
+  * @param {boolean} [props.allergenicIndicator] - If the ingredient is a known or suspected allergen
+  * @param {BackboneElement} [props.manufacturer] - An organization that manufactures this ingredient
+  * @param {BackboneElement} [props.substance] - The substance that comprises this ingredient
+ */
+declare function ingredient(type: string, props: Ingredient_Props): any;
+declare function ingredient(props: Ingredient_Props): any;
+/**
+  * Create a FHIR InsurancePlan resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for Product
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {CodeableConcept} [props.type] - Kind of product
+  * @param {string} [props.name] - Official name
+  * @param {string} [props.alias] - Alternate names
+  * @param {Period} [props.period] - When the product is available
+  * @param {Reference} [props.ownedBy] - Plan issuer
+  * @param {Reference} [props.administeredBy] - Product administrator
+  * @param {Reference} [props.coverageArea] - Where product applies
+  * @param {BackboneElement} [props.contact] - Contact for the product
+  * @param {Reference} [props.endpoint] - Technical endpoint
+  * @param {Reference} [props.network] - What networks are Included
+  * @param {BackboneElement} [props.coverage] - Coverage details
+  * @param {BackboneElement} [props.plan] - Plan details
+ */
+declare function insurancePlan(type: string, props: InsurancePlan_Props): any;
+declare function insurancePlan(props: InsurancePlan_Props): any;
+/**
+  * Create a FHIR Invoice resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for item
+  * @param {string} [props.status] - draft | issued | balanced | cancelled | entered-in-error
+  * @param {string} [props.cancelledReason] - Reason for cancellation of this Invoice
+  * @param {CodeableConcept} [props.type] - Type of Invoice
+  * @param {Reference} [props.subject] - Recipient(s) of goods and services
+  * @param {Reference} [props.recipient] - Recipient of this invoice
+  * @param {dateTime} [props.date] - Invoice date / posting date
+  * @param {BackboneElement} [props.participant] - Participant in creation of this Invoice
+  * @param {Reference} [props.issuer] - Issuing Organization of Invoice
+  * @param {Reference} [props.account] - Account that is being balanced
+  * @param {BackboneElement} [props.lineItem] - Line items of this Invoice
+  * @param {undefined} [props.totalPriceComponent] - Components of Invoice total
+  * @param {Money} [props.totalNet] - Net total of this Invoice
+  * @param {Money} [props.totalGross] - Gross total of this Invoice
+  * @param {markdown} [props.paymentTerms] - Payment details
+  * @param {Annotation} [props.note] - Comments made about the invoice
+ */
+declare function invoice(type: string, props: Invoice_Props): any;
+declare function invoice(props: Invoice_Props): any;
+/**
+  * Create a FHIR Library resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this library, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the library
+  * @param {string} [props.version] - Business version of the library
+  * @param {string} [props.name] - Name for this library (computer friendly)
+  * @param {string} [props.title] - Name for this library (human friendly)
+  * @param {string} [props.subtitle] - Subordinate title of the library
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.type] - logic-library | model-definition | asset-collection | module-definition
+  * @param {CodeableConcept} [props.subject] - Type of individual the library content is focused on
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the library
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for library (if applicable)
+  * @param {markdown} [props.purpose] - Why this library is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the library
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the library was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the library was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the library is expected to be used
+  * @param {CodeableConcept} [props.topic] - E.g. Education, Treatment, Assessment, etc.
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {ParameterDefinition} [props.parameter] - Parameters defined by the library
+  * @param {DataRequirement} [props.dataRequirement] - What data is referenced by this library
+  * @param {Attachment} [props.content] - Contents of the library, either embedded or referenced
+ */
+declare function library(type: string, props: Library_Props): any;
+declare function library(props: Library_Props): any;
+/**
+  * Create a FHIR List resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {string} [props.status] - current | retired | entered-in-error
+  * @param {string} [props.mode] - working | snapshot | changes
+  * @param {string} [props.title] - Descriptive name for the list
+  * @param {CodeableConcept} [props.code] - What the purpose of this list is
+  * @param {Reference} [props.subject] - If all resources have the same subject
+  * @param {Reference} [props.encounter] - Context in which list created
+  * @param {dateTime} [props.date] - When the list was prepared
+  * @param {Reference} [props.source] - Who and/or what defined the list contents (aka Author)
+  * @param {CodeableConcept} [props.orderedBy] - What order the list has
+  * @param {Annotation} [props.note] - Comments about the list
+  * @param {BackboneElement} [props.entry] - Entries in the list
+  * @param {CodeableConcept} [props.emptyReason] - Why list is empty
+ */
+declare function list(type: string, props: List_Props): any;
+declare function list(props: List_Props): any;
+/**
+  * Create a FHIR Location resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique code or number identifying the location to its users
+  * @param {string} [props.status] - active | suspended | inactive
+  * @param {Coding} [props.operationalStatus] - The operational status of the location (typically only for a bed/room)
+  * @param {string} [props.name] - Name of the location as used by humans
+  * @param {string} [props.alias] - A list of alternate names that the location is known as, or was known as, in the past
+  * @param {string} [props.description] - Additional details about the location that could be displayed as further information to identify the location beyond its name
+  * @param {string} [props.mode] - instance | kind
+  * @param {CodeableConcept} [props.type] - Type of function performed
+  * @param {ContactPoint} [props.telecom] - Contact details of the location
+  * @param {Address} [props.address] - Physical location
+  * @param {CodeableConcept} [props.physicalType] - Physical form of the location
+  * @param {BackboneElement} [props.position] - The absolute geographic location
+  * @param {Reference} [props.managingOrganization] - Organization responsible for provisioning and upkeep
+  * @param {Reference} [props.partOf] - Another Location this one is physically a part of
+  * @param {BackboneElement} [props.hoursOfOperation] - What days/times during a week is this location usually open
+  * @param {string} [props.availabilityExceptions] - Description of availability exceptions
+  * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the location
+ */
+declare function location(type: string, props: Location_Props): any;
+declare function location(props: Location_Props): any;
+/**
+  * Create a FHIR ManufacturedItemDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique identifier
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {CodeableConcept} [props.manufacturedDoseForm] - Dose form as manufactured (before any necessary transformation)
+  * @param {CodeableConcept} [props.unitOfPresentation] - The “real world” units in which the quantity of the item is described
+  * @param {Reference} [props.manufacturer] - Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues)
+  * @param {CodeableConcept} [props.ingredient] - The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource
+  * @param {BackboneElement} [props.property] - General characteristics of this item
+ */
+declare function manufacturedItemDefinition(type: string, props: ManufacturedItemDefinition_Props): any;
+declare function manufacturedItemDefinition(props: ManufacturedItemDefinition_Props): any;
+/**
+  * Create a FHIR Measure resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this measure, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the measure
+  * @param {string} [props.version] - Business version of the measure
+  * @param {string} [props.name] - Name for this measure (computer friendly)
+  * @param {string} [props.title] - Name for this measure (human friendly)
+  * @param {string} [props.subtitle] - Subordinate title of the measure
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.subject] - E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the measure
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for measure (if applicable)
+  * @param {markdown} [props.purpose] - Why this measure is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the measure
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the measure was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the measure was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the measure is expected to be used
+  * @param {CodeableConcept} [props.topic] - The category of the measure, such as Education, Treatment, Assessment, etc.
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {canonical} [props.library] - Logic used by the measure
+  * @param {markdown} [props.disclaimer] - Disclaimer for use of the measure or its referenced content
+  * @param {CodeableConcept} [props.scoring] - proportion | ratio | continuous-variable | cohort
+  * @param {CodeableConcept} [props.compositeScoring] - opportunity | all-or-nothing | linear | weighted
+  * @param {CodeableConcept} [props.type] - process | outcome | structure | patient-reported-outcome | composite
+  * @param {string} [props.riskAdjustment] - How risk adjustment is applied for this measure
+  * @param {string} [props.rateAggregation] - How is rate aggregation performed for this measure
+  * @param {markdown} [props.rationale] - Detailed description of why the measure exists
+  * @param {markdown} [props.clinicalRecommendationStatement] - Summary of clinical guidelines
+  * @param {CodeableConcept} [props.improvementNotation] - increase | decrease
+  * @param {markdown} [props.definition] - Defined terms used in the measure documentation
+  * @param {markdown} [props.guidance] - Additional guidance for implementers
+  * @param {BackboneElement} [props.group] - Population criteria group
+  * @param {BackboneElement} [props.supplementalData] - What other data should be reported with the measure
+ */
+declare function measure(type: string, props: Measure_Props): any;
+declare function measure(props: Measure_Props): any;
+/**
+  * Create a FHIR MeasureReport resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Additional identifier for the MeasureReport
+  * @param {string} [props.status] - complete | pending | error
+  * @param {string} [props.type] - individual | subject-list | summary | data-collection
+  * @param {canonical} [props.measure] - What measure was calculated
+  * @param {Reference} [props.subject] - What individual(s) the report is for
+  * @param {dateTime} [props.date] - When the report was generated
+  * @param {Reference} [props.reporter] - Who is reporting the data
+  * @param {Period} [props.period] - What period the report covers
+  * @param {CodeableConcept} [props.improvementNotation] - increase | decrease
+  * @param {BackboneElement} [props.group] - Measure results for each group
+  * @param {Reference} [props.evaluatedResource] - What data was used to calculate the measure score
+ */
+declare function measureReport(type: string, props: MeasureReport_Props): any;
+declare function measureReport(props: MeasureReport_Props): any;
+/**
+  * Create a FHIR Media resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifier(s) for the image
+  * @param {Reference} [props.basedOn] - Procedure that caused this media to be created
+  * @param {Reference} [props.partOf] - Part of referenced event
+  * @param {string} [props.status] - preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
+  * @param {CodeableConcept} [props.type] - Classification of media as image, video, or audio
+  * @param {CodeableConcept} [props.modality] - The type of acquisition equipment/process
+  * @param {CodeableConcept} [props.view] - Imaging view, e.g. Lateral or Antero-posterior
+  * @param {Reference} [props.subject] - Who/What this Media is a record of
+  * @param {Reference} [props.encounter] - Encounter associated with media
+  * @param {dateTime} [props.created] - When Media was collected
+  * @param {instant} [props.issued] - Date/Time this version was made available
+  * @param {Reference} [props.operator] - The person who generated the image
+  * @param {CodeableConcept} [props.reasonCode] - Why was event performed?
+  * @param {CodeableConcept} [props.bodySite] - Observed body part
+  * @param {string} [props.deviceName] - Name of the device/manufacturer
+  * @param {Reference} [props.device] - Observing Device
+  * @param {number} [props.height] - Height of the image in pixels (photo/video)
+  * @param {number} [props.width] - Width of the image in pixels (photo/video)
+  * @param {number} [props.frames] - Number of frames if > 1 (photo)
+  * @param {decimal} [props.duration] - Length in seconds (audio / video)
+  * @param {Attachment} [props.content] - Actual Media - reference or data
+  * @param {Annotation} [props.note] - Comments made about the media
+ */
+declare function media(type: string, props: Media_Props): any;
+declare function media(props: Media_Props): any;
+/**
+  * Create a FHIR Medication resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier for this medication
+  * @param {CodeableConcept} [props.code] - Codes that identify this medication
+  * @param {string} [props.status] - active | inactive | entered-in-error
+  * @param {Reference} [props.manufacturer] - Manufacturer of the item
+  * @param {CodeableConcept} [props.form] - powder | tablets | capsule +
+  * @param {Ratio} [props.amount] - Amount of drug in package
+  * @param {BackboneElement} [props.ingredient] - Active or inactive ingredient
+  * @param {BackboneElement} [props.batch] - Details about packaged medications
+ */
+declare function medication(type: string, props: Medication_Props): any;
+declare function medication(props: Medication_Props): any;
+/**
+  * Create a FHIR MedicationAdministration resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifier
+  * @param {string} [props.instantiates] - Instantiates protocol or definition
+  * @param {Reference} [props.partOf] - Part of referenced event
+  * @param {string} [props.status] - in-progress | not-done | on-hold | completed | entered-in-error | stopped | unknown
+  * @param {CodeableConcept} [props.statusReason] - Reason administration not performed
+  * @param {CodeableConcept} [props.category] - Type of medication usage
+  * @param {CodeableConcept} [props.medication] - What was administered
+  * @param {Reference} [props.subject] - Who received medication
+  * @param {Reference} [props.context] - Encounter or Episode of Care administered as part of
+  * @param {Reference} [props.supportingInformation] - Additional information to support administration
+  * @param {dateTime} [props.effective] - Start and end time of administration
+  * @param {BackboneElement} [props.performer] - Who performed the medication administration and what they did
+  * @param {CodeableConcept} [props.reasonCode] - Reason administration performed
+  * @param {Reference} [props.reasonReference] - Condition or observation that supports why the medication was administered
+  * @param {Reference} [props.request] - Request administration performed against
+  * @param {Reference} [props.device] - Device used to administer
+  * @param {Annotation} [props.note] - Information about the administration
+  * @param {BackboneElement} [props.dosage] - Details of how medication was taken
+  * @param {Reference} [props.eventHistory] - A list of events of interest in the lifecycle
+ */
+declare function medicationAdministration(type: string, props: MedicationAdministration_Props): any;
+declare function medicationAdministration(props: MedicationAdministration_Props): any;
+/**
+  * Create a FHIR MedicationDispense resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifier
+  * @param {Reference} [props.partOf] - Event that dispense is part of
+  * @param {string} [props.status] - preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown
+  * @param {CodeableConcept} [props.statusReason] - Why a dispense was not performed
+  * @param {CodeableConcept} [props.category] - Type of medication dispense
+  * @param {CodeableConcept} [props.medication] - What medication was supplied
+  * @param {Reference} [props.subject] - Who the dispense is for
+  * @param {Reference} [props.context] - Encounter / Episode associated with event
+  * @param {Reference} [props.supportingInformation] - Information that supports the dispensing of the medication
+  * @param {BackboneElement} [props.performer] - Who performed event
+  * @param {Reference} [props.location] - Where the dispense occurred
+  * @param {Reference} [props.authorizingPrescription] - Medication order that authorizes the dispense
+  * @param {CodeableConcept} [props.type] - Trial fill, partial fill, emergency fill, etc.
+  * @param {Quantity} [props.quantity] - Amount dispensed
+  * @param {Quantity} [props.daysSupply] - Amount of medication expressed as a timing amount
+  * @param {dateTime} [props.whenPrepared] - When product was packaged and reviewed
+  * @param {dateTime} [props.whenHandedOver] - When product was given out
+  * @param {Reference} [props.destination] - Where the medication was sent
+  * @param {Reference} [props.receiver] - Who collected the medication
+  * @param {Annotation} [props.note] - Information about the dispense
+  * @param {Dosage} [props.dosageInstruction] - How the medication is to be used by the patient or administered by the caregiver
+  * @param {BackboneElement} [props.substitution] - Whether a substitution was performed on the dispense
+  * @param {Reference} [props.detectedIssue] - Clinical issue with action
+  * @param {Reference} [props.eventHistory] - A list of relevant lifecycle events
+ */
+declare function medicationDispense(type: string, props: MedicationDispense_Props): any;
+declare function medicationDispense(props: MedicationDispense_Props): any;
+/**
+  * Create a FHIR MedicationKnowledge resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {CodeableConcept} [props.code] - Code that identifies this medication
+  * @param {string} [props.status] - active | inactive | entered-in-error
+  * @param {Reference} [props.manufacturer] - Manufacturer of the item
+  * @param {CodeableConcept} [props.doseForm] - powder | tablets | capsule +
+  * @param {Quantity} [props.amount] - Amount of drug in package
+  * @param {string} [props.synonym] - Additional names for a medication
+  * @param {BackboneElement} [props.relatedMedicationKnowledge] - Associated or related medication information
+  * @param {Reference} [props.associatedMedication] - A medication resource that is associated with this medication
+  * @param {CodeableConcept} [props.productType] - Category of the medication or product
+  * @param {BackboneElement} [props.monograph] - Associated documentation about the medication
+  * @param {BackboneElement} [props.ingredient] - Active or inactive ingredient
+  * @param {markdown} [props.preparationInstruction] - The instructions for preparing the medication
+  * @param {CodeableConcept} [props.intendedRoute] - The intended or approved route of administration
+  * @param {BackboneElement} [props.cost] - The pricing of the medication
+  * @param {BackboneElement} [props.monitoringProgram] - Program under which a medication is reviewed
+  * @param {BackboneElement} [props.administrationGuidelines] - Guidelines for administration of the medication
+  * @param {BackboneElement} [props.medicineClassification] - Categorization of the medication within a formulary or classification system
+  * @param {BackboneElement} [props.packaging] - Details about packaged medications
+  * @param {BackboneElement} [props.drugCharacteristic] - Specifies descriptive properties of the medicine
+  * @param {Reference} [props.contraindication] - Potential clinical issue with or between medication(s)
+  * @param {BackboneElement} [props.regulatory] - Regulatory information about a medication
+  * @param {BackboneElement} [props.kinetics] - The time course of drug absorption, distribution, metabolism and excretion of a medication from the body
+ */
+declare function medicationKnowledge(type: string, props: MedicationKnowledge_Props): any;
+declare function medicationKnowledge(props: MedicationKnowledge_Props): any;
+/**
+  * Create a FHIR MedicationRequest resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External ids for this request
+  * @param {string} [props.status] - active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {string} [props.intent] - proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {CodeableConcept} [props.category] - Type of medication usage
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {boolean} [props.doNotPerform] - True if request is prohibiting action
+  * @param {boolean} [props.reported] - Reported rather than primary record
+  * @param {CodeableConcept} [props.medication] - Medication to be taken
+  * @param {Reference} [props.subject] - Who or group medication request is for
+  * @param {Reference} [props.encounter] - Encounter created as part of encounter/admission/stay
+  * @param {Reference} [props.supportingInformation] - Information to support ordering of the medication
+  * @param {dateTime} [props.authoredOn] - When request was initially authored
+  * @param {Reference} [props.requester] - Who/What requested the Request
+  * @param {Reference} [props.performer] - Intended performer of administration
+  * @param {CodeableConcept} [props.performerType] - Desired kind of performer of the medication administration
+  * @param {Reference} [props.recorder] - Person who entered the request
+  * @param {CodeableConcept} [props.reasonCode] - Reason or indication for ordering or not ordering the medication
+  * @param {Reference} [props.reasonReference] - Condition or observation that supports why the prescription is being written
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - What request fulfills
+  * @param {Identifier} [props.groupIdentifier] - Composite request this is part of
+  * @param {CodeableConcept} [props.courseOfTherapyType] - Overall pattern of medication administration
+  * @param {Reference} [props.insurance] - Associated insurance coverage
+  * @param {Annotation} [props.note] - Information about the prescription
+  * @param {Dosage} [props.dosageInstruction] - How the medication should be taken
+  * @param {BackboneElement} [props.dispenseRequest] - Medication supply authorization
+  * @param {BackboneElement} [props.substitution] - Any restrictions on medication substitution
+  * @param {Reference} [props.priorPrescription] - An order/prescription that is being replaced
+  * @param {Reference} [props.detectedIssue] - Clinical Issue with action
+  * @param {Reference} [props.eventHistory] - A list of events of interest in the lifecycle
+ */
+declare function medicationRequest(type: string, props: MedicationRequest_Props): any;
+declare function medicationRequest(props: MedicationRequest_Props): any;
+/**
+  * Create a FHIR MedicationStatement resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifier
+  * @param {Reference} [props.basedOn] - Fulfils plan, proposal or order
+  * @param {Reference} [props.partOf] - Part of referenced event
+  * @param {string} [props.status] - active | completed | entered-in-error | intended | stopped | on-hold | unknown | not-taken
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {CodeableConcept} [props.category] - Type of medication usage
+  * @param {CodeableConcept} [props.medication] - What medication was taken
+  * @param {Reference} [props.subject] - Who is/was taking  the medication
+  * @param {Reference} [props.context] - Encounter / Episode associated with MedicationStatement
+  * @param {dateTime} [props.effective] - The date/time or interval when the medication is/was/will be taken
+  * @param {dateTime} [props.dateAsserted] - When the statement was asserted?
+  * @param {Reference} [props.informationSource] - Person or organization that provided the information about the taking of this medication
+  * @param {Reference} [props.derivedFrom] - Additional supporting information
+  * @param {CodeableConcept} [props.reasonCode] - Reason for why the medication is being/was taken
+  * @param {Reference} [props.reasonReference] - Condition or observation that supports why the medication is being/was taken
+  * @param {Annotation} [props.note] - Further information about the statement
+  * @param {Dosage} [props.dosage] - Details of how medication is/was taken or should be taken
+ */
+declare function medicationStatement(type: string, props: MedicationStatement_Props): any;
+declare function medicationStatement(props: MedicationStatement_Props): any;
+/**
+  * Create a FHIR MedicinalProductDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier for this product. Could be an MPID
+  * @param {CodeableConcept} [props.type] - Regulatory type, e.g. Investigational or Authorized
+  * @param {CodeableConcept} [props.domain] - If this medicine applies to human or veterinary uses
+  * @param {string} [props.version] - A business identifier relating to a specific version of the product
+  * @param {CodeableConcept} [props.status] - The status within the lifecycle of this product record
+  * @param {dateTime} [props.statusDate] - The date at which the given status became applicable
+  * @param {markdown} [props.description] - General description of this product
+  * @param {CodeableConcept} [props.combinedPharmaceuticalDoseForm] - The dose form for a single part product, or combined form of a multiple part product
+  * @param {CodeableConcept} [props.route] - The path by which the product is taken into or makes contact with the body
+  * @param {markdown} [props.indication] - Description of indication(s) for this product, used when structured indications are not required
+  * @param {CodeableConcept} [props.legalStatusOfSupply] - The legal status of supply of the medicinal product as classified by the regulator
+  * @param {CodeableConcept} [props.additionalMonitoringIndicator] - Whether the Medicinal Product is subject to additional monitoring for regulatory reasons
+  * @param {CodeableConcept} [props.specialMeasures] - Whether the Medicinal Product is subject to special measures for regulatory reasons
+  * @param {CodeableConcept} [props.pediatricUseIndicator] - If authorised for use in children
+  * @param {CodeableConcept} [props.classification] - Allows the product to be classified by various systems
+  * @param {MarketingStatus} [props.marketingStatus] - Marketing status of the medicinal product, in contrast to marketing authorization
+  * @param {CodeableConcept} [props.packagedMedicinalProduct] - Package type for the product
+  * @param {CodeableConcept} [props.ingredient] - The ingredients of this medicinal product - when not detailed in other resources
+  * @param {CodeableReference} [props.impurity] - Any component of the drug product which is not the chemical entity defined as the drug substance, or an excipient in the drug product
+  * @param {Reference} [props.attachedDocument] - Additional documentation about the medicinal product
+  * @param {Reference} [props.masterFile] - A master file for the medicinal product (e.g. Pharmacovigilance System Master File)
+  * @param {BackboneElement} [props.contact] - A product specific contact, person (in a role), or an organization
+  * @param {Reference} [props.clinicalTrial] - Clinical trials or studies that this product is involved in
+  * @param {Coding} [props.code] - A code that this product is known by, within some formal terminology
+  * @param {BackboneElement} [props.name] - The product's name, including full name and possibly coded parts
+  * @param {BackboneElement} [props.crossReference] - Reference to another product, e.g. for linking authorised to investigational product
+  * @param {BackboneElement} [props.operation] - A manufacturing or administrative process for the medicinal product
+  * @param {BackboneElement} [props.characteristic] - Key product features such as "sugar free", "modified release"
+ */
+declare function medicinalProductDefinition(type: string, props: MedicinalProductDefinition_Props): any;
+declare function medicinalProductDefinition(props: MedicinalProductDefinition_Props): any;
+/**
+  * Create a FHIR MolecularSequence resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique ID for this particular sequence. This is a FHIR-defined id
+  * @param {string} [props.type] - aa | dna | rna
+  * @param {integer} [props.coordinateSystem] - Base number of coordinate system (0 for 0-based numbering or coordinates, inclusive start, exclusive end, 1 for 1-based numbering, inclusive start, inclusive end)
+  * @param {Reference} [props.patient] - Who and/or what this is about
+  * @param {Reference} [props.specimen] - Specimen used for sequencing
+  * @param {Reference} [props.device] - The method for sequencing
+  * @param {Reference} [props.performer] - Who should be responsible for test result
+  * @param {Quantity} [props.quantity] - The number of copies of the sequence of interest.  (RNASeq)
+  * @param {BackboneElement} [props.referenceSeq] - A sequence used as reference
+  * @param {BackboneElement} [props.variant] - Variant in sequence
+  * @param {string} [props.observedSeq] - Sequence that was observed
+  * @param {BackboneElement} [props.quality] - An set of value as quality of sequence
+  * @param {integer} [props.readCoverage] - Average number of reads representing a given nucleotide in the reconstructed sequence
+  * @param {BackboneElement} [props.repository] - External repository which contains detailed report related with observedSeq in this resource
+  * @param {Reference} [props.pointer] - Pointer to next atomic sequence
+  * @param {BackboneElement} [props.structureVariant] - Structural variant
+ */
+declare function molecularSequence(type: string, props: MolecularSequence_Props): any;
+declare function molecularSequence(props: MolecularSequence_Props): any;
+/**
+  * Create a FHIR NutritionOrder resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifiers assigned to this order
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {string} [props.instantiates] - Instantiates protocol or definition
+  * @param {string} [props.status] - draft | active | on-hold | revoked | completed | entered-in-error | unknown
+  * @param {string} [props.intent] - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {Reference} [props.patient] - The person who requires the diet, formula or nutritional supplement
+  * @param {Reference} [props.encounter] - The encounter associated with this nutrition order
+  * @param {dateTime} [props.dateTime] - Date and time the nutrition order was requested
+  * @param {Reference} [props.orderer] - Who ordered the diet, formula or nutritional supplement
+  * @param {Reference} [props.allergyIntolerance] - List of the patient's food and nutrition-related allergies and intolerances
+  * @param {CodeableConcept} [props.foodPreferenceModifier] - Order-specific modifier about the type of food that should be given
+  * @param {CodeableConcept} [props.excludeFoodModifier] - Order-specific modifier about the type of food that should not be given
+  * @param {BackboneElement} [props.oralDiet] - Oral diet components
+  * @param {BackboneElement} [props.supplement] - Supplement components
+  * @param {BackboneElement} [props.enteralFormula] - Enteral formula components
+  * @param {Annotation} [props.note] - Comments
+ */
+declare function nutritionOrder(type: string, props: NutritionOrder_Props): any;
+declare function nutritionOrder(props: NutritionOrder_Props): any;
+/**
+  * Create a FHIR NutritionProduct resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.status] - active | inactive | entered-in-error
+  * @param {CodeableConcept} [props.category] - A category or class of the nutrition product (halal, kosher, gluten free, vegan, etc)
+  * @param {CodeableConcept} [props.code] - A code designating a specific type of nutritional product
+  * @param {Reference} [props.manufacturer] - Manufacturer, representative or officially responsible for the product
+  * @param {BackboneElement} [props.nutrient] - The product's nutritional information expressed by the nutrients
+  * @param {BackboneElement} [props.ingredient] - Ingredients contained in this product
+  * @param {CodeableReference} [props.knownAllergen] - Known or suspected allergens that are a part of this product
+  * @param {BackboneElement} [props.productCharacteristic] - Specifies descriptive properties of the nutrition product
+  * @param {BackboneElement} [props.instance] - One or several physical instances or occurrences of the nutrition product
+  * @param {Annotation} [props.note] - Comments made about the product
+ */
+declare function nutritionProduct(type: string, props: NutritionProduct_Props): any;
+declare function nutritionProduct(props: NutritionProduct_Props): any;
+/**
+  * Create a FHIR Observation resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for observation
+  * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
+  * @param {Reference} [props.partOf] - Part of referenced event
+  * @param {string} [props.status] - registered | preliminary | final | amended +
+  * @param {CodeableConcept} [props.category] - Classification of  type of observation
+  * @param {CodeableConcept} [props.code] - Type of observation (code / type)
+  * @param {Reference} [props.subject] - Who and/or what the observation is about
+  * @param {Reference} [props.focus] - What the observation is about, when it is not about the subject of record
+  * @param {Reference} [props.encounter] - Healthcare event during which this observation is made
+  * @param {dateTime} [props.effective] - Clinically relevant time/time-period for observation
+  * @param {instant} [props.issued] - Date/Time this version was made available
+  * @param {Reference} [props.performer] - Who is responsible for the observation
+  * @param {Quantity} [props.value] - Actual result
+  * @param {CodeableConcept} [props.dataAbsentReason] - Why the result is missing
+  * @param {CodeableConcept} [props.interpretation] - High, low, normal, etc.
+  * @param {Annotation} [props.note] - Comments about the observation
+  * @param {CodeableConcept} [props.bodySite] - Observed body part
+  * @param {CodeableConcept} [props.method] - How it was done
+  * @param {Reference} [props.specimen] - Specimen used for this observation
+  * @param {Reference} [props.device] - (Measurement) Device
+  * @param {BackboneElement} [props.referenceRange] - Provides guide for interpretation
+  * @param {Reference} [props.hasMember] - Related resource that belongs to the Observation group
+  * @param {Reference} [props.derivedFrom] - Related measurements the observation is made from
+  * @param {BackboneElement} [props.component] - Component results
+ */
+declare function observation(type: string, props: Observation_Props): any;
+declare function observation(props: Observation_Props): any;
+/**
+  * Create a FHIR ObservationDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {CodeableConcept} [props.category] - Category of observation
+  * @param {CodeableConcept} [props.code] - Type of observation (code / type)
+  * @param {Identifier} [props.identifier] - Business identifier for this ObservationDefinition instance
+  * @param {string} [props.permittedDataType] - Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period
+  * @param {boolean} [props.multipleResultsAllowed] - Multiple results allowed
+  * @param {CodeableConcept} [props.method] - Method used to produce the observation
+  * @param {string} [props.preferredReportName] - Preferred report name
+  * @param {BackboneElement} [props.quantitativeDetails] - Characteristics of quantitative results
+  * @param {BackboneElement} [props.qualifiedInterval] - Qualified range for continuous and ordinal observation results
+  * @param {Reference} [props.validCodedValueSet] - Value set of valid coded values for the observations conforming to this ObservationDefinition
+  * @param {Reference} [props.normalCodedValueSet] - Value set of normal coded values for the observations conforming to this ObservationDefinition
+  * @param {Reference} [props.abnormalCodedValueSet] - Value set of abnormal coded values for the observations conforming to this ObservationDefinition
+  * @param {Reference} [props.criticalCodedValueSet] - Value set of critical coded values for the observations conforming to this ObservationDefinition
+ */
+declare function observationDefinition(type: string, props: ObservationDefinition_Props): any;
+declare function observationDefinition(props: ObservationDefinition_Props): any;
+/**
+  * Create a FHIR Organization resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifies this organization  across multiple systems
+  * @param {boolean} [props.active] - Whether the organization's record is still in active use
+  * @param {CodeableConcept} [props.type] - Kind of organization
+  * @param {string} [props.name] - Name used for the organization
+  * @param {string} [props.alias] - A list of alternate names that the organization is known as, or was known as in the past
+  * @param {ContactPoint} [props.telecom] - A contact detail for the organization
+  * @param {Address} [props.address] - An address for the organization
+  * @param {Reference} [props.partOf] - The organization of which this organization forms a part
+  * @param {BackboneElement} [props.contact] - Contact for the organization for a certain purpose
+  * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the organization
+ */
+declare function organization(type: string, props: Organization_Props): any;
+declare function organization(props: Organization_Props): any;
+/**
+  * Create a FHIR OrganizationAffiliation resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifiers that are specific to this role
+  * @param {boolean} [props.active] - Whether this organization affiliation record is in active use
+  * @param {Period} [props.period] - The period during which the participatingOrganization is affiliated with the primary organization
+  * @param {Reference} [props.organization] - Organization where the role is available
+  * @param {Reference} [props.participatingOrganization] - Organization that provides/performs the role (e.g. providing services or is a member of)
+  * @param {Reference} [props.network] - Health insurance provider network in which the participatingOrganization provides the role's services (if defined) at the indicated locations (if defined)
+  * @param {CodeableConcept} [props.code] - Definition of the role the participatingOrganization plays
+  * @param {CodeableConcept} [props.specialty] - Specific specialty of the participatingOrganization in the context of the role
+  * @param {Reference} [props.location] - The location(s) at which the role occurs
+  * @param {Reference} [props.healthcareService] - Healthcare services provided through the role
+  * @param {ContactPoint} [props.telecom] - Contact details at the participatingOrganization relevant to this Affiliation
+  * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for this role
+ */
+declare function organizationAffiliation(type: string, props: OrganizationAffiliation_Props): any;
+declare function organizationAffiliation(props: OrganizationAffiliation_Props): any;
+/**
+  * Create a FHIR PackagedProductDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - A unique identifier for this package as whole
+  * @param {string} [props.name] - A name for this package. Typically as listed in a drug formulary, catalogue, inventory etc
+  * @param {CodeableConcept} [props.type] - A high level category e.g. medicinal product, raw material, shipping container etc
+  * @param {Reference} [props.packageFor] - The product that this is a pack for
+  * @param {CodeableConcept} [props.status] - The status within the lifecycle of this item. High level - not intended to duplicate details elsewhere e.g. legal status, or authorization/marketing status
+  * @param {dateTime} [props.statusDate] - The date at which the given status became applicable
+  * @param {Quantity} [props.containedItemQuantity] - A total of the complete count of contained items of a particular type/form, independent of sub-packaging or organization. This can be considered as the pack size
+  * @param {markdown} [props.description] - Textual description. Note that this is not the name of the package or product
+  * @param {BackboneElement} [props.legalStatusOfSupply] - The legal status of supply of the packaged item as classified by the regulator
+  * @param {MarketingStatus} [props.marketingStatus] - Allows specifying that an item is on the market for sale, or that it is not available, and the dates and locations associated
+  * @param {CodeableConcept} [props.characteristic] - Allows the key features to be recorded, such as "hospital pack", "nurse prescribable"
+  * @param {boolean} [props.copackagedIndicator] - If the drug product is supplied with another item such as a diluent or adjuvant
+  * @param {Reference} [props.manufacturer] - Manufacturer of this package type (multiple means these are all possible manufacturers)
+  * @param {BackboneElement} [props.package] - A packaging item, as a container for medically related items, possibly with other packaging items within, or a packaging component, such as bottle cap
+ */
+declare function packagedProductDefinition(type: string, props: PackagedProductDefinition_Props): any;
+declare function packagedProductDefinition(props: PackagedProductDefinition_Props): any;
+/**
+  * Create a FHIR Patient resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - An identifier for this patient
+  * @param {boolean} [props.active] - Whether this patient's record is in active use
+  * @param {HumanName} [props.name] - A name associated with the patient
+  * @param {ContactPoint} [props.telecom] - A contact detail for the individual
+  * @param {string} [props.gender] - male | female | other | unknown
+  * @param {date} [props.birthDate] - The date of birth for the individual
+  * @param {boolean} [props.deceased] - Indicates if the individual is deceased or not
+  * @param {Address} [props.address] - An address for the individual
+  * @param {CodeableConcept} [props.maritalStatus] - Marital (civil) status of a patient
+  * @param {boolean} [props.multipleBirth] - Whether patient is part of a multiple birth
+  * @param {Attachment} [props.photo] - Image of the patient
+  * @param {BackboneElement} [props.contact] - A contact party (e.g. guardian, partner, friend) for the patient
+  * @param {BackboneElement} [props.communication] - A language which may be used to communicate with the patient about his or her health
+  * @param {Reference} [props.generalPractitioner] - Patient's nominated primary care provider
+  * @param {Reference} [props.managingOrganization] - Organization that is the custodian of the patient record
+  * @param {BackboneElement} [props.link] - Link to another patient resource that concerns the same actual person
+ */
+declare function patient(type: string, props: Patient_Props): any;
+declare function patient(props: Patient_Props): any;
+/**
+  * Create a FHIR PaymentNotice resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for the payment noctice
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {Reference} [props.request] - Request reference
+  * @param {Reference} [props.response] - Response reference
+  * @param {dateTime} [props.created] - Creation date
+  * @param {Reference} [props.provider] - Responsible practitioner
+  * @param {Reference} [props.payment] - Payment reference
+  * @param {date} [props.paymentDate] - Payment or clearing date
+  * @param {Reference} [props.payee] - Party being paid
+  * @param {Reference} [props.recipient] - Party being notified
+  * @param {Money} [props.amount] - Monetary amount of the payment
+  * @param {CodeableConcept} [props.paymentStatus] - Issued or cleared Status of the payment
+ */
+declare function paymentNotice(type: string, props: PaymentNotice_Props): any;
+declare function paymentNotice(props: PaymentNotice_Props): any;
+/**
+  * Create a FHIR PaymentReconciliation resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for a payment reconciliation
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {Period} [props.period] - Period covered
+  * @param {dateTime} [props.created] - Creation date
+  * @param {Reference} [props.paymentIssuer] - Party generating payment
+  * @param {Reference} [props.request] - Reference to requesting resource
+  * @param {Reference} [props.requestor] - Responsible practitioner
+  * @param {string} [props.outcome] - queued | complete | error | partial
+  * @param {string} [props.disposition] - Disposition message
+  * @param {date} [props.paymentDate] - When payment issued
+  * @param {Money} [props.paymentAmount] - Total amount of Payment
+  * @param {Identifier} [props.paymentIdentifier] - Business identifier for the payment
+  * @param {BackboneElement} [props.detail] - Settlement particulars
+  * @param {CodeableConcept} [props.formCode] - Printed form identifier
+  * @param {BackboneElement} [props.processNote] - Note concerning processing
+ */
+declare function paymentReconciliation(type: string, props: PaymentReconciliation_Props): any;
+declare function paymentReconciliation(props: PaymentReconciliation_Props): any;
+/**
+  * Create a FHIR Person resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - A human identifier for this person
+  * @param {HumanName} [props.name] - A name associated with the person
+  * @param {ContactPoint} [props.telecom] - A contact detail for the person
+  * @param {string} [props.gender] - male | female | other | unknown
+  * @param {date} [props.birthDate] - The date on which the person was born
+  * @param {Address} [props.address] - One or more addresses for the person
+  * @param {Attachment} [props.photo] - Image of the person
+  * @param {Reference} [props.managingOrganization] - The organization that is the custodian of the person record
+  * @param {boolean} [props.active] - This person's record is in active use
+  * @param {BackboneElement} [props.link] - Link to a resource that concerns the same actual person
+ */
+declare function person(type: string, props: Person_Props): any;
+declare function person(props: Person_Props): any;
+/**
+  * Create a FHIR PlanDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this plan definition, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the plan definition
+  * @param {string} [props.version] - Business version of the plan definition
+  * @param {string} [props.name] - Name for this plan definition (computer friendly)
+  * @param {string} [props.title] - Name for this plan definition (human friendly)
+  * @param {string} [props.subtitle] - Subordinate title of the plan definition
+  * @param {CodeableConcept} [props.type] - order-set | clinical-protocol | eca-rule | workflow-definition
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.subject] - Type of individual the plan definition is focused on
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the plan definition
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for plan definition (if applicable)
+  * @param {markdown} [props.purpose] - Why this plan definition is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the plan
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the plan definition was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the plan definition was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the plan definition is expected to be used
+  * @param {CodeableConcept} [props.topic] - E.g. Education, Treatment, Assessment
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations
+  * @param {canonical} [props.library] - Logic used by the plan definition
+  * @param {BackboneElement} [props.goal] - What the plan is trying to accomplish
+  * @param {BackboneElement} [props.action] - Action defined by the plan
+ */
+declare function planDefinition(type: string, props: PlanDefinition_Props): any;
+declare function planDefinition(props: PlanDefinition_Props): any;
+/**
+  * Create a FHIR Practitioner resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - An identifier for the person as this agent
+  * @param {boolean} [props.active] - Whether this practitioner's record is in active use
+  * @param {HumanName} [props.name] - The name(s) associated with the practitioner
+  * @param {ContactPoint} [props.telecom] - A contact detail for the practitioner (that apply to all roles)
+  * @param {Address} [props.address] - Address(es) of the practitioner that are not role specific (typically home address)
+  * @param {string} [props.gender] - male | female | other | unknown
+  * @param {date} [props.birthDate] - The date  on which the practitioner was born
+  * @param {Attachment} [props.photo] - Image of the person
+  * @param {BackboneElement} [props.qualification] - Certification, licenses, or training pertaining to the provision of care
+  * @param {CodeableConcept} [props.communication] - A language the practitioner can use in patient communication
+ */
+declare function practitioner(type: string, props: Practitioner_Props): any;
+declare function practitioner(props: Practitioner_Props): any;
+/**
+  * Create a FHIR PractitionerRole resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifiers that are specific to a role/location
+  * @param {boolean} [props.active] - Whether this practitioner role record is in active use
+  * @param {Period} [props.period] - The period during which the practitioner is authorized to perform in these role(s)
+  * @param {Reference} [props.practitioner] - Practitioner that is able to provide the defined services for the organization
+  * @param {Reference} [props.organization] - Organization where the roles are available
+  * @param {CodeableConcept} [props.code] - Roles which this practitioner may perform
+  * @param {CodeableConcept} [props.specialty] - Specific specialty of the practitioner
+  * @param {Reference} [props.location] - The location(s) at which this practitioner provides care
+  * @param {Reference} [props.healthcareService] - The list of healthcare services that this worker provides for this role's Organization/Location(s)
+  * @param {ContactPoint} [props.telecom] - Contact details that are specific to the role/location/service
+  * @param {BackboneElement} [props.availableTime] - Times the Service Site is available
+  * @param {BackboneElement} [props.notAvailable] - Not available during this time due to provided reason
+  * @param {string} [props.availabilityExceptions] - Description of availability exceptions
+  * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the practitioner with this role
+ */
+declare function practitionerRole(type: string, props: PractitionerRole_Props): any;
+declare function practitionerRole(props: PractitionerRole_Props): any;
+/**
+  * Create a FHIR Procedure resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Identifiers for this procedure
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - A request for this procedure
+  * @param {Reference} [props.partOf] - Part of referenced event
+  * @param {string} [props.status] - preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {CodeableConcept} [props.category] - Classification of the procedure
+  * @param {CodeableConcept} [props.code] - Identification of the procedure
+  * @param {Reference} [props.subject] - Who the procedure was performed on
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {dateTime} [props.performed] - When the procedure was performed
+  * @param {Reference} [props.recorder] - Who recorded the procedure
+  * @param {Reference} [props.asserter] - Person who asserts this procedure
+  * @param {BackboneElement} [props.performer] - The people who performed the procedure
+  * @param {Reference} [props.location] - Where the procedure happened
+  * @param {CodeableConcept} [props.reasonCode] - Coded reason procedure performed
+  * @param {Reference} [props.reasonReference] - The justification that the procedure was performed
+  * @param {CodeableConcept} [props.bodySite] - Target body sites
+  * @param {CodeableConcept} [props.outcome] - The result of procedure
+  * @param {Reference} [props.report] - Any report resulting from the procedure
+  * @param {CodeableConcept} [props.complication] - Complication following the procedure
+  * @param {Reference} [props.complicationDetail] - A condition that is a result of the procedure
+  * @param {CodeableConcept} [props.followUp] - Instructions for follow up
+  * @param {Annotation} [props.note] - Additional information about the procedure
+  * @param {BackboneElement} [props.focalDevice] - Manipulated, implanted, or removed device
+  * @param {Reference} [props.usedReference] - Items used during procedure
+  * @param {CodeableConcept} [props.usedCode] - Coded items used during the procedure
+ */
+declare function procedure(type: string, props: Procedure_Props): any;
+declare function procedure(props: Procedure_Props): any;
+/**
+  * Create a FHIR Questionnaire resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this questionnaire, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the questionnaire
+  * @param {string} [props.version] - Business version of the questionnaire
+  * @param {string} [props.name] - Name for this questionnaire (computer friendly)
+  * @param {string} [props.title] - Name for this questionnaire (human friendly)
+  * @param {canonical} [props.derivedFrom] - Instantiates protocol or definition
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {string} [props.subjectType] - Resource that can be subject of QuestionnaireResponse
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the questionnaire
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for questionnaire (if applicable)
+  * @param {markdown} [props.purpose] - Why this questionnaire is defined
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the questionnaire was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the questionnaire was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the questionnaire is expected to be used
+  * @param {Coding} [props.code] - Concept that represents the overall questionnaire
+  * @param {BackboneElement} [props.item] - Questions and sections within the Questionnaire
+ */
+declare function questionnaire(type: string, props: Questionnaire_Props): any;
+declare function questionnaire(props: Questionnaire_Props): any;
+/**
+  * Create a FHIR QuestionnaireResponse resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique id for this set of answers
+  * @param {Reference} [props.basedOn] - Request fulfilled by this QuestionnaireResponse
+  * @param {Reference} [props.partOf] - Part of this action
+  * @param {canonical} [props.questionnaire] - Form being answered
+  * @param {string} [props.status] - in-progress | completed | amended | entered-in-error | stopped
+  * @param {Reference} [props.subject] - The subject of the questions
+  * @param {Reference} [props.encounter] - Encounter created as part of
+  * @param {dateTime} [props.authored] - Date the answers were gathered
+  * @param {Reference} [props.author] - Person who received and recorded the answers
+  * @param {Reference} [props.source] - The person who answered the questions
+  * @param {BackboneElement} [props.item] - Groups and questions
+ */
+declare function questionnaireResponse(type: string, props: QuestionnaireResponse_Props): any;
+declare function questionnaireResponse(props: QuestionnaireResponse_Props): any;
+/**
+  * Create a FHIR RegulatedAuthorization resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier for the authorization, typically assigned by the authorizing body
+  * @param {Reference} [props.subject] - The product type, treatment, facility or activity that is being authorized
+  * @param {CodeableConcept} [props.type] - Overall type of this authorization, for example drug marketing approval, orphan drug designation
+  * @param {markdown} [props.description] - General textual supporting information
+  * @param {CodeableConcept} [props.region] - The territory in which the authorization has been granted
+  * @param {CodeableConcept} [props.status] - The status that is authorised e.g. approved. Intermediate states can be tracked with cases and applications
+  * @param {dateTime} [props.statusDate] - The date at which the current status was assigned
+  * @param {Period} [props.validityPeriod] - The time period in which the regulatory approval etc. is in effect, e.g. a Marketing Authorization includes the date of authorization and/or expiration date
+  * @param {CodeableReference} [props.indication] - Condition for which the use of the regulated product applies
+  * @param {CodeableConcept} [props.intendedUse] - The intended use of the product, e.g. prevention, treatment
+  * @param {CodeableConcept} [props.basis] - The legal/regulatory framework or reasons under which this authorization is granted
+  * @param {Reference} [props.holder] - The organization that has been granted this authorization, by the regulator
+  * @param {Reference} [props.regulator] - The regulatory authority or authorizing body granting the authorization
+  * @param {BackboneElement} [props.case] - The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page)
+ */
+declare function regulatedAuthorization(type: string, props: RegulatedAuthorization_Props): any;
+declare function regulatedAuthorization(props: RegulatedAuthorization_Props): any;
+/**
+  * Create a FHIR RelatedPerson resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - A human identifier for this person
+  * @param {boolean} [props.active] - Whether this related person's record is in active use
+  * @param {Reference} [props.patient] - The patient this person is related to
+  * @param {CodeableConcept} [props.relationship] - The nature of the relationship
+  * @param {HumanName} [props.name] - A name associated with the person
+  * @param {ContactPoint} [props.telecom] - A contact detail for the person
+  * @param {string} [props.gender] - male | female | other | unknown
+  * @param {date} [props.birthDate] - The date on which the related person was born
+  * @param {Address} [props.address] - Address where the related person can be contacted or visited
+  * @param {Attachment} [props.photo] - Image of the person
+  * @param {Period} [props.period] - Period of time that this relationship is considered valid
+  * @param {BackboneElement} [props.communication] - A language which may be used to communicate with about the patient's health
+ */
+declare function relatedPerson(type: string, props: RelatedPerson_Props): any;
+declare function relatedPerson(props: RelatedPerson_Props): any;
+/**
+  * Create a FHIR RequestGroup resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - Fulfills plan, proposal, or order
+  * @param {Reference} [props.replaces] - Request(s) replaced by this request
+  * @param {Identifier} [props.groupIdentifier] - Composite request this is part of
+  * @param {string} [props.status] - draft | active | on-hold | revoked | completed | entered-in-error | unknown
+  * @param {string} [props.intent] - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {CodeableConcept} [props.code] - What's being requested/ordered
+  * @param {Reference} [props.subject] - Who the request group is about
+  * @param {Reference} [props.encounter] - Created as part of
+  * @param {dateTime} [props.authoredOn] - When the request group was authored
+  * @param {Reference} [props.author] - Device or practitioner that authored the request group
+  * @param {CodeableConcept} [props.reasonCode] - Why the request group is needed
+  * @param {Reference} [props.reasonReference] - Why the request group is needed
+  * @param {Annotation} [props.note] - Additional notes about the response
+  * @param {BackboneElement} [props.action] - Proposed actions, if any
+ */
+declare function requestGroup(type: string, props: RequestGroup_Props): any;
+declare function requestGroup(props: RequestGroup_Props): any;
+/**
+  * Create a FHIR ResearchDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this research definition, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the research definition
+  * @param {string} [props.version] - Business version of the research definition
+  * @param {string} [props.name] - Name for this research definition (computer friendly)
+  * @param {string} [props.title] - Name for this research definition (human friendly)
+  * @param {string} [props.shortTitle] - Title for use in informal contexts
+  * @param {string} [props.subtitle] - Subordinate title of the ResearchDefinition
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.subject] - E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the research definition
+  * @param {string} [props.comment] - Used for footnotes or explanatory notes
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for research definition (if applicable)
+  * @param {markdown} [props.purpose] - Why this research definition is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the ResearchDefinition
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the research definition was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the research definition was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the research definition is expected to be used
+  * @param {CodeableConcept} [props.topic] - The category of the ResearchDefinition, such as Education, Treatment, Assessment, etc.
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {canonical} [props.library] - Logic used by the ResearchDefinition
+  * @param {Reference} [props.population] - What population?
+  * @param {Reference} [props.exposure] - What exposure?
+  * @param {Reference} [props.exposureAlternative] - What alternative exposure state?
+  * @param {Reference} [props.outcome] - What outcome?
+ */
+declare function researchDefinition(type: string, props: ResearchDefinition_Props): any;
+declare function researchDefinition(props: ResearchDefinition_Props): any;
+/**
+  * Create a FHIR ResearchElementDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this research element definition, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the research element definition
+  * @param {string} [props.version] - Business version of the research element definition
+  * @param {string} [props.name] - Name for this research element definition (computer friendly)
+  * @param {string} [props.title] - Name for this research element definition (human friendly)
+  * @param {string} [props.shortTitle] - Title for use in informal contexts
+  * @param {string} [props.subtitle] - Subordinate title of the ResearchElementDefinition
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {CodeableConcept} [props.subject] - E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the research element definition
+  * @param {string} [props.comment] - Used for footnotes or explanatory notes
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for research element definition (if applicable)
+  * @param {markdown} [props.purpose] - Why this research element definition is defined
+  * @param {string} [props.usage] - Describes the clinical usage of the ResearchElementDefinition
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {date} [props.approvalDate] - When the research element definition was approved by publisher
+  * @param {date} [props.lastReviewDate] - When the research element definition was last reviewed
+  * @param {Period} [props.effectivePeriod] - When the research element definition is expected to be used
+  * @param {CodeableConcept} [props.topic] - The category of the ResearchElementDefinition, such as Education, Treatment, Assessment, etc.
+  * @param {ContactDetail} [props.author] - Who authored the content
+  * @param {ContactDetail} [props.editor] - Who edited the content
+  * @param {ContactDetail} [props.reviewer] - Who reviewed the content
+  * @param {ContactDetail} [props.endorser] - Who endorsed the content
+  * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
+  * @param {canonical} [props.library] - Logic used by the ResearchElementDefinition
+  * @param {string} [props.type] - population | exposure | outcome
+  * @param {string} [props.variableType] - dichotomous | continuous | descriptive
+  * @param {BackboneElement} [props.characteristic] - What defines the members of the research element
+ */
+declare function researchElementDefinition(type: string, props: ResearchElementDefinition_Props): any;
+declare function researchElementDefinition(props: ResearchElementDefinition_Props): any;
+/**
+  * Create a FHIR ResearchStudy resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for study
+  * @param {string} [props.title] - Name for this study
+  * @param {Reference} [props.protocol] - Steps followed in executing study
+  * @param {Reference} [props.partOf] - Part of larger study
+  * @param {string} [props.status] - active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn
+  * @param {CodeableConcept} [props.primaryPurposeType] - treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility
+  * @param {CodeableConcept} [props.phase] - n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4
+  * @param {CodeableConcept} [props.category] - Classifications for the study
+  * @param {CodeableConcept} [props.focus] - Drugs, devices, etc. under study
+  * @param {CodeableConcept} [props.condition] - Condition being studied
+  * @param {ContactDetail} [props.contact] - Contact details for the study
+  * @param {RelatedArtifact} [props.relatedArtifact] - References and dependencies
+  * @param {CodeableConcept} [props.keyword] - Used to search for the study
+  * @param {CodeableConcept} [props.location] - Geographic region(s) for study
+  * @param {markdown} [props.description] - What this is study doing
+  * @param {Reference} [props.enrollment] - Inclusion & exclusion criteria
+  * @param {Period} [props.period] - When the study began and ended
+  * @param {Reference} [props.sponsor] - Organization that initiates and is legally responsible for the study
+  * @param {Reference} [props.principalInvestigator] - Researcher who oversees multiple aspects of the study
+  * @param {Reference} [props.site] - Facility where study activities are conducted
+  * @param {CodeableConcept} [props.reasonStopped] - accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design
+  * @param {Annotation} [props.note] - Comments made about the study
+  * @param {BackboneElement} [props.arm] - Defined path through the study for a subject
+  * @param {BackboneElement} [props.objective] - A goal for the study
+ */
+declare function researchStudy(type: string, props: ResearchStudy_Props): any;
+declare function researchStudy(props: ResearchStudy_Props): any;
+/**
+  * Create a FHIR ResearchSubject resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for research subject in a study
+  * @param {string} [props.status] - candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
+  * @param {Period} [props.period] - Start and end of participation
+  * @param {Reference} [props.study] - Study subject is part of
+  * @param {Reference} [props.individual] - Who is part of study
+  * @param {string} [props.assignedArm] - What path should be followed
+  * @param {string} [props.actualArm] - What path was followed
+  * @param {Reference} [props.consent] - Agreement to participate in study
+ */
+declare function researchSubject(type: string, props: ResearchSubject_Props): any;
+declare function researchSubject(props: ResearchSubject_Props): any;
+/**
+  * Create a FHIR Resource resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+ */
+declare function resource(type: string, props: Resource_Props): any;
+declare function resource(props: Resource_Props): any;
+/**
+  * Create a FHIR RiskAssessment resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique identifier for the assessment
+  * @param {Reference} [props.basedOn] - Request fulfilled by this assessment
+  * @param {Reference} [props.parent] - Part of this occurrence
+  * @param {string} [props.status] - registered | preliminary | final | amended +
+  * @param {CodeableConcept} [props.method] - Evaluation mechanism
+  * @param {CodeableConcept} [props.code] - Type of assessment
+  * @param {Reference} [props.subject] - Who/what does assessment apply to?
+  * @param {Reference} [props.encounter] - Where was assessment performed?
+  * @param {dateTime} [props.occurrence] - When was assessment made?
+  * @param {Reference} [props.condition] - Condition assessed
+  * @param {Reference} [props.performer] - Who did assessment?
+  * @param {CodeableConcept} [props.reasonCode] - Why the assessment was necessary?
+  * @param {Reference} [props.reasonReference] - Why the assessment was necessary?
+  * @param {Reference} [props.basis] - Information used in assessment
+  * @param {BackboneElement} [props.prediction] - Outcome predicted
+  * @param {string} [props.mitigation] - How to reduce risk
+  * @param {Annotation} [props.note] - Comments on the risk assessment
+ */
+declare function riskAssessment(type: string, props: RiskAssessment_Props): any;
+declare function riskAssessment(props: RiskAssessment_Props): any;
+/**
+  * Create a FHIR Schedule resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this item
+  * @param {boolean} [props.active] - Whether this schedule is in active use
+  * @param {CodeableConcept} [props.serviceCategory] - High-level category
+  * @param {CodeableConcept} [props.serviceType] - Specific service
+  * @param {CodeableConcept} [props.specialty] - Type of specialty needed
+  * @param {Reference} [props.actor] - Resource(s) that availability information is being provided for
+  * @param {Period} [props.planningHorizon] - Period of time covered by schedule
+  * @param {string} [props.comment] - Comments on availability
+ */
+declare function schedule(type: string, props: Schedule_Props): any;
+declare function schedule(props: Schedule_Props): any;
+/**
+  * Create a FHIR ServiceRequest resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifiers assigned to this order
+  * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
+  * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
+  * @param {Reference} [props.basedOn] - What request fulfills
+  * @param {Reference} [props.replaces] - What request replaces
+  * @param {Identifier} [props.requisition] - Composite Request ID
+  * @param {string} [props.status] - draft | active | on-hold | revoked | completed | entered-in-error | unknown
+  * @param {string} [props.intent] - proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {CodeableConcept} [props.category] - Classification of service
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {boolean} [props.doNotPerform] - True if service/procedure should not be performed
+  * @param {CodeableConcept} [props.code] - What is being requested/ordered
+  * @param {CodeableConcept} [props.orderDetail] - Additional order information
+  * @param {Quantity} [props.quantity] - Service amount
+  * @param {Reference} [props.subject] - Individual or Entity the service is ordered for
+  * @param {Reference} [props.encounter] - Encounter in which the request was created
+  * @param {dateTime} [props.occurrence] - When service should occur
+  * @param {boolean} [props.asNeeded] - Preconditions for service
+  * @param {dateTime} [props.authoredOn] - Date request signed
+  * @param {Reference} [props.requester] - Who/what is requesting service
+  * @param {CodeableConcept} [props.performerType] - Performer role
+  * @param {Reference} [props.performer] - Requested performer
+  * @param {CodeableConcept} [props.locationCode] - Requested location
+  * @param {Reference} [props.locationReference] - Requested location
+  * @param {CodeableConcept} [props.reasonCode] - Explanation/Justification for procedure or service
+  * @param {Reference} [props.reasonReference] - Explanation/Justification for service or service
+  * @param {Reference} [props.insurance] - Associated insurance coverage
+  * @param {Reference} [props.supportingInfo] - Additional clinical information
+  * @param {Reference} [props.specimen] - Procedure Samples
+  * @param {CodeableConcept} [props.bodySite] - Location on Body
+  * @param {Annotation} [props.note] - Comments
+  * @param {string} [props.patientInstruction] - Patient or consumer-oriented instructions
+  * @param {Reference} [props.relevantHistory] - Request provenance
+ */
+declare function serviceRequest(type: string, props: ServiceRequest_Props): any;
+declare function serviceRequest(props: ServiceRequest_Props): any;
+/**
+  * Create a FHIR Slot resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Ids for this item
+  * @param {CodeableConcept} [props.serviceCategory] - A broad categorization of the service that is to be performed during this appointment
+  * @param {CodeableConcept} [props.serviceType] - The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource
+  * @param {CodeableConcept} [props.specialty] - The specialty of a practitioner that would be required to perform the service requested in this appointment
+  * @param {CodeableConcept} [props.appointmentType] - The style of appointment or patient that may be booked in the slot (not service type)
+  * @param {Reference} [props.schedule] - The schedule resource that this slot defines an interval of status information
+  * @param {string} [props.status] - busy | free | busy-unavailable | busy-tentative | entered-in-error
+  * @param {instant} [props.start] - Date/Time that the slot is to begin
+  * @param {instant} [props.end] - Date/Time that the slot is to conclude
+  * @param {boolean} [props.overbooked] - This slot has already been overbooked, appointments are unlikely to be accepted for this time
+  * @param {string} [props.comment] - Comments on the slot to describe any extended information. Such as custom constraints on the slot
+ */
+declare function slot(type: string, props: Slot_Props): any;
+declare function slot(props: Slot_Props): any;
+/**
+  * Create a FHIR Specimen resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External Identifier
+  * @param {Identifier} [props.accessionIdentifier] - Identifier assigned by the lab
+  * @param {string} [props.status] - available | unavailable | unsatisfactory | entered-in-error
+  * @param {CodeableConcept} [props.type] - Kind of material that forms the specimen
+  * @param {Reference} [props.subject] - Where the specimen came from. This may be from patient(s), from a location (e.g., the source of an environmental sample), or a sampling of a substance or a device
+  * @param {dateTime} [props.receivedTime] - The time when specimen was received for processing
+  * @param {Reference} [props.parent] - Specimen from which this specimen originated
+  * @param {Reference} [props.request] - Why the specimen was collected
+  * @param {BackboneElement} [props.collection] - Collection details
+  * @param {BackboneElement} [props.processing] - Processing and processing step details
+  * @param {BackboneElement} [props.container] - Direct container of specimen (tube/slide, etc.)
+  * @param {CodeableConcept} [props.condition] - State of the specimen
+  * @param {Annotation} [props.note] - Comments
+ */
+declare function specimen(type: string, props: Specimen_Props): any;
+declare function specimen(props: Specimen_Props): any;
+/**
+  * Create a FHIR SpecimenDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business identifier of a kind of specimen
+  * @param {CodeableConcept} [props.typeCollected] - Kind of material to collect
+  * @param {CodeableConcept} [props.patientPreparation] - Patient preparation for collection
+  * @param {string} [props.timeAspect] - Time aspect for collection
+  * @param {CodeableConcept} [props.collection] - Specimen collection procedure
+  * @param {BackboneElement} [props.typeTested] - Specimen in container intended for testing by lab
+ */
+declare function specimenDefinition(type: string, props: SpecimenDefinition_Props): any;
+declare function specimenDefinition(props: SpecimenDefinition_Props): any;
+/**
+  * Create a FHIR Substance resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Unique identifier
+  * @param {string} [props.status] - active | inactive | entered-in-error
+  * @param {CodeableConcept} [props.category] - What class/type of substance this is
+  * @param {CodeableConcept} [props.code] - What substance this is
+  * @param {string} [props.description] - Textual description of the substance, comments
+  * @param {BackboneElement} [props.instance] - If this describes a specific package/container of the substance
+  * @param {BackboneElement} [props.ingredient] - Composition information about the substance
+ */
+declare function substance(type: string, props: Substance_Props): any;
+declare function substance(props: Substance_Props): any;
+/**
+  * Create a FHIR SubstanceDefinition resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Identifier by which this substance is known
+  * @param {string} [props.version] - A business level version identifier of the substance
+  * @param {CodeableConcept} [props.status] - Status of substance within the catalogue e.g. active, retired
+  * @param {CodeableConcept} [props.classification] - A categorization, high level e.g. polymer or nucleic acid, or food, chemical, biological, or lower e.g. polymer linear or branch chain, or type of impurity
+  * @param {CodeableConcept} [props.domain] - If the substance applies to human or veterinary use
+  * @param {CodeableConcept} [props.grade] - The quality standard, established benchmark, to which substance complies (e.g. USP/NF, BP)
+  * @param {markdown} [props.description] - Textual description of the substance
+  * @param {Reference} [props.informationSource] - Supporting literature
+  * @param {Annotation} [props.note] - Textual comment about the substance's catalogue or registry record
+  * @param {Reference} [props.manufacturer] - The entity that creates, makes, produces or fabricates the substance
+  * @param {Reference} [props.supplier] - An entity that is the source for the substance. It may be different from the manufacturer
+  * @param {BackboneElement} [props.moiety] - Moiety, for structural modifications
+  * @param {BackboneElement} [props.property] - General specifications for this substance
+  * @param {BackboneElement} [props.molecularWeight] - The molecular weight or weight range
+  * @param {BackboneElement} [props.structure] - Structural information
+  * @param {BackboneElement} [props.code] - Codes associated with the substance
+  * @param {BackboneElement} [props.name] - Names applicable to this substance
+  * @param {BackboneElement} [props.relationship] - A link between this substance and another
+  * @param {BackboneElement} [props.sourceMaterial] - Material or taxonomic/anatomical source
+ */
+declare function substanceDefinition(type: string, props: SubstanceDefinition_Props): any;
+declare function substanceDefinition(props: SubstanceDefinition_Props): any;
+/**
+  * Create a FHIR SupplyDelivery resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifier
+  * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
+  * @param {Reference} [props.partOf] - Part of referenced event
+  * @param {string} [props.status] - in-progress | completed | abandoned | entered-in-error
+  * @param {Reference} [props.patient] - Patient for whom the item is supplied
+  * @param {CodeableConcept} [props.type] - Category of dispense event
+  * @param {BackboneElement} [props.suppliedItem] - The item that is delivered or supplied
+  * @param {dateTime} [props.occurrence] - When event occurred
+  * @param {Reference} [props.supplier] - Dispenser
+  * @param {Reference} [props.destination] - Where the Supply was sent
+  * @param {Reference} [props.receiver] - Who collected the Supply
+ */
+declare function supplyDelivery(type: string, props: SupplyDelivery_Props): any;
+declare function supplyDelivery(props: SupplyDelivery_Props): any;
+/**
+  * Create a FHIR SupplyRequest resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for SupplyRequest
+  * @param {string} [props.status] - draft | active | suspended +
+  * @param {CodeableConcept} [props.category] - The kind of supply (central, non-stock, etc.)
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {CodeableConcept} [props.item] - Medication, Substance, or Device requested to be supplied
+  * @param {Quantity} [props.quantity] - The requested amount of the item indicated
+  * @param {BackboneElement} [props.parameter] - Ordered item details
+  * @param {dateTime} [props.occurrence] - When the request should be fulfilled
+  * @param {dateTime} [props.authoredOn] - When the request was made
+  * @param {Reference} [props.requester] - Individual making the request
+  * @param {Reference} [props.supplier] - Who is intended to fulfill the request
+  * @param {CodeableConcept} [props.reasonCode] - The reason why the supply item was requested
+  * @param {Reference} [props.reasonReference] - The reason why the supply item was requested
+  * @param {Reference} [props.deliverFrom] - The origin of the supply
+  * @param {Reference} [props.deliverTo] - The destination of the supply
+ */
+declare function supplyRequest(type: string, props: SupplyRequest_Props): any;
+declare function supplyRequest(props: SupplyRequest_Props): any;
+/**
+  * Create a FHIR Task resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Task Instance Identifier
+  * @param {canonical} [props.instantiatesCanonical] - Formal definition of task
+  * @param {string} [props.instantiatesUri] - Formal definition of task
+  * @param {Reference} [props.basedOn] - Request fulfilled by this task
+  * @param {Identifier} [props.groupIdentifier] - Requisition or grouper id
+  * @param {Reference} [props.partOf] - Composite task
+  * @param {string} [props.status] - draft | requested | received | accepted | +
+  * @param {CodeableConcept} [props.statusReason] - Reason for current status
+  * @param {CodeableConcept} [props.businessStatus] - E.g. "Specimen collected", "IV prepped"
+  * @param {string} [props.intent] - unknown | proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
+  * @param {string} [props.priority] - routine | urgent | asap | stat
+  * @param {CodeableConcept} [props.code] - Task Type
+  * @param {string} [props.description] - Human-readable explanation of task
+  * @param {Reference} [props.focus] - What task is acting on
+  * @param {Reference} [props.for] - Beneficiary of the Task
+  * @param {Reference} [props.encounter] - Healthcare event during which this task originated
+  * @param {Period} [props.executionPeriod] - Start and end time of execution
+  * @param {dateTime} [props.authoredOn] - Task Creation Date
+  * @param {dateTime} [props.lastModified] - Task Last Modified Date
+  * @param {Reference} [props.requester] - Who is asking for task to be done
+  * @param {CodeableConcept} [props.performerType] - Requested performer
+  * @param {Reference} [props.owner] - Responsible individual
+  * @param {Reference} [props.location] - Where task occurs
+  * @param {CodeableConcept} [props.reasonCode] - Why task is needed
+  * @param {Reference} [props.reasonReference] - Why task is needed
+  * @param {Reference} [props.insurance] - Associated insurance coverage
+  * @param {Annotation} [props.note] - Comments made about the task
+  * @param {Reference} [props.relevantHistory] - Key events in history of the Task
+  * @param {BackboneElement} [props.restriction] - Constraints on fulfillment tasks
+  * @param {BackboneElement} [props.input] - Information used to perform task
+  * @param {BackboneElement} [props.output] - Information produced as part of task
+ */
+declare function task(type: string, props: Task_Props): any;
+declare function task(props: Task_Props): any;
+/**
+  * Create a FHIR TestReport resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - External identifier
+  * @param {string} [props.name] - Informal name of the executed TestScript
+  * @param {string} [props.status] - completed | in-progress | waiting | stopped | entered-in-error
+  * @param {Reference} [props.testScript] - Reference to the  version-specific TestScript that was executed to produce this TestReport
+  * @param {string} [props.result] - pass | fail | pending
+  * @param {decimal} [props.score] - The final score (percentage of tests passed) resulting from the execution of the TestScript
+  * @param {string} [props.tester] - Name of the tester producing this report (Organization or individual)
+  * @param {dateTime} [props.issued] - When the TestScript was executed and this TestReport was generated
+  * @param {BackboneElement} [props.participant] - A participant in the test execution, either the execution engine, a client, or a server
+  * @param {BackboneElement} [props.setup] - The results of the series of required setup operations before the tests were executed
+  * @param {BackboneElement} [props.test] - A test executed from the test script
+  * @param {BackboneElement} [props.teardown] - The results of running the series of required clean up steps
+ */
+declare function testReport(type: string, props: TestReport_Props): any;
+declare function testReport(props: TestReport_Props): any;
+/**
+  * Create a FHIR TestScript resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {string} [props.url] - Canonical identifier for this test script, represented as a URI (globally unique)
+  * @param {Identifier} [props.identifier] - Additional identifier for the test script
+  * @param {string} [props.version] - Business version of the test script
+  * @param {string} [props.name] - Name for this test script (computer friendly)
+  * @param {string} [props.title] - Name for this test script (human friendly)
+  * @param {string} [props.status] - draft | active | retired | unknown
+  * @param {boolean} [props.experimental] - For testing purposes, not real usage
+  * @param {dateTime} [props.date] - Date last changed
+  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
+  * @param {ContactDetail} [props.contact] - Contact details for the publisher
+  * @param {markdown} [props.description] - Natural language description of the test script
+  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
+  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for test script (if applicable)
+  * @param {markdown} [props.purpose] - Why this test script is defined
+  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
+  * @param {BackboneElement} [props.origin] - An abstract server representing a client or sender in a message exchange
+  * @param {BackboneElement} [props.destination] - An abstract server representing a destination or receiver in a message exchange
+  * @param {BackboneElement} [props.metadata] - Required capability that is assumed to function correctly on the FHIR server being tested
+  * @param {BackboneElement} [props.fixture] - Fixture in the test script - by reference (uri)
+  * @param {Reference} [props.profile] - Reference of the validation profile
+  * @param {BackboneElement} [props.variable] - Placeholder for evaluated elements
+  * @param {BackboneElement} [props.setup] - A series of required setup operations before tests are executed
+  * @param {BackboneElement} [props.test] - A test in this script
+  * @param {BackboneElement} [props.teardown] - A series of required clean up steps
+ */
+declare function testScript(type: string, props: TestScript_Props): any;
+declare function testScript(props: TestScript_Props): any;
+/**
+  * Create a FHIR VerificationResult resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Reference} [props.target] - A resource that was validated
+  * @param {string} [props.targetLocation] - The fhirpath location(s) within the resource that was validated
+  * @param {CodeableConcept} [props.need] - none | initial | periodic
+  * @param {string} [props.status] - attested | validated | in-process | req-revalid | val-fail | reval-fail
+  * @param {dateTime} [props.statusDate] - When the validation status was updated
+  * @param {CodeableConcept} [props.validationType] - nothing | primary | multiple
+  * @param {CodeableConcept} [props.validationProcess] - The primary process by which the target is validated (edit check; value set; primary source; multiple sources; standalone; in context)
+  * @param {Timing} [props.frequency] - Frequency of revalidation
+  * @param {dateTime} [props.lastPerformed] - The date/time validation was last completed (including failed validations)
+  * @param {date} [props.nextScheduled] - The date when target is next validated, if appropriate
+  * @param {CodeableConcept} [props.failureAction] - fatal | warn | rec-only | none
+  * @param {BackboneElement} [props.primarySource] - Information about the primary source(s) involved in validation
+  * @param {BackboneElement} [props.attestation] - Information about the entity attesting to information
+  * @param {BackboneElement} [props.validator] - Information about the entity validating information
+ */
+declare function verificationResult(type: string, props: VerificationResult_Props): any;
+declare function verificationResult(props: VerificationResult_Props): any;
+
+export { account, activityDefinition, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, biologicallyDerivedProduct, bodyStructure, carePlan, careTeam, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, communication, communicationRequest, condition, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, endpoint, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, familyMemberHistory, flag, goal, group, guidanceResponse, healthcareService, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, resource, riskAssessment, schedule, serviceRequest, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, testScript, verificationResult };
+

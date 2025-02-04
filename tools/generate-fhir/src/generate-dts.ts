@@ -1,4 +1,4 @@
-// Note that I can build tyepscript types with typescripts own ast
+// Note that I can build typescript types with typescript's own ast
 // https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API#creating-and-printing-a-typescript-ast
 
 import ts from 'typescript';
@@ -6,6 +6,57 @@ import { getBuilderName, getTypeName } from './util';
 import { PropDef } from './generate-schema';
 
 const b = ts.factory;
+
+// TODO primitive types like boolean, decimal. are they quite right?
+// TODO duplicates (are other globals, like dom globals). maybe we should namespace after all
+export const generateDataTypes = (schema: Record<string, Schema[]>) => {
+  const resultFile = ts.createSourceFile(
+    'test.ts',
+    '',
+    ts.ScriptTarget.Latest,
+    /*setParentNodes*/ false,
+    ts.ScriptKind.TS
+  );
+  const index: Record<string, true> = {};
+  const statements: ts.NodeArray<ts.Node> = [];
+  for (const resourceType in schema) {
+    for (const profile of schema[resourceType]) {
+      // skip primitives which we map to plain js
+      if (profile.id in typeMap) {
+        continue;
+      }
+      index[profile.id] = true;
+      const ast = generateType(resourceType, profile, {}, profile.id, true);
+      statements.push(ast);
+    }
+  }
+  const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
+
+  // // needed to make the module register properly. Apparently.
+  // const imp = b.createImportDeclaration(
+  //   [],
+  //   [],
+  //   undefined,
+  //   b.createStringLiteral('.')
+  // );
+  // const mod = b.createModuleDeclaration(
+  //   [b.createToken(ts.SyntaxKind.DeclareKeyword)],
+  //   b.createIdentifier('FHIR'),
+  //   b.createModuleBlock(statements),
+  //   ts.NodeFlags.GlobalAugmentation |
+  //     // ts.NodeFlags.Ambient |
+  //     ts.NodeFlags.ContextFlags
+  // );
+
+  const src = printer.printList(
+    ts.ListFormat.SourceFileStatements,
+    // statements.map(s => b.createExportDeclaration([], [], false, )),
+    statements,
+    resultFile
+  );
+
+  return { src, index };
+};
 
 // for a given list of mappings, generate a signature for the builder
 // a possible difficulty here is that this is sort of guessing?
@@ -15,7 +66,7 @@ const generateDTS = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {},
   options: {
-    simpleSignatures?: simpleBuilders;
+    simpleSignatures?: boolean;
   } = {}
 ) => {
   let contents: ts.Statement[] = [];
@@ -71,11 +122,15 @@ const typeMap = {
   date: 'string',
   dateTime: 'string',
   instant: 'string',
+  time: 'string',
   uri: 'string',
   id: 'string',
   decimal: 'number',
   integer: 'number',
+  positiveInt: 'number',
   unsignedInt: 'number',
+  string: 'string',
+  boolean: 'boolean',
 
   // TODO
   canonical: 'any',
@@ -189,7 +244,11 @@ const generateEntryFuction = (
 };
 
 // TODO maybe the sig is schema & mappings?
-const createTypeNode = (incomingType: string, values?: string[]) => {
+const createTypeNode = (
+  incomingType: string,
+  values?: string[],
+  fhirTypes = { Identifier: true }
+) => {
   const type = typeMap[incomingType] ?? incomingType;
 
   if (values) {
@@ -202,10 +261,13 @@ const createTypeNode = (incomingType: string, values?: string[]) => {
     }
   }
 
-  if (type === 'string') {
-    return b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
-  }
-
+  // if (type === 'string') {
+  //   return b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+  // }
+  // console.log('>>', fhirTypes, y);
+  // if (type in fhirTypes) {
+  //   return b.createTypeReferenceNode(`JAM`);
+  // }
   if (type) {
     return b.createTypeReferenceNode(type);
   }
@@ -213,7 +275,13 @@ const createTypeNode = (incomingType: string, values?: string[]) => {
   return b.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
 };
 
-const generateType = (resourceName: string, schema: Schema, mappings) => {
+export const generateType = (
+  resourceName: string,
+  schema: Schema,
+  mappings = {},
+  typeName?: string,
+  includeExport = false
+) => {
   const props = [];
 
   // find the superset of schema keys and mappings keys
@@ -245,12 +313,19 @@ const generateType = (resourceName: string, schema: Schema, mappings) => {
     if (s.desc) {
       props.push(b.createJSDocComment(s.desc + '\n'));
     }
-    props.push(b.createPropertySignature([], key, undefined, type));
+    props.push(
+      b.createPropertySignature(
+        [],
+        key,
+        b.createToken(ts.SyntaxKind.QuestionToken),
+        type
+      )
+    );
   }
 
   const t = b.createTypeAliasDeclaration(
-    [],
-    `${resourceName}_Props`,
+    includeExport ? [b.createToken(ts.SyntaxKind.ExportKeyword)] : [],
+    typeName || `${resourceName}_Props`,
     [], // generics
     b.createTypeLiteralNode(props)
   );
