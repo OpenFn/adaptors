@@ -5,6 +5,21 @@
 
 import { cursor, dataPath, dataValue, dateFns, each, field, fields, fn, lastReferenceValue, merge, sourceValue } from '@openfn/language-common';
 
+declare const Adaptor_cursor: typeof cursor;
+declare const Adaptor_dataPath: typeof dataPath;
+declare const Adaptor_dataValue: typeof dataValue;
+declare const Adaptor_dateFns: typeof dateFns;
+declare const Adaptor_each: typeof each;
+declare const Adaptor_field: typeof field;
+declare const Adaptor_fields: typeof fields;
+declare const Adaptor_fn: typeof fn;
+declare const Adaptor_lastReferenceValue: typeof lastReferenceValue;
+declare const Adaptor_merge: typeof merge;
+declare const Adaptor_sourceValue: typeof sourceValue;
+declare namespace Adaptor {
+  export { Adaptor_cursor as cursor, Adaptor_dataPath as dataPath, Adaptor_dataValue as dataValue, Adaptor_dateFns as dateFns, Adaptor_each as each, Adaptor_field as field, Adaptor_fields as fields, Adaptor_fn as fn, Adaptor_lastReferenceValue as lastReferenceValue, Adaptor_merge as merge, Adaptor_sourceValue as sourceValue };
+}
+
 declare const mapSystems: (obj: any) => any;
 /**
  * Define a set of mapped system values.
@@ -149,3512 +164,483 @@ declare namespace datatypes_d {
   export { datatypes_d_addExtension as addExtension, datatypes_d_c as c, datatypes_d_cc as cc, datatypes_d_coding as coding, datatypes_d_composite as composite, datatypes_d_concept as concept, datatypes_d_extendSystemMap as extendSystemMap, datatypes_d_findExtension as findExtension, datatypes_d_id as id, datatypes_d_identifier as identifier, datatypes_d_mapSystems as mapSystems, datatypes_d_ref as ref, datatypes_d_reference as reference, datatypes_d_setSystemMap as setSystemMap, datatypes_d_value as value };
 }
 
-declare type Account_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    type?: any;
-    name?: any;
-    subject?: any;
-    servicePeriod?: any;
-    coverage?: any;
-    owner?: any;
-    description?: any;
-    guarantor?: any;
-    partOf?: any;
+declare type Address = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * home | work | temp | old | billing - purpose of this address
+     *  */
+    use?: string;
+    /**
+     * postal | physical | both
+     *  */
+    type?: string;
+    /**
+     * Text representation of the address
+     *  */
+    text?: string;
+    /**
+     * Street name, number, direction & P.O. Box etc.
+     *  */
+    line?: string;
+    /**
+     * Name of city, town etc.
+     *  */
+    city?: string;
+    /**
+     * District name (aka county)
+     *  */
+    district?: string;
+    /**
+     * Sub-unit of country (abbreviations ok)
+     *  */
+    state?: string;
+    /**
+     * Postal code for area
+     *  */
+    postalCode?: string;
+    /**
+     * Country (e.g. can be ISO 3166 2 or 3 letter code)
+     *  */
+    country?: string;
+    /**
+     * Time period when address was/is in use
+     *  */
+    period?: Period;
 };
-
-declare type ActivityDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: undefined;
-    version?: any;
-    name?: any;
-    title?: any;
-    subtitle?: any;
-    status?: any;
-    experimental?: any;
-    subject?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    purpose?: any;
-    usage?: any;
-    copyright?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    effectivePeriod?: any;
-    topic?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    relatedArtifact?: any;
-    library?: any;
-    kind?: any;
+declare type Attachment = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * Mime type of the content, with charset etc.
+     *  */
+    contentType?: string;
+    /**
+     * Human language of the content (BCP-47)
+     *  */
+    language?: string;
+    /**
+     * Data inline, base64ed
+     *  */
+    data?: base64Binary;
+    /**
+     * Uri where the data can be found
+     *  */
+    url?: url;
+    /**
+     * Number of bytes of content (if url provided)
+     *  */
+    size?: number;
+    /**
+     * Hash of the data (sha-1, base64ed)
+     *  */
+    hash?: base64Binary;
+    /**
+     * Label to display in place of the data
+     *  */
+    title?: string;
+    /**
+     * Date attachment was first created
+     *  */
+    creation?: string;
+};
+declare type BackboneElement = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * Extensions that cannot be ignored even if unrecognized
+     *  */
+    modifierExtension?: Extension;
+};
+declare type CodeableConcept = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * Code defined by a terminology system
+     *  */
+    coding?: Coding;
+    /**
+     * Plain text representation of the concept
+     *  */
+    text?: string;
+};
+declare type Coding = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * Identity of the terminology system
+     *  */
+    system?: string;
+    /**
+     * Version of the system - if relevant
+     *  */
+    version?: string;
+    /**
+     * Symbol in syntax defined by the system
+     *  */
+    code?: string;
+    /**
+     * Representation defined by the system
+     *  */
+    display?: string;
+    /**
+     * If this coding was chosen directly by the user
+     *  */
+    userSelected?: boolean;
+};
+declare type ContactPoint = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * phone | fax | email | pager | url | sms | other
+     *  */
+    system?: string;
+    /**
+     * The actual contact point details
+     *  */
+    value?: string;
+    /**
+     * home | work | temp | old | mobile - purpose of this contact point
+     *  */
+    use?: string;
+    /**
+     * Specify preferred order of use (1 = highest)
+     *  */
+    rank?: number;
+    /**
+     * Time period when the contact point was/is in use
+     *  */
+    period?: Period;
+};
+declare type Extension = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * identifies the meaning of the extension
+     *  */
+    url?: string;
+    /**
+     * Value of extension
+     *  */
+    value?: base64Binary;
+};
+declare type HumanName = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * usual | official | temp | nickname | anonymous | old | maiden
+     *  */
+    use?: string;
+    /**
+     * Text representation of the full name
+     *  */
+    text?: string;
+    /**
+     * Family name (often called 'Surname')
+     *  */
+    family?: string;
+    /**
+     * Given names (not always 'first'). Includes middle names
+     *  */
+    given?: string;
+    /**
+     * Parts that come before the name
+     *  */
+    prefix?: string;
+    /**
+     * Parts that come after the name
+     *  */
+    suffix?: string;
+    /**
+     * Time period when name was/is in use
+     *  */
+    period?: Period;
+};
+declare type Identifier$1 = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * usual | official | temp | secondary | old (If known)
+     *  */
+    use?: string;
+    /**
+     * Description of identifier
+     *  */
+    type?: CodeableConcept;
+    /**
+     * The namespace for the identifier value
+     *  */
+    system?: string;
+    /**
+     * The value that is unique
+     *  */
+    value?: string;
+    /**
+     * Time period when id is/was valid for use
+     *  */
+    period?: Period;
+    /**
+     * Organization that issued id (may be just text)
+     *  */
+    assigner?: Reference;
+};
+declare type Meta = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * Version specific identifier
+     *  */
+    versionId?: string;
+    /**
+     * When the resource version last changed
+     *  */
+    lastUpdated?: string;
+    /**
+     * Identifies where the resource comes from
+     *  */
+    source?: string;
+    /**
+     * Profiles this resource claims to conform to
+     *  */
     profile?: any;
-    code?: any;
-    intent?: any;
-    priority?: any;
-    doNotPerform?: any;
-    timing?: any;
-    location?: any;
-    participant?: any;
-    product?: any;
-    quantity?: any;
-    dosage?: any;
-    bodySite?: any;
-    specimenRequirement?: any;
-    observationRequirement?: any;
-    observationResultRequirement?: any;
-    transform?: any;
-    dynamicValue?: any;
-};
-
-declare type AdministrableProductDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    formOf?: any;
-    administrableDoseForm?: any;
-    unitOfPresentation?: any;
-    producedFrom?: any;
-    ingredient?: any;
-    device?: any;
-    property?: any;
-    routeOfAdministration?: any;
-};
-
-declare type AdverseEvent_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    actuality?: any;
-    category?: any;
-    event?: any;
-    subject?: any;
-    encounter?: any;
-    date?: any;
-    detected?: any;
-    recordedDate?: any;
-    resultingCondition?: any;
-    location?: any;
-    seriousness?: any;
-    severity?: any;
-    outcome?: any;
-    recorder?: any;
-    contributor?: any;
-    suspectEntity?: any;
-    subjectMedicalHistory?: any;
-    referenceDocument?: any;
-    study?: any;
-};
-
-declare type AllergyIntolerance_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    clinicalStatus?: any;
-    verificationStatus?: any;
-    type?: any;
-    category?: any;
-    criticality?: any;
-    code?: any;
-    patient?: any;
-    encounter?: any;
-    onset?: any;
-    recordedDate?: any;
-    recorder?: any;
-    asserter?: any;
-    lastOccurrence?: any;
-    note?: any;
-    reaction?: any;
-};
-
-declare type Appointment_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    cancelationReason?: any;
-    serviceCategory?: any;
-    serviceType?: any;
-    specialty?: any;
-    appointmentType?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    priority?: any;
-    description?: any;
-    supportingInformation?: any;
-    start?: any;
-    end?: any;
-    minutesDuration?: any;
-    slot?: any;
-    created?: any;
-    comment?: any;
-    patientInstruction?: any;
-    basedOn?: any;
-    participant?: any;
-    requestedPeriod?: any;
-};
-
-declare type AppointmentResponse_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    appointment?: any;
-    start?: any;
-    end?: any;
-    participantType?: any;
-    actor?: any;
-    participantStatus?: any;
-    comment?: any;
-};
-
-declare type BiologicallyDerivedProduct_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    productCategory?: any;
-    productCode?: any;
-    status?: any;
-    request?: any;
-    quantity?: any;
-    parent?: any;
-    collection?: any;
-    processing?: any;
-    manipulation?: any;
-    storage?: any;
-};
-
-declare type BodyStructure_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    active?: any;
-    morphology?: any;
-    location?: any;
-    locationQualifier?: any;
-    description?: any;
-    image?: any;
-    patient?: any;
-};
-
-declare type CarePlan_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    basedOn?: any;
-    replaces?: any;
-    partOf?: any;
-    status?: any;
-    intent?: any;
-    category?: any;
-    title?: any;
-    description?: any;
-    subject?: any;
-    encounter?: any;
-    period?: any;
-    created?: any;
-    author?: any;
-    contributor?: any;
-    careTeam?: any;
-    addresses?: any;
-    supportingInfo?: any;
-    goal?: any;
-    activity?: any;
-    note?: any;
-};
-
-declare type CareTeam_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    category?: any;
-    name?: any;
-    subject?: any;
-    encounter?: any;
-    period?: any;
-    participant?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    managingOrganization?: any;
-    telecom?: any;
-    note?: any;
-};
-
-declare type ChargeItem_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    definitionUri?: any;
-    definitionCanonical?: any;
-    status?: any;
-    partOf?: any;
-    code?: any;
-    subject?: any;
-    context?: any;
-    occurrence?: any;
-    performer?: any;
-    performingOrganization?: any;
-    requestingOrganization?: any;
-    costCenter?: any;
-    quantity?: any;
-    bodysite?: any;
-    factorOverride?: any;
-    priceOverride?: any;
-    overrideReason?: any;
-    enterer?: any;
-    enteredDate?: any;
-    reason?: any;
-    service?: any;
-    product?: any;
-    account?: any;
-    note?: any;
-    supportingInformation?: any;
-};
-
-declare type ChargeItemDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: undefined;
-    version?: any;
-    title?: any;
-    derivedFromUri?: any;
-    partOf?: any;
-    replaces?: any;
-    status?: any;
-    experimental?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    copyright?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    effectivePeriod?: any;
-    code?: any;
-    instance?: any;
-    applicability?: any;
-    propertyGroup?: any;
-};
-
-declare type Citation_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: undefined;
-    version?: any;
-    name?: any;
-    title?: any;
-    status?: any;
-    experimental?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    purpose?: any;
-    copyright?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    effectivePeriod?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    summary?: any;
-    classification?: any;
-    note?: any;
-    currentState?: any;
-    statusDate?: any;
-    relatesTo?: any;
-    citedArtifact?: any;
-};
-
-declare type Claim_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    type?: any;
-    subType?: any;
-    use?: any;
-    patient?: any;
-    billablePeriod?: any;
-    created?: any;
-    enterer?: any;
-    insurer?: any;
-    provider?: any;
-    priority?: any;
-    fundsReserve?: any;
-    related?: any;
-    prescription?: any;
-    originalPrescription?: any;
-    payee?: any;
-    referral?: any;
-    facility?: any;
-    careTeam?: any;
-    supportingInfo?: any;
-    diagnosis?: any;
-    procedure?: any;
-    insurance?: any;
-    accident?: any;
-    item?: any;
-    total?: any;
-};
-
-declare type ClaimResponse_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    type?: any;
-    subType?: any;
-    use?: any;
-    patient?: any;
-    created?: any;
-    insurer?: any;
-    requestor?: any;
-    request?: any;
-    outcome?: any;
-    disposition?: any;
-    preAuthRef?: any;
-    preAuthPeriod?: any;
-    payeeType?: any;
-    item?: any;
-    addItem?: any;
-    adjudication?: any;
-    total?: any;
-    payment?: any;
-    fundsReserve?: any;
-    formCode?: any;
-    form?: any;
-    processNote?: any;
-    communicationRequest?: any;
-    insurance?: any;
-    error?: any;
-};
-
-declare type ClinicalImpression_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    statusReason?: any;
-    code?: any;
-    description?: any;
-    subject?: any;
-    encounter?: any;
-    effective?: any;
-    date?: any;
-    assessor?: any;
-    previous?: any;
-    problem?: any;
-    investigation?: any;
-    protocol?: any;
-    summary?: any;
-    finding?: any;
-    prognosisCodeableConcept?: any;
-    prognosisReference?: any;
-    supportingInfo?: any;
-    note?: any;
-};
-
-declare type ClinicalUseDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    type?: any;
-    category?: any;
-    subject?: any;
-    status?: any;
-    contraindication?: any;
-    indication?: any;
-    interaction?: any;
-    population?: any;
-    undesirableEffect?: any;
-    warning?: any;
-};
-
-declare type Communication_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    basedOn?: any;
-    partOf?: any;
-    inResponseTo?: any;
-    status?: any;
-    statusReason?: any;
-    category?: any;
-    priority?: any;
-    medium?: any;
-    subject?: any;
-    topic?: any;
-    about?: any;
-    encounter?: any;
-    sent?: any;
-    received?: any;
-    recipient?: any;
-    sender?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    payload?: any;
-    note?: any;
-};
-
-declare type CommunicationRequest_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    basedOn?: any;
-    replaces?: any;
-    groupIdentifier?: undefined;
-    status?: any;
-    statusReason?: any;
-    category?: any;
-    priority?: any;
-    doNotPerform?: any;
-    medium?: any;
-    subject?: any;
-    about?: any;
-    encounter?: any;
-    payload?: any;
-    occurrence?: any;
-    authoredOn?: any;
-    requester?: any;
-    recipient?: any;
-    sender?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    note?: any;
-};
-
-declare type Condition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    clinicalStatus?: any;
-    verificationStatus?: any;
-    category?: any;
-    severity?: any;
-    code?: any;
-    bodySite?: any;
-    subject?: any;
-    encounter?: any;
-    onset?: any;
-    abatement?: any;
-    recordedDate?: any;
-    recorder?: any;
-    asserter?: any;
-    stage?: any;
-    evidence?: any;
-    note?: any;
-};
-
-declare type Contract_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    url?: any;
-    version?: any;
-    status?: any;
-    legalState?: any;
-    instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    contentDerivative?: any;
-    issued?: any;
-    applies?: any;
-    expirationType?: any;
-    subject?: any;
-    authority?: any;
-    domain?: any;
-    site?: any;
-    name?: any;
-    title?: any;
-    subtitle?: any;
-    alias?: any;
-    author?: any;
-    scope?: any;
-    topic?: any;
-    type?: any;
-    subType?: any;
-    contentDefinition?: any;
-    term?: any;
-    supportingInfo?: any;
-    relevantHistory?: any;
-    signer?: any;
-    friendly?: any;
-    legal?: any;
-    rule?: any;
-    legallyBinding?: any;
-};
-
-declare type Coverage_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    type?: any;
-    policyHolder?: any;
-    subscriber?: any;
-    subscriberId?: any;
-    beneficiary?: any;
-    dependent?: any;
-    relationship?: any;
-    period?: any;
-    payor?: any;
-    class?: any;
-    order?: any;
-    network?: any;
-    costToBeneficiary?: any;
-    subrogation?: any;
-    contract?: any;
-};
-
-declare type CoverageEligibilityRequest_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    priority?: any;
-    purpose?: any;
-    patient?: any;
-    serviced?: any;
-    created?: any;
-    enterer?: any;
-    provider?: any;
-    insurer?: any;
-    facility?: any;
-    supportingInfo?: any;
-    insurance?: any;
-    item?: any;
-};
-
-declare type CoverageEligibilityResponse_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    purpose?: any;
-    patient?: any;
-    serviced?: any;
-    created?: any;
-    requestor?: any;
-    request?: any;
-    outcome?: any;
-    disposition?: any;
-    insurer?: any;
-    insurance?: any;
-    preAuthRef?: any;
-    form?: any;
-    error?: any;
-};
-
-declare type DetectedIssue_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    code?: any;
-    severity?: any;
-    patient?: any;
-    identified?: any;
-    author?: any;
-    implicated?: any;
-    evidence?: any;
-    detail?: any;
-    reference?: any;
-    mitigation?: any;
-};
-
-declare type Device_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    definition?: any;
-    udiCarrier?: any;
-    status?: any;
-    statusReason?: any;
-    distinctIdentifier?: any;
-    manufacturer?: any;
-    manufactureDate?: any;
-    expirationDate?: any;
-    lotNumber?: any;
-    serialNumber?: any;
-    deviceName?: any;
-    modelNumber?: any;
-    partNumber?: any;
-    type?: any;
-    specialization?: any;
-    version?: any;
-    property?: any;
-    patient?: any;
-    owner?: any;
-    contact?: any;
-    location?: any;
-    url?: any;
-    note?: any;
-    safety?: any;
-    parent?: any;
-};
-
-declare type DeviceDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    udiDeviceIdentifier?: any;
-    manufacturer?: any;
-    deviceName?: any;
-    modelNumber?: any;
-    type?: any;
-    specialization?: any;
-    version?: any;
-    safety?: any;
-    shelfLifeStorage?: any;
-    physicalCharacteristics?: any;
-    languageCode?: any;
-    capability?: any;
-    property?: any;
-    owner?: any;
-    contact?: any;
-    url?: any;
-    onlineInformation?: any;
-    note?: any;
-    quantity?: any;
-    parentDevice?: any;
-    material?: any;
-};
-
-declare type DeviceMetric_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    type?: any;
-    unit?: any;
-    source?: any;
-    parent?: any;
-    operationalStatus?: any;
-    color?: any;
-    category?: any;
-    measurementPeriod?: any;
-    calibration?: any;
-};
-
-declare type DeviceRequest_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    basedOn?: any;
-    priorRequest?: any;
-    groupIdentifier?: undefined;
-    status?: any;
-    intent?: any;
-    priority?: any;
-    code?: any;
-    parameter?: any;
-    subject?: any;
-    encounter?: any;
-    occurrence?: any;
-    authoredOn?: any;
-    requester?: any;
-    performerType?: any;
-    performer?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    insurance?: any;
-    supportingInfo?: any;
-    note?: any;
-    relevantHistory?: any;
-};
-
-declare type DeviceUseStatement_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    basedOn?: any;
-    status?: any;
-    subject?: any;
-    derivedFrom?: any;
-    timing?: any;
-    recordedOn?: any;
-    source?: any;
-    device?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    bodySite?: any;
-    note?: any;
-};
-
-declare type DiagnosticReport_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    basedOn?: any;
-    status?: any;
-    category?: any;
-    code?: any;
-    subject?: any;
-    encounter?: any;
-    effective?: any;
-    issued?: any;
-    performer?: any;
-    resultsInterpreter?: any;
-    specimen?: any;
-    result?: any;
-    imagingStudy?: any;
-    media?: any;
-    conclusion?: any;
-    conclusionCode?: any;
-    presentedForm?: any;
-};
-
-declare type DomainResource_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-};
-
-declare type Encounter_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    statusHistory?: any;
-    class?: any;
-    classHistory?: any;
-    type?: any;
-    serviceType?: any;
-    priority?: any;
-    subject?: any;
-    episodeOfCare?: any;
-    basedOn?: any;
-    participant?: any;
-    appointment?: any;
-    period?: any;
-    length?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    diagnosis?: any;
-    account?: any;
-    hospitalization?: any;
-    location?: any;
-    serviceProvider?: any;
-    partOf?: any;
-};
-
-declare type Endpoint_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    connectionType?: any;
-    name?: any;
-    managingOrganization?: any;
-    contact?: any;
-    period?: any;
-    payloadType?: any;
-    payloadMimeType?: any;
-    address?: any;
-    header?: any;
-};
-
-declare type EnrollmentRequest_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    created?: any;
-    insurer?: any;
-    provider?: any;
-    candidate?: any;
-    coverage?: any;
-};
-
-declare type EnrollmentResponse_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    request?: any;
-    outcome?: any;
-    disposition?: any;
-    created?: any;
-    organization?: any;
-    requestProvider?: any;
-};
-
-declare type EpisodeOfCare_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    statusHistory?: any;
-    type?: any;
-    diagnosis?: any;
-    patient?: any;
-    managingOrganization?: any;
-    period?: any;
-    referralRequest?: any;
-    careManager?: any;
-    team?: any;
-    account?: any;
-};
-
-declare type EventDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: undefined;
-    version?: any;
-    name?: any;
-    title?: any;
-    subtitle?: any;
-    status?: any;
-    experimental?: any;
-    subject?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    purpose?: any;
-    usage?: any;
-    copyright?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    effectivePeriod?: any;
-    topic?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    relatedArtifact?: any;
-    trigger?: any;
-};
-
-declare type Evidence_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: undefined;
-    version?: any;
-    title?: any;
-    citeAs?: any;
-    status?: any;
-    date?: any;
-    useContext?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    publisher?: any;
-    contact?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    relatedArtifact?: any;
-    description?: any;
-    assertion?: any;
-    note?: any;
-    variableDefinition?: any;
-    synthesisType?: any;
-    studyType?: any;
-    statistic?: any;
-    certainty?: any;
-};
-
-declare type EvidenceReport_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    status?: any;
-    useContext?: any;
-    identifier?: undefined;
-    relatedIdentifier?: undefined;
-    citeAs?: any;
-    type?: any;
-    note?: any;
-    relatedArtifact?: any;
-    subject?: any;
-    publisher?: any;
-    contact?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    relatesTo?: any;
-    section?: any;
-};
-
-declare type EvidenceVariable_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: undefined;
-    version?: any;
-    name?: any;
-    title?: any;
-    shortTitle?: any;
-    subtitle?: any;
-    status?: any;
-    date?: any;
-    description?: any;
-    note?: any;
-    useContext?: any;
-    publisher?: any;
-    contact?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    relatedArtifact?: any;
-    actual?: any;
-    characteristicCombination?: any;
-    characteristic?: any;
-    handling?: any;
-    category?: any;
-};
-
-declare type ExplanationOfBenefit_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    type?: any;
-    subType?: any;
-    use?: any;
-    patient?: any;
-    billablePeriod?: any;
-    created?: any;
-    enterer?: any;
-    insurer?: any;
-    provider?: any;
-    priority?: any;
-    fundsReserveRequested?: any;
-    fundsReserve?: any;
-    related?: any;
-    prescription?: any;
-    originalPrescription?: any;
-    payee?: any;
-    referral?: any;
-    facility?: any;
-    claim?: any;
-    claimResponse?: any;
-    outcome?: any;
-    disposition?: any;
-    preAuthRef?: any;
-    preAuthRefPeriod?: any;
-    careTeam?: any;
-    supportingInfo?: any;
-    diagnosis?: any;
-    procedure?: any;
-    precedence?: any;
-    insurance?: any;
-    accident?: any;
-    item?: any;
-    addItem?: any;
-    adjudication?: any;
-    total?: any;
-    payment?: any;
-    formCode?: any;
-    form?: any;
-    processNote?: any;
-    benefitPeriod?: any;
-    benefitBalance?: any;
-};
-
-declare type FamilyMemberHistory_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    status?: any;
-    dataAbsentReason?: any;
-    patient?: any;
-    date?: any;
-    name?: any;
-    relationship?: any;
-    sex?: any;
-    born?: any;
-    age?: any;
-    estimatedAge?: any;
-    deceased?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    note?: any;
-    condition?: any;
-};
-
-declare type Flag_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    category?: any;
-    code?: any;
-    subject?: any;
-    period?: any;
-    encounter?: any;
-    author?: any;
-};
-
-declare type Goal_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    lifecycleStatus?: any;
-    achievementStatus?: any;
-    category?: any;
-    priority?: any;
-    description?: any;
-    subject?: any;
-    start?: any;
-    target?: any;
-    statusDate?: any;
-    statusReason?: any;
-    expressedBy?: any;
-    addresses?: any;
-    note?: any;
-    outcomeCode?: any;
-    outcomeReference?: any;
-};
-
-declare type Group_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    active?: any;
-    type?: any;
-    actual?: any;
-    code?: any;
-    name?: any;
-    quantity?: any;
-    managingEntity?: any;
-    characteristic?: any;
-    member?: any;
-};
-
-declare type GuidanceResponse_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    requestIdentifier?: undefined;
-    identifier?: undefined;
-    module?: any;
-    status?: any;
-    subject?: any;
-    encounter?: any;
-    occurrenceDateTime?: any;
-    performer?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    note?: any;
-    evaluationMessage?: any;
-    outputParameters?: any;
-    result?: any;
-    dataRequirement?: any;
-};
-
-declare type HealthcareService_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    active?: any;
-    providedBy?: any;
-    category?: any;
-    type?: any;
-    specialty?: any;
-    location?: any;
-    name?: any;
-    comment?: any;
-    extraDetails?: any;
-    photo?: any;
-    telecom?: any;
-    coverageArea?: any;
-    serviceProvisionCode?: any;
-    eligibility?: any;
-    program?: any;
-    characteristic?: any;
-    communication?: any;
-    referralMethod?: any;
-    appointmentRequired?: any;
-    availableTime?: any;
-    notAvailable?: any;
-    availabilityExceptions?: any;
-    endpoint?: any;
-};
-
-declare type ImagingStudy_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    modality?: any;
-    subject?: any;
-    encounter?: any;
-    started?: any;
-    basedOn?: any;
-    referrer?: any;
-    interpreter?: any;
-    endpoint?: any;
-    numberOfSeries?: any;
-    numberOfInstances?: any;
-    procedureReference?: any;
-    procedureCode?: any;
-    location?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    note?: any;
-    description?: any;
-    series?: any;
-};
-
-declare type Immunization_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    statusReason?: any;
-    vaccineCode?: any;
-    patient?: any;
-    encounter?: any;
-    occurrence?: any;
-    recorded?: any;
-    primarySource?: any;
-    reportOrigin?: any;
-    location?: any;
-    manufacturer?: any;
-    lotNumber?: any;
-    expirationDate?: any;
-    site?: any;
-    route?: any;
-    doseQuantity?: any;
-    performer?: any;
-    note?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    isSubpotent?: any;
-    subpotentReason?: any;
-    education?: any;
-    programEligibility?: any;
-    fundingSource?: any;
-    reaction?: any;
-    protocolApplied?: any;
-};
-
-declare type ImmunizationEvaluation_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    patient?: any;
-    date?: any;
-    authority?: any;
-    targetDisease?: any;
-    immunizationEvent?: any;
-    doseStatus?: any;
-    doseStatusReason?: any;
-    description?: any;
-    series?: any;
-    doseNumber?: any;
-    seriesDoses?: any;
-};
-
-declare type ImmunizationRecommendation_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    patient?: any;
-    date?: any;
-    authority?: any;
-    recommendation?: any;
-};
-
-declare type Ingredient_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    for?: any;
-    role?: any;
-    function?: any;
-    allergenicIndicator?: any;
-    manufacturer?: any;
-    substance?: any;
-};
-
-declare type InsurancePlan_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    type?: any;
-    name?: any;
-    alias?: any;
-    period?: any;
-    ownedBy?: any;
-    administeredBy?: any;
-    coverageArea?: any;
-    contact?: any;
-    endpoint?: any;
-    network?: any;
-    coverage?: any;
-    plan?: any;
-};
-
-declare type Invoice_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    cancelledReason?: any;
-    type?: any;
-    subject?: any;
-    recipient?: any;
-    date?: any;
-    participant?: any;
-    issuer?: any;
-    account?: any;
-    lineItem?: any;
-    totalPriceComponent?: any;
-    totalNet?: any;
-    totalGross?: any;
-    paymentTerms?: any;
-    note?: any;
-};
-
-declare type Library_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: undefined;
-    version?: any;
-    name?: any;
-    title?: any;
-    subtitle?: any;
-    status?: any;
-    experimental?: any;
-    type?: any;
-    subject?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    purpose?: any;
-    usage?: any;
-    copyright?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    effectivePeriod?: any;
-    topic?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    relatedArtifact?: any;
-    parameter?: any;
-    dataRequirement?: any;
-    content?: any;
-};
-
-declare type List_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    mode?: any;
-    title?: any;
-    code?: any;
-    subject?: any;
-    encounter?: any;
-    date?: any;
-    source?: any;
-    orderedBy?: any;
-    note?: any;
-    entry?: any;
-    emptyReason?: any;
-};
-
-declare type Location_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    operationalStatus?: any;
-    name?: any;
-    alias?: any;
-    description?: any;
-    mode?: any;
-    type?: any;
-    telecom?: any;
-    address?: any;
-    physicalType?: any;
-    position?: any;
-    managingOrganization?: any;
-    partOf?: any;
-    hoursOfOperation?: any;
-    availabilityExceptions?: any;
-    endpoint?: any;
-};
-
-declare type ManufacturedItemDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    manufacturedDoseForm?: any;
-    unitOfPresentation?: any;
-    manufacturer?: any;
-    ingredient?: any;
-    property?: any;
-};
-
-declare type Measure_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: undefined;
-    version?: any;
-    name?: any;
-    title?: any;
-    subtitle?: any;
-    status?: any;
-    experimental?: any;
-    subject?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    purpose?: any;
-    usage?: any;
-    copyright?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    effectivePeriod?: any;
-    topic?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    relatedArtifact?: any;
-    library?: any;
-    disclaimer?: any;
-    scoring?: any;
-    compositeScoring?: any;
-    type?: any;
-    riskAdjustment?: any;
-    rateAggregation?: any;
-    rationale?: any;
-    clinicalRecommendationStatement?: any;
-    improvementNotation?: any;
-    definition?: any;
-    guidance?: any;
-    group?: any;
-    supplementalData?: any;
-};
-
-declare type MeasureReport_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    type?: any;
-    measure?: any;
-    subject?: any;
-    date?: any;
-    reporter?: any;
-    period?: any;
-    improvementNotation?: any;
-    group?: any;
-    evaluatedResource?: any;
-};
-
-declare type Media_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    basedOn?: any;
-    partOf?: any;
-    status?: any;
-    type?: any;
-    modality?: any;
-    view?: any;
-    subject?: any;
-    encounter?: any;
-    created?: any;
-    issued?: any;
-    operator?: any;
-    reasonCode?: any;
-    bodySite?: any;
-    deviceName?: any;
-    device?: any;
-    height?: any;
-    width?: any;
-    frames?: any;
-    duration?: any;
-    content?: any;
-    note?: any;
-};
-
-declare type Medication_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    code?: any;
-    status?: any;
-    manufacturer?: any;
-    form?: any;
-    amount?: any;
-    ingredient?: any;
-    batch?: any;
-};
-
-declare type MedicationAdministration_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    instantiates?: any;
-    partOf?: any;
-    status?: any;
-    statusReason?: any;
-    category?: any;
-    medication?: any;
-    subject?: any;
-    context?: any;
-    supportingInformation?: any;
-    effective?: any;
-    performer?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    request?: any;
-    device?: any;
-    note?: any;
-    dosage?: any;
-    eventHistory?: any;
-};
-
-declare type MedicationDispense_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    partOf?: any;
-    status?: any;
-    statusReason?: any;
-    category?: any;
-    medication?: any;
-    subject?: any;
-    context?: any;
-    supportingInformation?: any;
-    performer?: any;
-    location?: any;
-    authorizingPrescription?: any;
-    type?: any;
-    quantity?: any;
-    daysSupply?: any;
-    whenPrepared?: any;
-    whenHandedOver?: any;
-    destination?: any;
-    receiver?: any;
-    note?: any;
-    dosageInstruction?: any;
-    substitution?: any;
-    detectedIssue?: any;
-    eventHistory?: any;
-};
-
-declare type MedicationKnowledge_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    code?: any;
-    status?: any;
-    manufacturer?: any;
-    doseForm?: any;
-    amount?: any;
-    synonym?: any;
-    relatedMedicationKnowledge?: any;
-    associatedMedication?: any;
-    productType?: any;
-    monograph?: any;
-    ingredient?: any;
-    preparationInstruction?: any;
-    intendedRoute?: any;
-    cost?: any;
-    monitoringProgram?: any;
-    administrationGuidelines?: any;
-    medicineClassification?: any;
-    packaging?: any;
-    drugCharacteristic?: any;
-    contraindication?: any;
-    regulatory?: any;
-    kinetics?: any;
-};
-
-declare type MedicationRequest_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    statusReason?: any;
-    intent?: any;
-    category?: any;
-    priority?: any;
-    doNotPerform?: any;
-    reported?: any;
-    medication?: any;
-    subject?: any;
-    encounter?: any;
-    supportingInformation?: any;
-    authoredOn?: any;
-    requester?: any;
-    performer?: any;
-    performerType?: any;
-    recorder?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    basedOn?: any;
-    groupIdentifier?: undefined;
-    courseOfTherapyType?: any;
-    insurance?: any;
-    note?: any;
-    dosageInstruction?: any;
-    dispenseRequest?: any;
-    substitution?: any;
-    priorPrescription?: any;
-    detectedIssue?: any;
-    eventHistory?: any;
-};
-
-declare type MedicationStatement_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    basedOn?: any;
-    partOf?: any;
-    status?: any;
-    statusReason?: any;
-    category?: any;
-    medication?: any;
-    subject?: any;
-    context?: any;
-    effective?: any;
-    dateAsserted?: any;
-    informationSource?: any;
-    derivedFrom?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    note?: any;
-    dosage?: any;
-};
-
-declare type MedicinalProductDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    type?: any;
-    domain?: any;
-    version?: any;
-    status?: any;
-    statusDate?: any;
-    description?: any;
-    combinedPharmaceuticalDoseForm?: any;
-    route?: any;
-    indication?: any;
-    legalStatusOfSupply?: any;
-    additionalMonitoringIndicator?: any;
-    specialMeasures?: any;
-    pediatricUseIndicator?: any;
-    classification?: any;
-    marketingStatus?: any;
-    packagedMedicinalProduct?: any;
-    ingredient?: any;
-    impurity?: any;
-    attachedDocument?: any;
-    masterFile?: any;
-    contact?: any;
-    clinicalTrial?: any;
-    code?: any;
-    name?: any;
-    crossReference?: any;
-    operation?: any;
-    characteristic?: any;
-};
-
-declare type MolecularSequence_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    type?: any;
-    coordinateSystem?: any;
-    patient?: any;
-    specimen?: any;
-    device?: any;
-    performer?: any;
-    quantity?: any;
-    referenceSeq?: any;
-    variant?: any;
-    observedSeq?: any;
-    quality?: any;
-    readCoverage?: any;
-    repository?: any;
-    pointer?: any;
-    structureVariant?: any;
-};
-
-declare type NutritionOrder_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    instantiates?: any;
-    status?: any;
-    intent?: any;
-    patient?: any;
-    encounter?: any;
-    dateTime?: any;
-    orderer?: any;
-    allergyIntolerance?: any;
-    foodPreferenceModifier?: any;
-    excludeFoodModifier?: any;
-    oralDiet?: any;
-    supplement?: any;
-    enteralFormula?: any;
-    note?: any;
-};
-
-declare type NutritionProduct_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    status?: any;
-    category?: any;
-    code?: any;
-    manufacturer?: any;
-    nutrient?: any;
-    ingredient?: any;
-    knownAllergen?: any;
-    productCharacteristic?: any;
-    instance?: any;
-    note?: any;
-};
-
-declare type Observation_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    basedOn?: any;
-    partOf?: any;
-    status?: any;
-    category?: any;
-    code?: any;
-    subject?: any;
-    focus?: any;
-    encounter?: any;
-    effective?: any;
-    issued?: any;
-    performer?: any;
-    value?: any;
-    dataAbsentReason?: any;
-    interpretation?: any;
-    note?: any;
-    bodySite?: any;
-    method?: any;
-    specimen?: any;
-    device?: any;
-    referenceRange?: any;
-    hasMember?: any;
-    derivedFrom?: any;
-    component?: any;
-};
-
-declare type ObservationDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    category?: any;
-    code?: any;
-    identifier?: undefined;
-    permittedDataType?: any;
-    multipleResultsAllowed?: any;
-    method?: any;
-    preferredReportName?: any;
-    quantitativeDetails?: any;
-    qualifiedInterval?: any;
-    validCodedValueSet?: any;
-    normalCodedValueSet?: any;
-    abnormalCodedValueSet?: any;
-    criticalCodedValueSet?: any;
-};
-
-declare type Organization_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    active?: any;
-    type?: any;
-    name?: any;
-    alias?: any;
-    telecom?: any;
-    address?: any;
-    partOf?: any;
-    contact?: any;
-    endpoint?: any;
-};
-
-declare type OrganizationAffiliation_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    active?: any;
-    period?: any;
-    organization?: any;
-    participatingOrganization?: any;
-    network?: any;
-    code?: any;
-    specialty?: any;
-    location?: any;
-    healthcareService?: any;
-    telecom?: any;
-    endpoint?: any;
-};
-
-declare type PackagedProductDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    name?: any;
-    type?: any;
-    packageFor?: any;
-    status?: any;
-    statusDate?: any;
-    containedItemQuantity?: any;
-    description?: any;
-    legalStatusOfSupply?: any;
-    marketingStatus?: any;
-    characteristic?: any;
-    copackagedIndicator?: any;
-    manufacturer?: any;
-    package?: any;
+    /**
+     * Security Labels applied to this resource
+     *  */
+    security?: Coding;
+    /**
+     * Tags applied to this resource
+     *  */
+    tag?: Coding;
+};
+declare type Narrative = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * generated | extensions | additional | empty
+     *  */
+    status?: string;
+    /**
+     * Limited xhtml content
+     *  */
+    div?: xhtml;
+};
+declare type Period = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * Starting time with inclusive boundary
+     *  */
+    start?: string;
+    /**
+     * End time with inclusive boundary, if not ongoing
+     *  */
+    end?: string;
+};
+declare type Reference = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * Literal reference, Relative, internal or absolute URL
+     *  */
+    reference?: string;
+    /**
+     * Type the reference refers to (e.g. "Patient")
+     *  */
+    type?: string;
+    /**
+     * Logical reference, when literal reference is not known
+     *  */
+    identifier?: Identifier$1;
+    /**
+     * Text alternative for the resource
+     *  */
+    display?: string;
+};
+declare type base64Binary = {
+    /**
+     * xml:id (or equivalent in JSON)
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * Primitive value for base64Binary
+     *  */
+    value?: string;
+};
+declare type url = {
+    /**
+     * xml:id (or equivalent in JSON)
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * Primitive value for url
+     *  */
+    value?: string;
+};
+declare type xhtml = {
+    /**
+     * xml:id (or equivalent in JSON)
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension;
+    /**
+     * Actual xhtml
+     *  */
+    value?: string;
 };
 
 declare type Patient_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
     contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    active?: any;
-    name?: any;
-    telecom?: any;
-    gender?: any;
-    birthDate?: any;
-    deceased?: any;
-    address?: any;
-    maritalStatus?: any;
-    multipleBirth?: any;
-    photo?: any;
-    contact?: any;
-    communication?: any;
-    generalPractitioner?: any;
-    managingOrganization?: any;
-    link?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier$1;
+    active?: boolean;
+    name?: HumanName;
+    telecom?: ContactPoint;
+    gender?: string;
+    birthDate?: string;
+    deceased?: boolean;
+    address?: Address;
+    maritalStatus?: CodeableConcept;
+    multipleBirth?: boolean;
+    photo?: Attachment;
+    contact?: BackboneElement;
+    communication?: BackboneElement;
+    generalPractitioner?: Reference;
+    managingOrganization?: Reference;
+    link?: BackboneElement;
 };
 
-declare type PaymentNotice_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    request?: any;
-    response?: any;
-    created?: any;
-    provider?: any;
-    payment?: any;
-    paymentDate?: any;
-    payee?: any;
-    recipient?: any;
-    amount?: any;
-    paymentStatus?: any;
-};
-
-declare type PaymentReconciliation_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    period?: any;
-    created?: any;
-    paymentIssuer?: any;
-    request?: any;
-    requestor?: any;
-    outcome?: any;
-    disposition?: any;
-    paymentDate?: any;
-    paymentAmount?: any;
-    paymentIdentifier?: undefined;
-    detail?: any;
-    formCode?: any;
-    processNote?: any;
-};
-
-declare type Person_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    name?: any;
-    telecom?: any;
-    gender?: any;
-    birthDate?: any;
-    address?: any;
-    photo?: any;
-    managingOrganization?: any;
-    active?: any;
-    link?: any;
-};
-
-declare type PlanDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: undefined;
-    version?: any;
-    name?: any;
-    title?: any;
-    subtitle?: any;
-    type?: any;
-    status?: any;
-    experimental?: any;
-    subject?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    purpose?: any;
-    usage?: any;
-    copyright?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    effectivePeriod?: any;
-    topic?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    relatedArtifact?: any;
-    library?: any;
-    goal?: any;
-    action?: any;
-};
-
-declare type Practitioner_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    active?: any;
-    name?: any;
-    telecom?: any;
-    address?: any;
-    gender?: any;
-    birthDate?: any;
-    photo?: any;
-    qualification?: any;
-    communication?: any;
-};
-
-declare type PractitionerRole_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    active?: any;
-    period?: any;
-    practitioner?: any;
-    organization?: any;
-    code?: any;
-    specialty?: any;
-    location?: any;
-    healthcareService?: any;
-    telecom?: any;
-    availableTime?: any;
-    notAvailable?: any;
-    availabilityExceptions?: any;
-    endpoint?: any;
-};
-
-declare type Procedure_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    basedOn?: any;
-    partOf?: any;
-    status?: any;
-    statusReason?: any;
-    category?: any;
-    code?: any;
-    subject?: any;
-    encounter?: any;
-    performed?: any;
-    recorder?: any;
-    asserter?: any;
-    performer?: any;
-    location?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    bodySite?: any;
-    outcome?: any;
-    report?: any;
-    complication?: any;
-    complicationDetail?: any;
-    followUp?: any;
-    note?: any;
-    focalDevice?: any;
-    usedReference?: any;
-    usedCode?: any;
-};
-
-declare type Questionnaire_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: undefined;
-    version?: any;
-    name?: any;
-    title?: any;
-    derivedFrom?: any;
-    status?: any;
-    experimental?: any;
-    subjectType?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    purpose?: any;
-    copyright?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    effectivePeriod?: any;
-    code?: any;
-    item?: any;
-};
-
-declare type QuestionnaireResponse_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    basedOn?: any;
-    partOf?: any;
-    questionnaire?: any;
-    status?: any;
-    subject?: any;
-    encounter?: any;
-    authored?: any;
-    author?: any;
-    source?: any;
-    item?: any;
-};
-
-declare type RegulatedAuthorization_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    subject?: any;
-    type?: any;
-    description?: any;
-    region?: any;
-    status?: any;
-    statusDate?: any;
-    validityPeriod?: any;
-    indication?: any;
-    intendedUse?: any;
-    basis?: any;
-    holder?: any;
-    regulator?: any;
-    case?: any;
-};
-
-declare type RelatedPerson_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    active?: any;
-    patient?: any;
-    relationship?: any;
-    name?: any;
-    telecom?: any;
-    gender?: any;
-    birthDate?: any;
-    address?: any;
-    photo?: any;
-    period?: any;
-    communication?: any;
-};
-
-declare type RequestGroup_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    basedOn?: any;
-    replaces?: any;
-    groupIdentifier?: undefined;
-    status?: any;
-    intent?: any;
-    priority?: any;
-    code?: any;
-    subject?: any;
-    encounter?: any;
-    authoredOn?: any;
-    author?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    note?: any;
-    action?: any;
-};
-
-declare type ResearchDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: undefined;
-    version?: any;
-    name?: any;
-    title?: any;
-    shortTitle?: any;
-    subtitle?: any;
-    status?: any;
-    experimental?: any;
-    subject?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    comment?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    purpose?: any;
-    usage?: any;
-    copyright?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    effectivePeriod?: any;
-    topic?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    relatedArtifact?: any;
-    library?: any;
-    population?: any;
-    exposure?: any;
-    exposureAlternative?: any;
-    outcome?: any;
-};
-
-declare type ResearchElementDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: undefined;
-    version?: any;
-    name?: any;
-    title?: any;
-    shortTitle?: any;
-    subtitle?: any;
-    status?: any;
-    experimental?: any;
-    subject?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    comment?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    purpose?: any;
-    usage?: any;
-    copyright?: any;
-    approvalDate?: any;
-    lastReviewDate?: any;
-    effectivePeriod?: any;
-    topic?: any;
-    author?: any;
-    editor?: any;
-    reviewer?: any;
-    endorser?: any;
-    relatedArtifact?: any;
-    library?: any;
-    type?: any;
-    variableType?: any;
-    characteristic?: any;
-};
-
-declare type ResearchStudy_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    title?: any;
-    protocol?: any;
-    partOf?: any;
-    status?: any;
-    primaryPurposeType?: any;
-    phase?: any;
-    category?: any;
-    focus?: any;
-    condition?: any;
-    contact?: any;
-    relatedArtifact?: any;
-    keyword?: any;
-    location?: any;
-    description?: any;
-    enrollment?: any;
-    period?: any;
-    sponsor?: any;
-    principalInvestigator?: any;
-    site?: any;
-    reasonStopped?: any;
-    note?: any;
-    arm?: any;
-    objective?: any;
-};
-
-declare type ResearchSubject_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    period?: any;
-    study?: any;
-    individual?: any;
-    assignedArm?: any;
-    actualArm?: any;
-    consent?: any;
-};
-
-declare type Resource_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-};
-
-declare type RiskAssessment_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    basedOn?: any;
-    parent?: any;
-    status?: any;
-    method?: any;
-    code?: any;
-    subject?: any;
-    encounter?: any;
-    occurrence?: any;
-    condition?: any;
-    performer?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    basis?: any;
-    prediction?: any;
-    mitigation?: any;
-    note?: any;
-};
-
-declare type Schedule_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    active?: any;
-    serviceCategory?: any;
-    serviceType?: any;
-    specialty?: any;
-    actor?: any;
-    planningHorizon?: any;
-    comment?: any;
-};
-
-declare type ServiceRequest_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    basedOn?: any;
-    replaces?: any;
-    requisition?: undefined;
-    status?: any;
-    intent?: any;
-    category?: any;
-    priority?: any;
-    doNotPerform?: any;
-    code?: any;
-    orderDetail?: any;
-    quantity?: any;
-    subject?: any;
-    encounter?: any;
-    occurrence?: any;
-    asNeeded?: any;
-    authoredOn?: any;
-    requester?: any;
-    performerType?: any;
-    performer?: any;
-    locationCode?: any;
-    locationReference?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    insurance?: any;
-    supportingInfo?: any;
-    specimen?: any;
-    bodySite?: any;
-    note?: any;
-    patientInstruction?: any;
-    relevantHistory?: any;
-};
-
-declare type Slot_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    serviceCategory?: any;
-    serviceType?: any;
-    specialty?: any;
-    appointmentType?: any;
-    schedule?: any;
-    status?: any;
-    start?: any;
-    end?: any;
-    overbooked?: any;
-    comment?: any;
-};
-
-declare type Specimen_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    accessionIdentifier?: undefined;
-    status?: any;
-    type?: any;
-    subject?: any;
-    receivedTime?: any;
-    parent?: any;
-    request?: any;
-    collection?: any;
-    processing?: any;
-    container?: any;
-    condition?: any;
-    note?: any;
-};
-
-declare type SpecimenDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    typeCollected?: any;
-    patientPreparation?: any;
-    timeAspect?: any;
-    collection?: any;
-    typeTested?: any;
-};
-
-declare type Substance_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    category?: any;
-    code?: any;
-    description?: any;
-    instance?: any;
-    ingredient?: any;
-};
-
-declare type SubstanceDefinition_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    version?: any;
-    status?: any;
-    classification?: any;
-    domain?: any;
-    grade?: any;
-    description?: any;
-    informationSource?: any;
-    note?: any;
-    manufacturer?: any;
-    supplier?: any;
-    moiety?: any;
-    property?: any;
-    molecularWeight?: any;
-    structure?: any;
-    code?: any;
-    name?: any;
-    relationship?: any;
-    sourceMaterial?: any;
-};
-
-declare type SupplyDelivery_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    basedOn?: any;
-    partOf?: any;
-    status?: any;
-    patient?: any;
-    type?: any;
-    suppliedItem?: any;
-    occurrence?: any;
-    supplier?: any;
-    destination?: any;
-    receiver?: any;
-};
-
-declare type SupplyRequest_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    status?: any;
-    category?: any;
-    priority?: any;
-    item?: any;
-    quantity?: any;
-    parameter?: any;
-    occurrence?: any;
-    authoredOn?: any;
-    requester?: any;
-    supplier?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    deliverFrom?: any;
-    deliverTo?: any;
-};
-
-declare type Task_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    instantiatesCanonical?: any;
-    instantiatesUri?: any;
-    basedOn?: any;
-    groupIdentifier?: undefined;
-    partOf?: any;
-    status?: any;
-    statusReason?: any;
-    businessStatus?: any;
-    intent?: any;
-    priority?: any;
-    code?: any;
-    description?: any;
-    focus?: any;
-    for?: any;
-    encounter?: any;
-    executionPeriod?: any;
-    authoredOn?: any;
-    lastModified?: any;
-    requester?: any;
-    performerType?: any;
-    owner?: any;
-    location?: any;
-    reasonCode?: any;
-    reasonReference?: any;
-    insurance?: any;
-    note?: any;
-    relevantHistory?: any;
-    restriction?: any;
-    input?: any;
-    output?: any;
-};
-
-declare type TestReport_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    identifier?: undefined;
-    name?: any;
-    status?: any;
-    testScript?: any;
-    result?: any;
-    score?: any;
-    tester?: any;
-    issued?: any;
-    participant?: any;
-    setup?: any;
-    test?: any;
-    teardown?: any;
-};
-
-declare type TestScript_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    url?: any;
-    identifier?: undefined;
-    version?: any;
-    name?: any;
-    title?: any;
-    status?: any;
-    experimental?: any;
-    date?: any;
-    publisher?: any;
-    contact?: any;
-    description?: any;
-    useContext?: any;
-    jurisdiction?: any;
-    purpose?: any;
-    copyright?: any;
-    origin?: any;
-    destination?: any;
-    metadata?: any;
-    fixture?: any;
-    profile?: any;
-    variable?: any;
-    setup?: any;
-    test?: any;
-    teardown?: any;
-};
-
-declare type VerificationResult_Props = {
-    id?: any;
-    meta?: any;
-    implicitRules?: any;
-    language?: any;
-    text?: any;
-    contained?: any;
-    extension?: any;
-    modifierExtension?: any;
-    target?: any;
-    targetLocation?: any;
-    need?: any;
-    status?: any;
-    statusDate?: any;
-    validationType?: any;
-    validationProcess?: any;
-    frequency?: any;
-    lastPerformed?: any;
-    nextScheduled?: any;
-    failureAction?: any;
-    primarySource?: any;
-    attestation?: any;
-    validator?: any;
-};
-
-declare function account(type: string, props: Account_Props): any;
-declare function account(props: Account_Props): any;
-declare function activityDefinition(type: string, props: ActivityDefinition_Props): any;
-declare function activityDefinition(props: ActivityDefinition_Props): any;
-declare function administrableProductDefinition(type: string, props: AdministrableProductDefinition_Props): any;
-declare function administrableProductDefinition(props: AdministrableProductDefinition_Props): any;
-declare function adverseEvent(type: string, props: AdverseEvent_Props): any;
-declare function adverseEvent(props: AdverseEvent_Props): any;
-declare function allergyIntolerance(type: string, props: AllergyIntolerance_Props): any;
-declare function allergyIntolerance(props: AllergyIntolerance_Props): any;
-declare function appointment(type: string, props: Appointment_Props): any;
-declare function appointment(props: Appointment_Props): any;
-declare function appointmentResponse(type: string, props: AppointmentResponse_Props): any;
-declare function appointmentResponse(props: AppointmentResponse_Props): any;
-declare function biologicallyDerivedProduct(type: string, props: BiologicallyDerivedProduct_Props): any;
-declare function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Props): any;
-declare function bodyStructure(type: string, props: BodyStructure_Props): any;
-declare function bodyStructure(props: BodyStructure_Props): any;
-declare function carePlan(type: string, props: CarePlan_Props): any;
-declare function carePlan(props: CarePlan_Props): any;
-declare function careTeam(type: string, props: CareTeam_Props): any;
-declare function careTeam(props: CareTeam_Props): any;
-declare function chargeItem(type: string, props: ChargeItem_Props): any;
-declare function chargeItem(props: ChargeItem_Props): any;
-declare function chargeItemDefinition(type: string, props: ChargeItemDefinition_Props): any;
-declare function chargeItemDefinition(props: ChargeItemDefinition_Props): any;
-declare function citation(type: string, props: Citation_Props): any;
-declare function citation(props: Citation_Props): any;
-declare function claim(type: string, props: Claim_Props): any;
-declare function claim(props: Claim_Props): any;
-declare function claimResponse(type: string, props: ClaimResponse_Props): any;
-declare function claimResponse(props: ClaimResponse_Props): any;
-declare function clinicalImpression(type: string, props: ClinicalImpression_Props): any;
-declare function clinicalImpression(props: ClinicalImpression_Props): any;
-declare function clinicalUseDefinition(type: string, props: ClinicalUseDefinition_Props): any;
-declare function clinicalUseDefinition(props: ClinicalUseDefinition_Props): any;
-declare function communication(type: string, props: Communication_Props): any;
-declare function communication(props: Communication_Props): any;
-declare function communicationRequest(type: string, props: CommunicationRequest_Props): any;
-declare function communicationRequest(props: CommunicationRequest_Props): any;
-declare function condition(type: string, props: Condition_Props): any;
-declare function condition(props: Condition_Props): any;
-declare function contract(type: string, props: Contract_Props): any;
-declare function contract(props: Contract_Props): any;
-declare function coverage(type: string, props: Coverage_Props): any;
-declare function coverage(props: Coverage_Props): any;
-declare function coverageEligibilityRequest(type: string, props: CoverageEligibilityRequest_Props): any;
-declare function coverageEligibilityRequest(props: CoverageEligibilityRequest_Props): any;
-declare function coverageEligibilityResponse(type: string, props: CoverageEligibilityResponse_Props): any;
-declare function coverageEligibilityResponse(props: CoverageEligibilityResponse_Props): any;
-declare function detectedIssue(type: string, props: DetectedIssue_Props): any;
-declare function detectedIssue(props: DetectedIssue_Props): any;
-declare function device(type: string, props: Device_Props): any;
-declare function device(props: Device_Props): any;
-declare function deviceDefinition(type: string, props: DeviceDefinition_Props): any;
-declare function deviceDefinition(props: DeviceDefinition_Props): any;
-declare function deviceMetric(type: string, props: DeviceMetric_Props): any;
-declare function deviceMetric(props: DeviceMetric_Props): any;
-declare function deviceRequest(type: string, props: DeviceRequest_Props): any;
-declare function deviceRequest(props: DeviceRequest_Props): any;
-declare function deviceUseStatement(type: string, props: DeviceUseStatement_Props): any;
-declare function deviceUseStatement(props: DeviceUseStatement_Props): any;
-declare function diagnosticReport(type: string, props: DiagnosticReport_Props): any;
-declare function diagnosticReport(props: DiagnosticReport_Props): any;
-declare function domainResource(type: string, props: DomainResource_Props): any;
-declare function domainResource(props: DomainResource_Props): any;
-declare function encounter(type: string, props: Encounter_Props): any;
-declare function encounter(props: Encounter_Props): any;
-declare function endpoint(type: string, props: Endpoint_Props): any;
-declare function endpoint(props: Endpoint_Props): any;
-declare function enrollmentRequest(type: string, props: EnrollmentRequest_Props): any;
-declare function enrollmentRequest(props: EnrollmentRequest_Props): any;
-declare function enrollmentResponse(type: string, props: EnrollmentResponse_Props): any;
-declare function enrollmentResponse(props: EnrollmentResponse_Props): any;
-declare function episodeOfCare(type: string, props: EpisodeOfCare_Props): any;
-declare function episodeOfCare(props: EpisodeOfCare_Props): any;
-declare function eventDefinition(type: string, props: EventDefinition_Props): any;
-declare function eventDefinition(props: EventDefinition_Props): any;
-declare function evidence(type: string, props: Evidence_Props): any;
-declare function evidence(props: Evidence_Props): any;
-declare function evidenceReport(type: string, props: EvidenceReport_Props): any;
-declare function evidenceReport(props: EvidenceReport_Props): any;
-declare function evidenceVariable(type: string, props: EvidenceVariable_Props): any;
-declare function evidenceVariable(props: EvidenceVariable_Props): any;
-declare function explanationOfBenefit(type: string, props: ExplanationOfBenefit_Props): any;
-declare function explanationOfBenefit(props: ExplanationOfBenefit_Props): any;
-declare function familyMemberHistory(type: string, props: FamilyMemberHistory_Props): any;
-declare function familyMemberHistory(props: FamilyMemberHistory_Props): any;
-declare function flag(type: string, props: Flag_Props): any;
-declare function flag(props: Flag_Props): any;
-declare function goal(type: string, props: Goal_Props): any;
-declare function goal(props: Goal_Props): any;
-declare function group(type: string, props: Group_Props): any;
-declare function group(props: Group_Props): any;
-declare function guidanceResponse(type: string, props: GuidanceResponse_Props): any;
-declare function guidanceResponse(props: GuidanceResponse_Props): any;
-declare function healthcareService(type: string, props: HealthcareService_Props): any;
-declare function healthcareService(props: HealthcareService_Props): any;
-declare function imagingStudy(type: string, props: ImagingStudy_Props): any;
-declare function imagingStudy(props: ImagingStudy_Props): any;
-declare function immunization(type: string, props: Immunization_Props): any;
-declare function immunization(props: Immunization_Props): any;
-declare function immunizationEvaluation(type: string, props: ImmunizationEvaluation_Props): any;
-declare function immunizationEvaluation(props: ImmunizationEvaluation_Props): any;
-declare function immunizationRecommendation(type: string, props: ImmunizationRecommendation_Props): any;
-declare function immunizationRecommendation(props: ImmunizationRecommendation_Props): any;
-declare function ingredient(type: string, props: Ingredient_Props): any;
-declare function ingredient(props: Ingredient_Props): any;
-declare function insurancePlan(type: string, props: InsurancePlan_Props): any;
-declare function insurancePlan(props: InsurancePlan_Props): any;
-declare function invoice(type: string, props: Invoice_Props): any;
-declare function invoice(props: Invoice_Props): any;
-declare function library(type: string, props: Library_Props): any;
-declare function library(props: Library_Props): any;
-declare function list(type: string, props: List_Props): any;
-declare function list(props: List_Props): any;
-declare function location(type: string, props: Location_Props): any;
-declare function location(props: Location_Props): any;
-declare function manufacturedItemDefinition(type: string, props: ManufacturedItemDefinition_Props): any;
-declare function manufacturedItemDefinition(props: ManufacturedItemDefinition_Props): any;
-declare function measure(type: string, props: Measure_Props): any;
-declare function measure(props: Measure_Props): any;
-declare function measureReport(type: string, props: MeasureReport_Props): any;
-declare function measureReport(props: MeasureReport_Props): any;
-declare function media(type: string, props: Media_Props): any;
-declare function media(props: Media_Props): any;
-declare function medication(type: string, props: Medication_Props): any;
-declare function medication(props: Medication_Props): any;
-declare function medicationAdministration(type: string, props: MedicationAdministration_Props): any;
-declare function medicationAdministration(props: MedicationAdministration_Props): any;
-declare function medicationDispense(type: string, props: MedicationDispense_Props): any;
-declare function medicationDispense(props: MedicationDispense_Props): any;
-declare function medicationKnowledge(type: string, props: MedicationKnowledge_Props): any;
-declare function medicationKnowledge(props: MedicationKnowledge_Props): any;
-declare function medicationRequest(type: string, props: MedicationRequest_Props): any;
-declare function medicationRequest(props: MedicationRequest_Props): any;
-declare function medicationStatement(type: string, props: MedicationStatement_Props): any;
-declare function medicationStatement(props: MedicationStatement_Props): any;
-declare function medicinalProductDefinition(type: string, props: MedicinalProductDefinition_Props): any;
-declare function medicinalProductDefinition(props: MedicinalProductDefinition_Props): any;
-declare function molecularSequence(type: string, props: MolecularSequence_Props): any;
-declare function molecularSequence(props: MolecularSequence_Props): any;
-declare function nutritionOrder(type: string, props: NutritionOrder_Props): any;
-declare function nutritionOrder(props: NutritionOrder_Props): any;
-declare function nutritionProduct(type: string, props: NutritionProduct_Props): any;
-declare function nutritionProduct(props: NutritionProduct_Props): any;
-declare function observation(type: string, props: Observation_Props): any;
-declare function observation(props: Observation_Props): any;
-declare function observationDefinition(type: string, props: ObservationDefinition_Props): any;
-declare function observationDefinition(props: ObservationDefinition_Props): any;
-declare function organization(type: string, props: Organization_Props): any;
-declare function organization(props: Organization_Props): any;
-declare function organizationAffiliation(type: string, props: OrganizationAffiliation_Props): any;
-declare function organizationAffiliation(props: OrganizationAffiliation_Props): any;
-declare function packagedProductDefinition(type: string, props: PackagedProductDefinition_Props): any;
-declare function packagedProductDefinition(props: PackagedProductDefinition_Props): any;
+/**
+  * Create a FHIR Patient resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - An identifier for this patient
+  * @param {boolean} [props.active] - Whether this patient's record is in active use
+  * @param {HumanName} [props.name] - A name associated with the patient
+  * @param {ContactPoint} [props.telecom] - A contact detail for the individual
+  * @param {string} [props.gender] - male | female | other | unknown
+  * @param {date} [props.birthDate] - The date of birth for the individual
+  * @param {boolean} [props.deceased] - Indicates if the individual is deceased or not
+  * @param {Address} [props.address] - An address for the individual
+  * @param {CodeableConcept} [props.maritalStatus] - Marital (civil) status of a patient
+  * @param {boolean} [props.multipleBirth] - Whether patient is part of a multiple birth
+  * @param {Attachment} [props.photo] - Image of the patient
+  * @param {BackboneElement} [props.contact] - A contact party (e.g. guardian, partner, friend) for the patient
+  * @param {BackboneElement} [props.communication] - A language which may be used to communicate with the patient about his or her health
+  * @param {Reference} [props.generalPractitioner] - Patient's nominated primary care provider
+  * @param {Reference} [props.managingOrganization] - Organization that is the custodian of the patient record
+  * @param {BackboneElement} [props.link] - Link to another patient resource that concerns the same actual person
+ */
 declare function patient(type: string, props: Patient_Props): any;
 declare function patient(props: Patient_Props): any;
-declare function paymentNotice(type: string, props: PaymentNotice_Props): any;
-declare function paymentNotice(props: PaymentNotice_Props): any;
-declare function paymentReconciliation(type: string, props: PaymentReconciliation_Props): any;
-declare function paymentReconciliation(props: PaymentReconciliation_Props): any;
-declare function person(type: string, props: Person_Props): any;
-declare function person(props: Person_Props): any;
-declare function planDefinition(type: string, props: PlanDefinition_Props): any;
-declare function planDefinition(props: PlanDefinition_Props): any;
-declare function practitioner(type: string, props: Practitioner_Props): any;
-declare function practitioner(props: Practitioner_Props): any;
-declare function practitionerRole(type: string, props: PractitionerRole_Props): any;
-declare function practitionerRole(props: PractitionerRole_Props): any;
-declare function procedure(type: string, props: Procedure_Props): any;
-declare function procedure(props: Procedure_Props): any;
-declare function questionnaire(type: string, props: Questionnaire_Props): any;
-declare function questionnaire(props: Questionnaire_Props): any;
-declare function questionnaireResponse(type: string, props: QuestionnaireResponse_Props): any;
-declare function questionnaireResponse(props: QuestionnaireResponse_Props): any;
-declare function regulatedAuthorization(type: string, props: RegulatedAuthorization_Props): any;
-declare function regulatedAuthorization(props: RegulatedAuthorization_Props): any;
-declare function relatedPerson(type: string, props: RelatedPerson_Props): any;
-declare function relatedPerson(props: RelatedPerson_Props): any;
-declare function requestGroup(type: string, props: RequestGroup_Props): any;
-declare function requestGroup(props: RequestGroup_Props): any;
-declare function researchDefinition(type: string, props: ResearchDefinition_Props): any;
-declare function researchDefinition(props: ResearchDefinition_Props): any;
-declare function researchElementDefinition(type: string, props: ResearchElementDefinition_Props): any;
-declare function researchElementDefinition(props: ResearchElementDefinition_Props): any;
-declare function researchStudy(type: string, props: ResearchStudy_Props): any;
-declare function researchStudy(props: ResearchStudy_Props): any;
-declare function researchSubject(type: string, props: ResearchSubject_Props): any;
-declare function researchSubject(props: ResearchSubject_Props): any;
-declare function resource(type: string, props: Resource_Props): any;
-declare function resource(props: Resource_Props): any;
-declare function riskAssessment(type: string, props: RiskAssessment_Props): any;
-declare function riskAssessment(props: RiskAssessment_Props): any;
-declare function schedule(type: string, props: Schedule_Props): any;
-declare function schedule(props: Schedule_Props): any;
-declare function serviceRequest(type: string, props: ServiceRequest_Props): any;
-declare function serviceRequest(props: ServiceRequest_Props): any;
-declare function slot(type: string, props: Slot_Props): any;
-declare function slot(props: Slot_Props): any;
-declare function specimen(type: string, props: Specimen_Props): any;
-declare function specimen(props: Specimen_Props): any;
-declare function specimenDefinition(type: string, props: SpecimenDefinition_Props): any;
-declare function specimenDefinition(props: SpecimenDefinition_Props): any;
-declare function substance(type: string, props: Substance_Props): any;
-declare function substance(props: Substance_Props): any;
-declare function substanceDefinition(type: string, props: SubstanceDefinition_Props): any;
-declare function substanceDefinition(props: SubstanceDefinition_Props): any;
-declare function supplyDelivery(type: string, props: SupplyDelivery_Props): any;
-declare function supplyDelivery(props: SupplyDelivery_Props): any;
-declare function supplyRequest(type: string, props: SupplyRequest_Props): any;
-declare function supplyRequest(props: SupplyRequest_Props): any;
-declare function task(type: string, props: Task_Props): any;
-declare function task(props: Task_Props): any;
-declare function testReport(type: string, props: TestReport_Props): any;
-declare function testReport(props: TestReport_Props): any;
-declare function testScript(type: string, props: TestScript_Props): any;
-declare function testScript(props: TestScript_Props): any;
-declare function verificationResult(type: string, props: VerificationResult_Props): any;
-declare function verificationResult(props: VerificationResult_Props): any;
 
-declare const builders_d_account: typeof account;
-declare const builders_d_activityDefinition: typeof activityDefinition;
-declare const builders_d_administrableProductDefinition: typeof administrableProductDefinition;
-declare const builders_d_adverseEvent: typeof adverseEvent;
-declare const builders_d_allergyIntolerance: typeof allergyIntolerance;
-declare const builders_d_appointment: typeof appointment;
-declare const builders_d_appointmentResponse: typeof appointmentResponse;
-declare const builders_d_biologicallyDerivedProduct: typeof biologicallyDerivedProduct;
-declare const builders_d_bodyStructure: typeof bodyStructure;
-declare const builders_d_carePlan: typeof carePlan;
-declare const builders_d_careTeam: typeof careTeam;
-declare const builders_d_chargeItem: typeof chargeItem;
-declare const builders_d_chargeItemDefinition: typeof chargeItemDefinition;
-declare const builders_d_citation: typeof citation;
-declare const builders_d_claim: typeof claim;
-declare const builders_d_claimResponse: typeof claimResponse;
-declare const builders_d_clinicalImpression: typeof clinicalImpression;
-declare const builders_d_clinicalUseDefinition: typeof clinicalUseDefinition;
-declare const builders_d_communication: typeof communication;
-declare const builders_d_communicationRequest: typeof communicationRequest;
-declare const builders_d_condition: typeof condition;
-declare const builders_d_contract: typeof contract;
-declare const builders_d_coverage: typeof coverage;
-declare const builders_d_coverageEligibilityRequest: typeof coverageEligibilityRequest;
-declare const builders_d_coverageEligibilityResponse: typeof coverageEligibilityResponse;
-declare const builders_d_detectedIssue: typeof detectedIssue;
-declare const builders_d_device: typeof device;
-declare const builders_d_deviceDefinition: typeof deviceDefinition;
-declare const builders_d_deviceMetric: typeof deviceMetric;
-declare const builders_d_deviceRequest: typeof deviceRequest;
-declare const builders_d_deviceUseStatement: typeof deviceUseStatement;
-declare const builders_d_diagnosticReport: typeof diagnosticReport;
-declare const builders_d_domainResource: typeof domainResource;
-declare const builders_d_encounter: typeof encounter;
-declare const builders_d_endpoint: typeof endpoint;
-declare const builders_d_enrollmentRequest: typeof enrollmentRequest;
-declare const builders_d_enrollmentResponse: typeof enrollmentResponse;
-declare const builders_d_episodeOfCare: typeof episodeOfCare;
-declare const builders_d_eventDefinition: typeof eventDefinition;
-declare const builders_d_evidence: typeof evidence;
-declare const builders_d_evidenceReport: typeof evidenceReport;
-declare const builders_d_evidenceVariable: typeof evidenceVariable;
-declare const builders_d_explanationOfBenefit: typeof explanationOfBenefit;
-declare const builders_d_familyMemberHistory: typeof familyMemberHistory;
-declare const builders_d_flag: typeof flag;
-declare const builders_d_goal: typeof goal;
-declare const builders_d_group: typeof group;
-declare const builders_d_guidanceResponse: typeof guidanceResponse;
-declare const builders_d_healthcareService: typeof healthcareService;
-declare const builders_d_imagingStudy: typeof imagingStudy;
-declare const builders_d_immunization: typeof immunization;
-declare const builders_d_immunizationEvaluation: typeof immunizationEvaluation;
-declare const builders_d_immunizationRecommendation: typeof immunizationRecommendation;
-declare const builders_d_ingredient: typeof ingredient;
-declare const builders_d_insurancePlan: typeof insurancePlan;
-declare const builders_d_invoice: typeof invoice;
-declare const builders_d_library: typeof library;
-declare const builders_d_list: typeof list;
-declare const builders_d_location: typeof location;
-declare const builders_d_manufacturedItemDefinition: typeof manufacturedItemDefinition;
-declare const builders_d_measure: typeof measure;
-declare const builders_d_measureReport: typeof measureReport;
-declare const builders_d_media: typeof media;
-declare const builders_d_medication: typeof medication;
-declare const builders_d_medicationAdministration: typeof medicationAdministration;
-declare const builders_d_medicationDispense: typeof medicationDispense;
-declare const builders_d_medicationKnowledge: typeof medicationKnowledge;
-declare const builders_d_medicationRequest: typeof medicationRequest;
-declare const builders_d_medicationStatement: typeof medicationStatement;
-declare const builders_d_medicinalProductDefinition: typeof medicinalProductDefinition;
-declare const builders_d_molecularSequence: typeof molecularSequence;
-declare const builders_d_nutritionOrder: typeof nutritionOrder;
-declare const builders_d_nutritionProduct: typeof nutritionProduct;
-declare const builders_d_observation: typeof observation;
-declare const builders_d_observationDefinition: typeof observationDefinition;
-declare const builders_d_organization: typeof organization;
-declare const builders_d_organizationAffiliation: typeof organizationAffiliation;
-declare const builders_d_packagedProductDefinition: typeof packagedProductDefinition;
 declare const builders_d_patient: typeof patient;
-declare const builders_d_paymentNotice: typeof paymentNotice;
-declare const builders_d_paymentReconciliation: typeof paymentReconciliation;
-declare const builders_d_person: typeof person;
-declare const builders_d_planDefinition: typeof planDefinition;
-declare const builders_d_practitioner: typeof practitioner;
-declare const builders_d_practitionerRole: typeof practitionerRole;
-declare const builders_d_procedure: typeof procedure;
-declare const builders_d_questionnaire: typeof questionnaire;
-declare const builders_d_questionnaireResponse: typeof questionnaireResponse;
-declare const builders_d_regulatedAuthorization: typeof regulatedAuthorization;
-declare const builders_d_relatedPerson: typeof relatedPerson;
-declare const builders_d_requestGroup: typeof requestGroup;
-declare const builders_d_researchDefinition: typeof researchDefinition;
-declare const builders_d_researchElementDefinition: typeof researchElementDefinition;
-declare const builders_d_researchStudy: typeof researchStudy;
-declare const builders_d_researchSubject: typeof researchSubject;
-declare const builders_d_resource: typeof resource;
-declare const builders_d_riskAssessment: typeof riskAssessment;
-declare const builders_d_schedule: typeof schedule;
-declare const builders_d_serviceRequest: typeof serviceRequest;
-declare const builders_d_slot: typeof slot;
-declare const builders_d_specimen: typeof specimen;
-declare const builders_d_specimenDefinition: typeof specimenDefinition;
-declare const builders_d_substance: typeof substance;
-declare const builders_d_substanceDefinition: typeof substanceDefinition;
-declare const builders_d_supplyDelivery: typeof supplyDelivery;
-declare const builders_d_supplyRequest: typeof supplyRequest;
-declare const builders_d_task: typeof task;
-declare const builders_d_testReport: typeof testReport;
-declare const builders_d_testScript: typeof testScript;
-declare const builders_d_verificationResult: typeof verificationResult;
 declare namespace builders_d {
-  export { builders_d_account as account, builders_d_activityDefinition as activityDefinition, builders_d_administrableProductDefinition as administrableProductDefinition, builders_d_adverseEvent as adverseEvent, builders_d_allergyIntolerance as allergyIntolerance, builders_d_appointment as appointment, builders_d_appointmentResponse as appointmentResponse, builders_d_biologicallyDerivedProduct as biologicallyDerivedProduct, builders_d_bodyStructure as bodyStructure, builders_d_carePlan as carePlan, builders_d_careTeam as careTeam, builders_d_chargeItem as chargeItem, builders_d_chargeItemDefinition as chargeItemDefinition, builders_d_citation as citation, builders_d_claim as claim, builders_d_claimResponse as claimResponse, builders_d_clinicalImpression as clinicalImpression, builders_d_clinicalUseDefinition as clinicalUseDefinition, builders_d_communication as communication, builders_d_communicationRequest as communicationRequest, builders_d_condition as condition, builders_d_contract as contract, builders_d_coverage as coverage, builders_d_coverageEligibilityRequest as coverageEligibilityRequest, builders_d_coverageEligibilityResponse as coverageEligibilityResponse, builders_d_detectedIssue as detectedIssue, builders_d_device as device, builders_d_deviceDefinition as deviceDefinition, builders_d_deviceMetric as deviceMetric, builders_d_deviceRequest as deviceRequest, builders_d_deviceUseStatement as deviceUseStatement, builders_d_diagnosticReport as diagnosticReport, builders_d_domainResource as domainResource, builders_d_encounter as encounter, builders_d_endpoint as endpoint, builders_d_enrollmentRequest as enrollmentRequest, builders_d_enrollmentResponse as enrollmentResponse, builders_d_episodeOfCare as episodeOfCare, builders_d_eventDefinition as eventDefinition, builders_d_evidence as evidence, builders_d_evidenceReport as evidenceReport, builders_d_evidenceVariable as evidenceVariable, builders_d_explanationOfBenefit as explanationOfBenefit, builders_d_familyMemberHistory as familyMemberHistory, builders_d_flag as flag, builders_d_goal as goal, builders_d_group as group, builders_d_guidanceResponse as guidanceResponse, builders_d_healthcareService as healthcareService, builders_d_imagingStudy as imagingStudy, builders_d_immunization as immunization, builders_d_immunizationEvaluation as immunizationEvaluation, builders_d_immunizationRecommendation as immunizationRecommendation, builders_d_ingredient as ingredient, builders_d_insurancePlan as insurancePlan, builders_d_invoice as invoice, builders_d_library as library, builders_d_list as list, builders_d_location as location, builders_d_manufacturedItemDefinition as manufacturedItemDefinition, builders_d_measure as measure, builders_d_measureReport as measureReport, builders_d_media as media, builders_d_medication as medication, builders_d_medicationAdministration as medicationAdministration, builders_d_medicationDispense as medicationDispense, builders_d_medicationKnowledge as medicationKnowledge, builders_d_medicationRequest as medicationRequest, builders_d_medicationStatement as medicationStatement, builders_d_medicinalProductDefinition as medicinalProductDefinition, builders_d_molecularSequence as molecularSequence, builders_d_nutritionOrder as nutritionOrder, builders_d_nutritionProduct as nutritionProduct, builders_d_observation as observation, builders_d_observationDefinition as observationDefinition, builders_d_organization as organization, builders_d_organizationAffiliation as organizationAffiliation, builders_d_packagedProductDefinition as packagedProductDefinition, builders_d_patient as patient, builders_d_paymentNotice as paymentNotice, builders_d_paymentReconciliation as paymentReconciliation, builders_d_person as person, builders_d_planDefinition as planDefinition, builders_d_practitioner as practitioner, builders_d_practitionerRole as practitionerRole, builders_d_procedure as procedure, builders_d_questionnaire as questionnaire, builders_d_questionnaireResponse as questionnaireResponse, builders_d_regulatedAuthorization as regulatedAuthorization, builders_d_relatedPerson as relatedPerson, builders_d_requestGroup as requestGroup, builders_d_researchDefinition as researchDefinition, builders_d_researchElementDefinition as researchElementDefinition, builders_d_researchStudy as researchStudy, builders_d_researchSubject as researchSubject, builders_d_resource as resource, builders_d_riskAssessment as riskAssessment, builders_d_schedule as schedule, builders_d_serviceRequest as serviceRequest, builders_d_slot as slot, builders_d_specimen as specimen, builders_d_specimenDefinition as specimenDefinition, builders_d_substance as substance, builders_d_substanceDefinition as substanceDefinition, builders_d_supplyDelivery as supplyDelivery, builders_d_supplyRequest as supplyRequest, builders_d_task as task, builders_d_testReport as testReport, builders_d_testScript as testScript, builders_d_verificationResult as verificationResult };
-}
-
-declare const Adaptor_cursor: typeof cursor;
-declare const Adaptor_dataPath: typeof dataPath;
-declare const Adaptor_dataValue: typeof dataValue;
-declare const Adaptor_dateFns: typeof dateFns;
-declare const Adaptor_each: typeof each;
-declare const Adaptor_field: typeof field;
-declare const Adaptor_fields: typeof fields;
-declare const Adaptor_fn: typeof fn;
-declare const Adaptor_lastReferenceValue: typeof lastReferenceValue;
-declare const Adaptor_merge: typeof merge;
-declare const Adaptor_sourceValue: typeof sourceValue;
-declare namespace Adaptor {
-  export { Adaptor_cursor as cursor, Adaptor_dataPath as dataPath, Adaptor_dataValue as dataValue, Adaptor_dateFns as dateFns, Adaptor_each as each, Adaptor_field as field, Adaptor_fields as fields, Adaptor_fn as fn, Adaptor_lastReferenceValue as lastReferenceValue, Adaptor_merge as merge, Adaptor_sourceValue as sourceValue };
+  export { builders_d_patient as patient };
 }
 
 export { builders_d as b, builders_d as builders, Adaptor as default, datatypes_d as util };

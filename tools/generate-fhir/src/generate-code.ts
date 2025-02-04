@@ -18,7 +18,10 @@ const INPUT_NAME = 'props';
 const generateCode = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {},
-  options: { simpleSignatures?: boolean } = {}
+  options: {
+    simpleSignatures?: boolean;
+    fhirTypes?: Record<string, true>;
+  } = {}
 ): { builders: string; profiles: Record<string, string> } => {
   const statements: n.Statement[] = [];
 
@@ -47,7 +50,8 @@ const generateCode = (
 
       profiles[profile.id] = generateProfile(
         profile,
-        mappings.overrides?.[resourceType] ?? {}
+        mappings.overrides?.[resourceType] ?? {},
+        options.fhirTypes
       );
 
       // Generate an entrypoint function
@@ -69,7 +73,11 @@ const generateCode = (
   return { builders, profiles };
 };
 
-const generateProfile = (profile: Schema, mappings: MappingSpec) => {
+const generateProfile = (
+  profile: Schema,
+  mappings: MappingSpec,
+  fhirTypes: Record<string, true> = {}
+) => {
   const statements = [];
 
   const overrides = Object.assign({}, mappings.any, mappings[profile.id]);
@@ -86,8 +94,14 @@ const generateProfile = (profile: Schema, mappings: MappingSpec) => {
       b.stringLiteral('lodash')
     )
   );
+  statements.push(
+    b.importDeclaration(
+      [b.importNamespaceSpecifier(b.identifier('FHIR'))],
+      b.stringLiteral('../fhir')
+    )
+  );
 
-  const typedef = generateType(profile.type, profile, mappings);
+  const typedef = generateType(profile.type, profile, mappings, fhirTypes);
 
   statements.push(typedef);
 

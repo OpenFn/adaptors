@@ -17,41 +17,45 @@ export const generateDataTypes = (schema: Record<string, Schema[]>) => {
     /*setParentNodes*/ false,
     ts.ScriptKind.TS
   );
-  // tmp
-  const statements: any[] = [];
+  const index: Record<string, true> = {};
+  const statements: ts.NodeArray<ts.Node> = [];
   for (const resourceType in schema) {
     for (const profile of schema[resourceType]) {
       // skip primitives which we map to plain js
       if (profile.id in typeMap) {
         continue;
       }
-      const ast = generateType(resourceType, profile, {}, profile.id);
+      index[profile.id] = true;
+      const ast = generateType(resourceType, profile, {}, profile.id, true);
       statements.push(ast);
     }
   }
   const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
 
-  // needed to make the module register properly. Apparently.
-  const imp = b.createImportDeclaration(
-    [],
-    [],
-    undefined,
-    b.createStringLiteral('.')
-  );
-  const mod = b.createModuleDeclaration(
-    [b.createToken(ts.SyntaxKind.DeclareKeyword)],
-    b.createIdentifier('global'),
-    b.createModuleBlock(statements),
-    ts.NodeFlags.GlobalAugmentation |
-      // ts.NodeFlags.Ambient |
-      ts.NodeFlags.ContextFlags
-  );
+  // // needed to make the module register properly. Apparently.
+  // const imp = b.createImportDeclaration(
+  //   [],
+  //   [],
+  //   undefined,
+  //   b.createStringLiteral('.')
+  // );
+  // const mod = b.createModuleDeclaration(
+  //   [b.createToken(ts.SyntaxKind.DeclareKeyword)],
+  //   b.createIdentifier('FHIR'),
+  //   b.createModuleBlock(statements),
+  //   ts.NodeFlags.GlobalAugmentation |
+  //     // ts.NodeFlags.Ambient |
+  //     ts.NodeFlags.ContextFlags
+  // );
 
-  return printer.printList(
+  const src = printer.printList(
     ts.ListFormat.SourceFileStatements,
-    [imp, mod],
+    // statements.map(s => b.createExportDeclaration([], [], false, )),
+    statements,
     resultFile
   );
+
+  return { src, index };
 };
 
 // for a given list of mappings, generate a signature for the builder
@@ -240,7 +244,11 @@ const generateEntryFuction = (
 };
 
 // TODO maybe the sig is schema & mappings?
-const createTypeNode = (incomingType: string, values?: string[]) => {
+const createTypeNode = (
+  incomingType: string,
+  values?: string[],
+  fhirTypes = { Identifier: true }
+) => {
   const type = typeMap[incomingType] ?? incomingType;
 
   if (values) {
@@ -253,10 +261,13 @@ const createTypeNode = (incomingType: string, values?: string[]) => {
     }
   }
 
-  if (type === 'string') {
-    return b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
-  }
-
+  // if (type === 'string') {
+  //   return b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+  // }
+  // console.log('>>', fhirTypes, y);
+  // if (type in fhirTypes) {
+  //   return b.createTypeReferenceNode(`JAM`);
+  // }
   if (type) {
     return b.createTypeReferenceNode(type);
   }
@@ -268,7 +279,8 @@ export const generateType = (
   resourceName: string,
   schema: Schema,
   mappings = {},
-  typeName?: string
+  typeName?: string,
+  includeExport = false
 ) => {
   const props = [];
 
@@ -312,7 +324,7 @@ export const generateType = (
   }
 
   const t = b.createTypeAliasDeclaration(
-    [],
+    includeExport ? [b.createToken(ts.SyntaxKind.ExportKeyword)] : [],
     typeName || `${resourceName}_Props`,
     [], // generics
     b.createTypeLiteralNode(props)

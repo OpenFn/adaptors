@@ -121,6 +121,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log(e);
   }
 
+  let fhirTypes = {};
   try {
     await access(specPath);
     console.log('Generating datatype schemas');
@@ -129,10 +130,11 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     // Note: when generating datatypes we ignore the user's mappings and generate everything
     // maybe we need to take a different mappings object?
     const dtSchema = await generateSchema(dtSpecPath);
-    const datatypes = generateDataTypes(dtSchema);
-    const dtsPath = path.resolve(adaptorPath, 'types/globals.d.ts');
+    const { src, index } = generateDataTypes(dtSchema);
+    fhirTypes = index;
+    const dtsPath = path.resolve(adaptorPath, 'src/fhir.ts');
     console.log('Writing datatype schemas to ', dtsPath);
-    await writeFile(dtsPath, withDisclaimer(datatypes));
+    await writeFile(dtsPath, withDisclaimer(src));
   } catch (e) {
     console.log('Skipping datatype generation');
   }
@@ -140,22 +142,22 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   console.log('Generating resource schemas');
   const schema = await generateSchema(specPath, mappings);
 
-  // console.log('Generating code');
-  // const src = generateCode(schema, mappings, {
-  //   simpleSignatures: simpleBuilders,
-  // });
+  console.log('Generating code');
+  const src = generateCode(schema, mappings, {
+    simpleSignatures: simpleBuilders,
+    fhirTypes,
+  });
 
-  // const srcPath = path.resolve(adaptorPath, 'src/builders.ts');
-  // console.log('Writing source to ', srcPath);
-  // await writeFile(srcPath, withDisclaimer(src.builders));
-  // await mkdir(path.resolve(adaptorPath, 'src/profiles'), { recursive: true });
-  // for (const profile in src.profiles) {
-  //   ``;
-  //   await writeFile(
-  //     path.resolve(adaptorPath, 'src/profiles', `${profile}.ts`),
-  //     withDisclaimer(src.profiles[profile])
-  //   );
-  // }
+  const srcPath = path.resolve(adaptorPath, 'src/builders.ts');
+  console.log('Writing source to ', srcPath);
+  await writeFile(srcPath, withDisclaimer(src.builders));
+  await mkdir(path.resolve(adaptorPath, 'src/profiles'), { recursive: true });
+  for (const profile in src.profiles) {
+    await writeFile(
+      path.resolve(adaptorPath, 'src/profiles', `${profile}.ts`),
+      withDisclaimer(src.profiles[profile])
+    );
+  }
 
   if (options.tests) {
     console.log('Generating tests');
@@ -180,7 +182,9 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     '--declaration',
     '--emitDeclarationOnly',
     '--lib es2020',
-    `--declarationDir ${path.resolve(adaptorPath, 'types/tmp')}`,
+    // write type to a tmp dir to avoid conflicts
+    `--declarationDir ${path.resolve(adaptorPath, 'tmp-types')}`,
+    // `--typeRoots ${path.resolve(adaptorPath, 'types')}`,
   ];
 
   // Finally, update package json metadata
@@ -198,11 +202,11 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     `pnpm exec tsc ${tscArgs.join(' ')} ${pathToEntry}`,
     {},
     async (err, stderr) => {
-      console.log('>', err);
-      console.log('>', stderr);
+      // console.log('>', err);
+      // console.log('>', stderr);
       console.log('Bundling DTS files');
       const bundle = await rollup({
-        input: path.resolve(adaptorPath, 'types', 'tmp', 'index.d.ts'),
+        input: path.resolve(adaptorPath, 'tmp-types', 'index.d.ts'),
         plugins: [dts()],
       });
       const dtsBundle = await bundle.generate({
@@ -217,7 +221,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       console.log('Removing old dts files');
 
       // finally remove the temporary  type files
-      await rm(path.resolve(adaptorPath, 'types/tmp'), {
+      await rm(path.resolve(adaptorPath, 'tmp-types'), {
         recursive: true,
         force: true,
       });

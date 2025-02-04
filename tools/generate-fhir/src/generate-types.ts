@@ -19,6 +19,7 @@ const typeMap = {
 
   // TODO
   canonical: 'any',
+  Resource: 'any',
 };
 
 // These type defs will all reference back to fhir4
@@ -29,7 +30,8 @@ const datatypes = {
 export const generateType = (
   resourceName: string,
   schema: Schema,
-  mappings: MappingSpec
+  mappings: MappingSpec,
+  fhirTypes: Record<string, true> = {}
 ) => {
   const props = [];
 
@@ -66,8 +68,9 @@ export const generateType = (
     // props.push(b.createPropertySignature([], key, undefined, type));
 
     // simplified
+    const t = m.type || s.type || 'any';
     const type = createTypeNode(
-      m.type || s.type || 'any',
+      t in fhirTypes ? `FHIR.${t}` : t,
       m.values || s.values
     );
     props.push(
