@@ -5,32 +5,33 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type MolecularSequence_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     type?: string;
     coordinateSystem?: number;
-    patient?: Reference;
-    specimen?: Reference;
-    device?: Reference;
-    performer?: Reference;
-    quantity?: Quantity;
-    referenceSeq?: BackboneElement;
-    variant?: BackboneElement;
+    patient?: FHIR.Reference;
+    specimen?: FHIR.Reference;
+    device?: FHIR.Reference;
+    performer?: FHIR.Reference;
+    quantity?: FHIR.Quantity;
+    referenceSeq?: FHIR.BackboneElement;
+    variant?: FHIR.BackboneElement;
     observedSeq?: string;
-    quality?: BackboneElement;
+    quality?: FHIR.BackboneElement;
     readCoverage?: number;
-    repository?: BackboneElement;
-    pointer?: Reference;
-    structureVariant?: BackboneElement;
+    repository?: FHIR.BackboneElement;
+    pointer?: FHIR.Reference;
+    structureVariant?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<MolecularSequence_Props>) {

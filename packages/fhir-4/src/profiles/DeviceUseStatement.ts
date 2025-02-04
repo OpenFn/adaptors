@@ -5,29 +5,30 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type DeviceUseStatement_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    basedOn?: FHIR.Reference;
     status?: string;
-    subject?: Reference;
-    derivedFrom?: Reference;
-    timing?: Timing;
+    subject?: FHIR.Reference;
+    derivedFrom?: FHIR.Reference;
+    timing?: FHIR.Timing;
     recordedOn?: string;
-    source?: Reference;
-    device?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    bodySite?: CodeableConcept;
-    note?: Annotation;
+    source?: FHIR.Reference;
+    device?: FHIR.Reference;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
+    bodySite?: FHIR.CodeableConcept;
+    note?: FHIR.Annotation;
 };
 
 export default function(props: Partial<DeviceUseStatement_Props>) {

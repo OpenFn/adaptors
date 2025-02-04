@@ -5,40 +5,41 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type DeviceRequest_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
-    basedOn?: Reference;
-    priorRequest?: Reference;
-    groupIdentifier?: Identifier;
+    basedOn?: FHIR.Reference;
+    priorRequest?: FHIR.Reference;
+    groupIdentifier?: FHIR.Identifier;
     status?: string;
     intent?: string;
     priority?: string;
-    code?: Reference;
-    parameter?: BackboneElement;
-    subject?: Reference;
-    encounter?: Reference;
+    code?: FHIR.Reference;
+    parameter?: FHIR.BackboneElement;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     occurrence?: string;
     authoredOn?: string;
-    requester?: Reference;
-    performerType?: CodeableConcept;
-    performer?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    insurance?: Reference;
-    supportingInfo?: Reference;
-    note?: Annotation;
-    relevantHistory?: Reference;
+    requester?: FHIR.Reference;
+    performerType?: FHIR.CodeableConcept;
+    performer?: FHIR.Reference;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
+    insurance?: FHIR.Reference;
+    supportingInfo?: FHIR.Reference;
+    note?: FHIR.Annotation;
+    relevantHistory?: FHIR.Reference;
 };
 
 export default function(props: Partial<DeviceRequest_Props>) {

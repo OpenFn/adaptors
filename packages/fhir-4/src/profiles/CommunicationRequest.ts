@@ -5,38 +5,39 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type CommunicationRequest_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
-    replaces?: Reference;
-    groupIdentifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    basedOn?: FHIR.Reference;
+    replaces?: FHIR.Reference;
+    groupIdentifier?: FHIR.Identifier;
     status?: string;
-    statusReason?: CodeableConcept;
-    category?: CodeableConcept;
+    statusReason?: FHIR.CodeableConcept;
+    category?: FHIR.CodeableConcept;
     priority?: string;
     doNotPerform?: boolean;
-    medium?: CodeableConcept;
-    subject?: Reference;
-    about?: Reference;
-    encounter?: Reference;
-    payload?: BackboneElement;
+    medium?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    about?: FHIR.Reference;
+    encounter?: FHIR.Reference;
+    payload?: FHIR.BackboneElement;
     occurrence?: string;
     authoredOn?: string;
-    requester?: Reference;
-    recipient?: Reference;
-    sender?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    note?: Annotation;
+    requester?: FHIR.Reference;
+    recipient?: FHIR.Reference;
+    sender?: FHIR.Reference;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
+    note?: FHIR.Annotation;
 };
 
 export default function(props: Partial<CommunicationRequest_Props>) {

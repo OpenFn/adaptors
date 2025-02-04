@@ -5,24 +5,25 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type BodyStructure_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     active?: boolean;
-    morphology?: CodeableConcept;
-    location?: CodeableConcept;
-    locationQualifier?: CodeableConcept;
+    morphology?: FHIR.CodeableConcept;
+    location?: FHIR.CodeableConcept;
+    locationQualifier?: FHIR.CodeableConcept;
     description?: string;
-    image?: Attachment;
-    patient?: Reference;
+    image?: FHIR.Attachment;
+    patient?: FHIR.Reference;
 };
 
 export default function(props: Partial<BodyStructure_Props>) {

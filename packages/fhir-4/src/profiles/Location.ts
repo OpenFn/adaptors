@@ -5,33 +5,34 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Location_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    operationalStatus?: Coding;
+    operationalStatus?: FHIR.Coding;
     name?: string;
     alias?: string;
     description?: string;
     mode?: string;
-    type?: CodeableConcept;
-    telecom?: ContactPoint;
-    address?: Address;
-    physicalType?: CodeableConcept;
-    position?: BackboneElement;
-    managingOrganization?: Reference;
-    partOf?: Reference;
-    hoursOfOperation?: BackboneElement;
+    type?: FHIR.CodeableConcept;
+    telecom?: FHIR.ContactPoint;
+    address?: FHIR.Address;
+    physicalType?: FHIR.CodeableConcept;
+    position?: FHIR.BackboneElement;
+    managingOrganization?: FHIR.Reference;
+    partOf?: FHIR.Reference;
+    hoursOfOperation?: FHIR.BackboneElement;
     availabilityExceptions?: string;
-    endpoint?: Reference;
+    endpoint?: FHIR.Reference;
 };
 
 export default function(props: Partial<Location_Props>) {

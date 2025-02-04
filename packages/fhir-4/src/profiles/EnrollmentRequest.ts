@@ -5,23 +5,24 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type EnrollmentRequest_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
     created?: string;
-    insurer?: Reference;
-    provider?: Reference;
-    candidate?: Reference;
-    coverage?: Reference;
+    insurer?: FHIR.Reference;
+    provider?: FHIR.Reference;
+    candidate?: FHIR.Reference;
+    coverage?: FHIR.Reference;
 };
 
 export default function(props: Partial<EnrollmentRequest_Props>) {

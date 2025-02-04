@@ -5,36 +5,37 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type ImagingStudy_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    modality?: Coding;
-    subject?: Reference;
-    encounter?: Reference;
+    modality?: FHIR.Coding;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     started?: string;
-    basedOn?: Reference;
-    referrer?: Reference;
-    interpreter?: Reference;
-    endpoint?: Reference;
+    basedOn?: FHIR.Reference;
+    referrer?: FHIR.Reference;
+    interpreter?: FHIR.Reference;
+    endpoint?: FHIR.Reference;
     numberOfSeries?: number;
     numberOfInstances?: number;
-    procedureReference?: Reference;
-    procedureCode?: CodeableConcept;
-    location?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    note?: Annotation;
+    procedureReference?: FHIR.Reference;
+    procedureCode?: FHIR.CodeableConcept;
+    location?: FHIR.Reference;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
+    note?: FHIR.Annotation;
     description?: string;
-    series?: BackboneElement;
+    series?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<ImagingStudy_Props>) {

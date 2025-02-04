@@ -5,40 +5,41 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type MedicationDispense_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    partOf?: Reference;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    partOf?: FHIR.Reference;
     status?: string;
-    statusReason?: CodeableConcept;
-    category?: CodeableConcept;
-    medication?: CodeableConcept;
-    subject?: Reference;
-    context?: Reference;
-    supportingInformation?: Reference;
-    performer?: BackboneElement;
-    location?: Reference;
-    authorizingPrescription?: Reference;
-    type?: CodeableConcept;
-    quantity?: Quantity;
-    daysSupply?: Quantity;
+    statusReason?: FHIR.CodeableConcept;
+    category?: FHIR.CodeableConcept;
+    medication?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    context?: FHIR.Reference;
+    supportingInformation?: FHIR.Reference;
+    performer?: FHIR.BackboneElement;
+    location?: FHIR.Reference;
+    authorizingPrescription?: FHIR.Reference;
+    type?: FHIR.CodeableConcept;
+    quantity?: FHIR.Quantity;
+    daysSupply?: FHIR.Quantity;
     whenPrepared?: string;
     whenHandedOver?: string;
-    destination?: Reference;
-    receiver?: Reference;
-    note?: Annotation;
-    dosageInstruction?: Dosage;
-    substitution?: BackboneElement;
-    detectedIssue?: Reference;
-    eventHistory?: Reference;
+    destination?: FHIR.Reference;
+    receiver?: FHIR.Reference;
+    note?: FHIR.Annotation;
+    dosageInstruction?: FHIR.Dosage;
+    substitution?: FHIR.BackboneElement;
+    detectedIssue?: FHIR.Reference;
+    eventHistory?: FHIR.Reference;
 };
 
 export default function(props: Partial<MedicationDispense_Props>) {

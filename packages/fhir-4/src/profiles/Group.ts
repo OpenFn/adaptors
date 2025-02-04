@@ -5,26 +5,27 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Group_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     active?: boolean;
     type?: string;
     actual?: boolean;
-    code?: CodeableConcept;
+    code?: FHIR.CodeableConcept;
     name?: string;
     quantity?: number;
-    managingEntity?: Reference;
-    characteristic?: BackboneElement;
-    member?: BackboneElement;
+    managingEntity?: FHIR.Reference;
+    characteristic?: FHIR.BackboneElement;
+    member?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<Group_Props>) {

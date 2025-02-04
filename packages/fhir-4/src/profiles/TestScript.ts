@@ -5,18 +5,19 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type TestScript_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
     url?: string;
-    identifier?: Identifier;
+    identifier?: FHIR.Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -24,21 +25,21 @@ export type TestScript_Props = {
     experimental?: boolean;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
-    description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
-    purpose?: markdown;
-    copyright?: markdown;
-    origin?: BackboneElement;
-    destination?: BackboneElement;
-    metadata?: BackboneElement;
-    fixture?: BackboneElement;
-    profile?: Reference;
-    variable?: BackboneElement;
-    setup?: BackboneElement;
-    test?: BackboneElement;
-    teardown?: BackboneElement;
+    contact?: FHIR.ContactDetail;
+    description?: FHIR.markdown;
+    useContext?: FHIR.UsageContext;
+    jurisdiction?: FHIR.CodeableConcept;
+    purpose?: FHIR.markdown;
+    copyright?: FHIR.markdown;
+    origin?: FHIR.BackboneElement;
+    destination?: FHIR.BackboneElement;
+    metadata?: FHIR.BackboneElement;
+    fixture?: FHIR.BackboneElement;
+    profile?: FHIR.Reference;
+    variable?: FHIR.BackboneElement;
+    setup?: FHIR.BackboneElement;
+    test?: FHIR.BackboneElement;
+    teardown?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<TestScript_Props>) {

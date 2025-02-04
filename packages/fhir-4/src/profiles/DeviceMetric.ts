@@ -5,26 +5,27 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type DeviceMetric_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    type?: CodeableConcept;
-    unit?: CodeableConcept;
-    source?: Reference;
-    parent?: Reference;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    type?: FHIR.CodeableConcept;
+    unit?: FHIR.CodeableConcept;
+    source?: FHIR.Reference;
+    parent?: FHIR.Reference;
     operationalStatus?: string;
     color?: string;
     category?: string;
-    measurementPeriod?: Timing;
-    calibration?: BackboneElement;
+    measurementPeriod?: FHIR.Timing;
+    calibration?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<DeviceMetric_Props>) {

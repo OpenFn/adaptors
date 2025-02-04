@@ -5,24 +5,25 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Medication_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    code?: CodeableConcept;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    code?: FHIR.CodeableConcept;
     status?: string;
-    manufacturer?: Reference;
-    form?: CodeableConcept;
-    amount?: Ratio;
-    ingredient?: BackboneElement;
-    batch?: BackboneElement;
+    manufacturer?: FHIR.Reference;
+    form?: FHIR.CodeableConcept;
+    amount?: FHIR.Ratio;
+    ingredient?: FHIR.BackboneElement;
+    batch?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<Medication_Props>) {

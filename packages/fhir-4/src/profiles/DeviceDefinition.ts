@@ -5,38 +5,39 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type DeviceDefinition_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    udiDeviceIdentifier?: BackboneElement;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    udiDeviceIdentifier?: FHIR.BackboneElement;
     manufacturer?: string;
-    deviceName?: BackboneElement;
+    deviceName?: FHIR.BackboneElement;
     modelNumber?: string;
-    type?: CodeableConcept;
-    specialization?: BackboneElement;
+    type?: FHIR.CodeableConcept;
+    specialization?: FHIR.BackboneElement;
     version?: string;
-    safety?: CodeableConcept;
-    shelfLifeStorage?: ProductShelfLife;
-    physicalCharacteristics?: ProdCharacteristic;
-    languageCode?: CodeableConcept;
-    capability?: BackboneElement;
-    property?: BackboneElement;
-    owner?: Reference;
-    contact?: ContactPoint;
+    safety?: FHIR.CodeableConcept;
+    shelfLifeStorage?: FHIR.ProductShelfLife;
+    physicalCharacteristics?: FHIR.ProdCharacteristic;
+    languageCode?: FHIR.CodeableConcept;
+    capability?: FHIR.BackboneElement;
+    property?: FHIR.BackboneElement;
+    owner?: FHIR.Reference;
+    contact?: FHIR.ContactPoint;
     url?: string;
     onlineInformation?: string;
-    note?: Annotation;
-    quantity?: Quantity;
-    parentDevice?: Reference;
-    material?: BackboneElement;
+    note?: FHIR.Annotation;
+    quantity?: FHIR.Quantity;
+    parentDevice?: FHIR.Reference;
+    material?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<DeviceDefinition_Props>) {

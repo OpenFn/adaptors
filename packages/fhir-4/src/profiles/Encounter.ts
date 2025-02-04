@@ -5,39 +5,40 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Encounter_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    statusHistory?: BackboneElement;
-    class?: Coding;
-    classHistory?: BackboneElement;
-    type?: CodeableConcept;
-    serviceType?: CodeableConcept;
-    priority?: CodeableConcept;
-    subject?: Reference;
-    episodeOfCare?: Reference;
-    basedOn?: Reference;
-    participant?: BackboneElement;
-    appointment?: Reference;
-    period?: Period;
-    length?: Duration;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    diagnosis?: BackboneElement;
-    account?: Reference;
-    hospitalization?: BackboneElement;
-    location?: BackboneElement;
-    serviceProvider?: Reference;
-    partOf?: Reference;
+    statusHistory?: FHIR.BackboneElement;
+    class?: FHIR.Coding;
+    classHistory?: FHIR.BackboneElement;
+    type?: FHIR.CodeableConcept;
+    serviceType?: FHIR.CodeableConcept;
+    priority?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    episodeOfCare?: FHIR.Reference;
+    basedOn?: FHIR.Reference;
+    participant?: FHIR.BackboneElement;
+    appointment?: FHIR.Reference;
+    period?: FHIR.Period;
+    length?: FHIR.Duration;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
+    diagnosis?: FHIR.BackboneElement;
+    account?: FHIR.Reference;
+    hospitalization?: FHIR.BackboneElement;
+    location?: FHIR.BackboneElement;
+    serviceProvider?: FHIR.Reference;
+    partOf?: FHIR.Reference;
 };
 
 export default function(props: Partial<Encounter_Props>) {

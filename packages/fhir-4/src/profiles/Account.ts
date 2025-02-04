@@ -5,27 +5,28 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Account_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    type?: CodeableConcept;
+    type?: FHIR.CodeableConcept;
     name?: string;
-    subject?: Reference;
-    servicePeriod?: Period;
-    coverage?: BackboneElement;
-    owner?: Reference;
+    subject?: FHIR.Reference;
+    servicePeriod?: FHIR.Period;
+    coverage?: FHIR.BackboneElement;
+    owner?: FHIR.Reference;
     description?: string;
-    guarantor?: BackboneElement;
-    partOf?: Reference;
+    guarantor?: FHIR.BackboneElement;
+    partOf?: FHIR.Reference;
 };
 
 export default function(props: Partial<Account_Props>) {

@@ -5,26 +5,27 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Organization_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     active?: boolean;
-    type?: CodeableConcept;
+    type?: FHIR.CodeableConcept;
     name?: string;
     alias?: string;
-    telecom?: ContactPoint;
-    address?: Address;
-    partOf?: Reference;
-    contact?: BackboneElement;
-    endpoint?: Reference;
+    telecom?: FHIR.ContactPoint;
+    address?: FHIR.Address;
+    partOf?: FHIR.Reference;
+    contact?: FHIR.BackboneElement;
+    endpoint?: FHIR.Reference;
 };
 
 export default function(props: Partial<Organization_Props>) {

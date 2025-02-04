@@ -5,40 +5,41 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type ResearchStudy_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     title?: string;
-    protocol?: Reference;
-    partOf?: Reference;
+    protocol?: FHIR.Reference;
+    partOf?: FHIR.Reference;
     status?: string;
-    primaryPurposeType?: CodeableConcept;
-    phase?: CodeableConcept;
-    category?: CodeableConcept;
-    focus?: CodeableConcept;
-    condition?: CodeableConcept;
-    contact?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
-    keyword?: CodeableConcept;
-    location?: CodeableConcept;
-    description?: markdown;
-    enrollment?: Reference;
-    period?: Period;
-    sponsor?: Reference;
-    principalInvestigator?: Reference;
-    site?: Reference;
-    reasonStopped?: CodeableConcept;
-    note?: Annotation;
-    arm?: BackboneElement;
-    objective?: BackboneElement;
+    primaryPurposeType?: FHIR.CodeableConcept;
+    phase?: FHIR.CodeableConcept;
+    category?: FHIR.CodeableConcept;
+    focus?: FHIR.CodeableConcept;
+    condition?: FHIR.CodeableConcept;
+    contact?: FHIR.ContactDetail;
+    relatedArtifact?: FHIR.RelatedArtifact;
+    keyword?: FHIR.CodeableConcept;
+    location?: FHIR.CodeableConcept;
+    description?: FHIR.markdown;
+    enrollment?: FHIR.Reference;
+    period?: FHIR.Period;
+    sponsor?: FHIR.Reference;
+    principalInvestigator?: FHIR.Reference;
+    site?: FHIR.Reference;
+    reasonStopped?: FHIR.CodeableConcept;
+    note?: FHIR.Annotation;
+    arm?: FHIR.BackboneElement;
+    objective?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<ResearchStudy_Props>) {

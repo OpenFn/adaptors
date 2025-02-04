@@ -184,7 +184,6 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     '--lib es2020',
     // write type to a tmp dir to avoid conflicts
     `--declarationDir ${path.resolve(adaptorPath, 'tmp-types')}`,
-    // `--typeRoots ${path.resolve(adaptorPath, 'types')}`,
   ];
 
   // Finally, update package json metadata

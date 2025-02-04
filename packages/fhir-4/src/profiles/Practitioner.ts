@@ -5,26 +5,27 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Practitioner_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     active?: boolean;
-    name?: HumanName;
-    telecom?: ContactPoint;
-    address?: Address;
+    name?: FHIR.HumanName;
+    telecom?: FHIR.ContactPoint;
+    address?: FHIR.Address;
     gender?: string;
     birthDate?: string;
-    photo?: Attachment;
-    qualification?: BackboneElement;
-    communication?: CodeableConcept;
+    photo?: FHIR.Attachment;
+    qualification?: FHIR.BackboneElement;
+    communication?: FHIR.CodeableConcept;
 };
 
 export default function(props: Partial<Practitioner_Props>) {

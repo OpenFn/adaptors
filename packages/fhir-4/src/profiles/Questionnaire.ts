@@ -5,18 +5,19 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Questionnaire_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
     url?: string;
-    identifier?: Identifier;
+    identifier?: FHIR.Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -26,17 +27,17 @@ export type Questionnaire_Props = {
     subjectType?: string;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
-    description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
-    purpose?: markdown;
-    copyright?: markdown;
+    contact?: FHIR.ContactDetail;
+    description?: FHIR.markdown;
+    useContext?: FHIR.UsageContext;
+    jurisdiction?: FHIR.CodeableConcept;
+    purpose?: FHIR.markdown;
+    copyright?: FHIR.markdown;
     approvalDate?: string;
     lastReviewDate?: string;
-    effectivePeriod?: Period;
-    code?: Coding;
-    item?: BackboneElement;
+    effectivePeriod?: FHIR.Period;
+    code?: FHIR.Coding;
+    item?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<Questionnaire_Props>) {

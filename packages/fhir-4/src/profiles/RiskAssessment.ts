@@ -5,33 +5,34 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type RiskAssessment_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
-    parent?: Reference;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    basedOn?: FHIR.Reference;
+    parent?: FHIR.Reference;
     status?: string;
-    method?: CodeableConcept;
-    code?: CodeableConcept;
-    subject?: Reference;
-    encounter?: Reference;
+    method?: FHIR.CodeableConcept;
+    code?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     occurrence?: string;
-    condition?: Reference;
-    performer?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    basis?: Reference;
-    prediction?: BackboneElement;
+    condition?: FHIR.Reference;
+    performer?: FHIR.Reference;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
+    basis?: FHIR.Reference;
+    prediction?: FHIR.BackboneElement;
     mitigation?: string;
-    note?: Annotation;
+    note?: FHIR.Annotation;
 };
 
 export default function(props: Partial<RiskAssessment_Props>) {

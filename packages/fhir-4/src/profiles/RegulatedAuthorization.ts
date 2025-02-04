@@ -5,30 +5,31 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type RegulatedAuthorization_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    subject?: Reference;
-    type?: CodeableConcept;
-    description?: markdown;
-    region?: CodeableConcept;
-    status?: CodeableConcept;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    subject?: FHIR.Reference;
+    type?: FHIR.CodeableConcept;
+    description?: FHIR.markdown;
+    region?: FHIR.CodeableConcept;
+    status?: FHIR.CodeableConcept;
     statusDate?: string;
-    validityPeriod?: Period;
-    indication?: CodeableReference;
-    intendedUse?: CodeableConcept;
-    basis?: CodeableConcept;
-    holder?: Reference;
-    regulator?: Reference;
-    case?: BackboneElement;
+    validityPeriod?: FHIR.Period;
+    indication?: FHIR.CodeableReference;
+    intendedUse?: FHIR.CodeableConcept;
+    basis?: FHIR.CodeableConcept;
+    holder?: FHIR.Reference;
+    regulator?: FHIR.Reference;
+    case?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<RegulatedAuthorization_Props>) {

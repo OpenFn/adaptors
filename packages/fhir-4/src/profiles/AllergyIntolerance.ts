@@ -5,32 +5,33 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type AllergyIntolerance_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    clinicalStatus?: CodeableConcept;
-    verificationStatus?: CodeableConcept;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    clinicalStatus?: FHIR.CodeableConcept;
+    verificationStatus?: FHIR.CodeableConcept;
     type?: string;
     category?: string;
     criticality?: string;
-    code?: CodeableConcept;
-    patient?: Reference;
-    encounter?: Reference;
+    code?: FHIR.CodeableConcept;
+    patient?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     onset?: string;
     recordedDate?: string;
-    recorder?: Reference;
-    asserter?: Reference;
+    recorder?: FHIR.Reference;
+    asserter?: FHIR.Reference;
     lastOccurrence?: string;
-    note?: Annotation;
-    reaction?: BackboneElement;
+    note?: FHIR.Annotation;
+    reaction?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<AllergyIntolerance_Props>) {

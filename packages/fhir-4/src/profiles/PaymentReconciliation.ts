@@ -5,31 +5,32 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type PaymentReconciliation_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    period?: Period;
+    period?: FHIR.Period;
     created?: string;
-    paymentIssuer?: Reference;
-    request?: Reference;
-    requestor?: Reference;
+    paymentIssuer?: FHIR.Reference;
+    request?: FHIR.Reference;
+    requestor?: FHIR.Reference;
     outcome?: string;
     disposition?: string;
     paymentDate?: string;
-    paymentAmount?: Money;
-    paymentIdentifier?: Identifier;
-    detail?: BackboneElement;
-    formCode?: CodeableConcept;
-    processNote?: BackboneElement;
+    paymentAmount?: FHIR.Money;
+    paymentIdentifier?: FHIR.Identifier;
+    detail?: FHIR.BackboneElement;
+    formCode?: FHIR.CodeableConcept;
+    processNote?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<PaymentReconciliation_Props>) {

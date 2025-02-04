@@ -5,30 +5,31 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type PackagedProductDefinition_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     name?: string;
-    type?: CodeableConcept;
-    packageFor?: Reference;
-    status?: CodeableConcept;
+    type?: FHIR.CodeableConcept;
+    packageFor?: FHIR.Reference;
+    status?: FHIR.CodeableConcept;
     statusDate?: string;
-    containedItemQuantity?: Quantity;
-    description?: markdown;
-    legalStatusOfSupply?: BackboneElement;
-    marketingStatus?: MarketingStatus;
-    characteristic?: CodeableConcept;
+    containedItemQuantity?: FHIR.Quantity;
+    description?: FHIR.markdown;
+    legalStatusOfSupply?: FHIR.BackboneElement;
+    marketingStatus?: FHIR.MarketingStatus;
+    characteristic?: FHIR.CodeableConcept;
     copackagedIndicator?: boolean;
-    manufacturer?: Reference;
-    package?: BackboneElement;
+    manufacturer?: FHIR.Reference;
+    package?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<PackagedProductDefinition_Props>) {

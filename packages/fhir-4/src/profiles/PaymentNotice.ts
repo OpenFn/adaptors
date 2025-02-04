@@ -5,28 +5,29 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type PaymentNotice_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    request?: Reference;
-    response?: Reference;
+    request?: FHIR.Reference;
+    response?: FHIR.Reference;
     created?: string;
-    provider?: Reference;
-    payment?: Reference;
+    provider?: FHIR.Reference;
+    payment?: FHIR.Reference;
     paymentDate?: string;
-    payee?: Reference;
-    recipient?: Reference;
-    amount?: Money;
-    paymentStatus?: CodeableConcept;
+    payee?: FHIR.Reference;
+    recipient?: FHIR.Reference;
+    amount?: FHIR.Money;
+    paymentStatus?: FHIR.CodeableConcept;
 };
 
 export default function(props: Partial<PaymentNotice_Props>) {

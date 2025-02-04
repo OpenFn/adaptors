@@ -5,26 +5,27 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Endpoint_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    connectionType?: Coding;
+    connectionType?: FHIR.Coding;
     name?: string;
-    managingOrganization?: Reference;
-    contact?: ContactPoint;
-    period?: Period;
-    payloadType?: CodeableConcept;
+    managingOrganization?: FHIR.Reference;
+    contact?: FHIR.ContactPoint;
+    period?: FHIR.Period;
+    payloadType?: FHIR.CodeableConcept;
     payloadMimeType?: string;
-    address?: url;
+    address?: FHIR.url;
     header?: string;
 };
 

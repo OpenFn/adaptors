@@ -5,36 +5,37 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type ClinicalImpression_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    statusReason?: CodeableConcept;
-    code?: CodeableConcept;
+    statusReason?: FHIR.CodeableConcept;
+    code?: FHIR.CodeableConcept;
     description?: string;
-    subject?: Reference;
-    encounter?: Reference;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     effective?: string;
     date?: string;
-    assessor?: Reference;
-    previous?: Reference;
-    problem?: Reference;
-    investigation?: BackboneElement;
+    assessor?: FHIR.Reference;
+    previous?: FHIR.Reference;
+    problem?: FHIR.Reference;
+    investigation?: FHIR.BackboneElement;
     protocol?: string;
     summary?: string;
-    finding?: BackboneElement;
-    prognosisCodeableConcept?: CodeableConcept;
-    prognosisReference?: Reference;
-    supportingInfo?: Reference;
-    note?: Annotation;
+    finding?: FHIR.BackboneElement;
+    prognosisCodeableConcept?: FHIR.CodeableConcept;
+    prognosisReference?: FHIR.Reference;
+    supportingInfo?: FHIR.Reference;
+    note?: FHIR.Annotation;
 };
 
 export default function(props: Partial<ClinicalImpression_Props>) {

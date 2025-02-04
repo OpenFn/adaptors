@@ -5,40 +5,41 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Observation_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
-    partOf?: Reference;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    basedOn?: FHIR.Reference;
+    partOf?: FHIR.Reference;
     status?: string;
-    category?: CodeableConcept;
-    code?: CodeableConcept;
-    subject?: Reference;
-    focus?: Reference;
-    encounter?: Reference;
+    category?: FHIR.CodeableConcept;
+    code?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    focus?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     effective?: string;
     issued?: string;
-    performer?: Reference;
-    value?: Quantity;
-    dataAbsentReason?: CodeableConcept;
-    interpretation?: CodeableConcept;
-    note?: Annotation;
-    bodySite?: CodeableConcept;
-    method?: CodeableConcept;
-    specimen?: Reference;
-    device?: Reference;
-    referenceRange?: BackboneElement;
-    hasMember?: Reference;
-    derivedFrom?: Reference;
-    component?: BackboneElement;
+    performer?: FHIR.Reference;
+    value?: FHIR.Quantity;
+    dataAbsentReason?: FHIR.CodeableConcept;
+    interpretation?: FHIR.CodeableConcept;
+    note?: FHIR.Annotation;
+    bodySite?: FHIR.CodeableConcept;
+    method?: FHIR.CodeableConcept;
+    specimen?: FHIR.Reference;
+    device?: FHIR.Reference;
+    referenceRange?: FHIR.BackboneElement;
+    hasMember?: FHIR.Reference;
+    derivedFrom?: FHIR.Reference;
+    component?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<Observation_Props>) {

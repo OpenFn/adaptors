@@ -5,30 +5,31 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type InsurancePlan_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    type?: CodeableConcept;
+    type?: FHIR.CodeableConcept;
     name?: string;
     alias?: string;
-    period?: Period;
-    ownedBy?: Reference;
-    administeredBy?: Reference;
-    coverageArea?: Reference;
-    contact?: BackboneElement;
-    endpoint?: Reference;
-    network?: Reference;
-    coverage?: BackboneElement;
-    plan?: BackboneElement;
+    period?: FHIR.Period;
+    ownedBy?: FHIR.Reference;
+    administeredBy?: FHIR.Reference;
+    coverageArea?: FHIR.Reference;
+    contact?: FHIR.BackboneElement;
+    endpoint?: FHIR.Reference;
+    network?: FHIR.Reference;
+    coverage?: FHIR.BackboneElement;
+    plan?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<InsurancePlan_Props>) {

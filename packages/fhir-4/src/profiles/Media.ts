@@ -5,38 +5,39 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Media_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
-    partOf?: Reference;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    basedOn?: FHIR.Reference;
+    partOf?: FHIR.Reference;
     status?: string;
-    type?: CodeableConcept;
-    modality?: CodeableConcept;
-    view?: CodeableConcept;
-    subject?: Reference;
-    encounter?: Reference;
+    type?: FHIR.CodeableConcept;
+    modality?: FHIR.CodeableConcept;
+    view?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     created?: string;
     issued?: string;
-    operator?: Reference;
-    reasonCode?: CodeableConcept;
-    bodySite?: CodeableConcept;
+    operator?: FHIR.Reference;
+    reasonCode?: FHIR.CodeableConcept;
+    bodySite?: FHIR.CodeableConcept;
     deviceName?: string;
-    device?: Reference;
+    device?: FHIR.Reference;
     height?: number;
     width?: number;
     frames?: number;
     duration?: number;
-    content?: Attachment;
-    note?: Annotation;
+    content?: FHIR.Attachment;
+    note?: FHIR.Annotation;
 };
 
 export default function(props: Partial<Media_Props>) {

@@ -5,33 +5,34 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Condition_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    clinicalStatus?: CodeableConcept;
-    verificationStatus?: CodeableConcept;
-    category?: CodeableConcept;
-    severity?: CodeableConcept;
-    code?: CodeableConcept;
-    bodySite?: CodeableConcept;
-    subject?: Reference;
-    encounter?: Reference;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    clinicalStatus?: FHIR.CodeableConcept;
+    verificationStatus?: FHIR.CodeableConcept;
+    category?: FHIR.CodeableConcept;
+    severity?: FHIR.CodeableConcept;
+    code?: FHIR.CodeableConcept;
+    bodySite?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     onset?: string;
     abatement?: string;
     recordedDate?: string;
-    recorder?: Reference;
-    asserter?: Reference;
-    stage?: BackboneElement;
-    evidence?: BackboneElement;
-    note?: Annotation;
+    recorder?: FHIR.Reference;
+    asserter?: FHIR.Reference;
+    stage?: FHIR.BackboneElement;
+    evidence?: FHIR.BackboneElement;
+    note?: FHIR.Annotation;
 };
 
 export default function(props: Partial<Condition_Props>) {

@@ -5,31 +5,32 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type SupplyRequest_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    category?: CodeableConcept;
+    category?: FHIR.CodeableConcept;
     priority?: string;
-    item?: CodeableConcept;
-    quantity?: Quantity;
-    parameter?: BackboneElement;
+    item?: FHIR.CodeableConcept;
+    quantity?: FHIR.Quantity;
+    parameter?: FHIR.BackboneElement;
     occurrence?: string;
     authoredOn?: string;
-    requester?: Reference;
-    supplier?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    deliverFrom?: Reference;
-    deliverTo?: Reference;
+    requester?: FHIR.Reference;
+    supplier?: FHIR.Reference;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
+    deliverFrom?: FHIR.Reference;
+    deliverTo?: FHIR.Reference;
 };
 
 export default function(props: Partial<SupplyRequest_Props>) {

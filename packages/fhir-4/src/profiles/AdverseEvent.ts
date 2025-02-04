@@ -5,36 +5,37 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type AdverseEvent_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     actuality?: string;
-    category?: CodeableConcept;
-    event?: CodeableConcept;
-    subject?: Reference;
-    encounter?: Reference;
+    category?: FHIR.CodeableConcept;
+    event?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     date?: string;
     detected?: string;
     recordedDate?: string;
-    resultingCondition?: Reference;
-    location?: Reference;
-    seriousness?: CodeableConcept;
-    severity?: CodeableConcept;
-    outcome?: CodeableConcept;
-    recorder?: Reference;
-    contributor?: Reference;
-    suspectEntity?: BackboneElement;
-    subjectMedicalHistory?: Reference;
-    referenceDocument?: Reference;
-    study?: Reference;
+    resultingCondition?: FHIR.Reference;
+    location?: FHIR.Reference;
+    seriousness?: FHIR.CodeableConcept;
+    severity?: FHIR.CodeableConcept;
+    outcome?: FHIR.CodeableConcept;
+    recorder?: FHIR.Reference;
+    contributor?: FHIR.Reference;
+    suspectEntity?: FHIR.BackboneElement;
+    subjectMedicalHistory?: FHIR.Reference;
+    referenceDocument?: FHIR.Reference;
+    study?: FHIR.Reference;
 };
 
 export default function(props: Partial<AdverseEvent_Props>) {

@@ -5,30 +5,31 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type CoverageEligibilityRequest_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    priority?: CodeableConcept;
+    priority?: FHIR.CodeableConcept;
     purpose?: string;
-    patient?: Reference;
+    patient?: FHIR.Reference;
     serviced?: string;
     created?: string;
-    enterer?: Reference;
-    provider?: Reference;
-    insurer?: Reference;
-    facility?: Reference;
-    supportingInfo?: BackboneElement;
-    insurance?: BackboneElement;
-    item?: BackboneElement;
+    enterer?: FHIR.Reference;
+    provider?: FHIR.Reference;
+    insurer?: FHIR.Reference;
+    facility?: FHIR.Reference;
+    supportingInfo?: FHIR.BackboneElement;
+    insurance?: FHIR.BackboneElement;
+    item?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<CoverageEligibilityRequest_Props>) {

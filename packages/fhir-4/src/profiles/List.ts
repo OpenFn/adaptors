@@ -5,29 +5,30 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type List_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
     mode?: string;
     title?: string;
-    code?: CodeableConcept;
-    subject?: Reference;
-    encounter?: Reference;
+    code?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     date?: string;
-    source?: Reference;
-    orderedBy?: CodeableConcept;
-    note?: Annotation;
-    entry?: BackboneElement;
-    emptyReason?: CodeableConcept;
+    source?: FHIR.Reference;
+    orderedBy?: FHIR.CodeableConcept;
+    note?: FHIR.Annotation;
+    entry?: FHIR.BackboneElement;
+    emptyReason?: FHIR.CodeableConcept;
 };
 
 export default function(props: Partial<List_Props>) {

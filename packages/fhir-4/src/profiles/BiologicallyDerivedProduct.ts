@@ -5,27 +5,28 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type BiologicallyDerivedProduct_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     productCategory?: string;
-    productCode?: CodeableConcept;
+    productCode?: FHIR.CodeableConcept;
     status?: string;
-    request?: Reference;
+    request?: FHIR.Reference;
     quantity?: number;
-    parent?: Reference;
-    collection?: BackboneElement;
-    processing?: BackboneElement;
-    manipulation?: BackboneElement;
-    storage?: BackboneElement;
+    parent?: FHIR.Reference;
+    collection?: FHIR.BackboneElement;
+    processing?: FHIR.BackboneElement;
+    manipulation?: FHIR.BackboneElement;
+    storage?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<BiologicallyDerivedProduct_Props>) {

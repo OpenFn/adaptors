@@ -5,27 +5,28 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type SupplyDelivery_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
-    partOf?: Reference;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    basedOn?: FHIR.Reference;
+    partOf?: FHIR.Reference;
     status?: string;
-    patient?: Reference;
-    type?: CodeableConcept;
-    suppliedItem?: BackboneElement;
+    patient?: FHIR.Reference;
+    type?: FHIR.CodeableConcept;
+    suppliedItem?: FHIR.BackboneElement;
     occurrence?: string;
-    supplier?: Reference;
-    destination?: Reference;
-    receiver?: Reference;
+    supplier?: FHIR.Reference;
+    destination?: FHIR.Reference;
+    receiver?: FHIR.Reference;
 };
 
 export default function(props: Partial<SupplyDelivery_Props>) {

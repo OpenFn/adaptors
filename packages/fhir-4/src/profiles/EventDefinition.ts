@@ -5,44 +5,45 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type EventDefinition_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
     url?: string;
-    identifier?: Identifier;
+    identifier?: FHIR.Identifier;
     version?: string;
     name?: string;
     title?: string;
     subtitle?: string;
     status?: string;
     experimental?: boolean;
-    subject?: CodeableConcept;
+    subject?: FHIR.CodeableConcept;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
-    description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
-    purpose?: markdown;
+    contact?: FHIR.ContactDetail;
+    description?: FHIR.markdown;
+    useContext?: FHIR.UsageContext;
+    jurisdiction?: FHIR.CodeableConcept;
+    purpose?: FHIR.markdown;
     usage?: string;
-    copyright?: markdown;
+    copyright?: FHIR.markdown;
     approvalDate?: string;
     lastReviewDate?: string;
-    effectivePeriod?: Period;
-    topic?: CodeableConcept;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
-    trigger?: TriggerDefinition;
+    effectivePeriod?: FHIR.Period;
+    topic?: FHIR.CodeableConcept;
+    author?: FHIR.ContactDetail;
+    editor?: FHIR.ContactDetail;
+    reviewer?: FHIR.ContactDetail;
+    endorser?: FHIR.ContactDetail;
+    relatedArtifact?: FHIR.RelatedArtifact;
+    trigger?: FHIR.TriggerDefinition;
 };
 
 export default function(props: Partial<EventDefinition_Props>) {

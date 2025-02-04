@@ -5,23 +5,24 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type ManufacturedItemDefinition_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    manufacturedDoseForm?: CodeableConcept;
-    unitOfPresentation?: CodeableConcept;
-    manufacturer?: Reference;
-    ingredient?: CodeableConcept;
-    property?: BackboneElement;
+    manufacturedDoseForm?: FHIR.CodeableConcept;
+    unitOfPresentation?: FHIR.CodeableConcept;
+    manufacturer?: FHIR.Reference;
+    ingredient?: FHIR.CodeableConcept;
+    property?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<ManufacturedItemDefinition_Props>) {

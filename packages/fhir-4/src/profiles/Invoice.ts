@@ -5,32 +5,33 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Invoice_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
     cancelledReason?: string;
-    type?: CodeableConcept;
-    subject?: Reference;
-    recipient?: Reference;
+    type?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    recipient?: FHIR.Reference;
     date?: string;
-    participant?: BackboneElement;
-    issuer?: Reference;
-    account?: Reference;
-    lineItem?: BackboneElement;
+    participant?: FHIR.BackboneElement;
+    issuer?: FHIR.Reference;
+    account?: FHIR.Reference;
+    lineItem?: FHIR.BackboneElement;
     totalPriceComponent?: any;
-    totalNet?: Money;
-    totalGross?: Money;
-    paymentTerms?: markdown;
-    note?: Annotation;
+    totalNet?: FHIR.Money;
+    totalGross?: FHIR.Money;
+    paymentTerms?: FHIR.markdown;
+    note?: FHIR.Annotation;
 };
 
 export default function(props: Partial<Invoice_Props>) {

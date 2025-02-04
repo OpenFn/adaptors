@@ -5,42 +5,43 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type ChargeItem_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     definitionUri?: string;
     definitionCanonical?: any;
     status?: string;
-    partOf?: Reference;
-    code?: CodeableConcept;
-    subject?: Reference;
-    context?: Reference;
+    partOf?: FHIR.Reference;
+    code?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    context?: FHIR.Reference;
     occurrence?: string;
-    performer?: BackboneElement;
-    performingOrganization?: Reference;
-    requestingOrganization?: Reference;
-    costCenter?: Reference;
-    quantity?: Quantity;
-    bodysite?: CodeableConcept;
+    performer?: FHIR.BackboneElement;
+    performingOrganization?: FHIR.Reference;
+    requestingOrganization?: FHIR.Reference;
+    costCenter?: FHIR.Reference;
+    quantity?: FHIR.Quantity;
+    bodysite?: FHIR.CodeableConcept;
     factorOverride?: number;
-    priceOverride?: Money;
+    priceOverride?: FHIR.Money;
     overrideReason?: string;
-    enterer?: Reference;
+    enterer?: FHIR.Reference;
     enteredDate?: string;
-    reason?: CodeableConcept;
-    service?: Reference;
-    product?: Reference;
-    account?: Reference;
-    note?: Annotation;
-    supportingInformation?: Reference;
+    reason?: FHIR.CodeableConcept;
+    service?: FHIR.Reference;
+    product?: FHIR.Reference;
+    account?: FHIR.Reference;
+    note?: FHIR.Annotation;
+    supportingInformation?: FHIR.Reference;
 };
 
 export default function(props: Partial<ChargeItem_Props>) {

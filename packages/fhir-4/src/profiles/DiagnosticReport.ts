@@ -5,34 +5,35 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type DiagnosticReport_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    basedOn?: FHIR.Reference;
     status?: string;
-    category?: CodeableConcept;
-    code?: CodeableConcept;
-    subject?: Reference;
-    encounter?: Reference;
+    category?: FHIR.CodeableConcept;
+    code?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     effective?: string;
     issued?: string;
-    performer?: Reference;
-    resultsInterpreter?: Reference;
-    specimen?: Reference;
-    result?: Reference;
-    imagingStudy?: Reference;
-    media?: BackboneElement;
+    performer?: FHIR.Reference;
+    resultsInterpreter?: FHIR.Reference;
+    specimen?: FHIR.Reference;
+    result?: FHIR.Reference;
+    imagingStudy?: FHIR.Reference;
+    media?: FHIR.BackboneElement;
     conclusion?: string;
-    conclusionCode?: CodeableConcept;
-    presentedForm?: Attachment;
+    conclusionCode?: FHIR.CodeableConcept;
+    presentedForm?: FHIR.Attachment;
 };
 
 export default function(props: Partial<DiagnosticReport_Props>) {

@@ -5,34 +5,35 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type EvidenceReport_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
     url?: string;
     status?: string;
-    useContext?: UsageContext;
-    identifier?: Identifier;
-    relatedIdentifier?: Identifier;
-    citeAs?: Reference;
-    type?: CodeableConcept;
-    note?: Annotation;
-    relatedArtifact?: RelatedArtifact;
-    subject?: BackboneElement;
+    useContext?: FHIR.UsageContext;
+    identifier?: FHIR.Identifier;
+    relatedIdentifier?: FHIR.Identifier;
+    citeAs?: FHIR.Reference;
+    type?: FHIR.CodeableConcept;
+    note?: FHIR.Annotation;
+    relatedArtifact?: FHIR.RelatedArtifact;
+    subject?: FHIR.BackboneElement;
     publisher?: string;
-    contact?: ContactDetail;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatesTo?: BackboneElement;
-    section?: BackboneElement;
+    contact?: FHIR.ContactDetail;
+    author?: FHIR.ContactDetail;
+    editor?: FHIR.ContactDetail;
+    reviewer?: FHIR.ContactDetail;
+    endorser?: FHIR.ContactDetail;
+    relatesTo?: FHIR.BackboneElement;
+    section?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<EvidenceReport_Props>) {

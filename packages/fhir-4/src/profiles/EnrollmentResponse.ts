@@ -5,24 +5,25 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type EnrollmentResponse_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    request?: Reference;
+    request?: FHIR.Reference;
     outcome?: string;
     disposition?: string;
     created?: string;
-    organization?: Reference;
-    requestProvider?: Reference;
+    organization?: FHIR.Reference;
+    requestProvider?: FHIR.Reference;
 };
 
 export default function(props: Partial<EnrollmentResponse_Props>) {

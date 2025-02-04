@@ -5,39 +5,40 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type CarePlan_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
-    basedOn?: Reference;
-    replaces?: Reference;
-    partOf?: Reference;
+    basedOn?: FHIR.Reference;
+    replaces?: FHIR.Reference;
+    partOf?: FHIR.Reference;
     status?: string;
     intent?: string;
-    category?: CodeableConcept;
+    category?: FHIR.CodeableConcept;
     title?: string;
     description?: string;
-    subject?: Reference;
-    encounter?: Reference;
-    period?: Period;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
+    period?: FHIR.Period;
     created?: string;
-    author?: Reference;
-    contributor?: Reference;
-    careTeam?: Reference;
-    addresses?: Reference;
-    supportingInfo?: Reference;
-    goal?: Reference;
-    activity?: BackboneElement;
-    note?: Annotation;
+    author?: FHIR.Reference;
+    contributor?: FHIR.Reference;
+    careTeam?: FHIR.Reference;
+    addresses?: FHIR.Reference;
+    supportingInfo?: FHIR.Reference;
+    goal?: FHIR.Reference;
+    activity?: FHIR.BackboneElement;
+    note?: FHIR.Annotation;
 };
 
 export default function(props: Partial<CarePlan_Props>) {

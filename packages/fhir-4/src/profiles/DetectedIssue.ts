@@ -5,28 +5,29 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type DetectedIssue_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    code?: CodeableConcept;
+    code?: FHIR.CodeableConcept;
     severity?: string;
-    patient?: Reference;
+    patient?: FHIR.Reference;
     identified?: string;
-    author?: Reference;
-    implicated?: Reference;
-    evidence?: BackboneElement;
+    author?: FHIR.Reference;
+    implicated?: FHIR.Reference;
+    evidence?: FHIR.BackboneElement;
     detail?: string;
     reference?: string;
-    mitigation?: BackboneElement;
+    mitigation?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<DetectedIssue_Props>) {

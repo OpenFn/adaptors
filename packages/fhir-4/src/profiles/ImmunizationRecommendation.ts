@@ -5,21 +5,22 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type ImmunizationRecommendation_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    patient?: Reference;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    patient?: FHIR.Reference;
     date?: string;
-    authority?: Reference;
-    recommendation?: BackboneElement;
+    authority?: FHIR.Reference;
+    recommendation?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<ImmunizationRecommendation_Props>) {

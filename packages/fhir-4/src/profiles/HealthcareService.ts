@@ -5,40 +5,41 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type HealthcareService_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     active?: boolean;
-    providedBy?: Reference;
-    category?: CodeableConcept;
-    type?: CodeableConcept;
-    specialty?: CodeableConcept;
-    location?: Reference;
+    providedBy?: FHIR.Reference;
+    category?: FHIR.CodeableConcept;
+    type?: FHIR.CodeableConcept;
+    specialty?: FHIR.CodeableConcept;
+    location?: FHIR.Reference;
     name?: string;
     comment?: string;
-    extraDetails?: markdown;
-    photo?: Attachment;
-    telecom?: ContactPoint;
-    coverageArea?: Reference;
-    serviceProvisionCode?: CodeableConcept;
-    eligibility?: BackboneElement;
-    program?: CodeableConcept;
-    characteristic?: CodeableConcept;
-    communication?: CodeableConcept;
-    referralMethod?: CodeableConcept;
+    extraDetails?: FHIR.markdown;
+    photo?: FHIR.Attachment;
+    telecom?: FHIR.ContactPoint;
+    coverageArea?: FHIR.Reference;
+    serviceProvisionCode?: FHIR.CodeableConcept;
+    eligibility?: FHIR.BackboneElement;
+    program?: FHIR.CodeableConcept;
+    characteristic?: FHIR.CodeableConcept;
+    communication?: FHIR.CodeableConcept;
+    referralMethod?: FHIR.CodeableConcept;
     appointmentRequired?: boolean;
-    availableTime?: BackboneElement;
-    notAvailable?: BackboneElement;
+    availableTime?: FHIR.BackboneElement;
+    notAvailable?: FHIR.BackboneElement;
     availabilityExceptions?: string;
-    endpoint?: Reference;
+    endpoint?: FHIR.Reference;
 };
 
 export default function(props: Partial<HealthcareService_Props>) {

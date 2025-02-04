@@ -5,24 +5,25 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Ingredient_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    for?: Reference;
-    role?: CodeableConcept;
-    function?: CodeableConcept;
+    for?: FHIR.Reference;
+    role?: FHIR.CodeableConcept;
+    function?: FHIR.CodeableConcept;
     allergenicIndicator?: boolean;
-    manufacturer?: BackboneElement;
-    substance?: BackboneElement;
+    manufacturer?: FHIR.BackboneElement;
+    substance?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<Ingredient_Props>) {

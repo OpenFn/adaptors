@@ -5,30 +5,31 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type VerificationResult_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    target?: Reference;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    target?: FHIR.Reference;
     targetLocation?: string;
-    need?: CodeableConcept;
+    need?: FHIR.CodeableConcept;
     status?: string;
     statusDate?: string;
-    validationType?: CodeableConcept;
-    validationProcess?: CodeableConcept;
-    frequency?: Timing;
+    validationType?: FHIR.CodeableConcept;
+    validationProcess?: FHIR.CodeableConcept;
+    frequency?: FHIR.Timing;
     lastPerformed?: string;
     nextScheduled?: string;
-    failureAction?: CodeableConcept;
-    primarySource?: BackboneElement;
-    attestation?: BackboneElement;
-    validator?: BackboneElement;
+    failureAction?: FHIR.CodeableConcept;
+    primarySource?: FHIR.BackboneElement;
+    attestation?: FHIR.BackboneElement;
+    validator?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<VerificationResult_Props>) {

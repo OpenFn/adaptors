@@ -5,29 +5,30 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type ObservationDefinition_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    category?: CodeableConcept;
-    code?: CodeableConcept;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    category?: FHIR.CodeableConcept;
+    code?: FHIR.CodeableConcept;
+    identifier?: FHIR.Identifier;
     permittedDataType?: string;
     multipleResultsAllowed?: boolean;
-    method?: CodeableConcept;
+    method?: FHIR.CodeableConcept;
     preferredReportName?: string;
-    quantitativeDetails?: BackboneElement;
-    qualifiedInterval?: BackboneElement;
-    validCodedValueSet?: Reference;
-    normalCodedValueSet?: Reference;
-    abnormalCodedValueSet?: Reference;
-    criticalCodedValueSet?: Reference;
+    quantitativeDetails?: FHIR.BackboneElement;
+    qualifiedInterval?: FHIR.BackboneElement;
+    validCodedValueSet?: FHIR.Reference;
+    normalCodedValueSet?: FHIR.Reference;
+    abnormalCodedValueSet?: FHIR.Reference;
+    criticalCodedValueSet?: FHIR.Reference;
 };
 
 export default function(props: Partial<ObservationDefinition_Props>) {

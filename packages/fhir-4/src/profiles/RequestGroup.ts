@@ -5,34 +5,35 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type RequestGroup_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
-    basedOn?: Reference;
-    replaces?: Reference;
-    groupIdentifier?: Identifier;
+    basedOn?: FHIR.Reference;
+    replaces?: FHIR.Reference;
+    groupIdentifier?: FHIR.Identifier;
     status?: string;
     intent?: string;
     priority?: string;
-    code?: CodeableConcept;
-    subject?: Reference;
-    encounter?: Reference;
+    code?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     authoredOn?: string;
-    author?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    note?: Annotation;
-    action?: BackboneElement;
+    author?: FHIR.Reference;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
+    note?: FHIR.Annotation;
+    action?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<RequestGroup_Props>) {

@@ -5,26 +5,27 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type NutritionProduct_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
     status?: string;
-    category?: CodeableConcept;
-    code?: CodeableConcept;
-    manufacturer?: Reference;
-    nutrient?: BackboneElement;
-    ingredient?: BackboneElement;
-    knownAllergen?: CodeableReference;
-    productCharacteristic?: BackboneElement;
-    instance?: BackboneElement;
-    note?: Annotation;
+    category?: FHIR.CodeableConcept;
+    code?: FHIR.CodeableConcept;
+    manufacturer?: FHIR.Reference;
+    nutrient?: FHIR.BackboneElement;
+    ingredient?: FHIR.BackboneElement;
+    knownAllergen?: FHIR.CodeableReference;
+    productCharacteristic?: FHIR.BackboneElement;
+    instance?: FHIR.BackboneElement;
+    note?: FHIR.Annotation;
 };
 
 export default function(props: Partial<NutritionProduct_Props>) {

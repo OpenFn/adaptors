@@ -5,42 +5,43 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Device_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    definition?: Reference;
-    udiCarrier?: BackboneElement;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    definition?: FHIR.Reference;
+    udiCarrier?: FHIR.BackboneElement;
     status?: string;
-    statusReason?: CodeableConcept;
+    statusReason?: FHIR.CodeableConcept;
     distinctIdentifier?: string;
     manufacturer?: string;
     manufactureDate?: string;
     expirationDate?: string;
     lotNumber?: string;
     serialNumber?: string;
-    deviceName?: BackboneElement;
+    deviceName?: FHIR.BackboneElement;
     modelNumber?: string;
     partNumber?: string;
-    type?: CodeableConcept;
-    specialization?: BackboneElement;
-    version?: BackboneElement;
-    property?: BackboneElement;
-    patient?: Reference;
-    owner?: Reference;
-    contact?: ContactPoint;
-    location?: Reference;
+    type?: FHIR.CodeableConcept;
+    specialization?: FHIR.BackboneElement;
+    version?: FHIR.BackboneElement;
+    property?: FHIR.BackboneElement;
+    patient?: FHIR.Reference;
+    owner?: FHIR.Reference;
+    contact?: FHIR.ContactPoint;
+    location?: FHIR.Reference;
     url?: string;
-    note?: Annotation;
-    safety?: CodeableConcept;
-    parent?: Reference;
+    note?: FHIR.Annotation;
+    safety?: FHIR.CodeableConcept;
+    parent?: FHIR.Reference;
 };
 
 export default function(props: Partial<Device_Props>) {

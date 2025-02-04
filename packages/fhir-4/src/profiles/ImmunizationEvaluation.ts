@@ -5,25 +5,26 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type ImmunizationEvaluation_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    patient?: Reference;
+    patient?: FHIR.Reference;
     date?: string;
-    authority?: Reference;
-    targetDisease?: CodeableConcept;
-    immunizationEvent?: Reference;
-    doseStatus?: CodeableConcept;
-    doseStatusReason?: CodeableConcept;
+    authority?: FHIR.Reference;
+    targetDisease?: FHIR.CodeableConcept;
+    immunizationEvent?: FHIR.Reference;
+    doseStatus?: FHIR.CodeableConcept;
+    doseStatusReason?: FHIR.CodeableConcept;
     description?: string;
     series?: string;
     doseNumber?: number;

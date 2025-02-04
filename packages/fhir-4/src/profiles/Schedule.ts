@@ -5,23 +5,24 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Schedule_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     active?: boolean;
-    serviceCategory?: CodeableConcept;
-    serviceType?: CodeableConcept;
-    specialty?: CodeableConcept;
-    actor?: Reference;
-    planningHorizon?: Period;
+    serviceCategory?: FHIR.CodeableConcept;
+    serviceType?: FHIR.CodeableConcept;
+    specialty?: FHIR.CodeableConcept;
+    actor?: FHIR.Reference;
+    planningHorizon?: FHIR.Period;
     comment?: string;
 };
 

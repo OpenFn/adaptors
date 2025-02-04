@@ -5,33 +5,34 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type NutritionOrder_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
     instantiates?: string;
     status?: string;
     intent?: string;
-    patient?: Reference;
-    encounter?: Reference;
+    patient?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     dateTime?: string;
-    orderer?: Reference;
-    allergyIntolerance?: Reference;
-    foodPreferenceModifier?: CodeableConcept;
-    excludeFoodModifier?: CodeableConcept;
-    oralDiet?: BackboneElement;
-    supplement?: BackboneElement;
-    enteralFormula?: BackboneElement;
-    note?: Annotation;
+    orderer?: FHIR.Reference;
+    allergyIntolerance?: FHIR.Reference;
+    foodPreferenceModifier?: FHIR.CodeableConcept;
+    excludeFoodModifier?: FHIR.CodeableConcept;
+    oralDiet?: FHIR.BackboneElement;
+    supplement?: FHIR.BackboneElement;
+    enteralFormula?: FHIR.BackboneElement;
+    note?: FHIR.Annotation;
 };
 
 export default function(props: Partial<NutritionOrder_Props>) {

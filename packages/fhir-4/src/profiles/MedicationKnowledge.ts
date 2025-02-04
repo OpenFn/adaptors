@@ -5,38 +5,39 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type MedicationKnowledge_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    code?: CodeableConcept;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    code?: FHIR.CodeableConcept;
     status?: string;
-    manufacturer?: Reference;
-    doseForm?: CodeableConcept;
-    amount?: Quantity;
+    manufacturer?: FHIR.Reference;
+    doseForm?: FHIR.CodeableConcept;
+    amount?: FHIR.Quantity;
     synonym?: string;
-    relatedMedicationKnowledge?: BackboneElement;
-    associatedMedication?: Reference;
-    productType?: CodeableConcept;
-    monograph?: BackboneElement;
-    ingredient?: BackboneElement;
-    preparationInstruction?: markdown;
-    intendedRoute?: CodeableConcept;
-    cost?: BackboneElement;
-    monitoringProgram?: BackboneElement;
-    administrationGuidelines?: BackboneElement;
-    medicineClassification?: BackboneElement;
-    packaging?: BackboneElement;
-    drugCharacteristic?: BackboneElement;
-    contraindication?: Reference;
-    regulatory?: BackboneElement;
-    kinetics?: BackboneElement;
+    relatedMedicationKnowledge?: FHIR.BackboneElement;
+    associatedMedication?: FHIR.Reference;
+    productType?: FHIR.CodeableConcept;
+    monograph?: FHIR.BackboneElement;
+    ingredient?: FHIR.BackboneElement;
+    preparationInstruction?: FHIR.markdown;
+    intendedRoute?: FHIR.CodeableConcept;
+    cost?: FHIR.BackboneElement;
+    monitoringProgram?: FHIR.BackboneElement;
+    administrationGuidelines?: FHIR.BackboneElement;
+    medicineClassification?: FHIR.BackboneElement;
+    packaging?: FHIR.BackboneElement;
+    drugCharacteristic?: FHIR.BackboneElement;
+    contraindication?: FHIR.Reference;
+    regulatory?: FHIR.BackboneElement;
+    kinetics?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<MedicationKnowledge_Props>) {

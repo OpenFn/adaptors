@@ -5,27 +5,28 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type ClinicalUseDefinition_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     type?: string;
-    category?: CodeableConcept;
-    subject?: Reference;
-    status?: CodeableConcept;
-    contraindication?: BackboneElement;
-    indication?: BackboneElement;
-    interaction?: BackboneElement;
-    population?: Reference;
-    undesirableEffect?: BackboneElement;
-    warning?: BackboneElement;
+    category?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    status?: FHIR.CodeableConcept;
+    contraindication?: FHIR.BackboneElement;
+    indication?: FHIR.BackboneElement;
+    interaction?: FHIR.BackboneElement;
+    population?: FHIR.Reference;
+    undesirableEffect?: FHIR.BackboneElement;
+    warning?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<ClinicalUseDefinition_Props>) {

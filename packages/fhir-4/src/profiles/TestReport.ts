@@ -5,28 +5,29 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type TestReport_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     name?: string;
     status?: string;
-    testScript?: Reference;
+    testScript?: FHIR.Reference;
     result?: string;
     score?: number;
     tester?: string;
     issued?: string;
-    participant?: BackboneElement;
-    setup?: BackboneElement;
-    test?: BackboneElement;
-    teardown?: BackboneElement;
+    participant?: FHIR.BackboneElement;
+    setup?: FHIR.BackboneElement;
+    test?: FHIR.BackboneElement;
+    teardown?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<TestReport_Props>) {

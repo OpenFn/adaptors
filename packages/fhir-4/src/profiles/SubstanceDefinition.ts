@@ -5,35 +5,36 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type SubstanceDefinition_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     version?: string;
-    status?: CodeableConcept;
-    classification?: CodeableConcept;
-    domain?: CodeableConcept;
-    grade?: CodeableConcept;
-    description?: markdown;
-    informationSource?: Reference;
-    note?: Annotation;
-    manufacturer?: Reference;
-    supplier?: Reference;
-    moiety?: BackboneElement;
-    property?: BackboneElement;
-    molecularWeight?: BackboneElement;
-    structure?: BackboneElement;
-    code?: BackboneElement;
-    name?: BackboneElement;
-    relationship?: BackboneElement;
-    sourceMaterial?: BackboneElement;
+    status?: FHIR.CodeableConcept;
+    classification?: FHIR.CodeableConcept;
+    domain?: FHIR.CodeableConcept;
+    grade?: FHIR.CodeableConcept;
+    description?: FHIR.markdown;
+    informationSource?: FHIR.Reference;
+    note?: FHIR.Annotation;
+    manufacturer?: FHIR.Reference;
+    supplier?: FHIR.Reference;
+    moiety?: FHIR.BackboneElement;
+    property?: FHIR.BackboneElement;
+    molecularWeight?: FHIR.BackboneElement;
+    structure?: FHIR.BackboneElement;
+    code?: FHIR.BackboneElement;
+    name?: FHIR.BackboneElement;
+    relationship?: FHIR.BackboneElement;
+    sourceMaterial?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<SubstanceDefinition_Props>) {

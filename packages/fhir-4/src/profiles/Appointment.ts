@@ -5,38 +5,39 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Appointment_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    cancelationReason?: CodeableConcept;
-    serviceCategory?: CodeableConcept;
-    serviceType?: CodeableConcept;
-    specialty?: CodeableConcept;
-    appointmentType?: CodeableConcept;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
+    cancelationReason?: FHIR.CodeableConcept;
+    serviceCategory?: FHIR.CodeableConcept;
+    serviceType?: FHIR.CodeableConcept;
+    specialty?: FHIR.CodeableConcept;
+    appointmentType?: FHIR.CodeableConcept;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
     priority?: number;
     description?: string;
-    supportingInformation?: Reference;
+    supportingInformation?: FHIR.Reference;
     start?: string;
     end?: string;
     minutesDuration?: number;
-    slot?: Reference;
+    slot?: FHIR.Reference;
     created?: string;
     comment?: string;
     patientInstruction?: string;
-    basedOn?: Reference;
-    participant?: BackboneElement;
-    requestedPeriod?: Period;
+    basedOn?: FHIR.Reference;
+    participant?: FHIR.BackboneElement;
+    requestedPeriod?: FHIR.Period;
 };
 
 export default function(props: Partial<Appointment_Props>) {

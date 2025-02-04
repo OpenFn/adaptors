@@ -5,28 +5,29 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type RelatedPerson_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     active?: boolean;
-    patient?: Reference;
-    relationship?: CodeableConcept;
-    name?: HumanName;
-    telecom?: ContactPoint;
+    patient?: FHIR.Reference;
+    relationship?: FHIR.CodeableConcept;
+    name?: FHIR.HumanName;
+    telecom?: FHIR.ContactPoint;
     gender?: string;
     birthDate?: string;
-    address?: Address;
-    photo?: Attachment;
-    period?: Period;
-    communication?: BackboneElement;
+    address?: FHIR.Address;
+    photo?: FHIR.Attachment;
+    period?: FHIR.Period;
+    communication?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<RelatedPerson_Props>) {

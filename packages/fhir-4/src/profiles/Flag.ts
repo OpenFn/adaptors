@@ -5,24 +5,25 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Flag_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    category?: CodeableConcept;
-    code?: CodeableConcept;
-    subject?: Reference;
-    period?: Period;
-    encounter?: Reference;
-    author?: Reference;
+    category?: FHIR.CodeableConcept;
+    code?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    period?: FHIR.Period;
+    encounter?: FHIR.Reference;
+    author?: FHIR.Reference;
 };
 
 export default function(props: Partial<Flag_Props>) {

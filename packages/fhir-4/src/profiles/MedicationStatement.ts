@@ -5,33 +5,34 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type MedicationStatement_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
-    partOf?: Reference;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    basedOn?: FHIR.Reference;
+    partOf?: FHIR.Reference;
     status?: string;
-    statusReason?: CodeableConcept;
-    category?: CodeableConcept;
-    medication?: CodeableConcept;
-    subject?: Reference;
-    context?: Reference;
+    statusReason?: FHIR.CodeableConcept;
+    category?: FHIR.CodeableConcept;
+    medication?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    context?: FHIR.Reference;
     effective?: string;
     dateAsserted?: string;
-    informationSource?: Reference;
-    derivedFrom?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    note?: Annotation;
-    dosage?: Dosage;
+    informationSource?: FHIR.Reference;
+    derivedFrom?: FHIR.Reference;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
+    note?: FHIR.Annotation;
+    dosage?: FHIR.Dosage;
 };
 
 export default function(props: Partial<MedicationStatement_Props>) {

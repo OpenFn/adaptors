@@ -5,41 +5,42 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Evidence_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
     url?: string;
-    identifier?: Identifier;
+    identifier?: FHIR.Identifier;
     version?: string;
     title?: string;
-    citeAs?: Reference;
+    citeAs?: FHIR.Reference;
     status?: string;
     date?: string;
-    useContext?: UsageContext;
+    useContext?: FHIR.UsageContext;
     approvalDate?: string;
     lastReviewDate?: string;
     publisher?: string;
-    contact?: ContactDetail;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
-    description?: markdown;
-    assertion?: markdown;
-    note?: Annotation;
-    variableDefinition?: BackboneElement;
-    synthesisType?: CodeableConcept;
-    studyType?: CodeableConcept;
-    statistic?: BackboneElement;
-    certainty?: BackboneElement;
+    contact?: FHIR.ContactDetail;
+    author?: FHIR.ContactDetail;
+    editor?: FHIR.ContactDetail;
+    reviewer?: FHIR.ContactDetail;
+    endorser?: FHIR.ContactDetail;
+    relatedArtifact?: FHIR.RelatedArtifact;
+    description?: FHIR.markdown;
+    assertion?: FHIR.markdown;
+    note?: FHIR.Annotation;
+    variableDefinition?: FHIR.BackboneElement;
+    synthesisType?: FHIR.CodeableConcept;
+    studyType?: FHIR.CodeableConcept;
+    statistic?: FHIR.BackboneElement;
+    certainty?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<Evidence_Props>) {

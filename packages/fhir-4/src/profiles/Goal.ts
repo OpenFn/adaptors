@@ -5,32 +5,33 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Goal_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     lifecycleStatus?: string;
-    achievementStatus?: CodeableConcept;
-    category?: CodeableConcept;
-    priority?: CodeableConcept;
-    description?: CodeableConcept;
-    subject?: Reference;
+    achievementStatus?: FHIR.CodeableConcept;
+    category?: FHIR.CodeableConcept;
+    priority?: FHIR.CodeableConcept;
+    description?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
     start?: string;
-    target?: BackboneElement;
+    target?: FHIR.BackboneElement;
     statusDate?: string;
     statusReason?: string;
-    expressedBy?: Reference;
-    addresses?: Reference;
-    note?: Annotation;
-    outcomeCode?: CodeableConcept;
-    outcomeReference?: Reference;
+    expressedBy?: FHIR.Reference;
+    addresses?: FHIR.Reference;
+    note?: FHIR.Annotation;
+    outcomeCode?: FHIR.CodeableConcept;
+    outcomeReference?: FHIR.Reference;
 };
 
 export default function(props: Partial<Goal_Props>) {

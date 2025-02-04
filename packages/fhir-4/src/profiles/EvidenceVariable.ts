@@ -5,18 +5,19 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type EvidenceVariable_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
     url?: string;
-    identifier?: Identifier;
+    identifier?: FHIR.Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -24,21 +25,21 @@ export type EvidenceVariable_Props = {
     subtitle?: string;
     status?: string;
     date?: string;
-    description?: markdown;
-    note?: Annotation;
-    useContext?: UsageContext;
+    description?: FHIR.markdown;
+    note?: FHIR.Annotation;
+    useContext?: FHIR.UsageContext;
     publisher?: string;
-    contact?: ContactDetail;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
+    contact?: FHIR.ContactDetail;
+    author?: FHIR.ContactDetail;
+    editor?: FHIR.ContactDetail;
+    reviewer?: FHIR.ContactDetail;
+    endorser?: FHIR.ContactDetail;
+    relatedArtifact?: FHIR.RelatedArtifact;
     actual?: boolean;
     characteristicCombination?: string;
-    characteristic?: BackboneElement;
+    characteristic?: FHIR.BackboneElement;
     handling?: string;
-    category?: BackboneElement;
+    category?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<EvidenceVariable_Props>) {

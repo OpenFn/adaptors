@@ -5,39 +5,40 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Communication_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
-    basedOn?: Reference;
-    partOf?: Reference;
-    inResponseTo?: Reference;
+    basedOn?: FHIR.Reference;
+    partOf?: FHIR.Reference;
+    inResponseTo?: FHIR.Reference;
     status?: string;
-    statusReason?: CodeableConcept;
-    category?: CodeableConcept;
+    statusReason?: FHIR.CodeableConcept;
+    category?: FHIR.CodeableConcept;
     priority?: string;
-    medium?: CodeableConcept;
-    subject?: Reference;
-    topic?: CodeableConcept;
-    about?: Reference;
-    encounter?: Reference;
+    medium?: FHIR.CodeableConcept;
+    subject?: FHIR.Reference;
+    topic?: FHIR.CodeableConcept;
+    about?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     sent?: string;
     received?: string;
-    recipient?: Reference;
-    sender?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    payload?: BackboneElement;
-    note?: Annotation;
+    recipient?: FHIR.Reference;
+    sender?: FHIR.Reference;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
+    payload?: FHIR.BackboneElement;
+    note?: FHIR.Annotation;
 };
 
 export default function(props: Partial<Communication_Props>) {

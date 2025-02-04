@@ -5,27 +5,28 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type MeasureReport_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
     type?: string;
     measure?: any;
-    subject?: Reference;
+    subject?: FHIR.Reference;
     date?: string;
-    reporter?: Reference;
-    period?: Period;
-    improvementNotation?: CodeableConcept;
-    group?: BackboneElement;
-    evaluatedResource?: Reference;
+    reporter?: FHIR.Reference;
+    period?: FHIR.Period;
+    improvementNotation?: FHIR.CodeableConcept;
+    group?: FHIR.BackboneElement;
+    evaluatedResource?: FHIR.Reference;
 };
 
 export default function(props: Partial<MeasureReport_Props>) {

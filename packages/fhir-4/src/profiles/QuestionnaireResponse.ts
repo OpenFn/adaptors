@@ -5,27 +5,28 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type QuestionnaireResponse_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
-    partOf?: Reference;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
+    basedOn?: FHIR.Reference;
+    partOf?: FHIR.Reference;
     questionnaire?: any;
     status?: string;
-    subject?: Reference;
-    encounter?: Reference;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     authored?: string;
-    author?: Reference;
-    source?: Reference;
-    item?: BackboneElement;
+    author?: FHIR.Reference;
+    source?: FHIR.Reference;
+    item?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<QuestionnaireResponse_Props>) {

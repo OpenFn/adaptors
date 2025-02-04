@@ -5,34 +5,35 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type FamilyMemberHistory_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
     status?: string;
-    dataAbsentReason?: CodeableConcept;
-    patient?: Reference;
+    dataAbsentReason?: FHIR.CodeableConcept;
+    patient?: FHIR.Reference;
     date?: string;
     name?: string;
-    relationship?: CodeableConcept;
-    sex?: CodeableConcept;
-    born?: Period;
-    age?: Age;
+    relationship?: FHIR.CodeableConcept;
+    sex?: FHIR.CodeableConcept;
+    born?: FHIR.Period;
+    age?: FHIR.Age;
     estimatedAge?: boolean;
     deceased?: boolean;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    note?: Annotation;
-    condition?: BackboneElement;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
+    note?: FHIR.Annotation;
+    condition?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<FamilyMemberHistory_Props>) {

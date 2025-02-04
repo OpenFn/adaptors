@@ -5,28 +5,29 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type EpisodeOfCare_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    statusHistory?: BackboneElement;
-    type?: CodeableConcept;
-    diagnosis?: BackboneElement;
-    patient?: Reference;
-    managingOrganization?: Reference;
-    period?: Period;
-    referralRequest?: Reference;
-    careManager?: Reference;
-    team?: Reference;
-    account?: Reference;
+    statusHistory?: FHIR.BackboneElement;
+    type?: FHIR.CodeableConcept;
+    diagnosis?: FHIR.BackboneElement;
+    patient?: FHIR.Reference;
+    managingOrganization?: FHIR.Reference;
+    period?: FHIR.Period;
+    referralRequest?: FHIR.Reference;
+    careManager?: FHIR.Reference;
+    team?: FHIR.Reference;
+    account?: FHIR.Reference;
 };
 
 export default function(props: Partial<EpisodeOfCare_Props>) {

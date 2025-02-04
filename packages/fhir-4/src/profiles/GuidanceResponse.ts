@@ -5,31 +5,32 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type GuidanceResponse_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    requestIdentifier?: Identifier;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    requestIdentifier?: FHIR.Identifier;
+    identifier?: FHIR.Identifier;
     module?: string;
     status?: string;
-    subject?: Reference;
-    encounter?: Reference;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     occurrenceDateTime?: string;
-    performer?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    note?: Annotation;
-    evaluationMessage?: Reference;
-    outputParameters?: Reference;
-    result?: Reference;
-    dataRequirement?: DataRequirement;
+    performer?: FHIR.Reference;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
+    note?: FHIR.Annotation;
+    evaluationMessage?: FHIR.Reference;
+    outputParameters?: FHIR.Reference;
+    result?: FHIR.Reference;
+    dataRequirement?: FHIR.DataRequirement;
 };
 
 export default function(props: Partial<GuidanceResponse_Props>) {

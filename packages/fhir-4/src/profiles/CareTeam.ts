@@ -5,29 +5,30 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type CareTeam_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
-    category?: CodeableConcept;
+    category?: FHIR.CodeableConcept;
     name?: string;
-    subject?: Reference;
-    encounter?: Reference;
-    period?: Period;
-    participant?: BackboneElement;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    managingOrganization?: Reference;
-    telecom?: ContactPoint;
-    note?: Annotation;
+    subject?: FHIR.Reference;
+    encounter?: FHIR.Reference;
+    period?: FHIR.Period;
+    participant?: FHIR.BackboneElement;
+    reasonCode?: FHIR.CodeableConcept;
+    reasonReference?: FHIR.Reference;
+    managingOrganization?: FHIR.Reference;
+    telecom?: FHIR.ContactPoint;
+    note?: FHIR.Annotation;
 };
 
 export default function(props: Partial<CareTeam_Props>) {

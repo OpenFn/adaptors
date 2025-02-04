@@ -5,18 +5,19 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type ChargeItemDefinition_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
     url?: string;
-    identifier?: Identifier;
+    identifier?: FHIR.Identifier;
     version?: string;
     title?: string;
     derivedFromUri?: string;
@@ -26,18 +27,18 @@ export type ChargeItemDefinition_Props = {
     experimental?: boolean;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
-    description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
-    copyright?: markdown;
+    contact?: FHIR.ContactDetail;
+    description?: FHIR.markdown;
+    useContext?: FHIR.UsageContext;
+    jurisdiction?: FHIR.CodeableConcept;
+    copyright?: FHIR.markdown;
     approvalDate?: string;
     lastReviewDate?: string;
-    effectivePeriod?: Period;
-    code?: CodeableConcept;
-    instance?: Reference;
-    applicability?: BackboneElement;
-    propertyGroup?: BackboneElement;
+    effectivePeriod?: FHIR.Period;
+    code?: FHIR.CodeableConcept;
+    instance?: FHIR.Reference;
+    applicability?: FHIR.BackboneElement;
+    propertyGroup?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<ChargeItemDefinition_Props>) {

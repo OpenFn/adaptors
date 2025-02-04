@@ -5,18 +5,19 @@
 
 import * as dt from "../datatypes";
 import _ from "lodash";
+import * as FHIR from "../fhir";
 
 export type Citation_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
-    contained?: Resource;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    text?: FHIR.Narrative;
+    contained?: any;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
     url?: string;
-    identifier?: Identifier;
+    identifier?: FHIR.Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -24,26 +25,26 @@ export type Citation_Props = {
     experimental?: boolean;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
-    description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
-    purpose?: markdown;
-    copyright?: markdown;
+    contact?: FHIR.ContactDetail;
+    description?: FHIR.markdown;
+    useContext?: FHIR.UsageContext;
+    jurisdiction?: FHIR.CodeableConcept;
+    purpose?: FHIR.markdown;
+    copyright?: FHIR.markdown;
     approvalDate?: string;
     lastReviewDate?: string;
-    effectivePeriod?: Period;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    summary?: BackboneElement;
-    classification?: BackboneElement;
-    note?: Annotation;
-    currentState?: CodeableConcept;
-    statusDate?: BackboneElement;
-    relatesTo?: BackboneElement;
-    citedArtifact?: BackboneElement;
+    effectivePeriod?: FHIR.Period;
+    author?: FHIR.ContactDetail;
+    editor?: FHIR.ContactDetail;
+    reviewer?: FHIR.ContactDetail;
+    endorser?: FHIR.ContactDetail;
+    summary?: FHIR.BackboneElement;
+    classification?: FHIR.BackboneElement;
+    note?: FHIR.Annotation;
+    currentState?: FHIR.CodeableConcept;
+    statusDate?: FHIR.BackboneElement;
+    relatesTo?: FHIR.BackboneElement;
+    citedArtifact?: FHIR.BackboneElement;
 };
 
 export default function(props: Partial<Citation_Props>) {
