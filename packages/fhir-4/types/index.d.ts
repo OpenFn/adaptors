@@ -4,6 +4,7 @@
 // SEE THE README FILE FOR DETAILS
 
 import { cursor, dataPath, dataValue, dateFns, each, field, fields, fn, lastReferenceValue, merge, sourceValue } from '@openfn/language-common';
+export { cursor, dataPath, dataValue, dateFns, each, field, fields, fn, lastReferenceValue, merge, sourceValue } from '@openfn/language-common';
 
 declare const Adaptor_cursor: typeof cursor;
 declare const Adaptor_dataPath: typeof dataPath;

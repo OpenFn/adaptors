@@ -217,13 +217,13 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
         withDisclaimer(dtsBundle.output[0].code)
       );
 
-      console.log('Removing old dts files');
+      // console.log('Removing old dts files');
 
       // finally remove the temporary  type files
-      await rm(path.resolve(adaptorPath, 'tmp-types'), {
-        recursive: true,
-        force: true,
-      });
+      // await rm(path.resolve(adaptorPath, 'tmp-types'), {
+      //   recursive: true,
+      //   force: true,
+      // });
     }
   );
 };
