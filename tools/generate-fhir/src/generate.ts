@@ -182,8 +182,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     '--declaration',
     '--emitDeclarationOnly',
     '--lib es2020',
-    // write type to a tmp dir to avoid conflicts
-    `--declarationDir ${path.resolve(adaptorPath, 'tmp-types')}`,
+    `--declarationDir ${path.resolve(adaptorPath, 'types')}`,
   ];
 
   // Finally, update package json metadata
@@ -205,7 +204,9 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       // console.log('>', stderr);
       console.log('Bundling DTS files');
       const bundle = await rollup({
-        input: path.resolve(adaptorPath, 'tmp-types', 'index.d.ts'),
+        // Only bundle builders and profile together
+        // If we bundle everything into one file, then everything gets exported globally
+        input: path.resolve(adaptorPath, 'types', 'builders.d.ts'),
         plugins: [dts()],
       });
       const dtsBundle = await bundle.generate({
@@ -213,17 +214,16 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       });
 
       await writeFile(
-        path.resolve(adaptorPath, 'types', 'index.d.ts'),
+        path.resolve(adaptorPath, 'types', 'builders.d.ts'),
         withDisclaimer(dtsBundle.output[0].code)
       );
 
-      // console.log('Removing old dts files');
-
-      // finally remove the temporary  type files
-      // await rm(path.resolve(adaptorPath, 'tmp-types'), {
-      //   recursive: true,
-      //   force: true,
-      // });
+      // finally remove the profiles and core fhir types
+      await rm(path.resolve(adaptorPath, 'types', 'profiles'), {
+        recursive: true,
+        force: true,
+      });
+      await rm(path.resolve(adaptorPath, 'types', 'fhir.d.ts'));
     }
   );
 };
