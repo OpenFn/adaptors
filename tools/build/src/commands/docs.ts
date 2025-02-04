@@ -37,7 +37,6 @@ const build = async (lang: string) => {
   console.log();
 
   const glob = `${root}/src/**/*.(js|ts)`;
-  console.log(glob);
   const template = await readFile(
     '../../tools/build/src/util/docs-template.hbs'
   );

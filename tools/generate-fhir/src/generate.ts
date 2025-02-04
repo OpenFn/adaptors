@@ -125,8 +125,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   try {
     await access(specPath);
     console.log('Generating datatype schemas');
-    // TOOD rename spec-datatypes
-    const dtSpecPath = path.resolve(adaptorPath, 'spec', 'datatypes.json');
+    const dtSpecPath = path.resolve(adaptorPath, 'spec', 'spec-types.json');
     // Note: when generating datatypes we ignore the user's mappings and generate everything
     // maybe we need to take a different mappings object?
     const dtSchema = await generateSchema(dtSpecPath);
@@ -137,6 +136,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     await writeFile(dtsPath, withDisclaimer(src));
   } catch (e) {
     console.log('Skipping datatype generation');
+    console.log(e);
   }
 
   console.log('Generating resource schemas');
