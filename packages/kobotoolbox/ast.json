@@ -43,7 +43,13 @@
         "tags": [
           {
             "title": "example",
-            "description": "getSubmissions({formId: 'aXecHjmbATuF6iGFmvBLBX'});"
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX');",
+            "caption": "Get all submissions for a specific form"
+          },
+          {
+            "title": "example",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit: 10 });",
+            "caption": "Get submissions with exactly 10 items. Equivalent to `<baseURL>/api/v2/assets/?offset=0&limit=10`"
           },
           {
             "title": "function",
@@ -66,12 +72,12 @@
           },
           {
             "title": "param",
-            "description": "Optional query params and headers for the request",
+            "description": "Optional query params; limit and start for the request",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "RequestOptions"
+                "name": "object"
               }
             },
             "name": "options",
