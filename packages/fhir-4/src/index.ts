@@ -1,5 +1,6 @@
 import * as Adaptor from './Adaptor';
 export default Adaptor;
+export * from './Adaptor';
 
 // Is this wierd? export as dt?
 // or should we right datatypes to builders?
