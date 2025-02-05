@@ -252,35 +252,33 @@
         ]
       },
       "valid": true
-    }
-  ],
-  "exports": [],
-  "common": [
+    },
     {
       "name": "fn",
       "params": [
         "func"
       ],
       "docs": {
-        "description": "Creates a custom step (or operation) for more flexible job writing.",
+        "description": "Execute an arbitrary function against state. The Google Sheets adaptor\nalso exposes a {@link https://googleapis.dev/nodejs/googleapis/latest/sheets/classes/Resource$Spreadsheets.html | googlesheets client} instance.",
         "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
           {
             "title": "function",
             "description": null,
             "name": null
           },
           {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
             "title": "example",
-            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
+            "description": "fn((state, sheets) => {\n  // make any request with the sheets client\n  const response  = await sheets.values.batchUpdate({\n    spreadsheetId: 'abc',\n    resource: {data: [{ range: state.range, values: state.values }]}\n  });\n  // return a new state object\n  return {...state, data: response.data }\n}",
+            "caption": "Use the Sheets client directly"
           },
           {
             "title": "param",
-            "description": "is the function",
+            "description": "The function to execute. Must return state.",
             "type": {
               "type": "NameExpression",
               "name": "Function"
@@ -298,7 +296,10 @@
         ]
       },
       "valid": true
-    },
+    }
+  ],
+  "exports": [],
+  "common": [
     {
       "name": "fnIf",
       "params": [

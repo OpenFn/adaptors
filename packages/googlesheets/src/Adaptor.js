@@ -18,6 +18,7 @@ function createConnection(state) {
   auth.credentials = { access_token: accessToken };
 
   client = google.sheets({ version: 'v4', auth });
+  console.log(' >> created client');
   return state;
 }
 
@@ -253,7 +254,7 @@ export function getValues(spreadsheetId, range, callback = s => s) {
  */
 export function fn(func) {
   return state => {
-    return func(state, client?.sheets);
+    return func(state, client?.spreadsheets);
   };
 }
 
