@@ -233,28 +233,28 @@ export function getValues(spreadsheetId, range, callback = s => s) {
   };
 }
 
-
 /**
- * Exposes the googlesheets client for more flexible job writing
+ * Execute an arbitrary function against state. The Google Sheets adaptor
+ * also exposes a {@link https://googleapis.dev/nodejs/googleapis/latest/sheets/classes/Resource$Spreadsheets.html | googlesheets client} instance.
  * @function
  * @public
- * @example
+ * @example <caption>Use the Sheets client directly</caption>
  * fn((state, sheets) => {
- *  // make any request with the client
- *   const response  = await sheetsClient.values.batchUpdate({
+ *   // make any request with the sheets client
+ *   const response  = await sheets.values.batchUpdate({
  *     spreadsheetId: 'abc',
- *     resource: {data: [{ range, values }]}
+ *     resource: {data: [{ range: state.range, values: state.values }]}
  *   });
  *   // return a new state object
  *   return {...state, data: response.data }
  * }
- * @param {Function} func is the function
+ * @param {Function} func The function to execute. Must return state.
  * @returns {Operation}
  */
 export function fn(func) {
   return state => {
-    return func(state, client)
-  }
+    return func(state, client?.sheets);
+  };
 }
 
 export {
