@@ -37,19 +37,17 @@ export async function getMessageResult(userId, messageId) {
 }
 
 export function getContentIndicators(defaultContentRequests, contentRequests) {
-  const indicators = new Map();
+  defaultContentRequests = defaultContentRequests ?? [];
+  contentRequests = contentRequests ?? [];
 
-  const requests = [
-    ...(defaultContentRequests || []),
-    ...(contentRequests || []),
-  ];
+  const contentIndicators = contentRequests.map(getContentIndicator);
+  const contentNames = new Set(contentIndicators.map(({ name }) => name));
 
-  for (const request of requests) {
-    const indicator = getContentIndicator(request);
-    indicators.set(indicator.type, indicator);
-  }
+  const defaultContentIndicators = defaultContentRequests
+    .map(getContentIndicator)
+    .filter(({ name }) => !contentNames.has(name));
 
-  return Array.from(indicators.values());
+  return [...defaultContentIndicators, ...contentIndicators];
 }
 
 function getContentIndicator(contentRequest) {
