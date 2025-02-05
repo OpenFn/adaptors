@@ -1,5 +1,12 @@
 # @openfn/language-gmail
 
+## 1.1.1
+
+### Patch Changes
+
+- 658971a: Fixed bug which prevented multiple content of the same "type" and now
+  correctly works to prevent multiple of the same "name".
+
 ## 1.1.0
 
 ### Minor Changes
