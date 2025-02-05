@@ -21,34 +21,32 @@ export async function request(state, method, path, opts, paginate = false) {
 
   const authHeaders = makeBasicAuthHeader(username, password);
 
-  let start, limit, result;
+  let start, limit;
 
-  let nextState = state;
-  let response;
+  const options = {
+    body: data,
+    headers: {
+      'Content-Type': 'application/json',
+      ...authHeaders,
+      ...headers,
+    },
+    query: {
+      format: 'json',
+      ...query,
+    },
+    parseAs,
+    baseUrl: `${baseURL}/api/${apiVersion}`,
+  };
 
-  try {
-    const options = {
-      body: data,
-      headers: {
-        'Content-Type': 'application/json',
-        ...authHeaders,
-        ...headers,
-      },
-      query: {
-        format: 'json',
-        ...query,
-      },
-      parseAs,
-      baseUrl: `${baseURL}/api/${apiVersion}`,
-    };
+  if (paginate) {
+    const results = [];
 
     do {
-      response = await commonRequest(method, path, options);
-
+      const response = await commonRequest(method, path, options).then(
+        logResponse
+      );
+      results.push(...response.body.results);
       if (response.body.next) {
-        if (!result) {
-          result = [];
-        }
         const nextUrl = new URL(response.body.next);
         start = nextUrl.searchParams.get('start');
         limit = nextUrl.searchParams.get('limit');
@@ -58,25 +56,12 @@ export async function request(state, method, path, opts, paginate = false) {
           start,
           limit,
         };
-        result.push(...response.body.results);
       } else {
-        if (result) {
-          result.push(...response.body.results);
-        } else {
-          result = response.body.results;
-        }
         break;
       }
-    } while (paginate);
-
-    return logResponse({
-      ...response,
-      body: {
-        ...response.body,
-        results: result,
-      },
-    });
-  } catch (e) {
-    return logResponse(e);
+    } while (true);
+    return { results };
+  } else {
+    return commonRequest(method, path, options).then(logResponse);
   }
 }

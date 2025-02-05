@@ -50,6 +50,7 @@ export function getForms() {
     const url = `/assets/?asset_type=survey`;
 
     const response = await util.request(state, 'GET', url, {});
+
     console.log('✓', response.body.results.length, 'forms fetched.');
     return util.prepareNextState(state, response);
   };
@@ -71,7 +72,7 @@ export function getSubmissions(formId) {
     const url = `/assets/${resolvedFormId}/data/`;
 
     const response = await util.request(state, 'GET', url, {}, true);
-    console.log('✓', response.body.results.length, 'forms fetched.');
+    console.log('✓', response.results.length, 'forms fetched.');
 
     return util.prepareNextState(state, response);
   };
