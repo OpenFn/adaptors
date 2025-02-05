@@ -35,8 +35,7 @@
     {
       "name": "getSubmissions",
       "params": [
-        "formId",
-        "options"
+        "formId"
       ],
       "docs": {
         "description": "Get submissions for a specific form",
@@ -45,11 +44,6 @@
             "title": "example",
             "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX');",
             "caption": "Get all submissions for a specific form"
-          },
-          {
-            "title": "example",
-            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit: 10 });",
-            "caption": "Get submissions with exactly 10 items. Equivalent to `<baseURL>/api/v2/assets/?offset=0&limit=10`"
           },
           {
             "title": "function",
@@ -69,19 +63,6 @@
               "name": "string"
             },
             "name": "formId"
-          },
-          {
-            "title": "param",
-            "description": "Optional query params; limit and start for the request",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "options",
-            "default": "{}"
           },
           {
             "title": "returns",
