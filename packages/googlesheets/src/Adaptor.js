@@ -252,8 +252,8 @@ export function getValues(spreadsheetId, range, callback = s => s) {
  * @returns {Operation}
  */
 export function fn(func) {
-  return (state, sheetsClient) => {
-    return func(state, sheetsClient)
+  return state => {
+    return func(state, client)
   }
 }
 
