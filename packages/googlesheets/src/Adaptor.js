@@ -233,6 +233,30 @@ export function getValues(spreadsheetId, range, callback = s => s) {
   };
 }
 
+
+/**
+ * Exposes the googlesheets client for more flexible job writing
+ * @function
+ * @public
+ * @example
+ * fn((state, sheets) => {
+ *  // make any request with the client
+ *   const response  = await sheetsClient.values.batchUpdate({
+ *     spreadsheetId: 'abc',
+ *     resource: {data: [{ range, values }]}
+ *   });
+ *   // return a new state object
+ *   return {...state, data: response.data }
+ * }
+ * @param {Function} func is the function
+ * @returns {Operation}
+ */
+export function fn(func) {
+  return (state, sheetsClient) => {
+    return func(state, sheetsClient)
+  }
+}
+
 export {
   alterState,
   combine,
@@ -242,7 +266,6 @@ export {
   each,
   field,
   fields,
-  fn,
   fnIf,
   http,
   lastReferenceValue,
