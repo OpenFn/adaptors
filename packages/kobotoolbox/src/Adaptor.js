@@ -71,9 +71,10 @@ export function getSubmissions(formId) {
 
     const url = `/assets/${resolvedFormId}/data/`;
 
-    const response = await util.request(state, 'GET', url, {}, true);
+    const response = await util.request(state, 'GET', url, {
+      paginate: true,
+    });
     console.log('✓', response.results.length, 'forms fetched.');
-
     return util.prepareNextState(state, response);
   };
 }

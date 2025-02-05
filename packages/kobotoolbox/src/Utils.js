@@ -14,10 +14,16 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-export async function request(state, method, path, opts, paginate = false) {
+export async function request(state, method, path, opts) {
   const { baseURL, apiVersion, username, password } = state.configuration;
 
-  const { data = {}, query = {}, headers = {}, parseAs = 'json' } = opts;
+  const {
+    data = {},
+    query = {},
+    headers = {},
+    parseAs = 'json',
+    paginate = false,
+  } = opts;
 
   const authHeaders = makeBasicAuthHeader(username, password);
 
