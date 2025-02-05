@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { execute } from '../src';
+import { execute, fn } from '../src';
 import { appendValues, batchUpdateValues } from '../src';
 
 describe('execute', () => {
@@ -66,5 +66,50 @@ describe('batchUpdateValues', () =>{
       values: state.values,
     })(state);
     expect(result).to.eql(state);
+  });
+});
+
+describe('fn function', () => {
+  let mockFunc, mockState, mockSheetsClient, mockReturnValue;
+
+  beforeEach(()=> {
+    // mock call back function
+    mockFunc = (state, sheetsClient) => {
+          sheetsClient.values.get({
+          spreadsheetId: 'abc',
+          range: 'Sheet1!A1:E1'
+        });
+          return mockReturnValue;
+    };
+
+    // mock return value
+    mockReturnValue = [
+      ['From expression', '$15', '2', '3/15/2016'],
+      ['Really now!', '$100', '1', '3/20/2016'],
+    ];
+
+    mockState = { key: 'value' };
+
+    // simulate values.get function on Google sheets
+    mockSheetsClient = {
+      values: {
+        get: ({spreadsheetId, range}) => {
+          return {
+            values: mockReturnValue
+          }
+        }
+      }
+    }
+  });
+
+  it('should return an operation', () => {
+    const operation = fn(mockFunc)
+    expect(operation).to.be.a('Function')
+  });
+
+  it('should call the passed function with state and sheetsClient', () => {
+    const operation = fn(mockFunc);
+    const result = operation(mockState, mockSheetsClient);
+    expect(result).to.eql(mockReturnValue)
   });
 });
