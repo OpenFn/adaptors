@@ -36,10 +36,10 @@ export async function getMessageResult(userId, messageId) {
   };
 }
 
-export function getContentIndicators(defaultContentRequests, contentRequests) {
-  defaultContentRequests = defaultContentRequests ?? [];
-  contentRequests = contentRequests ?? [];
-
+export function getContentIndicators(
+  defaultContentRequests = [],
+  contentRequests = []
+) {
   const contentIndicators = contentRequests.map(getContentIndicator);
   const contentNames = new Set(contentIndicators.map(({ name }) => name));
 
