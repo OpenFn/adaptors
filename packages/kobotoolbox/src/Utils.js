@@ -28,7 +28,10 @@ export async function request(state, method, path, opts) {
       ...authHeaders,
       ...headers,
     },
-    query,
+    query: {
+      format: 'json',
+      ...query,
+    },
     parseAs,
     baseUrl: `${baseURL}/api/${apiVersion}`,
   };
