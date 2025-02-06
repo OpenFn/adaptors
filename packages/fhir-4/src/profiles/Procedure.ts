@@ -44,17 +44,12 @@ export type Procedure_Props = {
     focalDevice?: FHIR.BackboneElement;
     usedReference?: FHIR.Reference;
     usedCode?: FHIR.CodeableConcept;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Procedure_Props>) {
     const resource = {
         resourceType: "Procedure",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Procedure</b></p></div>"
-        },
-
         ...props
     };
 
@@ -144,10 +139,6 @@ export default function(props: Partial<Procedure_Props>) {
         if (!Array.isArray(props.usedReference)) { props.usedReference = [props.usedReference]; }
         resource.usedReference = dt.reference(props.usedReference);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Procedure"]
-    };
 
     return resource;
 }

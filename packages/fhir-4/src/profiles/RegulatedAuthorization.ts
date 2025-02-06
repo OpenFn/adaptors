@@ -30,17 +30,12 @@ export type RegulatedAuthorization_Props = {
     holder?: FHIR.Reference;
     regulator?: FHIR.Reference;
     case?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<RegulatedAuthorization_Props>) {
     const resource = {
         resourceType: "RegulatedAuthorization",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>RegulatedAuthorization</b></p></div>"
-        },
-
         ...props
     };
 
@@ -71,10 +66,6 @@ export default function(props: Partial<RegulatedAuthorization_Props>) {
 
         resource.case = _case;
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/RegulatedAuthorization"]
-    };
 
     return resource;
 }

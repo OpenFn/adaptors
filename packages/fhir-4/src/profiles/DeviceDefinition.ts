@@ -38,17 +38,12 @@ export type DeviceDefinition_Props = {
     quantity?: FHIR.Quantity;
     parentDevice?: FHIR.Reference;
     material?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<DeviceDefinition_Props>) {
     const resource = {
         resourceType: "DeviceDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>DeviceDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -152,10 +147,6 @@ export default function(props: Partial<DeviceDefinition_Props>) {
             resource.material.push(_material);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/DeviceDefinition"]
-    };
 
     return resource;
 }

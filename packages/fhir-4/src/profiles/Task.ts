@@ -47,17 +47,12 @@ export type Task_Props = {
     restriction?: FHIR.BackboneElement;
     input?: FHIR.BackboneElement;
     output?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Task_Props>) {
     const resource = {
         resourceType: "Task",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Task</b></p></div>"
-        },
-
         ...props
     };
 
@@ -155,10 +150,6 @@ export default function(props: Partial<Task_Props>) {
             resource.output.push(_output);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Task"]
-    };
 
     return resource;
 }

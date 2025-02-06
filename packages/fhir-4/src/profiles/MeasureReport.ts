@@ -27,17 +27,12 @@ export type MeasureReport_Props = {
     improvementNotation?: FHIR.CodeableConcept;
     group?: FHIR.BackboneElement;
     evaluatedResource?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<MeasureReport_Props>) {
     const resource = {
         resourceType: "MeasureReport",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MeasureReport</b></p></div>"
-        },
-
         ...props
     };
 
@@ -72,10 +67,6 @@ export default function(props: Partial<MeasureReport_Props>) {
         if (!Array.isArray(props.evaluatedResource)) { props.evaluatedResource = [props.evaluatedResource]; }
         resource.evaluatedResource = dt.reference(props.evaluatedResource);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/MeasureReport"]
-    };
 
     return resource;
 }

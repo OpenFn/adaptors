@@ -28,17 +28,12 @@ export type RelatedPerson_Props = {
     photo?: FHIR.Attachment;
     period?: FHIR.Period;
     communication?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<RelatedPerson_Props>) {
     const resource = {
         resourceType: "RelatedPerson",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>RelatedPerson</b></p></div>"
-        },
-
         ...props
     };
 
@@ -64,10 +59,6 @@ export default function(props: Partial<RelatedPerson_Props>) {
             resource.communication.push(_communication);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/RelatedPerson"]
-    };
 
     return resource;
 }

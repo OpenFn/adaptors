@@ -30,17 +30,12 @@ export type VerificationResult_Props = {
     primarySource?: FHIR.BackboneElement;
     attestation?: FHIR.BackboneElement;
     validator?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<VerificationResult_Props>) {
     const resource = {
         resourceType: "VerificationResult",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>VerificationResult</b></p></div>"
-        },
-
         ...props
     };
 
@@ -86,10 +81,6 @@ export default function(props: Partial<VerificationResult_Props>) {
             resource.validator.push(_validator);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/VerificationResult"]
-    };
 
     return resource;
 }

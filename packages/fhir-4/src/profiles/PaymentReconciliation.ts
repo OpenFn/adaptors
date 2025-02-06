@@ -31,17 +31,12 @@ export type PaymentReconciliation_Props = {
     detail?: FHIR.BackboneElement;
     formCode?: FHIR.CodeableConcept;
     processNote?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<PaymentReconciliation_Props>) {
     const resource = {
         resourceType: "PaymentReconciliation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>PaymentReconciliation</b></p></div>"
-        },
-
         ...props
     };
 
@@ -93,10 +88,6 @@ export default function(props: Partial<PaymentReconciliation_Props>) {
             resource.processNote.push(_processNote);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/PaymentReconciliation"]
-    };
 
     return resource;
 }

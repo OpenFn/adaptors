@@ -26,17 +26,12 @@ export type Group_Props = {
     managingEntity?: FHIR.Reference;
     characteristic?: FHIR.BackboneElement;
     member?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Group_Props>) {
     const resource = {
         resourceType: "Group",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Group</b></p></div>"
-        },
-
         ...props
     };
 
@@ -76,10 +71,6 @@ export default function(props: Partial<Group_Props>) {
             resource.member.push(_member);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Group"]
-    };
 
     return resource;
 }

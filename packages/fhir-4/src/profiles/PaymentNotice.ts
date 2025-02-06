@@ -28,17 +28,12 @@ export type PaymentNotice_Props = {
     recipient?: FHIR.Reference;
     amount?: FHIR.Money;
     paymentStatus?: FHIR.CodeableConcept;
+    initialiser?: any;
 };
 
 export default function(props: Partial<PaymentNotice_Props>) {
     const resource = {
         resourceType: "PaymentNotice",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>PaymentNotice</b></p></div>"
-        },
-
         ...props
     };
 
@@ -70,10 +65,6 @@ export default function(props: Partial<PaymentNotice_Props>) {
     if (!_.isNil(props.recipient)) {
         resource.recipient = dt.reference(props.recipient);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/PaymentNotice"]
-    };
 
     return resource;
 }

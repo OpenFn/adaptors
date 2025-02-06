@@ -50,17 +50,12 @@ export type ResearchDefinition_Props = {
     exposure?: FHIR.Reference;
     exposureAlternative?: FHIR.Reference;
     outcome?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ResearchDefinition_Props>) {
     const resource = {
         resourceType: "ResearchDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ResearchDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -88,10 +83,6 @@ export default function(props: Partial<ResearchDefinition_Props>) {
     if (!_.isNil(props.outcome)) {
         resource.outcome = dt.reference(props.outcome);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ResearchDefinition"]
-    };
 
     return resource;
 }

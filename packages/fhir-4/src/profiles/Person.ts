@@ -26,17 +26,12 @@ export type Person_Props = {
     managingOrganization?: FHIR.Reference;
     active?: boolean;
     link?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Person_Props>) {
     const resource = {
         resourceType: "Person",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Person</b></p></div>"
-        },
-
         ...props
     };
 
@@ -62,10 +57,6 @@ export default function(props: Partial<Person_Props>) {
             resource.link.push(_link);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Person"]
-    };
 
     return resource;
 }

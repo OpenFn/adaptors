@@ -35,17 +35,12 @@ export type MedicationAdministration_Props = {
     note?: FHIR.Annotation;
     dosage?: FHIR.BackboneElement;
     eventHistory?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<MedicationAdministration_Props>) {
     const resource = {
         resourceType: "MedicationAdministration",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationAdministration</b></p></div>"
-        },
-
         ...props
     };
 
@@ -122,10 +117,6 @@ export default function(props: Partial<MedicationAdministration_Props>) {
         if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
         resource.eventHistory = dt.reference(props.eventHistory);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/MedicationAdministration"]
-    };
 
     return resource;
 }

@@ -108,7 +108,6 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     }
     console.log(`Package ${adaptorName} generated!`);
   }
-
   // Now generate from the spec
   const specPath = path.resolve(adaptorPath, 'spec', 'spec.json');
   try {

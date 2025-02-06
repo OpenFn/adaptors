@@ -24,17 +24,12 @@ export type Ingredient_Props = {
     allergenicIndicator?: boolean;
     manufacturer?: FHIR.BackboneElement;
     substance?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Ingredient_Props>) {
     const resource = {
         resourceType: "Ingredient",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Ingredient</b></p></div>"
-        },
-
         ...props
     };
 
@@ -70,10 +65,6 @@ export default function(props: Partial<Ingredient_Props>) {
 
         resource.substance = _substance;
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Ingredient"]
-    };
 
     return resource;
 }

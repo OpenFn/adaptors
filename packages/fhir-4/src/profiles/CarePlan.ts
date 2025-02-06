@@ -39,17 +39,12 @@ export type CarePlan_Props = {
     goal?: FHIR.Reference;
     activity?: FHIR.BackboneElement;
     note?: FHIR.Annotation;
+    initialiser?: any;
 };
 
 export default function(props: Partial<CarePlan_Props>) {
     const resource = {
         resourceType: "CarePlan",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CarePlan</b></p></div>"
-        },
-
         ...props
     };
 
@@ -123,10 +118,6 @@ export default function(props: Partial<CarePlan_Props>) {
             resource.activity.push(_activity);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/CarePlan"]
-    };
 
     return resource;
 }

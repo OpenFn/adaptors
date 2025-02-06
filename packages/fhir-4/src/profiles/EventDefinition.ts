@@ -44,17 +44,12 @@ export type EventDefinition_Props = {
     endorser?: FHIR.ContactDetail;
     relatedArtifact?: FHIR.RelatedArtifact;
     trigger?: FHIR.TriggerDefinition;
+    initialiser?: any;
 };
 
 export default function(props: Partial<EventDefinition_Props>) {
     const resource = {
         resourceType: "EventDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>EventDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -66,10 +61,6 @@ export default function(props: Partial<EventDefinition_Props>) {
     if (!_.isNil(props.subject)) {
         dt.composite(resource, "subject", props.subject);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/EventDefinition"]
-    };
 
     return resource;
 }

@@ -24,17 +24,12 @@ export type Schedule_Props = {
     actor?: FHIR.Reference;
     planningHorizon?: FHIR.Period;
     comment?: string;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Schedule_Props>) {
     const resource = {
         resourceType: "Schedule",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Schedule</b></p></div>"
-        },
-
         ...props
     };
 
@@ -47,10 +42,6 @@ export default function(props: Partial<Schedule_Props>) {
         if (!Array.isArray(props.actor)) { props.actor = [props.actor]; }
         resource.actor = dt.reference(props.actor);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Schedule"]
-    };
 
     return resource;
 }

@@ -29,17 +29,12 @@ export type ObservationDefinition_Props = {
     normalCodedValueSet?: FHIR.Reference;
     abnormalCodedValueSet?: FHIR.Reference;
     criticalCodedValueSet?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ObservationDefinition_Props>) {
     const resource = {
         resourceType: "ObservationDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ObservationDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -87,10 +82,6 @@ export default function(props: Partial<ObservationDefinition_Props>) {
     if (!_.isNil(props.criticalCodedValueSet)) {
         resource.criticalCodedValueSet = dt.reference(props.criticalCodedValueSet);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ObservationDefinition"]
-    };
 
     return resource;
 }

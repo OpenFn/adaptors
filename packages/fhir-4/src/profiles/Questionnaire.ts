@@ -38,17 +38,12 @@ export type Questionnaire_Props = {
     effectivePeriod?: FHIR.Period;
     code?: FHIR.Coding;
     item?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Questionnaire_Props>) {
     const resource = {
         resourceType: "Questionnaire",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Questionnaire</b></p></div>"
-        },
-
         ...props
     };
 
@@ -70,10 +65,6 @@ export default function(props: Partial<Questionnaire_Props>) {
             resource.item.push(_item);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Questionnaire"]
-    };
 
     return resource;
 }

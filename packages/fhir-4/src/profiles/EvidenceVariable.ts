@@ -40,17 +40,12 @@ export type EvidenceVariable_Props = {
     characteristic?: FHIR.BackboneElement;
     handling?: string;
     category?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<EvidenceVariable_Props>) {
     const resource = {
         resourceType: "EvidenceVariable",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>EvidenceVariable</b></p></div>"
-        },
-
         ...props
     };
 
@@ -86,10 +81,6 @@ export default function(props: Partial<EvidenceVariable_Props>) {
             resource.category.push(_category);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/EvidenceVariable"]
-    };
 
     return resource;
 }

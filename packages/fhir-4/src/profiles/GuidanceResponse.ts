@@ -31,17 +31,12 @@ export type GuidanceResponse_Props = {
     outputParameters?: FHIR.Reference;
     result?: FHIR.Reference;
     dataRequirement?: FHIR.DataRequirement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<GuidanceResponse_Props>) {
     const resource = {
         resourceType: "GuidanceResponse",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>GuidanceResponse</b></p></div>"
-        },
-
         ...props
     };
 
@@ -87,10 +82,6 @@ export default function(props: Partial<GuidanceResponse_Props>) {
     if (!_.isNil(props.result)) {
         resource.result = dt.reference(props.result);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/GuidanceResponse"]
-    };
 
     return resource;
 }

@@ -40,17 +40,12 @@ export type TestScript_Props = {
     setup?: FHIR.BackboneElement;
     test?: FHIR.BackboneElement;
     teardown?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<TestScript_Props>) {
     const resource = {
         resourceType: "TestScript",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>TestScript</b></p></div>"
-        },
-
         ...props
     };
 
@@ -162,10 +157,6 @@ export default function(props: Partial<TestScript_Props>) {
 
         resource.teardown = _teardown;
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/TestScript"]
-    };
 
     return resource;
 }

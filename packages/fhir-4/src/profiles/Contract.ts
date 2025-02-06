@@ -49,17 +49,12 @@ export type Contract_Props = {
     legal?: FHIR.BackboneElement;
     rule?: FHIR.BackboneElement;
     legallyBinding?: FHIR.Attachment;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Contract_Props>) {
     const resource = {
         resourceType: "Contract",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Contract</b></p></div>"
-        },
-
         ...props
     };
 
@@ -193,10 +188,6 @@ export default function(props: Partial<Contract_Props>) {
     if (!_.isNil(props.legallyBinding)) {
         dt.composite(resource, "legallyBinding", props.legallyBinding);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Contract"]
-    };
 
     return resource;
 }

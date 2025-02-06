@@ -43,17 +43,12 @@ export type ClaimResponse_Props = {
     communicationRequest?: FHIR.Reference;
     insurance?: FHIR.BackboneElement;
     error?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ClaimResponse_Props>) {
     const resource = {
         resourceType: "ClaimResponse",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ClaimResponse</b></p></div>"
-        },
-
         ...props
     };
 
@@ -176,10 +171,6 @@ export default function(props: Partial<ClaimResponse_Props>) {
             resource.error.push(_error);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ClaimResponse"]
-    };
 
     return resource;
 }

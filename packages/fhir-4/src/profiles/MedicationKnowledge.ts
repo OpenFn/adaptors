@@ -38,17 +38,12 @@ export type MedicationKnowledge_Props = {
     contraindication?: FHIR.Reference;
     regulatory?: FHIR.BackboneElement;
     kinetics?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<MedicationKnowledge_Props>) {
     const resource = {
         resourceType: "MedicationKnowledge",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationKnowledge</b></p></div>"
-        },
-
         ...props
     };
 
@@ -215,10 +210,6 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
             resource.kinetics.push(_kinetics);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/MedicationKnowledge"]
-    };
 
     return resource;
 }

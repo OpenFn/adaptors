@@ -47,17 +47,12 @@ export type PlanDefinition_Props = {
     library?: any;
     goal?: FHIR.BackboneElement;
     action?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<PlanDefinition_Props>) {
     const resource = {
         resourceType: "PlanDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>PlanDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -97,10 +92,6 @@ export default function(props: Partial<PlanDefinition_Props>) {
             resource.action.push(_action);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/PlanDefinition"]
-    };
 
     return resource;
 }

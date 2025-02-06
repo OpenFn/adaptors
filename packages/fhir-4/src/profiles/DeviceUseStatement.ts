@@ -29,17 +29,12 @@ export type DeviceUseStatement_Props = {
     reasonReference?: FHIR.Reference;
     bodySite?: FHIR.CodeableConcept;
     note?: FHIR.Annotation;
+    initialiser?: any;
 };
 
 export default function(props: Partial<DeviceUseStatement_Props>) {
     const resource = {
         resourceType: "DeviceUseStatement",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>DeviceUseStatement</b></p></div>"
-        },
-
         ...props
     };
 
@@ -78,10 +73,6 @@ export default function(props: Partial<DeviceUseStatement_Props>) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = dt.reference(props.reasonReference);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/DeviceUseStatement"]
-    };
 
     return resource;
 }

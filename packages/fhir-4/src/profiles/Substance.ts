@@ -23,17 +23,12 @@ export type Substance_Props = {
     description?: string;
     instance?: FHIR.BackboneElement;
     ingredient?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Substance_Props>) {
     const resource = {
         resourceType: "Substance",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Substance</b></p></div>"
-        },
-
         ...props
     };
 
@@ -69,10 +64,6 @@ export default function(props: Partial<Substance_Props>) {
             resource.ingredient.push(_ingredient);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Substance"]
-    };
 
     return resource;
 }

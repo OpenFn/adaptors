@@ -27,17 +27,12 @@ export type ClinicalUseDefinition_Props = {
     population?: FHIR.Reference;
     undesirableEffect?: FHIR.BackboneElement;
     warning?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ClinicalUseDefinition_Props>) {
     const resource = {
         resourceType: "ClinicalUseDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ClinicalUseDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -105,10 +100,6 @@ export default function(props: Partial<ClinicalUseDefinition_Props>) {
 
         resource.warning = _warning;
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ClinicalUseDefinition"]
-    };
 
     return resource;
 }

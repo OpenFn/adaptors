@@ -29,17 +29,12 @@ export type List_Props = {
     note?: FHIR.Annotation;
     entry?: FHIR.BackboneElement;
     emptyReason?: FHIR.CodeableConcept;
+    initialiser?: any;
 };
 
 export default function(props: Partial<List_Props>) {
     const resource = {
         resourceType: "List",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>List</b></p></div>"
-        },
-
         ...props
     };
 
@@ -73,10 +68,6 @@ export default function(props: Partial<List_Props>) {
             resource.entry.push(_entry);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/List"]
-    };
 
     return resource;
 }

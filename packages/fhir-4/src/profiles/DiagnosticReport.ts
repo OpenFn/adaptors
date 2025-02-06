@@ -34,17 +34,12 @@ export type DiagnosticReport_Props = {
     conclusion?: string;
     conclusionCode?: FHIR.CodeableConcept;
     presentedForm?: FHIR.Attachment;
+    initialiser?: any;
 };
 
 export default function(props: Partial<DiagnosticReport_Props>) {
     const resource = {
         resourceType: "DiagnosticReport",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>DiagnosticReport</b></p></div>"
-        },
-
         ...props
     };
 
@@ -108,10 +103,6 @@ export default function(props: Partial<DiagnosticReport_Props>) {
             resource.media.push(_media);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/DiagnosticReport"]
-    };
 
     return resource;
 }

@@ -33,17 +33,12 @@ export type Coverage_Props = {
     costToBeneficiary?: FHIR.BackboneElement;
     subrogation?: boolean;
     contract?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Coverage_Props>) {
     const resource = {
         resourceType: "Coverage",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Coverage</b></p></div>"
-        },
-
         ...props
     };
 
@@ -101,10 +96,6 @@ export default function(props: Partial<Coverage_Props>) {
         if (!Array.isArray(props.contract)) { props.contract = [props.contract]; }
         resource.contract = dt.reference(props.contract);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Coverage"]
-    };
 
     return resource;
 }

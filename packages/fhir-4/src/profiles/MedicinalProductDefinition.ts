@@ -44,17 +44,12 @@ export type MedicinalProductDefinition_Props = {
     crossReference?: FHIR.BackboneElement;
     operation?: FHIR.BackboneElement;
     characteristic?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<MedicinalProductDefinition_Props>) {
     const resource = {
         resourceType: "MedicinalProductDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicinalProductDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -147,10 +142,6 @@ export default function(props: Partial<MedicinalProductDefinition_Props>) {
             resource.characteristic.push(_characteristic);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/MedicinalProductDefinition"]
-    };
 
     return resource;
 }

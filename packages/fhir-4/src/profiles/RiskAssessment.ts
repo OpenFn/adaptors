@@ -33,17 +33,12 @@ export type RiskAssessment_Props = {
     prediction?: FHIR.BackboneElement;
     mitigation?: string;
     note?: FHIR.Annotation;
+    initialiser?: any;
 };
 
 export default function(props: Partial<RiskAssessment_Props>) {
     const resource = {
         resourceType: "RiskAssessment",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>RiskAssessment</b></p></div>"
-        },
-
         ...props
     };
 
@@ -103,10 +98,6 @@ export default function(props: Partial<RiskAssessment_Props>) {
             resource.prediction.push(_prediction);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/RiskAssessment"]
-    };
 
     return resource;
 }

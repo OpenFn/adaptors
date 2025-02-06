@@ -35,17 +35,12 @@ export type SubstanceDefinition_Props = {
     name?: FHIR.BackboneElement;
     relationship?: FHIR.BackboneElement;
     sourceMaterial?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<SubstanceDefinition_Props>) {
     const resource = {
         resourceType: "SubstanceDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>SubstanceDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -172,10 +167,6 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
 
         resource.sourceMaterial = _sourceMaterial;
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/SubstanceDefinition"]
-    };
 
     return resource;
 }

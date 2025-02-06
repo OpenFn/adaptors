@@ -38,17 +38,12 @@ export type Media_Props = {
     duration?: number;
     content?: FHIR.Attachment;
     note?: FHIR.Annotation;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Media_Props>) {
     const resource = {
         resourceType: "Media",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Media</b></p></div>"
-        },
-
         ...props
     };
 
@@ -86,10 +81,6 @@ export default function(props: Partial<Media_Props>) {
     if (!_.isNil(props.device)) {
         resource.device = dt.reference(props.device);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Media"]
-    };
 
     return resource;
 }

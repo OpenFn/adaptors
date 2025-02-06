@@ -36,17 +36,12 @@ export type ImagingStudy_Props = {
     note?: FHIR.Annotation;
     description?: string;
     series?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ImagingStudy_Props>) {
     const resource = {
         resourceType: "ImagingStudy",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ImagingStudy</b></p></div>"
-        },
-
         ...props
     };
 
@@ -108,10 +103,6 @@ export default function(props: Partial<ImagingStudy_Props>) {
             resource.series.push(_series);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ImagingStudy"]
-    };
 
     return resource;
 }

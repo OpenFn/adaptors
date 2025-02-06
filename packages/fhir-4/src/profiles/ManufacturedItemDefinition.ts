@@ -23,17 +23,12 @@ export type ManufacturedItemDefinition_Props = {
     manufacturer?: FHIR.Reference;
     ingredient?: FHIR.CodeableConcept;
     property?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ManufacturedItemDefinition_Props>) {
     const resource = {
         resourceType: "ManufacturedItemDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ManufacturedItemDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -60,10 +55,6 @@ export default function(props: Partial<ManufacturedItemDefinition_Props>) {
             resource.property.push(_property);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ManufacturedItemDefinition"]
-    };
 
     return resource;
 }

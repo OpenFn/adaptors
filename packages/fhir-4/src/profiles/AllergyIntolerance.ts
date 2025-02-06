@@ -32,17 +32,12 @@ export type AllergyIntolerance_Props = {
     lastOccurrence?: string;
     note?: FHIR.Annotation;
     reaction?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<AllergyIntolerance_Props>) {
     const resource = {
         resourceType: "AllergyIntolerance",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>AllergyIntolerance</b></p></div>"
-        },
-
         ...props
     };
 
@@ -84,10 +79,6 @@ export default function(props: Partial<AllergyIntolerance_Props>) {
             resource.reaction.push(_reaction);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/AllergyIntolerance"]
-    };
 
     return resource;
 }

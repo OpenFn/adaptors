@@ -45,17 +45,12 @@ export type Citation_Props = {
     statusDate?: FHIR.BackboneElement;
     relatesTo?: FHIR.BackboneElement;
     citedArtifact?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Citation_Props>) {
     const resource = {
         resourceType: "Citation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Citation</b></p></div>"
-        },
-
         ...props
     };
 
@@ -129,10 +124,6 @@ export default function(props: Partial<Citation_Props>) {
 
         resource.citedArtifact = _citedArtifact;
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Citation"]
-    };
 
     return resource;
 }

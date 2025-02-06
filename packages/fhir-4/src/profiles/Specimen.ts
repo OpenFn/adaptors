@@ -29,17 +29,12 @@ export type Specimen_Props = {
     container?: FHIR.BackboneElement;
     condition?: FHIR.CodeableConcept;
     note?: FHIR.Annotation;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Specimen_Props>) {
     const resource = {
         resourceType: "Specimen",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Specimen</b></p></div>"
-        },
-
         ...props
     };
 
@@ -103,10 +98,6 @@ export default function(props: Partial<Specimen_Props>) {
             resource.container.push(_container);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Specimen"]
-    };
 
     return resource;
 }

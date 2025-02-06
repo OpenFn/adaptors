@@ -40,17 +40,12 @@ export type ResearchStudy_Props = {
     note?: FHIR.Annotation;
     arm?: FHIR.BackboneElement;
     objective?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ResearchStudy_Props>) {
     const resource = {
         resourceType: "ResearchStudy",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ResearchStudy</b></p></div>"
-        },
-
         ...props
     };
 
@@ -114,10 +109,6 @@ export default function(props: Partial<ResearchStudy_Props>) {
             resource.objective.push(_objective);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ResearchStudy"]
-    };
 
     return resource;
 }

@@ -24,17 +24,12 @@ export type BodyStructure_Props = {
     description?: string;
     image?: FHIR.Attachment;
     patient?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<BodyStructure_Props>) {
     const resource = {
         resourceType: "BodyStructure",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>BodyStructure</b></p></div>"
-        },
-
         ...props
     };
 
@@ -46,10 +41,6 @@ export default function(props: Partial<BodyStructure_Props>) {
     if (!_.isNil(props.patient)) {
         resource.patient = dt.reference(props.patient);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/BodyStructure"]
-    };
 
     return resource;
 }

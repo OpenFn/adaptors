@@ -24,17 +24,12 @@ export type Medication_Props = {
     amount?: FHIR.Ratio;
     ingredient?: FHIR.BackboneElement;
     batch?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Medication_Props>) {
     const resource = {
         resourceType: "Medication",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Medication</b></p></div>"
-        },
-
         ...props
     };
 
@@ -70,10 +65,6 @@ export default function(props: Partial<Medication_Props>) {
 
         resource.batch = _batch;
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Medication"]
-    };
 
     return resource;
 }

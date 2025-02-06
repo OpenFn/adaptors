@@ -32,17 +32,12 @@ export type Invoice_Props = {
     totalGross?: FHIR.Money;
     paymentTerms?: FHIR.markdown;
     note?: FHIR.Annotation;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Invoice_Props>) {
     const resource = {
         resourceType: "Invoice",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Invoice</b></p></div>"
-        },
-
         ...props
     };
 
@@ -94,10 +89,6 @@ export default function(props: Partial<Invoice_Props>) {
             resource.lineItem.push(_lineItem);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Invoice"]
-    };
 
     return resource;
 }

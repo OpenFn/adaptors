@@ -24,17 +24,12 @@ export type EnrollmentResponse_Props = {
     created?: string;
     organization?: FHIR.Reference;
     requestProvider?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<EnrollmentResponse_Props>) {
     const resource = {
         resourceType: "EnrollmentResponse",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>EnrollmentResponse</b></p></div>"
-        },
-
         ...props
     };
 
@@ -54,10 +49,6 @@ export default function(props: Partial<EnrollmentResponse_Props>) {
     if (!_.isNil(props.requestProvider)) {
         resource.requestProvider = dt.reference(props.requestProvider);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/EnrollmentResponse"]
-    };
 
     return resource;
 }

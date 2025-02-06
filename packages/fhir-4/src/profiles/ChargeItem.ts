@@ -42,17 +42,12 @@ export type ChargeItem_Props = {
     account?: FHIR.Reference;
     note?: FHIR.Annotation;
     supportingInformation?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ChargeItem_Props>) {
     const resource = {
         resourceType: "ChargeItem",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ChargeItem</b></p></div>"
-        },
-
         ...props
     };
 
@@ -126,10 +121,6 @@ export default function(props: Partial<ChargeItem_Props>) {
         if (!Array.isArray(props.supportingInformation)) { props.supportingInformation = [props.supportingInformation]; }
         resource.supportingInformation = dt.reference(props.supportingInformation);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ChargeItem"]
-    };
 
     return resource;
 }

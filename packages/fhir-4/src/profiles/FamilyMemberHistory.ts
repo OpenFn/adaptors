@@ -34,17 +34,12 @@ export type FamilyMemberHistory_Props = {
     reasonReference?: FHIR.Reference;
     note?: FHIR.Annotation;
     condition?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<FamilyMemberHistory_Props>) {
     const resource = {
         resourceType: "FamilyMemberHistory",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>FamilyMemberHistory</b></p></div>"
-        },
-
         ...props
     };
 
@@ -87,10 +82,6 @@ export default function(props: Partial<FamilyMemberHistory_Props>) {
             resource.condition.push(_condition);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory"]
-    };
 
     return resource;
 }

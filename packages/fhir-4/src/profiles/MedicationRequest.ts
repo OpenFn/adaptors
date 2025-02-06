@@ -48,17 +48,12 @@ export type MedicationRequest_Props = {
     priorPrescription?: FHIR.Reference;
     detectedIssue?: FHIR.Reference;
     eventHistory?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<MedicationRequest_Props>) {
     const resource = {
         resourceType: "MedicationRequest",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationRequest</b></p></div>"
-        },
-
         ...props
     };
 
@@ -152,10 +147,6 @@ export default function(props: Partial<MedicationRequest_Props>) {
         if (!Array.isArray(props.eventHistory)) { props.eventHistory = [props.eventHistory]; }
         resource.eventHistory = dt.reference(props.eventHistory);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/MedicationRequest"]
-    };
 
     return resource;
 }

@@ -27,17 +27,12 @@ export type SupplyDelivery_Props = {
     supplier?: FHIR.Reference;
     destination?: FHIR.Reference;
     receiver?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<SupplyDelivery_Props>) {
     const resource = {
         resourceType: "SupplyDelivery",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>SupplyDelivery</b></p></div>"
-        },
-
         ...props
     };
 
@@ -86,10 +81,6 @@ export default function(props: Partial<SupplyDelivery_Props>) {
         if (!Array.isArray(props.receiver)) { props.receiver = [props.receiver]; }
         resource.receiver = dt.reference(props.receiver);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/SupplyDelivery"]
-    };
 
     return resource;
 }

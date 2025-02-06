@@ -59,17 +59,12 @@ export type ExplanationOfBenefit_Props = {
     processNote?: FHIR.BackboneElement;
     benefitPeriod?: FHIR.Period;
     benefitBalance?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ExplanationOfBenefit_Props>) {
     const resource = {
         resourceType: "ExplanationOfBenefit",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ExplanationOfBenefit</b></p></div>"
-        },
-
         ...props
     };
 
@@ -301,10 +296,6 @@ export default function(props: Partial<ExplanationOfBenefit_Props>) {
             resource.benefitBalance.push(_benefitBalance);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ExplanationOfBenefit"]
-    };
 
     return resource;
 }

@@ -26,17 +26,12 @@ export type NutritionProduct_Props = {
     productCharacteristic?: FHIR.BackboneElement;
     instance?: FHIR.BackboneElement;
     note?: FHIR.Annotation;
+    initialiser?: any;
 };
 
 export default function(props: Partial<NutritionProduct_Props>) {
     const resource = {
         resourceType: "NutritionProduct",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>NutritionProduct</b></p></div>"
-        },
-
         ...props
     };
 
@@ -96,10 +91,6 @@ export default function(props: Partial<NutritionProduct_Props>) {
 
         resource.instance = _instance;
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/NutritionProduct"]
-    };
 
     return resource;
 }

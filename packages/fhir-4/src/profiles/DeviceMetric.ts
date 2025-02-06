@@ -26,17 +26,12 @@ export type DeviceMetric_Props = {
     category?: string;
     measurementPeriod?: FHIR.Timing;
     calibration?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<DeviceMetric_Props>) {
     const resource = {
         resourceType: "DeviceMetric",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>DeviceMetric</b></p></div>"
-        },
-
         ...props
     };
 
@@ -66,10 +61,6 @@ export default function(props: Partial<DeviceMetric_Props>) {
             resource.calibration.push(_calibration);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/DeviceMetric"]
-    };
 
     return resource;
 }

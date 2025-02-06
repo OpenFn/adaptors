@@ -29,17 +29,12 @@ export type ImmunizationEvaluation_Props = {
     series?: string;
     doseNumber?: number;
     seriesDoses?: number;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ImmunizationEvaluation_Props>) {
     const resource = {
         resourceType: "ImmunizationEvaluation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ImmunizationEvaluation</b></p></div>"
-        },
-
         ...props
     };
 
@@ -67,10 +62,6 @@ export default function(props: Partial<ImmunizationEvaluation_Props>) {
     if (!_.isNil(props.seriesDoses)) {
         dt.composite(resource, "seriesDoses", props.seriesDoses);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ImmunizationEvaluation"]
-    };
 
     return resource;
 }

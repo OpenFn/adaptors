@@ -57,17 +57,12 @@ export type Measure_Props = {
     guidance?: FHIR.markdown;
     group?: FHIR.BackboneElement;
     supplementalData?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Measure_Props>) {
     const resource = {
         resourceType: "Measure",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Measure</b></p></div>"
-        },
-
         ...props
     };
 
@@ -107,10 +102,6 @@ export default function(props: Partial<Measure_Props>) {
             resource.supplementalData.push(_supplementalData);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Measure"]
-    };
 
     return resource;
 }

@@ -40,17 +40,12 @@ export type DeviceRequest_Props = {
     supportingInfo?: FHIR.Reference;
     note?: FHIR.Annotation;
     relevantHistory?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<DeviceRequest_Props>) {
     const resource = {
         resourceType: "DeviceRequest",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>DeviceRequest</b></p></div>"
-        },
-
         ...props
     };
 
@@ -130,10 +125,6 @@ export default function(props: Partial<DeviceRequest_Props>) {
         if (!Array.isArray(props.relevantHistory)) { props.relevantHistory = [props.relevantHistory]; }
         resource.relevantHistory = dt.reference(props.relevantHistory);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/DeviceRequest"]
-    };
 
     return resource;
 }

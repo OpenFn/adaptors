@@ -26,17 +26,12 @@ export type Practitioner_Props = {
     photo?: FHIR.Attachment;
     qualification?: FHIR.BackboneElement;
     communication?: FHIR.CodeableConcept;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Practitioner_Props>) {
     const resource = {
         resourceType: "Practitioner",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Practitioner</b></p></div>"
-        },
-
         ...props
     };
 
@@ -58,10 +53,6 @@ export default function(props: Partial<Practitioner_Props>) {
             resource.qualification.push(_qualification);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Practitioner"]
-    };
 
     return resource;
 }

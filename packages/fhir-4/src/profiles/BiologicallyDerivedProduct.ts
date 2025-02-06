@@ -27,17 +27,12 @@ export type BiologicallyDerivedProduct_Props = {
     processing?: FHIR.BackboneElement;
     manipulation?: FHIR.BackboneElement;
     storage?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<BiologicallyDerivedProduct_Props>) {
     const resource = {
         resourceType: "BiologicallyDerivedProduct",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>BiologicallyDerivedProduct</b></p></div>"
-        },
-
         ...props
     };
 
@@ -103,10 +98,6 @@ export default function(props: Partial<BiologicallyDerivedProduct_Props>) {
             resource.storage.push(_storage);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/BiologicallyDerivedProduct"]
-    };
 
     return resource;
 }

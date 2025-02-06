@@ -33,17 +33,12 @@ export type Location_Props = {
     hoursOfOperation?: FHIR.BackboneElement;
     availabilityExceptions?: string;
     endpoint?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Location_Props>) {
     const resource = {
         resourceType: "Location",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Location</b></p></div>"
-        },
-
         ...props
     };
 
@@ -88,10 +83,6 @@ export default function(props: Partial<Location_Props>) {
         if (!Array.isArray(props.endpoint)) { props.endpoint = [props.endpoint]; }
         resource.endpoint = dt.reference(props.endpoint);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Location"]
-    };
 
     return resource;
 }

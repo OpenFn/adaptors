@@ -50,7 +50,12 @@ const generateCode = (
 
       profiles[profile.id] = generateProfile(
         profile,
-        mappings.overrides?.[resourceType] ?? {},
+        Object.assign(
+          {
+            initialiser: mappings.initialiser,
+          },
+          mappings.overrides?.[resourceType]
+        ),
         options.fhirTypes
       );
 
@@ -105,7 +110,7 @@ const generateProfile = (
 
   statements.push(typedef);
 
-  const fn = generateBuilder(profile, overrides);
+  const fn = generateBuilder(profile, overrides, mappings.initialiser);
 
   statements.push(b.exportDefaultDeclaration(fn));
 
@@ -262,18 +267,25 @@ ${generateJsDocs(variants)}
   return declarations;
 };
 
-const generateBuilder = (schema, mappings) => {
+const generateBuilder = (schema, mappings, initialiser: (r: any) => void) => {
   const body: StatementKind[] = [];
 
   body.push(initResource(schema.type));
 
-  // this may be temporary
-  // const setDefaults = parse('Object.assign(resource, props);');
-  // body.push(...setDefaults.program.body);
-
   body.push(...mapProps(schema, mappings));
 
-  body.push(addMeta(schema, mappings));
+  if (initialiser) {
+    try {
+      const init = parse(initialiser.toString());
+      // Pull the statements out of the function body
+      // and add them in-line
+      const fn = init.program.body[0].expression;
+      body.push(...fn.body.body.filter(n => n.type !== 'ReturnStatement'));
+    } catch (e) {
+      console.error(`Failed to process initialiser for ${schema.type}`);
+      console.error(e);
+    }
+  }
 
   body.push(returnResource());
 
@@ -626,22 +638,6 @@ const mapComposite = (propName: string, _mapping: Mapping, _schema: Schema) => {
   return ifPropInInput(propName, [b.expressionStatement(callBuilder)]);
 };
 
-// this will ensure a meta prop on the data
-const addMeta = (schema, _mapping) => {
-  return b.expressionStatement(
-    b.assignmentExpression(
-      '=',
-      b.memberExpression(b.identifier(RESOURCE_NAME), b.identifier('meta')),
-      b.objectExpression([
-        b.objectProperty(
-          b.identifier('profile'),
-          b.arrayExpression([b.stringLiteral(schema.url)])
-        ),
-      ])
-    )
-  );
-};
-
 const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {
   const defaultSystem = schema.defaults?.system;
 
@@ -673,19 +669,10 @@ const initResource = (resourceType: string) => {
     b.stringLiteral(resourceType)
   );
 
-  const t = `<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>${resourceType}</b></p></div>`;
-  const text = b.objectProperty(
-    b.identifier('text'),
-    b.objectExpression([
-      b.objectProperty(b.identifier('status'), b.stringLiteral('generated')),
-      b.objectProperty(b.identifier('div'), b.stringLiteral(t)),
-    ])
-  );
-
   return b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier(RESOURCE_NAME),
-      b.objectExpression([rt, text, b.spreadProperty(b.identifier(INPUT_NAME))])
+      b.objectExpression([rt, b.spreadProperty(b.identifier(INPUT_NAME))])
     ),
   ]);
 };

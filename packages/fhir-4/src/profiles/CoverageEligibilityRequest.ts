@@ -30,17 +30,12 @@ export type CoverageEligibilityRequest_Props = {
     supportingInfo?: FHIR.BackboneElement;
     insurance?: FHIR.BackboneElement;
     item?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<CoverageEligibilityRequest_Props>) {
     const resource = {
         resourceType: "CoverageEligibilityRequest",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CoverageEligibilityRequest</b></p></div>"
-        },
-
         ...props
     };
 
@@ -114,10 +109,6 @@ export default function(props: Partial<CoverageEligibilityRequest_Props>) {
             resource.item.push(_item);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/CoverageEligibilityRequest"]
-    };
 
     return resource;
 }

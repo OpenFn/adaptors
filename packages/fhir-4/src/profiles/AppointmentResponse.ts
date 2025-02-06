@@ -24,17 +24,12 @@ export type AppointmentResponse_Props = {
     actor?: FHIR.Reference;
     participantStatus?: string;
     comment?: string;
+    initialiser?: any;
 };
 
 export default function(props: Partial<AppointmentResponse_Props>) {
     const resource = {
         resourceType: "AppointmentResponse",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>AppointmentResponse</b></p></div>"
-        },
-
         ...props
     };
 
@@ -50,10 +45,6 @@ export default function(props: Partial<AppointmentResponse_Props>) {
     if (!_.isNil(props.actor)) {
         resource.actor = dt.reference(props.actor);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/AppointmentResponse"]
-    };
 
     return resource;
 }

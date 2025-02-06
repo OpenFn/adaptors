@@ -33,17 +33,12 @@ export type NutritionOrder_Props = {
     supplement?: FHIR.BackboneElement;
     enteralFormula?: FHIR.BackboneElement;
     note?: FHIR.Annotation;
+    initialiser?: any;
 };
 
 export default function(props: Partial<NutritionOrder_Props>) {
     const resource = {
         resourceType: "NutritionOrder",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>NutritionOrder</b></p></div>"
-        },
-
         ...props
     };
 
@@ -102,10 +97,6 @@ export default function(props: Partial<NutritionOrder_Props>) {
 
         resource.enteralFormula = _enteralFormula;
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/NutritionOrder"]
-    };
 
     return resource;
 }

@@ -33,17 +33,12 @@ export type Condition_Props = {
     stage?: FHIR.BackboneElement;
     evidence?: FHIR.BackboneElement;
     note?: FHIR.Annotation;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Condition_Props>) {
     const resource = {
         resourceType: "Condition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Condition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -103,10 +98,6 @@ export default function(props: Partial<Condition_Props>) {
             resource.evidence.push(_evidence);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Condition"]
-    };
 
     return resource;
 }

@@ -30,17 +30,12 @@ export type InsurancePlan_Props = {
     network?: FHIR.Reference;
     coverage?: FHIR.BackboneElement;
     plan?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<InsurancePlan_Props>) {
     const resource = {
         resourceType: "InsurancePlan",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>InsurancePlan</b></p></div>"
-        },
-
         ...props
     };
 
@@ -113,10 +108,6 @@ export default function(props: Partial<InsurancePlan_Props>) {
             resource.plan.push(_plan);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/InsurancePlan"]
-    };
 
     return resource;
 }

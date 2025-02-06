@@ -49,17 +49,12 @@ export type ResearchElementDefinition_Props = {
     type?: string;
     variableType?: string;
     characteristic?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ResearchElementDefinition_Props>) {
     const resource = {
         resourceType: "ResearchElementDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ResearchElementDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -85,10 +80,6 @@ export default function(props: Partial<ResearchElementDefinition_Props>) {
             resource.characteristic.push(_characteristic);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ResearchElementDefinition"]
-    };
 
     return resource;
 }

@@ -34,17 +34,12 @@ export type RequestGroup_Props = {
     reasonReference?: FHIR.Reference;
     note?: FHIR.Annotation;
     action?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<RequestGroup_Props>) {
     const resource = {
         resourceType: "RequestGroup",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>RequestGroup</b></p></div>"
-        },
-
         ...props
     };
 
@@ -97,10 +92,6 @@ export default function(props: Partial<RequestGroup_Props>) {
             resource.action.push(_action);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/RequestGroup"]
-    };
 
     return resource;
 }

@@ -41,17 +41,12 @@ export type Evidence_Props = {
     studyType?: FHIR.CodeableConcept;
     statistic?: FHIR.BackboneElement;
     certainty?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Evidence_Props>) {
     const resource = {
         resourceType: "Evidence",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Evidence</b></p></div>"
-        },
-
         ...props
     };
 
@@ -105,10 +100,6 @@ export default function(props: Partial<Evidence_Props>) {
             resource.certainty.push(_certainty);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Evidence"]
-    };
 
     return resource;
 }

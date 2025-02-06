@@ -26,17 +26,12 @@ export type AdministrableProductDefinition_Props = {
     device?: FHIR.Reference;
     property?: FHIR.BackboneElement;
     routeOfAdministration?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<AdministrableProductDefinition_Props>) {
     const resource = {
         resourceType: "AdministrableProductDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>AdministrableProductDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -86,10 +81,6 @@ export default function(props: Partial<AdministrableProductDefinition_Props>) {
             resource.routeOfAdministration.push(_routeOfAdministration);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/AdministrableProductDefinition"]
-    };
 
     return resource;
 }

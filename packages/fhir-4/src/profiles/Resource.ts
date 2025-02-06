@@ -12,22 +12,13 @@ export type Resource_Props = {
     meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Resource_Props>) {
     const resource = {
         resourceType: "Resource",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Resource</b></p></div>"
-        },
-
         ...props
-    };
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Resource"]
     };
 
     return resource;

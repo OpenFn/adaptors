@@ -32,17 +32,12 @@ export type MolecularSequence_Props = {
     repository?: FHIR.BackboneElement;
     pointer?: FHIR.Reference;
     structureVariant?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<MolecularSequence_Props>) {
     const resource = {
         resourceType: "MolecularSequence",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MolecularSequence</b></p></div>"
-        },
-
         ...props
     };
 
@@ -137,10 +132,6 @@ export default function(props: Partial<MolecularSequence_Props>) {
             resource.structureVariant.push(_structureVariant);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/MolecularSequence"]
-    };
 
     return resource;
 }

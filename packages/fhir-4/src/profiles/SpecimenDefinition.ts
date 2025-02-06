@@ -22,17 +22,12 @@ export type SpecimenDefinition_Props = {
     timeAspect?: string;
     collection?: FHIR.CodeableConcept;
     typeTested?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<SpecimenDefinition_Props>) {
     const resource = {
         resourceType: "SpecimenDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>SpecimenDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -53,10 +48,6 @@ export default function(props: Partial<SpecimenDefinition_Props>) {
             resource.typeTested.push(_typeTested);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/SpecimenDefinition"]
-    };
 
     return resource;
 }

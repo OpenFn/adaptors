@@ -39,17 +39,12 @@ export type ChargeItemDefinition_Props = {
     instance?: FHIR.Reference;
     applicability?: FHIR.BackboneElement;
     propertyGroup?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ChargeItemDefinition_Props>) {
     const resource = {
         resourceType: "ChargeItemDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ChargeItemDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -90,10 +85,6 @@ export default function(props: Partial<ChargeItemDefinition_Props>) {
             resource.propertyGroup.push(_propertyGroup);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ChargeItemDefinition"]
-    };
 
     return resource;
 }

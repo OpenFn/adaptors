@@ -40,17 +40,12 @@ export type Observation_Props = {
     hasMember?: FHIR.Reference;
     derivedFrom?: FHIR.Reference;
     component?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Observation_Props>) {
     const resource = {
         resourceType: "Observation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Observation</b></p></div>"
-        },
-
         ...props
     };
 
@@ -140,10 +135,6 @@ export default function(props: Partial<Observation_Props>) {
             resource.component.push(_component);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Observation"]
-    };
 
     return resource;
 }

@@ -38,17 +38,12 @@ export type Appointment_Props = {
     basedOn?: FHIR.Reference;
     participant?: FHIR.BackboneElement;
     requestedPeriod?: FHIR.Period;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Appointment_Props>) {
     const resource = {
         resourceType: "Appointment",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Appointment</b></p></div>"
-        },
-
         ...props
     };
 
@@ -90,10 +85,6 @@ export default function(props: Partial<Appointment_Props>) {
             resource.participant.push(_participant);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Appointment"]
-    };
 
     return resource;
 }

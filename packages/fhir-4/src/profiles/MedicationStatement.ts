@@ -33,17 +33,12 @@ export type MedicationStatement_Props = {
     reasonReference?: FHIR.Reference;
     note?: FHIR.Annotation;
     dosage?: FHIR.Dosage;
+    initialiser?: any;
 };
 
 export default function(props: Partial<MedicationStatement_Props>) {
     const resource = {
         resourceType: "MedicationStatement",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>MedicationStatement</b></p></div>"
-        },
-
         ...props
     };
 
@@ -91,10 +86,6 @@ export default function(props: Partial<MedicationStatement_Props>) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = dt.reference(props.reasonReference);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/MedicationStatement"]
-    };
 
     return resource;
 }

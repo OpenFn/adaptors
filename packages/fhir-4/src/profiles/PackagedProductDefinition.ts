@@ -30,17 +30,12 @@ export type PackagedProductDefinition_Props = {
     copackagedIndicator?: boolean;
     manufacturer?: FHIR.Reference;
     package?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<PackagedProductDefinition_Props>) {
     const resource = {
         resourceType: "PackagedProductDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>PackagedProductDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -82,10 +77,6 @@ export default function(props: Partial<PackagedProductDefinition_Props>) {
 
         resource.package = _package;
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/PackagedProductDefinition"]
-    };
 
     return resource;
 }

@@ -13,6 +13,9 @@ export type MappingSpec = {
 
   /** Array of string regexes */
   valueSets?: string[];
+
+  /** After creation has run, execute this code */
+  initialiser?: (resource) => void;
 };
 
 export type Mapping = {

@@ -21,17 +21,12 @@ export type ImmunizationRecommendation_Props = {
     date?: string;
     authority?: FHIR.Reference;
     recommendation?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ImmunizationRecommendation_Props>) {
     const resource = {
         resourceType: "ImmunizationRecommendation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ImmunizationRecommendation</b></p></div>"
-        },
-
         ...props
     };
 
@@ -61,10 +56,6 @@ export default function(props: Partial<ImmunizationRecommendation_Props>) {
             resource.recommendation.push(_recommendation);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation"]
-    };
 
     return resource;
 }

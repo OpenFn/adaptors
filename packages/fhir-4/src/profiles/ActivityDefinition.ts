@@ -62,17 +62,12 @@ export type ActivityDefinition_Props = {
     observationResultRequirement?: FHIR.Reference;
     transform?: any;
     dynamicValue?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ActivityDefinition_Props>) {
     const resource = {
         resourceType: "ActivityDefinition",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ActivityDefinition</b></p></div>"
-        },
-
         ...props
     };
 
@@ -139,10 +134,6 @@ export default function(props: Partial<ActivityDefinition_Props>) {
             resource.dynamicValue.push(_dynamicValue);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ActivityDefinition"]
-    };
 
     return resource;
 }

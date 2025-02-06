@@ -39,17 +39,12 @@ export type Communication_Props = {
     reasonReference?: FHIR.Reference;
     payload?: FHIR.BackboneElement;
     note?: FHIR.Annotation;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Communication_Props>) {
     const resource = {
         resourceType: "Communication",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Communication</b></p></div>"
-        },
-
         ...props
     };
 
@@ -113,10 +108,6 @@ export default function(props: Partial<Communication_Props>) {
             resource.payload.push(_payload);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Communication"]
-    };
 
     return resource;
 }

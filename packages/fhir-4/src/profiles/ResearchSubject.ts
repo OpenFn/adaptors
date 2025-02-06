@@ -24,17 +24,12 @@ export type ResearchSubject_Props = {
     assignedArm?: string;
     actualArm?: string;
     consent?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ResearchSubject_Props>) {
     const resource = {
         resourceType: "ResearchSubject",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ResearchSubject</b></p></div>"
-        },
-
         ...props
     };
 
@@ -54,10 +49,6 @@ export default function(props: Partial<ResearchSubject_Props>) {
     if (!_.isNil(props.consent)) {
         resource.consent = dt.reference(props.consent);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ResearchSubject"]
-    };
 
     return resource;
 }

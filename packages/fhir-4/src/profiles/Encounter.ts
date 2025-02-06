@@ -39,17 +39,12 @@ export type Encounter_Props = {
     location?: FHIR.BackboneElement;
     serviceProvider?: FHIR.Reference;
     partOf?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Encounter_Props>) {
     const resource = {
         resourceType: "Encounter",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Encounter</b></p></div>"
-        },
-
         ...props
     };
 
@@ -174,10 +169,6 @@ export default function(props: Partial<Encounter_Props>) {
     if (!_.isNil(props.partOf)) {
         resource.partOf = dt.reference(props.partOf);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Encounter"]
-    };
 
     return resource;
 }

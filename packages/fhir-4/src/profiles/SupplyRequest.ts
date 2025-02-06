@@ -31,17 +31,12 @@ export type SupplyRequest_Props = {
     reasonReference?: FHIR.Reference;
     deliverFrom?: FHIR.Reference;
     deliverTo?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<SupplyRequest_Props>) {
     const resource = {
         resourceType: "SupplyRequest",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>SupplyRequest</b></p></div>"
-        },
-
         ...props
     };
 
@@ -93,10 +88,6 @@ export default function(props: Partial<SupplyRequest_Props>) {
     if (!_.isNil(props.deliverTo)) {
         resource.deliverTo = dt.reference(props.deliverTo);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/SupplyRequest"]
-    };
 
     return resource;
 }

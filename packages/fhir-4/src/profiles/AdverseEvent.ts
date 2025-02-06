@@ -36,17 +36,12 @@ export type AdverseEvent_Props = {
     subjectMedicalHistory?: FHIR.Reference;
     referenceDocument?: FHIR.Reference;
     study?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<AdverseEvent_Props>) {
     const resource = {
         resourceType: "AdverseEvent",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>AdverseEvent</b></p></div>"
-        },
-
         ...props
     };
 
@@ -108,10 +103,6 @@ export default function(props: Partial<AdverseEvent_Props>) {
         if (!Array.isArray(props.study)) { props.study = [props.study]; }
         resource.study = dt.reference(props.study);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/AdverseEvent"]
-    };
 
     return resource;
 }

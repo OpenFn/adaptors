@@ -27,17 +27,12 @@ export type Endpoint_Props = {
     payloadMimeType?: string;
     address?: FHIR.url;
     header?: string;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Endpoint_Props>) {
     const resource = {
         resourceType: "Endpoint",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Endpoint</b></p></div>"
-        },
-
         ...props
     };
 
@@ -49,10 +44,6 @@ export default function(props: Partial<Endpoint_Props>) {
     if (!_.isNil(props.managingOrganization)) {
         resource.managingOrganization = dt.reference(props.managingOrganization);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Endpoint"]
-    };
 
     return resource;
 }

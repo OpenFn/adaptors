@@ -36,17 +36,12 @@ export type ClinicalImpression_Props = {
     prognosisReference?: FHIR.Reference;
     supportingInfo?: FHIR.Reference;
     note?: FHIR.Annotation;
+    initialiser?: any;
 };
 
 export default function(props: Partial<ClinicalImpression_Props>) {
     const resource = {
         resourceType: "ClinicalImpression",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>ClinicalImpression</b></p></div>"
-        },
-
         ...props
     };
 
@@ -117,10 +112,6 @@ export default function(props: Partial<ClinicalImpression_Props>) {
         if (!Array.isArray(props.supportingInfo)) { props.supportingInfo = [props.supportingInfo]; }
         resource.supportingInfo = dt.reference(props.supportingInfo);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/ClinicalImpression"]
-    };
 
     return resource;
 }

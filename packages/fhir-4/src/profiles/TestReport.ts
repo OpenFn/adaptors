@@ -28,17 +28,12 @@ export type TestReport_Props = {
     setup?: FHIR.BackboneElement;
     test?: FHIR.BackboneElement;
     teardown?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<TestReport_Props>) {
     const resource = {
         resourceType: "TestReport",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>TestReport</b></p></div>"
-        },
-
         ...props
     };
 
@@ -97,10 +92,6 @@ export default function(props: Partial<TestReport_Props>) {
 
         resource.teardown = _teardown;
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/TestReport"]
-    };
 
     return resource;
 }

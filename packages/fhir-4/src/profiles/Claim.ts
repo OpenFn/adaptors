@@ -43,17 +43,12 @@ export type Claim_Props = {
     accident?: FHIR.BackboneElement;
     item?: FHIR.BackboneElement;
     total?: FHIR.Money;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Claim_Props>) {
     const resource = {
         resourceType: "Claim",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Claim</b></p></div>"
-        },
-
         ...props
     };
 
@@ -211,10 +206,6 @@ export default function(props: Partial<Claim_Props>) {
             resource.item.push(_item);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Claim"]
-    };
 
     return resource;
 }

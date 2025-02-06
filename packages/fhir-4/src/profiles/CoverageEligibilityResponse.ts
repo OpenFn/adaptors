@@ -31,17 +31,12 @@ export type CoverageEligibilityResponse_Props = {
     preAuthRef?: string;
     form?: FHIR.CodeableConcept;
     error?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<CoverageEligibilityResponse_Props>) {
     const resource = {
         resourceType: "CoverageEligibilityResponse",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CoverageEligibilityResponse</b></p></div>"
-        },
-
         ...props
     };
 
@@ -97,10 +92,6 @@ export default function(props: Partial<CoverageEligibilityResponse_Props>) {
             resource.error.push(_error);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/CoverageEligibilityResponse"]
-    };
 
     return resource;
 }

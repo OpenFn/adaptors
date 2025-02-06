@@ -28,17 +28,12 @@ export type DetectedIssue_Props = {
     detail?: string;
     reference?: string;
     mitigation?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<DetectedIssue_Props>) {
     const resource = {
         resourceType: "DetectedIssue",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>DetectedIssue</b></p></div>"
-        },
-
         ...props
     };
 
@@ -91,10 +86,6 @@ export default function(props: Partial<DetectedIssue_Props>) {
             resource.mitigation.push(_mitigation);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/DetectedIssue"]
-    };
 
     return resource;
 }

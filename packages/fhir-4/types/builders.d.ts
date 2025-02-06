@@ -1195,6 +1195,7 @@ declare type Account_Props = {
     description?: string;
     guarantor?: BackboneElement;
     partOf?: Reference;
+    initialiser?: any;
 };
 
 declare type ActivityDefinition_Props = {
@@ -1252,6 +1253,7 @@ declare type ActivityDefinition_Props = {
     observationResultRequirement?: Reference;
     transform?: any;
     dynamicValue?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type AdministrableProductDefinition_Props = {
@@ -1273,6 +1275,7 @@ declare type AdministrableProductDefinition_Props = {
     device?: Reference;
     property?: BackboneElement;
     routeOfAdministration?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type AdverseEvent_Props = {
@@ -1304,6 +1307,7 @@ declare type AdverseEvent_Props = {
     subjectMedicalHistory?: Reference;
     referenceDocument?: Reference;
     study?: Reference;
+    initialiser?: any;
 };
 
 declare type AllergyIntolerance_Props = {
@@ -1331,6 +1335,7 @@ declare type AllergyIntolerance_Props = {
     lastOccurrence?: string;
     note?: Annotation;
     reaction?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Appointment_Props = {
@@ -1364,6 +1369,7 @@ declare type Appointment_Props = {
     basedOn?: Reference;
     participant?: BackboneElement;
     requestedPeriod?: Period;
+    initialiser?: any;
 };
 
 declare type AppointmentResponse_Props = {
@@ -1383,6 +1389,7 @@ declare type AppointmentResponse_Props = {
     actor?: Reference;
     participantStatus?: string;
     comment?: string;
+    initialiser?: any;
 };
 
 declare type BiologicallyDerivedProduct_Props = {
@@ -1405,6 +1412,7 @@ declare type BiologicallyDerivedProduct_Props = {
     processing?: BackboneElement;
     manipulation?: BackboneElement;
     storage?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type BodyStructure_Props = {
@@ -1424,6 +1432,7 @@ declare type BodyStructure_Props = {
     description?: string;
     image?: Attachment;
     patient?: Reference;
+    initialiser?: any;
 };
 
 declare type CarePlan_Props = {
@@ -1458,6 +1467,7 @@ declare type CarePlan_Props = {
     goal?: Reference;
     activity?: BackboneElement;
     note?: Annotation;
+    initialiser?: any;
 };
 
 declare type CareTeam_Props = {
@@ -1482,6 +1492,7 @@ declare type CareTeam_Props = {
     managingOrganization?: Reference;
     telecom?: ContactPoint;
     note?: Annotation;
+    initialiser?: any;
 };
 
 declare type ChargeItem_Props = {
@@ -1519,6 +1530,7 @@ declare type ChargeItem_Props = {
     account?: Reference;
     note?: Annotation;
     supportingInformation?: Reference;
+    initialiser?: any;
 };
 
 declare type ChargeItemDefinition_Props = {
@@ -1553,6 +1565,7 @@ declare type ChargeItemDefinition_Props = {
     instance?: Reference;
     applicability?: BackboneElement;
     propertyGroup?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Citation_Props = {
@@ -1593,6 +1606,7 @@ declare type Citation_Props = {
     statusDate?: BackboneElement;
     relatesTo?: BackboneElement;
     citedArtifact?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Claim_Props = {
@@ -1631,6 +1645,7 @@ declare type Claim_Props = {
     accident?: BackboneElement;
     item?: BackboneElement;
     total?: Money;
+    initialiser?: any;
 };
 
 declare type ClaimResponse_Props = {
@@ -1669,6 +1684,7 @@ declare type ClaimResponse_Props = {
     communicationRequest?: Reference;
     insurance?: BackboneElement;
     error?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type ClinicalImpression_Props = {
@@ -1700,6 +1716,7 @@ declare type ClinicalImpression_Props = {
     prognosisReference?: Reference;
     supportingInfo?: Reference;
     note?: Annotation;
+    initialiser?: any;
 };
 
 declare type ClinicalUseDefinition_Props = {
@@ -1722,6 +1739,7 @@ declare type ClinicalUseDefinition_Props = {
     population?: Reference;
     undesirableEffect?: BackboneElement;
     warning?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Communication_Props = {
@@ -1756,6 +1774,7 @@ declare type Communication_Props = {
     reasonReference?: Reference;
     payload?: BackboneElement;
     note?: Annotation;
+    initialiser?: any;
 };
 
 declare type CommunicationRequest_Props = {
@@ -1789,6 +1808,7 @@ declare type CommunicationRequest_Props = {
     reasonCode?: CodeableConcept;
     reasonReference?: Reference;
     note?: Annotation;
+    initialiser?: any;
 };
 
 declare type Condition_Props = {
@@ -1817,6 +1837,7 @@ declare type Condition_Props = {
     stage?: BackboneElement;
     evidence?: BackboneElement;
     note?: Annotation;
+    initialiser?: any;
 };
 
 declare type Contract_Props = {
@@ -1861,6 +1882,7 @@ declare type Contract_Props = {
     legal?: BackboneElement;
     rule?: BackboneElement;
     legallyBinding?: Attachment;
+    initialiser?: any;
 };
 
 declare type Coverage_Props = {
@@ -1889,6 +1911,7 @@ declare type Coverage_Props = {
     costToBeneficiary?: BackboneElement;
     subrogation?: boolean;
     contract?: Reference;
+    initialiser?: any;
 };
 
 declare type CoverageEligibilityRequest_Props = {
@@ -1914,6 +1937,7 @@ declare type CoverageEligibilityRequest_Props = {
     supportingInfo?: BackboneElement;
     insurance?: BackboneElement;
     item?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type CoverageEligibilityResponse_Props = {
@@ -1940,6 +1964,7 @@ declare type CoverageEligibilityResponse_Props = {
     preAuthRef?: string;
     form?: CodeableConcept;
     error?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type DetectedIssue_Props = {
@@ -1963,6 +1988,7 @@ declare type DetectedIssue_Props = {
     detail?: string;
     reference?: string;
     mitigation?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Device_Props = {
@@ -2000,6 +2026,7 @@ declare type Device_Props = {
     note?: Annotation;
     safety?: CodeableConcept;
     parent?: Reference;
+    initialiser?: any;
 };
 
 declare type DeviceDefinition_Props = {
@@ -2033,6 +2060,7 @@ declare type DeviceDefinition_Props = {
     quantity?: Quantity;
     parentDevice?: Reference;
     material?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type DeviceMetric_Props = {
@@ -2054,6 +2082,7 @@ declare type DeviceMetric_Props = {
     category?: string;
     measurementPeriod?: Timing;
     calibration?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type DeviceRequest_Props = {
@@ -2089,6 +2118,7 @@ declare type DeviceRequest_Props = {
     supportingInfo?: Reference;
     note?: Annotation;
     relevantHistory?: Reference;
+    initialiser?: any;
 };
 
 declare type DeviceUseStatement_Props = {
@@ -2113,6 +2143,7 @@ declare type DeviceUseStatement_Props = {
     reasonReference?: Reference;
     bodySite?: CodeableConcept;
     note?: Annotation;
+    initialiser?: any;
 };
 
 declare type DiagnosticReport_Props = {
@@ -2142,6 +2173,7 @@ declare type DiagnosticReport_Props = {
     conclusion?: string;
     conclusionCode?: CodeableConcept;
     presentedForm?: Attachment;
+    initialiser?: any;
 };
 
 declare type DomainResource_Props = {
@@ -2153,6 +2185,7 @@ declare type DomainResource_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
+    initialiser?: any;
 };
 
 declare type Encounter_Props = {
@@ -2187,6 +2220,7 @@ declare type Encounter_Props = {
     location?: BackboneElement;
     serviceProvider?: Reference;
     partOf?: Reference;
+    initialiser?: any;
 };
 
 declare type Endpoint_Props = {
@@ -2209,6 +2243,7 @@ declare type Endpoint_Props = {
     payloadMimeType?: string;
     address?: url;
     header?: string;
+    initialiser?: any;
 };
 
 declare type EnrollmentRequest_Props = {
@@ -2227,6 +2262,7 @@ declare type EnrollmentRequest_Props = {
     provider?: Reference;
     candidate?: Reference;
     coverage?: Reference;
+    initialiser?: any;
 };
 
 declare type EnrollmentResponse_Props = {
@@ -2246,6 +2282,7 @@ declare type EnrollmentResponse_Props = {
     created?: string;
     organization?: Reference;
     requestProvider?: Reference;
+    initialiser?: any;
 };
 
 declare type EpisodeOfCare_Props = {
@@ -2269,6 +2306,7 @@ declare type EpisodeOfCare_Props = {
     careManager?: Reference;
     team?: Reference;
     account?: Reference;
+    initialiser?: any;
 };
 
 declare type EventDefinition_Props = {
@@ -2308,6 +2346,7 @@ declare type EventDefinition_Props = {
     endorser?: ContactDetail;
     relatedArtifact?: RelatedArtifact;
     trigger?: TriggerDefinition;
+    initialiser?: any;
 };
 
 declare type Evidence_Props = {
@@ -2344,6 +2383,7 @@ declare type Evidence_Props = {
     studyType?: CodeableConcept;
     statistic?: BackboneElement;
     certainty?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type EvidenceReport_Props = {
@@ -2373,6 +2413,7 @@ declare type EvidenceReport_Props = {
     endorser?: ContactDetail;
     relatesTo?: BackboneElement;
     section?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type EvidenceVariable_Props = {
@@ -2408,6 +2449,7 @@ declare type EvidenceVariable_Props = {
     characteristic?: BackboneElement;
     handling?: string;
     category?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type ExplanationOfBenefit_Props = {
@@ -2462,6 +2504,7 @@ declare type ExplanationOfBenefit_Props = {
     processNote?: BackboneElement;
     benefitPeriod?: Period;
     benefitBalance?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type FamilyMemberHistory_Props = {
@@ -2491,6 +2534,7 @@ declare type FamilyMemberHistory_Props = {
     reasonReference?: Reference;
     note?: Annotation;
     condition?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Flag_Props = {
@@ -2510,6 +2554,7 @@ declare type Flag_Props = {
     period?: Period;
     encounter?: Reference;
     author?: Reference;
+    initialiser?: any;
 };
 
 declare type Goal_Props = {
@@ -2537,6 +2582,7 @@ declare type Goal_Props = {
     note?: Annotation;
     outcomeCode?: CodeableConcept;
     outcomeReference?: Reference;
+    initialiser?: any;
 };
 
 declare type Group_Props = {
@@ -2558,6 +2604,7 @@ declare type Group_Props = {
     managingEntity?: Reference;
     characteristic?: BackboneElement;
     member?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type GuidanceResponse_Props = {
@@ -2584,6 +2631,7 @@ declare type GuidanceResponse_Props = {
     outputParameters?: Reference;
     result?: Reference;
     dataRequirement?: DataRequirement;
+    initialiser?: any;
 };
 
 declare type HealthcareService_Props = {
@@ -2619,6 +2667,7 @@ declare type HealthcareService_Props = {
     notAvailable?: BackboneElement;
     availabilityExceptions?: string;
     endpoint?: Reference;
+    initialiser?: any;
 };
 
 declare type ImagingStudy_Props = {
@@ -2650,6 +2699,7 @@ declare type ImagingStudy_Props = {
     note?: Annotation;
     description?: string;
     series?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Immunization_Props = {
@@ -2689,6 +2739,7 @@ declare type Immunization_Props = {
     fundingSource?: CodeableConcept;
     reaction?: BackboneElement;
     protocolApplied?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type ImmunizationEvaluation_Props = {
@@ -2713,6 +2764,7 @@ declare type ImmunizationEvaluation_Props = {
     series?: string;
     doseNumber?: number;
     seriesDoses?: number;
+    initialiser?: any;
 };
 
 declare type ImmunizationRecommendation_Props = {
@@ -2729,6 +2781,7 @@ declare type ImmunizationRecommendation_Props = {
     date?: string;
     authority?: Reference;
     recommendation?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Ingredient_Props = {
@@ -2748,6 +2801,7 @@ declare type Ingredient_Props = {
     allergenicIndicator?: boolean;
     manufacturer?: BackboneElement;
     substance?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type InsurancePlan_Props = {
@@ -2773,6 +2827,7 @@ declare type InsurancePlan_Props = {
     network?: Reference;
     coverage?: BackboneElement;
     plan?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Invoice_Props = {
@@ -2800,6 +2855,7 @@ declare type Invoice_Props = {
     totalGross?: Money;
     paymentTerms?: markdown;
     note?: Annotation;
+    initialiser?: any;
 };
 
 declare type Library_Props = {
@@ -2842,6 +2898,7 @@ declare type Library_Props = {
     parameter?: ParameterDefinition;
     dataRequirement?: DataRequirement;
     content?: Attachment;
+    initialiser?: any;
 };
 
 declare type List_Props = {
@@ -2866,6 +2923,7 @@ declare type List_Props = {
     note?: Annotation;
     entry?: BackboneElement;
     emptyReason?: CodeableConcept;
+    initialiser?: any;
 };
 
 declare type Location_Props = {
@@ -2894,6 +2952,7 @@ declare type Location_Props = {
     hoursOfOperation?: BackboneElement;
     availabilityExceptions?: string;
     endpoint?: Reference;
+    initialiser?: any;
 };
 
 declare type ManufacturedItemDefinition_Props = {
@@ -2912,6 +2971,7 @@ declare type ManufacturedItemDefinition_Props = {
     manufacturer?: Reference;
     ingredient?: CodeableConcept;
     property?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Measure_Props = {
@@ -2964,6 +3024,7 @@ declare type Measure_Props = {
     guidance?: markdown;
     group?: BackboneElement;
     supplementalData?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type MeasureReport_Props = {
@@ -2986,6 +3047,7 @@ declare type MeasureReport_Props = {
     improvementNotation?: CodeableConcept;
     group?: BackboneElement;
     evaluatedResource?: Reference;
+    initialiser?: any;
 };
 
 declare type Media_Props = {
@@ -3019,6 +3081,7 @@ declare type Media_Props = {
     duration?: number;
     content?: Attachment;
     note?: Annotation;
+    initialiser?: any;
 };
 
 declare type Medication_Props = {
@@ -3038,6 +3101,7 @@ declare type Medication_Props = {
     amount?: Ratio;
     ingredient?: BackboneElement;
     batch?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type MedicationAdministration_Props = {
@@ -3068,6 +3132,7 @@ declare type MedicationAdministration_Props = {
     note?: Annotation;
     dosage?: BackboneElement;
     eventHistory?: Reference;
+    initialiser?: any;
 };
 
 declare type MedicationDispense_Props = {
@@ -3103,6 +3168,7 @@ declare type MedicationDispense_Props = {
     substitution?: BackboneElement;
     detectedIssue?: Reference;
     eventHistory?: Reference;
+    initialiser?: any;
 };
 
 declare type MedicationKnowledge_Props = {
@@ -3136,6 +3202,7 @@ declare type MedicationKnowledge_Props = {
     contraindication?: Reference;
     regulatory?: BackboneElement;
     kinetics?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type MedicationRequest_Props = {
@@ -3179,6 +3246,7 @@ declare type MedicationRequest_Props = {
     priorPrescription?: Reference;
     detectedIssue?: Reference;
     eventHistory?: Reference;
+    initialiser?: any;
 };
 
 declare type MedicationStatement_Props = {
@@ -3207,6 +3275,7 @@ declare type MedicationStatement_Props = {
     reasonReference?: Reference;
     note?: Annotation;
     dosage?: Dosage;
+    initialiser?: any;
 };
 
 declare type MedicinalProductDefinition_Props = {
@@ -3246,6 +3315,7 @@ declare type MedicinalProductDefinition_Props = {
     crossReference?: BackboneElement;
     operation?: BackboneElement;
     characteristic?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type MolecularSequence_Props = {
@@ -3273,6 +3343,7 @@ declare type MolecularSequence_Props = {
     repository?: BackboneElement;
     pointer?: Reference;
     structureVariant?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type NutritionOrder_Props = {
@@ -3301,6 +3372,7 @@ declare type NutritionOrder_Props = {
     supplement?: BackboneElement;
     enteralFormula?: BackboneElement;
     note?: Annotation;
+    initialiser?: any;
 };
 
 declare type NutritionProduct_Props = {
@@ -3322,6 +3394,7 @@ declare type NutritionProduct_Props = {
     productCharacteristic?: BackboneElement;
     instance?: BackboneElement;
     note?: Annotation;
+    initialiser?: any;
 };
 
 declare type Observation_Props = {
@@ -3357,6 +3430,7 @@ declare type Observation_Props = {
     hasMember?: Reference;
     derivedFrom?: Reference;
     component?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type ObservationDefinition_Props = {
@@ -3381,6 +3455,7 @@ declare type ObservationDefinition_Props = {
     normalCodedValueSet?: Reference;
     abnormalCodedValueSet?: Reference;
     criticalCodedValueSet?: Reference;
+    initialiser?: any;
 };
 
 declare type Organization_Props = {
@@ -3402,6 +3477,7 @@ declare type Organization_Props = {
     partOf?: Reference;
     contact?: BackboneElement;
     endpoint?: Reference;
+    initialiser?: any;
 };
 
 declare type OrganizationAffiliation_Props = {
@@ -3425,6 +3501,7 @@ declare type OrganizationAffiliation_Props = {
     healthcareService?: Reference;
     telecom?: ContactPoint;
     endpoint?: Reference;
+    initialiser?: any;
 };
 
 declare type PackagedProductDefinition_Props = {
@@ -3450,6 +3527,7 @@ declare type PackagedProductDefinition_Props = {
     copackagedIndicator?: boolean;
     manufacturer?: Reference;
     package?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Patient_Props = {
@@ -3477,6 +3555,7 @@ declare type Patient_Props = {
     generalPractitioner?: Reference;
     managingOrganization?: Reference;
     link?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type PaymentNotice_Props = {
@@ -3500,6 +3579,7 @@ declare type PaymentNotice_Props = {
     recipient?: Reference;
     amount?: Money;
     paymentStatus?: CodeableConcept;
+    initialiser?: any;
 };
 
 declare type PaymentReconciliation_Props = {
@@ -3526,6 +3606,7 @@ declare type PaymentReconciliation_Props = {
     detail?: BackboneElement;
     formCode?: CodeableConcept;
     processNote?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Person_Props = {
@@ -3547,6 +3628,7 @@ declare type Person_Props = {
     managingOrganization?: Reference;
     active?: boolean;
     link?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type PlanDefinition_Props = {
@@ -3589,6 +3671,7 @@ declare type PlanDefinition_Props = {
     library?: any;
     goal?: BackboneElement;
     action?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Practitioner_Props = {
@@ -3610,6 +3693,7 @@ declare type Practitioner_Props = {
     photo?: Attachment;
     qualification?: BackboneElement;
     communication?: CodeableConcept;
+    initialiser?: any;
 };
 
 declare type PractitionerRole_Props = {
@@ -3635,6 +3719,7 @@ declare type PractitionerRole_Props = {
     notAvailable?: BackboneElement;
     availabilityExceptions?: string;
     endpoint?: Reference;
+    initialiser?: any;
 };
 
 declare type Procedure_Props = {
@@ -3674,6 +3759,7 @@ declare type Procedure_Props = {
     focalDevice?: BackboneElement;
     usedReference?: Reference;
     usedCode?: CodeableConcept;
+    initialiser?: any;
 };
 
 declare type Questionnaire_Props = {
@@ -3707,6 +3793,7 @@ declare type Questionnaire_Props = {
     effectivePeriod?: Period;
     code?: Coding;
     item?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type QuestionnaireResponse_Props = {
@@ -3729,6 +3816,7 @@ declare type QuestionnaireResponse_Props = {
     author?: Reference;
     source?: Reference;
     item?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type RegulatedAuthorization_Props = {
@@ -3754,6 +3842,7 @@ declare type RegulatedAuthorization_Props = {
     holder?: Reference;
     regulator?: Reference;
     case?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type RelatedPerson_Props = {
@@ -3777,6 +3866,7 @@ declare type RelatedPerson_Props = {
     photo?: Attachment;
     period?: Period;
     communication?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type RequestGroup_Props = {
@@ -3806,6 +3896,7 @@ declare type RequestGroup_Props = {
     reasonReference?: Reference;
     note?: Annotation;
     action?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type ResearchDefinition_Props = {
@@ -3851,6 +3942,7 @@ declare type ResearchDefinition_Props = {
     exposure?: Reference;
     exposureAlternative?: Reference;
     outcome?: Reference;
+    initialiser?: any;
 };
 
 declare type ResearchElementDefinition_Props = {
@@ -3895,6 +3987,7 @@ declare type ResearchElementDefinition_Props = {
     type?: string;
     variableType?: string;
     characteristic?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type ResearchStudy_Props = {
@@ -3930,6 +4023,7 @@ declare type ResearchStudy_Props = {
     note?: Annotation;
     arm?: BackboneElement;
     objective?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type ResearchSubject_Props = {
@@ -3949,6 +4043,7 @@ declare type ResearchSubject_Props = {
     assignedArm?: string;
     actualArm?: string;
     consent?: Reference;
+    initialiser?: any;
 };
 
 declare type Resource_Props = {
@@ -3956,6 +4051,7 @@ declare type Resource_Props = {
     meta?: Meta;
     implicitRules?: string;
     language?: string;
+    initialiser?: any;
 };
 
 declare type RiskAssessment_Props = {
@@ -3984,6 +4080,7 @@ declare type RiskAssessment_Props = {
     prediction?: BackboneElement;
     mitigation?: string;
     note?: Annotation;
+    initialiser?: any;
 };
 
 declare type Schedule_Props = {
@@ -4003,6 +4100,7 @@ declare type Schedule_Props = {
     actor?: Reference;
     planningHorizon?: Period;
     comment?: string;
+    initialiser?: any;
 };
 
 declare type ServiceRequest_Props = {
@@ -4047,6 +4145,7 @@ declare type ServiceRequest_Props = {
     note?: Annotation;
     patientInstruction?: string;
     relevantHistory?: Reference;
+    initialiser?: any;
 };
 
 declare type Slot_Props = {
@@ -4069,6 +4168,7 @@ declare type Slot_Props = {
     end?: string;
     overbooked?: boolean;
     comment?: string;
+    initialiser?: any;
 };
 
 declare type Specimen_Props = {
@@ -4093,6 +4193,7 @@ declare type Specimen_Props = {
     container?: BackboneElement;
     condition?: CodeableConcept;
     note?: Annotation;
+    initialiser?: any;
 };
 
 declare type SpecimenDefinition_Props = {
@@ -4110,6 +4211,7 @@ declare type SpecimenDefinition_Props = {
     timeAspect?: string;
     collection?: CodeableConcept;
     typeTested?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type Substance_Props = {
@@ -4128,6 +4230,7 @@ declare type Substance_Props = {
     description?: string;
     instance?: BackboneElement;
     ingredient?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type SubstanceDefinition_Props = {
@@ -4158,6 +4261,7 @@ declare type SubstanceDefinition_Props = {
     name?: BackboneElement;
     relationship?: BackboneElement;
     sourceMaterial?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type SupplyDelivery_Props = {
@@ -4180,6 +4284,7 @@ declare type SupplyDelivery_Props = {
     supplier?: Reference;
     destination?: Reference;
     receiver?: Reference;
+    initialiser?: any;
 };
 
 declare type SupplyRequest_Props = {
@@ -4206,6 +4311,7 @@ declare type SupplyRequest_Props = {
     reasonReference?: Reference;
     deliverFrom?: Reference;
     deliverTo?: Reference;
+    initialiser?: any;
 };
 
 declare type Task_Props = {
@@ -4248,6 +4354,7 @@ declare type Task_Props = {
     restriction?: BackboneElement;
     input?: BackboneElement;
     output?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type TestReport_Props = {
@@ -4271,6 +4378,7 @@ declare type TestReport_Props = {
     setup?: BackboneElement;
     test?: BackboneElement;
     teardown?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type TestScript_Props = {
@@ -4306,6 +4414,7 @@ declare type TestScript_Props = {
     setup?: BackboneElement;
     test?: BackboneElement;
     teardown?: BackboneElement;
+    initialiser?: any;
 };
 
 declare type VerificationResult_Props = {
@@ -4331,6 +4440,27 @@ declare type VerificationResult_Props = {
     primarySource?: BackboneElement;
     attestation?: BackboneElement;
     validator?: BackboneElement;
+    initialiser?: any;
+};
+
+declare type VisionPrescription_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any;
+    extension?: Extension;
+    modifierExtension?: Extension;
+    identifier?: Identifier;
+    status?: string;
+    created?: string;
+    patient?: Reference;
+    encounter?: Reference;
+    dateWritten?: string;
+    prescriber?: Reference;
+    lensSpecification?: BackboneElement;
+    initialiser?: any;
 };
 
 /**
@@ -8151,6 +8281,31 @@ declare function testScript(props: TestScript_Props): any;
  */
 declare function verificationResult(type: string, props: VerificationResult_Props): any;
 declare function verificationResult(props: VerificationResult_Props): any;
+/**
+  * Create a FHIR VisionPrescription resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource
+  * @param {string} [props.id] - Logical id of this artifact
+  * @param {Meta} [props.meta] - Metadata about the resource
+  * @param {string} [props.implicitRules] - A set of rules under which this content was created
+  * @param {string} [props.language] - Language of the resource content
+  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
+  * @param {Resource} [props.contained] - Contained, inline Resources
+  * @param {Extension} [props.extension] - Additional content defined by implementations
+  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {Identifier} [props.identifier] - Business Identifier for vision prescription
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {dateTime} [props.created] - Response creation date
+  * @param {Reference} [props.patient] - Who prescription is for
+  * @param {Reference} [props.encounter] - Created during encounter / admission / stay
+  * @param {dateTime} [props.dateWritten] - When prescription was authorized
+  * @param {Reference} [props.prescriber] - Who authorized the vision prescription
+  * @param {BackboneElement} [props.lensSpecification] - Vision lens authorization
+ */
+declare function visionPrescription(type: string, props: VisionPrescription_Props): any;
+declare function visionPrescription(props: VisionPrescription_Props): any;
 
-export { account, activityDefinition, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, biologicallyDerivedProduct, bodyStructure, carePlan, careTeam, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, communication, communicationRequest, condition, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, endpoint, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, familyMemberHistory, flag, goal, group, guidanceResponse, healthcareService, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, resource, riskAssessment, schedule, serviceRequest, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, testScript, verificationResult };
+export { account, activityDefinition, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, biologicallyDerivedProduct, bodyStructure, carePlan, careTeam, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, communication, communicationRequest, condition, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, endpoint, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, familyMemberHistory, flag, goal, group, guidanceResponse, healthcareService, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, resource, riskAssessment, schedule, serviceRequest, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, testScript, verificationResult, visionPrescription };
 

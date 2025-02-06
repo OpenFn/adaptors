@@ -27,17 +27,12 @@ export type Slot_Props = {
     end?: string;
     overbooked?: boolean;
     comment?: string;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Slot_Props>) {
     const resource = {
         resourceType: "Slot",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Slot</b></p></div>"
-        },
-
         ...props
     };
 
@@ -49,10 +44,6 @@ export default function(props: Partial<Slot_Props>) {
     if (!_.isNil(props.schedule)) {
         resource.schedule = dt.reference(props.schedule);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Slot"]
-    };
 
     return resource;
 }

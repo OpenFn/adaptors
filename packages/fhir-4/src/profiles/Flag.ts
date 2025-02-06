@@ -24,17 +24,12 @@ export type Flag_Props = {
     period?: FHIR.Period;
     encounter?: FHIR.Reference;
     author?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Flag_Props>) {
     const resource = {
         resourceType: "Flag",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Flag</b></p></div>"
-        },
-
         ...props
     };
 
@@ -54,10 +49,6 @@ export default function(props: Partial<Flag_Props>) {
     if (!_.isNil(props.author)) {
         resource.author = dt.reference(props.author);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Flag"]
-    };
 
     return resource;
 }

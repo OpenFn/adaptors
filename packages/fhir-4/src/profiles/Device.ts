@@ -42,17 +42,12 @@ export type Device_Props = {
     note?: FHIR.Annotation;
     safety?: FHIR.CodeableConcept;
     parent?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Device_Props>) {
     const resource = {
         resourceType: "Device",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Device</b></p></div>"
-        },
-
         ...props
     };
 
@@ -150,10 +145,6 @@ export default function(props: Partial<Device_Props>) {
     if (!_.isNil(props.parent)) {
         resource.parent = dt.reference(props.parent);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Device"]
-    };
 
     return resource;
 }

@@ -40,17 +40,12 @@ export type HealthcareService_Props = {
     notAvailable?: FHIR.BackboneElement;
     availabilityExceptions?: string;
     endpoint?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<HealthcareService_Props>) {
     const resource = {
         resourceType: "HealthcareService",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>HealthcareService</b></p></div>"
-        },
-
         ...props
     };
 
@@ -119,10 +114,6 @@ export default function(props: Partial<HealthcareService_Props>) {
         if (!Array.isArray(props.endpoint)) { props.endpoint = [props.endpoint]; }
         resource.endpoint = dt.reference(props.endpoint);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/HealthcareService"]
-    };
 
     return resource;
 }

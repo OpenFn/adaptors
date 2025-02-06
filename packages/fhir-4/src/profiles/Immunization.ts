@@ -44,17 +44,12 @@ export type Immunization_Props = {
     fundingSource?: FHIR.CodeableConcept;
     reaction?: FHIR.BackboneElement;
     protocolApplied?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Immunization_Props>) {
     const resource = {
         resourceType: "Immunization",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Immunization</b></p></div>"
-        },
-
         ...props
     };
 
@@ -143,10 +138,6 @@ export default function(props: Partial<Immunization_Props>) {
             resource.protocolApplied.push(_protocolApplied);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Immunization"]
-    };
 
     return resource;
 }

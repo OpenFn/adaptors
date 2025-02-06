@@ -29,17 +29,12 @@ export type CareTeam_Props = {
     managingOrganization?: FHIR.Reference;
     telecom?: FHIR.ContactPoint;
     note?: FHIR.Annotation;
+    initialiser?: any;
 };
 
 export default function(props: Partial<CareTeam_Props>) {
     const resource = {
         resourceType: "CareTeam",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CareTeam</b></p></div>"
-        },
-
         ...props
     };
 
@@ -79,10 +74,6 @@ export default function(props: Partial<CareTeam_Props>) {
         if (!Array.isArray(props.managingOrganization)) { props.managingOrganization = [props.managingOrganization]; }
         resource.managingOrganization = dt.reference(props.managingOrganization);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/CareTeam"]
-    };
 
     return resource;
 }

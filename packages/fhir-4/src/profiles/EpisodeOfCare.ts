@@ -28,17 +28,12 @@ export type EpisodeOfCare_Props = {
     careManager?: FHIR.Reference;
     team?: FHIR.Reference;
     account?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<EpisodeOfCare_Props>) {
     const resource = {
         resourceType: "EpisodeOfCare",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>EpisodeOfCare</b></p></div>"
-        },
-
         ...props
     };
 
@@ -101,10 +96,6 @@ export default function(props: Partial<EpisodeOfCare_Props>) {
         if (!Array.isArray(props.account)) { props.account = [props.account]; }
         resource.account = dt.reference(props.account);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"]
-    };
 
     return resource;
 }

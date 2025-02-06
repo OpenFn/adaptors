@@ -9,32 +9,27 @@ import * as FHIR from "../fhir";
 
 export type VisionPrescription_Props = {
     id?: string;
-    meta?: Meta;
+    meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: Narrative;
+    text?: FHIR.Narrative;
     contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    extension?: FHIR.Extension;
+    modifierExtension?: FHIR.Extension;
+    identifier?: FHIR.Identifier;
     status?: string;
     created?: string;
-    patient?: Reference;
-    encounter?: Reference;
+    patient?: FHIR.Reference;
+    encounter?: FHIR.Reference;
     dateWritten?: string;
-    prescriber?: Reference;
-    lensSpecification?: BackboneElement;
+    prescriber?: FHIR.Reference;
+    lensSpecification?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<VisionPrescription_Props>) {
     const resource = {
         resourceType: "VisionPrescription",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>VisionPrescription</b></p></div>"
-        },
-
         ...props
     };
 
@@ -68,10 +63,6 @@ export default function(props: Partial<VisionPrescription_Props>) {
             resource.lensSpecification.push(_lensSpecification);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/VisionPrescription"]
-    };
 
     return resource;
 }

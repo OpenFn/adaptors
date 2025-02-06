@@ -28,17 +28,12 @@ export type OrganizationAffiliation_Props = {
     healthcareService?: FHIR.Reference;
     telecom?: FHIR.ContactPoint;
     endpoint?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<OrganizationAffiliation_Props>) {
     const resource = {
         resourceType: "OrganizationAffiliation",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>OrganizationAffiliation</b></p></div>"
-        },
-
         ...props
     };
 
@@ -74,10 +69,6 @@ export default function(props: Partial<OrganizationAffiliation_Props>) {
         if (!Array.isArray(props.endpoint)) { props.endpoint = [props.endpoint]; }
         resource.endpoint = dt.reference(props.endpoint);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/OrganizationAffiliation"]
-    };
 
     return resource;
 }

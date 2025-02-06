@@ -47,17 +47,12 @@ export type Library_Props = {
     parameter?: FHIR.ParameterDefinition;
     dataRequirement?: FHIR.DataRequirement;
     content?: FHIR.Attachment;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Library_Props>) {
     const resource = {
         resourceType: "Library",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Library</b></p></div>"
-        },
-
         ...props
     };
 
@@ -69,10 +64,6 @@ export default function(props: Partial<Library_Props>) {
     if (!_.isNil(props.subject)) {
         dt.composite(resource, "subject", props.subject);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Library"]
-    };
 
     return resource;
 }

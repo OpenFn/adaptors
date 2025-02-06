@@ -34,17 +34,12 @@ export type EvidenceReport_Props = {
     endorser?: FHIR.ContactDetail;
     relatesTo?: FHIR.BackboneElement;
     section?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<EvidenceReport_Props>) {
     const resource = {
         resourceType: "EvidenceReport",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>EvidenceReport</b></p></div>"
-        },
-
         ...props
     };
 
@@ -99,10 +94,6 @@ export default function(props: Partial<EvidenceReport_Props>) {
             resource.section.push(_section);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/EvidenceReport"]
-    };
 
     return resource;
 }

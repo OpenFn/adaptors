@@ -32,17 +32,12 @@ export type Goal_Props = {
     note?: FHIR.Annotation;
     outcomeCode?: FHIR.CodeableConcept;
     outcomeReference?: FHIR.Reference;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Goal_Props>) {
     const resource = {
         resourceType: "Goal",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Goal</b></p></div>"
-        },
-
         ...props
     };
 
@@ -86,10 +81,6 @@ export default function(props: Partial<Goal_Props>) {
         if (!Array.isArray(props.outcomeReference)) { props.outcomeReference = [props.outcomeReference]; }
         resource.outcomeReference = dt.reference(props.outcomeReference);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Goal"]
-    };
 
     return resource;
 }

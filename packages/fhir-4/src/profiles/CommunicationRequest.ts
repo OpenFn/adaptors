@@ -38,17 +38,12 @@ export type CommunicationRequest_Props = {
     reasonCode?: FHIR.CodeableConcept;
     reasonReference?: FHIR.Reference;
     note?: FHIR.Annotation;
+    initialiser?: any;
 };
 
 export default function(props: Partial<CommunicationRequest_Props>) {
     const resource = {
         resourceType: "CommunicationRequest",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>CommunicationRequest</b></p></div>"
-        },
-
         ...props
     };
 
@@ -119,10 +114,6 @@ export default function(props: Partial<CommunicationRequest_Props>) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = dt.reference(props.reasonReference);
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/CommunicationRequest"]
-    };
 
     return resource;
 }

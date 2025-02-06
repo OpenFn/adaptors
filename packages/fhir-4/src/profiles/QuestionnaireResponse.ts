@@ -27,17 +27,12 @@ export type QuestionnaireResponse_Props = {
     author?: FHIR.Reference;
     source?: FHIR.Reference;
     item?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<QuestionnaireResponse_Props>) {
     const resource = {
         resourceType: "QuestionnaireResponse",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>QuestionnaireResponse</b></p></div>"
-        },
-
         ...props
     };
 
@@ -84,10 +79,6 @@ export default function(props: Partial<QuestionnaireResponse_Props>) {
             resource.item.push(_item);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"]
-    };
 
     return resource;
 }

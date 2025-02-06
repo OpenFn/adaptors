@@ -32,17 +32,12 @@ export type Patient_Props = {
     generalPractitioner?: FHIR.Reference;
     managingOrganization?: FHIR.Reference;
     link?: FHIR.BackboneElement;
+    initialiser?: any;
 };
 
 export default function(props: Partial<Patient_Props>) {
     const resource = {
         resourceType: "Patient",
-
-        text: {
-            status: "generated",
-            div: "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Patient</b></p></div>"
-        },
-
         ...props
     };
 
@@ -109,10 +104,6 @@ export default function(props: Partial<Patient_Props>) {
             resource.link.push(_link);
         }
     }
-
-    resource.meta = {
-        profile: ["http://hl7.org/fhir/StructureDefinition/Patient"]
-    };
 
     return resource;
 }
