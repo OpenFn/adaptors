@@ -46,7 +46,7 @@ export function execute(...operations) {
 }
 
 /**
- * Make a request to fetch all survey forms accessible to the user's API token. The url is `/assets/?asset_type=survey`.
+ * Make a request to fetch all survey forms accessible to the user's API token. Calls `/api/v2/assets/?asset_type=survey`.
  * @public
  * @example
  * getForms();
@@ -66,7 +66,7 @@ export function getForms() {
 }
 
 /**
- * Get submissions for a specific form
+ * Get submissions for a specific form. Calls `/api/v2/assets/<id>/data/`.
  * @example <caption>Get all submissions for a specific form</caption>
  * getSubmissions('aXecHjmbATuF6iGFmvBLBX');
  * @example <caption>Get form submissions with a query</caption>
@@ -106,7 +106,7 @@ export function getSubmissions(formId, options = {}) {
 }
 
 /**
- * Get deployment information for a specific form
+ * Get deployment information for a specific form. Calls `/api/v2/assets/<id>/deployment/`.
  * @example
  * getDeploymentInfo('aXecHjmbATuF6iGFmvBLBX');
  * @function
