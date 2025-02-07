@@ -60,19 +60,35 @@ export function getForms() {
  * Get submissions for a specific form
  * @example <caption>Get all submissions for a specific form</caption>
  * getSubmissions('aXecHjmbATuF6iGFmvBLBX');
+ * @example <caption>Get form submissions with a query</caption>
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: "2022-06-12T21:54:20" } } });
  * @function
  * @public
  * @param {string} formId - Form Id to get the specific submissions
+ * @param {object} [options={}] - Optional query params for the request
  * @returns {Operation}
  */
-export function getSubmissions(formId) {
+export function getSubmissions(formId, options = {}) {
   return async state => {
-    const [resolvedFormId] = expandReferences(state, formId);
+    const [resolvedFormId, resolvedOptions] = expandReferences(
+      state,
+      formId,
+      options
+    );
 
     const url = `/assets/${resolvedFormId}/data/`;
+    const query = {}
+    if (resolvedOptions.query) {
+      if (typeof resolvedOptions.query == 'string') {
+        query.query = resolvedOptions.query
+      } else {
+        query.query = JSON.stringify(resolvedOptions.query)
+      }
+    }
 
     const response = await util.request(state, 'GET', url, {
       paginate: true,
+      query,
     });
     console.log('✓', response.results.length, 'forms fetched.');
     return util.prepareNextState(state, response);

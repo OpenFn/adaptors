@@ -54,7 +54,13 @@ export async function request(state, method, path, opts) {
       results.push(...response.body.results);
       if (response.body.next) {
         const nextUrl = new URL(response.body.next);
-        start = nextUrl.searchParams.get('start');
+
+        const startDigit =
+          nextUrl.searchParams.get('start') !== null
+            ? nextUrl.searchParams.get('start')
+            : 0;
+
+        start = Number(startDigit);
         limit = nextUrl.searchParams.get('limit');
 
         options.query = {

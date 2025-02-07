@@ -35,7 +35,8 @@
     {
       "name": "getSubmissions",
       "params": [
-        "formId"
+        "formId",
+        "options"
       ],
       "docs": {
         "description": "Get submissions for a specific form",
@@ -44,6 +45,11 @@
             "title": "example",
             "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX');",
             "caption": "Get all submissions for a specific form"
+          },
+          {
+            "title": "example",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: `owner__username:meg AND name__icontains:quixotic`});",
+            "caption": "Get submissions form a specific form starting from the 10th item"
           },
           {
             "title": "function",
@@ -63,6 +69,19 @@
               "name": "string"
             },
             "name": "formId"
+          },
+          {
+            "title": "param",
+            "description": "Optional query params for the request",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options",
+            "default": "{}"
           },
           {
             "title": "returns",
