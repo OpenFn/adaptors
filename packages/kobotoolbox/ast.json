@@ -4,7 +4,7 @@
       "name": "getForms",
       "params": [],
       "docs": {
-        "description": "Make a request to get the list of forms",
+        "description": "Make a request to fetch all survey forms accessible to the user's API token. The url is `/assets/?asset_type=survey`.",
         "tags": [
           {
             "title": "public",
@@ -48,8 +48,8 @@
           },
           {
             "title": "example",
-            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: `owner__username:meg AND name__icontains:quixotic`});",
-            "caption": "Get submissions form a specific form starting from the 10th item"
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \"2022-06-12T21:54:20\" } } });",
+            "caption": "Get form submissions with a query"
           },
           {
             "title": "function",
@@ -98,8 +98,7 @@
     {
       "name": "getDeploymentInfo",
       "params": [
-        "formId",
-        "options"
+        "formId"
       ],
       "docs": {
         "description": "Get deployment information for a specific form",
@@ -126,19 +125,6 @@
               "name": "string"
             },
             "name": "formId"
-          },
-          {
-            "title": "param",
-            "description": "Optional query params and headers for the request",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "RequestOptions"
-              }
-            },
-            "name": "options",
-            "default": "{}"
           },
           {
             "title": "returns",

@@ -38,7 +38,7 @@ export function execute(...operations) {
 }
 
 /**
- * Make a request to get the list of forms
+ * Make a request to fetch all survey forms accessible to the user's API token. The url is `/assets/?asset_type=survey`.
  * @public
  * @example
  * getForms();
@@ -77,12 +77,12 @@ export function getSubmissions(formId, options = {}) {
     );
 
     const url = `/assets/${resolvedFormId}/data/`;
-    const query = {}
+    const query = {};
     if (resolvedOptions.query) {
       if (typeof resolvedOptions.query == 'string') {
-        query.query = resolvedOptions.query
+        query.query = resolvedOptions.query;
       } else {
-        query.query = JSON.stringify(resolvedOptions.query)
+        query.query = JSON.stringify(resolvedOptions.query);
       }
     }
 
@@ -90,7 +90,7 @@ export function getSubmissions(formId, options = {}) {
       paginate: true,
       query,
     });
-    console.log('✓', response.results.length, 'forms fetched.');
+    console.log('✓', response.results.length, 'submissions fetched.');
     return util.prepareNextState(state, response);
   };
 }
@@ -102,20 +102,15 @@ export function getSubmissions(formId, options = {}) {
  * @function
  * @public
  * @param {string} formId - Form Id to get the deployment information
- * @param {RequestOptions} [options={}] - Optional query params and headers for the request
  * @returns {Operation}
  */
-export function getDeploymentInfo(formId, options = {}) {
+export function getDeploymentInfo(formId) {
   return async state => {
-    const [resolvedFormId, resolvedOptions] = expandReferences(
-      state,
-      formId,
-      options
-    );
+    const [resolvedFormId] = expandReferences(state, formId);
 
     const url = `/assets/${resolvedFormId}/deployment/`;
 
-    const response = await util.request(state, 'GET', url, resolvedOptions);
+    const response = await util.request(state, 'GET', url, {});
     console.log('✓', 'deployment information fetched.');
     return util.prepareNextState(state, response);
   };
