@@ -2,12 +2,9 @@
   "operations": [
     {
       "name": "getForms",
-      "params": [
-        "options",
-        "callback"
-      ],
+      "params": [],
       "docs": {
-        "description": "Make a request to get the list of forms",
+        "description": "Make a request to fetch all survey forms accessible to the user's API token. The url is `/assets/?asset_type=survey`.",
         "tags": [
           {
             "title": "public",
@@ -16,34 +13,12 @@
           },
           {
             "title": "example",
-            "description": "getForms({}, state => {\n   console.log(state.data);\n   return state;\n});"
+            "description": "getForms();"
           },
           {
             "title": "function",
             "description": null,
             "name": null
-          },
-          {
-            "title": "param",
-            "description": "Optional headers and query for the request",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "RequestOptions"
-              }
-            },
-            "name": "options",
-            "default": "{}"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function to execute after fetching form list",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -60,15 +35,21 @@
     {
       "name": "getSubmissions",
       "params": [
-        "params",
-        "callback"
+        "formId",
+        "options"
       ],
       "docs": {
         "description": "Get submissions for a specific form",
         "tags": [
           {
             "title": "example",
-            "description": "getSubmissions({formId: 'aXecHjmbATuF6iGFmvBLBX'}, state => {\n  console.log(state.data);\n  return state;\n});"
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX');",
+            "caption": "Get all submissions for a specific form"
+          },
+          {
+            "title": "example",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \"2022-06-12T21:54:20\" } } });",
+            "caption": "Get form submissions with a query"
           },
           {
             "title": "function",
@@ -82,21 +63,25 @@
           },
           {
             "title": "param",
-            "description": "Form Id and data to make the fetch or filter",
+            "description": "Form Id to get the specific submissions",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "string"
             },
-            "name": "params"
+            "name": "formId"
           },
           {
             "title": "param",
-            "description": "(Optional) Callback function to execute after fetching form submissions",
+            "description": "Optional query params for the request",
             "type": {
-              "type": "NameExpression",
-              "name": "function"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
-            "name": "callback"
+            "name": "options",
+            "default": "{}"
           },
           {
             "title": "returns",
@@ -113,15 +98,14 @@
     {
       "name": "getDeploymentInfo",
       "params": [
-        "params",
-        "callback"
+        "formId"
       ],
       "docs": {
         "description": "Get deployment information for a specific form",
         "tags": [
           {
             "title": "example",
-            "description": "getDeploymentInfo({formId: 'aXecHjmbATuF6iGFmvBLBX'}, state => {\n  console.log(state.data);\n  return state;\n});"
+            "description": "getDeploymentInfo('aXecHjmbATuF6iGFmvBLBX');"
           },
           {
             "title": "function",
@@ -135,21 +119,12 @@
           },
           {
             "title": "param",
-            "description": "Form Id and data to make the fetch or filter",
+            "description": "Form Id to get the deployment information",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "string"
             },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function to execute after fetching form deployment information",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
+            "name": "formId"
           },
           {
             "title": "returns",
