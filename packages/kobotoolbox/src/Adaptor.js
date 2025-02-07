@@ -3,13 +3,6 @@ import { expandReferences } from '@openfn/language-common/util';
 
 import * as util from './Utils';
 
-/**
- * State object
- * @typedef {Object} KoboToolboxState
- * @property data - The response body (as JSON)
- * @property response - The HTTP response from the KoboToolbox server (excluding the body). Responses will be returned in JSON format
- * @property references - An array of all previous data objects used in the Job
- */
 
 /**
  * Options object
@@ -51,7 +44,7 @@ export function execute(...operations) {
  * @example
  * getForms();
  * @function
- * @state {KoboToolboxState}
+ * @state data - an array of form objects
  * @returns {Operation}
  */
 export function getForms() {
@@ -75,7 +68,7 @@ export function getForms() {
  * @public
  * @param {string} formId - Form Id to get the specific submissions
  * @param {object} [options={}] - Optional query params for the request
- * @state {KoboToolboxState}
+ * @state data - an array of submission objects
  * @returns {Operation}
  */
 export function getSubmissions(formId, options = {}) {
@@ -112,7 +105,7 @@ export function getSubmissions(formId, options = {}) {
  * @function
  * @public
  * @param {string} formId - Form Id to get the deployment information
- * @state {KoboToolboxState}
+ * @state data - an object containing deployment information
  * @returns {Operation}
  */
 export function getDeploymentInfo(formId) {
