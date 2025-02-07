@@ -869,6 +869,21 @@ export function destroy(
 }
 
 /**
+ * Gets an attribute value by its uid
+ * @public
+ * @example
+ * findAttributeValueById(state.tei, 'y1w2R6leVmh')
+ * @function
+ * @param {Object} trackedEntity - A tracked entity instance (TEI) object
+ * @param {string} attributeUid - The uid to search for in the TEI's attributes
+ * @returns {string}
+ */
+export function findAttributeValueById(trackedEntity, attributeUid) {
+  return trackedEntity?.attributes?.find(a => a?.attribute == attributeUid)
+    ?.value;
+}
+
+/**
  * Gets an attribute value by its case-insensitive display name
  * @public
  * @example
