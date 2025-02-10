@@ -7,27 +7,33 @@ export function getEmsData() {
     console.log('--- Incoming message count', state.data.length);
 
     for (const message of state.data) {
-      if (!message.metadata?.content) {
-        console.error('No metadata supplied.');
+      if (message.fridge_tag) {
+        const result = parseFridgeTagToEms(message.fridge_tag.content);
+        results.push(result);
         continue;
       }
 
-      if (!message.data?.content) {
-        console.error('No data supplied.');
+      if (message.metadata) {
+        if (!message.metadata?.content) {
+          console.error('No metadata supplied.');
+          continue;
+        }
+
+        if (!message.data?.content) {
+          console.error('No data supplied.');
+          continue;
+        }
+
+        const varoMetadata = JSON.parse(message.metadata.content);
+        const varoData = JSON.parse(message.data.content);
+        const varoDataPath = message.data.filename;
+
+        const result = parseVaroToEms(varoMetadata, varoData, varoDataPath);
+        results.push(result);
         continue;
       }
 
-      const varoMetadata = JSON.parse(message.metadata.content);
-      const varoData = JSON.parse(message.data.content);
-      const varoDataPath = message.data.filename;
-
-      const result = getResult(varoMetadata, varoData, varoDataPath);
-
-      if (!result) {
-        throw new Error(`No result found for ${varoMetadata.name}`);
-      }
-
-      results.push(result);
+      throw new Error(`No result found for ${varoMetadata.name}`);
     }
 
     console.log('--- Converted message count', results.length);
@@ -38,7 +44,7 @@ export function getEmsData() {
   };
 }
 
-function getResult(varoMetadata, varoData, varoDataPath) {
+function parseVaroToEms(varoMetadata, varoData, varoDataPath) {
   const result = {
     CID: null,
     LAT: varoMetadata.location.used.latitude,
@@ -226,6 +232,63 @@ function isoToAbbreviatedIso(iso) {
     .toISOString()
     .replace(/[\-\:]/g, '')
     .replace('.000Z', 'Z');
+}
+
+function parseFridgeTagToEms(text) {
+  const data = {};
+
+  // Split the text into lines
+  let splitText = text.split('\n');
+
+  // For each line in the text, check if the next line has a greater indent
+  for (let i = 0; i < splitText.length - 1; i++) {
+    let line = splitText[i];
+    let currentIndent = line.search(/\S|$/);
+    let nextIndent = 0;
+    if (i !== splitText.length - 1) {
+      nextIndent = splitText[i + 1].search(/\S|$/);
+    }
+
+    // If the next line has a greater indent, create a new subsection by collecting
+    // all of the nested object's lines and then recursively parsing them
+    if (nextIndent > currentIndent) {
+      const key = toObjectKey(line);
+      let subSectionIndex = i + 1;
+      let subSectionText = '';
+
+      while (subSectionIndex > 0 && subSectionIndex <= splitText.length) {
+        subSectionText += splitText[subSectionIndex] + '\n';
+        let nextIndent = splitText[subSectionIndex + 1]?.search(/\S|$/) || 0;
+
+        // Found the end of current subsection
+        if (nextIndent <= currentIndent) {
+          i = subSectionIndex;
+          subSectionIndex = 0;
+        } else {
+          subSectionIndex++;
+        }
+      }
+
+      // Recursively parse the subsection
+      data[key] = parseFridgeTagToEms(subSectionText);
+    } else {
+      // Base case of a single line that needs to be parsed as it is not a new subsection
+      const splitLines = line.split(',');
+
+      for (let j = 0; j < splitLines.length; j++) {
+        // Note some lines have a colon in the value, so we need to split on the first colon
+        let [key, value] = splitLines[j]
+          .split(/:(.*)/)
+          .map(part => part.trim());
+        data[toObjectKey(key)] = value;
+      }
+    }
+  }
+  return data;
+}
+
+function toObjectKey(str) {
+  return str.replace(':', '').trim();
 }
 
 export {
