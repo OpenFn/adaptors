@@ -4,7 +4,7 @@
       "name": "getForms",
       "params": [],
       "docs": {
-        "description": "Make a request to fetch all survey forms accessible to the user's API token. The url is `/assets/?asset_type=survey`.",
+        "description": "Make a request to fetch all survey forms accessible to the user's API token. Calls `/api/v2/assets/?asset_type=survey`.",
         "tags": [
           {
             "title": "public",
@@ -19,6 +19,10 @@
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "state",
+            "description": "data - an array of form objects"
           },
           {
             "title": "returns",
@@ -39,7 +43,7 @@
         "options"
       ],
       "docs": {
-        "description": "Get submissions for a specific form",
+        "description": "Get submissions for a specific form. Calls `/api/v2/assets/<id>/data/`.",
         "tags": [
           {
             "title": "example",
@@ -84,6 +88,10 @@
             "default": "{}"
           },
           {
+            "title": "state",
+            "description": "data - an array of submission objects"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -101,7 +109,7 @@
         "formId"
       ],
       "docs": {
-        "description": "Get deployment information for a specific form",
+        "description": "Get deployment information for a specific form. Calls `/api/v2/assets/<id>/deployment/`.",
         "tags": [
           {
             "title": "example",
@@ -125,6 +133,10 @@
               "name": "string"
             },
             "name": "formId"
+          },
+          {
+            "title": "state",
+            "description": "data - an object containing deployment information"
           },
           {
             "title": "returns",

@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "properties": {
-        "baseURL": {
-            "title": "Base URL",
+        "baseUrl": {
+            "title": "Base Url",
             "type": "string",
             "default": "https://kf.kobotoolbox.org",
             "description": "Kobotoolbox URL",
@@ -46,7 +46,7 @@
     "additionalProperties": true,
     "required": [
         "username",
-        "baseURL",
+        "baseUrl",
         "password",
         "apiVersion"
     ]
