@@ -17,12 +17,15 @@ export const prepareNextState = (state, response) => {
 export async function request(state, method, path, opts) {
   const { baseUrl, apiVersion, username, password } = state.configuration;
 
-  let baseURL = baseUrl || state.configuration.baseURL;
+  let baseURL;
 
-  if (!baseUrl) {
+  if (state.configuration.baseURL) {
+    baseURL = state.configuration.baseURL;
     console.warn(
       'No baseUrl found in state.configuration. baseURL will be used instead, but this will be deprecated in the future.'
     );
+  } else {
+    baseURL = baseUrl;
   }
 
   const {
