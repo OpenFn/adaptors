@@ -15,17 +15,17 @@ export const prepareNextState = (state, response) => {
 };
 
 export async function request(state, method, path, opts) {
-  const { baseUrl, apiVersion, username, password } = state.configuration;
+  const { baseURL, apiVersion, username, password } = state.configuration;
 
-  let baseURL;
+  let baseUrl;
 
-  if (state.configuration.baseURL) {
-    baseURL = state.configuration.baseURL;
+  if (!state.configuration.baseUrl && baseURL) {
+    baseUrl = baseURL;
     console.warn(
       'No baseUrl found in state.configuration. baseURL will be used instead, but this will be deprecated in the future.'
     );
   } else {
-    baseURL = baseUrl;
+    baseUrl = state.configuration.baseUrl;
   }
 
   const {
@@ -52,7 +52,7 @@ export async function request(state, method, path, opts) {
       ...query,
     },
     parseAs,
-    baseUrl: `${baseURL}/api/${apiVersion}`,
+    baseUrl: `${baseUrl}/api/${apiVersion}`,
   };
 
   if (paginate) {
