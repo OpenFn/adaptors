@@ -3,7 +3,6 @@ import { expandReferences } from '@openfn/language-common/util';
 
 import * as util from './Utils';
 
-
 /**
  * Options object
  * @typedef {Object} RequestOptions
@@ -39,7 +38,7 @@ export function execute(...operations) {
 }
 
 /**
- * Make a request to fetch all survey forms accessible to the user's API token. Calls `/api/v2/assets/?asset_type=survey`.
+ * Make a request to fetch all survey forms accessible to the authorized user. Calls `/api/v2/assets/?asset_type=survey`.
  * @public
  * @example
  * getForms();
@@ -59,7 +58,7 @@ export function getForms() {
 }
 
 /**
- * Get submissions for a specific form. Calls `/api/v2/assets/<id>/data/`.
+ * Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`.
  * @example <caption>Get all submissions for a specific form</caption>
  * getSubmissions('aXecHjmbATuF6iGFmvBLBX');
  * @example <caption>Get form submissions with a query</caption>
