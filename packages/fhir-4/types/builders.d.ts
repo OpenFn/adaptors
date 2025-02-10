@@ -4467,7 +4467,7 @@ declare type VisionPrescription_Props = {
   * Create a FHIR Account resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4490,12 +4490,11 @@ declare type VisionPrescription_Props = {
   * @param {Reference} [props.partOf] - Reference to a parent Account
  */
 declare function account(type: string, props: Account_Props): any;
-declare function account(props: Account_Props): any;
 /**
   * Create a FHIR ActivityDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4553,12 +4552,11 @@ declare function account(props: Account_Props): any;
   * @param {BackboneElement} [props.dynamicValue] - Dynamic aspects of the definition
  */
 declare function activityDefinition(type: string, props: ActivityDefinition_Props): any;
-declare function activityDefinition(props: ActivityDefinition_Props): any;
 /**
   * Create a FHIR AdministrableProductDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4580,12 +4578,11 @@ declare function activityDefinition(props: ActivityDefinition_Props): any;
   * @param {BackboneElement} [props.routeOfAdministration] - The path by which the product is taken into or makes contact with the body
  */
 declare function administrableProductDefinition(type: string, props: AdministrableProductDefinition_Props): any;
-declare function administrableProductDefinition(props: AdministrableProductDefinition_Props): any;
 /**
   * Create a FHIR AdverseEvent resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4617,12 +4614,11 @@ declare function administrableProductDefinition(props: AdministrableProductDefin
   * @param {Reference} [props.study] - AdverseEvent.study
  */
 declare function adverseEvent(type: string, props: AdverseEvent_Props): any;
-declare function adverseEvent(props: AdverseEvent_Props): any;
 /**
   * Create a FHIR AllergyIntolerance resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4650,12 +4646,11 @@ declare function adverseEvent(props: AdverseEvent_Props): any;
   * @param {BackboneElement} [props.reaction] - Adverse Reaction Events linked to exposure to substance
  */
 declare function allergyIntolerance(type: string, props: AllergyIntolerance_Props): any;
-declare function allergyIntolerance(props: AllergyIntolerance_Props): any;
 /**
   * Create a FHIR Appointment resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4689,12 +4684,11 @@ declare function allergyIntolerance(props: AllergyIntolerance_Props): any;
   * @param {Period} [props.requestedPeriod] - Potential date/time interval(s) requested to allocate the appointment within
  */
 declare function appointment(type: string, props: Appointment_Props): any;
-declare function appointment(props: Appointment_Props): any;
 /**
   * Create a FHIR AppointmentResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4714,12 +4708,11 @@ declare function appointment(props: Appointment_Props): any;
   * @param {string} [props.comment] - Additional comments
  */
 declare function appointmentResponse(type: string, props: AppointmentResponse_Props): any;
-declare function appointmentResponse(props: AppointmentResponse_Props): any;
 /**
   * Create a FHIR BiologicallyDerivedProduct resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4742,12 +4735,11 @@ declare function appointmentResponse(props: AppointmentResponse_Props): any;
   * @param {BackboneElement} [props.storage] - Product storage
  */
 declare function biologicallyDerivedProduct(type: string, props: BiologicallyDerivedProduct_Props): any;
-declare function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Props): any;
 /**
   * Create a FHIR BodyStructure resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4767,12 +4759,11 @@ declare function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Pr
   * @param {Reference} [props.patient] - Who this is about
  */
 declare function bodyStructure(type: string, props: BodyStructure_Props): any;
-declare function bodyStructure(props: BodyStructure_Props): any;
 /**
   * Create a FHIR CarePlan resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4807,12 +4798,11 @@ declare function bodyStructure(props: BodyStructure_Props): any;
   * @param {Annotation} [props.note] - Comments about the plan
  */
 declare function carePlan(type: string, props: CarePlan_Props): any;
-declare function carePlan(props: CarePlan_Props): any;
 /**
   * Create a FHIR CareTeam resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4837,12 +4827,11 @@ declare function carePlan(props: CarePlan_Props): any;
   * @param {Annotation} [props.note] - Comments made about the CareTeam
  */
 declare function careTeam(type: string, props: CareTeam_Props): any;
-declare function careTeam(props: CareTeam_Props): any;
 /**
   * Create a FHIR ChargeItem resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4880,12 +4869,11 @@ declare function careTeam(props: CareTeam_Props): any;
   * @param {Reference} [props.supportingInformation] - Further information supporting this charge
  */
 declare function chargeItem(type: string, props: ChargeItem_Props): any;
-declare function chargeItem(props: ChargeItem_Props): any;
 /**
   * Create a FHIR ChargeItemDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4920,12 +4908,11 @@ declare function chargeItem(props: ChargeItem_Props): any;
   * @param {BackboneElement} [props.propertyGroup] - Group of properties which are applicable under the same conditions
  */
 declare function chargeItemDefinition(type: string, props: ChargeItemDefinition_Props): any;
-declare function chargeItemDefinition(props: ChargeItemDefinition_Props): any;
 /**
   * Create a FHIR Citation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -4966,12 +4953,11 @@ declare function chargeItemDefinition(props: ChargeItemDefinition_Props): any;
   * @param {BackboneElement} [props.citedArtifact] - The article or artifact being described
  */
 declare function citation(type: string, props: Citation_Props): any;
-declare function citation(props: Citation_Props): any;
 /**
   * Create a FHIR Claim resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5010,12 +4996,11 @@ declare function citation(props: Citation_Props): any;
   * @param {Money} [props.total] - Total claim cost
  */
 declare function claim(type: string, props: Claim_Props): any;
-declare function claim(props: Claim_Props): any;
 /**
   * Create a FHIR ClaimResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5054,12 +5039,11 @@ declare function claim(props: Claim_Props): any;
   * @param {BackboneElement} [props.error] - Processing errors
  */
 declare function claimResponse(type: string, props: ClaimResponse_Props): any;
-declare function claimResponse(props: ClaimResponse_Props): any;
 /**
   * Create a FHIR ClinicalImpression resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5091,12 +5075,11 @@ declare function claimResponse(props: ClaimResponse_Props): any;
   * @param {Annotation} [props.note] - Comments made about the ClinicalImpression
  */
 declare function clinicalImpression(type: string, props: ClinicalImpression_Props): any;
-declare function clinicalImpression(props: ClinicalImpression_Props): any;
 /**
   * Create a FHIR ClinicalUseDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5119,12 +5102,11 @@ declare function clinicalImpression(props: ClinicalImpression_Props): any;
   * @param {BackboneElement} [props.warning] - Critical environmental, health or physical risks or hazards. For example 'Do not operate heavy machinery', 'May cause drowsiness'
  */
 declare function clinicalUseDefinition(type: string, props: ClinicalUseDefinition_Props): any;
-declare function clinicalUseDefinition(props: ClinicalUseDefinition_Props): any;
 /**
   * Create a FHIR Communication resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5159,12 +5141,11 @@ declare function clinicalUseDefinition(props: ClinicalUseDefinition_Props): any;
   * @param {Annotation} [props.note] - Comments made about the communication
  */
 declare function communication(type: string, props: Communication_Props): any;
-declare function communication(props: Communication_Props): any;
 /**
   * Create a FHIR CommunicationRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5198,12 +5179,11 @@ declare function communication(props: Communication_Props): any;
   * @param {Annotation} [props.note] - Comments made about communication request
  */
 declare function communicationRequest(type: string, props: CommunicationRequest_Props): any;
-declare function communicationRequest(props: CommunicationRequest_Props): any;
 /**
   * Create a FHIR Condition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5232,12 +5212,11 @@ declare function communicationRequest(props: CommunicationRequest_Props): any;
   * @param {Annotation} [props.note] - Additional information about the Condition
  */
 declare function condition(type: string, props: Condition_Props): any;
-declare function condition(props: Condition_Props): any;
 /**
   * Create a FHIR Contract resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5282,12 +5261,11 @@ declare function condition(props: Condition_Props): any;
   * @param {Attachment} [props.legallyBinding] - Binding Contract
  */
 declare function contract(type: string, props: Contract_Props): any;
-declare function contract(props: Contract_Props): any;
 /**
   * Create a FHIR Coverage resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5316,12 +5294,11 @@ declare function contract(props: Contract_Props): any;
   * @param {Reference} [props.contract] - Contract details
  */
 declare function coverage(type: string, props: Coverage_Props): any;
-declare function coverage(props: Coverage_Props): any;
 /**
   * Create a FHIR CoverageEligibilityRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5347,12 +5324,11 @@ declare function coverage(props: Coverage_Props): any;
   * @param {BackboneElement} [props.item] - Item to be evaluated for eligibiity
  */
 declare function coverageEligibilityRequest(type: string, props: CoverageEligibilityRequest_Props): any;
-declare function coverageEligibilityRequest(props: CoverageEligibilityRequest_Props): any;
 /**
   * Create a FHIR CoverageEligibilityResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5379,12 +5355,11 @@ declare function coverageEligibilityRequest(props: CoverageEligibilityRequest_Pr
   * @param {BackboneElement} [props.error] - Processing errors
  */
 declare function coverageEligibilityResponse(type: string, props: CoverageEligibilityResponse_Props): any;
-declare function coverageEligibilityResponse(props: CoverageEligibilityResponse_Props): any;
 /**
   * Create a FHIR DetectedIssue resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5408,12 +5383,11 @@ declare function coverageEligibilityResponse(props: CoverageEligibilityResponse_
   * @param {BackboneElement} [props.mitigation] - Step taken to address
  */
 declare function detectedIssue(type: string, props: DetectedIssue_Props): any;
-declare function detectedIssue(props: DetectedIssue_Props): any;
 /**
   * Create a FHIR Device resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5451,12 +5425,11 @@ declare function detectedIssue(props: DetectedIssue_Props): any;
   * @param {Reference} [props.parent] - The device that this device is attached to or is part of
  */
 declare function device(type: string, props: Device_Props): any;
-declare function device(props: Device_Props): any;
 /**
   * Create a FHIR DeviceDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5490,12 +5463,11 @@ declare function device(props: Device_Props): any;
   * @param {BackboneElement} [props.material] - A substance used to create the material(s) of which the device is made
  */
 declare function deviceDefinition(type: string, props: DeviceDefinition_Props): any;
-declare function deviceDefinition(props: DeviceDefinition_Props): any;
 /**
   * Create a FHIR DeviceMetric resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5517,12 +5489,11 @@ declare function deviceDefinition(props: DeviceDefinition_Props): any;
   * @param {BackboneElement} [props.calibration] - Describes the calibrations that have been performed or that are required to be performed
  */
 declare function deviceMetric(type: string, props: DeviceMetric_Props): any;
-declare function deviceMetric(props: DeviceMetric_Props): any;
 /**
   * Create a FHIR DeviceRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5558,12 +5529,11 @@ declare function deviceMetric(props: DeviceMetric_Props): any;
   * @param {Reference} [props.relevantHistory] - Request provenance
  */
 declare function deviceRequest(type: string, props: DeviceRequest_Props): any;
-declare function deviceRequest(props: DeviceRequest_Props): any;
 /**
   * Create a FHIR DeviceUseStatement resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5588,12 +5558,11 @@ declare function deviceRequest(props: DeviceRequest_Props): any;
   * @param {Annotation} [props.note] - Addition details (comments, instructions)
  */
 declare function deviceUseStatement(type: string, props: DeviceUseStatement_Props): any;
-declare function deviceUseStatement(props: DeviceUseStatement_Props): any;
 /**
   * Create a FHIR DiagnosticReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5623,12 +5592,11 @@ declare function deviceUseStatement(props: DeviceUseStatement_Props): any;
   * @param {Attachment} [props.presentedForm] - Entire report as issued
  */
 declare function diagnosticReport(type: string, props: DiagnosticReport_Props): any;
-declare function diagnosticReport(props: DiagnosticReport_Props): any;
 /**
   * Create a FHIR DomainResource resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5640,12 +5608,11 @@ declare function diagnosticReport(props: DiagnosticReport_Props): any;
   * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
  */
 declare function domainResource(type: string, props: DomainResource_Props): any;
-declare function domainResource(props: DomainResource_Props): any;
 /**
   * Create a FHIR Encounter resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5680,12 +5647,11 @@ declare function domainResource(props: DomainResource_Props): any;
   * @param {Reference} [props.partOf] - Another Encounter this encounter is part of
  */
 declare function encounter(type: string, props: Encounter_Props): any;
-declare function encounter(props: Encounter_Props): any;
 /**
   * Create a FHIR Endpoint resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5708,12 +5674,11 @@ declare function encounter(props: Encounter_Props): any;
   * @param {string} [props.header] - Usage depends on the channel type
  */
 declare function endpoint(type: string, props: Endpoint_Props): any;
-declare function endpoint(props: Endpoint_Props): any;
 /**
   * Create a FHIR EnrollmentRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5732,12 +5697,11 @@ declare function endpoint(props: Endpoint_Props): any;
   * @param {Reference} [props.coverage] - Insurance information
  */
 declare function enrollmentRequest(type: string, props: EnrollmentRequest_Props): any;
-declare function enrollmentRequest(props: EnrollmentRequest_Props): any;
 /**
   * Create a FHIR EnrollmentResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5757,12 +5721,11 @@ declare function enrollmentRequest(props: EnrollmentRequest_Props): any;
   * @param {Reference} [props.requestProvider] - Responsible practitioner
  */
 declare function enrollmentResponse(type: string, props: EnrollmentResponse_Props): any;
-declare function enrollmentResponse(props: EnrollmentResponse_Props): any;
 /**
   * Create a FHIR EpisodeOfCare resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5786,12 +5749,11 @@ declare function enrollmentResponse(props: EnrollmentResponse_Props): any;
   * @param {Reference} [props.account] - The set of accounts that may be used for billing for this EpisodeOfCare
  */
 declare function episodeOfCare(type: string, props: EpisodeOfCare_Props): any;
-declare function episodeOfCare(props: EpisodeOfCare_Props): any;
 /**
   * Create a FHIR EventDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5831,12 +5793,11 @@ declare function episodeOfCare(props: EpisodeOfCare_Props): any;
   * @param {TriggerDefinition} [props.trigger] - "when" the event occurs (multiple = 'or')
  */
 declare function eventDefinition(type: string, props: EventDefinition_Props): any;
-declare function eventDefinition(props: EventDefinition_Props): any;
 /**
   * Create a FHIR Evidence resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5873,12 +5834,11 @@ declare function eventDefinition(props: EventDefinition_Props): any;
   * @param {BackboneElement} [props.certainty] - Certainty or quality of the evidence
  */
 declare function evidence(type: string, props: Evidence_Props): any;
-declare function evidence(props: Evidence_Props): any;
 /**
   * Create a FHIR EvidenceReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5908,12 +5868,11 @@ declare function evidence(props: Evidence_Props): any;
   * @param {BackboneElement} [props.section] - Composition is broken into sections
  */
 declare function evidenceReport(type: string, props: EvidenceReport_Props): any;
-declare function evidenceReport(props: EvidenceReport_Props): any;
 /**
   * Create a FHIR EvidenceVariable resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -5949,12 +5908,11 @@ declare function evidenceReport(props: EvidenceReport_Props): any;
   * @param {BackboneElement} [props.category] - A grouping for ordinal or polychotomous variables
  */
 declare function evidenceVariable(type: string, props: EvidenceVariable_Props): any;
-declare function evidenceVariable(props: EvidenceVariable_Props): any;
 /**
   * Create a FHIR ExplanationOfBenefit resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6009,12 +5967,11 @@ declare function evidenceVariable(props: EvidenceVariable_Props): any;
   * @param {BackboneElement} [props.benefitBalance] - Balance by Benefit Category
  */
 declare function explanationOfBenefit(type: string, props: ExplanationOfBenefit_Props): any;
-declare function explanationOfBenefit(props: ExplanationOfBenefit_Props): any;
 /**
   * Create a FHIR FamilyMemberHistory resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6044,12 +6001,11 @@ declare function explanationOfBenefit(props: ExplanationOfBenefit_Props): any;
   * @param {BackboneElement} [props.condition] - Condition that the related person had
  */
 declare function familyMemberHistory(type: string, props: FamilyMemberHistory_Props): any;
-declare function familyMemberHistory(props: FamilyMemberHistory_Props): any;
 /**
   * Create a FHIR Flag resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6069,12 +6025,11 @@ declare function familyMemberHistory(props: FamilyMemberHistory_Props): any;
   * @param {Reference} [props.author] - Flag creator
  */
 declare function flag(type: string, props: Flag_Props): any;
-declare function flag(props: Flag_Props): any;
 /**
   * Create a FHIR Goal resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6102,12 +6057,11 @@ declare function flag(props: Flag_Props): any;
   * @param {Reference} [props.outcomeReference] - Observation that resulted from goal
  */
 declare function goal(type: string, props: Goal_Props): any;
-declare function goal(props: Goal_Props): any;
 /**
   * Create a FHIR Group resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6129,12 +6083,11 @@ declare function goal(props: Goal_Props): any;
   * @param {BackboneElement} [props.member] - Who or what is in group
  */
 declare function group(type: string, props: Group_Props): any;
-declare function group(props: Group_Props): any;
 /**
   * Create a FHIR GuidanceResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6161,12 +6114,11 @@ declare function group(props: Group_Props): any;
   * @param {DataRequirement} [props.dataRequirement] - Additional required data
  */
 declare function guidanceResponse(type: string, props: GuidanceResponse_Props): any;
-declare function guidanceResponse(props: GuidanceResponse_Props): any;
 /**
   * Create a FHIR HealthcareService resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6202,12 +6154,11 @@ declare function guidanceResponse(props: GuidanceResponse_Props): any;
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to electronic services operated for the healthcare service
  */
 declare function healthcareService(type: string, props: HealthcareService_Props): any;
-declare function healthcareService(props: HealthcareService_Props): any;
 /**
   * Create a FHIR ImagingStudy resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6239,12 +6190,11 @@ declare function healthcareService(props: HealthcareService_Props): any;
   * @param {BackboneElement} [props.series] - Each study has one or more series of instances
  */
 declare function imagingStudy(type: string, props: ImagingStudy_Props): any;
-declare function imagingStudy(props: ImagingStudy_Props): any;
 /**
   * Create a FHIR Immunization resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6284,12 +6234,11 @@ declare function imagingStudy(props: ImagingStudy_Props): any;
   * @param {BackboneElement} [props.protocolApplied] - Protocol followed by the provider
  */
 declare function immunization(type: string, props: Immunization_Props): any;
-declare function immunization(props: Immunization_Props): any;
 /**
   * Create a FHIR ImmunizationEvaluation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6314,12 +6263,11 @@ declare function immunization(props: Immunization_Props): any;
   * @param {number} [props.seriesDoses] - Recommended number of doses for immunity
  */
 declare function immunizationEvaluation(type: string, props: ImmunizationEvaluation_Props): any;
-declare function immunizationEvaluation(props: ImmunizationEvaluation_Props): any;
 /**
   * Create a FHIR ImmunizationRecommendation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6336,12 +6284,11 @@ declare function immunizationEvaluation(props: ImmunizationEvaluation_Props): an
   * @param {BackboneElement} [props.recommendation] - Vaccine administration recommendations
  */
 declare function immunizationRecommendation(type: string, props: ImmunizationRecommendation_Props): any;
-declare function immunizationRecommendation(props: ImmunizationRecommendation_Props): any;
 /**
   * Create a FHIR Ingredient resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6361,12 +6308,11 @@ declare function immunizationRecommendation(props: ImmunizationRecommendation_Pr
   * @param {BackboneElement} [props.substance] - The substance that comprises this ingredient
  */
 declare function ingredient(type: string, props: Ingredient_Props): any;
-declare function ingredient(props: Ingredient_Props): any;
 /**
   * Create a FHIR InsurancePlan resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6392,12 +6338,11 @@ declare function ingredient(props: Ingredient_Props): any;
   * @param {BackboneElement} [props.plan] - Plan details
  */
 declare function insurancePlan(type: string, props: InsurancePlan_Props): any;
-declare function insurancePlan(props: InsurancePlan_Props): any;
 /**
   * Create a FHIR Invoice resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6425,12 +6370,11 @@ declare function insurancePlan(props: InsurancePlan_Props): any;
   * @param {Annotation} [props.note] - Comments made about the invoice
  */
 declare function invoice(type: string, props: Invoice_Props): any;
-declare function invoice(props: Invoice_Props): any;
 /**
   * Create a FHIR Library resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6473,12 +6417,11 @@ declare function invoice(props: Invoice_Props): any;
   * @param {Attachment} [props.content] - Contents of the library, either embedded or referenced
  */
 declare function library(type: string, props: Library_Props): any;
-declare function library(props: Library_Props): any;
 /**
   * Create a FHIR List resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6503,12 +6446,11 @@ declare function library(props: Library_Props): any;
   * @param {CodeableConcept} [props.emptyReason] - Why list is empty
  */
 declare function list(type: string, props: List_Props): any;
-declare function list(props: List_Props): any;
 /**
   * Create a FHIR Location resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6537,12 +6479,11 @@ declare function list(props: List_Props): any;
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the location
  */
 declare function location(type: string, props: Location_Props): any;
-declare function location(props: Location_Props): any;
 /**
   * Create a FHIR ManufacturedItemDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6561,12 +6502,11 @@ declare function location(props: Location_Props): any;
   * @param {BackboneElement} [props.property] - General characteristics of this item
  */
 declare function manufacturedItemDefinition(type: string, props: ManufacturedItemDefinition_Props): any;
-declare function manufacturedItemDefinition(props: ManufacturedItemDefinition_Props): any;
 /**
   * Create a FHIR Measure resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6619,12 +6559,11 @@ declare function manufacturedItemDefinition(props: ManufacturedItemDefinition_Pr
   * @param {BackboneElement} [props.supplementalData] - What other data should be reported with the measure
  */
 declare function measure(type: string, props: Measure_Props): any;
-declare function measure(props: Measure_Props): any;
 /**
   * Create a FHIR MeasureReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6647,12 +6586,11 @@ declare function measure(props: Measure_Props): any;
   * @param {Reference} [props.evaluatedResource] - What data was used to calculate the measure score
  */
 declare function measureReport(type: string, props: MeasureReport_Props): any;
-declare function measureReport(props: MeasureReport_Props): any;
 /**
   * Create a FHIR Media resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6686,12 +6624,11 @@ declare function measureReport(props: MeasureReport_Props): any;
   * @param {Annotation} [props.note] - Comments made about the media
  */
 declare function media(type: string, props: Media_Props): any;
-declare function media(props: Media_Props): any;
 /**
   * Create a FHIR Medication resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6711,12 +6648,11 @@ declare function media(props: Media_Props): any;
   * @param {BackboneElement} [props.batch] - Details about packaged medications
  */
 declare function medication(type: string, props: Medication_Props): any;
-declare function medication(props: Medication_Props): any;
 /**
   * Create a FHIR MedicationAdministration resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6747,12 +6683,11 @@ declare function medication(props: Medication_Props): any;
   * @param {Reference} [props.eventHistory] - A list of events of interest in the lifecycle
  */
 declare function medicationAdministration(type: string, props: MedicationAdministration_Props): any;
-declare function medicationAdministration(props: MedicationAdministration_Props): any;
 /**
   * Create a FHIR MedicationDispense resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6788,12 +6723,11 @@ declare function medicationAdministration(props: MedicationAdministration_Props)
   * @param {Reference} [props.eventHistory] - A list of relevant lifecycle events
  */
 declare function medicationDispense(type: string, props: MedicationDispense_Props): any;
-declare function medicationDispense(props: MedicationDispense_Props): any;
 /**
   * Create a FHIR MedicationKnowledge resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6827,12 +6761,11 @@ declare function medicationDispense(props: MedicationDispense_Props): any;
   * @param {BackboneElement} [props.kinetics] - The time course of drug absorption, distribution, metabolism and excretion of a medication from the body
  */
 declare function medicationKnowledge(type: string, props: MedicationKnowledge_Props): any;
-declare function medicationKnowledge(props: MedicationKnowledge_Props): any;
 /**
   * Create a FHIR MedicationRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6876,12 +6809,11 @@ declare function medicationKnowledge(props: MedicationKnowledge_Props): any;
   * @param {Reference} [props.eventHistory] - A list of events of interest in the lifecycle
  */
 declare function medicationRequest(type: string, props: MedicationRequest_Props): any;
-declare function medicationRequest(props: MedicationRequest_Props): any;
 /**
   * Create a FHIR MedicationStatement resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6910,12 +6842,11 @@ declare function medicationRequest(props: MedicationRequest_Props): any;
   * @param {Dosage} [props.dosage] - Details of how medication is/was taken or should be taken
  */
 declare function medicationStatement(type: string, props: MedicationStatement_Props): any;
-declare function medicationStatement(props: MedicationStatement_Props): any;
 /**
   * Create a FHIR MedicinalProductDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6955,12 +6886,11 @@ declare function medicationStatement(props: MedicationStatement_Props): any;
   * @param {BackboneElement} [props.characteristic] - Key product features such as "sugar free", "modified release"
  */
 declare function medicinalProductDefinition(type: string, props: MedicinalProductDefinition_Props): any;
-declare function medicinalProductDefinition(props: MedicinalProductDefinition_Props): any;
 /**
   * Create a FHIR MolecularSequence resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -6988,12 +6918,11 @@ declare function medicinalProductDefinition(props: MedicinalProductDefinition_Pr
   * @param {BackboneElement} [props.structureVariant] - Structural variant
  */
 declare function molecularSequence(type: string, props: MolecularSequence_Props): any;
-declare function molecularSequence(props: MolecularSequence_Props): any;
 /**
   * Create a FHIR NutritionOrder resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7022,12 +6951,11 @@ declare function molecularSequence(props: MolecularSequence_Props): any;
   * @param {Annotation} [props.note] - Comments
  */
 declare function nutritionOrder(type: string, props: NutritionOrder_Props): any;
-declare function nutritionOrder(props: NutritionOrder_Props): any;
 /**
   * Create a FHIR NutritionProduct resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7049,12 +6977,11 @@ declare function nutritionOrder(props: NutritionOrder_Props): any;
   * @param {Annotation} [props.note] - Comments made about the product
  */
 declare function nutritionProduct(type: string, props: NutritionProduct_Props): any;
-declare function nutritionProduct(props: NutritionProduct_Props): any;
 /**
   * Create a FHIR Observation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7090,12 +7017,11 @@ declare function nutritionProduct(props: NutritionProduct_Props): any;
   * @param {BackboneElement} [props.component] - Component results
  */
 declare function observation(type: string, props: Observation_Props): any;
-declare function observation(props: Observation_Props): any;
 /**
   * Create a FHIR ObservationDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7120,12 +7046,11 @@ declare function observation(props: Observation_Props): any;
   * @param {Reference} [props.criticalCodedValueSet] - Value set of critical coded values for the observations conforming to this ObservationDefinition
  */
 declare function observationDefinition(type: string, props: ObservationDefinition_Props): any;
-declare function observationDefinition(props: ObservationDefinition_Props): any;
 /**
   * Create a FHIR Organization resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7147,12 +7072,11 @@ declare function observationDefinition(props: ObservationDefinition_Props): any;
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the organization
  */
 declare function organization(type: string, props: Organization_Props): any;
-declare function organization(props: Organization_Props): any;
 /**
   * Create a FHIR OrganizationAffiliation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7176,12 +7100,11 @@ declare function organization(props: Organization_Props): any;
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for this role
  */
 declare function organizationAffiliation(type: string, props: OrganizationAffiliation_Props): any;
-declare function organizationAffiliation(props: OrganizationAffiliation_Props): any;
 /**
   * Create a FHIR PackagedProductDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7207,12 +7130,11 @@ declare function organizationAffiliation(props: OrganizationAffiliation_Props): 
   * @param {BackboneElement} [props.package] - A packaging item, as a container for medically related items, possibly with other packaging items within, or a packaging component, such as bottle cap
  */
 declare function packagedProductDefinition(type: string, props: PackagedProductDefinition_Props): any;
-declare function packagedProductDefinition(props: PackagedProductDefinition_Props): any;
 /**
   * Create a FHIR Patient resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7240,12 +7162,11 @@ declare function packagedProductDefinition(props: PackagedProductDefinition_Prop
   * @param {BackboneElement} [props.link] - Link to another patient resource that concerns the same actual person
  */
 declare function patient(type: string, props: Patient_Props): any;
-declare function patient(props: Patient_Props): any;
 /**
   * Create a FHIR PaymentNotice resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7269,12 +7190,11 @@ declare function patient(props: Patient_Props): any;
   * @param {CodeableConcept} [props.paymentStatus] - Issued or cleared Status of the payment
  */
 declare function paymentNotice(type: string, props: PaymentNotice_Props): any;
-declare function paymentNotice(props: PaymentNotice_Props): any;
 /**
   * Create a FHIR PaymentReconciliation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7301,12 +7221,11 @@ declare function paymentNotice(props: PaymentNotice_Props): any;
   * @param {BackboneElement} [props.processNote] - Note concerning processing
  */
 declare function paymentReconciliation(type: string, props: PaymentReconciliation_Props): any;
-declare function paymentReconciliation(props: PaymentReconciliation_Props): any;
 /**
   * Create a FHIR Person resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7328,12 +7247,11 @@ declare function paymentReconciliation(props: PaymentReconciliation_Props): any;
   * @param {BackboneElement} [props.link] - Link to a resource that concerns the same actual person
  */
 declare function person(type: string, props: Person_Props): any;
-declare function person(props: Person_Props): any;
 /**
   * Create a FHIR PlanDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7376,12 +7294,11 @@ declare function person(props: Person_Props): any;
   * @param {BackboneElement} [props.action] - Action defined by the plan
  */
 declare function planDefinition(type: string, props: PlanDefinition_Props): any;
-declare function planDefinition(props: PlanDefinition_Props): any;
 /**
   * Create a FHIR Practitioner resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7403,12 +7320,11 @@ declare function planDefinition(props: PlanDefinition_Props): any;
   * @param {CodeableConcept} [props.communication] - A language the practitioner can use in patient communication
  */
 declare function practitioner(type: string, props: Practitioner_Props): any;
-declare function practitioner(props: Practitioner_Props): any;
 /**
   * Create a FHIR PractitionerRole resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7434,12 +7350,11 @@ declare function practitioner(props: Practitioner_Props): any;
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the practitioner with this role
  */
 declare function practitionerRole(type: string, props: PractitionerRole_Props): any;
-declare function practitionerRole(props: PractitionerRole_Props): any;
 /**
   * Create a FHIR Procedure resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7479,12 +7394,11 @@ declare function practitionerRole(props: PractitionerRole_Props): any;
   * @param {CodeableConcept} [props.usedCode] - Coded items used during the procedure
  */
 declare function procedure(type: string, props: Procedure_Props): any;
-declare function procedure(props: Procedure_Props): any;
 /**
   * Create a FHIR Questionnaire resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7518,12 +7432,11 @@ declare function procedure(props: Procedure_Props): any;
   * @param {BackboneElement} [props.item] - Questions and sections within the Questionnaire
  */
 declare function questionnaire(type: string, props: Questionnaire_Props): any;
-declare function questionnaire(props: Questionnaire_Props): any;
 /**
   * Create a FHIR QuestionnaireResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7546,12 +7459,11 @@ declare function questionnaire(props: Questionnaire_Props): any;
   * @param {BackboneElement} [props.item] - Groups and questions
  */
 declare function questionnaireResponse(type: string, props: QuestionnaireResponse_Props): any;
-declare function questionnaireResponse(props: QuestionnaireResponse_Props): any;
 /**
   * Create a FHIR RegulatedAuthorization resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7577,12 +7489,11 @@ declare function questionnaireResponse(props: QuestionnaireResponse_Props): any;
   * @param {BackboneElement} [props.case] - The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page)
  */
 declare function regulatedAuthorization(type: string, props: RegulatedAuthorization_Props): any;
-declare function regulatedAuthorization(props: RegulatedAuthorization_Props): any;
 /**
   * Create a FHIR RelatedPerson resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7606,12 +7517,11 @@ declare function regulatedAuthorization(props: RegulatedAuthorization_Props): an
   * @param {BackboneElement} [props.communication] - A language which may be used to communicate with about the patient's health
  */
 declare function relatedPerson(type: string, props: RelatedPerson_Props): any;
-declare function relatedPerson(props: RelatedPerson_Props): any;
 /**
   * Create a FHIR RequestGroup resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7641,12 +7551,11 @@ declare function relatedPerson(props: RelatedPerson_Props): any;
   * @param {BackboneElement} [props.action] - Proposed actions, if any
  */
 declare function requestGroup(type: string, props: RequestGroup_Props): any;
-declare function requestGroup(props: RequestGroup_Props): any;
 /**
   * Create a FHIR ResearchDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7692,12 +7601,11 @@ declare function requestGroup(props: RequestGroup_Props): any;
   * @param {Reference} [props.outcome] - What outcome?
  */
 declare function researchDefinition(type: string, props: ResearchDefinition_Props): any;
-declare function researchDefinition(props: ResearchDefinition_Props): any;
 /**
   * Create a FHIR ResearchElementDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7742,12 +7650,11 @@ declare function researchDefinition(props: ResearchDefinition_Props): any;
   * @param {BackboneElement} [props.characteristic] - What defines the members of the research element
  */
 declare function researchElementDefinition(type: string, props: ResearchElementDefinition_Props): any;
-declare function researchElementDefinition(props: ResearchElementDefinition_Props): any;
 /**
   * Create a FHIR ResearchStudy resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7783,12 +7690,11 @@ declare function researchElementDefinition(props: ResearchElementDefinition_Prop
   * @param {BackboneElement} [props.objective] - A goal for the study
  */
 declare function researchStudy(type: string, props: ResearchStudy_Props): any;
-declare function researchStudy(props: ResearchStudy_Props): any;
 /**
   * Create a FHIR ResearchSubject resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7808,12 +7714,11 @@ declare function researchStudy(props: ResearchStudy_Props): any;
   * @param {Reference} [props.consent] - Agreement to participate in study
  */
 declare function researchSubject(type: string, props: ResearchSubject_Props): any;
-declare function researchSubject(props: ResearchSubject_Props): any;
 /**
   * Create a FHIR Resource resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7821,12 +7726,11 @@ declare function researchSubject(props: ResearchSubject_Props): any;
   * @param {string} [props.language] - Language of the resource content
  */
 declare function resource(type: string, props: Resource_Props): any;
-declare function resource(props: Resource_Props): any;
 /**
   * Create a FHIR RiskAssessment resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7855,12 +7759,11 @@ declare function resource(props: Resource_Props): any;
   * @param {Annotation} [props.note] - Comments on the risk assessment
  */
 declare function riskAssessment(type: string, props: RiskAssessment_Props): any;
-declare function riskAssessment(props: RiskAssessment_Props): any;
 /**
   * Create a FHIR Schedule resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7880,12 +7783,11 @@ declare function riskAssessment(props: RiskAssessment_Props): any;
   * @param {string} [props.comment] - Comments on availability
  */
 declare function schedule(type: string, props: Schedule_Props): any;
-declare function schedule(props: Schedule_Props): any;
 /**
   * Create a FHIR ServiceRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7930,12 +7832,11 @@ declare function schedule(props: Schedule_Props): any;
   * @param {Reference} [props.relevantHistory] - Request provenance
  */
 declare function serviceRequest(type: string, props: ServiceRequest_Props): any;
-declare function serviceRequest(props: ServiceRequest_Props): any;
 /**
   * Create a FHIR Slot resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7958,12 +7859,11 @@ declare function serviceRequest(props: ServiceRequest_Props): any;
   * @param {string} [props.comment] - Comments on the slot to describe any extended information. Such as custom constraints on the slot
  */
 declare function slot(type: string, props: Slot_Props): any;
-declare function slot(props: Slot_Props): any;
 /**
   * Create a FHIR Specimen resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -7988,12 +7888,11 @@ declare function slot(props: Slot_Props): any;
   * @param {Annotation} [props.note] - Comments
  */
 declare function specimen(type: string, props: Specimen_Props): any;
-declare function specimen(props: Specimen_Props): any;
 /**
   * Create a FHIR SpecimenDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -8011,12 +7910,11 @@ declare function specimen(props: Specimen_Props): any;
   * @param {BackboneElement} [props.typeTested] - Specimen in container intended for testing by lab
  */
 declare function specimenDefinition(type: string, props: SpecimenDefinition_Props): any;
-declare function specimenDefinition(props: SpecimenDefinition_Props): any;
 /**
   * Create a FHIR Substance resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -8035,12 +7933,11 @@ declare function specimenDefinition(props: SpecimenDefinition_Props): any;
   * @param {BackboneElement} [props.ingredient] - Composition information about the substance
  */
 declare function substance(type: string, props: Substance_Props): any;
-declare function substance(props: Substance_Props): any;
 /**
   * Create a FHIR SubstanceDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -8071,12 +7968,11 @@ declare function substance(props: Substance_Props): any;
   * @param {BackboneElement} [props.sourceMaterial] - Material or taxonomic/anatomical source
  */
 declare function substanceDefinition(type: string, props: SubstanceDefinition_Props): any;
-declare function substanceDefinition(props: SubstanceDefinition_Props): any;
 /**
   * Create a FHIR SupplyDelivery resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -8099,12 +7995,11 @@ declare function substanceDefinition(props: SubstanceDefinition_Props): any;
   * @param {Reference} [props.receiver] - Who collected the Supply
  */
 declare function supplyDelivery(type: string, props: SupplyDelivery_Props): any;
-declare function supplyDelivery(props: SupplyDelivery_Props): any;
 /**
   * Create a FHIR SupplyRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -8131,12 +8026,11 @@ declare function supplyDelivery(props: SupplyDelivery_Props): any;
   * @param {Reference} [props.deliverTo] - The destination of the supply
  */
 declare function supplyRequest(type: string, props: SupplyRequest_Props): any;
-declare function supplyRequest(props: SupplyRequest_Props): any;
 /**
   * Create a FHIR Task resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -8179,12 +8073,11 @@ declare function supplyRequest(props: SupplyRequest_Props): any;
   * @param {BackboneElement} [props.output] - Information produced as part of task
  */
 declare function task(type: string, props: Task_Props): any;
-declare function task(props: Task_Props): any;
 /**
   * Create a FHIR TestReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -8208,12 +8101,11 @@ declare function task(props: Task_Props): any;
   * @param {BackboneElement} [props.teardown] - The results of running the series of required clean up steps
  */
 declare function testReport(type: string, props: TestReport_Props): any;
-declare function testReport(props: TestReport_Props): any;
 /**
   * Create a FHIR TestScript resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -8249,12 +8141,11 @@ declare function testReport(props: TestReport_Props): any;
   * @param {BackboneElement} [props.teardown] - A series of required clean up steps
  */
 declare function testScript(type: string, props: TestScript_Props): any;
-declare function testScript(props: TestScript_Props): any;
 /**
   * Create a FHIR VerificationResult resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -8280,12 +8171,11 @@ declare function testScript(props: TestScript_Props): any;
   * @param {BackboneElement} [props.validator] - Information about the entity validating information
  */
 declare function verificationResult(type: string, props: VerificationResult_Props): any;
-declare function verificationResult(props: VerificationResult_Props): any;
 /**
   * Create a FHIR VisionPrescription resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {string} type - The profile id for the resource variant.
   * @param {object} props - Properties to apply to the resource
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
@@ -8305,7 +8195,6 @@ declare function verificationResult(props: VerificationResult_Props): any;
   * @param {BackboneElement} [props.lensSpecification] - Vision lens authorization
  */
 declare function visionPrescription(type: string, props: VisionPrescription_Props): any;
-declare function visionPrescription(props: VisionPrescription_Props): any;
 
 export { account, activityDefinition, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, biologicallyDerivedProduct, bodyStructure, carePlan, careTeam, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, communication, communicationRequest, condition, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, endpoint, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, familyMemberHistory, flag, goal, group, guidanceResponse, healthcareService, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, resource, riskAssessment, schedule, serviceRequest, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, testScript, verificationResult, visionPrescription };
 
