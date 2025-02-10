@@ -22,7 +22,7 @@ const configuration = {
   username: 'test',
   password: 'strongpassword',
   apiVersion: 'v2',
-  baseURL: 'https://test.kobotoolbox.org',
+  baseUrl: 'https://test.kobotoolbox.org',
 };
 
 const defaultObjects = [
