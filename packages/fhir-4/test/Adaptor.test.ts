@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { read, search, update } from '../src/Adaptor';
+import { read, search, update, create, delete as del } from '../src/Adaptor';
 import patient from './fixtures/Patient' assert { type: 'json' };
 
 const testServer = enableMockClient('https://fhir.example.com');
@@ -140,5 +140,65 @@ describe('update', () => {
 
     expect(result.data).to.eql(patient);
     expect(result.response.statusCode).to.equal(200);
+  });
+});
+
+describe('create', () => {
+  it('should create a resource', async () => {
+    mock('Patient', {
+      req: {
+        method: 'POST',
+      },
+      res: {
+        data: patient,
+      },
+    });
+
+    const result = await create(patient)(state);
+
+    expect(result.data).to.eql(patient);
+    expect(result.response.statusCode).to.equal(200);
+  });
+  it('should throw if no resourceType', async () => {
+    let err;
+    try {
+      await create({})(state);
+    } catch (e) {
+      err = e;
+    }
+
+    expect(err.code).to.equal('INVALID_RESOURCE_TYPE');
+    expect(err.fix).to.be.ok;
+    expect(err.description).to.be.ok;
+  });
+});
+
+describe('delete', () => {
+  it('should delete a valid id', async () => {
+    mock('Patient/123', {
+      req: {
+        method: 'DELETE',
+      },
+      res: {
+        data: patient,
+      },
+    });
+
+    const result = await del('Patient/123')(state);
+
+    expect(result.data).to.eql(patient);
+    expect(result.response.statusCode).to.equal(200);
+  });
+
+  it('should throw for an invalid id', async () => {
+    let err;
+    try {
+      await del('123')(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.equal('INVALID_RESOURCE_ID');
+    expect(err.fix).to.be.ok;
+    expect(err.description).to.be.ok;
   });
 });

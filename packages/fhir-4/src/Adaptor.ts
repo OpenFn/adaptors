@@ -1,5 +1,5 @@
 import { composeNextState } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import { throwError, expandReferences } from '@openfn/language-common/util';
 import { assertValidResourceId, prepareNextState, request } from './util';
 
 /**
@@ -132,6 +132,11 @@ export function search(resourceType: string, options: SearchQuery) {
  * @param {object} resource - The new version of this resource.
  * @state data - the newly updated resource, as returned by the server
  * @state response - the HTTP response returned by the server.
+ * @example <caption>Update a Patient with a builder function</caption>
+ * update('Patient/123', b.patient({
+ *   id: 'Patient/123',
+ *   name: { family: "Messi", given: "Lionel", use: "official" },
+ * }))
  * @returns Operation
  */
 export function update(reference: string, resource: any) {
@@ -185,13 +190,70 @@ export function update(reference: string, resource: any) {
 
 //     return prepareNextState(state, response);
 //   };
-// }
 
-function _delete(reference: string) {}
+/**
+ * Delete a single FHIR resource.
+ * @public
+ * @function
+ * @param {string} reference - The type and ID of the resource to delete, eg, `Patient/123`
+ * @state response - the HTTP response returned by the server.
+ * @example <caption>Delete a single Patient resource</caption>
+ * delete('Patient/12345')
+ * @returns Operation
+ */
+
+function _delete(reference: string) {
+  return async state => {
+    const [$reference] = expandReferences(state, reference);
+
+    assertValidResourceId($reference);
+
+    const response = await request('DELETE', $reference as string, {
+      configuration: state.configuration,
+    });
+
+    return prepareNextState(state, response);
+  };
+}
 
 export { _delete as delete };
 
-export function create() {}
+/**
+ * Create a new resource. The resource does not need to include an id.
+ * The created resource will be returned to state.data.
+ * @public
+ * @function
+ * @param {object} resource - The resource to create.
+ * @state data - the newly created resource.
+ * @state response - the HTTP response returned by the server.
+ * @example <caption>Create a Patient with a builder function</caption>
+ * create(b.patient({
+ *   name: { family: "Messi", given: "Lionel", use: "official" },
+ * }))
+ * @returns Operation
+ */
+export function create(resource: any) {
+  return async state => {
+    const [$resource] = expandReferences(state, resource);
+
+    if (!$resource.resourceType) {
+      throwError('INVALID_RESOURCE_TYPE', {
+        description:
+          'The provided resource does not have a resourceType property',
+        fix: 'Set resourceType on the resource, or use a builder function eg b.patient({})',
+      });
+    }
+
+    const response = await request('POST', $resource.resourceType as string, {
+      configuration: state.configuration,
+      body: $resource,
+    });
+
+    console.log(`Created ${response.body.id}`);
+
+    return prepareNextState(state, response);
+  };
+}
 
 // writes to state.bundles[name]
 export function addToBundle(resources: any[], name?: string) {}
