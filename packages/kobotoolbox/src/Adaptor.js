@@ -73,13 +73,13 @@ export function getForms(params, callback) {
 /**
  * Get submissions for a specific form
  * @example
- * getSubmissions({formId: 'aXecHjmbATuF6iGFmvBLBX'}, state => {
+ * getSubmissions({formId: 'aXecHjmbATuF6iGFmvBLBX', start: 50, limit: 50}, state => {
  *   console.log(state.data);
  *   return state;
  * });
  * @function
  * @public
- * @param {object} params - Form Id and data to make the fetch or filter
+ * @param {object} params - Form Id, pagination parameters like `start` and `limit`, and data to make the fetch or filter
  * @param {function} callback - (Optional) Callback function to execute after fetching form submissions
  * @returns {Operation}
  */
@@ -88,14 +88,17 @@ export function getSubmissions(params, callback) {
     const resolvedParams = expandReferences(params)(state);
 
     const { baseURL, apiVersion, username, password } = state.configuration;
-    const { formId } = resolvedParams;
+    const { formId, limit, start } = resolvedParams;
 
     const url = `${baseURL}/api/${apiVersion}/assets/${formId}/data/?format=json`;
     const auth = { username, password };
 
     const config = {
       url,
-      params: resolvedParams.query,
+      params: {
+        limit,
+        start,
+      },
       auth,
     };
 
