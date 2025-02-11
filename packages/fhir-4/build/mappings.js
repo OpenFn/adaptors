@@ -14,4 +14,14 @@ export default {
   //     ],
   //   };
   // },
+  propsToIgnoreInDocs: [
+    'id',
+    'meta',
+    'text',
+    'language',
+    'implicitRules',
+    'extension',
+    'modifierExtension',
+    'contained',
+  ],
 };

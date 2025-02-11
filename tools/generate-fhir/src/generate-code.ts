@@ -65,7 +65,8 @@ const generateCode = (
           name,
           resourceType,
           schema[resourceType],
-          options.simpleSignatures
+          options.simpleSignatures,
+          mappings.propsToIgnoreInDocs
         )
       );
     }
@@ -123,13 +124,15 @@ const generateProfile = (
 export default generateCode;
 
 // For each prop in the schema, generate a prop in jsdocs
-const generateJsDocs = (schema: Schema[]) => {
+const generateJsDocs = (schema: Schema[], ignore: string[] = []) => {
   const props: string[] = [];
 
   // TODO for now, just generate for the first schema
   const profile = schema[0];
-
-  for (const propName in profile.props) {
+  const validProps = Object.keys(profile.props).filter(
+    p => !ignore.includes(p)
+  );
+  for (const propName of validProps) {
     const prop = profile.props[propName];
     // TODO do I need the typemap here?
     props.push(`{${prop.type}} [props.${propName}] - ${prop.desc}`);
@@ -142,7 +145,8 @@ const generateEntry = (
   name: string,
   resourceType: string,
   variants: Schema[],
-  simpleSignatures?: boolean
+  simpleSignatures?: boolean,
+  propsToIgnoreInDocs: string[] = []
 ) => {
   const declarations = [];
 
@@ -154,8 +158,8 @@ const generateEntry = (
   * @param {string} type - The profile id for the resource variant.${
     simpleSignatures ? ' Optional.' : ''
   }
-  * @param {object} props - Properties to apply to the resource
-${generateJsDocs(variants)}
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
+${generateJsDocs(variants, propsToIgnoreInDocs)}
  */
 `);
 

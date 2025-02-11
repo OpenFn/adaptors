@@ -1,5 +1,7 @@
+export declare function assertValidResourceId(id: string): void;
 export declare function addAuth(options: any): any;
 export declare const prepareNextState: (state: any, response: any) => any;
+export declare const logResponse: (response: any, query: any) => any;
 declare type RequestOptions = {
     headers?: Record<string, string>;
     body?: any;

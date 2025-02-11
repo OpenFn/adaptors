@@ -4443,40 +4443,12 @@ declare type VerificationResult_Props = {
     initialiser?: any;
 };
 
-declare type VisionPrescription_Props = {
-    id?: string;
-    meta?: Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    status?: string;
-    created?: string;
-    patient?: Reference;
-    encounter?: Reference;
-    dateWritten?: string;
-    prescriber?: Reference;
-    lensSpecification?: BackboneElement;
-    initialiser?: any;
-};
-
 /**
   * Create a FHIR Account resource.
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Account number
   * @param {string} [props.status] - active | inactive | entered-in-error | on-hold | unknown
   * @param {CodeableConcept} [props.type] - E.g. patient, expense, depreciation
@@ -4495,15 +4467,7 @@ declare function account(type: string, props: Account_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this activity definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the activity definition
   * @param {string} [props.version] - Business version of the activity definition
@@ -4557,15 +4521,7 @@ declare function activityDefinition(type: string, props: ActivityDefinition_Prop
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier for the administrable product
   * @param {string} [props.status] - draft | active | retired | unknown
   * @param {Reference} [props.formOf] - References a product from which one or more of the constituent parts of that product can be prepared and used as described by this administrable product
@@ -4583,15 +4539,7 @@ declare function administrableProductDefinition(type: string, props: Administrab
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for the event
   * @param {string} [props.actuality] - actual | potential
   * @param {CodeableConcept} [props.category] - product-problem | product-quality | product-use-error | wrong-dose | incorrect-prescribing-information | wrong-technique | wrong-route-of-administration | wrong-rate | wrong-duration | wrong-time | expired-drug | medical-device-use-error | problem-different-manufacturer | unsafe-physical-environment
@@ -4619,15 +4567,7 @@ declare function adverseEvent(type: string, props: AdverseEvent_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External ids for this item
   * @param {CodeableConcept} [props.clinicalStatus] - active | inactive | resolved
   * @param {CodeableConcept} [props.verificationStatus] - unconfirmed | confirmed | refuted | entered-in-error
@@ -4651,15 +4591,7 @@ declare function allergyIntolerance(type: string, props: AllergyIntolerance_Prop
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {string} [props.status] - proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist
   * @param {CodeableConcept} [props.cancelationReason] - The coded reason for the appointment being cancelled
@@ -4689,15 +4621,7 @@ declare function appointment(type: string, props: Appointment_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {Reference} [props.appointment] - Appointment this response relates to
   * @param {instant} [props.start] - Time from appointment, or requested new start time
@@ -4713,15 +4637,7 @@ declare function appointmentResponse(type: string, props: AppointmentResponse_Pr
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External ids for this item
   * @param {string} [props.productCategory] - organ | tissue | fluid | cells | biologicalAgent
   * @param {CodeableConcept} [props.productCode] - What this biologically derived product is
@@ -4740,15 +4656,7 @@ declare function biologicallyDerivedProduct(type: string, props: BiologicallyDer
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Bodystructure identifier
   * @param {boolean} [props.active] - Whether this record is in active use
   * @param {CodeableConcept} [props.morphology] - Kind of Structure
@@ -4764,15 +4672,7 @@ declare function bodyStructure(type: string, props: BodyStructure_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this plan
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
   * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
@@ -4803,15 +4703,7 @@ declare function carePlan(type: string, props: CarePlan_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this team
   * @param {string} [props.status] - proposed | active | suspended | inactive | entered-in-error
   * @param {CodeableConcept} [props.category] - Type of team
@@ -4832,15 +4724,7 @@ declare function careTeam(type: string, props: CareTeam_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for item
   * @param {string} [props.definitionUri] - Defining information about the code of this charge item
   * @param {canonical} [props.definitionCanonical] - Resource defining the code of this ChargeItem
@@ -4874,15 +4758,7 @@ declare function chargeItem(type: string, props: ChargeItem_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this charge item definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the charge item definition
   * @param {string} [props.version] - Business version of the charge item definition
@@ -4913,15 +4789,7 @@ declare function chargeItemDefinition(type: string, props: ChargeItemDefinition_
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this citation, represented as a globally unique URI
   * @param {Identifier} [props.identifier] - Identifier for the Citation resource itself
   * @param {string} [props.version] - Business version of the citation
@@ -4958,15 +4826,7 @@ declare function citation(type: string, props: Citation_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for claim
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
   * @param {CodeableConcept} [props.type] - Category or discipline
@@ -5001,15 +4861,7 @@ declare function claim(type: string, props: Claim_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for a claim response
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
   * @param {CodeableConcept} [props.type] - More granular claim type
@@ -5044,15 +4896,7 @@ declare function claimResponse(type: string, props: ClaimResponse_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - in-progress | completed | entered-in-error
   * @param {CodeableConcept} [props.statusReason] - Reason for current status
@@ -5080,15 +4924,7 @@ declare function clinicalImpression(type: string, props: ClinicalImpression_Prop
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for this issue
   * @param {string} [props.type] - indication | contraindication | interaction | undesirable-effect | warning
   * @param {CodeableConcept} [props.category] - A categorisation of the issue, primarily for dividing warnings into subject heading areas such as "Pregnancy", "Overdose"
@@ -5107,15 +4943,7 @@ declare function clinicalUseDefinition(type: string, props: ClinicalUseDefinitio
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
   * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
@@ -5146,15 +4974,7 @@ declare function communication(type: string, props: Communication_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {Reference} [props.basedOn] - Fulfills plan or proposal
   * @param {Reference} [props.replaces] - Request(s) replaced by this request
@@ -5184,15 +5004,7 @@ declare function communicationRequest(type: string, props: CommunicationRequest_
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this condition
   * @param {CodeableConcept} [props.clinicalStatus] - active | recurrence | relapse | inactive | remission | resolved
   * @param {CodeableConcept} [props.verificationStatus] - unconfirmed | provisional | differential | confirmed | refuted | entered-in-error
@@ -5217,15 +5029,7 @@ declare function condition(type: string, props: Condition_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Contract number
   * @param {string} [props.url] - Basal definition
   * @param {string} [props.version] - Business edition
@@ -5266,15 +5070,7 @@ declare function contract(type: string, props: Contract_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for the coverage
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
   * @param {CodeableConcept} [props.type] - Coverage category such as medical or accident
@@ -5299,15 +5095,7 @@ declare function coverage(type: string, props: Coverage_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for coverage eligiblity request
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
   * @param {CodeableConcept} [props.priority] - Desired processing priority
@@ -5329,15 +5117,7 @@ declare function coverageEligibilityRequest(type: string, props: CoverageEligibi
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for coverage eligiblity request
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
   * @param {string} [props.purpose] - auth-requirements | benefits | discovery | validation
@@ -5360,15 +5140,7 @@ declare function coverageEligibilityResponse(type: string, props: CoverageEligib
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique id for the detected issue
   * @param {string} [props.status] - registered | preliminary | final | amended +
   * @param {CodeableConcept} [props.code] - Issue Category, e.g. drug-drug, duplicate therapy, etc.
@@ -5388,15 +5160,7 @@ declare function detectedIssue(type: string, props: DetectedIssue_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Instance identifier
   * @param {Reference} [props.definition] - The reference to the definition for the device
   * @param {BackboneElement} [props.udiCarrier] - Unique Device Identifier (UDI) Barcode string
@@ -5430,15 +5194,7 @@ declare function device(type: string, props: Device_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Instance identifier
   * @param {BackboneElement} [props.udiDeviceIdentifier] - Unique Device Identifier (UDI) Barcode string
   * @param {string} [props.manufacturer] - Name of device manufacturer
@@ -5468,15 +5224,7 @@ declare function deviceDefinition(type: string, props: DeviceDefinition_Props): 
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Instance identifier
   * @param {CodeableConcept} [props.type] - Identity of metric, for example Heart Rate or PEEP Setting
   * @param {CodeableConcept} [props.unit] - Unit of Measure for the Metric
@@ -5494,15 +5242,7 @@ declare function deviceMetric(type: string, props: DeviceMetric_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Request identifier
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
   * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
@@ -5534,15 +5274,7 @@ declare function deviceRequest(type: string, props: DeviceRequest_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier for this record
   * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
   * @param {string} [props.status] - active | completed | entered-in-error +
@@ -5563,15 +5295,7 @@ declare function deviceUseStatement(type: string, props: DeviceUseStatement_Prop
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for report
   * @param {Reference} [props.basedOn] - What was requested
   * @param {string} [props.status] - registered | partial | preliminary | final +
@@ -5597,15 +5321,8 @@ declare function diagnosticReport(type: string, props: DiagnosticReport_Props): 
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
+
  */
 declare function domainResource(type: string, props: DomainResource_Props): any;
 /**
@@ -5613,15 +5330,7 @@ declare function domainResource(type: string, props: DomainResource_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifier(s) by which this encounter is known
   * @param {string} [props.status] - planned | arrived | triaged | in-progress | onleave | finished | cancelled +
   * @param {BackboneElement} [props.statusHistory] - List of past encounter statuses
@@ -5652,15 +5361,7 @@ declare function encounter(type: string, props: Encounter_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifies this endpoint across multiple systems
   * @param {string} [props.status] - active | suspended | error | off | entered-in-error | test
   * @param {Coding} [props.connectionType] - Protocol/Profile/Standard to be used with this endpoint connection
@@ -5679,15 +5380,7 @@ declare function endpoint(type: string, props: Endpoint_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
   * @param {dateTime} [props.created] - Creation date
@@ -5702,15 +5395,7 @@ declare function enrollmentRequest(type: string, props: EnrollmentRequest_Props)
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
   * @param {Reference} [props.request] - Claim reference
@@ -5726,15 +5411,7 @@ declare function enrollmentResponse(type: string, props: EnrollmentResponse_Prop
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier(s) relevant for this EpisodeOfCare
   * @param {string} [props.status] - planned | waitlist | active | onhold | finished | cancelled | entered-in-error
   * @param {BackboneElement} [props.statusHistory] - Past list of status codes (the current status may be included to cover the start date of the status)
@@ -5754,15 +5431,7 @@ declare function episodeOfCare(type: string, props: EpisodeOfCare_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this event definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the event definition
   * @param {string} [props.version] - Business version of the event definition
@@ -5798,15 +5467,7 @@ declare function eventDefinition(type: string, props: EventDefinition_Props): an
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this evidence, represented as a globally unique URI
   * @param {Identifier} [props.identifier] - Additional identifier for the summary
   * @param {string} [props.version] - Business version of this summary
@@ -5839,15 +5500,7 @@ declare function evidence(type: string, props: Evidence_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this EvidenceReport, represented as a globally unique URI
   * @param {string} [props.status] - draft | active | retired | unknown
   * @param {UsageContext} [props.useContext] - The context that the content is intended to support
@@ -5873,15 +5526,7 @@ declare function evidenceReport(type: string, props: EvidenceReport_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this evidence variable, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the evidence variable
   * @param {string} [props.version] - Business version of the evidence variable
@@ -5913,15 +5558,7 @@ declare function evidenceVariable(type: string, props: EvidenceVariable_Props): 
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for the resource
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
   * @param {CodeableConcept} [props.type] - Category or discipline
@@ -5972,15 +5609,7 @@ declare function explanationOfBenefit(type: string, props: ExplanationOfBenefit_
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Id(s) for this record
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
   * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
@@ -6006,15 +5635,7 @@ declare function familyMemberHistory(type: string, props: FamilyMemberHistory_Pr
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - active | inactive | entered-in-error
   * @param {CodeableConcept} [props.category] - Clinical, administrative, etc.
@@ -6030,15 +5651,7 @@ declare function flag(type: string, props: Flag_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this goal
   * @param {string} [props.lifecycleStatus] - proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected
   * @param {CodeableConcept} [props.achievementStatus] - in-progress | improving | worsening | no-change | achieved | sustaining | not-achieved | no-progress | not-attainable
@@ -6062,15 +5675,7 @@ declare function goal(type: string, props: Goal_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique id
   * @param {boolean} [props.active] - Whether this group's record is in active use
   * @param {string} [props.type] - person | animal | practitioner | device | medication | substance
@@ -6088,15 +5693,7 @@ declare function group(type: string, props: Group_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.requestIdentifier] - The identifier of the request associated with this response, if any
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.module] - What guidance was requested
@@ -6119,15 +5716,7 @@ declare function guidanceResponse(type: string, props: GuidanceResponse_Props): 
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifiers for this item
   * @param {boolean} [props.active] - Whether this HealthcareService record is in active use
   * @param {Reference} [props.providedBy] - Organization that provides this service
@@ -6159,15 +5748,7 @@ declare function healthcareService(type: string, props: HealthcareService_Props)
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifiers for the whole study
   * @param {string} [props.status] - registered | available | cancelled | entered-in-error | unknown
   * @param {Coding} [props.modality] - All series modality if actual acquisition modalities
@@ -6195,15 +5776,7 @@ declare function imagingStudy(type: string, props: ImagingStudy_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - completed | entered-in-error | not-done
   * @param {CodeableConcept} [props.statusReason] - Reason not done
@@ -6239,15 +5812,7 @@ declare function immunization(type: string, props: Immunization_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - completed | entered-in-error
   * @param {Reference} [props.patient] - Who this evaluation is for
@@ -6268,15 +5833,7 @@ declare function immunizationEvaluation(type: string, props: ImmunizationEvaluat
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {Reference} [props.patient] - Who this profile is for
   * @param {dateTime} [props.date] - Date recommendation(s) created
@@ -6289,15 +5846,7 @@ declare function immunizationRecommendation(type: string, props: ImmunizationRec
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier or code by which the ingredient can be referenced
   * @param {string} [props.status] - draft | active | retired | unknown
   * @param {Reference} [props.for] - The product which this ingredient is a constituent part of
@@ -6313,15 +5862,7 @@ declare function ingredient(type: string, props: Ingredient_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for Product
   * @param {string} [props.status] - draft | active | retired | unknown
   * @param {CodeableConcept} [props.type] - Kind of product
@@ -6343,15 +5884,7 @@ declare function insurancePlan(type: string, props: InsurancePlan_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for item
   * @param {string} [props.status] - draft | issued | balanced | cancelled | entered-in-error
   * @param {string} [props.cancelledReason] - Reason for cancellation of this Invoice
@@ -6375,15 +5908,7 @@ declare function invoice(type: string, props: Invoice_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this library, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the library
   * @param {string} [props.version] - Business version of the library
@@ -6422,15 +5947,7 @@ declare function library(type: string, props: Library_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - current | retired | entered-in-error
   * @param {string} [props.mode] - working | snapshot | changes
@@ -6451,15 +5968,7 @@ declare function list(type: string, props: List_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique code or number identifying the location to its users
   * @param {string} [props.status] - active | suspended | inactive
   * @param {Coding} [props.operationalStatus] - The operational status of the location (typically only for a bed/room)
@@ -6484,15 +5993,7 @@ declare function location(type: string, props: Location_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {string} [props.status] - draft | active | retired | unknown
   * @param {CodeableConcept} [props.manufacturedDoseForm] - Dose form as manufactured (before any necessary transformation)
@@ -6507,15 +6008,7 @@ declare function manufacturedItemDefinition(type: string, props: ManufacturedIte
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this measure, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the measure
   * @param {string} [props.version] - Business version of the measure
@@ -6564,15 +6057,7 @@ declare function measure(type: string, props: Measure_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Additional identifier for the MeasureReport
   * @param {string} [props.status] - complete | pending | error
   * @param {string} [props.type] - individual | subject-list | summary | data-collection
@@ -6591,15 +6076,7 @@ declare function measureReport(type: string, props: MeasureReport_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifier(s) for the image
   * @param {Reference} [props.basedOn] - Procedure that caused this media to be created
   * @param {Reference} [props.partOf] - Part of referenced event
@@ -6629,15 +6106,7 @@ declare function media(type: string, props: Media_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for this medication
   * @param {CodeableConcept} [props.code] - Codes that identify this medication
   * @param {string} [props.status] - active | inactive | entered-in-error
@@ -6653,15 +6122,7 @@ declare function medication(type: string, props: Medication_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {string} [props.instantiates] - Instantiates protocol or definition
   * @param {Reference} [props.partOf] - Part of referenced event
@@ -6688,15 +6149,7 @@ declare function medicationAdministration(type: string, props: MedicationAdminis
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {Reference} [props.partOf] - Event that dispense is part of
   * @param {string} [props.status] - preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown
@@ -6728,15 +6181,7 @@ declare function medicationDispense(type: string, props: MedicationDispense_Prop
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {CodeableConcept} [props.code] - Code that identifies this medication
   * @param {string} [props.status] - active | inactive | entered-in-error
   * @param {Reference} [props.manufacturer] - Manufacturer of the item
@@ -6766,15 +6211,7 @@ declare function medicationKnowledge(type: string, props: MedicationKnowledge_Pr
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External ids for this request
   * @param {string} [props.status] - active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
   * @param {CodeableConcept} [props.statusReason] - Reason for current status
@@ -6814,15 +6251,7 @@ declare function medicationRequest(type: string, props: MedicationRequest_Props)
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {Reference} [props.basedOn] - Fulfils plan, proposal or order
   * @param {Reference} [props.partOf] - Part of referenced event
@@ -6847,15 +6276,7 @@ declare function medicationStatement(type: string, props: MedicationStatement_Pr
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for this product. Could be an MPID
   * @param {CodeableConcept} [props.type] - Regulatory type, e.g. Investigational or Authorized
   * @param {CodeableConcept} [props.domain] - If this medicine applies to human or veterinary uses
@@ -6891,15 +6312,7 @@ declare function medicinalProductDefinition(type: string, props: MedicinalProduc
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique ID for this particular sequence. This is a FHIR-defined id
   * @param {string} [props.type] - aa | dna | rna
   * @param {integer} [props.coordinateSystem] - Base number of coordinate system (0 for 0-based numbering or coordinates, inclusive start, exclusive end, 1 for 1-based numbering, inclusive start, inclusive end)
@@ -6923,15 +6336,7 @@ declare function molecularSequence(type: string, props: MolecularSequence_Props)
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifiers assigned to this order
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
   * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
@@ -6956,15 +6361,7 @@ declare function nutritionOrder(type: string, props: NutritionOrder_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.status] - active | inactive | entered-in-error
   * @param {CodeableConcept} [props.category] - A category or class of the nutrition product (halal, kosher, gluten free, vegan, etc)
   * @param {CodeableConcept} [props.code] - A code designating a specific type of nutritional product
@@ -6982,15 +6379,7 @@ declare function nutritionProduct(type: string, props: NutritionProduct_Props): 
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for observation
   * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
   * @param {Reference} [props.partOf] - Part of referenced event
@@ -7022,15 +6411,7 @@ declare function observation(type: string, props: Observation_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {CodeableConcept} [props.category] - Category of observation
   * @param {CodeableConcept} [props.code] - Type of observation (code / type)
   * @param {Identifier} [props.identifier] - Business identifier for this ObservationDefinition instance
@@ -7051,15 +6432,7 @@ declare function observationDefinition(type: string, props: ObservationDefinitio
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifies this organization  across multiple systems
   * @param {boolean} [props.active] - Whether the organization's record is still in active use
   * @param {CodeableConcept} [props.type] - Kind of organization
@@ -7077,15 +6450,7 @@ declare function organization(type: string, props: Organization_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifiers that are specific to this role
   * @param {boolean} [props.active] - Whether this organization affiliation record is in active use
   * @param {Period} [props.period] - The period during which the participatingOrganization is affiliated with the primary organization
@@ -7105,15 +6470,7 @@ declare function organizationAffiliation(type: string, props: OrganizationAffili
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - A unique identifier for this package as whole
   * @param {string} [props.name] - A name for this package. Typically as listed in a drug formulary, catalogue, inventory etc
   * @param {CodeableConcept} [props.type] - A high level category e.g. medicinal product, raw material, shipping container etc
@@ -7135,15 +6492,7 @@ declare function packagedProductDefinition(type: string, props: PackagedProductD
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier for this patient
   * @param {boolean} [props.active] - Whether this patient's record is in active use
   * @param {HumanName} [props.name] - A name associated with the patient
@@ -7167,15 +6516,7 @@ declare function patient(type: string, props: Patient_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for the payment noctice
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
   * @param {Reference} [props.request] - Request reference
@@ -7195,15 +6536,7 @@ declare function paymentNotice(type: string, props: PaymentNotice_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for a payment reconciliation
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
   * @param {Period} [props.period] - Period covered
@@ -7226,15 +6559,7 @@ declare function paymentReconciliation(type: string, props: PaymentReconciliatio
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - A human identifier for this person
   * @param {HumanName} [props.name] - A name associated with the person
   * @param {ContactPoint} [props.telecom] - A contact detail for the person
@@ -7252,15 +6577,7 @@ declare function person(type: string, props: Person_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this plan definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the plan definition
   * @param {string} [props.version] - Business version of the plan definition
@@ -7299,15 +6616,7 @@ declare function planDefinition(type: string, props: PlanDefinition_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier for the person as this agent
   * @param {boolean} [props.active] - Whether this practitioner's record is in active use
   * @param {HumanName} [props.name] - The name(s) associated with the practitioner
@@ -7325,15 +6634,7 @@ declare function practitioner(type: string, props: Practitioner_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifiers that are specific to a role/location
   * @param {boolean} [props.active] - Whether this practitioner role record is in active use
   * @param {Period} [props.period] - The period during which the practitioner is authorized to perform in these role(s)
@@ -7355,15 +6656,7 @@ declare function practitionerRole(type: string, props: PractitionerRole_Props): 
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Identifiers for this procedure
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
   * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
@@ -7399,15 +6692,7 @@ declare function procedure(type: string, props: Procedure_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this questionnaire, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the questionnaire
   * @param {string} [props.version] - Business version of the questionnaire
@@ -7437,15 +6722,7 @@ declare function questionnaire(type: string, props: Questionnaire_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique id for this set of answers
   * @param {Reference} [props.basedOn] - Request fulfilled by this QuestionnaireResponse
   * @param {Reference} [props.partOf] - Part of this action
@@ -7464,15 +6741,7 @@ declare function questionnaireResponse(type: string, props: QuestionnaireRespons
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for the authorization, typically assigned by the authorizing body
   * @param {Reference} [props.subject] - The product type, treatment, facility or activity that is being authorized
   * @param {CodeableConcept} [props.type] - Overall type of this authorization, for example drug marketing approval, orphan drug designation
@@ -7494,15 +6763,7 @@ declare function regulatedAuthorization(type: string, props: RegulatedAuthorizat
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - A human identifier for this person
   * @param {boolean} [props.active] - Whether this related person's record is in active use
   * @param {Reference} [props.patient] - The patient this person is related to
@@ -7522,15 +6783,7 @@ declare function relatedPerson(type: string, props: RelatedPerson_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
   * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
@@ -7556,15 +6809,7 @@ declare function requestGroup(type: string, props: RequestGroup_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this research definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the research definition
   * @param {string} [props.version] - Business version of the research definition
@@ -7606,15 +6851,7 @@ declare function researchDefinition(type: string, props: ResearchDefinition_Prop
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this research element definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the research element definition
   * @param {string} [props.version] - Business version of the research element definition
@@ -7655,15 +6892,7 @@ declare function researchElementDefinition(type: string, props: ResearchElementD
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for study
   * @param {string} [props.title] - Name for this study
   * @param {Reference} [props.protocol] - Steps followed in executing study
@@ -7695,15 +6924,7 @@ declare function researchStudy(type: string, props: ResearchStudy_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for research subject in a study
   * @param {string} [props.status] - candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
   * @param {Period} [props.period] - Start and end of participation
@@ -7719,11 +6940,8 @@ declare function researchSubject(type: string, props: ResearchSubject_Props): an
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
+
  */
 declare function resource(type: string, props: Resource_Props): any;
 /**
@@ -7731,15 +6949,7 @@ declare function resource(type: string, props: Resource_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier for the assessment
   * @param {Reference} [props.basedOn] - Request fulfilled by this assessment
   * @param {Reference} [props.parent] - Part of this occurrence
@@ -7764,15 +6974,7 @@ declare function riskAssessment(type: string, props: RiskAssessment_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {boolean} [props.active] - Whether this schedule is in active use
   * @param {CodeableConcept} [props.serviceCategory] - High-level category
@@ -7788,15 +6990,7 @@ declare function schedule(type: string, props: Schedule_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifiers assigned to this order
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
   * @param {string} [props.instantiatesUri] - Instantiates external protocol or definition
@@ -7837,15 +7031,7 @@ declare function serviceRequest(type: string, props: ServiceRequest_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {CodeableConcept} [props.serviceCategory] - A broad categorization of the service that is to be performed during this appointment
   * @param {CodeableConcept} [props.serviceType] - The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource
@@ -7864,15 +7050,7 @@ declare function slot(type: string, props: Slot_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Identifier
   * @param {Identifier} [props.accessionIdentifier] - Identifier assigned by the lab
   * @param {string} [props.status] - available | unavailable | unsatisfactory | entered-in-error
@@ -7893,15 +7071,7 @@ declare function specimen(type: string, props: Specimen_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier of a kind of specimen
   * @param {CodeableConcept} [props.typeCollected] - Kind of material to collect
   * @param {CodeableConcept} [props.patientPreparation] - Patient preparation for collection
@@ -7915,15 +7085,7 @@ declare function specimenDefinition(type: string, props: SpecimenDefinition_Prop
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {string} [props.status] - active | inactive | entered-in-error
   * @param {CodeableConcept} [props.category] - What class/type of substance this is
@@ -7938,15 +7100,7 @@ declare function substance(type: string, props: Substance_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifier by which this substance is known
   * @param {string} [props.version] - A business level version identifier of the substance
   * @param {CodeableConcept} [props.status] - Status of substance within the catalogue e.g. active, retired
@@ -7973,15 +7127,7 @@ declare function substanceDefinition(type: string, props: SubstanceDefinition_Pr
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
   * @param {Reference} [props.partOf] - Part of referenced event
@@ -8000,15 +7146,7 @@ declare function supplyDelivery(type: string, props: SupplyDelivery_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for SupplyRequest
   * @param {string} [props.status] - draft | active | suspended +
   * @param {CodeableConcept} [props.category] - The kind of supply (central, non-stock, etc.)
@@ -8031,15 +7169,7 @@ declare function supplyRequest(type: string, props: SupplyRequest_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Task Instance Identifier
   * @param {canonical} [props.instantiatesCanonical] - Formal definition of task
   * @param {string} [props.instantiatesUri] - Formal definition of task
@@ -8078,15 +7208,7 @@ declare function task(type: string, props: Task_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {string} [props.name] - Informal name of the executed TestScript
   * @param {string} [props.status] - completed | in-progress | waiting | stopped | entered-in-error
@@ -8106,15 +7228,7 @@ declare function testReport(type: string, props: TestReport_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this test script, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the test script
   * @param {string} [props.version] - Business version of the test script
@@ -8146,15 +7260,7 @@ declare function testScript(type: string, props: TestScript_Props): any;
   * @public
   * @function
   * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Reference} [props.target] - A resource that was validated
   * @param {string} [props.targetLocation] - The fhirpath location(s) within the resource that was validated
   * @param {CodeableConcept} [props.need] - none | initial | periodic
@@ -8171,30 +7277,6 @@ declare function testScript(type: string, props: TestScript_Props): any;
   * @param {BackboneElement} [props.validator] - Information about the entity validating information
  */
 declare function verificationResult(type: string, props: VerificationResult_Props): any;
-/**
-  * Create a FHIR VisionPrescription resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant.
-  * @param {object} props - Properties to apply to the resource
-  * @param {string} [props.id] - Logical id of this artifact
-  * @param {Meta} [props.meta] - Metadata about the resource
-  * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
-  * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
-  * @param {Resource} [props.contained] - Contained, inline Resources
-  * @param {Extension} [props.extension] - Additional content defined by implementations
-  * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
-  * @param {Identifier} [props.identifier] - Business Identifier for vision prescription
-  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
-  * @param {dateTime} [props.created] - Response creation date
-  * @param {Reference} [props.patient] - Who prescription is for
-  * @param {Reference} [props.encounter] - Created during encounter / admission / stay
-  * @param {dateTime} [props.dateWritten] - When prescription was authorized
-  * @param {Reference} [props.prescriber] - Who authorized the vision prescription
-  * @param {BackboneElement} [props.lensSpecification] - Vision lens authorization
- */
-declare function visionPrescription(type: string, props: VisionPrescription_Props): any;
 
-export { account, activityDefinition, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, biologicallyDerivedProduct, bodyStructure, carePlan, careTeam, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, communication, communicationRequest, condition, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, endpoint, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, familyMemberHistory, flag, goal, group, guidanceResponse, healthcareService, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, resource, riskAssessment, schedule, serviceRequest, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, testScript, verificationResult, visionPrescription };
+export { account, activityDefinition, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, biologicallyDerivedProduct, bodyStructure, carePlan, careTeam, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, communication, communicationRequest, condition, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, endpoint, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, familyMemberHistory, flag, goal, group, guidanceResponse, healthcareService, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, resource, riskAssessment, schedule, serviceRequest, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, testScript, verificationResult };
 

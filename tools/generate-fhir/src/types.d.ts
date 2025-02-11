@@ -14,6 +14,8 @@ export type MappingSpec = {
   /** Array of string regexes */
   valueSets?: string[];
 
+  propsToIgnoreInDocs: string[];
+
   /** After creation has run, execute this code */
   initialiser?: (resource) => void;
 };
