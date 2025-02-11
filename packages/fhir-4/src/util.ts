@@ -96,6 +96,7 @@ export const request = (method, path, options: RequestOptions) => {
     .then(response => logResponse(response, opts.query))
     .catch(async e => {
       if (
+        e.headers &&
         'content-type' in e.headers &&
         e.headers['content-type'].match(/fhir\+json/)
       ) {

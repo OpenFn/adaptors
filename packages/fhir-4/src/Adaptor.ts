@@ -1,14 +1,24 @@
 import { composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import { assertValidResourceId, prepareNextState, request } from './util';
-// TODO: export your main operations here
-// Can we auto-generate any thing here?
+
+/**
+ * Fetch a single FHIR resource.
+ * @public
+ * @function
+ * @param {string} reference - The type and ID of the resource to read, eg, `Patient/123`
+ * @state data - the newly updated resource, as returned by the server
+ * @state response - the HTTP response returned by the server.
+ * @example <caption>Read a single Patient resource</caption>
+ * read('Patient/12345')
+ * @returns Operation
+ */
 
 // don't support vread, but maybe accept a version parameter later
 // TODO this doesn't play that nice with native resource references? I can't do `read($.id)`
-export function read(reference: string, options: object = {}) {
+export function read(reference: string) {
   return async state => {
-    const [$reference, $options] = expandReferences(state, reference, options);
+    const [$reference] = expandReferences(state, reference);
 
     assertValidResourceId($reference);
 
@@ -55,11 +65,33 @@ const assignParameters = (query, options) => {
   };
   for (const key in options) {
     if (special[key]) {
-      query[`_${key}`] = options.key;
+      query[`_${key}`] = options[key];
     }
   }
 };
 
+/**
+ * Search for matching FHIR resources. Exclude _ from search parameters, and pass query terms on options.query.
+ * @public
+ * @function
+ * @param {string} resourceType - The type of the resource to search for.
+ * @param {object} options - Parameters, query and filter.
+ * @param {object} [options.*] - Pass supported query parameters without underscore. See {@link https://www.hl7.org/fhir/R4/search.html#Summary FHIR Search Summary}.
+ * @param {object} [options.query] - query terms to search for. These are appended to the query URL veratim..
+ * @state data - the newly updated resource, as returned by the server
+ * @state response - the HTTP response returned by the server.
+ * @example <caption>Search with parameter and query term</caption>
+ * search('Patient', {
+ *   lastUpdated: $.cursor,
+ *   count: 10,
+ *   query: { given: 'messi' },
+ * })
+ * @example <caption>Search for patients with a given name containing "eve"</caption>
+ * search('Patient', {
+ *   query: { 'given:contains': 'eve' },
+ * })
+ * @returns Operation
+ */
 // TODO handle paging
 // https://hl7.org/fhir/R4B/search.html
 // Note: if you do Family= rather than family=, you get a 400 out of fhir
@@ -91,8 +123,8 @@ export function search(resourceType: string, options: SearchQuery) {
 }
 
 /**
- * Update a resource to match the object passed in.
- * If the resource does not already exist, it will be created and `state.response.statusCode` will be 201.
+ * Update a resource. If the resource does not already exist, it will be created and `state.response.statusCode` will be 201.
+ * Otherwise, the existing resource will be replaced.
  * To partially update a resource, use `patch()`.
  * @public
  * @function
@@ -100,7 +132,7 @@ export function search(resourceType: string, options: SearchQuery) {
  * @param {object} resource - The new version of this resource.
  * @state data - the newly updated resource, as returned by the server
  * @state response - the HTTP response returned by the server.
- * @returns
+ * @returns Operation
  */
 export function update(reference: string, resource: any) {
   return async state => {
