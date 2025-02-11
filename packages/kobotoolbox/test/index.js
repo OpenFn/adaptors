@@ -67,6 +67,16 @@ describe('getSubmissions', () => {
       .reply(500, {
         body: 'Another error.',
       });
+
+    nock('https://kf.kobotoolbox.org')
+      .get('/api/v2/assets/cXecHjmbATuF6iGFmvBLBX/data/?format=json&start=4&limit=1')
+      .basicAuth({ user: 'john', pass: 'doe' })
+      .reply(200,  {
+        count: 10,
+        next: 'https://xyz',
+        previous: 'http://abc',
+        results: [{}, {}],
+      });
   });
 
   it('should get a list of submissions', async () => {
@@ -127,6 +137,27 @@ describe('getSubmissions', () => {
       return error;
     });
     expect(error.message).to.eql('Request failed with status code 500');
+  });
+
+  it('accepts pagination params like `start` and `limit`', async () => {
+    const state = {
+      configuration: {
+        username: 'john',
+        password: 'doe',
+        baseURL: 'https://kf.kobotoolbox.org',
+        apiVersion: 'v2',
+      },
+    };
+
+    const nextState = await execute(getSubmissions({ formId: 'cXecHjmbATuF6iGFmvBLBX', limit: 1, start: 4}))(state)
+      .then(nextState => nextState);
+
+    expect(nextState.data).to.deep.eql({
+      count: 10,
+      next: 'https://xyz',
+      previous: 'http://abc',
+      results: [{}, {}],
+    });
   });
 });
 
