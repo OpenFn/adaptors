@@ -1,0 +1,44 @@
+{
+  "submissions": {
+    "value": [
+      {
+        "first_name": "Taylor",
+        "gender": "f",
+        "age_location": {
+          "age": 34,
+          "location": {
+            "type": "Point",
+            "coordinates": [
+              -86.781539,
+              36.162334,
+              0
+            ],
+            "properties": {
+              "accuracy": 0
+            }
+          }
+        },
+        "my_picture": null,
+        "meta": {
+          "instanceID": "uuid:9e8c274d-709c-4ea5-8b3b-85aa4e0f1b5a",
+          "instanceName": "Taylor - 34"
+        },
+        "__id": "uuid:9e8c274d-709c-4ea5-8b3b-85aa4e0f1b5a",
+        "__system": {
+          "submissionDate": "2024-04-25T18:45:02.627Z",
+          "updatedAt": null,
+          "submitterId": "6",
+          "submitterName": "Yaw Anokwa",
+          "attachmentsPresent": 0,
+          "attachmentsExpected": 0,
+          "status": null,
+          "reviewState": null,
+          "deviceId": null,
+          "edits": 0,
+          "formVersion": "2023120100"
+        }
+      }
+    ],
+    "@odata.context": "https://sandbox.getodk.cloud/v1/projects/66/forms/integration_test.svc/$metadata#Submissions"
+  }
+}

@@ -1,10 +1,10 @@
 {
   "name": "@openfn/language-cartodb",
-  "version": "0.2.1",
+  "version": "0.4.10",
   "description": "cartodb Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
-    "build": "pnpm clean && build-adaptor rapidpro",
+    "build": "pnpm clean && build-adaptor cartodb",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
@@ -20,9 +20,9 @@
     "configuration-schema.json"
   ],
   "dependencies": {
+    "@openfn/language-common": "workspace:*",
     "JSONPath": "^0.10.0",
     "json-sql": "^0.3.8",
-    "@openfn/language-common": "^1.12.0",
     "lodash-fp": "^0.10.2",
     "superagent": "^3.7.0"
   },
@@ -30,12 +30,9 @@
     "assertion-error": "^1.0.1",
     "chai": "^3.4.0",
     "deep-eql": "^0.1.3",
-    "mocha": "^7.1.1",
-    "superagent-mock": "^1.10.0",
     "esno": "^0.16.3",
-    "@openfn/buildtools": "workspace:^1.0.1",
-    "@openfn/simple-ast": "0.4.1",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "superagent-mock": "^1.10.0"
   },
   "repository": {
     "type": "git",
@@ -45,6 +42,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"

@@ -1,9 +1,10 @@
 import { execute as commonExecute } from '@openfn/language-common';
-import { request as sendRequest, xmlParser } from './Utils';
+import { request as sendRequest, xmlParser } from './util';
 
 /**
  * Options provided to the HTTP request
  * @typedef {Object} RequestOptions
+ * @public
  * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
  * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
  * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
@@ -15,14 +16,21 @@ import { request as sendRequest, xmlParser } from './Utils';
  */
 
 /**
- * Execute a sequence of operations.
+ * State object
+ * @typedef {Object} HttpState
+ * @property data - the parsed response body
+ * @property response - the response from the HTTP server, including headers, statusCode, body, etc
+ * @property references - an array of all previous data objects used in the Job
+ **/
+
+/**
+ * Execute a sequence of operations
  * Wraps `language-common/execute`, and prepends initial state for http.
  * @example
  * execute(
  *   create('foo'),
  *   delete('bar')
  * )(state)
- * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -38,7 +46,7 @@ export function execute(...operations) {
 }
 
 /**
- * Make a HTTP request
+ * Make a HTTP request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
  * request(
@@ -50,10 +58,11 @@ export function execute(...operations) {
  *    }
  * )
  * @function
- * @param {string} method - The HTTP method to use
- * @param {string} path - Path to resource
+ * @param {string} method - The HTTP method to use.
+ * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} params - Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function request(method, path, params, callback) {
@@ -61,7 +70,7 @@ export function request(method, path, params, callback) {
 }
 
 /**
- * Make a GET request
+ * Make a GET request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
  * get('/myEndpoint', {
@@ -69,9 +78,10 @@ export function request(method, path, params, callback) {
  *   headers: {'content-type': 'application/json'},
  * })
  * @function
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} params - Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function get(path, params, callback) {
@@ -79,7 +89,7 @@ export function get(path, params, callback) {
 }
 
 /**
- * Make a POST request
+ * Make a POST request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
  *  post('/myEndpoint', {
@@ -87,9 +97,10 @@ export function get(path, params, callback) {
  *    headers: {'content-type': 'application/json'},
  *  })
  * @function
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} params - Body, Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {operation}
  */
 
@@ -98,7 +109,7 @@ export function post(path, params, callback) {
 }
 
 /**
- * Make a PUT request
+ * Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
  *  put('/myEndpoint', {
@@ -106,9 +117,10 @@ export function post(path, params, callback) {
  *    headers: {'content-type': 'application/json'},
  *  })
  * @function
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function put(path, params, callback) {
@@ -116,7 +128,7 @@ export function put(path, params, callback) {
 }
 
 /**
- * Make a PATCH request
+ * Make a PATCH request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
  *  patch('/myEndpoint', {
@@ -124,9 +136,10 @@ export function put(path, params, callback) {
  *    headers: {'content-type': 'application/json'},
  *  })
  * @function
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function patch(path, params, callback) {
@@ -134,16 +147,17 @@ export function patch(path, params, callback) {
 }
 
 /**
- * Make a DELETE request
+ * Make a DELETE request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
  *  del(`/myendpoint/${state => state.data.id}`, {
  *    headers: {'content-type': 'application/json'}
  *  })
  * @function
- * @param {string} path - Path to resource
+ * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
  * @param {function} callback - (Optional) Callback function
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function del(path, params, callback) {
@@ -172,6 +186,8 @@ export function del(path, params, callback) {
  * @param {String} body - data string to be parsed
  * @param {function} script - script for extracting data
  * @param {function} callback - (Optional) Callback function
+ * @state data - the parsed XML as a JSON object
+ * @state references - an array of all previous data objects used in the Job
  * @returns {Operation}
  */
 export function parseXML(body, script, callback) {
@@ -182,6 +198,7 @@ export {
   alterState,
   arrayToString,
   combine,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
@@ -189,7 +206,9 @@ export {
   field,
   fields,
   fn,
+  fnIf,
   chunk,
+  group,
   humanProper,
   lastReferenceValue,
   merge,

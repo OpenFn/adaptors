@@ -1,4 +1,148 @@
-v0.4.0
+## 2.3.0
+
+### Minor Changes
+
+- b3d7f59: Common util functions `encode` and `decode` can now take a JavaScript
+  object and stringify
+- 41e8cc3: Added an 'assert' function that throws an error when an expression or
+  function resolves to false
+
+### Patch Changes
+
+- 2d709ff: Ensure that RegExp objects can be safely passed as references
+
+## 2.2.1
+
+### Patch Changes
+
+- 6dffdbd: Fixed an issue in the HTTP helpers where responses without a body can
+  cause an error to be thrown.
+
+## 2.2.0
+
+### Minor Changes
+
+- a47d8d5: `decode`, `encode` and `uuid` are now correctly documented as being
+  in the `util` namespace
+
+### Patch Changes
+
+- 9240428: security: Update dependencies
+
+## 2.1.1
+
+### Patch Changes
+
+- Updated docs for each()
+
+## 2.1.0
+
+### Minor Changes
+
+- 03a1a74: Add `encode`, `decode` and `uuid` helpers
+
+## 2.0.3
+
+### Patch Changes
+
+- 33973a2: Fix a critical security issue in jsonpath-plus
+
+## 2.0.2
+
+### Patch Changes
+
+- 77a690f: improve cursor setup message
+
+## 2.0.1
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+
+## 2.0.0
+
+The 2.0 version of common removes axios and re-writes the `http` namespace.
+
+You can now use `http.request()` from any adaptor that exports it:
+
+```
+http.request(
+  'GET',
+  'https://jsonplaceholder.typicode.com/todos',
+  http.options().basic('user', 'pass')
+)
+```
+
+`http.get()` and `http.post()` are also available.
+
+These functions behave just like the HTTP adaptor's operations (except that they
+don't handle auth for you).
+
+Use the `http.options()` helper functiosn to set basic auth headers and set the
+content type to JSON.
+
+### Major Changes
+
+- Replace axios-based http operations with cleaner, undici-based ones
+- Removed axios export
+
+### Minor Changes
+
+- Add options helpers to http namespace
+
+### Patch Changes
+
+- 4c08444: document `date-fns` functions
+
+## 1.15.0
+
+### Minor Changes
+
+- 5fb82f07: - Add `group()` operation
+  - Initialize `state.references` in `composeNextState()`
+
+## 1.14.0
+
+### Minor Changes
+
+- 106ecf6d: Add `fnIf` operation
+
+## 1.13.5
+
+### Patch Changes
+
+- http helpers: Fix an issue where query parameters in the URL did not get sent
+  to the server
+
+## 1.13.4
+
+### Patch Changes
+
+- 12f02ed5: http helpers: Ensure redirects append base url
+
+## 1.13.3
+
+### Patch Changes
+
+- 88f99a8f: cursor: support format option
+
+## 1.13.2
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+
+## 1.13.1
+
+### Patch Changes
+
+- Fix jsdoc link
+
+## 1.13.0
+
+### Minor Changes
+
+- 1ad86651: Added cursor() helper
 
 ## 1.12.0
 

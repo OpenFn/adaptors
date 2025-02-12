@@ -1,5 +1,82 @@
 # @openfn/language-khanacademy
 
+## 0.5.9
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
+## 0.5.8
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
+## 0.5.7
+
+### Patch Changes
+
+- Updated dependencies [a47d8d5]
+- Updated dependencies [9240428]
+  - @openfn/language-common@2.2.0
+
+## 0.5.6
+
+### Patch Changes
+
+- Updated dependencies [03a1a74]
+  - @openfn/language-common@2.1.0
+
+## 0.5.5
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
+## 0.5.4
+
+### Patch Changes
+
+- 8d866e4: Update tough-cookie dependency
+
+## 0.5.3
+
+### Patch Changes
+
+- Updated dependencies [77a690f]
+  - @openfn/language-common@2.0.2
+
+## 0.5.2
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
+## 0.5.1
+
+### Patch Changes
+
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
+## 0.5.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
 ## 0.4.1
 
 ### Patch Changes

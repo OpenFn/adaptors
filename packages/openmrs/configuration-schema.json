@@ -29,6 +29,21 @@
             "examples": [
                 "@super(!)Secretpass"
             ]
+        },
+        "fhirVersion": {
+            "title": "FHIR Release Version",
+            "type": "string",
+            "placeholder": "R4",
+            "default": "R4",
+            "description": "FHIR Release Version",
+            "minLength": 1,
+            "examples": [
+                "R5",
+                "R4B",
+                "R4",
+                "R3",
+                "R2"
+            ]
         }
     },
     "type": "object",

@@ -127,6 +127,7 @@ export {
   each,
   field,
   fn,
+  fnIf,
   fields,
   http,
   lastReferenceValue,

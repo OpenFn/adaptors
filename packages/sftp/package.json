@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-sftp",
-  "version": "1.0.2",
+  "version": "2.0.8",
   "description": "An SFTP language package for use with Open Function",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -10,6 +10,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
@@ -32,13 +33,11 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.12.0",
-    "lodash": "^4.17.19",
+    "@openfn/language-common": "workspace:*",
+    "lodash": "^4.17.21",
     "ssh2-sftp-client": "9.0.4"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
@@ -46,7 +45,6 @@
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.26.0",
     "esno": "^0.16.3",
-    "mocha": "7.2.0",
     "nock": "12.0.3",
     "rimraf": "^3.0.2"
   },

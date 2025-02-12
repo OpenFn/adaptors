@@ -1,5 +1,60 @@
 # @openfn/language-kobotoolbox
 
+## 2.4.3
+
+### Patch Changes
+
+- Security fix: update jsonpath-plus version
+
+## 2.4.2
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+
+## 2.4.1
+
+### Patch Changes
+
+- 73d0a02: Make documentation public
+- Updated dependencies [4c08444]
+- Updated dependencies [73d0a02]
+  - @openfn/language-common@1.15.1
+
+## 2.4.0
+
+### Minor Changes
+
+- 5fb82f07: Export `group` operation from common
+
+### Patch Changes
+
+- Updated dependencies [5fb82f07]
+  - @openfn/language-common@1.15.0
+
+## 2.3.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
+## 2.2.0
+
+### Minor Changes
+
+- bae5d3b6: Add the cursor() function from common. See the job writing guide for
+  more information.
+
+### Patch Changes
+
+- Updated dependencies [1ad86651]
+  - @openfn/language-common@1.13.0
+
 ## 2.1.0
 
 ### Minor Changes

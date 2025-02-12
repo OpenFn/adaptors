@@ -1,5 +1,144 @@
 # @openfn/language-fhir
 
+## 5.0.3
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
+## 5.0.2
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
+## 5.0.1
+
+### Patch Changes
+
+- 940996b: Use common helper code to handle invalid absolute URLs
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
+## 5.0.0
+
+#### Added
+
+- Improved type definitions for `request()` and `get()`
+
+#### Changed
+
+- Updated `request` function to the new signature:
+
+  ```js
+  export const request =
+    async (method, path, options = {}, callback) =>
+    state => ({
+      ...state,
+      data,
+      response,
+    });
+  ```
+
+- Updated `post` function to the new signature:
+
+  ```js
+  export const post = (path, data, options, callback) => state => ({
+    ...state,
+    data,
+    response,
+  });
+  ```
+
+- Updated `get` function to the new signature:
+
+  ```js
+  export const get = (path, params, options, callback) => state => ({
+    ...state,
+    data,
+    response,
+  });
+  ```
+
+- Updated `create` function to the new signature:
+
+  ```js
+  export const create = (resource, resource, params, callback) => state => ({
+    ...state,
+    data,
+    response,
+  });
+  ```
+
+- Updated `createTransactionBundle` function:
+
+  ```js
+  export const createTransactionBundle = (entries, callback) => state => ({
+    ...state,
+    data,
+  });
+  ```
+
+- Updated `getClaim` function to the new signature:
+  ```js
+  export const getClaim =
+    (claimId, params, callback = s => s) =>
+    state => ({
+      ...state,
+      data,
+    });
+  ```
+- Updated `configuration-schema.json`
+  - Removed `authType`
+  - Rename `token` to `access_token`
+  - Add `username` and `password`
+
+#### Removed
+
+- Removed `parseAs` from the options.
+
+## 4.0.0
+
+### Major Changes
+
+- a42ffeb9: - All HTTP methods now write `{ data, response }` to state, where
+  data is the response body and response is the raw response
+  - All HTTP methods now support a `throwOnError` param, which defaults to true.
+    If false, the adaptor will not throw if the HTTP status is <=400
+  - request: return { data, response } directly
+  - request: fix an issue where default headers would override user headers
+  - request: if the body contains application/json content, parse it as JSON
+
+## 3.2.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
+## 3.1.2
+
+### Patch Changes
+
+- 2b283549: - Update `create()` example
+  - Update required properties in configuration schema
+
+## 3.1.1
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
 ## 3.1.0
 
 ### Minor Changes

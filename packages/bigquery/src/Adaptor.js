@@ -1,9 +1,5 @@
 import 'regenerator-runtime/runtime.js';
-import {
-  execute as commonExecute,
-  expandReferences,
-  composeNextState,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
 import fs from 'fs';
 import { BigQuery } from '@google-cloud/bigquery';
 
@@ -120,6 +116,8 @@ export function load(
 }
 
 export {
+  fn,
+  fnIf,
   alterState,
   dataPath,
   combine,

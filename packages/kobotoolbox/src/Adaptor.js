@@ -2,7 +2,7 @@ import {
   execute as commonExecute,
   composeNextState,
   expandReferences,
-  http,
+  http, // IMPORTANT: this is the OLD axios-based HTTP
 } from '@openfn/language-common';
 
 /**
@@ -78,6 +78,7 @@ export function getForms(params, callback) {
  *   return state;
  * });
  * @function
+ * @public
  * @param {object} params - Form Id and data to make the fetch or filter
  * @param {function} callback - (Optional) Callback function to execute after fetching form submissions
  * @returns {Operation}
@@ -118,6 +119,7 @@ export function getSubmissions(params, callback) {
  *   return state;
  * });
  * @function
+ * @public
  * @param {object} params - Form Id and data to make the fetch or filter
  * @param {function} callback - (Optional) Callback function to execute after fetching form deployment information
  * @returns {Operation}
@@ -151,14 +153,17 @@ export function getDeploymentInfo(params, callback) {
 }
 
 export {
-  fn,
   alterState,
+  cursor,
   dataPath,
   dataValue,
   each,
   field,
   fields,
-  http,
+  fn,
+  fnIf,
+  http, // IMPORTANT: this is the OLD axios-based HTTP. The public documentation for this will be wrong.
+  group,
   lastReferenceValue,
   merge,
   sourceValue,

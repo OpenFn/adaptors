@@ -177,6 +177,7 @@ export {
   sourceValue,
   alterState,
   fn,
+  fnIf,
   each,
   merge,
   dataPath,

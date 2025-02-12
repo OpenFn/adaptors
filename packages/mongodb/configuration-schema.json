@@ -5,7 +5,7 @@
             "title": "Cluster Hostname",
             "type": "string",
             "description": "Your MongoDB cluster hostname",
-            "format": "hostname",
+            "format": "string",
             "minLength": 1,
             "examples": [
                 "yourCluster-xxxyzzz.mongodb.net"

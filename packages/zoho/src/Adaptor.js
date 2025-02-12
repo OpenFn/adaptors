@@ -70,6 +70,7 @@ export function addRow(db, table, rowData) {
 
 export {
   fn,
+  fnIf,
   alterState,
   field,
   fields,

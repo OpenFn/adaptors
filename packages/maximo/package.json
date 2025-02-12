@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-maximo",
-  "version": "0.4.1",
+  "version": "0.5.11",
   "description": "An IBM Maximo EAM Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -20,14 +20,12 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^1.12.0",
+    "@openfn/language-common": "workspace:*",
     "base-64": "^0.1.0",
     "request": "^2.88.2",
     "utf8": "^2.1.2"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "^2.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -36,7 +34,6 @@
     "chai": "^4.3.7",
     "deep-eql": "^4.1.2",
     "esno": "^0.16.3",
-    "mocha": "^10.1.0",
     "nock": "^13.2.9",
     "rimraf": "^3.0.2"
   },
@@ -48,6 +45,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"

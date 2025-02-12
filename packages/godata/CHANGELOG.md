@@ -1,5 +1,45 @@
 # @openfn/language-godata
 
+## 3.5.4
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
+## 3.5.3
+
+### Patch Changes
+
+- 3fd13c2: Update axios to 1.7.7
+
+## 3.5.2
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
+## 3.5.1
+
+### Patch Changes
+
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
+## 3.5.0
+
+### Minor Changes
+
+- 3d9d564c: Add `fn` and `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
 ## 3.4.0
 
 ### Minor Changes

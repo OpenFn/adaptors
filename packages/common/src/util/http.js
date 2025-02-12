@@ -1,6 +1,9 @@
 import { Client, MockAgent } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
+import querystring from 'node:querystring';
+import path from 'node:path';
+import throwError from './throw-error';
 
 const clients = new Map();
 
@@ -22,6 +25,7 @@ export const logResponse = response => {
       console.log(message);
     }
   }
+  return response;
 };
 
 const getClient = (baseUrl, options) => {
@@ -34,6 +38,7 @@ const getClient = (baseUrl, options) => {
 
 export const enableMockClient = baseUrl => {
   const mockAgent = new MockAgent({ connections: 1 });
+  mockAgent.disableNetConnect();
   const client = mockAgent.get(baseUrl);
   if (!clients.has(baseUrl)) {
     clients.set(baseUrl, client);
@@ -53,14 +58,14 @@ const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
     const body = await readResponseBody(response);
 
     const statusText = getReasonPhrase(response.statusCode);
-    const defaultErrorMesssage = `${method} to ${fullUrl} returned ${response.statusCode}: ${statusText}`;
+    const defaultErrorMessage = `${method} to ${fullUrl} returned ${response.statusCode}: ${statusText}`;
 
     const duration = Date.now() - startTime;
 
     const errMessage =
       typeof errMapMessage === 'function'
         ? errMapMessage(response)
-        : errMapMessage || defaultErrorMesssage;
+        : errMapMessage || defaultErrorMessage;
 
     const error = new Error(errMessage);
     error.statusCode = response.statusCode;
@@ -74,30 +79,61 @@ const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
   }
 };
 
+export const ERROR_ABSOLUTE_URL = 'Absolute URLs not suppored';
+
+// throws if a path is absolute
+export const assertRelativeUrl = path => {
+  if (/https?:\/\//.test(path)) {
+    const e = new Error('UNEXPECTED_ABSOLUTE_URL');
+    e.code = 'UNEXPECTED_ABSOLUTE_URL';
+    e.description =
+      'An absolute URL was provided (https://...) but only a path (/a/b/c) is supported';
+    e.url = path;
+    e.fix =
+      'Remove the protocol, domain and origin from the provided URL. Maybe you need to use the generic HTTP helper functions instead?';
+    throw e;
+  }
+};
+
+export const ERROR_URL_MISMATCH = 'Target origin does not match baseUrl origin';
+
 export const parseUrl = (pathOrUrl = '', baseUrl) => {
   let fullUrl;
 
   // We handle our own URL parsing rather than leaning on node:url
   // because we are non-strict about the baseURL (ie, we do not ignore the path)
   if (/https?:\/\//.test(pathOrUrl)) {
-    fullUrl = pathOrUrl;
-  } else if (baseUrl) {
-    // ensure the base url ends with a /
-    const base = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
-    // ensure the path does not start with /
-    const path = pathOrUrl.startsWith('/') ? pathOrUrl.substring(1) : pathOrUrl;
+    fullUrl = new URL(pathOrUrl);
 
-    fullUrl = base + path;
+    // If the url is absolute, and there's a basePath, ensure they point to the same origin
+    if (baseUrl) {
+      const base = new URL(baseUrl);
+      if (fullUrl.origin !== base.origin) {
+        const e = new Error(ERROR_URL_MISMATCH);
+        e.code = 'BASE_URL_MISMATCH';
+        e.description = `A request was attempted to an absolute URL, but a different base URL was specified. This is a potential security violation.`;
+        e.target = pathOrUrl;
+        e.baseUrl = baseUrl;
+        e.fix = 'Try using a generic HTTP function to access the target URL';
+        throw e;
+      }
+    }
+  } else if (baseUrl) {
+    // Note: we use path.join here because our "baseUrl" may not be a stict base url
+    //       Ie it may be https://example.com/api/v1
+    //       Doing new URl(path, base) will chop off the "base path" so to speak, and break stuff
+    //       Technically path.join will produce an invalid URL, but the URL parser handles it safely
+    fullUrl = new URL(path.join(baseUrl, pathOrUrl));
   } else {
     // let this throw
     new URL(pathOrUrl);
   }
 
-  const url = new URL(fullUrl);
   return {
-    url: url.toString(),
-    baseUrl: url.origin,
-    path: url.pathname,
+    url: fullUrl.toString(),
+    baseUrl: fullUrl.origin,
+    path: fullUrl.pathname,
+    query: querystring.parse(fullUrl.searchParams.toString()),
   };
 };
 
@@ -120,10 +156,15 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
  */
 export async function request(method, fullUrlOrPath, options = {}) {
   const startTime = Date.now();
-  const { url, baseUrl, path } = parseUrl(fullUrlOrPath, options.baseUrl);
+  const {
+    url,
+    baseUrl,
+    path,
+    query: urlQuery,
+  } = parseUrl(fullUrlOrPath, options.baseUrl);
   const {
     headers = {},
-    query = {},
+    query: optionQuery = {},
     body,
     errors = {},
     timeout = 300e3, // Default to 300 seconds,
@@ -136,7 +177,10 @@ export async function request(method, fullUrlOrPath, options = {}) {
 
   const response = await client.request({
     path,
-    query,
+    query: {
+      ...optionQuery,
+      ...urlQuery,
+    },
     method,
     headers,
     body: encodeRequestBody(body),
@@ -144,6 +188,8 @@ export async function request(method, fullUrlOrPath, options = {}) {
     maxRedirections,
     bodyTimeout: timeout,
     headersTimeout: timeout,
+    // If the request is redirected, undici requires the origin to be set (this affects commcare)
+    origin: baseUrl,
   });
 
   const statusText = getReasonPhrase(response.statusCode);
@@ -193,19 +239,32 @@ function encodeRequestBody(body) {
 }
 
 async function readResponseBody(response, parseAs) {
-  const contentType = response.headers['content-type'];
+  try {
+    const contentType = response.headers['content-type'];
+    if (+response.headers['content-length'] === 0) {
+      return undefined;
+    }
 
-  switch (parseAs) {
-    case 'json':
-      return response.body.json();
-    case 'text':
-      return response.body.text();
-    case 'stream':
-      return response.body;
-    default:
-      return contentType && contentType.includes('application/json')
-        ? response.body.json()
-        : response.body.text();
+    switch (parseAs) {
+      case 'json':
+        return await response.body.json();
+      case 'text':
+        return response.body.text();
+      case 'stream':
+        return response.body;
+      default:
+        return contentType && contentType.includes('application/json')
+          ? await response.body.json()
+          : response.body.text();
+    }
+  } catch (error) {
+    throwError(response.statusCode, {
+      description: 'Error parsing the response body',
+      parseAs,
+      contentType: response.headers['content-type'],
+      bodyLength: +response.headers['content-length'],
+      error: error.message,
+    });
   }
 }
 

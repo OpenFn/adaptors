@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL (https://frogapi.wigal.com.gh)",
+      "format": "uri",
+      "minLength": 1,
+      "examples": [
+        "https://frogapi.wigal.com.gh"
+      ]
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "Username",
+      "examples": [
+        "test@openfn.org"
+      ]
+    },
+    "apiKey": {
+      "title": "API-KEY",
+      "type": "string",
+      "description": "API-KEY",
+      "writeOnly": true,
+      "examples": [
+        "@some(!)apikey"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "apiKey",
+    "username"
+  ]
+}

@@ -7,5 +7,13 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": []
+  "ignore": [
+    "@openfn/buildtools",
+    "@openfn/generate",
+    "@openfn/metadata",
+    "@openfn/migrate-adaptor",
+    "@openfn/parse-jsdoc",
+    "@openfn/slack-notify",
+    "import-tests"
+  ]
 }

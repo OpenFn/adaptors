@@ -7,8 +7,7 @@
   "main": "src/index.js",
   "license": "ISC",
   "bin": {
-    "metadata": "src/cli.js",
-    "jam": "src/cli.js"
+    "metadata": "src/cli.js"
   },
   "scripts": {
     "cli": "node src/cli.js"

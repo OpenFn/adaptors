@@ -56,6 +56,63 @@ describe('request()', () => {
 
     expect(result.data).to.eql('hello');
   });
+
+  it('should throw if no baseUrl is set and no url is provided', async () => {
+    const state = {
+      configuration: null,
+    };
+    let err;
+    try {
+      await execute(request('GET'))(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('NO_URL');
+    expect(err.description).to.not.be.undefined;
+  });
+  it('should pass if baseUrl is not set and url is absolute', async () => {
+    testServer.intercept({ path: '/greeting' }).reply(200, 'hello');
+
+    const state = {
+      configuration: null,
+    };
+    const result = await execute(
+      request('GET', 'https://www.example.com/greeting')
+    )(state);
+    expect(result.data).to.eql('hello');
+  });
+  it('should throw if baseUrl is not set and url is relative', async () => {
+    const state = {
+      configuration: null,
+    };
+    let err;
+    try {
+      await execute(request('GET', 'greeting'))(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.code).to.eql('UNEXPECTED_RELATIVE_URL');
+    expect(err.description).to.not.be.undefined
+  });
+
+  it('should throw if url is absolute and does not match baseUrl', async () => {
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
+    };
+
+    let err;
+    try {
+      await execute(request('GET', 'https://www.something.net/greeting'))(
+        state
+      );
+    } catch (e) {
+      err = e;
+    }
+
+    expect(err.code).to.eql('BASE_URL_MISMATCH');
+  });
 });
 
 describe('get()', () => {
@@ -233,7 +290,48 @@ describe('get()', () => {
     expect(data).to.eql({ 'x-openfn': 'testing' });
   });
 
-  it('encodes configuration into basic auth header', async () => {
+  it('sets up a basic auth header', async () => {
+    testServer
+      .intercept({
+        path: '/api/private',
+        method: 'GET',
+      })
+      .reply(200, req => req.headers, { headers: jsonHeaders });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+        username: 'hello',
+        password: 'there',
+      },
+    };
+
+    const { data } = await execute(get('/api/private'))(state);
+
+    expect(data.Authorization).to.eql('Basic aGVsbG86dGhlcmU=');
+  });
+
+  it('sets up an oauth/token header', async () => {
+    testServer
+      .intercept({
+        path: '/api/private',
+        method: 'GET',
+      })
+      .reply(200, req => req.headers, { headers: jsonHeaders });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+        access_token: '00QCjAl4MlV-WPX',
+      },
+    };
+
+    const { data } = await execute(get('/api/private'))(state);
+
+    expect(data.Authorization).to.eql('Bearer 00QCjAl4MlV-WPX');
+  });
+
+  it('does not override the Authorization header', async () => {
     testServer
       .intercept({
         path: '/api/auth',
@@ -249,9 +347,11 @@ describe('get()', () => {
       },
     };
 
-    const { data } = await execute(get('/api/auth'))(state);
+    const { data } = await execute(
+      get('/api/auth', { headers: { Authorization: 'Bearer abc' } })
+    )(state);
 
-    expect(data.Authorization).to.eql('Basic aGVsbG86dGhlcmU=');
+    expect(data.Authorization).to.eql('Bearer abc');
   });
 
   it('allows query strings to be set', async () => {

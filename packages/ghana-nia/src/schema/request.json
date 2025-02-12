@@ -1,0 +1,116 @@
+{
+  "$id": "http://json-schema.org/draft-04/schema#",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "merchantKey": {
+      "type": "string",
+      "minLength": 0
+    },
+    "babyData": {
+      "type": "object",
+      "properties": {
+        "dateOfBirth": {
+          "type": "string",
+          "minLength": 0
+        },
+        "fatherName": {
+          "type": "string",
+          "minLength": 0
+        },
+        "forenames": {
+          "type": "string",
+          "minLength": 0
+        },
+        "gender": {
+          "type": "string",
+          "minLength": 0
+        },
+        "lightwaveETrackerID": {
+          "type": "string",
+          "minLength": 0
+        },
+        "motherName": {
+          "type": "string",
+          "minLength": 0
+        },
+        "noSiblingsInDelivery": {
+          "type": "string",
+          "minLength": 0
+        },
+        "placeOfBirth": {
+          "type": "string",
+          "minLength": 0
+        },
+        "surname": {
+          "type": "string",
+          "minLength": 0
+        },
+        "timeOfbirth": {
+          "type": "string",
+          "minLength": 0
+        },
+        "weightAtBirth": {
+          "type": "string",
+          "minLength": 0
+        },
+        "birthCertificateNumber": {
+          "type": "string",
+          "minLength": 0
+        },
+        "babyPicture": {
+          "type": "string",
+          "minLength": 0
+        }
+      },
+      "required": [
+        "dateOfBirth",
+        "fatherName",
+        "forenames",
+        "gender",
+        "lightwaveETrackerID",
+        "motherName",
+        "noSiblingsInDelivery",
+        "placeOfBirth",
+        "surname",
+        "timeOfbirth",
+        "weightAtBirth",
+        "birthCertificateNumber",
+        "babyPicture"
+      ]
+    },
+    "personVouching": {
+      "type": "object",
+      "properties": {
+        "etrackerLightwaveID": {
+          "type": "string",
+          "minLength": 0
+        },
+        "ghanaCardPIN": {
+          "type": "string",
+          "minLength": 0
+        },
+        "relationToBaby": {
+          "type": "string",
+          "minLength": 0
+        },
+        "relativePhone": {
+          "type": "string",
+          "minLength": 0
+        },
+        "relativePicture": {
+          "type": "string",
+          "minLength": 0
+        }
+      },
+      "required": [
+        "etrackerLightwaveID",
+        "ghanaCardPIN",
+        "relationToBaby",
+        "relativePhone",
+        "relativePicture"
+      ]
+    }
+  },
+  "required": ["merchantKey", "babyData", "personVouching"]
+}

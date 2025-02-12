@@ -1,5 +1,72 @@
 # @openfn/language-surveycto
 
+## 2.2.3
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
+## 2.2.2
+
+### Patch Changes
+
+- d54ab59: Fix an issue assembling surveyCTO urls (which manifested as
+  `TypeError: Cannot read properties of undefined (reading 'toString'`)
+
+## 2.2.1
+
+### Patch Changes
+
+- f51c5d0: Enforce that absolute urls must not be passed to HTTP functions
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
+## 2.2.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
+## 2.1.1
+
+### Patch Changes
+
+- 6c588212: Fix `servername` typo in the `configuration-schema`
+
+## 2.1.0
+
+### Minor Changes
+
+- b67f81be: Add a `cursor()` function which adds support for the surveyCTO
+  string format dates.
+
+  The date option in `fetchSubmissions` can now accept a surveyCTO date, an
+  epoch or unix timestamp, or basically anything you can pass into new Date().
+
+  Internally, any date you pass into `cursor` will be converted into a
+  human-readable surveyCTO format in UTC time.
+
+### Patch Changes
+
+- Updated dependencies [88f99a8f]
+  - @openfn/language-common@1.13.3
+
+## 2.0.0
+
+### Major Changes
+
+- 59ae7b50: - Refactor `fetchSubmissions()` function
+  - Update `instanceName` to `servername` in `configuration-schema.json`
+  - Add `apiVersion` in `configuration-schema.json`. Defaults to `v1`
+  - Add `request()` function for surveyCTO API requests
+
 ## 1.2.1
 
 ### Patch Changes

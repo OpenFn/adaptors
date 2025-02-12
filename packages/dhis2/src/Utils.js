@@ -1,5 +1,11 @@
 import { composeNextState } from '@openfn/language-common';
 
+export function shouldUseNewTracker(resourceType) {
+  return /^(enrollments|relationships|events|trackedEntities)$/.test(
+    resourceType
+  );
+}
+
 export const CONTENT_TYPES = {
   xml: 'application/xml',
   json: 'application/json',
@@ -43,10 +49,8 @@ export function prettyJson(data) {
   return JSON.stringify(data, null, 2);
 }
 
-const isArray = variable => !!variable && variable.constructor === Array;
-
-export function nestArray(data, key) {
-  return isArray(data) ? { [key]: data } : data;
+export function ensureArray(data, key) {
+  return Array.isArray(data) ? { [key]: data } : { [key]: [data] };
 }
 
 export function generateUrl(configuration, options, resourceType, path = null) {

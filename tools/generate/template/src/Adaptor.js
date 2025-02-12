@@ -1,96 +1,100 @@
-import {
-  execute as commonExecute,
-  composeNextState,
-} from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { request } from './Utils';
+import * as util from './Utils';
 
-// TODO You can override the execute function to run code at the start
-//      and end of job execution. This is useful for initialising and destroying
-//      client objects. In this example we need it to create the references array.
 /**
- * Execute a sequence of operations.
- * Wraps `language-common/execute` to make working with this API easier.
- * @example
- * execute(
- *   create('foo'),
- *   delete('bar')
- * )(state)
- * @private
- * @param {Operations} operations - Operations to be performed.
- * @returns {Operation}
- */
-export function execute(...operations) {
-  const initialState = {
-    references: [],
-    data: null,
-  };
+ * State object
+ * @typedef {Object} HttpState
+ * @property data - the parsed response body
+ * @property response - the response from the HTTP server, including headers, statusCode, body, etc
+ * @property references - an array of all previous data objects used in the Job
+ **/
 
-  // TODO: Add session-based authentication here if your API needs it.
-  return state => {
-    return commonExecute(...operations)({
-      ...initialState,
-      ...state,
-    });
-  };
-}
-
-// TODO this is example Operations which might create a resource on
-//      on a fictional service. It demonstrates best practice for how
-//      Operations should be written
 /**
- * Create some resource in some system
+ * Options provided to the HTTP request
+ * @typedef {Object} RequestOptions
  * @public
- * @example
- * create("patient", {"name": "Bukayo"})
- * @function
- * @param {string} resource - The type of entity that will be created
- * @param {object} data - The data to create the new resource from
- * @param {function} callback - An optional callback function
- * @returns {Operation}
+ * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
+ * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
+ * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
+ * @property {object} query - An object of query parameters to be encoded into the URL.
+ * @property {object} headers - An object of headers to append to the request.
+ * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
+ * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
+ * @property {object} tls - TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
  */
-export function create(resource, data, callback = s => s) {
+
+/**
+ * Make a GET request
+ * @example
+ * get("patients");
+ * @function
+ * @public
+ * @param {string} path - Path to resource
+ * @param {RequestOptions} options - Optional request options
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function get(path, options) {
+  return request('GET', path, null, options);
+}
+
+/**
+ * Make a POST request
+ * @example
+ * post("patient", { "name": "Bukayo" });
+ * @function
+ * @public
+ * @param {string} path - Path to resource
+ * @param {object} body - Object which will be attached to the POST body
+ * @param {RequestOptions} options - Optional request options
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function post(path, body, options) {
+  return request('POST', path, body, options);
+}
+
+/**
+ * Make a general HTTP request
+ * @example
+ * request("POST", "patient", { "name": "Bukayo" });
+ * @function
+ * @public
+ * @param {string} method - HTTP method to use
+ * @param {string} path - Path to resource
+ * @param {object} body - Object which will be attached to the POST body
+ * @param {RequestOptions} options - Optional request options
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function request(method, path, body, options = {}) {
   return async state => {
-    // Parameters like resource and data might be passed as functions, which
-    // allow us to lazily evaluate state references
-    // The expand function will either return the provided values back to us,
-    // or evaluate them first
-    const [resolvedResource, resolvedData] = expandReferences(
-      state,
-      resource,
-      data
+    const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
+      expandReferences(state, method, path, body, options);
+
+    const response = await util.request(
+      state.configuration,
+      resolvedMethod,
+      resolvedPath,
+      {
+        body: resolvedBody,
+        ...resolvedoptions,
+      }
     );
 
-    // Make the request to the service
-    // See src/Utils.js for the request implementation
-    const response = await request(
-      state,
-      'POST',
-      resolvedResource,
-      resolvedData
-    );
-
-    // Write the result to state.data, update the references array,  and save response metadata
-    const nextState = {
-      ...composeNextState(state, response.body),
-      response,
-    };
-
-    // Invoke the callback (if passed) before returning
-    return callback(nextState);
+    return util.prepareNextState(state, response);
   };
 }
 
-// TODO: Decide which functions to publish from @openfn/language-common
 export {
   dataPath,
   dataValue,
   dateFns,
+  cursor,
   each,
   field,
   fields,
   fn,
-  http,
   lastReferenceValue,
   merge,
   sourceValue,

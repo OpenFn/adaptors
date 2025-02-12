@@ -1,5 +1,147 @@
 # @openfn/language-http
 
+## 6.5.4
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
+## 6.5.3
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
+## 6.5.2
+
+### Patch Changes
+
+- 4b9a5b9: - Fix typo in util functions examples
+  - Remove export for `addAuth()` helper
+- Updated dependencies [a47d8d5]
+- Updated dependencies [9240428]
+  - @openfn/language-common@2.2.0
+
+## 6.5.1
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
+## 6.5.0
+
+### Minor Changes
+
+- b433d7f: Add `util.encode`, `util.decode` and `util.uuid` helpers
+
+### Patch Changes
+
+- Updated dependencies [03a1a74]
+  - @openfn/language-common@2.1.0
+
+## 6.4.6
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
+## 6.4.5
+
+### Patch Changes
+
+- e01d7b3: - Fix an issue where an error is thrown if `state.configuration` is
+  `null`
+  - better error when `baseUrl` is not set and the passed url is a relative url.
+  - better error when `baseUrl` is not set and no url is provided.
+
+## 6.4.4
+
+### Patch Changes
+
+- Updated dependencies [77a690f]
+  - @openfn/language-common@2.0.2
+
+## 6.4.3
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
+## 6.4.2
+
+### Patch Changes
+
+- c803bab: In all functions, if baseUrl if set, path MUST be relative.
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
+## 6.4.1
+
+### Patch Changes
+
+- Updated dependencies [4c08444]
+- Updated dependencies [73d0a02]
+  - @openfn/language-common@1.15.1
+
+## 6.4.0
+
+### Minor Changes
+
+- 5fb82f07: Export `group` operation from common
+
+### Patch Changes
+
+- Updated dependencies [5fb82f07]
+  - @openfn/language-common@1.15.0
+
+## 6.3.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
+## 6.2.3
+
+### Patch Changes
+
+- Fix an issue where query parameters in the URL did not get sent to the server
+
+## 6.2.2
+
+### Patch Changes
+
+- Automatically apply api/oauth tokens from config
+
+## 6.2.1
+
+### Patch Changes
+
+- Fixed an issue where the Authorization header could be overwritten if username
+  and password are set on config
+- Configuration schema: demoted `username` and `password` to optional
+- Configuration schema: Added `token`. This is not automated and must be
+  manually add to the HTTP headers.
+
+## 6.2.0
+
+### Minor Changes
+
+- Add cursor() function
+
 ## 6.1.0
 
 ### Minor Changes

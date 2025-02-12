@@ -5,8 +5,6 @@ import {
 import { post } from './Client';
 import { resolve as resolveUrl } from 'url';
 
-
-
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for openhim.
@@ -60,6 +58,7 @@ export function encounter(encounterData) {
 
 export {
   fn,
+  fnIf,
   field,
   fields,
   sourceValue,

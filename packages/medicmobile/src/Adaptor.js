@@ -199,6 +199,7 @@ export function pickFormData(formId) {
 
 export {
   fn,
+  fnIf,
   alterState,
   dataPath,
   dataValue,

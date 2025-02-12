@@ -60,7 +60,6 @@ describe('post', () => {
         body: { a: 1 },
       })
     )(state).then(state => {
-      console.log(state);
       let status = state.data.status;
       let responseBody = state.data.data;
       // Check that the post made it's way to the request as a string.

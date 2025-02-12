@@ -1,5 +1,213 @@
 # @openfn/language-commcare
 
+## 3.2.9
+
+### Patch Changes
+
+- 3b166c9: Update commcare request docs to read query parameters instead of
+  options, and fix the empty body response received when specific requests are
+  made.
+
+## 3.2.8
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
+## 3.2.7
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
+## 3.2.6
+
+### Patch Changes
+
+- Updated dependencies [a47d8d5]
+- Updated dependencies [9240428]
+  - @openfn/language-common@2.2.0
+
+## 3.2.5
+
+### Patch Changes
+
+- 2fc7d82: Update example docs and configuration
+
+## 3.2.4
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
+## 3.2.3
+
+### Patch Changes
+
+- Updated dependencies [03a1a74]
+  - @openfn/language-common@2.1.0
+
+## 3.2.2
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
+## 3.2.1
+
+### Patch Changes
+
+- 8d85bb4: Implement resolved body and resolved params in bulk
+
+## 3.2.0
+
+### Minor Changes
+
+- c800948: Implement a generic request funciton for generic HTTP calls
+- cff886e: Implement bulk function for lookup-table and case-data bulk uploads
+
+## 3.1.2
+
+### Patch Changes
+
+- Updated dependencies [77a690f]
+  - @openfn/language-common@2.0.2
+
+## 3.1.1
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
+## 3.1.0
+
+### Minor Changes
+
+- Add `cursor()` function from common
+- Add `dateFns` helper from common
+
+### Patch Changes
+
+- 90d74c7: Revise documentation
+
+## 3.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
+## 2.3.2
+
+### Patch Changes
+
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
+## 2.3.1
+
+### Patch Changes
+
+- Updated dependencies [4c08444]
+- Updated dependencies [73d0a02]
+  - @openfn/language-common@1.15.1
+
+## 2.3.0
+
+### Minor Changes
+
+- ac4b4a0: `get()` will now automatically paginate responses (unless an offset
+  is passed)
+
+## 2.2.1
+
+### Patch Changes
+
+- Updated dependencies [5fb82f07]
+  - @openfn/language-common@1.15.0
+
+## 2.2.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
+## 2.1.0
+
+### Minor Changes
+
+- 0719de00: Implement better error handling and make post a public function
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.5
+
+## 2.0.0
+
+Rebase the commcare adaptor on the new HTTP helpers.
+
+### Major Changes
+
+- Remove superagents and language-http dependencies
+- configuration schema: change applicationName to domain to match commcare's
+  configuration.
+- remove the `clientPost` function
+
+### Minor Changes
+
+- Implemented a get function for all get requests in commcare
+- Create a generic post function that allows for posting JSON data
+- Standardize auth to use either basic or APIKey across all operations
+- configuration schema: add apiKey
+- configuration schema: demote username and appId are optional
+
+### Patch Changes
+
+- Updated dependencies [12f02ed5]
+  - @openfn/language-common@1.13.4
+
+## 1.6.14
+
+### Patch Changes
+
+- Updated dependencies [88f99a8f]
+  - @openfn/language-common@1.13.3
+
+## 1.6.13
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
+## 1.6.12
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.1
+
+## 1.6.11
+
+### Patch Changes
+
+- Updated dependencies [1ad86651]
+  - @openfn/language-common@1.13.0
+
 ## 1.6.10
 
 ### Patch Changes

@@ -1,21 +1,23 @@
 {
   "name": "@openfn/language-salesforce",
-  "version": "4.6.0",
-  "description": "Salesforce Language Pack for OpenFn",
+  "version": "5.0.4",
+  "description": "OpenFn Salesforce adaptor",
   "homepage": "https://docs.openfn.org",
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
     "build": "pnpm clean && build-adaptor salesforce",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings --recursive",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --recursive",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings --exclude test/integration.js --recursive",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --exclude test/integration.js --recursive",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
+    "test:integration": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.js",
     "lint": "eslint src"
   },
   "author": "Open Function Group",
@@ -33,7 +35,6 @@
   "dependencies": {
     "@openfn/language-common": "workspace:*",
     "any-ascii": "^0.3.2",
-    "axios": "^0.21.4",
     "jsforce": "^1.11.1",
     "lodash": "^4.17.21"
   },
@@ -43,7 +44,6 @@
     "deep-eql": "4.1.1",
     "esno": "^0.16.3",
     "jsonpath": "^1.1.1",
-    "mocha": "7.2.0",
     "nock": "13.2.9",
     "rimraf": "3.0.2",
     "sinon": "^14.0.2",

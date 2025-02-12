@@ -5,7 +5,7 @@
             "title": "Domain Name",
             "type": "string",
             "description": "Mailgun API Domain Name",
-            "format": "hostname",
+            "format": "string",
             "minLength": 1,
             "examples": [
                 "sandbox-123.mailgun.org"

@@ -1,5 +1,147 @@
 # @openfn/language-dynamics
 
+## 0.5.12
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
+## 0.5.11
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
+## 0.5.10
+
+### Patch Changes
+
+- Updated dependencies [a47d8d5]
+- Updated dependencies [9240428]
+  - @openfn/language-common@2.2.0
+
+## 0.5.9
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
+## 0.5.8
+
+### Patch Changes
+
+- Updated dependencies [03a1a74]
+  - @openfn/language-common@2.1.0
+
+## 0.5.7
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
+## 0.5.6
+
+### Patch Changes
+
+- 8d866e4: Update tough-cookie dependency
+
+## 0.5.5
+
+### Patch Changes
+
+- Updated dependencies [77a690f]
+  - @openfn/language-common@2.0.2
+
+## 0.5.4
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
+## 0.5.3
+
+### Patch Changes
+
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
+## 0.5.2
+
+### Patch Changes
+
+- Updated dependencies [4c08444]
+- Updated dependencies [73d0a02]
+  - @openfn/language-common@1.15.1
+
+## 0.5.1
+
+### Patch Changes
+
+- Updated dependencies [5fb82f07]
+  - @openfn/language-common@1.15.0
+
+## 0.5.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
+## 0.4.14
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.5
+
+## 0.4.13
+
+### Patch Changes
+
+- Updated dependencies [12f02ed5]
+  - @openfn/language-common@1.13.4
+
+## 0.4.12
+
+### Patch Changes
+
+- Updated dependencies [88f99a8f]
+  - @openfn/language-common@1.13.3
+
+## 0.4.11
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
+## 0.4.10
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.1
+
+## 0.4.9
+
+### Patch Changes
+
+- Updated dependencies [1ad86651]
+  - @openfn/language-common@1.13.0
+
 ## 0.4.8
 
 ### Patch Changes

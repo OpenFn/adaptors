@@ -1,5 +1,181 @@
 # @openfn/language-mssql
 
+## 5.0.10
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
+## 5.0.9
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
+## 5.0.8
+
+### Patch Changes
+
+- de03bea: Update tedious to 1.18.0. This should have no impact on the adaptor,
+  but note this version will only run in node versions 18.x and 20+ (this should
+  be fully compatible with all `@openfn/cli` and `@openfn/ws-worker` releases)
+- Updated dependencies [a47d8d5]
+- Updated dependencies [9240428]
+  - @openfn/language-common@2.2.0
+
+## 5.0.7
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
+## 5.0.7
+
+### Patch Changes
+
+- Updated dependencies [03a1a74]
+  - @openfn/language-common@2.1.0
+
+## 5.0.6
+
+### Patch Changes
+
+- d8d84d3: improve logging error message
+
+## 5.0.5
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
+## 5.0.4
+
+### Patch Changes
+
+- d3ac969: use reject instead of throw
+
+## 5.0.3
+
+### Patch Changes
+
+- 6d38a48: Removed process.exit(1) to prevent workflow crashes on errors
+
+## 5.0.2
+
+### Patch Changes
+
+- Updated dependencies [77a690f]
+  - @openfn/language-common@2.0.2
+
+## 5.0.1
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
+## 5.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
+## 4.3.4
+
+### Patch Changes
+
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
+## 4.3.3
+
+### Patch Changes
+
+- Updated dependencies [4c08444]
+- Updated dependencies [73d0a02]
+  - @openfn/language-common@1.15.1
+
+## 4.3.2
+
+### Patch Changes
+
+- bb5436c: Add title and description for `port` configuration
+
+## 4.3.1
+
+### Patch Changes
+
+- Updated dependencies [5fb82f07]
+  - @openfn/language-common@1.15.0
+
+## 4.3.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
+## 4.2.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.5
+
+## 4.2.3
+
+### Patch Changes
+
+- Updated dependencies [12f02ed5]
+  - @openfn/language-common@1.13.4
+
+## 4.2.2
+
+### Patch Changes
+
+- Updated dependencies [88f99a8f]
+  - @openfn/language-common@1.13.3
+
+## 4.2.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
+## 4.2.0
+
+### Minor Changes
+
+- 2964fc8d: - Add `cursor()` function
+  - Update `configuration-schema.json`
+
+## 4.1.10
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.1
+
+## 4.1.9
+
+### Patch Changes
+
+- Updated dependencies [1ad86651]
+  - @openfn/language-common@1.13.0
+
 ## 4.1.8
 
 ### Patch Changes

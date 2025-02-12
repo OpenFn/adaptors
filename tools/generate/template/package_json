@@ -1,11 +1,12 @@
 {
   "name": "@openfn/language-{{TEMPLATE}}",
   "version": "1.0.0",
-  "description": "The standard template for building OpenFn adaptors",
+  "description": "OpenFn {{TEMPLATE}} adaptor",
   "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
@@ -27,14 +28,14 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common":  "workspace:*"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "esno": "^0.16.3",
-    "mocha": "9.2.2",
+    "mocha": "^10.7.3",
     "rimraf": "3.0.2",
     "undici": "^5.22.1"
   },

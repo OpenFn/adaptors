@@ -1,19 +1,36 @@
-/**
- * If you have any helper functions which are NOT operations,
- * you should add them here
- */
-
+import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   makeBasicAuthHeader,
+  assertRelativeUrl,
 } from '@openfn/language-common/util';
+import nodepath from 'node:path';
+
+export const prepareNextState = (state, response) => {
+  const { body, ...responseWithoutBody } = response;
+
+  if (!state.references) {
+    state.references = [];
+  }
+
+  return {
+    ...composeNextState(state, response.body),
+    response: responseWithoutBody,
+  };
+};
 
 // This helper function will call out to the backend service
-// And add authorisation headers
-export const request = (state, method, path, data) => {
+// and add authorisation headers
+// Refer to the common request function for options and details
+export const request = (configuration = {}, method, path, options) => {
+  // You might want to check that the path is not an absolute URL before
+  // appending credentials commonRequest will do this for you if you
+  // pass a baseURL to it and you don't need to build a path here
+  // assertRelativeUrl(path);
+
   // TODO This example adds basic auth from config data
   //       you may need to support other auth strategies
-  const { baseUrl, username, password } = state.configuration;
+  const { baseUrl, username, password } = configuration;
   const headers = makeBasicAuthHeader(username, password);
 
   // TODO You can define custom error messages here
@@ -23,25 +40,29 @@ export const request = (state, method, path, data) => {
     404: 'Page not found',
   };
 
-  const options = {
-    // Append data to the request body
-    body: data,
-
-    // You can dd extra headers here if yout want to
-    headers: {
-      ...headers,
-      'content-type': 'application/json',
-    },
-
+  const opts = {
     // Force the response to be parsed as JSON
     parseAs: 'json',
 
     // Include the error map
     errors,
+
+    // Set the baseUrl from the config object
+    baseUrl,
+
+    ...options,
+
+    // You can add extra headers here if you want to
+    headers: {
+      'content-type': 'application/json',
+      ...headers,
+    },
   };
 
-  // Build the url base on the baseUrl in config and the path provided
-  const url = `${baseUrl}/api/${path}`;
+  // TODO you may want to add a prefix to the path
+  // use path.join to build the path safely
+  const safePath = nodepath.join(path);
+
   // Make the actual request
-  return commonRequest(method, url, options);
+  return commonRequest(method, safePath, opts);
 };

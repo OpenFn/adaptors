@@ -19,7 +19,11 @@ const isStream = value => {
 };
 
 function expandReference(state, value) {
-  if (Buffer.isBuffer(value)) {
+  if (
+    Buffer.isBuffer(value) ||
+    // Note: there is a weird identity thing in the VM where typeof RegExp will be false ¯\_(ツ)_/¯
+    value?.constructor?.name === 'RegExp'
+  ) {
     return value;
   }
 

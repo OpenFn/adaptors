@@ -1,11 +1,6 @@
-import {
-  execute as commonExecute,
-  expandReferences,
-} from '@openfn/language-common';
-import request from 'superagent';
-import { Log, handleError, handleResponse } from './Utils';
-
-let agent = null;
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
+import { request, prepareNextState } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -20,293 +15,172 @@ let agent = null;
  * @returns {Operation}
  */
 export function execute(...operations) {
-  agent = null;
-
   const initialState = {
     references: [],
     data: null,
   };
 
   return state => {
-    return commonExecute(login, ...operations)({ ...initialState, ...state });
+    return commonExecute(...operations)({ ...initialState, ...state });
   };
 }
 
 /**
- * Logs in to OpenMRS, gets a session token.
- * @example
- *  login(state)
- * @private
- * @param {State} state - Runtime state.
- * @returns {State}
- */
-async function login(state) {
-  const { instanceUrl, username, password } = state.configuration;
-  agent = request.agent();
-  await agent.get(`${instanceUrl}/ws/rest/v1/session`).auth(username, password);
-
-  return state;
-}
-
-/**
  * Gets patient matching a uuid
- * @example
- * getPatient("123")
  * @function
+ * @public
  * @param {string} uuid - A uuid for the patient
  * @param {function} [callback] - Optional callback to handle the response
  * @example <caption>Get a patient by uuid</caption>
  * getPatient('681f8785-c9ca-4dc8-a091-7b869316ff93')
  * @returns {Operation}
  */
-export function getPatient(uuid, callback = false) {
-  return state => {
-    Log.info(`Searching for patient with uuid: ${uuid}`);
-    const { instanceUrl } = state.configuration;
-    const defaultQuery = { v: 'full', limit: 1 };
-    const url = `${instanceUrl}/ws/rest/v1/patient/${uuid}`;
+export function getPatient(uuid, callback = s => s) {
+  return async state => {
+    const [resolvedUuid] = expandReferences(state, uuid);
+    console.log(`Fetching patient by uuid: ${resolvedUuid}`);
+    const { instanceUrl: baseUrl } = state.configuration;
 
-    return agent
-      .get(url)
-      .accept('json')
-      .query(defaultQuery)
-      .then(response => {
-        Log.success(`Found patient.`);
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/patient/${resolvedUuid}`,
+      {
+        baseUrl,
+      }
+    );
 
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
+    console.log(`Retrieved patient with uuid: ${resolvedUuid}...`);
+
+    return prepareNextState(state, response, callback);
   };
 }
 
 /**
- * Creates an encounter
- * @example <caption>Create an encounter</caption>
- * createEncounter({
- *   encounterDatetime: '2023-05-25T06:08:25.000+0000',
- *   patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',
- *   encounterType: 'dd528487-82a5-4082-9c72-ed246bd49591',
- *   location: 'ba685651-ed3b-4e63-9b35-78893060758a',
- *   encounterProviders: [],
- *   visit: {
- *     patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',
- *     visitType: '7b0f5697-27e3-40c4-8bae-f4049abfb4ed',
- *     startDatetime: '2023-05-25T06:08:25.000+0000',
- *     stopDatetime: '2023-05-25T06:09:25.000+0000',
- *   },
- * })
- * @function
- * @param {object} data - Data parameters of the encounter
- * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation}
- */
-export function createEncounter(data, callback = false) {
-  return state => {
-    const { instanceUrl } = state.configuration;
-    const body = expandReferences(data)(state);
-    const url = `${instanceUrl}/ws/rest/v1/encounter`;
-
-    Log.info(`Creating an encounter.`);
-
-    return agent
-      .post(url)
-      .type('json')
-      .send(body)
-      .then(response => {
-        Log.success(`Created an encounter.`);
-
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
-  };
-}
-
-/**
- * Make a get request to any OpenMRS endpoint
+ * Make a get request to any OpenMRS REST endpoint.
  * @example
  * get("patient", {
  *   q: "Patient",
  *   limit: 1,
  * });
  * @function
- * @param {string} path - Path to resource
+ * @public
+ * @param {string} path - Path to resource (excluding /ws/rest/v1/)
  * @param {object} query - parameters for the request
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function get(path, query, callback = false) {
-  return state => {
-    const { instanceUrl } = state.configuration;
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedQuery = expandReferences(query)(state);
-    const urlPath = `${instanceUrl}/ws/rest/v1/${resolvedPath}`;
+export function get(path, query, callback = s => s) {
+  return async state => {
+    const [resolvedPath, resolvedQuery = {}] = expandReferences(
+      state,
+      path,
+      query
+    );
+    const { instanceUrl: baseUrl } = state.configuration;
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/${resolvedPath}`,
+      {
+        baseUrl,
+        query: resolvedQuery,
+      }
+    );
 
-    return agent
-      .get(urlPath)
-      .query(resolvedQuery)
-      .then(response => handleResponse(response, state, callback))
-      .catch(handleError);
+    // TODO: later decide if we want to throw for no-results.
+    // (This could be introduced as an option for this function.)
+    // if (response.body.results.length == 0) {
+    //   throw `Get operation returned no results for ${resolvedResource}.`;
+    // }
+
+    return prepareNextState(state, response, callback);
   };
 }
 
 /**
- * Make a post request to any OpenMRS endpoint
+ * Make a post request to any OpenMRS rest endpoint
  * @example
  * post(
  *   "idgen/identifiersource/8549f706-7e85-4c1d-9424-217d50a2988b/identifier",
  *   {}
  * );
  * @function
- * @param {string} path - Path to resource
+ * @public
+ * @param {string} path - Path to resource (excluding /ws/rest/v1/)
  * @param {object} data - Object which defines data that will be used to create a given instance of resource
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function post(path, data, callback = false) {
-  return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedData = expandReferences(data)(state);
-    const { instanceUrl } = state.configuration;
+export function post(path, data, callback = s => s) {
+  return async state => {
+    const [resolvedPath, resolvedData] = expandReferences(state, path, data);
+    const { instanceUrl: baseUrl } = state.configuration;
+    const response = await request(
+      state,
+      'POST',
+      `/ws/rest/v1/${resolvedPath}`,
+      {
+        baseUrl,
+        data: resolvedData,
+      }
+    );
 
-    const urlPath = `${instanceUrl}/ws/rest/v1/${resolvedPath}`;
-
-    return agent
-      .post(urlPath)
-      .type('json')
-      .send(resolvedData)
-      .then(response => handleResponse(response, state, callback))
-      .catch(handleError);
+    return prepareNextState(state, response, callback);
   };
 }
 
 /**
  * Fetch all non-retired patients that match any specified parameters
  * @example
- * searchPatient({ q: Sarah })
+ * searchPatient({ q: "Sarah"})
  * @function
- * @param {object} query - Object with query for the patient
+ * @public
+ * @param {object} query - Object with query for the patient.
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function searchPatient(query, callback = false) {
-  return state => {
-    const qs = expandReferences(query)(state);
-    Log.info(`Searching for patient with name: ${qs.q}`);
-    const { instanceUrl } = state.configuration;
+export function searchPatient(query, callback = s => s) {
+  return async state => {
+    const [resolvedQuery] = expandReferences(state, query);
+    const { instanceUrl: baseUrl } = state.configuration;
 
-    const url = `${instanceUrl}/ws/rest/v1/patient`;
+    console.log('Searching for patient with query:', resolvedQuery);
 
-    return agent
-      .get(url)
-      .accept('json')
-      .query(qs)
-      .then(response => {
-        const data = response.body;
-        const count = data.results.length;
+    const response = await request(state, 'GET', '/ws/rest/v1/patient', {
+      baseUrl,
+      query: resolvedQuery,
+    });
 
-        if (count > 0) {
-          Log.success(
-            `Search successful. Returned ${count} patient${
-              count > 1 ? 's' : ''
-            }.`
-          );
-          return handleResponse(response, state, callback);
-        } else {
-          Log.warn(`${count} records were found.`);
-        }
-      })
-      .catch(handleError);
+    return prepareNextState(state, response, callback);
   };
 }
 
 /**
  * Fetch all non-retired persons that match any specified parameters
  * @example
- * searchPerson({ q: Sarah })
+ * searchPerson({ q: "Sarah" })
  * @function
+ * @public
  * @param {object} query - object with query for the person
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function searchPerson(query, callback = false) {
-  return state => {
-    const qs = expandReferences(query)(state);
-    Log.info(`Searching for person with name: ${qs.q}`);
+export function searchPerson(query, callback = s => s) {
+  return async state => {
+    const [resolvedQuery = {}] = expandReferences(state, query);
+    const { instanceUrl: baseUrl } = state.configuration;
 
-    const { instanceUrl } = state.configuration;
+    console.log(`Searching for person with query:`, resolvedQuery);
 
-    const url = `${instanceUrl}/ws/rest/v1/person`;
+    const response = await request(state, 'GET', '/ws/rest/v1/person', {
+      baseUrl,
+      query: resolvedQuery,
+    });
 
-    return agent
-      .get(url)
-      .accept('json')
-      .query(qs)
-      .then(response => {
-        const data = response.body;
-        const count = data.results.length;
+    console.log(`Found ${response.body.results.length} people`);
 
-        if (count > 0) {
-          Log.success(
-            `Search successful. Returned ${count} person${
-              count > 1 ? 's' : ''
-            }.`
-          );
-          return handleResponse(response, state, callback);
-        } else {
-          Log.warn(`${count} records were found.`);
-        }
-      })
-      .catch(handleError);
-  };
-}
-
-/**
- * Creates a new patient
- * @example
- * createPatient({
- *   identifiers: [
- *     {
- *       identifier: '4023287',
- *       identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',
- *       preferred: true,
- *     },
- *   ],
- *   person: {
- *     gender: 'M',
- *     age: 42,
- *     birthdate: '1970-01-01T00:00:00.000+0100',
- *     birthdateEstimated: false,
- *     names: [
- *       {
- *         givenName: 'Doe',
- *         familyName: 'John',
- *       },
- *     ],
- *   },
- * })
- * @function
- * @param {object} data - Object parameters of the patient
- * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation}
- */
-export function createPatient(data, callback = false) {
-  return state => {
-    const body = expandReferences(data)(state);
-    const { instanceUrl } = state.configuration;
-    const url = `${instanceUrl}/ws/rest/v1/patient`;
-
-    Log.info(`Creating a patient.`);
-
-    return agent
-      .post(url)
-      .type('json')
-      .send(body)
-      .then(response => {
-        Log.success(`Created a new patient.`);
-
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
+    return prepareNextState(state, response, callback);
   };
 }
 
@@ -315,56 +189,57 @@ export function createPatient(data, callback = false) {
  * @example
  * getEncounter("123")
  * @function
+ * @public
  * @param {object} uuid - A uuid for the encounter
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function getEncounter(uuid, callback = false) {
-  return state => {
-    Log.info(`Searching for encounter with uuid: ${uuid}`);
-    const { instanceUrl } = state.configuration;
+export function getEncounter(uuid, callback = s => s) {
+  return async state => {
+    const [resolvedUuid] = expandReferences(state, uuid);
+    console.log(`Fetching encounter with UUID: ${resolvedUuid}`);
+    const { instanceUrl: baseUrl } = state.configuration;
 
-    const url = `${instanceUrl}/ws/rest/v1/encounter/${uuid}`;
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/encounter/${resolvedUuid}`,
+      {
+        baseUrl,
+      }
+    );
 
-    return agent
-      .get(url)
-      .accept('json')
-      .then(response => {
-        Log.success(`Found an encounter.`);
+    console.log(
+      `Successfully retrieved for encounter with UUID: ${resolvedUuid}`
+    );
 
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
+    return prepareNextState(state, response, callback);
   };
 }
 
 /**
  * Gets encounters matching params
  * @example
- * getEncounters({patient: "123", fromdate: "2023-05-18"})
+ * getEncounters({ patient: "123", fromdate: "2023-05-18" })
  * @function
+ * @public
  * @param {object} query - Object for the patient
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  */
-export function getEncounters(query, callback = false) {
-  return state => {
-    const qs = expandReferences(query)(state);
-    const { instanceUrl } = state.configuration;
-    const url = `${instanceUrl}/ws/rest/v1/encounter`;
+export function getEncounters(query, callback = s => s) {
+  return async state => {
+    const [resolvedQuery] = expandReferences(state, query);
+    console.log('Fetching encounters by query', resolvedQuery);
+    const { instanceUrl: baseUrl } = state.configuration;
 
-    Log.info(`Searching for encounters: ${JSON.stringify(qs, null, 2)}`);
+    const response = await request(state, 'GET', `/ws/rest/v1/encounter/`, {
+      baseUrl,
+      query: resolvedQuery,
+    });
+    console.log(`Found ${response.body.results.length} results`);
 
-    return agent
-      .get(url)
-      .accept('json')
-      .query(qs)
-      .then(response => {
-        Log.success(`Found an encounter.`);
-
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
+    return prepareNextState(state, response, callback);
   };
 }
 
@@ -395,33 +270,66 @@ export function getEncounters(query, callback = false) {
  *     },
  *   ],
  * });
+ * @example <caption>Create an encounter</caption>
+ * create("encounter", {
+ *   encounterDatetime: '2023-05-25T06:08:25.000+0000',
+ *   patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',
+ *   encounterType: 'dd528487-82a5-4082-9c72-ed246bd49591',
+ *   location: 'ba685651-ed3b-4e63-9b35-78893060758a',
+ *   encounterProviders: [],
+ *   visit: {
+ *     patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',
+ *     visitType: '7b0f5697-27e3-40c4-8bae-f4049abfb4ed',
+ *     startDatetime: '2023-05-25T06:08:25.000+0000',
+ *     stopDatetime: '2023-05-25T06:09:25.000+0000',
+ *   },
+ * })
+ * @example <caption>Create a patient</caption>
+ * create("patient", {
+ *   identifiers: [
+ *     {
+ *       identifier: '4023287',
+ *       identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',
+ *       preferred: true,
+ *     },
+ *   ],
+ *   person: {
+ *     gender: 'M',
+ *     age: 42,
+ *     birthdate: '1970-01-01T00:00:00.000+0100',
+ *     birthdateEstimated: false,
+ *     names: [
+ *       {
+ *         givenName: 'Doe',
+ *         familyName: 'John',
+ *       },
+ *     ],
+ *   },
+ * })
  */
-export function create(resourceType, data, callback = false) {
-  return state => {
-    Log.info(`Preparing create operation...`);
+export function create(resourceType, data, callback = s => s) {
+  return async state => {
+    const [resolvedResource, resolvedData] = expandReferences(
+      state,
+      resourceType,
+      data
+    );
+    console.log('Preparing to create', resolvedResource);
+    const { instanceUrl: baseUrl } = state.configuration;
 
-    const resolvedData = expandReferences(data)(state);
-    const resolvedResourceType = expandReferences(resourceType)(state);
+    const response = await request(
+      state,
+      'POST',
+      `/ws/rest/v1/${resolvedResource}`,
+      {
+        baseUrl,
+        data: resolvedData,
+      }
+    );
 
-    const { instanceUrl } = state.configuration;
-    const url = `${instanceUrl}/ws/rest/v1/${resolvedResourceType}`;
+    console.log('Successfully created', resolvedResource);
 
-    return agent
-      .post(url)
-      .type('json')
-      .send(resolvedData)
-      .then(response => {
-        const details = `with response ${JSON.stringify(
-          response.body,
-          null,
-          2
-        )}`;
-
-        Log.success(`Created ${resolvedResourceType} ${details}`);
-
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
+    return prepareNextState(state, response, callback);
   };
 }
 
@@ -438,28 +346,30 @@ export function create(resourceType, data, callback = false) {
  * @example <caption>a person</caption>
  * update("person", '3cad37ad-984d-4c65-a019-3eb120c9c373',{"gender":"M","birthdate":"1997-01-13"})
  */
-export function update(resourceType, path, data, callback = false) {
-  return state => {
-    Log.info(`Preparing update operation...`);
+export function update(resourceType, path, data, callback = s => s) {
+  return async state => {
+    const [resolvedResource, resolvedPath, resolvedData] = expandReferences(
+      state,
+      resourceType,
+      path,
+      data
+    );
+    console.log('Preparing to update', resolvedResource);
+    const { instanceUrl: baseUrl } = state.configuration;
 
-    const { instanceUrl } = state.configuration;
+    const response = await request(
+      state,
+      'POST',
+      `/ws/rest/v1/${resolvedResource}/${resolvedPath}`,
+      {
+        baseUrl,
+        data: resolvedData,
+      }
+    );
 
-    const resolvedResourceType = expandReferences(resourceType)(state);
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedData = expandReferences(data)(state);
+    console.log('Successfully updated', resolvedResource);
 
-    const url = `${instanceUrl}/ws/rest/v1/${resolvedResourceType}/${resolvedPath}`;
-
-    return agent
-      .post(url)
-      .type('json')
-      .send(resolvedData)
-      .then(response => {
-        Log.success(`Updated ${resolvedResourceType} at ${resolvedPath}`);
-
-        return handleResponse(response, state, callback);
-      })
-      .catch(handleError);
+    return prepareNextState(state, response, callback);
   };
 }
 
@@ -499,42 +409,46 @@ export function upsert(
   resourceType, // resourceType supplied to both the `get` and the `create/update`
   query, // query supplied to the `get`
   data, // data supplied to the `create/update`
-  callback = false // callback for the upsert itself.
+  callback = s => s // callback for the upsert itself.
 ) {
-  return state => {
-    Log.info(`Preparing upsert via 'get' then 'create' OR 'update'...`);
+  return async state => {
+    const [resolvedResource, resolvedData, resolvedQuery = {}] =
+      expandReferences(state, resourceType, data, query);
 
-    return get(
-      resourceType,
-      query
-    )(state)
-      .then(resp => {
-        const resources = resp.data.body.results;
-        if (resources.length > 1) {
-          throw new RangeError(
-            `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
-          );
-        } else if (resources.length <= 0) {
-          return create(resourceType, data)(state);
-        } else {
-          // Pick out the first (and only) resource in the array and grab its
-          // ID to be used in the subsequent `update` by the path determined
-          const path = resources[0]['uuid'];
-          return update(resourceType, path, data)(state);
-        }
-      })
-      .then(result => {
-        Log.success(`Performed a "composed upsert" on ${resourceType}`);
-        return handleResponse(result, state, callback);
-      });
+    console.log(
+      "Preparing composed upsert (via 'get' then 'create' OR 'update') on",
+      resolvedResource
+    );
+    const { instanceUrl: baseUrl } = state.configuration;
+    return await request(state, 'GET', `/ws/rest/v1/${resolvedResource}`, {
+      baseUrl,
+      query: resolvedQuery,
+    }).then(resp => {
+      const resource = resp.body.results;
+      if (resource.length > 1) {
+        throw new RangeError(
+          `Found more than one record for your request; cannot upsert on non-unique attribute.`
+        );
+      } else if (resource.length === 0) {
+        console.log(`No ${resolvedResource} found.`);
+        return create(resolvedResource, resolvedData, callback)(state);
+      } else {
+        console.log(`One ${resolvedResource} found.`);
+        const path = resource[0]?.uuid;
+        return update(resolvedResource, path, resolvedData, callback)(state);
+      }
+    });
   };
 }
 
 export {
   alterState,
   fn,
+  fnIf,
   field,
   fields,
+  cursor,
+  dateFns,
   sourceValue,
   merge,
   dataPath,

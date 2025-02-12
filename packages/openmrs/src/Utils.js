@@ -1,44 +1,89 @@
 import { composeNextState } from '@openfn/language-common';
+import {
+  request as commonRequest,
+  makeBasicAuthHeader,
+  logResponse,
+} from '@openfn/language-common/util';
 
-export const Log = {
-  success: message => console.log(`✓ Success at ${new Date()}:\n∟ ${message}`),
-  warn: message => console.log(`⚠ Warning at ${new Date()}:\n∟ ${message}`),
-  error: message => console.log(`✗ Error at ${new Date()}:\n∟ ${message}`),
-  info: message => console.log(`ℹ Info at ${new Date()}:\n∟ ${message}`),
+export const prepareNextState = (state, response, callback = s => s) => {
+  const { body, ...responseWithoutBody } = response;
+  const nextState = {
+    ...composeNextState(state, response.body),
+    response: responseWithoutBody,
+  };
+
+  return callback(nextState);
 };
 
-export function handleError(error) {
-  if (error.response) {
-    const { method, path } = error.response.req;
-    const { status } = error.response;
-    if (Object.keys(error.response.body).length === 0) {
-      throw new Error(
-        `Server responded with:  \n${JSON.stringify(error.response, null, 2)}`
-      );
-    }
+export async function request(state, method, path, options = {}) {
+  const {
+    baseUrl = state.configuration.instanceUrl,
+    query = {},
+    data = {},
+    headers = { 'content-type': 'application/json' },
+    parseAs = 'json',
+  } = options;
 
-    const errorString = [
-      `Request: ${method} ${path}`,
-      `Got: ${status}`,
-      'Body:',
-      JSON.stringify(error.response.body, null, 2),
-    ].join('\n');
-
-    throw new Error(errorString);
-  } else {
-    throw error;
+  if (baseUrl.length <= 0) {
+    throw new Error(
+      'Invalid instanceUrl. Include instanceUrl in state.configuration'
+    );
   }
-}
 
-export function handleResponse(response, state, callback) {
-  const { body } = response;
-  const nextState = composeNextState(state, { body });
-  if (callback) return callback(nextState);
-  return nextState;
-}
+  const isAbsoluteUrl = /^(https?:|\/\/)/i.test(path);
+  if (isAbsoluteUrl) {
+    throw new Error(
+      `Invalid path argument: "${path}" appears to be an absolute URL. Please provide a relative path.`
+    );
+  }
 
-const isArray = variable => !!variable && variable.constructor === Array;
+  const { username, password } = state.configuration;
+  const authHeaders = makeBasicAuthHeader(username, password);
 
-export function nestArray(data, key) {
-  return isArray(data) ? { [key]: data } : data;
+  const opts = {
+    body: data,
+    headers: {
+      ...authHeaders,
+      ...headers,
+    },
+    query,
+    parseAs,
+  };
+
+  const url = `${baseUrl}${path}`;
+
+  let allResponses;
+  let queryParams = opts?.query;
+  let allowPagination = isNaN(queryParams?.startIndex);
+
+  do {
+    const requestOptions = queryParams ? { ...opts, query: queryParams } : opts;
+
+    const response = await commonRequest(method, url, requestOptions);
+    logResponse(response);
+
+    if (allResponses) {
+      allResponses.body.results.push(...response.body.results);
+    } else {
+      allResponses = response;
+    }
+    const nextUrl = response?.body?.links?.find(
+      link => link.rel === 'next'
+    )?.uri;
+
+    if (nextUrl) {
+      console.log(`Fetched ${response.body.results.length} results`);
+      console.log(`Fetching next page from ${nextUrl}`);
+      const urlObj = new URL(nextUrl);
+      const params = new URLSearchParams(urlObj.search);
+      const startIndex = params.get('startIndex');
+
+      queryParams = { ...queryParams, startIndex };
+    } else {
+      delete allResponses.body.links;
+      break;
+    }
+  } while (allowPagination);
+
+  return allResponses;
 }

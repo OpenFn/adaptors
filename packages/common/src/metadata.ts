@@ -1,5 +1,5 @@
 // Generic entity in a data model
-type Entity = {
+export type Entity = {
   name: string; // the value when inserted
   type: string; // domain-specific type string (eg OrgUnit, sObject)
 
@@ -18,4 +18,4 @@ type Entity = {
 // we need to map data types into a standard
 // SF's types are UI focused, like picklist, reference, id. They also have string and datetime
 // So we need to work out what htis list is
-type DataType = 'string' | 'boolean' | 'date';
+export type DataType = 'string' | 'boolean' | 'date';

@@ -1,69 +1,53 @@
-import { fetch } from 'undici';
+import nodepath from 'node:path';
+
 import { composeNextState } from '@openfn/language-common';
+import {
+  request as commonRequest,
+  logResponse,
+  makeBasicAuthHeader,
+  assertRelativeUrl,
+} from '@openfn/language-common/util';
 
-export function handleResponse(response, state, callback) {
-  const nextState = {
-    ...composeNextState(state, response),
-    response,
-  };
-  if (callback) return callback(nextState);
-  return nextState;
-}
+export function addAuth(configuration = {}, headers) {
+  if (headers.Authorization) return;
 
-export function handleResponseError(response, data, method) {
-  const { status, statusText, url } = response;
+  const { username, password, access_token } = configuration;
 
-  if (!response.ok) {
-    const errorString = [
-      `Message: ${statusText}`,
-      `Request: ${method} ${url}`,
-      `Status: ${status}`,
-      `Body: ${JSON.stringify(data, null, 2).replace(/\n/g, '\n\t  ')}`,
-    ].join('\n\t∟ ');
-    throw new Error(errorString);
+  if (access_token) {
+    Object.assign(headers, { Authorization: `Bearer ${access_token}` });
+  } else if (username && password) {
+    Object.assign(headers, makeBasicAuthHeader(username, password));
   }
 }
 
-/**
- * This is an asynchronous function that sends a request to a specified URL with optional parameters
- * and headers, and returns the response data in JSON format.
- * @param {string} url - The URL of the API endpoint that the request is being made to.
- * @param {object} [params] - An object containing any additional parameters to be sent with the request, such
- * as query parameters or request body data. It is an optional parameter and defaults to an empty
- * object if not provided.
- * @param {string} [method=GET] - The HTTP method to be used for the request. It defaults to 'GET' if not
- * specified.
- * @returns The `request` function is returning the parsed JSON data from the response of the HTTP
- * request made to the specified `url` with the given `params` and `method`. If there is an error in
- * the response, the function will throw an error.
- */
-export const request = async (urlString, params = {}, method = 'GET') => {
-  let url = urlString;
-  const defaultHeaders = { 'Content-Type': 'application/fhir+json' };
-  const { headers } = params;
-  const setHeaders = { ...headers, ...defaultHeaders };
+export const prepareNextState = (state, response, callback) => {
+  const { body, ...responseWithoutBody } = response;
 
-  delete params.headers;
+  return callback({
+    ...composeNextState(state, body),
+    response: responseWithoutBody,
+  });
+};
 
-  let options = {
-    method,
-    headers: setHeaders, // Add nonce for WP REST API
+export const request = (configuration, method, path, options = {}) => {
+  assertRelativeUrl(path);
+
+  const { baseUrl, apiPath } = configuration;
+  const { headers = {}, ...otherOptions } = options;
+  const fullPath = nodepath.join(apiPath ?? '', path);
+
+  addAuth(configuration, headers);
+
+  const opts = {
+    ...otherOptions,
+    headers: {
+      accept: 'application/fhir+json',
+      'content-type': 'application/fhir+json',
+      ...headers,
+    },
+    baseUrl,
+    parseAs: 'json',
   };
 
-  if ('GET' === method) {
-    url = `${urlString}?${new URLSearchParams(params).toString()}`;
-  } else {
-    options.body = JSON.stringify(params);
-  }
-
-  const response = await fetch(url, options);
-  const contentType = response.headers.get('Content-Type');
-
-  const data = contentType?.includes('application/fhir+json')
-    ? await response.json()
-    : await response.text();
-
-  handleResponseError(response, data, method);
-
-  return data;
+  return commonRequest(method, fullPath, opts).then(logResponse);
 };

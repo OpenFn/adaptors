@@ -64,16 +64,16 @@ async function login(state) {
  * @private
  * @param {Array} domain - input domain
  */
-const resolveDomain = (domain) => {
- for (const element of domain) {
-   if (!Array.isArray(element) && !['|', '&', '!'].includes(element)) {
-     return [domain];
-   }
- }
-return domain;
-}
+const resolveDomain = domain => {
+  for (const element of domain) {
+    if (!Array.isArray(element) && !['|', '&', '!'].includes(element)) {
+      return [domain];
+    }
+  }
+  return domain;
+};
 
-const resolveOptions = (options) => {
+const resolveOptions = options => {
   let res = {
     limit: 100,
     offset: 0,
@@ -85,7 +85,7 @@ const resolveOptions = (options) => {
     }
   }
   return res;
-}
+};
 
 /**
  * Create a brand new program membership for registrant.
@@ -140,7 +140,7 @@ async function createProgramMembership(spp_id, program_id) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getGroup(spp_id, callback=(s) => s) {
+export function getGroup(spp_id, callback = s => s) {
   return async state => {
     const defaultDomain = [
       ['is_registrant', '=', true],
@@ -186,7 +186,7 @@ export function getGroup(spp_id, callback=(s) => s) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getIndividual(spp_id, callback=(s) => s) {
+export function getIndividual(spp_id, callback = s => s) {
   return async state => {
     const defaultDomain = [
       ['is_registrant', '=', true],
@@ -235,7 +235,7 @@ export function getIndividual(spp_id, callback=(s) => s) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getGroupMembers(spp_id, options={}, callback=(s) => s) {
+export function getGroupMembers(spp_id, options = {}, callback = s => s) {
   return async state => {
     try {
       const group_id = await sppConnector.search('res.partner', [
@@ -267,9 +267,7 @@ export function getGroupMembers(spp_id, options={}, callback=(s) => s) {
         options
       );
       if (!members) {
-        console.log(
-          `⚠ Warning: Household ${spp_id} not having members!`
-        );
+        console.log(`⚠ Warning: Household ${spp_id} not having members!`);
         return state;
       }
       console.log(`ℹ Household ${spp_id} members found!`);
@@ -292,7 +290,7 @@ export function getGroupMembers(spp_id, options={}, callback=(s) => s) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getServicePoint(spp_id, callback=(s) => s) {
+export function getServicePoint(spp_id, callback = s => s) {
   return async state => {
     const defaultFields = [
       'name',
@@ -307,7 +305,7 @@ export function getServicePoint(spp_id, callback=(s) => s) {
       const agents = await sppConnector.searchRead(
         'spp.service.point',
         [['spp_id', '=', spp_id]],
-        defaultFields,
+        defaultFields
       );
       if (agents.length === 0) {
         console.log(`⚠ Warning: Agent ${spp_id} not found!`);
@@ -338,7 +336,7 @@ export function getServicePoint(spp_id, callback=(s) => s) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function searchGroup(domain, options={}, callback=(s) => s) {
+export function searchGroup(domain, options = {}, callback = s => s) {
   return async state => {
     const defaultDomain = [
       ['is_registrant', '=', true],
@@ -384,7 +382,7 @@ export function searchGroup(domain, options={}, callback=(s) => s) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function searchIndividual(domain, options={}, callback=(s) => s) {
+export function searchIndividual(domain, options = {}, callback = s => s) {
   return async state => {
     const defaultDomain = [
       ['is_registrant', '=', true],
@@ -425,7 +423,7 @@ export function searchIndividual(domain, options={}, callback=(s) => s) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getProgram(program_id, callback=(s) => s) {
+export function getProgram(program_id, callback = s => s) {
   return async state => {
     const defaultDomain = [['program_id', '=', program_id]];
     const defaultFields = [
@@ -468,7 +466,7 @@ export function getProgram(program_id, callback=(s) => s) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getPrograms(options={}, callback=(s) => s) {
+export function getPrograms(options = {}, callback = s => s) {
   return async state => {
     const defaultDomain = [];
     const defaultFields = ['name', 'program_id'];
@@ -504,7 +502,7 @@ export function getPrograms(options={}, callback=(s) => s) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getEnrolledPrograms(spp_id, callback=(s) => s) {
+export function getEnrolledPrograms(spp_id, callback = s => s) {
   return async state => {
     const defaultDomain = [['partner_id.spp_id', '=', spp_id]];
     const defaultFields = ['program_id'];
@@ -629,7 +627,7 @@ export function unenroll(spp_id, program_id) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function createIndividual(data, callback=(s) => s) {
+export function createIndividual(data, callback = s => s) {
   return async state => {
     try {
       if (!data.name) {
@@ -645,14 +643,16 @@ export function createIndividual(data, callback=(s) => s) {
         { limit: 1 }
       );
       const individualRegistrantId = res[0].spp_id;
-      console.log(`ℹ Individual created with registrant ID: ${individualRegistrantId}`);
+      console.log(
+        `ℹ Individual created with registrant ID: ${individualRegistrantId}`
+      );
       const nextState = composeNextState(state, individualRegistrantId);
       return callback(nextState);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
       return state;
     }
-  }
+  };
 }
 
 /**
@@ -665,7 +665,7 @@ export function createIndividual(data, callback=(s) => s) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function createGroup(data, callback=(s) => s) {
+export function createGroup(data, callback = s => s) {
   return async state => {
     try {
       if (!data.name) {
@@ -688,7 +688,7 @@ export function createGroup(data, callback=(s) => s) {
       console.log(`✗ Error: ${err}`);
       return state;
     }
-  }
+  };
 }
 
 /**
@@ -712,24 +712,22 @@ export function updateGroup(group_id, data) {
           ['is_group', '=', true],
         ],
         ['id'],
-        { limit: 1, order: 'id desc' },
+        { limit: 1, order: 'id desc' }
       );
       if (res.length === 0) {
-        throw new Error(`Group with registrant id: ${group_id} does not exists!`);
+        throw new Error(
+          `Group with registrant id: ${group_id} does not exists!`
+        );
       }
       const groupId = res[0].id;
-      await sppConnector.update(
-        'res.partner',
-        groupId,
-        data
-      );
+      await sppConnector.update('res.partner', groupId, data);
       console.log(`ℹ Group ${group_id} updated!`);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
     } finally {
       return state;
     }
-  }
+  };
 }
 
 /**
@@ -756,24 +754,22 @@ export function updateIndividual(individual_id, data) {
           ['is_group', '=', false],
         ],
         ['id'],
-        { limit: 1, order: 'id desc' },
+        { limit: 1, order: 'id desc' }
       );
       if (res.length === 0) {
-        throw new Error(`Individual with registrant id: ${individual_id} does not exists!`);
+        throw new Error(
+          `Individual with registrant id: ${individual_id} does not exists!`
+        );
       }
       const individualId = res[0].id;
-      await sppConnector.update(
-        'res.partner',
-        individualId,
-        data
-      );
+      await sppConnector.update('res.partner', individualId, data);
       console.log(`ℹ Individual ${individual_id} updated!`);
     } catch (err) {
       console.log(`✗ Error: ${err}`);
     } finally {
       return state;
     }
-  }
+  };
 }
 
 /**
@@ -791,20 +787,20 @@ export function updateIndividual(individual_id, data) {
  * @param {string} role - individual role in group
  * @returns {Operation}
  */
-export function addToGroup(group_id, individual_id, role='') {
+export function addToGroup(group_id, individual_id, role = '') {
   return async state => {
     try {
       let roleId = [];
       if (role.length > 0) {
-        roleId = await sppConnector.search(
-          'g2p.group.membership.kind',
-          [['name', '=', role]]
-        );
+        roleId = await sppConnector.search('g2p.group.membership.kind', [
+          ['name', '=', role],
+        ]);
         if (roleId.length === 0) {
-          roleId = [await sppConnector.create(
-            'g2p.group.membership.kind',
-            { name: role }
-          )];
+          roleId = [
+            await sppConnector.create('g2p.group.membership.kind', {
+              name: role,
+            }),
+          ];
         }
       }
       const res = await sppConnector.searchRead(
@@ -815,7 +811,7 @@ export function addToGroup(group_id, individual_id, role='') {
           ['is_ended', '=', false],
         ],
         ['id', 'kind'],
-        { limit: 1 },
+        { limit: 1 }
       );
       if (res.length === 0) {
         const individual = await sppConnector.searchRead(
@@ -826,7 +822,7 @@ export function addToGroup(group_id, individual_id, role='') {
             ['is_group', '=', false],
           ],
           ['id'],
-          { limit: 1 },
+          { limit: 1 }
         );
         const group = await sppConnector.searchRead(
           'res.partner',
@@ -836,38 +832,37 @@ export function addToGroup(group_id, individual_id, role='') {
             ['is_group', '=', true],
           ],
           ['id'],
-          { limit: 1 },
+          { limit: 1 }
         );
         if (individual.length === 0 || group.length === 0) {
           throw new Error(`Individual or Group does not exist!`);
         }
-        await sppConnector.create(
-          'g2p.group.membership',
-          {
-            individual: individual[0].id,
-            group: group[0].id,
-            kind: [[6, 0, roleId]],
-          }
-        );
+        await sppConnector.create('g2p.group.membership', {
+          individual: individual[0].id,
+          group: group[0].id,
+          kind: [[6, 0, roleId]],
+        });
       } else {
-        const groupMembershipIds = res.map( i => i.id );
-        await sppConnector.update(
-          'g2p.group.membership',
-          groupMembershipIds,
-          { kind: [[6, 0, roleId]] },
-        );
+        const groupMembershipIds = res.map(i => i.id);
+        await sppConnector.update('g2p.group.membership', groupMembershipIds, {
+          kind: [[6, 0, roleId]],
+        });
       }
       if (role.length > 0) {
-        console.log(`ℹ Individual ${individual_id} added to group ${group_id} with role ${role}!`);
+        console.log(
+          `ℹ Individual ${individual_id} added to group ${group_id} with role ${role}!`
+        );
       } else {
-        console.log(`ℹ Individual ${individual_id} added to group ${group_id}!`);
+        console.log(
+          `ℹ Individual ${individual_id} added to group ${group_id}!`
+        );
       }
     } catch (err) {
       console.log(`✗ Error: ${err}`);
     } finally {
       return state;
     }
-  }
+  };
 }
 
 /**
@@ -890,25 +885,25 @@ export function removeFromGroup(group_id, individual_id) {
           ['individual.spp_id', '=', individual_id],
           ['is_ended', '=', false],
         ],
-        ['id'],
+        ['id']
       );
       if (res.length > 0) {
-        const groupMembershipIds = res.map( i => i.id );
+        const groupMembershipIds = res.map(i => i.id);
         const now = new Date();
         const sppDateTimeNowString = dateFns.format(now, 'y-M-d HH:mm:ss');
-        await sppConnector.update(
-          'g2p.group.membership',
-          groupMembershipIds,
-          { ended_date: sppDateTimeNowString }
-        );
+        await sppConnector.update('g2p.group.membership', groupMembershipIds, {
+          ended_date: sppDateTimeNowString,
+        });
       }
-      console.log(`ℹ Individual ${individual_id} membership to group ${group_id} is ended!`);
+      console.log(
+        `ℹ Individual ${individual_id} membership to group ${group_id} is ended!`
+      );
     } catch (err) {
       console.log(`✗ Error: ${err}`);
     } finally {
       return state;
     }
-  }
+  };
 }
 
 /**
@@ -924,11 +919,11 @@ export function removeFromGroup(group_id, individual_id) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function searchServicePoint(domain, options={}, callback=(s) => s) {
+export function searchServicePoint(domain, options = {}, callback = s => s) {
   return async state => {
     try {
       domain = resolveDomain(domain);
-        let servicePoints = await sppConnector.searchRead(
+      let servicePoints = await sppConnector.searchRead(
         'spp.service.point',
         domain,
         [
@@ -940,14 +935,16 @@ export function searchServicePoint(domain, options={}, callback=(s) => s) {
           'is_contract_active',
           'is_disabled',
         ],
-        resolveOptions(options),
+        resolveOptions(options)
       );
       for (let servicePoint of servicePoints) {
         servicePoint.program_ids = servicePoint.program_id;
         delete servicePoint.program_id;
       }
       if (servicePoints.length === 0) {
-        console.log(`⚠ Warning: Service point with domain=${domain} not found!`);
+        console.log(
+          `⚠ Warning: Service point with domain=${domain} not found!`
+        );
         return state;
       }
       console.log(`ℹ Service point with domain=${domain} found!`);
@@ -957,7 +954,7 @@ export function searchServicePoint(domain, options={}, callback=(s) => s) {
       console.log(`✗ Error: ${err}`);
       return state;
     }
-  }
+  };
 }
 
 /**
@@ -970,20 +967,13 @@ export function searchServicePoint(domain, options={}, callback=(s) => s) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function getArea(spp_id, callback=(s) => s) {
+export function getArea(spp_id, callback = s => s) {
   return async state => {
     try {
       const area = await sppConnector.searchRead(
         'spp.area',
         [['spp_id', '=', spp_id]],
-        [
-          'parent_id',
-          'name',
-          'code',
-          'altnames',
-          'area_level',
-          'kind'
-        ],
+        ['parent_id', 'name', 'code', 'altnames', 'area_level', 'kind']
       );
       if (area.length === 0) {
         console.log(`⚠ Warning: Area ${spp_id} not found!`);
@@ -996,7 +986,7 @@ export function getArea(spp_id, callback=(s) => s) {
       console.log(`✗ Error: ${err}`);
       return state;
     }
-  }
+  };
 }
 
 /**
@@ -1012,22 +1002,15 @@ export function getArea(spp_id, callback=(s) => s) {
  * @param {function} callback - An optional callback function
  * @returns {Operation}
  */
-export function searchArea(domain, options={}, callback=(s) => s) {
+export function searchArea(domain, options = {}, callback = s => s) {
   return async state => {
     try {
       domain = resolveDomain(domain);
-        const areas = await sppConnector.searchRead(
+      const areas = await sppConnector.searchRead(
         'spp.area',
         domain,
-        [
-          'parent_id',
-          'name',
-          'code',
-          'altnames',
-          'area_level',
-          'kind'
-        ],
-        resolveOptions(options),
+        ['parent_id', 'name', 'code', 'altnames', 'area_level', 'kind'],
+        resolveOptions(options)
       );
       if (areas.length === 0) {
         console.log(`⚠ Warning: Area with domain=${domain} not found!`);
@@ -1040,7 +1023,7 @@ export function searchArea(domain, options={}, callback=(s) => s) {
       console.log(`✗ Error: ${err}`);
       return state;
     }
-  }
+  };
 }
 
 export {
@@ -1051,6 +1034,7 @@ export {
   field,
   fields,
   fn,
+  fnIf,
   http,
   lastReferenceValue,
   merge,

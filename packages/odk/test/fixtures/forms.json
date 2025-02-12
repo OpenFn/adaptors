@@ -1,0 +1,19 @@
+[
+  {
+    "projectId": 66,
+    "xmlFormId": "integration_test",
+    "state": "open",
+    "enketoId": "N0B5FIwrwlmiPwCD4Q7XCs3fNhkXooz",
+    "enketoOnceId": "90922c4cb86fe7e67bfffa56afd55f6a8b9108533c63bcb288923f0be5f36b3f",
+    "createdAt": "2024-04-25T18:42:50.367Z",
+    "updatedAt": "2024-04-25T18:42:53.338Z",
+    "keyId": null,
+    "version": "2023120100",
+    "hash": "658c5a3d42cddc76693448133ec1e5f4",
+    "sha": "95890b40ec709d6181b1bb2cf880764ec284235f",
+    "sha256": "7ea24514bcb4df2a5a5e6092fce1216eb7af74b9dfacb9803dfcbd55b15252a9",
+    "draftToken": null,
+    "publishedAt": "2024-04-25T18:42:53.336Z",
+    "name": "Integration Test Form"
+  }
+]

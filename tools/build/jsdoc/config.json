@@ -1,0 +1,3 @@
+{
+  "plugins": ["../../tools/build/jsdoc/custom-tags.cjs"]
+}

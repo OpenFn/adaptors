@@ -1,7 +1,7 @@
 # Language OpenMRS
 
 Language Pack for building expressions and operations for working with the
-[OpenMRS API](https://wiki.openmrs.org/display/docs/API).
+[OpenMRS Rest API](https://rest.openmrs.org/?javascript#openmrs-rest-api)
 
 [OpenMRS Data Model Explorer](http://burkeware.com/openmrs-data-model/openmrs-data-model-1.11.html#)
 
@@ -58,32 +58,16 @@ createEncounter({
 ### Make a request to any OpenMRS endpoint
 
 ```js
-req({ method: 'GET', url: '/ws/rest/v1/concept' }, state => {
+get('/ws/rest/v1/patient', { q: 'mohammed' }, state => {
   console.log(JSON.stringify(state, null, 2));
   return state;
 });
 ```
 
-<!-- ## Create new person
-
-```js
-person(
-  fields(
-    field("gender", "M"),
-    field("names", function(state) {
-      return [{
-        "givenName": dataValue("form.first_name")(state),
-        "familyName": dataValue("form.last_name")(state)
-      }]
-    })
-  )
-)
-```-->
-
 ## Create new patient
 
 ```js
-patient(
+createPatient(
   fields(
     field('gender', 'M'),
     field('names', function (state) {

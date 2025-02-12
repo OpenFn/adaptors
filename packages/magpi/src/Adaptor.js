@@ -186,6 +186,7 @@ export function submitRecord(jsonData) {
 
 export {
   fn,
+  fnIf,
   alterState,
   field,
   fields,

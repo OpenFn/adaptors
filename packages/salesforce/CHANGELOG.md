@@ -1,5 +1,293 @@
 # @openfn/language-salesforce
 
+## 5.0.4
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
+## 5.0.3
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
+## 5.0.2
+
+Major modernization of the Salesforce adaptor, focusing on standardized state
+handling (ie,`state.data` over on `state.references`) and a cleaner API.
+
+This version introduces multiple breaking changes and workflows WILL require
+changes to be compatible - see the Migration Guide.
+
+### Migration Guide
+
+- Operations now "return" their results to `state.data`. Use `state.data`
+  instead of `state.references`. For example:
+
+```js
+❌  retrieve('Patient__c', $.patientId);
+    fn((state) => {
+      state.patients = state.references.at(-1)
+      return state
+    });
+
+✅  retrieve('Patient__c', $.patientId);
+    fn((state) => {
+      state.patients = state.data;
+      return state
+    });
+```
+
+- All callback functions have been removed. Use `fn()` blocks or `.then()`
+  functions instead. For example:
+
+```js
+❌  query($.query, {}, (state) => {
+      state.patients = state.references.at(-1)
+      return state
+    });
+
+✅  query($.query).then((state) => {
+      state.patients = state.data;
+      return state
+    });
+
+✅  query($.query)
+    fn((state) => {
+     state.patients = state.data
+     return state
+    });
+```
+
+- The `axios` object has been removed. For HTTP requests outside salesforce, use
+  a different step with the http adaptor
+- Replace `describeAll()` with `describe()`.
+- Replace `upsertIf(...)` with `fnIf(true, upsert(...))`
+- Replace `createIf(...)` with `fnIf(true, create(...))`
+- Replace `toUTF8(...)` with `util.UTF8(...)`
+- The `bulk()` signature has been re-ordered: replace
+  `bulk(operation, sObject, options, records)` with
+  `bulk(operation, sObjectName, records, options)`
+
+### Major Changes
+
+- 59721be: New API design for salesforce, including use of `composeNextState`
+  and removing old code.
+- Remove `axios` dependency
+- Remove old/unused functions. `relationship`, `upsertIf`, `createIf`,
+  `reference`, `steps`, `beta`, `describeAll()`
+- Standardize state mutation in all operations
+- Change `bulk` signature to `bulk(operation, sObjectName, records, options)`
+- Remove callback support
+- a2cf9c7: Move `toUTF8()` to `util.UTF8()`. `toUTF8` is not an operation and
+  cannot be called at the top level. Moving into the utils namespace should help
+  make the usage of the function a little clearer
+- ca09ade: - Restructured response format for `bulk`, `create`,`update` and
+  `destroy` functions into standardized result structure:
+  ```
+  {
+    success: boolean,
+    completed: [id],
+    errors: [{ id message }],
+  }
+  ```
+- b1227a2: - add `query` option in `request` function
+
+### Minor Changes
+
+- b4a9c42: - Create `get()` and `post()` functions for all http requests against
+  Salesforce
+- Update `describe()` to fetch all available sObjects metadata
+- update function examples and improve options documentation
+- Enforce that `upsert`, `create` and `update` do not accept dot-notated
+  relationships. Relationships should be nested instead. Eg, do this:
+  ```
+  create('Project', {
+   "Project__r": {
+     "Metrics_ID__c": "value"
+   }
+  })
+  ```
+  Not this:
+  ```
+  create('Project', {
+   "Project__r.Metrics_ID__c": "value"
+  })
+  ```
+- Add support for nested relationships in `bulk` (the adaptor will flatten them
+  to dot-notation for you)
+
+### Patch Changes
+
+- b4a9c42: - Change internal `cleanupState` to `removeConnection` and tagged it
+  as private function
+  - Rename `attrs` to `records` in docs
+- Update `@openfn/language-common` to `workspace:*`
+- Add integration tests
+
+Note: due to a conflict in the npm registry this 5.0.0 build has been released
+with version number 5.0.2.
+
+## 4.8.6
+
+### Patch Changes
+
+- Security fix: update jsonpath-plus version
+
+## 4.8.5
+
+### Patch Changes
+
+- 3fd13c2: Update axios to 1.7.7
+
+## 4.8.4
+
+### Patch Changes
+
+- 8d866e4: Update tough-cookie dependency
+
+## 4.8.3
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
+## 4.8.2
+
+### Patch Changes
+
+- ce08e7f: Fix `autoFetch` behaviour in `query()` function. All records are
+  merged into a single `records` array, and pushed to `[0]` in
+  `state.references`.
+
+  For jobs which use `references[0][0]` to read query results, this is a
+  breaking fix.
+
+## 4.8.1
+
+### Patch Changes
+
+- Updated dependencies [4c08444]
+- Updated dependencies [73d0a02]
+  - @openfn/language-common@1.15.1
+
+## 4.8.0
+
+### Minor Changes
+
+- 5fb82f07: Export `group` operation from common
+- b5e0c266: ### Added
+
+  - `insert()` function as an alias for `create()`.
+
+  ### Improved
+
+  - JSDocs for `query`, `bulk`, `describe`, `create`, and `upsert`.
+
+  ### Deprecated
+
+  - `upsertIf()` and `createIf()` functions are now deprecated. Use
+    `fnIf(condition, upsert())` instead.
+
+### Patch Changes
+
+- Updated dependencies [5fb82f07]
+  - @openfn/language-common@1.15.0
+
+## 4.7.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
+## 4.6.11
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.5
+
+## 4.6.10
+
+### Patch Changes
+
+- 90f44c62: Include the Salesforce query response in the result, even if no
+  records are found.
+
+## 4.6.9
+
+### Patch Changes
+
+- Fix any-ascii load and add more tests
+
+## 4.6.8
+
+### Patch Changes
+
+- Properly ensure any-ascii is loaded before executing, resolving a critical
+  race that we are losing in production
+
+## 4.6.7
+
+### Patch Changes
+
+- 332225ec: - Set default API version to `47.0`
+  - In `bulkQuery` throw errors if API version is less than `47.0`
+  - Update `bulkQuery` jsdocs with a link to `Bulk API 2.0 Query`
+
+## 4.6.6
+
+### Patch Changes
+
+- Updated dependencies [12f02ed5]
+  - @openfn/language-common@1.13.4
+
+## 4.6.5
+
+### Patch Changes
+
+- b1c915b0: Add documentation about Salesforce API limits to query and bulkQuery
+
+## 4.6.4
+
+### Patch Changes
+
+- Updated dependencies [88f99a8f]
+  - @openfn/language-common@1.13.3
+
+## 4.6.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
+## 4.6.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@1.13.1
+
+## 4.6.1
+
+### Patch Changes
+
+- Updated dependencies [1ad86651]
+  - @openfn/language-common@1.13.0
+
 ## 4.6.0
 
 ### Minor Changes

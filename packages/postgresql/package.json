@@ -1,11 +1,12 @@
 {
   "name": "@openfn/language-postgresql",
-  "version": "4.1.8",
+  "version": "6.0.8",
   "description": "A PostgreSQL Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
@@ -31,18 +32,15 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.12.0",
+    "@openfn/language-common": "workspace:*",
     "pg": "^8.3.2",
     "pg-format": "^1.0.4"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "esno": "^0.16.3",
-    "mocha": "7.2.0",
     "nock": "12.0.3",
     "rimraf": "3.0.2"
   },

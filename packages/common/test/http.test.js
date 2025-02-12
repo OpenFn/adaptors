@@ -1,281 +1,265 @@
-import nock from 'nock';
-import { expect } from 'chai';
-import { http } from '../src/Adaptor';
+import { expect, assert } from 'chai';
+import { request, get, post, options } from '../src/http';
+import { assertRelativeUrl, enableMockClient } from '../src/util/http';
 
-describe('post', () => {
-  before(() => {
-    const fakeServer = nock('https://www.example.com');
-
-    fakeServer.post('/api/fake').reply(200, {
-      httpStatus: 'OK',
-    });
-
-    fakeServer
-      .post('/api/fake?id=3', 'stringPayload')
-      .reply(200, function (uri, body) {
-        return [uri, body];
-      });
-  });
-
-  it('sends a post request', async () => {
-    const response = await http.post({
-      url: 'https://www.example.com/api/fake',
-    })();
-
-    expect(Object.keys(response)).to.eql(
-      ['status', 'statusText', 'headers', 'config', 'request', 'data'],
-      'look like an axios response'
-    );
-
-    expect(response.status).to.eql(200);
-  });
-
-  it('expands all references', async () => {
-    const unresolvedValue = state => state.foo;
-    const unresolveId = state => state.id;
-
-    const initialState = { foo: 'stringPayload', id: 3 };
-
-    const response = await http.post({
-      url: 'https://www.example.com/api/fake',
-      data: unresolvedValue,
-      params: { id: unresolveId },
-    })(initialState);
-
-    expect(response.status).to.eql(200);
-    expect(response.data).to.eql(['/api/fake?id=3', 'stringPayload']);
-  });
-});
-
-describe('delete', () => {
-  before(() => {
-    const fakeServer = nock('https://www.example.com');
-
-    fakeServer.delete('/api/items/5').reply(204, {});
-    fakeServer.delete('/api/items/6').reply(204, {});
-  });
-
-  it('sends a delete request', async () => {
-    const response = await http.delete({
-      url: 'https://www.example.com/api/items/5',
-    })();
-
-    expect(Object.keys(response)).to.eql(
-      ['status', 'statusText', 'headers', 'config', 'request', 'data'],
-      'look like an axios response'
-    );
-
-    expect(response.status).to.eql(204);
-    expect(response.data).to.eql({});
-  });
-
-  it('expands all references', async () => {
-    const initialState = { foo: 'stringPayload', id: 6 };
-
-    const response = await http.delete({
-      url: state => `https://www.example.com/api/items/${state.id}`,
-    })(initialState);
-
-    expect(response.status).to.eql(204);
-    expect(response.data).to.eql({});
-  });
-});
-
-describe('head', () => {
-  before(() => {
-    const fakeServer = nock('https://www.example.com');
-
-    fakeServer
-      .head('/api/items')
-      .reply(
-        200,
-        {},
-        { fakeHeader: 'fakeValue', 'content-type': 'application/json' }
-      );
-  });
-
-  it('sends a head request', async () => {
-    const response = await http.head({
-      url: 'https://www.example.com/api/items',
-    })();
-
-    expect(Object.keys(response)).to.eql(
-      ['status', 'statusText', 'headers', 'config', 'request', 'data'],
-      'look like an axios response'
-    );
-
-    expect(response.status).to.eql(200);
-    expect(response.data).to.eql({});
-    expect(response.headers).to.eql({
-      fakeheader: 'fakeValue',
-      'content-type': 'application/json',
-    });
-  });
-});
-
-describe('put', () => {
-  before(() => {
-    const fakeServer = nock('https://www.example.com');
-
-    fakeServer.put('/api/items/6').reply(200, { name: 'New name' });
-    fakeServer.put('/api/items/6').reply(200, { name: 'New name' });
-  });
-
-  it('sends a put request', async () => {
-    const response = await http.put({
-      url: 'https://www.example.com/api/items/6',
-      data: { name: 'New name' },
-    })();
-
-    expect(Object.keys(response)).to.eql(
-      ['status', 'statusText', 'headers', 'config', 'request', 'data'],
-      'look like an axios response'
-    );
-
-    expect(response.status).to.eql(200);
-    expect(response.data).to.eql({ name: 'New name' });
-  });
-
-  it('expands all references', async () => {
-    const initialState = { id: 6 };
-
-    const response = await http.put({
-      url: state => `https://www.example.com/api/items/${state.id}`,
-      data: { name: 'New name' },
-    })(initialState);
-
-    expect(response.status).to.eql(200);
-    expect(response.data).to.eql({ name: 'New name' });
-  });
-});
-
-describe('patch', () => {
-  before(() => {
-    const fakeServer = nock('https://www.example.com');
-
-    fakeServer.patch('/api/items/6').reply(200, { name: 'New name' });
-    fakeServer.patch('/api/items/6').reply(200, { name: 'New name' });
-  });
-
-  it('sends a patch request', async () => {
-    const response = await http.patch({
-      url: 'https://www.example.com/api/items/6',
-      data: { name: 'New name' },
-    })();
-
-    expect(Object.keys(response)).to.eql(
-      ['status', 'statusText', 'headers', 'config', 'request', 'data'],
-      'look like an axios response'
-    );
-
-    expect(response.status).to.eql(200);
-    expect(response.data).to.eql({ name: 'New name' });
-  });
-
-  it('expands all references', async () => {
-    const initialState = { id: 6 };
-
-    const response = await http.patch({
-      url: state => `https://www.example.com/api/items/${state.id}`,
-      data: { name: 'New name' },
-    })(initialState);
-
-    expect(response.status).to.eql(200);
-    expect(response.data).to.eql({ name: 'New name' });
-  });
-});
+const client = enableMockClient('https://a.com');
 
 describe('options', () => {
-  before(() => {
-    const fakeServer = nock('https://www.example.com');
-    fakeServer.options('/api/items').reply(
-      200,
-      {},
-      {
-        allow: 'OPTIONS, GET, HEAD, POST',
-        'content-type': 'application/json',
-      }
-    );
-    fakeServer.options('/api/items').reply(
-      200,
-      {},
-      {
-        allow: 'OPTIONS, GET, HEAD, POST',
-        'content-type': 'application/json',
-      }
-    );
+  it('should return an object', () => {
+    const opts = { a: 1, b: 2, c: 3 };
+
+    const result = options(opts);
+
+    expect(result).to.eql(opts);
   });
 
-  it('sends a options request', async () => {
-    const response = await http.options({
-      url: 'https://www.example.com/api/items',
-      data: {},
-    })();
+  it('should return a default object', () => {
+    const opts = {};
 
-    expect(Object.keys(response)).to.eql(
-      ['status', 'statusText', 'headers', 'config', 'request', 'data'],
-      'look like an axios response'
-    );
+    const result = options();
 
-    expect(response.status).to.eql(200);
-    expect(response.data).to.eql({});
-    expect(response.headers).to.eql({
-      allow: 'OPTIONS, GET, HEAD, POST',
-      'content-type': 'application/json',
+    expect(result).to.eql(opts);
+  });
+
+  it('should return an object with no keys', () => {
+    const result = options();
+
+    expect(Object.keys(result)).to.eql([]);
+  });
+
+  it('should return an object with no keys', () => {
+    const keys = [];
+    const result = options();
+    for (const key in result) {
+      keys.push(key);
+    }
+
+    expect(keys).to.eql([]);
+  });
+
+  it('should work with json()', () => {
+    const opts = { a: 1 };
+
+    const result = options(opts).json();
+    expect(result).to.eql({
+      a: 1,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  });
+
+  it('should not override existing headers with json()', () => {
+    const opts = { headers: { x: 1 } };
+
+    const result = options(opts).json();
+    expect(result).to.eql({
+      headers: {
+        x: 1,
+        'Content-Type': 'application/json',
+      },
+    });
+  });
+
+  it('should work with basic()', () => {
+    const opts = { a: 1 };
+
+    const result = options(opts).basic('u', 'p');
+
+    expect(result).to.eql({
+      a: 1,
+      headers: {
+        Authorization: 'Basic dTpw',
+      },
+    });
+  });
+
+  it('should work with oauth', () => {
+    const opts = { a: 1 };
+
+    const result = options(opts).oauth('abc');
+
+    expect(result).to.eql({
+      a: 1,
+      headers: {
+        Authorization: 'Bearer abc',
+      },
+    });
+  });
+
+  it('should work with bearer', () => {
+    const opts = { a: 1 };
+
+    const result = options(opts).bearer('x.y.z');
+
+    expect(result).to.eql({
+      a: 1,
+      headers: {
+        Authorization: 'Bearer x.y.z',
+      },
+    });
+  });
+
+  it('should allow chaining', () => {
+    const opts = { a: 1 };
+
+    const result = options(opts).basic('u', 'p').json();
+
+    expect(result).to.eql({
+      a: 1,
+      headers: {
+        Authorization: 'Basic dTpw',
+        'Content-Type': 'application/json',
+      },
     });
   });
 });
 
-describe('get', () => {
-  before(() => {
-    const fakeServer = nock('https://www.example.com');
-    fakeServer.get('/api/items/6').reply(200, { name: 'Some Name' });
-    fakeServer.get('/api/items/6').reply(200, { name: 'Some Name' });
-    fakeServer.post('/api/ssl').reply(200, 'Nice cert!');
+describe('assertRelativeUrl', () => {
+  specify('https://www.test.com is absolute', () => {
+    assert.throws(
+      () => assertRelativeUrl('https://www.test.com'),
+      'UNEXPECTED_ABSOLUTE_URL'
+    );
   });
 
-  it('sends a get request', async () => {
-    const response = await http.get({
-      url: 'https://www.example.com/api/items/6',
+  specify('http://www.test.com is absolute', () => {
+    assert.throws(
+      () => assertRelativeUrl('http://www.test.com'),
+      'UNEXPECTED_ABSOLUTE_URL'
+    );
+  });
+
+  specify('x/y/z is relative', () => {
+    assert.doesNotThrow(() => assertRelativeUrl('x/y/z'));
+  });
+
+  specify('/x/y/z is relative', () => {
+    assert.doesNotThrow(() => assertRelativeUrl('/x/y/z'));
+  });
+
+  specify('www.x.com is treated as relative', () => {
+    assert.doesNotThrow(() => assertRelativeUrl('www.x.com'));
+  });
+});
+
+const mock = (path, req = {}, res = {}) => {
+  const responseHeaders = Object.assign(
+    { 'Content-Type': 'application/json' },
+    res.headers
+  );
+
+  return client
+    .intercept({
+      path,
+      method: req.method || 'GET',
+      headers: req.headers,
+      query: req.query,
+    })
+    .reply(r => ({
+      statusCode: res.code || 200,
+      data: res.body ?? r.body ?? { ok: true },
+      responseOptions: {
+        headers: responseHeaders,
+      },
+    }));
+};
+
+// Beacuse request is just a wrapper around util.request, it is only tested very lightly
+describe('request()', () => {
+  it('should make a successful arbitary request', async () => {
+    mock('/api/1', { method: 'TEST' });
+
+    const state = {};
+    const { response, data } = await request(
+      'TEST',
+      'https://a.com/api/1'
+    )(state);
+
+    expect(data).to.eql({ ok: true });
+    expect(response.statusCode).to.eql(200);
+  });
+
+  it('should request with a query', async () => {
+    mock('/api/2', { method: 'GET', query: { jam: 'jar' } });
+
+    const { response, data } = await request('GET', 'https://a.com/api/2', {
+      query: { jam: 'jar' },
     })();
 
-    expect(Object.keys(response)).to.eql(
-      ['status', 'statusText', 'headers', 'config', 'request', 'data'],
-      'look like an axios response'
-    );
-
-    expect(response.status).to.eql(200);
-    expect(response.data).to.eql({ name: 'Some Name' });
+    expect(data).to.eql({ ok: true });
+    expect(response.statusCode).to.eql(200);
   });
 
-  it('expands all references', async () => {
-    const initialState = { id: 6 };
+  it('should throw for a 404', async () => {
+    mock('/api/3', {}, { code: 404 });
 
-    const response = await http.get({
-      url: state => `https://www.example.com/api/items/${state.id}`,
-      data: { name: 'Some Name' },
-    })(initialState);
+    let error;
+    try {
+      await request('GET', 'https://a.com/api/3')();
+    } catch (e) {
+      error = e;
+    }
 
-    expect(response.status).to.eql(200);
-    expect(response.data).to.eql({ name: 'Some Name' });
+    expect(error.statusCode).to.eql(404);
+    expect(error.statusMessage).to.eql('Not Found');
   });
 
-  it('allows users to pass https agent options via `agentOptions`', async () => {
-    let initialState = { configuration: { privateKey: '123' } };
-
-    const response = await http.post({
-      url: 'https://www.example.com/api/ssl',
-      data: { name: 'Some Name' },
-      agentOptions: { ca: initialState.configuration.privateKey },
-    })(initialState);
-
-    expect(response.status).to.eql(200);
-    expect(response.data).to.eql('Nice cert!');
-
-    expect(response.config.httpsAgent.options).to.eql({
-      ca: '123',
-      noDelay: true,
-      path: null,
+  it('should request with basic auth', async () => {
+    mock('/api/4', {
+      method: 'GET',
+      headers: {
+        Authorization: 'Basic dTpw',
+      },
     });
+
+    const { response, data } = await request(
+      'GET',
+      'https://a.com/api/4',
+      options().basic('u', 'p')
+    )();
+
+    expect(data).to.eql({ ok: true });
+    expect(response.statusCode).to.eql(200);
+  });
+
+  it('should expand references', async () => {
+    mock('/api/5', { method: 'PATCH' });
+
+    const { response, data } = await request(
+      () => 'PATCH',
+      () => 'https://a.com/api/5',
+      () => ({ body: { x: 'y' } })
+    )();
+
+    expect(data).to.eql({ x: 'y' });
+    expect(response.statusCode).to.eql(200);
+  });
+});
+
+// Again, only super light testing of the API surface
+describe('get()', () => {
+  it('should make a simple get request', async () => {
+    mock('/api/100', { query: { name: 'lamine' } });
+
+    const { response, data } = await get('https://a.com/api/100', {
+      query: { name: 'lamine' },
+    })();
+
+    expect(data).to.eql({ ok: true });
+    expect(response.statusCode).to.eql(200);
+  });
+});
+
+describe('post()', () => {
+  it('should make a simple post request', async () => {
+    mock('/api/101', { method: 'POST' });
+
+    const { response, data } = await post('https://a.com/api/101', {
+      name: 'lamine',
+    })();
+
+    expect(data).to.eql({ name: 'lamine' });
+    expect(response.statusCode).to.eql(200);
   });
 });

@@ -1,4 +1,3 @@
-
 import {
   execute as commonExecute,
   composeNextState,
@@ -883,6 +882,8 @@ export { axios };
 
 // What functions do you want from the common adaptor?
 export {
+  fn,
+  fnIf,
   alterState,
   dataPath,
   dataValue,

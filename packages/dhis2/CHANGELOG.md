@@ -1,5 +1,222 @@
 # @openfn/language-dhis2
 
+## 6.3.0
+
+### Minor Changes
+
+- Added a 'findAttributeValueById' function; GHS points out that this is more
+  durable than the display names used by 'findAttributeValue'
+
+## 6.2.0
+
+### Minor Changes
+
+- 0156632: Add `asBase64` option in dhis2 `get()` function
+
+## 6.1.0
+
+### Minor Changes
+
+- c19d561: Added support for personal access tokens in dhis2
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
+## 6.0.3
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
+## 6.0.2
+
+### Patch Changes
+
+- Updated dependencies [a47d8d5]
+- Updated dependencies [9240428]
+  - @openfn/language-common@2.2.0
+
+## 6.0.1
+
+### Patch Changes
+
+- ab94b7c: Fix links in docs examples
+
+## 6.0.0
+
+### Major Changes
+
+- b44a3b1: Migrates the adaptor to the new Tracker API (v36+) for
+  `trackedEntities`, `enrollments`, `events` and `relationships`. Note that
+  `trackedEntities` is no longer used.
+
+  This release is designed for compatibility with DHIS2 v42, which drops support
+  for a number of endpoints.
+
+  The `create`, `update`, `upsert` and `destroy` functions will automatically
+  map affected resources to the new tracker API endpoint.
+
+  If you have an existing workflow which uses these functions with
+  `trackedEntities`, `enrollments`, `events` or `relationships`, the data and
+  options you pass may be incompatible with the new tracker API. You should
+  review your code carefully against the
+  [DHIS2 Tracker Migration Guide](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker-deprecated.html#webapi_tracker_migration)
+  to see what's changed.
+
+  For example, if you used to do:
+
+  ```js
+  create('trackedEntityInstances', {
+    /*...*/
+  });
+  ```
+
+  You should now do:
+
+  ```js
+  create('trackedEntities', {
+    /*...*/
+  });
+  ```
+
+  The payloads have also changed shape, so for example if you used to:
+
+  ```js
+  create('events', {
+    trackedEntityInstance: 'eBAyeGv0exc',
+    eventDate: '2024-01-01',
+    /* ... */
+  });
+  ```
+
+  You should now do:
+
+  ```js
+  create('events', {
+    trackedEntity: 'eBAyeGv0exc',
+    occurredAt: '2024-01-01',
+    /* ... */
+  });
+  ```
+
+  The HTTP APIs `get()`, `patch()`, and `post()` do not automatically map to the
+  new tracker: they continue to call the URL you provide with the data you send.
+  You can use this to continue to call the old tracker API directly.
+
+### Minor Changes
+
+- d30f39f: Added new post() operation
+
+## 5.0.8
+
+### Patch Changes
+
+- 94be282: Fix an issue where the path argument of update does not accept a
+  function value
+
+## 5.0.7
+
+### Patch Changes
+
+- 6cb5377: Removed support for DHIS2 v42
+
+## 5.0.6
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
+## 5.0.5
+
+### Patch Changes
+
+- Updated dependencies [03a1a74]
+  - @openfn/language-common@2.1.0
+
+## 5.0.4
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
+## 5.0.3
+
+### Patch Changes
+
+- 3fd13c2: Update axios to 1.7.7
+
+## 5.0.2
+
+### Patch Changes
+
+- Updated dependencies [77a690f]
+  - @openfn/language-common@2.0.2
+
+## 5.0.1
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
+## 5.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
+## 4.2.1
+
+### Patch Changes
+
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
+## 4.2.0
+
+### Minor Changes
+
+- 5fb82f07: Export `group` operation from common
+
+### Patch Changes
+
+- Updated dependencies [5fb82f07]
+  - @openfn/language-common@1.15.0
+
+## 4.1.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
+## 4.0.5
+
+### Patch Changes
+
+- Fix attribute metadata
+
+## 4.0.4
+
+### Patch Changes
+
+- Security updates (lodash,undici)
+- Updated dependencies
+  - @openfn/language-common@1.13.2
+
 ## 4.0.3
 
 ### Patch Changes

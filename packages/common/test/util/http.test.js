@@ -8,12 +8,13 @@ import {
   post,
   del,
   parseUrl,
+  ERROR_URL_MISMATCH,
 } from '../../src/util/http.js';
 
 const client = enableMockClient('https://www.example.com');
 
 describe('parseUrl', () => {
-  it('should work with a url as a path', () => {
+  it('should work with a url and path', () => {
     const { url, baseUrl, path } = parseUrl('https://www.example.org/a/b/c');
 
     expect(baseUrl).to.equal('https://www.example.org');
@@ -62,11 +63,60 @@ describe('parseUrl', () => {
     expect(url).to.eql('https://www.example.org/api/a/b/c');
   });
 
+  it('should work with matching absolute url and base', () => {
+    const { url, baseUrl, path } = parseUrl(
+      'https://www.example.org/api/a/b/c',
+      'https://www.example.org/api'
+    );
+
+    expect(baseUrl).to.equal('https://www.example.org');
+    expect(path).to.equal('/api/a/b/c');
+    expect(url).to.eql('https://www.example.org/api/a/b/c');
+  });
+
+  it('should work with matching absolute url and no base', () => {
+    const { url, baseUrl, path } = parseUrl(
+      'https://www.example.org/api/a/b/c'
+    );
+
+    expect(baseUrl).to.equal('https://www.example.org');
+    expect(path).to.equal('/api/a/b/c');
+    expect(url).to.eql('https://www.example.org/api/a/b/c');
+  });
+
+  it('should extract query parameters', () => {
+    const { query } = parseUrl('a/b/c?x=1&y=2', 'https://www.example.org/api');
+
+    expect(query).to.eql({ x: '1', y: '2' });
+  });
+
+  it('should extract empty query parameters', () => {
+    const { query } = parseUrl('a', 'https://www.example.org/api');
+
+    expect(query).to.eql({});
+  });
+
   it('should throw if base has no protocol', () => {
     try {
       parseUrl('/a/b/c', 'www.example.org');
     } catch (e) {
       expect(e.message).to.eql('Invalid URL');
+    }
+  });
+
+  it('should throw if path and no base', () => {
+    try {
+      parseUrl('/a/b/c');
+    } catch (e) {
+      expect(e.message).to.eql('Invalid URL');
+    }
+  });
+
+  it('should throw if url and base mismatch', () => {
+    try {
+      parseUrl('http://www.x.com/a', 'http://www.y.com/a');
+    } catch (e) {
+      expect(e.message).to.eql(ERROR_URL_MISMATCH);
     }
   });
 });
@@ -124,6 +174,98 @@ describe('request function', () => {
 
     expect(response.statusCode).to.eql(200);
     expect(response.url).to.eql('https://www.example.com/api');
+  });
+
+  it('should include query parameters in the url', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+        query: {
+          name: 'homelander',
+        },
+      })
+      .reply(200, {});
+
+    const response = await request(
+      'GET',
+      'https://www.example.com/api?name=homelander'
+    );
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.url).to.eql('https://www.example.com/api?name=homelander');
+  });
+
+  it('should include query parameters in the options', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+        query: {
+          name: 'homelander',
+        },
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api', {
+      query: { name: 'homelander' },
+    });
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.url).to.eql('https://www.example.com/api');
+  });
+
+  it('should return undefined if response body is empty and parseAs is json', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'PUT',
+      })
+      .reply(200, undefined, {
+        headers: { 'Content-Length': '0' },
+      });
+
+    const response = await request('PUT', 'https://www.example.com/api', {
+      parseAs: 'json',
+      body: { id: 2 },
+    });
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.body).to.eql(undefined);
+  });
+
+  it('should throw an error if there is no content-length header and an empty response body', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'PUT',
+      })
+      .reply(200);
+
+    await request('PUT', 'https://www.example.com/api', {
+      parseAs: 'json',
+      body: { id: 2 },
+    }).catch(error => {
+      expect(error.message).to.eql('200: Error parsing the response body');
+    });
+  });
+
+  it('should display the body length in numbers if a request throws an error', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'PUT',
+      })
+      .reply(200, undefined, {
+        headers: { 'Content-Length': '0' },
+      });
+
+    await request('PUT', 'https://www.example.com/api', {
+      parseAs: 'json',
+      body: { id: 2 },
+    }).catch(error => {
+      expect(error.bodyLength).to.eql(0);
+    });
   });
 
   it('should send data', async () => {

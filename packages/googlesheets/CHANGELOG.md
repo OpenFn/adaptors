@@ -1,5 +1,132 @@
 # @openfn/language-googlesheets
 
+## 3.0.9
+
+### Patch Changes
+
+- `update()` and `append()` will exit early with a gentle warning if an empty
+  array is passed. This allows a no-op update to be error free.
+
+## 3.0.8
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
+## 3.0.7
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
+## 3.0.6
+
+### Patch Changes
+
+- Updated dependencies [a47d8d5]
+- Updated dependencies [9240428]
+  - @openfn/language-common@2.2.0
+
+## 3.0.5
+
+### Patch Changes
+
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
+
+## 3.0.4
+
+### Patch Changes
+
+- Updated dependencies [03a1a74]
+  - @openfn/language-common@2.1.0
+
+## 3.0.3
+
+### Patch Changes
+
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
+
+## 3.0.2
+
+### Patch Changes
+
+- Updated dependencies [77a690f]
+  - @openfn/language-common@2.0.2
+
+## 3.0.1
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
+## 3.0.0
+
+### Major Changes
+
+- Export new common http helpers (http namespace)
+
+## 2.5.2
+
+### Patch Changes
+
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
+## 2.5.1
+
+### Patch Changes
+
+- 73d0a02: Make documentation public
+- Updated dependencies [4c08444]
+- Updated dependencies [73d0a02]
+  - @openfn/language-common@1.15.1
+
+## 2.5.0
+
+### Minor Changes
+
+- 73433c20: Add `fnIf` operation
+
+### Patch Changes
+
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
+
+## 2.4.0
+
+### Minor Changes
+
+- bae5d3b6: Add the cursor() function from common. See the job writing guide for
+  more information.
+
+### Patch Changes
+
+- Updated dependencies [1ad86651]
+  - @openfn/language-common@1.13.0
+
+## 2.3.1
+
+### Patch Changes
+
+- 4594a324: add callback jsdocs
+
+## 2.3.0
+
+### Minor Changes
+
+- 8405fc9a: - Add `getValues()` function
+  - Improve connection handling
+  - Improve error logs
+
 ## 2.2.2
 
 ### Patch Changes

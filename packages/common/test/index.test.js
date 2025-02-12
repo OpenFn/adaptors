@@ -7,6 +7,7 @@ import {
   arrayToString,
   chunk,
   combine,
+  cursor,
   dataPath,
   dataValue,
   each,
@@ -20,6 +21,7 @@ import {
   lastReferenceValue,
   map,
   merge,
+  group,
   parseCsv,
   referencePath,
   scrubEmojis,
@@ -28,7 +30,9 @@ import {
   splitKeys,
   toArray,
   validate,
+  assert as assertCommon,
 } from '../src/Adaptor';
+import { startOfToday } from 'date-fns';
 
 const mockAgent = new MockAgent();
 setGlobalDispatcher(mockAgent);
@@ -859,5 +863,250 @@ describe('validate', () => {
     const result = await validate()(state);
 
     expect(result.validationErrors).to.eql([]);
+  });
+});
+
+describe('cursor', () => {
+  it('should set a cursor on state', () => {
+    const state = {};
+    const result = cursor(1234)(state);
+    expect(result.cursor).to.eql(1234);
+  });
+
+  it('should set a cursorStart on state', () => {
+    const state = {};
+    const date = new Date();
+    const result = cursor('start')(state);
+    const resultDate = new Date(result.cursor);
+    expect(resultDate.toDateString()).to.eql(date.toDateString());
+  });
+
+  it('should set a cursor on state with a natural language timestamp', () => {
+    const state = {};
+
+    const date = startOfToday().toISOString();
+    const result = cursor('today')(state);
+    expect(result.cursor).to.eql(date);
+  });
+
+  it('should not blow up if an arbitrary string is passed', () => {
+    const state = {};
+
+    const str = 'rock the cashbah';
+    const result = cursor(str)(state);
+    expect(result.cursor).to.eql(str);
+  });
+
+  it('should clear the cursor', () => {
+    const state = {
+      cursor: new Date(),
+    };
+    const result = cursor()(state);
+    expect(result.cursor).to.eql(undefined);
+  });
+
+  it('should use a default value', () => {
+    const state = {};
+    const result = cursor(state.cursor, { defaultValue: 33 })(state);
+    expect(result.cursor).to.eql(33);
+  });
+
+  it('should use a custom key', () => {
+    const state = {};
+    const result = cursor(44, { key: 'page' })(state);
+    expect(result.page).to.eql(44);
+  });
+
+  it('should re-use a custom key', () => {
+    const state = {};
+    const result1 = cursor(44, { key: 'page' })(state);
+    expect(result1.page).to.eql(44);
+
+    const result2 = cursor(55)(state);
+    expect(result2.page).to.eql(55);
+  });
+
+  // testing the log output is hard here, I've only verified it manally
+  it('should log the correct message with multiple arguments', () => {
+    const state = {};
+    let originalLog;
+    let consoleOutput = [];
+    // Setup: Override console.log
+    originalLog = console.log;
+    console.log = (...args) => consoleOutput.push(args);
+
+    cursor(1234, { key: 'lastRunDateTime' })(state);
+    expect(consoleOutput[0]).to.deep.equal([
+      'Setting lastRunDateTime to:',
+      1234,
+    ]);
+
+    // Teardown: Restore console.log
+    console.log = originalLog;
+  });
+  it('should use an object', () => {
+    const state = {};
+    const c = { page: 22, next: 23 };
+    const result = cursor(c, { key: 'cursor' })(state);
+    expect(result.cursor).to.eql(c);
+  });
+
+  it('should apply a custom formatter', () => {
+    const state = {};
+    const result = cursor('abc', {
+      format: c => c.toUpperCase(),
+    })(state);
+    expect(result.cursor).to.eql('ABC');
+  });
+
+  it('should format "today"', () => {
+    const state = {};
+    const date = new Date().toDateString();
+    const result = cursor('today', {
+      format: c => c.toDateString(),
+    })(state);
+    expect(result.cursor).to.eql(date);
+  });
+
+  it('should format a number to an arbitrary object', () => {
+    const state = {};
+    const result = cursor(3, {
+      format: c => ({ page: c }),
+    })(state);
+    expect(result.cursor).to.eql({ page: 3 });
+  });
+});
+
+describe('group', () => {
+  it('should group an array of objects by a specified key path', function () {
+    const state = {};
+    const data = [{ x: 'a' }, { x: 'b' }, { x: 'b' }];
+
+    const result = group(data, 'x')(state);
+
+    expect(result.data).eql({ a: [{ x: 'a' }], b: [{ x: 'b' }, { x: 'b' }] });
+  });
+
+  it('should group an array of objects by a specified path', function () {
+    const data = [
+      { x: 'a', y: { z: 'a' } },
+      { x: 'b', y: { z: 'a' } },
+    ];
+    const state = {};
+    const result = group(data, 'y.z')(state);
+    expect(result.data).eql({
+      a: [
+        { x: 'a', y: { z: 'a' } },
+        { x: 'b', y: { z: 'a' } },
+      ],
+    });
+  });
+  it("should return an empty object if the key isn't present on any items", function () {
+    const data = [
+      { x: 'a', y: { z: 'a' } },
+      { x: 'b', y: { w: 'a' } },
+    ];
+    const state = {};
+    const result = group(data, 'y.q')(state);
+    expect(result.data).eql({});
+  });
+
+  it('should remove undefined keys', function () {
+    const data = [
+      { x: 'a', y: { z: 'a' } },
+      { x: 'b', y: { z: undefined } },
+    ];
+    const state = {};
+    const result = group(data, 'y.z')(state);
+    expect(result.data).eql({ a: [{ x: 'a', y: { z: 'a' } }] });
+  });
+  it('should expand arrayOfObjects', function () {
+    const input = {
+      data: [
+        { x: 'a', y: { z: 'a' } },
+        { x: 'b', y: { z: undefined } },
+      ],
+    };
+
+    const result = group(state => state.data, 'y.z')(input);
+
+    expect(result.data).eql({ a: [{ x: 'a', y: { z: 'a' } }] });
+  });
+
+  it('should expand key path', function () {
+    const input = {
+      path: 'y.z',
+      data: [
+        { x: 'a', y: { z: 'a' } },
+        { x: 'b', y: { z: undefined } },
+      ],
+    };
+
+    const result = group(input.data, state => state.path)(input);
+
+    expect(result.data).eql({ a: [{ x: 'a', y: { z: 'a' } }] });
+  });
+});
+
+describe('assert', () => {
+  it('throws an error when a function returns false', () => {
+    let error;
+
+    const testFunction = function () {
+      return 'a' === 'b';
+    };
+
+    const errorMessage = 'a is not equal to b';
+
+    try {
+      assertCommon(testFunction, errorMessage)({});
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error.message).to.eql(errorMessage);
+  });
+
+  it('throws an error when an expression evaluates to false', () => {
+    let error;
+    const errorMessage = 'a is not equal to b';
+
+    try {
+      assertCommon('a' === 'b', errorMessage)({});
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error.message).to.eql(errorMessage);
+  });
+
+  it('does not throw when an expression evaluates to true', () => {
+    const state = { name: 'Jane' };
+    const result = assertCommon('a' === 'a', 'a is not equal to a')(state);
+    expect(result).to.eql(state);
+  });
+
+  it('expands references on error message', () => {
+    const msg = 'this is an error';
+    const state = { msg };
+    let error;
+    try {
+      assertCommon(false, state => state.msg)(state);
+    } catch (e) {
+      error = e;
+    }
+    expect(error.message).to.eql(msg);
+  });
+
+  it("falls back to the generic message if no 'errorMessage' argument is passed", () => {
+    let error;
+
+    try {
+      assertCommon('a' === 'b')({});
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error.message).to.eql(`assertion statement failed with false`);
   });
 });

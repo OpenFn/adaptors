@@ -155,6 +155,7 @@ export {
   field,
   fields,
   fn,
+  fnIf,
   lastReferenceValue,
   merge,
   sourceValue,

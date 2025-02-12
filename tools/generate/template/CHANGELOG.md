@@ -1,4 +1,4 @@
-# @openfn/language-template
+# @openfn/language-{{TEMPLATE}}
 
 ## 1.0.0
 

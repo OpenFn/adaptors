@@ -1,0 +1,11 @@
+{{#if state}}
+This operation writes the following keys to state:
+
+{{tableHead state "name|State Key" "description|Description" ~}}
+{{#flattenState state}}
+  {{#tableRow this "name" "description" ~}}
+| {{#if @col1}}{{>param-table-name}} | {{/if~}}
+  {{#if @col2}}{{{stripNewlines (inlineLinks description)}}} |{{/if}}
+  {{/tableRow}}
+{{/flattenState}}
+{{/if}}

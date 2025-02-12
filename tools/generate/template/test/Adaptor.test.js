@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { execute, create, dataValue } from '../src/Adaptor.js';
+import { request, dataValue } from '../src/Adaptor.js';
 
 // This creates a mock client which acts like a fake server.
 // It enables pattern-matching on the request object and custom responses
@@ -9,36 +9,7 @@ import { execute, create, dataValue } from '../src/Adaptor.js';
 // https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
 const testServer = enableMockClient('https://fake.server.com');
 
-describe('execute', () => {
-  it('executes each operation in sequence', async () => {
-    const state = {};
-    const operations = [
-      state => {
-        return { counter: 1 };
-      },
-      state => {
-        return { counter: 2 };
-      },
-      state => {
-        return { counter: 3 };
-      },
-    ];
-
-    const finalState = await execute(...operations)(state);
-
-    expect(finalState).to.eql({ counter: 3 });
-  });
-
-  it('assigns references and data to the initialState', async () => {
-    const state = {};
-
-    const finalState = await execute()(state);
-
-    expect(finalState).to.eql({ references: [], data: null });
-  });
-});
-
-describe('create', () => {
+describe('request', () => {
   it('makes a post request to the right endpoint', async () => {
     // Setup a mock endpoint
     testServer
@@ -65,12 +36,10 @@ describe('create', () => {
       },
     };
 
-    const finalState = await execute(
-      create('patients', {
-        name: dataValue('fullName')(state),
-        gender: dataValue('gender')(state),
-      })
-    )(state);
+    const finalState = await request('POST', 'patients', {
+      name: state.data.fullName,
+      gender: state.data.gender,
+    })(state);
 
     expect(finalState.data).to.eql({
       fullName: 'Mamadou',
@@ -95,37 +64,12 @@ describe('create', () => {
       },
     };
 
-    const error = await execute(create('noAccess', { name: 'taylor' }))(
+    const error = await request('POST', 'noAccess', { name: 'taylor' })(
       state
     ).catch(error => {
       return error;
     });
 
     expect(error.statusMessage).to.eql('Forbidden');
-  });
-
-  it('handles and throws mapped errors', async () => {
-    testServer
-      .intercept({
-        path: '/api/blah',
-        method: 'POST',
-      })
-      .reply(404);
-
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-    };
-
-    const error = await execute(create('blah', { name: 'taylor' }))(
-      state
-    ).catch(error => {
-      return error;
-    });
-
-    expect(error.message).to.eql('Page not found');
   });
 });
