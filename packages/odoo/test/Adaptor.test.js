@@ -1,104 +1,89 @@
 import { expect } from 'chai';
-import { execute, create, dataValue } from '../src/Adaptor.js';
+import { enableMockClient } from '@openfn/language-common/util';
+import {
+  execute,
+  create,
+  dataValue,
+  update,
+  read,
+  deleteRecord,
+} from '../src/Adaptor.js';
 
 import MockAgent from './mockAgent.js';
 import { setGlobalDispatcher } from 'undici';
 
 setGlobalDispatcher(MockAgent);
 
-describe('execute', () => {
-  it('executes each operation in sequence', done => {
-    const state = {};
-    const operations = [
-      state => {
-        return { counter: 1 };
-      },
-      state => {
-        return { counter: 2 };
-      },
-      state => {
-        return { counter: 3 };
-      },
-    ];
+const configuration = {
+  baseUrl: 'https://test.odoo.com/odoo',
+  password: 'somepassword',
+  username: 'someusername',
+  database: 'somedatabase',
+};
 
-    execute(...operations)(state)
-      .then(finalState => {
-        expect(finalState).to.eql({ counter: 3 });
-      })
-      .then(done)
-      .catch(done);
-  });
+const state = { configuration };
 
-  it('assigns references, data to the initialState', () => {
-    const state = {};
+describe('read record', () => {
+  it('should read a record', () => {
+    const mock = {
+      read: (model, id, fields) => {
+        expect(model).to.eql('product.product');
+        return {
+          id: 2,
+          name: 'Saas Product',
+        };
+      },
+    };
+    enableMockClient(mock);
 
-    execute()(state).then(finalState => {
-      expect(finalState).to.eql({ references: [], data: null });
-    });
+    read('product.product', [2], ['name'])(state);
   });
 });
 
 describe('create', () => {
-  it('makes a post request to the right endpoint', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
+  it('should create a record', () => {
+    const mock = {
+      create: (model, data, id) => {
+        expect(model).to.eql('res.partner');
+        return {
+          data: 15,
+        };
       },
     };
+    enableMockClient(mock);
 
-    const finalState = await execute(
-      create('patients', {
-        name: dataValue('fullName')(state),
-        gender: dataValue('gender')(state),
-      })
-    )(state);
-
-    expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-      id: 7,
-    });
+    create('res.partner', { name: 'Jane Doe' }, '')(state);
   });
+});
 
-  it('throws an error for a 404', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
+describe('update', () => {
+  it('should update a record', () => {
+    const mock = {
+      update: (model, id, data) => {
+        expect(model).to.eql('product.product');
+        return {
+          data: true,
+        };
       },
     };
+    enableMockClient(mock);
 
-    const error = await execute(create('noAccess', { name: 'taylor' }))(
-      state
-    ).catch(error => {
-      return error;
-    });
-
-    expect(error.message).to.eql('Page not found');
+    update('product.product', 4, { name: 'Testing Product' })(state);
   });
+});
 
-  it('handles and throws different kinds of errors', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
+describe('delete', () => {
+  it('should delete a record', () => {
+    const mock = {
+      deleteRecord: (model, id) => {
+        expect(model).to.eql('product.product');
+        return {
+          data: true,
+        };
       },
     };
+    enableMockClient(mock);
 
-    const error = await execute(
-      create('!@#$%^&*', { name: 'taylor' })
-    )(state).catch(error => {
-      return error;
-    });
-    
-    expect(error.message).to.eql('Server error');
+    deleteRecord('product.product', 4)(state);
   });
 });
