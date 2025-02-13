@@ -1,6 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { request, prepareNextState } from './Utils';
+import { request, prepareNextState, cleanPath } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -60,31 +60,33 @@ export function getPatient(uuid, callback = s => s) {
  * Make a get request to any OpenMRS REST endpoint.
  * @example
  * get("patient", {
- *   q: "Patient",
+ * query: {
+ *    q: "Patient",
  *   limit: 1,
+ * }
  * });
  * @function
  * @public
  * @param {string} path - Path to resource (excluding /ws/rest/v1/)
- * @param {object} query - parameters for the request
- * @param {function} [callback] - Optional callback to handle the response
+ * @param {object} options - parameters for the request
  * @returns {Operation}
  */
-export function get(path, query, callback = s => s) {
+export function get(path, options) {
   return async state => {
-    const [resolvedPath, resolvedQuery = {}] = expandReferences(
+    const [resolvedPath, resolvedOptions] = expandReferences(
       state,
       path,
-      query
+      options
     );
+
     const { instanceUrl: baseUrl } = state.configuration;
     const response = await request(
       state,
       'GET',
-      `/ws/rest/v1/${resolvedPath}`,
+      cleanPath(`/ws/rest/v1/${resolvedPath}`),
       {
         baseUrl,
-        query: resolvedQuery,
+        ...resolvedOptions
       }
     );
 
@@ -94,7 +96,7 @@ export function get(path, query, callback = s => s) {
     //   throw `Get operation returned no results for ${resolvedResource}.`;
     // }
 
-    return prepareNextState(state, response, callback);
+    return prepareNextState(state, response);
   };
 }
 
