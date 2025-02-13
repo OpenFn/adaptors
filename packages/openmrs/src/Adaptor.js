@@ -314,8 +314,7 @@ export function create(path, data) {
       path,
       data
     );
-    const resourceName = resolvedPath[0] === '/' ? resolvedPath.split('/')[1] : resolvedPath.split('/')[0];
-    console.log(`Preparing to create ${resourceName}`);
+    console.log(`Preparing to create ${resolvedPath}`);
     const { instanceUrl: baseUrl } = state.configuration;
 
     const response = await request(
@@ -328,7 +327,7 @@ export function create(path, data) {
       }
     );
 
-    console.log(`Successfully created ${resourceName}`);
+    console.log(`Successfully created ${resolvedPath}`);
 
     return prepareNextState(state, response);
   };
@@ -352,10 +351,8 @@ export function update(path, data) {
       path,
       data
     );
-    const resourceName = resolvedPath[0] === '/' ? resolvedPath.split('/')[1] : resolvedPath.split('/')[0];
 
-
-    console.log(`Preparing to update ${resourceName}`);
+    console.log(`Preparing to update ${resolvedPath}`);
     const { instanceUrl: baseUrl } = state.configuration;
 
     const response = await request(
@@ -368,7 +365,7 @@ export function update(path, data) {
       }
     );
 
-    console.log(`Successfully updated ${resourceName}`);
+    console.log(`Successfully updated ${resolvedPath}`);
 
     return prepareNextState(state, response);
   };
