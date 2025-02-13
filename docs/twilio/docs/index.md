@@ -31,7 +31,7 @@ This adaptor exports the following from common:
     <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#http">http</a>
+    <a href="/adaptors/packages/common-docs#http">http()</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
