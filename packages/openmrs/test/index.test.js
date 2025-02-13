@@ -447,7 +447,7 @@ describe('get', () => {
       })
       .reply(200, { uuid: '123' }, { ...jsonHeaders });
 
-    const { data } = await execute(get('/encounter/123/'))(state);
+    const { data } = await execute(get('/encounter/123'))(state);
 
     expect(data.uuid).to.eql('123');
   });
@@ -460,7 +460,7 @@ describe('get', () => {
       })
       .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
 
-    const { data } = await execute(get('patient/', {query: {q: 'Sarah'}}))(state);
+    const { data } = await execute(get('patient', {query: {q: 'Sarah'}}))(state);
 
     expect(data.results[0].uuid).to.eql(testData.patientResults[0].uuid);
   });
