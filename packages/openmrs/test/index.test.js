@@ -7,6 +7,7 @@ import {
   get,
   post,
   create,
+  update,
   upsert,
   execute,
   getPatient,
@@ -15,6 +16,7 @@ import {
   fhir,
   http,
 } from '../src';
+import *  as adaptor from '../src'
 
 const testServer = enableMockClient('https://fn.openmrs.org');
 const jsonHeaders = {
@@ -494,6 +496,18 @@ describe('get', () => {
       .reply(200, { uuid: '123' }, { ...jsonHeaders });
 
     const { data } = await execute(get('encounter/123'))(state);
+
+    expect(data.uuid).to.eql('123');
+  });
+  it('should be robust to leading and trailing slashes', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/encounter/123',
+        method: 'GET',
+      })
+      .reply(200, { uuid: '123' }, { ...jsonHeaders });
+
+    const { data } = await execute(get('/encounter/123/'))(state);
 
     expect(data.uuid).to.eql('123');
   });
