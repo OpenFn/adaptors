@@ -485,6 +485,24 @@ describe('post', () => {
   });
 });
 
+describe('Update', () => {
+  it('should update a patient', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3',
+        method: 'POST',
+      })
+      .reply(200, ({ body }) => body, {
+        ...jsonHeaders,
+      });
+
+    const { data } = await execute(update('patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3', state => state.patient))(
+      state
+    );
+    expect(data.uuid).to.eql('b52ec6f9-0e26-424c-a4a1-c64f9d571eb3');
+  });
+});
+
 describe('create', () => {
   it('should create a patient', async () => {
     testServer
