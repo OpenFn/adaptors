@@ -67,7 +67,7 @@ export function getPatient(uuid, callback = s => s) {
  * @function
  * @public
  * @param {string} path - Path to resource (excluding /ws/rest/v1/)
- * @param {object} options - parameters for the request
+ * @param {RequestOptions}  [options={}] - An object containing query, headers, and body for the request. See {@link https://rest.openmrs.org/ OpenMRS Rest API docs} for available query parameters
  * @returns {Operation}
  */
 export function get(path, options) {
@@ -448,7 +448,7 @@ export function upsert(path,  data) {
  * @function
  * @public
  * @param {string} path - Path to resource (excluding /ws/rest/v1/)
- * @param {object} options - parameters for the request
+ * @param {RequestOptions}  [options={}] - An object containing query, headers, and body for the request. See {@link https://rest.openmrs.org/ OpenMRS Rest API docs} for available query parameters
  * @returns {Operation}
  */
 function _delete(path, options) {
