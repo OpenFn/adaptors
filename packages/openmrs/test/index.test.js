@@ -678,8 +678,7 @@ describe('upsert', () => {
   it('should update a patient', async () => {
     testServer
       .intercept({
-        path: `/ws/rest/v1/patient`,
-        query: { q: testData.patient.person.display },
+        path: `/ws/rest/v1/patient/${testData.patient.uuid}`,
         method: 'GET',
       })
       .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
@@ -694,10 +693,7 @@ describe('upsert', () => {
       });
 
     const result = await upsert(
-      'patient',
-      state => ({
-        q: state.patient.person.display,
-      }),
+      `patient/${testData.patient.uuid}`,
       state => state.patient
     )(state);
 
@@ -706,8 +702,7 @@ describe('upsert', () => {
   it('should create a patient', async () => {
     testServer
       .intercept({
-        path: `/ws/rest/v1/patient`,
-        query: { q: testData.patient.person.display },
+        path: `/ws/rest/v1/patient/${testData.patient.uuid}`,
         method: 'GET',
       })
       .reply(200, { results: [] }, { ...jsonHeaders });
@@ -722,10 +717,7 @@ describe('upsert', () => {
       });
 
     const result = await upsert(
-      'patient',
-      state => ({
-        q: state.patient.person.display,
-      }),
+      `patient/${testData.patient.uuid}`,
       state => state.patient
     )(state);
 
