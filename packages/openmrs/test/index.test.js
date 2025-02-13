@@ -672,3 +672,19 @@ describe('upsert', () => {
     expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
 });
+
+
+describe('delete', () => {
+  it('should delete an encounter by uuid', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/encounter/123',
+        method: 'DELETE',
+      })
+      .reply(200, { uuid: '123', voided: true }, { ...jsonHeaders });
+
+    const { data } = await execute(adaptor.delete('/encounter/123'))(state);
+
+    expect(data.uuid).to.eql('123');
+  });
+});
