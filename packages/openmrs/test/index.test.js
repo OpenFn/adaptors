@@ -451,6 +451,19 @@ describe('get', () => {
 
     expect(data.uuid).to.eql('123');
   });
+  it('should parse query params', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        query: { q: 'Sarah' },
+        method: 'GET',
+      })
+      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
+
+    const { data } = await execute(get('patient/', {query: {q: 'Sarah'}}))(state);
+
+    expect(data.results[0].uuid).to.eql(testData.patientResults[0].uuid);
+  });
 });
 
 describe('post', () => {
