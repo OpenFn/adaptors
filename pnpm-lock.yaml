@@ -1358,8 +1358,8 @@ importers:
   packages/odoo:
     dependencies:
       '@openfn/language-common':
-        specifier: ^1.8.1
-        version: 1.15.2
+        specifier: workspace:*
+        version: link:../common
       odoo-await:
         specifier: ^3.4.1
         version: 3.4.1
