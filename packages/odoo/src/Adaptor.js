@@ -1,6 +1,8 @@
-import { execute as commonExecute } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { prepareNextState } from './Utils';
 
 import pkg from 'odoo-await';
 const Odoo = pkg;
@@ -80,7 +82,8 @@ export function create(model, data, externalId) {
       resolvedData,
       resolvedExternalId
     );
-    return prepareNextState(state, response);
+
+    return composeNextState(state, response);
   };
 }
 
@@ -110,7 +113,7 @@ export function read(model, recordId, fields) {
       resolvedRecordId,
       resolvedFields
     );
-    return prepareNextState(state, response);
+    return composeNextState(state, response);
   };
 }
 
@@ -140,7 +143,7 @@ export function update(model, recordId, data) {
       resolvedRecordId,
       resolvedData
     );
-    return prepareNextState(state, response);
+    return composeNextState(state, response);
   };
 }
 
@@ -164,7 +167,7 @@ export function deleteRecord(model, recordId) {
 
     console.log(resolvedModel, resolvedRecordId);
     const response = await odooConn.delete(resolvedModel, resolvedRecordId);
-    return prepareNextState(state, response);
+    return composeNextState(state, response);
   };
 }
 
