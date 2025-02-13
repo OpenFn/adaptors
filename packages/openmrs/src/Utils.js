@@ -87,3 +87,10 @@ export async function request(state, method, path, options = {}) {
 
   return allResponses;
 }
+
+
+export function cleanPath(path) {
+  return path
+    .replace(/([^:]\/)\/+/g, '$1') //remove double slashes while also preserving http:// or https://
+    .replace(/\/$/, ''); // remove trailing slash
+}
