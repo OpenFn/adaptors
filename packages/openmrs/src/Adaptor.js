@@ -121,7 +121,7 @@ export function post(path, data, callback = s => s) {
     const response = await request(
       state,
       'POST',
-      `/ws/rest/v1/${resolvedPath}`,
+      cleanPath(`/ws/rest/v1/${resolvedPath}`),
       {
         baseUrl,
         data: resolvedData,
