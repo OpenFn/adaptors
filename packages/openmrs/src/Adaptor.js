@@ -340,38 +340,38 @@ export function create(path, data) {
  * Updating an object requires to send `all required fields` or the `full body`
  * @public
  * @function
- * @param {string} resourceType - The type of resource to be updated. E.g. `person`, `patient`, etc.
- * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `e739808f-f166-42ae-aaf3-8b3e8fa13fda` or `e739808f-f166-42ae-aaf3-8b3e8fa13fda/{collection-name}/{object-id}`
+ * @param {string} path - Path to resource (excluding /ws/rest/v1/)
  * @param {Object} data - Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.
- * @param {function} [callback]  - Optional callback to handle the response
  * @returns {Operation}
  * @example <caption>a person</caption>
- * update("person", '3cad37ad-984d-4c65-a019-3eb120c9c373',{"gender":"M","birthdate":"1997-01-13"})
+ * update('person/3cad37ad-984d-4c65-a019-3eb120c9c373',{"gender":"M","birthdate":"1997-01-13"})
  */
-export function update(resourceType, path, data, callback = s => s) {
+export function update(path, data) {
   return async state => {
-    const [resolvedResource, resolvedPath, resolvedData] = expandReferences(
+    const [resolvedPath, resolvedData] = expandReferences(
       state,
-      resourceType,
       path,
       data
     );
-    console.log('Preparing to update', resolvedResource);
+    const resourceName = resolvedPath[0] === '/' ? resolvedPath.split('/')[1] : resolvedPath.split('/')[0];
+
+
+    console.log(`Preparing to update ${resourceName}`);
     const { instanceUrl: baseUrl } = state.configuration;
 
     const response = await request(
       state,
       'POST',
-      `/ws/rest/v1/${resolvedResource}/${resolvedPath}`,
+      cleanPath(`/ws/rest/v1/${resolvedPath}`),
       {
         baseUrl,
         data: resolvedData,
       }
     );
 
-    console.log('Successfully updated', resolvedResource);
+    console.log(`Successfully updated ${resourceName}`);
 
-    return prepareNextState(state, response, callback);
+    return prepareNextState(state, response);
   };
 }
 
@@ -379,10 +379,8 @@ export function update(resourceType, path, data, callback = s => s) {
  * Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
  * @public
  * @function
- * @param {string} resourceType - The type of a resource to `upsert`. E.g. `trackedEntityInstances`
- * @param {Object} query - A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.
+ * @param {string} path - Path to resource (excluding /ws/rest/v1/)
  * @param {Object} data - The data to use for update or create depending on the result of the query.
- * @param {function} [callback] - Optional callback to handle the response
  * @throws {RangeError} - Throws range error
  * @returns {Operation}
  * @example <caption>For an existing patient using upsert</caption>
@@ -407,24 +405,18 @@ export function update(resourceType, path, data, callback = s => s) {
  *   }
  * );
  */
-export function upsert(
-  resourceType, // resourceType supplied to both the `get` and the `create/update`
-  query, // query supplied to the `get`
-  data, // data supplied to the `create/update`
-  callback = s => s // callback for the upsert itself.
-) {
+export function upsert(path,  data) {
   return async state => {
-    const [resolvedResource, resolvedData, resolvedQuery = {}] =
-      expandReferences(state, resourceType, data, query);
+    const [resolvedPath, resolvedData] =
+      expandReferences(state, path, data);
 
-    console.log(
-      "Preparing composed upsert (via 'get' then 'create' OR 'update') on",
-      resolvedResource
-    );
+    const resourceName = resolvedPath[0] === '/' ? resolvedPath.split('/')[1] : resolvedPath.split('/')[0];
+
+    console.log(`Preparing composed upsert (via 'get' then 'create' OR 'update') on ${resourceName}`);
+
     const { instanceUrl: baseUrl } = state.configuration;
-    return await request(state, 'GET', `/ws/rest/v1/${resolvedResource}`, {
+    return await request(state, 'GET', cleanPath(`/ws/rest/v1/${resolvedPath}`), {
       baseUrl,
-      query: resolvedQuery,
     }).then(resp => {
       const resource = resp.body.results;
       if (resource.length > 1) {
@@ -432,16 +424,58 @@ export function upsert(
           `Found more than one record for your request; cannot upsert on non-unique attribute.`
         );
       } else if (resource.length === 0) {
-        console.log(`No ${resolvedResource} found.`);
-        return create(resolvedResource, resolvedData, callback)(state);
+        console.log(`No ${resourceName} found.`);
+        const path = resolvedPath.split('/').slice(0, -1).join('/'); // remove the ID
+        return create(path, resolvedData)(state);
       } else {
-        console.log(`One ${resolvedResource} found.`);
-        const path = resource[0]?.uuid;
-        return update(resolvedResource, path, resolvedData, callback)(state);
+        console.log(`One ${resourceName} found.`);
+        return update(resolvedPath, resolvedData)(state);
       }
     });
   };
 }
+
+
+
+/**
+ * Make a DELETE request to any OpenMRS REST endpoint.
+ * @alias delete
+ * @example
+ * delete("patient/12346", {
+ *   query: {
+ *     purge: false
+ *   }
+ * });
+ * @function
+ * @public
+ * @param {string} path - Path to resource (excluding /ws/rest/v1/)
+ * @param {object} options - parameters for the request
+ * @returns {Operation}
+ */
+function _delete(path, options) {
+  return async state => {
+    const [resolvedPath, resolvedOptions = {}] = expandReferences(
+      state,
+      path,
+      options
+    );
+
+    const { instanceUrl: baseUrl } = state.configuration;
+    const response = await request(
+      state,
+      'DELETE',
+      cleanPath(`/ws/rest/v1/${resolvedPath}`),
+      {
+        baseUrl,
+        ...resolvedOptions,
+      }
+    );
+
+    return prepareNextState(state, response);
+  };
+}
+
+export { _delete as delete }
 
 export {
   alterState,
