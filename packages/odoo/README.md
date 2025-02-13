@@ -1,6 +1,6 @@
 # language-odoo <img src='assets/sq-256x256.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the \_\_\_\_
+An OpenFn **_adaptor_** for building integration jobs for use with the odoo 
 API.
 
 ## Documentation
@@ -17,7 +17,7 @@ for required and optional `configuration` properties.
 ### A example expression using the `create` function
 
 ```js
-create('patient', { name: 'Bukayo' });
+create("res.partner", { name: "James Kelvin" }, '123');
 ```
 
 ## Development
