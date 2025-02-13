@@ -511,6 +511,30 @@ describe('get', () => {
 
     expect(data.uuid).to.eql('123');
   });
+  it('should be robust to leading and trailing slashes', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/encounter/123',
+        method: 'GET',
+      })
+      .reply(200, { uuid: '123' }, { ...jsonHeaders });
+
+    const { data } = await execute(get('encounter/123/'))(state);
+
+    expect(data.uuid).to.eql('123');
+  });
+  it('should be robust to leading and trailing slashes', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/encounter/123',
+        method: 'GET',
+      })
+      .reply(200, { uuid: '123' }, { ...jsonHeaders });
+
+    const { data } = await execute(get('encounter/123'))(state);
+
+    expect(data.uuid).to.eql('123');
+  });
   it('should parse query params', async () => {
     testServer
       .intercept({
