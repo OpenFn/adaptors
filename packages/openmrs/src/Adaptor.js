@@ -249,9 +249,8 @@ export function getEncounters(query, callback = s => s) {
  * Create a record
  * @public
  * @function
- * @param {string} resourceType - Type of resource to create. E.g. `person`, `patient`, `encounter`, ...
- * @param {OpenMRSData} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
- * @param {function} [callback] - Optional callback to handle the response
+ * @param {string} path - Path to resource (excluding /ws/rest/v1/)
+ * @param {object} data - Object which defines data that will be used to create a given instance of resource
  * @returns {Operation}
  * @example <caption>Create a person</caption>
  * create("person", {
@@ -309,29 +308,30 @@ export function getEncounters(query, callback = s => s) {
  *   },
  * })
  */
-export function create(resourceType, data, callback = s => s) {
+export function create(path, data) {
   return async state => {
-    const [resolvedResource, resolvedData] = expandReferences(
+    const [resolvedPath, resolvedData] = expandReferences(
       state,
-      resourceType,
+      path,
       data
     );
-    console.log('Preparing to create', resolvedResource);
+    const resourceName = resolvedPath[0] === '/' ? resolvedPath.split('/')[1] : resolvedPath.split('/')[0];
+    console.log(`Preparing to create ${resourceName}`);
     const { instanceUrl: baseUrl } = state.configuration;
 
     const response = await request(
       state,
       'POST',
-      `/ws/rest/v1/${resolvedResource}`,
+      cleanPath(`/ws/rest/v1/${resolvedPath}`),
       {
         baseUrl,
         data: resolvedData,
       }
     );
 
-    console.log('Successfully created', resolvedResource);
+    console.log(`Successfully created ${resourceName}`);
 
-    return prepareNextState(state, response, callback);
+    return prepareNextState(state, response);
   };
 }
 
