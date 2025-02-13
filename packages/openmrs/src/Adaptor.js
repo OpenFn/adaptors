@@ -1,6 +1,9 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { request, prepareNextState, cleanPath } from './Utils';
+import { request, prepareNextState } from './Utils';
+import nodepath from 'node:path';
+
+const restPathChunk = '/ws/rest/v1/';
 
 /**
  * Execute a sequence of operations.
@@ -82,7 +85,7 @@ export function get(path, options) {
     const response = await request(
       state,
       'GET',
-      cleanPath(`/ws/rest/v1/${resolvedPath}`),
+      nodepath.join(restPathChunk, resolvedPath),
       {
         baseUrl,
         ...resolvedOptions
@@ -120,7 +123,7 @@ export function post(path, data, callback = s => s) {
     const response = await request(
       state,
       'POST',
-      cleanPath(`/ws/rest/v1/${resolvedPath}`),
+      nodepath.join(restPathChunk, resolvedPath),
       {
         baseUrl,
         data: resolvedData,
@@ -321,7 +324,7 @@ export function create(path, data) {
     const response = await request(
       state,
       'POST',
-      cleanPath(`/ws/rest/v1/${resolvedPath}`),
+      nodepath.join(restPathChunk, resolvedPath),
       {
         baseUrl,
         data: resolvedData,
@@ -361,7 +364,7 @@ export function update(path, data) {
     const response = await request(
       state,
       'POST',
-      cleanPath(`/ws/rest/v1/${resolvedPath}`),
+      nodepath.join(restPathChunk, resolvedPath),
       {
         baseUrl,
         data: resolvedData,
@@ -414,7 +417,7 @@ export function upsert(path,  data) {
     console.log(`Preparing composed upsert (via 'get' then 'create' OR 'update') on ${resourceName}`);
 
     const { instanceUrl: baseUrl } = state.configuration;
-    return await request(state, 'GET', cleanPath(`/ws/rest/v1/${resolvedPath}`), {
+    return await request(state, 'GET', nodepath.join(restPathChunk, resolvedPath), {
       baseUrl,
     }).then(resp => {
       const resource = resp.body.results;
@@ -463,7 +466,7 @@ function _delete(path, options) {
     const response = await request(
       state,
       'DELETE',
-      cleanPath(`/ws/rest/v1/${resolvedPath}`),
+      nodepath.join(restPathChunk, resolvedPath),
       {
         baseUrl,
         ...resolvedOptions,
