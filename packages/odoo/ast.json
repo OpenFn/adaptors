@@ -1,14 +1,14 @@
 {
   "operations": [
     {
-      "name": "createLead",
+      "name": "create",
       "params": [
         "model",
-        "params",
+        "data",
         "externalId"
       ],
       "docs": {
-        "description": "Create a lead in Odoo",
+        "description": "Create a record in Odoo",
         "tags": [
           {
             "title": "public",
@@ -17,12 +17,39 @@
           },
           {
             "title": "example",
-            "description": "createLead(\"res.partner\", { name: \"Kool Keith\" });"
+            "description": "create(\"res.partner\", { name: \"Kool Keith\" });"
           },
           {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "param",
+            "description": "The specific record model i.e. \"res.partner\"",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "model"
+          },
+          {
+            "title": "param",
+            "description": "The data to be created in JSON.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Optional external ID for the record.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "externalId"
           },
           {
             "title": "returns",
@@ -34,7 +61,204 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
+    },
+    {
+      "name": "read",
+      "params": [
+        "model",
+        "recordId",
+        "fields"
+      ],
+      "docs": {
+        "description": "Get a record from Odoo",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "read(\"res.partner\", [1] , [name]);"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The specific record model from i.e. \"res.partner\"",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "model"
+          },
+          {
+            "title": "param",
+            "description": "An array of record IDs to read.",
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "number"
+                }
+              ]
+            },
+            "name": "recordId"
+          },
+          {
+            "title": "param",
+            "description": "An array of fields to read from the record.",
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              ]
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "update",
+      "params": [
+        "model",
+        "recordId",
+        "data"
+      ],
+      "docs": {
+        "description": "Update a record in Odoo",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "update(\"res.partner\", 54 , {name: 'Jane Doe'});"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The specific record model i.e. \"res.partner\"",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "model"
+          },
+          {
+            "title": "param",
+            "description": "The specific recordId to be updated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "recordId"
+          },
+          {
+            "title": "param",
+            "description": "The data to be updated in JSON.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "deleteRecord",
+      "params": [
+        "model",
+        "recordId"
+      ],
+      "docs": {
+        "description": "Delete a record from Odoo",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "deleteRecord(\"res.partner\", 54 );"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The specific record model i.e. \"res.partner\"",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "model"
+          },
+          {
+            "title": "param",
+            "description": "The specific recordId to be deleted.",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "recordId"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],
@@ -53,13 +277,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
           },
           {
             "title": "param",
@@ -96,13 +320,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "sourceValue('$.key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
           },
           {
             "title": "param",
@@ -139,13 +363,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataPath('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
           },
           {
             "title": "param",
@@ -182,13 +406,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "dataValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
           },
           {
             "title": "param",
@@ -225,13 +449,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "lastReferenceValue('key')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
           },
           {
             "title": "param",
@@ -269,13 +493,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
           },
           {
             "title": "param",
@@ -322,13 +546,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "field('destination_field_name__c', 'value')"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
           },
           {
             "title": "param",
@@ -374,13 +598,13 @@
             "type": null
           },
           {
-            "title": "example",
-            "description": "fields(list_of_fields)"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
           },
           {
             "title": "param",
@@ -425,6 +649,11 @@
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
           },
           {
             "title": "param",
