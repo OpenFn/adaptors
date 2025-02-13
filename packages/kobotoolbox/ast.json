@@ -4,7 +4,7 @@
       "name": "getForms",
       "params": [],
       "docs": {
-        "description": "Make a request to fetch all survey forms accessible to the user's API token. Calls `/api/v2/assets/?asset_type=survey`.",
+        "description": "Make a request to fetch all survey forms accessible to the authorized user. Calls `/api/v2/assets/?asset_type=survey`.",
         "tags": [
           {
             "title": "public",
@@ -43,7 +43,7 @@
         "options"
       ],
       "docs": {
-        "description": "Get submissions for a specific form. Calls `/api/v2/assets/<id>/data/`.",
+        "description": "Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`.",
         "tags": [
           {
             "title": "example",
