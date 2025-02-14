@@ -4,8 +4,7 @@ import {
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import pkg from 'odoo-await';
-const Odoo = pkg;
+import Odoo from 'odoo-await';
 
 let odooConn = null;
 
@@ -60,27 +59,27 @@ async function login(state) {
  * Create a record in Odoo
  * @public
  * @example
- * create("res.partner", { name: "Kool Keith" });
+ * create("res.partner", { name: "Kool Keith" }, {externalId: 23});
  * @function
  * @param {string} model - The specific record model i.e. "res.partner"
  * @param {object} data - The data to be created in JSON.
- * @param {string} externalId - Optional external ID for the record.
+ * @param {object} options - Optional external ID for the record.
  * @returns {Operation}
  */
-export function create(model, data, externalId) {
+export function create(model, data, options) {
   return async state => {
-    const [resolvedModel, resolvedData, resolvedExternalId] = expandReferences(
+    const [resolvedModel, resolvedData, resolvedOptions] = expandReferences(
       state,
       model,
       data,
-      externalId
+      options
     );
 
-    console.log(resolvedModel, resolvedData, resolvedExternalId);
+    console.log(resolvedModel, resolvedData, resolvedOptions);
     const response = await odooConn.create(
       resolvedModel,
       resolvedData,
-      resolvedExternalId
+      resolvedOptions.externalId
     );
 
     return composeNextState(state, response);
@@ -95,10 +94,10 @@ export function create(model, data, externalId) {
  * @function
  * @param {string} model - The specific record model from i.e. "res.partner"
  * @param {number[]} recordId - An array of record IDs to read.
- * @param {string[]} fields - An array of fields to read from the record.
+ * @param {string[]} fields - An optional array of fields to read from the record.
  * @returns {Operation}
  */
-export function read(model, recordId, fields) {
+export function read(model, recordId, fields = []) {
   return async state => {
     const [resolvedModel, resolvedRecordId, resolvedFields] = expandReferences(
       state,

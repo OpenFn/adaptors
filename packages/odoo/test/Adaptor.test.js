@@ -1,18 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import {
-  execute,
-  create,
-  dataValue,
-  update,
-  read,
-  deleteRecord,
-} from '../src/Adaptor.js';
-
-import MockAgent from './mockAgent.js';
-import { setGlobalDispatcher } from 'undici';
-
-setGlobalDispatcher(MockAgent);
+import { create, update, read, deleteRecord } from '../src/Adaptor.js';
 
 const configuration = {
   baseUrl: 'https://test.odoo.com/odoo',
@@ -28,10 +16,14 @@ describe('read record', () => {
     const mock = {
       read: (model, id, fields) => {
         expect(model).to.eql('product.product');
-        return {
-          id: 2,
-          name: 'Saas Product',
-        };
+        expect(id).to.eql([2]);
+        expect(fields).to.eql(['name']);
+        return [
+          {
+            id: 2,
+            name: 'Saas Product',
+          },
+        ];
       },
     };
     enableMockClient(mock);
@@ -43,8 +35,10 @@ describe('read record', () => {
 describe('create', () => {
   it('should create a record', () => {
     const mock = {
-      create: (model, data, id) => {
+      create: (model, data, options) => {
         expect(model).to.eql('res.partner');
+        expect(data).to.eql({ name: 'Jane Doe' });
+        expect(options).to.eql({ externalId: 23 });
         return {
           data: 15,
         };
@@ -52,7 +46,7 @@ describe('create', () => {
     };
     enableMockClient(mock);
 
-    create('res.partner', { name: 'Jane Doe' }, '')(state);
+    create('res.partner', { name: 'Jane Doe' }, { externalId: 23 })(state);
   });
 });
 
@@ -61,6 +55,8 @@ describe('update', () => {
     const mock = {
       update: (model, id, data) => {
         expect(model).to.eql('product.product');
+        expect(id).to.eql(4);
+        expect(data).to.eql({ name: 'Testing Product' });
         return {
           data: true,
         };
@@ -77,6 +73,7 @@ describe('delete', () => {
     const mock = {
       deleteRecord: (model, id) => {
         expect(model).to.eql('product.product');
+        expect(id).to.eql(4);
         return {
           data: true,
         };

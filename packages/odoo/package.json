@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-odoo",
-  "version": "3.0.1",
-  "description": "The standard odoo for building OpenFn adaptors",
+  "version": "1.0.0",
+  "description": "OpenFn odoo adaptor",
   "type": "module",
   "exports": {
     ".": {
@@ -31,8 +31,6 @@
     "odoo-await": "^3.4.1"
   },
   "devDependencies": {
-    "@openfn/buildtools": "workspace:^1.0.2",
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
