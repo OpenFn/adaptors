@@ -256,7 +256,30 @@ export function create(resource: any) {
 }
 
 // writes to state.bundles[name]
-export function addToBundle(resources: any[], name?: string) {}
+// TODO let's also have a create bundle in case you need to add props
+// idk how formal bundles need to be
+export function addToBundle(resources: any[], name: string = 'bundle') {
+  return state => {
+    let [$resources, $name] = expandReferences(state, resources, name);
+
+    if (!state[$name]) {
+      state[$name] = {
+        resourceType: 'Bundle',
+        entry: [],
+      };
+    }
+
+    if (!Array.isArray($resources)) {
+      $resources = [$resources];
+    }
+
+    state[$name].entry.push(
+      ...$resources.map(r => ({
+        resource: r,
+      }))
+    );
+  };
+}
 
 // posts state.bundles[name]
 export function submitBundle(name?: string) {}
