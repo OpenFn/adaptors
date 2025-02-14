@@ -293,6 +293,11 @@ describe('getSubmissions', () => {
         { ...jsonHeaders }
       );
     const state = { configuration };
+    // This unit test looks wrong
+    // why are we asserting against response, and not state.data?
+    // ~95% of users only care about state.data
+    // Note that the fix on this branch should be causing the tests to fail now,
+    // because we no longer return response from getSubmissions
     const { response } = await execute(getSubmissions(formId))(state);
     expect(response.results[0]['First_Name_of_Patient']).to.eql('Kwothe');
   });
