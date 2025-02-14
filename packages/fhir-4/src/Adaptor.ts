@@ -240,7 +240,7 @@ export function create(resource: any) {
       throwError('INVALID_RESOURCE_TYPE', {
         description:
           'The provided resource does not have a resourceType property',
-        fix: 'Set resourceType on the resource, or use a builder function eg b.patient({})',
+        fix: 'Set resourceType on the resource, or use a builder function eg b.patient({...})',
       });
     }
 
@@ -255,16 +255,29 @@ export function create(resource: any) {
   };
 }
 
-// writes to state.bundles[name]
-// TODO let's also have a create bundle in case you need to add props
-// idk how formal bundles need to be
-export function addToBundle(resources: any[], name: string = 'bundle') {
+/**
+ * Add a resource to a bundle on state, using the `name` as the key (or `bundle` by default).
+ * The resource will be upserted (via PUT).
+ * A new bundle will be generated if one does not already exist.
+ * @public
+ * @function
+ * @param {object or array} resources - A resource or array of resources to add to the bundle
+ * @param {string} [name] - A name (key) for this bundle on state (defaults to `bundle`)
+ * @state <name> - the updated bundle
+ * @example <caption>Add a new patient resource to the default bundle</caption>
+ * addToBundle(b.patient($.patientDetails))
+ * @returns Operation
+ */
+export function addToBundle(resources: any | any[], name: string = 'bundle') {
   return state => {
     let [$resources, $name] = expandReferences(state, resources, name);
 
     if (!state[$name]) {
+      // Generate a barebones bundle object
+      // We do not need to maintain `total` or anything because that's for search bundles only
       state[$name] = {
         resourceType: 'Bundle',
+        type: 'transaction',
         entry: [],
       };
     }
@@ -275,14 +288,67 @@ export function addToBundle(resources: any[], name: string = 'bundle') {
 
     state[$name].entry.push(
       ...$resources.map(r => ({
+        // TODO is this needed?
+        // fullUrl: new URL(`${r.resourceType}/${r.id}`, state.configuration?.baseUrl).toString(),
         resource: r,
+        request: {
+          method: 'PUT', // upsert
+          url: `${r.resourceType}/${r.id}`,
+        },
       }))
     );
+
+    return state;
   };
 }
 
-// posts state.bundles[name]
-export function submitBundle(name?: string) {}
+/**
+ * Upload a bundle from state (created by addToBundle) as a transaction.
+ * @public
+ * @function
+ * @param {string/object} bundle - A bundle object or name of a bundle on state
+ * @state <name> - the updated bundle
+ * @example <caption>Upload the default bundle</caption>
+ * uploadBundle()
+ * @example <caption>Create and a bundle with a custom name</caption>
+ * addToBundle($.patients, 'patientsBundle')
+ * uploadBundle('patientsBundle')
+ * @example <caption>Upload a bundle from state</caption>
+ * uploadBundle($.patientsBundle)
+ * @returns Operation
+ */
+export function uploadBundle(bundle: string | any = 'bundle') {
+  return async state => {
+    let [$bundle] = expandReferences(state, bundle);
+    let data;
+    if (typeof $bundle === 'string') {
+      data = state[$bundle];
+    } else if ($bundle) {
+      data = $bundle;
+    } else {
+      data = state.bundle;
+    }
+
+    if (!data) {
+      throwError('INVALID_BUNDLE', {
+        description:
+          'You have passed in invalid bundle or bundle name to uploadBundle().',
+        fix: 'Pass the name of a key on state that references a bundle, or pass a bundle object directly.',
+        bundle: $bundle ?? 'bundle (default)',
+      });
+    }
+
+    const response = await request('POST', '/', {
+      configuration: state.configuration,
+      body: data,
+    });
+
+    return prepareNextState(state, response);
+  };
+}
+
+// TODO maybe an each that can take a bundle and iterate over each resource?
+// should it include the metadata/wrapper?
 
 export {
   dataPath,

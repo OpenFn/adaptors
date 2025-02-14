@@ -1,6 +1,15 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { read, search, update, create, delete as del } from '../src/Adaptor';
+import {
+  read,
+  search,
+  update,
+  create,
+  delete as del,
+  addToBundle,
+  uploadBundle,
+} from '../src/Adaptor';
+
 import patient from './fixtures/Patient' assert { type: 'json' };
 
 const testServer = enableMockClient('https://fhir.example.com');
@@ -200,5 +209,327 @@ describe('delete', () => {
     expect(err.code).to.equal('INVALID_RESOURCE_ID');
     expect(err.fix).to.be.ok;
     expect(err.description).to.be.ok;
+  });
+});
+
+describe('addToBundle', () => {
+  it('should add one resource to a non-existing default bundle', async () => {
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com/fhir',
+      },
+    };
+    const resource = { id: 'a', resourceType: 'patient' };
+
+    const result = await addToBundle(resource)(state);
+    expect(result.bundle).to.eql({
+      resourceType: 'Bundle',
+      type: 'transaction',
+      entry: [
+        {
+          resource,
+          request: {
+            method: 'PUT',
+            url: 'patient/a',
+          },
+        },
+      ],
+    });
+  });
+  it('should add one resource to an existing default bundle', async () => {
+    const z = { id: 'z', resourceType: 'patient' };
+    const state = {
+      bundle: {
+        resourceType: 'Bundle',
+        type: 'transaction',
+        entry: [
+          {
+            resource: z,
+            request: {
+              method: 'PUT',
+              url: 'patient/z',
+            },
+          },
+        ],
+        total: 0, // important!! Right now we are not maintaining this property on the bundle
+      },
+    };
+    const a = { id: 'a', resourceType: 'patient' };
+
+    const result = await addToBundle(a)(state);
+
+    expect(result.bundle).to.eql({
+      total: 0,
+      resourceType: 'Bundle',
+      type: 'transaction',
+      entry: [
+        {
+          resource: z,
+          request: {
+            method: 'PUT',
+            url: 'patient/z',
+          },
+        },
+        {
+          resource: a,
+          request: {
+            method: 'PUT',
+            url: 'patient/a',
+          },
+        },
+      ],
+    });
+  });
+  it('should add multiple resources to a non-existing default bundle', async () => {
+    const state = {};
+    const a = { id: 'a', resourceType: 'patient' };
+    const b = { id: 'b', resourceType: 'patient' };
+
+    const result = await addToBundle([a, b])(state);
+
+    expect(result.bundle).to.eql({
+      resourceType: 'Bundle',
+      type: 'transaction',
+      entry: [
+        {
+          resource: a,
+          request: {
+            method: 'PUT',
+            url: 'patient/a',
+          },
+        },
+        {
+          resource: b,
+          request: {
+            method: 'PUT',
+            url: 'patient/b',
+          },
+        },
+      ],
+    });
+  });
+  it('should add multiple resources to a non-existing custom bundle', async () => {
+    const state = {};
+    const a = { id: 'a', resourceType: 'patient' };
+    const b = { id: 'b', resourceType: 'patient' };
+
+    const result = await addToBundle([a, b], 'my-bundle')(state);
+
+    expect(result['my-bundle']).to.eql({
+      resourceType: 'Bundle',
+      type: 'transaction',
+      entry: [
+        {
+          resource: a,
+          request: {
+            method: 'PUT',
+            url: 'patient/a',
+          },
+        },
+        {
+          resource: b,
+          request: {
+            method: 'PUT',
+            url: 'patient/b',
+          },
+        },
+      ],
+    });
+  });
+  it('should add multiple resources to an existing custom bundle', async () => {
+    const z = { id: 'z', resourceType: 'patient' };
+    const state = {
+      'my-bundle': {
+        resourceType: 'Bundle',
+        type: 'transaction',
+        entry: [
+          {
+            resource: z,
+            request: {
+              method: 'PUT',
+              url: 'patient/z',
+            },
+          },
+        ],
+        total: 0,
+      },
+    };
+    const a = { id: 'a', resourceType: 'patient' };
+    const b = { id: 'b', resourceType: 'patient' };
+
+    const result = await addToBundle([a, b], 'my-bundle')(state);
+
+    expect(result['my-bundle']).to.eql({
+      resourceType: 'Bundle',
+      type: 'transaction',
+      entry: [
+        {
+          resource: z,
+          request: {
+            method: 'PUT',
+            url: 'patient/z',
+          },
+        },
+        {
+          resource: a,
+          request: {
+            method: 'PUT',
+            url: 'patient/a',
+          },
+        },
+        {
+          resource: b,
+          request: {
+            method: 'PUT',
+            url: 'patient/b',
+          },
+        },
+      ],
+      total: 0, // important!! Right now we are not maintaining this property on the bundle
+    });
+  });
+});
+
+describe('uploadBundle', () => {
+  it('should post the default bundle from state', async () => {
+    const state = {
+      configuration: {
+        baseUrl: 'https://fhir.example.com/r4',
+      },
+    };
+
+    const a = { id: 'a', resourceType: 'patient' };
+    addToBundle(a)(state);
+
+    mock('', {
+      req: {
+        method: 'POST',
+      },
+      res: {
+        // Simulated (incomplete) response bundle
+        data: {
+          resourceType: 'Bundle',
+          id: 'bundle-response',
+          meta: {
+            lastUpdated: '2014-08-18T01:43:33Z',
+          },
+          type: 'transaction-response',
+          entry: [
+            {
+              resource: a,
+              //request // don't bother in the mock
+              response: {
+                status: '200 OK',
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    const result = await uploadBundle()(state);
+
+    expect(result.response.statusCode).to.equal(200);
+    expect(result.response.statusMessage).to.equal('OK');
+    expect(result.data.entry[0].response.status).to.equal('200 OK');
+  });
+
+  it('should post a named bundle from state', async () => {
+    const state = {
+      configuration: {
+        baseUrl: 'https://fhir.example.com/r4',
+      },
+    };
+
+    const a = { id: 'a', resourceType: 'patient' };
+    addToBundle(a, 'b1')(state);
+
+    mock('', {
+      req: {
+        method: 'POST',
+      },
+      res: {
+        // Simulated (incomplete) response bundle
+        data: {
+          resourceType: 'Bundle',
+          id: 'bundle-response',
+          meta: {
+            lastUpdated: '2014-08-18T01:43:33Z',
+          },
+          type: 'transaction-response',
+          entry: [
+            {
+              resource: a,
+              //request // don't bother in the mock
+              response: {
+                status: '200 OK',
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    const result = await uploadBundle('b1')(state);
+
+    expect(result.response.statusCode).to.equal(200);
+    expect(result.response.statusMessage).to.equal('OK');
+    expect(result.data.entry[0].response.status).to.equal('200 OK');
+  });
+
+  it('should post a bundle from state', async () => {
+    const state = {
+      configuration: {
+        baseUrl: 'https://fhir.example.com/r4',
+      },
+    };
+
+    const a = { id: 'a', resourceType: 'patient' };
+
+    const bundle = {
+      resourceType: 'Bundle',
+      type: 'transaction',
+      entry: [
+        {
+          resource: a,
+          request: {
+            method: 'PUT',
+            url: 'patient/z',
+          },
+        },
+      ],
+    };
+
+    mock('', {
+      req: {
+        method: 'POST',
+      },
+      res: {
+        // Simulated (incomplete) response bundle
+        data: {
+          resourceType: 'Bundle',
+          id: 'bundle-response',
+          meta: {
+            lastUpdated: '2014-08-18T01:43:33Z',
+          },
+          type: 'transaction-response',
+          entry: [
+            {
+              resource: a,
+              //request // don't bother in the mock
+              response: {
+                status: '200 OK',
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    const result = await uploadBundle(bundle)(state);
+
+    expect(result.response.statusCode).to.equal(200);
+    expect(result.response.statusMessage).to.equal('OK');
+    expect(result.data.entry[0].response.status).to.equal('200 OK');
   });
 });
