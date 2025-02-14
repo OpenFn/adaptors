@@ -31,6 +31,10 @@ export function execute(...operations) {
   };
 }
 
+export function setMockClient(mock) {
+  odooConn = mock;
+}
+
 /**
  * Logs in to OpenSpp, gets a session token.
  * @example

@@ -1,6 +1,12 @@
 import { expect } from 'chai';
-import { enableMockClient } from '@openfn/language-common/util';
-import { create, update, read, deleteRecord } from '../src/Adaptor.js';
+
+import {
+  create,
+  update,
+  read,
+  deleteRecord,
+  setMockClient,
+} from '../src/Adaptor.js';
 
 const configuration = {
   baseUrl: 'https://test.odoo.com/odoo',
@@ -12,12 +18,13 @@ const configuration = {
 const state = { configuration };
 
 describe('read record', () => {
-  it('should read a record', () => {
+  it('should read a record', async () => {
     const mock = {
       read: (model, id, fields) => {
         expect(model).to.eql('product.product');
         expect(id).to.eql([2]);
         expect(fields).to.eql(['name']);
+
         return [
           {
             id: 2,
@@ -26,61 +33,66 @@ describe('read record', () => {
         ];
       },
     };
-    enableMockClient(mock);
+    setMockClient(mock);
 
-    read('product.product', [2], ['name'])(state);
+    const { data } = await read('product.product', [2], ['name'])(state);
+    expect(data[0].id).to.eql(2);
+    expect(data[0].name).to.eql('Saas Product');
   });
 });
 
 describe('create', () => {
-  it('should create a record', () => {
+  it('should create a record', async () => {
     const mock = {
       create: (model, data, options) => {
         expect(model).to.eql('res.partner');
         expect(data).to.eql({ name: 'Jane Doe' });
-        expect(options).to.eql({ externalId: 23 });
-        return {
-          data: 15,
-        };
+        expect(options).to.eql(23);
+        return 15;
       },
     };
-    enableMockClient(mock);
+    setMockClient(mock);
 
-    create('res.partner', { name: 'Jane Doe' }, { externalId: 23 })(state);
+    const { data } = await create(
+      'res.partner',
+      { name: 'Jane Doe' },
+      { externalId: 23 }
+    )(state);
+    expect(data).to.eql(15);
   });
 });
 
 describe('update', () => {
-  it('should update a record', () => {
+  it('should update a record', async () => {
     const mock = {
       update: (model, id, data) => {
         expect(model).to.eql('product.product');
         expect(id).to.eql(4);
         expect(data).to.eql({ name: 'Testing Product' });
-        return {
-          data: true,
-        };
+        return true;
       },
     };
-    enableMockClient(mock);
+    setMockClient(mock);
 
-    update('product.product', 4, { name: 'Testing Product' })(state);
+    const { data } = await update('product.product', 4, {
+      name: 'Testing Product',
+    })(state);
+    expect(data).to.eql(true);
   });
 });
 
 describe('delete', () => {
-  it('should delete a record', () => {
+  it('should delete a record', async () => {
     const mock = {
-      deleteRecord: (model, id) => {
+      delete: (model, id) => {
         expect(model).to.eql('product.product');
         expect(id).to.eql(4);
-        return {
-          data: true,
-        };
+        return true;
       },
     };
-    enableMockClient(mock);
+    setMockClient(mock);
 
-    deleteRecord('product.product', 4)(state);
+    const { data } = await deleteRecord('product.product', 4)(state);
+    expect(data).to.eql(true);
   });
 });
