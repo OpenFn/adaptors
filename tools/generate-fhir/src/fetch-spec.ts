@@ -34,6 +34,9 @@ export type Meta = {
   name?: string;
   adaptorGeneratedDate?: string;
   generatorVersion?: string;
+  options?: {
+    simpleBuilders?: boolean;
+  };
 };
 
 // download and parse the spec file

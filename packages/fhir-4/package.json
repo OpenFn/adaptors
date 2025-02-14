@@ -18,8 +18,11 @@
   "type": "module",
   "fhir": {
     "specUrl": "https://hl7.org/fhir/R4B/definitions.json.zip",
-    "adaptorGeneratedDate": "2025-02-14T15:18:10.328Z",
-    "generatorVersion": "0.2.3"
+    "adaptorGeneratedDate": "2025-02-14T15:27:48.696Z",
+    "generatorVersion": "0.2.3",
+    "options": {
+      "simpleBuilders": true
+    }
   },
   "dependencies": {
     "@openfn/language-common": "workspace",

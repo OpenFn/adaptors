@@ -120,7 +120,7 @@ export * from "./datatypes";
   * Create a FHIR Account resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Account number
   * @param {string} [props.status] - active | inactive | entered-in-error | on-hold | unknown
@@ -136,11 +136,18 @@ export * from "./datatypes";
  */
 export function account(type: string, props: Account_Props);
 
+export function account(props: Account_Props);
+
 export function account(type: any, props?: any) {
     const mappings = {
         "Account": Account_Account
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Account";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -151,7 +158,7 @@ export function account(type: any, props?: any) {
   * Create a FHIR ActivityDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this activity definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the activity definition
@@ -202,11 +209,18 @@ export function account(type: any, props?: any) {
  */
 export function activityDefinition(type: string, props: ActivityDefinition_Props);
 
+export function activityDefinition(props: ActivityDefinition_Props);
+
 export function activityDefinition(type: any, props?: any) {
     const mappings = {
         "ActivityDefinition": ActivityDefinition_ActivityDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ActivityDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -217,7 +231,7 @@ export function activityDefinition(type: any, props?: any) {
   * Create a FHIR AdministrableProductDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier for the administrable product
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -232,11 +246,18 @@ export function activityDefinition(type: any, props?: any) {
  */
 export function administrableProductDefinition(type: string, props: AdministrableProductDefinition_Props);
 
+export function administrableProductDefinition(props: AdministrableProductDefinition_Props);
+
 export function administrableProductDefinition(type: any, props?: any) {
     const mappings = {
         "AdministrableProductDefinition": AdministrableProductDefinition_AdministrableProductDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "AdministrableProductDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -247,7 +268,7 @@ export function administrableProductDefinition(type: any, props?: any) {
   * Create a FHIR AdverseEvent resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for the event
   * @param {string} [props.actuality] - actual | potential
@@ -272,11 +293,18 @@ export function administrableProductDefinition(type: any, props?: any) {
  */
 export function adverseEvent(type: string, props: AdverseEvent_Props);
 
+export function adverseEvent(props: AdverseEvent_Props);
+
 export function adverseEvent(type: any, props?: any) {
     const mappings = {
         "AdverseEvent": AdverseEvent_AdverseEvent
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "AdverseEvent";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -287,7 +315,7 @@ export function adverseEvent(type: any, props?: any) {
   * Create a FHIR AllergyIntolerance resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External ids for this item
   * @param {CodeableConcept} [props.clinicalStatus] - active | inactive | resolved
@@ -308,11 +336,18 @@ export function adverseEvent(type: any, props?: any) {
  */
 export function allergyIntolerance(type: string, props: AllergyIntolerance_Props);
 
+export function allergyIntolerance(props: AllergyIntolerance_Props);
+
 export function allergyIntolerance(type: any, props?: any) {
     const mappings = {
         "AllergyIntolerance": AllergyIntolerance_AllergyIntolerance
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "AllergyIntolerance";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -323,7 +358,7 @@ export function allergyIntolerance(type: any, props?: any) {
   * Create a FHIR Appointment resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {string} [props.status] - proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist
@@ -350,11 +385,18 @@ export function allergyIntolerance(type: any, props?: any) {
  */
 export function appointment(type: string, props: Appointment_Props);
 
+export function appointment(props: Appointment_Props);
+
 export function appointment(type: any, props?: any) {
     const mappings = {
         "Appointment": Appointment_Appointment
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Appointment";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -365,7 +407,7 @@ export function appointment(type: any, props?: any) {
   * Create a FHIR AppointmentResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {Reference} [props.appointment] - Appointment this response relates to
@@ -378,11 +420,18 @@ export function appointment(type: any, props?: any) {
  */
 export function appointmentResponse(type: string, props: AppointmentResponse_Props);
 
+export function appointmentResponse(props: AppointmentResponse_Props);
+
 export function appointmentResponse(type: any, props?: any) {
     const mappings = {
         "AppointmentResponse": AppointmentResponse_AppointmentResponse
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "AppointmentResponse";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -393,7 +442,7 @@ export function appointmentResponse(type: any, props?: any) {
   * Create a FHIR BiologicallyDerivedProduct resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External ids for this item
   * @param {string} [props.productCategory] - organ | tissue | fluid | cells | biologicalAgent
@@ -409,11 +458,18 @@ export function appointmentResponse(type: any, props?: any) {
  */
 export function biologicallyDerivedProduct(type: string, props: BiologicallyDerivedProduct_Props);
 
+export function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Props);
+
 export function biologicallyDerivedProduct(type: any, props?: any) {
     const mappings = {
         "BiologicallyDerivedProduct": BiologicallyDerivedProduct_BiologicallyDerivedProduct
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "BiologicallyDerivedProduct";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -424,7 +480,7 @@ export function biologicallyDerivedProduct(type: any, props?: any) {
   * Create a FHIR BodyStructure resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Bodystructure identifier
   * @param {boolean} [props.active] - Whether this record is in active use
@@ -437,11 +493,18 @@ export function biologicallyDerivedProduct(type: any, props?: any) {
  */
 export function bodyStructure(type: string, props: BodyStructure_Props);
 
+export function bodyStructure(props: BodyStructure_Props);
+
 export function bodyStructure(type: any, props?: any) {
     const mappings = {
         "BodyStructure": BodyStructure_BodyStructure
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "BodyStructure";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -452,7 +515,7 @@ export function bodyStructure(type: any, props?: any) {
   * Create a FHIR CarePlan resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this plan
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -480,11 +543,18 @@ export function bodyStructure(type: any, props?: any) {
  */
 export function carePlan(type: string, props: CarePlan_Props);
 
+export function carePlan(props: CarePlan_Props);
+
 export function carePlan(type: any, props?: any) {
     const mappings = {
         "CarePlan": CarePlan_CarePlan
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "CarePlan";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -495,7 +565,7 @@ export function carePlan(type: any, props?: any) {
   * Create a FHIR CareTeam resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this team
   * @param {string} [props.status] - proposed | active | suspended | inactive | entered-in-error
@@ -513,11 +583,18 @@ export function carePlan(type: any, props?: any) {
  */
 export function careTeam(type: string, props: CareTeam_Props);
 
+export function careTeam(props: CareTeam_Props);
+
 export function careTeam(type: any, props?: any) {
     const mappings = {
         "CareTeam": CareTeam_CareTeam
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "CareTeam";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -528,7 +605,7 @@ export function careTeam(type: any, props?: any) {
   * Create a FHIR ChargeItem resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for item
   * @param {string} [props.definitionUri] - Defining information about the code of this charge item
@@ -559,11 +636,18 @@ export function careTeam(type: any, props?: any) {
  */
 export function chargeItem(type: string, props: ChargeItem_Props);
 
+export function chargeItem(props: ChargeItem_Props);
+
 export function chargeItem(type: any, props?: any) {
     const mappings = {
         "ChargeItem": ChargeItem_ChargeItem
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ChargeItem";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -574,7 +658,7 @@ export function chargeItem(type: any, props?: any) {
   * Create a FHIR ChargeItemDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this charge item definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the charge item definition
@@ -602,11 +686,18 @@ export function chargeItem(type: any, props?: any) {
  */
 export function chargeItemDefinition(type: string, props: ChargeItemDefinition_Props);
 
+export function chargeItemDefinition(props: ChargeItemDefinition_Props);
+
 export function chargeItemDefinition(type: any, props?: any) {
     const mappings = {
         "ChargeItemDefinition": ChargeItemDefinition_ChargeItemDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ChargeItemDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -617,7 +708,7 @@ export function chargeItemDefinition(type: any, props?: any) {
   * Create a FHIR Citation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this citation, represented as a globally unique URI
   * @param {Identifier} [props.identifier] - Identifier for the Citation resource itself
@@ -651,11 +742,18 @@ export function chargeItemDefinition(type: any, props?: any) {
  */
 export function citation(type: string, props: Citation_Props);
 
+export function citation(props: Citation_Props);
+
 export function citation(type: any, props?: any) {
     const mappings = {
         "Citation": Citation_Citation
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Citation";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -666,7 +764,7 @@ export function citation(type: any, props?: any) {
   * Create a FHIR Claim resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for claim
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -698,11 +796,18 @@ export function citation(type: any, props?: any) {
  */
 export function claim(type: string, props: Claim_Props);
 
+export function claim(props: Claim_Props);
+
 export function claim(type: any, props?: any) {
     const mappings = {
         "Claim": Claim_Claim
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Claim";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -713,7 +818,7 @@ export function claim(type: any, props?: any) {
   * Create a FHIR ClaimResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for a claim response
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -745,11 +850,18 @@ export function claim(type: any, props?: any) {
  */
 export function claimResponse(type: string, props: ClaimResponse_Props);
 
+export function claimResponse(props: ClaimResponse_Props);
+
 export function claimResponse(type: any, props?: any) {
     const mappings = {
         "ClaimResponse": ClaimResponse_ClaimResponse
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ClaimResponse";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -760,7 +872,7 @@ export function claimResponse(type: any, props?: any) {
   * Create a FHIR ClinicalImpression resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - in-progress | completed | entered-in-error
@@ -785,11 +897,18 @@ export function claimResponse(type: any, props?: any) {
  */
 export function clinicalImpression(type: string, props: ClinicalImpression_Props);
 
+export function clinicalImpression(props: ClinicalImpression_Props);
+
 export function clinicalImpression(type: any, props?: any) {
     const mappings = {
         "ClinicalImpression": ClinicalImpression_ClinicalImpression
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ClinicalImpression";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -800,7 +919,7 @@ export function clinicalImpression(type: any, props?: any) {
   * Create a FHIR ClinicalUseDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for this issue
   * @param {string} [props.type] - indication | contraindication | interaction | undesirable-effect | warning
@@ -816,11 +935,18 @@ export function clinicalImpression(type: any, props?: any) {
  */
 export function clinicalUseDefinition(type: string, props: ClinicalUseDefinition_Props);
 
+export function clinicalUseDefinition(props: ClinicalUseDefinition_Props);
+
 export function clinicalUseDefinition(type: any, props?: any) {
     const mappings = {
         "ClinicalUseDefinition": ClinicalUseDefinition_ClinicalUseDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ClinicalUseDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -831,7 +957,7 @@ export function clinicalUseDefinition(type: any, props?: any) {
   * Create a FHIR Communication resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -859,11 +985,18 @@ export function clinicalUseDefinition(type: any, props?: any) {
  */
 export function communication(type: string, props: Communication_Props);
 
+export function communication(props: Communication_Props);
+
 export function communication(type: any, props?: any) {
     const mappings = {
         "Communication": Communication_Communication
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Communication";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -874,7 +1007,7 @@ export function communication(type: any, props?: any) {
   * Create a FHIR CommunicationRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {Reference} [props.basedOn] - Fulfills plan or proposal
@@ -901,11 +1034,18 @@ export function communication(type: any, props?: any) {
  */
 export function communicationRequest(type: string, props: CommunicationRequest_Props);
 
+export function communicationRequest(props: CommunicationRequest_Props);
+
 export function communicationRequest(type: any, props?: any) {
     const mappings = {
         "CommunicationRequest": CommunicationRequest_CommunicationRequest
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "CommunicationRequest";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -916,7 +1056,7 @@ export function communicationRequest(type: any, props?: any) {
   * Create a FHIR Condition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this condition
   * @param {CodeableConcept} [props.clinicalStatus] - active | recurrence | relapse | inactive | remission | resolved
@@ -938,11 +1078,18 @@ export function communicationRequest(type: any, props?: any) {
  */
 export function condition(type: string, props: Condition_Props);
 
+export function condition(props: Condition_Props);
+
 export function condition(type: any, props?: any) {
     const mappings = {
         "Condition": Condition_Condition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Condition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -953,7 +1100,7 @@ export function condition(type: any, props?: any) {
   * Create a FHIR Contract resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Contract number
   * @param {string} [props.url] - Basal definition
@@ -991,11 +1138,18 @@ export function condition(type: any, props?: any) {
  */
 export function contract(type: string, props: Contract_Props);
 
+export function contract(props: Contract_Props);
+
 export function contract(type: any, props?: any) {
     const mappings = {
         "Contract": Contract_Contract
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Contract";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1006,7 +1160,7 @@ export function contract(type: any, props?: any) {
   * Create a FHIR Coverage resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for the coverage
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -1028,11 +1182,18 @@ export function contract(type: any, props?: any) {
  */
 export function coverage(type: string, props: Coverage_Props);
 
+export function coverage(props: Coverage_Props);
+
 export function coverage(type: any, props?: any) {
     const mappings = {
         "Coverage": Coverage_Coverage
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Coverage";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1043,7 +1204,7 @@ export function coverage(type: any, props?: any) {
   * Create a FHIR CoverageEligibilityRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for coverage eligiblity request
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -1062,11 +1223,18 @@ export function coverage(type: any, props?: any) {
  */
 export function coverageEligibilityRequest(type: string, props: CoverageEligibilityRequest_Props);
 
+export function coverageEligibilityRequest(props: CoverageEligibilityRequest_Props);
+
 export function coverageEligibilityRequest(type: any, props?: any) {
     const mappings = {
         "CoverageEligibilityRequest": CoverageEligibilityRequest_CoverageEligibilityRequest
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "CoverageEligibilityRequest";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1077,7 +1245,7 @@ export function coverageEligibilityRequest(type: any, props?: any) {
   * Create a FHIR CoverageEligibilityResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for coverage eligiblity request
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -1097,11 +1265,18 @@ export function coverageEligibilityRequest(type: any, props?: any) {
  */
 export function coverageEligibilityResponse(type: string, props: CoverageEligibilityResponse_Props);
 
+export function coverageEligibilityResponse(props: CoverageEligibilityResponse_Props);
+
 export function coverageEligibilityResponse(type: any, props?: any) {
     const mappings = {
         "CoverageEligibilityResponse": CoverageEligibilityResponse_CoverageEligibilityResponse
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "CoverageEligibilityResponse";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1112,7 +1287,7 @@ export function coverageEligibilityResponse(type: any, props?: any) {
   * Create a FHIR DetectedIssue resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique id for the detected issue
   * @param {string} [props.status] - registered | preliminary | final | amended +
@@ -1129,11 +1304,18 @@ export function coverageEligibilityResponse(type: any, props?: any) {
  */
 export function detectedIssue(type: string, props: DetectedIssue_Props);
 
+export function detectedIssue(props: DetectedIssue_Props);
+
 export function detectedIssue(type: any, props?: any) {
     const mappings = {
         "DetectedIssue": DetectedIssue_DetectedIssue
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "DetectedIssue";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1144,7 +1326,7 @@ export function detectedIssue(type: any, props?: any) {
   * Create a FHIR Device resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Instance identifier
   * @param {Reference} [props.definition] - The reference to the definition for the device
@@ -1175,11 +1357,18 @@ export function detectedIssue(type: any, props?: any) {
  */
 export function device(type: string, props: Device_Props);
 
+export function device(props: Device_Props);
+
 export function device(type: any, props?: any) {
     const mappings = {
         "Device": Device_Device
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Device";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1190,7 +1379,7 @@ export function device(type: any, props?: any) {
   * Create a FHIR DeviceDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Instance identifier
   * @param {BackboneElement} [props.udiDeviceIdentifier] - Unique Device Identifier (UDI) Barcode string
@@ -1217,11 +1406,18 @@ export function device(type: any, props?: any) {
  */
 export function deviceDefinition(type: string, props: DeviceDefinition_Props);
 
+export function deviceDefinition(props: DeviceDefinition_Props);
+
 export function deviceDefinition(type: any, props?: any) {
     const mappings = {
         "DeviceDefinition": DeviceDefinition_DeviceDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "DeviceDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1232,7 +1428,7 @@ export function deviceDefinition(type: any, props?: any) {
   * Create a FHIR DeviceMetric resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Instance identifier
   * @param {CodeableConcept} [props.type] - Identity of metric, for example Heart Rate or PEEP Setting
@@ -1247,11 +1443,18 @@ export function deviceDefinition(type: any, props?: any) {
  */
 export function deviceMetric(type: string, props: DeviceMetric_Props);
 
+export function deviceMetric(props: DeviceMetric_Props);
+
 export function deviceMetric(type: any, props?: any) {
     const mappings = {
         "DeviceMetric": DeviceMetric_DeviceMetric
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "DeviceMetric";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1262,7 +1465,7 @@ export function deviceMetric(type: any, props?: any) {
   * Create a FHIR DeviceRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Request identifier
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -1291,11 +1494,18 @@ export function deviceMetric(type: any, props?: any) {
  */
 export function deviceRequest(type: string, props: DeviceRequest_Props);
 
+export function deviceRequest(props: DeviceRequest_Props);
+
 export function deviceRequest(type: any, props?: any) {
     const mappings = {
         "DeviceRequest": DeviceRequest_DeviceRequest
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "DeviceRequest";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1306,7 +1516,7 @@ export function deviceRequest(type: any, props?: any) {
   * Create a FHIR DeviceUseStatement resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier for this record
   * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
@@ -1324,11 +1534,18 @@ export function deviceRequest(type: any, props?: any) {
  */
 export function deviceUseStatement(type: string, props: DeviceUseStatement_Props);
 
+export function deviceUseStatement(props: DeviceUseStatement_Props);
+
 export function deviceUseStatement(type: any, props?: any) {
     const mappings = {
         "DeviceUseStatement": DeviceUseStatement_DeviceUseStatement
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "DeviceUseStatement";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1339,7 +1556,7 @@ export function deviceUseStatement(type: any, props?: any) {
   * Create a FHIR DiagnosticReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for report
   * @param {Reference} [props.basedOn] - What was requested
@@ -1362,11 +1579,18 @@ export function deviceUseStatement(type: any, props?: any) {
  */
 export function diagnosticReport(type: string, props: DiagnosticReport_Props);
 
+export function diagnosticReport(props: DiagnosticReport_Props);
+
 export function diagnosticReport(type: any, props?: any) {
     const mappings = {
         "DiagnosticReport": DiagnosticReport_DiagnosticReport
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "DiagnosticReport";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1377,17 +1601,24 @@ export function diagnosticReport(type: any, props?: any) {
   * Create a FHIR DomainResource resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
 
  */
 export function domainResource(type: string, props: DomainResource_Props);
+
+export function domainResource(props: DomainResource_Props);
 
 export function domainResource(type: any, props?: any) {
     const mappings = {
         "DomainResource": DomainResource_DomainResource
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "DomainResource";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1398,7 +1629,7 @@ export function domainResource(type: any, props?: any) {
   * Create a FHIR Encounter resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifier(s) by which this encounter is known
   * @param {string} [props.status] - planned | arrived | triaged | in-progress | onleave | finished | cancelled +
@@ -1426,11 +1657,18 @@ export function domainResource(type: any, props?: any) {
  */
 export function encounter(type: string, props: Encounter_Props);
 
+export function encounter(props: Encounter_Props);
+
 export function encounter(type: any, props?: any) {
     const mappings = {
         "Encounter": Encounter_Encounter
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Encounter";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1441,7 +1679,7 @@ export function encounter(type: any, props?: any) {
   * Create a FHIR Endpoint resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifies this endpoint across multiple systems
   * @param {string} [props.status] - active | suspended | error | off | entered-in-error | test
@@ -1457,11 +1695,18 @@ export function encounter(type: any, props?: any) {
  */
 export function endpoint(type: string, props: Endpoint_Props);
 
+export function endpoint(props: Endpoint_Props);
+
 export function endpoint(type: any, props?: any) {
     const mappings = {
         "Endpoint": Endpoint_Endpoint
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Endpoint";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1472,7 +1717,7 @@ export function endpoint(type: any, props?: any) {
   * Create a FHIR EnrollmentRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -1484,11 +1729,18 @@ export function endpoint(type: any, props?: any) {
  */
 export function enrollmentRequest(type: string, props: EnrollmentRequest_Props);
 
+export function enrollmentRequest(props: EnrollmentRequest_Props);
+
 export function enrollmentRequest(type: any, props?: any) {
     const mappings = {
         "EnrollmentRequest": EnrollmentRequest_EnrollmentRequest
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "EnrollmentRequest";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1499,7 +1751,7 @@ export function enrollmentRequest(type: any, props?: any) {
   * Create a FHIR EnrollmentResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -1512,11 +1764,18 @@ export function enrollmentRequest(type: any, props?: any) {
  */
 export function enrollmentResponse(type: string, props: EnrollmentResponse_Props);
 
+export function enrollmentResponse(props: EnrollmentResponse_Props);
+
 export function enrollmentResponse(type: any, props?: any) {
     const mappings = {
         "EnrollmentResponse": EnrollmentResponse_EnrollmentResponse
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "EnrollmentResponse";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1527,7 +1786,7 @@ export function enrollmentResponse(type: any, props?: any) {
   * Create a FHIR EpisodeOfCare resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier(s) relevant for this EpisodeOfCare
   * @param {string} [props.status] - planned | waitlist | active | onhold | finished | cancelled | entered-in-error
@@ -1544,11 +1803,18 @@ export function enrollmentResponse(type: any, props?: any) {
  */
 export function episodeOfCare(type: string, props: EpisodeOfCare_Props);
 
+export function episodeOfCare(props: EpisodeOfCare_Props);
+
 export function episodeOfCare(type: any, props?: any) {
     const mappings = {
         "EpisodeOfCare": EpisodeOfCare_EpisodeOfCare
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "EpisodeOfCare";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1559,7 +1825,7 @@ export function episodeOfCare(type: any, props?: any) {
   * Create a FHIR EventDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this event definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the event definition
@@ -1592,11 +1858,18 @@ export function episodeOfCare(type: any, props?: any) {
  */
 export function eventDefinition(type: string, props: EventDefinition_Props);
 
+export function eventDefinition(props: EventDefinition_Props);
+
 export function eventDefinition(type: any, props?: any) {
     const mappings = {
         "EventDefinition": EventDefinition_EventDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "EventDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1607,7 +1880,7 @@ export function eventDefinition(type: any, props?: any) {
   * Create a FHIR Evidence resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this evidence, represented as a globally unique URI
   * @param {Identifier} [props.identifier] - Additional identifier for the summary
@@ -1637,11 +1910,18 @@ export function eventDefinition(type: any, props?: any) {
  */
 export function evidence(type: string, props: Evidence_Props);
 
+export function evidence(props: Evidence_Props);
+
 export function evidence(type: any, props?: any) {
     const mappings = {
         "Evidence": Evidence_Evidence
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Evidence";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1652,7 +1932,7 @@ export function evidence(type: any, props?: any) {
   * Create a FHIR EvidenceReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this EvidenceReport, represented as a globally unique URI
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -1675,11 +1955,18 @@ export function evidence(type: any, props?: any) {
  */
 export function evidenceReport(type: string, props: EvidenceReport_Props);
 
+export function evidenceReport(props: EvidenceReport_Props);
+
 export function evidenceReport(type: any, props?: any) {
     const mappings = {
         "EvidenceReport": EvidenceReport_EvidenceReport
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "EvidenceReport";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1690,7 +1977,7 @@ export function evidenceReport(type: any, props?: any) {
   * Create a FHIR EvidenceVariable resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this evidence variable, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the evidence variable
@@ -1719,11 +2006,18 @@ export function evidenceReport(type: any, props?: any) {
  */
 export function evidenceVariable(type: string, props: EvidenceVariable_Props);
 
+export function evidenceVariable(props: EvidenceVariable_Props);
+
 export function evidenceVariable(type: any, props?: any) {
     const mappings = {
         "EvidenceVariable": EvidenceVariable_EvidenceVariable
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "EvidenceVariable";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1734,7 +2028,7 @@ export function evidenceVariable(type: any, props?: any) {
   * Create a FHIR ExplanationOfBenefit resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for the resource
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -1782,11 +2076,18 @@ export function evidenceVariable(type: any, props?: any) {
  */
 export function explanationOfBenefit(type: string, props: ExplanationOfBenefit_Props);
 
+export function explanationOfBenefit(props: ExplanationOfBenefit_Props);
+
 export function explanationOfBenefit(type: any, props?: any) {
     const mappings = {
         "ExplanationOfBenefit": ExplanationOfBenefit_ExplanationOfBenefit
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ExplanationOfBenefit";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1797,7 +2098,7 @@ export function explanationOfBenefit(type: any, props?: any) {
   * Create a FHIR FamilyMemberHistory resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Id(s) for this record
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -1820,11 +2121,18 @@ export function explanationOfBenefit(type: any, props?: any) {
  */
 export function familyMemberHistory(type: string, props: FamilyMemberHistory_Props);
 
+export function familyMemberHistory(props: FamilyMemberHistory_Props);
+
 export function familyMemberHistory(type: any, props?: any) {
     const mappings = {
         "FamilyMemberHistory": FamilyMemberHistory_FamilyMemberHistory
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "FamilyMemberHistory";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1835,7 +2143,7 @@ export function familyMemberHistory(type: any, props?: any) {
   * Create a FHIR Flag resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - active | inactive | entered-in-error
@@ -1848,11 +2156,18 @@ export function familyMemberHistory(type: any, props?: any) {
  */
 export function flag(type: string, props: Flag_Props);
 
+export function flag(props: Flag_Props);
+
 export function flag(type: any, props?: any) {
     const mappings = {
         "Flag": Flag_Flag
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Flag";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1863,7 +2178,7 @@ export function flag(type: any, props?: any) {
   * Create a FHIR Goal resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this goal
   * @param {string} [props.lifecycleStatus] - proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected
@@ -1884,11 +2199,18 @@ export function flag(type: any, props?: any) {
  */
 export function goal(type: string, props: Goal_Props);
 
+export function goal(props: Goal_Props);
+
 export function goal(type: any, props?: any) {
     const mappings = {
         "Goal": Goal_Goal
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Goal";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1899,7 +2221,7 @@ export function goal(type: any, props?: any) {
   * Create a FHIR Group resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique id
   * @param {boolean} [props.active] - Whether this group's record is in active use
@@ -1914,11 +2236,18 @@ export function goal(type: any, props?: any) {
  */
 export function group(type: string, props: Group_Props);
 
+export function group(props: Group_Props);
+
 export function group(type: any, props?: any) {
     const mappings = {
         "Group": Group_Group
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Group";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1929,7 +2258,7 @@ export function group(type: any, props?: any) {
   * Create a FHIR GuidanceResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.requestIdentifier] - The identifier of the request associated with this response, if any
   * @param {Identifier} [props.identifier] - Business identifier
@@ -1949,11 +2278,18 @@ export function group(type: any, props?: any) {
  */
 export function guidanceResponse(type: string, props: GuidanceResponse_Props);
 
+export function guidanceResponse(props: GuidanceResponse_Props);
+
 export function guidanceResponse(type: any, props?: any) {
     const mappings = {
         "GuidanceResponse": GuidanceResponse_GuidanceResponse
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "GuidanceResponse";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -1964,7 +2300,7 @@ export function guidanceResponse(type: any, props?: any) {
   * Create a FHIR HealthcareService resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifiers for this item
   * @param {boolean} [props.active] - Whether this HealthcareService record is in active use
@@ -1993,11 +2329,18 @@ export function guidanceResponse(type: any, props?: any) {
  */
 export function healthcareService(type: string, props: HealthcareService_Props);
 
+export function healthcareService(props: HealthcareService_Props);
+
 export function healthcareService(type: any, props?: any) {
     const mappings = {
         "HealthcareService": HealthcareService_HealthcareService
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "HealthcareService";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2008,7 +2351,7 @@ export function healthcareService(type: any, props?: any) {
   * Create a FHIR ImagingStudy resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifiers for the whole study
   * @param {string} [props.status] - registered | available | cancelled | entered-in-error | unknown
@@ -2033,11 +2376,18 @@ export function healthcareService(type: any, props?: any) {
  */
 export function imagingStudy(type: string, props: ImagingStudy_Props);
 
+export function imagingStudy(props: ImagingStudy_Props);
+
 export function imagingStudy(type: any, props?: any) {
     const mappings = {
         "ImagingStudy": ImagingStudy_ImagingStudy
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ImagingStudy";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2048,7 +2398,7 @@ export function imagingStudy(type: any, props?: any) {
   * Create a FHIR Immunization resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - completed | entered-in-error | not-done
@@ -2081,11 +2431,18 @@ export function imagingStudy(type: any, props?: any) {
  */
 export function immunization(type: string, props: Immunization_Props);
 
+export function immunization(props: Immunization_Props);
+
 export function immunization(type: any, props?: any) {
     const mappings = {
         "Immunization": Immunization_Immunization
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Immunization";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2096,7 +2453,7 @@ export function immunization(type: any, props?: any) {
   * Create a FHIR ImmunizationEvaluation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - completed | entered-in-error
@@ -2114,11 +2471,18 @@ export function immunization(type: any, props?: any) {
  */
 export function immunizationEvaluation(type: string, props: ImmunizationEvaluation_Props);
 
+export function immunizationEvaluation(props: ImmunizationEvaluation_Props);
+
 export function immunizationEvaluation(type: any, props?: any) {
     const mappings = {
         "ImmunizationEvaluation": ImmunizationEvaluation_ImmunizationEvaluation
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ImmunizationEvaluation";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2129,7 +2493,7 @@ export function immunizationEvaluation(type: any, props?: any) {
   * Create a FHIR ImmunizationRecommendation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {Reference} [props.patient] - Who this profile is for
@@ -2139,11 +2503,18 @@ export function immunizationEvaluation(type: any, props?: any) {
  */
 export function immunizationRecommendation(type: string, props: ImmunizationRecommendation_Props);
 
+export function immunizationRecommendation(props: ImmunizationRecommendation_Props);
+
 export function immunizationRecommendation(type: any, props?: any) {
     const mappings = {
         "ImmunizationRecommendation": ImmunizationRecommendation_ImmunizationRecommendation
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ImmunizationRecommendation";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2154,7 +2525,7 @@ export function immunizationRecommendation(type: any, props?: any) {
   * Create a FHIR Ingredient resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier or code by which the ingredient can be referenced
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -2167,11 +2538,18 @@ export function immunizationRecommendation(type: any, props?: any) {
  */
 export function ingredient(type: string, props: Ingredient_Props);
 
+export function ingredient(props: Ingredient_Props);
+
 export function ingredient(type: any, props?: any) {
     const mappings = {
         "Ingredient": Ingredient_Ingredient
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Ingredient";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2182,7 +2560,7 @@ export function ingredient(type: any, props?: any) {
   * Create a FHIR InsurancePlan resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for Product
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -2201,11 +2579,18 @@ export function ingredient(type: any, props?: any) {
  */
 export function insurancePlan(type: string, props: InsurancePlan_Props);
 
+export function insurancePlan(props: InsurancePlan_Props);
+
 export function insurancePlan(type: any, props?: any) {
     const mappings = {
         "InsurancePlan": InsurancePlan_InsurancePlan
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "InsurancePlan";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2216,7 +2601,7 @@ export function insurancePlan(type: any, props?: any) {
   * Create a FHIR Invoice resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for item
   * @param {string} [props.status] - draft | issued | balanced | cancelled | entered-in-error
@@ -2237,11 +2622,18 @@ export function insurancePlan(type: any, props?: any) {
  */
 export function invoice(type: string, props: Invoice_Props);
 
+export function invoice(props: Invoice_Props);
+
 export function invoice(type: any, props?: any) {
     const mappings = {
         "Invoice": Invoice_Invoice
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Invoice";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2252,7 +2644,7 @@ export function invoice(type: any, props?: any) {
   * Create a FHIR Library resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this library, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the library
@@ -2288,11 +2680,18 @@ export function invoice(type: any, props?: any) {
  */
 export function library(type: string, props: Library_Props);
 
+export function library(props: Library_Props);
+
 export function library(type: any, props?: any) {
     const mappings = {
         "Library": Library_Library
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Library";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2303,7 +2702,7 @@ export function library(type: any, props?: any) {
   * Create a FHIR List resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - current | retired | entered-in-error
@@ -2321,11 +2720,18 @@ export function library(type: any, props?: any) {
  */
 export function list(type: string, props: List_Props);
 
+export function list(props: List_Props);
+
 export function list(type: any, props?: any) {
     const mappings = {
         "List": List_List
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "List";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2336,7 +2742,7 @@ export function list(type: any, props?: any) {
   * Create a FHIR Location resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique code or number identifying the location to its users
   * @param {string} [props.status] - active | suspended | inactive
@@ -2358,11 +2764,18 @@ export function list(type: any, props?: any) {
  */
 export function location(type: string, props: Location_Props);
 
+export function location(props: Location_Props);
+
 export function location(type: any, props?: any) {
     const mappings = {
         "Location": Location_Location
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Location";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2373,7 +2786,7 @@ export function location(type: any, props?: any) {
   * Create a FHIR ManufacturedItemDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -2385,11 +2798,18 @@ export function location(type: any, props?: any) {
  */
 export function manufacturedItemDefinition(type: string, props: ManufacturedItemDefinition_Props);
 
+export function manufacturedItemDefinition(props: ManufacturedItemDefinition_Props);
+
 export function manufacturedItemDefinition(type: any, props?: any) {
     const mappings = {
         "ManufacturedItemDefinition": ManufacturedItemDefinition_ManufacturedItemDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ManufacturedItemDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2400,7 +2820,7 @@ export function manufacturedItemDefinition(type: any, props?: any) {
   * Create a FHIR Measure resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this measure, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the measure
@@ -2446,11 +2866,18 @@ export function manufacturedItemDefinition(type: any, props?: any) {
  */
 export function measure(type: string, props: Measure_Props);
 
+export function measure(props: Measure_Props);
+
 export function measure(type: any, props?: any) {
     const mappings = {
         "Measure": Measure_Measure
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Measure";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2461,7 +2888,7 @@ export function measure(type: any, props?: any) {
   * Create a FHIR MeasureReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Additional identifier for the MeasureReport
   * @param {string} [props.status] - complete | pending | error
@@ -2477,11 +2904,18 @@ export function measure(type: any, props?: any) {
  */
 export function measureReport(type: string, props: MeasureReport_Props);
 
+export function measureReport(props: MeasureReport_Props);
+
 export function measureReport(type: any, props?: any) {
     const mappings = {
         "MeasureReport": MeasureReport_MeasureReport
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "MeasureReport";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2492,7 +2926,7 @@ export function measureReport(type: any, props?: any) {
   * Create a FHIR Media resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifier(s) for the image
   * @param {Reference} [props.basedOn] - Procedure that caused this media to be created
@@ -2519,11 +2953,18 @@ export function measureReport(type: any, props?: any) {
  */
 export function media(type: string, props: Media_Props);
 
+export function media(props: Media_Props);
+
 export function media(type: any, props?: any) {
     const mappings = {
         "Media": Media_Media
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Media";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2534,7 +2975,7 @@ export function media(type: any, props?: any) {
   * Create a FHIR Medication resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for this medication
   * @param {CodeableConcept} [props.code] - Codes that identify this medication
@@ -2547,11 +2988,18 @@ export function media(type: any, props?: any) {
  */
 export function medication(type: string, props: Medication_Props);
 
+export function medication(props: Medication_Props);
+
 export function medication(type: any, props?: any) {
     const mappings = {
         "Medication": Medication_Medication
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Medication";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2562,7 +3010,7 @@ export function medication(type: any, props?: any) {
   * Create a FHIR MedicationAdministration resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {string} [props.instantiates] - Instantiates protocol or definition
@@ -2586,11 +3034,18 @@ export function medication(type: any, props?: any) {
  */
 export function medicationAdministration(type: string, props: MedicationAdministration_Props);
 
+export function medicationAdministration(props: MedicationAdministration_Props);
+
 export function medicationAdministration(type: any, props?: any) {
     const mappings = {
         "MedicationAdministration": MedicationAdministration_MedicationAdministration
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "MedicationAdministration";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2601,7 +3056,7 @@ export function medicationAdministration(type: any, props?: any) {
   * Create a FHIR MedicationDispense resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {Reference} [props.partOf] - Event that dispense is part of
@@ -2630,11 +3085,18 @@ export function medicationAdministration(type: any, props?: any) {
  */
 export function medicationDispense(type: string, props: MedicationDispense_Props);
 
+export function medicationDispense(props: MedicationDispense_Props);
+
 export function medicationDispense(type: any, props?: any) {
     const mappings = {
         "MedicationDispense": MedicationDispense_MedicationDispense
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "MedicationDispense";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2645,7 +3107,7 @@ export function medicationDispense(type: any, props?: any) {
   * Create a FHIR MedicationKnowledge resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {CodeableConcept} [props.code] - Code that identifies this medication
   * @param {string} [props.status] - active | inactive | entered-in-error
@@ -2672,11 +3134,18 @@ export function medicationDispense(type: any, props?: any) {
  */
 export function medicationKnowledge(type: string, props: MedicationKnowledge_Props);
 
+export function medicationKnowledge(props: MedicationKnowledge_Props);
+
 export function medicationKnowledge(type: any, props?: any) {
     const mappings = {
         "MedicationKnowledge": MedicationKnowledge_MedicationKnowledge
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "MedicationKnowledge";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2687,7 +3156,7 @@ export function medicationKnowledge(type: any, props?: any) {
   * Create a FHIR MedicationRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External ids for this request
   * @param {string} [props.status] - active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
@@ -2724,11 +3193,18 @@ export function medicationKnowledge(type: any, props?: any) {
  */
 export function medicationRequest(type: string, props: MedicationRequest_Props);
 
+export function medicationRequest(props: MedicationRequest_Props);
+
 export function medicationRequest(type: any, props?: any) {
     const mappings = {
         "MedicationRequest": MedicationRequest_MedicationRequest
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "MedicationRequest";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2739,7 +3215,7 @@ export function medicationRequest(type: any, props?: any) {
   * Create a FHIR MedicationStatement resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {Reference} [props.basedOn] - Fulfils plan, proposal or order
@@ -2761,11 +3237,18 @@ export function medicationRequest(type: any, props?: any) {
  */
 export function medicationStatement(type: string, props: MedicationStatement_Props);
 
+export function medicationStatement(props: MedicationStatement_Props);
+
 export function medicationStatement(type: any, props?: any) {
     const mappings = {
         "MedicationStatement": MedicationStatement_MedicationStatement
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "MedicationStatement";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2776,7 +3259,7 @@ export function medicationStatement(type: any, props?: any) {
   * Create a FHIR MedicinalProductDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for this product. Could be an MPID
   * @param {CodeableConcept} [props.type] - Regulatory type, e.g. Investigational or Authorized
@@ -2809,11 +3292,18 @@ export function medicationStatement(type: any, props?: any) {
  */
 export function medicinalProductDefinition(type: string, props: MedicinalProductDefinition_Props);
 
+export function medicinalProductDefinition(props: MedicinalProductDefinition_Props);
+
 export function medicinalProductDefinition(type: any, props?: any) {
     const mappings = {
         "MedicinalProductDefinition": MedicinalProductDefinition_MedicinalProductDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "MedicinalProductDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2824,7 +3314,7 @@ export function medicinalProductDefinition(type: any, props?: any) {
   * Create a FHIR MolecularSequence resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique ID for this particular sequence. This is a FHIR-defined id
   * @param {string} [props.type] - aa | dna | rna
@@ -2845,11 +3335,18 @@ export function medicinalProductDefinition(type: any, props?: any) {
  */
 export function molecularSequence(type: string, props: MolecularSequence_Props);
 
+export function molecularSequence(props: MolecularSequence_Props);
+
 export function molecularSequence(type: any, props?: any) {
     const mappings = {
         "MolecularSequence": MolecularSequence_MolecularSequence
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "MolecularSequence";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2860,7 +3357,7 @@ export function molecularSequence(type: any, props?: any) {
   * Create a FHIR NutritionOrder resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifiers assigned to this order
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -2882,11 +3379,18 @@ export function molecularSequence(type: any, props?: any) {
  */
 export function nutritionOrder(type: string, props: NutritionOrder_Props);
 
+export function nutritionOrder(props: NutritionOrder_Props);
+
 export function nutritionOrder(type: any, props?: any) {
     const mappings = {
         "NutritionOrder": NutritionOrder_NutritionOrder
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "NutritionOrder";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2897,7 +3401,7 @@ export function nutritionOrder(type: any, props?: any) {
   * Create a FHIR NutritionProduct resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.status] - active | inactive | entered-in-error
   * @param {CodeableConcept} [props.category] - A category or class of the nutrition product (halal, kosher, gluten free, vegan, etc)
@@ -2912,11 +3416,18 @@ export function nutritionOrder(type: any, props?: any) {
  */
 export function nutritionProduct(type: string, props: NutritionProduct_Props);
 
+export function nutritionProduct(props: NutritionProduct_Props);
+
 export function nutritionProduct(type: any, props?: any) {
     const mappings = {
         "NutritionProduct": NutritionProduct_NutritionProduct
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "NutritionProduct";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2927,7 +3438,7 @@ export function nutritionProduct(type: any, props?: any) {
   * Create a FHIR Observation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for observation
   * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
@@ -2956,11 +3467,18 @@ export function nutritionProduct(type: any, props?: any) {
  */
 export function observation(type: string, props: Observation_Props);
 
+export function observation(props: Observation_Props);
+
 export function observation(type: any, props?: any) {
     const mappings = {
         "Observation": Observation_Observation
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Observation";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -2971,7 +3489,7 @@ export function observation(type: any, props?: any) {
   * Create a FHIR ObservationDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {CodeableConcept} [props.category] - Category of observation
   * @param {CodeableConcept} [props.code] - Type of observation (code / type)
@@ -2989,11 +3507,18 @@ export function observation(type: any, props?: any) {
  */
 export function observationDefinition(type: string, props: ObservationDefinition_Props);
 
+export function observationDefinition(props: ObservationDefinition_Props);
+
 export function observationDefinition(type: any, props?: any) {
     const mappings = {
         "ObservationDefinition": ObservationDefinition_ObservationDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ObservationDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3004,7 +3529,7 @@ export function observationDefinition(type: any, props?: any) {
   * Create a FHIR Organization resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifies this organization  across multiple systems
   * @param {boolean} [props.active] - Whether the organization's record is still in active use
@@ -3019,11 +3544,18 @@ export function observationDefinition(type: any, props?: any) {
  */
 export function organization(type: string, props: Organization_Props);
 
+export function organization(props: Organization_Props);
+
 export function organization(type: any, props?: any) {
     const mappings = {
         "Organization": Organization_Organization
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Organization";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3034,7 +3566,7 @@ export function organization(type: any, props?: any) {
   * Create a FHIR OrganizationAffiliation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifiers that are specific to this role
   * @param {boolean} [props.active] - Whether this organization affiliation record is in active use
@@ -3051,11 +3583,18 @@ export function organization(type: any, props?: any) {
  */
 export function organizationAffiliation(type: string, props: OrganizationAffiliation_Props);
 
+export function organizationAffiliation(props: OrganizationAffiliation_Props);
+
 export function organizationAffiliation(type: any, props?: any) {
     const mappings = {
         "OrganizationAffiliation": OrganizationAffiliation_OrganizationAffiliation
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "OrganizationAffiliation";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3066,7 +3605,7 @@ export function organizationAffiliation(type: any, props?: any) {
   * Create a FHIR PackagedProductDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - A unique identifier for this package as whole
   * @param {string} [props.name] - A name for this package. Typically as listed in a drug formulary, catalogue, inventory etc
@@ -3085,11 +3624,18 @@ export function organizationAffiliation(type: any, props?: any) {
  */
 export function packagedProductDefinition(type: string, props: PackagedProductDefinition_Props);
 
+export function packagedProductDefinition(props: PackagedProductDefinition_Props);
+
 export function packagedProductDefinition(type: any, props?: any) {
     const mappings = {
         "PackagedProductDefinition": PackagedProductDefinition_PackagedProductDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "PackagedProductDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3100,7 +3646,7 @@ export function packagedProductDefinition(type: any, props?: any) {
   * Create a FHIR Patient resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier for this patient
   * @param {boolean} [props.active] - Whether this patient's record is in active use
@@ -3121,11 +3667,18 @@ export function packagedProductDefinition(type: any, props?: any) {
  */
 export function patient(type: string, props: Patient_Props);
 
+export function patient(props: Patient_Props);
+
 export function patient(type: any, props?: any) {
     const mappings = {
         "Patient": Patient_Patient
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Patient";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3136,7 +3689,7 @@ export function patient(type: any, props?: any) {
   * Create a FHIR PaymentNotice resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for the payment noctice
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -3153,11 +3706,18 @@ export function patient(type: any, props?: any) {
  */
 export function paymentNotice(type: string, props: PaymentNotice_Props);
 
+export function paymentNotice(props: PaymentNotice_Props);
+
 export function paymentNotice(type: any, props?: any) {
     const mappings = {
         "PaymentNotice": PaymentNotice_PaymentNotice
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "PaymentNotice";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3168,7 +3728,7 @@ export function paymentNotice(type: any, props?: any) {
   * Create a FHIR PaymentReconciliation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for a payment reconciliation
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -3188,11 +3748,18 @@ export function paymentNotice(type: any, props?: any) {
  */
 export function paymentReconciliation(type: string, props: PaymentReconciliation_Props);
 
+export function paymentReconciliation(props: PaymentReconciliation_Props);
+
 export function paymentReconciliation(type: any, props?: any) {
     const mappings = {
         "PaymentReconciliation": PaymentReconciliation_PaymentReconciliation
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "PaymentReconciliation";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3203,7 +3770,7 @@ export function paymentReconciliation(type: any, props?: any) {
   * Create a FHIR Person resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - A human identifier for this person
   * @param {HumanName} [props.name] - A name associated with the person
@@ -3218,11 +3785,18 @@ export function paymentReconciliation(type: any, props?: any) {
  */
 export function person(type: string, props: Person_Props);
 
+export function person(props: Person_Props);
+
 export function person(type: any, props?: any) {
     const mappings = {
         "Person": Person_Person
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Person";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3233,7 +3807,7 @@ export function person(type: any, props?: any) {
   * Create a FHIR PlanDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this plan definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the plan definition
@@ -3269,11 +3843,18 @@ export function person(type: any, props?: any) {
  */
 export function planDefinition(type: string, props: PlanDefinition_Props);
 
+export function planDefinition(props: PlanDefinition_Props);
+
 export function planDefinition(type: any, props?: any) {
     const mappings = {
         "PlanDefinition": PlanDefinition_PlanDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "PlanDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3284,7 +3865,7 @@ export function planDefinition(type: any, props?: any) {
   * Create a FHIR Practitioner resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier for the person as this agent
   * @param {boolean} [props.active] - Whether this practitioner's record is in active use
@@ -3299,11 +3880,18 @@ export function planDefinition(type: any, props?: any) {
  */
 export function practitioner(type: string, props: Practitioner_Props);
 
+export function practitioner(props: Practitioner_Props);
+
 export function practitioner(type: any, props?: any) {
     const mappings = {
         "Practitioner": Practitioner_Practitioner
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Practitioner";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3314,7 +3902,7 @@ export function practitioner(type: any, props?: any) {
   * Create a FHIR PractitionerRole resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifiers that are specific to a role/location
   * @param {boolean} [props.active] - Whether this practitioner role record is in active use
@@ -3333,11 +3921,18 @@ export function practitioner(type: any, props?: any) {
  */
 export function practitionerRole(type: string, props: PractitionerRole_Props);
 
+export function practitionerRole(props: PractitionerRole_Props);
+
 export function practitionerRole(type: any, props?: any) {
     const mappings = {
         "PractitionerRole": PractitionerRole_PractitionerRole
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "PractitionerRole";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3348,7 +3943,7 @@ export function practitionerRole(type: any, props?: any) {
   * Create a FHIR Procedure resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Identifiers for this procedure
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -3381,11 +3976,18 @@ export function practitionerRole(type: any, props?: any) {
  */
 export function procedure(type: string, props: Procedure_Props);
 
+export function procedure(props: Procedure_Props);
+
 export function procedure(type: any, props?: any) {
     const mappings = {
         "Procedure": Procedure_Procedure
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Procedure";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3396,7 +3998,7 @@ export function procedure(type: any, props?: any) {
   * Create a FHIR Questionnaire resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this questionnaire, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the questionnaire
@@ -3423,11 +4025,18 @@ export function procedure(type: any, props?: any) {
  */
 export function questionnaire(type: string, props: Questionnaire_Props);
 
+export function questionnaire(props: Questionnaire_Props);
+
 export function questionnaire(type: any, props?: any) {
     const mappings = {
         "Questionnaire": Questionnaire_Questionnaire
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Questionnaire";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3438,7 +4047,7 @@ export function questionnaire(type: any, props?: any) {
   * Create a FHIR QuestionnaireResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique id for this set of answers
   * @param {Reference} [props.basedOn] - Request fulfilled by this QuestionnaireResponse
@@ -3454,11 +4063,18 @@ export function questionnaire(type: any, props?: any) {
  */
 export function questionnaireResponse(type: string, props: QuestionnaireResponse_Props);
 
+export function questionnaireResponse(props: QuestionnaireResponse_Props);
+
 export function questionnaireResponse(type: any, props?: any) {
     const mappings = {
         "QuestionnaireResponse": QuestionnaireResponse_QuestionnaireResponse
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "QuestionnaireResponse";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3469,7 +4085,7 @@ export function questionnaireResponse(type: any, props?: any) {
   * Create a FHIR RegulatedAuthorization resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for the authorization, typically assigned by the authorizing body
   * @param {Reference} [props.subject] - The product type, treatment, facility or activity that is being authorized
@@ -3488,11 +4104,18 @@ export function questionnaireResponse(type: any, props?: any) {
  */
 export function regulatedAuthorization(type: string, props: RegulatedAuthorization_Props);
 
+export function regulatedAuthorization(props: RegulatedAuthorization_Props);
+
 export function regulatedAuthorization(type: any, props?: any) {
     const mappings = {
         "RegulatedAuthorization": RegulatedAuthorization_RegulatedAuthorization
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "RegulatedAuthorization";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3503,7 +4126,7 @@ export function regulatedAuthorization(type: any, props?: any) {
   * Create a FHIR RelatedPerson resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - A human identifier for this person
   * @param {boolean} [props.active] - Whether this related person's record is in active use
@@ -3520,11 +4143,18 @@ export function regulatedAuthorization(type: any, props?: any) {
  */
 export function relatedPerson(type: string, props: RelatedPerson_Props);
 
+export function relatedPerson(props: RelatedPerson_Props);
+
 export function relatedPerson(type: any, props?: any) {
     const mappings = {
         "RelatedPerson": RelatedPerson_RelatedPerson
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "RelatedPerson";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3535,7 +4165,7 @@ export function relatedPerson(type: any, props?: any) {
   * Create a FHIR RequestGroup resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -3558,11 +4188,18 @@ export function relatedPerson(type: any, props?: any) {
  */
 export function requestGroup(type: string, props: RequestGroup_Props);
 
+export function requestGroup(props: RequestGroup_Props);
+
 export function requestGroup(type: any, props?: any) {
     const mappings = {
         "RequestGroup": RequestGroup_RequestGroup
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "RequestGroup";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3573,7 +4210,7 @@ export function requestGroup(type: any, props?: any) {
   * Create a FHIR ResearchDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this research definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the research definition
@@ -3612,11 +4249,18 @@ export function requestGroup(type: any, props?: any) {
  */
 export function researchDefinition(type: string, props: ResearchDefinition_Props);
 
+export function researchDefinition(props: ResearchDefinition_Props);
+
 export function researchDefinition(type: any, props?: any) {
     const mappings = {
         "ResearchDefinition": ResearchDefinition_ResearchDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ResearchDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3627,7 +4271,7 @@ export function researchDefinition(type: any, props?: any) {
   * Create a FHIR ResearchElementDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this research element definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the research element definition
@@ -3665,11 +4309,18 @@ export function researchDefinition(type: any, props?: any) {
  */
 export function researchElementDefinition(type: string, props: ResearchElementDefinition_Props);
 
+export function researchElementDefinition(props: ResearchElementDefinition_Props);
+
 export function researchElementDefinition(type: any, props?: any) {
     const mappings = {
         "ResearchElementDefinition": ResearchElementDefinition_ResearchElementDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ResearchElementDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3680,7 +4331,7 @@ export function researchElementDefinition(type: any, props?: any) {
   * Create a FHIR ResearchStudy resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for study
   * @param {string} [props.title] - Name for this study
@@ -3709,11 +4360,18 @@ export function researchElementDefinition(type: any, props?: any) {
  */
 export function researchStudy(type: string, props: ResearchStudy_Props);
 
+export function researchStudy(props: ResearchStudy_Props);
+
 export function researchStudy(type: any, props?: any) {
     const mappings = {
         "ResearchStudy": ResearchStudy_ResearchStudy
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ResearchStudy";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3724,7 +4382,7 @@ export function researchStudy(type: any, props?: any) {
   * Create a FHIR ResearchSubject resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for research subject in a study
   * @param {string} [props.status] - candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
@@ -3737,11 +4395,18 @@ export function researchStudy(type: any, props?: any) {
  */
 export function researchSubject(type: string, props: ResearchSubject_Props);
 
+export function researchSubject(props: ResearchSubject_Props);
+
 export function researchSubject(type: any, props?: any) {
     const mappings = {
         "ResearchSubject": ResearchSubject_ResearchSubject
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ResearchSubject";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3752,17 +4417,24 @@ export function researchSubject(type: any, props?: any) {
   * Create a FHIR Resource resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
 
  */
 export function resource(type: string, props: Resource_Props);
+
+export function resource(props: Resource_Props);
 
 export function resource(type: any, props?: any) {
     const mappings = {
         "Resource": Resource_Resource
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Resource";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3773,7 +4445,7 @@ export function resource(type: any, props?: any) {
   * Create a FHIR RiskAssessment resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier for the assessment
   * @param {Reference} [props.basedOn] - Request fulfilled by this assessment
@@ -3795,11 +4467,18 @@ export function resource(type: any, props?: any) {
  */
 export function riskAssessment(type: string, props: RiskAssessment_Props);
 
+export function riskAssessment(props: RiskAssessment_Props);
+
 export function riskAssessment(type: any, props?: any) {
     const mappings = {
         "RiskAssessment": RiskAssessment_RiskAssessment
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "RiskAssessment";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3810,7 +4489,7 @@ export function riskAssessment(type: any, props?: any) {
   * Create a FHIR Schedule resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {boolean} [props.active] - Whether this schedule is in active use
@@ -3823,11 +4502,18 @@ export function riskAssessment(type: any, props?: any) {
  */
 export function schedule(type: string, props: Schedule_Props);
 
+export function schedule(props: Schedule_Props);
+
 export function schedule(type: any, props?: any) {
     const mappings = {
         "Schedule": Schedule_Schedule
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Schedule";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3838,7 +4524,7 @@ export function schedule(type: any, props?: any) {
   * Create a FHIR ServiceRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifiers assigned to this order
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -3876,11 +4562,18 @@ export function schedule(type: any, props?: any) {
  */
 export function serviceRequest(type: string, props: ServiceRequest_Props);
 
+export function serviceRequest(props: ServiceRequest_Props);
+
 export function serviceRequest(type: any, props?: any) {
     const mappings = {
         "ServiceRequest": ServiceRequest_ServiceRequest
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "ServiceRequest";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3891,7 +4584,7 @@ export function serviceRequest(type: any, props?: any) {
   * Create a FHIR Slot resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {CodeableConcept} [props.serviceCategory] - A broad categorization of the service that is to be performed during this appointment
@@ -3907,11 +4600,18 @@ export function serviceRequest(type: any, props?: any) {
  */
 export function slot(type: string, props: Slot_Props);
 
+export function slot(props: Slot_Props);
+
 export function slot(type: any, props?: any) {
     const mappings = {
         "Slot": Slot_Slot
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Slot";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3922,7 +4622,7 @@ export function slot(type: any, props?: any) {
   * Create a FHIR Specimen resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Identifier
   * @param {Identifier} [props.accessionIdentifier] - Identifier assigned by the lab
@@ -3940,11 +4640,18 @@ export function slot(type: any, props?: any) {
  */
 export function specimen(type: string, props: Specimen_Props);
 
+export function specimen(props: Specimen_Props);
+
 export function specimen(type: any, props?: any) {
     const mappings = {
         "Specimen": Specimen_Specimen
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Specimen";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3955,7 +4662,7 @@ export function specimen(type: any, props?: any) {
   * Create a FHIR SpecimenDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier of a kind of specimen
   * @param {CodeableConcept} [props.typeCollected] - Kind of material to collect
@@ -3966,11 +4673,18 @@ export function specimen(type: any, props?: any) {
  */
 export function specimenDefinition(type: string, props: SpecimenDefinition_Props);
 
+export function specimenDefinition(props: SpecimenDefinition_Props);
+
 export function specimenDefinition(type: any, props?: any) {
     const mappings = {
         "SpecimenDefinition": SpecimenDefinition_SpecimenDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SpecimenDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -3981,7 +4695,7 @@ export function specimenDefinition(type: any, props?: any) {
   * Create a FHIR Substance resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {string} [props.status] - active | inactive | entered-in-error
@@ -3993,11 +4707,18 @@ export function specimenDefinition(type: any, props?: any) {
  */
 export function substance(type: string, props: Substance_Props);
 
+export function substance(props: Substance_Props);
+
 export function substance(type: any, props?: any) {
     const mappings = {
         "Substance": Substance_Substance
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Substance";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -4008,7 +4729,7 @@ export function substance(type: any, props?: any) {
   * Create a FHIR SubstanceDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifier by which this substance is known
   * @param {string} [props.version] - A business level version identifier of the substance
@@ -4032,11 +4753,18 @@ export function substance(type: any, props?: any) {
  */
 export function substanceDefinition(type: string, props: SubstanceDefinition_Props);
 
+export function substanceDefinition(props: SubstanceDefinition_Props);
+
 export function substanceDefinition(type: any, props?: any) {
     const mappings = {
         "SubstanceDefinition": SubstanceDefinition_SubstanceDefinition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SubstanceDefinition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -4047,7 +4775,7 @@ export function substanceDefinition(type: any, props?: any) {
   * Create a FHIR SupplyDelivery resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
@@ -4063,11 +4791,18 @@ export function substanceDefinition(type: any, props?: any) {
  */
 export function supplyDelivery(type: string, props: SupplyDelivery_Props);
 
+export function supplyDelivery(props: SupplyDelivery_Props);
+
 export function supplyDelivery(type: any, props?: any) {
     const mappings = {
         "SupplyDelivery": SupplyDelivery_SupplyDelivery
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SupplyDelivery";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -4078,7 +4813,7 @@ export function supplyDelivery(type: any, props?: any) {
   * Create a FHIR SupplyRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for SupplyRequest
   * @param {string} [props.status] - draft | active | suspended +
@@ -4098,11 +4833,18 @@ export function supplyDelivery(type: any, props?: any) {
  */
 export function supplyRequest(type: string, props: SupplyRequest_Props);
 
+export function supplyRequest(props: SupplyRequest_Props);
+
 export function supplyRequest(type: any, props?: any) {
     const mappings = {
         "SupplyRequest": SupplyRequest_SupplyRequest
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SupplyRequest";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -4113,7 +4855,7 @@ export function supplyRequest(type: any, props?: any) {
   * Create a FHIR Task resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Task Instance Identifier
   * @param {canonical} [props.instantiatesCanonical] - Formal definition of task
@@ -4149,11 +4891,18 @@ export function supplyRequest(type: any, props?: any) {
  */
 export function task(type: string, props: Task_Props);
 
+export function task(props: Task_Props);
+
 export function task(type: any, props?: any) {
     const mappings = {
         "Task": Task_Task
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "Task";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -4164,7 +4913,7 @@ export function task(type: any, props?: any) {
   * Create a FHIR TestReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {string} [props.name] - Informal name of the executed TestScript
@@ -4181,11 +4930,18 @@ export function task(type: any, props?: any) {
  */
 export function testReport(type: string, props: TestReport_Props);
 
+export function testReport(props: TestReport_Props);
+
 export function testReport(type: any, props?: any) {
     const mappings = {
         "TestReport": TestReport_TestReport
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "TestReport";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -4196,7 +4952,7 @@ export function testReport(type: any, props?: any) {
   * Create a FHIR TestScript resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this test script, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the test script
@@ -4225,11 +4981,18 @@ export function testReport(type: any, props?: any) {
  */
 export function testScript(type: string, props: TestScript_Props);
 
+export function testScript(props: TestScript_Props);
+
 export function testScript(type: any, props?: any) {
     const mappings = {
         "TestScript": TestScript_TestScript
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "TestScript";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -4240,7 +5003,7 @@ export function testScript(type: any, props?: any) {
   * Create a FHIR VerificationResult resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Reference} [props.target] - A resource that was validated
   * @param {string} [props.targetLocation] - The fhirpath location(s) within the resource that was validated
@@ -4259,11 +5022,18 @@ export function testScript(type: any, props?: any) {
  */
 export function verificationResult(type: string, props: VerificationResult_Props);
 
+export function verificationResult(props: VerificationResult_Props);
+
 export function verificationResult(type: any, props?: any) {
     const mappings = {
         "VerificationResult": VerificationResult_VerificationResult
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "VerificationResult";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -4274,7 +5044,7 @@ export function verificationResult(type: any, props?: any) {
   * Create a FHIR VisionPrescription resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant.
+  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for vision prescription
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -4287,11 +5057,18 @@ export function verificationResult(type: any, props?: any) {
  */
 export function visionPrescription(type: string, props: VisionPrescription_Props);
 
+export function visionPrescription(props: VisionPrescription_Props);
+
 export function visionPrescription(type: any, props?: any) {
     const mappings = {
         "VisionPrescription": VisionPrescription_VisionPrescription
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "VisionPrescription";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }

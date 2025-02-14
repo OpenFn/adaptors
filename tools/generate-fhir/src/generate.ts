@@ -38,7 +38,7 @@ export type Options = {
 };
 
 const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
-  const { base, respec, spec, simpleBuilders } = options;
+  const { base, respec, spec } = options;
 
   const dir = path.dirname(import.meta.url.replace('file://', ''));
   const monoRepoRoot = path.resolve(dir, `../../../`);
@@ -96,6 +96,9 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
         process.exit(1);
       }
     }
+    if (pkg.fhir.options) {
+      Object.assign(options, pkg.fhir.options);
+    }
   } catch (error: any) {
     console.log(`Package ${adaptorName} does not exist: generating...`);
     // If the adaptor does not exist, generate the project boilerplate
@@ -108,6 +111,10 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     }
     console.log(`Package ${adaptorName} generated!`);
   }
+
+  // Load options which may have been saved to the package
+  const { simpleBuilders } = options;
+
   // Now generate from the spec
   const specPath = path.resolve(adaptorPath, 'spec', 'spec.json');
   try {
@@ -190,6 +197,12 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     ...meta,
     adaptorGeneratedDate: new Date().toISOString(),
     generatorVersion: toolPkg.version,
+    options: ['simpleBuilders']
+      .filter(o => o in options)
+      .reduce((acc: any, o: string) => {
+        acc[o] = options[o];
+        return acc;
+      }, {}),
   });
 
   const pathToEntry = path.resolve(adaptorPath, 'src', 'index.ts');
