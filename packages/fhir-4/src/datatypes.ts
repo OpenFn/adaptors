@@ -1,5 +1,7 @@
 import _ from 'lodash';
 
+import type * as FHIR from './fhir';
+
 let systemMap = {};
 
 // https://hl7.org/fhir/R4/datatypes.html#dateTime
@@ -49,7 +51,7 @@ export const extendSystemMap = newMappings => {
  * @param ext - Any other arguments will be treated as extensions
  * @param {string} [system] - the string system to use by default if
  */
-export const identifier = (id: string | Identifier, ...ext) => {
+export const identifier = (id: string | FHIR.Identifier, ...ext) => {
   // If an array of inputs is passed in, map each element of the array
   // because it's very common to support a set of identifiers, rather than just one
   // Note that in this mode, each argument should be an object
@@ -57,7 +59,7 @@ export const identifier = (id: string | Identifier, ...ext) => {
     return id.map(i => identifier(i));
   }
 
-  const i: Identifier = {};
+  const i: FHIR.Identifier = {};
   if (typeof id === 'string') {
     i.value = id;
   } else {
@@ -159,19 +161,28 @@ export const findExtension = (obj, targetUrl, path) => {
  * @public
  * @function
  * @param {string} code - the code value
- * @param {string} system - URL to the system. Well be mapped using the system map.
+ * @param {string} system - URL to the system. Will be mapped using the system map.
  */
-export const coding = (code, system) => ({ code, system: mapSystems(system) });
+export const coding = (
+  code: string,
+  system: string,
+  extra: Omit<FHIR.Coding, 'code' | 'system'> = {}
+) =>
+  mapSystems({
+    code,
+    system,
+    ...extra,
+  });
 
 export const c = coding;
 
 /**
  * Create a value object { code, system } with optional system. Systems will be mapped.
- * @public
  * @function
  * @param {string} value - the value
  * @param {string} system - URL to the system. Well be mapped using the system map.
  */
+// TODO drop this? What is it for?
 export const value = (value, system, ...extra) =>
   mapSystems({
     value,
@@ -180,37 +191,47 @@ export const value = (value, system, ...extra) =>
   });
 
 /**
- * Create a codeableConcept. Codings can be coding objects or
- * [code, system] tuples
- * if the first argument is a string, it will be set as the text.
+ * Create a CodeableConcept. Codings can be coding objects or
+ * [code, system, extra] tuples (such as passed to b.coding())
  * Systems will be mapped with the system map
  * @public
  * @function
+ * @param {string} value - the value
+ * @param {object} extra - Extra properties to write to the coding
  * @example <caption><Create a codeableConcept</caption>
  * const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  * * @example <caption><Create a codeableConcept with text</caption>
  * const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  */
-export const concept = (text, ...codings) => {
-  const result = {};
-  let incomingCodings = codings;
-  if (typeof text === 'string') {
-    result.text = text;
-  } else {
-    incomingCodings = [text].concat(codings);
+type ConceptCoding =
+  | FHIR.Coding
+  | [string, string, Omit<FHIR.Coding, 'code' | 'system'>?];
+
+export const concept = (
+  codings: ConceptCoding | ConceptCoding[],
+  extra: Omit<FHIR.CodeableConcept, 'coding'> = {}
+) => {
+  // Work out if we've been passed one or many codings
+  if (
+    // This looks like a single coding object
+    !Array.isArray(codings) ||
+    // This looks like a single tuple
+    typeof codings[0] === 'string'
+  ) {
+    // @ts-ignore
+    codings = [codings];
   }
 
-  const c = [];
-  for (const item of incomingCodings) {
-    if (Array.isArray(item)) {
-      c.push(coding(item[0], item[1]));
-    } else {
-      c.push(item);
-    }
-  }
-  result.coding = c;
-
-  return result;
+  return {
+    ...extra,
+    coding: codings.map(c => {
+      if (Array.isArray(c)) {
+        return coding(...c);
+      } else {
+        return c;
+      }
+    }),
+  };
 };
 
 /**
