@@ -50,12 +50,68 @@ export declare function search(resourceType: string, options: SearchQuery): (sta
  * @param {object} resource - The new version of this resource.
  * @state data - the newly updated resource, as returned by the server
  * @state response - the HTTP response returned by the server.
+ * @example <caption>Update a Patient with a builder function</caption>
+ * update('Patient/123', b.patient({
+ *   id: 'Patient/123',
+ *   name: { family: "Messi", given: "Lionel", use: "official" },
+ * }))
  * @returns Operation
  */
 export declare function update(reference: string, resource: any): (state: any) => Promise<any>;
-declare function _delete(reference: string): void;
+/**
+ * Delete a single FHIR resource.
+ * @public
+ * @function
+ * @param {string} reference - The type and ID of the resource to delete, eg, `Patient/123`
+ * @state response - the HTTP response returned by the server.
+ * @example <caption>Delete a single Patient resource</caption>
+ * delete('Patient/12345')
+ * @returns Operation
+ */
+declare function _delete(reference: string): (state: any) => Promise<any>;
 export { _delete as delete };
-export declare function create(): void;
-export declare function addToBundle(resources: any[], name?: string): void;
-export declare function submitBundle(name?: string): void;
+/**
+ * Create a new resource. The resource does not need to include an id.
+ * The created resource will be returned to state.data.
+ * @public
+ * @function
+ * @param {object} resource - The resource to create.
+ * @state data - the newly created resource.
+ * @state response - the HTTP response returned by the server.
+ * @example <caption>Create a Patient with a builder function</caption>
+ * create(b.patient({
+ *   name: { family: "Messi", given: "Lionel", use: "official" },
+ * }))
+ * @returns Operation
+ */
+export declare function create(resource: any): (state: any) => Promise<any>;
+/**
+ * Add a resource to a bundle on state, using the `name` as the key (or `bundle` by default).
+ * The resource will be upserted (via PUT).
+ * A new bundle will be generated if one does not already exist.
+ * @public
+ * @function
+ * @param {object/array} resources - A resource or array of resources to add to the bundle
+ * @param {string} [name] - A name (key) for this bundle on state (defaults to `bundle`)
+ * @state bundle - the updated bundle
+ * @example <caption>Add a new patient resource to the default bundle</caption>
+ * addToBundle(b.patient($.patientDetails))
+ * @returns Operation
+ */
+export declare function addToBundle(resources: any | any[], name?: string): (state: any) => any;
+/**
+ * Upload a bundle from state (created by addToBundle) as a transaction.
+ * @public
+ * @function
+ * @param {string/object} bundle - A bundle object or name of a bundle on state
+ * @example <caption>Upload the default bundle</caption>
+ * uploadBundle()
+ * @example <caption>Create and a bundle with a custom name</caption>
+ * addToBundle($.patients, 'patientsBundle')
+ * uploadBundle('patientsBundle')
+ * @example <caption>Upload a bundle from state</caption>
+ * uploadBundle($.patientsBundle)
+ * @returns Operation
+ */
+export declare function uploadBundle(bundle?: string | any): (state: any) => Promise<any>;
 export { dataPath, dataValue, dateFns, cursor, each, field, fields, fn, lastReferenceValue, merge, sourceValue, } from '@openfn/language-common';

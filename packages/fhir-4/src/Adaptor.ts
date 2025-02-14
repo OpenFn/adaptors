@@ -263,7 +263,7 @@ export function create(resource: any) {
  * @function
  * @param {object/array} resources - A resource or array of resources to add to the bundle
  * @param {string} [name] - A name (key) for this bundle on state (defaults to `bundle`)
- * @state <name> - the updated bundle
+ * @state bundle - the updated bundle
  * @example <caption>Add a new patient resource to the default bundle</caption>
  * addToBundle(b.patient($.patientDetails))
  * @returns Operation
@@ -307,7 +307,6 @@ export function addToBundle(resources: any | any[], name: string = 'bundle') {
  * @public
  * @function
  * @param {string/object} bundle - A bundle object or name of a bundle on state
- * @state <name> - the updated bundle
  * @example <caption>Upload the default bundle</caption>
  * uploadBundle()
  * @example <caption>Create and a bundle with a custom name</caption>

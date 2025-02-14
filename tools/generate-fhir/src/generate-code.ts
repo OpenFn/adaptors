@@ -25,6 +25,8 @@ const generateCode = (
 ): { builders: string; profiles: Record<string, string> } => {
   const statements: n.Statement[] = [];
 
+  statements.push(b.exportAllDeclaration(b.stringLiteral('./datatypes'), null));
+
   const imports: n.Statement[] = [];
 
   const profiles = {};
