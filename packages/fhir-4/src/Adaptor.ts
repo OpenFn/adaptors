@@ -261,7 +261,7 @@ export function create(resource: any) {
  * A new bundle will be generated if one does not already exist.
  * @public
  * @function
- * @param {object or array} resources - A resource or array of resources to add to the bundle
+ * @param {object/array} resources - A resource or array of resources to add to the bundle
  * @param {string} [name] - A name (key) for this bundle on state (defaults to `bundle`)
  * @state <name> - the updated bundle
  * @example <caption>Add a new patient resource to the default bundle</caption>
