@@ -1,4 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
 import * as util from './Utils';
@@ -88,12 +91,13 @@ export function getSubmissions(formId, options = {}) {
       }
     }
 
-    const response = await util.request(state, 'GET', url, {
+    const { results } = await util.request(state, 'GET', url, {
       paginate: true,
       query,
     });
-    console.log('✓', response.results.length, 'submissions fetched.');
-    return util.prepareNextState(state, response);
+
+    console.log('✓', results.length, 'submissions fetched.');
+    return composeNextState(state, results);
   };
 }
 
