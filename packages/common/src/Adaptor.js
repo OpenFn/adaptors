@@ -932,3 +932,35 @@ export function assert(expression, errorMessage) {
     return state;
   };
 }
+
+
+/**
+ * Runs an operation and saves the return value to a pre-defined key in state
+ * @public
+ * @function
+ * @example
+ * as('lookup_table.option_set', get('fixture/?fixture_type=option_set_mapping'));
+ * @param {string} key - The key used to store the return value in the state object
+ * @param {any} op - The operation being executed
+ * @returns {operation}
+ */
+export function as (key, op) {
+  return async state => {
+    const data = state.data; // save incoming state before it is mutated by the operation
+
+    const [resolvedKey] = newExpandReferences(state, key);
+    try {
+      const result = await op(state);
+
+      const [resolvedResult] = newExpandReferences(state, result);
+
+      state[resolvedKey] = resolvedResult;
+    } catch (e) {
+      console.log(`Error executing operation: ${e.message}`);
+    } finally {
+      state.data = data;
+    }
+
+    return state;
+  }
+}
