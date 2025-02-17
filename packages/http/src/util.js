@@ -74,7 +74,7 @@ export function request(method, path, params, callback = s => s) {
     }
 
     if (resolvedParams.form) {
-      body = encodeFormBody(resolvedParams.form);
+      body = encodeFormBody(body);
     }
 
     const baseUrl = state.configuration?.baseUrl;
@@ -99,7 +99,10 @@ export function request(method, path, params, callback = s => s) {
 
     const options = {
       ...resolvedParams,
-      headers,
+      headers: {
+        'Content-type': 'application/json',
+        ...headers,
+      },
       baseUrl,
       body,
       tls,
