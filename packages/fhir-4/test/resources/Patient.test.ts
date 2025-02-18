@@ -11,7 +11,7 @@ describe('Patient', () => {
     assert.isOk(resource);
   });
 
-  it.only('should create an example Patient', () => {
+  it('should create an example Patient', () => {
     const resource = builders.patient({
       id: 'example',
 
