@@ -33,6 +33,7 @@ export type Goal_Props = {
     outcomeCode?: FHIR.CodeableConcept[];
     outcomeReference?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Goal_Props>) {

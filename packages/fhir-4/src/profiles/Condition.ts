@@ -34,6 +34,7 @@ export type Condition_Props = {
     evidence?: FHIR.BackboneElement[];
     note?: FHIR.Annotation[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Condition_Props>) {

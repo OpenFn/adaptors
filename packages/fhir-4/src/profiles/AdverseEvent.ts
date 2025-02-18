@@ -37,6 +37,7 @@ export type AdverseEvent_Props = {
     referenceDocument?: FHIR.Reference[];
     study?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<AdverseEvent_Props>) {

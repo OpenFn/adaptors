@@ -45,6 +45,7 @@ export type EventDefinition_Props = {
     relatedArtifact?: FHIR.RelatedArtifact[];
     trigger?: FHIR.TriggerDefinition[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<EventDefinition_Props>) {

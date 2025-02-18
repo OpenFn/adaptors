@@ -30,6 +30,7 @@ export type ImmunizationEvaluation_Props = {
     doseNumber?: number;
     seriesDoses?: number;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ImmunizationEvaluation_Props>) {

@@ -25,6 +25,7 @@ export type Schedule_Props = {
     planningHorizon?: FHIR.Period;
     comment?: string;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Schedule_Props>) {

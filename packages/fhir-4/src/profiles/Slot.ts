@@ -28,6 +28,7 @@ export type Slot_Props = {
     overbooked?: boolean;
     comment?: string;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Slot_Props>) {

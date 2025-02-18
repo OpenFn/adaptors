@@ -37,6 +37,7 @@ export type ImagingStudy_Props = {
     description?: string;
     series?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ImagingStudy_Props>) {

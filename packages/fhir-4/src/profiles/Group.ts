@@ -27,6 +27,7 @@ export type Group_Props = {
     characteristic?: FHIR.BackboneElement[];
     member?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Group_Props>) {

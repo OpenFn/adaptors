@@ -31,6 +31,7 @@ export type CoverageEligibilityRequest_Props = {
     insurance?: FHIR.BackboneElement[];
     item?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<CoverageEligibilityRequest_Props>) {

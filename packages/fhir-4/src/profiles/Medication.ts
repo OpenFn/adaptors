@@ -25,6 +25,7 @@ export type Medication_Props = {
     ingredient?: FHIR.BackboneElement[];
     batch?: FHIR.BackboneElement;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Medication_Props>) {

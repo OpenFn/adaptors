@@ -29,6 +29,7 @@ export type OrganizationAffiliation_Props = {
     telecom?: FHIR.ContactPoint[];
     endpoint?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<OrganizationAffiliation_Props>) {

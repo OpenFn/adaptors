@@ -22,6 +22,7 @@ export type ImmunizationRecommendation_Props = {
     authority?: FHIR.Reference;
     recommendation?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ImmunizationRecommendation_Props>) {

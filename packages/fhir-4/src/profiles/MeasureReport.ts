@@ -28,6 +28,7 @@ export type MeasureReport_Props = {
     group?: FHIR.BackboneElement[];
     evaluatedResource?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<MeasureReport_Props>) {

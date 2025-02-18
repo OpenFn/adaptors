@@ -27,6 +27,7 @@ export type Organization_Props = {
     contact?: FHIR.BackboneElement[];
     endpoint?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Organization_Props>) {

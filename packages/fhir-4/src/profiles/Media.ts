@@ -39,6 +39,7 @@ export type Media_Props = {
     content?: FHIR.Attachment;
     note?: FHIR.Annotation[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Media_Props>) {

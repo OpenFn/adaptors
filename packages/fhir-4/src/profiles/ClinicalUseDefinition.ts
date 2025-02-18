@@ -28,6 +28,7 @@ export type ClinicalUseDefinition_Props = {
     undesirableEffect?: FHIR.BackboneElement;
     warning?: FHIR.BackboneElement;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ClinicalUseDefinition_Props>) {

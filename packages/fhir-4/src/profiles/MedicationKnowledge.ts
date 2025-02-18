@@ -39,6 +39,7 @@ export type MedicationKnowledge_Props = {
     regulatory?: FHIR.BackboneElement[];
     kinetics?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<MedicationKnowledge_Props>) {

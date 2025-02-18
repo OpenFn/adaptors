@@ -30,6 +30,7 @@ export type ObservationDefinition_Props = {
     abnormalCodedValueSet?: FHIR.Reference;
     criticalCodedValueSet?: FHIR.Reference;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ObservationDefinition_Props>) {

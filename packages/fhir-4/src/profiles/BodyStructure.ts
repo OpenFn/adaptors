@@ -25,6 +25,7 @@ export type BodyStructure_Props = {
     image?: FHIR.Attachment[];
     patient?: FHIR.Reference;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<BodyStructure_Props>) {

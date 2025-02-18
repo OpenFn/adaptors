@@ -45,6 +45,7 @@ export type Immunization_Props = {
     reaction?: FHIR.BackboneElement[];
     protocolApplied?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Immunization_Props>) {

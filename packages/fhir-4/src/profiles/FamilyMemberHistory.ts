@@ -35,6 +35,7 @@ export type FamilyMemberHistory_Props = {
     note?: FHIR.Annotation[];
     condition?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<FamilyMemberHistory_Props>) {

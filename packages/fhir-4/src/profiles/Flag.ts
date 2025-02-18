@@ -25,6 +25,7 @@ export type Flag_Props = {
     encounter?: FHIR.Reference;
     author?: FHIR.Reference;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Flag_Props>) {

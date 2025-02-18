@@ -40,6 +40,7 @@ export type Communication_Props = {
     payload?: FHIR.BackboneElement[];
     note?: FHIR.Annotation[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Communication_Props>) {

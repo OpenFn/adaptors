@@ -44,6 +44,7 @@ export type ClaimResponse_Props = {
     insurance?: FHIR.BackboneElement[];
     error?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ClaimResponse_Props>) {

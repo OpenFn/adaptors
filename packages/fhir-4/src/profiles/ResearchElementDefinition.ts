@@ -50,6 +50,7 @@ export type ResearchElementDefinition_Props = {
     variableType?: string;
     characteristic?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ResearchElementDefinition_Props>) {

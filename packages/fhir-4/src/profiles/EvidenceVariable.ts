@@ -41,6 +41,7 @@ export type EvidenceVariable_Props = {
     handling?: string;
     category?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<EvidenceVariable_Props>) {

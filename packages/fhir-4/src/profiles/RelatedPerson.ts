@@ -29,6 +29,7 @@ export type RelatedPerson_Props = {
     period?: FHIR.Period;
     communication?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<RelatedPerson_Props>) {

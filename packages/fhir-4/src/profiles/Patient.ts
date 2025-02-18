@@ -33,6 +33,7 @@ export type Patient_Props = {
     managingOrganization?: FHIR.Reference;
     link?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Patient_Props>) {

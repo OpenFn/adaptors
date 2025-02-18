@@ -50,6 +50,7 @@ export type ServiceRequest_Props = {
     patientInstruction?: string;
     relevantHistory?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ServiceRequest_Props>) {

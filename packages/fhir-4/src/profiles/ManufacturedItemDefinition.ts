@@ -24,6 +24,7 @@ export type ManufacturedItemDefinition_Props = {
     ingredient?: FHIR.CodeableConcept[];
     property?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ManufacturedItemDefinition_Props>) {

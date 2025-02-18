@@ -17,6 +17,7 @@ export type DomainResource_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<DomainResource_Props>) {

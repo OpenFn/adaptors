@@ -13,6 +13,7 @@ export type Resource_Props = {
     implicitRules?: string;
     language?: string;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Resource_Props>) {

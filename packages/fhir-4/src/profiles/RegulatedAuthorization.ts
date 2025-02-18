@@ -31,6 +31,7 @@ export type RegulatedAuthorization_Props = {
     regulator?: FHIR.Reference;
     case?: FHIR.BackboneElement;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<RegulatedAuthorization_Props>) {

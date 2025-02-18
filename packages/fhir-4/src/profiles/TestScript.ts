@@ -41,6 +41,7 @@ export type TestScript_Props = {
     test?: FHIR.BackboneElement[];
     teardown?: FHIR.BackboneElement;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<TestScript_Props>) {

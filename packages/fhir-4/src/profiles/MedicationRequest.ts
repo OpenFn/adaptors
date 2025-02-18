@@ -49,6 +49,7 @@ export type MedicationRequest_Props = {
     detectedIssue?: FHIR.Reference[];
     eventHistory?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<MedicationRequest_Props>) {

@@ -39,6 +39,7 @@ export type Appointment_Props = {
     participant?: FHIR.BackboneElement[];
     requestedPeriod?: FHIR.Period[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Appointment_Props>) {

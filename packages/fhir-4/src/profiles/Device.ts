@@ -43,6 +43,7 @@ export type Device_Props = {
     safety?: FHIR.CodeableConcept[];
     parent?: FHIR.Reference;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Device_Props>) {

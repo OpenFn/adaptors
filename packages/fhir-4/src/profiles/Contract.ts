@@ -50,6 +50,7 @@ export type Contract_Props = {
     rule?: FHIR.BackboneElement[];
     legallyBinding?: FHIR.Attachment;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Contract_Props>) {

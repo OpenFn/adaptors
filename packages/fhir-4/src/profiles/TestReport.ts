@@ -29,6 +29,7 @@ export type TestReport_Props = {
     test?: FHIR.BackboneElement[];
     teardown?: FHIR.BackboneElement;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<TestReport_Props>) {

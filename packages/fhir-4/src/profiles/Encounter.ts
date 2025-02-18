@@ -40,6 +40,7 @@ export type Encounter_Props = {
     serviceProvider?: FHIR.Reference;
     partOf?: FHIR.Reference;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Encounter_Props>) {

@@ -73,6 +73,17 @@ export const generateType = (
       b.tsPropertySignature(b.identifier(key), b.tsTypeAnnotation(type), true)
     );
   }
+  props.push(
+    b.tsIndexSignature(
+      [
+        b.identifier.from({
+          name: 'key',
+          typeAnnotation: b.tsTypeAnnotation(b.tsStringKeyword()),
+        }),
+      ],
+      b.tsTypeAnnotation(b.tsAnyKeyword())
+    )
+  );
 
   const t = b.exportDeclaration(
     false,

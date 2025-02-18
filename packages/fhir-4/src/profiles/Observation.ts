@@ -41,6 +41,7 @@ export type Observation_Props = {
     derivedFrom?: FHIR.Reference[];
     component?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Observation_Props>) {

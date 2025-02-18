@@ -28,6 +28,7 @@ export type QuestionnaireResponse_Props = {
     source?: FHIR.Reference;
     item?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<QuestionnaireResponse_Props>) {

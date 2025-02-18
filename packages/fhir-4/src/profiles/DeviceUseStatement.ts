@@ -30,6 +30,7 @@ export type DeviceUseStatement_Props = {
     bodySite?: FHIR.CodeableConcept;
     note?: FHIR.Annotation[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<DeviceUseStatement_Props>) {

@@ -31,6 +31,7 @@ export type VerificationResult_Props = {
     attestation?: FHIR.BackboneElement;
     validator?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<VerificationResult_Props>) {

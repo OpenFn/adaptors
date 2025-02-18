@@ -30,6 +30,7 @@ export type CareTeam_Props = {
     telecom?: FHIR.ContactPoint[];
     note?: FHIR.Annotation[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<CareTeam_Props>) {

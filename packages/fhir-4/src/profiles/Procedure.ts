@@ -45,6 +45,7 @@ export type Procedure_Props = {
     usedReference?: FHIR.Reference[];
     usedCode?: FHIR.CodeableConcept[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Procedure_Props>) {

@@ -41,6 +41,7 @@ export type DeviceRequest_Props = {
     note?: FHIR.Annotation[];
     relevantHistory?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<DeviceRequest_Props>) {

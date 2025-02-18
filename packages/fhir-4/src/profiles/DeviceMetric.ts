@@ -27,6 +27,7 @@ export type DeviceMetric_Props = {
     measurementPeriod?: FHIR.Timing;
     calibration?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<DeviceMetric_Props>) {

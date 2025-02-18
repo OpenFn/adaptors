@@ -48,6 +48,7 @@ export type Library_Props = {
     dataRequirement?: FHIR.DataRequirement[];
     content?: FHIR.Attachment[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Library_Props>) {

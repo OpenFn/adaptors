@@ -34,6 +34,7 @@ export type MedicationStatement_Props = {
     note?: FHIR.Annotation[];
     dosage?: FHIR.Dosage[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<MedicationStatement_Props>) {

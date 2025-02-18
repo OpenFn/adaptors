@@ -27,6 +27,7 @@ export type NutritionProduct_Props = {
     instance?: FHIR.BackboneElement;
     note?: FHIR.Annotation[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<NutritionProduct_Props>) {

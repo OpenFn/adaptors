@@ -41,6 +41,7 @@ export type ResearchStudy_Props = {
     arm?: FHIR.BackboneElement[];
     objective?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ResearchStudy_Props>) {

@@ -48,6 +48,7 @@ export type Task_Props = {
     input?: FHIR.BackboneElement[];
     output?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Task_Props>) {

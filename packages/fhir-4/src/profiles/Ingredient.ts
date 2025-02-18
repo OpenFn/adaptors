@@ -25,6 +25,7 @@ export type Ingredient_Props = {
     manufacturer?: FHIR.BackboneElement[];
     substance?: FHIR.BackboneElement;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Ingredient_Props>) {

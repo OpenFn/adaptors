@@ -42,6 +42,7 @@ export type Evidence_Props = {
     statistic?: FHIR.BackboneElement[];
     certainty?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Evidence_Props>) {

@@ -27,6 +27,7 @@ export type Practitioner_Props = {
     qualification?: FHIR.BackboneElement[];
     communication?: FHIR.CodeableConcept[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Practitioner_Props>) {

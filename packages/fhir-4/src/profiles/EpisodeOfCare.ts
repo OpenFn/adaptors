@@ -29,6 +29,7 @@ export type EpisodeOfCare_Props = {
     team?: FHIR.Reference[];
     account?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<EpisodeOfCare_Props>) {

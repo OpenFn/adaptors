@@ -43,6 +43,7 @@ export type ChargeItem_Props = {
     note?: FHIR.Annotation[];
     supportingInformation?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ChargeItem_Props>) {

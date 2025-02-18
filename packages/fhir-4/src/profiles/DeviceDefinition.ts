@@ -39,6 +39,7 @@ export type DeviceDefinition_Props = {
     parentDevice?: FHIR.Reference;
     material?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<DeviceDefinition_Props>) {

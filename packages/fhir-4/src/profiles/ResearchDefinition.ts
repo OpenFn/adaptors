@@ -51,6 +51,7 @@ export type ResearchDefinition_Props = {
     exposureAlternative?: FHIR.Reference;
     outcome?: FHIR.Reference;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ResearchDefinition_Props>) {

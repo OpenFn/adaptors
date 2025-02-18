@@ -28,6 +28,7 @@ export type SupplyDelivery_Props = {
     destination?: FHIR.Reference;
     receiver?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<SupplyDelivery_Props>) {

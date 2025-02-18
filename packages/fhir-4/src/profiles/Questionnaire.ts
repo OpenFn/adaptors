@@ -39,6 +39,7 @@ export type Questionnaire_Props = {
     code?: FHIR.Coding[];
     item?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Questionnaire_Props>) {

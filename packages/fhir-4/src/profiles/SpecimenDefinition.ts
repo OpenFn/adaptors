@@ -23,6 +23,7 @@ export type SpecimenDefinition_Props = {
     collection?: FHIR.CodeableConcept[];
     typeTested?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<SpecimenDefinition_Props>) {

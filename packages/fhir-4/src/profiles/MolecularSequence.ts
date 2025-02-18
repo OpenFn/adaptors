@@ -33,6 +33,7 @@ export type MolecularSequence_Props = {
     pointer?: FHIR.Reference[];
     structureVariant?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<MolecularSequence_Props>) {

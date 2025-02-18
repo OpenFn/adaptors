@@ -27,6 +27,7 @@ export type Person_Props = {
     active?: boolean;
     link?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Person_Props>) {

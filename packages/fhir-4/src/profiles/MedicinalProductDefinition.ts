@@ -45,6 +45,7 @@ export type MedicinalProductDefinition_Props = {
     operation?: FHIR.BackboneElement[];
     characteristic?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<MedicinalProductDefinition_Props>) {

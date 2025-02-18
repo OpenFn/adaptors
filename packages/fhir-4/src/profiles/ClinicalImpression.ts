@@ -37,6 +37,7 @@ export type ClinicalImpression_Props = {
     supportingInfo?: FHIR.Reference[];
     note?: FHIR.Annotation[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ClinicalImpression_Props>) {

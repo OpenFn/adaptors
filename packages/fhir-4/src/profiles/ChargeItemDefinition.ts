@@ -40,6 +40,7 @@ export type ChargeItemDefinition_Props = {
     applicability?: FHIR.BackboneElement[];
     propertyGroup?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ChargeItemDefinition_Props>) {

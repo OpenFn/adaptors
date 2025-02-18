@@ -28,6 +28,7 @@ export type Endpoint_Props = {
     address?: FHIR.url;
     header?: string[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Endpoint_Props>) {

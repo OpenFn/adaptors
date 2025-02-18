@@ -31,6 +31,7 @@ export type InsurancePlan_Props = {
     coverage?: FHIR.BackboneElement[];
     plan?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<InsurancePlan_Props>) {

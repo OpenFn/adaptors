@@ -32,6 +32,7 @@ export type CoverageEligibilityResponse_Props = {
     form?: FHIR.CodeableConcept;
     error?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<CoverageEligibilityResponse_Props>) {

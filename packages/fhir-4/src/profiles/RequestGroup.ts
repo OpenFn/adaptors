@@ -35,6 +35,7 @@ export type RequestGroup_Props = {
     note?: FHIR.Annotation[];
     action?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<RequestGroup_Props>) {

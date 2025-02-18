@@ -44,6 +44,7 @@ export type Claim_Props = {
     item?: FHIR.BackboneElement[];
     total?: FHIR.Money;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Claim_Props>) {

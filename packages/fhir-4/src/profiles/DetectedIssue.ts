@@ -29,6 +29,7 @@ export type DetectedIssue_Props = {
     reference?: string;
     mitigation?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<DetectedIssue_Props>) {

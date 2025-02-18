@@ -34,6 +34,7 @@ export type NutritionOrder_Props = {
     enteralFormula?: FHIR.BackboneElement;
     note?: FHIR.Annotation[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<NutritionOrder_Props>) {

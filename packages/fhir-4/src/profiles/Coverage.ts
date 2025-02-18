@@ -34,6 +34,7 @@ export type Coverage_Props = {
     subrogation?: boolean;
     contract?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Coverage_Props>) {

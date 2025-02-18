@@ -46,6 +46,7 @@ export type Citation_Props = {
     relatesTo?: FHIR.BackboneElement[];
     citedArtifact?: FHIR.BackboneElement;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Citation_Props>) {

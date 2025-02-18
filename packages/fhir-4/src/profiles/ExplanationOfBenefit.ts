@@ -60,6 +60,7 @@ export type ExplanationOfBenefit_Props = {
     benefitPeriod?: FHIR.Period;
     benefitBalance?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ExplanationOfBenefit_Props>) {

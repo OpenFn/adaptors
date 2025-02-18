@@ -28,6 +28,7 @@ export type BiologicallyDerivedProduct_Props = {
     manipulation?: FHIR.BackboneElement;
     storage?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<BiologicallyDerivedProduct_Props>) {

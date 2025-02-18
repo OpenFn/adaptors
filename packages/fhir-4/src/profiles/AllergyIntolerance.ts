@@ -33,6 +33,7 @@ export type AllergyIntolerance_Props = {
     note?: FHIR.Annotation[];
     reaction?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<AllergyIntolerance_Props>) {

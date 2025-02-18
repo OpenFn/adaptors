@@ -39,6 +39,7 @@ export type CommunicationRequest_Props = {
     reasonReference?: FHIR.Reference[];
     note?: FHIR.Annotation[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<CommunicationRequest_Props>) {

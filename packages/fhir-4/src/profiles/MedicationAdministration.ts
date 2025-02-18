@@ -36,6 +36,7 @@ export type MedicationAdministration_Props = {
     dosage?: FHIR.BackboneElement;
     eventHistory?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<MedicationAdministration_Props>) {

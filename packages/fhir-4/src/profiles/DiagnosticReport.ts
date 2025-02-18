@@ -35,6 +35,7 @@ export type DiagnosticReport_Props = {
     conclusionCode?: FHIR.CodeableConcept[];
     presentedForm?: FHIR.Attachment[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<DiagnosticReport_Props>) {

@@ -25,6 +25,7 @@ export type AppointmentResponse_Props = {
     participantStatus?: string;
     comment?: string;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<AppointmentResponse_Props>) {

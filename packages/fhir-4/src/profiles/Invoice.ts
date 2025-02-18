@@ -33,6 +33,7 @@ export type Invoice_Props = {
     paymentTerms?: FHIR.markdown;
     note?: FHIR.Annotation[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Invoice_Props>) {

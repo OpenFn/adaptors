@@ -34,6 +34,7 @@ export type RiskAssessment_Props = {
     mitigation?: string;
     note?: FHIR.Annotation[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<RiskAssessment_Props>) {

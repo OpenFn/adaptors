@@ -32,6 +32,7 @@ export type PaymentReconciliation_Props = {
     formCode?: FHIR.CodeableConcept;
     processNote?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<PaymentReconciliation_Props>) {

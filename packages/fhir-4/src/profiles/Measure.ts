@@ -58,6 +58,7 @@ export type Measure_Props = {
     group?: FHIR.BackboneElement[];
     supplementalData?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Measure_Props>) {

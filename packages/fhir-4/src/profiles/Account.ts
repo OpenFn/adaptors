@@ -28,6 +28,7 @@ export type Account_Props = {
     guarantor?: FHIR.BackboneElement[];
     partOf?: FHIR.Reference;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Account_Props>) {

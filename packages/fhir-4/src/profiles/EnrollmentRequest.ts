@@ -24,6 +24,7 @@ export type EnrollmentRequest_Props = {
     candidate?: FHIR.Reference;
     coverage?: FHIR.Reference;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<EnrollmentRequest_Props>) {

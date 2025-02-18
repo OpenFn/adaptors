@@ -30,6 +30,7 @@ export type List_Props = {
     entry?: FHIR.BackboneElement[];
     emptyReason?: FHIR.CodeableConcept;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<List_Props>) {

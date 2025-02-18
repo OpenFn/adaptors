@@ -63,6 +63,7 @@ export type ActivityDefinition_Props = {
     transform?: any;
     dynamicValue?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<ActivityDefinition_Props>) {

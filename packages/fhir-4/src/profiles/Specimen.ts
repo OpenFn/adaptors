@@ -30,6 +30,7 @@ export type Specimen_Props = {
     condition?: FHIR.CodeableConcept[];
     note?: FHIR.Annotation[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<Specimen_Props>) {

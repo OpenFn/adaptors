@@ -29,6 +29,7 @@ export type PaymentNotice_Props = {
     amount?: FHIR.Money;
     paymentStatus?: FHIR.CodeableConcept;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<PaymentNotice_Props>) {

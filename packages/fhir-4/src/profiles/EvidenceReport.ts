@@ -35,6 +35,7 @@ export type EvidenceReport_Props = {
     relatesTo?: FHIR.BackboneElement[];
     section?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<EvidenceReport_Props>) {

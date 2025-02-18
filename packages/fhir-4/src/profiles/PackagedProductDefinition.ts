@@ -31,6 +31,7 @@ export type PackagedProductDefinition_Props = {
     manufacturer?: FHIR.Reference[];
     package?: FHIR.BackboneElement;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<PackagedProductDefinition_Props>) {

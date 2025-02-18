@@ -32,6 +32,7 @@ export type GuidanceResponse_Props = {
     result?: FHIR.Reference;
     dataRequirement?: FHIR.DataRequirement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<GuidanceResponse_Props>) {

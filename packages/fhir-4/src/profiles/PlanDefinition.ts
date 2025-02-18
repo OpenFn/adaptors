@@ -48,6 +48,7 @@ export type PlanDefinition_Props = {
     goal?: FHIR.BackboneElement[];
     action?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<PlanDefinition_Props>) {

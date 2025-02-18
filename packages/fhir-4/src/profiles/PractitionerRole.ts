@@ -31,6 +31,7 @@ export type PractitionerRole_Props = {
     availabilityExceptions?: string;
     endpoint?: FHIR.Reference[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<PractitionerRole_Props>) {

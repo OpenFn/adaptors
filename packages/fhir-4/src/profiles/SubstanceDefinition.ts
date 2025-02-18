@@ -36,6 +36,7 @@ export type SubstanceDefinition_Props = {
     relationship?: FHIR.BackboneElement[];
     sourceMaterial?: FHIR.BackboneElement;
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<SubstanceDefinition_Props>) {

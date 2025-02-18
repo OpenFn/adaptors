@@ -27,6 +27,7 @@ export type AdministrableProductDefinition_Props = {
     property?: FHIR.BackboneElement[];
     routeOfAdministration?: FHIR.BackboneElement[];
     initialiser?: any;
+    [key: string]: any;
 };
 
 export default function(props: Partial<AdministrableProductDefinition_Props>) {
