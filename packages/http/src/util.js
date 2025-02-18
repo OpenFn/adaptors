@@ -100,7 +100,7 @@ export function request(method, path, params, callback = s => s) {
     const options = {
       ...resolvedParams,
       headers: {
-        ...(resolvedParams.json ? { 'Content-Type': 'application/json' } : {}),
+        ...(!resolvedParams.form ? { 'Content-Type': 'application/json' } : {}),
         ...headers,
       },
       baseUrl,
