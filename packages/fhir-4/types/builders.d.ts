@@ -1831,36 +1831,6 @@ declare type CommunicationRequest_Props = {
     [key: string]: any;
 };
 
-declare type Condition_Props = {
-    id?: string;
-    meta?: Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: Narrative;
-    contained?: any[];
-    extension?: Extension[];
-    modifierExtension?: Extension[];
-    identifier?: Identifier[];
-    clinicalStatus?: CodeableConcept;
-    verificationStatus?: CodeableConcept;
-    category?: CodeableConcept[];
-    severity?: CodeableConcept;
-    code?: CodeableConcept;
-    bodySite?: CodeableConcept[];
-    subject?: Reference;
-    encounter?: Reference;
-    onset?: string;
-    abatement?: string;
-    recordedDate?: string;
-    recorder?: Reference;
-    asserter?: Reference;
-    stage?: BackboneElement[];
-    evidence?: BackboneElement[];
-    note?: Annotation[];
-    initialiser?: any;
-    [key: string]: any;
-};
-
 declare type Contract_Props = {
     id?: string;
     meta?: Meta;
@@ -2253,30 +2223,6 @@ declare type Encounter_Props = {
     location?: BackboneElement[];
     serviceProvider?: Reference;
     partOf?: Reference;
-    initialiser?: any;
-    [key: string]: any;
-};
-
-declare type Endpoint_Props = {
-    id?: string;
-    meta?: Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: Narrative;
-    contained?: any[];
-    extension?: Extension[];
-    modifierExtension?: Extension[];
-    identifier?: Identifier[];
-    status?: string;
-    connectionType?: Coding;
-    name?: string;
-    managingOrganization?: Reference;
-    contact?: ContactPoint[];
-    period?: Period;
-    payloadType?: CodeableConcept[];
-    payloadMimeType?: string[];
-    address?: url;
-    header?: string[];
     initialiser?: any;
     [key: string]: any;
 };
@@ -4141,15 +4087,6 @@ declare type ResearchSubject_Props = {
     [key: string]: any;
 };
 
-declare type Resource_Props = {
-    id?: string;
-    meta?: Meta;
-    implicitRules?: string;
-    language?: string;
-    initialiser?: any;
-    [key: string]: any;
-};
-
 declare type RiskAssessment_Props = {
     id?: string;
     meta?: Meta;
@@ -4482,43 +4419,6 @@ declare type TestReport_Props = {
     tester?: string;
     issued?: string;
     participant?: BackboneElement[];
-    setup?: BackboneElement;
-    test?: BackboneElement[];
-    teardown?: BackboneElement;
-    initialiser?: any;
-    [key: string]: any;
-};
-
-declare type TestScript_Props = {
-    id?: string;
-    meta?: Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: Narrative;
-    contained?: any[];
-    extension?: Extension[];
-    modifierExtension?: Extension[];
-    url?: string;
-    identifier?: Identifier;
-    version?: string;
-    name?: string;
-    title?: string;
-    status?: string;
-    experimental?: boolean;
-    date?: string;
-    publisher?: string;
-    contact?: ContactDetail[];
-    description?: markdown;
-    useContext?: UsageContext[];
-    jurisdiction?: CodeableConcept[];
-    purpose?: markdown;
-    copyright?: markdown;
-    origin?: BackboneElement[];
-    destination?: BackboneElement[];
-    metadata?: BackboneElement;
-    fixture?: BackboneElement[];
-    profile?: Reference[];
-    variable?: BackboneElement[];
     setup?: BackboneElement;
     test?: BackboneElement[];
     teardown?: BackboneElement;
@@ -5285,32 +5185,6 @@ declare function communication(props: Communication_Props): any;
 declare function communicationRequest(type: string, props: CommunicationRequest_Props): any;
 declare function communicationRequest(props: CommunicationRequest_Props): any;
 /**
-  * Create a FHIR Condition resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-  * @param {Identifier} [props.identifier] - External Ids for this condition
-  * @param {CodeableConcept} [props.clinicalStatus] - active | recurrence | relapse | inactive | remission | resolved
-  * @param {CodeableConcept} [props.verificationStatus] - unconfirmed | provisional | differential | confirmed | refuted | entered-in-error
-  * @param {CodeableConcept} [props.category] - problem-list-item | encounter-diagnosis
-  * @param {CodeableConcept} [props.severity] - Subjective severity of condition
-  * @param {CodeableConcept} [props.code] - Identification of the condition, problem or diagnosis
-  * @param {CodeableConcept} [props.bodySite] - Anatomical location, if relevant
-  * @param {Reference} [props.subject] - Who has the condition?
-  * @param {Reference} [props.encounter] - Encounter created as part of
-  * @param {dateTime} [props.onset] - Estimated or actual date,  date-time, or age
-  * @param {dateTime} [props.abatement] - When in resolution/remission
-  * @param {dateTime} [props.recordedDate] - Date record was first recorded
-  * @param {Reference} [props.recorder] - Who recorded the condition
-  * @param {Reference} [props.asserter] - Person who asserts this condition
-  * @param {BackboneElement} [props.stage] - Stage/grade, usually assessed formally
-  * @param {BackboneElement} [props.evidence] - Supporting evidence
-  * @param {Annotation} [props.note] - Additional information about the Condition
- */
-declare function condition(type: string, props: Condition_Props): any;
-declare function condition(props: Condition_Props): any;
-/**
   * Create a FHIR Contract resource.
   * @public
   * @function
@@ -5655,26 +5529,6 @@ declare function domainResource(props: DomainResource_Props): any;
  */
 declare function encounter(type: string, props: Encounter_Props): any;
 declare function encounter(props: Encounter_Props): any;
-/**
-  * Create a FHIR Endpoint resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-  * @param {Identifier} [props.identifier] - Identifies this endpoint across multiple systems
-  * @param {string} [props.status] - active | suspended | error | off | entered-in-error | test
-  * @param {Coding} [props.connectionType] - Protocol/Profile/Standard to be used with this endpoint connection
-  * @param {string} [props.name] - A name that this endpoint can be identified by
-  * @param {Reference} [props.managingOrganization] - Organization that manages this endpoint (might not be the organization that exposes the endpoint)
-  * @param {ContactPoint} [props.contact] - Contact details for source (e.g. troubleshooting)
-  * @param {Period} [props.period] - Interval the endpoint is expected to be operational
-  * @param {CodeableConcept} [props.payloadType] - The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)
-  * @param {string} [props.payloadMimeType] - Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
-  * @param {url} [props.address] - The technical base address for connecting to this endpoint
-  * @param {string} [props.header] - Usage depends on the channel type
- */
-declare function endpoint(type: string, props: Endpoint_Props): any;
-declare function endpoint(props: Endpoint_Props): any;
 /**
   * Create a FHIR EnrollmentRequest resource.
   * @public
@@ -7296,16 +7150,6 @@ declare function researchStudy(props: ResearchStudy_Props): any;
 declare function researchSubject(type: string, props: ResearchSubject_Props): any;
 declare function researchSubject(props: ResearchSubject_Props): any;
 /**
-  * Create a FHIR Resource resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-
- */
-declare function resource(type: string, props: Resource_Props): any;
-declare function resource(props: Resource_Props): any;
-/**
   * Create a FHIR RiskAssessment resource.
   * @public
   * @function
@@ -7597,39 +7441,6 @@ declare function task(props: Task_Props): any;
 declare function testReport(type: string, props: TestReport_Props): any;
 declare function testReport(props: TestReport_Props): any;
 /**
-  * Create a FHIR TestScript resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-  * @param {string} [props.url] - Canonical identifier for this test script, represented as a URI (globally unique)
-  * @param {Identifier} [props.identifier] - Additional identifier for the test script
-  * @param {string} [props.version] - Business version of the test script
-  * @param {string} [props.name] - Name for this test script (computer friendly)
-  * @param {string} [props.title] - Name for this test script (human friendly)
-  * @param {string} [props.status] - draft | active | retired | unknown
-  * @param {boolean} [props.experimental] - For testing purposes, not real usage
-  * @param {dateTime} [props.date] - Date last changed
-  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
-  * @param {ContactDetail} [props.contact] - Contact details for the publisher
-  * @param {markdown} [props.description] - Natural language description of the test script
-  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
-  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for test script (if applicable)
-  * @param {markdown} [props.purpose] - Why this test script is defined
-  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
-  * @param {BackboneElement} [props.origin] - An abstract server representing a client or sender in a message exchange
-  * @param {BackboneElement} [props.destination] - An abstract server representing a destination or receiver in a message exchange
-  * @param {BackboneElement} [props.metadata] - Required capability that is assumed to function correctly on the FHIR server being tested
-  * @param {BackboneElement} [props.fixture] - Fixture in the test script - by reference (uri)
-  * @param {Reference} [props.profile] - Reference of the validation profile
-  * @param {BackboneElement} [props.variable] - Placeholder for evaluated elements
-  * @param {BackboneElement} [props.setup] - A series of required setup operations before tests are executed
-  * @param {BackboneElement} [props.test] - A test in this script
-  * @param {BackboneElement} [props.teardown] - A series of required clean up steps
- */
-declare function testScript(type: string, props: TestScript_Props): any;
-declare function testScript(props: TestScript_Props): any;
-/**
   * Create a FHIR VerificationResult resource.
   * @public
   * @function
@@ -7653,5 +7464,5 @@ declare function testScript(props: TestScript_Props): any;
 declare function verificationResult(type: string, props: VerificationResult_Props): any;
 declare function verificationResult(props: VerificationResult_Props): any;
 
-export { account, activityDefinition, addExtension, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, biologicallyDerivedProduct, bodyStructure, c, carePlan, careTeam, cc, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, coding, communication, communicationRequest, composite, concept, condition, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, endpoint, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, ext, extendSystemMap, extension, familyMemberHistory, findExtension, flag, goal, group, guidanceResponse, healthcareService, id, identifier, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, mapSystems, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, ref, reference, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, resource, riskAssessment, schedule, serviceRequest, setSystemMap, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, testScript, value, verificationResult };
+export { account, activityDefinition, addExtension, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, biologicallyDerivedProduct, bodyStructure, c, carePlan, careTeam, cc, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, coding, communication, communicationRequest, composite, concept, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, ext, extendSystemMap, extension, familyMemberHistory, findExtension, flag, goal, group, guidanceResponse, healthcareService, id, identifier, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, mapSystems, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, ref, reference, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, riskAssessment, schedule, serviceRequest, setSystemMap, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, value, verificationResult };
 

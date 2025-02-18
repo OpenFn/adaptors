@@ -23,7 +23,6 @@ import ClinicalImpression_ClinicalImpression, { ClinicalImpression_Props } from 
 import ClinicalUseDefinition_ClinicalUseDefinition, { ClinicalUseDefinition_Props } from "./profiles/ClinicalUseDefinition";
 import Communication_Communication, { Communication_Props } from "./profiles/Communication";
 import CommunicationRequest_CommunicationRequest, { CommunicationRequest_Props } from "./profiles/CommunicationRequest";
-import Condition_Condition, { Condition_Props } from "./profiles/Condition";
 import Contract_Contract, { Contract_Props } from "./profiles/Contract";
 import Coverage_Coverage, { Coverage_Props } from "./profiles/Coverage";
 import CoverageEligibilityRequest_CoverageEligibilityRequest, { CoverageEligibilityRequest_Props } from "./profiles/CoverageEligibilityRequest";
@@ -37,7 +36,6 @@ import DeviceUseStatement_DeviceUseStatement, { DeviceUseStatement_Props } from 
 import DiagnosticReport_DiagnosticReport, { DiagnosticReport_Props } from "./profiles/DiagnosticReport";
 import DomainResource_DomainResource, { DomainResource_Props } from "./profiles/DomainResource";
 import Encounter_Encounter, { Encounter_Props } from "./profiles/Encounter";
-import Endpoint_Endpoint, { Endpoint_Props } from "./profiles/Endpoint";
 import EnrollmentRequest_EnrollmentRequest, { EnrollmentRequest_Props } from "./profiles/EnrollmentRequest";
 import EnrollmentResponse_EnrollmentResponse, { EnrollmentResponse_Props } from "./profiles/EnrollmentResponse";
 import EpisodeOfCare_EpisodeOfCare, { EpisodeOfCare_Props } from "./profiles/EpisodeOfCare";
@@ -98,7 +96,6 @@ import ResearchDefinition_ResearchDefinition, { ResearchDefinition_Props } from 
 import ResearchElementDefinition_ResearchElementDefinition, { ResearchElementDefinition_Props } from "./profiles/ResearchElementDefinition";
 import ResearchStudy_ResearchStudy, { ResearchStudy_Props } from "./profiles/ResearchStudy";
 import ResearchSubject_ResearchSubject, { ResearchSubject_Props } from "./profiles/ResearchSubject";
-import Resource_Resource, { Resource_Props } from "./profiles/Resource";
 import RiskAssessment_RiskAssessment, { RiskAssessment_Props } from "./profiles/RiskAssessment";
 import Schedule_Schedule, { Schedule_Props } from "./profiles/Schedule";
 import ServiceRequest_ServiceRequest, { ServiceRequest_Props } from "./profiles/ServiceRequest";
@@ -111,7 +108,6 @@ import SupplyDelivery_SupplyDelivery, { SupplyDelivery_Props } from "./profiles/
 import SupplyRequest_SupplyRequest, { SupplyRequest_Props } from "./profiles/SupplyRequest";
 import Task_Task, { Task_Props } from "./profiles/Task";
 import TestReport_TestReport, { TestReport_Props } from "./profiles/TestReport";
-import TestScript_TestScript, { TestScript_Props } from "./profiles/TestScript";
 import VerificationResult_VerificationResult, { VerificationResult_Props } from "./profiles/VerificationResult";
 export * from "./datatypes";
 
@@ -1052,50 +1048,6 @@ export function communicationRequest(type: any, props?: any) {
 }
 
 /**
-  * Create a FHIR Condition resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-  * @param {Identifier} [props.identifier] - External Ids for this condition
-  * @param {CodeableConcept} [props.clinicalStatus] - active | recurrence | relapse | inactive | remission | resolved
-  * @param {CodeableConcept} [props.verificationStatus] - unconfirmed | provisional | differential | confirmed | refuted | entered-in-error
-  * @param {CodeableConcept} [props.category] - problem-list-item | encounter-diagnosis
-  * @param {CodeableConcept} [props.severity] - Subjective severity of condition
-  * @param {CodeableConcept} [props.code] - Identification of the condition, problem or diagnosis
-  * @param {CodeableConcept} [props.bodySite] - Anatomical location, if relevant
-  * @param {Reference} [props.subject] - Who has the condition?
-  * @param {Reference} [props.encounter] - Encounter created as part of
-  * @param {dateTime} [props.onset] - Estimated or actual date,  date-time, or age
-  * @param {dateTime} [props.abatement] - When in resolution/remission
-  * @param {dateTime} [props.recordedDate] - Date record was first recorded
-  * @param {Reference} [props.recorder] - Who recorded the condition
-  * @param {Reference} [props.asserter] - Person who asserts this condition
-  * @param {BackboneElement} [props.stage] - Stage/grade, usually assessed formally
-  * @param {BackboneElement} [props.evidence] - Supporting evidence
-  * @param {Annotation} [props.note] - Additional information about the Condition
- */
-export function condition(type: string, props: Condition_Props);
-
-export function condition(props: Condition_Props);
-
-export function condition(type: any, props?: any) {
-    const mappings = {
-        "Condition": Condition_Condition
-    };
-
-    // Handle optional type parameter
-    if (typeof type !== "string") {
-      props = type;
-      type = "Condition";
-    }
-    if (type in mappings) {
-        return mappings[type](props)
-    }
-    throw new Error(`Error: profile "${type}" not recognised`)
-}
-
-/**
   * Create a FHIR Contract resource.
   * @public
   * @function
@@ -1667,44 +1619,6 @@ export function encounter(type: any, props?: any) {
     if (typeof type !== "string") {
       props = type;
       type = "Encounter";
-    }
-    if (type in mappings) {
-        return mappings[type](props)
-    }
-    throw new Error(`Error: profile "${type}" not recognised`)
-}
-
-/**
-  * Create a FHIR Endpoint resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-  * @param {Identifier} [props.identifier] - Identifies this endpoint across multiple systems
-  * @param {string} [props.status] - active | suspended | error | off | entered-in-error | test
-  * @param {Coding} [props.connectionType] - Protocol/Profile/Standard to be used with this endpoint connection
-  * @param {string} [props.name] - A name that this endpoint can be identified by
-  * @param {Reference} [props.managingOrganization] - Organization that manages this endpoint (might not be the organization that exposes the endpoint)
-  * @param {ContactPoint} [props.contact] - Contact details for source (e.g. troubleshooting)
-  * @param {Period} [props.period] - Interval the endpoint is expected to be operational
-  * @param {CodeableConcept} [props.payloadType] - The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)
-  * @param {string} [props.payloadMimeType] - Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
-  * @param {url} [props.address] - The technical base address for connecting to this endpoint
-  * @param {string} [props.header] - Usage depends on the channel type
- */
-export function endpoint(type: string, props: Endpoint_Props);
-
-export function endpoint(props: Endpoint_Props);
-
-export function endpoint(type: any, props?: any) {
-    const mappings = {
-        "Endpoint": Endpoint_Endpoint
-    };
-
-    // Handle optional type parameter
-    if (typeof type !== "string") {
-      props = type;
-      type = "Endpoint";
     }
     if (type in mappings) {
         return mappings[type](props)
@@ -4413,34 +4327,6 @@ export function researchSubject(type: any, props?: any) {
 }
 
 /**
-  * Create a FHIR Resource resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-
- */
-export function resource(type: string, props: Resource_Props);
-
-export function resource(props: Resource_Props);
-
-export function resource(type: any, props?: any) {
-    const mappings = {
-        "Resource": Resource_Resource
-    };
-
-    // Handle optional type parameter
-    if (typeof type !== "string") {
-      props = type;
-      type = "Resource";
-    }
-    if (type in mappings) {
-        return mappings[type](props)
-    }
-    throw new Error(`Error: profile "${type}" not recognised`)
-}
-
-/**
   * Create a FHIR RiskAssessment resource.
   * @public
   * @function
@@ -4940,57 +4826,6 @@ export function testReport(type: any, props?: any) {
     if (typeof type !== "string") {
       props = type;
       type = "TestReport";
-    }
-    if (type in mappings) {
-        return mappings[type](props)
-    }
-    throw new Error(`Error: profile "${type}" not recognised`)
-}
-
-/**
-  * Create a FHIR TestScript resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-  * @param {string} [props.url] - Canonical identifier for this test script, represented as a URI (globally unique)
-  * @param {Identifier} [props.identifier] - Additional identifier for the test script
-  * @param {string} [props.version] - Business version of the test script
-  * @param {string} [props.name] - Name for this test script (computer friendly)
-  * @param {string} [props.title] - Name for this test script (human friendly)
-  * @param {string} [props.status] - draft | active | retired | unknown
-  * @param {boolean} [props.experimental] - For testing purposes, not real usage
-  * @param {dateTime} [props.date] - Date last changed
-  * @param {string} [props.publisher] - Name of the publisher (organization or individual)
-  * @param {ContactDetail} [props.contact] - Contact details for the publisher
-  * @param {markdown} [props.description] - Natural language description of the test script
-  * @param {UsageContext} [props.useContext] - The context that the content is intended to support
-  * @param {CodeableConcept} [props.jurisdiction] - Intended jurisdiction for test script (if applicable)
-  * @param {markdown} [props.purpose] - Why this test script is defined
-  * @param {markdown} [props.copyright] - Use and/or publishing restrictions
-  * @param {BackboneElement} [props.origin] - An abstract server representing a client or sender in a message exchange
-  * @param {BackboneElement} [props.destination] - An abstract server representing a destination or receiver in a message exchange
-  * @param {BackboneElement} [props.metadata] - Required capability that is assumed to function correctly on the FHIR server being tested
-  * @param {BackboneElement} [props.fixture] - Fixture in the test script - by reference (uri)
-  * @param {Reference} [props.profile] - Reference of the validation profile
-  * @param {BackboneElement} [props.variable] - Placeholder for evaluated elements
-  * @param {BackboneElement} [props.setup] - A series of required setup operations before tests are executed
-  * @param {BackboneElement} [props.test] - A test in this script
-  * @param {BackboneElement} [props.teardown] - A series of required clean up steps
- */
-export function testScript(type: string, props: TestScript_Props);
-
-export function testScript(props: TestScript_Props);
-
-export function testScript(type: any, props?: any) {
-    const mappings = {
-        "TestScript": TestScript_TestScript
-    };
-
-    // Handle optional type parameter
-    if (typeof type !== "string") {
-      props = type;
-      type = "TestScript";
     }
     if (type in mappings) {
         return mappings[type](props)
