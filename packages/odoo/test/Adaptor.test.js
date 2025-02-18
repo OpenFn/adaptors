@@ -79,6 +79,27 @@ describe('update', () => {
     })(state);
     expect(data).to.eql(true);
   });
+
+  it('should throw an error if a record does not exist', async () => {
+    const mock = {
+      update: (model, id, data) => {
+        expect(model).to.eql('product.product');
+        expect(id).to.eql(4);
+        expect(data).to.eql({ name: 'Testing Product' });
+        throw new Error(
+          'Error: XML-RPC fault: Record does not exist or has been deleted.'
+        );
+      },
+    };
+    setMockClient(mock);
+
+    await update('product.product', 4, {
+      name: 'Testing Product',
+    })(state).catch(error => {
+      expect(error).to.be.an('error');
+      return error;
+    });
+  });
 });
 
 describe('delete', () => {
