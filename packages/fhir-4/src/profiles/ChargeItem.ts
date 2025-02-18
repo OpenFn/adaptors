@@ -70,6 +70,7 @@ export default function(props: Partial<ChargeItem_Props>) {
     }
 
     if (!_.isNil(props.occurrence)) {
+        delete resource.occurrence;
         dt.composite(resource, "occurrence", props.occurrence);
     }
 
@@ -109,6 +110,7 @@ export default function(props: Partial<ChargeItem_Props>) {
     }
 
     if (!_.isNil(props.product)) {
+        delete resource.product;
         dt.composite(resource, "product", props.product);
     }
 

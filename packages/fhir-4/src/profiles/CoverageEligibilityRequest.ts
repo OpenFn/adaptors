@@ -49,6 +49,7 @@ export default function(props: Partial<CoverageEligibilityRequest_Props>) {
     }
 
     if (!_.isNil(props.serviced)) {
+        delete resource.serviced;
         dt.composite(resource, "serviced", props.serviced);
     }
 

@@ -567,7 +567,7 @@ declare type HumanName = {
      *  */
     period?: Period;
 };
-declare type Identifier$1 = {
+declare type Identifier = {
     /**
      * Unique id for inter-element referencing
      *  */
@@ -865,7 +865,7 @@ declare type ProductShelfLife = {
     /**
      * Unique identifier for the packaged Medicinal Product
      *  */
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     /**
      * This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
      *  */
@@ -935,7 +935,7 @@ declare type Reference = {
     /**
      * Logical reference, when literal reference is not known
      *  */
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     /**
      * Text alternative for the resource
      *  */
@@ -1184,7 +1184,7 @@ declare type Account_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     type?: CodeableConcept;
     name?: string;
@@ -1208,7 +1208,7 @@ declare type ActivityDefinition_Props = {
     extension?: Extension;
     modifierExtension?: Extension;
     url?: string;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -1265,7 +1265,7 @@ declare type AdministrableProductDefinition_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     formOf?: Reference;
     administrableDoseForm?: CodeableConcept;
@@ -1287,7 +1287,7 @@ declare type AdverseEvent_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     actuality?: string;
     category?: CodeableConcept;
     event?: CodeableConcept;
@@ -1319,7 +1319,7 @@ declare type AllergyIntolerance_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     clinicalStatus?: CodeableConcept;
     verificationStatus?: CodeableConcept;
     type?: string;
@@ -1347,7 +1347,7 @@ declare type Appointment_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     cancelationReason?: CodeableConcept;
     serviceCategory?: CodeableConcept;
@@ -1381,7 +1381,7 @@ declare type AppointmentResponse_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     appointment?: Reference;
     start?: string;
     end?: string;
@@ -1401,7 +1401,7 @@ declare type BiologicallyDerivedProduct_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     productCategory?: string;
     productCode?: CodeableConcept;
     status?: string;
@@ -1424,7 +1424,7 @@ declare type BodyStructure_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     active?: boolean;
     morphology?: CodeableConcept;
     location?: CodeableConcept;
@@ -1444,7 +1444,7 @@ declare type CarePlan_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
     basedOn?: Reference;
@@ -1479,7 +1479,7 @@ declare type CareTeam_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     category?: CodeableConcept;
     name?: string;
@@ -1504,7 +1504,7 @@ declare type ChargeItem_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     definitionUri?: string;
     definitionCanonical?: any;
     status?: string;
@@ -1543,7 +1543,7 @@ declare type ChargeItemDefinition_Props = {
     extension?: Extension;
     modifierExtension?: Extension;
     url?: string;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     title?: string;
     derivedFromUri?: string;
@@ -1578,7 +1578,7 @@ declare type Citation_Props = {
     extension?: Extension;
     modifierExtension?: Extension;
     url?: string;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -1618,7 +1618,7 @@ declare type Claim_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     type?: CodeableConcept;
     subType?: CodeableConcept;
@@ -1657,7 +1657,7 @@ declare type ClaimResponse_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     type?: CodeableConcept;
     subType?: CodeableConcept;
@@ -1696,7 +1696,7 @@ declare type ClinicalImpression_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     statusReason?: CodeableConcept;
     code?: CodeableConcept;
@@ -1728,7 +1728,7 @@ declare type ClinicalUseDefinition_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     type?: string;
     category?: CodeableConcept;
     subject?: Reference;
@@ -1751,7 +1751,7 @@ declare type Communication_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
     basedOn?: Reference;
@@ -1786,10 +1786,10 @@ declare type CommunicationRequest_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     basedOn?: Reference;
     replaces?: Reference;
-    groupIdentifier?: Identifier$1;
+    groupIdentifier?: Identifier;
     status?: string;
     statusReason?: CodeableConcept;
     category?: CodeableConcept;
@@ -1820,7 +1820,7 @@ declare type Condition_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     clinicalStatus?: CodeableConcept;
     verificationStatus?: CodeableConcept;
     category?: CodeableConcept;
@@ -1849,7 +1849,7 @@ declare type Contract_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     url?: string;
     version?: string;
     status?: string;
@@ -1894,7 +1894,7 @@ declare type Coverage_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     type?: CodeableConcept;
     policyHolder?: Reference;
@@ -1923,7 +1923,7 @@ declare type CoverageEligibilityRequest_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     priority?: CodeableConcept;
     purpose?: string;
@@ -1949,7 +1949,7 @@ declare type CoverageEligibilityResponse_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     purpose?: string;
     patient?: Reference;
@@ -1976,7 +1976,7 @@ declare type DetectedIssue_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     code?: CodeableConcept;
     severity?: string;
@@ -2000,7 +2000,7 @@ declare type Device_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     definition?: Reference;
     udiCarrier?: BackboneElement;
     status?: string;
@@ -2038,7 +2038,7 @@ declare type DeviceDefinition_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     udiDeviceIdentifier?: BackboneElement;
     manufacturer?: string;
     deviceName?: BackboneElement;
@@ -2072,7 +2072,7 @@ declare type DeviceMetric_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     type?: CodeableConcept;
     unit?: CodeableConcept;
     source?: Reference;
@@ -2094,12 +2094,12 @@ declare type DeviceRequest_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
     basedOn?: Reference;
     priorRequest?: Reference;
-    groupIdentifier?: Identifier$1;
+    groupIdentifier?: Identifier;
     status?: string;
     intent?: string;
     priority?: string;
@@ -2130,7 +2130,7 @@ declare type DeviceUseStatement_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     basedOn?: Reference;
     status?: string;
     subject?: Reference;
@@ -2155,7 +2155,7 @@ declare type DiagnosticReport_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     basedOn?: Reference;
     status?: string;
     category?: CodeableConcept;
@@ -2197,7 +2197,7 @@ declare type Encounter_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     statusHistory?: BackboneElement;
     class?: Coding;
@@ -2232,7 +2232,7 @@ declare type Endpoint_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     connectionType?: Coding;
     name?: string;
@@ -2255,7 +2255,7 @@ declare type EnrollmentRequest_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     created?: string;
     insurer?: Reference;
@@ -2274,7 +2274,7 @@ declare type EnrollmentResponse_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     request?: Reference;
     outcome?: string;
@@ -2294,7 +2294,7 @@ declare type EpisodeOfCare_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     statusHistory?: BackboneElement;
     type?: CodeableConcept;
@@ -2319,7 +2319,7 @@ declare type EventDefinition_Props = {
     extension?: Extension;
     modifierExtension?: Extension;
     url?: string;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -2359,7 +2359,7 @@ declare type Evidence_Props = {
     extension?: Extension;
     modifierExtension?: Extension;
     url?: string;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     title?: string;
     citeAs?: Reference;
@@ -2398,8 +2398,8 @@ declare type EvidenceReport_Props = {
     url?: string;
     status?: string;
     useContext?: UsageContext;
-    identifier?: Identifier$1;
-    relatedIdentifier?: Identifier$1;
+    identifier?: Identifier;
+    relatedIdentifier?: Identifier;
     citeAs?: Reference;
     type?: CodeableConcept;
     note?: Annotation;
@@ -2426,7 +2426,7 @@ declare type EvidenceVariable_Props = {
     extension?: Extension;
     modifierExtension?: Extension;
     url?: string;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -2461,7 +2461,7 @@ declare type ExplanationOfBenefit_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     type?: CodeableConcept;
     subType?: CodeableConcept;
@@ -2516,7 +2516,7 @@ declare type FamilyMemberHistory_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
     status?: string;
@@ -2546,7 +2546,7 @@ declare type Flag_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     category?: CodeableConcept;
     code?: CodeableConcept;
@@ -2566,7 +2566,7 @@ declare type Goal_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     lifecycleStatus?: string;
     achievementStatus?: CodeableConcept;
     category?: CodeableConcept;
@@ -2594,7 +2594,7 @@ declare type Group_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     active?: boolean;
     type?: string;
     actual?: boolean;
@@ -2616,8 +2616,8 @@ declare type GuidanceResponse_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    requestIdentifier?: Identifier$1;
-    identifier?: Identifier$1;
+    requestIdentifier?: Identifier;
+    identifier?: Identifier;
     module?: string;
     status?: string;
     subject?: Reference;
@@ -2643,7 +2643,7 @@ declare type HealthcareService_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     active?: boolean;
     providedBy?: Reference;
     category?: CodeableConcept;
@@ -2679,7 +2679,7 @@ declare type ImagingStudy_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     modality?: Coding;
     subject?: Reference;
@@ -2711,7 +2711,7 @@ declare type Immunization_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     statusReason?: CodeableConcept;
     vaccineCode?: CodeableConcept;
@@ -2751,7 +2751,7 @@ declare type ImmunizationEvaluation_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     patient?: Reference;
     date?: string;
@@ -2776,7 +2776,7 @@ declare type ImmunizationRecommendation_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     patient?: Reference;
     date?: string;
     authority?: Reference;
@@ -2793,7 +2793,7 @@ declare type Ingredient_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     for?: Reference;
     role?: CodeableConcept;
@@ -2813,7 +2813,7 @@ declare type InsurancePlan_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     type?: CodeableConcept;
     name?: string;
@@ -2839,7 +2839,7 @@ declare type Invoice_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     cancelledReason?: string;
     type?: CodeableConcept;
@@ -2868,7 +2868,7 @@ declare type Library_Props = {
     extension?: Extension;
     modifierExtension?: Extension;
     url?: string;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -2910,7 +2910,7 @@ declare type List_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     mode?: string;
     title?: string;
@@ -2935,7 +2935,7 @@ declare type Location_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     operationalStatus?: Coding;
     name?: string;
@@ -2964,7 +2964,7 @@ declare type ManufacturedItemDefinition_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     manufacturedDoseForm?: CodeableConcept;
     unitOfPresentation?: CodeableConcept;
@@ -2984,7 +2984,7 @@ declare type Measure_Props = {
     extension?: Extension;
     modifierExtension?: Extension;
     url?: string;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -3036,7 +3036,7 @@ declare type MeasureReport_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     type?: string;
     measure?: any;
@@ -3059,7 +3059,7 @@ declare type Media_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     basedOn?: Reference;
     partOf?: Reference;
     status?: string;
@@ -3093,7 +3093,7 @@ declare type Medication_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     code?: CodeableConcept;
     status?: string;
     manufacturer?: Reference;
@@ -3113,7 +3113,7 @@ declare type MedicationAdministration_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     instantiates?: string;
     partOf?: Reference;
     status?: string;
@@ -3144,7 +3144,7 @@ declare type MedicationDispense_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     partOf?: Reference;
     status?: string;
     statusReason?: CodeableConcept;
@@ -3214,7 +3214,7 @@ declare type MedicationRequest_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     statusReason?: CodeableConcept;
     intent?: string;
@@ -3236,7 +3236,7 @@ declare type MedicationRequest_Props = {
     instantiatesCanonical?: any;
     instantiatesUri?: string;
     basedOn?: Reference;
-    groupIdentifier?: Identifier$1;
+    groupIdentifier?: Identifier;
     courseOfTherapyType?: CodeableConcept;
     insurance?: Reference;
     note?: Annotation;
@@ -3258,7 +3258,7 @@ declare type MedicationStatement_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     basedOn?: Reference;
     partOf?: Reference;
     status?: string;
@@ -3287,7 +3287,7 @@ declare type MedicinalProductDefinition_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     type?: CodeableConcept;
     domain?: CodeableConcept;
     version?: string;
@@ -3327,7 +3327,7 @@ declare type MolecularSequence_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     type?: string;
     coordinateSystem?: number;
     patient?: Reference;
@@ -3355,7 +3355,7 @@ declare type NutritionOrder_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
     instantiates?: string;
@@ -3406,7 +3406,7 @@ declare type Observation_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     basedOn?: Reference;
     partOf?: Reference;
     status?: string;
@@ -3444,7 +3444,7 @@ declare type ObservationDefinition_Props = {
     modifierExtension?: Extension;
     category?: CodeableConcept;
     code?: CodeableConcept;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     permittedDataType?: string;
     multipleResultsAllowed?: boolean;
     method?: CodeableConcept;
@@ -3467,7 +3467,7 @@ declare type Organization_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     active?: boolean;
     type?: CodeableConcept;
     name?: string;
@@ -3489,7 +3489,7 @@ declare type OrganizationAffiliation_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     active?: boolean;
     period?: Period;
     organization?: Reference;
@@ -3513,7 +3513,7 @@ declare type PackagedProductDefinition_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     name?: string;
     type?: CodeableConcept;
     packageFor?: Reference;
@@ -3539,7 +3539,7 @@ declare type Patient_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     active?: boolean;
     name?: HumanName;
     telecom?: ContactPoint;
@@ -3567,7 +3567,7 @@ declare type PaymentNotice_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     request?: Reference;
     response?: Reference;
@@ -3591,7 +3591,7 @@ declare type PaymentReconciliation_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     period?: Period;
     created?: string;
@@ -3602,7 +3602,7 @@ declare type PaymentReconciliation_Props = {
     disposition?: string;
     paymentDate?: string;
     paymentAmount?: Money;
-    paymentIdentifier?: Identifier$1;
+    paymentIdentifier?: Identifier;
     detail?: BackboneElement;
     formCode?: CodeableConcept;
     processNote?: BackboneElement;
@@ -3618,7 +3618,7 @@ declare type Person_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     name?: HumanName;
     telecom?: ContactPoint;
     gender?: string;
@@ -3641,7 +3641,7 @@ declare type PlanDefinition_Props = {
     extension?: Extension;
     modifierExtension?: Extension;
     url?: string;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -3683,7 +3683,7 @@ declare type Practitioner_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     active?: boolean;
     name?: HumanName;
     telecom?: ContactPoint;
@@ -3705,7 +3705,7 @@ declare type PractitionerRole_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     active?: boolean;
     period?: Period;
     practitioner?: Reference;
@@ -3731,7 +3731,7 @@ declare type Procedure_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
     basedOn?: Reference;
@@ -3772,7 +3772,7 @@ declare type Questionnaire_Props = {
     extension?: Extension;
     modifierExtension?: Extension;
     url?: string;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -3805,7 +3805,7 @@ declare type QuestionnaireResponse_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     basedOn?: Reference;
     partOf?: Reference;
     questionnaire?: any;
@@ -3828,7 +3828,7 @@ declare type RegulatedAuthorization_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     subject?: Reference;
     type?: CodeableConcept;
     description?: markdown;
@@ -3854,7 +3854,7 @@ declare type RelatedPerson_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     active?: boolean;
     patient?: Reference;
     relationship?: CodeableConcept;
@@ -3878,12 +3878,12 @@ declare type RequestGroup_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
     basedOn?: Reference;
     replaces?: Reference;
-    groupIdentifier?: Identifier$1;
+    groupIdentifier?: Identifier;
     status?: string;
     intent?: string;
     priority?: string;
@@ -3909,7 +3909,7 @@ declare type ResearchDefinition_Props = {
     extension?: Extension;
     modifierExtension?: Extension;
     url?: string;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -3955,7 +3955,7 @@ declare type ResearchElementDefinition_Props = {
     extension?: Extension;
     modifierExtension?: Extension;
     url?: string;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -3999,7 +3999,7 @@ declare type ResearchStudy_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     title?: string;
     protocol?: Reference;
     partOf?: Reference;
@@ -4035,7 +4035,7 @@ declare type ResearchSubject_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     period?: Period;
     study?: Reference;
@@ -4063,7 +4063,7 @@ declare type RiskAssessment_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     basedOn?: Reference;
     parent?: Reference;
     status?: string;
@@ -4092,7 +4092,7 @@ declare type Schedule_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     active?: boolean;
     serviceCategory?: CodeableConcept;
     serviceType?: CodeableConcept;
@@ -4112,12 +4112,12 @@ declare type ServiceRequest_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
     basedOn?: Reference;
     replaces?: Reference;
-    requisition?: Identifier$1;
+    requisition?: Identifier;
     status?: string;
     intent?: string;
     category?: CodeableConcept;
@@ -4157,7 +4157,7 @@ declare type Slot_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     serviceCategory?: CodeableConcept;
     serviceType?: CodeableConcept;
     specialty?: CodeableConcept;
@@ -4180,8 +4180,8 @@ declare type Specimen_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
-    accessionIdentifier?: Identifier$1;
+    identifier?: Identifier;
+    accessionIdentifier?: Identifier;
     status?: string;
     type?: CodeableConcept;
     subject?: Reference;
@@ -4205,7 +4205,7 @@ declare type SpecimenDefinition_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     typeCollected?: CodeableConcept;
     patientPreparation?: CodeableConcept;
     timeAspect?: string;
@@ -4223,7 +4223,7 @@ declare type Substance_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     category?: CodeableConcept;
     code?: CodeableConcept;
@@ -4242,7 +4242,7 @@ declare type SubstanceDefinition_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     status?: CodeableConcept;
     classification?: CodeableConcept;
@@ -4273,7 +4273,7 @@ declare type SupplyDelivery_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     basedOn?: Reference;
     partOf?: Reference;
     status?: string;
@@ -4296,7 +4296,7 @@ declare type SupplyRequest_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     status?: string;
     category?: CodeableConcept;
     priority?: string;
@@ -4323,11 +4323,11 @@ declare type Task_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
     basedOn?: Reference;
-    groupIdentifier?: Identifier$1;
+    groupIdentifier?: Identifier;
     partOf?: Reference;
     status?: string;
     statusReason?: CodeableConcept;
@@ -4366,7 +4366,7 @@ declare type TestReport_Props = {
     contained?: any;
     extension?: Extension;
     modifierExtension?: Extension;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     name?: string;
     status?: string;
     testScript?: Reference;
@@ -4391,7 +4391,7 @@ declare type TestScript_Props = {
     extension?: Extension;
     modifierExtension?: Extension;
     url?: string;
-    identifier?: Identifier$1;
+    identifier?: Identifier;
     version?: string;
     name?: string;
     title?: string;
@@ -4443,26 +4443,6 @@ declare type VerificationResult_Props = {
     initialiser?: any;
 };
 
-declare type VisionPrescription_Props = {
-    id?: string;
-    meta?: Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier$1;
-    status?: string;
-    created?: string;
-    patient?: Reference;
-    encounter?: Reference;
-    dateWritten?: string;
-    prescriber?: Reference;
-    lensSpecification?: BackboneElement;
-    initialiser?: any;
-};
-
 declare const mapSystems: (obj: any) => any;
 /**
  * Define a set of mapped system values.
@@ -4489,7 +4469,7 @@ declare const extendSystemMap: (newMappings: any) => void;
  */
 declare const identifier: (id: string | Identifier, ...ext: any[]) => any;
 /**
- * Alias for util.identifier()
+ * Alias for b.identifier()
  * @public
  * @function
  */
@@ -4507,6 +4487,31 @@ declare const id: (id: string | Identifier, ...ext: any[]) => any;
  */
 declare const addExtension: (resource: any, url: any, value: any) => void;
 /**
+ * Create an extension with a system and value
+ * Values will be typemapped (ie, `value` -> `valueString`)
+ * Optionally pass extra keys on the third argument
+ * @public
+ * @function
+ * @param {string} url - the URL to set for the extension
+ * @param value - the value that the extension should contain
+ * @param props - extra props to add to the extension
+ */
+declare const extension: (url: string, value: any, props?: Omit<Extension, 'url'>) => {
+    extension: ({
+        url: string;
+    } & Omit<Extension, "url">)[];
+};
+/**
+ * Alias for b.extension()
+ * @public
+ * @function
+ */
+declare const ext: (url: string, value: any, props?: Omit<Extension, 'url'>) => {
+    extension: ({
+        url: string;
+    } & Omit<Extension, "url">)[];
+};
+/**
  * Find an extension with a given url in some array
  * @public
  * @function
@@ -4520,43 +4525,48 @@ declare const findExtension: (obj: any, targetUrl: any, path: any) => any;
  * @public
  * @function
  * @param {string} code - the code value
- * @param {string} system - URL to the system. Well be mapped using the system map.
+ * @param {string} system - URL to the system. Will be mapped using the system map.
  */
-declare const coding: (code: any, system: any) => {
-    code: any;
-    system: any;
-};
-declare const c: (code: any, system: any) => {
-    code: any;
-    system: any;
-};
+declare const coding: (code: string, system: string, extra?: Omit<Coding, 'code' | 'system'>) => any;
+declare const c: (code: string, system: string, extra?: Omit<Coding, 'code' | 'system'>) => any;
 /**
  * Create a value object { code, system } with optional system. Systems will be mapped.
- * @public
  * @function
  * @param {string} value - the value
  * @param {string} system - URL to the system. Well be mapped using the system map.
  */
 declare const value: (value: any, system: any, ...extra: any[]) => any;
 /**
- * Create a codeableConcept. Codings can be coding objects or
- * [code, system] tuples
- * if the first argument is a string, it will be set as the text.
+ * Create a CodeableConcept. Codings can be coding objects or
+ * [code, system, extra] tuples (such as passed to b.coding())
  * Systems will be mapped with the system map
  * @public
  * @function
+ * @param {string} value - the value
+ * @param {object} extra - Extra properties to write to the coding
  * @example <caption><Create a codeableConcept</caption>
  * const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  * * @example <caption><Create a codeableConcept with text</caption>
  * const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  */
-declare const concept: (text: any, ...codings: any[]) => {};
+declare type ConceptCoding = Coding | [string, string, Omit<Coding, 'code' | 'system'>?];
+declare const concept: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<CodeableConcept, 'coding'>) => {
+    coding: any;
+    id?: string;
+    extension?: Extension;
+    text?: string;
+};
 /**
- * Alias for util.concept()
+ * Alias for b.concept()
  * @public
  * @function
  */
-declare const cc: (text: any, ...codings: any[]) => {};
+declare const cc: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<CodeableConcept, 'coding'>) => {
+    coding: any;
+    id?: string;
+    extension?: Extension;
+    text?: string;
+};
 /**
  * Create a reference object of the form { reference }
  * If ref is an array, each item will be mapped and an array returned.
@@ -4567,13 +4577,13 @@ declare const cc: (text: any, ...codings: any[]) => {};
  * @function
  * @param ref - the thing to generate a reference from
  */
-declare const reference: (ref: any, opts: any) => any;
+declare const reference: (ref: any, opts?: {}) => any;
 /**
- * Alias for util.reference()
+ * Alias for b.reference()
  * @public
  * @function
  */
-declare const ref: (ref: any, opts: any) => any;
+declare const ref: (ref: any, opts?: {}) => any;
 /**
  * Write a value to the target object using a typed key
  * Ie, if key is `value` and the value is a date time string,
@@ -7532,23 +7542,6 @@ declare function testScript(props: TestScript_Props): any;
  */
 declare function verificationResult(type: string, props: VerificationResult_Props): any;
 declare function verificationResult(props: VerificationResult_Props): any;
-/**
-  * Create a FHIR VisionPrescription resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-  * @param {Identifier} [props.identifier] - Business Identifier for vision prescription
-  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
-  * @param {dateTime} [props.created] - Response creation date
-  * @param {Reference} [props.patient] - Who prescription is for
-  * @param {Reference} [props.encounter] - Created during encounter / admission / stay
-  * @param {dateTime} [props.dateWritten] - When prescription was authorized
-  * @param {Reference} [props.prescriber] - Who authorized the vision prescription
-  * @param {BackboneElement} [props.lensSpecification] - Vision lens authorization
- */
-declare function visionPrescription(type: string, props: VisionPrescription_Props): any;
-declare function visionPrescription(props: VisionPrescription_Props): any;
 
-export { account, activityDefinition, addExtension, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, biologicallyDerivedProduct, bodyStructure, c, carePlan, careTeam, cc, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, coding, communication, communicationRequest, composite, concept, condition, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, endpoint, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, extendSystemMap, familyMemberHistory, findExtension, flag, goal, group, guidanceResponse, healthcareService, id, identifier, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, mapSystems, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, ref, reference, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, resource, riskAssessment, schedule, serviceRequest, setSystemMap, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, testScript, value, verificationResult, visionPrescription };
+export { account, activityDefinition, addExtension, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, biologicallyDerivedProduct, bodyStructure, c, carePlan, careTeam, cc, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, coding, communication, communicationRequest, composite, concept, condition, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, endpoint, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, ext, extendSystemMap, extension, familyMemberHistory, findExtension, flag, goal, group, guidanceResponse, healthcareService, id, identifier, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, mapSystems, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, ref, reference, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, resource, riskAssessment, schedule, serviceRequest, setSystemMap, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, testScript, value, verificationResult };
 

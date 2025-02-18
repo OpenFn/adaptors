@@ -63,10 +63,12 @@ export default function(props: Partial<MedicationRequest_Props>) {
     }
 
     if (!_.isNil(props.reported)) {
+        delete resource.reported;
         dt.composite(resource, "reported", props.reported);
     }
 
     if (!_.isNil(props.medication)) {
+        delete resource.medication;
         dt.composite(resource, "medication", props.medication);
     }
 

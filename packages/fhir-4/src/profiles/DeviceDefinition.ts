@@ -67,6 +67,7 @@ export default function(props: Partial<DeviceDefinition_Props>) {
     }
 
     if (!_.isNil(props.manufacturer)) {
+        delete resource.manufacturer;
         dt.composite(resource, "manufacturer", props.manufacturer);
     }
 

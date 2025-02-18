@@ -56,10 +56,12 @@ export default function(props: Partial<ImmunizationEvaluation_Props>) {
     }
 
     if (!_.isNil(props.doseNumber)) {
+        delete resource.doseNumber;
         dt.composite(resource, "doseNumber", props.doseNumber);
     }
 
     if (!_.isNil(props.seriesDoses)) {
+        delete resource.seriesDoses;
         dt.composite(resource, "seriesDoses", props.seriesDoses);
     }
 

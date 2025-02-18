@@ -62,6 +62,7 @@ export default function(props: Partial<PlanDefinition_Props>) {
     }
 
     if (!_.isNil(props.subject)) {
+        delete resource.subject;
         dt.composite(resource, "subject", props.subject);
     }
 

@@ -59,6 +59,7 @@ export default function(props: Partial<EventDefinition_Props>) {
     }
 
     if (!_.isNil(props.subject)) {
+        delete resource.subject;
         dt.composite(resource, "subject", props.subject);
     }
 

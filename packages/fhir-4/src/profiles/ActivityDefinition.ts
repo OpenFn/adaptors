@@ -77,10 +77,12 @@ export default function(props: Partial<ActivityDefinition_Props>) {
     }
 
     if (!_.isNil(props.subject)) {
+        delete resource.subject;
         dt.composite(resource, "subject", props.subject);
     }
 
     if (!_.isNil(props.timing)) {
+        delete resource.timing;
         dt.composite(resource, "timing", props.timing);
     }
 
@@ -103,6 +105,7 @@ export default function(props: Partial<ActivityDefinition_Props>) {
     }
 
     if (!_.isNil(props.product)) {
+        delete resource.product;
         dt.composite(resource, "product", props.product);
     }
 

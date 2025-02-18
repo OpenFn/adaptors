@@ -94,6 +94,7 @@ export default function(props: Partial<CommunicationRequest_Props>) {
     }
 
     if (!_.isNil(props.occurrence)) {
+        delete resource.occurrence;
         dt.composite(resource, "occurrence", props.occurrence);
     }
 

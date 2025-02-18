@@ -47,10 +47,12 @@ export default function(props: Partial<Patient_Props>) {
     }
 
     if (!_.isNil(props.deceased)) {
+        delete resource.deceased;
         dt.composite(resource, "deceased", props.deceased);
     }
 
     if (!_.isNil(props.multipleBirth)) {
+        delete resource.multipleBirth;
         dt.composite(resource, "multipleBirth", props.multipleBirth);
     }
 

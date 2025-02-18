@@ -58,6 +58,7 @@ export default function(props: Partial<DeviceUseStatement_Props>) {
     }
 
     if (!_.isNil(props.timing)) {
+        delete resource.timing;
         dt.composite(resource, "timing", props.timing);
     }
 

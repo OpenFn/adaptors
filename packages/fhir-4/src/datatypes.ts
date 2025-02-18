@@ -110,7 +110,7 @@ export const identifier = (id: string | FHIR.Identifier, ...ext) => {
 // };
 
 /**
- * Alias for util.identifier()
+ * Alias for b.identifier()
  * @public
  * @function
  */
@@ -139,6 +139,36 @@ export const addExtension = (resource, url, value) => {
 };
 
 /**
+ * Create an extension with a system and value
+ * Values will be typemapped (ie, `value` -> `valueString`)
+ * Optionally pass extra keys on the third argument
+ * @public
+ * @function
+ * @param {string} url - the URL to set for the extension
+ * @param value - the value that the extension should contain
+ * @param props - extra props to add to the extension
+ */
+export const extension = (
+  url: string,
+  value: any,
+  props: Omit<FHIR.Extension, 'url'> = {}
+) => {
+  const ext = {
+    url: url,
+  };
+
+  composite(ext, 'value', value);
+  return { extension: [Object.assign(ext, props)] };
+};
+
+/**
+ * Alias for b.extension()
+ * @public
+ * @function
+ */
+export const ext = extension;
+
+/**
  * Find an extension with a given url in some array
  * @public
  * @function
@@ -153,8 +183,6 @@ export const findExtension = (obj, targetUrl, path) => {
   }
   return result;
 };
-
-// TODO should this also take display text?
 
 /**
  * Create a coding object { code, system }. Systems will be mapped using the system map.
@@ -235,7 +263,7 @@ export const concept = (
 };
 
 /**
- * Alias for util.concept()
+ * Alias for b.concept()
  * @public
  * @function
  */
@@ -251,7 +279,7 @@ export const cc = concept;
  * @function
  * @param ref - the thing to generate a reference from
  */
-export const reference = (ref, opts) => {
+export const reference = (ref, opts = {}) => {
   if (Array.isArray(ref)) {
     return ref.map(reference, opts);
   }
@@ -279,7 +307,7 @@ export const reference = (ref, opts) => {
 };
 
 /**
- * Alias for util.reference()
+ * Alias for b.reference()
  * @public
  * @function
  */

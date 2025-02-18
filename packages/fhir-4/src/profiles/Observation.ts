@@ -78,6 +78,7 @@ export default function(props: Partial<Observation_Props>) {
     }
 
     if (!_.isNil(props.effective)) {
+        delete resource.effective;
         dt.composite(resource, "effective", props.effective);
     }
 
@@ -87,6 +88,7 @@ export default function(props: Partial<Observation_Props>) {
     }
 
     if (!_.isNil(props.value)) {
+        delete resource.value;
         dt.composite(resource, "value", props.value);
     }
 

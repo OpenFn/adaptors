@@ -113,7 +113,6 @@ import Task_Task, { Task_Props } from "./profiles/Task";
 import TestReport_TestReport, { TestReport_Props } from "./profiles/TestReport";
 import TestScript_TestScript, { TestScript_Props } from "./profiles/TestScript";
 import VerificationResult_VerificationResult, { VerificationResult_Props } from "./profiles/VerificationResult";
-import VisionPrescription_VisionPrescription, { VisionPrescription_Props } from "./profiles/VisionPrescription";
 export * from "./datatypes";
 
 /**
@@ -5033,41 +5032,6 @@ export function verificationResult(type: any, props?: any) {
     if (typeof type !== "string") {
       props = type;
       type = "VerificationResult";
-    }
-    if (type in mappings) {
-        return mappings[type](props)
-    }
-    throw new Error(`Error: profile "${type}" not recognised`)
-}
-
-/**
-  * Create a FHIR VisionPrescription resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-  * @param {Identifier} [props.identifier] - Business Identifier for vision prescription
-  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
-  * @param {dateTime} [props.created] - Response creation date
-  * @param {Reference} [props.patient] - Who prescription is for
-  * @param {Reference} [props.encounter] - Created during encounter / admission / stay
-  * @param {dateTime} [props.dateWritten] - When prescription was authorized
-  * @param {Reference} [props.prescriber] - Who authorized the vision prescription
-  * @param {BackboneElement} [props.lensSpecification] - Vision lens authorization
- */
-export function visionPrescription(type: string, props: VisionPrescription_Props);
-
-export function visionPrescription(props: VisionPrescription_Props);
-
-export function visionPrescription(type: any, props?: any) {
-    const mappings = {
-        "VisionPrescription": VisionPrescription_VisionPrescription
-    };
-
-    // Handle optional type parameter
-    if (typeof type !== "string") {
-      props = type;
-      type = "VisionPrescription";
     }
     if (type in mappings) {
         return mappings[type](props)

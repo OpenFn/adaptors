@@ -54,6 +54,7 @@ export default function(props: Partial<EvidenceReport_Props>) {
     }
 
     if (!_.isNil(props.citeAs)) {
+        delete resource.citeAs;
         dt.composite(resource, "citeAs", props.citeAs);
     }
 

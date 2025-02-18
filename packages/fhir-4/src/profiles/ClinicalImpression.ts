@@ -59,6 +59,7 @@ export default function(props: Partial<ClinicalImpression_Props>) {
     }
 
     if (!_.isNil(props.effective)) {
+        delete resource.effective;
         dt.composite(resource, "effective", props.effective);
     }
 

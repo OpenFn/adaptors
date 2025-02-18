@@ -64,6 +64,7 @@ export default function(props: Partial<ResearchElementDefinition_Props>) {
     }
 
     if (!_.isNil(props.subject)) {
+        delete resource.subject;
         dt.composite(resource, "subject", props.subject);
     }
 

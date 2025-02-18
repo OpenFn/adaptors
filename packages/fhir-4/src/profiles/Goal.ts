@@ -51,6 +51,7 @@ export default function(props: Partial<Goal_Props>) {
     }
 
     if (!_.isNil(props.start)) {
+        delete resource.start;
         dt.composite(resource, "start", props.start);
     }
 

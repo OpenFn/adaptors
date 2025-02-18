@@ -47,6 +47,7 @@ export default function(props: Partial<DetectedIssue_Props>) {
     }
 
     if (!_.isNil(props.identified)) {
+        delete resource.identified;
         dt.composite(resource, "identified", props.identified);
     }
 

@@ -78,6 +78,7 @@ export default function(props: Partial<ServiceRequest_Props>) {
     }
 
     if (!_.isNil(props.quantity)) {
+        delete resource.quantity;
         dt.composite(resource, "quantity", props.quantity);
     }
 
@@ -90,10 +91,12 @@ export default function(props: Partial<ServiceRequest_Props>) {
     }
 
     if (!_.isNil(props.occurrence)) {
+        delete resource.occurrence;
         dt.composite(resource, "occurrence", props.occurrence);
     }
 
     if (!_.isNil(props.asNeeded)) {
+        delete resource.asNeeded;
         dt.composite(resource, "asNeeded", props.asNeeded);
     }
 

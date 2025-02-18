@@ -1,3 +1,4 @@
+import type * as FHIR from './fhir';
 export declare const mapSystems: (obj: any) => any;
 /**
  * Define a set of mapped system values.
@@ -22,13 +23,13 @@ export declare const extendSystemMap: (newMappings: any) => void;
  * @param ext - Any other arguments will be treated as extensions
  * @param {string} [system] - the string system to use by default if
  */
-export declare const identifier: (id: string | Identifier, ...ext: any[]) => any;
+export declare const identifier: (id: string | FHIR.Identifier, ...ext: any[]) => any;
 /**
- * Alias for util.identifier()
+ * Alias for b.identifier()
  * @public
  * @function
  */
-export declare const id: (id: string | Identifier, ...ext: any[]) => any;
+export declare const id: (id: string | FHIR.Identifier, ...ext: any[]) => any;
 /**
  * Add an extension to a resource (or object).
  * An object will be created and added to an `extension` array on the provided resource.
@@ -41,6 +42,31 @@ export declare const id: (id: string | Identifier, ...ext: any[]) => any;
  * @param value - the value that the extension should contain
  */
 export declare const addExtension: (resource: any, url: any, value: any) => void;
+/**
+ * Create an extension with a system and value
+ * Values will be typemapped (ie, `value` -> `valueString`)
+ * Optionally pass extra keys on the third argument
+ * @public
+ * @function
+ * @param {string} url - the URL to set for the extension
+ * @param value - the value that the extension should contain
+ * @param props - extra props to add to the extension
+ */
+export declare const extension: (url: string, value: any, props?: Omit<FHIR.Extension, 'url'>) => {
+    extension: ({
+        url: string;
+    } & Omit<FHIR.Extension, "url">)[];
+};
+/**
+ * Alias for b.extension()
+ * @public
+ * @function
+ */
+export declare const ext: (url: string, value: any, props?: Omit<FHIR.Extension, 'url'>) => {
+    extension: ({
+        url: string;
+    } & Omit<FHIR.Extension, "url">)[];
+};
 /**
  * Find an extension with a given url in some array
  * @public
@@ -55,43 +81,48 @@ export declare const findExtension: (obj: any, targetUrl: any, path: any) => any
  * @public
  * @function
  * @param {string} code - the code value
- * @param {string} system - URL to the system. Well be mapped using the system map.
+ * @param {string} system - URL to the system. Will be mapped using the system map.
  */
-export declare const coding: (code: any, system: any) => {
-    code: any;
-    system: any;
-};
-export declare const c: (code: any, system: any) => {
-    code: any;
-    system: any;
-};
+export declare const coding: (code: string, system: string, extra?: Omit<FHIR.Coding, 'code' | 'system'>) => any;
+export declare const c: (code: string, system: string, extra?: Omit<FHIR.Coding, 'code' | 'system'>) => any;
 /**
  * Create a value object { code, system } with optional system. Systems will be mapped.
- * @public
  * @function
  * @param {string} value - the value
  * @param {string} system - URL to the system. Well be mapped using the system map.
  */
 export declare const value: (value: any, system: any, ...extra: any[]) => any;
 /**
- * Create a codeableConcept. Codings can be coding objects or
- * [code, system] tuples
- * if the first argument is a string, it will be set as the text.
+ * Create a CodeableConcept. Codings can be coding objects or
+ * [code, system, extra] tuples (such as passed to b.coding())
  * Systems will be mapped with the system map
  * @public
  * @function
+ * @param {string} value - the value
+ * @param {object} extra - Extra properties to write to the coding
  * @example <caption><Create a codeableConcept</caption>
  * const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  * * @example <caption><Create a codeableConcept with text</caption>
  * const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  */
-export declare const concept: (text: any, ...codings: any[]) => {};
+declare type ConceptCoding = FHIR.Coding | [string, string, Omit<FHIR.Coding, 'code' | 'system'>?];
+export declare const concept: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<FHIR.CodeableConcept, 'coding'>) => {
+    coding: any;
+    id?: string;
+    extension?: FHIR.Extension;
+    text?: string;
+};
 /**
- * Alias for util.concept()
+ * Alias for b.concept()
  * @public
  * @function
  */
-export declare const cc: (text: any, ...codings: any[]) => {};
+export declare const cc: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<FHIR.CodeableConcept, 'coding'>) => {
+    coding: any;
+    id?: string;
+    extension?: FHIR.Extension;
+    text?: string;
+};
 /**
  * Create a reference object of the form { reference }
  * If ref is an array, each item will be mapped and an array returned.
@@ -102,13 +133,13 @@ export declare const cc: (text: any, ...codings: any[]) => {};
  * @function
  * @param ref - the thing to generate a reference from
  */
-export declare const reference: (ref: any, opts: any) => any;
+export declare const reference: (ref: any, opts?: {}) => any;
 /**
- * Alias for util.reference()
+ * Alias for b.reference()
  * @public
  * @function
  */
-export declare const ref: (ref: any, opts: any) => any;
+export declare const ref: (ref: any, opts?: {}) => any;
 /**
  * Write a value to the target object using a typed key
  * Ie, if key is `value` and the value is a date time string,
@@ -122,3 +153,4 @@ export declare const ref: (ref: any, opts: any) => any;
  * @param value - some value to write to the object
  */
 export declare const composite: (object: any, key: any, value: any) => void;
+export {};

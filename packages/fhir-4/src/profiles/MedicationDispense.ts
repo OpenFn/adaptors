@@ -60,10 +60,12 @@ export default function(props: Partial<MedicationDispense_Props>) {
     }
 
     if (!_.isNil(props.statusReason)) {
+        delete resource.statusReason;
         dt.composite(resource, "statusReason", props.statusReason);
     }
 
     if (!_.isNil(props.medication)) {
+        delete resource.medication;
         dt.composite(resource, "medication", props.medication);
     }
 

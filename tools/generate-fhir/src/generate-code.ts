@@ -631,6 +631,10 @@ const mapReference = (propName: string, _mapping: Mapping, schema: Schema) => {
 };
 
 const mapComposite = (propName: string, _mapping: Mapping, _schema: Schema) => {
+  const deleteKey = b.unaryExpression(
+    'delete',
+    b.memberExpression(b.identifier(RESOURCE_NAME), b.identifier(propName))
+  );
   const callBuilder = b.callExpression(
     b.memberExpression(b.identifier('dt'), b.identifier('composite')),
     // util.composite(resource, 'x'', input.x)
@@ -641,7 +645,10 @@ const mapComposite = (propName: string, _mapping: Mapping, _schema: Schema) => {
     ]
   );
 
-  return ifPropInInput(propName, [b.expressionStatement(callBuilder)]);
+  return ifPropInInput(
+    propName,
+    [deleteKey, callBuilder].map(b.expressionStatement)
+  );
 };
 
 const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {

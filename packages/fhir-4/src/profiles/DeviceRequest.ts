@@ -69,6 +69,7 @@ export default function(props: Partial<DeviceRequest_Props>) {
     }
 
     if (!_.isNil(props.code)) {
+        delete resource.code;
         dt.composite(resource, "code", props.code);
     }
 
@@ -95,6 +96,7 @@ export default function(props: Partial<DeviceRequest_Props>) {
     }
 
     if (!_.isNil(props.occurrence)) {
+        delete resource.occurrence;
         dt.composite(resource, "occurrence", props.occurrence);
     }
 

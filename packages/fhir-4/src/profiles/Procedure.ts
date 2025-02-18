@@ -77,6 +77,7 @@ export default function(props: Partial<Procedure_Props>) {
     }
 
     if (!_.isNil(props.performed)) {
+        delete resource.performed;
         dt.composite(resource, "performed", props.performed);
     }
 

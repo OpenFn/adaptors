@@ -56,10 +56,12 @@ export default function(props: Partial<Condition_Props>) {
     }
 
     if (!_.isNil(props.onset)) {
+        delete resource.onset;
         dt.composite(resource, "onset", props.onset);
     }
 
     if (!_.isNil(props.abatement)) {
+        delete resource.abatement;
         dt.composite(resource, "abatement", props.abatement);
     }
 

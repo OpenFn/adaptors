@@ -71,6 +71,7 @@ export default function(props: Partial<Media_Props>) {
     }
 
     if (!_.isNil(props.created)) {
+        delete resource.created;
         dt.composite(resource, "created", props.created);
     }
 

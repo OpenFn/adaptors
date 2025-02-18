@@ -53,14 +53,17 @@ export default function(props: Partial<FamilyMemberHistory_Props>) {
     }
 
     if (!_.isNil(props.born)) {
+        delete resource.born;
         dt.composite(resource, "born", props.born);
     }
 
     if (!_.isNil(props.age)) {
+        delete resource.age;
         dt.composite(resource, "age", props.age);
     }
 
     if (!_.isNil(props.deceased)) {
+        delete resource.deceased;
         dt.composite(resource, "deceased", props.deceased);
     }
 

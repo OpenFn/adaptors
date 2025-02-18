@@ -50,6 +50,7 @@ export default function(props: Partial<GuidanceResponse_Props>) {
     }
 
     if (!_.isNil(props.module)) {
+        delete resource.module;
         dt.composite(resource, "module", props.module);
     }
 

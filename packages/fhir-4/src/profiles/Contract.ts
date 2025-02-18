@@ -92,6 +92,7 @@ export default function(props: Partial<Contract_Props>) {
     }
 
     if (!_.isNil(props.topic)) {
+        delete resource.topic;
         dt.composite(resource, "topic", props.topic);
     }
 
@@ -186,6 +187,7 @@ export default function(props: Partial<Contract_Props>) {
     }
 
     if (!_.isNil(props.legallyBinding)) {
+        delete resource.legallyBinding;
         dt.composite(resource, "legallyBinding", props.legallyBinding);
     }
 

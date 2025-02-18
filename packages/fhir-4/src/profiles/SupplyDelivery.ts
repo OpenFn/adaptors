@@ -66,6 +66,7 @@ export default function(props: Partial<SupplyDelivery_Props>) {
     }
 
     if (!_.isNil(props.occurrence)) {
+        delete resource.occurrence;
         dt.composite(resource, "occurrence", props.occurrence);
     }
 

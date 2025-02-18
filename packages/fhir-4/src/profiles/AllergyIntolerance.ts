@@ -55,6 +55,7 @@ export default function(props: Partial<AllergyIntolerance_Props>) {
     }
 
     if (!_.isNil(props.onset)) {
+        delete resource.onset;
         dt.composite(resource, "onset", props.onset);
     }
 

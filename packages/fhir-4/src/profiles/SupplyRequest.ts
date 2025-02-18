@@ -46,6 +46,7 @@ export default function(props: Partial<SupplyRequest_Props>) {
     }
 
     if (!_.isNil(props.item)) {
+        delete resource.item;
         dt.composite(resource, "item", props.item);
     }
 
@@ -64,6 +65,7 @@ export default function(props: Partial<SupplyRequest_Props>) {
     }
 
     if (!_.isNil(props.occurrence)) {
+        delete resource.occurrence;
         dt.composite(resource, "occurrence", props.occurrence);
     }
 

@@ -55,6 +55,7 @@ export default function(props: Partial<MedicationAdministration_Props>) {
     }
 
     if (!_.isNil(props.medication)) {
+        delete resource.medication;
         dt.composite(resource, "medication", props.medication);
     }
 
@@ -72,6 +73,7 @@ export default function(props: Partial<MedicationAdministration_Props>) {
     }
 
     if (!_.isNil(props.effective)) {
+        delete resource.effective;
         dt.composite(resource, "effective", props.effective);
     }
 
