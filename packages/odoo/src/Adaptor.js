@@ -91,14 +91,16 @@ export function create(model, data, options) {
 }
 
 /**
- * Get a record from Odoo
+ * Get a record from Odoo. Returns all fields unless a field list is provided as a third argument
  * @public
- * @example
+ * @example <caption>Download records with select fields</caption>
  * read("res.partner", [1] , [name]);
+ * @example <caption>Download a single record with all fields</caption>
+ * read("res.partner", $.recordIds);
  * @function
  * @param {string} model - The specific record model from i.e. "res.partner"
- * @param {number[]} recordId - An array of record IDs to read.
- * @param {string[]} fields - An optional array of fields to read from the record.
+ * @param {number} recordId - An array of record IDs to read.
+ * @param {string} fields - An optional array of fields to read from the record.
  * @returns {Operation}
  */
 export function read(model, recordId, fields = []) {
