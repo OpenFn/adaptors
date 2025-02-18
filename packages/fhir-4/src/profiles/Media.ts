@@ -13,12 +13,12 @@ export type Media_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
-    basedOn?: FHIR.Reference;
-    partOf?: FHIR.Reference;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
+    basedOn?: FHIR.Reference[];
+    partOf?: FHIR.Reference[];
     status?: string;
     type?: FHIR.CodeableConcept;
     modality?: FHIR.CodeableConcept;
@@ -28,7 +28,7 @@ export type Media_Props = {
     created?: string;
     issued?: string;
     operator?: FHIR.Reference;
-    reasonCode?: FHIR.CodeableConcept;
+    reasonCode?: FHIR.CodeableConcept[];
     bodySite?: FHIR.CodeableConcept;
     deviceName?: string;
     device?: FHIR.Reference;
@@ -37,7 +37,7 @@ export type Media_Props = {
     frames?: number;
     duration?: number;
     content?: FHIR.Attachment;
-    note?: FHIR.Annotation;
+    note?: FHIR.Annotation[];
     initialiser?: any;
 };
 

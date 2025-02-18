@@ -13,10 +13,10 @@ export type DeviceMetric_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     type?: FHIR.CodeableConcept;
     unit?: FHIR.CodeableConcept;
     source?: FHIR.Reference;
@@ -25,7 +25,7 @@ export type DeviceMetric_Props = {
     color?: string;
     category?: string;
     measurementPeriod?: FHIR.Timing;
-    calibration?: FHIR.BackboneElement;
+    calibration?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

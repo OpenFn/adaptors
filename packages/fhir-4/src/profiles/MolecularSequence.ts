@@ -13,10 +13,10 @@ export type MolecularSequence_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     type?: string;
     coordinateSystem?: number;
     patient?: FHIR.Reference;
@@ -25,13 +25,13 @@ export type MolecularSequence_Props = {
     performer?: FHIR.Reference;
     quantity?: FHIR.Quantity;
     referenceSeq?: FHIR.BackboneElement;
-    variant?: FHIR.BackboneElement;
+    variant?: FHIR.BackboneElement[];
     observedSeq?: string;
-    quality?: FHIR.BackboneElement;
+    quality?: FHIR.BackboneElement[];
     readCoverage?: number;
-    repository?: FHIR.BackboneElement;
-    pointer?: FHIR.Reference;
-    structureVariant?: FHIR.BackboneElement;
+    repository?: FHIR.BackboneElement[];
+    pointer?: FHIR.Reference[];
+    structureVariant?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

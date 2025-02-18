@@ -22,11 +22,6 @@ const typeMap = {
   Resource: 'any',
 };
 
-// These type defs will all reference back to fhir4
-const datatypes = {
-  Identifier: 1,
-};
-
 export const generateType = (
   resourceName: string,
   schema: Schema,
@@ -71,6 +66,7 @@ export const generateType = (
     const t = m.type || s.type || 'any';
     const type = createTypeNode(
       t in fhirTypes ? `FHIR.${t}` : t,
+      s.isArray,
       m.values || s.values
     );
     props.push(
@@ -93,9 +89,9 @@ const generateInlineType = (typeDef: PropDef) => {
   const props: ts.TypeElement[] = [];
   for (let key in typeDef) {
     const useStringLiteral = /[\-\.\\\/\#\@\{\}\[\]]/.test(key);
-    const { type, desc, values } = typeDef[key];
+    const { type, desc, values, isArray } = typeDef[key];
 
-    const typeNode = createTypeNode(type, values);
+    const typeNode = createTypeNode(type, isArray, values);
     if (desc) {
       props.push(b.createJSDocComment(desc + '\n'));
     }
@@ -112,14 +108,15 @@ const generateInlineType = (typeDef: PropDef) => {
 };
 
 // TODO maybe the sig is schema & mappings?
-const createTypeNode = (incomingType: string, values?: string[]) => {
+const createTypeNode = (
+  incomingType: string,
+  isArray: boolean,
+  values?: string[]
+) => {
+  let node;
   const type = typeMap[incomingType] ?? incomingType;
 
-  if (type) {
-    // TODO why is this double wrapped??
-    return b.tsTypeReference(b.identifier(type));
-  }
-  return b.tsAnyKeyword();
+  // TODO restore and adapt this for values
   // if (values) {
   //   if (values.length > 1) {
   //     return b.createUnionTypeNode(values.map(v => b.createStringLiteral(v)));
@@ -129,6 +126,16 @@ const createTypeNode = (incomingType: string, values?: string[]) => {
   //     return b.createStringLiteral(values[0]);
   //   }
   // }
+  if (type) {
+    // TODO why is this double wrapped??
+    node = b.tsTypeReference(b.identifier(type));
+  } else {
+    node = b.tsAnyKeyword();
+  }
+  if (isArray) {
+    node = b.tsArrayType(node);
+  }
+  return node;
 
   // if (type === 'string') {
   //   return b.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);

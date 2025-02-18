@@ -13,10 +13,10 @@ export type Coverage_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     status?: string;
     type?: FHIR.CodeableConcept;
     policyHolder?: FHIR.Reference;
@@ -26,13 +26,13 @@ export type Coverage_Props = {
     dependent?: string;
     relationship?: FHIR.CodeableConcept;
     period?: FHIR.Period;
-    payor?: FHIR.Reference;
-    class?: FHIR.BackboneElement;
+    payor?: FHIR.Reference[];
+    class?: FHIR.BackboneElement[];
     order?: number;
     network?: string;
-    costToBeneficiary?: FHIR.BackboneElement;
+    costToBeneficiary?: FHIR.BackboneElement[];
     subrogation?: boolean;
-    contract?: FHIR.Reference;
+    contract?: FHIR.Reference[];
     initialiser?: any;
 };
 

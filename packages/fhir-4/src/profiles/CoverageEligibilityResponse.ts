@@ -13,12 +13,12 @@ export type CoverageEligibilityResponse_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     status?: string;
-    purpose?: string;
+    purpose?: string[];
     patient?: FHIR.Reference;
     serviced?: string;
     created?: string;
@@ -27,10 +27,10 @@ export type CoverageEligibilityResponse_Props = {
     outcome?: string;
     disposition?: string;
     insurer?: FHIR.Reference;
-    insurance?: FHIR.BackboneElement;
+    insurance?: FHIR.BackboneElement[];
     preAuthRef?: string;
     form?: FHIR.CodeableConcept;
-    error?: FHIR.BackboneElement;
+    error?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

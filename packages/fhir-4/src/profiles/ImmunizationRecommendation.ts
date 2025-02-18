@@ -13,14 +13,14 @@ export type ImmunizationRecommendation_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     patient?: FHIR.Reference;
     date?: string;
     authority?: FHIR.Reference;
-    recommendation?: FHIR.BackboneElement;
+    recommendation?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

@@ -13,19 +13,19 @@ export type AdministrableProductDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     status?: string;
-    formOf?: FHIR.Reference;
+    formOf?: FHIR.Reference[];
     administrableDoseForm?: FHIR.CodeableConcept;
     unitOfPresentation?: FHIR.CodeableConcept;
-    producedFrom?: FHIR.Reference;
-    ingredient?: FHIR.CodeableConcept;
+    producedFrom?: FHIR.Reference[];
+    ingredient?: FHIR.CodeableConcept[];
     device?: FHIR.Reference;
-    property?: FHIR.BackboneElement;
-    routeOfAdministration?: FHIR.BackboneElement;
+    property?: FHIR.BackboneElement[];
+    routeOfAdministration?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

@@ -13,15 +13,15 @@ export type SpecimenDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
     identifier?: FHIR.Identifier;
     typeCollected?: FHIR.CodeableConcept;
-    patientPreparation?: FHIR.CodeableConcept;
+    patientPreparation?: FHIR.CodeableConcept[];
     timeAspect?: string;
-    collection?: FHIR.CodeableConcept;
-    typeTested?: FHIR.BackboneElement;
+    collection?: FHIR.CodeableConcept[];
+    typeTested?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

@@ -13,12 +13,12 @@ export type SupplyDelivery_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
-    basedOn?: FHIR.Reference;
-    partOf?: FHIR.Reference;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
+    basedOn?: FHIR.Reference[];
+    partOf?: FHIR.Reference[];
     status?: string;
     patient?: FHIR.Reference;
     type?: FHIR.CodeableConcept;
@@ -26,7 +26,7 @@ export type SupplyDelivery_Props = {
     occurrence?: string;
     supplier?: FHIR.Reference;
     destination?: FHIR.Reference;
-    receiver?: FHIR.Reference;
+    receiver?: FHIR.Reference[];
     initialiser?: any;
 };
 

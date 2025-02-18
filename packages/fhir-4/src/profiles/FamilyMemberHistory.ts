@@ -13,12 +13,12 @@ export type FamilyMemberHistory_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
-    instantiatesCanonical?: any;
-    instantiatesUri?: string;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
+    instantiatesCanonical?: any[];
+    instantiatesUri?: string[];
     status?: string;
     dataAbsentReason?: FHIR.CodeableConcept;
     patient?: FHIR.Reference;
@@ -30,10 +30,10 @@ export type FamilyMemberHistory_Props = {
     age?: FHIR.Age;
     estimatedAge?: boolean;
     deceased?: boolean;
-    reasonCode?: FHIR.CodeableConcept;
-    reasonReference?: FHIR.Reference;
-    note?: FHIR.Annotation;
-    condition?: FHIR.BackboneElement;
+    reasonCode?: FHIR.CodeableConcept[];
+    reasonReference?: FHIR.Reference[];
+    note?: FHIR.Annotation[];
+    condition?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

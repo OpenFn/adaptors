@@ -7,10 +7,7 @@ import { b } from '../../src/index';
 
 describe('Patient', () => {
   it('should create a simple Patient', () => {
-    const resource = builders.patient({
-      name: {},
-      identifier: {},
-    });
+    const resource = builders.patient({});
     assert.isOk(resource);
   });
 
@@ -19,16 +16,18 @@ describe('Patient', () => {
       id: 'example',
 
       // builder isn't much use here
-      identifier: {
-        use: 'usual', // no code assist on value
-        type: b.cc(['MR', 'http://terminology.hl7.org/CodeSystem/v2-0203']),
-        system: 'urn:oid:1.2.36.146.595.217.0.1',
-        value: '12345',
-        period: { start: '2001-05-06' },
-        assigner: {
-          display: 'Acme Healthcare',
+      identifier: [
+        {
+          use: 'usual', // no code assist on value
+          type: b.cc(['MR', 'http://terminology.hl7.org/CodeSystem/v2-0203']),
+          system: 'urn:oid:1.2.36.146.595.217.0.1',
+          value: '12345',
+          period: { start: '2001-05-06' },
+          assigner: {
+            display: 'Acme Healthcare',
+          },
         },
-      },
+      ],
       active: true,
 
       // builder doesn't help here either

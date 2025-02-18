@@ -13,12 +13,12 @@ export type Flag_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     status?: string;
-    category?: FHIR.CodeableConcept;
+    category?: FHIR.CodeableConcept[];
     code?: FHIR.CodeableConcept;
     subject?: FHIR.Reference;
     period?: FHIR.Period;

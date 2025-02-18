@@ -109,7 +109,7 @@ declare type ConceptCoding = FHIR.Coding | [string, string, Omit<FHIR.Coding, 'c
 export declare const concept: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<FHIR.CodeableConcept, 'coding'>) => {
     coding: any;
     id?: string;
-    extension?: FHIR.Extension;
+    extension?: FHIR.Extension[];
     text?: string;
 };
 /**
@@ -120,7 +120,7 @@ export declare const concept: (codings: ConceptCoding | ConceptCoding[], extra?:
 export declare const cc: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<FHIR.CodeableConcept, 'coding'>) => {
     coding: any;
     id?: string;
-    extension?: FHIR.Extension;
+    extension?: FHIR.Extension[];
     text?: string;
 };
 /**

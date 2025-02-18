@@ -13,10 +13,10 @@ export type PaymentReconciliation_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     status?: string;
     period?: FHIR.Period;
     created?: string;
@@ -28,9 +28,9 @@ export type PaymentReconciliation_Props = {
     paymentDate?: string;
     paymentAmount?: FHIR.Money;
     paymentIdentifier?: FHIR.Identifier;
-    detail?: FHIR.BackboneElement;
+    detail?: FHIR.BackboneElement[];
     formCode?: FHIR.CodeableConcept;
-    processNote?: FHIR.BackboneElement;
+    processNote?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

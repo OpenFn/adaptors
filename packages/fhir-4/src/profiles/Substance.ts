@@ -13,16 +13,16 @@ export type Substance_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     status?: string;
-    category?: FHIR.CodeableConcept;
+    category?: FHIR.CodeableConcept[];
     code?: FHIR.CodeableConcept;
     description?: string;
-    instance?: FHIR.BackboneElement;
-    ingredient?: FHIR.BackboneElement;
+    instance?: FHIR.BackboneElement[];
+    ingredient?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

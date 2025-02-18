@@ -13,14 +13,14 @@ export type MedicationStatement_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
-    basedOn?: FHIR.Reference;
-    partOf?: FHIR.Reference;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
+    basedOn?: FHIR.Reference[];
+    partOf?: FHIR.Reference[];
     status?: string;
-    statusReason?: FHIR.CodeableConcept;
+    statusReason?: FHIR.CodeableConcept[];
     category?: FHIR.CodeableConcept;
     medication?: FHIR.CodeableConcept;
     subject?: FHIR.Reference;
@@ -28,11 +28,11 @@ export type MedicationStatement_Props = {
     effective?: string;
     dateAsserted?: string;
     informationSource?: FHIR.Reference;
-    derivedFrom?: FHIR.Reference;
-    reasonCode?: FHIR.CodeableConcept;
-    reasonReference?: FHIR.Reference;
-    note?: FHIR.Annotation;
-    dosage?: FHIR.Dosage;
+    derivedFrom?: FHIR.Reference[];
+    reasonCode?: FHIR.CodeableConcept[];
+    reasonReference?: FHIR.Reference[];
+    note?: FHIR.Annotation[];
+    dosage?: FHIR.Dosage[];
     initialiser?: any;
 };
 

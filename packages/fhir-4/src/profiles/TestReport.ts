@@ -13,9 +13,9 @@ export type TestReport_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
     identifier?: FHIR.Identifier;
     name?: string;
     status?: string;
@@ -24,9 +24,9 @@ export type TestReport_Props = {
     score?: number;
     tester?: string;
     issued?: string;
-    participant?: FHIR.BackboneElement;
+    participant?: FHIR.BackboneElement[];
     setup?: FHIR.BackboneElement;
-    test?: FHIR.BackboneElement;
+    test?: FHIR.BackboneElement[];
     teardown?: FHIR.BackboneElement;
     initialiser?: any;
 };

@@ -13,21 +13,21 @@ export type DetectedIssue_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     status?: string;
     code?: FHIR.CodeableConcept;
     severity?: string;
     patient?: FHIR.Reference;
     identified?: string;
     author?: FHIR.Reference;
-    implicated?: FHIR.Reference;
-    evidence?: FHIR.BackboneElement;
+    implicated?: FHIR.Reference[];
+    evidence?: FHIR.BackboneElement[];
     detail?: string;
     reference?: string;
-    mitigation?: FHIR.BackboneElement;
+    mitigation?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

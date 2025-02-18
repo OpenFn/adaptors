@@ -13,10 +13,10 @@ export type List_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     status?: string;
     mode?: string;
     title?: string;
@@ -26,8 +26,8 @@ export type List_Props = {
     date?: string;
     source?: FHIR.Reference;
     orderedBy?: FHIR.CodeableConcept;
-    note?: FHIR.Annotation;
-    entry?: FHIR.BackboneElement;
+    note?: FHIR.Annotation[];
+    entry?: FHIR.BackboneElement[];
     emptyReason?: FHIR.CodeableConcept;
     initialiser?: any;
 };

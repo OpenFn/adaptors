@@ -13,10 +13,10 @@ export type RiskAssessment_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     basedOn?: FHIR.Reference;
     parent?: FHIR.Reference;
     status?: string;
@@ -27,12 +27,12 @@ export type RiskAssessment_Props = {
     occurrence?: string;
     condition?: FHIR.Reference;
     performer?: FHIR.Reference;
-    reasonCode?: FHIR.CodeableConcept;
-    reasonReference?: FHIR.Reference;
-    basis?: FHIR.Reference;
-    prediction?: FHIR.BackboneElement;
+    reasonCode?: FHIR.CodeableConcept[];
+    reasonReference?: FHIR.Reference[];
+    basis?: FHIR.Reference[];
+    prediction?: FHIR.BackboneElement[];
     mitigation?: string;
-    note?: FHIR.Annotation;
+    note?: FHIR.Annotation[];
     initialiser?: any;
 };
 

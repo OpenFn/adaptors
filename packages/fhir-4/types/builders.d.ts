@@ -11,7 +11,7 @@ declare type Address = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * home | work | temp | old | billing - purpose of this address
      *  */
@@ -27,7 +27,7 @@ declare type Address = {
     /**
      * Street name, number, direction & P.O. Box etc.
      *  */
-    line?: string;
+    line?: string[];
     /**
      * Name of city, town etc.
      *  */
@@ -61,7 +61,7 @@ declare type Age = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerical value (with implicit precision)
      *  */
@@ -91,7 +91,7 @@ declare type Annotation = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Individual responsible for the annotation
      *  */
@@ -113,7 +113,7 @@ declare type Attachment = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Mime type of the content, with charset etc.
      *  */
@@ -155,11 +155,11 @@ declare type BackboneElement = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
 };
 declare type CodeableConcept = {
     /**
@@ -169,11 +169,11 @@ declare type CodeableConcept = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Code defined by a terminology system
      *  */
-    coding?: Coding;
+    coding?: Coding[];
     /**
      * Plain text representation of the concept
      *  */
@@ -187,7 +187,7 @@ declare type CodeableReference = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Reference to a concept (by class)
      *  */
@@ -205,7 +205,7 @@ declare type Coding = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Identity of the terminology system
      *  */
@@ -235,7 +235,7 @@ declare type ContactDetail = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Name of an individual to contact
      *  */
@@ -243,7 +243,7 @@ declare type ContactDetail = {
     /**
      * Contact details for individual or organization
      *  */
-    telecom?: ContactPoint;
+    telecom?: ContactPoint[];
 };
 declare type ContactPoint = {
     /**
@@ -253,7 +253,7 @@ declare type ContactPoint = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * phone | fax | email | pager | url | sms | other
      *  */
@@ -283,7 +283,7 @@ declare type DataRequirement = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * The type of the required data
      *  */
@@ -291,7 +291,7 @@ declare type DataRequirement = {
     /**
      * The profile of the required data
      *  */
-    profile?: any;
+    profile?: any[];
     /**
      * E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
      *  */
@@ -299,7 +299,7 @@ declare type DataRequirement = {
     /**
      * Indicates specific structure elements that are referenced by the knowledge module
      *  */
-    mustSupport?: string;
+    mustSupport?: string[];
     /**
      * What codes are expected
      *  */
@@ -376,11 +376,11 @@ declare type Dosage = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
     /**
      * The order of the dosage instructions
      *  */
@@ -459,7 +459,7 @@ declare type Duration = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerical value (with implicit precision)
      *  */
@@ -489,7 +489,7 @@ declare type Expression = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Natural language description of the condition
      *  */
@@ -519,7 +519,7 @@ declare type Extension = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * identifies the meaning of the extension
      *  */
@@ -537,7 +537,7 @@ declare type HumanName = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * usual | official | temp | nickname | anonymous | old | maiden
      *  */
@@ -553,15 +553,15 @@ declare type HumanName = {
     /**
      * Given names (not always 'first'). Includes middle names
      *  */
-    given?: string;
+    given?: string[];
     /**
      * Parts that come before the name
      *  */
-    prefix?: string;
+    prefix?: string[];
     /**
      * Parts that come after the name
      *  */
-    suffix?: string;
+    suffix?: string[];
     /**
      * Time period when name was/is in use
      *  */
@@ -575,7 +575,7 @@ declare type Identifier = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * usual | official | temp | secondary | old (If known)
      *  */
@@ -609,11 +609,11 @@ declare type MarketingStatus = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
     /**
      * The country in which the marketing authorisation has been granted shall be specified It should be specified using the ISO 3166 ‑ 1 alpha-2 code elements
      *  */
@@ -643,7 +643,7 @@ declare type Meta = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Version specific identifier
      *  */
@@ -659,7 +659,7 @@ declare type Meta = {
     /**
      * Profiles this resource claims to conform to
      *  */
-    profile?: any;
+    profile?: any[];
     /**
      * Security Labels applied to this resource
      *  */
@@ -677,7 +677,7 @@ declare type Money = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerical value (with implicit precision)
      *  */
@@ -695,7 +695,7 @@ declare type Quantity = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerical value (with implicit precision)
      *  */
@@ -725,7 +725,7 @@ declare type Narrative = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * generated | extensions | additional | empty
      *  */
@@ -743,7 +743,7 @@ declare type ParameterDefinition = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Name used to access the parameter value
      *  */
@@ -781,7 +781,7 @@ declare type Period = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Starting time with inclusive boundary
      *  */
@@ -799,11 +799,11 @@ declare type ProdCharacteristic = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
     /**
      * Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
      *  */
@@ -835,15 +835,15 @@ declare type ProdCharacteristic = {
     /**
      * Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
      *  */
-    color?: string;
+    color?: string[];
     /**
      * Where applicable, the imprint can be specified as text
      *  */
-    imprint?: string;
+    imprint?: string[];
     /**
      * Where applicable, the image can be provided The format of the image attachment shall be specified by regional implementations
      *  */
-    image?: Attachment;
+    image?: Attachment[];
     /**
      * Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
      *  */
@@ -857,11 +857,11 @@ declare type ProductShelfLife = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
     /**
      * Unique identifier for the packaged Medicinal Product
      *  */
@@ -877,7 +877,7 @@ declare type ProductShelfLife = {
     /**
      * Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
      *  */
-    specialPrecautionsForStorage?: CodeableConcept;
+    specialPrecautionsForStorage?: CodeableConcept[];
 };
 declare type Range = {
     /**
@@ -887,7 +887,7 @@ declare type Range = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Low limit
      *  */
@@ -905,7 +905,7 @@ declare type Ratio = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerator value
      *  */
@@ -923,7 +923,7 @@ declare type Reference = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Literal reference, Relative, internal or absolute URL
      *  */
@@ -949,7 +949,7 @@ declare type RelatedArtifact = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
      *  */
@@ -987,15 +987,15 @@ declare type Timing = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
     /**
      * When the event occurs
      *  */
-    event?: string;
+    event?: string[];
     /**
      * When the event is to occur
      *  */
@@ -1078,7 +1078,7 @@ declare type TriggerDefinition = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended
      *  */
@@ -1094,7 +1094,7 @@ declare type TriggerDefinition = {
     /**
      * Triggering data of the event (multiple = 'and')
      *  */
-    data?: DataRequirement;
+    data?: DataRequirement[];
     /**
      * Whether the event triggers (boolean expression)
      *  */
@@ -1108,7 +1108,7 @@ declare type UsageContext = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Type of context being specified
      *  */
@@ -1126,7 +1126,7 @@ declare type base64Binary = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Primitive value for base64Binary
      *  */
@@ -1140,7 +1140,7 @@ declare type markdown = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Primitive value for markdown
      *  */
@@ -1154,7 +1154,7 @@ declare type url = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Primitive value for url
      *  */
@@ -1168,7 +1168,7 @@ declare type xhtml = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Actual xhtml
      *  */
@@ -1181,19 +1181,19 @@ declare type Account_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     type?: CodeableConcept;
     name?: string;
-    subject?: Reference;
+    subject?: Reference[];
     servicePeriod?: Period;
-    coverage?: BackboneElement;
+    coverage?: BackboneElement[];
     owner?: Reference;
     description?: string;
-    guarantor?: BackboneElement;
+    guarantor?: BackboneElement[];
     partOf?: Reference;
     initialiser?: any;
 };
@@ -1204,11 +1204,11 @@ declare type ActivityDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
-    identifier?: Identifier;
+    identifier?: Identifier[];
     version?: string;
     name?: string;
     title?: string;
@@ -1218,23 +1218,23 @@ declare type ActivityDefinition_Props = {
     subject?: CodeableConcept;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
+    contact?: ContactDetail[];
     description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
+    useContext?: UsageContext[];
+    jurisdiction?: CodeableConcept[];
     purpose?: markdown;
     usage?: string;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    topic?: CodeableConcept;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
-    library?: any;
+    topic?: CodeableConcept[];
+    author?: ContactDetail[];
+    editor?: ContactDetail[];
+    reviewer?: ContactDetail[];
+    endorser?: ContactDetail[];
+    relatedArtifact?: RelatedArtifact[];
+    library?: any[];
     kind?: string;
     profile?: any;
     code?: CodeableConcept;
@@ -1243,16 +1243,16 @@ declare type ActivityDefinition_Props = {
     doNotPerform?: boolean;
     timing?: Timing;
     location?: Reference;
-    participant?: BackboneElement;
+    participant?: BackboneElement[];
     product?: Reference;
     quantity?: Quantity;
-    dosage?: Dosage;
-    bodySite?: CodeableConcept;
-    specimenRequirement?: Reference;
-    observationRequirement?: Reference;
-    observationResultRequirement?: Reference;
+    dosage?: Dosage[];
+    bodySite?: CodeableConcept[];
+    specimenRequirement?: Reference[];
+    observationRequirement?: Reference[];
+    observationResultRequirement?: Reference[];
     transform?: any;
-    dynamicValue?: BackboneElement;
+    dynamicValue?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -1262,19 +1262,19 @@ declare type AdministrableProductDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
-    formOf?: Reference;
+    formOf?: Reference[];
     administrableDoseForm?: CodeableConcept;
     unitOfPresentation?: CodeableConcept;
-    producedFrom?: Reference;
-    ingredient?: CodeableConcept;
+    producedFrom?: Reference[];
+    ingredient?: CodeableConcept[];
     device?: Reference;
-    property?: BackboneElement;
-    routeOfAdministration?: BackboneElement;
+    property?: BackboneElement[];
+    routeOfAdministration?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -1284,29 +1284,29 @@ declare type AdverseEvent_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     identifier?: Identifier;
     actuality?: string;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     event?: CodeableConcept;
     subject?: Reference;
     encounter?: Reference;
     date?: string;
     detected?: string;
     recordedDate?: string;
-    resultingCondition?: Reference;
+    resultingCondition?: Reference[];
     location?: Reference;
     seriousness?: CodeableConcept;
     severity?: CodeableConcept;
     outcome?: CodeableConcept;
     recorder?: Reference;
-    contributor?: Reference;
-    suspectEntity?: BackboneElement;
-    subjectMedicalHistory?: Reference;
-    referenceDocument?: Reference;
-    study?: Reference;
+    contributor?: Reference[];
+    suspectEntity?: BackboneElement[];
+    subjectMedicalHistory?: Reference[];
+    referenceDocument?: Reference[];
+    study?: Reference[];
     initialiser?: any;
 };
 
@@ -1316,14 +1316,14 @@ declare type AllergyIntolerance_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     clinicalStatus?: CodeableConcept;
     verificationStatus?: CodeableConcept;
     type?: string;
-    category?: string;
+    category?: string[];
     criticality?: string;
     code?: CodeableConcept;
     patient?: Reference;
@@ -1333,8 +1333,8 @@ declare type AllergyIntolerance_Props = {
     recorder?: Reference;
     asserter?: Reference;
     lastOccurrence?: string;
-    note?: Annotation;
-    reaction?: BackboneElement;
+    note?: Annotation[];
+    reaction?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -1344,31 +1344,31 @@ declare type Appointment_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     cancelationReason?: CodeableConcept;
-    serviceCategory?: CodeableConcept;
-    serviceType?: CodeableConcept;
-    specialty?: CodeableConcept;
+    serviceCategory?: CodeableConcept[];
+    serviceType?: CodeableConcept[];
+    specialty?: CodeableConcept[];
     appointmentType?: CodeableConcept;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
     priority?: number;
     description?: string;
-    supportingInformation?: Reference;
+    supportingInformation?: Reference[];
     start?: string;
     end?: string;
     minutesDuration?: number;
-    slot?: Reference;
+    slot?: Reference[];
     created?: string;
     comment?: string;
     patientInstruction?: string;
-    basedOn?: Reference;
-    participant?: BackboneElement;
-    requestedPeriod?: Period;
+    basedOn?: Reference[];
+    participant?: BackboneElement[];
+    requestedPeriod?: Period[];
     initialiser?: any;
 };
 
@@ -1378,14 +1378,14 @@ declare type AppointmentResponse_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     appointment?: Reference;
     start?: string;
     end?: string;
-    participantType?: CodeableConcept;
+    participantType?: CodeableConcept[];
     actor?: Reference;
     participantStatus?: string;
     comment?: string;
@@ -1398,20 +1398,20 @@ declare type BiologicallyDerivedProduct_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     productCategory?: string;
     productCode?: CodeableConcept;
     status?: string;
-    request?: Reference;
+    request?: Reference[];
     quantity?: number;
-    parent?: Reference;
+    parent?: Reference[];
     collection?: BackboneElement;
-    processing?: BackboneElement;
+    processing?: BackboneElement[];
     manipulation?: BackboneElement;
-    storage?: BackboneElement;
+    storage?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -1421,16 +1421,16 @@ declare type BodyStructure_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     active?: boolean;
     morphology?: CodeableConcept;
     location?: CodeableConcept;
-    locationQualifier?: CodeableConcept;
+    locationQualifier?: CodeableConcept[];
     description?: string;
-    image?: Attachment;
+    image?: Attachment[];
     patient?: Reference;
     initialiser?: any;
 };
@@ -1441,18 +1441,18 @@ declare type CarePlan_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    instantiatesCanonical?: any;
-    instantiatesUri?: string;
-    basedOn?: Reference;
-    replaces?: Reference;
-    partOf?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    instantiatesCanonical?: any[];
+    instantiatesUri?: string[];
+    basedOn?: Reference[];
+    replaces?: Reference[];
+    partOf?: Reference[];
     status?: string;
     intent?: string;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     title?: string;
     description?: string;
     subject?: Reference;
@@ -1460,13 +1460,13 @@ declare type CarePlan_Props = {
     period?: Period;
     created?: string;
     author?: Reference;
-    contributor?: Reference;
-    careTeam?: Reference;
-    addresses?: Reference;
-    supportingInfo?: Reference;
-    goal?: Reference;
-    activity?: BackboneElement;
-    note?: Annotation;
+    contributor?: Reference[];
+    careTeam?: Reference[];
+    addresses?: Reference[];
+    supportingInfo?: Reference[];
+    goal?: Reference[];
+    activity?: BackboneElement[];
+    note?: Annotation[];
     initialiser?: any;
 };
 
@@ -1476,22 +1476,22 @@ declare type CareTeam_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     name?: string;
     subject?: Reference;
     encounter?: Reference;
     period?: Period;
-    participant?: BackboneElement;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    managingOrganization?: Reference;
-    telecom?: ContactPoint;
-    note?: Annotation;
+    participant?: BackboneElement[];
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    managingOrganization?: Reference[];
+    telecom?: ContactPoint[];
+    note?: Annotation[];
     initialiser?: any;
 };
 
@@ -1501,35 +1501,35 @@ declare type ChargeItem_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    definitionUri?: string;
-    definitionCanonical?: any;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    definitionUri?: string[];
+    definitionCanonical?: any[];
     status?: string;
-    partOf?: Reference;
+    partOf?: Reference[];
     code?: CodeableConcept;
     subject?: Reference;
     context?: Reference;
     occurrence?: string;
-    performer?: BackboneElement;
+    performer?: BackboneElement[];
     performingOrganization?: Reference;
     requestingOrganization?: Reference;
     costCenter?: Reference;
     quantity?: Quantity;
-    bodysite?: CodeableConcept;
+    bodysite?: CodeableConcept[];
     factorOverride?: number;
     priceOverride?: Money;
     overrideReason?: string;
     enterer?: Reference;
     enteredDate?: string;
-    reason?: CodeableConcept;
-    service?: Reference;
+    reason?: CodeableConcept[];
+    service?: Reference[];
     product?: Reference;
-    account?: Reference;
-    note?: Annotation;
-    supportingInformation?: Reference;
+    account?: Reference[];
+    note?: Annotation[];
+    supportingInformation?: Reference[];
     initialiser?: any;
 };
 
@@ -1539,32 +1539,32 @@ declare type ChargeItemDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
-    identifier?: Identifier;
+    identifier?: Identifier[];
     version?: string;
     title?: string;
-    derivedFromUri?: string;
-    partOf?: any;
-    replaces?: any;
+    derivedFromUri?: string[];
+    partOf?: any[];
+    replaces?: any[];
     status?: string;
     experimental?: boolean;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
+    contact?: ContactDetail[];
     description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
+    useContext?: UsageContext[];
+    jurisdiction?: CodeableConcept[];
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
     code?: CodeableConcept;
-    instance?: Reference;
-    applicability?: BackboneElement;
-    propertyGroup?: BackboneElement;
+    instance?: Reference[];
+    applicability?: BackboneElement[];
+    propertyGroup?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -1574,11 +1574,11 @@ declare type Citation_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
-    identifier?: Identifier;
+    identifier?: Identifier[];
     version?: string;
     name?: string;
     title?: string;
@@ -1586,25 +1586,25 @@ declare type Citation_Props = {
     experimental?: boolean;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
+    contact?: ContactDetail[];
     description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
+    useContext?: UsageContext[];
+    jurisdiction?: CodeableConcept[];
     purpose?: markdown;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    summary?: BackboneElement;
-    classification?: BackboneElement;
-    note?: Annotation;
-    currentState?: CodeableConcept;
-    statusDate?: BackboneElement;
-    relatesTo?: BackboneElement;
+    author?: ContactDetail[];
+    editor?: ContactDetail[];
+    reviewer?: ContactDetail[];
+    endorser?: ContactDetail[];
+    summary?: BackboneElement[];
+    classification?: BackboneElement[];
+    note?: Annotation[];
+    currentState?: CodeableConcept[];
+    statusDate?: BackboneElement[];
+    relatesTo?: BackboneElement[];
     citedArtifact?: BackboneElement;
     initialiser?: any;
 };
@@ -1615,10 +1615,10 @@ declare type Claim_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     type?: CodeableConcept;
     subType?: CodeableConcept;
@@ -1631,19 +1631,19 @@ declare type Claim_Props = {
     provider?: Reference;
     priority?: CodeableConcept;
     fundsReserve?: CodeableConcept;
-    related?: BackboneElement;
+    related?: BackboneElement[];
     prescription?: Reference;
     originalPrescription?: Reference;
     payee?: BackboneElement;
     referral?: Reference;
     facility?: Reference;
-    careTeam?: BackboneElement;
-    supportingInfo?: BackboneElement;
-    diagnosis?: BackboneElement;
-    procedure?: BackboneElement;
-    insurance?: BackboneElement;
+    careTeam?: BackboneElement[];
+    supportingInfo?: BackboneElement[];
+    diagnosis?: BackboneElement[];
+    procedure?: BackboneElement[];
+    insurance?: BackboneElement[];
     accident?: BackboneElement;
-    item?: BackboneElement;
+    item?: BackboneElement[];
     total?: Money;
     initialiser?: any;
 };
@@ -1654,10 +1654,10 @@ declare type ClaimResponse_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     type?: CodeableConcept;
     subType?: CodeableConcept;
@@ -1672,18 +1672,18 @@ declare type ClaimResponse_Props = {
     preAuthRef?: string;
     preAuthPeriod?: Period;
     payeeType?: CodeableConcept;
-    item?: BackboneElement;
-    addItem?: BackboneElement;
-    adjudication?: any;
-    total?: BackboneElement;
+    item?: BackboneElement[];
+    addItem?: BackboneElement[];
+    adjudication?: any[];
+    total?: BackboneElement[];
     payment?: BackboneElement;
     fundsReserve?: CodeableConcept;
     formCode?: CodeableConcept;
     form?: Attachment;
-    processNote?: BackboneElement;
-    communicationRequest?: Reference;
-    insurance?: BackboneElement;
-    error?: BackboneElement;
+    processNote?: BackboneElement[];
+    communicationRequest?: Reference[];
+    insurance?: BackboneElement[];
+    error?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -1693,10 +1693,10 @@ declare type ClinicalImpression_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     statusReason?: CodeableConcept;
     code?: CodeableConcept;
@@ -1707,15 +1707,15 @@ declare type ClinicalImpression_Props = {
     date?: string;
     assessor?: Reference;
     previous?: Reference;
-    problem?: Reference;
-    investigation?: BackboneElement;
-    protocol?: string;
+    problem?: Reference[];
+    investigation?: BackboneElement[];
+    protocol?: string[];
     summary?: string;
-    finding?: BackboneElement;
-    prognosisCodeableConcept?: CodeableConcept;
-    prognosisReference?: Reference;
-    supportingInfo?: Reference;
-    note?: Annotation;
+    finding?: BackboneElement[];
+    prognosisCodeableConcept?: CodeableConcept[];
+    prognosisReference?: Reference[];
+    supportingInfo?: Reference[];
+    note?: Annotation[];
     initialiser?: any;
 };
 
@@ -1725,18 +1725,18 @@ declare type ClinicalUseDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     type?: string;
-    category?: CodeableConcept;
-    subject?: Reference;
+    category?: CodeableConcept[];
+    subject?: Reference[];
     status?: CodeableConcept;
     contraindication?: BackboneElement;
     indication?: BackboneElement;
     interaction?: BackboneElement;
-    population?: Reference;
+    population?: Reference[];
     undesirableEffect?: BackboneElement;
     warning?: BackboneElement;
     initialiser?: any;
@@ -1748,32 +1748,32 @@ declare type Communication_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    instantiatesCanonical?: any;
-    instantiatesUri?: string;
-    basedOn?: Reference;
-    partOf?: Reference;
-    inResponseTo?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    instantiatesCanonical?: any[];
+    instantiatesUri?: string[];
+    basedOn?: Reference[];
+    partOf?: Reference[];
+    inResponseTo?: Reference[];
     status?: string;
     statusReason?: CodeableConcept;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     priority?: string;
-    medium?: CodeableConcept;
+    medium?: CodeableConcept[];
     subject?: Reference;
     topic?: CodeableConcept;
-    about?: Reference;
+    about?: Reference[];
     encounter?: Reference;
     sent?: string;
     received?: string;
-    recipient?: Reference;
+    recipient?: Reference[];
     sender?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    payload?: BackboneElement;
-    note?: Annotation;
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    payload?: BackboneElement[];
+    note?: Annotation[];
     initialiser?: any;
 };
 
@@ -1783,31 +1783,31 @@ declare type CommunicationRequest_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
-    replaces?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    basedOn?: Reference[];
+    replaces?: Reference[];
     groupIdentifier?: Identifier;
     status?: string;
     statusReason?: CodeableConcept;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     priority?: string;
     doNotPerform?: boolean;
-    medium?: CodeableConcept;
+    medium?: CodeableConcept[];
     subject?: Reference;
-    about?: Reference;
+    about?: Reference[];
     encounter?: Reference;
-    payload?: BackboneElement;
+    payload?: BackboneElement[];
     occurrence?: string;
     authoredOn?: string;
     requester?: Reference;
-    recipient?: Reference;
+    recipient?: Reference[];
     sender?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    note?: Annotation;
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    note?: Annotation[];
     initialiser?: any;
 };
 
@@ -1817,16 +1817,16 @@ declare type Condition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     clinicalStatus?: CodeableConcept;
     verificationStatus?: CodeableConcept;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     severity?: CodeableConcept;
     code?: CodeableConcept;
-    bodySite?: CodeableConcept;
+    bodySite?: CodeableConcept[];
     subject?: Reference;
     encounter?: Reference;
     onset?: string;
@@ -1834,9 +1834,9 @@ declare type Condition_Props = {
     recordedDate?: string;
     recorder?: Reference;
     asserter?: Reference;
-    stage?: BackboneElement;
-    evidence?: BackboneElement;
-    note?: Annotation;
+    stage?: BackboneElement[];
+    evidence?: BackboneElement[];
+    note?: Annotation[];
     initialiser?: any;
 };
 
@@ -1846,10 +1846,10 @@ declare type Contract_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     url?: string;
     version?: string;
     status?: string;
@@ -1860,27 +1860,27 @@ declare type Contract_Props = {
     issued?: string;
     applies?: Period;
     expirationType?: CodeableConcept;
-    subject?: Reference;
-    authority?: Reference;
-    domain?: Reference;
-    site?: Reference;
+    subject?: Reference[];
+    authority?: Reference[];
+    domain?: Reference[];
+    site?: Reference[];
     name?: string;
     title?: string;
     subtitle?: string;
-    alias?: string;
+    alias?: string[];
     author?: Reference;
     scope?: CodeableConcept;
     topic?: CodeableConcept;
     type?: CodeableConcept;
-    subType?: CodeableConcept;
+    subType?: CodeableConcept[];
     contentDefinition?: BackboneElement;
-    term?: BackboneElement;
-    supportingInfo?: Reference;
-    relevantHistory?: Reference;
-    signer?: BackboneElement;
-    friendly?: BackboneElement;
-    legal?: BackboneElement;
-    rule?: BackboneElement;
+    term?: BackboneElement[];
+    supportingInfo?: Reference[];
+    relevantHistory?: Reference[];
+    signer?: BackboneElement[];
+    friendly?: BackboneElement[];
+    legal?: BackboneElement[];
+    rule?: BackboneElement[];
     legallyBinding?: Attachment;
     initialiser?: any;
 };
@@ -1891,10 +1891,10 @@ declare type Coverage_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     type?: CodeableConcept;
     policyHolder?: Reference;
@@ -1904,13 +1904,13 @@ declare type Coverage_Props = {
     dependent?: string;
     relationship?: CodeableConcept;
     period?: Period;
-    payor?: Reference;
-    class?: BackboneElement;
+    payor?: Reference[];
+    class?: BackboneElement[];
     order?: number;
     network?: string;
-    costToBeneficiary?: BackboneElement;
+    costToBeneficiary?: BackboneElement[];
     subrogation?: boolean;
-    contract?: Reference;
+    contract?: Reference[];
     initialiser?: any;
 };
 
@@ -1920,13 +1920,13 @@ declare type CoverageEligibilityRequest_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     priority?: CodeableConcept;
-    purpose?: string;
+    purpose?: string[];
     patient?: Reference;
     serviced?: string;
     created?: string;
@@ -1934,9 +1934,9 @@ declare type CoverageEligibilityRequest_Props = {
     provider?: Reference;
     insurer?: Reference;
     facility?: Reference;
-    supportingInfo?: BackboneElement;
-    insurance?: BackboneElement;
-    item?: BackboneElement;
+    supportingInfo?: BackboneElement[];
+    insurance?: BackboneElement[];
+    item?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -1946,12 +1946,12 @@ declare type CoverageEligibilityResponse_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
-    purpose?: string;
+    purpose?: string[];
     patient?: Reference;
     serviced?: string;
     created?: string;
@@ -1960,10 +1960,10 @@ declare type CoverageEligibilityResponse_Props = {
     outcome?: string;
     disposition?: string;
     insurer?: Reference;
-    insurance?: BackboneElement;
+    insurance?: BackboneElement[];
     preAuthRef?: string;
     form?: CodeableConcept;
-    error?: BackboneElement;
+    error?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -1973,21 +1973,21 @@ declare type DetectedIssue_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     code?: CodeableConcept;
     severity?: string;
     patient?: Reference;
     identified?: string;
     author?: Reference;
-    implicated?: Reference;
-    evidence?: BackboneElement;
+    implicated?: Reference[];
+    evidence?: BackboneElement[];
     detail?: string;
     reference?: string;
-    mitigation?: BackboneElement;
+    mitigation?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -1997,34 +1997,34 @@ declare type Device_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     definition?: Reference;
-    udiCarrier?: BackboneElement;
+    udiCarrier?: BackboneElement[];
     status?: string;
-    statusReason?: CodeableConcept;
+    statusReason?: CodeableConcept[];
     distinctIdentifier?: string;
     manufacturer?: string;
     manufactureDate?: string;
     expirationDate?: string;
     lotNumber?: string;
     serialNumber?: string;
-    deviceName?: BackboneElement;
+    deviceName?: BackboneElement[];
     modelNumber?: string;
     partNumber?: string;
     type?: CodeableConcept;
-    specialization?: BackboneElement;
-    version?: BackboneElement;
-    property?: BackboneElement;
+    specialization?: BackboneElement[];
+    version?: BackboneElement[];
+    property?: BackboneElement[];
     patient?: Reference;
     owner?: Reference;
-    contact?: ContactPoint;
+    contact?: ContactPoint[];
     location?: Reference;
     url?: string;
-    note?: Annotation;
-    safety?: CodeableConcept;
+    note?: Annotation[];
+    safety?: CodeableConcept[];
     parent?: Reference;
     initialiser?: any;
 };
@@ -2035,31 +2035,31 @@ declare type DeviceDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    udiDeviceIdentifier?: BackboneElement;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    udiDeviceIdentifier?: BackboneElement[];
     manufacturer?: string;
-    deviceName?: BackboneElement;
+    deviceName?: BackboneElement[];
     modelNumber?: string;
     type?: CodeableConcept;
-    specialization?: BackboneElement;
-    version?: string;
-    safety?: CodeableConcept;
-    shelfLifeStorage?: ProductShelfLife;
+    specialization?: BackboneElement[];
+    version?: string[];
+    safety?: CodeableConcept[];
+    shelfLifeStorage?: ProductShelfLife[];
     physicalCharacteristics?: ProdCharacteristic;
-    languageCode?: CodeableConcept;
-    capability?: BackboneElement;
-    property?: BackboneElement;
+    languageCode?: CodeableConcept[];
+    capability?: BackboneElement[];
+    property?: BackboneElement[];
     owner?: Reference;
-    contact?: ContactPoint;
+    contact?: ContactPoint[];
     url?: string;
     onlineInformation?: string;
-    note?: Annotation;
+    note?: Annotation[];
     quantity?: Quantity;
     parentDevice?: Reference;
-    material?: BackboneElement;
+    material?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -2069,10 +2069,10 @@ declare type DeviceMetric_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     type?: CodeableConcept;
     unit?: CodeableConcept;
     source?: Reference;
@@ -2081,7 +2081,7 @@ declare type DeviceMetric_Props = {
     color?: string;
     category?: string;
     measurementPeriod?: Timing;
-    calibration?: BackboneElement;
+    calibration?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -2091,20 +2091,20 @@ declare type DeviceRequest_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    instantiatesCanonical?: any;
-    instantiatesUri?: string;
-    basedOn?: Reference;
-    priorRequest?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    instantiatesCanonical?: any[];
+    instantiatesUri?: string[];
+    basedOn?: Reference[];
+    priorRequest?: Reference[];
     groupIdentifier?: Identifier;
     status?: string;
     intent?: string;
     priority?: string;
     code?: Reference;
-    parameter?: BackboneElement;
+    parameter?: BackboneElement[];
     subject?: Reference;
     encounter?: Reference;
     occurrence?: string;
@@ -2112,12 +2112,12 @@ declare type DeviceRequest_Props = {
     requester?: Reference;
     performerType?: CodeableConcept;
     performer?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    insurance?: Reference;
-    supportingInfo?: Reference;
-    note?: Annotation;
-    relevantHistory?: Reference;
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    insurance?: Reference[];
+    supportingInfo?: Reference[];
+    note?: Annotation[];
+    relevantHistory?: Reference[];
     initialiser?: any;
 };
 
@@ -2127,22 +2127,22 @@ declare type DeviceUseStatement_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    basedOn?: Reference[];
     status?: string;
     subject?: Reference;
-    derivedFrom?: Reference;
+    derivedFrom?: Reference[];
     timing?: Timing;
     recordedOn?: string;
     source?: Reference;
     device?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
     bodySite?: CodeableConcept;
-    note?: Annotation;
+    note?: Annotation[];
     initialiser?: any;
 };
 
@@ -2152,27 +2152,27 @@ declare type DiagnosticReport_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    basedOn?: Reference[];
     status?: string;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     code?: CodeableConcept;
     subject?: Reference;
     encounter?: Reference;
     effective?: string;
     issued?: string;
-    performer?: Reference;
-    resultsInterpreter?: Reference;
-    specimen?: Reference;
-    result?: Reference;
-    imagingStudy?: Reference;
-    media?: BackboneElement;
+    performer?: Reference[];
+    resultsInterpreter?: Reference[];
+    specimen?: Reference[];
+    result?: Reference[];
+    imagingStudy?: Reference[];
+    media?: BackboneElement[];
     conclusion?: string;
-    conclusionCode?: CodeableConcept;
-    presentedForm?: Attachment;
+    conclusionCode?: CodeableConcept[];
+    presentedForm?: Attachment[];
     initialiser?: any;
 };
 
@@ -2182,9 +2182,9 @@ declare type DomainResource_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     initialiser?: any;
 };
 
@@ -2194,30 +2194,30 @@ declare type Encounter_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
-    statusHistory?: BackboneElement;
+    statusHistory?: BackboneElement[];
     class?: Coding;
-    classHistory?: BackboneElement;
-    type?: CodeableConcept;
+    classHistory?: BackboneElement[];
+    type?: CodeableConcept[];
     serviceType?: CodeableConcept;
     priority?: CodeableConcept;
     subject?: Reference;
-    episodeOfCare?: Reference;
-    basedOn?: Reference;
-    participant?: BackboneElement;
-    appointment?: Reference;
+    episodeOfCare?: Reference[];
+    basedOn?: Reference[];
+    participant?: BackboneElement[];
+    appointment?: Reference[];
     period?: Period;
     length?: Duration;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    diagnosis?: BackboneElement;
-    account?: Reference;
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    diagnosis?: BackboneElement[];
+    account?: Reference[];
     hospitalization?: BackboneElement;
-    location?: BackboneElement;
+    location?: BackboneElement[];
     serviceProvider?: Reference;
     partOf?: Reference;
     initialiser?: any;
@@ -2229,20 +2229,20 @@ declare type Endpoint_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     connectionType?: Coding;
     name?: string;
     managingOrganization?: Reference;
-    contact?: ContactPoint;
+    contact?: ContactPoint[];
     period?: Period;
-    payloadType?: CodeableConcept;
-    payloadMimeType?: string;
+    payloadType?: CodeableConcept[];
+    payloadMimeType?: string[];
     address?: url;
-    header?: string;
+    header?: string[];
     initialiser?: any;
 };
 
@@ -2252,10 +2252,10 @@ declare type EnrollmentRequest_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     created?: string;
     insurer?: Reference;
@@ -2271,10 +2271,10 @@ declare type EnrollmentResponse_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     request?: Reference;
     outcome?: string;
@@ -2291,21 +2291,21 @@ declare type EpisodeOfCare_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
-    statusHistory?: BackboneElement;
-    type?: CodeableConcept;
-    diagnosis?: BackboneElement;
+    statusHistory?: BackboneElement[];
+    type?: CodeableConcept[];
+    diagnosis?: BackboneElement[];
     patient?: Reference;
     managingOrganization?: Reference;
     period?: Period;
-    referralRequest?: Reference;
+    referralRequest?: Reference[];
     careManager?: Reference;
-    team?: Reference;
-    account?: Reference;
+    team?: Reference[];
+    account?: Reference[];
     initialiser?: any;
 };
 
@@ -2315,11 +2315,11 @@ declare type EventDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
-    identifier?: Identifier;
+    identifier?: Identifier[];
     version?: string;
     name?: string;
     title?: string;
@@ -2329,23 +2329,23 @@ declare type EventDefinition_Props = {
     subject?: CodeableConcept;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
+    contact?: ContactDetail[];
     description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
+    useContext?: UsageContext[];
+    jurisdiction?: CodeableConcept[];
     purpose?: markdown;
     usage?: string;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    topic?: CodeableConcept;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
-    trigger?: TriggerDefinition;
+    topic?: CodeableConcept[];
+    author?: ContactDetail[];
+    editor?: ContactDetail[];
+    reviewer?: ContactDetail[];
+    endorser?: ContactDetail[];
+    relatedArtifact?: RelatedArtifact[];
+    trigger?: TriggerDefinition[];
     initialiser?: any;
 };
 
@@ -2355,34 +2355,34 @@ declare type Evidence_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
-    identifier?: Identifier;
+    identifier?: Identifier[];
     version?: string;
     title?: string;
     citeAs?: Reference;
     status?: string;
     date?: string;
-    useContext?: UsageContext;
+    useContext?: UsageContext[];
     approvalDate?: string;
     lastReviewDate?: string;
     publisher?: string;
-    contact?: ContactDetail;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
+    contact?: ContactDetail[];
+    author?: ContactDetail[];
+    editor?: ContactDetail[];
+    reviewer?: ContactDetail[];
+    endorser?: ContactDetail[];
+    relatedArtifact?: RelatedArtifact[];
     description?: markdown;
     assertion?: markdown;
-    note?: Annotation;
-    variableDefinition?: BackboneElement;
+    note?: Annotation[];
+    variableDefinition?: BackboneElement[];
     synthesisType?: CodeableConcept;
     studyType?: CodeableConcept;
-    statistic?: BackboneElement;
-    certainty?: BackboneElement;
+    statistic?: BackboneElement[];
+    certainty?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -2392,27 +2392,27 @@ declare type EvidenceReport_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
     status?: string;
-    useContext?: UsageContext;
-    identifier?: Identifier;
-    relatedIdentifier?: Identifier;
+    useContext?: UsageContext[];
+    identifier?: Identifier[];
+    relatedIdentifier?: Identifier[];
     citeAs?: Reference;
     type?: CodeableConcept;
-    note?: Annotation;
-    relatedArtifact?: RelatedArtifact;
+    note?: Annotation[];
+    relatedArtifact?: RelatedArtifact[];
     subject?: BackboneElement;
     publisher?: string;
-    contact?: ContactDetail;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatesTo?: BackboneElement;
-    section?: BackboneElement;
+    contact?: ContactDetail[];
+    author?: ContactDetail[];
+    editor?: ContactDetail[];
+    reviewer?: ContactDetail[];
+    endorser?: ContactDetail[];
+    relatesTo?: BackboneElement[];
+    section?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -2422,11 +2422,11 @@ declare type EvidenceVariable_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
-    identifier?: Identifier;
+    identifier?: Identifier[];
     version?: string;
     name?: string;
     title?: string;
@@ -2435,20 +2435,20 @@ declare type EvidenceVariable_Props = {
     status?: string;
     date?: string;
     description?: markdown;
-    note?: Annotation;
-    useContext?: UsageContext;
+    note?: Annotation[];
+    useContext?: UsageContext[];
     publisher?: string;
-    contact?: ContactDetail;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
+    contact?: ContactDetail[];
+    author?: ContactDetail[];
+    editor?: ContactDetail[];
+    reviewer?: ContactDetail[];
+    endorser?: ContactDetail[];
+    relatedArtifact?: RelatedArtifact[];
     actual?: boolean;
     characteristicCombination?: string;
-    characteristic?: BackboneElement;
+    characteristic?: BackboneElement[];
     handling?: string;
-    category?: BackboneElement;
+    category?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -2458,10 +2458,10 @@ declare type ExplanationOfBenefit_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     type?: CodeableConcept;
     subType?: CodeableConcept;
@@ -2475,7 +2475,7 @@ declare type ExplanationOfBenefit_Props = {
     priority?: CodeableConcept;
     fundsReserveRequested?: CodeableConcept;
     fundsReserve?: CodeableConcept;
-    related?: BackboneElement;
+    related?: BackboneElement[];
     prescription?: Reference;
     originalPrescription?: Reference;
     payee?: BackboneElement;
@@ -2485,25 +2485,25 @@ declare type ExplanationOfBenefit_Props = {
     claimResponse?: Reference;
     outcome?: string;
     disposition?: string;
-    preAuthRef?: string;
-    preAuthRefPeriod?: Period;
-    careTeam?: BackboneElement;
-    supportingInfo?: BackboneElement;
-    diagnosis?: BackboneElement;
-    procedure?: BackboneElement;
+    preAuthRef?: string[];
+    preAuthRefPeriod?: Period[];
+    careTeam?: BackboneElement[];
+    supportingInfo?: BackboneElement[];
+    diagnosis?: BackboneElement[];
+    procedure?: BackboneElement[];
     precedence?: number;
-    insurance?: BackboneElement;
+    insurance?: BackboneElement[];
     accident?: BackboneElement;
-    item?: BackboneElement;
-    addItem?: BackboneElement;
-    adjudication?: any;
-    total?: BackboneElement;
+    item?: BackboneElement[];
+    addItem?: BackboneElement[];
+    adjudication?: any[];
+    total?: BackboneElement[];
     payment?: BackboneElement;
     formCode?: CodeableConcept;
     form?: Attachment;
-    processNote?: BackboneElement;
+    processNote?: BackboneElement[];
     benefitPeriod?: Period;
-    benefitBalance?: BackboneElement;
+    benefitBalance?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -2513,12 +2513,12 @@ declare type FamilyMemberHistory_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    instantiatesCanonical?: any;
-    instantiatesUri?: string;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    instantiatesCanonical?: any[];
+    instantiatesUri?: string[];
     status?: string;
     dataAbsentReason?: CodeableConcept;
     patient?: Reference;
@@ -2530,10 +2530,10 @@ declare type FamilyMemberHistory_Props = {
     age?: Age;
     estimatedAge?: boolean;
     deceased?: boolean;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    note?: Annotation;
-    condition?: BackboneElement;
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    note?: Annotation[];
+    condition?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -2543,12 +2543,12 @@ declare type Flag_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     code?: CodeableConcept;
     subject?: Reference;
     period?: Period;
@@ -2563,25 +2563,25 @@ declare type Goal_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     lifecycleStatus?: string;
     achievementStatus?: CodeableConcept;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     priority?: CodeableConcept;
     description?: CodeableConcept;
     subject?: Reference;
     start?: string;
-    target?: BackboneElement;
+    target?: BackboneElement[];
     statusDate?: string;
     statusReason?: string;
     expressedBy?: Reference;
-    addresses?: Reference;
-    note?: Annotation;
-    outcomeCode?: CodeableConcept;
-    outcomeReference?: Reference;
+    addresses?: Reference[];
+    note?: Annotation[];
+    outcomeCode?: CodeableConcept[];
+    outcomeReference?: Reference[];
     initialiser?: any;
 };
 
@@ -2591,10 +2591,10 @@ declare type Group_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     active?: boolean;
     type?: string;
     actual?: boolean;
@@ -2602,8 +2602,8 @@ declare type Group_Props = {
     name?: string;
     quantity?: number;
     managingEntity?: Reference;
-    characteristic?: BackboneElement;
-    member?: BackboneElement;
+    characteristic?: BackboneElement[];
+    member?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -2613,24 +2613,24 @@ declare type GuidanceResponse_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     requestIdentifier?: Identifier;
-    identifier?: Identifier;
+    identifier?: Identifier[];
     module?: string;
     status?: string;
     subject?: Reference;
     encounter?: Reference;
     occurrenceDateTime?: string;
     performer?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    note?: Annotation;
-    evaluationMessage?: Reference;
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    note?: Annotation[];
+    evaluationMessage?: Reference[];
     outputParameters?: Reference;
     result?: Reference;
-    dataRequirement?: DataRequirement;
+    dataRequirement?: DataRequirement[];
     initialiser?: any;
 };
 
@@ -2640,33 +2640,33 @@ declare type HealthcareService_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     active?: boolean;
     providedBy?: Reference;
-    category?: CodeableConcept;
-    type?: CodeableConcept;
-    specialty?: CodeableConcept;
-    location?: Reference;
+    category?: CodeableConcept[];
+    type?: CodeableConcept[];
+    specialty?: CodeableConcept[];
+    location?: Reference[];
     name?: string;
     comment?: string;
     extraDetails?: markdown;
     photo?: Attachment;
-    telecom?: ContactPoint;
-    coverageArea?: Reference;
-    serviceProvisionCode?: CodeableConcept;
-    eligibility?: BackboneElement;
-    program?: CodeableConcept;
-    characteristic?: CodeableConcept;
-    communication?: CodeableConcept;
-    referralMethod?: CodeableConcept;
+    telecom?: ContactPoint[];
+    coverageArea?: Reference[];
+    serviceProvisionCode?: CodeableConcept[];
+    eligibility?: BackboneElement[];
+    program?: CodeableConcept[];
+    characteristic?: CodeableConcept[];
+    communication?: CodeableConcept[];
+    referralMethod?: CodeableConcept[];
     appointmentRequired?: boolean;
-    availableTime?: BackboneElement;
-    notAvailable?: BackboneElement;
+    availableTime?: BackboneElement[];
+    notAvailable?: BackboneElement[];
     availabilityExceptions?: string;
-    endpoint?: Reference;
+    endpoint?: Reference[];
     initialiser?: any;
 };
 
@@ -2676,29 +2676,29 @@ declare type ImagingStudy_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
-    modality?: Coding;
+    modality?: Coding[];
     subject?: Reference;
     encounter?: Reference;
     started?: string;
-    basedOn?: Reference;
+    basedOn?: Reference[];
     referrer?: Reference;
-    interpreter?: Reference;
-    endpoint?: Reference;
+    interpreter?: Reference[];
+    endpoint?: Reference[];
     numberOfSeries?: number;
     numberOfInstances?: number;
     procedureReference?: Reference;
-    procedureCode?: CodeableConcept;
+    procedureCode?: CodeableConcept[];
     location?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    note?: Annotation;
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    note?: Annotation[];
     description?: string;
-    series?: BackboneElement;
+    series?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -2708,10 +2708,10 @@ declare type Immunization_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     statusReason?: CodeableConcept;
     vaccineCode?: CodeableConcept;
@@ -2728,17 +2728,17 @@ declare type Immunization_Props = {
     site?: CodeableConcept;
     route?: CodeableConcept;
     doseQuantity?: Quantity;
-    performer?: BackboneElement;
-    note?: Annotation;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
+    performer?: BackboneElement[];
+    note?: Annotation[];
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
     isSubpotent?: boolean;
-    subpotentReason?: CodeableConcept;
-    education?: BackboneElement;
-    programEligibility?: CodeableConcept;
+    subpotentReason?: CodeableConcept[];
+    education?: BackboneElement[];
+    programEligibility?: CodeableConcept[];
     fundingSource?: CodeableConcept;
-    reaction?: BackboneElement;
-    protocolApplied?: BackboneElement;
+    reaction?: BackboneElement[];
+    protocolApplied?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -2748,10 +2748,10 @@ declare type ImmunizationEvaluation_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     patient?: Reference;
     date?: string;
@@ -2759,7 +2759,7 @@ declare type ImmunizationEvaluation_Props = {
     targetDisease?: CodeableConcept;
     immunizationEvent?: Reference;
     doseStatus?: CodeableConcept;
-    doseStatusReason?: CodeableConcept;
+    doseStatusReason?: CodeableConcept[];
     description?: string;
     series?: string;
     doseNumber?: number;
@@ -2773,14 +2773,14 @@ declare type ImmunizationRecommendation_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     patient?: Reference;
     date?: string;
     authority?: Reference;
-    recommendation?: BackboneElement;
+    recommendation?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -2790,16 +2790,16 @@ declare type Ingredient_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     identifier?: Identifier;
     status?: string;
-    for?: Reference;
+    for?: Reference[];
     role?: CodeableConcept;
-    function?: CodeableConcept;
+    function?: CodeableConcept[];
     allergenicIndicator?: boolean;
-    manufacturer?: BackboneElement;
+    manufacturer?: BackboneElement[];
     substance?: BackboneElement;
     initialiser?: any;
 };
@@ -2810,23 +2810,23 @@ declare type InsurancePlan_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
-    type?: CodeableConcept;
+    type?: CodeableConcept[];
     name?: string;
-    alias?: string;
+    alias?: string[];
     period?: Period;
     ownedBy?: Reference;
     administeredBy?: Reference;
-    coverageArea?: Reference;
-    contact?: BackboneElement;
-    endpoint?: Reference;
-    network?: Reference;
-    coverage?: BackboneElement;
-    plan?: BackboneElement;
+    coverageArea?: Reference[];
+    contact?: BackboneElement[];
+    endpoint?: Reference[];
+    network?: Reference[];
+    coverage?: BackboneElement[];
+    plan?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -2836,25 +2836,25 @@ declare type Invoice_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     cancelledReason?: string;
     type?: CodeableConcept;
     subject?: Reference;
     recipient?: Reference;
     date?: string;
-    participant?: BackboneElement;
+    participant?: BackboneElement[];
     issuer?: Reference;
     account?: Reference;
-    lineItem?: BackboneElement;
-    totalPriceComponent?: any;
+    lineItem?: BackboneElement[];
+    totalPriceComponent?: any[];
     totalNet?: Money;
     totalGross?: Money;
     paymentTerms?: markdown;
-    note?: Annotation;
+    note?: Annotation[];
     initialiser?: any;
 };
 
@@ -2864,11 +2864,11 @@ declare type Library_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
-    identifier?: Identifier;
+    identifier?: Identifier[];
     version?: string;
     name?: string;
     title?: string;
@@ -2879,25 +2879,25 @@ declare type Library_Props = {
     subject?: CodeableConcept;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
+    contact?: ContactDetail[];
     description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
+    useContext?: UsageContext[];
+    jurisdiction?: CodeableConcept[];
     purpose?: markdown;
     usage?: string;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    topic?: CodeableConcept;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
-    parameter?: ParameterDefinition;
-    dataRequirement?: DataRequirement;
-    content?: Attachment;
+    topic?: CodeableConcept[];
+    author?: ContactDetail[];
+    editor?: ContactDetail[];
+    reviewer?: ContactDetail[];
+    endorser?: ContactDetail[];
+    relatedArtifact?: RelatedArtifact[];
+    parameter?: ParameterDefinition[];
+    dataRequirement?: DataRequirement[];
+    content?: Attachment[];
     initialiser?: any;
 };
 
@@ -2907,10 +2907,10 @@ declare type List_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     mode?: string;
     title?: string;
@@ -2920,8 +2920,8 @@ declare type List_Props = {
     date?: string;
     source?: Reference;
     orderedBy?: CodeableConcept;
-    note?: Annotation;
-    entry?: BackboneElement;
+    note?: Annotation[];
+    entry?: BackboneElement[];
     emptyReason?: CodeableConcept;
     initialiser?: any;
 };
@@ -2932,26 +2932,26 @@ declare type Location_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     operationalStatus?: Coding;
     name?: string;
-    alias?: string;
+    alias?: string[];
     description?: string;
     mode?: string;
-    type?: CodeableConcept;
-    telecom?: ContactPoint;
+    type?: CodeableConcept[];
+    telecom?: ContactPoint[];
     address?: Address;
     physicalType?: CodeableConcept;
     position?: BackboneElement;
     managingOrganization?: Reference;
     partOf?: Reference;
-    hoursOfOperation?: BackboneElement;
+    hoursOfOperation?: BackboneElement[];
     availabilityExceptions?: string;
-    endpoint?: Reference;
+    endpoint?: Reference[];
     initialiser?: any;
 };
 
@@ -2961,16 +2961,16 @@ declare type ManufacturedItemDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     manufacturedDoseForm?: CodeableConcept;
     unitOfPresentation?: CodeableConcept;
-    manufacturer?: Reference;
-    ingredient?: CodeableConcept;
-    property?: BackboneElement;
+    manufacturer?: Reference[];
+    ingredient?: CodeableConcept[];
+    property?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -2980,11 +2980,11 @@ declare type Measure_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
-    identifier?: Identifier;
+    identifier?: Identifier[];
     version?: string;
     name?: string;
     title?: string;
@@ -2994,36 +2994,36 @@ declare type Measure_Props = {
     subject?: CodeableConcept;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
+    contact?: ContactDetail[];
     description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
+    useContext?: UsageContext[];
+    jurisdiction?: CodeableConcept[];
     purpose?: markdown;
     usage?: string;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    topic?: CodeableConcept;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
-    library?: any;
+    topic?: CodeableConcept[];
+    author?: ContactDetail[];
+    editor?: ContactDetail[];
+    reviewer?: ContactDetail[];
+    endorser?: ContactDetail[];
+    relatedArtifact?: RelatedArtifact[];
+    library?: any[];
     disclaimer?: markdown;
     scoring?: CodeableConcept;
     compositeScoring?: CodeableConcept;
-    type?: CodeableConcept;
+    type?: CodeableConcept[];
     riskAdjustment?: string;
     rateAggregation?: string;
     rationale?: markdown;
     clinicalRecommendationStatement?: markdown;
     improvementNotation?: CodeableConcept;
-    definition?: markdown;
+    definition?: markdown[];
     guidance?: markdown;
-    group?: BackboneElement;
-    supplementalData?: BackboneElement;
+    group?: BackboneElement[];
+    supplementalData?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3033,10 +3033,10 @@ declare type MeasureReport_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     type?: string;
     measure?: any;
@@ -3045,8 +3045,8 @@ declare type MeasureReport_Props = {
     reporter?: Reference;
     period?: Period;
     improvementNotation?: CodeableConcept;
-    group?: BackboneElement;
-    evaluatedResource?: Reference;
+    group?: BackboneElement[];
+    evaluatedResource?: Reference[];
     initialiser?: any;
 };
 
@@ -3056,12 +3056,12 @@ declare type Media_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
-    partOf?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    basedOn?: Reference[];
+    partOf?: Reference[];
     status?: string;
     type?: CodeableConcept;
     modality?: CodeableConcept;
@@ -3071,7 +3071,7 @@ declare type Media_Props = {
     created?: string;
     issued?: string;
     operator?: Reference;
-    reasonCode?: CodeableConcept;
+    reasonCode?: CodeableConcept[];
     bodySite?: CodeableConcept;
     deviceName?: string;
     device?: Reference;
@@ -3080,7 +3080,7 @@ declare type Media_Props = {
     frames?: number;
     duration?: number;
     content?: Attachment;
-    note?: Annotation;
+    note?: Annotation[];
     initialiser?: any;
 };
 
@@ -3090,16 +3090,16 @@ declare type Medication_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     code?: CodeableConcept;
     status?: string;
     manufacturer?: Reference;
     form?: CodeableConcept;
     amount?: Ratio;
-    ingredient?: BackboneElement;
+    ingredient?: BackboneElement[];
     batch?: BackboneElement;
     initialiser?: any;
 };
@@ -3110,28 +3110,28 @@ declare type MedicationAdministration_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    instantiates?: string;
-    partOf?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    instantiates?: string[];
+    partOf?: Reference[];
     status?: string;
-    statusReason?: CodeableConcept;
+    statusReason?: CodeableConcept[];
     category?: CodeableConcept;
     medication?: CodeableConcept;
     subject?: Reference;
     context?: Reference;
-    supportingInformation?: Reference;
+    supportingInformation?: Reference[];
     effective?: string;
-    performer?: BackboneElement;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
+    performer?: BackboneElement[];
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
     request?: Reference;
-    device?: Reference;
-    note?: Annotation;
+    device?: Reference[];
+    note?: Annotation[];
     dosage?: BackboneElement;
-    eventHistory?: Reference;
+    eventHistory?: Reference[];
     initialiser?: any;
 };
 
@@ -3141,33 +3141,33 @@ declare type MedicationDispense_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    partOf?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    partOf?: Reference[];
     status?: string;
     statusReason?: CodeableConcept;
     category?: CodeableConcept;
     medication?: CodeableConcept;
     subject?: Reference;
     context?: Reference;
-    supportingInformation?: Reference;
-    performer?: BackboneElement;
+    supportingInformation?: Reference[];
+    performer?: BackboneElement[];
     location?: Reference;
-    authorizingPrescription?: Reference;
+    authorizingPrescription?: Reference[];
     type?: CodeableConcept;
     quantity?: Quantity;
     daysSupply?: Quantity;
     whenPrepared?: string;
     whenHandedOver?: string;
     destination?: Reference;
-    receiver?: Reference;
-    note?: Annotation;
-    dosageInstruction?: Dosage;
+    receiver?: Reference[];
+    note?: Annotation[];
+    dosageInstruction?: Dosage[];
     substitution?: BackboneElement;
-    detectedIssue?: Reference;
-    eventHistory?: Reference;
+    detectedIssue?: Reference[];
+    eventHistory?: Reference[];
     initialiser?: any;
 };
 
@@ -3177,31 +3177,31 @@ declare type MedicationKnowledge_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     code?: CodeableConcept;
     status?: string;
     manufacturer?: Reference;
     doseForm?: CodeableConcept;
     amount?: Quantity;
-    synonym?: string;
-    relatedMedicationKnowledge?: BackboneElement;
-    associatedMedication?: Reference;
-    productType?: CodeableConcept;
-    monograph?: BackboneElement;
-    ingredient?: BackboneElement;
+    synonym?: string[];
+    relatedMedicationKnowledge?: BackboneElement[];
+    associatedMedication?: Reference[];
+    productType?: CodeableConcept[];
+    monograph?: BackboneElement[];
+    ingredient?: BackboneElement[];
     preparationInstruction?: markdown;
-    intendedRoute?: CodeableConcept;
-    cost?: BackboneElement;
-    monitoringProgram?: BackboneElement;
-    administrationGuidelines?: BackboneElement;
-    medicineClassification?: BackboneElement;
+    intendedRoute?: CodeableConcept[];
+    cost?: BackboneElement[];
+    monitoringProgram?: BackboneElement[];
+    administrationGuidelines?: BackboneElement[];
+    medicineClassification?: BackboneElement[];
     packaging?: BackboneElement;
-    drugCharacteristic?: BackboneElement;
-    contraindication?: Reference;
-    regulatory?: BackboneElement;
-    kinetics?: BackboneElement;
+    drugCharacteristic?: BackboneElement[];
+    contraindication?: Reference[];
+    regulatory?: BackboneElement[];
+    kinetics?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3211,41 +3211,41 @@ declare type MedicationRequest_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     statusReason?: CodeableConcept;
     intent?: string;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     priority?: string;
     doNotPerform?: boolean;
     reported?: boolean;
     medication?: CodeableConcept;
     subject?: Reference;
     encounter?: Reference;
-    supportingInformation?: Reference;
+    supportingInformation?: Reference[];
     authoredOn?: string;
     requester?: Reference;
     performer?: Reference;
     performerType?: CodeableConcept;
     recorder?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    instantiatesCanonical?: any;
-    instantiatesUri?: string;
-    basedOn?: Reference;
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    instantiatesCanonical?: any[];
+    instantiatesUri?: string[];
+    basedOn?: Reference[];
     groupIdentifier?: Identifier;
     courseOfTherapyType?: CodeableConcept;
-    insurance?: Reference;
-    note?: Annotation;
-    dosageInstruction?: Dosage;
+    insurance?: Reference[];
+    note?: Annotation[];
+    dosageInstruction?: Dosage[];
     dispenseRequest?: BackboneElement;
     substitution?: BackboneElement;
     priorPrescription?: Reference;
-    detectedIssue?: Reference;
-    eventHistory?: Reference;
+    detectedIssue?: Reference[];
+    eventHistory?: Reference[];
     initialiser?: any;
 };
 
@@ -3255,14 +3255,14 @@ declare type MedicationStatement_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
-    partOf?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    basedOn?: Reference[];
+    partOf?: Reference[];
     status?: string;
-    statusReason?: CodeableConcept;
+    statusReason?: CodeableConcept[];
     category?: CodeableConcept;
     medication?: CodeableConcept;
     subject?: Reference;
@@ -3270,11 +3270,11 @@ declare type MedicationStatement_Props = {
     effective?: string;
     dateAsserted?: string;
     informationSource?: Reference;
-    derivedFrom?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    note?: Annotation;
-    dosage?: Dosage;
+    derivedFrom?: Reference[];
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    note?: Annotation[];
+    dosage?: Dosage[];
     initialiser?: any;
 };
 
@@ -3284,10 +3284,10 @@ declare type MedicinalProductDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     type?: CodeableConcept;
     domain?: CodeableConcept;
     version?: string;
@@ -3295,26 +3295,26 @@ declare type MedicinalProductDefinition_Props = {
     statusDate?: string;
     description?: markdown;
     combinedPharmaceuticalDoseForm?: CodeableConcept;
-    route?: CodeableConcept;
+    route?: CodeableConcept[];
     indication?: markdown;
     legalStatusOfSupply?: CodeableConcept;
     additionalMonitoringIndicator?: CodeableConcept;
-    specialMeasures?: CodeableConcept;
+    specialMeasures?: CodeableConcept[];
     pediatricUseIndicator?: CodeableConcept;
-    classification?: CodeableConcept;
-    marketingStatus?: MarketingStatus;
-    packagedMedicinalProduct?: CodeableConcept;
-    ingredient?: CodeableConcept;
-    impurity?: CodeableReference;
-    attachedDocument?: Reference;
-    masterFile?: Reference;
-    contact?: BackboneElement;
-    clinicalTrial?: Reference;
-    code?: Coding;
-    name?: BackboneElement;
-    crossReference?: BackboneElement;
-    operation?: BackboneElement;
-    characteristic?: BackboneElement;
+    classification?: CodeableConcept[];
+    marketingStatus?: MarketingStatus[];
+    packagedMedicinalProduct?: CodeableConcept[];
+    ingredient?: CodeableConcept[];
+    impurity?: CodeableReference[];
+    attachedDocument?: Reference[];
+    masterFile?: Reference[];
+    contact?: BackboneElement[];
+    clinicalTrial?: Reference[];
+    code?: Coding[];
+    name?: BackboneElement[];
+    crossReference?: BackboneElement[];
+    operation?: BackboneElement[];
+    characteristic?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3324,10 +3324,10 @@ declare type MolecularSequence_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     type?: string;
     coordinateSystem?: number;
     patient?: Reference;
@@ -3336,13 +3336,13 @@ declare type MolecularSequence_Props = {
     performer?: Reference;
     quantity?: Quantity;
     referenceSeq?: BackboneElement;
-    variant?: BackboneElement;
+    variant?: BackboneElement[];
     observedSeq?: string;
-    quality?: BackboneElement;
+    quality?: BackboneElement[];
     readCoverage?: number;
-    repository?: BackboneElement;
-    pointer?: Reference;
-    structureVariant?: BackboneElement;
+    repository?: BackboneElement[];
+    pointer?: Reference[];
+    structureVariant?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3352,26 +3352,26 @@ declare type NutritionOrder_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    instantiatesCanonical?: any;
-    instantiatesUri?: string;
-    instantiates?: string;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    instantiatesCanonical?: any[];
+    instantiatesUri?: string[];
+    instantiates?: string[];
     status?: string;
     intent?: string;
     patient?: Reference;
     encounter?: Reference;
     dateTime?: string;
     orderer?: Reference;
-    allergyIntolerance?: Reference;
-    foodPreferenceModifier?: CodeableConcept;
-    excludeFoodModifier?: CodeableConcept;
+    allergyIntolerance?: Reference[];
+    foodPreferenceModifier?: CodeableConcept[];
+    excludeFoodModifier?: CodeableConcept[];
     oralDiet?: BackboneElement;
-    supplement?: BackboneElement;
+    supplement?: BackboneElement[];
     enteralFormula?: BackboneElement;
-    note?: Annotation;
+    note?: Annotation[];
     initialiser?: any;
 };
 
@@ -3381,19 +3381,19 @@ declare type NutritionProduct_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     status?: string;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     code?: CodeableConcept;
-    manufacturer?: Reference;
-    nutrient?: BackboneElement;
-    ingredient?: BackboneElement;
-    knownAllergen?: CodeableReference;
-    productCharacteristic?: BackboneElement;
+    manufacturer?: Reference[];
+    nutrient?: BackboneElement[];
+    ingredient?: BackboneElement[];
+    knownAllergen?: CodeableReference[];
+    productCharacteristic?: BackboneElement[];
     instance?: BackboneElement;
-    note?: Annotation;
+    note?: Annotation[];
     initialiser?: any;
 };
 
@@ -3403,33 +3403,33 @@ declare type Observation_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
-    partOf?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    basedOn?: Reference[];
+    partOf?: Reference[];
     status?: string;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     code?: CodeableConcept;
     subject?: Reference;
-    focus?: Reference;
+    focus?: Reference[];
     encounter?: Reference;
     effective?: string;
     issued?: string;
-    performer?: Reference;
+    performer?: Reference[];
     value?: Quantity;
     dataAbsentReason?: CodeableConcept;
-    interpretation?: CodeableConcept;
-    note?: Annotation;
+    interpretation?: CodeableConcept[];
+    note?: Annotation[];
     bodySite?: CodeableConcept;
     method?: CodeableConcept;
     specimen?: Reference;
     device?: Reference;
-    referenceRange?: BackboneElement;
-    hasMember?: Reference;
-    derivedFrom?: Reference;
-    component?: BackboneElement;
+    referenceRange?: BackboneElement[];
+    hasMember?: Reference[];
+    derivedFrom?: Reference[];
+    component?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3439,18 +3439,18 @@ declare type ObservationDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    category?: CodeableConcept;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    category?: CodeableConcept[];
     code?: CodeableConcept;
-    identifier?: Identifier;
-    permittedDataType?: string;
+    identifier?: Identifier[];
+    permittedDataType?: string[];
     multipleResultsAllowed?: boolean;
     method?: CodeableConcept;
     preferredReportName?: string;
     quantitativeDetails?: BackboneElement;
-    qualifiedInterval?: BackboneElement;
+    qualifiedInterval?: BackboneElement[];
     validCodedValueSet?: Reference;
     normalCodedValueSet?: Reference;
     abnormalCodedValueSet?: Reference;
@@ -3464,19 +3464,19 @@ declare type Organization_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     active?: boolean;
-    type?: CodeableConcept;
+    type?: CodeableConcept[];
     name?: string;
-    alias?: string;
-    telecom?: ContactPoint;
-    address?: Address;
+    alias?: string[];
+    telecom?: ContactPoint[];
+    address?: Address[];
     partOf?: Reference;
-    contact?: BackboneElement;
-    endpoint?: Reference;
+    contact?: BackboneElement[];
+    endpoint?: Reference[];
     initialiser?: any;
 };
 
@@ -3486,21 +3486,21 @@ declare type OrganizationAffiliation_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     active?: boolean;
     period?: Period;
     organization?: Reference;
     participatingOrganization?: Reference;
-    network?: Reference;
-    code?: CodeableConcept;
-    specialty?: CodeableConcept;
-    location?: Reference;
-    healthcareService?: Reference;
-    telecom?: ContactPoint;
-    endpoint?: Reference;
+    network?: Reference[];
+    code?: CodeableConcept[];
+    specialty?: CodeableConcept[];
+    location?: Reference[];
+    healthcareService?: Reference[];
+    telecom?: ContactPoint[];
+    endpoint?: Reference[];
     initialiser?: any;
 };
 
@@ -3510,22 +3510,22 @@ declare type PackagedProductDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     name?: string;
     type?: CodeableConcept;
-    packageFor?: Reference;
+    packageFor?: Reference[];
     status?: CodeableConcept;
     statusDate?: string;
-    containedItemQuantity?: Quantity;
+    containedItemQuantity?: Quantity[];
     description?: markdown;
-    legalStatusOfSupply?: BackboneElement;
-    marketingStatus?: MarketingStatus;
-    characteristic?: CodeableConcept;
+    legalStatusOfSupply?: BackboneElement[];
+    marketingStatus?: MarketingStatus[];
+    characteristic?: CodeableConcept[];
     copackagedIndicator?: boolean;
-    manufacturer?: Reference;
+    manufacturer?: Reference[];
     package?: BackboneElement;
     initialiser?: any;
 };
@@ -3536,25 +3536,25 @@ declare type Patient_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     active?: boolean;
-    name?: HumanName;
-    telecom?: ContactPoint;
+    name?: HumanName[];
+    telecom?: ContactPoint[];
     gender?: string;
     birthDate?: string;
     deceased?: boolean;
-    address?: Address;
+    address?: Address[];
     maritalStatus?: CodeableConcept;
     multipleBirth?: boolean;
-    photo?: Attachment;
-    contact?: BackboneElement;
-    communication?: BackboneElement;
-    generalPractitioner?: Reference;
+    photo?: Attachment[];
+    contact?: BackboneElement[];
+    communication?: BackboneElement[];
+    generalPractitioner?: Reference[];
     managingOrganization?: Reference;
-    link?: BackboneElement;
+    link?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3564,10 +3564,10 @@ declare type PaymentNotice_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     request?: Reference;
     response?: Reference;
@@ -3588,10 +3588,10 @@ declare type PaymentReconciliation_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     period?: Period;
     created?: string;
@@ -3603,9 +3603,9 @@ declare type PaymentReconciliation_Props = {
     paymentDate?: string;
     paymentAmount?: Money;
     paymentIdentifier?: Identifier;
-    detail?: BackboneElement;
+    detail?: BackboneElement[];
     formCode?: CodeableConcept;
-    processNote?: BackboneElement;
+    processNote?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3615,19 +3615,19 @@ declare type Person_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    name?: HumanName;
-    telecom?: ContactPoint;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    name?: HumanName[];
+    telecom?: ContactPoint[];
     gender?: string;
     birthDate?: string;
-    address?: Address;
+    address?: Address[];
     photo?: Attachment;
     managingOrganization?: Reference;
     active?: boolean;
-    link?: BackboneElement;
+    link?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3637,11 +3637,11 @@ declare type PlanDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
-    identifier?: Identifier;
+    identifier?: Identifier[];
     version?: string;
     name?: string;
     title?: string;
@@ -3652,25 +3652,25 @@ declare type PlanDefinition_Props = {
     subject?: CodeableConcept;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
+    contact?: ContactDetail[];
     description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
+    useContext?: UsageContext[];
+    jurisdiction?: CodeableConcept[];
     purpose?: markdown;
     usage?: string;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    topic?: CodeableConcept;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
-    library?: any;
-    goal?: BackboneElement;
-    action?: BackboneElement;
+    topic?: CodeableConcept[];
+    author?: ContactDetail[];
+    editor?: ContactDetail[];
+    reviewer?: ContactDetail[];
+    endorser?: ContactDetail[];
+    relatedArtifact?: RelatedArtifact[];
+    library?: any[];
+    goal?: BackboneElement[];
+    action?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3680,19 +3680,19 @@ declare type Practitioner_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     active?: boolean;
-    name?: HumanName;
-    telecom?: ContactPoint;
-    address?: Address;
+    name?: HumanName[];
+    telecom?: ContactPoint[];
+    address?: Address[];
     gender?: string;
     birthDate?: string;
-    photo?: Attachment;
-    qualification?: BackboneElement;
-    communication?: CodeableConcept;
+    photo?: Attachment[];
+    qualification?: BackboneElement[];
+    communication?: CodeableConcept[];
     initialiser?: any;
 };
 
@@ -3702,23 +3702,23 @@ declare type PractitionerRole_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     active?: boolean;
     period?: Period;
     practitioner?: Reference;
     organization?: Reference;
-    code?: CodeableConcept;
-    specialty?: CodeableConcept;
-    location?: Reference;
-    healthcareService?: Reference;
-    telecom?: ContactPoint;
-    availableTime?: BackboneElement;
-    notAvailable?: BackboneElement;
+    code?: CodeableConcept[];
+    specialty?: CodeableConcept[];
+    location?: Reference[];
+    healthcareService?: Reference[];
+    telecom?: ContactPoint[];
+    availableTime?: BackboneElement[];
+    notAvailable?: BackboneElement[];
     availabilityExceptions?: string;
-    endpoint?: Reference;
+    endpoint?: Reference[];
     initialiser?: any;
 };
 
@@ -3728,14 +3728,14 @@ declare type Procedure_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    instantiatesCanonical?: any;
-    instantiatesUri?: string;
-    basedOn?: Reference;
-    partOf?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    instantiatesCanonical?: any[];
+    instantiatesUri?: string[];
+    basedOn?: Reference[];
+    partOf?: Reference[];
     status?: string;
     statusReason?: CodeableConcept;
     category?: CodeableConcept;
@@ -3745,20 +3745,20 @@ declare type Procedure_Props = {
     performed?: string;
     recorder?: Reference;
     asserter?: Reference;
-    performer?: BackboneElement;
+    performer?: BackboneElement[];
     location?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    bodySite?: CodeableConcept;
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    bodySite?: CodeableConcept[];
     outcome?: CodeableConcept;
-    report?: Reference;
-    complication?: CodeableConcept;
-    complicationDetail?: Reference;
-    followUp?: CodeableConcept;
-    note?: Annotation;
-    focalDevice?: BackboneElement;
-    usedReference?: Reference;
-    usedCode?: CodeableConcept;
+    report?: Reference[];
+    complication?: CodeableConcept[];
+    complicationDetail?: Reference[];
+    followUp?: CodeableConcept[];
+    note?: Annotation[];
+    focalDevice?: BackboneElement[];
+    usedReference?: Reference[];
+    usedCode?: CodeableConcept[];
     initialiser?: any;
 };
 
@@ -3768,31 +3768,31 @@ declare type Questionnaire_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
-    identifier?: Identifier;
+    identifier?: Identifier[];
     version?: string;
     name?: string;
     title?: string;
-    derivedFrom?: any;
+    derivedFrom?: any[];
     status?: string;
     experimental?: boolean;
-    subjectType?: string;
+    subjectType?: string[];
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
+    contact?: ContactDetail[];
     description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
+    useContext?: UsageContext[];
+    jurisdiction?: CodeableConcept[];
     purpose?: markdown;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    code?: Coding;
-    item?: BackboneElement;
+    code?: Coding[];
+    item?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3802,12 +3802,12 @@ declare type QuestionnaireResponse_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     identifier?: Identifier;
-    basedOn?: Reference;
-    partOf?: Reference;
+    basedOn?: Reference[];
+    partOf?: Reference[];
     questionnaire?: any;
     status?: string;
     subject?: Reference;
@@ -3815,7 +3815,7 @@ declare type QuestionnaireResponse_Props = {
     authored?: string;
     author?: Reference;
     source?: Reference;
-    item?: BackboneElement;
+    item?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3825,20 +3825,20 @@ declare type RegulatedAuthorization_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    subject?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    subject?: Reference[];
     type?: CodeableConcept;
     description?: markdown;
-    region?: CodeableConcept;
+    region?: CodeableConcept[];
     status?: CodeableConcept;
     statusDate?: string;
     validityPeriod?: Period;
     indication?: CodeableReference;
     intendedUse?: CodeableConcept;
-    basis?: CodeableConcept;
+    basis?: CodeableConcept[];
     holder?: Reference;
     regulator?: Reference;
     case?: BackboneElement;
@@ -3851,21 +3851,21 @@ declare type RelatedPerson_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     active?: boolean;
     patient?: Reference;
-    relationship?: CodeableConcept;
-    name?: HumanName;
-    telecom?: ContactPoint;
+    relationship?: CodeableConcept[];
+    name?: HumanName[];
+    telecom?: ContactPoint[];
     gender?: string;
     birthDate?: string;
-    address?: Address;
-    photo?: Attachment;
+    address?: Address[];
+    photo?: Attachment[];
     period?: Period;
-    communication?: BackboneElement;
+    communication?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3875,14 +3875,14 @@ declare type RequestGroup_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    instantiatesCanonical?: any;
-    instantiatesUri?: string;
-    basedOn?: Reference;
-    replaces?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    instantiatesCanonical?: any[];
+    instantiatesUri?: string[];
+    basedOn?: Reference[];
+    replaces?: Reference[];
     groupIdentifier?: Identifier;
     status?: string;
     intent?: string;
@@ -3892,10 +3892,10 @@ declare type RequestGroup_Props = {
     encounter?: Reference;
     authoredOn?: string;
     author?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    note?: Annotation;
-    action?: BackboneElement;
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    note?: Annotation[];
+    action?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3905,11 +3905,11 @@ declare type ResearchDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
-    identifier?: Identifier;
+    identifier?: Identifier[];
     version?: string;
     name?: string;
     title?: string;
@@ -3920,24 +3920,24 @@ declare type ResearchDefinition_Props = {
     subject?: CodeableConcept;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
+    contact?: ContactDetail[];
     description?: markdown;
-    comment?: string;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
+    comment?: string[];
+    useContext?: UsageContext[];
+    jurisdiction?: CodeableConcept[];
     purpose?: markdown;
     usage?: string;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    topic?: CodeableConcept;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
-    library?: any;
+    topic?: CodeableConcept[];
+    author?: ContactDetail[];
+    editor?: ContactDetail[];
+    reviewer?: ContactDetail[];
+    endorser?: ContactDetail[];
+    relatedArtifact?: RelatedArtifact[];
+    library?: any[];
     population?: Reference;
     exposure?: Reference;
     exposureAlternative?: Reference;
@@ -3951,11 +3951,11 @@ declare type ResearchElementDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
-    identifier?: Identifier;
+    identifier?: Identifier[];
     version?: string;
     name?: string;
     title?: string;
@@ -3966,27 +3966,27 @@ declare type ResearchElementDefinition_Props = {
     subject?: CodeableConcept;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
+    contact?: ContactDetail[];
     description?: markdown;
-    comment?: string;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
+    comment?: string[];
+    useContext?: UsageContext[];
+    jurisdiction?: CodeableConcept[];
     purpose?: markdown;
     usage?: string;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    topic?: CodeableConcept;
-    author?: ContactDetail;
-    editor?: ContactDetail;
-    reviewer?: ContactDetail;
-    endorser?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
-    library?: any;
+    topic?: CodeableConcept[];
+    author?: ContactDetail[];
+    editor?: ContactDetail[];
+    reviewer?: ContactDetail[];
+    endorser?: ContactDetail[];
+    relatedArtifact?: RelatedArtifact[];
+    library?: any[];
     type?: string;
     variableType?: string;
-    characteristic?: BackboneElement;
+    characteristic?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -3996,33 +3996,33 @@ declare type ResearchStudy_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     title?: string;
-    protocol?: Reference;
-    partOf?: Reference;
+    protocol?: Reference[];
+    partOf?: Reference[];
     status?: string;
     primaryPurposeType?: CodeableConcept;
     phase?: CodeableConcept;
-    category?: CodeableConcept;
-    focus?: CodeableConcept;
-    condition?: CodeableConcept;
-    contact?: ContactDetail;
-    relatedArtifact?: RelatedArtifact;
-    keyword?: CodeableConcept;
-    location?: CodeableConcept;
+    category?: CodeableConcept[];
+    focus?: CodeableConcept[];
+    condition?: CodeableConcept[];
+    contact?: ContactDetail[];
+    relatedArtifact?: RelatedArtifact[];
+    keyword?: CodeableConcept[];
+    location?: CodeableConcept[];
     description?: markdown;
-    enrollment?: Reference;
+    enrollment?: Reference[];
     period?: Period;
     sponsor?: Reference;
     principalInvestigator?: Reference;
-    site?: Reference;
+    site?: Reference[];
     reasonStopped?: CodeableConcept;
-    note?: Annotation;
-    arm?: BackboneElement;
-    objective?: BackboneElement;
+    note?: Annotation[];
+    arm?: BackboneElement[];
+    objective?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -4032,10 +4032,10 @@ declare type ResearchSubject_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     period?: Period;
     study?: Reference;
@@ -4060,10 +4060,10 @@ declare type RiskAssessment_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     basedOn?: Reference;
     parent?: Reference;
     status?: string;
@@ -4074,12 +4074,12 @@ declare type RiskAssessment_Props = {
     occurrence?: string;
     condition?: Reference;
     performer?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    basis?: Reference;
-    prediction?: BackboneElement;
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    basis?: Reference[];
+    prediction?: BackboneElement[];
     mitigation?: string;
-    note?: Annotation;
+    note?: Annotation[];
     initialiser?: any;
 };
 
@@ -4089,15 +4089,15 @@ declare type Schedule_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     active?: boolean;
-    serviceCategory?: CodeableConcept;
-    serviceType?: CodeableConcept;
-    specialty?: CodeableConcept;
-    actor?: Reference;
+    serviceCategory?: CodeableConcept[];
+    serviceType?: CodeableConcept[];
+    specialty?: CodeableConcept[];
+    actor?: Reference[];
     planningHorizon?: Period;
     comment?: string;
     initialiser?: any;
@@ -4109,22 +4109,22 @@ declare type ServiceRequest_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    instantiatesCanonical?: any;
-    instantiatesUri?: string;
-    basedOn?: Reference;
-    replaces?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    instantiatesCanonical?: any[];
+    instantiatesUri?: string[];
+    basedOn?: Reference[];
+    replaces?: Reference[];
     requisition?: Identifier;
     status?: string;
     intent?: string;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     priority?: string;
     doNotPerform?: boolean;
     code?: CodeableConcept;
-    orderDetail?: CodeableConcept;
+    orderDetail?: CodeableConcept[];
     quantity?: Quantity;
     subject?: Reference;
     encounter?: Reference;
@@ -4133,18 +4133,18 @@ declare type ServiceRequest_Props = {
     authoredOn?: string;
     requester?: Reference;
     performerType?: CodeableConcept;
-    performer?: Reference;
-    locationCode?: CodeableConcept;
-    locationReference?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
-    insurance?: Reference;
-    supportingInfo?: Reference;
-    specimen?: Reference;
-    bodySite?: CodeableConcept;
-    note?: Annotation;
+    performer?: Reference[];
+    locationCode?: CodeableConcept[];
+    locationReference?: Reference[];
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    insurance?: Reference[];
+    supportingInfo?: Reference[];
+    specimen?: Reference[];
+    bodySite?: CodeableConcept[];
+    note?: Annotation[];
     patientInstruction?: string;
-    relevantHistory?: Reference;
+    relevantHistory?: Reference[];
     initialiser?: any;
 };
 
@@ -4154,13 +4154,13 @@ declare type Slot_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    serviceCategory?: CodeableConcept;
-    serviceType?: CodeableConcept;
-    specialty?: CodeableConcept;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    serviceCategory?: CodeableConcept[];
+    serviceType?: CodeableConcept[];
+    specialty?: CodeableConcept[];
     appointmentType?: CodeableConcept;
     schedule?: Reference;
     status?: string;
@@ -4177,22 +4177,22 @@ declare type Specimen_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     accessionIdentifier?: Identifier;
     status?: string;
     type?: CodeableConcept;
     subject?: Reference;
     receivedTime?: string;
-    parent?: Reference;
-    request?: Reference;
+    parent?: Reference[];
+    request?: Reference[];
     collection?: BackboneElement;
-    processing?: BackboneElement;
-    container?: BackboneElement;
-    condition?: CodeableConcept;
-    note?: Annotation;
+    processing?: BackboneElement[];
+    container?: BackboneElement[];
+    condition?: CodeableConcept[];
+    note?: Annotation[];
     initialiser?: any;
 };
 
@@ -4202,15 +4202,15 @@ declare type SpecimenDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     identifier?: Identifier;
     typeCollected?: CodeableConcept;
-    patientPreparation?: CodeableConcept;
+    patientPreparation?: CodeableConcept[];
     timeAspect?: string;
-    collection?: CodeableConcept;
-    typeTested?: BackboneElement;
+    collection?: CodeableConcept[];
+    typeTested?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -4220,16 +4220,16 @@ declare type Substance_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
-    category?: CodeableConcept;
+    category?: CodeableConcept[];
     code?: CodeableConcept;
     description?: string;
-    instance?: BackboneElement;
-    ingredient?: BackboneElement;
+    instance?: BackboneElement[];
+    ingredient?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -4239,27 +4239,27 @@ declare type SubstanceDefinition_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     version?: string;
     status?: CodeableConcept;
-    classification?: CodeableConcept;
+    classification?: CodeableConcept[];
     domain?: CodeableConcept;
-    grade?: CodeableConcept;
+    grade?: CodeableConcept[];
     description?: markdown;
-    informationSource?: Reference;
-    note?: Annotation;
-    manufacturer?: Reference;
-    supplier?: Reference;
-    moiety?: BackboneElement;
-    property?: BackboneElement;
-    molecularWeight?: BackboneElement;
+    informationSource?: Reference[];
+    note?: Annotation[];
+    manufacturer?: Reference[];
+    supplier?: Reference[];
+    moiety?: BackboneElement[];
+    property?: BackboneElement[];
+    molecularWeight?: BackboneElement[];
     structure?: BackboneElement;
-    code?: BackboneElement;
-    name?: BackboneElement;
-    relationship?: BackboneElement;
+    code?: BackboneElement[];
+    name?: BackboneElement[];
+    relationship?: BackboneElement[];
     sourceMaterial?: BackboneElement;
     initialiser?: any;
 };
@@ -4270,12 +4270,12 @@ declare type SupplyDelivery_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
-    basedOn?: Reference;
-    partOf?: Reference;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
+    basedOn?: Reference[];
+    partOf?: Reference[];
     status?: string;
     patient?: Reference;
     type?: CodeableConcept;
@@ -4283,7 +4283,7 @@ declare type SupplyDelivery_Props = {
     occurrence?: string;
     supplier?: Reference;
     destination?: Reference;
-    receiver?: Reference;
+    receiver?: Reference[];
     initialiser?: any;
 };
 
@@ -4293,22 +4293,22 @@ declare type SupplyRequest_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     status?: string;
     category?: CodeableConcept;
     priority?: string;
     item?: CodeableConcept;
     quantity?: Quantity;
-    parameter?: BackboneElement;
+    parameter?: BackboneElement[];
     occurrence?: string;
     authoredOn?: string;
     requester?: Reference;
-    supplier?: Reference;
-    reasonCode?: CodeableConcept;
-    reasonReference?: Reference;
+    supplier?: Reference[];
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
     deliverFrom?: Reference;
     deliverTo?: Reference;
     initialiser?: any;
@@ -4320,15 +4320,15 @@ declare type Task_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    identifier?: Identifier;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: Identifier[];
     instantiatesCanonical?: any;
     instantiatesUri?: string;
-    basedOn?: Reference;
+    basedOn?: Reference[];
     groupIdentifier?: Identifier;
-    partOf?: Reference;
+    partOf?: Reference[];
     status?: string;
     statusReason?: CodeableConcept;
     businessStatus?: CodeableConcept;
@@ -4343,17 +4343,17 @@ declare type Task_Props = {
     authoredOn?: string;
     lastModified?: string;
     requester?: Reference;
-    performerType?: CodeableConcept;
+    performerType?: CodeableConcept[];
     owner?: Reference;
     location?: Reference;
     reasonCode?: CodeableConcept;
     reasonReference?: Reference;
-    insurance?: Reference;
-    note?: Annotation;
-    relevantHistory?: Reference;
+    insurance?: Reference[];
+    note?: Annotation[];
+    relevantHistory?: Reference[];
     restriction?: BackboneElement;
-    input?: BackboneElement;
-    output?: BackboneElement;
+    input?: BackboneElement[];
+    output?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -4363,9 +4363,9 @@ declare type TestReport_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     identifier?: Identifier;
     name?: string;
     status?: string;
@@ -4374,9 +4374,9 @@ declare type TestReport_Props = {
     score?: number;
     tester?: string;
     issued?: string;
-    participant?: BackboneElement;
+    participant?: BackboneElement[];
     setup?: BackboneElement;
-    test?: BackboneElement;
+    test?: BackboneElement[];
     teardown?: BackboneElement;
     initialiser?: any;
 };
@@ -4387,9 +4387,9 @@ declare type TestScript_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
     url?: string;
     identifier?: Identifier;
     version?: string;
@@ -4399,20 +4399,20 @@ declare type TestScript_Props = {
     experimental?: boolean;
     date?: string;
     publisher?: string;
-    contact?: ContactDetail;
+    contact?: ContactDetail[];
     description?: markdown;
-    useContext?: UsageContext;
-    jurisdiction?: CodeableConcept;
+    useContext?: UsageContext[];
+    jurisdiction?: CodeableConcept[];
     purpose?: markdown;
     copyright?: markdown;
-    origin?: BackboneElement;
-    destination?: BackboneElement;
+    origin?: BackboneElement[];
+    destination?: BackboneElement[];
     metadata?: BackboneElement;
-    fixture?: BackboneElement;
-    profile?: Reference;
-    variable?: BackboneElement;
+    fixture?: BackboneElement[];
+    profile?: Reference[];
+    variable?: BackboneElement[];
     setup?: BackboneElement;
-    test?: BackboneElement;
+    test?: BackboneElement[];
     teardown?: BackboneElement;
     initialiser?: any;
 };
@@ -4423,23 +4423,23 @@ declare type VerificationResult_Props = {
     implicitRules?: string;
     language?: string;
     text?: Narrative;
-    contained?: any;
-    extension?: Extension;
-    modifierExtension?: Extension;
-    target?: Reference;
-    targetLocation?: string;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    target?: Reference[];
+    targetLocation?: string[];
     need?: CodeableConcept;
     status?: string;
     statusDate?: string;
     validationType?: CodeableConcept;
-    validationProcess?: CodeableConcept;
+    validationProcess?: CodeableConcept[];
     frequency?: Timing;
     lastPerformed?: string;
     nextScheduled?: string;
     failureAction?: CodeableConcept;
-    primarySource?: BackboneElement;
+    primarySource?: BackboneElement[];
     attestation?: BackboneElement;
-    validator?: BackboneElement;
+    validator?: BackboneElement[];
     initialiser?: any;
 };
 
@@ -4553,7 +4553,7 @@ declare type ConceptCoding = Coding | [string, string, Omit<Coding, 'code' | 'sy
 declare const concept: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<CodeableConcept, 'coding'>) => {
     coding: any;
     id?: string;
-    extension?: Extension;
+    extension?: Extension[];
     text?: string;
 };
 /**
@@ -4564,7 +4564,7 @@ declare const concept: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<C
 declare const cc: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<CodeableConcept, 'coding'>) => {
     coding: any;
     id?: string;
-    extension?: Extension;
+    extension?: Extension[];
     text?: string;
 };
 /**

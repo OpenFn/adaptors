@@ -13,14 +13,14 @@ export type RequestGroup_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
-    instantiatesCanonical?: any;
-    instantiatesUri?: string;
-    basedOn?: FHIR.Reference;
-    replaces?: FHIR.Reference;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
+    instantiatesCanonical?: any[];
+    instantiatesUri?: string[];
+    basedOn?: FHIR.Reference[];
+    replaces?: FHIR.Reference[];
     groupIdentifier?: FHIR.Identifier;
     status?: string;
     intent?: string;
@@ -30,10 +30,10 @@ export type RequestGroup_Props = {
     encounter?: FHIR.Reference;
     authoredOn?: string;
     author?: FHIR.Reference;
-    reasonCode?: FHIR.CodeableConcept;
-    reasonReference?: FHIR.Reference;
-    note?: FHIR.Annotation;
-    action?: FHIR.BackboneElement;
+    reasonCode?: FHIR.CodeableConcept[];
+    reasonReference?: FHIR.Reference[];
+    note?: FHIR.Annotation[];
+    action?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

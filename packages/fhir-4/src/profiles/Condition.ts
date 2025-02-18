@@ -13,16 +13,16 @@ export type Condition_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     clinicalStatus?: FHIR.CodeableConcept;
     verificationStatus?: FHIR.CodeableConcept;
-    category?: FHIR.CodeableConcept;
+    category?: FHIR.CodeableConcept[];
     severity?: FHIR.CodeableConcept;
     code?: FHIR.CodeableConcept;
-    bodySite?: FHIR.CodeableConcept;
+    bodySite?: FHIR.CodeableConcept[];
     subject?: FHIR.Reference;
     encounter?: FHIR.Reference;
     onset?: string;
@@ -30,9 +30,9 @@ export type Condition_Props = {
     recordedDate?: string;
     recorder?: FHIR.Reference;
     asserter?: FHIR.Reference;
-    stage?: FHIR.BackboneElement;
-    evidence?: FHIR.BackboneElement;
-    note?: FHIR.Annotation;
+    stage?: FHIR.BackboneElement[];
+    evidence?: FHIR.BackboneElement[];
+    note?: FHIR.Annotation[];
     initialiser?: any;
 };
 

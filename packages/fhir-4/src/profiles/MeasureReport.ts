@@ -13,10 +13,10 @@ export type MeasureReport_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     status?: string;
     type?: string;
     measure?: any;
@@ -25,8 +25,8 @@ export type MeasureReport_Props = {
     reporter?: FHIR.Reference;
     period?: FHIR.Period;
     improvementNotation?: FHIR.CodeableConcept;
-    group?: FHIR.BackboneElement;
-    evaluatedResource?: FHIR.Reference;
+    group?: FHIR.BackboneElement[];
+    evaluatedResource?: FHIR.Reference[];
     initialiser?: any;
 };
 

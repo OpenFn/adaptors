@@ -13,20 +13,20 @@ export type Endpoint_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     status?: string;
     connectionType?: FHIR.Coding;
     name?: string;
     managingOrganization?: FHIR.Reference;
-    contact?: FHIR.ContactPoint;
+    contact?: FHIR.ContactPoint[];
     period?: FHIR.Period;
-    payloadType?: FHIR.CodeableConcept;
-    payloadMimeType?: string;
+    payloadType?: FHIR.CodeableConcept[];
+    payloadMimeType?: string[];
     address?: FHIR.url;
-    header?: string;
+    header?: string[];
     initialiser?: any;
 };
 

@@ -11,7 +11,7 @@ export type Address = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * home | work | temp | old | billing - purpose of this address
      *  */
@@ -27,7 +27,7 @@ export type Address = {
     /**
      * Street name, number, direction & P.O. Box etc.
      *  */
-    line?: string;
+    line?: string[];
     /**
      * Name of city, town etc.
      *  */
@@ -61,7 +61,7 @@ export type Age = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerical value (with implicit precision)
      *  */
@@ -91,7 +91,7 @@ export type Annotation = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Individual responsible for the annotation
      *  */
@@ -113,7 +113,7 @@ export type Attachment = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Mime type of the content, with charset etc.
      *  */
@@ -155,11 +155,11 @@ export type BackboneElement = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
 };
 export type CodeableConcept = {
     /**
@@ -169,11 +169,11 @@ export type CodeableConcept = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Code defined by a terminology system
      *  */
-    coding?: Coding;
+    coding?: Coding[];
     /**
      * Plain text representation of the concept
      *  */
@@ -187,7 +187,7 @@ export type CodeableReference = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Reference to a concept (by class)
      *  */
@@ -205,7 +205,7 @@ export type Coding = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Identity of the terminology system
      *  */
@@ -235,7 +235,7 @@ export type ContactDetail = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Name of an individual to contact
      *  */
@@ -243,7 +243,7 @@ export type ContactDetail = {
     /**
      * Contact details for individual or organization
      *  */
-    telecom?: ContactPoint;
+    telecom?: ContactPoint[];
 };
 export type ContactPoint = {
     /**
@@ -253,7 +253,7 @@ export type ContactPoint = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * phone | fax | email | pager | url | sms | other
      *  */
@@ -283,7 +283,7 @@ export type Contributor = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * author | editor | reviewer | endorser
      *  */
@@ -295,7 +295,7 @@ export type Contributor = {
     /**
      * Contact details of the contributor
      *  */
-    contact?: ContactDetail;
+    contact?: ContactDetail[];
 };
 export type Count = {
     /**
@@ -305,7 +305,7 @@ export type Count = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerical value (with implicit precision)
      *  */
@@ -335,7 +335,7 @@ export type DataRequirement = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * The type of the required data
      *  */
@@ -343,7 +343,7 @@ export type DataRequirement = {
     /**
      * The profile of the required data
      *  */
-    profile?: any;
+    profile?: any[];
     /**
      * E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
      *  */
@@ -351,7 +351,7 @@ export type DataRequirement = {
     /**
      * Indicates specific structure elements that are referenced by the knowledge module
      *  */
-    mustSupport?: string;
+    mustSupport?: string[];
     /**
      * What codes are expected
      *  */
@@ -428,7 +428,7 @@ export type Distance = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerical value (with implicit precision)
      *  */
@@ -458,11 +458,11 @@ export type Dosage = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
     /**
      * The order of the dosage instructions
      *  */
@@ -541,7 +541,7 @@ export type Duration = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerical value (with implicit precision)
      *  */
@@ -571,7 +571,7 @@ export type Element = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
 };
 export type ElementDefinition = {
     /**
@@ -581,11 +581,11 @@ export type ElementDefinition = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
     /**
      * Path of the element in the hierarchy of elements
      *  */
@@ -654,7 +654,7 @@ export type ElementDefinition = {
     /**
      * Other names
      *  */
-    alias?: string;
+    alias?: string[];
     /**
      * Minimum Cardinality
      *  */
@@ -769,7 +769,7 @@ export type ElementDefinition = {
     /**
      * Reference to invariant about presence
      *  */
-    condition?: string;
+    condition?: string[];
     /**
      * Condition that must evaluate to true
      *  */
@@ -878,7 +878,7 @@ export type Expression = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Natural language description of the condition
      *  */
@@ -908,7 +908,7 @@ export type Extension = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * identifies the meaning of the extension
      *  */
@@ -926,7 +926,7 @@ export type HumanName = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * usual | official | temp | nickname | anonymous | old | maiden
      *  */
@@ -942,15 +942,15 @@ export type HumanName = {
     /**
      * Given names (not always 'first'). Includes middle names
      *  */
-    given?: string;
+    given?: string[];
     /**
      * Parts that come before the name
      *  */
-    prefix?: string;
+    prefix?: string[];
     /**
      * Parts that come after the name
      *  */
-    suffix?: string;
+    suffix?: string[];
     /**
      * Time period when name was/is in use
      *  */
@@ -964,7 +964,7 @@ export type Identifier = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * usual | official | temp | secondary | old (If known)
      *  */
@@ -998,11 +998,11 @@ export type MarketingStatus = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
     /**
      * The country in which the marketing authorisation has been granted shall be specified It should be specified using the ISO 3166 ‑ 1 alpha-2 code elements
      *  */
@@ -1032,7 +1032,7 @@ export type Meta = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Version specific identifier
      *  */
@@ -1048,7 +1048,7 @@ export type Meta = {
     /**
      * Profiles this resource claims to conform to
      *  */
-    profile?: any;
+    profile?: any[];
     /**
      * Security Labels applied to this resource
      *  */
@@ -1066,7 +1066,7 @@ export type Money = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerical value (with implicit precision)
      *  */
@@ -1084,7 +1084,7 @@ export type MoneyQuantity = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerical value (with implicit precision)
      *  */
@@ -1114,7 +1114,7 @@ export type Quantity = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerical value (with implicit precision)
      *  */
@@ -1144,7 +1144,7 @@ export type SimpleQuantity = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerical value (with implicit precision)
      *  */
@@ -1174,7 +1174,7 @@ export type Narrative = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * generated | extensions | additional | empty
      *  */
@@ -1192,7 +1192,7 @@ export type ParameterDefinition = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Name used to access the parameter value
      *  */
@@ -1230,7 +1230,7 @@ export type Period = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Starting time with inclusive boundary
      *  */
@@ -1248,11 +1248,11 @@ export type Population = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
     /**
      * The age of the specific population
      *  */
@@ -1278,11 +1278,11 @@ export type ProdCharacteristic = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
     /**
      * Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
      *  */
@@ -1314,15 +1314,15 @@ export type ProdCharacteristic = {
     /**
      * Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
      *  */
-    color?: string;
+    color?: string[];
     /**
      * Where applicable, the imprint can be specified as text
      *  */
-    imprint?: string;
+    imprint?: string[];
     /**
      * Where applicable, the image can be provided The format of the image attachment shall be specified by regional implementations
      *  */
-    image?: Attachment;
+    image?: Attachment[];
     /**
      * Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
      *  */
@@ -1336,11 +1336,11 @@ export type ProductShelfLife = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
     /**
      * Unique identifier for the packaged Medicinal Product
      *  */
@@ -1356,7 +1356,7 @@ export type ProductShelfLife = {
     /**
      * Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
      *  */
-    specialPrecautionsForStorage?: CodeableConcept;
+    specialPrecautionsForStorage?: CodeableConcept[];
 };
 export type Range = {
     /**
@@ -1366,7 +1366,7 @@ export type Range = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Low limit
      *  */
@@ -1384,7 +1384,7 @@ export type Ratio = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Numerator value
      *  */
@@ -1402,7 +1402,7 @@ export type RatioRange = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Low Numerator limit
      *  */
@@ -1424,7 +1424,7 @@ export type Reference = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Literal reference, Relative, internal or absolute URL
      *  */
@@ -1450,7 +1450,7 @@ export type RelatedArtifact = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
      *  */
@@ -1488,7 +1488,7 @@ export type SampledData = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Zero value and units
      *  */
@@ -1526,7 +1526,7 @@ export type Signature = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Indication of the reason the entity signed the object(s)
      *  */
@@ -1564,15 +1564,15 @@ export type Timing = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
-    modifierExtension?: Extension;
+    modifierExtension?: Extension[];
     /**
      * When the event occurs
      *  */
-    event?: string;
+    event?: string[];
     /**
      * When the event is to occur
      *  */
@@ -1655,7 +1655,7 @@ export type TriggerDefinition = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended
      *  */
@@ -1671,7 +1671,7 @@ export type TriggerDefinition = {
     /**
      * Triggering data of the event (multiple = 'and')
      *  */
-    data?: DataRequirement;
+    data?: DataRequirement[];
     /**
      * Whether the event triggers (boolean expression)
      *  */
@@ -1685,7 +1685,7 @@ export type UsageContext = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Type of context being specified
      *  */
@@ -1703,7 +1703,7 @@ export type base64Binary = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Primitive value for base64Binary
      *  */
@@ -1717,7 +1717,7 @@ export type code = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Primitive value for code
      *  */
@@ -1731,7 +1731,7 @@ export type markdown = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Primitive value for markdown
      *  */
@@ -1745,7 +1745,7 @@ export type oid = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Primitive value for oid
      *  */
@@ -1759,7 +1759,7 @@ export type url = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Primitive value for url
      *  */
@@ -1773,7 +1773,7 @@ export type uuid = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Primitive value for uuid
      *  */
@@ -1787,7 +1787,7 @@ export type xhtml = {
     /**
      * Additional content defined by implementations
      *  */
-    extension?: Extension;
+    extension?: Extension[];
     /**
      * Actual xhtml
      *  */

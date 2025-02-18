@@ -13,20 +13,20 @@ export type BiologicallyDerivedProduct_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     productCategory?: string;
     productCode?: FHIR.CodeableConcept;
     status?: string;
-    request?: FHIR.Reference;
+    request?: FHIR.Reference[];
     quantity?: number;
-    parent?: FHIR.Reference;
+    parent?: FHIR.Reference[];
     collection?: FHIR.BackboneElement;
-    processing?: FHIR.BackboneElement;
+    processing?: FHIR.BackboneElement[];
     manipulation?: FHIR.BackboneElement;
-    storage?: FHIR.BackboneElement;
+    storage?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

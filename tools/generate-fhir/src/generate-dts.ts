@@ -243,21 +243,23 @@ const generateEntryFuction = (
   return result;
 };
 
+// note that this is kinda duplicated from generate-types
+// because we use two different ast libraries
 // TODO maybe the sig is schema & mappings?
 const createTypeNode = (
   incomingType: string,
-  values?: string[],
-  fhirTypes = { Identifier: true }
+  isArray?: boolean,
+  values?: string[]
 ) => {
+  let node;
   const type = typeMap[incomingType] ?? incomingType;
 
-  if (values) {
+  if (values && values.length) {
     if (values.length > 1) {
-      return b.createUnionTypeNode(values.map(v => b.createStringLiteral(v)));
-    }
-    if (values.length === 1) {
+      node = b.createUnionTypeNode(values.map(v => b.createStringLiteral(v)));
+    } else if (values.length === 1) {
       // TODO an edge case, but for a single value
-      return b.createStringLiteral(values[0]);
+      node = b.createStringLiteral(values[0]);
     }
   }
 
@@ -269,10 +271,14 @@ const createTypeNode = (
   //   return b.createTypeReferenceNode(`JAM`);
   // }
   if (type) {
-    return b.createTypeReferenceNode(type);
+    node = b.createTypeReferenceNode(type);
+  } else {
+    node = b.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
   }
-
-  return b.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
+  if (isArray && !values) {
+    node = b.createArrayTypeNode(node);
+  }
+  return node;
 };
 
 export const generateType = (
@@ -308,7 +314,11 @@ export const generateType = (
         continue;
       }
 
-      type = createTypeNode(m.type || s.type || 'any', m.values || s.values);
+      type = createTypeNode(
+        m.type || s.type || 'any',
+        s.isArray,
+        m.values || s.values
+      );
     }
     if (s.desc) {
       props.push(b.createJSDocComment(s.desc + '\n'));
@@ -337,9 +347,9 @@ const generateInlineType = (typeDef: PropDef) => {
   const props: ts.TypeElement[] = [];
   for (let key in typeDef) {
     const useStringLiteral = /[\-\.\\\/\#\@\{\}\[\]]/.test(key);
-    const { type, desc, values } = typeDef[key];
+    const { type, desc, values, isArray } = typeDef[key];
 
-    const typeNode = createTypeNode(type, values);
+    const typeNode = createTypeNode(type, isArray, values);
     if (desc) {
       props.push(b.createJSDocComment(desc + '\n'));
     }

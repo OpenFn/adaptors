@@ -13,19 +13,19 @@ export type Person_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
-    name?: FHIR.HumanName;
-    telecom?: FHIR.ContactPoint;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
+    name?: FHIR.HumanName[];
+    telecom?: FHIR.ContactPoint[];
     gender?: string;
     birthDate?: string;
-    address?: FHIR.Address;
+    address?: FHIR.Address[];
     photo?: FHIR.Attachment;
     managingOrganization?: FHIR.Reference;
     active?: boolean;
-    link?: FHIR.BackboneElement;
+    link?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

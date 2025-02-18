@@ -13,10 +13,10 @@ export type ImmunizationEvaluation_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     status?: string;
     patient?: FHIR.Reference;
     date?: string;
@@ -24,7 +24,7 @@ export type ImmunizationEvaluation_Props = {
     targetDisease?: FHIR.CodeableConcept;
     immunizationEvent?: FHIR.Reference;
     doseStatus?: FHIR.CodeableConcept;
-    doseStatusReason?: FHIR.CodeableConcept;
+    doseStatusReason?: FHIR.CodeableConcept[];
     description?: string;
     series?: string;
     doseNumber?: number;

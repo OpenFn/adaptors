@@ -13,10 +13,10 @@ export type ClinicalImpression_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     status?: string;
     statusReason?: FHIR.CodeableConcept;
     code?: FHIR.CodeableConcept;
@@ -27,15 +27,15 @@ export type ClinicalImpression_Props = {
     date?: string;
     assessor?: FHIR.Reference;
     previous?: FHIR.Reference;
-    problem?: FHIR.Reference;
-    investigation?: FHIR.BackboneElement;
-    protocol?: string;
+    problem?: FHIR.Reference[];
+    investigation?: FHIR.BackboneElement[];
+    protocol?: string[];
     summary?: string;
-    finding?: FHIR.BackboneElement;
-    prognosisCodeableConcept?: FHIR.CodeableConcept;
-    prognosisReference?: FHIR.Reference;
-    supportingInfo?: FHIR.Reference;
-    note?: FHIR.Annotation;
+    finding?: FHIR.BackboneElement[];
+    prognosisCodeableConcept?: FHIR.CodeableConcept[];
+    prognosisReference?: FHIR.Reference[];
+    supportingInfo?: FHIR.Reference[];
+    note?: FHIR.Annotation[];
     initialiser?: any;
 };
 

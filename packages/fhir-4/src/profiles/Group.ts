@@ -13,10 +13,10 @@ export type Group_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     active?: boolean;
     type?: string;
     actual?: boolean;
@@ -24,8 +24,8 @@ export type Group_Props = {
     name?: string;
     quantity?: number;
     managingEntity?: FHIR.Reference;
-    characteristic?: FHIR.BackboneElement;
-    member?: FHIR.BackboneElement;
+    characteristic?: FHIR.BackboneElement[];
+    member?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

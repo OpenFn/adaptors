@@ -13,12 +13,12 @@ export type QuestionnaireResponse_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
     identifier?: FHIR.Identifier;
-    basedOn?: FHIR.Reference;
-    partOf?: FHIR.Reference;
+    basedOn?: FHIR.Reference[];
+    partOf?: FHIR.Reference[];
     questionnaire?: any;
     status?: string;
     subject?: FHIR.Reference;
@@ -26,7 +26,7 @@ export type QuestionnaireResponse_Props = {
     authored?: string;
     author?: FHIR.Reference;
     source?: FHIR.Reference;
-    item?: FHIR.BackboneElement;
+    item?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 

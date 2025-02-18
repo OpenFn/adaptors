@@ -13,14 +13,14 @@ export type AllergyIntolerance_Props = {
     implicitRules?: string;
     language?: string;
     text?: FHIR.Narrative;
-    contained?: any;
-    extension?: FHIR.Extension;
-    modifierExtension?: FHIR.Extension;
-    identifier?: FHIR.Identifier;
+    contained?: any[];
+    extension?: FHIR.Extension[];
+    modifierExtension?: FHIR.Extension[];
+    identifier?: FHIR.Identifier[];
     clinicalStatus?: FHIR.CodeableConcept;
     verificationStatus?: FHIR.CodeableConcept;
     type?: string;
-    category?: string;
+    category?: string[];
     criticality?: string;
     code?: FHIR.CodeableConcept;
     patient?: FHIR.Reference;
@@ -30,8 +30,8 @@ export type AllergyIntolerance_Props = {
     recorder?: FHIR.Reference;
     asserter?: FHIR.Reference;
     lastOccurrence?: string;
-    note?: FHIR.Annotation;
-    reaction?: FHIR.BackboneElement;
+    note?: FHIR.Annotation[];
+    reaction?: FHIR.BackboneElement[];
     initialiser?: any;
 };
 
