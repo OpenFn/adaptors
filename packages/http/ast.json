@@ -5,7 +5,6 @@
       "params": [
         "method",
         "path",
-        "data",
         "options",
         "callback"
       ],
@@ -19,7 +18,7 @@
           },
           {
             "title": "example",
-            "description": "request(\n  'GET',\n  '/myEndpoint',\n  {},\n   {\n     query: {foo: 'bar', a: 1},\n     headers: {'content-type': 'application/json'},\n   }\n)"
+            "description": "request(\n  'GET',\n  '/myEndpoint',\n   {\n     query: {foo: 'bar', a: 1},\n     headers: {'content-type': 'application/json'},\n   }\n)"
           },
           {
             "title": "function",
@@ -85,7 +84,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "get",
@@ -127,7 +126,7 @@
               "type": "NameExpression",
               "name": "RequestOptions"
             },
-            "name": "Options"
+            "name": "options"
           },
           {
             "title": "param",
@@ -152,7 +151,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "post",
@@ -172,7 +171,8 @@
           },
           {
             "title": "example",
-            "description": "post('/myEndpoint',\n {'foo': 'bar'},\n{\n   headers: {'content-type': 'application/json'},\n })"
+            "description": "post('/myEndpoint',\n $.data\n{\n   headers: {'content-type': 'application/json'},\n })",
+            "caption": "Create a resource with data"
           },
           {
             "title": "function",
@@ -249,7 +249,7 @@
           },
           {
             "title": "example",
-            "description": "put('/myEndpoint',  {'foo': 'bar'},{\n   headers: {'content-type': 'application/json'},\n })"
+            "description": "put('/myEndpoint', {'foo': 'bar'},\n{\n   headers: {'content-type': 'application/json'},\n })"
           },
           {
             "title": "function",

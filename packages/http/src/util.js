@@ -100,7 +100,7 @@ export function request(method, path, params, callback = s => s) {
     const options = {
       ...resolvedParams,
       headers: {
-        'Content-type': 'application/json',
+        ...(resolvedParams.json ? { 'Content-Type': 'application/json' } : {}),
         ...headers,
       },
       baseUrl,

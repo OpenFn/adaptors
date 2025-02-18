@@ -7,6 +7,7 @@ import { request as sendRequest, xmlParser } from './util';
  * @public
  * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
  * @property {boolean} form - True/False if the body data is multipart HTML form (as FormData).
+ * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).This is only applicable to the request function
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.
  * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
@@ -51,7 +52,6 @@ export function execute(...operations) {
  * request(
  *   'GET',
  *   '/myEndpoint',
- *   {},
  *    {
  *      query: {foo: 'bar', a: 1},
  *      headers: {'content-type': 'application/json'},
@@ -60,14 +60,13 @@ export function execute(...operations) {
  * @function
  * @param {string} method - The HTTP method to use.
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
- * @param {object} data - Body data to append to the request. JSON will be converted to a string.
- * @param {RequestOptions} options - Query, Headers and Authentication parameters
+ * @param {RequestOptions} options - Body, Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
  * @returns {Operation}
  */
-export function request(method, path, data, options, callback) {
-  return sendRequest(method, path, { body: data, ...options }, callback);
+export function request(method, path, options, callback) {
+  return sendRequest(method, path, options, callback);
 }
 
 /**
@@ -80,7 +79,7 @@ export function request(method, path, data, options, callback) {
  * })
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
- * @param {RequestOptions} Options - Body, Query, Headers and Authentication parameters
+ * @param {RequestOptions} options - Body, Query, Headers and Authentication parameters
  * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
  * @returns {Operation}
@@ -92,9 +91,9 @@ export function get(path, options, callback) {
 /**
  * Make a POST request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example
+ * @example <caption>Create a resource with data</caption>
  *  post('/myEndpoint',
- *  {'foo': 'bar'},
+ *  $.data
  * {
  *    headers: {'content-type': 'application/json'},
  *  })
@@ -115,7 +114,8 @@ export function post(path, data, options, callback) {
  * Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
- *  put('/myEndpoint',  {'foo': 'bar'},{
+ *  put('/myEndpoint', {'foo': 'bar'},
+ * {
  *    headers: {'content-type': 'application/json'},
  *  })
  * @function
