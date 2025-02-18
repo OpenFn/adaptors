@@ -17404,6 +17404,307 @@
     "kind": "external-function"
   }
 ],
+{"name":"odoo","adaptor":"@openfn/language-odoo","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#create\\\">create(model, data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#deleterecord\\\">deleteRecord(model, recordId)</a></dt>\\n<dt>\\n    <a href=\\\"#read\\\">read(model, recordId, fields)</a></dt>\\n<dt>\\n    <a href=\\\"#update\\\">update(model, recordId, data)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### create\\n\\n<p><code>create(model, data, options) ⇒ Operation</code></p>\\n\\nCreate a record in Odoo\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | The specific record model i.e. \\\"res.partner\\\" |\\n| data | <code>object</code> | The data to be created in JSON. |\\n| options | <code>object</code> | Optional external ID for the record. |\\n\\n**Example**\\n```js\\ncreate(\\\"res.partner\\\", { name: \\\"Kool Keith\\\" }, {externalId: 23});\\n```\\n\\n* * *\\n\\n### deleteRecord\\n\\n<p><code>deleteRecord(model, recordId) ⇒ Operation</code></p>\\n\\nDelete a record from Odoo\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | The specific record model i.e. \\\"res.partner\\\" |\\n| recordId | <code>number</code> | The specific recordId to be deleted. |\\n\\n**Example**\\n```js\\ndeleteRecord(\\\"res.partner\\\", 54 );\\n```\\n\\n* * *\\n\\n### read\\n\\n<p><code>read(model, recordId, fields) ⇒ Operation</code></p>\\n\\nGet a record from Odoo. Returns all fields unless a field list is provided as a third argument\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | The specific record model from i.e. \\\"res.partner\\\" |\\n| recordId | <code>number</code> | An array of record IDs to read. |\\n| fields | <code>string</code> | An optional array of fields to read from the record. |\\n\\n**Example:** Download records with select fields\\n```js\\nread(\\\"res.partner\\\", [1] , [name]);\\n```\\n**Example:** Download a single record with all fields\\n```js\\nread(\\\"res.partner\\\", $.recordIds);\\n```\\n\\n* * *\\n\\n### update\\n\\n<p><code>update(model, recordId, data) ⇒ Operation</code></p>\\n\\nUpdate a record in Odoo\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | The specific record model i.e. \\\"res.partner\\\" |\\n| recordId | <code>number</code> | The specific recordId to be updated. |\\n| data | <code>object</code> | The data to be updated in JSON. |\\n\\n**Example**\\n```js\\nupdate(\\\"res.partner\\\", 54 , {name: 'Jane Doe'});\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-odoo <img src='assets/sq-256x256.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the odoo \\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/odoo-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/odoo-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `create` function\\n\\n```js\\ncreate(\\\"res.partner\\\", { name: \\\"James Kelvin\\\" }, '123');\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-odoo\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["create","deleteRecord","read","update"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The base URL (http://www.example.com)","format":"uri","minLength":1,"default":"http://localhost","examples":["https://dev.newlogic-demo.com"]},"username":{"title":"Username","type":"string","description":"Username","default":"admin","examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Password","default":"admin","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]},"database":{"title":"Database Name","type":"string","default":"devel","description":"Database Name","examples":["devel"]}},"type":"object","additionalProperties":true,"required":["password","username","database","baseUrl"]}},
+[
+  {
+    "id": "create",
+    "longname": "create",
+    "name": "create",
+    "kind": "function",
+    "scope": "global",
+    "description": "Create a record in Odoo",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The specific record model i.e. \"res.partner\"",
+        "name": "model"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "The data to be created in JSON.",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Optional external ID for the record.",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "create(\"res.partner\", { name: \"Kool Keith\" }, {externalId: 23});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 73,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/odoo/src"
+    },
+    "order": 2,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "deleteRecord",
+    "longname": "deleteRecord",
+    "name": "deleteRecord",
+    "kind": "function",
+    "scope": "global",
+    "description": "Delete a record from Odoo",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The specific record model i.e. \"res.partner\"",
+        "name": "model"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "The specific recordId to be deleted.",
+        "name": "recordId"
+      }
+    ],
+    "examples": [
+      "deleteRecord(\"res.partner\", 54 );"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 165,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/odoo/src"
+    },
+    "order": 5,
+    "level": 0
+  },
+  {
+    "id": "read",
+    "longname": "read",
+    "name": "read",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get a record from Odoo. Returns all fields unless a field list is provided as a third argument",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The specific record model from i.e. \"res.partner\"",
+        "name": "model"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "An array of record IDs to read.",
+        "name": "recordId"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "An optional array of fields to read from the record.",
+        "name": "fields"
+      }
+    ],
+    "examples": [
+      "<caption>Download records with select fields</caption>\nread(\"res.partner\", [1] , [name]);",
+      "<caption>Download a single record with all fields</caption>\nread(\"res.partner\", $.recordIds);"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 106,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/odoo/src"
+    },
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "update",
+    "longname": "update",
+    "name": "update",
+    "kind": "function",
+    "scope": "global",
+    "description": "Update a record in Odoo",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The specific record model i.e. \"res.partner\"",
+        "name": "model"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "The specific recordId to be updated.",
+        "name": "recordId"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "The data to be updated in JSON.",
+        "name": "data"
+      }
+    ],
+    "examples": [
+      "update(\"res.partner\", 54 , {name: 'Jane Doe'});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 136,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/odoo/src"
+    },
+    "order": 4,
+    "level": 0
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "http",
+    "common": true,
+    "name": "http",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  }
+],
 {"name":"openfn","adaptor":"@openfn/language-openfn","version":"2.0.9","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#request\\\">request(options, callback)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#beta\\\">beta</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### request\\n\\n<p><code>request(options, callback) ⇒ Operation</code></p>\\n\\nMake a POST request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| options | <code>object</code> | Body, Query, Headers and Authentication parameters |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example**\\n```js\\nrequest({method: 'get', path: '/jobs/});\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# Language OpenFn\\n\\nAdaptor for building expressions and operations to interact with the OpenFn v1\\nAPI.\\n\\n## Documentation\\n\\n## request\\n\\n```js\\nrequest({\\n  method: 'get',\\n  path: 'jobs',\\n  params: {\\n    project_id: 490,\\n  },\\n});\\nrequest(\\n  {\\n    method: 'post',\\n    path: 'jobs',\\n    data: {\\n      trigger_id: 1,\\n      expression: 'steps()',\\n    },\\n  },\\n  state => {\\n    console.log('cool callback!');\\n    return state;\\n  }\\n);\\n```\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/openfn-configuration-schema/)\\ndefinition.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-openfn\\n\\n## 2.0.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [b3d7f59]\\n- Updated dependencies [2d709ff]\\n- Updated dependencies [41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 2.0.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 2.0.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [a47d8d5]\\n- Updated dependencies [9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 2.0.6\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 2.0.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 2.0.4\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus [33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 2.0.3\\n\\n### Patch Changes\\n\\n- 3fd13c2: Update axios to 1.7.7\\n\\n## 2.0.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 2.0.1\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 2.0.0\\n\\n### Major Changes\\n\\n- Export new common http helpers (http namespace)\\n\\n## 1.4.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 1.4.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [4c08444]\\n- Updated dependencies [73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 1.4.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 1.4.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 1.3.14\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 1.3.13\\n\\n### Patch Changes\\n\\n- Updated dependencies [12f02ed5]\\n  - @openfn/language-common@1.13.4\\n\\n## 1.3.12\\n\\n### Patch Changes\\n\\n- Updated dependencies [88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 1.3.11\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 1.3.10\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.1\\n\\n## 1.3.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 1.3.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [c19efbe]\\n  - @openfn/language-common@1.11.1\\n\\n## 1.3.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [85c35b8]\\n  - @openfn/language-common@1.11.0\\n\\n## 1.3.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [df09270]\\n  - @openfn/language-common@1.10.3\\n\\n## 1.3.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [26a303e]\\n  - @openfn/language-common@1.10.2\\n\\n## 1.3.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [8c32eb3]\\n  - @openfn/language-common@1.10.1\\n\\n## 1.3.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [aad9549]\\n  - @openfn/language-common@1.10.0\\n\\n## 1.3.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [111807f]\\n  - @openfn/language-common@1.9.0\\n\\n## 1.3.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 1.3.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 1.2.6\\n\\n### Patch Changes\\n\\n- 779596f: Use native fetch (undici) in template and add icons in openfn\\n\\n## 1.2.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [929bca6]\\n  - @openfn/language-common@1.7.7\\n\\n## 1.2.4\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies [2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 1.2.3\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 1.2.2\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 1.2.1\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*_ @module Adaptor _/\\n\\n## 1.2.0\\n\\n### Minor Changes\\n\\n- be9d3c6: Migrate OpenFn\\n\"","functions":["request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"host":{"title":"Host","type":"string","description":"The OpenFn host url","format":"uri","default":"https://www.openfn.org","minLength":1,"examples":["https://www.openfn.org"]},"projectId":{"title":"Project ID","type":"string","description":"Your OpenFn project ID","minLength":1,"examples":["some-id"]},"username":{"title":"Username","type":"string","description":"The username to log in to OpenFn","minLength":1,"examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"The password to log in to OpenFn","writeOnly":true,"minLength":1,"examples":["@super(!)Secretpass"]}},"type":"object","additionalProperties":true,"required":["host","username","password"]}},
 [
   {
