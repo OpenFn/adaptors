@@ -39,7 +39,7 @@ declare type SearchQuery = {
  * })
  * @returns Operation
  */
-export declare function search(resourceType: string, options: SearchQuery): (state: any) => Promise<State>;
+export declare function search(resourceType: string, options: SearchQuery): (state: any) => Promise<any>;
 /**
  * Update a resource. If the resource does not already exist, it will be created and `state.response.statusCode` will be 201.
  * Otherwise, the existing resource will be replaced.
