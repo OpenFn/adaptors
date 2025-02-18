@@ -71,7 +71,7 @@
         "fields"
       ],
       "docs": {
-        "description": "Get a record from Odoo",
+        "description": "Get a record from Odoo. Returns all fields unless a field list is provided as a third argument",
         "tags": [
           {
             "title": "public",
@@ -80,7 +80,13 @@
           },
           {
             "title": "example",
-            "description": "read(\"res.partner\", [1] , [name]);"
+            "description": "read(\"res.partner\", [1] , [name]);",
+            "caption": "Download records with select fields"
+          },
+          {
+            "title": "example",
+            "description": "read(\"res.partner\", $.recordIds);",
+            "caption": "Download a single record with all fields"
           },
           {
             "title": "function",
@@ -100,17 +106,8 @@
             "title": "param",
             "description": "An array of record IDs to read.",
             "type": {
-              "type": "TypeApplication",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Array"
-              },
-              "applications": [
-                {
-                  "type": "NameExpression",
-                  "name": "number"
-                }
-              ]
+              "type": "NameExpression",
+              "name": "number"
             },
             "name": "recordId"
           },
@@ -118,17 +115,8 @@
             "title": "param",
             "description": "An optional array of fields to read from the record.",
             "type": {
-              "type": "TypeApplication",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Array"
-              },
-              "applications": [
-                {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              ]
+              "type": "NameExpression",
+              "name": "string"
             },
             "name": "fields"
           },
