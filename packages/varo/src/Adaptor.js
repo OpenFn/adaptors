@@ -7,8 +7,8 @@ export function getEmsData() {
     console.log('--- Incoming message count', state.data.length);
 
     for (const message of state.data) {
-      if (message.fridge_tag) {
-        const result = parseFridgeTagToEms(message.fridge_tag.content);
+      if (message.fridgeTag) {
+        const result = parseFridgeTagToEms(message.fridgeTag.content);
         results.push(result);
         continue;
       }
@@ -24,16 +24,16 @@ export function getEmsData() {
           continue;
         }
 
-        const varoMetadata = JSON.parse(message.metadata.content);
-        const varoData = JSON.parse(message.data.content);
-        const varoDataPath = message.data.filename;
+        const metadata = JSON.parse(message.metadata.content);
+        const data = JSON.parse(message.data.content);
+        const dataPath = message.data.filename;
 
-        const result = parseVaroToEms(varoMetadata, varoData, varoDataPath);
+        const result = parseVaroEmsToEms(metadata, data, dataPath);
         results.push(result);
         continue;
       }
 
-      throw new Error(`No result found for ${varoMetadata.name}`);
+      throw new Error(`Insufficient content found for MessageID: ${message.messageId}`);
     }
 
     console.log('--- Converted message count', results.length);
@@ -44,52 +44,52 @@ export function getEmsData() {
   };
 }
 
-function parseVaroToEms(varoMetadata, varoData, varoDataPath) {
+function parseVaroEmsToEms(metadata, data, dataPath) {
   const result = {
     CID: null,
-    LAT: varoMetadata.location.used.latitude,
-    LNG: varoMetadata.location.used.longitude,
-    ADOP: varoData.ADOP,
-    AMFR: varoData.AMFR,
-    AMOD: varoData.AMOD,
-    APQS: varoData.APQS,
-    ASER: varoData.ASER,
+    LAT: metadata.location.used.latitude,
+    LNG: metadata.location.used.longitude,
+    ADOP: data.ADOP,
+    AMFR: data.AMFR,
+    AMOD: data.AMOD,
+    APQS: data.APQS,
+    ASER: data.ASER,
     EDOP: null,
     EMFR: null,
     EMOD: null,
     EPQS: null,
     ESER: null,
     EMSV: null,
-    LDOP: varoData.LDOP,
-    LMFR: varoData.LMFR,
-    LMOD: varoData.LMOD,
-    LPQS: varoData.LPQS,
-    LSER: varoData.LSER,
-    LSV: varoData.LSV,
+    LDOP: data.LDOP,
+    LMFR: data.LMFR,
+    LMOD: data.LMOD,
+    LPQS: data.LPQS,
+    LSER: data.LSER,
+    LSV: data.LSV,
     records: [],
   };
 
-  const deviceDate = getRelativeDateFromUsbPluggedInfo(varoDataPath);
+  const deviceDate = getRelativeDateFromUsbPluggedInfo(dataPath);
 
-  for (const item of varoData.records) {
+  for (const item of data.records) {
     const durations = [item.RELT]; // ignore RTCW?
     const absoluteDate = getAdjustedDate(deviceDate, durations);
     const abst = isoToAbbreviatedIso(absoluteDate);
 
     const record = {
-      ABST: abst,
-      ALRM: null,
-      BEMD: null,
-      BLOG: item.BLOG,
-      CMPR: null,
-      DORV: item.DORV,
-      HAMB: null,
-      HOLD: item.HOLD,
-      LERR: item.LERR,
-      EERR: null,
-      SVA: null,
-      TAMB: item.TAMB,
-      TVC: item.TVC,
+      ABST: abst, // absolute time utc
+      ALRM: null, // presence of defined alarm conditions
+      BEMD: null, // emd - estimated number of days of battery life remaining
+      BLOG: item.BLOG, // logger - estimated number of days of battery life remaining
+      CMPR: null, // compressor operation seconds per 15 minutes
+      DORV: item.DORV, // vaccine compartment open seconds per 15 minutes
+      HAMB: null, // relative humidity
+      HOLD: item.HOLD, // days the vaccine department will stay cold if power disconnected
+      LERR: item.LERR, // logger errors
+      EERR: null, // emd errors
+      SVA: null, // good voltage in seconds per 15 minutes
+      TAMB: item.TAMB, // ambient temperature
+      TVC: item.TVC, // vaccine chamber temperature
     };
 
     // TODO: limit the number of records for testing.
@@ -122,54 +122,7 @@ function getRelativeDateFromUsbPluggedInfo(path) {
   return getAdjustedDate(isoDate, [usbPluggedInfo.duration], true);
 }
 
-// const results = [];
-
-// attributes.forEach(attribute => {
-//   const median = getMedian(json.records, attribute);
-//   const { sum, min, max } = getStats(json.records, attribute);
-//   const length = json.records.length;
-//   const average = sum / length;
-
-//   results.push({ [attribute]: { average, median, min, max } });
-// });
-
-// return results;
-
-// function getStats(records, attribute) {
-//   let sum = 0;
-//   let min = records[0][attribute];
-//   let max = records[0][attribute];
-
-//   records.forEach(record => {
-//     const value = record[attribute];
-//     sum += value;
-//     if (value < min) min = value;
-//     if (value > max) max = value;
-//   });
-
-//   return { sum, min, max };
-// }
-
-// function getMedian(records, attribute) {
-//   const length = records.length;
-//   if (records.length === 0) {
-//     return null;
-//   }
-
-//   const sortedValues = records
-//     .map(record => record[attribute])
-//     .sort((a, b) => a - b);
-
-//   if (length % 2 === 0) {
-//     return (sortedValues[length / 2 - 1] + sortedValues[length / 2]) / 2;
-//   }
-
-//   return sortedValues[Math.floor(length / 2)];
-// }
-
 function getAdjustedDate(incomingDate, durations, subtract = false) {
-  //console.log(incomingDate, durations);
-
   // Parse duration in the format PnDTnHnMnS.
   function parseDuration(duration) {
     const regex =
@@ -234,61 +187,103 @@ function isoToAbbreviatedIso(iso) {
     .replace('.000Z', 'Z');
 }
 
-function parseFridgeTagToEms(text) {
-  const data = {};
+function parseFridgeTagToEms(fridgeTag, metadata) {
+  const data = parseFridgeTag(fridgeTag);
 
-  // Split the text into lines
-  let splitText = text.split('\n');
+  const result = {
+    records: [],
+  };
 
-  // For each line in the text, check if the next line has a greater indent
-  for (let i = 0; i < splitText.length - 1; i++) {
-    let line = splitText[i];
-    let currentIndent = line.search(/\S|$/);
-    let nextIndent = 0;
-    if (i !== splitText.length - 1) {
-      nextIndent = splitText[i + 1].search(/\S|$/);
+  let dayIndex = 1;
+  let day;
+  while ((day = data['Hist'][dayIndex++]) !== undefined) {
+    result.records.push(parseDay(day, 'TS Min T', 'Min T', '0', 'FRZE'));
+    result.records.push(parseDay(day, 'TS Max T', 'Max T', '1', 'HEAT'));
+  }
+
+  function parseDay(day, timeField, tempField, alarmField, alarmDescription) {
+    const date = day['Date'];
+    const time = day[timeField];
+    const dateTime = new Date(`${date}T${time}:00Z`);
+    const temp = parseFloat(day[tempField]);
+    const alarm = parseAlarm(day['Alarm'][alarmField], alarmDescription);
+
+    return {
+      ABST: dateTime,
+      TVC: temp,
+      ALRM: alarm,
+      description: date + ' ' + tempField,
+    };
+  }
+
+  function parseAlarm(node, description) {
+    if (node['t Acc'] === '0') return null;
+    return description + (node['C A'] !== '0' ? 'ACK' : '');
+  }
+
+  // const record = {
+  //   ABST: minDateTime, // absolute time utc
+  //   ALRM: null, // presence of defined alarm conditions
+  //   BEMD: null, // emd - estimated number of days of battery life remaining
+  //   BLOG: item.BLOG, // logger - estimated number of days of battery life remaining
+  //   CMPR: null, // compressor operation seconds per 15 minutes
+  //   DORV: item.DORV, // vaccine compartment open seconds per 15 minutes
+  //   HAMB: null, // relative humidity
+  //   HOLD: item.HOLD, // days the vaccine department will stay cold if power disconnected
+  //   LERR: item.LERR, // logger errors
+  //   EERR: null, // emd errors
+  //   SVA: null, // good voltage in seconds per 15 minutes
+  //   TAMB: item.TAMB, // ambient temperature
+  //   TVC: minTemp, // vaccine chamber temperature
+  // };
+
+  console.log(result);
+
+  return '';
+}
+
+function parseFridgeTag(text) {
+  const result = {};
+  const properties = [{ indent: -1, property: result }];
+
+  for (const line of text.split('\n')) {
+    const trimmedLine = line.trim();
+    if (!trimmedLine) continue;
+
+    // Determine current indent level.
+    const indent = line.search(/\S/);
+
+    // If our indent is the same or smaller, it indicates a new property; remove the finished property.
+    while (indent <= properties[properties.length - 1].indent) {
+      properties.pop();
     }
 
-    // If the next line has a greater indent, create a new subsection by collecting
-    // all of the nested object's lines and then recursively parsing them
-    if (nextIndent > currentIndent) {
-      const key = toObjectKey(line);
-      let subSectionIndex = i + 1;
-      let subSectionText = '';
+    const property = properties[properties.length - 1].property;
+    const segments = trimmedLine.split(',').map(s => s.trim());
 
-      while (subSectionIndex > 0 && subSectionIndex <= splitText.length) {
-        subSectionText += splitText[subSectionIndex] + '\n';
-        let nextIndent = splitText[subSectionIndex + 1]?.search(/\S|$/) || 0;
+    for (const segment of segments) {
+      const pair = getKeyValuePair(segment);
+      if (!pair) continue;
 
-        // Found the end of current subsection
-        if (nextIndent <= currentIndent) {
-          i = subSectionIndex;
-          subSectionIndex = 0;
-        } else {
-          subSectionIndex++;
-        }
-      }
-
-      // Recursively parse the subsection
-      data[key] = parseFridgeTagToEms(subSectionText);
-    } else {
-      // Base case of a single line that needs to be parsed as it is not a new subsection
-      const splitLines = line.split(',');
-
-      for (let j = 0; j < splitLines.length; j++) {
-        // Note some lines have a colon in the value, so we need to split on the first colon
-        let [key, value] = splitLines[j]
-          .split(/:(.*)/)
-          .map(part => part.trim());
-        data[toObjectKey(key)] = value;
+      if (pair.value) {
+        property[pair.key] = pair.value;
+      } else {
+        // If the value is empty, create a child property.
+        property[pair.key] = {};
+        properties.push({ indent, property: property[pair.key] });
       }
     }
   }
-  return data;
-}
 
-function toObjectKey(str) {
-  return str.replace(':', '').trim();
+  return result;
+
+  function getKeyValuePair(segment) {
+    const colonIndex = segment.indexOf(':');
+    if (colonIndex === -1) return null;
+    const key = segment.slice(0, colonIndex).trim();
+    const value = segment.slice(colonIndex + 1).trim();
+    return { key, value };
+  }
 }
 
 export {
