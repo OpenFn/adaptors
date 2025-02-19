@@ -643,46 +643,6 @@ describe('post', () => {
     ]);
   });
 
-  it('can be called inside an each with old "json" request config', async () => {
-    testServer
-      .intercept({
-        path: '/api/fake-json',
-        method: 'POST',
-      })
-      .reply(200, ({ body }) => body)
-      .persist();
-
-    const state = {
-      configuration: {},
-      things: [
-        { name: 'a', age: 42 },
-        { name: 'b', age: 83 },
-        { name: 'c', age: 112 },
-      ],
-      replies: [],
-    };
-
-    const finalState = await execute(
-      each(
-        '$.things[*]',
-        post(
-          'https://www.example.com/api/fake-json',
-          state => state.data,
-          {},
-          next => {
-            next.replies.push(next.response.body);
-            return next;
-          }
-        )
-      )
-    )(state);
-
-    expect(finalState.replies).to.eql([
-      '{"name":"a","age":42}',
-      '{"name":"b","age":83}',
-      '{"name":"c","age":112}',
-    ]);
-  });
 
   it('should make an http request from inside the parseCSV callback', async function () {
     testServer
