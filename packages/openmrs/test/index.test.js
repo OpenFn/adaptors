@@ -5,14 +5,10 @@ import testData from './fixtures.json' assert { type: 'json' };
 
 import {
   get,
-  post,
   create,
   update,
   upsert,
   execute,
-  getPatient,
-  searchPerson,
-  searchPatient,
   fhir,
   http,
 } from '../src';
@@ -550,24 +546,6 @@ describe('get', () => {
   });
 });
 
-describe('post', () => {
-  it('should post an encounter', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/encounter',
-        method: 'POST',
-      })
-      .reply(200, ({ body }) => body, {
-        ...jsonHeaders,
-      });
-
-    const { data } = await execute(post('encounter', state => state.encounter))(
-      state
-    );
-
-    expect(data.patient).to.eql('1fdaa696-e759-4a7d-a066-f1ae557c151b');
-  });
-});
 
 describe('Update', () => {
   it('should update a patient', async () => {
@@ -636,65 +614,6 @@ describe('create', () => {
       );
 
     await execute(create('patient', state => state.patient))(state);
-  });
-});
-
-describe('getPatient', () => {
-  it('should get a patient by uuid', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3',
-        method: 'GET',
-      })
-      .reply(
-        200,
-        { uuid: 'b52ec6f9-0e26-424c-a4a1-c64f9d571eb3' },
-        { ...jsonHeaders }
-      );
-
-    const { data } = await execute(
-      getPatient('b52ec6f9-0e26-424c-a4a1-c64f9d571eb3')
-    )(state);
-
-    expect(data.uuid).to.eql('b52ec6f9-0e26-424c-a4a1-c64f9d571eb3');
-  });
-});
-
-describe('searchPerson', () => {
-  it('should search for a person', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/person?q=Sarah',
-        method: 'GET',
-      })
-      .reply(200, { results: [{ display: 'Sarah' }] }, { ...jsonHeaders });
-
-    const { data } = await execute(
-      searchPerson({
-        q: 'Sarah',
-      })
-    )(state);
-
-    expect(data.results[0].display).to.eql('Sarah');
-  });
-});
-
-describe('searchPatient', () => {
-  it('should search for a patient', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient?q=Sarah',
-        method: 'GET',
-      })
-      .reply(200, { results: [testData.patient] }, { ...jsonHeaders });
-
-    const { data } = await execute(
-      searchPatient({
-        q: 'Sarah',
-      })
-    )(state);
-
-    expect(data.results[0].display).to.eql(testData.patient.display);
   });
 });
 
