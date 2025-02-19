@@ -92,7 +92,7 @@ describe('request()', () => {
       err = e;
     }
     expect(err.code).to.eql('UNEXPECTED_RELATIVE_URL');
-    expect(err.description).to.not.be.undefined
+    expect(err.description).to.not.be.undefined;
   });
 
   it('should throw if url is absolute and does not match baseUrl', async () => {
@@ -531,9 +531,7 @@ describe('post', () => {
     const state = {};
 
     await execute(
-      post('https://www.example.com/api/json', {
-        body: { name: 'tony stark', age: 24 },
-      })
+      post('https://www.example.com/api/json', { name: 'tony stark', age: 24 })
     )(state);
 
     expect(req.body).to.equal(JSON.stringify({ name: 'tony stark', age: 24 }));
@@ -565,8 +563,8 @@ describe('post', () => {
     };
 
     const { data } = await execute(
-      post('https://www.example.com/api/form-data', {
-        form: formData,
+      post('https://www.example.com/api/form-data', formData, {
+        form: true,
       })
     )({});
 
@@ -592,10 +590,13 @@ describe('post', () => {
       },
     };
     const { response } = await execute(
-      post('https://www.example.com/api/custom-success-codes', {
-        body: state => state.data,
-        errors: { 502: false },
-      })
+      post(
+        'https://www.example.com/api/custom-success-codes',
+        state => state.data,
+        {
+          errors: { 502: false },
+        }
+      )
     )(state);
 
     expect(response.statusCode).to.eq(502);
@@ -625,9 +626,8 @@ describe('post', () => {
         '$.things[*]',
         post(
           'https://www.example.com/api/json',
-          {
-            body: state => state.data,
-          },
+          state => state.data,
+          {},
           next => {
             next.replies.push(next.response.body);
             return next;
@@ -667,9 +667,8 @@ describe('post', () => {
         '$.things[*]',
         post(
           'https://www.example.com/api/fake-json',
-          {
-            json: state => state.data,
-          },
+          state => state.data,
+          {},
           next => {
             next.replies.push(next.response.body);
             return next;
@@ -705,16 +704,10 @@ describe('post', () => {
       csv,
       { chunkSize: 2 },
       (state, rows) =>
-        post(
-          'https://www.example.com/api/csv-reader',
-          {
-            body: rows,
-          },
-          state => {
-            state.apiResponses.push(...state.response.body);
-            return state;
-          }
-        )(state)
+        post('https://www.example.com/api/csv-reader', rows, {}, state => {
+          state.apiResponses.push(...state.response.body);
+          return state;
+        })(state)
     )(state);
 
     expect(resultingState.apiResponses).to.eql([
@@ -745,9 +738,7 @@ describe('put', () => {
     const state = {};
 
     const { response } = await execute(
-      put('https://www.example.com/api/fake-items/6', {
-        body,
-      })
+      put('https://www.example.com/api/fake-items/6', body)
     )(state);
 
     expect(response.statusCode).to.eql(200);
@@ -780,9 +771,8 @@ describe('put', () => {
         '$.things[*]',
         put(
           '/api/json',
-          {
-            body: state => state.data,
-          },
+          state => state.data,
+          {},
           next => {
             next.replies.push(next.response.body);
             return next;
@@ -817,9 +807,7 @@ describe('patch', () => {
     const state = {};
 
     const { response } = await execute(
-      patch('https://www.example.com/api/items/7', {
-        body,
-      })
+      patch('https://www.example.com/api/items/7', body)
     )(state);
 
     expect(response.statusCode).to.eql(200);
@@ -852,9 +840,8 @@ describe('patch', () => {
         '$.things[*]',
         patch(
           '/api/fake-json',
-          state => ({
-            body: state.data,
-          }),
+          state => state.data,
+          {},
           next => {
             next.replies.push(next.response.body);
             return next;
@@ -966,10 +953,13 @@ describe('tls', () => {
         state.httpsOptions = { ca: state.configuration.privateKey };
         return state;
       }),
-      post('https://www.example.com/api/sslCertCheck', state => ({
-        body: state.data,
-        agentOptions: state.httpsOptions,
-      }))
+      post(
+        'https://www.example.com/api/sslCertCheck',
+        state => state.data,
+        state => ({
+          agentOptions: state.httpsOptions,
+        })
+      )
     )(state);
     expect(finalState.data).to.eql({ a: 1 });
   });
@@ -985,8 +975,7 @@ describe('tls', () => {
     };
 
     const finalState = await execute(
-      post('https://www.example.com/api/sslCertCheck', {
-        body: state => state.data,
+      post('https://www.example.com/api/sslCertCheck', state => state.data, {
         tls: { ca: state.configuration.privateKey },
       })
     )(state);
@@ -1008,8 +997,7 @@ describe('tls', () => {
         state.httpsOptions = { ca: state.configuration.privateKey };
         return state;
       }),
-      post('https://www.example.com/api/sslCertCheck', {
-        body: state => state.data,
+      post('https://www.example.com/api/sslCertCheck', state => state.data, {
         tls: state => state.httpsOptions,
       })
     )(state);

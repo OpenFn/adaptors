@@ -45,16 +45,7 @@
           },
           {
             "title": "param",
-            "description": "Body data to append to the request. JSON will be converted to a string.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "Query, Headers and Authentication parameters",
+            "description": "Body, Query, Headers and Authentication parameters",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
@@ -84,7 +75,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "get",

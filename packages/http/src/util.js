@@ -64,14 +64,14 @@ export function request(method, path, params, callback = s => s) {
       params
     );
 
-    let { body, headers = {} } = resolvedParams;
+    let { body, headers = { 'Content-Type': 'application/json' } } = resolvedParams;
 
-    if (resolvedParams.json) {
-      console.warn(
-        'WARNING: The `json` option has been deprecated. Use `body` instead'
-      );
-      body = resolvedParams.json;
-    }
+    // if (resolvedParams.json) {
+    //   console.warn(
+    //     'WARNING: The `json` option has been deprecated. Use `body` instead'
+    //   );
+    //   body = resolvedParams.json;
+    // }
 
     if (resolvedParams.form) {
       body = encodeFormBody(body);
@@ -99,10 +99,7 @@ export function request(method, path, params, callback = s => s) {
 
     const options = {
       ...resolvedParams,
-      headers: {
-        ...(!resolvedParams.form ? { 'Content-Type': 'application/json' } : {}),
-        ...headers,
-      },
+      headers,
       baseUrl,
       body,
       tls,
