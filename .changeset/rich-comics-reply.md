@@ -10,13 +10,16 @@ and `searchPerson()`.
 ## Migration Guide
 
 All removed functionality is now captured by the `get(path, options)` function
-in `4.10.0`
+introduced in `4.10.0`. Just pass a path to the resource you need, and add a
+`{ query }` options object to search.
 
-Instead of `getEncounters()` , do `get('encounters')` Instead of
-`getEncounter('1234')`, do `get('encounters/1234')` Instead of
-`searchPatient({ q: 'sarah' })`, do `get('patient', { q: 'sarah' })`
+For example:
 
-Instead of callback arguments, you can either use `.then()`:
+- Instead of `getEncounters()` , do `get('encounters')`
+- Instead of `getEncounter('1234')`, do `get('encounters/1234')`
+- Instead of `searchPatient({ query: 'sarah' })`, do
+  `get('patient', { query: 'sarah' })`
+- Instead of callback arguments, you can either use `.then()`:
 
 ```js
 get('encounter/1234', state => {
