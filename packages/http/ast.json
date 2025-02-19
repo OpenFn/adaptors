@@ -18,7 +18,7 @@
           },
           {
             "title": "example",
-            "description": "request(\n  'GET',\n  '/myEndpoint',\n   {\n     query: {foo: 'bar', a: 1},\n     headers: {'content-type': 'application/json'},\n   }\n)"
+            "description": "request(\n  'GET',\n  '/patient',\n   {\n     query: {foo: 'bar', a: 1},\n     headers: {'content-type': 'application/json'},\n   }\n)"
           },
           {
             "title": "function",
@@ -94,7 +94,7 @@
           },
           {
             "title": "example",
-            "description": "get('/myEndpoint', {\n  query: {foo: 'bar', a: 1},\n  headers: {'content-type': 'application/json'},\n})"
+            "description": "get('/patient', {\n  query: {foo: 'bar', a: 1},\n  headers: {'content-type': 'application/json'},\n})"
           },
           {
             "title": "function",
@@ -162,8 +162,13 @@
           },
           {
             "title": "example",
-            "description": "post('/myEndpoint',\n $.data\n{\n   headers: {'content-type': 'application/json'},\n })",
-            "caption": "Create a resource with data"
+            "description": "post('/patient' $.data)",
+            "caption": "POST a resource with from state"
+          },
+          {
+            "title": "example",
+            "description": "post('/patient' $.data, {\n  headers: { 'content-type': 'application/fhir+json' },\n})",
+            "caption": "POST a resource with custom headers"
           },
           {
             "title": "function",
@@ -240,7 +245,13 @@
           },
           {
             "title": "example",
-            "description": "put('/myEndpoint', {'foo': 'bar'},\n{\n   headers: {'content-type': 'application/json'},\n })"
+            "description": "put('/patient', $.data)",
+            "caption": "PUT a resource from state"
+          },
+          {
+            "title": "example",
+            "description": "put('/patient', $.data, {\n  headers: { 'content-type': 'application/fhir+json' },\n})",
+            "caption": "PUT a resource with custom headers"
           },
           {
             "title": "function",
@@ -317,7 +328,13 @@
           },
           {
             "title": "example",
-            "description": "patch('/myEndpoint', {'foo': 'bar'}, {\n   headers: {'content-type': 'application/json'},\n })"
+            "description": "patch('/patient', $.data)",
+            "caption": "PATCH a resource from state"
+          },
+          {
+            "title": "example",
+            "description": "patch('/patient', $.data, {\n  headers: { 'content-type': 'application/fhir+json' },\n})",
+            "caption": "PATCH a resource with custom headers"
           },
           {
             "title": "function",
@@ -393,7 +410,7 @@
           },
           {
             "title": "example",
-            "description": "del(`/myendpoint/${state => state.data.id}`, {\n   headers: {'content-type': 'application/json'}\n })"
+            "description": "del(`/myendpoint/${$.data.id}`)"
           },
           {
             "title": "function",
