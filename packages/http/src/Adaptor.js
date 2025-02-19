@@ -51,7 +51,7 @@ export function execute(...operations) {
  * @example
  * request(
  *   'GET',
- *   '/myEndpoint',
+ *   '/patient',
  *    {
  *      query: {foo: 'bar', a: 1},
  *      headers: {'content-type': 'application/json'},
@@ -73,7 +73,7 @@ export function request(method, path, options, callback) {
  * Make a GET request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
- * get('/myEndpoint', {
+ * get('/patient', {
  *   query: {foo: 'bar', a: 1},
  *   headers: {'content-type': 'application/json'},
  * })
@@ -91,12 +91,12 @@ export function get(path, options, callback) {
 /**
  * Make a POST request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example <caption>Create a resource with data</caption>
- *  post('/myEndpoint',
- *  $.data
- * {
- *    headers: {'content-type': 'application/json'},
- *  })
+ * @example <caption>POST a resource with from state</caption>
+ * post('/patient' $.data)
+   @example <caption>POST a resource with custom headers</caption>
+ * post('/patient' $.data, {
+ *   headers: { 'content-type': 'application/fhir+json' },
+ * })
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {object} data - Body data to append to the request. JSON will be converted to a string.
@@ -113,11 +113,12 @@ export function post(path, data, options, callback) {
 /**
  * Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example
- *  put('/myEndpoint', {'foo': 'bar'},
- * {
- *    headers: {'content-type': 'application/json'},
- *  })
+ * @example <caption>PUT a resource from state</caption>
+ * put('/patient', $.data)
+ * @example <caption>PUT a resource with custom headers</caption>
+ * put('/patient', $.data, {
+ *   headers: { 'content-type': 'application/fhir+json' },
+ * })
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {object} data - Body data to append to the request. JSON will be converted to a string.
@@ -133,10 +134,12 @@ export function put(path, data, options, callback) {
 /**
  * Make a PATCH request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example
- *  patch('/myEndpoint', {'foo': 'bar'}, {
- *    headers: {'content-type': 'application/json'},
- *  })
+ * @example <caption>PATCH a resource from state</caption>
+ * patch('/patient', $.data)
+ * @example <caption>PATCH a resource with custom headers</caption>
+ * patch('/patient', $.data, {
+ *   headers: { 'content-type': 'application/fhir+json' },
+ * })
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {object} data - Body data to append to the request. JSON will be converted to a string.
@@ -153,9 +156,7 @@ export function patch(path, data, options, callback) {
  * Make a DELETE request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example
- *  del(`/myendpoint/${state => state.data.id}`, {
- *    headers: {'content-type': 'application/json'}
- *  })
+ * del(`/myendpoint/${$.data.id}`)
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} options - Query, Headers and Auth parameters

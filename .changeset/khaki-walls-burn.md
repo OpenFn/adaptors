@@ -2,7 +2,8 @@
 '@openfn/language-http': major
 ---
 
-Add a `data` argument to `put()`, `patch()` and `post()`
+- Add a `data` argument to `put()`, `patch()` and `post()`
+- Remove the deprecated `json` property on `RequestOptions`
 
 ## Migration Guide
 
