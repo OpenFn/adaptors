@@ -64,7 +64,7 @@ export function execute(...operations) {
  * @function
  * @public
  * @param {string} path - Path to resource (excluding /ws/rest/v1/)
- * @param {OpenMRSRequestOptions}
+ * @param {OpenMRSRequestOptions} [options = {}]
  * @state {HttpState}
  * @returns {Operation}
  */
@@ -300,7 +300,7 @@ export function upsert(path,  data) {
  * @function
  * @public
  * @param {string} path - Path to resource (excluding /ws/rest/v1/)
- * @param {OpenMRSRequestOptions}
+ * @param {OpenMRSRequestOptions}  [options = {}]
  * @state {HttpState}
  * @returns {Operation}
  */
