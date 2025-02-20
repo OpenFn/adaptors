@@ -234,27 +234,8 @@ export function update(path, data) {
  * @param {Object} data - The data to use for update or create depending on the result of the query.
  * @state {HttpState}
  * @returns {Operation}
- * @example <caption>For an existing patient using upsert</caption>
- * upsert('patient', { q: '10007JJ' }, { person: { age: 50 } });
- * @example <caption>For non existing patient creating a patient record using upsert </caption>
- * upsert(
- *   "patient",
- *   { q: "1000EHE" },
- *   {
- *     identifiers: [
- *       {
- *         identifier: "1000EHE",
- *         identifierType: "05a29f94-c0ed-11e2-94be-8c13b969e334",
- *         location: "44c3efb0-2583-4c80-a79e-1f756a03c0a1",
- *         preferred: true,
- *       },
- *     ],
- *     person: {
- *       gender: "M",
- *       age: 42,
- *     },
- *   }
- * );
+ * @example <caption>Upsert patient</caption>
+ * upsert('patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3', { person: { age: 50 }});
  */
 export function upsert(path,  data) {
   return async state => {
