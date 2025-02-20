@@ -3,6 +3,14 @@ import { expandReferences } from '@openfn/language-common/util';
 import { request, prepareNextState, cleanPath } from './Utils';
 
 /**
+ * State object
+ * @typedef {object} HttpState
+ * @property data - The parsed response body
+ * @property response - The response from the OpenMRS server, including headers, statusCode, body, etc
+ * @property references  - An array of all previous data objects used in the job
+ */
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for OpenMRS.
  * @example
@@ -37,6 +45,7 @@ export function execute(...operations) {
  * @public
  * @param {string} path - Path to resource (excluding /ws/rest/v1/)
  * @param {RequestOptions}  [options={}] - An object containing query, headers, and body for the request. See {@link https://rest.openmrs.org/ OpenMRS Rest API docs} for available query parameters
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function get(path, options) {
@@ -74,6 +83,7 @@ export function get(path, options) {
  * @function
  * @param {string} path - Path to resource (excluding /ws/rest/v1/)
  * @param {object} data - Object which defines data that will be used to create a given instance of resource
+ * @state {HttpState}
  * @returns {Operation}
  * @example <caption>Create a person</caption>
  * create("person", {
@@ -164,6 +174,7 @@ export function create(path, data) {
  * @function
  * @param {string} path - Path to resource (excluding /ws/rest/v1/)
  * @param {Object} data - Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.
+ * @state {HttpState}
  * @returns {Operation}
  * @example <caption>a person</caption>
  * update('person/3cad37ad-984d-4c65-a019-3eb120c9c373',{"gender":"M","birthdate":"1997-01-13"})
@@ -202,6 +213,7 @@ export function update(path, data) {
  * @param {string} path - Path to resource (excluding /ws/rest/v1/)
  * @param {Object} data - The data to use for update or create depending on the result of the query.
  * @throws {RangeError} - Throws range error
+ * @state {HttpState}
  * @returns {Operation}
  * @example <caption>For an existing patient using upsert</caption>
  * upsert('patient', { q: '10007JJ' }, { person: { age: 50 } });
@@ -270,6 +282,7 @@ export function upsert(path,  data) {
  * @public
  * @param {string} path - Path to resource (excluding /ws/rest/v1/)
  * @param {RequestOptions}  [options={}] - An object containing query, headers, and body for the request. See {@link https://rest.openmrs.org/ OpenMRS Rest API docs} for available query parameters
+ * @state {HttpState}
  * @returns {Operation}
  */
 function _delete(path, options) {

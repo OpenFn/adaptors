@@ -26,6 +26,7 @@ import * as util from './Utils';
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
  * @param {RequestOptions}  [options={}] - An object containing query, headers, and body for the request
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function request(method, path, options = {}) {
@@ -67,6 +68,7 @@ export function request(method, path, options = {}) {
  * )
  * @param {string} path - path to resource
  * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
  * @returns {operation}
  */
 export function get(path, options = {}) {
@@ -112,6 +114,7 @@ export function get(path, options = {}) {
  * @param {string} path - path to resource
  * @param {any} data - the payload
  * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
  * @returns {operation}
  */
 export function post(path, data, options = {}) {
@@ -149,6 +152,7 @@ export function post(path, data, options = {}) {
  * )
  * @param {string} path - path to resource
  * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
  * @returns {operation}
  */
 function _delete(path, options = {}) {

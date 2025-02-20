@@ -38,6 +38,7 @@ import { prepareNextState } from './Utils';
  * @param {string} path - Path to resource
  * @param {FhirParameters} query - Request parameters
  * @param {function} [callback] - Optional callback to handle the response
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function get(path, query, callback = s => s) {
