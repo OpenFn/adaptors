@@ -11,6 +11,22 @@ import { request, prepareNextState, cleanPath } from './Utils';
  */
 
 /**
+ * OpenMRS query object. This is a brief overview with commonly used parameters that cut across multiple requests. For more details about parameters specific to your request visit the [official docs](https://rest.openmrs.org/)
+ * @typedef {object} OpenMRSQueryObject query parameters
+ * @property {string} q - Search by query for listings
+ * @property {number} limit - Number of listings returned in the `results` array.
+ * @property {boolean} purge - For delete operations only. Use with caution! The resource will be voided unless purge = true. Purging will attempt to remove the resource irreversibly. Resources that are referenced from existing data can not be purged.
+ * @property {number} startindex - Commonly used with `query.q` and `query.limit` for pagination to position the cursor.
+ * @property {boolean} includeAll - Include voided/retired/disabled resources in the response.
+ */
+
+/**
+ * OpenMRS Options.
+ * @typedef {object} OpenMRSRequestOptions
+ * @property {OpenMRSQueryObject} query - Query params object
+ */
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for OpenMRS.
  * @example
@@ -48,7 +64,7 @@ export function execute(...operations) {
  * @function
  * @public
  * @param {string} path - Path to resource (excluding /ws/rest/v1/)
- * @param {RequestOptions}  [options={}] - An object containing query, headers, and body for the request. See {@link https://rest.openmrs.org/ OpenMRS Rest API docs} for available query parameters
+ * @param {OpenMRSRequestOptions}
  * @state {HttpState}
  * @returns {Operation}
  */
@@ -285,7 +301,7 @@ export function upsert(path,  data) {
  * @function
  * @public
  * @param {string} path - Path to resource (excluding /ws/rest/v1/)
- * @param {RequestOptions}  [options={}] - An object containing query, headers, and body for the request. See {@link https://rest.openmrs.org/ OpenMRS Rest API docs} for available query parameters
+ * @param {OpenMRSRequestOptions}
  * @state {HttpState}
  * @returns {Operation}
  */
