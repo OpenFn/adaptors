@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "secretKey": {
+      "title": "Secret Key",
+      "type": "string",
+      "description": "Chapa secret key"
+    },
+    "apiVersion": {
+      "title": "API Version",
+      "type": "string",
+      "description": "Chapa API version",
+      "default": "v1"
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "secretKey"
+  ]
+}
