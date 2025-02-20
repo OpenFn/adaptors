@@ -19,7 +19,9 @@ describe('Patient', () => {
       identifier: [
         {
           use: 'usual', // no code assist on value
-          type: b.cc(['MR', 'http://terminology.hl7.org/CodeSystem/v2-0203']),
+          // TODO type on tuple
+          type: ['MR', 'http://terminology.hl7.org/CodeSystem/v2-0203'],
+          // type: b.cc(['MR', 'http://terminology.hl7.org/CodeSystem/v2-0203']),
           system: 'urn:oid:1.2.36.146.595.217.0.1',
           value: '12345',
           period: { start: '2001-05-06' },
@@ -74,7 +76,9 @@ describe('Patient', () => {
           },
         },
       ],
-      managingOrganization: b.ref('Organization/1'),
+
+      // TODO TS doesn't like this but it's actually fine
+      managingOrganization: 'Organization/1',
       telecom: [
         {
           system: 'phone',

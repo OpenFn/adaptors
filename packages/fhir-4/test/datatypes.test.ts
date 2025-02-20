@@ -50,6 +50,14 @@ describe('identifier', () => {
     expect(result).to.eql({ value: 'abc', use: 'usual' });
   });
 
+  it('should pass identifier.type into datatypes.concept()', () => {
+    const result = b.identifier({ type: ['abc', 'www'] });
+
+    expect(result).to.eql({
+      type: { coding: [{ code: 'abc', system: 'www' }] },
+    });
+  });
+
   //it('should map an identifier from a string with a default system', () => {});
 });
 
@@ -91,6 +99,15 @@ describe('coding', () => {
 
 // TODO I have changed this and so the generator will also need an update
 describe('concept', () => {
+  it('should just return a concept if one is passed', () => {
+    const c = {
+      coding: [{ code: '1234', system: 'https://fake.loinc.org' }],
+    };
+
+    const result = b.concept(c);
+
+    expect(result).to.eql(c);
+  });
   it('should create a codeable concept from a single tuple', () => {
     // the double array here is horrible
     const result = b.concept(['1234', 'https://fake.loinc.org']);

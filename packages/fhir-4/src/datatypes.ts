@@ -63,6 +63,9 @@ export const identifier = (id: string | FHIR.Identifier, ...ext) => {
   if (typeof id === 'string') {
     i.value = id;
   } else {
+    if (id.type) {
+      id.type = concept(id.type);
+    }
     Object.assign(i, id);
     // TODO can we default the system anyhow?
   }
@@ -239,6 +242,10 @@ export const concept = (
   codings: ConceptCoding | ConceptCoding[],
   extra: Omit<FHIR.CodeableConcept, 'coding'> = {}
 ) => {
+  // This looks like a valid concept - just return it
+  if ((codings as any).coding) {
+    return codings;
+  }
   // Work out if we've been passed one or many codings
   if (
     // This looks like a single coding object
