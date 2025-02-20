@@ -232,7 +232,6 @@ export function update(path, data) {
  * @function
  * @param {string} path - Path to resource (excluding /ws/rest/v1/)
  * @param {Object} data - The data to use for update or create depending on the result of the query.
- * @throws {RangeError} - Throws range error
  * @state {HttpState}
  * @returns {Operation}
  * @example <caption>For an existing patient using upsert</caption>
