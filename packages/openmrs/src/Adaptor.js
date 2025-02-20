@@ -35,11 +35,15 @@ export function execute(...operations) {
 
 /**
  * Make a get request to any OpenMRS REST endpoint.
- * @example <caption>Get a patient by UUID</caption>
+ * @example <caption>List all patients</caption>
+ * get("/patient")
+ * @example <caption>List patients by name with a limit</caption>
+ * get("/patient", { query: { q: "brian", limit: 1 }})
+ * @example <caption>List patient by UUID</caption>
  * get("/patient/abc")
- * @example <caption>Get a patient with query and limit</caption>
- * get("/patient", {query: {q: 'Jon', limit: 1}})
- * @example <caption>Get an allergy subresource by its UUID and parent patient UUID</caption>
+ * @example <caption>List allergy subresources</caption>
+ * get("/patient/abc/allergy")
+ * @example <caption>List allergy subresource by its UUID and parent patient UUID</caption>
  * get("/patient/abc/allergy/xyz")
  * @function
  * @public
