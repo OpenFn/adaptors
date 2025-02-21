@@ -7,22 +7,32 @@
         "options"
       ],
       "docs": {
-        "description": "Make a get request to any OpenMRS REST endpoint.",
+        "description": "Fetch resources from OpenMRS. Use this to fetch a single resource,\nor to search a list. Query parameters will be appended to the request URL,\nrefer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.",
         "tags": [
           {
             "title": "example",
-            "description": "get(\"/patient/abc\")",
-            "caption": "Get a patient by UUID"
+            "description": "get(\"patient\")",
+            "caption": "List all patients"
           },
           {
             "title": "example",
-            "description": "get(\"/patient\", {query: {q: 'Jon', limit: 1}})",
-            "caption": "Get a patient with query and limit"
+            "description": "get(\"patient\", { q: \"brian\", limit: 1 })",
+            "caption": "List patients by name with a limit(<a href=\"https://rest.openmrs.org/#search-patients\">see OpenMRS API</a>)"
           },
           {
             "title": "example",
-            "description": "get(\"/patient/abc/allergy/xyz\")",
-            "caption": "Get an allergy subresource by its UUID and parent patient UUID"
+            "description": "get(\"patient/abc\")",
+            "caption": "Fetch patient by UUID"
+          },
+          {
+            "title": "example",
+            "description": "get(\"patient/abc/allergy\")",
+            "caption": "List allergy subresources"
+          },
+          {
+            "title": "example",
+            "description": "get(\"patient/abc/allergy/xyz\")",
+            "caption": "Get allergy subresource by its UUID and parent patient UUID"
           },
           {
             "title": "function",
@@ -36,7 +46,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource (excluding /ws/rest/v1/)",
+            "description": "Path to resource (excluding `/ws/rest/v1/`)",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -45,16 +55,24 @@
           },
           {
             "title": "param",
-            "description": "An object containing query, headers, and body for the request. See {@link https://rest.openmrs.org/ OpenMRS Rest API docs} for available query parameters",
+            "description": "Query parameters (eg `limit`, `q`)",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "RequestOptions"
+                "name": "RestQueryOptions"
               }
             },
             "name": "options",
             "default": "{}"
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          },
+          {
+            "title": "state",
+            "description": "data The requested resources"
           },
           {
             "title": "returns",
@@ -75,7 +93,7 @@
         "data"
       ],
       "docs": {
-        "description": "Create a record",
+        "description": "Create a resource. For a list of valid resources, see {@link https://rest.openmrs.org/ OpenMRS Docs}",
         "tags": [
           {
             "title": "public",
@@ -89,7 +107,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource (excluding /ws/rest/v1/)",
+            "description": "Path to resource (excluding `/ws/rest/v1/`)",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -98,12 +116,20 @@
           },
           {
             "title": "param",
-            "description": "Object which defines data that will be used to create a given instance of resource",
+            "description": "Resource definition",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "data"
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          },
+          {
+            "title": "state",
+            "description": "data The newly created resource"
           },
           {
             "title": "returns",
@@ -116,7 +142,7 @@
           {
             "title": "example",
             "description": "create(\"person\", {\n  names: [\n    {\n      givenName: \"Mohit\",\n      familyName: \"Kumar\",\n    },\n  ],\n  gender: \"M\",\n  birthdate: \"1997-09-02\",\n  addresses: [\n    {\n      address1: \"30, Vivekananda Layout, Munnekolal,Marathahalli\",\n      cityVillage: \"Bengaluru\",\n      country: \"India\",\n      postalCode: \"560037\",\n    },\n  ],\n});",
-            "caption": "Create a person"
+            "caption": "Create a person (<a href=\"https://rest.openmrs.org/#create-a-person\">see OpenMRS API</a>)"
           },
           {
             "title": "example",
@@ -139,7 +165,7 @@
         "data"
       ],
       "docs": {
-        "description": "Update data. A generic helper function to update a resource object of any type.\nUpdating an object requires to send `all required fields` or the `full body`",
+        "description": "Update a resource. Only properties included in the data will be affected.\nFor a list of valid resources and for update rules, see the Update sections\nof the {@link https://rest.openmrs.org/ OpenMRS Docs}",
         "tags": [
           {
             "title": "public",
@@ -153,7 +179,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource (excluding /ws/rest/v1/)",
+            "description": "Path to resource (excluding `/ws/rest/v1/`)",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -162,12 +188,16 @@
           },
           {
             "title": "param",
-            "description": "Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.",
+            "description": "Resource properties to update",
             "type": {
               "type": "NameExpression",
               "name": "Object"
             },
             "name": "data"
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           },
           {
             "title": "returns",
@@ -179,8 +209,8 @@
           },
           {
             "title": "example",
-            "description": "update('person/3cad37ad-984d-4c65-a019-3eb120c9c373',{\"gender\":\"M\",\"birthdate\":\"1997-01-13\"})",
-            "caption": "a person"
+            "description": "update('person/3cad37ad-984d-4c65-a019-3eb120c9c373', {\n  'gender': 'M',\n  'birthdate':'1997-01-13'\n})",
+            "caption": "Update a person (<a href=\"https://rest.openmrs.org/#create-a-person\">see OpenMRS API</a>)"
           }
         ]
       },
@@ -193,7 +223,7 @@
         "data"
       ],
       "docs": {
-        "description": "Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.",
+        "description": "Upsert a record. If the resource exists, it will be updated. Otherwise, a new resource will be created.",
         "tags": [
           {
             "title": "public",
@@ -207,7 +237,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource (excluding /ws/rest/v1/)",
+            "description": "Path to resource (excluding `/ws/rest/v1/`)",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -216,7 +246,7 @@
           },
           {
             "title": "param",
-            "description": "The data to use for update or create depending on the result of the query.",
+            "description": "The resource data",
             "type": {
               "type": "NameExpression",
               "name": "Object"
@@ -224,12 +254,8 @@
             "name": "data"
           },
           {
-            "title": "throws",
-            "description": "Throws range error",
-            "type": {
-              "type": "NameExpression",
-              "name": "RangeError"
-            }
+            "title": "state",
+            "description": "{HttpState}"
           },
           {
             "title": "returns",
@@ -241,13 +267,8 @@
           },
           {
             "title": "example",
-            "description": "upsert('patient', { q: '10007JJ' }, { person: { age: 50 } });",
-            "caption": "For an existing patient using upsert"
-          },
-          {
-            "title": "example",
-            "description": "upsert(\n  \"patient\",\n  { q: \"1000EHE\" },\n  {\n    identifiers: [\n      {\n        identifier: \"1000EHE\",\n        identifierType: \"05a29f94-c0ed-11e2-94be-8c13b969e334\",\n        location: \"44c3efb0-2583-4c80-a79e-1f756a03c0a1\",\n        preferred: true,\n      },\n    ],\n    person: {\n      gender: \"M\",\n      age: 42,\n    },\n  }\n);",
-            "caption": "For non existing patient creating a patient record using upsert"
+            "description": "upsert(\"patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a\", {\n  identifiers: [\n    {\n      identifier: '4023287',\n      identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',\n      preferred: true,\n    },\n  ],\n  person: {\n    gender: 'M',\n    age: 42,\n    birthdate: '1970-01-01T00:00:00.000+0100',\n    birthdateEstimated: false,\n    names: [\n      {\n        givenName: 'Doe',\n        familyName: 'John',\n      },\n    ],\n  },\n})",
+            "caption": "Upsert a patient"
           }
         ]
       },

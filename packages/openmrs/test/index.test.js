@@ -3,16 +3,8 @@ import { expect } from 'chai';
 import { request } from '../src/Utils';
 import testData from './fixtures.json' assert { type: 'json' };
 
-import {
-  get,
-  create,
-  update,
-  upsert,
-  execute,
-  fhir,
-  http,
-} from '../src';
-import *  as adaptor from '../src'
+import { get, create, update, upsert, execute, fhir, http } from '../src';
+import * as adaptor from '../src';
 
 const testServer = enableMockClient('https://fn.openmrs.org');
 const jsonHeaders = {
@@ -540,12 +532,11 @@ describe('get', () => {
       })
       .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
 
-    const { data } = await execute(get('patient', {query: {q: 'Sarah'}}))(state);
+    const { data } = await execute(get('patient', { q: 'Sarah' }))(state);
 
     expect(data.results[0].uuid).to.eql(testData.patientResults[0].uuid);
   });
 });
-
 
 describe('Update', () => {
   it('should update a patient', async () => {
@@ -558,9 +549,12 @@ describe('Update', () => {
         ...jsonHeaders,
       });
 
-    const { data } = await execute(update('patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3', state => state.patient))(
-      state
-    );
+    const { data } = await execute(
+      update(
+        'patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3',
+        state => state.patient
+      )
+    )(state);
     expect(data.uuid).to.eql('b52ec6f9-0e26-424c-a4a1-c64f9d571eb3');
   });
 });
@@ -668,7 +662,6 @@ describe('upsert', () => {
   });
 });
 
-
 describe('delete', () => {
   it('should delete an encounter by uuid', async () => {
     testServer
@@ -681,5 +674,35 @@ describe('delete', () => {
     const { data } = await execute(adaptor.delete('/encounter/123'))(state);
 
     expect(data.uuid).to.eql('123');
+  });
+
+  it('should delete a resource with options', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/encounter/456?purge=true',
+        method: 'DELETE',
+      })
+      .reply(200, { uuid: '456', voided: false }, { ...jsonHeaders });
+
+    const { data } = await execute(
+      adaptor.delete('/encounter/456', { purge: true })
+    )(state);
+
+    expect(data.uuid).to.eql('456');
+  });
+
+  it('should throw an error if the resource is not found', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/encounter/789',
+        method: 'DELETE',
+      })
+      .reply(404, { error: 'Not Found' }, { ...jsonHeaders });
+
+    try {
+      await execute(adaptor.delete('encounter/789'))(state);
+    } catch (error) {
+      expect(error.body.error).to.eql('Not Found');
+    }
   });
 });

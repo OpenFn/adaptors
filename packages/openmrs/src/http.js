@@ -3,7 +3,7 @@ import * as util from './Utils';
 
 /**
  * Options object
- * @typedef {Object} RequestOptions
+ * @typedef {Object} HTTPRequestOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
  * @property {object} headers - An object of all request headers
  * @property {object} body - The request body (as JSON)
@@ -25,7 +25,7 @@ import * as util from './Utils';
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
- * @param {RequestOptions}  [options={}] - An object containing query, headers, and body for the request
+ * @param {HTTPRequestOptions}  [options={}] - An object containing query, headers, and body for the request
  * @state {HttpState}
  * @returns {Operation}
  */
@@ -67,7 +67,7 @@ export function request(method, path, options = {}) {
  *  }
  * )
  * @param {string} path - path to resource
- * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
  * @state {HttpState}
  * @returns {operation}
  */
@@ -113,7 +113,7 @@ export function get(path, options = {}) {
  * )
  * @param {string} path - path to resource
  * @param {any} data - the payload
- * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
  * @state {HttpState}
  * @returns {operation}
  */
@@ -151,7 +151,7 @@ export function post(path, data, options = {}) {
  *  "/ws/rest/v1/patient/abc/"
  * )
  * @param {string} path - path to resource
- * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
  * @state {HttpState}
  * @returns {operation}
  */

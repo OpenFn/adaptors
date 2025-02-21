@@ -8,7 +8,7 @@ import {
 export const prepareNextState = (state, response, callback = s => s) => {
   const { body, ...responseWithoutBody } = response;
   const nextState = {
-    ...composeNextState(state, response.body),
+    ...composeNextState(state, body),
     response: responseWithoutBody,
   };
 
@@ -87,7 +87,6 @@ export async function request(state, method, path, options = {}) {
 
   return allResponses;
 }
-
 
 export function cleanPath(path) {
   return path
