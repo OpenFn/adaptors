@@ -50,7 +50,7 @@ export function execute(...operations) {
  * refer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.
  * @example <caption>List all patients</caption>
  * get("patient")
- * @example <caption>List patients by name with a limit(<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
+ * @example <caption>Search patients by name with a limit (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
  * get("patient", { q: "brian", limit: 1 })
  * @example <caption>Fetch patient by UUID</caption>
  * get("patient/abc")
@@ -117,7 +117,7 @@ export function get(path, options) {
  *     },
  *   ],
  * });
- * @example <caption>Create an encounter</caption>
+ * @example <caption>Create an encounter (<a href="https://rest.openmrs.org/#create-an-encounter">see OpenMRS API</a>)</caption>
  * create("encounter", {
  *   encounterDatetime: '2023-05-25T06:08:25.000+0000',
  *   patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',
@@ -131,7 +131,7 @@ export function get(path, options) {
  *     stopDatetime: '2023-05-25T06:09:25.000+0000',
  *   },
  * })
- * @example <caption>Create a patient</caption>
+ * @example <caption>Create a patient (<a href="https://rest.openmrs.org/#create-a-patient">see OpenMRS API</a>)</caption>
  * create("patient", {
  *   identifiers: [
  *     {
@@ -223,7 +223,7 @@ export function update(path, data) {
  * @param {Object} data - The resource data
  * @state {HttpState}
  * @returns {Operation}
- * @example <caption>Upsert a patient</caption>
+ * @example <caption>Upsert a patient (<a href="https://rest.openmrs.org/#patients-overview">see OpenMRS API</a>)</caption>
  * upsert("patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a", {
  *   identifiers: [
  *     {
