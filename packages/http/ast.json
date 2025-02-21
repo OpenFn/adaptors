@@ -5,7 +5,7 @@
       "params": [
         "method",
         "path",
-        "params",
+        "options",
         "callback"
       ],
       "docs": {
@@ -18,7 +18,7 @@
           },
           {
             "title": "example",
-            "description": "request(\n  'GET',\n  '/myEndpoint',\n   {\n     query: {foo: 'bar', a: 1},\n     headers: {'content-type': 'application/json'},\n   }\n)"
+            "description": "request(\n  'GET',\n  '/patient',\n   {\n     query: {foo: 'bar', a: 1},\n     headers: {'content-type': 'application/json'},\n   }\n)"
           },
           {
             "title": "function",
@@ -45,12 +45,12 @@
           },
           {
             "title": "param",
-            "description": "Query, Headers and Authentication parameters",
+            "description": "Body, Query, Headers and Authentication parameters",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
             },
-            "name": "params"
+            "name": "options"
           },
           {
             "title": "param",
@@ -81,7 +81,7 @@
       "name": "get",
       "params": [
         "path",
-        "params",
+        "options",
         "callback"
       ],
       "docs": {
@@ -94,7 +94,7 @@
           },
           {
             "title": "example",
-            "description": "get('/myEndpoint', {\n  query: {foo: 'bar', a: 1},\n  headers: {'content-type': 'application/json'},\n})"
+            "description": "get('/patient', {\n  query: {foo: 'bar', a: 1},\n  headers: {'content-type': 'application/json'},\n})"
           },
           {
             "title": "function",
@@ -112,12 +112,12 @@
           },
           {
             "title": "param",
-            "description": "Query, Headers and Authentication parameters",
+            "description": "Body, Query, Headers and Authentication parameters",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
             },
-            "name": "params"
+            "name": "options"
           },
           {
             "title": "param",
@@ -148,7 +148,8 @@
       "name": "post",
       "params": [
         "path",
-        "params",
+        "data",
+        "options",
         "callback"
       ],
       "docs": {
@@ -161,7 +162,13 @@
           },
           {
             "title": "example",
-            "description": "post('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
+            "description": "post('/patient' $.data)",
+            "caption": "POST a resource with from state"
+          },
+          {
+            "title": "example",
+            "description": "post('/patient' $.data, {\n  headers: { 'content-type': 'application/fhir+json' },\n})",
+            "caption": "POST a resource with custom headers"
           },
           {
             "title": "function",
@@ -179,12 +186,21 @@
           },
           {
             "title": "param",
-            "description": "Body, Query, Headers and Authentication parameters",
+            "description": "Body data to append to the request. JSON will be converted to a string.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Query, Headers and Authentication parameters",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
             },
-            "name": "params"
+            "name": "options"
           },
           {
             "title": "param",
@@ -215,7 +231,8 @@
       "name": "put",
       "params": [
         "path",
-        "params",
+        "data",
+        "options",
         "callback"
       ],
       "docs": {
@@ -228,7 +245,13 @@
           },
           {
             "title": "example",
-            "description": "put('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
+            "description": "put('/patient', $.data)",
+            "caption": "PUT a resource from state"
+          },
+          {
+            "title": "example",
+            "description": "put('/patient', $.data, {\n  headers: { 'content-type': 'application/fhir+json' },\n})",
+            "caption": "PUT a resource with custom headers"
           },
           {
             "title": "function",
@@ -246,12 +269,21 @@
           },
           {
             "title": "param",
-            "description": "Body, Query, Headers and Auth parameters",
+            "description": "Body data to append to the request. JSON will be converted to a string.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
             },
-            "name": "params"
+            "name": "options-null"
           },
           {
             "title": "param",
@@ -276,13 +308,14 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "patch",
       "params": [
         "path",
-        "params",
+        "data",
+        "options",
         "callback"
       ],
       "docs": {
@@ -295,7 +328,13 @@
           },
           {
             "title": "example",
-            "description": "patch('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
+            "description": "patch('/patient', $.data)",
+            "caption": "PATCH a resource from state"
+          },
+          {
+            "title": "example",
+            "description": "patch('/patient', $.data, {\n  headers: { 'content-type': 'application/fhir+json' },\n})",
+            "caption": "PATCH a resource with custom headers"
           },
           {
             "title": "function",
@@ -313,12 +352,21 @@
           },
           {
             "title": "param",
-            "description": "Body, Query, Headers and Auth parameters",
+            "description": "Body data to append to the request. JSON will be converted to a string.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
             },
-            "name": "params"
+            "name": "options"
           },
           {
             "title": "param",
@@ -349,7 +397,7 @@
       "name": "del",
       "params": [
         "path",
-        "params",
+        "options",
         "callback"
       ],
       "docs": {
@@ -362,7 +410,7 @@
           },
           {
             "title": "example",
-            "description": "del(`/myendpoint/${state => state.data.id}`, {\n   headers: {'content-type': 'application/json'}\n })"
+            "description": "del(`/myendpoint/${$.data.id}`)"
           },
           {
             "title": "function",
@@ -380,12 +428,12 @@
           },
           {
             "title": "param",
-            "description": "Body, Query, Headers and Auth parameters",
+            "description": "Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
             },
-            "name": "params"
+            "name": "options"
           },
           {
             "title": "param",
@@ -415,7 +463,7 @@
     {
       "name": "parseXML",
       "params": [
-        "body",
+        "data",
         "script",
         "callback"
       ],
@@ -433,7 +481,7 @@
           },
           {
             "title": "example",
-            "description": "parseXML(\n  (state) => state.response,\n  ($) => {\n    return $(\"table[class=your_table]\").parsetable(true, true, true);\n  },\n  (next) => ({ ...next, results: next.data.body })\n);",
+            "description": "parseXML(\n  (state) => state.response,\n  ($) => {\n    return $(\"table[class=your_table]\").parsetable(true, true, true);\n  },\n  (next) => ({ ...next, results: next.data.data })\n);",
             "caption": "Using parseXML with a callback"
           },
           {
@@ -443,12 +491,12 @@
           },
           {
             "title": "param",
-            "description": "data string to be parsed",
+            "description": "Body string to be parsed",
             "type": {
               "type": "NameExpression",
               "name": "String"
             },
-            "name": "body"
+            "name": "data"
           },
           {
             "title": "param",
