@@ -16,18 +16,18 @@ _eg http@6.0.0_
 
 ## Summary
 
-_A single-sentence summary of the problem_
+_A single-sentence summary of the problem. Link to a run or log, if possible._
 
 ## Steps to reproduce
 
 _Show us how to recreate the problem, step by step. Or include some sample
 code!_
 
-## ANy more details
+## Any more details
 
 _Give us some more details about the issue here. Include screenshots and log
-output if relevant. Do not disclose any sensitive data, API keys, or personally
-identifiable information. _
+output if relevant. Do NOT disclose any sensitive data, API keys, or personally
+identifiable information._
 
 ## Expected behaviour
 
