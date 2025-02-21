@@ -8,12 +8,25 @@ export function getEmsData() {
 
     for (const message of state.data) {
       if (message.fridgeTag) {
-        const result = parseFridgeTagToEms(message.fridgeTag.content);
+        if (!message.metadata?.content) {
+          console.error('No metadata supplied.');
+          continue;
+        }
+
+        if (!message.fridgeTag?.content) {
+          console.error('No fridgetag supplied.');
+          continue;
+        }
+
+        const metadata = JSON.parse(message.metadata.content);
+        const fridgeTagNodes = parseFridgeTag(message.fridgeTag.content);
+
+        const result = parseFridgeTagToEms(metadata, fridgeTagNodes);
         results.push(result);
         continue;
       }
 
-      if (message.metadata) {
+      if (message.data) {
         if (!message.metadata?.content) {
           console.error('No metadata supplied.');
           continue;
@@ -33,7 +46,9 @@ export function getEmsData() {
         continue;
       }
 
-      throw new Error(`Insufficient content found for MessageID: ${message.messageId}`);
+      throw new Error(
+        `Insufficient content found for MessageID: ${message.messageId}`
+      );
     }
 
     console.log('--- Converted message count', results.length);
@@ -74,7 +89,7 @@ function parseVaroEmsToEms(metadata, data, dataPath) {
   for (const item of data.records) {
     const durations = [item.RELT]; // ignore RTCW?
     const absoluteDate = getAdjustedDate(deviceDate, durations);
-    const abst = isoToAbbreviatedIso(absoluteDate);
+    const abst = parseIsoToAbbreviatedIso(absoluteDate);
 
     const record = {
       ABST: abst, // absolute time utc
@@ -116,7 +131,7 @@ function getRelativeDateFromUsbPluggedInfo(path) {
     duration: match.groups.duration,
   };
 
-  const isoDate = abbreviatedIsoToIso(usbPluggedInfo.date);
+  const isoDate = parseAbbreviatedIsoToIso(usbPluggedInfo.date);
 
   // The relative date is: from when the USB drive was plugged in, the date, minus the relative duration.
   return getAdjustedDate(isoDate, [usbPluggedInfo.duration], true);
@@ -167,7 +182,7 @@ function getAdjustedDate(incomingDate, durations, subtract = false) {
   return adjustedDate;
 }
 
-function abbreviatedIsoToIso(abbreviatedIso) {
+function parseAbbreviatedIsoToIso(abbreviatedIso) {
   // Incoming format is abbreviated ISO 8601: 20240913T171251Z
   const regex = /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z$/;
   const match = abbreviatedIso.match(regex);
@@ -180,66 +195,140 @@ function abbreviatedIsoToIso(abbreviatedIso) {
   return `${match[1]}-${match[2]}-${match[3]}T${match[4]}:${match[5]}:${match[6]}Z`;
 }
 
-function isoToAbbreviatedIso(iso) {
+function parseIsoToAbbreviatedIso(iso) {
   return iso
     .toISOString()
     .replace(/[\-\:]/g, '')
     .replace('.000Z', 'Z');
 }
 
-function parseFridgeTagToEms(fridgeTag, metadata) {
-  const data = parseFridgeTag(fridgeTag);
-
+function parseFridgeTagToEms(metadata, nodes) {
   const result = {
     records: [],
+    reports: [],
   };
 
-  let dayIndex = 1;
-  let day;
-  while ((day = data['Hist'][dayIndex++]) !== undefined) {
-    result.records.push(parseDay(day, 'TS Min T', 'Min T', '0', 'FRZE'));
-    result.records.push(parseDay(day, 'TS Max T', 'Max T', '1', 'HEAT'));
+  applyMetadataToResult();
+  applyNodesToResult();
+
+  function applyMetadataToResult() {
+    applyPropertyToResult('AMFR', metadata.refrigerator?.deviceManufacturer);
+    applyPropertyToResult('ASER', metadata.refrigerator?.deviceId);
+    applyPropertyToResult('AMOD', metadata.refrigerator?.model);
+
+    applyPropertyToResult('LAT', metadata.location?.used?.latitude);
+    applyPropertyToResult('LNG', metadata.location?.used?.longitude);
+    applyPropertyToResult('LACC', metadata.location?.used?.accuracy);
+
+    applyPropertyToResult('LSV', metadata.appInfo?.version);
+    applyPropertyToResult('LMFR', metadata.appInfo?.os);
+    applyPropertyToResult('LMOD', metadata.appInfo?.phoneModel);
   }
 
-  function parseDay(day, timeField, tempField, alarmField, alarmDescription) {
-    const date = day['Date'];
-    const time = day[timeField];
-    const dateTime = new Date(`${date}T${time}:00Z`);
-    const temp = parseFloat(day[tempField]);
-    const alarm = parseAlarm(day['Alarm'][alarmField], alarmDescription);
+  function applyNodesToResult() {
+    applyPropertyToResult('AID', nodes['Conf']['CID']);
 
-    return {
-      ABST: dateTime,
-      TVC: temp,
-      ALRM: alarm,
-      description: date + ' ' + tempField,
+    let dayIndex = 1;
+    let dayNode;
+    while ((dayNode = nodes['Hist'][dayIndex++]) !== undefined) {
+      applyDayToRecords(dayNode);
+      applyDayToReports(dayNode);
+    }
+  }
+
+  function applyPropertyToResult(property, text) {
+    if (!text) return;
+    result[property] = text;
+  }
+
+  function applyDayToRecords(dayNode) {
+    applyNodeToRecords(dayNode, 'TS Min T', 'Min T', '0', 'FRZE');
+    applyNodeToRecords(dayNode, 'TS Max T', 'Max T', '1', 'HEAT');
+
+    function applyNodeToRecords(
+      dayNode,
+      timeField,
+      tempField,
+      alarmField,
+      alarmDescription
+    ) {
+      const date = dayNode['Date'];
+      const time = dayNode[timeField];
+      const dateTime = new Date(`${date}T${time}:00Z`);
+      const temp = parseFloat(dayNode[tempField]);
+      const alarm = parseAlarm(dayNode['Alarm'][alarmField], alarmDescription);
+
+      result.records.push({
+        ABST: dateTime,
+        TVC: temp,
+        ALRM: alarm,
+        description: date + ' ' + tempField,
+      });
+
+      function parseAlarm(alarmNode, description) {
+        if (alarmNode['t Acc'] === '0') return null;
+        return description + (alarmNode['C A'] !== '0' ? 'ACK' : '');
+      }
+    }
+  }
+
+  function applyDayToReports(dayNode) {
+    const report = {
+      date: new Date(dayNode['Date']),
+      duration: '1D',
+      alarms: [],
+      aggregates: [],
     };
+
+    applyAlarmsToReport(dayNode);
+    applyAggregatesToReport(dayNode);
+
+    result.reports.push(report);
+
+    function applyAlarmsToReport(dayNode) {
+      const date = dayNode['Date'];
+
+      applyAlarmToAlarms(dayNode['Alarm']['0'], 'FRZE');
+      applyAlarmToAlarms(dayNode['Alarm']['1'], 'HEAT');
+
+      function applyAlarmToAlarms(alarmNode, description) {
+        const minutes = parseInt(alarmNode['t Acc']);
+        if (!minutes) return;
+
+        const alarm = {
+          condition: description,
+          conditionMinutes: minutes,
+        };
+
+        const time = alarmNode['TS A'];
+        if (time) {
+          alarm.alarmTime = new Date(`${date}T${time}:00Z`);
+        }
+
+        const count = parseInt(alarmNode['C A']);
+        if (count) {
+          alarm.count = count;
+        }
+
+        report.alarms.push(alarm);
+      }
+    }
+
+    function applyAggregatesToReport(dayNode) {
+      applyTvcToAggregates(dayNode);
+
+      function applyTvcToAggregates(dayNode) {
+        report.aggregates.push({
+          id: 'TVC',
+          min: parseFloat(dayNode['Min T']),
+          max: parseFloat(dayNode['Max T']),
+          average: parseFloat(dayNode['Avrg T']),
+        });
+      }
+    }
   }
 
-  function parseAlarm(node, description) {
-    if (node['t Acc'] === '0') return null;
-    return description + (node['C A'] !== '0' ? 'ACK' : '');
-  }
-
-  // const record = {
-  //   ABST: minDateTime, // absolute time utc
-  //   ALRM: null, // presence of defined alarm conditions
-  //   BEMD: null, // emd - estimated number of days of battery life remaining
-  //   BLOG: item.BLOG, // logger - estimated number of days of battery life remaining
-  //   CMPR: null, // compressor operation seconds per 15 minutes
-  //   DORV: item.DORV, // vaccine compartment open seconds per 15 minutes
-  //   HAMB: null, // relative humidity
-  //   HOLD: item.HOLD, // days the vaccine department will stay cold if power disconnected
-  //   LERR: item.LERR, // logger errors
-  //   EERR: null, // emd errors
-  //   SVA: null, // good voltage in seconds per 15 minutes
-  //   TAMB: item.TAMB, // ambient temperature
-  //   TVC: minTemp, // vaccine chamber temperature
-  // };
-
-  console.log(result);
-
-  return '';
+  return result;
 }
 
 function parseFridgeTag(text) {
