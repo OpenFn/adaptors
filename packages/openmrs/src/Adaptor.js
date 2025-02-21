@@ -185,6 +185,7 @@ export function create(path, data) {
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
  * @param {Object} data - Resource properties to update
  * @state {HttpState}
+ * @state data The updated resource
  * @returns {Operation}
  * @example <caption>Update a person (<a href="https://rest.openmrs.org/#create-a-person">see OpenMRS API</a>)</caption>
  * update('person/3cad37ad-984d-4c65-a019-3eb120c9c373', {
@@ -222,6 +223,7 @@ export function update(path, data) {
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
  * @param {Object} data - The resource data
  * @state {HttpState}
+ * @state data The updated or newly created resource
  * @returns {Operation}
  * @example <caption>Upsert a patient (<a href="https://rest.openmrs.org/#patients-overview">see OpenMRS API</a>)</caption>
  * upsert("patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a", {
