@@ -8,7 +8,7 @@ import {
 export const prepareNextState = (state, response, callback = s => s) => {
   const { body, ...responseWithoutBody } = response;
   const nextState = {
-    ...composeNextState(state, response.body),
+    ...composeNextState(state, body),
     response: responseWithoutBody,
   };
 
@@ -86,4 +86,10 @@ export async function request(state, method, path, options = {}) {
   } while (allowPagination);
 
   return allResponses;
+}
+
+export function cleanPath(path) {
+  return path
+    .replace(/([^:]\/)\/+/g, '$1') //remove double slashes while also preserving http:// or https://
+    .replace(/\/$/, ''); // remove trailing slash
 }
