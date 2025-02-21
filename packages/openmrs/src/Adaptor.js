@@ -5,25 +5,20 @@ import { request, prepareNextState, cleanPath } from './Utils';
 /**
  * State object
  * @typedef {object} HttpState
+ * @private
  * @property data - The parsed response body
- * @property response - The response from the OpenMRS server, including headers, statusCode, body, etc
+ * @property response - The response from the OpenMRS server
  * @property references  - An array of all previous data objects used in the job
  */
 
 /**
- * OpenMRS query object. This is a brief overview with commonly used parameters that cut across multiple requests. For more details about parameters specific to your request visit the [official docs](https://rest.openmrs.org/)
- * @typedef {object} OpenMRSQueryObject query parameters
+ * OpenMRS query object. This is a brief overview with commonly used parameters that cut across multiple requests. For more details about parameters specific to your request visit the [OpenMRS Docs](https://rest.openmrs.org/)
+ * @typedef {object} RestQueryOptions
  * @property {string} q - Search by query for listings
  * @property {number} limit - Number of listings returned in the `results` array.
  * @property {boolean} purge - For delete operations only. Use with caution! The resource will be voided unless purge = true. Purging will attempt to remove the resource irreversibly. Resources that are referenced from existing data can not be purged.
  * @property {number} startindex - Commonly used with `query.q` and `query.limit` for pagination to position the cursor.
  * @property {boolean} includeAll - Include voided/retired/disabled resources in the response.
- */
-
-/**
- * OpenMRS Options.
- * @typedef {object} OpenMRSRequestOptions
- * @property {OpenMRSQueryObject} query - Query params object
  */
 
 /**
@@ -50,22 +45,25 @@ export function execute(...operations) {
 }
 
 /**
- * Make a get request to any OpenMRS REST endpoint.
+ * Fetch resources from OpenMRS. Use this to fetch a single resource,
+ * or to search a list. Query parameters will be appended to the request URL,
+ * refer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.
  * @example <caption>List all patients</caption>
- * get("/patient")
- * @example <caption>List patients by name with a limit</caption>
- * get("/patient", { query: { q: "brian", limit: 1 }})
- * @example <caption>List patient by UUID</caption>
- * get("/patient/abc")
+ * get("patient")
+ * @example <caption>List patients by name with a limit(<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
+ * get("patient", { q: "brian", limit: 1 })
+ * @example <caption>Fetch patient by UUID</caption>
+ * get("patient/abc")
  * @example <caption>List allergy subresources</caption>
- * get("/patient/abc/allergy")
- * @example <caption>List allergy subresource by its UUID and parent patient UUID</caption>
- * get("/patient/abc/allergy/xyz")
+ * get("patient/abc/allergy")
+ * @example <caption>Get allergy subresource by its UUID and parent patient UUID</caption>
+ * get("patient/abc/allergy/xyz")
  * @function
  * @public
- * @param {string} path - Path to resource (excluding /ws/rest/v1/)
- * @param {OpenMRSRequestOptions} [options = {}]
+ * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
+ * @param {RestQueryOptions} [options = {}] Query parameters (eg `limit`, `q`)
  * @state {HttpState}
+ * @state data The requested resources
  * @returns {Operation}
  */
 export function get(path, options) {
@@ -83,29 +81,24 @@ export function get(path, options) {
       cleanPath(`/ws/rest/v1/${resolvedPath}`),
       {
         baseUrl,
-        ...resolvedOptions
+        query: resolvedOptions,
       }
     );
-
-    // TODO: later decide if we want to throw for no-results.
-    // (This could be introduced as an option for this function.)
-    // if (response.body.results.length == 0) {
-    //   throw `Get operation returned no results for ${resolvedResource}.`;
-    // }
 
     return prepareNextState(state, response);
   };
 }
 
 /**
- * Create a record
+ * Create a resource. For a list of valid resources, see {@link https://rest.openmrs.org/ OpenMRS Docs}
  * @public
  * @function
- * @param {string} path - Path to resource (excluding /ws/rest/v1/)
- * @param {object} data - Object which defines data that will be used to create a given instance of resource
+ * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
+ * @param {object} data - Resource definition
  * @state {HttpState}
+ * @state data The newly created resource
  * @returns {Operation}
- * @example <caption>Create a person</caption>
+ * @example <caption>Create a person (<a href="https://rest.openmrs.org/#create-a-person">see OpenMRS API</a>)</caption>
  * create("person", {
  *   names: [
  *     {
@@ -163,11 +156,7 @@ export function get(path, options) {
  */
 export function create(path, data) {
   return async state => {
-    const [resolvedPath, resolvedData] = expandReferences(
-      state,
-      path,
-      data
-    );
+    const [resolvedPath, resolvedData] = expandReferences(state, path, data);
     console.log(`Preparing to create ${resolvedPath}`);
     const { instanceUrl: baseUrl } = state.configuration;
 
@@ -188,24 +177,24 @@ export function create(path, data) {
 }
 
 /**
- * Update data. A generic helper function to update a resource object of any type.
- * Updating an object requires to send `all required fields` or the `full body`
+ * Update a resource. Only properties included in the data will be affected.
+ * For a list of valid resources and for update rules, see the Update sections
+ * of the {@link https://rest.openmrs.org/ OpenMRS Docs}
  * @public
  * @function
- * @param {string} path - Path to resource (excluding /ws/rest/v1/)
- * @param {Object} data - Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.
+ * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
+ * @param {Object} data - Resource properties to update
  * @state {HttpState}
  * @returns {Operation}
- * @example <caption>a person</caption>
- * update('person/3cad37ad-984d-4c65-a019-3eb120c9c373',{"gender":"M","birthdate":"1997-01-13"})
+ * @example <caption>Update a person (<a href="https://rest.openmrs.org/#create-a-person">see OpenMRS API</a>)</caption>
+ * update('person/3cad37ad-984d-4c65-a019-3eb120c9c373', {
+ *   'gender': 'M',
+ *   'birthdate':'1997-01-13'
+ * })
  */
 export function update(path, data) {
   return async state => {
-    const [resolvedPath, resolvedData] = expandReferences(
-      state,
-      path,
-      data
-    );
+    const [resolvedPath, resolvedData] = expandReferences(state, path, data);
 
     console.log(`Preparing to update ${resolvedPath}`);
     const { instanceUrl: baseUrl } = state.configuration;
@@ -227,29 +216,58 @@ export function update(path, data) {
 }
 
 /**
- * Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
+ * Upsert a record. If the resource exists, it will be updated. Otherwise, a new resource will be created.
  * @public
  * @function
- * @param {string} path - Path to resource (excluding /ws/rest/v1/)
- * @param {Object} data - The data to use for update or create depending on the result of the query.
+ * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
+ * @param {Object} data - The resource data
  * @state {HttpState}
  * @returns {Operation}
- * @example <caption>Upsert patient</caption>
- * upsert('patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3', { person: { age: 50 }});
+ * @example <caption>Upsert a patient</caption>
+ * upsert("patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a", {
+ *   identifiers: [
+ *     {
+ *       identifier: '4023287',
+ *       identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',
+ *       preferred: true,
+ *     },
+ *   ],
+ *   person: {
+ *     gender: 'M',
+ *     age: 42,
+ *     birthdate: '1970-01-01T00:00:00.000+0100',
+ *     birthdateEstimated: false,
+ *     names: [
+ *       {
+ *         givenName: 'Doe',
+ *         familyName: 'John',
+ *       },
+ *     ],
+ *   },
+ * })
  */
-export function upsert(path,  data) {
+export function upsert(path, data) {
   return async state => {
-    const [resolvedPath, resolvedData] =
-      expandReferences(state, path, data);
+    const [resolvedPath, resolvedData] = expandReferences(state, path, data);
 
-    const resourceName = resolvedPath[0] === '/' ? resolvedPath.split('/')[1] : resolvedPath.split('/')[0];
+    const resourceName =
+      resolvedPath[0] === '/'
+        ? resolvedPath.split('/')[1]
+        : resolvedPath.split('/')[0];
 
-    console.log(`Preparing composed upsert (via 'get' then 'create' OR 'update') on ${resourceName}`);
+    console.log(
+      `Preparing composed upsert (via 'get' then 'create' OR 'update') on ${resourceName}`
+    );
 
     const { instanceUrl: baseUrl } = state.configuration;
-    return await request(state, 'GET', cleanPath(`/ws/rest/v1/${resolvedPath}`), {
-      baseUrl,
-    }).then(resp => {
+    return await request(
+      state,
+      'GET',
+      cleanPath(`/ws/rest/v1/${resolvedPath}`),
+      {
+        baseUrl,
+      }
+    ).then(resp => {
       const resource = resp.body.results;
       if (resource.length > 1) {
         throw new RangeError(
@@ -267,21 +285,21 @@ export function upsert(path,  data) {
   };
 }
 
-
-
 /**
- * Make a DELETE request to any OpenMRS REST endpoint.
+ * Delete a resource. Must include a UUID in the path.
+ * Throws an error if the resource does not exist.
  * @alias delete
- * @example
+ * @example <caption>Void a patient</caption>
+ * delete("patient/12346");
+ * @example <caption>Purge a patient</caption>
  * delete("patient/12346", {
- *   query: {
- *     purge: false
- *   }
+ *   purge: true
  * });
  * @function
  * @public
- * @param {string} path - Path to resource (excluding /ws/rest/v1/)
- * @param {OpenMRSRequestOptions}  [options = {}]
+ * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
+ * @param {object}  [options = {}]
+ * @param {object}  [options.purge=false] The resource will be voided/retired unless true
  * @state {HttpState}
  * @returns {Operation}
  */
@@ -300,7 +318,7 @@ function _delete(path, options) {
       cleanPath(`/ws/rest/v1/${resolvedPath}`),
       {
         baseUrl,
-        ...resolvedOptions,
+        query: resolvedOptions,
       }
     );
 
@@ -308,7 +326,7 @@ function _delete(path, options) {
   };
 }
 
-export { _delete as delete }
+export { _delete as delete };
 
 export {
   alterState,
