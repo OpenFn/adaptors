@@ -338,13 +338,18 @@ export const generateType = (
         continue;
       }
 
-      const t = m.type || s.type || 'any';
-      type = createTypeNode(
-        t,
-        s.isArray,
-        m.values || s.values,
-        typeShorthands[t]
+      let t = m.type || s.type || 'any';
+      if (!Array.isArray(t)) {
+        t = [t];
+      }
+      const types = t.map(t =>
+        createTypeNode(t, s.isArray, m.values || s.values, typeShorthands[t])
       );
+      if (types.length === 1) {
+        type = types[0];
+      } else {
+        type = b.createUnionTypeNode(types);
+      }
     }
     if (s.desc) {
       props.push(b.createJSDocComment(s.desc + '\n'));

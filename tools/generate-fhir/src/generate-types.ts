@@ -63,16 +63,35 @@ export const generateType = (
     // props.push(b.createPropertySignature([], key, undefined, type));
 
     // simplified
-    const t = m.type || s.type || 'any';
-    const type = createTypeNode(
-      t in fhirTypes ? `FHIR.${t}` : t,
-      s.isArray,
-      m.values || s.values,
-      mappings.typeShorthands?.[t]
+    let t = m.type || s.type || 'any';
+    if (!Array.isArray(t)) {
+      t = [t];
+    }
+    const types = t.map(t =>
+      createTypeNode(
+        t in fhirTypes ? `FHIR.${t}` : t,
+        s.isArray,
+        m.values || s.values,
+        mappings.typeShorthands?.[t]
+      )
     );
-    props.push(
-      b.tsPropertySignature(b.identifier(key), b.tsTypeAnnotation(type), true)
-    );
+    if (types.length == 1) {
+      props.push(
+        b.tsPropertySignature(
+          b.identifier(key),
+          b.tsTypeAnnotation(types[0]),
+          true
+        )
+      );
+    } else {
+      props.push(
+        b.tsPropertySignature(
+          b.identifier(key),
+          b.tsTypeAnnotation(b.tsUnionType(types)),
+          true
+        )
+      );
+    }
   }
   props.push(
     b.tsIndexSignature(

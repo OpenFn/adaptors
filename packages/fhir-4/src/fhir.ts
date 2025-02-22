@@ -95,7 +95,7 @@ export type Annotation = {
     /**
      * Individual responsible for the annotation
      *  */
-    author?: string | Reference;
+    author?: (string | Reference) | string;
     /**
      * When the annotation was made
      *  */
@@ -347,7 +347,7 @@ export type DataRequirement = {
     /**
      * E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
      *  */
-    subject?: string[] | CodeableConcept;
+    subject?: (string[] | CodeableConcept) | (string | Reference);
     /**
      * Indicates specific structure elements that are referenced by the knowledge module
      *  */
@@ -486,7 +486,7 @@ export type Dosage = {
     /**
      * Take "as needed" (for x)
      *  */
-    asNeeded?: boolean;
+    asNeeded?: boolean | (string[] | CodeableConcept);
     /**
      * Body site to administer to
      *  */
@@ -720,7 +720,7 @@ export type ElementDefinition = {
     /**
      * Specified value if missing from instance
      *  */
-    defaultValue?: base64Binary;
+    defaultValue?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
     /**
      * Implicit meaning when this element is missing
      *  */
@@ -732,11 +732,11 @@ export type ElementDefinition = {
     /**
      * Value must be exactly this
      *  */
-    fixed?: base64Binary;
+    fixed?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
     /**
      * Value must have at least these property values
      *  */
-    pattern?: base64Binary;
+    pattern?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
     /**
      * Example value (as defined for type)
      *  */
@@ -757,11 +757,11 @@ export type ElementDefinition = {
     /**
      * Minimum Allowed Value (for some types)
      *  */
-    minValue?: string;
+    minValue?: string | string | string | string | number | number | number | number | Quantity;
     /**
      * Maximum Allowed Value (for some types)
      *  */
-    maxValue?: string;
+    maxValue?: string | string | string | string | number | number | number | number | Quantity;
     /**
      * Max length for strings
      *  */
@@ -916,7 +916,7 @@ export type Extension = {
     /**
      * Value of extension
      *  */
-    value?: base64Binary;
+    value?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
 };
 export type HumanName = {
     /**
@@ -1256,7 +1256,7 @@ export type Population = {
     /**
      * The age of the specific population
      *  */
-    age?: Range;
+    age?: Range | (string[] | CodeableConcept);
     /**
      * The gender of the specific population
      *  */
@@ -1667,7 +1667,7 @@ export type TriggerDefinition = {
     /**
      * Timing of the event
      *  */
-    timing?: Timing;
+    timing?: Timing | (string | Reference) | string | string;
     /**
      * Triggering data of the event (multiple = 'and')
      *  */
@@ -1693,7 +1693,7 @@ export type UsageContext = {
     /**
      * Value that defines the context
      *  */
-    value?: string[] | CodeableConcept;
+    value?: (string[] | CodeableConcept) | Quantity | Range | (string | Reference);
 };
 export type base64Binary = {
     /**

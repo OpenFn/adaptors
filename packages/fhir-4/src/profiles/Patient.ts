@@ -22,10 +22,10 @@ export type Patient_Props = {
     telecom?: FHIR.ContactPoint[];
     gender?: string;
     birthDate?: string;
-    deceased?: boolean;
+    deceased?: boolean | string;
     address?: FHIR.Address[];
     maritalStatus?: string[] | FHIR.CodeableConcept;
-    multipleBirth?: boolean;
+    multipleBirth?: boolean | number;
     photo?: FHIR.Attachment[];
     contact?: FHIR.BackboneElement[];
     communication?: FHIR.BackboneElement[];
@@ -42,11 +42,6 @@ export default function(props: Partial<Patient_Props>) {
         resourceType: "Patient",
         ...props
     };
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = dt.identifier(props.identifier);
-    }
 
     if (!_.isNil(props.deceased)) {
         delete resource.deceased;
@@ -84,15 +79,6 @@ export default function(props: Partial<Patient_Props>) {
 
             resource.communication.push(_communication);
         }
-    }
-
-    if (!_.isNil(props.generalPractitioner)) {
-        if (!Array.isArray(props.generalPractitioner)) { props.generalPractitioner = [props.generalPractitioner]; }
-        resource.generalPractitioner = dt.reference(props.generalPractitioner);
-    }
-
-    if (!_.isNil(props.managingOrganization)) {
-        resource.managingOrganization = dt.reference(props.managingOrganization);
     }
 
     if (!_.isNil(props.link)) {
