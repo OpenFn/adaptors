@@ -212,21 +212,26 @@ function parseFridgeTagToEms(metadata, nodes) {
   applyNodesToResult();
 
   function applyMetadataToResult() {
-    applyPropertyToResult('AMFR', metadata.refrigerator?.deviceManufacturer);
-    applyPropertyToResult('ASER', metadata.refrigerator?.deviceId);
+    applyPropertyToResult('AMFR', metadata.refrigerator?.manufacturer);
     applyPropertyToResult('AMOD', metadata.refrigerator?.model);
+
+    applyPropertyToResult('CID', metadata.facility?.country);
 
     applyPropertyToResult('LAT', metadata.location?.used?.latitude);
     applyPropertyToResult('LNG', metadata.location?.used?.longitude);
     applyPropertyToResult('LACC', metadata.location?.used?.accuracy);
 
-    applyPropertyToResult('LSV', metadata.appInfo?.version);
-    applyPropertyToResult('LMFR', metadata.appInfo?.os);
-    applyPropertyToResult('LMOD', metadata.appInfo?.phoneModel);
+    applyPropertyToResult('LMFR', metadata.refrigerator?.deviceManufacturer);
   }
 
   function applyNodesToResult() {
-    applyPropertyToResult('AID', nodes['Conf']['CID']);
+    applyPropertyToResult('LMOD', nodes['Device']);
+    applyPropertyToResult('LSER', nodes['Conf']?.['Serial']);
+    applyPropertyToResult('LSV', nodes['Fw Vers']);
+
+    let productionDate = nodes['Conf']?.['Test TS'];
+    productionDate = productionDate ? new Date(productionDate) : null;
+    applyPropertyToResult('LDOP', productionDate);
 
     let dayIndex = 1;
     let dayNode;
