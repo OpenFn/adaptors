@@ -16,17 +16,18 @@ export type DeviceMetric_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
-    type?: FHIR.CodeableConcept;
-    unit?: FHIR.CodeableConcept;
-    source?: FHIR.Reference;
-    parent?: FHIR.Reference;
+    identifier?: Array<string | FHIR.Identifier>;
+    type?: string[] | FHIR.CodeableConcept;
+    unit?: string[] | FHIR.CodeableConcept;
+    source?: string | FHIR.Reference;
+    parent?: string | FHIR.Reference;
     operationalStatus?: string;
     color?: string;
     category?: string;
     measurementPeriod?: FHIR.Timing;
     calibration?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

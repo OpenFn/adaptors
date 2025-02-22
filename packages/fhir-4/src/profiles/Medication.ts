@@ -16,15 +16,16 @@ export type Medication_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
-    code?: FHIR.CodeableConcept;
+    identifier?: Array<string | FHIR.Identifier>;
+    code?: string[] | FHIR.CodeableConcept;
     status?: string;
-    manufacturer?: FHIR.Reference;
-    form?: FHIR.CodeableConcept;
+    manufacturer?: string | FHIR.Reference;
+    form?: string[] | FHIR.CodeableConcept;
     amount?: FHIR.Ratio;
     ingredient?: FHIR.BackboneElement[];
     batch?: FHIR.BackboneElement;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

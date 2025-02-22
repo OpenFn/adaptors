@@ -16,19 +16,20 @@ export type PaymentNotice_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
-    request?: FHIR.Reference;
-    response?: FHIR.Reference;
+    request?: string | FHIR.Reference;
+    response?: string | FHIR.Reference;
     created?: string;
-    provider?: FHIR.Reference;
-    payment?: FHIR.Reference;
+    provider?: string | FHIR.Reference;
+    payment?: string | FHIR.Reference;
     paymentDate?: string;
-    payee?: FHIR.Reference;
-    recipient?: FHIR.Reference;
+    payee?: string | FHIR.Reference;
+    recipient?: string | FHIR.Reference;
     amount?: FHIR.Money;
-    paymentStatus?: FHIR.CodeableConcept;
+    paymentStatus?: string[] | FHIR.CodeableConcept;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

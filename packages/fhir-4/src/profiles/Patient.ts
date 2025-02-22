@@ -16,7 +16,7 @@ export type Patient_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     active?: boolean;
     name?: FHIR.HumanName[];
     telecom?: FHIR.ContactPoint[];
@@ -24,15 +24,16 @@ export type Patient_Props = {
     birthDate?: string;
     deceased?: boolean;
     address?: FHIR.Address[];
-    maritalStatus?: FHIR.CodeableConcept;
+    maritalStatus?: string[] | FHIR.CodeableConcept;
     multipleBirth?: boolean;
     photo?: FHIR.Attachment[];
     contact?: FHIR.BackboneElement[];
     communication?: FHIR.BackboneElement[];
-    generalPractitioner?: FHIR.Reference[];
-    managingOrganization?: FHIR.Reference;
+    generalPractitioner?: Array<string | FHIR.Reference>;
+    managingOrganization?: string | FHIR.Reference;
     link?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -14,10 +14,14 @@ export type MappingSpec = {
   /** Array of string regexes */
   valueSets?: string[];
 
-  propsToIgnoreInDocs: string[];
+  propsToIgnoreInDocs?: string[];
 
   /** After creation has run, execute this code */
   initialiser?: (resource) => void;
+
+  // Allow builder shorthand values to be captured in typings
+  // eg, a refernce can be a string or Reference
+  typeShorthands?: Record<string, string[]>;
 };
 
 export type Mapping = {

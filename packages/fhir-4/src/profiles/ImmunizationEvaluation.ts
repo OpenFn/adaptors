@@ -16,20 +16,21 @@ export type ImmunizationEvaluation_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
-    patient?: FHIR.Reference;
+    patient?: string | FHIR.Reference;
     date?: string;
-    authority?: FHIR.Reference;
-    targetDisease?: FHIR.CodeableConcept;
-    immunizationEvent?: FHIR.Reference;
-    doseStatus?: FHIR.CodeableConcept;
-    doseStatusReason?: FHIR.CodeableConcept[];
+    authority?: string | FHIR.Reference;
+    targetDisease?: string[] | FHIR.CodeableConcept;
+    immunizationEvent?: string | FHIR.Reference;
+    doseStatus?: string[] | FHIR.CodeableConcept;
+    doseStatusReason?: Array<string[] | FHIR.CodeableConcept>;
     description?: string;
     series?: string;
     doseNumber?: number;
     seriesDoses?: number;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

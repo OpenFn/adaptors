@@ -16,15 +16,16 @@ export type Flag_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
-    category?: FHIR.CodeableConcept[];
-    code?: FHIR.CodeableConcept;
-    subject?: FHIR.Reference;
+    category?: Array<string[] | FHIR.CodeableConcept>;
+    code?: string[] | FHIR.CodeableConcept;
+    subject?: string | FHIR.Reference;
     period?: FHIR.Period;
-    encounter?: FHIR.Reference;
-    author?: FHIR.Reference;
+    encounter?: string | FHIR.Reference;
+    author?: string | FHIR.Reference;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

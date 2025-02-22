@@ -95,7 +95,7 @@ export type Annotation = {
     /**
      * Individual responsible for the annotation
      *  */
-    author?: Reference;
+    author?: string | Reference;
     /**
      * When the annotation was made
      *  */
@@ -191,11 +191,11 @@ export type CodeableReference = {
     /**
      * Reference to a concept (by class)
      *  */
-    concept?: CodeableConcept;
+    concept?: string[] | CodeableConcept;
     /**
      * Reference to a resource (by instance)
      *  */
-    reference?: Reference;
+    reference?: string | Reference;
 };
 export type Coding = {
     /**
@@ -347,7 +347,7 @@ export type DataRequirement = {
     /**
      * E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
      *  */
-    subject?: CodeableConcept;
+    subject?: string[] | CodeableConcept;
     /**
      * Indicates specific structure elements that are referenced by the knowledge module
      *  */
@@ -474,7 +474,7 @@ export type Dosage = {
     /**
      * Supplemental instruction or warnings to the patient - e.g. "with meals", "may cause drowsiness"
      *  */
-    additionalInstruction?: CodeableConcept;
+    additionalInstruction?: string[] | CodeableConcept;
     /**
      * Patient or consumer oriented instructions
      *  */
@@ -490,15 +490,15 @@ export type Dosage = {
     /**
      * Body site to administer to
      *  */
-    site?: CodeableConcept;
+    site?: string[] | CodeableConcept;
     /**
      * How drug should enter body
      *  */
-    route?: CodeableConcept;
+    route?: string[] | CodeableConcept;
     /**
      * Technique for administering medication
      *  */
-    method?: CodeableConcept;
+    method?: string[] | CodeableConcept;
     /**
      * Amount of medication administered
      *  */
@@ -972,7 +972,7 @@ export type Identifier = {
     /**
      * Description of identifier
      *  */
-    type?: CodeableConcept;
+    type?: string[] | CodeableConcept;
     /**
      * The namespace for the identifier value
      *  */
@@ -988,7 +988,7 @@ export type Identifier = {
     /**
      * Organization that issued id (may be just text)
      *  */
-    assigner?: Reference;
+    assigner?: string | Reference;
 };
 export type MarketingStatus = {
     /**
@@ -1006,15 +1006,15 @@ export type MarketingStatus = {
     /**
      * The country in which the marketing authorisation has been granted shall be specified It should be specified using the ISO 3166 ‑ 1 alpha-2 code elements
      *  */
-    country?: CodeableConcept;
+    country?: string[] | CodeableConcept;
     /**
      * Where a Medicines Regulatory Agency has granted a marketing authorisation for which specific provisions within a jurisdiction apply, the jurisdiction can be specified using an appropriate controlled terminology The controlled term and the controlled term identifier shall be specified
      *  */
-    jurisdiction?: CodeableConcept;
+    jurisdiction?: string[] | CodeableConcept;
     /**
      * This attribute provides information on the status of the marketing of the medicinal product See ISO/TS 20443 for more information and examples
      *  */
-    status?: CodeableConcept;
+    status?: string[] | CodeableConcept;
     /**
      * The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
      *  */
@@ -1260,15 +1260,15 @@ export type Population = {
     /**
      * The gender of the specific population
      *  */
-    gender?: CodeableConcept;
+    gender?: string[] | CodeableConcept;
     /**
      * Race of the specific population
      *  */
-    race?: CodeableConcept;
+    race?: string[] | CodeableConcept;
     /**
      * The existing physiological conditions of the specific population to which this applies
      *  */
-    physiologicalCondition?: CodeableConcept;
+    physiologicalCondition?: string[] | CodeableConcept;
 };
 export type ProdCharacteristic = {
     /**
@@ -1326,7 +1326,7 @@ export type ProdCharacteristic = {
     /**
      * Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
      *  */
-    scoring?: CodeableConcept;
+    scoring?: string[] | CodeableConcept;
 };
 export type ProductShelfLife = {
     /**
@@ -1344,11 +1344,11 @@ export type ProductShelfLife = {
     /**
      * Unique identifier for the packaged Medicinal Product
      *  */
-    identifier?: Identifier;
+    identifier?: string | Identifier;
     /**
      * This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
      *  */
-    type?: CodeableConcept;
+    type?: string[] | CodeableConcept;
     /**
      * The shelf life time period can be specified using a numerical value for the period of time and its unit of time measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
      *  */
@@ -1356,7 +1356,7 @@ export type ProductShelfLife = {
     /**
      * Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
      *  */
-    specialPrecautionsForStorage?: CodeableConcept[];
+    specialPrecautionsForStorage?: string[] | CodeableConcept;
 };
 export type Range = {
     /**
@@ -1436,7 +1436,7 @@ export type Reference = {
     /**
      * Logical reference, when literal reference is not known
      *  */
-    identifier?: Identifier;
+    identifier?: string | Identifier;
     /**
      * Text alternative for the resource
      *  */
@@ -1538,11 +1538,11 @@ export type Signature = {
     /**
      * Who signed
      *  */
-    who?: Reference;
+    who?: string | Reference;
     /**
      * The party represented
      *  */
-    onBehalfOf?: Reference;
+    onBehalfOf?: string | Reference;
     /**
      * The technical format of the signed resources
      *  */
@@ -1645,7 +1645,7 @@ export type Timing = {
     /**
      * BID | TID | QID | AM | PM | QD | QOD | +
      *  */
-    code?: CodeableConcept;
+    code?: string[] | CodeableConcept;
 };
 export type TriggerDefinition = {
     /**
@@ -1693,7 +1693,7 @@ export type UsageContext = {
     /**
      * Value that defines the context
      *  */
-    value?: CodeableConcept;
+    value?: string[] | CodeableConcept;
 };
 export type base64Binary = {
     /**

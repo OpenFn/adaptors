@@ -16,15 +16,16 @@ export type Schedule_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     active?: boolean;
-    serviceCategory?: FHIR.CodeableConcept[];
-    serviceType?: FHIR.CodeableConcept[];
-    specialty?: FHIR.CodeableConcept[];
-    actor?: FHIR.Reference[];
+    serviceCategory?: Array<string[] | FHIR.CodeableConcept>;
+    serviceType?: Array<string[] | FHIR.CodeableConcept>;
+    specialty?: Array<string[] | FHIR.CodeableConcept>;
+    actor?: Array<string | FHIR.Reference>;
     planningHorizon?: FHIR.Period;
     comment?: string;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

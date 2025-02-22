@@ -16,20 +16,21 @@ export type List_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
     mode?: string;
     title?: string;
-    code?: FHIR.CodeableConcept;
-    subject?: FHIR.Reference;
-    encounter?: FHIR.Reference;
+    code?: string[] | FHIR.CodeableConcept;
+    subject?: string | FHIR.Reference;
+    encounter?: string | FHIR.Reference;
     date?: string;
-    source?: FHIR.Reference;
-    orderedBy?: FHIR.CodeableConcept;
+    source?: string | FHIR.Reference;
+    orderedBy?: string[] | FHIR.CodeableConcept;
     note?: FHIR.Annotation[];
     entry?: FHIR.BackboneElement[];
-    emptyReason?: FHIR.CodeableConcept;
+    emptyReason?: string[] | FHIR.CodeableConcept;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

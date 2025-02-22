@@ -24,4 +24,9 @@ export default {
     'modifierExtension',
     'contained',
   ],
+  typeShorthands: {
+    Identifier: ['string'],
+    Reference: ['string'],
+    CodeableConcept: ['string[]'],
+  },
 };

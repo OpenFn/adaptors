@@ -16,18 +16,19 @@ export type SupplyDelivery_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
-    basedOn?: FHIR.Reference[];
-    partOf?: FHIR.Reference[];
+    identifier?: Array<string | FHIR.Identifier>;
+    basedOn?: Array<string | FHIR.Reference>;
+    partOf?: Array<string | FHIR.Reference>;
     status?: string;
-    patient?: FHIR.Reference;
-    type?: FHIR.CodeableConcept;
+    patient?: string | FHIR.Reference;
+    type?: string[] | FHIR.CodeableConcept;
     suppliedItem?: FHIR.BackboneElement;
     occurrence?: string;
-    supplier?: FHIR.Reference;
-    destination?: FHIR.Reference;
-    receiver?: FHIR.Reference[];
+    supplier?: string | FHIR.Reference;
+    destination?: string | FHIR.Reference;
+    receiver?: Array<string | FHIR.Reference>;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

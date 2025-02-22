@@ -16,18 +16,19 @@ export type Slot_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
-    serviceCategory?: FHIR.CodeableConcept[];
-    serviceType?: FHIR.CodeableConcept[];
-    specialty?: FHIR.CodeableConcept[];
-    appointmentType?: FHIR.CodeableConcept;
-    schedule?: FHIR.Reference;
+    identifier?: Array<string | FHIR.Identifier>;
+    serviceCategory?: Array<string[] | FHIR.CodeableConcept>;
+    serviceType?: Array<string[] | FHIR.CodeableConcept>;
+    specialty?: Array<string[] | FHIR.CodeableConcept>;
+    appointmentType?: string[] | FHIR.CodeableConcept;
+    schedule?: string | FHIR.Reference;
     status?: string;
     start?: string;
     end?: string;
     overbooked?: boolean;
     comment?: string;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

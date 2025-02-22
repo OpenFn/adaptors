@@ -16,15 +16,16 @@ export type AppointmentResponse_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
-    appointment?: FHIR.Reference;
+    identifier?: Array<string | FHIR.Identifier>;
+    appointment?: string | FHIR.Reference;
     start?: string;
     end?: string;
-    participantType?: FHIR.CodeableConcept[];
-    actor?: FHIR.Reference;
+    participantType?: Array<string[] | FHIR.CodeableConcept>;
+    actor?: string | FHIR.Reference;
     participantStatus?: string;
     comment?: string;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

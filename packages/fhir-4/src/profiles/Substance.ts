@@ -16,14 +16,15 @@ export type Substance_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
-    category?: FHIR.CodeableConcept[];
-    code?: FHIR.CodeableConcept;
+    category?: Array<string[] | FHIR.CodeableConcept>;
+    code?: string[] | FHIR.CodeableConcept;
     description?: string;
     instance?: FHIR.BackboneElement[];
     ingredient?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -16,20 +16,21 @@ export type Specimen_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
-    accessionIdentifier?: FHIR.Identifier;
+    identifier?: Array<string | FHIR.Identifier>;
+    accessionIdentifier?: string | FHIR.Identifier;
     status?: string;
-    type?: FHIR.CodeableConcept;
-    subject?: FHIR.Reference;
+    type?: string[] | FHIR.CodeableConcept;
+    subject?: string | FHIR.Reference;
     receivedTime?: string;
-    parent?: FHIR.Reference[];
-    request?: FHIR.Reference[];
+    parent?: Array<string | FHIR.Reference>;
+    request?: Array<string | FHIR.Reference>;
     collection?: FHIR.BackboneElement;
     processing?: FHIR.BackboneElement[];
     container?: FHIR.BackboneElement[];
-    condition?: FHIR.CodeableConcept[];
+    condition?: Array<string[] | FHIR.CodeableConcept>;
     note?: FHIR.Annotation[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -16,21 +16,22 @@ export type VerificationResult_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    target?: FHIR.Reference[];
+    target?: Array<string | FHIR.Reference>;
     targetLocation?: string[];
-    need?: FHIR.CodeableConcept;
+    need?: string[] | FHIR.CodeableConcept;
     status?: string;
     statusDate?: string;
-    validationType?: FHIR.CodeableConcept;
-    validationProcess?: FHIR.CodeableConcept[];
+    validationType?: string[] | FHIR.CodeableConcept;
+    validationProcess?: Array<string[] | FHIR.CodeableConcept>;
     frequency?: FHIR.Timing;
     lastPerformed?: string;
     nextScheduled?: string;
-    failureAction?: FHIR.CodeableConcept;
+    failureAction?: string[] | FHIR.CodeableConcept;
     primarySource?: FHIR.BackboneElement[];
     attestation?: FHIR.BackboneElement;
     validator?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

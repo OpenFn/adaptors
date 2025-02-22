@@ -19,10 +19,10 @@ export type EvidenceReport_Props = {
     url?: string;
     status?: string;
     useContext?: FHIR.UsageContext[];
-    identifier?: FHIR.Identifier[];
-    relatedIdentifier?: FHIR.Identifier[];
-    citeAs?: FHIR.Reference;
-    type?: FHIR.CodeableConcept;
+    identifier?: Array<string | FHIR.Identifier>;
+    relatedIdentifier?: Array<string | FHIR.Identifier>;
+    citeAs?: string | FHIR.Reference;
+    type?: string[] | FHIR.CodeableConcept;
     note?: FHIR.Annotation[];
     relatedArtifact?: FHIR.RelatedArtifact[];
     subject?: FHIR.BackboneElement;
@@ -35,6 +35,7 @@ export type EvidenceReport_Props = {
     relatesTo?: FHIR.BackboneElement[];
     section?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

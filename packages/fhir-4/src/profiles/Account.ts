@@ -16,18 +16,19 @@ export type Account_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
-    type?: FHIR.CodeableConcept;
+    type?: string[] | FHIR.CodeableConcept;
     name?: string;
-    subject?: FHIR.Reference[];
+    subject?: Array<string | FHIR.Reference>;
     servicePeriod?: FHIR.Period;
     coverage?: FHIR.BackboneElement[];
-    owner?: FHIR.Reference;
+    owner?: string | FHIR.Reference;
     description?: string;
     guarantor?: FHIR.BackboneElement[];
-    partOf?: FHIR.Reference;
+    partOf?: string | FHIR.Reference;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

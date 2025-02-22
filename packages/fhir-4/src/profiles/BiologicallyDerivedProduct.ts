@@ -16,18 +16,19 @@ export type BiologicallyDerivedProduct_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     productCategory?: string;
-    productCode?: FHIR.CodeableConcept;
+    productCode?: string[] | FHIR.CodeableConcept;
     status?: string;
-    request?: FHIR.Reference[];
+    request?: Array<string | FHIR.Reference>;
     quantity?: number;
-    parent?: FHIR.Reference[];
+    parent?: Array<string | FHIR.Reference>;
     collection?: FHIR.BackboneElement;
     processing?: FHIR.BackboneElement[];
     manipulation?: FHIR.BackboneElement;
     storage?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -16,14 +16,15 @@ export type ManufacturedItemDefinition_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
-    manufacturedDoseForm?: FHIR.CodeableConcept;
-    unitOfPresentation?: FHIR.CodeableConcept;
-    manufacturer?: FHIR.Reference[];
-    ingredient?: FHIR.CodeableConcept[];
+    manufacturedDoseForm?: string[] | FHIR.CodeableConcept;
+    unitOfPresentation?: string[] | FHIR.CodeableConcept;
+    manufacturer?: Array<string | FHIR.Reference>;
+    ingredient?: Array<string[] | FHIR.CodeableConcept>;
     property?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

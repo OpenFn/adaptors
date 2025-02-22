@@ -77,7 +77,6 @@ describe('Patient', () => {
         },
       ],
 
-      // TODO TS doesn't like this but it's actually fine
       managingOrganization: 'Organization/1',
       telecom: [
         {

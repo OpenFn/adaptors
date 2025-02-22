@@ -16,7 +16,7 @@ export type Practitioner_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     active?: boolean;
     name?: FHIR.HumanName[];
     telecom?: FHIR.ContactPoint[];
@@ -25,8 +25,9 @@ export type Practitioner_Props = {
     birthDate?: string;
     photo?: FHIR.Attachment[];
     qualification?: FHIR.BackboneElement[];
-    communication?: FHIR.CodeableConcept[];
+    communication?: Array<string[] | FHIR.CodeableConcept>;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

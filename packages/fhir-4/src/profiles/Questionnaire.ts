@@ -17,7 +17,7 @@ export type Questionnaire_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     url?: string;
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -30,7 +30,7 @@ export type Questionnaire_Props = {
     contact?: FHIR.ContactDetail[];
     description?: FHIR.markdown;
     useContext?: FHIR.UsageContext[];
-    jurisdiction?: FHIR.CodeableConcept[];
+    jurisdiction?: Array<string[] | FHIR.CodeableConcept>;
     purpose?: FHIR.markdown;
     copyright?: FHIR.markdown;
     approvalDate?: string;
@@ -39,6 +39,7 @@ export type Questionnaire_Props = {
     code?: FHIR.Coding[];
     item?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

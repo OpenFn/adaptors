@@ -67,7 +67,8 @@ export const generateType = (
     const type = createTypeNode(
       t in fhirTypes ? `FHIR.${t}` : t,
       s.isArray,
-      m.values || s.values
+      m.values || s.values,
+      mappings.typeShorthands?.[t]
     );
     props.push(
       b.tsPropertySignature(b.identifier(key), b.tsTypeAnnotation(type), true)
@@ -122,7 +123,8 @@ const generateInlineType = (typeDef: PropDef) => {
 const createTypeNode = (
   incomingType: string,
   isArray: boolean,
-  values?: string[]
+  values?: string[],
+  shorthands?: string[]
 ) => {
   let node;
   const type = typeMap[incomingType] ?? incomingType;
@@ -143,7 +145,18 @@ const createTypeNode = (
   } else {
     node = b.tsAnyKeyword();
   }
-  if (isArray) {
+  if (shorthands) {
+    node = b.tsUnionType([
+      ...shorthands.map(s => b.tsTypeReference(b.identifier(s))),
+      node,
+    ]);
+    if (isArray) {
+      node = b.tsTypeReference(
+        b.identifier('Array'),
+        b.tsTypeParameterInstantiation([node])
+      );
+    }
+  } else if (isArray) {
     node = b.tsArrayType(node);
   }
   return node;

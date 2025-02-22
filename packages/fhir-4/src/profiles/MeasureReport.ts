@@ -16,18 +16,19 @@ export type MeasureReport_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
     type?: string;
     measure?: any;
-    subject?: FHIR.Reference;
+    subject?: string | FHIR.Reference;
     date?: string;
-    reporter?: FHIR.Reference;
+    reporter?: string | FHIR.Reference;
     period?: FHIR.Period;
-    improvementNotation?: FHIR.CodeableConcept;
+    improvementNotation?: string[] | FHIR.CodeableConcept;
     group?: FHIR.BackboneElement[];
-    evaluatedResource?: FHIR.Reference[];
+    evaluatedResource?: Array<string | FHIR.Reference>;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

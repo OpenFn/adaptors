@@ -17,9 +17,9 @@ export type NutritionProduct_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     status?: string;
-    category?: FHIR.CodeableConcept[];
-    code?: FHIR.CodeableConcept;
-    manufacturer?: FHIR.Reference[];
+    category?: Array<string[] | FHIR.CodeableConcept>;
+    code?: string[] | FHIR.CodeableConcept;
+    manufacturer?: Array<string | FHIR.Reference>;
     nutrient?: FHIR.BackboneElement[];
     ingredient?: FHIR.BackboneElement[];
     knownAllergen?: FHIR.CodeableReference[];
@@ -27,6 +27,7 @@ export type NutritionProduct_Props = {
     instance?: FHIR.BackboneElement;
     note?: FHIR.Annotation[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

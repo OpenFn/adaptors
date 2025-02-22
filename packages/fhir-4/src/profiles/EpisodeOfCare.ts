@@ -16,19 +16,20 @@ export type EpisodeOfCare_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
     statusHistory?: FHIR.BackboneElement[];
-    type?: FHIR.CodeableConcept[];
+    type?: Array<string[] | FHIR.CodeableConcept>;
     diagnosis?: FHIR.BackboneElement[];
-    patient?: FHIR.Reference;
-    managingOrganization?: FHIR.Reference;
+    patient?: string | FHIR.Reference;
+    managingOrganization?: string | FHIR.Reference;
     period?: FHIR.Period;
-    referralRequest?: FHIR.Reference[];
-    careManager?: FHIR.Reference;
-    team?: FHIR.Reference[];
-    account?: FHIR.Reference[];
+    referralRequest?: Array<string | FHIR.Reference>;
+    careManager?: string | FHIR.Reference;
+    team?: Array<string | FHIR.Reference>;
+    account?: Array<string | FHIR.Reference>;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 
