@@ -29,15 +29,16 @@ export const mapSystems = obj => {
  * @public
  * @function
  * @example <caption>Set shortcut system mappings</caption>
- * util.setSystemMap({
+ * b.setSystemMap({
  *   SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'
  * });
- * builders.patient('patient', { identifier: util.identifier('xyz', 'SmartCareId') })
- * };
+ * create(builders.patient({ identifier: b.identifier('xyz', 'SmartCareId') }))
  */
-export const setSystemMap = newMappings => {
-  systemMap = newMappings;
-};
+export const setSystemMap = newMappings => 
+  (state) => {
+    systemMap = newMappings;
+    return state
+  };
 
 export const extendSystemMap = newMappings => {
   Object.assign(systemMap, newMappings);
