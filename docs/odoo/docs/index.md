@@ -58,9 +58,9 @@ Create a record in Odoo
 | --- | --- | --- |
 | model | <code>string</code> | The specific record model i.e. "res.partner" |
 | data | <code>object</code> | The data to be created in JSON. |
-| options | <code>object</code> | Optional external ID for the record. |
+| options | <code>object</code> | Options to send to the request. Includes an optional external ID for the record. |
 
-**Example**
+**Example:**  Create a partner record with an external Id
 ```js
 create("res.partner", { name: "Kool Keith" }, {externalId: 23});
 ```
@@ -97,11 +97,11 @@ Get a record from Odoo. Returns all fields unless a field list is provided as a 
 | --- | --- | --- |
 | model | <code>string</code> | The specific record model from i.e. "res.partner" |
 | recordId | <code>number</code> | An array of record IDs to read. |
-| fields | <code>string</code> | An optional array of fields to read from the record. |
+| fields | <code>Array.&lt;string&gt;</code> | An optional array of field strings to read from the record. |
 
 **Example:** Download records with select fields
 ```js
-read("res.partner", [1] , [name]);
+read("res.partner", [1] , ['name']);
 ```
 **Example:** Download a single record with all fields
 ```js
