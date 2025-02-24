@@ -81,7 +81,7 @@
           },
           {
             "title": "example",
-            "description": "read(\"res.partner\", [1] , [name]);",
+            "description": "read(\"res.partner\", [1] , ['name']);",
             "caption": "Download records with select fields"
           },
           {
@@ -114,10 +114,19 @@
           },
           {
             "title": "param",
-            "description": "An optional array of fields to read from the record.",
+            "description": "An optional array of field strings to read from the record.",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              ]
             },
             "name": "fields"
           },
