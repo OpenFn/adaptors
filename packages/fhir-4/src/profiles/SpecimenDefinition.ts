@@ -16,13 +16,14 @@ export type SpecimenDefinition_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier;
-    typeCollected?: FHIR.CodeableConcept;
-    patientPreparation?: FHIR.CodeableConcept[];
+    identifier?: string | FHIR.Identifier;
+    typeCollected?: string[] | FHIR.CodeableConcept;
+    patientPreparation?: Array<string[] | FHIR.CodeableConcept>;
     timeAspect?: string;
-    collection?: FHIR.CodeableConcept[];
+    collection?: Array<string[] | FHIR.CodeableConcept>;
     typeTested?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

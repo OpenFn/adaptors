@@ -16,16 +16,16 @@ export type Invoice_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
     cancelledReason?: string;
-    type?: FHIR.CodeableConcept;
-    subject?: FHIR.Reference;
-    recipient?: FHIR.Reference;
+    type?: string[] | FHIR.CodeableConcept;
+    subject?: string | FHIR.Reference;
+    recipient?: string | FHIR.Reference;
     date?: string;
     participant?: FHIR.BackboneElement[];
-    issuer?: FHIR.Reference;
-    account?: FHIR.Reference;
+    issuer?: string | FHIR.Reference;
+    account?: string | FHIR.Reference;
     lineItem?: FHIR.BackboneElement[];
     totalPriceComponent?: any[];
     totalNet?: FHIR.Money;
@@ -33,6 +33,7 @@ export type Invoice_Props = {
     paymentTerms?: FHIR.markdown;
     note?: FHIR.Annotation[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -1,8 +1,8 @@
 export default {
   include: [],
 
-  // include: ['Patient'],
-  exclude: ['Condition', 'Endpoint', 'Resource', 'TestScript'],
+  include: ['Patient'],
+  // exclude: ['Condition', 'Endpoint', 'Resource', 'TestScript'],
   overrides: {},
   valueSets: [],
   // This function should run on every resource
@@ -24,4 +24,9 @@ export default {
     'modifierExtension',
     'contained',
   ],
+  typeShorthands: {
+    Identifier: ['string'],
+    Reference: ['string'],
+    CodeableConcept: ['string[]'],
+  },
 };

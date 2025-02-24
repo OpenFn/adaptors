@@ -16,19 +16,20 @@ export type DetectedIssue_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
-    code?: FHIR.CodeableConcept;
+    code?: string[] | FHIR.CodeableConcept;
     severity?: string;
-    patient?: FHIR.Reference;
+    patient?: string | FHIR.Reference;
     identified?: string;
-    author?: FHIR.Reference;
-    implicated?: FHIR.Reference[];
+    author?: string | FHIR.Reference;
+    implicated?: Array<string | FHIR.Reference>;
     evidence?: FHIR.BackboneElement[];
     detail?: string;
     reference?: string;
     mitigation?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

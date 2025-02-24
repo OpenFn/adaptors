@@ -63,15 +63,35 @@ export const generateType = (
     // props.push(b.createPropertySignature([], key, undefined, type));
 
     // simplified
-    const t = m.type || s.type || 'any';
-    const type = createTypeNode(
-      t in fhirTypes ? `FHIR.${t}` : t,
-      s.isArray,
-      m.values || s.values
+    let t = m.type || s.type || 'any';
+    if (!Array.isArray(t)) {
+      t = [t];
+    }
+    const types = t.map(t =>
+      createTypeNode(
+        t in fhirTypes ? `FHIR.${t}` : t,
+        s.isArray,
+        m.values || s.values,
+        mappings.typeShorthands?.[t]
+      )
     );
-    props.push(
-      b.tsPropertySignature(b.identifier(key), b.tsTypeAnnotation(type), true)
-    );
+    if (types.length == 1) {
+      props.push(
+        b.tsPropertySignature(
+          b.identifier(key),
+          b.tsTypeAnnotation(types[0]),
+          true
+        )
+      );
+    } else {
+      props.push(
+        b.tsPropertySignature(
+          b.identifier(key),
+          b.tsTypeAnnotation(b.tsUnionType(types)),
+          true
+        )
+      );
+    }
   }
   props.push(
     b.tsIndexSignature(
@@ -122,7 +142,8 @@ const generateInlineType = (typeDef: PropDef) => {
 const createTypeNode = (
   incomingType: string,
   isArray: boolean,
-  values?: string[]
+  values?: string[],
+  shorthands?: string[]
 ) => {
   let node;
   const type = typeMap[incomingType] ?? incomingType;
@@ -143,7 +164,18 @@ const createTypeNode = (
   } else {
     node = b.tsAnyKeyword();
   }
-  if (isArray) {
+  if (shorthands) {
+    node = b.tsUnionType([
+      ...shorthands.map(s => b.tsTypeReference(b.identifier(s))),
+      node,
+    ]);
+    if (isArray) {
+      node = b.tsTypeReference(
+        b.identifier('Array'),
+        b.tsTypeParameterInstantiation([node])
+      );
+    }
+  } else if (isArray) {
     node = b.tsArrayType(node);
   }
   return node;

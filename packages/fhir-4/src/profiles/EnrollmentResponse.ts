@@ -16,15 +16,16 @@ export type EnrollmentResponse_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
-    request?: FHIR.Reference;
+    request?: string | FHIR.Reference;
     outcome?: string;
     disposition?: string;
     created?: string;
-    organization?: FHIR.Reference;
-    requestProvider?: FHIR.Reference;
+    organization?: string | FHIR.Reference;
+    requestProvider?: string | FHIR.Reference;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -135,7 +135,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     // Note: when generating datatypes we ignore the user's mappings and generate everything
     // maybe we need to take a different mappings object?
     const dtSchema = await generateSchema(dtSpecPath);
-    const { src, index } = generateDataTypes(dtSchema);
+    const { src, index } = generateDataTypes(dtSchema, mappings);
     fhirTypes = index;
     const dtsPath = path.resolve(adaptorPath, 'src/fhir.ts');
     console.log('Writing datatype schemas to ', dtsPath);

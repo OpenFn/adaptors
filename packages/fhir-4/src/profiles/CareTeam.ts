@@ -16,20 +16,21 @@ export type CareTeam_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
-    category?: FHIR.CodeableConcept[];
+    category?: Array<string[] | FHIR.CodeableConcept>;
     name?: string;
-    subject?: FHIR.Reference;
-    encounter?: FHIR.Reference;
+    subject?: string | FHIR.Reference;
+    encounter?: string | FHIR.Reference;
     period?: FHIR.Period;
     participant?: FHIR.BackboneElement[];
-    reasonCode?: FHIR.CodeableConcept[];
-    reasonReference?: FHIR.Reference[];
-    managingOrganization?: FHIR.Reference[];
+    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
+    reasonReference?: Array<string | FHIR.Reference>;
+    managingOrganization?: Array<string | FHIR.Reference>;
     telecom?: FHIR.ContactPoint[];
     note?: FHIR.Annotation[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

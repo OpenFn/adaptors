@@ -16,15 +16,16 @@ export type BodyStructure_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     active?: boolean;
-    morphology?: FHIR.CodeableConcept;
-    location?: FHIR.CodeableConcept;
-    locationQualifier?: FHIR.CodeableConcept[];
+    morphology?: string[] | FHIR.CodeableConcept;
+    location?: string[] | FHIR.CodeableConcept;
+    locationQualifier?: Array<string[] | FHIR.CodeableConcept>;
     description?: string;
     image?: FHIR.Attachment[];
-    patient?: FHIR.Reference;
+    patient?: string | FHIR.Reference;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

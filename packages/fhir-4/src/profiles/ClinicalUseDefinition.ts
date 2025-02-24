@@ -16,18 +16,19 @@ export type ClinicalUseDefinition_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     type?: string;
-    category?: FHIR.CodeableConcept[];
-    subject?: FHIR.Reference[];
-    status?: FHIR.CodeableConcept;
+    category?: Array<string[] | FHIR.CodeableConcept>;
+    subject?: Array<string | FHIR.Reference>;
+    status?: string[] | FHIR.CodeableConcept;
     contraindication?: FHIR.BackboneElement;
     indication?: FHIR.BackboneElement;
     interaction?: FHIR.BackboneElement;
-    population?: FHIR.Reference[];
+    population?: Array<string | FHIR.Reference>;
     undesirableEffect?: FHIR.BackboneElement;
     warning?: FHIR.BackboneElement;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

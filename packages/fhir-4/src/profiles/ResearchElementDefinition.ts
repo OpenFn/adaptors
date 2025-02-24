@@ -17,7 +17,7 @@ export type ResearchElementDefinition_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     url?: string;
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -25,21 +25,21 @@ export type ResearchElementDefinition_Props = {
     subtitle?: string;
     status?: string;
     experimental?: boolean;
-    subject?: FHIR.CodeableConcept;
+    subject?: string[] | FHIR.CodeableConcept;
     date?: string;
     publisher?: string;
     contact?: FHIR.ContactDetail[];
     description?: FHIR.markdown;
     comment?: string[];
     useContext?: FHIR.UsageContext[];
-    jurisdiction?: FHIR.CodeableConcept[];
+    jurisdiction?: Array<string[] | FHIR.CodeableConcept>;
     purpose?: FHIR.markdown;
     usage?: string;
     copyright?: FHIR.markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: FHIR.Period;
-    topic?: FHIR.CodeableConcept[];
+    topic?: Array<string[] | FHIR.CodeableConcept>;
     author?: FHIR.ContactDetail[];
     editor?: FHIR.ContactDetail[];
     reviewer?: FHIR.ContactDetail[];
@@ -50,6 +50,7 @@ export type ResearchElementDefinition_Props = {
     variableType?: string;
     characteristic?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

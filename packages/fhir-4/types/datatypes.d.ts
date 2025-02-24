@@ -106,7 +106,7 @@ export declare const value: (value: any, system: any, ...extra: any[]) => any;
  * const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  */
 declare type ConceptCoding = FHIR.Coding | [string, string, Omit<FHIR.Coding, 'code' | 'system'>?];
-export declare const concept: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<FHIR.CodeableConcept, 'coding'>) => {
+export declare const concept: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<FHIR.CodeableConcept, 'coding'>) => FHIR.Coding | [string, string, Omit<FHIR.Coding, "code" | "system">?] | ConceptCoding[] | {
     coding: any;
     id?: string;
     extension?: FHIR.Extension[];
@@ -117,7 +117,7 @@ export declare const concept: (codings: ConceptCoding | ConceptCoding[], extra?:
  * @public
  * @function
  */
-export declare const cc: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<FHIR.CodeableConcept, 'coding'>) => {
+export declare const cc: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<FHIR.CodeableConcept, 'coding'>) => FHIR.Coding | [string, string, Omit<FHIR.Coding, "code" | "system">?] | ConceptCoding[] | {
     coding: any;
     id?: string;
     extension?: FHIR.Extension[];

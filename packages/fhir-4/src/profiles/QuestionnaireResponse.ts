@@ -16,18 +16,19 @@ export type QuestionnaireResponse_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier;
-    basedOn?: FHIR.Reference[];
-    partOf?: FHIR.Reference[];
+    identifier?: string | FHIR.Identifier;
+    basedOn?: Array<string | FHIR.Reference>;
+    partOf?: Array<string | FHIR.Reference>;
     questionnaire?: any;
     status?: string;
-    subject?: FHIR.Reference;
-    encounter?: FHIR.Reference;
+    subject?: string | FHIR.Reference;
+    encounter?: string | FHIR.Reference;
     authored?: string;
-    author?: FHIR.Reference;
-    source?: FHIR.Reference;
+    author?: string | FHIR.Reference;
+    source?: string | FHIR.Reference;
     item?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

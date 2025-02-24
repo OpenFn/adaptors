@@ -16,12 +16,13 @@ export type ImmunizationRecommendation_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
-    patient?: FHIR.Reference;
+    identifier?: Array<string | FHIR.Identifier>;
+    patient?: string | FHIR.Reference;
     date?: string;
-    authority?: FHIR.Reference;
+    authority?: string | FHIR.Reference;
     recommendation?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

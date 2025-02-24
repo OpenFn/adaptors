@@ -55,6 +55,7 @@ const generateCode = (
         Object.assign(
           {
             initialiser: mappings.initialiser,
+            typeShorthands: mappings.typeShorthands,
           },
           mappings.overrides?.[resourceType]
         ),

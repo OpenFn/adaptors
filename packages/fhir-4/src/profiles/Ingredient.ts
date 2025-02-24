@@ -16,15 +16,16 @@ export type Ingredient_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier;
+    identifier?: string | FHIR.Identifier;
     status?: string;
-    for?: FHIR.Reference[];
-    role?: FHIR.CodeableConcept;
-    function?: FHIR.CodeableConcept[];
+    for?: Array<string | FHIR.Reference>;
+    role?: string[] | FHIR.CodeableConcept;
+    function?: Array<string[] | FHIR.CodeableConcept>;
     allergenicIndicator?: boolean;
     manufacturer?: FHIR.BackboneElement[];
     substance?: FHIR.BackboneElement;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

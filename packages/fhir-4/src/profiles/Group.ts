@@ -16,17 +16,18 @@ export type Group_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     active?: boolean;
     type?: string;
     actual?: boolean;
-    code?: FHIR.CodeableConcept;
+    code?: string[] | FHIR.CodeableConcept;
     name?: string;
     quantity?: number;
-    managingEntity?: FHIR.Reference;
+    managingEntity?: string | FHIR.Reference;
     characteristic?: FHIR.BackboneElement[];
     member?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -16,17 +16,17 @@ export type SubstanceDefinition_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     version?: string;
-    status?: FHIR.CodeableConcept;
-    classification?: FHIR.CodeableConcept[];
-    domain?: FHIR.CodeableConcept;
-    grade?: FHIR.CodeableConcept[];
+    status?: string[] | FHIR.CodeableConcept;
+    classification?: Array<string[] | FHIR.CodeableConcept>;
+    domain?: string[] | FHIR.CodeableConcept;
+    grade?: Array<string[] | FHIR.CodeableConcept>;
     description?: FHIR.markdown;
-    informationSource?: FHIR.Reference[];
+    informationSource?: Array<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
-    manufacturer?: FHIR.Reference[];
-    supplier?: FHIR.Reference[];
+    manufacturer?: Array<string | FHIR.Reference>;
+    supplier?: Array<string | FHIR.Reference>;
     moiety?: FHIR.BackboneElement[];
     property?: FHIR.BackboneElement[];
     molecularWeight?: FHIR.BackboneElement[];
@@ -36,6 +36,7 @@ export type SubstanceDefinition_Props = {
     relationship?: FHIR.BackboneElement[];
     sourceMaterial?: FHIR.BackboneElement;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

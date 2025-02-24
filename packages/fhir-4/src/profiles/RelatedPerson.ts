@@ -16,10 +16,10 @@ export type RelatedPerson_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     active?: boolean;
-    patient?: FHIR.Reference;
-    relationship?: FHIR.CodeableConcept[];
+    patient?: string | FHIR.Reference;
+    relationship?: Array<string[] | FHIR.CodeableConcept>;
     name?: FHIR.HumanName[];
     telecom?: FHIR.ContactPoint[];
     gender?: string;
@@ -29,6 +29,7 @@ export type RelatedPerson_Props = {
     period?: FHIR.Period;
     communication?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

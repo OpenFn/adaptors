@@ -17,10 +17,10 @@ export type Evidence_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     url?: string;
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     version?: string;
     title?: string;
-    citeAs?: FHIR.Reference;
+    citeAs?: string | FHIR.Reference;
     status?: string;
     date?: string;
     useContext?: FHIR.UsageContext[];
@@ -37,11 +37,12 @@ export type Evidence_Props = {
     assertion?: FHIR.markdown;
     note?: FHIR.Annotation[];
     variableDefinition?: FHIR.BackboneElement[];
-    synthesisType?: FHIR.CodeableConcept;
-    studyType?: FHIR.CodeableConcept;
+    synthesisType?: string[] | FHIR.CodeableConcept;
+    studyType?: string[] | FHIR.CodeableConcept;
     statistic?: FHIR.BackboneElement[];
     certainty?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

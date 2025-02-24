@@ -16,17 +16,18 @@ export type AdministrableProductDefinition_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
-    formOf?: FHIR.Reference[];
-    administrableDoseForm?: FHIR.CodeableConcept;
-    unitOfPresentation?: FHIR.CodeableConcept;
-    producedFrom?: FHIR.Reference[];
-    ingredient?: FHIR.CodeableConcept[];
-    device?: FHIR.Reference;
+    formOf?: Array<string | FHIR.Reference>;
+    administrableDoseForm?: string[] | FHIR.CodeableConcept;
+    unitOfPresentation?: string[] | FHIR.CodeableConcept;
+    producedFrom?: Array<string | FHIR.Reference>;
+    ingredient?: Array<string[] | FHIR.CodeableConcept>;
+    device?: string | FHIR.Reference;
     property?: FHIR.BackboneElement[];
     routeOfAdministration?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

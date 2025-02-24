@@ -16,15 +16,16 @@ export type ResearchSubject_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     status?: string;
     period?: FHIR.Period;
-    study?: FHIR.Reference;
-    individual?: FHIR.Reference;
+    study?: string | FHIR.Reference;
+    individual?: string | FHIR.Reference;
     assignedArm?: string;
     actualArm?: string;
-    consent?: FHIR.Reference;
+    consent?: string | FHIR.Reference;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

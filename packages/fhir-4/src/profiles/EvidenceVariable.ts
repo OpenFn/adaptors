@@ -17,7 +17,7 @@ export type EvidenceVariable_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     url?: string;
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -41,6 +41,7 @@ export type EvidenceVariable_Props = {
     handling?: string;
     category?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

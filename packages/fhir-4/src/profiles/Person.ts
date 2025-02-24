@@ -16,17 +16,18 @@ export type Person_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     name?: FHIR.HumanName[];
     telecom?: FHIR.ContactPoint[];
     gender?: string;
     birthDate?: string;
     address?: FHIR.Address[];
     photo?: FHIR.Attachment;
-    managingOrganization?: FHIR.Reference;
+    managingOrganization?: string | FHIR.Reference;
     active?: boolean;
     link?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

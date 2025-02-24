@@ -17,7 +17,7 @@ export type Citation_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     url?: string;
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -28,7 +28,7 @@ export type Citation_Props = {
     contact?: FHIR.ContactDetail[];
     description?: FHIR.markdown;
     useContext?: FHIR.UsageContext[];
-    jurisdiction?: FHIR.CodeableConcept[];
+    jurisdiction?: Array<string[] | FHIR.CodeableConcept>;
     purpose?: FHIR.markdown;
     copyright?: FHIR.markdown;
     approvalDate?: string;
@@ -41,11 +41,12 @@ export type Citation_Props = {
     summary?: FHIR.BackboneElement[];
     classification?: FHIR.BackboneElement[];
     note?: FHIR.Annotation[];
-    currentState?: FHIR.CodeableConcept[];
+    currentState?: Array<string[] | FHIR.CodeableConcept>;
     statusDate?: FHIR.BackboneElement[];
     relatesTo?: FHIR.BackboneElement[];
     citedArtifact?: FHIR.BackboneElement;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

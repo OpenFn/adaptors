@@ -16,17 +16,18 @@ export type Organization_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     active?: boolean;
-    type?: FHIR.CodeableConcept[];
+    type?: Array<string[] | FHIR.CodeableConcept>;
     name?: string;
     alias?: string[];
     telecom?: FHIR.ContactPoint[];
     address?: FHIR.Address[];
-    partOf?: FHIR.Reference;
+    partOf?: string | FHIR.Reference;
     contact?: FHIR.BackboneElement[];
-    endpoint?: FHIR.Reference[];
+    endpoint?: Array<string | FHIR.Reference>;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -16,10 +16,10 @@ export type TestReport_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: FHIR.Identifier;
+    identifier?: string | FHIR.Identifier;
     name?: string;
     status?: string;
-    testScript?: FHIR.Reference;
+    testScript?: string | FHIR.Reference;
     result?: string;
     score?: number;
     tester?: string;
@@ -29,6 +29,7 @@ export type TestReport_Props = {
     test?: FHIR.BackboneElement[];
     teardown?: FHIR.BackboneElement;
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

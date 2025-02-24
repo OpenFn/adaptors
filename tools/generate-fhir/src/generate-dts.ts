@@ -4,12 +4,16 @@
 import ts from 'typescript';
 import { getBuilderName, getTypeName } from './util';
 import { PropDef } from './generate-schema';
+import { MappingSpec } from './types';
 
 const b = ts.factory;
 
 // TODO primitive types like boolean, decimal. are they quite right?
 // TODO duplicates (are other globals, like dom globals). maybe we should namespace after all
-export const generateDataTypes = (schema: Record<string, Schema[]>) => {
+export const generateDataTypes = (
+  schema: Record<string, Schema[]>,
+  mappings: MappingSpec
+) => {
   const resultFile = ts.createSourceFile(
     'test.ts',
     '',
@@ -26,7 +30,14 @@ export const generateDataTypes = (schema: Record<string, Schema[]>) => {
         continue;
       }
       index[profile.id] = true;
-      const ast = generateType(resourceType, profile, {}, profile.id, true);
+      const ast = generateType(
+        resourceType,
+        profile,
+        {},
+        mappings.typeShorthands,
+        profile.id,
+        true
+      );
       statements.push(ast);
     }
   }
@@ -94,7 +105,12 @@ const generateDTS = (
         mappings.overrides?.[resourceType]?.any,
         mappings.overrides?.[resourceType]?.[profile.id]
       );
-      const typedef = generateType(name, profile, overrides);
+      const typedef = generateType(
+        name,
+        profile,
+        overrides,
+        mappings.typeShorthands
+      );
       contents.push(typedef);
     }
 
@@ -249,7 +265,8 @@ const generateEntryFuction = (
 const createTypeNode = (
   incomingType: string,
   isArray?: boolean,
-  values?: string[]
+  values?: string[],
+  shorthands?: string[]
 ) => {
   let node;
   const type = typeMap[incomingType] ?? incomingType;
@@ -275,7 +292,11 @@ const createTypeNode = (
   } else {
     node = b.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
   }
-  if (isArray && !values) {
+  if (shorthands?.length) {
+    node = b.createUnionTypeNode(
+      shorthands.map(s => b.createTypeReferenceNode(s)).concat(node)
+    );
+  } else if (isArray && !values) {
     node = b.createArrayTypeNode(node);
   }
   return node;
@@ -284,20 +305,23 @@ const createTypeNode = (
 export const generateType = (
   resourceName: string,
   schema: Schema,
-  mappings = {},
+  mappingOverrides = {},
+  typeShorthands: MappingSpec['typeShorthands'] = {},
   typeName?: string,
   includeExport = false
 ) => {
   const props = [];
 
   // find the superset of schema keys and mappings keys
-  const allKeys = Object.keys(Object.assign({}, schema.props, mappings));
+  const allKeys = Object.keys(
+    Object.assign({}, schema.props, mappingOverrides)
+  );
 
   // Now for each key, build a type
   // Note that mappings should overwrite schema if conflict
   for (const key of allKeys) {
     const s = schema.props[key] || {};
-    const m = mappings[key] || {};
+    const m = mappingOverrides[key] || {};
 
     if (m == false || m.type === false) {
       // Ignore this key if it's mapped out
@@ -314,11 +338,18 @@ export const generateType = (
         continue;
       }
 
-      type = createTypeNode(
-        m.type || s.type || 'any',
-        s.isArray,
-        m.values || s.values
+      let t = m.type || s.type || 'any';
+      if (!Array.isArray(t)) {
+        t = [t];
+      }
+      const types = t.map(t =>
+        createTypeNode(t, s.isArray, m.values || s.values, typeShorthands[t])
       );
+      if (types.length === 1) {
+        type = types[0];
+      } else {
+        type = b.createUnionTypeNode(types);
+      }
     }
     if (s.desc) {
       props.push(b.createJSDocComment(s.desc + '\n'));

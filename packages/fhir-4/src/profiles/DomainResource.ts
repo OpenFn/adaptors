@@ -17,6 +17,7 @@ export type DomainResource_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -17,7 +17,7 @@ export type ChargeItemDefinition_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     url?: string;
-    identifier?: FHIR.Identifier[];
+    identifier?: Array<string | FHIR.Identifier>;
     version?: string;
     title?: string;
     derivedFromUri?: string[];
@@ -30,16 +30,17 @@ export type ChargeItemDefinition_Props = {
     contact?: FHIR.ContactDetail[];
     description?: FHIR.markdown;
     useContext?: FHIR.UsageContext[];
-    jurisdiction?: FHIR.CodeableConcept[];
+    jurisdiction?: Array<string[] | FHIR.CodeableConcept>;
     copyright?: FHIR.markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: FHIR.Period;
-    code?: FHIR.CodeableConcept;
-    instance?: FHIR.Reference[];
+    code?: string[] | FHIR.CodeableConcept;
+    instance?: Array<string | FHIR.Reference>;
     applicability?: FHIR.BackboneElement[];
     propertyGroup?: FHIR.BackboneElement[];
     initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 
