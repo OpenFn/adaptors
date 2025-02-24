@@ -17,7 +17,8 @@
           },
           {
             "title": "example",
-            "description": "create(\"res.partner\", { name: \"Kool Keith\" }, {externalId: 23});"
+            "description": "create(\"res.partner\", { name: \"Kool Keith\" }, {externalId: 23});",
+            "caption": "Create a partner record with an external Id"
           },
           {
             "title": "function",
@@ -44,7 +45,7 @@
           },
           {
             "title": "param",
-            "description": "Optional external ID for the record.",
+            "description": "Options to send to the request. Includes an optional external ID for the record.",
             "type": {
               "type": "NameExpression",
               "name": "object"
