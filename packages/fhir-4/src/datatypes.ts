@@ -34,11 +34,10 @@ export const mapSystems = obj => {
  * });
  * create(builders.patient({ identifier: b.identifier('xyz', 'SmartCareId') }))
  */
-export const setSystemMap = newMappings => 
-  (state) => {
-    systemMap = newMappings;
-    return state
-  };
+export const setSystemMap = newMappings => state => {
+  systemMap = newMappings;
+  return state;
+};
 
 export const extendSystemMap = newMappings => {
   Object.assign(systemMap, newMappings);
@@ -73,10 +72,9 @@ export const identifier = (id: string | FHIR.Identifier, ...ext) => {
 
   // TODO warn for unexpected keys?
 
-  if (ext.length) {
-    i.extension ??= [];
-    i.extension.push(...ext);
-  }
+  ext.forEach(e => {
+    addExtension(i, e.url, e.value);
+  });
 
   return mapSystems(i);
 };

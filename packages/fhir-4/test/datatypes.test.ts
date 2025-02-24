@@ -2,7 +2,7 @@ import { expect, assert } from 'chai';
 import * as b from '../src/datatypes';
 
 afterEach(() => {
-  b.setSystemMap({});
+  b.setSystemMap({})({});
 });
 
 describe('identifier', () => {
@@ -26,7 +26,7 @@ describe('identifier', () => {
   it('should map an identifier with a mapped system', () => {
     b.setSystemMap({
       default: 'xyz',
-    });
+    })({});
     const result = b.identifier({ value: 'abc', system: 'default' });
     expect(result).to.eql({ value: 'abc', system: 'xyz' });
   });
@@ -41,7 +41,7 @@ describe('identifier', () => {
   it('should add an extension', () => {
     const result = b.identifier({ value: 'abc' }, { value: 'x', url: 'www' });
 
-    expect(result.extension).to.eql([{ value: 'x', url: 'www' }]);
+    expect(result.extension).to.eql([{ valueString: 'x', url: 'www' }]);
   });
 
   it('should allow arbitrary keys on a value object', () => {
@@ -83,7 +83,7 @@ describe('coding', () => {
   it('should map a system', () => {
     b.setSystemMap({
       loinc: 'https://fake.loinc.org',
-    });
+    })({});
 
     const result = b.coding('1234', 'loinc');
 
