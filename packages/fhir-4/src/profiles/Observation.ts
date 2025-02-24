@@ -25,10 +25,10 @@ export type Observation_Props = {
     subject?: string | FHIR.Reference;
     focus?: Array<string | FHIR.Reference>;
     encounter?: string | FHIR.Reference;
-    effective?: string;
+    effective?: string | FHIR.Period | FHIR.Timing;
     issued?: string;
     performer?: Array<string | FHIR.Reference>;
-    value?: FHIR.Quantity;
+    value?: FHIR.Quantity | string[] | FHIR.CodeableConcept | string | boolean | number | FHIR.Range | FHIR.Ratio | FHIR.SampledData | FHIR.Period;
     dataAbsentReason?: string[] | FHIR.CodeableConcept;
     interpretation?: Array<string[] | FHIR.CodeableConcept>;
     note?: FHIR.Annotation[];
@@ -40,8 +40,6 @@ export type Observation_Props = {
     hasMember?: Array<string | FHIR.Reference>;
     derivedFrom?: Array<string | FHIR.Reference>;
     component?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

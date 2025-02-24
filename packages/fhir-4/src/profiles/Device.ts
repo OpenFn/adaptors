@@ -42,8 +42,6 @@ export type Device_Props = {
     note?: FHIR.Annotation[];
     safety?: Array<string[] | FHIR.CodeableConcept>;
     parent?: string | FHIR.Reference;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

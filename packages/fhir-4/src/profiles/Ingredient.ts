@@ -24,8 +24,6 @@ export type Ingredient_Props = {
     allergenicIndicator?: boolean;
     manufacturer?: FHIR.BackboneElement[];
     substance?: FHIR.BackboneElement;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

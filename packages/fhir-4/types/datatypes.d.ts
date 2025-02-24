@@ -7,13 +7,12 @@ export declare const mapSystems: (obj: any) => any;
  * @public
  * @function
  * @example <caption>Set shortcut system mappings</caption>
- * util.setSystemMap({
+ * b.setSystemMap({
  *   SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'
  * });
- * builders.patient('patient', { identifier: util.identifier('xyz', 'SmartCareId') })
- * };
+ * create(builders.patient({ identifier: b.identifier('xyz', 'SmartCareId') }))
  */
-export declare const setSystemMap: (newMappings: any) => void;
+export declare const setSystemMap: (newMappings: any) => (state: any) => any;
 export declare const extendSystemMap: (newMappings: any) => void;
 /**
  * Create an Identifier. Systems will be mapped against the system map. Pass extensions as extra arguments.

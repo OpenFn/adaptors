@@ -23,8 +23,8 @@ export type MedicationRequest_Props = {
     category?: Array<string[] | FHIR.CodeableConcept>;
     priority?: string;
     doNotPerform?: boolean;
-    reported?: boolean;
-    medication?: string[] | FHIR.CodeableConcept;
+    reported?: boolean | string | FHIR.Reference;
+    medication?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     subject?: string | FHIR.Reference;
     encounter?: string | FHIR.Reference;
     supportingInformation?: Array<string | FHIR.Reference>;
@@ -48,8 +48,6 @@ export type MedicationRequest_Props = {
     priorPrescription?: string | FHIR.Reference;
     detectedIssue?: Array<string | FHIR.Reference>;
     eventHistory?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

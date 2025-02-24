@@ -23,7 +23,7 @@ export type ClinicalImpression_Props = {
     description?: string;
     subject?: string | FHIR.Reference;
     encounter?: string | FHIR.Reference;
-    effective?: string;
+    effective?: string | FHIR.Period;
     date?: string;
     assessor?: string | FHIR.Reference;
     previous?: string | FHIR.Reference;
@@ -36,8 +36,6 @@ export type ClinicalImpression_Props = {
     prognosisReference?: Array<string | FHIR.Reference>;
     supportingInfo?: Array<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

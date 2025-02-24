@@ -24,8 +24,6 @@ export type Flag_Props = {
     period?: FHIR.Period;
     encounter?: string | FHIR.Reference;
     author?: string | FHIR.Reference;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

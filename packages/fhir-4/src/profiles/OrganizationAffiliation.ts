@@ -28,8 +28,6 @@ export type OrganizationAffiliation_Props = {
     healthcareService?: Array<string | FHIR.Reference>;
     telecom?: FHIR.ContactPoint[];
     endpoint?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

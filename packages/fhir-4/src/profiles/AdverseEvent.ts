@@ -36,8 +36,6 @@ export type AdverseEvent_Props = {
     subjectMedicalHistory?: Array<string | FHIR.Reference>;
     referenceDocument?: Array<string | FHIR.Reference>;
     study?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -25,7 +25,7 @@ export type Library_Props = {
     status?: string;
     experimental?: boolean;
     type?: string[] | FHIR.CodeableConcept;
-    subject?: string[] | FHIR.CodeableConcept;
+    subject?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     date?: string;
     publisher?: string;
     contact?: FHIR.ContactDetail[];
@@ -47,8 +47,6 @@ export type Library_Props = {
     parameter?: FHIR.ParameterDefinition[];
     dataRequirement?: FHIR.DataRequirement[];
     content?: FHIR.Attachment[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

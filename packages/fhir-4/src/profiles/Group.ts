@@ -26,8 +26,6 @@ export type Group_Props = {
     managingEntity?: string | FHIR.Reference;
     characteristic?: FHIR.BackboneElement[];
     member?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

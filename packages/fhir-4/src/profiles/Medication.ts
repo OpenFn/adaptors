@@ -24,8 +24,6 @@ export type Medication_Props = {
     amount?: FHIR.Ratio;
     ingredient?: FHIR.BackboneElement[];
     batch?: FHIR.BackboneElement;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

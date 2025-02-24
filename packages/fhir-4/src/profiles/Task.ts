@@ -47,8 +47,6 @@ export type Task_Props = {
     restriction?: FHIR.BackboneElement;
     input?: FHIR.BackboneElement[];
     output?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

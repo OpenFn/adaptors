@@ -29,8 +29,6 @@ export type Specimen_Props = {
     container?: FHIR.BackboneElement[];
     condition?: Array<string[] | FHIR.CodeableConcept>;
     note?: FHIR.Annotation[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -27,8 +27,6 @@ export type MeasureReport_Props = {
     improvementNotation?: string[] | FHIR.CodeableConcept;
     group?: FHIR.BackboneElement[];
     evaluatedResource?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

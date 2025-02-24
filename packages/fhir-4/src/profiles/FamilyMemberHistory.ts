@@ -26,16 +26,14 @@ export type FamilyMemberHistory_Props = {
     name?: string;
     relationship?: string[] | FHIR.CodeableConcept;
     sex?: string[] | FHIR.CodeableConcept;
-    born?: FHIR.Period;
-    age?: FHIR.Age;
+    born?: FHIR.Period | string;
+    age?: FHIR.Age | FHIR.Range | string;
     estimatedAge?: boolean;
-    deceased?: boolean;
+    deceased?: boolean | FHIR.Age | FHIR.Range | string;
     reasonCode?: Array<string[] | FHIR.CodeableConcept>;
     reasonReference?: Array<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
     condition?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

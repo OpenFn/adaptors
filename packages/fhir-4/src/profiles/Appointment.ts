@@ -38,8 +38,6 @@ export type Appointment_Props = {
     basedOn?: Array<string | FHIR.Reference>;
     participant?: FHIR.BackboneElement[];
     requestedPeriod?: FHIR.Period[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

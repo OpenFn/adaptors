@@ -59,8 +59,6 @@ export type ExplanationOfBenefit_Props = {
     processNote?: FHIR.BackboneElement[];
     benefitPeriod?: FHIR.Period;
     benefitBalance?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

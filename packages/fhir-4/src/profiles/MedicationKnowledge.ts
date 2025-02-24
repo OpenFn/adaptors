@@ -38,8 +38,6 @@ export type MedicationKnowledge_Props = {
     contraindication?: Array<string | FHIR.Reference>;
     regulatory?: FHIR.BackboneElement[];
     kinetics?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

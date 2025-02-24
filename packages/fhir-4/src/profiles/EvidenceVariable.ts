@@ -40,8 +40,6 @@ export type EvidenceVariable_Props = {
     characteristic?: FHIR.BackboneElement[];
     handling?: string;
     category?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

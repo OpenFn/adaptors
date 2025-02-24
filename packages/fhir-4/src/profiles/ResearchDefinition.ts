@@ -25,7 +25,7 @@ export type ResearchDefinition_Props = {
     subtitle?: string;
     status?: string;
     experimental?: boolean;
-    subject?: string[] | FHIR.CodeableConcept;
+    subject?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     date?: string;
     publisher?: string;
     contact?: FHIR.ContactDetail[];
@@ -50,8 +50,6 @@ export type ResearchDefinition_Props = {
     exposure?: string | FHIR.Reference;
     exposureAlternative?: string | FHIR.Reference;
     outcome?: string | FHIR.Reference;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

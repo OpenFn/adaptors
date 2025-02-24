@@ -34,8 +34,6 @@ export type RequestGroup_Props = {
     reasonReference?: Array<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
     action?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

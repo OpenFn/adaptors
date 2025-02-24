@@ -29,8 +29,6 @@ export type ObservationDefinition_Props = {
     normalCodedValueSet?: string | FHIR.Reference;
     abnormalCodedValueSet?: string | FHIR.Reference;
     criticalCodedValueSet?: string | FHIR.Reference;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

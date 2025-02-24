@@ -26,8 +26,6 @@ export type NutritionProduct_Props = {
     productCharacteristic?: FHIR.BackboneElement[];
     instance?: FHIR.BackboneElement;
     note?: FHIR.Annotation[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

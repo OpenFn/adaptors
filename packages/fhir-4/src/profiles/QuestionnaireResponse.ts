@@ -27,8 +27,6 @@ export type QuestionnaireResponse_Props = {
     author?: string | FHIR.Reference;
     source?: string | FHIR.Reference;
     item?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

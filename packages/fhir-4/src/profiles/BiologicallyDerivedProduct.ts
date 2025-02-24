@@ -27,8 +27,6 @@ export type BiologicallyDerivedProduct_Props = {
     processing?: FHIR.BackboneElement[];
     manipulation?: FHIR.BackboneElement;
     storage?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

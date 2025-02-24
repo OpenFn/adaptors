@@ -30,8 +30,6 @@ export type RegulatedAuthorization_Props = {
     holder?: string | FHIR.Reference;
     regulator?: string | FHIR.Reference;
     case?: FHIR.BackboneElement;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

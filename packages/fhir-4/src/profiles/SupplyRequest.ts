@@ -20,10 +20,10 @@ export type SupplyRequest_Props = {
     status?: string;
     category?: string[] | FHIR.CodeableConcept;
     priority?: string;
-    item?: string[] | FHIR.CodeableConcept;
+    item?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     quantity?: FHIR.Quantity;
     parameter?: FHIR.BackboneElement[];
-    occurrence?: string;
+    occurrence?: string | FHIR.Period | FHIR.Timing;
     authoredOn?: string;
     requester?: string | FHIR.Reference;
     supplier?: Array<string | FHIR.Reference>;
@@ -31,8 +31,6 @@ export type SupplyRequest_Props = {
     reasonReference?: Array<string | FHIR.Reference>;
     deliverFrom?: string | FHIR.Reference;
     deliverTo?: string | FHIR.Reference;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

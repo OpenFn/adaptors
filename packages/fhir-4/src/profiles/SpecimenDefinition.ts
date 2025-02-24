@@ -22,8 +22,6 @@ export type SpecimenDefinition_Props = {
     timeAspect?: string;
     collection?: Array<string[] | FHIR.CodeableConcept>;
     typeTested?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

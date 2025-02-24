@@ -21,7 +21,7 @@ export type DeviceUseStatement_Props = {
     status?: string;
     subject?: string | FHIR.Reference;
     derivedFrom?: Array<string | FHIR.Reference>;
-    timing?: FHIR.Timing;
+    timing?: FHIR.Timing | FHIR.Period | string;
     recordedOn?: string;
     source?: string | FHIR.Reference;
     device?: string | FHIR.Reference;
@@ -29,8 +29,6 @@ export type DeviceUseStatement_Props = {
     reasonReference?: Array<string | FHIR.Reference>;
     bodySite?: string[] | FHIR.CodeableConcept;
     note?: FHIR.Annotation[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

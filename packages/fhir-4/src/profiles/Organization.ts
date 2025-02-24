@@ -26,8 +26,6 @@ export type Organization_Props = {
     partOf?: string | FHIR.Reference;
     contact?: FHIR.BackboneElement[];
     endpoint?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

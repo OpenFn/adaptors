@@ -23,7 +23,7 @@ export type Goal_Props = {
     priority?: string[] | FHIR.CodeableConcept;
     description?: string[] | FHIR.CodeableConcept;
     subject?: string | FHIR.Reference;
-    start?: string;
+    start?: string | string[] | FHIR.CodeableConcept;
     target?: FHIR.BackboneElement[];
     statusDate?: string;
     statusReason?: string;
@@ -32,8 +32,6 @@ export type Goal_Props = {
     note?: FHIR.Annotation[];
     outcomeCode?: Array<string[] | FHIR.CodeableConcept>;
     outcomeReference?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

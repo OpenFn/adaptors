@@ -24,7 +24,7 @@ export type ActivityDefinition_Props = {
     subtitle?: string;
     status?: string;
     experimental?: boolean;
-    subject?: string[] | FHIR.CodeableConcept;
+    subject?: string[] | FHIR.CodeableConcept | string | FHIR.Reference | any;
     date?: string;
     publisher?: string;
     contact?: FHIR.ContactDetail[];
@@ -50,10 +50,10 @@ export type ActivityDefinition_Props = {
     intent?: string;
     priority?: string;
     doNotPerform?: boolean;
-    timing?: FHIR.Timing;
+    timing?: FHIR.Timing | string | FHIR.Age | FHIR.Period | FHIR.Range | FHIR.Duration;
     location?: string | FHIR.Reference;
     participant?: FHIR.BackboneElement[];
-    product?: string | FHIR.Reference;
+    product?: string | FHIR.Reference | string[] | FHIR.CodeableConcept;
     quantity?: FHIR.Quantity;
     dosage?: FHIR.Dosage[];
     bodySite?: Array<string[] | FHIR.CodeableConcept>;
@@ -62,8 +62,6 @@ export type ActivityDefinition_Props = {
     observationResultRequirement?: Array<string | FHIR.Reference>;
     transform?: any;
     dynamicValue?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

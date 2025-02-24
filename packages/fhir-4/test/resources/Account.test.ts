@@ -57,7 +57,7 @@ describe('Account', () => {
     assert.isOk(resource);
   });
 
-  it('should create a simple Account', () => {
+  it.only('should create a simple Account', () => {
     const resource = builders.account({
       id: 'example',
       identifier: {
@@ -74,12 +74,9 @@ describe('Account', () => {
         { text: 'patient' }
       ),
       name: 'HACC Funded Billing for Peter James Chalmers',
-      subject: [
-        {
-          reference: 'Patient/example',
-          display: 'Peter James Chalmers',
-        },
-      ],
+      subject: b.ref('Patient/example', {
+        display: 'Peter James Chalmers',
+      }),
       servicePeriod: {
         start: '2016-01-01',
         end: '2016-06-30',

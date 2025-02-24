@@ -29,8 +29,6 @@ export type CareTeam_Props = {
     managingOrganization?: Array<string | FHIR.Reference>;
     telecom?: FHIR.ContactPoint[];
     note?: FHIR.Annotation[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

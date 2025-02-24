@@ -24,7 +24,7 @@ export type EventDefinition_Props = {
     subtitle?: string;
     status?: string;
     experimental?: boolean;
-    subject?: string[] | FHIR.CodeableConcept;
+    subject?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     date?: string;
     publisher?: string;
     contact?: FHIR.ContactDetail[];
@@ -44,8 +44,6 @@ export type EventDefinition_Props = {
     endorser?: FHIR.ContactDetail[];
     relatedArtifact?: FHIR.RelatedArtifact[];
     trigger?: FHIR.TriggerDefinition[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

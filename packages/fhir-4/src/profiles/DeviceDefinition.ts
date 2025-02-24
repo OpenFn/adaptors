@@ -18,7 +18,7 @@ export type DeviceDefinition_Props = {
     modifierExtension?: FHIR.Extension[];
     identifier?: Array<string | FHIR.Identifier>;
     udiDeviceIdentifier?: FHIR.BackboneElement[];
-    manufacturer?: string;
+    manufacturer?: string | string | FHIR.Reference;
     deviceName?: FHIR.BackboneElement[];
     modelNumber?: string;
     type?: string[] | FHIR.CodeableConcept;
@@ -38,8 +38,6 @@ export type DeviceDefinition_Props = {
     quantity?: FHIR.Quantity;
     parentDevice?: string | FHIR.Reference;
     material?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

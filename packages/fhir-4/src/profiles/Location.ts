@@ -33,8 +33,6 @@ export type Location_Props = {
     hoursOfOperation?: FHIR.BackboneElement[];
     availabilityExceptions?: string;
     endpoint?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

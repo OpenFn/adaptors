@@ -22,10 +22,10 @@ export type MedicationStatement_Props = {
     status?: string;
     statusReason?: Array<string[] | FHIR.CodeableConcept>;
     category?: string[] | FHIR.CodeableConcept;
-    medication?: string[] | FHIR.CodeableConcept;
+    medication?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     subject?: string | FHIR.Reference;
     context?: string | FHIR.Reference;
-    effective?: string;
+    effective?: string | FHIR.Period;
     dateAsserted?: string;
     informationSource?: string | FHIR.Reference;
     derivedFrom?: Array<string | FHIR.Reference>;
@@ -33,8 +33,6 @@ export type MedicationStatement_Props = {
     reasonReference?: Array<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
     dosage?: FHIR.Dosage[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

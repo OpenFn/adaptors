@@ -22,11 +22,11 @@ export type MedicationAdministration_Props = {
     status?: string;
     statusReason?: Array<string[] | FHIR.CodeableConcept>;
     category?: string[] | FHIR.CodeableConcept;
-    medication?: string[] | FHIR.CodeableConcept;
+    medication?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     subject?: string | FHIR.Reference;
     context?: string | FHIR.Reference;
     supportingInformation?: Array<string | FHIR.Reference>;
-    effective?: string;
+    effective?: string | FHIR.Period;
     performer?: FHIR.BackboneElement[];
     reasonCode?: Array<string[] | FHIR.CodeableConcept>;
     reasonReference?: Array<string | FHIR.Reference>;
@@ -35,8 +35,6 @@ export type MedicationAdministration_Props = {
     note?: FHIR.Annotation[];
     dosage?: FHIR.BackboneElement;
     eventHistory?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

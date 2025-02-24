@@ -24,7 +24,7 @@ export type ChargeItem_Props = {
     code?: string[] | FHIR.CodeableConcept;
     subject?: string | FHIR.Reference;
     context?: string | FHIR.Reference;
-    occurrence?: string;
+    occurrence?: string | FHIR.Period | FHIR.Timing;
     performer?: FHIR.BackboneElement[];
     performingOrganization?: string | FHIR.Reference;
     requestingOrganization?: string | FHIR.Reference;
@@ -38,12 +38,10 @@ export type ChargeItem_Props = {
     enteredDate?: string;
     reason?: Array<string[] | FHIR.CodeableConcept>;
     service?: Array<string | FHIR.Reference>;
-    product?: string | FHIR.Reference;
+    product?: string | FHIR.Reference | string[] | FHIR.CodeableConcept;
     account?: Array<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
     supportingInformation?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

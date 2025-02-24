@@ -28,8 +28,6 @@ export type RelatedPerson_Props = {
     photo?: FHIR.Attachment[];
     period?: FHIR.Period;
     communication?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -21,15 +21,13 @@ export type DetectedIssue_Props = {
     code?: string[] | FHIR.CodeableConcept;
     severity?: string;
     patient?: string | FHIR.Reference;
-    identified?: string;
+    identified?: string | FHIR.Period;
     author?: string | FHIR.Reference;
     implicated?: Array<string | FHIR.Reference>;
     evidence?: FHIR.BackboneElement[];
     detail?: string;
     reference?: string;
     mitigation?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

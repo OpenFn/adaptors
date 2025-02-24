@@ -31,8 +31,6 @@ export type PaymentReconciliation_Props = {
     detail?: FHIR.BackboneElement[];
     formCode?: string[] | FHIR.CodeableConcept;
     processNote?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -19,9 +19,9 @@ export type MedicationDispense_Props = {
     identifier?: Array<string | FHIR.Identifier>;
     partOf?: Array<string | FHIR.Reference>;
     status?: string;
-    statusReason?: string[] | FHIR.CodeableConcept;
+    statusReason?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     category?: string[] | FHIR.CodeableConcept;
-    medication?: string[] | FHIR.CodeableConcept;
+    medication?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     subject?: string | FHIR.Reference;
     context?: string | FHIR.Reference;
     supportingInformation?: Array<string | FHIR.Reference>;
@@ -40,8 +40,6 @@ export type MedicationDispense_Props = {
     substitution?: FHIR.BackboneElement;
     detectedIssue?: Array<string | FHIR.Reference>;
     eventHistory?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -24,8 +24,6 @@ export type ResearchSubject_Props = {
     assignedArm?: string;
     actualArm?: string;
     consent?: string | FHIR.Reference;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

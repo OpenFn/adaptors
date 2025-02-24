@@ -365,12 +365,14 @@ async function parseProp(
  * will return a simple string type or an object type def
  */
 function getSimpleType(prop: any): string[] {
-  return prop.type.map((t: any) => {
-    if (t.code in typeMappings) {
-      return typeMappings[t.code];
-    }
-    return t.code;
-  });
+  return (
+    prop.type?.map((t: any) => {
+      if (t.code in typeMappings) {
+        return typeMappings[t.code];
+      }
+      return t.code;
+    }) ?? ['any']
+  );
 
   // // TODO maybe restore this
   // if (prop.type.length > 1) {

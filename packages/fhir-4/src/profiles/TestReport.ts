@@ -28,8 +28,6 @@ export type TestReport_Props = {
     setup?: FHIR.BackboneElement;
     test?: FHIR.BackboneElement[];
     teardown?: FHIR.BackboneElement;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -26,8 +26,6 @@ export type AdministrableProductDefinition_Props = {
     device?: string | FHIR.Reference;
     property?: FHIR.BackboneElement[];
     routeOfAdministration?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

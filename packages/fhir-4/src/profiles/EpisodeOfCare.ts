@@ -28,8 +28,6 @@ export type EpisodeOfCare_Props = {
     careManager?: string | FHIR.Reference;
     team?: Array<string | FHIR.Reference>;
     account?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

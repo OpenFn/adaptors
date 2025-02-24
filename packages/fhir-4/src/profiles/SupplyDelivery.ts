@@ -23,12 +23,10 @@ export type SupplyDelivery_Props = {
     patient?: string | FHIR.Reference;
     type?: string[] | FHIR.CodeableConcept;
     suppliedItem?: FHIR.BackboneElement;
-    occurrence?: string;
+    occurrence?: string | FHIR.Period | FHIR.Timing;
     supplier?: string | FHIR.Reference;
     destination?: string | FHIR.Reference;
     receiver?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -20,7 +20,7 @@ export type Evidence_Props = {
     identifier?: Array<string | FHIR.Identifier>;
     version?: string;
     title?: string;
-    citeAs?: string | FHIR.Reference;
+    citeAs?: string | FHIR.Reference | FHIR.markdown;
     status?: string;
     date?: string;
     useContext?: FHIR.UsageContext[];
@@ -41,8 +41,6 @@ export type Evidence_Props = {
     studyType?: string[] | FHIR.CodeableConcept;
     statistic?: FHIR.BackboneElement[];
     certainty?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

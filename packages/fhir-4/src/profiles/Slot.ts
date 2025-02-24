@@ -27,8 +27,6 @@ export type Slot_Props = {
     end?: string;
     overbooked?: boolean;
     comment?: string;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

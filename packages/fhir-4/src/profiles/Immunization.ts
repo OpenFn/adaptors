@@ -44,8 +44,6 @@ export type Immunization_Props = {
     fundingSource?: string[] | FHIR.CodeableConcept;
     reaction?: FHIR.BackboneElement[];
     protocolApplied?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

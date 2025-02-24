@@ -29,11 +29,11 @@ export type ServiceRequest_Props = {
     doNotPerform?: boolean;
     code?: string[] | FHIR.CodeableConcept;
     orderDetail?: Array<string[] | FHIR.CodeableConcept>;
-    quantity?: FHIR.Quantity;
+    quantity?: FHIR.Quantity | FHIR.Ratio | FHIR.Range;
     subject?: string | FHIR.Reference;
     encounter?: string | FHIR.Reference;
-    occurrence?: string;
-    asNeeded?: boolean;
+    occurrence?: string | FHIR.Period | FHIR.Timing;
+    asNeeded?: boolean | string[] | FHIR.CodeableConcept;
     authoredOn?: string;
     requester?: string | FHIR.Reference;
     performerType?: string[] | FHIR.CodeableConcept;
@@ -49,8 +49,6 @@ export type ServiceRequest_Props = {
     note?: FHIR.Annotation[];
     patientInstruction?: string;
     relevantHistory?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

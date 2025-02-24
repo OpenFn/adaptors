@@ -30,8 +30,6 @@ export type PackagedProductDefinition_Props = {
     copackagedIndicator?: boolean;
     manufacturer?: Array<string | FHIR.Reference>;
     package?: FHIR.BackboneElement;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

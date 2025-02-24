@@ -28,8 +28,6 @@ export type PaymentNotice_Props = {
     recipient?: string | FHIR.Reference;
     amount?: FHIR.Money;
     paymentStatus?: string[] | FHIR.CodeableConcept;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

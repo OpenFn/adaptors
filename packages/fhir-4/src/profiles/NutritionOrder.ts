@@ -33,8 +33,6 @@ export type NutritionOrder_Props = {
     supplement?: FHIR.BackboneElement[];
     enteralFormula?: FHIR.BackboneElement;
     note?: FHIR.Annotation[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

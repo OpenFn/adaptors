@@ -27,7 +27,7 @@ export type Procedure_Props = {
     code?: string[] | FHIR.CodeableConcept;
     subject?: string | FHIR.Reference;
     encounter?: string | FHIR.Reference;
-    performed?: string;
+    performed?: string | FHIR.Period | FHIR.Age | FHIR.Range;
     recorder?: string | FHIR.Reference;
     asserter?: string | FHIR.Reference;
     performer?: FHIR.BackboneElement[];
@@ -44,8 +44,6 @@ export type Procedure_Props = {
     focalDevice?: FHIR.BackboneElement[];
     usedReference?: Array<string | FHIR.Reference>;
     usedCode?: Array<string[] | FHIR.CodeableConcept>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

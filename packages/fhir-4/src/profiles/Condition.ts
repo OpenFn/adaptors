@@ -7,7 +7,7 @@ import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
 
-export type AllergyIntolerance_Props = {
+export type Condition_Props = {
     id?: string;
     meta?: FHIR.Meta;
     implicitRules?: string;
@@ -19,65 +19,66 @@ export type AllergyIntolerance_Props = {
     identifier?: Array<string | FHIR.Identifier>;
     clinicalStatus?: string[] | FHIR.CodeableConcept;
     verificationStatus?: string[] | FHIR.CodeableConcept;
-    type?: string;
-    category?: string[];
-    criticality?: string;
+    category?: Array<string[] | FHIR.CodeableConcept>;
+    severity?: string[] | FHIR.CodeableConcept;
     code?: string[] | FHIR.CodeableConcept;
-    patient?: string | FHIR.Reference;
+    bodySite?: Array<string[] | FHIR.CodeableConcept>;
+    subject?: string | FHIR.Reference;
     encounter?: string | FHIR.Reference;
-    onset?: string | FHIR.Age | FHIR.Period | FHIR.Range;
+    onset?: string | FHIR.Age | FHIR.Period | FHIR.Range | string;
+    abatement?: string | FHIR.Age | FHIR.Period | FHIR.Range | string;
     recordedDate?: string;
     recorder?: string | FHIR.Reference;
     asserter?: string | FHIR.Reference;
-    lastOccurrence?: string;
+    stage?: FHIR.BackboneElement[];
+    evidence?: FHIR.BackboneElement[];
     note?: FHIR.Annotation[];
-    reaction?: FHIR.BackboneElement[];
+    initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 
-export default function(props: Partial<AllergyIntolerance_Props>) {
+export default function(props: Partial<Condition_Props>) {
     const resource = {
-        resourceType: "AllergyIntolerance",
+        resourceType: "Condition",
         ...props
     };
-
-    if (!_.isNil(props.identifier)) {
-        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
-        resource.identifier = dt.identifier(props.identifier);
-    }
-
-    if (!_.isNil(props.patient)) {
-        resource.patient = dt.reference(props.patient);
-    }
-
-    if (!_.isNil(props.encounter)) {
-        resource.encounter = dt.reference(props.encounter);
-    }
 
     if (!_.isNil(props.onset)) {
         delete resource.onset;
         dt.composite(resource, "onset", props.onset);
     }
 
-    if (!_.isNil(props.recorder)) {
-        resource.recorder = dt.reference(props.recorder);
+    if (!_.isNil(props.abatement)) {
+        delete resource.abatement;
+        dt.composite(resource, "abatement", props.abatement);
     }
 
-    if (!_.isNil(props.asserter)) {
-        resource.asserter = dt.reference(props.asserter);
-    }
-
-    if (!_.isNil(props.reaction)) {
-        let src = props.reaction;
+    if (!_.isNil(props.stage)) {
+        let src = props.stage;
         if (!Array.isArray(src)) { src = [src]; }
-        resource.reaction = [];
+        resource.stage = [];
 
         for (let item of src) {
-            let _reaction = {
+            let _stage = {
                 ...item
             };
 
-            resource.reaction.push(_reaction);
+            resource.stage.push(_stage);
+        }
+    }
+
+    if (!_.isNil(props.evidence)) {
+        let src = props.evidence;
+        if (!Array.isArray(src)) { src = [src]; }
+        resource.evidence = [];
+
+        for (let item of src) {
+            let _evidence = {
+                ...item
+            };
+
+            resource.evidence.push(_evidence);
         }
     }
 

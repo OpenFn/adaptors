@@ -36,8 +36,6 @@ export type ImagingStudy_Props = {
     note?: FHIR.Annotation[];
     description?: string;
     series?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

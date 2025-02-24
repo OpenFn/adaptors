@@ -24,8 +24,6 @@ export type EnrollmentResponse_Props = {
     created?: string;
     organization?: string | FHIR.Reference;
     requestProvider?: string | FHIR.Reference;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

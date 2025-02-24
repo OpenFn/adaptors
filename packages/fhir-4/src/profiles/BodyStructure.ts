@@ -24,8 +24,6 @@ export type BodyStructure_Props = {
     description?: string;
     image?: FHIR.Attachment[];
     patient?: string | FHIR.Reference;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

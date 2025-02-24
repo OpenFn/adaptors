@@ -27,8 +27,6 @@ export type ClinicalUseDefinition_Props = {
     population?: Array<string | FHIR.Reference>;
     undesirableEffect?: FHIR.BackboneElement;
     warning?: FHIR.BackboneElement;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

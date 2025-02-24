@@ -38,8 +38,6 @@ export type Questionnaire_Props = {
     effectivePeriod?: FHIR.Period;
     code?: FHIR.Coding[];
     item?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

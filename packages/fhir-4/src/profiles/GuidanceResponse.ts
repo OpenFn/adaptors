@@ -18,7 +18,7 @@ export type GuidanceResponse_Props = {
     modifierExtension?: FHIR.Extension[];
     requestIdentifier?: string | FHIR.Identifier;
     identifier?: Array<string | FHIR.Identifier>;
-    module?: string;
+    module?: string | any | string[] | FHIR.CodeableConcept;
     status?: string;
     subject?: string | FHIR.Reference;
     encounter?: string | FHIR.Reference;
@@ -31,8 +31,6 @@ export type GuidanceResponse_Props = {
     outputParameters?: string | FHIR.Reference;
     result?: string | FHIR.Reference;
     dataRequirement?: FHIR.DataRequirement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -23,8 +23,6 @@ export type EnrollmentRequest_Props = {
     provider?: string | FHIR.Reference;
     candidate?: string | FHIR.Reference;
     coverage?: string | FHIR.Reference;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

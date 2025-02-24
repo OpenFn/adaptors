@@ -25,7 +25,7 @@ export type PlanDefinition_Props = {
     type?: string[] | FHIR.CodeableConcept;
     status?: string;
     experimental?: boolean;
-    subject?: string[] | FHIR.CodeableConcept;
+    subject?: string[] | FHIR.CodeableConcept | string | FHIR.Reference | any;
     date?: string;
     publisher?: string;
     contact?: FHIR.ContactDetail[];
@@ -47,8 +47,6 @@ export type PlanDefinition_Props = {
     library?: any[];
     goal?: FHIR.BackboneElement[];
     action?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

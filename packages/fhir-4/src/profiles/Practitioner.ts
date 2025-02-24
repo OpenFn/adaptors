@@ -26,8 +26,6 @@ export type Practitioner_Props = {
     photo?: FHIR.Attachment[];
     qualification?: FHIR.BackboneElement[];
     communication?: Array<string[] | FHIR.CodeableConcept>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

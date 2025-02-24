@@ -26,8 +26,6 @@ export type DeviceMetric_Props = {
     category?: string;
     measurementPeriod?: FHIR.Timing;
     calibration?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

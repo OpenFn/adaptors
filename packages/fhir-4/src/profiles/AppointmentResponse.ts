@@ -24,8 +24,6 @@ export type AppointmentResponse_Props = {
     actor?: string | FHIR.Reference;
     participantStatus?: string;
     comment?: string;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

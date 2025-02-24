@@ -24,7 +24,7 @@ export type Measure_Props = {
     subtitle?: string;
     status?: string;
     experimental?: boolean;
-    subject?: string[] | FHIR.CodeableConcept;
+    subject?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     date?: string;
     publisher?: string;
     contact?: FHIR.ContactDetail[];
@@ -57,8 +57,6 @@ export type Measure_Props = {
     guidance?: FHIR.markdown;
     group?: FHIR.BackboneElement[];
     supplementalData?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

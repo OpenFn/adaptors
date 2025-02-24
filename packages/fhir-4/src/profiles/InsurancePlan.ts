@@ -30,8 +30,6 @@ export type InsurancePlan_Props = {
     network?: Array<string | FHIR.Reference>;
     coverage?: FHIR.BackboneElement[];
     plan?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -27,8 +27,6 @@ export type Account_Props = {
     description?: string;
     guarantor?: FHIR.BackboneElement[];
     partOf?: string | FHIR.Reference;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

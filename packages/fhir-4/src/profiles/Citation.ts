@@ -45,8 +45,6 @@ export type Citation_Props = {
     statusDate?: FHIR.BackboneElement[];
     relatesTo?: FHIR.BackboneElement[];
     citedArtifact?: FHIR.BackboneElement;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

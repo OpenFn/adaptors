@@ -23,8 +23,6 @@ export type ManufacturedItemDefinition_Props = {
     manufacturer?: Array<string | FHIR.Reference>;
     ingredient?: Array<string[] | FHIR.CodeableConcept>;
     property?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

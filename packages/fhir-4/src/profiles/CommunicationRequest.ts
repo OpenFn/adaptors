@@ -30,7 +30,7 @@ export type CommunicationRequest_Props = {
     about?: Array<string | FHIR.Reference>;
     encounter?: string | FHIR.Reference;
     payload?: FHIR.BackboneElement[];
-    occurrence?: string;
+    occurrence?: string | FHIR.Period;
     authoredOn?: string;
     requester?: string | FHIR.Reference;
     recipient?: Array<string | FHIR.Reference>;
@@ -38,8 +38,6 @@ export type CommunicationRequest_Props = {
     reasonCode?: Array<string[] | FHIR.CodeableConcept>;
     reasonReference?: Array<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -25,7 +25,7 @@ export type Media_Props = {
     view?: string[] | FHIR.CodeableConcept;
     subject?: string | FHIR.Reference;
     encounter?: string | FHIR.Reference;
-    created?: string;
+    created?: string | FHIR.Period;
     issued?: string;
     operator?: string | FHIR.Reference;
     reasonCode?: Array<string[] | FHIR.CodeableConcept>;
@@ -38,8 +38,6 @@ export type Media_Props = {
     duration?: number;
     content?: FHIR.Attachment;
     note?: FHIR.Annotation[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

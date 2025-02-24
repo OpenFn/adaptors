@@ -43,8 +43,6 @@ export type Claim_Props = {
     accident?: FHIR.BackboneElement;
     item?: FHIR.BackboneElement[];
     total?: FHIR.Money;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

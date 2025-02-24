@@ -24,7 +24,7 @@ export type RiskAssessment_Props = {
     code?: string[] | FHIR.CodeableConcept;
     subject?: string | FHIR.Reference;
     encounter?: string | FHIR.Reference;
-    occurrence?: string;
+    occurrence?: string | FHIR.Period;
     condition?: string | FHIR.Reference;
     performer?: string | FHIR.Reference;
     reasonCode?: Array<string[] | FHIR.CodeableConcept>;
@@ -33,8 +33,6 @@ export type RiskAssessment_Props = {
     prediction?: FHIR.BackboneElement[];
     mitigation?: string;
     note?: FHIR.Annotation[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

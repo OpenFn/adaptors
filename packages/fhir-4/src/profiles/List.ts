@@ -29,8 +29,6 @@ export type List_Props = {
     note?: FHIR.Annotation[];
     entry?: FHIR.BackboneElement[];
     emptyReason?: string[] | FHIR.CodeableConcept;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

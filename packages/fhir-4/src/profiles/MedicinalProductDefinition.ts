@@ -44,8 +44,6 @@ export type MedicinalProductDefinition_Props = {
     crossReference?: FHIR.BackboneElement[];
     operation?: FHIR.BackboneElement[];
     characteristic?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -23,8 +23,6 @@ export type Substance_Props = {
     description?: string;
     instance?: FHIR.BackboneElement[];
     ingredient?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

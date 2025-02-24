@@ -23,7 +23,7 @@ export type DiagnosticReport_Props = {
     code?: string[] | FHIR.CodeableConcept;
     subject?: string | FHIR.Reference;
     encounter?: string | FHIR.Reference;
-    effective?: string;
+    effective?: string | FHIR.Period;
     issued?: string;
     performer?: Array<string | FHIR.Reference>;
     resultsInterpreter?: Array<string | FHIR.Reference>;
@@ -34,8 +34,6 @@ export type DiagnosticReport_Props = {
     conclusion?: string;
     conclusionCode?: Array<string[] | FHIR.CodeableConcept>;
     presentedForm?: FHIR.Attachment[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

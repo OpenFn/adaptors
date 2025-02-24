@@ -32,8 +32,6 @@ export type Patient_Props = {
     generalPractitioner?: Array<string | FHIR.Reference>;
     managingOrganization?: string | FHIR.Reference;
     link?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 
@@ -42,6 +40,11 @@ export default function(props: Partial<Patient_Props>) {
         resourceType: "Patient",
         ...props
     };
+
+    if (!_.isNil(props.identifier)) {
+        if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
+        resource.identifier = dt.identifier(props.identifier);
+    }
 
     if (!_.isNil(props.deceased)) {
         delete resource.deceased;
@@ -79,6 +82,15 @@ export default function(props: Partial<Patient_Props>) {
 
             resource.communication.push(_communication);
         }
+    }
+
+    if (!_.isNil(props.generalPractitioner)) {
+        if (!Array.isArray(props.generalPractitioner)) { props.generalPractitioner = [props.generalPractitioner]; }
+        resource.generalPractitioner = dt.reference(props.generalPractitioner);
+    }
+
+    if (!_.isNil(props.managingOrganization)) {
+        resource.managingOrganization = dt.reference(props.managingOrganization);
     }
 
     if (!_.isNil(props.link)) {

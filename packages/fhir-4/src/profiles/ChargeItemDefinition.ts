@@ -39,8 +39,6 @@ export type ChargeItemDefinition_Props = {
     instance?: Array<string | FHIR.Reference>;
     applicability?: FHIR.BackboneElement[];
     propertyGroup?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

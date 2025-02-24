@@ -40,8 +40,6 @@ export type ResearchStudy_Props = {
     note?: FHIR.Annotation[];
     arm?: FHIR.BackboneElement[];
     objective?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

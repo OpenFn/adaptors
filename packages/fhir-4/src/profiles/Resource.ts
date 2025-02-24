@@ -7,21 +7,19 @@ import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
 
-export type DomainResource_Props = {
+export type Resource_Props = {
     id?: string;
     meta?: FHIR.Meta;
     implicitRules?: string;
     language?: string;
-    text?: FHIR.Narrative;
-    contained?: any[];
-    extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
+    initialiser?: any;
+    typeShorthands?: any;
     [key: string]: any;
 };
 
-export default function(props: Partial<DomainResource_Props>) {
+export default function(props: Partial<Resource_Props>) {
     const resource = {
-        resourceType: "DomainResource",
+        resourceType: "Resource",
         ...props
     };
 

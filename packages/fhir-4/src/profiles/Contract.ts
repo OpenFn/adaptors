@@ -37,7 +37,7 @@ export type Contract_Props = {
     alias?: string[];
     author?: string | FHIR.Reference;
     scope?: string[] | FHIR.CodeableConcept;
-    topic?: string[] | FHIR.CodeableConcept;
+    topic?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     type?: string[] | FHIR.CodeableConcept;
     subType?: Array<string[] | FHIR.CodeableConcept>;
     contentDefinition?: FHIR.BackboneElement;
@@ -48,9 +48,7 @@ export type Contract_Props = {
     friendly?: FHIR.BackboneElement[];
     legal?: FHIR.BackboneElement[];
     rule?: FHIR.BackboneElement[];
-    legallyBinding?: FHIR.Attachment;
-    initialiser?: any;
-    typeShorthands?: any;
+    legallyBinding?: FHIR.Attachment | string | FHIR.Reference;
     [key: string]: any;
 };
 

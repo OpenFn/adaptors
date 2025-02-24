@@ -39,8 +39,6 @@ export type Encounter_Props = {
     location?: FHIR.BackboneElement[];
     serviceProvider?: string | FHIR.Reference;
     partOf?: string | FHIR.Reference;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

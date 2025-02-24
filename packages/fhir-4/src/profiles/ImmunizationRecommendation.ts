@@ -21,8 +21,6 @@ export type ImmunizationRecommendation_Props = {
     date?: string;
     authority?: string | FHIR.Reference;
     recommendation?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

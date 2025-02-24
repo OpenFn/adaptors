@@ -32,8 +32,6 @@ export type Invoice_Props = {
     totalGross?: FHIR.Money;
     paymentTerms?: FHIR.markdown;
     note?: FHIR.Annotation[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

@@ -110,7 +110,15 @@ const generateProfile = (
     )
   );
 
-  const typedef = generateType(profile.type, profile, mappings, fhirTypes);
+  const typedef = generateType(
+    profile.type,
+    profile,
+    {
+      ...mappings,
+      overrides,
+    },
+    fhirTypes
+  );
 
   statements.push(typedef);
 
@@ -138,7 +146,7 @@ const generateJsDocs = (schema: Schema[], ignore: string[] = []) => {
   for (const propName of validProps) {
     const prop = profile.props[propName];
     // TODO do I need the typemap here?
-    props.push(`{${prop.type}} [props.${propName}] - ${prop.desc}`);
+    props.push(`{${prop.type.join('|')}} [props.${propName}] - ${prop.desc}`);
   }
 
   return props.map(p => `  * @param ${p}`).join('\n');
@@ -335,21 +343,11 @@ const mapProps = (schema, mappings) => {
       } else if (spec.typeDef) {
         props.push(mapTypeDef(key, mappings[key], spec));
       } else {
-        switch (spec.type) {
-          case 'string':
-          case 'Period':
-          case 'CodeableConcept':
-            // Do nothing - the prop will be spread to the resource
-            break;
-          case 'Reference':
-            props.push(mapReference(key, mappings[key], spec));
-            break;
-          case 'Identifier':
-            props.push(mapIdentifier(key, mappings[key] || {}, spec));
-            break;
-          default:
-            // Do nothing - the prop will be spread to the resource
-            break;
+        // TODO what happens if the type is like `reference | identifier`? Such contrasting types?
+        if (spec.type.includes('Reference')) {
+          props.push(mapReference(key, mappings[key], spec));
+        } else if (spec.type.includes('Identifier')) {
+          props.push(mapIdentifier(key, mappings[key] || {}, spec));
         }
       }
     } else {

@@ -24,8 +24,6 @@ export type Schedule_Props = {
     actor?: Array<string | FHIR.Reference>;
     planningHorizon?: FHIR.Period;
     comment?: string;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

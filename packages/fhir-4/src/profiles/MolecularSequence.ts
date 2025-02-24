@@ -32,8 +32,6 @@ export type MolecularSequence_Props = {
     repository?: FHIR.BackboneElement[];
     pointer?: Array<string | FHIR.Reference>;
     structureVariant?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

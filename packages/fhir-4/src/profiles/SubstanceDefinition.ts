@@ -35,8 +35,6 @@ export type SubstanceDefinition_Props = {
     name?: FHIR.BackboneElement[];
     relationship?: FHIR.BackboneElement[];
     sourceMaterial?: FHIR.BackboneElement;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

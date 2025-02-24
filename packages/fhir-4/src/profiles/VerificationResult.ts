@@ -30,8 +30,6 @@ export type VerificationResult_Props = {
     primarySource?: FHIR.BackboneElement[];
     attestation?: FHIR.BackboneElement;
     validator?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

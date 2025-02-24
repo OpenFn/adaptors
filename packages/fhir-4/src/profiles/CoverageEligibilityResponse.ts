@@ -20,7 +20,7 @@ export type CoverageEligibilityResponse_Props = {
     status?: string;
     purpose?: string[];
     patient?: string | FHIR.Reference;
-    serviced?: string;
+    serviced?: string | FHIR.Period;
     created?: string;
     requestor?: string | FHIR.Reference;
     request?: string | FHIR.Reference;
@@ -31,8 +31,6 @@ export type CoverageEligibilityResponse_Props = {
     preAuthRef?: string;
     form?: string[] | FHIR.CodeableConcept;
     error?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

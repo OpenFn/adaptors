@@ -43,8 +43,6 @@ export type ClaimResponse_Props = {
     communicationRequest?: Array<string | FHIR.Reference>;
     insurance?: FHIR.BackboneElement[];
     error?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

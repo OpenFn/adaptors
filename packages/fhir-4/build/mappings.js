@@ -1,8 +1,8 @@
 export default {
   include: [],
 
-  include: ['Patient'],
-  // exclude: ['Condition', 'Endpoint', 'Resource', 'TestScript'],
+  // include: ['Observation'],
+  exclude: ['Condition', 'Endpoint', 'Resource', 'TestScript'],
   overrides: {},
   valueSets: [],
   // This function should run on every resource

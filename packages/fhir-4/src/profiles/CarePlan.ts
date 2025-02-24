@@ -39,8 +39,6 @@ export type CarePlan_Props = {
     goal?: Array<string | FHIR.Reference>;
     activity?: FHIR.BackboneElement[];
     note?: FHIR.Annotation[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

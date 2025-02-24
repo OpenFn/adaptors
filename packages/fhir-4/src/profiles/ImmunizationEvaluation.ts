@@ -27,10 +27,8 @@ export type ImmunizationEvaluation_Props = {
     doseStatusReason?: Array<string[] | FHIR.CodeableConcept>;
     description?: string;
     series?: string;
-    doseNumber?: number;
-    seriesDoses?: number;
-    initialiser?: any;
-    typeShorthands?: any;
+    doseNumber?: number | string;
+    seriesDoses?: number | string;
     [key: string]: any;
 };
 

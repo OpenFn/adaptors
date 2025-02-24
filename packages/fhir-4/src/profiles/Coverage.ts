@@ -33,8 +33,6 @@ export type Coverage_Props = {
     costToBeneficiary?: FHIR.BackboneElement[];
     subrogation?: boolean;
     contract?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

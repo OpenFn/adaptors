@@ -25,11 +25,11 @@ export type DeviceRequest_Props = {
     status?: string;
     intent?: string;
     priority?: string;
-    code?: string | FHIR.Reference;
+    code?: string | FHIR.Reference | string[] | FHIR.CodeableConcept;
     parameter?: FHIR.BackboneElement[];
     subject?: string | FHIR.Reference;
     encounter?: string | FHIR.Reference;
-    occurrence?: string;
+    occurrence?: string | FHIR.Period | FHIR.Timing;
     authoredOn?: string;
     requester?: string | FHIR.Reference;
     performerType?: string[] | FHIR.CodeableConcept;
@@ -40,8 +40,6 @@ export type DeviceRequest_Props = {
     supportingInfo?: Array<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
     relevantHistory?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

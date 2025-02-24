@@ -1,6 +1,6 @@
 import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 import { print, parse } from 'recast';
-
+import _ from 'lodash';
 import { getBuilderName, getTypeName } from './util';
 import { PropDef } from './generate-schema';
 import { MappingSpec } from './types';
@@ -8,6 +8,7 @@ import { MappingSpec } from './types';
 // Map some fhir types to js types
 // TODO we should be able to take these from mappings
 const typeMap = {
+  time: 'string',
   date: 'string',
   dateTime: 'string',
   instant: 'string',
@@ -31,13 +32,15 @@ export const generateType = (
   const props = [];
 
   // // find the superset of schema keys and mappings keys
-  const allKeys = Object.keys(Object.assign({}, schema.props, mappings));
+  const allKeys = Object.keys(
+    Object.assign({}, schema.props, mappings.overrides)
+  );
 
   // // Now for each key, build a type
   // // Note that mappings should overwrite schema if conflict
   for (const key of allKeys) {
     const s = schema.props[key] || {};
-    const m = mappings[key] || {};
+    const m = mappings.overrides[key] || {};
 
     if (m == false || m.type === false) {
       // Ignore this key if it's mapped out
@@ -67,6 +70,9 @@ export const generateType = (
     if (!Array.isArray(t)) {
       t = [t];
     }
+    // Map the simple types and remove duplicates
+    t = _.uniq(t.map(incomingType => typeMap[incomingType] ?? incomingType));
+    // Now map them to nodes
     const types = t.map(t =>
       createTypeNode(
         t in fhirTypes ? `FHIR.${t}` : t,
@@ -140,14 +146,12 @@ const generateInlineType = (typeDef: PropDef) => {
 
 // TODO maybe the sig is schema & mappings?
 const createTypeNode = (
-  incomingType: string,
+  type: string,
   isArray: boolean,
   values?: string[],
   shorthands?: string[]
 ) => {
   let node;
-  const type = typeMap[incomingType] ?? incomingType;
-
   // TODO restore and adapt this for values
   // if (values) {
   //   if (values.length > 1) {

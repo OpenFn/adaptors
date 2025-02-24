@@ -39,8 +39,6 @@ export type Communication_Props = {
     reasonReference?: Array<string | FHIR.Reference>;
     payload?: FHIR.BackboneElement[];
     note?: FHIR.Annotation[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

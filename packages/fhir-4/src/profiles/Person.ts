@@ -26,8 +26,6 @@ export type Person_Props = {
     managingOrganization?: string | FHIR.Reference;
     active?: boolean;
     link?: FHIR.BackboneElement[];
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 

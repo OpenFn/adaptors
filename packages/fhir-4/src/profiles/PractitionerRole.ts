@@ -30,8 +30,6 @@ export type PractitionerRole_Props = {
     notAvailable?: FHIR.BackboneElement[];
     availabilityExceptions?: string;
     endpoint?: Array<string | FHIR.Reference>;
-    initialiser?: any;
-    typeShorthands?: any;
     [key: string]: any;
 };
 
