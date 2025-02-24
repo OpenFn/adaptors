@@ -62,15 +62,15 @@ async function login(state) {
 /**
  * Create a record in Odoo
  * @public
- * @example
+ * @example <caption> Create a partner record with an external Id</caption>
  * create("res.partner", { name: "Kool Keith" }, {externalId: 23});
  * @function
  * @param {string} model - The specific record model i.e. "res.partner"
  * @param {object} data - The data to be created in JSON.
- * @param {object} options - Optional external ID for the record.
+ * @param {object} options - Options to send to the request. Includes an optional external ID for the record.
  * @returns {Operation}
  */
-export function create(model, data, options) {
+export function create(model, data, options = {}) {
   return async state => {
     const [resolvedModel, resolvedData, resolvedOptions] = expandReferences(
       state,
@@ -79,11 +79,12 @@ export function create(model, data, options) {
       options
     );
 
-    console.log(resolvedModel, resolvedData, resolvedOptions);
+    console.log(`Creating a ${resolvedModel} resource...`);
+
     const response = await odooConn.create(
       resolvedModel,
       resolvedData,
-      resolvedOptions.externalId
+      resolvedOptions?.externalId
     );
 
     return composeNextState(state, response);
@@ -94,13 +95,13 @@ export function create(model, data, options) {
  * Get a record from Odoo. Returns all fields unless a field list is provided as a third argument
  * @public
  * @example <caption>Download records with select fields</caption>
- * read("res.partner", [1] , [name]);
+ * read("res.partner", [1] , ['name']);
  * @example <caption>Download a single record with all fields</caption>
  * read("res.partner", $.recordIds);
  * @function
  * @param {string} model - The specific record model from i.e. "res.partner"
  * @param {number} recordId - An array of record IDs to read.
- * @param {string} fields - An optional array of fields to read from the record.
+ * @param {string[]} fields - An optional array of field strings to read from the record.
  * @returns {Operation}
  */
 export function read(model, recordId, fields = []) {
@@ -111,8 +112,7 @@ export function read(model, recordId, fields = []) {
       recordId,
       fields
     );
-
-    console.log(resolvedModel, resolvedRecordId, resolvedFields);
+    console.log(`Reading a ${resolvedModel} resource...`);
     const response = await odooConn.read(
       resolvedModel,
       resolvedRecordId,
@@ -142,7 +142,7 @@ export function update(model, recordId, data) {
       data
     );
 
-    console.log(resolvedModel, resolvedRecordId, resolvedData);
+    console.log(`Updating a ${resolvedModel} resource...`);
     const response = await odooConn.update(
       resolvedModel,
       resolvedRecordId,
@@ -170,7 +170,8 @@ export function deleteRecord(model, recordId) {
       recordId
     );
 
-    console.log(resolvedModel, resolvedRecordId);
+    console.log(`Deleting a ${resolvedModel} resource...`);
+
     const response = await odooConn.delete(resolvedModel, resolvedRecordId);
     return composeNextState(state, response);
   };
