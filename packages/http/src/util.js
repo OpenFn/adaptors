@@ -64,17 +64,10 @@ export function request(method, path, params, callback = s => s) {
       params
     );
 
-    let { body, headers = {} } = resolvedParams;
-
-    if (resolvedParams.json) {
-      console.warn(
-        'WARNING: The `json` option has been deprecated. Use `body` instead'
-      );
-      body = resolvedParams.json;
-    }
+    let { body, headers = { 'Content-Type': 'application/json' } } = resolvedParams;
 
     if (resolvedParams.form) {
-      body = encodeFormBody(resolvedParams.form);
+      body = encodeFormBody(body);
     }
 
     const baseUrl = state.configuration?.baseUrl;
