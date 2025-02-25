@@ -3,11 +3,11 @@ import * as util from './Utils';
 
 /**
  * Options object
- * @typedef {Object} RequestOptions
+ * @typedef {Object} HTTPRequestOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
  * @property {object} headers - An object of all request headers
  * @property {object} body - The request body (as JSON)
- * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
+ * @property {string} [parseAs=json] - The response format to parse (e.g., 'json', 'text', or 'stream')
  */
 
 /**
@@ -15,16 +15,17 @@ import * as util from './Utils';
  * @example <caption>GET request with a URL query</caption>
  * http.request("GET",
  *   "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8", {
- *    query:{ 
- *       limit: 1, 
- *       offset: 20 
+ *    query:{
+ *       limit: 1,
+ *       offset: 20
  *    },
  * });
  * @function
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
- * @param {RequestOptions}  [options={}] - An object containing query, headers, and body for the request
+ * @param {HTTPRequestOptions}  [options={}] - An object containing query, headers, and body for the request
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function request(method, path, options = {}) {
@@ -58,19 +59,28 @@ export function request(method, path, options = {}) {
  *  }
  *  )
  * @param {string} path - path to resource
- * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
  * @returns {operation}
  */
 export function get(path, options = {}) {
   return async state => {
-    const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
+    const [resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      path,
+      options
+    );
 
-    const response = await util.request(state, 'GET', resolvedPath, resolvedOptions);
+    const response = await util.request(
+      state,
+      'GET',
+      resolvedPath,
+      resolvedOptions
+    );
 
     return util.prepareNextState(state, response);
   };
 }
-
 
 /**
  * Make a POST request to an OpenMRS endpoint
@@ -95,23 +105,33 @@ export function get(path, options = {}) {
  * )
  * @param {string} path - path to resource
  * @param {any} data - the payload
- * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
  * @returns {operation}
  */
 export function post(path, data, options = {}) {
-  return  async state => {
-    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(state, path, data, options);
+  return async state => {
+    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
+      state,
+      path,
+      data,
+      options
+    );
 
     const optionsObject = {
       data: resolvedData,
-      ...resolvedOptions
-    }
-    const response = await util.request(state, 'POST', resolvedPath, optionsObject);
+      ...resolvedOptions,
+    };
+    const response = await util.request(
+      state,
+      'POST',
+      resolvedPath,
+      optionsObject
+    );
 
     return util.prepareNextState(state, response);
-  }
+  };
 }
-
 
 /**
  * Make a DELETE request to an OpenMRS endpoint
@@ -123,17 +143,27 @@ export function post(path, data, options = {}) {
  *  "/ws/rest/v1/patient/abc/"
  * )
  * @param {string} path - path to resource
- * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
  * @returns {operation}
  */
- function _delete(path, options = {}) {
-  return  async state => {
-    const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
+function _delete(path, options = {}) {
+  return async state => {
+    const [resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      path,
+      options
+    );
 
-    const response = await util.request(state, 'DELETE', resolvedPath, resolvedOptions);
+    const response = await util.request(
+      state,
+      'DELETE',
+      resolvedPath,
+      resolvedOptions
+    );
 
     return util.prepareNextState(state, response);
-  }
+  };
 }
 
 export { _delete as delete };
