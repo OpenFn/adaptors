@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type OrganizationAffiliation_Props = {
     id?: string;
@@ -16,18 +17,18 @@ export type OrganizationAffiliation_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     active?: boolean;
     period?: FHIR.Period;
     organization?: string | FHIR.Reference;
     participatingOrganization?: string | FHIR.Reference;
-    network?: Array<string | FHIR.Reference>;
-    code?: Array<string[] | FHIR.CodeableConcept>;
-    specialty?: Array<string[] | FHIR.CodeableConcept>;
-    location?: Array<string | FHIR.Reference>;
-    healthcareService?: Array<string | FHIR.Reference>;
+    network?: MaybeArray<string | FHIR.Reference>;
+    code?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    specialty?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    location?: MaybeArray<string | FHIR.Reference>;
+    healthcareService?: MaybeArray<string | FHIR.Reference>;
     telecom?: FHIR.ContactPoint[];
-    endpoint?: Array<string | FHIR.Reference>;
+    endpoint?: MaybeArray<string | FHIR.Reference>;
     [key: string]: any;
 };
 

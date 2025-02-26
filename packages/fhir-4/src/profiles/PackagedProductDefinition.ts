@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type PackagedProductDefinition_Props = {
     id?: string;
@@ -16,19 +17,19 @@ export type PackagedProductDefinition_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     name?: string;
     type?: string[] | FHIR.CodeableConcept;
-    packageFor?: Array<string | FHIR.Reference>;
+    packageFor?: MaybeArray<string | FHIR.Reference>;
     status?: string[] | FHIR.CodeableConcept;
     statusDate?: string;
     containedItemQuantity?: FHIR.Quantity[];
     description?: FHIR.markdown;
     legalStatusOfSupply?: FHIR.BackboneElement[];
     marketingStatus?: FHIR.MarketingStatus[];
-    characteristic?: Array<string[] | FHIR.CodeableConcept>;
+    characteristic?: MaybeArray<string[] | FHIR.CodeableConcept>;
     copackagedIndicator?: boolean;
-    manufacturer?: Array<string | FHIR.Reference>;
+    manufacturer?: MaybeArray<string | FHIR.Reference>;
     package?: FHIR.BackboneElement;
     [key: string]: any;
 };

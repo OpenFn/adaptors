@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Medication_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type Medication_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     code?: string[] | FHIR.CodeableConcept;
     status?: string;
     manufacturer?: string | FHIR.Reference;

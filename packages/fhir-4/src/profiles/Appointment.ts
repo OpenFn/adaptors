@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Appointment_Props = {
     id?: string;
@@ -16,26 +17,26 @@ export type Appointment_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     status?: string;
     cancelationReason?: string[] | FHIR.CodeableConcept;
-    serviceCategory?: Array<string[] | FHIR.CodeableConcept>;
-    serviceType?: Array<string[] | FHIR.CodeableConcept>;
-    specialty?: Array<string[] | FHIR.CodeableConcept>;
+    serviceCategory?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    serviceType?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    specialty?: MaybeArray<string[] | FHIR.CodeableConcept>;
     appointmentType?: string[] | FHIR.CodeableConcept;
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
-    reasonReference?: Array<string | FHIR.Reference>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    reasonReference?: MaybeArray<string | FHIR.Reference>;
     priority?: number;
     description?: string;
-    supportingInformation?: Array<string | FHIR.Reference>;
+    supportingInformation?: MaybeArray<string | FHIR.Reference>;
     start?: string;
     end?: string;
     minutesDuration?: number;
-    slot?: Array<string | FHIR.Reference>;
+    slot?: MaybeArray<string | FHIR.Reference>;
     created?: string;
     comment?: string;
     patientInstruction?: string;
-    basedOn?: Array<string | FHIR.Reference>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
     participant?: FHIR.BackboneElement[];
     requestedPeriod?: FHIR.Period[];
     [key: string]: any;

@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type MolecularSequence_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type MolecularSequence_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     type?: string;
     coordinateSystem?: number;
     patient?: string | FHIR.Reference;
@@ -30,7 +31,7 @@ export type MolecularSequence_Props = {
     quality?: FHIR.BackboneElement[];
     readCoverage?: number;
     repository?: FHIR.BackboneElement[];
-    pointer?: Array<string | FHIR.Reference>;
+    pointer?: MaybeArray<string | FHIR.Reference>;
     structureVariant?: FHIR.BackboneElement[];
     [key: string]: any;
 };

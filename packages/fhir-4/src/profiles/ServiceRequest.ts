@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type ServiceRequest_Props = {
     id?: string;
@@ -16,19 +17,19 @@ export type ServiceRequest_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    basedOn?: Array<string | FHIR.Reference>;
-    replaces?: Array<string | FHIR.Reference>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
+    replaces?: MaybeArray<string | FHIR.Reference>;
     requisition?: string | FHIR.Identifier;
     status?: string;
     intent?: string;
-    category?: Array<string[] | FHIR.CodeableConcept>;
+    category?: MaybeArray<string[] | FHIR.CodeableConcept>;
     priority?: string;
     doNotPerform?: boolean;
     code?: string[] | FHIR.CodeableConcept;
-    orderDetail?: Array<string[] | FHIR.CodeableConcept>;
+    orderDetail?: MaybeArray<string[] | FHIR.CodeableConcept>;
     quantity?: FHIR.Quantity | FHIR.Ratio | FHIR.Range;
     subject?: string | FHIR.Reference;
     encounter?: string | FHIR.Reference;
@@ -37,18 +38,18 @@ export type ServiceRequest_Props = {
     authoredOn?: string;
     requester?: string | FHIR.Reference;
     performerType?: string[] | FHIR.CodeableConcept;
-    performer?: Array<string | FHIR.Reference>;
-    locationCode?: Array<string[] | FHIR.CodeableConcept>;
-    locationReference?: Array<string | FHIR.Reference>;
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
-    reasonReference?: Array<string | FHIR.Reference>;
-    insurance?: Array<string | FHIR.Reference>;
-    supportingInfo?: Array<string | FHIR.Reference>;
-    specimen?: Array<string | FHIR.Reference>;
-    bodySite?: Array<string[] | FHIR.CodeableConcept>;
+    performer?: MaybeArray<string | FHIR.Reference>;
+    locationCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    locationReference?: MaybeArray<string | FHIR.Reference>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    reasonReference?: MaybeArray<string | FHIR.Reference>;
+    insurance?: MaybeArray<string | FHIR.Reference>;
+    supportingInfo?: MaybeArray<string | FHIR.Reference>;
+    specimen?: MaybeArray<string | FHIR.Reference>;
+    bodySite?: MaybeArray<string[] | FHIR.CodeableConcept>;
     note?: FHIR.Annotation[];
     patientInstruction?: string;
-    relevantHistory?: Array<string | FHIR.Reference>;
+    relevantHistory?: MaybeArray<string | FHIR.Reference>;
     [key: string]: any;
 };
 

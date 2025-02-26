@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type SupplyRequest_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type SupplyRequest_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     status?: string;
     category?: string[] | FHIR.CodeableConcept;
     priority?: string;
@@ -26,9 +27,9 @@ export type SupplyRequest_Props = {
     occurrence?: string | FHIR.Period | FHIR.Timing;
     authoredOn?: string;
     requester?: string | FHIR.Reference;
-    supplier?: Array<string | FHIR.Reference>;
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
-    reasonReference?: Array<string | FHIR.Reference>;
+    supplier?: MaybeArray<string | FHIR.Reference>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    reasonReference?: MaybeArray<string | FHIR.Reference>;
     deliverFrom?: string | FHIR.Reference;
     deliverTo?: string | FHIR.Reference;
     [key: string]: any;

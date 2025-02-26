@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type RequestGroup_Props = {
     id?: string;
@@ -16,11 +17,11 @@ export type RequestGroup_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    basedOn?: Array<string | FHIR.Reference>;
-    replaces?: Array<string | FHIR.Reference>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
+    replaces?: MaybeArray<string | FHIR.Reference>;
     groupIdentifier?: string | FHIR.Identifier;
     status?: string;
     intent?: string;
@@ -30,8 +31,8 @@ export type RequestGroup_Props = {
     encounter?: string | FHIR.Reference;
     authoredOn?: string;
     author?: string | FHIR.Reference;
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
-    reasonReference?: Array<string | FHIR.Reference>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    reasonReference?: MaybeArray<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
     action?: FHIR.BackboneElement[];
     [key: string]: any;

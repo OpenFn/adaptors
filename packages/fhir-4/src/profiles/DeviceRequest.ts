@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type DeviceRequest_Props = {
     id?: string;
@@ -16,11 +17,11 @@ export type DeviceRequest_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    basedOn?: Array<string | FHIR.Reference>;
-    priorRequest?: Array<string | FHIR.Reference>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
+    priorRequest?: MaybeArray<string | FHIR.Reference>;
     groupIdentifier?: string | FHIR.Identifier;
     status?: string;
     intent?: string;
@@ -34,12 +35,12 @@ export type DeviceRequest_Props = {
     requester?: string | FHIR.Reference;
     performerType?: string[] | FHIR.CodeableConcept;
     performer?: string | FHIR.Reference;
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
-    reasonReference?: Array<string | FHIR.Reference>;
-    insurance?: Array<string | FHIR.Reference>;
-    supportingInfo?: Array<string | FHIR.Reference>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    reasonReference?: MaybeArray<string | FHIR.Reference>;
+    insurance?: MaybeArray<string | FHIR.Reference>;
+    supportingInfo?: MaybeArray<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
-    relevantHistory?: Array<string | FHIR.Reference>;
+    relevantHistory?: MaybeArray<string | FHIR.Reference>;
     [key: string]: any;
 };
 

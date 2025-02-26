@@ -78,7 +78,7 @@ export const generateType = (
         t in fhirTypes ? `FHIR.${t}` : t,
         s.isArray,
         m.values || s.values,
-        mappings.typeShorthands?.[t]
+        mappings.typeShorthands?.[t]?.filter(s => !t.includes(s))
       )
     );
     if (types.length == 1) {
@@ -168,14 +168,14 @@ const createTypeNode = (
   } else {
     node = b.tsAnyKeyword();
   }
-  if (shorthands) {
+  if (shorthands && shorthands.length) {
     node = b.tsUnionType([
       ...shorthands.map(s => b.tsTypeReference(b.identifier(s))),
       node,
     ]);
     if (isArray) {
       node = b.tsTypeReference(
-        b.identifier('Array'),
+        b.identifier('MaybeArray'),
         b.tsTypeParameterInstantiation([node])
       );
     }

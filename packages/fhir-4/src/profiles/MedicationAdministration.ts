@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type MedicationAdministration_Props = {
     id?: string;
@@ -16,25 +17,25 @@ export type MedicationAdministration_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     instantiates?: string[];
-    partOf?: Array<string | FHIR.Reference>;
+    partOf?: MaybeArray<string | FHIR.Reference>;
     status?: string;
-    statusReason?: Array<string[] | FHIR.CodeableConcept>;
+    statusReason?: MaybeArray<string[] | FHIR.CodeableConcept>;
     category?: string[] | FHIR.CodeableConcept;
     medication?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     subject?: string | FHIR.Reference;
     context?: string | FHIR.Reference;
-    supportingInformation?: Array<string | FHIR.Reference>;
+    supportingInformation?: MaybeArray<string | FHIR.Reference>;
     effective?: string | FHIR.Period;
     performer?: FHIR.BackboneElement[];
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
-    reasonReference?: Array<string | FHIR.Reference>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    reasonReference?: MaybeArray<string | FHIR.Reference>;
     request?: string | FHIR.Reference;
-    device?: Array<string | FHIR.Reference>;
+    device?: MaybeArray<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
     dosage?: FHIR.BackboneElement;
-    eventHistory?: Array<string | FHIR.Reference>;
+    eventHistory?: MaybeArray<string | FHIR.Reference>;
     [key: string]: any;
 };
 

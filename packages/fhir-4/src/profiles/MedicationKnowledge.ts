@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type MedicationKnowledge_Props = {
     id?: string;
@@ -23,19 +24,19 @@ export type MedicationKnowledge_Props = {
     amount?: FHIR.Quantity;
     synonym?: string[];
     relatedMedicationKnowledge?: FHIR.BackboneElement[];
-    associatedMedication?: Array<string | FHIR.Reference>;
-    productType?: Array<string[] | FHIR.CodeableConcept>;
+    associatedMedication?: MaybeArray<string | FHIR.Reference>;
+    productType?: MaybeArray<string[] | FHIR.CodeableConcept>;
     monograph?: FHIR.BackboneElement[];
     ingredient?: FHIR.BackboneElement[];
     preparationInstruction?: FHIR.markdown;
-    intendedRoute?: Array<string[] | FHIR.CodeableConcept>;
+    intendedRoute?: MaybeArray<string[] | FHIR.CodeableConcept>;
     cost?: FHIR.BackboneElement[];
     monitoringProgram?: FHIR.BackboneElement[];
     administrationGuidelines?: FHIR.BackboneElement[];
     medicineClassification?: FHIR.BackboneElement[];
     packaging?: FHIR.BackboneElement;
     drugCharacteristic?: FHIR.BackboneElement[];
-    contraindication?: Array<string | FHIR.Reference>;
+    contraindication?: MaybeArray<string | FHIR.Reference>;
     regulatory?: FHIR.BackboneElement[];
     kinetics?: FHIR.BackboneElement[];
     [key: string]: any;

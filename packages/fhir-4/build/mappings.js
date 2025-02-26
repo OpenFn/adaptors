@@ -1,7 +1,7 @@
 export default {
   include: [],
 
-  // include: ['Observation'],
+  // include: ['Patient'],
   exclude: ['Condition', 'Endpoint', 'Resource', 'TestScript'],
   overrides: {},
   valueSets: [],

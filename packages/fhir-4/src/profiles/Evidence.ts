@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Evidence_Props = {
     id?: string;
@@ -17,7 +18,7 @@ export type Evidence_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     url?: string;
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     version?: string;
     title?: string;
     citeAs?: string | FHIR.Reference | FHIR.markdown;

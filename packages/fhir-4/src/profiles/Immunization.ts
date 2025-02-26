@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Immunization_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type Immunization_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     status?: string;
     statusReason?: string[] | FHIR.CodeableConcept;
     vaccineCode?: string[] | FHIR.CodeableConcept;
@@ -35,12 +36,12 @@ export type Immunization_Props = {
     doseQuantity?: FHIR.Quantity;
     performer?: FHIR.BackboneElement[];
     note?: FHIR.Annotation[];
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
-    reasonReference?: Array<string | FHIR.Reference>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    reasonReference?: MaybeArray<string | FHIR.Reference>;
     isSubpotent?: boolean;
-    subpotentReason?: Array<string[] | FHIR.CodeableConcept>;
+    subpotentReason?: MaybeArray<string[] | FHIR.CodeableConcept>;
     education?: FHIR.BackboneElement[];
-    programEligibility?: Array<string[] | FHIR.CodeableConcept>;
+    programEligibility?: MaybeArray<string[] | FHIR.CodeableConcept>;
     fundingSource?: string[] | FHIR.CodeableConcept;
     reaction?: FHIR.BackboneElement[];
     protocolApplied?: FHIR.BackboneElement[];

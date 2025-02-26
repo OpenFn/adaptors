@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Media_Props = {
     id?: string;
@@ -16,9 +17,9 @@ export type Media_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
-    basedOn?: Array<string | FHIR.Reference>;
-    partOf?: Array<string | FHIR.Reference>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
+    partOf?: MaybeArray<string | FHIR.Reference>;
     status?: string;
     type?: string[] | FHIR.CodeableConcept;
     modality?: string[] | FHIR.CodeableConcept;
@@ -28,7 +29,7 @@ export type Media_Props = {
     created?: string | FHIR.Period;
     issued?: string;
     operator?: string | FHIR.Reference;
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
     bodySite?: string[] | FHIR.CodeableConcept;
     deviceName?: string;
     device?: string | FHIR.Reference;

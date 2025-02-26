@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Observation_Props = {
     id?: string;
@@ -16,29 +17,29 @@ export type Observation_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
-    basedOn?: Array<string | FHIR.Reference>;
-    partOf?: Array<string | FHIR.Reference>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
+    partOf?: MaybeArray<string | FHIR.Reference>;
     status?: string;
-    category?: Array<string[] | FHIR.CodeableConcept>;
+    category?: MaybeArray<string[] | FHIR.CodeableConcept>;
     code?: string[] | FHIR.CodeableConcept;
     subject?: string | FHIR.Reference;
-    focus?: Array<string | FHIR.Reference>;
+    focus?: MaybeArray<string | FHIR.Reference>;
     encounter?: string | FHIR.Reference;
     effective?: string | FHIR.Period | FHIR.Timing;
     issued?: string;
-    performer?: Array<string | FHIR.Reference>;
+    performer?: MaybeArray<string | FHIR.Reference>;
     value?: FHIR.Quantity | string[] | FHIR.CodeableConcept | string | boolean | number | FHIR.Range | FHIR.Ratio | FHIR.SampledData | FHIR.Period;
     dataAbsentReason?: string[] | FHIR.CodeableConcept;
-    interpretation?: Array<string[] | FHIR.CodeableConcept>;
+    interpretation?: MaybeArray<string[] | FHIR.CodeableConcept>;
     note?: FHIR.Annotation[];
     bodySite?: string[] | FHIR.CodeableConcept;
     method?: string[] | FHIR.CodeableConcept;
     specimen?: string | FHIR.Reference;
     device?: string | FHIR.Reference;
     referenceRange?: FHIR.BackboneElement[];
-    hasMember?: Array<string | FHIR.Reference>;
-    derivedFrom?: Array<string | FHIR.Reference>;
+    hasMember?: MaybeArray<string | FHIR.Reference>;
+    derivedFrom?: MaybeArray<string | FHIR.Reference>;
     component?: FHIR.BackboneElement[];
     [key: string]: any;
 };

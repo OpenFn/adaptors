@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type ClinicalImpression_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type ClinicalImpression_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     status?: string;
     statusReason?: string[] | FHIR.CodeableConcept;
     code?: string[] | FHIR.CodeableConcept;
@@ -27,14 +28,14 @@ export type ClinicalImpression_Props = {
     date?: string;
     assessor?: string | FHIR.Reference;
     previous?: string | FHIR.Reference;
-    problem?: Array<string | FHIR.Reference>;
+    problem?: MaybeArray<string | FHIR.Reference>;
     investigation?: FHIR.BackboneElement[];
     protocol?: string[];
     summary?: string;
     finding?: FHIR.BackboneElement[];
-    prognosisCodeableConcept?: Array<string[] | FHIR.CodeableConcept>;
-    prognosisReference?: Array<string | FHIR.Reference>;
-    supportingInfo?: Array<string | FHIR.Reference>;
+    prognosisCodeableConcept?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    prognosisReference?: MaybeArray<string | FHIR.Reference>;
+    supportingInfo?: MaybeArray<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
     [key: string]: any;
 };

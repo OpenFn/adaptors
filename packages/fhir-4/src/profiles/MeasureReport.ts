@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type MeasureReport_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type MeasureReport_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     status?: string;
     type?: string;
     measure?: any;
@@ -26,7 +27,7 @@ export type MeasureReport_Props = {
     period?: FHIR.Period;
     improvementNotation?: string[] | FHIR.CodeableConcept;
     group?: FHIR.BackboneElement[];
-    evaluatedResource?: Array<string | FHIR.Reference>;
+    evaluatedResource?: MaybeArray<string | FHIR.Reference>;
     [key: string]: any;
 };
 

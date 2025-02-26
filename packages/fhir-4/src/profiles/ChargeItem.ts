@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type ChargeItem_Props = {
     id?: string;
@@ -16,11 +17,11 @@ export type ChargeItem_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     definitionUri?: string[];
     definitionCanonical?: any[];
     status?: string;
-    partOf?: Array<string | FHIR.Reference>;
+    partOf?: MaybeArray<string | FHIR.Reference>;
     code?: string[] | FHIR.CodeableConcept;
     subject?: string | FHIR.Reference;
     context?: string | FHIR.Reference;
@@ -30,18 +31,18 @@ export type ChargeItem_Props = {
     requestingOrganization?: string | FHIR.Reference;
     costCenter?: string | FHIR.Reference;
     quantity?: FHIR.Quantity;
-    bodysite?: Array<string[] | FHIR.CodeableConcept>;
+    bodysite?: MaybeArray<string[] | FHIR.CodeableConcept>;
     factorOverride?: number;
     priceOverride?: FHIR.Money;
     overrideReason?: string;
     enterer?: string | FHIR.Reference;
     enteredDate?: string;
-    reason?: Array<string[] | FHIR.CodeableConcept>;
-    service?: Array<string | FHIR.Reference>;
+    reason?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    service?: MaybeArray<string | FHIR.Reference>;
     product?: string | FHIR.Reference | string[] | FHIR.CodeableConcept;
-    account?: Array<string | FHIR.Reference>;
+    account?: MaybeArray<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
-    supportingInformation?: Array<string | FHIR.Reference>;
+    supportingInformation?: MaybeArray<string | FHIR.Reference>;
     [key: string]: any;
 };
 

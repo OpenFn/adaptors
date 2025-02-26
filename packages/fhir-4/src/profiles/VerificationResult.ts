@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type VerificationResult_Props = {
     id?: string;
@@ -16,13 +17,13 @@ export type VerificationResult_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    target?: Array<string | FHIR.Reference>;
+    target?: MaybeArray<string | FHIR.Reference>;
     targetLocation?: string[];
     need?: string[] | FHIR.CodeableConcept;
     status?: string;
     statusDate?: string;
     validationType?: string[] | FHIR.CodeableConcept;
-    validationProcess?: Array<string[] | FHIR.CodeableConcept>;
+    validationProcess?: MaybeArray<string[] | FHIR.CodeableConcept>;
     frequency?: FHIR.Timing;
     lastPerformed?: string;
     nextScheduled?: string;

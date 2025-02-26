@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type BiologicallyDerivedProduct_Props = {
     id?: string;
@@ -16,13 +17,13 @@ export type BiologicallyDerivedProduct_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     productCategory?: string;
     productCode?: string[] | FHIR.CodeableConcept;
     status?: string;
-    request?: Array<string | FHIR.Reference>;
+    request?: MaybeArray<string | FHIR.Reference>;
     quantity?: number;
-    parent?: Array<string | FHIR.Reference>;
+    parent?: MaybeArray<string | FHIR.Reference>;
     collection?: FHIR.BackboneElement;
     processing?: FHIR.BackboneElement[];
     manipulation?: FHIR.BackboneElement;

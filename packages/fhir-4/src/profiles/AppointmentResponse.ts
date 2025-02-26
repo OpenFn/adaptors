@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type AppointmentResponse_Props = {
     id?: string;
@@ -16,11 +17,11 @@ export type AppointmentResponse_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     appointment?: string | FHIR.Reference;
     start?: string;
     end?: string;
-    participantType?: Array<string[] | FHIR.CodeableConcept>;
+    participantType?: MaybeArray<string[] | FHIR.CodeableConcept>;
     actor?: string | FHIR.Reference;
     participantStatus?: string;
     comment?: string;

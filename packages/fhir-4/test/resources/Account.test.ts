@@ -57,7 +57,7 @@ describe('Account', () => {
     assert.isOk(resource);
   });
 
-  it.only('should create a simple Account', () => {
+  it('should create an example Account', () => {
     const resource = builders.account({
       id: 'example',
       identifier: {

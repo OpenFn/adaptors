@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Contract_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type Contract_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     url?: string;
     version?: string;
     status?: string;
@@ -27,10 +28,10 @@ export type Contract_Props = {
     issued?: string;
     applies?: FHIR.Period;
     expirationType?: string[] | FHIR.CodeableConcept;
-    subject?: Array<string | FHIR.Reference>;
-    authority?: Array<string | FHIR.Reference>;
-    domain?: Array<string | FHIR.Reference>;
-    site?: Array<string | FHIR.Reference>;
+    subject?: MaybeArray<string | FHIR.Reference>;
+    authority?: MaybeArray<string | FHIR.Reference>;
+    domain?: MaybeArray<string | FHIR.Reference>;
+    site?: MaybeArray<string | FHIR.Reference>;
     name?: string;
     title?: string;
     subtitle?: string;
@@ -39,11 +40,11 @@ export type Contract_Props = {
     scope?: string[] | FHIR.CodeableConcept;
     topic?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     type?: string[] | FHIR.CodeableConcept;
-    subType?: Array<string[] | FHIR.CodeableConcept>;
+    subType?: MaybeArray<string[] | FHIR.CodeableConcept>;
     contentDefinition?: FHIR.BackboneElement;
     term?: FHIR.BackboneElement[];
-    supportingInfo?: Array<string | FHIR.Reference>;
-    relevantHistory?: Array<string | FHIR.Reference>;
+    supportingInfo?: MaybeArray<string | FHIR.Reference>;
+    relevantHistory?: MaybeArray<string | FHIR.Reference>;
     signer?: FHIR.BackboneElement[];
     friendly?: FHIR.BackboneElement[];
     legal?: FHIR.BackboneElement[];

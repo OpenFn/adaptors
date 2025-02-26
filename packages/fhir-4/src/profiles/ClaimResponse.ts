@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type ClaimResponse_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type ClaimResponse_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     status?: string;
     type?: string[] | FHIR.CodeableConcept;
     subType?: string[] | FHIR.CodeableConcept;
@@ -40,7 +41,7 @@ export type ClaimResponse_Props = {
     formCode?: string[] | FHIR.CodeableConcept;
     form?: FHIR.Attachment;
     processNote?: FHIR.BackboneElement[];
-    communicationRequest?: Array<string | FHIR.Reference>;
+    communicationRequest?: MaybeArray<string | FHIR.Reference>;
     insurance?: FHIR.BackboneElement[];
     error?: FHIR.BackboneElement[];
     [key: string]: any;

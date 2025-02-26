@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type DiagnosticReport_Props = {
     id?: string;
@@ -16,23 +17,23 @@ export type DiagnosticReport_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
-    basedOn?: Array<string | FHIR.Reference>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
     status?: string;
-    category?: Array<string[] | FHIR.CodeableConcept>;
+    category?: MaybeArray<string[] | FHIR.CodeableConcept>;
     code?: string[] | FHIR.CodeableConcept;
     subject?: string | FHIR.Reference;
     encounter?: string | FHIR.Reference;
     effective?: string | FHIR.Period;
     issued?: string;
-    performer?: Array<string | FHIR.Reference>;
-    resultsInterpreter?: Array<string | FHIR.Reference>;
-    specimen?: Array<string | FHIR.Reference>;
-    result?: Array<string | FHIR.Reference>;
-    imagingStudy?: Array<string | FHIR.Reference>;
+    performer?: MaybeArray<string | FHIR.Reference>;
+    resultsInterpreter?: MaybeArray<string | FHIR.Reference>;
+    specimen?: MaybeArray<string | FHIR.Reference>;
+    result?: MaybeArray<string | FHIR.Reference>;
+    imagingStudy?: MaybeArray<string | FHIR.Reference>;
     media?: FHIR.BackboneElement[];
     conclusion?: string;
-    conclusionCode?: Array<string[] | FHIR.CodeableConcept>;
+    conclusionCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
     presentedForm?: FHIR.Attachment[];
     [key: string]: any;
 };

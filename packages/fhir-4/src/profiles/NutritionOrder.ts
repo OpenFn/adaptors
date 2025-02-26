@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type NutritionOrder_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type NutritionOrder_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
     instantiates?: string[];
@@ -26,9 +27,9 @@ export type NutritionOrder_Props = {
     encounter?: string | FHIR.Reference;
     dateTime?: string;
     orderer?: string | FHIR.Reference;
-    allergyIntolerance?: Array<string | FHIR.Reference>;
-    foodPreferenceModifier?: Array<string[] | FHIR.CodeableConcept>;
-    excludeFoodModifier?: Array<string[] | FHIR.CodeableConcept>;
+    allergyIntolerance?: MaybeArray<string | FHIR.Reference>;
+    foodPreferenceModifier?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    excludeFoodModifier?: MaybeArray<string[] | FHIR.CodeableConcept>;
     oralDiet?: FHIR.BackboneElement;
     supplement?: FHIR.BackboneElement[];
     enteralFormula?: FHIR.BackboneElement;

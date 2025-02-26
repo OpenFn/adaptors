@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type MedicationStatement_Props = {
     id?: string;
@@ -16,11 +17,11 @@ export type MedicationStatement_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
-    basedOn?: Array<string | FHIR.Reference>;
-    partOf?: Array<string | FHIR.Reference>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
+    partOf?: MaybeArray<string | FHIR.Reference>;
     status?: string;
-    statusReason?: Array<string[] | FHIR.CodeableConcept>;
+    statusReason?: MaybeArray<string[] | FHIR.CodeableConcept>;
     category?: string[] | FHIR.CodeableConcept;
     medication?: string[] | FHIR.CodeableConcept | string | FHIR.Reference;
     subject?: string | FHIR.Reference;
@@ -28,9 +29,9 @@ export type MedicationStatement_Props = {
     effective?: string | FHIR.Period;
     dateAsserted?: string;
     informationSource?: string | FHIR.Reference;
-    derivedFrom?: Array<string | FHIR.Reference>;
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
-    reasonReference?: Array<string | FHIR.Reference>;
+    derivedFrom?: MaybeArray<string | FHIR.Reference>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    reasonReference?: MaybeArray<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
     dosage?: FHIR.Dosage[];
     [key: string]: any;

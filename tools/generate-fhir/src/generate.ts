@@ -236,6 +236,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
         force: true,
       });
       await rm(path.resolve(adaptorPath, 'types', 'fhir.d.ts'));
+      await rm(path.resolve(adaptorPath, 'types', 'datatypes.d.ts'));
     }
   );
 };

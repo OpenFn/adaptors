@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type AdverseEvent_Props = {
     id?: string;
@@ -18,24 +19,24 @@ export type AdverseEvent_Props = {
     modifierExtension?: FHIR.Extension[];
     identifier?: string | FHIR.Identifier;
     actuality?: string;
-    category?: Array<string[] | FHIR.CodeableConcept>;
+    category?: MaybeArray<string[] | FHIR.CodeableConcept>;
     event?: string[] | FHIR.CodeableConcept;
     subject?: string | FHIR.Reference;
     encounter?: string | FHIR.Reference;
     date?: string;
     detected?: string;
     recordedDate?: string;
-    resultingCondition?: Array<string | FHIR.Reference>;
+    resultingCondition?: MaybeArray<string | FHIR.Reference>;
     location?: string | FHIR.Reference;
     seriousness?: string[] | FHIR.CodeableConcept;
     severity?: string[] | FHIR.CodeableConcept;
     outcome?: string[] | FHIR.CodeableConcept;
     recorder?: string | FHIR.Reference;
-    contributor?: Array<string | FHIR.Reference>;
+    contributor?: MaybeArray<string | FHIR.Reference>;
     suspectEntity?: FHIR.BackboneElement[];
-    subjectMedicalHistory?: Array<string | FHIR.Reference>;
-    referenceDocument?: Array<string | FHIR.Reference>;
-    study?: Array<string | FHIR.Reference>;
+    subjectMedicalHistory?: MaybeArray<string | FHIR.Reference>;
+    referenceDocument?: MaybeArray<string | FHIR.Reference>;
+    study?: MaybeArray<string | FHIR.Reference>;
     [key: string]: any;
 };
 

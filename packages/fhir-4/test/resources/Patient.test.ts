@@ -7,7 +7,9 @@ import { b } from '../../src/index';
 
 describe('Patient', () => {
   it('should create a simple Patient', () => {
-    const resource = builders.patient({});
+    const resource = builders.patient({
+      identifier: b.identifier({}),
+    });
     assert.isOk(resource);
   });
 
@@ -15,11 +17,9 @@ describe('Patient', () => {
     const resource = builders.patient({
       id: 'example',
 
-      // builder isn't much use here
       identifier: [
         {
           use: 'usual', // no code assist on value
-          // TODO type on tuple
           type: ['MR', 'http://terminology.hl7.org/CodeSystem/v2-0203'],
           // type: b.cc(['MR', 'http://terminology.hl7.org/CodeSystem/v2-0203']),
           system: 'urn:oid:1.2.36.146.595.217.0.1',

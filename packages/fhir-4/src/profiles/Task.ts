@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Task_Props = {
     id?: string;
@@ -16,12 +17,12 @@ export type Task_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
-    basedOn?: Array<string | FHIR.Reference>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
     groupIdentifier?: string | FHIR.Identifier;
-    partOf?: Array<string | FHIR.Reference>;
+    partOf?: MaybeArray<string | FHIR.Reference>;
     status?: string;
     statusReason?: string[] | FHIR.CodeableConcept;
     businessStatus?: string[] | FHIR.CodeableConcept;
@@ -36,14 +37,14 @@ export type Task_Props = {
     authoredOn?: string;
     lastModified?: string;
     requester?: string | FHIR.Reference;
-    performerType?: Array<string[] | FHIR.CodeableConcept>;
+    performerType?: MaybeArray<string[] | FHIR.CodeableConcept>;
     owner?: string | FHIR.Reference;
     location?: string | FHIR.Reference;
     reasonCode?: string[] | FHIR.CodeableConcept;
     reasonReference?: string | FHIR.Reference;
-    insurance?: Array<string | FHIR.Reference>;
+    insurance?: MaybeArray<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
-    relevantHistory?: Array<string | FHIR.Reference>;
+    relevantHistory?: MaybeArray<string | FHIR.Reference>;
     restriction?: FHIR.BackboneElement;
     input?: FHIR.BackboneElement[];
     output?: FHIR.BackboneElement[];

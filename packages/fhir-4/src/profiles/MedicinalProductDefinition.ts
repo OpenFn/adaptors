@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type MedicinalProductDefinition_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type MedicinalProductDefinition_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     type?: string[] | FHIR.CodeableConcept;
     domain?: string[] | FHIR.CodeableConcept;
     version?: string;
@@ -24,21 +25,21 @@ export type MedicinalProductDefinition_Props = {
     statusDate?: string;
     description?: FHIR.markdown;
     combinedPharmaceuticalDoseForm?: string[] | FHIR.CodeableConcept;
-    route?: Array<string[] | FHIR.CodeableConcept>;
+    route?: MaybeArray<string[] | FHIR.CodeableConcept>;
     indication?: FHIR.markdown;
     legalStatusOfSupply?: string[] | FHIR.CodeableConcept;
     additionalMonitoringIndicator?: string[] | FHIR.CodeableConcept;
-    specialMeasures?: Array<string[] | FHIR.CodeableConcept>;
+    specialMeasures?: MaybeArray<string[] | FHIR.CodeableConcept>;
     pediatricUseIndicator?: string[] | FHIR.CodeableConcept;
-    classification?: Array<string[] | FHIR.CodeableConcept>;
+    classification?: MaybeArray<string[] | FHIR.CodeableConcept>;
     marketingStatus?: FHIR.MarketingStatus[];
-    packagedMedicinalProduct?: Array<string[] | FHIR.CodeableConcept>;
-    ingredient?: Array<string[] | FHIR.CodeableConcept>;
+    packagedMedicinalProduct?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    ingredient?: MaybeArray<string[] | FHIR.CodeableConcept>;
     impurity?: FHIR.CodeableReference[];
-    attachedDocument?: Array<string | FHIR.Reference>;
-    masterFile?: Array<string | FHIR.Reference>;
+    attachedDocument?: MaybeArray<string | FHIR.Reference>;
+    masterFile?: MaybeArray<string | FHIR.Reference>;
     contact?: FHIR.BackboneElement[];
-    clinicalTrial?: Array<string | FHIR.Reference>;
+    clinicalTrial?: MaybeArray<string | FHIR.Reference>;
     code?: FHIR.Coding[];
     name?: FHIR.BackboneElement[];
     crossReference?: FHIR.BackboneElement[];

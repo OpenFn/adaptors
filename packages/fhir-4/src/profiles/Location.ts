@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Location_Props = {
     id?: string;
@@ -16,14 +17,14 @@ export type Location_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     status?: string;
     operationalStatus?: FHIR.Coding;
     name?: string;
     alias?: string[];
     description?: string;
     mode?: string;
-    type?: Array<string[] | FHIR.CodeableConcept>;
+    type?: MaybeArray<string[] | FHIR.CodeableConcept>;
     telecom?: FHIR.ContactPoint[];
     address?: FHIR.Address;
     physicalType?: string[] | FHIR.CodeableConcept;
@@ -32,7 +33,7 @@ export type Location_Props = {
     partOf?: string | FHIR.Reference;
     hoursOfOperation?: FHIR.BackboneElement[];
     availabilityExceptions?: string;
-    endpoint?: Array<string | FHIR.Reference>;
+    endpoint?: MaybeArray<string | FHIR.Reference>;
     [key: string]: any;
 };
 

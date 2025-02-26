@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type FamilyMemberHistory_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type FamilyMemberHistory_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
     status?: string;
@@ -30,8 +31,8 @@ export type FamilyMemberHistory_Props = {
     age?: FHIR.Age | FHIR.Range | string;
     estimatedAge?: boolean;
     deceased?: boolean | FHIR.Age | FHIR.Range | string;
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
-    reasonReference?: Array<string | FHIR.Reference>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    reasonReference?: MaybeArray<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
     condition?: FHIR.BackboneElement[];
     [key: string]: any;

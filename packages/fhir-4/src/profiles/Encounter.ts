@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Encounter_Props = {
     id?: string;
@@ -16,25 +17,25 @@ export type Encounter_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     status?: string;
     statusHistory?: FHIR.BackboneElement[];
     class?: FHIR.Coding;
     classHistory?: FHIR.BackboneElement[];
-    type?: Array<string[] | FHIR.CodeableConcept>;
+    type?: MaybeArray<string[] | FHIR.CodeableConcept>;
     serviceType?: string[] | FHIR.CodeableConcept;
     priority?: string[] | FHIR.CodeableConcept;
     subject?: string | FHIR.Reference;
-    episodeOfCare?: Array<string | FHIR.Reference>;
-    basedOn?: Array<string | FHIR.Reference>;
+    episodeOfCare?: MaybeArray<string | FHIR.Reference>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
     participant?: FHIR.BackboneElement[];
-    appointment?: Array<string | FHIR.Reference>;
+    appointment?: MaybeArray<string | FHIR.Reference>;
     period?: FHIR.Period;
     length?: FHIR.Duration;
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
-    reasonReference?: Array<string | FHIR.Reference>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    reasonReference?: MaybeArray<string | FHIR.Reference>;
     diagnosis?: FHIR.BackboneElement[];
-    account?: Array<string | FHIR.Reference>;
+    account?: MaybeArray<string | FHIR.Reference>;
     hospitalization?: FHIR.BackboneElement;
     location?: FHIR.BackboneElement[];
     serviceProvider?: string | FHIR.Reference;

@@ -79,38 +79,6 @@ export const identifier = (id: string | FHIR.Identifier, ...ext) => {
   return mapSystems(i);
 };
 
-// TODO identifier takes many many things!
-// This API is insufficent really, and not well typed
-// technically all identifier fields are optional
-// but really there will usually be a value, and the value should usually have a system
-// everything else is optional
-// TODO how do we handle extensions?
-// export const identifier = (input, system) => {
-//   // If an array of inputs is passed in, map each element of the array
-//   // because it's very common to support a set of identifiers, rather than just one
-//   if (Array.isArray(input)) {
-//     return input.map(i => identifier(i, system));
-//   }
-
-//   if (input) {
-//     if (typeof input === 'string') {
-//       return mapSystems({
-//         value: input,
-//         system,
-//       });
-//     } else if (system) {
-//       return mapSystems({
-//         // Is system a default or override?
-//         // Probably a default?
-//         system,
-//         ...input,
-//       });
-//     } else {
-//       return mapSystems(input);
-//     }
-//   }
-// };
-
 /**
  * Alias for b.identifier()
  * @public
@@ -240,10 +208,10 @@ type ConceptCoding =
 export const concept = (
   codings: ConceptCoding | ConceptCoding[],
   extra: Omit<FHIR.CodeableConcept, 'coding'> = {}
-) => {
+): FHIR.CodeableConcept => {
   // This looks like a valid concept - just return it
   if ((codings as any).coding) {
-    return codings;
+    return codings as unknown as FHIR.CodeableConcept;
   }
   // Work out if we've been passed one or many codings
   if (

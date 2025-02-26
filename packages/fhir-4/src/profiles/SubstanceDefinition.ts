@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type SubstanceDefinition_Props = {
     id?: string;
@@ -16,17 +17,17 @@ export type SubstanceDefinition_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     version?: string;
     status?: string[] | FHIR.CodeableConcept;
-    classification?: Array<string[] | FHIR.CodeableConcept>;
+    classification?: MaybeArray<string[] | FHIR.CodeableConcept>;
     domain?: string[] | FHIR.CodeableConcept;
-    grade?: Array<string[] | FHIR.CodeableConcept>;
+    grade?: MaybeArray<string[] | FHIR.CodeableConcept>;
     description?: FHIR.markdown;
-    informationSource?: Array<string | FHIR.Reference>;
+    informationSource?: MaybeArray<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
-    manufacturer?: Array<string | FHIR.Reference>;
-    supplier?: Array<string | FHIR.Reference>;
+    manufacturer?: MaybeArray<string | FHIR.Reference>;
+    supplier?: MaybeArray<string | FHIR.Reference>;
     moiety?: FHIR.BackboneElement[];
     property?: FHIR.BackboneElement[];
     molecularWeight?: FHIR.BackboneElement[];

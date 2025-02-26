@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type CarePlan_Props = {
     id?: string;
@@ -16,15 +17,15 @@ export type CarePlan_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    basedOn?: Array<string | FHIR.Reference>;
-    replaces?: Array<string | FHIR.Reference>;
-    partOf?: Array<string | FHIR.Reference>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
+    replaces?: MaybeArray<string | FHIR.Reference>;
+    partOf?: MaybeArray<string | FHIR.Reference>;
     status?: string;
     intent?: string;
-    category?: Array<string[] | FHIR.CodeableConcept>;
+    category?: MaybeArray<string[] | FHIR.CodeableConcept>;
     title?: string;
     description?: string;
     subject?: string | FHIR.Reference;
@@ -32,11 +33,11 @@ export type CarePlan_Props = {
     period?: FHIR.Period;
     created?: string;
     author?: string | FHIR.Reference;
-    contributor?: Array<string | FHIR.Reference>;
-    careTeam?: Array<string | FHIR.Reference>;
-    addresses?: Array<string | FHIR.Reference>;
-    supportingInfo?: Array<string | FHIR.Reference>;
-    goal?: Array<string | FHIR.Reference>;
+    contributor?: MaybeArray<string | FHIR.Reference>;
+    careTeam?: MaybeArray<string | FHIR.Reference>;
+    addresses?: MaybeArray<string | FHIR.Reference>;
+    supportingInfo?: MaybeArray<string | FHIR.Reference>;
+    goal?: MaybeArray<string | FHIR.Reference>;
     activity?: FHIR.BackboneElement[];
     note?: FHIR.Annotation[];
     [key: string]: any;

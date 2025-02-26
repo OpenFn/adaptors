@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type HealthcareService_Props = {
     id?: string;
@@ -16,30 +17,30 @@ export type HealthcareService_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     active?: boolean;
     providedBy?: string | FHIR.Reference;
-    category?: Array<string[] | FHIR.CodeableConcept>;
-    type?: Array<string[] | FHIR.CodeableConcept>;
-    specialty?: Array<string[] | FHIR.CodeableConcept>;
-    location?: Array<string | FHIR.Reference>;
+    category?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    type?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    specialty?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    location?: MaybeArray<string | FHIR.Reference>;
     name?: string;
     comment?: string;
     extraDetails?: FHIR.markdown;
     photo?: FHIR.Attachment;
     telecom?: FHIR.ContactPoint[];
-    coverageArea?: Array<string | FHIR.Reference>;
-    serviceProvisionCode?: Array<string[] | FHIR.CodeableConcept>;
+    coverageArea?: MaybeArray<string | FHIR.Reference>;
+    serviceProvisionCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
     eligibility?: FHIR.BackboneElement[];
-    program?: Array<string[] | FHIR.CodeableConcept>;
-    characteristic?: Array<string[] | FHIR.CodeableConcept>;
-    communication?: Array<string[] | FHIR.CodeableConcept>;
-    referralMethod?: Array<string[] | FHIR.CodeableConcept>;
+    program?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    characteristic?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    communication?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    referralMethod?: MaybeArray<string[] | FHIR.CodeableConcept>;
     appointmentRequired?: boolean;
     availableTime?: FHIR.BackboneElement[];
     notAvailable?: FHIR.BackboneElement[];
     availabilityExceptions?: string;
-    endpoint?: Array<string | FHIR.Reference>;
+    endpoint?: MaybeArray<string | FHIR.Reference>;
     [key: string]: any;
 };
 

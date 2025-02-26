@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Questionnaire_Props = {
     id?: string;
@@ -17,7 +18,7 @@ export type Questionnaire_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     url?: string;
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -30,7 +31,7 @@ export type Questionnaire_Props = {
     contact?: FHIR.ContactDetail[];
     description?: FHIR.markdown;
     useContext?: FHIR.UsageContext[];
-    jurisdiction?: Array<string[] | FHIR.CodeableConcept>;
+    jurisdiction?: MaybeArray<string[] | FHIR.CodeableConcept>;
     purpose?: FHIR.markdown;
     copyright?: FHIR.markdown;
     approvalDate?: string;

@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type ActivityDefinition_Props = {
     id?: string;
@@ -17,7 +18,7 @@ export type ActivityDefinition_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     url?: string;
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -30,14 +31,14 @@ export type ActivityDefinition_Props = {
     contact?: FHIR.ContactDetail[];
     description?: FHIR.markdown;
     useContext?: FHIR.UsageContext[];
-    jurisdiction?: Array<string[] | FHIR.CodeableConcept>;
+    jurisdiction?: MaybeArray<string[] | FHIR.CodeableConcept>;
     purpose?: FHIR.markdown;
     usage?: string;
     copyright?: FHIR.markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: FHIR.Period;
-    topic?: Array<string[] | FHIR.CodeableConcept>;
+    topic?: MaybeArray<string[] | FHIR.CodeableConcept>;
     author?: FHIR.ContactDetail[];
     editor?: FHIR.ContactDetail[];
     reviewer?: FHIR.ContactDetail[];
@@ -56,10 +57,10 @@ export type ActivityDefinition_Props = {
     product?: string | FHIR.Reference | string[] | FHIR.CodeableConcept;
     quantity?: FHIR.Quantity;
     dosage?: FHIR.Dosage[];
-    bodySite?: Array<string[] | FHIR.CodeableConcept>;
-    specimenRequirement?: Array<string | FHIR.Reference>;
-    observationRequirement?: Array<string | FHIR.Reference>;
-    observationResultRequirement?: Array<string | FHIR.Reference>;
+    bodySite?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    specimenRequirement?: MaybeArray<string | FHIR.Reference>;
+    observationRequirement?: MaybeArray<string | FHIR.Reference>;
+    observationResultRequirement?: MaybeArray<string | FHIR.Reference>;
     transform?: any;
     dynamicValue?: FHIR.BackboneElement[];
     [key: string]: any;

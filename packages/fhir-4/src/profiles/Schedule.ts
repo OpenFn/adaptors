@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Schedule_Props = {
     id?: string;
@@ -16,12 +17,12 @@ export type Schedule_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     active?: boolean;
-    serviceCategory?: Array<string[] | FHIR.CodeableConcept>;
-    serviceType?: Array<string[] | FHIR.CodeableConcept>;
-    specialty?: Array<string[] | FHIR.CodeableConcept>;
-    actor?: Array<string | FHIR.Reference>;
+    serviceCategory?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    serviceType?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    specialty?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    actor?: MaybeArray<string | FHIR.Reference>;
     planningHorizon?: FHIR.Period;
     comment?: string;
     [key: string]: any;

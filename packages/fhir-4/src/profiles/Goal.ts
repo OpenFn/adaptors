@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Goal_Props = {
     id?: string;
@@ -16,10 +17,10 @@ export type Goal_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     lifecycleStatus?: string;
     achievementStatus?: string[] | FHIR.CodeableConcept;
-    category?: Array<string[] | FHIR.CodeableConcept>;
+    category?: MaybeArray<string[] | FHIR.CodeableConcept>;
     priority?: string[] | FHIR.CodeableConcept;
     description?: string[] | FHIR.CodeableConcept;
     subject?: string | FHIR.Reference;
@@ -28,10 +29,10 @@ export type Goal_Props = {
     statusDate?: string;
     statusReason?: string;
     expressedBy?: string | FHIR.Reference;
-    addresses?: Array<string | FHIR.Reference>;
+    addresses?: MaybeArray<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
-    outcomeCode?: Array<string[] | FHIR.CodeableConcept>;
-    outcomeReference?: Array<string | FHIR.Reference>;
+    outcomeCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    outcomeReference?: MaybeArray<string | FHIR.Reference>;
     [key: string]: any;
 };
 

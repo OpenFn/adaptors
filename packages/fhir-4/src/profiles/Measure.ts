@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Measure_Props = {
     id?: string;
@@ -17,7 +18,7 @@ export type Measure_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     url?: string;
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -30,14 +31,14 @@ export type Measure_Props = {
     contact?: FHIR.ContactDetail[];
     description?: FHIR.markdown;
     useContext?: FHIR.UsageContext[];
-    jurisdiction?: Array<string[] | FHIR.CodeableConcept>;
+    jurisdiction?: MaybeArray<string[] | FHIR.CodeableConcept>;
     purpose?: FHIR.markdown;
     usage?: string;
     copyright?: FHIR.markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: FHIR.Period;
-    topic?: Array<string[] | FHIR.CodeableConcept>;
+    topic?: MaybeArray<string[] | FHIR.CodeableConcept>;
     author?: FHIR.ContactDetail[];
     editor?: FHIR.ContactDetail[];
     reviewer?: FHIR.ContactDetail[];
@@ -47,7 +48,7 @@ export type Measure_Props = {
     disclaimer?: FHIR.markdown;
     scoring?: string[] | FHIR.CodeableConcept;
     compositeScoring?: string[] | FHIR.CodeableConcept;
-    type?: Array<string[] | FHIR.CodeableConcept>;
+    type?: MaybeArray<string[] | FHIR.CodeableConcept>;
     riskAdjustment?: string;
     rateAggregation?: string;
     rationale?: FHIR.markdown;

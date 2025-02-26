@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type EvidenceReport_Props = {
     id?: string;
@@ -19,8 +20,8 @@ export type EvidenceReport_Props = {
     url?: string;
     status?: string;
     useContext?: FHIR.UsageContext[];
-    identifier?: Array<string | FHIR.Identifier>;
-    relatedIdentifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
+    relatedIdentifier?: MaybeArray<string | FHIR.Identifier>;
     citeAs?: string | FHIR.Reference | FHIR.markdown;
     type?: string[] | FHIR.CodeableConcept;
     note?: FHIR.Annotation[];

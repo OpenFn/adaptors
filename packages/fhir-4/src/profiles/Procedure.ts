@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Procedure_Props = {
     id?: string;
@@ -16,11 +17,11 @@ export type Procedure_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    basedOn?: Array<string | FHIR.Reference>;
-    partOf?: Array<string | FHIR.Reference>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
+    partOf?: MaybeArray<string | FHIR.Reference>;
     status?: string;
     statusReason?: string[] | FHIR.CodeableConcept;
     category?: string[] | FHIR.CodeableConcept;
@@ -32,18 +33,18 @@ export type Procedure_Props = {
     asserter?: string | FHIR.Reference;
     performer?: FHIR.BackboneElement[];
     location?: string | FHIR.Reference;
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
-    reasonReference?: Array<string | FHIR.Reference>;
-    bodySite?: Array<string[] | FHIR.CodeableConcept>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    reasonReference?: MaybeArray<string | FHIR.Reference>;
+    bodySite?: MaybeArray<string[] | FHIR.CodeableConcept>;
     outcome?: string[] | FHIR.CodeableConcept;
-    report?: Array<string | FHIR.Reference>;
-    complication?: Array<string[] | FHIR.CodeableConcept>;
-    complicationDetail?: Array<string | FHIR.Reference>;
-    followUp?: Array<string[] | FHIR.CodeableConcept>;
+    report?: MaybeArray<string | FHIR.Reference>;
+    complication?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    complicationDetail?: MaybeArray<string | FHIR.Reference>;
+    followUp?: MaybeArray<string[] | FHIR.CodeableConcept>;
     note?: FHIR.Annotation[];
     focalDevice?: FHIR.BackboneElement[];
-    usedReference?: Array<string | FHIR.Reference>;
-    usedCode?: Array<string[] | FHIR.CodeableConcept>;
+    usedReference?: MaybeArray<string | FHIR.Reference>;
+    usedCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
     [key: string]: any;
 };
 

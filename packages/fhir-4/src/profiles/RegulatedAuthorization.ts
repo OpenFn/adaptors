@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type RegulatedAuthorization_Props = {
     id?: string;
@@ -16,17 +17,17 @@ export type RegulatedAuthorization_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
-    subject?: Array<string | FHIR.Reference>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
+    subject?: MaybeArray<string | FHIR.Reference>;
     type?: string[] | FHIR.CodeableConcept;
     description?: FHIR.markdown;
-    region?: Array<string[] | FHIR.CodeableConcept>;
+    region?: MaybeArray<string[] | FHIR.CodeableConcept>;
     status?: string[] | FHIR.CodeableConcept;
     statusDate?: string;
     validityPeriod?: FHIR.Period;
     indication?: FHIR.CodeableReference;
     intendedUse?: string[] | FHIR.CodeableConcept;
-    basis?: Array<string[] | FHIR.CodeableConcept>;
+    basis?: MaybeArray<string[] | FHIR.CodeableConcept>;
     holder?: string | FHIR.Reference;
     regulator?: string | FHIR.Reference;
     case?: FHIR.BackboneElement;

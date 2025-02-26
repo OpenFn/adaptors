@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type QuestionnaireResponse_Props = {
     id?: string;
@@ -17,8 +18,8 @@ export type QuestionnaireResponse_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     identifier?: string | FHIR.Identifier;
-    basedOn?: Array<string | FHIR.Reference>;
-    partOf?: Array<string | FHIR.Reference>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
+    partOf?: MaybeArray<string | FHIR.Reference>;
     questionnaire?: any;
     status?: string;
     subject?: string | FHIR.Reference;

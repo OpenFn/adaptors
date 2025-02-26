@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type ResearchStudy_Props = {
     id?: string;
@@ -16,26 +17,26 @@ export type ResearchStudy_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     title?: string;
-    protocol?: Array<string | FHIR.Reference>;
-    partOf?: Array<string | FHIR.Reference>;
+    protocol?: MaybeArray<string | FHIR.Reference>;
+    partOf?: MaybeArray<string | FHIR.Reference>;
     status?: string;
     primaryPurposeType?: string[] | FHIR.CodeableConcept;
     phase?: string[] | FHIR.CodeableConcept;
-    category?: Array<string[] | FHIR.CodeableConcept>;
-    focus?: Array<string[] | FHIR.CodeableConcept>;
-    condition?: Array<string[] | FHIR.CodeableConcept>;
+    category?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    focus?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    condition?: MaybeArray<string[] | FHIR.CodeableConcept>;
     contact?: FHIR.ContactDetail[];
     relatedArtifact?: FHIR.RelatedArtifact[];
-    keyword?: Array<string[] | FHIR.CodeableConcept>;
-    location?: Array<string[] | FHIR.CodeableConcept>;
+    keyword?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    location?: MaybeArray<string[] | FHIR.CodeableConcept>;
     description?: FHIR.markdown;
-    enrollment?: Array<string | FHIR.Reference>;
+    enrollment?: MaybeArray<string | FHIR.Reference>;
     period?: FHIR.Period;
     sponsor?: string | FHIR.Reference;
     principalInvestigator?: string | FHIR.Reference;
-    site?: Array<string | FHIR.Reference>;
+    site?: MaybeArray<string | FHIR.Reference>;
     reasonStopped?: string[] | FHIR.CodeableConcept;
     note?: FHIR.Annotation[];
     arm?: FHIR.BackboneElement[];

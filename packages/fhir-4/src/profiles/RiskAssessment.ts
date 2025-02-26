@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type RiskAssessment_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type RiskAssessment_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     basedOn?: string | FHIR.Reference;
     parent?: string | FHIR.Reference;
     status?: string;
@@ -27,9 +28,9 @@ export type RiskAssessment_Props = {
     occurrence?: string | FHIR.Period;
     condition?: string | FHIR.Reference;
     performer?: string | FHIR.Reference;
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
-    reasonReference?: Array<string | FHIR.Reference>;
-    basis?: Array<string | FHIR.Reference>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    reasonReference?: MaybeArray<string | FHIR.Reference>;
+    basis?: MaybeArray<string | FHIR.Reference>;
     prediction?: FHIR.BackboneElement[];
     mitigation?: string;
     note?: FHIR.Annotation[];

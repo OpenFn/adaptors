@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type ChargeItemDefinition_Props = {
     id?: string;
@@ -17,7 +18,7 @@ export type ChargeItemDefinition_Props = {
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
     url?: string;
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     version?: string;
     title?: string;
     derivedFromUri?: string[];
@@ -30,13 +31,13 @@ export type ChargeItemDefinition_Props = {
     contact?: FHIR.ContactDetail[];
     description?: FHIR.markdown;
     useContext?: FHIR.UsageContext[];
-    jurisdiction?: Array<string[] | FHIR.CodeableConcept>;
+    jurisdiction?: MaybeArray<string[] | FHIR.CodeableConcept>;
     copyright?: FHIR.markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: FHIR.Period;
     code?: string[] | FHIR.CodeableConcept;
-    instance?: Array<string | FHIR.Reference>;
+    instance?: MaybeArray<string | FHIR.Reference>;
     applicability?: FHIR.BackboneElement[];
     propertyGroup?: FHIR.BackboneElement[];
     [key: string]: any;

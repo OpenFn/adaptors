@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type Specimen_Props = {
     id?: string;
@@ -16,18 +17,18 @@ export type Specimen_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     accessionIdentifier?: string | FHIR.Identifier;
     status?: string;
     type?: string[] | FHIR.CodeableConcept;
     subject?: string | FHIR.Reference;
     receivedTime?: string;
-    parent?: Array<string | FHIR.Reference>;
-    request?: Array<string | FHIR.Reference>;
+    parent?: MaybeArray<string | FHIR.Reference>;
+    request?: MaybeArray<string | FHIR.Reference>;
     collection?: FHIR.BackboneElement;
     processing?: FHIR.BackboneElement[];
     container?: FHIR.BackboneElement[];
-    condition?: Array<string[] | FHIR.CodeableConcept>;
+    condition?: MaybeArray<string[] | FHIR.CodeableConcept>;
     note?: FHIR.Annotation[];
     [key: string]: any;
 };

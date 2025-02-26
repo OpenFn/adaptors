@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type DeviceDefinition_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type DeviceDefinition_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     udiDeviceIdentifier?: FHIR.BackboneElement[];
     manufacturer?: string | string | FHIR.Reference;
     deviceName?: FHIR.BackboneElement[];
@@ -24,10 +25,10 @@ export type DeviceDefinition_Props = {
     type?: string[] | FHIR.CodeableConcept;
     specialization?: FHIR.BackboneElement[];
     version?: string[];
-    safety?: Array<string[] | FHIR.CodeableConcept>;
+    safety?: MaybeArray<string[] | FHIR.CodeableConcept>;
     shelfLifeStorage?: FHIR.ProductShelfLife[];
     physicalCharacteristics?: FHIR.ProdCharacteristic;
-    languageCode?: Array<string[] | FHIR.CodeableConcept>;
+    languageCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
     capability?: FHIR.BackboneElement[];
     property?: FHIR.BackboneElement[];
     owner?: string | FHIR.Reference;

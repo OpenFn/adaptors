@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type BodyStructure_Props = {
     id?: string;
@@ -16,11 +17,11 @@ export type BodyStructure_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     active?: boolean;
     morphology?: string[] | FHIR.CodeableConcept;
     location?: string[] | FHIR.CodeableConcept;
-    locationQualifier?: Array<string[] | FHIR.CodeableConcept>;
+    locationQualifier?: MaybeArray<string[] | FHIR.CodeableConcept>;
     description?: string;
     image?: FHIR.Attachment[];
     patient?: string | FHIR.Reference;

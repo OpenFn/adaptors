@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type ImmunizationEvaluation_Props = {
     id?: string;
@@ -16,7 +17,7 @@ export type ImmunizationEvaluation_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     status?: string;
     patient?: string | FHIR.Reference;
     date?: string;
@@ -24,7 +25,7 @@ export type ImmunizationEvaluation_Props = {
     targetDisease?: string[] | FHIR.CodeableConcept;
     immunizationEvent?: string | FHIR.Reference;
     doseStatus?: string[] | FHIR.CodeableConcept;
-    doseStatusReason?: Array<string[] | FHIR.CodeableConcept>;
+    doseStatusReason?: MaybeArray<string[] | FHIR.CodeableConcept>;
     description?: string;
     series?: string;
     doseNumber?: number | string;

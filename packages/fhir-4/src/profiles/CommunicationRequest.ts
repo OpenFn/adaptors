@@ -6,6 +6,7 @@
 import * as dt from "../datatypes";
 import _ from "lodash";
 import * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type CommunicationRequest_Props = {
     id?: string;
@@ -16,27 +17,27 @@ export type CommunicationRequest_Props = {
     contained?: any[];
     extension?: FHIR.Extension[];
     modifierExtension?: FHIR.Extension[];
-    identifier?: Array<string | FHIR.Identifier>;
-    basedOn?: Array<string | FHIR.Reference>;
-    replaces?: Array<string | FHIR.Reference>;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
+    basedOn?: MaybeArray<string | FHIR.Reference>;
+    replaces?: MaybeArray<string | FHIR.Reference>;
     groupIdentifier?: string | FHIR.Identifier;
     status?: string;
     statusReason?: string[] | FHIR.CodeableConcept;
-    category?: Array<string[] | FHIR.CodeableConcept>;
+    category?: MaybeArray<string[] | FHIR.CodeableConcept>;
     priority?: string;
     doNotPerform?: boolean;
-    medium?: Array<string[] | FHIR.CodeableConcept>;
+    medium?: MaybeArray<string[] | FHIR.CodeableConcept>;
     subject?: string | FHIR.Reference;
-    about?: Array<string | FHIR.Reference>;
+    about?: MaybeArray<string | FHIR.Reference>;
     encounter?: string | FHIR.Reference;
     payload?: FHIR.BackboneElement[];
     occurrence?: string | FHIR.Period;
     authoredOn?: string;
     requester?: string | FHIR.Reference;
-    recipient?: Array<string | FHIR.Reference>;
+    recipient?: MaybeArray<string | FHIR.Reference>;
     sender?: string | FHIR.Reference;
-    reasonCode?: Array<string[] | FHIR.CodeableConcept>;
-    reasonReference?: Array<string | FHIR.Reference>;
+    reasonCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    reasonReference?: MaybeArray<string | FHIR.Reference>;
     note?: FHIR.Annotation[];
     [key: string]: any;
 };
