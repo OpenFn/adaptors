@@ -286,8 +286,10 @@ describe('get()', () => {
         headers: { 'x-openfn': 'testing' },
       })
     )(state);
-
-    expect(data).to.eql({ 'x-openfn': 'testing' });
+    expect(data).to.eql({
+      'x-openfn': 'testing',
+      'Content-Type': 'application/json',
+    });
   });
 
   it('sets up a basic auth header', async () => {
@@ -564,7 +566,7 @@ describe('post', () => {
 
     const { data } = await execute(
       post('https://www.example.com/api/form-data', formData, {
-        form: true,
+        contentType: 'form',
       })
     )({});
 
