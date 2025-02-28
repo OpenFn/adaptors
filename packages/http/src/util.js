@@ -72,8 +72,12 @@ export function request(method, path, params, callback = s => s) {
 
     let { body, contentType = 'json', headers = {} } = resolvedParams;
 
-    if (resolvedParams.headers) {
-      headers = { ...headers, ...resolvedParams.headers };
+    const hasContentType = Object.keys(headers).some(
+      key => key.toLowerCase() === 'content-type'
+    );
+
+    if (hasContentType) {
+      headers = { ...resolvedParams.headers };
     } else if (contentType === 'form') {
       body = encodeFormBody(body);
     } else {
