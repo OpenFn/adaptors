@@ -77,7 +77,7 @@ export function request(method, path, params, callback = s => s) {
     );
 
     if (hasContentType) {
-      headers = { ...resolvedParams.headers };
+      headers = { ...headers };
     } else if (contentType === 'form') {
       body = encodeFormBody(body);
     } else {
