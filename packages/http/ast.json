@@ -5,8 +5,7 @@
       "params": [
         "method",
         "path",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Make a HTTP request. If `configuration.baseUrl` is set, paths must be relative.",
@@ -53,15 +52,6 @@
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "state",
             "description": "{HttpState}"
           },
@@ -81,8 +71,7 @@
       "name": "get",
       "params": [
         "path",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Make a GET request. If `configuration.baseUrl` is set, paths must be relative.",
@@ -120,15 +109,6 @@
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "state",
             "description": "{HttpState}"
           },
@@ -149,8 +129,7 @@
       "params": [
         "path",
         "data",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Make a POST request. If `configuration.baseUrl` is set, paths must be relative.",
@@ -203,15 +182,6 @@
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "state",
             "description": "{HttpState}"
           },
@@ -232,8 +202,7 @@
       "params": [
         "path",
         "data",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.",
@@ -286,15 +255,6 @@
             "name": "options-null"
           },
           {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "state",
             "description": "{HttpState}"
           },
@@ -315,8 +275,7 @@
       "params": [
         "path",
         "data",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Make a PATCH request. If `configuration.baseUrl` is set, paths must be relative.",
@@ -369,15 +328,6 @@
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "state",
             "description": "{HttpState}"
           },
@@ -397,8 +347,7 @@
       "name": "del",
       "params": [
         "path",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Make a DELETE request. If `configuration.baseUrl` is set, paths must be relative.",
@@ -436,15 +385,6 @@
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "state",
             "description": "{HttpState}"
           },
@@ -464,8 +404,7 @@
       "name": "parseXML",
       "params": [
         "data",
-        "script",
-        "callback"
+        "script"
       ],
       "docs": {
         "description": "Parse XML with the Cheerio parser",
@@ -506,15 +445,6 @@
               "name": "function"
             },
             "name": "script"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "state",
