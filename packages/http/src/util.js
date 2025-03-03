@@ -76,22 +76,25 @@ export function request(method, path, params, callback = s => s) {
       key => key.toLowerCase() === 'content-type'
     );
 
-    const hasContentType = !!contentTypeKey;
-    const contentTypeValue = hasContentType ? headers[contentTypeKey] : '';
+    const hasContentType = contentTypeKey && headers[contentTypeKey];
 
-    if (hasContentType) {
-      headers = { ...headers };
-    } else if (contentType === 'form') {
+    const contentTypeValue = hasContentType
+      ? headers[contentTypeKey].toLowerCase()
+      : '';
+
+    const shouldEncodeForm =
+      (!hasContentType && contentType === 'form') ||
+      contentTypeValue.includes('multipart/form-data');
+
+    if (shouldEncodeForm) {
       body = encodeFormBody(body);
-    } else {
+    }
+
+    if (!hasContentType && !shouldEncodeForm) {
       headers = {
         ...headers,
         'Content-Type': CONTENT_TYPES[contentType] || 'application/json',
       };
-    }
-
-    if (contentTypeValue.toLowerCase().includes('multipart/form-data')) {
-      body = encodeFormBody(body);
     }
 
     const baseUrl = state.configuration?.baseUrl;

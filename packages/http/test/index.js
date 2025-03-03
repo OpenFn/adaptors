@@ -517,7 +517,7 @@ describe('get()', () => {
 });
 
 describe('contentType', () => {
-  it('should use "Content-Type" header if both contentType and headers are provided', async () => {
+  it('should prefer content-type header to contentType option', async () => {
     let req;
     testServer
       .intercept({
