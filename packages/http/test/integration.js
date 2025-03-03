@@ -69,9 +69,7 @@ describe('Integration tests', () => {
       },
       data: {},
     };
-    const { response } = await execute(
-      post('/',  { name: 'Joe' })
-    )(state);
+    const { response } = await execute(post('/', { name: 'Joe' }))(state);
 
     expect(response.body).to.eql('Hello, World!');
     expect(response.method).to.eql('POST');

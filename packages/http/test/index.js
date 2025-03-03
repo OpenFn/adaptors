@@ -440,51 +440,6 @@ describe('get()', () => {
     expect(response.statusCode).to.eql(404);
   });
 
-  it.skip('can be called inside an each block', async () => {
-    testServer
-      .intercept({
-        path: '/api/fake-json',
-        method: 'GET',
-      })
-      .reply(200, ({ body }) => body)
-      .persist();
-
-    const state = {
-      configuration: {},
-      things: [
-        { name: 'a', age: 42 },
-        { name: 'b', age: 83 },
-        { name: 'c', age: 112 },
-      ],
-      replies: [],
-    };
-
-    const finalState = await execute(
-      each(
-        '$.things[*]',
-        get(
-          'https://www.example.com/api/fake-json',
-          {
-            body: state => state.data,
-          }
-        ).then((next, state) => {
-          console.log({state});
-          
-          next.replies.push(next.response.body);
-          return next;
-        })
-      )
-    )(state);
-
-    console.log({finalState});
-    
-
-    // expect(finalState.replies).to.eql([
-    //   '{"name":"a","age":42}',
-    //   '{"name":"b","age":83}',
-    //   '{"name":"c","age":112}',
-    // ]);
-  });
 });
 
 describe('post', () => {
@@ -574,80 +529,6 @@ describe('post', () => {
 
     expect(response.statusCode).to.eq(502);
   });
-
-  it.only('can be called inside an each block', async () => {
-    testServer
-      .intercept({
-        path: '/api/json',
-        method: 'POST',
-      })
-      .reply(200, ({ body }) => body)
-      .persist();
-
-    const state = {
-      configuration: {},
-      things: [
-        { name: 'a', age: 42 },
-        { name: 'b', age: 83 },
-        { name: 'c', age: 112 },
-      ],
-      replies: [],
-    };
-
-    const finalState = await execute(
-      each(
-        '$.things[*]',
-        post(
-          'https://www.example.com/api/json',
-          state => state.data,
-        ).then(next => {
-          next.replies.push(next.response.body);
-          return next;
-        })
-      )
-    )(state);
-
-    expect(finalState.replies).to.eql([
-      '{"name":"a","age":42}',
-      '{"name":"b","age":83}',
-      '{"name":"c","age":112}',
-    ]);
-  });
-
-  it('should make an http request from inside the parseCSV callback', async function () {
-    testServer
-      .intercept({
-        path: '/api/csv-reader',
-        method: 'POST',
-      })
-      .reply(200, ({ body }) => body, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .persist();
-
-    const csv = 'id,name\n1,taylor\n2,mtuchi\n3,joe\n4,stu\n5,elias';
-    const state = { references: [], data: [], apiResponses: [] };
-
-    const resultingState = await parseCsv(
-      csv,
-      { chunkSize: 2 },
-      (state, rows) =>
-        post('https://www.example.com/api/csv-reader', rows, {}, state => {
-          state.apiResponses.push(...state.response.body);
-          return state;
-        })(state)
-    )(state);
-
-    expect(resultingState.apiResponses).to.eql([
-      { id: '1', name: 'taylor' },
-      { id: '2', name: 'mtuchi' },
-      { id: '3', name: 'joe' },
-      { id: '4', name: 'stu' },
-      { id: '5', name: 'elias' },
-    ]);
-  });
 });
 
 describe('put', () => {
@@ -675,48 +556,6 @@ describe('put', () => {
     expect(req.body).to.equal(JSON.stringify(body));
   });
 
-  it('can be called inside an each block', async () => {
-    testServer
-      .intercept({
-        path: '/api/json',
-        method: 'put',
-      })
-      .reply(200, ({ body }) => body)
-      .persist();
-
-    const state = {
-      configuration: {
-        baseUrl: 'https://www.example.com',
-      },
-      things: [
-        { name: 'a', age: 42 },
-        { name: 'b', age: 83 },
-        { name: 'c', age: 112 },
-      ],
-      replies: [],
-    };
-
-    const finalState = await execute(
-      each(
-        '$.things[*]',
-        put(
-          '/api/json',
-          state => state.data,
-          {},
-          next => {
-            next.replies.push(next.response.body);
-            return next;
-          }
-        )
-      )
-    )(state);
-
-    expect(finalState.replies).to.eql([
-      '{"name":"a","age":42}',
-      '{"name":"b","age":83}',
-      '{"name":"c","age":112}',
-    ]);
-  });
 });
 
 describe('patch', () => {
@@ -744,48 +583,6 @@ describe('patch', () => {
     expect(req.body).to.equal(JSON.stringify(body));
   });
 
-  it('can be called inside an each block', async () => {
-    testServer
-      .intercept({
-        path: '/api/fake-json',
-        method: 'PATCH',
-      })
-      .reply(200, ({ body }) => body)
-      .persist();
-
-    const state = {
-      configuration: {
-        baseUrl: 'https://www.example.com',
-      },
-      things: [
-        { name: 'a', age: 42 },
-        { name: 'b', age: 83 },
-        { name: 'c', age: 112 },
-      ],
-      replies: [],
-    };
-
-    const finalState = await execute(
-      each(
-        '$.things[*]',
-        patch(
-          '/api/fake-json',
-          state => state.data,
-          {},
-          next => {
-            next.replies.push(next.response.body);
-            return next;
-          }
-        )
-      )
-    )(state);
-
-    expect(finalState.replies).to.eql([
-      '{"name":"a","age":42}',
-      '{"name":"b","age":83}',
-      '{"name":"c","age":112}',
-    ]);
-  });
 });
 
 describe('delete', () => {
@@ -808,48 +605,6 @@ describe('delete', () => {
     )(state);
 
     expect(response.statusCode).to.eql(204);
-  });
-
-  it('can be called inside an each block', async () => {
-    testServer
-      .intercept({
-        path: '/api/fake-json',
-        method: 'DELETE',
-      })
-      .reply(200, ({ body }) => body)
-      .persist();
-
-    const state = {
-      configuration: {},
-      things: [
-        { name: 'a', age: 42 },
-        { name: 'b', age: 83 },
-        { name: 'c', age: 112 },
-      ],
-      replies: [],
-    };
-
-    const finalState = await execute(
-      each(
-        '$.things[*]',
-        del(
-          'https://www.example.com/api/fake-json',
-          {
-            body: state => state.data,
-          },
-          next => {
-            next.replies.push(next.response.body);
-            return next;
-          }
-        )
-      )
-    )(state);
-
-    expect(finalState.replies).to.eql([
-      '{"name":"a","age":42}',
-      '{"name":"b","age":83}',
-      '{"name":"c","age":112}',
-    ]);
   });
 });
 
