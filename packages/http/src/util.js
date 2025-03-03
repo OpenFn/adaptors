@@ -72,16 +72,26 @@ export function request(method, path, params, callback = s => s) {
 
     let { body, contentType = 'json', headers = {} } = resolvedParams;
 
-    const hasContentType = Object.keys(headers).some(
+    const contentTypeKey = Object.keys(headers).find(
       key => key.toLowerCase() === 'content-type'
     );
+
+    const hasContentType = !!contentTypeKey;
+    const contentTypeValue = hasContentType ? headers[contentTypeKey] : '';
 
     if (hasContentType) {
       headers = { ...headers };
     } else if (contentType === 'form') {
       body = encodeFormBody(body);
     } else {
-      headers = { ...headers, 'Content-Type': CONTENT_TYPES[contentType] };
+      headers = {
+        ...headers,
+        'Content-Type': CONTENT_TYPES[contentType] || 'application/json',
+      };
+    }
+
+    if (contentTypeValue.toLowerCase().includes('multipart/form-data')) {
+      body = encodeFormBody(body);
     }
 
     const baseUrl = state.configuration?.baseUrl;
