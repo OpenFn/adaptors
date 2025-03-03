@@ -7,7 +7,7 @@
 ## Migration Guide
 
 All functions in `http` allowed for the use of `callbacks` as the third option.
-We have stripped this and allow users to use promise chaining instead.
+We have stripped this and allowed users to use promise chaining instead.
 
 So if you used to do this:
 
