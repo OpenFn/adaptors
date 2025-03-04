@@ -264,11 +264,11 @@ export function bulk(sObjectName, operation, records, options = {}) {
  * @public
  * @example <caption>Bulk query patient records where "Health_ID__c" is equal to the value in "state.data.healthId"</caption>
  * bulkQuery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
- * @example <caption>Bulk query with custom polling options</caption>
+ * @example <caption>Bulk query with options</caption>
  * bulkQuery(
  *   (state) =>
  *     `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,
- *   { pollTimeout: 10000, pollInterval: 6000 }
+ *   { useBulk2: true }
  * );
  * @function
  * @param {string} query - A query string.
@@ -284,34 +284,23 @@ export function bulkQuery(query, options = {}) {
       query,
       options
     );
-
-    if (parseFloat(connection.version) < 47.0)
-      throw new Error('bulkQuery requires API version 47.0 and later');
-
-    const { pollTimeout = 90000, pollInterval = 3000 } = resolvedOptions;
+    const { useBulk2 = false } = resolvedOptions;
+    // Note: no need for polling since we are using the bulk query API
 
     console.log(`Executing query: ${resolvedQuery}`);
 
-    const queryJob = await connection.request({
-      method: 'POST',
-      url: `/services/data/v${connection.version}/jobs/query`,
-      body: JSON.stringify({
-        operation: 'query',
-        query: resolvedQuery,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    const queryStream = useBulk2
+      ? await connection.bulk2.query(resolvedQuery, resolvedOptions)
+      : await connection.bulk.query(resolvedQuery, resolvedOptions);
+    const records = await new Promise((resolve, reject) => {
+      const recs = [];
+      queryStream
+        .on('record', rec => recs.push(rec))
+        .on('error', reject)
+        .on('finish', () => resolve(recs));
     });
 
-    const result = await util.pollJobResult(
-      connection,
-      queryJob,
-      pollInterval,
-      pollTimeout
-    );
-
-    return composeNextState(state, result);
+    return composeNextState(state, records);
   };
 }
 
@@ -530,44 +519,27 @@ export function insert(sObjectName, records) {
  * @public
  * @example <caption>Make a POST request to a custom Salesforce flow</caption>
  * post("/actions/custom/flow/POC_OpenFN_Test_Flow", {
- *   body: {
- *     inputs: [
- *       {
- *         CommentCount: 6,
- *         FeedItemId: "0D5D0000000cfMY",
- *       },
- *     ],
- *   },
+ *   inputs: [
+ *     {
+ *       CommentCount: 6,
+ *       FeedItemId: "0D5D0000000cfMY",
+ *     },
+ *   ],
  * });
  * @function
  * @param {string} path - The Salesforce API endpoint.
  * @param {object} data - A JSON Object request body.
- * @param {SimpleRequestOptions} [options] - Configure headers and query parameters for the request.
  * @state {SalesforceState}
  * @returns {Operation}
  */
-export function post(path, data, options = {}) {
+export function post(path, data) {
   return async state => {
     const { connection } = state;
-    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
-      state,
-      path,
-      data,
-      options
-    );
-    const { query, headers } = resolvedOptions;
+    const [resolvedPath, resolvedData] = expandReferences(state, path, data);
 
     console.log(`POST: ${resolvedPath}`);
 
-    const requestOptions = {
-      url: resolvedPath,
-      method: 'POST',
-      query,
-      headers: { 'content-type': 'application/json', ...headers },
-      body: JSON.stringify(resolvedData),
-    };
-
-    const result = await connection.request(requestOptions);
+    const result = await connection.requestPost(resolvedPath, resolvedData);
 
     return composeNextState(state, result);
   };
@@ -588,76 +560,64 @@ export function post(path, data, options = {}) {
  * @example <caption>Query patients by Health ID using a lazy state reference</caption>
  * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
  * @function
- * @param {(string|function)} query - A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause
+ * @param {(string|function)} queryString - A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause
  * @param {QueryOptions} [options] - Optional configuration for the query operation
  * @state {SalesforceState}
  * @property data - Array of result objects of the form <code>\{ done, totalSize, records \}</code>
  * @returns {Operation}
  */
-export function query(query, options = {}) {
+export function query(queryString, options = {}) {
   return async state => {
     const { connection } = state;
     const [resolvedQuery, resolvedOptions] = expandReferences(
       state,
-      query,
+      queryString,
       options
     );
     console.log(`Executing query: ${resolvedQuery}`);
-    const autoFetch = resolvedOptions.autoFetch || resolvedOptions.autofetch;
+    // TODO: Add support for more query options
+    // https://jsforce.github.io/jsforce/types/query.QueryOptions.html
+    // {headers, responseTarget}
+    const {
+      autoFetch = true,
+      scanAll = false,
+      maxFetch = 10000,
+    } = resolvedOptions;
 
     if (autoFetch) {
-      console.log('autoFetch is enabled: all records will be downloaded');
+      console.log(
+        `autoFetch is enabled: A maximum of ${maxFetch} records will be downloaded`
+      );
     }
 
-    const result = {
-      done: true,
-      totalSize: 0,
-      records: [],
-    };
-
-    const processRecords = async res => {
-      const { done, totalSize, records, nextRecordsUrl } = res;
-
-      result.done = done;
-      result.totalSize = totalSize;
-      result.records.push(...records);
-
-      if (!done && !autoFetch && nextRecordsUrl) {
-        result.nextRecordsUrl = nextRecordsUrl;
-      }
-      if (!done && autoFetch) {
-        console.log('Fetched records so far:', result.records.length);
-        console.log('Fetching next records...');
-
-        try {
-          const newResult = await connection.request({ url: nextRecordsUrl });
-          await processRecords(newResult);
-        } catch (err) {
+    let query = {};
+    const records = [];
+    await new Promise((resolve, reject) => {
+      query = connection
+        .query(resolvedQuery)
+        .on('record', record => {
+          records.push(record);
+        })
+        .on('end', () => {
+          console.log('total in database : ' + query.totalSize);
+          console.log('total fetched : ' + query.totalFetched);
+          resolve();
+        })
+        .on('error', err => {
           const { message, errorCode } = err;
           console.error(`Error ${errorCode}: ${message}`);
-          throw err;
-        }
-      }
+          throwError('QUERY_ERROR', { message, errorCode });
+          reject();
+        })
+        .run({ autoFetch, maxFetch, scanAll });
+    });
+
+    const result = {
+      done: query.totalFetched === query.totalSize,
+      records,
+      totalSize: query.totalSize,
+      totalFetched: query.totalFetched,
     };
-
-    try {
-      const qResult = await connection.query(resolvedQuery);
-      if (qResult.totalSize > 0) {
-        console.log('Total records:', qResult.totalSize);
-        await processRecords(qResult);
-        console.log('Done ✔ retrieved records:', result.records.length);
-      } else {
-        console.log('No records found.');
-      }
-    } catch (err) {
-      const { message, errorCode } = err;
-      console.log(`Error ${errorCode}: ${message}`);
-      throw err;
-    }
-
-    console.log(
-      'Results retrieved and pushed to position [0] of the references array.'
-    );
 
     return composeNextState(state, result);
   };
