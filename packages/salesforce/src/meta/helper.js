@@ -1,5 +1,4 @@
-import jsforce from 'jsforce';
-
+import { Connection } from '@jsforce/jsforce-node';
 const createHelper = (configuration = {}) => {
   const { loginUrl, username, password, securityToken } = configuration;
 
@@ -47,7 +46,7 @@ const createHelper = (configuration = {}) => {
 
   return new Promise(resolve => {
     if (loginUrl) {
-      conn = new jsforce.Connection({
+      conn = new Connection({
         loginUrl,
       });
       conn.login(username, password + securityToken, (err, res) => {
