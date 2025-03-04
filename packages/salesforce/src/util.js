@@ -140,7 +140,7 @@ export function formatResults(input) {
     }
   });
 
-  return input;
+  return output;
 }
 
 /**
