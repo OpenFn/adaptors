@@ -579,8 +579,7 @@
       "name": "post",
       "params": [
         "path",
-        "data",
-        "options"
+        "data"
       ],
       "docs": {
         "description": "Send a POST request to salesforce server configured in `state.configuration`.",
@@ -592,7 +591,7 @@
           },
           {
             "title": "example",
-            "description": "post(\"/actions/custom/flow/POC_OpenFN_Test_Flow\", {\n  body: {\n    inputs: [\n      {\n        CommentCount: 6,\n        FeedItemId: \"0D5D0000000cfMY\",\n      },\n    ],\n  },\n});",
+            "description": "post(\"/actions/custom/flow/POC_OpenFN_Test_Flow\", {\n  inputs: [\n    {\n      CommentCount: 6,\n      FeedItemId: \"0D5D0000000cfMY\",\n    },\n  ],\n});",
             "caption": "Make a POST request to a custom Salesforce flow"
           },
           {
@@ -619,18 +618,6 @@
             "name": "data"
           },
           {
-            "title": "param",
-            "description": "Configure headers and query parameters for the request.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "SimpleRequestOptions"
-              }
-            },
-            "name": "options"
-          },
-          {
             "title": "state",
             "description": "{SalesforceState}"
           },
@@ -649,7 +636,7 @@
     {
       "name": "query",
       "params": [
-        "query",
+        "queryString",
         "options"
       ],
       "docs": {
@@ -696,7 +683,7 @@
                 }
               ]
             },
-            "name": "query"
+            "name": "queryString"
           },
           {
             "title": "param",
