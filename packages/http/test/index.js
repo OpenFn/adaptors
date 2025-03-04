@@ -517,7 +517,7 @@ describe('get()', () => {
 });
 
 describe('contentType', () => {
-  it('should prefer content-type header to contentType option', async () => {
+  it('should prefer contentType option to content-type header', async () => {
     let req;
     testServer
       .intercept({
@@ -540,9 +540,8 @@ describe('contentType', () => {
       )
     )(state);
 
-    expect(req.body).to.equal(JSON.stringify({ name: 'a', age: 42 }));
+    expect(req.body instanceof FormData).to.equal(true);
     expect(JSON.parse(response.data).id).to.eql(1);
-    expect(req.headers['Content-Type']).to.equal('application/json');
   });
 
   it('should handle invalid contentType and default to application/json', async () => {
@@ -565,6 +564,35 @@ describe('contentType', () => {
         'https://www.example.com/api/fake-json',
         { name: 'a', age: 42 },
         { contentType: 'file' }
+      )
+    )(state);
+
+    
+    expect(req.body).to.equal(JSON.stringify({ name: 'a', age: 42 }));
+    expect(JSON.parse(response.data).id).to.eql(1);
+    expect(req.headers['Content-Type']).to.equal('application/json');
+  });
+
+  it('should use content-type header when given', async () => {
+    let req;
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'POST',
+      })
+      .reply(200, r => {
+        req = r;
+        return { id: 1, name: 'a', age: 42 };
+      });
+    const state = {
+      configuration: {},
+    };
+
+    const response = await execute(
+      post(
+        'https://www.example.com/api/fake-json',
+        { name: 'a', age: 42 },
+        { headers: { 'Content-Type': 'application/json' } }
       )
     )(state);
 
