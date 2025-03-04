@@ -572,37 +572,6 @@ describe('contentType', () => {
     expect(JSON.parse(response.data).id).to.eql(1);
     expect(req.headers['Content-Type']).to.equal('application/json');
   });
-
-  it('should handle multipart/form-data if sent in the headers ', async () => {
-    let req;
-    testServer
-      .intercept({
-        path: '/api/fake-json',
-        method: 'POST',
-      })
-      .reply(200, r => {
-        req = r;
-        return { id: 1, name: 'a', age: 42 };
-      });
-    const state = {
-      configuration: {},
-    };
-
-    const response = await execute(
-      post(
-        'https://www.example.com/api/fake-json',
-        { name: 'a', age: 42 },
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-          contentType: 'form',
-        }
-      )
-    )(state);
-
-    expect(req.body instanceof FormData).to.equal(true);
-    expect(JSON.parse(response.data).id).to.eql(1);
-    expect(req.headers['Content-Type']).to.equal('multipart/form-data');
-  });
 });
 
 describe('post', () => {

@@ -72,19 +72,11 @@ export function request(method, path, params, callback = s => s) {
 
     let { body, contentType = 'json', headers = {} } = resolvedParams;
 
-    const contentTypeKey = Object.keys(headers).find(
+    const hasContentType = Object.keys(headers).some(
       key => key.toLowerCase() === 'content-type'
     );
 
-    const hasContentType = contentTypeKey && headers[contentTypeKey];
-
-    const contentTypeValue = hasContentType
-      ? headers[contentTypeKey].toLowerCase()
-      : '';
-
-    const shouldEncodeForm =
-      (!hasContentType && contentType === 'form') ||
-      contentTypeValue.includes('multipart/form-data');
+    const shouldEncodeForm = !hasContentType && contentType === 'form';
 
     if (shouldEncodeForm) {
       body = encodeFormBody(body);
