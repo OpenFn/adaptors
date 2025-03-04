@@ -76,13 +76,11 @@ export function request(method, path, params, callback = s => s) {
       key => key.toLowerCase() === 'content-type'
     );
 
-    const shouldEncodeForm = !hasContentType && contentType === 'form';
-
-    if (shouldEncodeForm) {
+    if (hasContentType) {
+      headers = { ...headers };
+    } else if (contentType === 'form') {
       body = encodeFormBody(body);
-    }
-
-    if (!hasContentType && !shouldEncodeForm) {
+    } else {
       headers = {
         ...headers,
         'Content-Type': CONTENT_TYPES[contentType] || 'application/json',
