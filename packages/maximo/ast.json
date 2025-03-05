@@ -53,7 +53,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "update({\n  endpoint: \"maxrest/rest/mbo/workorder/1234\",\n  body: {\n    WORKORDER: {\n      STATUS: \"COMP\",\n      DESCRIPTION: \"Work completed\",\n    },\n  },\n});",
+            "description": "update({\n  endpoint: \"maxrest/rest/mbo/workorder/1234\",\n  body: state => state.data,\n});",
             "caption": "Update a workorder"
           },
           {
@@ -97,7 +97,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "update75({\n  endpoint: (state) => {\n    return (\n      \"maxrest/rest/os/mxinvbal/\" + state.data.form.question1.INVBALANCESID\n    );\n  },\n  body: (state) => {\n    return {\n      ITEMNUM: state.data.form.ITEMNUM,\n      ITEMSETID: state.data.form.ITEMSETID,\n      SITEID: state.data.form.SITEID,\n      LOCATION: state.data.form.LOCATION,\n      PHYSCNT: state.data.PHYSCNT,\n      BINNUM: state.data.form.BINNUM,\n    };\n  },\n});",
+            "description": "update75({\n  endpoint: \"maxrest/rest/mbo/invbalances\",\n  body: state => state.inventoryBalances,\n});",
             "caption": "Update an inventory balance"
           },
           {

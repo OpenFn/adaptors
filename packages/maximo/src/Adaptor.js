@@ -182,12 +182,7 @@ export function create(params) {
  * @example <caption>Update a workorder</caption>
  * update({
  *   endpoint: "maxrest/rest/mbo/workorder/1234",
- *   body: {
- *     WORKORDER: {
- *       STATUS: "COMP",
- *       DESCRIPTION: "Work completed",
- *     },
- *   },
+ *   body: state => state.data,
  * });
  * @function
  * @public
@@ -253,21 +248,8 @@ export function update(params) {
  * Make an upadte in Maximo 7.5
  * @example <caption>Update an inventory balance</caption>
  * update75({
- *   endpoint: (state) => {
- *     return (
- *       "maxrest/rest/os/mxinvbal/" + state.data.form.question1.INVBALANCESID
- *     );
- *   },
- *   body: (state) => {
- *     return {
- *       ITEMNUM: state.data.form.ITEMNUM,
- *       ITEMSETID: state.data.form.ITEMSETID,
- *       SITEID: state.data.form.SITEID,
- *       LOCATION: state.data.form.LOCATION,
- *       PHYSCNT: state.data.PHYSCNT,
- *       BINNUM: state.data.form.BINNUM,
- *     };
- *   },
+ *   endpoint: "maxrest/rest/mbo/invbalances",
+ *   body: state => state.inventoryBalances,
  * });
  * @function
  * @public
