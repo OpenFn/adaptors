@@ -215,7 +215,6 @@ describe('get()', () => {
     expect(responseWithoutDuration).to.eql({
       method: 'GET',
       headers: { 'content-type': 'application/json' },
-      body: { x: 31 },
       statusCode: 201,
       statusMessage: 'Created',
       url: 'https://www.example.com/json',
@@ -499,7 +498,7 @@ describe('get()', () => {
             body: state => state.data,
           },
           next => {
-            next.replies.push(next.response.body);
+            next.replies.push(next.data);
             return next;
           }
         )
@@ -629,7 +628,7 @@ describe('post', () => {
           state => state.data,
           {},
           next => {
-            next.replies.push(next.response.body);
+            next.replies.push(next.data);
             return next;
           }
         )
@@ -664,7 +663,7 @@ describe('post', () => {
       { chunkSize: 2 },
       (state, rows) =>
         post('https://www.example.com/api/csv-reader', rows, {}, state => {
-          state.apiResponses.push(...state.response.body);
+          state.apiResponses.push(...state.data);
           return state;
         })(state)
     )(state);
@@ -733,7 +732,7 @@ describe('put', () => {
           state => state.data,
           {},
           next => {
-            next.replies.push(next.response.body);
+            next.replies.push(next.data);
             return next;
           }
         )
@@ -802,7 +801,7 @@ describe('patch', () => {
           state => state.data,
           {},
           next => {
-            next.replies.push(next.response.body);
+            next.replies.push(next.data);
             return next;
           }
         )
@@ -867,7 +866,7 @@ describe('delete', () => {
             body: state => state.data,
           },
           next => {
-            next.replies.push(next.response.body);
+            next.replies.push(next.data);
             return next;
           }
         )
