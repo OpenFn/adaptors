@@ -72,16 +72,16 @@ export function request(method, path, params) {
 
     let { body, contentType = 'json', headers = {} } = resolvedParams;
 
-    const hasContentType = Object.keys(headers).find(
+    const contentTypeHeader = Object.keys(headers).find(
       key => key.toLowerCase() === 'content-type'
     );
 
     if (contentType === 'form') {
-      delete headers[hasContentType];
+      delete headers[contentTypeHeader];
       headers = { ...headers };
 
       body = encodeFormBody(body);
-    } else if (hasContentType) {
+    } else if (contentTypeHeader) {
       headers = { ...headers };
     } else {
       headers = {
