@@ -1,18 +1,18 @@
 <dl>
 <dt>
-    <a href="#del">del(path, params, callback)</a></dt>
+    <a href="#del">del(path, options)</a></dt>
 <dt>
-    <a href="#get">get(path, params, callback)</a></dt>
+    <a href="#get">get(path, options)</a></dt>
 <dt>
-    <a href="#parsexml">parseXML(body, script, callback)</a></dt>
+    <a href="#parsexml">parseXML(data, script)</a></dt>
 <dt>
-    <a href="#patch">patch(path, params, callback)</a></dt>
+    <a href="#patch">patch(path, data, options)</a></dt>
 <dt>
-    <a href="#post">post(path, params, callback)</a></dt>
+    <a href="#post">post(path, data, options)</a></dt>
 <dt>
-    <a href="#put">put(path, params, callback)</a></dt>
+    <a href="#put">put(path, data, options-)</a></dt>
 <dt>
-    <a href="#request">request(method, path, params, callback)</a></dt>
+    <a href="#request">request(method, path, options)</a></dt>
 </dl>
 
 This adaptor exports the following namespaced functions:
@@ -104,7 +104,7 @@ This adaptor exports the following from common:
 ## Functions
 ### del
 
-<p><code>del(path, params, callback) ⇒ Operation</code></p>
+<p><code>del(path, options) ⇒ Operation</code></p>
 
 Make a DELETE request. If `configuration.baseUrl` is set, paths must be relative.
 
@@ -112,8 +112,7 @@ Make a DELETE request. If `configuration.baseUrl` is set, paths must be relative
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
-| params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Auth parameters |
-| callback | <code>function</code> | (Optional) Callback function |
+| options | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Auth parameters |
 
 This operation writes the following keys to state:
 
@@ -124,16 +123,14 @@ This operation writes the following keys to state:
 | references | an array of all previous data objects used in the Job |
 **Example**
 ```js
-del(`/myendpoint/${state => state.data.id}`, {
-   headers: {'content-type': 'application/json'}
- })
+del(`/myendpoint/${$.data.id}`)
 ```
 
 * * *
 
 ### get
 
-<p><code>get(path, params, callback) ⇒ Operation</code></p>
+<p><code>get(path, options) ⇒ Operation</code></p>
 
 Make a GET request. If `configuration.baseUrl` is set, paths must be relative.
 
@@ -141,8 +138,7 @@ Make a GET request. If `configuration.baseUrl` is set, paths must be relative.
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
-| params | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Authentication parameters |
-| callback | <code>function</code> | (Optional) Callback function |
+| options | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Authentication parameters |
 
 This operation writes the following keys to state:
 
@@ -153,7 +149,7 @@ This operation writes the following keys to state:
 | references | an array of all previous data objects used in the Job |
 **Example**
 ```js
-get('/myEndpoint', {
+get('/patient', {
   query: {foo: 'bar', a: 1},
   headers: {'content-type': 'application/json'},
 })
@@ -163,16 +159,15 @@ get('/myEndpoint', {
 
 ### parseXML
 
-<p><code>parseXML(body, script, callback) ⇒ Operation</code></p>
+<p><code>parseXML(data, script) ⇒ Operation</code></p>
 
 Parse XML with the Cheerio parser
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| body | <code>String</code> | data string to be parsed |
+| data | <code>String</code> | Body string to be parsed |
 | script | <code>function</code> | script for extracting data |
-| callback | <code>function</code> | (Optional) Callback function |
 
 This operation writes the following keys to state:
 
@@ -196,7 +191,7 @@ parseXML(
   ($) => {
     return $("table[class=your_table]").parsetable(true, true, true);
   },
-  (next) => ({ ...next, results: next.data.body })
+  (next) => ({ ...next, results: next.data.data })
 );
 ```
 
@@ -204,7 +199,7 @@ parseXML(
 
 ### patch
 
-<p><code>patch(path, params, callback) ⇒ Operation</code></p>
+<p><code>patch(path, data, options) ⇒ Operation</code></p>
 
 Make a PATCH request. If `configuration.baseUrl` is set, paths must be relative.
 
@@ -212,8 +207,8 @@ Make a PATCH request. If `configuration.baseUrl` is set, paths must be relative.
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
-| params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Auth parameters |
-| callback | <code>function</code> | (Optional) Callback function |
+| data | <code>object</code> | Body data to append to the request. JSON will be converted to a string. |
+| options | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Auth parameters |
 
 This operation writes the following keys to state:
 
@@ -222,19 +217,22 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example**
+**Example:** PATCH a resource from state
 ```js
-patch('/myEndpoint', {
-   body: {'foo': 'bar'},
-   headers: {'content-type': 'application/json'},
- })
+patch('/patient', $.data)
+```
+**Example:** PATCH a resource with custom headers
+```js
+patch('/patient', $.data, {
+  headers: { 'content-type': 'application/fhir+json' },
+})
 ```
 
 * * *
 
 ### post
 
-<p><code>post(path, params, callback) ⇒ operation</code></p>
+<p><code>post(path, data, options) ⇒ operation</code></p>
 
 Make a POST request. If `configuration.baseUrl` is set, paths must be relative.
 
@@ -242,8 +240,8 @@ Make a POST request. If `configuration.baseUrl` is set, paths must be relative.
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
-| params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Authentication parameters |
-| callback | <code>function</code> | (Optional) Callback function |
+| data | <code>object</code> | Body data to append to the request. JSON will be converted to a string. |
+| options | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Authentication parameters |
 
 This operation writes the following keys to state:
 
@@ -252,19 +250,23 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example**
+**Example:** POST a resource with from state
 ```js
-post('/myEndpoint', {
-   body: {'foo': 'bar'},
-   headers: {'content-type': 'application/json'},
- })
+post('/patient' $.data)
+   
+```
+**Example:** POST a resource with custom headers
+```js
+post('/patient' $.data, {
+  headers: { 'content-type': 'application/fhir+json' },
+})
 ```
 
 * * *
 
 ### put
 
-<p><code>put(path, params, callback) ⇒ Operation</code></p>
+<p><code>put(path, data, options-) ⇒ Operation</code></p>
 
 Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.
 
@@ -272,8 +274,8 @@ Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
-| params | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Auth parameters |
-| callback | <code>function</code> | (Optional) Callback function |
+| data | <code>object</code> | Body data to append to the request. JSON will be converted to a string. |
+| options- | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Auth parameters |
 
 This operation writes the following keys to state:
 
@@ -282,19 +284,22 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example**
+**Example:** PUT a resource from state
 ```js
-put('/myEndpoint', {
-   body: {'foo': 'bar'},
-   headers: {'content-type': 'application/json'},
- })
+put('/patient', $.data)
+```
+**Example:** PUT a resource with custom headers
+```js
+put('/patient', $.data, {
+  headers: { 'content-type': 'application/fhir+json' },
+})
 ```
 
 * * *
 
 ### request
 
-<p><code>request(method, path, params, callback) ⇒ Operation</code></p>
+<p><code>request(method, path, options) ⇒ Operation</code></p>
 
 Make a HTTP request. If `configuration.baseUrl` is set, paths must be relative.
 
@@ -303,8 +308,7 @@ Make a HTTP request. If `configuration.baseUrl` is set, paths must be relative.
 | --- | --- | --- |
 | method | <code>string</code> | The HTTP method to use. |
 | path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
-| params | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Authentication parameters |
-| callback | <code>function</code> | (Optional) Callback function |
+| options | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Authentication parameters |
 
 This operation writes the following keys to state:
 
@@ -317,7 +321,7 @@ This operation writes the following keys to state:
 ```js
 request(
   'GET',
-  '/myEndpoint',
+  '/patient',
    {
      query: {foo: 'bar', a: 1},
      headers: {'content-type': 'application/json'},
@@ -414,9 +418,9 @@ Options provided to the HTTP request
 
 | Name | Type | Description |
 | --- | --- | --- |
-| body | <code>object</code> \| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |
 | errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |
-| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |
+| contentType | <code>string</code> | Sets the `Content-Type` header on the request. Defaults to `json`. Supported values: `json`, `xml`, `string`, and `form` (for FormData). |
+| body | <code>object</code> \| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).This is only applicable to the request function |
 | query | <code>object</code> | An object of query parameters to be encoded into the URL. |
 | headers | <code>object</code> | An object of headers to append to the request. |
 | parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |
