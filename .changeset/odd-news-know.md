@@ -7,7 +7,6 @@
 '@openfn/language-cartodb': patch
 '@openfn/language-openhim': patch
 '@openfn/language-maximo': patch
-'@openfn/language-mysql': patch
 ---
 
 - cleanup examples wrapped with `execute()` function
