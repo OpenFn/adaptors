@@ -8,11 +8,6 @@ import { resolve as resolveUrl } from 'url';
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for beyonic.
- * @example
- * execute(
- *   create('foo'),
- *   delete('bar')
- * )(state)
  * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
@@ -30,10 +25,8 @@ export function execute(...operations) {
 
 /**
  * Create a payment
- * @example
- * execute(
- *   createPayment(data)
- * )(state)
+ * @example <caption>Create a payment with a reference to a customer</caption>
+ *  createPayment(data)
  * @public
  * @function
  * @param {object} data - Payload data for the payment
@@ -59,10 +52,8 @@ export function createPayment(data) {
 
 /**
  * Create a contact
- * @example
- * execute(
- *   createContact(data)
- * )(state)
+ * @example <caption>Create a contact</caption>
+ * createContact(data)
  * @public
  * @function
  * @param {object} data - Payload data for the contact
@@ -88,10 +79,8 @@ export function createContact(data) {
 
 /**
  * Create a collection request
- * @example
- * execute(
- *   createCollectionRequest(data)
- * )(state)
+ * @example <caption>Create a collection request</caption>
+ * createCollectionRequest(data)
  * @public
  * @function
  * @param {object} data - Payload data for the collection request

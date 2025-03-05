@@ -8,11 +8,6 @@ import squel from 'squel';
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for mysql.
- * @example
- * execute(
- *   create('foo'),
- *   delete('bar')
- * )(state)
  * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
@@ -302,20 +297,20 @@ export function sqlString(queryString) {
 }
 
 export {
-  field,
-  fields,
-  sourceValue,
-  alterState,
-  cursor,
-  dateFns,
   fn,
   fnIf,
-  arrayToString,
   each,
-  combine,
+  http,
   merge,
+  field,
+  fields,
+  cursor,
+  dateFns,
+  combine,
   dataPath,
   dataValue,
+  alterState,
+  sourceValue,
+  arrayToString,
   lastReferenceValue,
-  http,
 } from '@openfn/language-common';
