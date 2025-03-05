@@ -215,7 +215,6 @@ describe('get()', () => {
     expect(responseWithoutDuration).to.eql({
       method: 'GET',
       headers: { 'content-type': 'application/json' },
-      body: { x: 31 },
       statusCode: 201,
       statusMessage: 'Created',
       url: 'https://www.example.com/json',

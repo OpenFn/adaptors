@@ -64,7 +64,8 @@ export function request(method, path, params) {
       params
     );
 
-    let { body, headers = { 'Content-Type': 'application/json' } } = resolvedParams;
+    let { body, headers = { 'Content-Type': 'application/json' } } =
+      resolvedParams;
 
     if (resolvedParams.form) {
       body = encodeFormBody(body);
@@ -101,11 +102,12 @@ export function request(method, path, params) {
 
     return commonRequest(method, resolvedPath, options)
       .then(response => {
+        const { body, ...responseWithoutBody } = response;
         logResponse(response);
 
         return {
-          ...composeNextState(state, response.body),
-          response,
+          ...composeNextState(state, body),
+          response: responseWithoutBody,
         };
       })
       .catch(err => {
