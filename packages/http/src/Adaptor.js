@@ -61,12 +61,11 @@ export function execute(...operations) {
  * @param {string} method - The HTTP method to use.
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} options - Body, Query, Headers and Authentication parameters
- * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
  * @returns {Operation}
  */
-export function request(method, path, options, callback) {
-  return sendRequest(method, path, options, callback);
+export function request(method, path, options) {
+  return sendRequest(method, path, options);
 }
 
 /**
@@ -80,12 +79,11 @@ export function request(method, path, options, callback) {
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} options - Body, Query, Headers and Authentication parameters
- * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
  * @returns {Operation}
  */
-export function get(path, options, callback) {
-  return sendRequest('GET', path, options, callback);
+export function get(path, options) {
+  return sendRequest('GET', path, options);
 }
 
 /**
@@ -101,13 +99,12 @@ export function get(path, options, callback) {
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {object} data - Body data to append to the request. JSON will be converted to a string.
  * @param {RequestOptions} options - Query, Headers and Authentication parameters
- * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
  * @returns {operation}
  */
 
-export function post(path, data, options, callback) {
-  return sendRequest('POST', path, { body: data, ...options }, callback);
+export function post(path, data, options) {
+  return sendRequest('POST', path, { body: data, ...options });
 }
 
 /**
@@ -123,12 +120,11 @@ export function post(path, data, options, callback) {
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {object} data - Body data to append to the request. JSON will be converted to a string.
  * @param {RequestOptions} options- Query, Headers and Auth parameters
- * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
  * @returns {Operation}
  */
-export function put(path, data, options, callback) {
-  return sendRequest('PUT', path, { body: data, ...options }, callback);
+export function put(path, data, options) {
+  return sendRequest('PUT', path, { body: data, ...options });
 }
 
 /**
@@ -144,12 +140,11 @@ export function put(path, data, options, callback) {
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {object} data - Body data to append to the request. JSON will be converted to a string.
  * @param {RequestOptions} options - Query, Headers and Auth parameters
- * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
  * @returns {Operation}
  */
-export function patch(path, data, options, callback) {
-  return sendRequest('PATCH', path, { body: data, ...options }, callback);
+export function patch(path, data, options) {
+  return sendRequest('PATCH', path, { body: data, ...options });
 }
 
 /**
@@ -160,12 +155,11 @@ export function patch(path, data, options, callback) {
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} options - Query, Headers and Auth parameters
- * @param {function} callback - (Optional) Callback function
  * @state {HttpState}
  * @returns {Operation}
  */
-export function del(path, options, callback) {
-  return sendRequest('DELETE', path, options, callback);
+export function del(path, options) {
+  return sendRequest('DELETE', path, options);
 }
 
 /**
@@ -189,13 +183,12 @@ export function del(path, options, callback) {
  * @function
  * @param {String} data - Body string to be parsed
  * @param {function} script - script for extracting data
- * @param {function} callback - (Optional) Callback function
  * @state data - the parsed XML as a JSON object
  * @state references - an array of all previous data objects used in the Job
  * @returns {Operation}
  */
-export function parseXML(data, script, callback) {
-  return xmlParser({ body: data }, script, callback);
+export function parseXML(data, script) {
+  return xmlParser({ body: data }, script);
 }
 
 export {

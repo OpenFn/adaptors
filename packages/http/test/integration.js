@@ -56,9 +56,9 @@ describe('Integration tests', () => {
       },
       data: {},
     };
-    const { response } = await execute(get('/'))(state);
+    const { data, response } = await execute(get('/'))(state);
 
-    expect(response.body).to.eql('Hello, World!');
+    expect(data).to.eql('Hello, World!');
     expect(response.method).to.eql('GET');
   });
 
@@ -69,11 +69,9 @@ describe('Integration tests', () => {
       },
       data: {},
     };
-    const { response } = await execute(
-      post('/',  { name: 'Joe' })
-    )(state);
+    const { data, response } = await execute(post('/', { name: 'Joe' }))(state);
 
-    expect(response.body).to.eql('Hello, World!');
+    expect(data).to.eql('Hello, World!');
     expect(response.method).to.eql('POST');
   });
 
@@ -85,13 +83,13 @@ describe('Integration tests', () => {
       data: {},
     };
 
-    const { response } = await execute(
+    const { data } = await execute(
       get('/redirect', {
         headers: { followAllRedirects: true },
       })
     )(state);
 
-    expect(response.body).to.eql({ ok: true });
+    expect(data).to.eql({ ok: true });
   });
 
   it('should pass if certs are added to the request', async () => {
@@ -103,7 +101,7 @@ describe('Integration tests', () => {
       data: {},
     };
 
-    const { response } = await execute(
+    const { data } = await execute(
       get('/', {
         tls: {
           ca,
@@ -113,7 +111,7 @@ describe('Integration tests', () => {
       })
     )(state);
 
-    expect(response.body).to.eql('Hello, HTTPS World!');
+    expect(data).to.eql('Hello, HTTPS World!');
   });
 
   it('should fail if certs are not added to the request', async () => {

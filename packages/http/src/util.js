@@ -62,7 +62,7 @@ export const CONTENT_TYPES = {
  * @function
  * @private
  */
-export function request(method, path, params, callback = s => s) {
+export function request(method, path, params) {
   return state => {
     const [resolvedPath, resolvedParams = {}] = expandReferences(
       state,
@@ -121,14 +121,14 @@ export function request(method, path, params, callback = s => s) {
 
     return commonRequest(method, resolvedPath, options)
       .then(response => {
+        const { body, ...responseWithoutBody } = response;
         logResponse(response);
 
         return {
-          ...composeNextState(state, response.body),
-          response,
+          ...composeNextState(state, body),
+          response: responseWithoutBody,
         };
       })
-      .then(callback)
       .catch(err => {
         logResponse(err);
 
@@ -141,7 +141,7 @@ export function request(method, path, params, callback = s => s) {
  * @function
  * @private
  */
-export function xmlParser(body, script, callback = s => s) {
+export function xmlParser(body, script) {
   return state => {
     const [resolvedBody] = expandReferences(state, body);
     const $ = cheerio.load(resolvedBody);
@@ -151,12 +151,12 @@ export function xmlParser(body, script, callback = s => s) {
       const result = script($);
       try {
         const r = JSON.parse(result);
-        return callback(composeNextState(state, r));
+        return composeNextState(state, r);
       } catch (e) {
-        return callback(composeNextState(state, { body: result }));
+        return composeNextState(state, { body: result });
       }
     } else {
-      return callback(composeNextState(state, { body: resolvedBody }));
+      return composeNextState(state, { body: resolvedBody });
     }
   };
 }
