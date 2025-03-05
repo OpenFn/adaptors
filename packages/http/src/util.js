@@ -51,6 +51,12 @@ const assertUrl = (pathOrUrl, baseUrl) => {
   }
 };
 
+export const CONTENT_TYPES = {
+  xml: 'application/xml',
+  json: 'application/json',
+  string: 'text/plain',
+};
+
 /**
  * Request helper function
  * @function
@@ -64,11 +70,24 @@ export function request(method, path, params) {
       params
     );
 
-    let { body, headers = { 'Content-Type': 'application/json' } } =
-      resolvedParams;
+    let { body, contentType = 'json', headers = {} } = resolvedParams;
 
-    if (resolvedParams.form) {
+    const contentTypeHeader = Object.keys(headers).find(
+      key => key.toLowerCase() === 'content-type'
+    );
+
+    if (contentType === 'form') {
+      delete headers[contentTypeHeader];
+      headers = { ...headers };
+
       body = encodeFormBody(body);
+    } else if (contentTypeHeader) {
+      headers = { ...headers };
+    } else {
+      headers = {
+        ...headers,
+        'Content-Type': CONTENT_TYPES[contentType] || 'application/json',
+      };
     }
 
     const baseUrl = state.configuration?.baseUrl;
