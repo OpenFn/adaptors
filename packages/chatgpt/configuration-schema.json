@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
-    "baseUrl": {
-      "title": "Base URL",
+    "apiKey": {
+      "title": "API Key",
       "anyOf": [
         {
           "type": "string"
@@ -11,26 +11,13 @@
           "type": "null"
         }
       ],
-      "description": "The base URL (http://www.example.com)",
-      "format": "uri",
+      "description": "Your OpenAI API key",
+      "type": "string",
       "minLength": 1,
-      "examples": ["https://example.com"]
-    },
-    "username": {
-      "title": "Username",
-      "type": "string",
-      "description": "Username",
-      "examples": ["test@openfn.org"]
-    },
-    "password": {
-      "title": "Password",
-      "type": "string",
-      "description": "Password",
-      "writeOnly": true,
-      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+      "examples": ["sk-proj-api03-YOUR_SECRET_KEY"]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["password", "username"]
+  "required": ["apiKey"]
 }

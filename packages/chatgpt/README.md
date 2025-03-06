@@ -1,11 +1,12 @@
 # language-chatgpt <img src='./assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the chatgpt API.
+An OpenFn **_adaptor_** for building integration jobs for use with OpenAI's
+ChatGPT API.
 
 ## Documentation
 
-View the [docs site](https://docs.openfn.org/adaptors/packages/chatgpt-docs)
-for full technical documentation.
+View the [docs site](https://docs.openfn.org/adaptors/packages/chatgpt-docs) for
+full technical documentation.
 
 ### Configuration
 
@@ -16,7 +17,7 @@ for required and optional `configuration` properties.
 ### A example expression using the `create` function
 
 ```js
-post('patient', { name: 'Bukayo' });
+prompt('Write me a poem about tables and chairs.');
 ```
 
 ## Development

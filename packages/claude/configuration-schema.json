@@ -12,11 +12,9 @@
         }
       ],
       "description": "Your Anthropic API token",
-      "format": "uri",
+      "type": "string",
       "minLength": 1,
-      "examples": [
-        "sk-ant-api03-YOUR_SECRET_KEY"
-      ]
+      "examples": ["sk-ant-api03-YOUR_SECRET_KEY"]
     }
   },
   "type": "object",
