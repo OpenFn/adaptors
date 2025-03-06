@@ -49,10 +49,10 @@ export function execute(...operations) {
 /**
  * Prompt the GPT chat interface to respond
  * @example
- * prompt('Write a haiku about surfing.');
+ * prompt('Write a haiku about surfing.' model='gpt-4o');
  * @public
  * @param {string} message - The prompt
- * @param model - The model (defaults to 'gpt-4o)
+ * @param {string} model - The model (defaults to 'gpt-4o)
  * @returns {operation}
  */
 export function prompt (message, model='gpt-4o') {

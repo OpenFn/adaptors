@@ -11,7 +11,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "prompt('Write a haiku about surfing.');"
+            "description": "prompt('Write a haiku about surfing.' model='gpt-4o');"
           },
           {
             "title": "public",
