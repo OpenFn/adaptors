@@ -18,6 +18,12 @@ export function createClient(state) {
   return state;
 }
 
+
+export function setMockClient(mock) {
+  client = mock;
+}
+
+
 /**
  * Executes a series of operations.
  * It ensures the client is created first and assigned to the 'client' variable
