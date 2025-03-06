@@ -45,6 +45,10 @@ export function execute(...operations) {
   };
 }
 
+export function setMockClient(mock) {
+  client = mock;
+}
+
 /**
  * Prompt the Claude chat interface to respond
  * @public
