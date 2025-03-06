@@ -49,6 +49,7 @@ export function execute(...operations) {
  * Write a prompt
  * @public
  * @param {string} message - The prompt
+ * @param {string} model - The model (defaults to 'claude-3-7-sonnet-20250219')
  * @returns {operation}
  */
 export function prompt(message, model = 'claude-3-7-sonnet-20250219') {
