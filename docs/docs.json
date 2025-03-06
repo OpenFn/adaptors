@@ -1438,6 +1438,135 @@
     "kind": "external-function"
   }
 ],
+{"name":"chatgpt","adaptor":"@openfn/language-chatgpt","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#prompt\\\">prompt(message, model)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### prompt\\n\\n<p><code>prompt(message, model) ⇒ operation</code></p>\\n\\nPrompt the GPT chat interface to respond\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| message | <code>string</code> | The prompt |\\n| model | <code>string</code> | The model (defaults to 'gpt-4o) |\\n\\n**Example**\\n```js\\nprompt('Write a haiku about surfing.' model='gpt-4o');\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-chatgpt <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with OpenAI's\\nChatGPT API.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/chatgpt-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/chatgpt-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `create` function\\n\\n```js\\nprompt('Write me a poem about tables and chairs.');\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-chatgpt\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["prompt"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"apiKey":{"title":"API Key","anyOf":[{"type":"string"},{"type":"null"}],"description":"Your OpenAI API key","type":"string","minLength":1,"examples":["sk-proj-api03-YOUR_SECRET_KEY"]}},"type":"object","additionalProperties":true,"required":["apiKey"]}},
+[
+  {
+    "id": "prompt",
+    "longname": "prompt",
+    "name": "prompt",
+    "kind": "function",
+    "scope": "global",
+    "description": "Prompt the GPT chat interface to respond",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The prompt",
+        "name": "message"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The model (defaults to 'gpt-4o)",
+        "name": "model"
+      }
+    ],
+    "examples": [
+      "prompt('Write a haiku about surfing.' model='gpt-4o');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 61,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/chatgpt/src"
+    },
+    "order": 2,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  }
+],
 {"name":"cht","adaptor":"@openfn/language-cht","version":"1.0.8","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, options, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, body, options, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#put\\\">put(path, options, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, data, options, [callback])</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### get\\n\\n<p><code>get(path, options, [callback]) ⇒ Operation</code></p>\\n\\nMake a GET request against the base URL.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Options to configure the HTTP request |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the CHT HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get a list of contacts\\n```js\\nget(\\\"/api/v2/export/contacts\\\");\\n```\\n**Example:** Filter contacts given a name\\n```js\\nget(\\\"/api/v2/export/contacts\\\", {\\n  query: {\\\"filters\\\": {\\n    \\\"search\\\": \\\"jim\\\"\\n  }}\\n});\\n```\\n\\n* * *\\n\\n### post\\n\\n<p><code>post(path, body, options, [callback]) ⇒ Operation</code></p>\\n\\nMake a POST request against the base url\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the CHT HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Create a new person\\n```js\\npost(\\\"/api/v1/people\\\", {  \\n  \\\"name\\\": \\\"Hannah\\\",\\n  \\\"phone\\\": \\\"+254712345678\\\",\\n  \\\"type\\\": \\\"contact\\\",\\n  \\\"contact_type\\\": \\\"patient\\\", });\\n```\\n\\n* * *\\n\\n### put\\n\\n<p><code>put(path, options, [callback]) ⇒ Operation</code></p>\\n\\nMake a PUT request against the base url\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Options to configure the HTTP request |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the CHT HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Update settings\\n```js\\nput(\\\"/api/v1/settings\\\",{query:{overwrite:true}});\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(method, path, data, options, [callback]) ⇒ Operation</code></p>\\n\\nMake a general HTTP request to CHT\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the CHT HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\nrequest(\\\"POST\\\",\\\"/api/v1/people\\\", {  \\n  \\\"name\\\": \\\"Hannah\\\",\\n  \\\"phone\\\": \\\"+254712345678\\\",\\n  \\\"type\\\": \\\"contact\\\",\\n  \\\"contact_type\\\": \\\"patient\\\", });\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-cht <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the cht API.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/cht-docs)\\nfor full technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/cht-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `post` function\\n\\n```js\\npost(\\\"/api/v1/people\\\", {  \\n  \\\"name\\\": \\\"Hannah\\\",\\n  \\\"phone\\\": \\\"+254712345678\\\",\\n  \\\"type\\\": \\\"contact\\\",\\n  \\\"contact_type\\\": \\\"patient\\\", });\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-cht\\n\\n## 1.0.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [b3d7f59]\\n- Updated dependencies [2d709ff]\\n- Updated dependencies [41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 1.0.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 1.0.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [a47d8d5]\\n- Updated dependencies [9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 1.0.5\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 1.0.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 1.0.3\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus [33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 1.0.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 1.0.1\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 1.0.0\\n\\nInitial release for cht adaptor with `get`, `post`, and `put`\\n\"","functions":["get","post","put","request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"Community Health Kit base URL","format":"uri","minLength":1,"examples":["https://demo-cht.dev.medicmobile.org"]},"username":{"title":"Username","type":"string","description":"Username","examples":["somenamehere"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]}},"type":"object","additionalProperties":true,"required":["password","username"]}},
 [
   {
@@ -1927,7 +2056,7 @@
     "kind": "external-function"
   }
 ],
-{"name":"claude","adaptor":"@openfn/language-claude","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#prompt\\\">prompt(message, model)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### prompt\\n\\n<p><code>prompt(message, model) ⇒ operation</code></p>\\n\\nPrompt the Claude chat interface to respond\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| message | <code>string</code> | The prompt |\\n| model | <code>string</code> | The model (defaults to 'claude-3-7-sonnet-20250219') |\\n\\n**Example**\\n```js\\nprompt('Write a haiku about surfing.');\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-claude <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the Anthropic\\nClaude API.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/claude-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/claude-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `prompt` function\\n\\n```js\\nprompt('Write a haiku about surfing.');\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\"","changelog":"\"# @openfn/language-claude\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["prompt"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"apiKey":{"title":"API Key","anyOf":[{"type":"string"},{"type":"null"}],"description":"Your Anthropic API token","format":"uri","minLength":1,"examples":["sk-ant-api03-YOUR_SECRET_KEY"]}},"type":"object","additionalProperties":true,"required":["apiKey"]}},
+{"name":"claude","adaptor":"@openfn/language-claude","version":"1.0.1","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#prompt\\\">prompt(message, model)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### prompt\\n\\n<p><code>prompt(message, model) ⇒ operation</code></p>\\n\\nPrompt the Claude chat interface to respond\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| message | <code>string</code> | The prompt |\\n| model | <code>string</code> | The model (defaults to 'claude-3-7-sonnet-20250219') |\\n\\n**Example**\\n```js\\nprompt('Write a haiku about surfing.');\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-claude <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the Anthropic\\nClaude API.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/claude-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/claude-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `prompt` function\\n\\n```js\\nprompt('Write a haiku about surfing.');\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\"","changelog":"\"# @openfn/language-claude\\n\\n## 1.0.1\\n\\n### Patch Changes\\n\\n- Fix config schema\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["prompt"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"apiKey":{"title":"API Key","anyOf":[{"type":"string"},{"type":"null"}],"description":"Your Anthropic API token","type":"string","minLength":1,"examples":["sk-ant-api03-YOUR_SECRET_KEY"]}},"type":"object","additionalProperties":true,"required":["apiKey"]}},
 [
   {
     "id": "prompt",
