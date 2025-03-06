@@ -7,12 +7,16 @@
         "model"
       ],
       "docs": {
-        "description": "Write a prompt",
+        "description": "Prompt the Claude chat interface to respond",
         "tags": [
           {
             "title": "public",
             "description": null,
             "type": null
+          },
+          {
+            "title": "example",
+            "description": "prompt('Write a haiku about surfing.');"
           },
           {
             "title": "param",
