@@ -51,10 +51,10 @@ export function execute(...operations) {
  * @param {string} message - The prompt
  * @returns {operation}
  */
-export function createPrompt(message) {
+export function prompt(message, model = 'claude-3-7-sonnet-20250219') {
   return async state => {
     const msg = await client.messages.create({
-      model: 'claude-3-7-sonnet-20250219',
+      model,
       max_tokens: 1024,
       messages: [{ role: 'user', content: message }],
     });
