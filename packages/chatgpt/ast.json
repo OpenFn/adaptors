@@ -30,7 +30,10 @@
           {
             "title": "param",
             "description": "The model (defaults to 'gpt-4o)",
-            "type": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
             "name": "model"
           },
           {
