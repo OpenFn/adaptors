@@ -28,7 +28,8 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:*"
+    "@openfn/language-common": "workspace:*",
+    "openai": "^4.86.2"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
