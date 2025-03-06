@@ -10,7 +10,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "fetch( { getEndpoint: 'topictree', queryParams: { subject: 'math' } })",
+            "description": "fetch({ getEndpoint: \"topictree\", queryParams: { subject: \"math\" } });",
             "caption": "Fetch data from the Khan Academy API"
           },
           {

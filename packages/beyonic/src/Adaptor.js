@@ -26,7 +26,7 @@ export function execute(...operations) {
 /**
  * Create a payment
  * @example <caption>Create a payment with a reference to a customer</caption>
- *  createPayment(data)
+ * createPayment(data)
  * @public
  * @function
  * @param {object} data - Payload data for the payment

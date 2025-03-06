@@ -27,7 +27,7 @@ export function execute(...operations) {
 /**
  * Fetch data from the Khan Academy API
  * @example <caption>Fetch data from the Khan Academy API</caption>
- * fetch( { getEndpoint: 'topictree', queryParams: { subject: 'math' } })
+ * fetch({ getEndpoint: "topictree", queryParams: { subject: "math" } });
  * @public
  * @function
  * @param {object} params - data to make the query
