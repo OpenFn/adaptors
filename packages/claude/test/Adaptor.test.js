@@ -1,75 +1,77 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { request, dataValue } from '../src/Adaptor.js';
+import { prompt, createClient } from '../src/Adaptor.js';
 
 // This creates a mock client which acts like a fake server.
 // It enables pattern-matching on the request object and custom responses
 // For the full mock API see
 // https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
-const testServer = enableMockClient('https://fake.server.com');
+const testServer = enableMockClient('https://api.anthropic.com');
 
-describe('request', () => {
-  it('makes a post request to the right endpoint', async () => {
+describe('prompt', () => {
+  it('sends a post request to Claude', async () => {
     // Setup a mock endpoint
     testServer
       .intercept({
-        path: '/api/patients',
+        path: '/v1/messages',
         method: 'POST',
         headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
+          'x-api-key': 'secret',
         },
       })
       // Set the reply from this endpoint
       // The body will be returned to state.data
-      .reply(200, { id: 7, fullName: 'Mamadou', gender: 'M' });
+      .reply(200, {
+        id: 'msg_01UQMuLDXwzgrkUtfWG7X5Ep',
+        type: 'message',
+        role: 'assistant',
+        model: 'claude-3-7-sonnet-20250219',
+        content: [
+          {
+            type: 'text',
+            text: 'Waves crest and tumble\nBalanced on liquid blue silk\nSalt kisses the soul',
+          },
+        ],
+        stop_reason: 'end_turn',
+        stop_sequence: null,
+        usage: {
+          input_tokens: 15,
+          cache_creation_input_tokens: 0,
+          cache_read_input_tokens: 0,
+          output_tokens: 23,
+        },
+      });
 
     const state = {
       configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
+        apiKey: 'secret',
       },
     };
 
-    const finalState = await request('POST', 'patients', {
-      name: state.data.fullName,
-      gender: state.data.gender,
-    })(state);
+    let client = createClient(state);
+
+    const finalState = await prompt('Write a poem about surfing.')(state);
 
     expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-      id: 7,
-    });
-  });
-
-  it('throws an error if the service returns 403', async () => {
-    testServer
-      .intercept({
-        path: '/api/noAccess',
-        method: 'POST',
-      })
-      .reply(403);
-
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
+      id: 'msg_01UQMuLDXwzgrkUtfWG7X5Ep',
+      type: 'message',
+      role: 'assistant',
+      model: 'claude-3-7-sonnet-20250219',
+      content: [
+        {
+          type: 'text',
+          text: 'Waves crest and tumble\nBalanced on liquid blue silk\nSalt kisses the soul',
+        },
+      ],
+      stop_reason: 'end_turn',
+      stop_sequence: null,
+      usage: {
+        input_tokens: 15,
+        cache_creation_input_tokens: 0,
+        cache_read_input_tokens: 0,
+        output_tokens: 23,
       },
-    };
-
-    const error = await request('POST', 'noAccess', { name: 'taylor' })(
-      state
-    ).catch(error => {
-      return error;
     });
-
-    expect(error.statusMessage).to.eql('Forbidden');
   });
 });

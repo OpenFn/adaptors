@@ -11,7 +11,7 @@ let client;
  * @param state
  * @returns {state}
  */
-function createClient(state) {
+export function createClient(state) {
   const { apiKey } = state.configuration;
 
   client = new Anthropic({
