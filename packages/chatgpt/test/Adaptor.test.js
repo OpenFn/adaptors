@@ -1,75 +1,33 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
+import { prompt, createClient, execute } from '../src/Adaptor.js';
+import testData from "./fixtures/fixture.json" assert {type: 'json'};
 
-import { request, dataValue } from '../src/Adaptor.js';
 
 // This creates a mock client which acts like a fake server.
 // It enables pattern-matching on the request object and custom responses
 // For the full mock API see
 // https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
-const testServer = enableMockClient('https://fake.server.com');
+const testServer = enableMockClient('https://api.openai.com');
 
-describe('request', () => {
-  it('makes a post request to the right endpoint', async () => {
+describe('prompt', () => {
+  it('sends a post request to OpenAI', async () => {
     // Setup a mock endpoint
-    testServer
-      .intercept({
-        path: '/api/patients',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      // Set the reply from this endpoint
-      // The body will be returned to state.data
-      .reply(200, { id: 7, fullName: 'Mamadou', gender: 'M' });
+    testServer.intercept({
+      path: '/v1/chat/completions',
+      method:'POST'
+    }).reply(200, {...testData.response});
 
     const state = {
       configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
+        apiKey: 'secret',
       },
     };
 
-    const finalState = await request('POST', 'patients', {
-      name: state.data.fullName,
-      gender: state.data.gender,
-    })(state);
+    let client = createClient(state);
 
-    expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-      id: 7,
-    });
-  });
+    const finalState = await execute(prompt('Write a poem about surfing.'))(state);
 
-  it('throws an error if the service returns 403', async () => {
-    testServer
-      .intercept({
-        path: '/api/noAccess',
-        method: 'POST',
-      })
-      .reply(403);
-
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-    };
-
-    const error = await request('POST', 'noAccess', { name: 'taylor' })(
-      state
-    ).catch(error => {
-      return error;
-    });
-
-    expect(error.statusMessage).to.eql('Forbidden');
+    expect(finalState.data).to.eql(testData.response);
   });
 });
