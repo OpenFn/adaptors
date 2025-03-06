@@ -54,6 +54,7 @@ export function execute(...operations) {
  * @example
  * prompt('Write a haiku about surfing.' model='gpt-4o');
  * @public
+ * @function
  * @param {string} message - The prompt
  * @param {string} model - The model (defaults to 'gpt-4o)
  * @returns {operation}
