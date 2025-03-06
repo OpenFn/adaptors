@@ -1,4 +1,7 @@
-import { composeNextState, execute as commonExecute } from '@openfn/language-common';
+import {
+  composeNextState,
+  execute as commonExecute,
+} from '@openfn/language-common';
 import Anthropic from '@anthropic-ai/sdk';
 
 let client;
@@ -12,7 +15,7 @@ function createClient(state) {
   const { apiKey } = state.configuration;
 
   client = new Anthropic({
-    apiKey
+    apiKey,
   });
 
   return state;
@@ -28,17 +31,19 @@ function createClient(state) {
 export function execute(...operations) {
   const initialState = {
     references: [],
-    data: null
+    data: null,
   };
 
   return state => {
-    return commonExecute(createClient, ...operations)({
+    return commonExecute(
+      createClient,
+      ...operations
+    )({
       ...initialState,
       ...state,
-    })
-  }
+    });
+  };
 }
-
 
 /**
  * Write a prompt
@@ -46,15 +51,15 @@ export function execute(...operations) {
  * @param {string} message - The prompt
  * @returns {operation}
  */
-export function createPrompt (message) {
+export function createPrompt(message) {
   return async state => {
     const msg = await client.messages.create({
       model: 'claude-3-7-sonnet-20250219',
       max_tokens: 1024,
-      messages: [{ role: 'user', content: message }]
+      messages: [{ role: 'user', content: message }],
     });
-    return composeNextState(state, msg)
-  }
+    return composeNextState(state, msg);
+  };
 }
 
 export {
