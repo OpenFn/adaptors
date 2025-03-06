@@ -75,22 +75,30 @@ please make one and assign yourself.
 
 #### Requirements
 
-* Create a fork of this repo on your local machine
-* Iinstall the OpenFn CLI `npm install -g @openfn/cli`
-* Ensure the OPENFN_REPO_DIR env var is set to to the root of this repo, ie,  `export OPENFN_REPO_DIR=~/repo/openfn/cli-repo`
-* Ensure you have the logo images of the adaptor you need to create: a rectangle 512x190px and a square-256x256px
-
+- Create a fork of this repo on your local machine
+- Iinstall the OpenFn CLI `npm install -g @openfn/cli`
+- Ensure the OPENFN_REPO_DIR env var is set to to the root of this repo, ie,
+  `export OPENFN_REPO_DIR=~/repo/openfn/cli-repo`
+- Ensure you have the logo images of the adaptor you need to create: a rectangle
+  512x190px and a square-256x256px
 
 #### 1. Setup
 
 Generating a new adaptor. Run this from the repo root:
+
 ```
 pnpm generate <adaptor-name>
 ```
-* Add the logo images in the assets folder inside the generated adaptor folder. Ps: Ensure both images are named rectangle.png and square.png respectively and adhere to the size specifications mentioned in the requirements section.
-* Ensure the mages have a transparent background.
-Navigate to configuration-schema.json, and change any configs that do not align with the adaptor
-* Go to `/src/Adaptor.js` and create the adaptor’s Operations - the functions used in job code. You may want to set up  `POST, GET,` to fit the current adaptor’s requirements
+
+- Add the logo images in the assets folder inside the generated adaptor folder.
+  Ps: Ensure both images are named rectangle.png and square.png respectively and
+  adhere to the size specifications mentioned in the requirements section.
+- Ensure the mages have a transparent background. Navigate to
+  configuration-schema.json, and change any configs that do not align with the
+  adaptor
+- Go to `/src/Adaptor.js` and create the adaptor’s Operations - the functions
+  used in job code. You may want to set up `POST, GET,` to fit the current
+  adaptor’s requirements
 
 They should look something like this:
 
@@ -103,45 +111,58 @@ export function yourFunctionName(arguments) {
 }
 ```
 
-* Go to `src/Utils.js` and change the code in the file to match your desired implementation. Any internal functions used by your adaptor, but not by job code, should go here in Utils.js
-* Update the readme with correct examples that match your new implementation
-* Write and update the tests within the `/tests` folder
-* Edit the CHANGELOG.md file with comments about the initial release. 
-* You should set your credentials in the “configuration”  property inside `state.json`
-* Write some unit tests to ensure your code works
+- Go to `src/Utils.js` and change the code in the file to match your desired
+  implementation. Any internal functions used by your adaptor, but not by job
+  code, should go here in Utils.js
+- Update the readme with correct examples that match your new implementation
+- Write and update the tests within the `/tests` folder
+- Edit the CHANGELOG.md file with comments about the initial release.
+- You should set your credentials in the “configuration” property inside
+  `state.json`
+- Write some unit tests to ensure your code works
 
 #### 2. Test it manually
 
 To run a test job and exercise your
 
-* Create a new /tmp folder and create two new files: state.json and expression.js.
-* * Note that the /tmp folder is already gitignored and will not be sent to gitHub when you push your code.
-* Write a test job inside `expression.js`
-* Navigate to the adaptor folder:
+- Create a new /tmp folder and create two new files: state.json and
+  expression.js.
+- - Note that the /tmp folder is already gitignored and will not be sent to
+    gitHub when you push your code.
+- Write a test job inside `expression.js`
+- Navigate to the adaptor folder:
+
 ```
 cd packages/<adaptor name>
 ```
-* Install adaptor dependencies
+
+- Install adaptor dependencies
+
 ```
 pnpm install
 ```
-* Build the adaptor
+
+- Build the adaptor
+
 ```
 pnpm build --watch
 ```
-* Run the test job through the CLI
-```
-openfn tmp/expression.js -ma <adaptor name> -o tmp/output.json -s tmp/state.json 
+
+- Run the test job through the CLI
 
 ```
-  `-o` will output to your console
+openfn tmp/expression.js -ma <adaptor name> -o tmp/output.json -s tmp/state.json
 
-  `-m` will run the job from the monorepo (see the setup notes in 1.)
+```
 
-  `-a` this will specify the adaptor to run your job with
+`-o` will output to your console
 
-The different output from you running the jobs will be temporarily stored in `output.json`
+`-m` will run the job from the monorepo (see the setup notes in 1.)
 
+`-a` this will specify the adaptor to run your job with
+
+The different output from you running the jobs will be temporarily stored in
+`output.json`
 
 #### 3. Add docs and write the tests
 
@@ -188,18 +209,19 @@ to the release branch BEFORE merging.
 1. Push the branch
 
 When the branch is merged to main, Github Actions will:
-* Build and test (just in case)
-* Publish any new version numbers to npm
-* Generate and push tags for all new versions
-* Send a notification to slack
-* Update `docs/docs.json` with new markdown and update docs.openfn.org
+
+- Build and test (just in case)
+- Publish any new version numbers to npm
+- Generate and push tags for all new versions
+- Send a notification to slack
+- Update `docs/docs.json` with new markdown and update docs.openfn.org
 
 ## Pre-releases
 
 **NOTE: pre-release automation is currently DISABLED until support is activated
 in Lightning**
 
-Pre-release builds for adaptors are availabe with the `@next` tag. These can be
+Pre-release builds for adaptors are available with the `@next` tag. These can be
 used in the CLI and Lightning and are generally available on `npm` (but because
 they're not flagged as `latest`, they won't be downloaded by default).
 
