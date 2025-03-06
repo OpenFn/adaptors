@@ -1,16 +1,17 @@
-# language-anthropic <img src='./assets/square.png' width="30" height="30"/>
+# language-claude <img src='./assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the anthropic API.
+An OpenFn **_adaptor_** for building integration jobs for use with the Anthropic
+Claude API.
 
 ## Documentation
 
-View the [docs site](https://docs.openfn.org/adaptors/packages/anthropic-docs)
+View the [docs site](https://docs.openfn.org/adaptors/packages/claude-docs)
 for full technical documentation.
 
 ### Configuration
 
 View the
-[configuration-schema](https://docs.openfn.org/adaptors/packages/anthropic-configuration-schema/)
+[configuration-schema](https://docs.openfn.org/adaptors/packages/claude-configuration-schema/)
 for required and optional `configuration` properties.
 
 ### A example expression using the `create` function

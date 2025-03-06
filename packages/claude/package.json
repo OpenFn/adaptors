@@ -1,7 +1,7 @@
 {
-  "name": "@openfn/language-anthropic",
+  "name": "@openfn/language-claude",
   "version": "1.0.0",
-  "description": "OpenFn anthropic adaptor",
+  "description": "OpenFn claude adaptor",
   "type": "module",
   "exports": {
     ".": {
@@ -12,7 +12,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && build-adaptor anthropic",
+    "build": "pnpm clean && build-adaptor claude",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",

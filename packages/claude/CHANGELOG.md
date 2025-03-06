@@ -1,4 +1,4 @@
-# @openfn/language-anthropic
+# @openfn/language-claude
 
 ## 1.0.0
 
