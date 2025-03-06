@@ -5,8 +5,8 @@ Claude API.
 
 ## Documentation
 
-View the [docs site](https://docs.openfn.org/adaptors/packages/claude-docs)
-for full technical documentation.
+View the [docs site](https://docs.openfn.org/adaptors/packages/claude-docs) for
+full technical documentation.
 
 ### Configuration
 
@@ -14,10 +14,10 @@ View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/claude-configuration-schema/)
 for required and optional `configuration` properties.
 
-### A example expression using the `create` function
+### A example expression using the `prompt` function
 
 ```js
-post('patient', { name: 'Bukayo' });
+prompt('Write a haiku about surfing.');
 ```
 
 ## Development

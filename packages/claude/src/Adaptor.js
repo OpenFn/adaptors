@@ -46,8 +46,10 @@ export function execute(...operations) {
 }
 
 /**
- * Write a prompt
+ * Prompt the Claude chat interface to respond
  * @public
+ * @example
+ * prompt('Write a haiku about surfing.');
  * @param {string} message - The prompt
  * @param {string} model - The model (defaults to 'claude-3-7-sonnet-20250219')
  * @returns {operation}
