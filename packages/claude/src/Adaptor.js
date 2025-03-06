@@ -4,6 +4,8 @@ import {
 } from '@openfn/language-common';
 import Anthropic from '@anthropic-ai/sdk';
 
+let client;
+
 /**
  * Creates and Anthropic client
  * @param state
@@ -12,7 +14,7 @@ import Anthropic from '@anthropic-ai/sdk';
 function createClient(state) {
   const { apiKey } = state.configuration;
 
-  const client = new Anthropic({
+  client = new Anthropic({
     apiKey,
   });
 
