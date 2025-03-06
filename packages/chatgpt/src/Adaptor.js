@@ -1,4 +1,7 @@
-import { composeNextState, execute as commonExecute } from '@openfn/language-common';
+import {
+  composeNextState,
+  execute as commonExecute,
+} from '@openfn/language-common';
 import OpenAI from 'openai';
 
 let client;
@@ -12,17 +15,15 @@ export function createClient(state) {
   const { apiKey } = state.configuration;
 
   client = new OpenAI({
-    apiKey
+    apiKey,
   });
 
   return state;
 }
 
-
 export function setMockClient(mock) {
   client = mock;
 }
-
 
 /**
  * Executes a series of operations.
@@ -34,17 +35,19 @@ export function setMockClient(mock) {
 export function execute(...operations) {
   const initialState = {
     references: [],
-    data: null
+    data: null,
   };
 
   return state => {
-    return commonExecute(createClient, ...operations)({
+    return commonExecute(
+      createClient,
+      ...operations
+    )({
       ...initialState,
       ...state,
-    })
-  }
+    });
+  };
 }
-
 
 /**
  * Prompt the GPT chat interface to respond
@@ -55,14 +58,14 @@ export function execute(...operations) {
  * @param {string} model - The model (defaults to 'gpt-4o)
  * @returns {operation}
  */
-export function prompt (message, model='gpt-4o') {
+export function prompt(message, model = 'gpt-4o') {
   return async state => {
     const msg = await client.chat.completions.create({
       model,
-      messages: [{ role: 'user', content: message }]
+      messages: [{ role: 'user', content: message }],
     });
-    return composeNextState(state, msg)
-  }
+    return composeNextState(state, msg);
+  };
 }
 
 export {
