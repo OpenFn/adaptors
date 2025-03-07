@@ -10,7 +10,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "execute(\n  sql(sqlQuery)\n)"
+            "description": "sql(\"SELECT * FROM table WHERE ST_DWithin(geom,ST_Point(-73,40),1000)\");",
+            "caption": "A basic radius search query"
           },
           {
             "title": "function",
@@ -54,7 +55,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "execute(\n  addRow(table, rowData)\n)"
+            "description": "addRow('users', { name: 'Alice', age: 25, city: 'New York' })",
+            "caption": "Add rows to a table"
           },
           {
             "title": "function",

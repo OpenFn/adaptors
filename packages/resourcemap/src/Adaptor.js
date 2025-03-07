@@ -7,11 +7,6 @@ import request from 'request';
 /**
  * Execute a sequence of operations.
  * Wraps `@openfn/language-common/execute`, and prepends initial state for resourcemap.
- * @example
- * execute(
- *   create('foo'),
- *   delete('bar')
- * )(state)
  * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
@@ -30,9 +25,7 @@ export function execute(...operations) {
 /**
  * Create an event
  * @example
- * execute(
- *   event(eventData)
- * )(state)
+ * submitSite('collection_id', { name: 'My Site' })
  * @function
  * @param {object} eventData - Payload data for the event
  * @returns {Operation}

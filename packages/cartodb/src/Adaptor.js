@@ -10,11 +10,6 @@ const jsonSql = jsonSqlPkg();
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for cartodb.
- * @example
- * execute(
- *   create('foo'),
- *   delete('bar')
- * )(state)
  * @private
  * @param {Array} ...operations - Operations to be performed.
  * @returns {Operation}
@@ -32,10 +27,8 @@ export function execute(...operations) {
 
 /**
  * Execute an SQL statement
- * @example
- * execute(
- *   sql(sqlQuery)
- * )
+ * @example <caption>A basic radius search query</caption>
+ * sql("SELECT * FROM table WHERE ST_DWithin(geom,ST_Point(-73,40),1000)");
  * @function
  * @public
  * @param {object} sqlQuery - Payload data for the message
@@ -62,10 +55,8 @@ export function sql(sqlQuery) {
 
 /**
  * Add rows to a table
- * @example
- * execute(
- *   addRow(table, rowData)
- * )
+ * @example <caption>Add rows to a table</caption>
+ * addRow('users', { name: 'Alice', age: 25, city: 'New York' })
  * @function
  * @public
  * @param {String} table - Table name

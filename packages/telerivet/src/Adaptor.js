@@ -7,11 +7,6 @@ import { post } from './Client';
 /**
  * Execute a sequence of operations.
  * Wraps `@openfn/language-common/execute`, and prepends initial state for telerivet.
- * @example
- * execute(
- *   create('foo'),
- *   delete('bar')
- * )(state)
  * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
@@ -29,10 +24,12 @@ export function execute(...operations) {
 
 /**
  * Send a message
- * @example
- * execute(
- *   send(data)
- * )(state)
+ * @example <caption>Send a message</caption>
+ * send({
+ *   to_number: "+1234567890",
+ *   content: "Hello from Telerivet",
+ *   route_id: "PN123",
+ * });
  * @function
  * @param {object} sendData - Payload data for the message
  * @returns {Operation}

@@ -1,5 +1,50 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "fetch",
+      "params": [
+        "params"
+      ],
+      "docs": {
+        "description": "Fetch data from the Khan Academy API",
+        "tags": [
+          {
+            "title": "example",
+            "description": "fetch({ getEndpoint: \"topictree\", queryParams: { subject: \"math\" } });",
+            "caption": "Fetch data from the Khan Academy API"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "data to make the query",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
   "exports": [],
   "common": [
     {

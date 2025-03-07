@@ -53,7 +53,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "execute(\n  update(params)\n)(state)"
+            "description": "update({\n  endpoint: \"maxrest/rest/mbo/workorder/1234\",\n  body: state => state.data,\n});",
+            "caption": "Update a workorder"
           },
           {
             "title": "function",
@@ -96,7 +97,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "execute(\n  update75(params)\n)(state)"
+            "description": "update75({\n  endpoint: \"maxrest/rest/mbo/invbalances\",\n  body: state => state.inventoryBalances,\n});",
+            "caption": "Update an inventory balance"
           },
           {
             "title": "function",

@@ -11,7 +11,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "execute(\n  insert('table', fields(\n     field('name', dataValue('name'))\n  ))\n)(state)"
+            "description": "insert(\"users\", { name: (state) => state.data.name });",
+            "caption": "Insert a record into the `users` table"
           },
           {
             "title": "function",
@@ -64,7 +65,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "execute(\n  upsert('table', fields(\n     field('name', dataValue('name'))\n  ))\n)(state)"
+            "description": "upsert(\"table\", { name: (state) => state.data.name });",
+            "caption": "Upsert a record"
           },
           {
             "title": "function",
@@ -122,7 +124,8 @@
           },
           {
             "title": "example",
-            "description": "upsertMany(\n  'users', // the DB table\n  [\n    { name: 'one', email: 'one@openfn.org' },\n    { name: 'two', email: 'two@openfn.org' },\n  ]\n)"
+            "description": "upsertMany(\n  'users', // the DB table\n  [\n    { name: 'one', email: 'one@openfn.org' },\n    { name: 'two', email: 'two@openfn.org' },\n  ]\n)",
+            "caption": "Upsert multiple records"
           },
           {
             "title": "function",
@@ -174,7 +177,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "execute(\n  query({ sql: 'select * from users;' })\n)(state)"
+            "description": "query({ sql: 'select * from users;' })",
+            "caption": "Execute a SQL statement"
           },
           {
             "title": "function",
@@ -217,7 +221,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "execute(\n  sqlString(state => \"select * from items;\")\n)(state)"
+            "description": "sqlString(state => \"select * from items;\")",
+            "caption": "Execute a SQL statement"
           },
           {
             "title": "function",
@@ -834,6 +839,92 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "cursor",
+      "params": [
+        "value",
+        "options"
+      ],
+      "docs": {
+        "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "cursor($.cursor, { defaultValue: 'today' })",
+            "caption": "Use a cursor from state if present, or else use the default value"
+          },
+          {
+            "title": "example",
+            "description": "cursor(22)",
+            "caption": "Use a pagination cursor"
+          },
+          {
+            "title": "param",
+            "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "value"
+          },
+          {
+            "title": "param",
+            "description": "options to control the cursor.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "set the cursor key. Will persist through the whole run.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "options.key"
+          },
+          {
+            "title": "param",
+            "description": "the value to use if value is falsy",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "options.defaultValue"
+          },
+          {
+            "title": "param",
+            "description": "custom formatter for the final cursor value",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "options.format"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ]
 }

@@ -10,11 +10,6 @@ import utf8 from 'utf8';
 /**
  * Execute a sequence of operations.
  * Wraps `@openfn/language-common/execute`, and prepends initial state for http.
- * @example
- * execute(
- *   create('foo'),
- *   delete('bar')
- * )(state)
  * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
@@ -184,10 +179,11 @@ export function create(params) {
 
 /**
  * Make an update in Maximo 7.6 and beyond
- * @example
- * execute(
- *   update(params)
- * )(state)
+ * @example <caption>Update a workorder</caption>
+ * update({
+ *   endpoint: "maxrest/rest/mbo/workorder/1234",
+ *   body: state => state.data,
+ * });
  * @function
  * @public
  * @param {object} params - data to make the update
@@ -250,10 +246,11 @@ export function update(params) {
 
 /**
  * Make an upadte in Maximo 7.5
- * @example
- * execute(
- *   update75(params)
- * )(state)
+ * @example <caption>Update an inventory balance</caption>
+ * update75({
+ *   endpoint: "maxrest/rest/mbo/invbalances",
+ *   body: state => state.inventoryBalances,
+ * });
  * @function
  * @public
  * @param {object} params - data to make the update
