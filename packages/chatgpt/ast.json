@@ -19,6 +19,11 @@
             "type": null
           },
           {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
             "title": "param",
             "description": "The prompt",
             "type": {

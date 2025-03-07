@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { enableMockClient } from '@openfn/language-common/util';
 import { prompt, setMockClient } from '../src/Adaptor.js';
 import testData from "./fixtures/fixture.json" assert {type: 'json'};
 

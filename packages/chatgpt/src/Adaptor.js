@@ -2,6 +2,7 @@ import {
   composeNextState,
   execute as commonExecute,
 } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 import OpenAI from 'openai';
 
 let client;
@@ -61,9 +62,12 @@ export function execute(...operations) {
  */
 export function prompt(message, model = 'gpt-4o') {
   return async state => {
+
+    const [resolvedMessage, resolvedModel] = expandReferences(state, message, model);
+   
     const msg = await client.chat.completions.create({
-      model,
-      messages: [{ role: 'user', content: message }],
+      model: resolvedModel,
+      messages: [{ role: 'user', content: resolvedMessage }],
     });
     return composeNextState(state, msg);
   };
