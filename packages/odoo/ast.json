@@ -45,7 +45,7 @@
           },
           {
             "title": "param",
-            "description": "Options to send to the request. Includes an optional external ID for the record.",
+            "description": "Options to send to the request. Includes an optional external ID for the record and a downloadNewRecord option defaulted to `false` incase a user intends to receive the whole created resource in the response.",
             "type": {
               "type": "NameExpression",
               "name": "object"

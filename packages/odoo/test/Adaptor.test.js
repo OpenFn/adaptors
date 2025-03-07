@@ -60,6 +60,43 @@ describe('create', () => {
     )(state);
     expect(data).to.eql(15);
   });
+
+  it('should return the whole resource created if downloadNewRecord is true', async () => {
+    const mock = {
+      create: (model, data, options) => {
+        expect(model).to.eql('res.partner');
+        expect(data).to.eql({ name: 'Jane Doe' });
+        expect(options).to.eql(23);
+
+        return 15;
+      },
+      read: (model, id, fields) => {
+        expect(model).to.eql('res.partner');
+        expect(id).to.eql([15]);
+        expect(fields).to.eql([]);
+
+        return [
+          {
+            id: 15,
+            display_name: 'Jane Doe',
+            message_is_follower: true,
+            has_message: true,
+            message_needaction: false,
+            message_needaction_counter: 0,
+          },
+        ];
+      },
+    };
+    setMockClient(mock);
+
+    const { data } = await create(
+      'res.partner',
+      { name: 'Jane Doe' },
+      { externalId: 23, downloadNewRecord: true }
+    )(state);
+    expect(data[0].id).to.eql(15);
+    expect(data[0]['display_name']).to.eql('Jane Doe');
+  });
 });
 
 describe('update', () => {

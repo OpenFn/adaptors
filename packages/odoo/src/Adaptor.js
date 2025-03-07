@@ -60,32 +60,43 @@ async function login(state) {
   return state;
 }
 /**
- * Create a record in Odoo
+ * Create a record in Odoo.
+ * You can pass an external ID to the options object to create a record with a specific ID.
+ * You can also pass a downloadNewRecord option to download the whole created resource in the response.
  * @public
  * @example <caption> Create a partner record with an external Id</caption>
  * create("res.partner", { name: "Kool Keith" }, {externalId: 23});
+ * @example <caption> Create a partner record and download the whole record in the response</caption>
+ * create("res.partner", { name: "Kool Keith" }, {downloadNewRecord: true});
  * @function
  * @param {string} model - The specific record model i.e. "res.partner"
  * @param {object} data - The data to be created in JSON.
- * @param {object} options - Options to send to the request. Includes an optional external ID for the record.
+ * @param {object} options - Options to send to the request. Includes an optional external ID for the record and a downloadNewRecord option defaulted to `false` incase a user intends to receive the whole created resource in the response.
  * @returns {Operation}
  */
 export function create(model, data, options = {}) {
   return async state => {
+    const mergedOptions = { downloadNewRecord: false, ...options };
+
     const [resolvedModel, resolvedData, resolvedOptions] = expandReferences(
       state,
       model,
       data,
-      options
+      mergedOptions
     );
 
     console.log(`Creating a ${resolvedModel} resource...`);
 
-    const response = await odooConn.create(
+    let response = await odooConn.create(
       resolvedModel,
       resolvedData,
       resolvedOptions?.externalId
     );
+
+    if (resolvedOptions.downloadNewRecord) {
+      console.log(`Fetching ${resolvedModel} resource with id ${response}...`);
+      response = await odooConn.read(resolvedModel, [response], []);
+    }
 
     return composeNextState(state, response);
   };
