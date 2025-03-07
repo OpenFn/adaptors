@@ -52,6 +52,7 @@ export function setMockClient(mock) {
 /**
  * Prompt the Claude chat interface to respond
  * @public
+ * @function
  * @example
  * prompt('Write a haiku about surfing.');
  * @param {string} message - The prompt
