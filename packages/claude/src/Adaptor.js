@@ -3,6 +3,8 @@ import {
   execute as commonExecute,
 } from '@openfn/language-common';
 import Anthropic from '@anthropic-ai/sdk';
+import { expandReferences } from '@openfn/language-common/util';
+
 
 let client;
 
@@ -61,10 +63,12 @@ export function setMockClient(mock) {
  */
 export function prompt(message, model = 'claude-3-7-sonnet-20250219') {
   return async state => {
+    const [resolvedMessage, resolvedModel] = expandReferences(state, message, model);
+
     const msg = await client.messages.create({
-      model,
+      model: resolvedModel,
       max_tokens: 1024,
-      messages: [{ role: 'user', content: message }],
+      messages: [{ role: 'user', content: resolvedMessage }],
     });
     return composeNextState(state, msg);
   };
