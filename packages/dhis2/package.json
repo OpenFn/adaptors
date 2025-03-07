@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "axios": "^1.7.7",
+    "axios": "^1.8.2",
     "lodash": "^4.17.21",
     "qs": "^6.11.0"
   },
