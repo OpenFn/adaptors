@@ -1438,7 +1438,7 @@
     "kind": "external-function"
   }
 ],
-{"name":"chatgpt","adaptor":"@openfn/language-chatgpt","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#prompt\\\">prompt(message, model)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### prompt\\n\\n<p><code>prompt(message, model) ⇒ operation</code></p>\\n\\nPrompt the GPT chat interface to respond\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| message | <code>string</code> | The prompt |\\n| model | <code>string</code> | The model (defaults to 'gpt-4o) |\\n\\n**Example**\\n```js\\nprompt('Write a haiku about surfing.' model='gpt-4o');\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-chatgpt <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with OpenAI's\\nChatGPT API.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/chatgpt-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/chatgpt-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `create` function\\n\\n```js\\nprompt('Write me a poem about tables and chairs.');\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-chatgpt\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["prompt"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"apiKey":{"title":"API Key","anyOf":[{"type":"string"},{"type":"null"}],"description":"Your OpenAI API key","type":"string","minLength":1,"examples":["sk-proj-api03-YOUR_SECRET_KEY"]}},"type":"object","additionalProperties":true,"required":["apiKey"]}},
+{"name":"chatgpt","adaptor":"@openfn/language-chatgpt","version":"1.0.1","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#prompt\\\">prompt(message, options)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### prompt\\n\\n<p><code>prompt(message, options) ⇒ operation</code></p>\\n\\nPrompt the GPT chat interface to respond\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| message | <code>string</code> | The prompt |\\n| options | [<code>PromptOptions</code>](#promptoptions) | Model, Reasoning Effort, Response Form and other parameters (https://platform.openai.com/docs/api-reference/chat/create) |\\n\\n**Example**\\n```js\\nprompt('Write a haiku about surfing.');\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### PromptOptions\\n\\nOptions provided to Chat Completions Create (https://platform.openai.com/docs/api-reference/chat/create)\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | Which mode to use, i.e., `o3-mini-2025-01-31`. |\\n| reasoning_effort | <code>string</code> | Use `low`, `medium`, or `high` to constrain effort on reasoning for some models. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-chatgpt <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with OpenAI's\\nChatGPT API.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/chatgpt-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/chatgpt-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `create` function\\n\\n```js\\nprompt('Write me a poem about tables and chairs.');\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-chatgpt\\n\\n## 1.0.1\\n\\n### Patch Changes\\n\\n- Expose documenatation, expand references and expose options.\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["prompt"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"apiKey":{"title":"API Key","anyOf":[{"type":"string"},{"type":"null"}],"description":"Your OpenAI API key","type":"string","minLength":1,"examples":["sk-proj-api03-YOUR_SECRET_KEY"]}},"type":"object","additionalProperties":true,"required":["apiKey"]}},
 [
   {
     "id": "prompt",
@@ -1460,15 +1460,15 @@
       {
         "type": {
           "names": [
-            "string"
+            "PromptOptions"
           ]
         },
-        "description": "The model (defaults to 'gpt-4o)",
-        "name": "model"
+        "description": "Model, Reasoning Effort, Response Form and other parameters (https://platform.openai.com/docs/api-reference/chat/create)",
+        "name": "options"
       }
     ],
     "examples": [
-      "prompt('Write a haiku about surfing.' model='gpt-4o');"
+      "prompt('Write a haiku about surfing.');"
     ],
     "returns": [
       {
@@ -1481,12 +1481,53 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 61,
+      "lineno": 71,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/chatgpt/src"
     },
-    "order": 2,
+    "order": 3,
     "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "PromptOptions",
+    "longname": "PromptOptions",
+    "name": "PromptOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to Chat Completions Create (https://platform.openai.com/docs/api-reference/chat/create)",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Which mode to use, i.e., `o3-mini-2025-01-31`.",
+        "name": "model"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Use `low`, `medium`, or `high` to constrain effort on reasoning for some models.",
+        "name": "reasoning_effort"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 8,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/chatgpt/src"
+    },
+    "order": 0,
     "level": 0
   },
   {
@@ -2056,7 +2097,7 @@
     "kind": "external-function"
   }
 ],
-{"name":"claude","adaptor":"@openfn/language-claude","version":"1.0.1","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#prompt\\\">prompt(message, model)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### prompt\\n\\n<p><code>prompt(message, model) ⇒ operation</code></p>\\n\\nPrompt the Claude chat interface to respond\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| message | <code>string</code> | The prompt |\\n| model | <code>string</code> | The model (defaults to 'claude-3-7-sonnet-20250219') |\\n\\n**Example**\\n```js\\nprompt('Write a haiku about surfing.');\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-claude <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the Anthropic\\nClaude API.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/claude-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/claude-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `prompt` function\\n\\n```js\\nprompt('Write a haiku about surfing.');\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\"","changelog":"\"# @openfn/language-claude\\n\\n## 1.0.1\\n\\n### Patch Changes\\n\\n- Fix config schema\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["prompt"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"apiKey":{"title":"API Key","anyOf":[{"type":"string"},{"type":"null"}],"description":"Your Anthropic API token","type":"string","minLength":1,"examples":["sk-ant-api03-YOUR_SECRET_KEY"]}},"type":"object","additionalProperties":true,"required":["apiKey"]}},
+{"name":"claude","adaptor":"@openfn/language-claude","version":"1.0.2","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#prompt\\\">prompt(message, opts)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### prompt\\n\\n<p><code>prompt(message, opts) ⇒ operation</code></p>\\n\\nPrompt the Claude chat interface to respond\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| message | <code>string</code> | The prompt |\\n| opts | [<code>PromptOptions</code>](#promptoptions) | Model, Max Tokens, Temperature, and other options. |\\n\\n**Example**\\n```js\\nprompt('Write a haiku about surfing.');\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### PromptOptions\\n\\nOptions provided to Chat Completions Create (https://docs.anthropic.com/en/api/messages)\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | Which mode to use, i.e., `claude-3-7-sonnet-20250219`. |\\n| max_tokens | <code>string</code> | The maximum number of tokens to generate before stopping, i.e., `1024` |\\n| temperature | <code>number</code> | Amount of randomness injected into the response. Ranges from 0.0 to 1.0. Use temperature closer to 0.0 for analytical / multiple choice, and closer to 1.0 for creative and generative tasks. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-claude <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the Anthropic\\nClaude API.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/claude-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/claude-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `prompt` function\\n\\n```js\\nprompt('Write a haiku about surfing.');\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\"","changelog":"\"# @openfn/language-claude\\n\\n## 1.0.2\\n\\n### Patch Changes\\n\\n- Expose documenatation, expand references and expose options.\\n\\n## 1.0.1\\n\\n### Patch Changes\\n\\n- Fix config schema\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["prompt"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"apiKey":{"title":"API Key","anyOf":[{"type":"string"},{"type":"null"}],"description":"Your Anthropic API token","type":"string","minLength":1,"examples":["sk-ant-api03-YOUR_SECRET_KEY"]}},"type":"object","additionalProperties":true,"required":["apiKey"]}},
 [
   {
     "id": "prompt",
@@ -2078,11 +2119,11 @@
       {
         "type": {
           "names": [
-            "string"
+            "PromptOptions"
           ]
         },
-        "description": "The model (defaults to 'claude-3-7-sonnet-20250219')",
-        "name": "model"
+        "description": "Model, Max Tokens, Temperature, and other options.",
+        "name": "opts"
       }
     ],
     "examples": [
@@ -2099,12 +2140,62 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 61,
+      "lineno": 72,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/claude/src"
     },
-    "order": 2,
+    "order": 3,
     "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "PromptOptions",
+    "longname": "PromptOptions",
+    "name": "PromptOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to Chat Completions Create (https://docs.anthropic.com/en/api/messages)",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Which mode to use, i.e., `claude-3-7-sonnet-20250219`.",
+        "name": "model"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The maximum number of tokens to generate before stopping, i.e., `1024`",
+        "name": "max_tokens"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Amount of randomness injected into the response. Ranges from 0.0 to 1.0. Use temperature closer to 0.0 for analytical / multiple choice, and closer to 1.0 for creative and generative tasks.",
+        "name": "temperature"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 8,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/claude/src"
+    },
+    "order": 0,
     "level": 0
   },
   {

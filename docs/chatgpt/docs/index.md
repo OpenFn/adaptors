@@ -1,6 +1,6 @@
 <dl>
 <dt>
-    <a href="#prompt">prompt(message, model)</a></dt>
+    <a href="#prompt">prompt(message, options)</a></dt>
 </dl>
 
 
@@ -43,7 +43,7 @@ This adaptor exports the following from common:
 ## Functions
 ### prompt
 
-<p><code>prompt(message, model) ⇒ operation</code></p>
+<p><code>prompt(message, options) ⇒ operation</code></p>
 
 Prompt the GPT chat interface to respond
 
@@ -51,13 +51,29 @@ Prompt the GPT chat interface to respond
 | Param | Type | Description |
 | --- | --- | --- |
 | message | <code>string</code> | The prompt |
-| model | <code>string</code> | The model (defaults to 'gpt-4o) |
+| options | [<code>PromptOptions</code>](#promptoptions) | Model, Reasoning Effort, Response Form and other parameters (https://platform.openai.com/docs/api-reference/chat/create) |
 
 **Example**
 ```js
-prompt('Write a haiku about surfing.' model='gpt-4o');
+prompt('Write a haiku about surfing.');
 ```
 
 * * *
 
+
+##  Interfaces
+
+### PromptOptions
+
+Options provided to Chat Completions Create (https://platform.openai.com/docs/api-reference/chat/create)
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| model | <code>string</code> | Which mode to use, i.e., `o3-mini-2025-01-31`. |
+| reasoning_effort | <code>string</code> | Use `low`, `medium`, or `high` to constrain effort on reasoning for some models. |
+
+
+* * *
 
