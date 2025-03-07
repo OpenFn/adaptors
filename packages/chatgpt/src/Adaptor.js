@@ -5,6 +5,14 @@ import {
 import { expandReferences } from '@openfn/language-common/util';
 import OpenAI from 'openai';
 
+/**
+ * Options provided to Chat Completions Create (https://platform.openai.com/docs/api-reference/chat/create)
+ * @typedef {Object} PromptOptions
+ * @public
+ * @property {string} model - Which mode to use, i.e., `o3-mini-2025-01-31`.
+ * @property {string} reasoning_effort - Use `low`, `medium`, or `high` to constrain effort on reasoning for some models.
+ */
+
 let client;
 
 /**
@@ -53,22 +61,29 @@ export function execute(...operations) {
 /**
  * Prompt the GPT chat interface to respond
  * @example
- * prompt('Write a haiku about surfing.' model='gpt-4o');
+ * prompt('Write a haiku about surfing.');
  * @public
  * @function
  * @param {string} message - The prompt
- * @param {string} model - The model (defaults to 'gpt-4o)
+ * @param {PromptOptions} options - Model, Reasoning Effort, Response Form and other parameters (https://platform.openai.com/docs/api-reference/chat/create)
  * @returns {operation}
  */
-export function prompt(message, model = 'gpt-4o') {
+export function prompt(message, opts) {
   return async state => {
+    const [resolvedMessage, resolvedOpts] = expandReferences(
+      state,
+      message,
+      opts
+    );
 
-    const [resolvedMessage, resolvedModel] = expandReferences(state, message, model);
-   
-    const msg = await client.chat.completions.create({
-      model: resolvedModel,
+    const payload = {
+      model: 'o3-mini-2025-01-31',
+      reasoning_effort: 'low',
       messages: [{ role: 'user', content: resolvedMessage }],
-    });
+      ...resolvedOpts,
+    };
+
+    const msg = await client.chat.completions.create(payload);
     return composeNextState(state, msg);
   };
 }

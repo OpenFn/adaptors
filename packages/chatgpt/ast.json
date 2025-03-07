@@ -4,14 +4,14 @@
       "name": "prompt",
       "params": [
         "message",
-        "model"
+        "opts"
       ],
       "docs": {
         "description": "Prompt the GPT chat interface to respond",
         "tags": [
           {
             "title": "example",
-            "description": "prompt('Write a haiku about surfing.' model='gpt-4o');"
+            "description": "prompt('Write a haiku about surfing.');"
           },
           {
             "title": "public",
@@ -34,12 +34,12 @@
           },
           {
             "title": "param",
-            "description": "The model (defaults to 'gpt-4o)",
+            "description": "Model, Reasoning Effort, Response Form and other parameters (https://platform.openai.com/docs/api-reference/chat/create)",
             "type": {
               "type": "NameExpression",
-              "name": "string"
+              "name": "PromptOptions"
             },
-            "name": "model"
+            "name": "options"
           },
           {
             "title": "returns",
@@ -51,7 +51,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     }
   ],
   "exports": [],
