@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { enableMockClient } from '@openfn/language-common/util';
 import { prompt, setMockClient } from '../src/Adaptor.js';
 import testData from "./fixtures/fixture.json" assert {type: 'json'};
 
@@ -12,7 +11,7 @@ describe('prompt', () => {
       chat: {
         completions: {
           create: ({ model, messages }) => {
-            expect(model).to.eql('gpt-4o');
+            expect(model).to.eql('o3-mini-2025-01-31');
             expect(messages).to.eql([
               { role: 'user', content: 'Write a poem about surfing.' },
             ]);

@@ -1,6 +1,4 @@
 import { expect } from 'chai';
-import { enableMockClient } from '@openfn/language-common/util';
-
 import { prompt, setMockClient } from '../src/Adaptor.js';
 
 // This creates a mock client which acts like a fake server.

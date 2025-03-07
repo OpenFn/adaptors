@@ -4,7 +4,7 @@
       "name": "prompt",
       "params": [
         "message",
-        "model"
+        "opts"
       ],
       "docs": {
         "description": "Prompt the Claude chat interface to respond",
@@ -13,6 +13,11 @@
             "title": "public",
             "description": null,
             "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
           },
           {
             "title": "example",
@@ -29,12 +34,12 @@
           },
           {
             "title": "param",
-            "description": "The model (defaults to 'claude-3-7-sonnet-20250219')",
+            "description": "Model, Max Tokens, Temperature, and other options.",
             "type": {
               "type": "NameExpression",
-              "name": "string"
+              "name": "PromptOptions"
             },
-            "name": "model"
+            "name": "opts"
           },
           {
             "title": "returns",
