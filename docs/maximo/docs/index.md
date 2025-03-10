@@ -81,11 +81,12 @@ Make an update in Maximo 7.6 and beyond
 | --- | --- | --- |
 | params | <code>object</code> | data to make the update |
 
-**Example**
+**Example:** Update a workorder
 ```js
-execute(
-  update(params)
-)(state)
+update({
+  endpoint: "maxrest/rest/mbo/workorder/1234",
+  body: state => state.data,
+});
 ```
 
 * * *
@@ -101,11 +102,12 @@ Make an upadte in Maximo 7.5
 | --- | --- | --- |
 | params | <code>object</code> | data to make the update |
 
-**Example**
+**Example:** Update an inventory balance
 ```js
-execute(
-  update75(params)
-)(state)
+update75({
+  endpoint: "maxrest/rest/mbo/invbalances",
+  body: state => state.inventoryBalances,
+});
 ```
 
 * * *

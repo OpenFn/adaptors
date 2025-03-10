@@ -1,5 +1,12 @@
 # @openfn/language-resourcemap
 
+## 0.4.11
+
+### Patch Changes
+
+- 8a8c28d: - cleanup examples wrapped with `execute()` function
+  - Add example caption and add sample payload
+
 ## 0.4.10
 
 ### Patch Changes

@@ -52,11 +52,9 @@ Add rows to a table
 | table | <code>String</code> | Table name |
 | rowData | <code>object</code> | data to add in the row |
 
-**Example**
+**Example:** Add rows to a table
 ```js
-execute(
-  addRow(table, rowData)
-)
+addRow('users', { name: 'Alice', age: 25, city: 'New York' })
 ```
 
 * * *
@@ -72,11 +70,9 @@ Execute an SQL statement
 | --- | --- | --- |
 | sqlQuery | <code>object</code> | Payload data for the message |
 
-**Example**
+**Example:** A basic radius search query
 ```js
-execute(
-  sql(sqlQuery)
-)
+sql("SELECT * FROM table WHERE ST_DWithin(geom,ST_Point(-73,40),1000)");
 ```
 
 * * *

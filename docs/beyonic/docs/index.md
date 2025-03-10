@@ -50,11 +50,9 @@ Create a collection request
 | --- | --- | --- |
 | data | <code>object</code> | Payload data for the collection request |
 
-**Example**
+**Example:** Create a collection request
 ```js
-execute(
-  createCollectionRequest(data)
-)(state)
+createCollectionRequest(data)
 ```
 
 * * *
@@ -70,11 +68,9 @@ Create a contact
 | --- | --- | --- |
 | data | <code>object</code> | Payload data for the contact |
 
-**Example**
+**Example:** Create a contact
 ```js
-execute(
-  createContact(data)
-)(state)
+createContact(data)
 ```
 
 * * *
@@ -90,11 +86,9 @@ Create a payment
 | --- | --- | --- |
 | data | <code>object</code> | Payload data for the payment |
 
-**Example**
+**Example:** Create a payment with a reference to a customer
 ```js
-execute(
-  createPayment(data)
-)(state)
+createPayment(data)
 ```
 
 * * *
