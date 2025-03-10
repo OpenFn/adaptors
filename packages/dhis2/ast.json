@@ -5,8 +5,7 @@
       "params": [
         "resourceType",
         "data",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Create a record",
@@ -54,18 +53,6 @@
               }
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -145,8 +132,7 @@
         "resourceType",
         "path",
         "data",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Update data. A generic helper function to update a resource object of any type.\nUpdating an object requires to send `all required fields` or the `full body`",
@@ -199,18 +185,6 @@
               }
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -280,240 +254,12 @@
       "valid": true
     },
     {
-      "name": "get",
-      "params": [
-        "resourceType",
-        "query",
-        "options",
-        "callback"
-      ],
-      "docs": {
-        "description": "Get data. Generic helper method for getting data of any kind from DHIS2.\n- This can be used to get `DataValueSets`,`events`,`trackers`,`etc.`",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "resourceType"
-          },
-          {
-            "title": "param",
-            "description": "A query object that will limit what resources are retrieved when converted into request params.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "query"
-          },
-          {
-            "title": "param",
-            "description": "Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Object"
-              }
-            },
-            "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "The parameters for the request.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Object"
-              }
-            },
-            "name": "options.params"
-          },
-          {
-            "title": "param",
-            "description": "The configuration for the request, including headers, etc.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Object"
-              }
-            },
-            "name": "options.requestConfig"
-          },
-          {
-            "title": "param",
-            "description": "Optional flag to indicate if the response should be returned as a Base64 encoded string.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.asBase64",
-            "default": "false"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": "state",
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "example",
-            "description": "get('dataValueSets', {\n  dataSet: 'pBOMPrpg1QX',\n  orgUnit: 'DiszpKrYNg8',\n  period: '201401',\n  fields: '*',\n});",
-            "caption": "Get all data values for the 'pBOMPrpg1QX' dataset"
-          },
-          {
-            "title": "example",
-            "description": "get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });",
-            "caption": "Get all programs for an organization unit"
-          },
-          {
-            "title": "example",
-            "description": "get('tracker/trackedEntities/F8yKM85NbxW');",
-            "caption": "Get a single tracked entity given the provided ID. See [TrackedEntities docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities)"
-          },
-          {
-            "title": "example",
-            "description": "get('tracker/enrollments/abcd');",
-            "caption": "Get an enrollment given the provided ID. See [Enrollment docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments)"
-          },
-          {
-            "title": "example",
-            "description": "get('tracker/events');",
-            "caption": "Get all events matching given criteria. See [Events docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents)"
-          },
-          {
-            "title": "example",
-            "description": "get('tracker/relationships', {\n  trackedEntity:['F8yKM85NbxW'],\n});",
-            "caption": "Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See [Relationships docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships)"
-          }
-        ]
-      },
-      "valid": false
-    },
-    {
-      "name": "post",
-      "params": [
-        "resourceType",
-        "data",
-        "query",
-        "options",
-        "callback"
-      ],
-      "docs": {
-        "description": "Post data. Generic helper method for posting data of any kind to DHIS2.\nThis can be used to create `DataValueSets`,`events`,`trackers`,etc.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ...",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "resourceType"
-          },
-          {
-            "title": "magic",
-            "description": "resourceType $.children.resourceTypes[*]"
-          },
-          {
-            "title": "param",
-            "description": "Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Dhis2Data"
-            },
-            "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Object"
-              }
-            },
-            "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": "state",
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "example",
-            "description": "post(\"tracker\", {\n  events: [\n    {\n      program: \"eBAyeGv0exc\",\n      orgUnit: \"DiszpKrYNg8\",\n      status: \"COMPLETED\",\n    },\n  ],\n});",
-            "caption": "Create an event"
-          }
-        ]
-      },
-      "valid": false
-    },
-    {
       "name": "upsert",
       "params": [
         "resourceType",
         "query",
         "data",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.",
@@ -591,18 +337,6 @@
               }
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
           },
           {
             "title": "throws",
@@ -684,103 +418,12 @@
       "valid": true
     },
     {
-      "name": "patch",
-      "params": [
-        "resourceType",
-        "path",
-        "data",
-        "options",
-        "callback"
-      ],
-      "docs": {
-        "description": "Patch a record. A generic helper function to send partial updates on one or more object properties.\n- You are not required to send the full body of object properties.\n- This is useful for cases where you don't want or need to update all properties on a object.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "resourceType"
-          },
-          {
-            "title": "param",
-            "description": "The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Data to update. Include only the fields you want to update. E.g. `{name: \"New Name\"}`",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "Optional configuration, including params for the update ({preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}). Defaults to `{operationName: 'patch', apiVersion: state.configuration.apiVersion, responseType: 'json'}`",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Object"
-              }
-            },
-            "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "example",
-            "description": "patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });",
-            "caption": "a dataElement"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "destroy",
       "params": [
         "resourceType",
         "path",
         "data",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Delete a record. A generic helper function to delete an object",
@@ -861,18 +504,6 @@
               }
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
           },
           {
             "title": "returns",

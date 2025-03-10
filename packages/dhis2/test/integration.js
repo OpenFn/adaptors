@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import crypto from 'node:crypto';
-import { execute, create, update, get, upsert } from '../dist/index.js';
+import { execute, create, update, upsert, http } from '../dist/index.js';
 
 const getRandomProgramPayload = () => {
   const name = crypto.randomBytes(16).toString('hex');
@@ -252,7 +252,7 @@ describe('Integration tests', () => {
 
     it('should get dataValueSets matching the query specified', async () => {
       const finalState = await execute(
-        get('dataValueSets', {
+        http.get('dataValueSets', {
           dataSet: 'pBOMPrpg1QX',
           orgUnit: 'DiszpKrYNg8',
           period: '201401',
@@ -265,7 +265,7 @@ describe('Integration tests', () => {
 
     it('should get a single TEI based on multiple filters', async () => {
       const finalState = await execute(
-        get('tracker/trackedEntities', {
+        http.get('tracker/trackedEntities', {
           program: 'fDd25txQckK',
           orgUnit: 'DiszpKrYNg8',
           filter: ['w75KJ2mc4zz:Eq:Elanor'],
@@ -275,7 +275,7 @@ describe('Integration tests', () => {
       expect(finalState.data.instances.length).to.eq(1);
 
       const finalState2 = await execute(
-        get('trackedEntityInstances', {
+        http.get('trackedEntityInstances', {
           program: 'fDd25txQckK',
           ou: 'DiszpKrYNg8',
           filter: ['w75KJ2mc4zz:Eq:Elanor', 'zDhUuAYrxNC:Eq:NotJackson'],
@@ -287,7 +287,7 @@ describe('Integration tests', () => {
 
     it('should get a no TEIs if non match the filters', async () => {
       const finalState = await execute(
-        get('trackedEntityInstances', {
+        http.get('trackedEntityInstances', {
           program: 'IpHINAT79UW',
           ou: 'DiszpKrYNg8',
           filter: [

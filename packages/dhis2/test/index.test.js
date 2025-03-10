@@ -3,11 +3,11 @@ import {
   execute,
   create,
   update,
-  get,
   upsert,
   findAttributeValue,
   findAttributeValueById,
 } from '../src/Adaptor';
+import { get, post, request, patch } from '../src/http';
 import { dataValue } from '@openfn/language-common';
 import {
   buildUrl,
@@ -292,9 +292,9 @@ describe('post', () => {
         message: 'the response',
       });
 
-    const finalState = await execute(
-      create('tracker', { events: [state.data] })
-    )(state);
+    const finalState = await execute(post('tracker', { events: [state.data] }))(
+      state
+    );
 
     expect(finalState.data).to.eql({
       httpStatus: 'OK',
@@ -318,7 +318,7 @@ describe('post', () => {
       });
 
     const finalState = await execute(
-      create('tracker', {
+      post('tracker', {
         relationships: [
           {
             program: 'abc',
@@ -326,6 +326,82 @@ describe('post', () => {
           },
         ],
       })
+    )(state);
+
+    expect(finalState.data).to.eql({
+      httpStatus: 'OK',
+      message: 'the response',
+    });
+  });
+});
+
+describe('request', () => {
+  const state = {
+    configuration: {
+      username: 'admin',
+      password: 'district',
+      hostUrl: 'https://play.dhis2.org/2.36.4',
+    },
+    data: {
+      program: 'program1',
+      orgUnit: 'org50',
+      trackedEntityType: 'nEenWmSyUEp',
+      status: 'COMPLETED',
+      date: '02-02-20',
+    },
+  };
+
+  it('should create a tracker resource', async () => {
+    testServer
+      .post('/api/tracker?importStrategy=CREATE', {
+        orgUnit: 'TSyzvBiovKh',
+        trackedEntityType: 'nEenWmSyUEp',
+        attributes: [
+          {
+            attribute: 'w75KJ2mc4zz',
+            value: 'Qassime',
+          },
+        ],
+      })
+      .times(2)
+      .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'the response',
+      });
+
+    const finalState = await execute(
+      request('POST', 'tracker', {
+        data: {
+          orgUnit: 'TSyzvBiovKh',
+          trackedEntityType: 'nEenWmSyUEp',
+          attributes: [
+            {
+              attribute: 'w75KJ2mc4zz',
+              value: 'Qassime',
+            },
+          ],
+        },
+        params: {
+          importStrategy: 'CREATE',
+        },
+      })
+    )(state);
+
+    expect(finalState.data).to.eql({
+      httpStatus: 'OK',
+      message: 'the response',
+    });
+  });
+
+  it('should get a trackedEntity', async () => {
+    testServer.get('/api/tracker/trackedEntities/F8yKM85NbxW').reply(200, {
+      httpStatus: 'OK',
+      message: 'the response',
+    });
+
+    const finalState = await execute(
+      request('GET', 'tracker/trackedEntities/F8yKM85NbxW')
     )(state);
 
     expect(finalState.data).to.eql({
