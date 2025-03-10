@@ -1,5 +1,12 @@
 # @openfn/language-maximo
 
+## 0.5.12
+
+### Patch Changes
+
+- 8a8c28d: - cleanup examples wrapped with `execute()` function
+  - Add example caption and add sample payload
+
 ## 0.5.11
 
 ### Patch Changes

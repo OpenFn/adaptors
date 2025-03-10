@@ -1,5 +1,12 @@
 # @openfn/language-openimis
 
+## 2.0.9
+
+### Patch Changes
+
+- 8a8c28d: - cleanup examples wrapped with `execute()` function
+  - Add example caption and add sample payload
+
 ## 2.0.8
 
 ### Patch Changes
