@@ -9,6 +9,21 @@ import Odoo from 'odoo-await';
 let odooConn = null;
 
 /**
+ * State object
+ * @typedef {Object} OdooState
+ * @property data - The response body (as JSON)
+ * @property response - The HTTP response from the Odoo server (excluding the body)
+ * @property references - An array of all previous data objects used in the Job
+ */
+
+/**
+ * Options object
+ * @typedef {Object} CreateOptions
+ * @property {number} externalId - An optional id to be used in the request
+ * @property {boolean} downloadNewRecord - An option defaulted to `false` incase a user intends to receive the whole created resource in the response. The collective response will be written in `state.data`.
+ */
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute` to make working with this API easier.
  * @example
@@ -64,14 +79,15 @@ async function login(state) {
  * You can pass an external ID to the options object to create a record with a specific ID.
  * You can also pass a downloadNewRecord option to download the whole created resource in the response.
  * @public
- * @example <caption> Create a partner record with an external Id</caption>
- * create("res.partner", { name: "Kool Keith" }, {externalId: 23});
- * @example <caption> Create a partner record and download the whole record in the response</caption>
- * create("res.partner", { name: "Kool Keith" }, {downloadNewRecord: true});
+ * @example <caption> Create a partner record with an external Id </caption>
+ * create('res.partner', { name: 'Kool Keith' }, { externalId: 23 });
+ * @example <caption> Create a partner record and download the whole record in the response </caption>
+ * create('res.partner', { name: 'Kool Keith' }, { downloadNewRecord: true });
  * @function
  * @param {string} model - The specific record model i.e. "res.partner"
  * @param {object} data - The data to be created in JSON.
- * @param {object} options - Options to send to the request. Includes an optional external ID for the record and a downloadNewRecord option defaulted to `false` incase a user intends to receive the whole created resource in the response.
+ * @param {CreateOptions} options - Options to send to the request.
+ * @state {OdooState}
  * @returns {Operation}
  */
 export function create(model, data, options = {}) {
@@ -86,19 +102,22 @@ export function create(model, data, options = {}) {
     );
 
     console.log(`Creating a ${resolvedModel} resource...`);
+    try {
+      let response = await odooConn.create(
+        resolvedModel,
+        resolvedData,
+        resolvedOptions?.externalId
+      );
 
-    let response = await odooConn.create(
-      resolvedModel,
-      resolvedData,
-      resolvedOptions?.externalId
-    );
+      if (resolvedOptions.downloadNewRecord) {
+        response = await odooConn.read(resolvedModel, [response], []);
+      }
 
-    if (resolvedOptions.downloadNewRecord) {
-      console.log(`Fetching ${resolvedModel} resource with id ${response}...`);
-      response = await odooConn.read(resolvedModel, [response], []);
+      return composeNextState(state, response);
+    } catch (e) {
+      console.error(`Error creating ${resolvedModel} resource: ${e}`);
+      throw e;
     }
-
-    return composeNextState(state, response);
   };
 }
 
@@ -113,6 +132,7 @@ export function create(model, data, options = {}) {
  * @param {string} model - The specific record model from i.e. "res.partner"
  * @param {number} recordId - An array of record IDs to read.
  * @param {string[]} fields - An optional array of field strings to read from the record.
+ * @state {OdooState}
  * @returns {Operation}
  */
 export function read(model, recordId, fields = []) {
@@ -142,6 +162,7 @@ export function read(model, recordId, fields = []) {
  * @param {string} model - The specific record model i.e. "res.partner"
  * @param {number} recordId - The specific recordId to be updated.
  * @param {object} data - The data to be updated in JSON.
+ * @state {OdooState}
  * @returns {Operation}
  */
 export function update(model, recordId, data) {
@@ -171,6 +192,7 @@ export function update(model, recordId, data) {
  * @function
  * @param {string} model - The specific record model i.e. "res.partner"
  * @param {number} recordId - The specific recordId to be deleted.
+ * @state {OdooState}
  * @returns {Operation}
  */
 export function deleteRecord(model, recordId) {

@@ -97,6 +97,29 @@ describe('create', () => {
     expect(data[0].id).to.eql(15);
     expect(data[0]['display_name']).to.eql('Jane Doe');
   });
+
+  it('should throw an error if a record already exists', async () => {
+    const mock = {
+      create: (model, data, options) => {
+        expect(model).to.eql('res.partner');
+        expect(data).to.eql({ name: 'Jane Doe' });
+        expect(options).to.eql(23);
+        throw new Error(
+          'Error: XML-RPC fault: errors.UniqueViolation: duplicate key value violates unique constraint "ir_model_data_module_name_uniq_index".'
+        );
+      },
+    };
+    setMockClient(mock);
+
+    await create(
+      'res.partner',
+      { name: 'Jane Doe' },
+      { externalId: 23 }
+    )(state).catch(error => {
+      expect(error).to.be.an('error');
+      return error;
+    });
+  });
 });
 
 describe('update', () => {
