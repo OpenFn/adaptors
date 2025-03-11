@@ -1,5 +1,5 @@
 ---
-'@openfn/language-dhis2': minor
+'@openfn/language-dhis2': major
 ---
 
 - Implement a namespaced `http` for all generic functions.
