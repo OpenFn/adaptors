@@ -117,6 +117,7 @@ describe('create', () => {
       { externalId: 23 }
     )(state).catch(error => {
       expect(error).to.be.an('error');
+      expect(error.message).to.contain('UniqueViolation');
       return error;
     });
   });
