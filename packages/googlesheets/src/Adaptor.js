@@ -18,6 +18,7 @@ function createConnection(state) {
   auth.credentials = { access_token: accessToken };
 
   client = google.sheets({ version: 'v4', auth });
+  console.log(' >> created client');
   return state;
 }
 
@@ -233,6 +234,30 @@ export function getValues(spreadsheetId, range, callback = s => s) {
   };
 }
 
+/**
+ * Execute an arbitrary function against state. The Google Sheets adaptor
+ * also exposes a {@link https://googleapis.dev/nodejs/googleapis/latest/sheets/classes/Resource$Spreadsheets.html | googlesheets client} instance.
+ * @function
+ * @public
+ * @example <caption>Use the Sheets client directly</caption>
+ * fn((state, sheets) => {
+ *   // make any request with the sheets client
+ *   const response  = await sheets.values.batchUpdate({
+ *     spreadsheetId: 'abc',
+ *     resource: {data: [{ range: state.range, values: state.values }]}
+ *   });
+ *   // return a new state object
+ *   return {...state, data: response.data }
+ * }
+ * @param {Function} func The function to execute. Must return state.
+ * @returns {Operation}
+ */
+export function fn(func) {
+  return state => {
+    return func(state, client?.spreadsheets);
+  };
+}
+
 export {
   alterState,
   combine,
@@ -242,7 +267,6 @@ export {
   each,
   field,
   fields,
-  fn,
   fnIf,
   http,
   lastReferenceValue,
