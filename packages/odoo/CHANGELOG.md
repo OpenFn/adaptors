@@ -1,5 +1,20 @@
 # @openfn/language-odoo
 
+## 1.0.2
+
+### Patch Changes
+
+- cde1ead: Add a `downloadNewRecord: true` option to `create` to enable
+  downloading of the whole record in the response.
+
+  ```js
+  create('res.partner', { name: 'Kool Keith' }, { downloadNewRecord: true });
+  fn(state => {
+    const record = state.data; // whole record is here
+    return state;
+  });
+  ```
+
 ## 1.0.1
 
 ### Patch Changes

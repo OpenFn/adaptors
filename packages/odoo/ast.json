@@ -8,7 +8,7 @@
         "options"
       ],
       "docs": {
-        "description": "Create a record in Odoo",
+        "description": "Create a record in Odoo.\nYou can pass an external ID to the options object to create a record with a specific ID.\nYou can also pass a downloadNewRecord option to download the whole created resource in the response.",
         "tags": [
           {
             "title": "public",
@@ -17,8 +17,13 @@
           },
           {
             "title": "example",
-            "description": "create(\"res.partner\", { name: \"Kool Keith\" }, {externalId: 23});",
+            "description": "create('res.partner', { name: 'Kool Keith' }, { externalId: 23 });",
             "caption": "Create a partner record with an external Id"
+          },
+          {
+            "title": "example",
+            "description": "create('res.partner', { name: 'Kool Keith' }, { downloadNewRecord: true });",
+            "caption": "Create a partner record and download the whole record in the response"
           },
           {
             "title": "function",
@@ -45,12 +50,16 @@
           },
           {
             "title": "param",
-            "description": "Options to send to the request. Includes an optional external ID for the record.",
+            "description": "Options to send to the request.",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "CreateOptions"
             },
             "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{OdooState}"
           },
           {
             "title": "returns",
@@ -131,6 +140,10 @@
             "name": "fields"
           },
           {
+            "title": "state",
+            "description": "{OdooState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -194,6 +207,10 @@
             "name": "data"
           },
           {
+            "title": "state",
+            "description": "{OdooState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -245,6 +262,10 @@
               "name": "number"
             },
             "name": "recordId"
+          },
+          {
+            "title": "state",
+            "description": "{OdooState}"
           },
           {
             "title": "returns",
