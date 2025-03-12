@@ -1,5 +1,14 @@
 # @openfn/language-mysql
 
+## 2.1.0
+
+### Minor Changes
+
+- e87110f: - add `cursor` and `dateFns` from `@openfn/language-common`
+  - cleanup examples wrapped with `execute()` function
+  - Add example caption and add sample payload
+  - remove unused import of url
+
 ## 2.0.8
 
 ### Patch Changes

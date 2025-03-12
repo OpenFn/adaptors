@@ -3,6 +3,16 @@ import {
   execute as commonExecute,
 } from '@openfn/language-common';
 import Anthropic from '@anthropic-ai/sdk';
+import { expandReferences } from '@openfn/language-common/util';
+
+/**
+ * Options provided to Chat Completions Create (https://docs.anthropic.com/en/api/messages)
+ * @typedef {Object} PromptOptions
+ * @public
+ * @property {string} model - Which mode to use, i.e., `claude-3-7-sonnet-20250219`.
+ * @property {string} max_tokens - The maximum number of tokens to generate before stopping, i.e., `1024`
+ * @property {number} temperature - Amount of randomness injected into the response. Ranges from 0.0 to 1.0. Use temperature closer to 0.0 for analytical / multiple choice, and closer to 1.0 for creative and generative tasks.
+ */
 
 let client;
 
@@ -52,19 +62,29 @@ export function setMockClient(mock) {
 /**
  * Prompt the Claude chat interface to respond
  * @public
+ * @function
  * @example
  * prompt('Write a haiku about surfing.');
  * @param {string} message - The prompt
- * @param {string} model - The model (defaults to 'claude-3-7-sonnet-20250219')
+ * @param {PromptOptions} opts - Model, Max Tokens, Temperature, and other options.
  * @returns {operation}
  */
-export function prompt(message, model = 'claude-3-7-sonnet-20250219') {
+export function prompt(message, opts) {
   return async state => {
-    const msg = await client.messages.create({
-      model,
+    const [resolvedMessage, resolvedOpts] = expandReferences(
+      state,
+      message,
+      opts
+    );
+
+    const payload = {
+      model: 'claude-3-7-sonnet-20250219',
       max_tokens: 1024,
-      messages: [{ role: 'user', content: message }],
-    });
+      messages: [{ role: 'user', content: resolvedMessage }],
+      ...resolvedOpts,
+    };
+
+    const msg = await client.messages.create(payload);
     return composeNextState(state, msg);
   };
 }
