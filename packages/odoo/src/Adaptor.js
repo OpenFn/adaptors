@@ -110,7 +110,9 @@ export function create(model, data, options = {}) {
       );
 
       if (resolvedOptions.downloadNewRecord) {
-        console.log(`Fetching a ${resolvedModel} resource...`);
+        console.log(
+          `Fetching ${resolvedModel} resource with id ${newRecordId}......`
+        );
         const newRecord = await odooConn.read(resolvedModel, [newRecordId], []);
         return composeNextState(state, newRecord);
       } else {
