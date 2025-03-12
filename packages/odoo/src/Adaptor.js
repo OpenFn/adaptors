@@ -103,17 +103,19 @@ export function create(model, data, options = {}) {
 
     console.log(`Creating a ${resolvedModel} resource...`);
     try {
-      let response = await odooConn.create(
+      let newRecordId = await odooConn.create(
         resolvedModel,
         resolvedData,
         resolvedOptions?.externalId
       );
 
       if (resolvedOptions.downloadNewRecord) {
-        response = await odooConn.read(resolvedModel, [response], []);
+        console.log(`Fetching a ${resolvedModel} resource...`);
+        const newRecord = await odooConn.read(resolvedModel, [newRecordId], []);
+        return composeNextState(state, newRecord);
+      } else {
+        return composeNextState(state, newRecordId);
       }
-
-      return composeNextState(state, response);
     } catch (e) {
       console.error(`Error creating ${resolvedModel} resource: ${e}`);
       throw e;
