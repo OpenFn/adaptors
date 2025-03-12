@@ -51,18 +51,31 @@ This adaptor exports the following from common:
 
 <p><code>create(model, data, options) ⇒ Operation</code></p>
 
-Create a record in Odoo
+Create a record in Odoo.
+You can pass an external ID to the options object to create a record with a specific ID.
+You can also pass a downloadNewRecord option to download the whole created resource in the response.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | model | <code>string</code> | The specific record model i.e. "res.partner" |
 | data | <code>object</code> | The data to be created in JSON. |
-| options | <code>object</code> | Options to send to the request. Includes an optional external ID for the record. |
+| options | [<code>CreateOptions</code>](#createoptions) | Options to send to the request. |
 
-**Example:**  Create a partner record with an external Id
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Odoo server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+**Example:**  Create a partner record with an external Id 
 ```js
-create("res.partner", { name: "Kool Keith" }, {externalId: 23});
+create('res.partner', { name: 'Kool Keith' }, { externalId: 23 });
+```
+**Example:**  Create a partner record and download the whole record in the response 
+```js
+create('res.partner', { name: 'Kool Keith' }, { downloadNewRecord: true });
 ```
 
 * * *
@@ -79,6 +92,13 @@ Delete a record from Odoo
 | model | <code>string</code> | The specific record model i.e. "res.partner" |
 | recordId | <code>number</code> | The specific recordId to be deleted. |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Odoo server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
 **Example**
 ```js
 deleteRecord("res.partner", 54 );
@@ -99,6 +119,13 @@ Get a record from Odoo. Returns all fields unless a field list is provided as a 
 | recordId | <code>number</code> | An array of record IDs to read. |
 | fields | <code>Array.&lt;string&gt;</code> | An optional array of field strings to read from the record. |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Odoo server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
 **Example:** Download records with select fields
 ```js
 read("res.partner", [1] , ['name']);
@@ -123,6 +150,13 @@ Update a record in Odoo
 | recordId | <code>number</code> | The specific recordId to be updated. |
 | data | <code>object</code> | The data to be updated in JSON. |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Odoo server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
 **Example**
 ```js
 update("res.partner", 54 , {name: 'Jane Doe'});
@@ -130,4 +164,35 @@ update("res.partner", 54 , {name: 'Jane Doe'});
 
 * * *
 
+
+##  Interfaces
+
+### CreateOptions
+
+Options object
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| externalId | <code>number</code> | An optional id to be used in the request |
+| downloadNewRecord | <code>boolean</code> | An option defaulted to `false` incase a user intends to receive the whole created resource in the response. The collective response will be written in `state.data`. |
+
+
+* * *
+
+### OdooState
+
+State object
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Odoo server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+
+
+* * *
 

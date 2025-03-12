@@ -17773,7 +17773,7 @@
     "kind": "external-function"
   }
 ],
-{"name":"odoo","adaptor":"@openfn/language-odoo","version":"1.0.1","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#create\\\">create(model, data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#deleterecord\\\">deleteRecord(model, recordId)</a></dt>\\n<dt>\\n    <a href=\\\"#read\\\">read(model, recordId, fields)</a></dt>\\n<dt>\\n    <a href=\\\"#update\\\">update(model, recordId, data)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### create\\n\\n<p><code>create(model, data, options) ⇒ Operation</code></p>\\n\\nCreate a record in Odoo\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | The specific record model i.e. \\\"res.partner\\\" |\\n| data | <code>object</code> | The data to be created in JSON. |\\n| options | <code>object</code> | Options to send to the request. Includes an optional external ID for the record. |\\n\\n**Example:**  Create a partner record with an external Id\\n```js\\ncreate(\\\"res.partner\\\", { name: \\\"Kool Keith\\\" }, {externalId: 23});\\n```\\n\\n* * *\\n\\n### deleteRecord\\n\\n<p><code>deleteRecord(model, recordId) ⇒ Operation</code></p>\\n\\nDelete a record from Odoo\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | The specific record model i.e. \\\"res.partner\\\" |\\n| recordId | <code>number</code> | The specific recordId to be deleted. |\\n\\n**Example**\\n```js\\ndeleteRecord(\\\"res.partner\\\", 54 );\\n```\\n\\n* * *\\n\\n### read\\n\\n<p><code>read(model, recordId, fields) ⇒ Operation</code></p>\\n\\nGet a record from Odoo. Returns all fields unless a field list is provided as a third argument\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | The specific record model from i.e. \\\"res.partner\\\" |\\n| recordId | <code>number</code> | An array of record IDs to read. |\\n| fields | <code>Array.&lt;string&gt;</code> | An optional array of field strings to read from the record. |\\n\\n**Example:** Download records with select fields\\n```js\\nread(\\\"res.partner\\\", [1] , ['name']);\\n```\\n**Example:** Download a single record with all fields\\n```js\\nread(\\\"res.partner\\\", $.recordIds);\\n```\\n\\n* * *\\n\\n### update\\n\\n<p><code>update(model, recordId, data) ⇒ Operation</code></p>\\n\\nUpdate a record in Odoo\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | The specific record model i.e. \\\"res.partner\\\" |\\n| recordId | <code>number</code> | The specific recordId to be updated. |\\n| data | <code>object</code> | The data to be updated in JSON. |\\n\\n**Example**\\n```js\\nupdate(\\\"res.partner\\\", 54 , {name: 'Jane Doe'});\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-odoo <img src='assets/sq-256x256.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the odoo \\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/odoo-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/odoo-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `create` function\\n\\n```js\\ncreate(\\\"res.partner\\\", { name: \\\"James Kelvin\\\" }, '123');\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-odoo\\n\\n## 1.0.1\\n\\n### Patch Changes\\n\\n- 2f58a71: Default `create()` options to `{}` to ensure that the options\\n  argument is optional.\\n- e26fbd5: Simplified logging across the adaptor without displaying user data\\n- 2db9f8d: Update the third argument in `read()` examples and documentation to\\n  explicitly indicate that it accepts an array of strings.\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["create","deleteRecord","read","update"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The base URL (http://www.example.com)","format":"uri","minLength":1,"default":"http://localhost","examples":["https://dev.newlogic-demo.com"]},"username":{"title":"Username","type":"string","description":"Username","default":"admin","examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Password","default":"admin","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]},"database":{"title":"Database Name","type":"string","default":"devel","description":"Database Name","examples":["devel"]}},"type":"object","additionalProperties":true,"required":["password","username","database","baseUrl"]}},
+{"name":"odoo","adaptor":"@openfn/language-odoo","version":"1.0.2","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#create\\\">create(model, data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#deleterecord\\\">deleteRecord(model, recordId)</a></dt>\\n<dt>\\n    <a href=\\\"#read\\\">read(model, recordId, fields)</a></dt>\\n<dt>\\n    <a href=\\\"#update\\\">update(model, recordId, data)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### create\\n\\n<p><code>create(model, data, options) ⇒ Operation</code></p>\\n\\nCreate a record in Odoo.\\nYou can pass an external ID to the options object to create a record with a specific ID.\\nYou can also pass a downloadNewRecord option to download the whole created resource in the response.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | The specific record model i.e. \\\"res.partner\\\" |\\n| data | <code>object</code> | The data to be created in JSON. |\\n| options | [<code>CreateOptions</code>](#createoptions) | Options to send to the request. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Odoo server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n**Example:**  Create a partner record with an external Id \\n```js\\ncreate('res.partner', { name: 'Kool Keith' }, { externalId: 23 });\\n```\\n**Example:**  Create a partner record and download the whole record in the response \\n```js\\ncreate('res.partner', { name: 'Kool Keith' }, { downloadNewRecord: true });\\n```\\n\\n* * *\\n\\n### deleteRecord\\n\\n<p><code>deleteRecord(model, recordId) ⇒ Operation</code></p>\\n\\nDelete a record from Odoo\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | The specific record model i.e. \\\"res.partner\\\" |\\n| recordId | <code>number</code> | The specific recordId to be deleted. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Odoo server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n**Example**\\n```js\\ndeleteRecord(\\\"res.partner\\\", 54 );\\n```\\n\\n* * *\\n\\n### read\\n\\n<p><code>read(model, recordId, fields) ⇒ Operation</code></p>\\n\\nGet a record from Odoo. Returns all fields unless a field list is provided as a third argument\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | The specific record model from i.e. \\\"res.partner\\\" |\\n| recordId | <code>number</code> | An array of record IDs to read. |\\n| fields | <code>Array.&lt;string&gt;</code> | An optional array of field strings to read from the record. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Odoo server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** Download records with select fields\\n```js\\nread(\\\"res.partner\\\", [1] , ['name']);\\n```\\n**Example:** Download a single record with all fields\\n```js\\nread(\\\"res.partner\\\", $.recordIds);\\n```\\n\\n* * *\\n\\n### update\\n\\n<p><code>update(model, recordId, data) ⇒ Operation</code></p>\\n\\nUpdate a record in Odoo\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| model | <code>string</code> | The specific record model i.e. \\\"res.partner\\\" |\\n| recordId | <code>number</code> | The specific recordId to be updated. |\\n| data | <code>object</code> | The data to be updated in JSON. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Odoo server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n**Example**\\n```js\\nupdate(\\\"res.partner\\\", 54 , {name: 'Jane Doe'});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### CreateOptions\\n\\nOptions object\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| externalId | <code>number</code> | An optional id to be used in the request |\\n| downloadNewRecord | <code>boolean</code> | An option defaulted to `false` incase a user intends to receive the whole created resource in the response. The collective response will be written in `state.data`. |\\n\\n\\n* * *\\n\\n### OdooState\\n\\nState object\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Odoo server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-odoo <img src='assets/sq-256x256.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the odoo \\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/odoo-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/odoo-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `create` function\\n\\n```js\\ncreate(\\\"res.partner\\\", { name: \\\"James Kelvin\\\" }, '123');\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-odoo\\n\\n## 1.0.2\\n\\n### Patch Changes\\n\\n- cde1ead: Add a `downloadNewRecord: true` option to `create` to enable\\n  downloading of the whole record in the response.\\n\\n  ```js\\n  create('res.partner', { name: 'Kool Keith' }, { downloadNewRecord: true });\\n  fn(state => {\\n    const record = state.data; // whole record is here\\n    return state;\\n  });\\n  ```\\n\\n## 1.0.1\\n\\n### Patch Changes\\n\\n- 2f58a71: Default `create()` options to `{}` to ensure that the options\\n  argument is optional.\\n- e26fbd5: Simplified logging across the adaptor without displaying user data\\n- 2db9f8d: Update the third argument in `read()` examples and documentation to\\n  explicitly indicate that it accepts an array of strings.\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["create","deleteRecord","read","update"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The base URL (http://www.example.com)","format":"uri","minLength":1,"default":"http://localhost","examples":["https://dev.newlogic-demo.com"]},"username":{"title":"Username","type":"string","description":"Username","default":"admin","examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Password","default":"admin","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]},"database":{"title":"Database Name","type":"string","default":"devel","description":"Database Name","examples":["devel"]}},"type":"object","additionalProperties":true,"required":["password","username","database","baseUrl"]}},
 [
   {
     "id": "create",
@@ -17781,7 +17781,7 @@
     "name": "create",
     "kind": "function",
     "scope": "global",
-    "description": "Create a record in Odoo",
+    "description": "Create a record in Odoo.\nYou can pass an external ID to the options object to create a record with a specific ID.\nYou can also pass a downloadNewRecord option to download the whole created resource in the response.",
     "params": [
       {
         "type": {
@@ -17804,15 +17804,16 @@
       {
         "type": {
           "names": [
-            "object"
+            "CreateOptions"
           ]
         },
-        "description": "Options to send to the request. Includes an optional external ID for the record.",
+        "description": "Options to send to the request.",
         "name": "options"
       }
     ],
     "examples": [
-      "<caption> Create a partner record with an external Id</caption>\ncreate(\"res.partner\", { name: \"Kool Keith\" }, {externalId: 23});"
+      "<caption> Create a partner record with an external Id </caption>\ncreate('res.partner', { name: 'Kool Keith' }, { externalId: 23 });",
+      "<caption> Create a partner record and download the whole record in the response </caption>\ncreate('res.partner', { name: 'Kool Keith' }, { downloadNewRecord: true });"
     ],
     "returns": [
       {
@@ -17825,12 +17826,59 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 73,
+      "lineno": 93,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/odoo/src"
     },
-    "order": 2,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OdooState"
+      }
+    ],
+    "order": 4,
     "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "CreateOptions",
+    "longname": "CreateOptions",
+    "name": "CreateOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "An optional id to be used in the request",
+        "name": "externalId"
+      },
+      {
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        },
+        "description": "An option defaulted to `false` incase a user intends to receive the whole created resource in the response. The collective response will be written in `state.data`.",
+        "name": "downloadNewRecord"
+      }
+    ],
+    "meta": {
+      "lineno": 19,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/odoo/src"
+    },
+    "order": 1,
     "level": 0
   },
   {
@@ -17874,11 +17922,52 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 165,
+      "lineno": 202,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/odoo/src"
     },
-    "order": 5,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OdooState"
+      }
+    ],
+    "order": 7,
+    "level": 0
+  },
+  {
+    "id": "OdooState",
+    "longname": "OdooState",
+    "name": "OdooState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "The response body (as JSON)",
+        "name": "data"
+      },
+      {
+        "description": "The HTTP response from the Odoo server (excluding the body)",
+        "name": "response"
+      },
+      {
+        "description": "An array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 11,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/odoo/src"
+    },
+    "order": 0,
     "level": 0
   },
   {
@@ -17932,11 +18021,18 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 107,
+      "lineno": 142,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/odoo/src"
     },
-    "order": 3,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OdooState"
+      }
+    ],
+    "order": 5,
     "level": 0
   },
   {
@@ -17989,11 +18085,18 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 136,
+      "lineno": 172,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/odoo/src"
     },
-    "order": 4,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OdooState"
+      }
+    ],
+    "order": 6,
     "level": 0
   },
   {
