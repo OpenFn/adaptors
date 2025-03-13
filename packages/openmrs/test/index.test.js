@@ -3,18 +3,8 @@ import { expect } from 'chai';
 import { request } from '../src/Utils';
 import testData from './fixtures.json' assert { type: 'json' };
 
-import {
-  get,
-  post,
-  create,
-  upsert,
-  execute,
-  getPatient,
-  searchPerson,
-  searchPatient,
-  fhir,
-  http,
-} from '../src';
+import { get, create, update, upsert, execute, fhir, http } from '../src';
+import * as adaptor from '../src';
 
 const testServer = enableMockClient('https://fn.openmrs.org');
 const jsonHeaders = {
@@ -31,7 +21,7 @@ const configuration = {
 const state = {
   configuration,
   patient: testData.patient,
-  encounter: testData.encounter
+  encounter: testData.encounter,
 };
 
 describe('execute', () => {
@@ -133,7 +123,7 @@ describe('http', () => {
 });
 
 describe('http.get', () => {
-  beforeEach(()=>{
+  beforeEach(() => {
     // Basic patient query interceptor
     testServer
       .intercept({
@@ -177,22 +167,22 @@ describe('http.get', () => {
 
   it('should make a get request that includes query params', async () => {
     const options = {
-      query: { q: 'Sarah', startIndex: 1 }
-    }
+      query: { q: 'Sarah', startIndex: 1 },
+    };
 
     const { data } = await http.get('/ws/rest/v1/patient', options)(state);
     expect(data.results[0].display).to.eql(testData.patientResults[0].display);
   });
 });
 
-describe('http.post', () =>{
-  beforeEach(()=>{
+describe('http.post', () => {
+  beforeEach(() => {
     // Basic patient query interceptor
     testServer
       .intercept({
         path: '/ws/rest/v1/patient',
         method: 'POST',
-        data: testData.newPatient
+        data: testData.newPatient,
       })
       .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
 
@@ -201,18 +191,24 @@ describe('http.post', () =>{
       .intercept({
         path: '/ws/rest/v1/wrong-url',
         method: 'POST',
-        data: testData.newPatient
+        data: testData.newPatient,
       })
       .reply(404, { ...jsonHeaders });
   });
 
   it('should make http request with the "POST" verb', async () => {
-    const response = await http.post('/ws/rest/v1/patient', testData.newPatient)(state);
+    const response = await http.post(
+      '/ws/rest/v1/patient',
+      testData.newPatient
+    )(state);
     expect(response.response.method).to.eql('POST');
   });
 
   it('should make a successful POST request to openmrs', async () => {
-    const { data } = await http.post('/ws/rest/v1/patient',  testData.newPatient)(state);
+    const { data } = await http.post(
+      '/ws/rest/v1/patient',
+      testData.newPatient
+    )(state);
     expect(data.results[0].display).to.eql(testData.patientResults[0].display);
   });
 
@@ -220,13 +216,13 @@ describe('http.post', () =>{
     try {
       await http.post('/ws/rest/v1/wrong-url', testData.newPatient)(state);
     } catch (e) {
-      expect(e.statusCode).to.eql(404)
+      expect(e.statusCode).to.eql(404);
     }
   });
 });
 
-describe('http.delete', () =>{
-  beforeEach(()=>{
+describe('http.delete', () => {
+  beforeEach(() => {
     // Basic patient query interceptor
     testServer
       .intercept({
@@ -258,7 +254,7 @@ describe('http.delete', () =>{
     try {
       await http.delete('/ws/rest/v1/patient/non-existent')(state);
     } catch (e) {
-      expect(e.statusCode).to.eql(404)
+      expect(e.statusCode).to.eql(404);
     }
   });
 });
@@ -437,24 +433,75 @@ describe('get', () => {
 
     expect(data.uuid).to.eql('123');
   });
-});
-
-describe('post', () => {
-  it('should post an encounter', async () => {
+  it('should be robust to leading and trailing slashes', async () => {
     testServer
       .intercept({
-        path: '/ws/rest/v1/encounter',
+        path: '/ws/rest/v1/encounter/123',
+        method: 'GET',
+      })
+      .reply(200, { uuid: '123' }, { ...jsonHeaders });
+
+    const { data } = await execute(get('/encounter/123'))(state);
+
+    expect(data.uuid).to.eql('123');
+  });
+  it('should be robust to leading and trailing slashes', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/encounter/123',
+        method: 'GET',
+      })
+      .reply(200, { uuid: '123' }, { ...jsonHeaders });
+
+    const { data } = await execute(get('encounter/123/'))(state);
+
+    expect(data.uuid).to.eql('123');
+  });
+  it('should be robust to leading and trailing slashes', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/encounter/123',
+        method: 'GET',
+      })
+      .reply(200, { uuid: '123' }, { ...jsonHeaders });
+
+    const { data } = await execute(get('encounter/123'))(state);
+
+    expect(data.uuid).to.eql('123');
+  });
+  it('should parse query params', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        query: { q: 'Sarah' },
+        method: 'GET',
+      })
+      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
+
+    const { data } = await execute(get('patient', { q: 'Sarah' }))(state);
+
+    expect(data.results[0].uuid).to.eql(testData.patientResults[0].uuid);
+  });
+});
+
+describe('Update', () => {
+  it('should update a patient', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3',
         method: 'POST',
       })
       .reply(200, ({ body }) => body, {
         ...jsonHeaders,
       });
 
-    const { data } = await execute(post('encounter', state => state.encounter))(
-      state
-    );
-
-    expect(data.patient).to.eql('1fdaa696-e759-4a7d-a066-f1ae557c151b');
+    const { data } = await execute(
+      update(
+        'patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3',
+        state => state.patient
+      )
+    )(state);
+    expect(data.uuid).to.eql('b52ec6f9-0e26-424c-a4a1-c64f9d571eb3');
   });
 });
 
@@ -510,71 +557,11 @@ describe('create', () => {
   });
 });
 
-describe('getPatient', () => {
-  it('should get a patient by uuid', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3',
-        method: 'GET',
-      })
-      .reply(
-        200,
-        { uuid: 'b52ec6f9-0e26-424c-a4a1-c64f9d571eb3' },
-        { ...jsonHeaders }
-      );
-
-    const { data } = await execute(
-      getPatient('b52ec6f9-0e26-424c-a4a1-c64f9d571eb3')
-    )(state);
-
-    expect(data.uuid).to.eql('b52ec6f9-0e26-424c-a4a1-c64f9d571eb3');
-  });
-});
-
-describe('searchPerson', () => {
-  it('should search for a person', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/person?q=Sarah',
-        method: 'GET',
-      })
-      .reply(200, { results: [{ display: 'Sarah' }] }, { ...jsonHeaders });
-
-    const { data } = await execute(
-      searchPerson({
-        q: 'Sarah',
-      })
-    )(state);
-
-    expect(data.results[0].display).to.eql('Sarah');
-  });
-});
-
-describe('searchPatient', () => {
-  it('should search for a patient', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient?q=Sarah',
-        method: 'GET',
-      })
-      .reply(200, { results: [testData.patient] }, { ...jsonHeaders });
-
-    const { data } = await execute(
-      searchPatient({
-        q: 'Sarah',
-      })
-    )(state);
-
-    expect(data.results[0].display).to.eql(testData.patient.display);
-  });
-});
-
 describe('upsert', () => {
   it('should update a patient', async () => {
     testServer
       .intercept({
-        path: `/ws/rest/v1/patient`,
-        query: { q: testData.patient.person.display },
+        path: `/ws/rest/v1/patient/${testData.patient.uuid}`,
         method: 'GET',
       })
       .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
@@ -589,10 +576,7 @@ describe('upsert', () => {
       });
 
     const result = await upsert(
-      'patient',
-      state => ({
-        q: state.patient.person.display,
-      }),
+      `patient/${testData.patient.uuid}`,
       state => state.patient
     )(state);
 
@@ -601,8 +585,7 @@ describe('upsert', () => {
   it('should create a patient', async () => {
     testServer
       .intercept({
-        path: `/ws/rest/v1/patient`,
-        query: { q: testData.patient.person.display },
+        path: `/ws/rest/v1/patient/${testData.patient.uuid}`,
         method: 'GET',
       })
       .reply(200, { results: [] }, { ...jsonHeaders });
@@ -617,13 +600,55 @@ describe('upsert', () => {
       });
 
     const result = await upsert(
-      'patient',
-      state => ({
-        q: state.patient.person.display,
-      }),
+      `patient/${testData.patient.uuid}`,
       state => state.patient
     )(state);
 
     expect(result.data.person.display).to.eql(testData.patient.person.display);
+  });
+});
+
+describe('delete', () => {
+  it('should delete an encounter by uuid', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/encounter/123',
+        method: 'DELETE',
+      })
+      .reply(200, { uuid: '123', voided: true }, { ...jsonHeaders });
+
+    const { data } = await execute(adaptor.delete('/encounter/123'))(state);
+
+    expect(data.uuid).to.eql('123');
+  });
+
+  it('should delete a resource with options', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/encounter/456?purge=true',
+        method: 'DELETE',
+      })
+      .reply(200, { uuid: '456', voided: false }, { ...jsonHeaders });
+
+    const { data } = await execute(
+      adaptor.delete('/encounter/456', { purge: true })
+    )(state);
+
+    expect(data.uuid).to.eql('456');
+  });
+
+  it('should throw an error if the resource is not found', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/encounter/789',
+        method: 'DELETE',
+      })
+      .reply(404, { error: 'Not Found' }, { ...jsonHeaders });
+
+    try {
+      await execute(adaptor.delete('encounter/789'))(state);
+    } catch (error) {
+      expect(error.body.error).to.eql('Not Found');
+    }
   });
 });
