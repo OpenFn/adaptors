@@ -47,6 +47,10 @@ export const enableMockClient = baseUrl => {
 };
 
 const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
+  if (errorMap == false) {
+    return;
+  }
+
   const errMapMessage = errorMap[response.statusCode];
 
   const isError =
