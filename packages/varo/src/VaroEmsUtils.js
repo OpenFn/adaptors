@@ -46,11 +46,6 @@ export function parseVaroEmsToEms(metadata, data, dataPath) {
       TVC: item.TVC, // vaccine chamber temperature
     };
 
-    // TODO: limit the number of records for testing.
-    if (result.records.length >= 3) {
-      result.records.shift();
-    }
-
     result.records.push(record);
   }
 
