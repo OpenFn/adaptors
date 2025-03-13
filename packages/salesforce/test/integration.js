@@ -25,6 +25,18 @@ describe('Integration tests', () => {
       expect(data.success).to.eq(true);
     }).timeout(50000);
 
+    it.only('should update multiple sobjects', async () => {
+      state.data = [
+        { name: 'Coco', vera__Active__c: 'Yes' },
+        { name: 'Melon', vera__Active__c: 'No' },
+      ];
+      const { data } = await execute(
+        bulk('Account', 'update', state => state.data)
+      )(state);
+
+      expect(data.success).to.eq(true);
+    }).timeout(50000);
+
     it('should fail if there is an error', async () => {
       state.data.push({ name: 'Aleksa', vera__Active__c: undefined });
       try {
