@@ -45,12 +45,12 @@
           },
           {
             "title": "param",
-            "description": "Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.",
+            "description": "An optional object containing query, parseAs,and headers for the request.",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "Object"
+                "name": "RequestOptions"
               }
             },
             "name": "options"
@@ -190,12 +190,12 @@
           },
           {
             "title": "param",
-            "description": "Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.",
+            "description": "An optional object containing query, parseAs,and headers for the request.",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "Object"
+                "name": "RequestOptions"
               }
             },
             "name": "options"
@@ -283,7 +283,6 @@
       "name": "get",
       "params": [
         "resourceType",
-        "query",
         "options",
         "callback"
       ],
@@ -311,61 +310,15 @@
           },
           {
             "title": "param",
-            "description": "A query object that will limit what resources are retrieved when converted into request params.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "query"
-          },
-          {
-            "title": "param",
-            "description": "Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use.",
+            "description": "An optional object containing query, parseAs,and headers for the request",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "Object"
+                "name": "RequestOptions"
               }
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "The parameters for the request.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Object"
-              }
-            },
-            "name": "options.params"
-          },
-          {
-            "title": "param",
-            "description": "The configuration for the request, including headers, etc.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Object"
-              }
-            },
-            "name": "options.requestConfig"
-          },
-          {
-            "title": "param",
-            "description": "Optional flag to indicate if the response should be returned as a Base64 encoded string.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.asBase64",
-            "default": "false"
           },
           {
             "title": "param",
@@ -389,12 +342,12 @@
           },
           {
             "title": "example",
-            "description": "get('dataValueSets', {\n  dataSet: 'pBOMPrpg1QX',\n  orgUnit: 'DiszpKrYNg8',\n  period: '201401',\n  fields: '*',\n});",
+            "description": "get('dataValueSets', {\n query:{\n  dataSet: 'pBOMPrpg1QX',\n  orgUnit: 'DiszpKrYNg8',\n  period: '201401',\n  fields: '*',\n}\n});",
             "caption": "Get all data values for the 'pBOMPrpg1QX' dataset"
           },
           {
             "title": "example",
-            "description": "get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });",
+            "description": "get('programs', { query : { orgUnit: 'TSyzvBiovKh', fields: '*' } });",
             "caption": "Get all programs for an organization unit"
           },
           {
@@ -414,19 +367,23 @@
           },
           {
             "title": "example",
-            "description": "get('tracker/relationships', {\n  trackedEntity:['F8yKM85NbxW'],\n});",
+            "description": "get('tracker/relationships', {\n  query: { trackedEntity:['F8yKM85NbxW'] }\n});",
             "caption": "Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See [Relationships docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships)"
+          },
+          {
+            "title": "example",
+            "description": "get('trackedEntityInstances/qHVDKszQmdx/BqaEWTBG3RB/image', {\n  headers:{\n      Accept: 'image/*'\n  },\n  parseAs: 'text',\n  asBase64: true\n});",
+            "caption": "Get an image from a trackedEntityInstance."
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "post",
       "params": [
         "resourceType",
         "data",
-        "query",
         "options",
         "callback"
       ],
@@ -467,12 +424,12 @@
           },
           {
             "title": "param",
-            "description": "Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.",
+            "description": "An optional object containing query, parseAs,and headers for the request.",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "Object"
+                "name": "RequestOptions"
               }
             },
             "name": "options"
@@ -504,7 +461,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "upsert",
@@ -557,37 +514,12 @@
           },
           {
             "title": "param",
-            "description": "Optional configuration that will be applied to both the `get` and the `create` or `update` operations.",
+            "description": "An optional object containing query, parseAs,and headers for the request",
             "type": {
               "type": "OptionalType",
               "expression": {
-                "type": "RecordType",
-                "fields": [
-                  {
-                    "type": "FieldType",
-                    "key": "apiVersion",
-                    "value": {
-                      "type": "NameExpression",
-                      "name": "object"
-                    }
-                  },
-                  {
-                    "type": "FieldType",
-                    "key": "requestConfig",
-                    "value": {
-                      "type": "NameExpression",
-                      "name": "object"
-                    }
-                  },
-                  {
-                    "type": "FieldType",
-                    "key": "params",
-                    "value": {
-                      "type": "NameExpression",
-                      "name": "object"
-                    }
-                  }
-                ]
+                "type": "NameExpression",
+                "name": "RequestOptions"
               }
             },
             "name": "options"
@@ -624,60 +556,11 @@
             "title": "example",
             "description": "upsert('trackedEntities', {\n orgUnit: 'TSyzvBiovKh',\n filter: ['w75KJ2mc4zz:Eq:Qassim'],\n}, {\n orgUnit: 'TSyzvBiovKh',\n trackedEntityType: 'nEenWmSyUEp',\n attributes: [\n   {\n     attribute: 'w75KJ2mc4zz',\n     value: 'Qassim',\n   },\n ],\n});",
             "caption": "Upsert a trackedEntity"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "discover",
-      "params": [
-        "httpMethod",
-        "endpoint"
-      ],
-      "docs": {
-        "description": "Discover `DHIS2` `api` `endpoint` `query parameters` and allowed `operators` for a given resource's endpoint.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "The HTTP to inspect parameter usage for a given endpoint, e.g., `get`, `post`,`put`,`patch`,`delete`",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "httpMethod"
-          },
-          {
-            "title": "param",
-            "description": "The path for a given endpoint. E.g. `/trackedEntities` or `/dataValueSets`",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "endpoint"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
           },
           {
             "title": "example",
-            "description": "discover('post', '/trackedEntities')",
-            "caption": "a list of parameters allowed on a given endpoint for specific http method"
+            "description": "upsert(\n  'dataElements',\n  { filter: 'id:eq:P3jJH5Tu5VC' },\n  {\n    op: 'add',\n    path: '/domainType',\n    name: 'Acute',\n    shortName: 'AFP follow-up',\n    dimensionItemType: 'DATA_ELEMENT',\n    legendSets: [],\n    aggregationType: 'SUM',\n    valueType: 'NUMBER',\n    domainType: 'AGGREGATE',\n    code: 'DE_359049',\n    name: 'Acute Flaccid Paralysis (AFP) follow-up',\n   }\n );",
+            "caption": "Upsert a dataElement"
           }
         ]
       },
@@ -734,12 +617,12 @@
           },
           {
             "title": "param",
-            "description": "Optional configuration, including params for the update ({preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}). Defaults to `{operationName: 'patch', apiVersion: state.configuration.apiVersion, responseType: 'json'}`",
+            "description": "An optional object containing query, parseAs,and headers for the request.",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "Object"
+                "name": "RequestOptions"
               }
             },
             "name": "options"
@@ -827,37 +710,12 @@
           },
           {
             "title": "param",
-            "description": "Optional `options` for `del` operation including params e.g. `{preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}`. Run `discover` or see {@link https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#create-update-parameters DHIS2 documentation}. Defaults to `{operationName: 'delete', apiVersion: state.configuration.apiVersion, responseType: 'json'}`",
+            "description": "An optional object containing query, parseAs,and headers for the request.",
             "type": {
               "type": "OptionalType",
               "expression": {
-                "type": "RecordType",
-                "fields": [
-                  {
-                    "type": "FieldType",
-                    "key": "apiVersion",
-                    "value": {
-                      "type": "NameExpression",
-                      "name": "number"
-                    }
-                  },
-                  {
-                    "type": "FieldType",
-                    "key": "operationName",
-                    "value": {
-                      "type": "NameExpression",
-                      "name": "string"
-                    }
-                  },
-                  {
-                    "type": "FieldType",
-                    "key": "resourceType",
-                    "value": {
-                      "type": "NameExpression",
-                      "name": "string"
-                    }
-                  }
-                ]
+                "type": "NameExpression",
+                "name": "RequestOptions"
               }
             },
             "name": "options"
