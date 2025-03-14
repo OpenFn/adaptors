@@ -426,7 +426,16 @@ http.get(
      limit: 1
    }
  }
- )
+)
+```
+**Example:** Don't throw if OpenMRS returns a 404 error code
+```js
+http.get(
+ "/ws/rest/v1/patient",
+ {
+   errors: { 404: false }
+ }
+)
 ```
 
 * * *
@@ -485,9 +494,9 @@ Make a HTTP request to any OpenMRS endpoint
 ```js
 http.request("GET",
   "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8", {
-   query:{ 
-      limit: 1, 
-      offset: 20 
+   query:{
+      limit: 1,
+      offset: 20
    },
 });
 ```
@@ -565,6 +574,7 @@ Options object
 | query | <code>object</code> |  | An object of query parameters to be encoded into the URL |
 | headers | <code>object</code> |  | An object of all request headers |
 | body | <code>object</code> |  | The request body (as JSON) |
+| errors | <code>object</code> \| <code>boolean</code> |  | Pass `false` to not throw on errors. Pass a map of errorCodes: error messages, ie, `{ 404: 'Resource not found' }`, or `false` to suppress errors for a specific code. |
 | [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |
 
 

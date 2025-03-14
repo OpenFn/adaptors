@@ -1,5 +1,12 @@
 # @openfn/language-fhir-fr
 
+## 1.0.8
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
 ## 1.0.7
 
 ### Patch Changes

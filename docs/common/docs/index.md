@@ -1033,7 +1033,7 @@ Options provided to the HTTP request
 
 | Name | Type | Description |
 | --- | --- | --- |
-| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors. |
+| errors | <code>object</code> \| <code>boolean</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors. |
 | form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |
 | query | <code>object</code> | An object of query parameters to be encoded into the URL. |
 | headers | <code>object</code> | An object of headers to append to the request. |
