@@ -7,6 +7,7 @@ import * as util from './Utils';
  * @property {object} query - An object of query parameters to be encoded into the URL
  * @property {object} headers - An object of all request headers
  * @property {object} body - The request body (as JSON)
+ * @property {object|boolean} errors - Pass `false` to not throw on errors. Pass a map of errorCodes: error messages, ie, `{ 404: 'Resource not found' }`, or `false` to suppress errors for a specific code.
  * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
  */
 
@@ -15,9 +16,9 @@ import * as util from './Utils';
  * @example <caption>GET request with a URL query</caption>
  * http.request("GET",
  *   "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8", {
- *    query:{ 
- *       limit: 1, 
- *       offset: 20 
+ *    query:{
+ *       limit: 1,
+ *       offset: 20
  *    },
  * });
  * @function
@@ -56,21 +57,36 @@ export function request(method, path, options = {}) {
  *      limit: 1
  *    }
  *  }
- *  )
+ * )
+ * @example <caption>Don't throw if OpenMRS returns a 404 error code</caption>
+ * http.get(
+ *  "/ws/rest/v1/patient",
+ *  {
+ *    errors: { 404: false }
+ *  }
+ * )
  * @param {string} path - path to resource
  * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
  * @returns {operation}
  */
 export function get(path, options = {}) {
   return async state => {
-    const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
+    const [resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      path,
+      options
+    );
 
-    const response = await util.request(state, 'GET', resolvedPath, resolvedOptions);
+    const response = await util.request(
+      state,
+      'GET',
+      resolvedPath,
+      resolvedOptions
+    );
 
     return util.prepareNextState(state, response);
   };
 }
-
 
 /**
  * Make a POST request to an OpenMRS endpoint
@@ -99,19 +115,28 @@ export function get(path, options = {}) {
  * @returns {operation}
  */
 export function post(path, data, options = {}) {
-  return  async state => {
-    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(state, path, data, options);
+  return async state => {
+    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
+      state,
+      path,
+      data,
+      options
+    );
 
     const optionsObject = {
       data: resolvedData,
-      ...resolvedOptions
-    }
-    const response = await util.request(state, 'POST', resolvedPath, optionsObject);
+      ...resolvedOptions,
+    };
+    const response = await util.request(
+      state,
+      'POST',
+      resolvedPath,
+      optionsObject
+    );
 
     return util.prepareNextState(state, response);
-  }
+  };
 }
-
 
 /**
  * Make a DELETE request to an OpenMRS endpoint
@@ -126,14 +151,23 @@ export function post(path, data, options = {}) {
  * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
  * @returns {operation}
  */
- function _delete(path, options = {}) {
-  return  async state => {
-    const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
+function _delete(path, options = {}) {
+  return async state => {
+    const [resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      path,
+      options
+    );
 
-    const response = await util.request(state, 'DELETE', resolvedPath, resolvedOptions);
+    const response = await util.request(
+      state,
+      'DELETE',
+      resolvedPath,
+      resolvedOptions
+    );
 
     return util.prepareNextState(state, response);
-  }
+  };
 }
 
 export { _delete as delete };

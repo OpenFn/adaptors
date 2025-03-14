@@ -41,6 +41,8 @@ export async function request(state, method, path, options = {}) {
   const authHeaders = makeBasicAuthHeader(username, password);
 
   const opts = {
+    ...options,
+    baseUrl,
     body: data,
     headers: {
       ...authHeaders,
@@ -50,8 +52,6 @@ export async function request(state, method, path, options = {}) {
     parseAs,
   };
 
-  const url = `${baseUrl}${path}`;
-
   let allResponses;
   let queryParams = opts?.query;
   let allowPagination = isNaN(queryParams?.startIndex);
@@ -59,7 +59,7 @@ export async function request(state, method, path, options = {}) {
   do {
     const requestOptions = queryParams ? { ...opts, query: queryParams } : opts;
 
-    const response = await commonRequest(method, url, requestOptions);
+    const response = await commonRequest(method, path, requestOptions);
     logResponse(response);
 
     if (allResponses) {

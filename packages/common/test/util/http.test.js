@@ -377,6 +377,25 @@ describe('options', () => {
     );
   });
 
+  it('should not throw for 404 if errors is false', async () => {
+    client
+      .intercept({
+        path: '/api/content',
+        method: 'GET',
+      })
+      .reply(404, {});
+
+    const response = await request(
+      'GET',
+      'https://www.example.com/api/content',
+      {
+        errors: false,
+      }
+    );
+
+    expect(response.statusCode).to.eql(404);
+  });
+
   it('should encode keys and values of query', async () => {
     let request;
     client
