@@ -65,11 +65,9 @@ export async function request(state, method, path, options = {}) {
   let queryParams = opts?.query;
   const requestOptions = queryParams ? { ...opts, query: queryParams } : opts;
 
-  if (shouldPaginate({ underGlobalLimit: true, hasPageSize: query.pageSize })) {
-    return paginate(method, url, requestOptions);
-  } else {
-    return fetchAndLog(method, url, requestOptions);
-  }
+  return (shouldPaginate({ underGlobalLimit: true, hasPageSize: query.pageSize }))
+    ? paginate(method, url, requestOptions)
+    : fetchAndLog(method, url, requestOptions);
 }
 
 export async function paginate(method, url, opts) {
@@ -95,7 +93,7 @@ export async function paginate(method, url, opts) {
     const response = await fetchAndLog(method, url, paginatedRequestOptions);
 
     // Stop itereation if there are no more objects
-    if(!response.body){
+    if (!response.body) {
       break;
     }
 
