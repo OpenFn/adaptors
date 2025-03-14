@@ -173,6 +173,31 @@ describe('get', () => {
         'no filters applied, dhis2 might complain about needing "at least one orgUnit"',
     });
   });
+
+  it('should support base64 for images', async () => {
+    testServer
+      .intercept({
+        path: getPath('trackedEntityInstances/qHVDKszQmdx/BqaEWTBG3RB/image'),
+        method: 'GET',
+      })
+      .reply(
+        200,
+        '����\x00\x10JFIF\x00\x01\x02\x00\x00\x01\x00\x01\x00\x00��\x00C\x00\b\x06\x06\x07\x06\x05\b\x07\x07\x07\t\t\b\n'
+      );
+
+    const finalState = await execute(
+      get('trackedEntityInstances/qHVDKszQmdx/BqaEWTBG3RB/image', {
+        headers: {
+          Accept: 'image/*',
+        },
+        parseAs: 'text',
+        asBase64: true,
+      })
+    )(state);
+    expect(finalState.data).to.eql(
+      '77+977+977+977+9ABBKRklGAAECAAABAAEAAO+/ve+/vQBDAAgGBgcGBQgHBwcJCQgK'
+    );
+  });
 });
 
 describe('helperfunctions', () => {

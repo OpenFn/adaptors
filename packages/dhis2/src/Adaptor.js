@@ -485,8 +485,8 @@ export function get(resourceType, options = {}, callback = s => s) {
       ),
       options: resolvedOptions,
     }).then(result => {
-      console.log(`Retrieved ${resolvedResourceType}`);
-      const response = asBase64 ? { data: encode(result.body) } : result;
+      console.log(`Retrieved ${resolvedResourceType}`);      
+      const response = asBase64 ? { body: encode(result.body) } : result;
       return handleResponse(response, state, callback);
     });
   };
