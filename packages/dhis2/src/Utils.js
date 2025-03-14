@@ -45,13 +45,13 @@ export function selectId(resourceType) {
 
 // Write a unit test for this one
 export function handleResponse(result, state, callback) {
-  const { body, ... responseWithoutBody } = result;
+  const { body, ...responseWithoutBody } = result;
 
   const nextState = {
     ...composeNextState(state, body),
-    response: responseWithoutBody
-  }
- return callback(nextState);
+    response: responseWithoutBody,
+  };
+  return callback(nextState);
 }
 
 export function prettyJson(data) {
@@ -103,17 +103,15 @@ export const configureAuth = (auth, headers = {}) => {
 export async function request(configuration, requestData) {
   const { hostUrl } = configuration;
   const { method, path, options = {}, data = {} } = requestData;
-  console.log({options});
-  
+
   const {
-    headers = {'content-type': 'application/json'},
+    headers = { 'content-type': 'application/json' },
     query = {},
-    parseAs = 'json'
-  } = options
+    parseAs = 'json',
+  } = options;
 
   console.log(`Sending ${method} request to ${path}`);
   if (options) console.log(`with params: `, query);
-
 
   const authHeaders = configureAuth(configuration, headers);
 
@@ -127,6 +125,6 @@ export async function request(configuration, requestData) {
     body: data,
     baseUrl: hostUrl,
   };
-  
+
   return commonRequest(method, path, opts).then(logResponse);
 }

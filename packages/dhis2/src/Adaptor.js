@@ -551,10 +551,7 @@ export function post(resourceType, data, options = {}, callback = s => s) {
  * @throws {RangeError} - Throws range error
  * @returns {Operation}
  * @example <caption>Upsert a trackedEntity</caption>
- * upsert('trackedEntities', {
- *  orgUnit: 'TSyzvBiovKh',
- *  filter: ['w75KJ2mc4zz:Eq:Qassim'],
- * }, {
+ * upsert('trackedEntities', {}, {
  *  orgUnit: 'TSyzvBiovKh',
  *  trackedEntityType: 'nEenWmSyUEp',
  *  attributes: [
