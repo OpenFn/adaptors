@@ -7,6 +7,7 @@ import {
   upsert,
   findAttributeValue,
   findAttributeValueById,
+  patch,
 } from '../src/Adaptor';
 import { dataValue } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
@@ -378,6 +379,55 @@ describe('update', () => {
       httpStatus: 'OK',
       message: 'the response',
     });
+  });
+});
+
+describe('patch', () => {
+  const state = {
+    configuration,
+    data: {
+      program: 'program',
+      orgUnit: 'orgunit',
+      status: 'COMPLETED',
+      currentDate: '02-02-20',
+    },
+  };
+
+  it('should make an authenticated PUT to the right url', async () => {
+    testServer
+      .intercept({
+        path: getPath('dataValueSets/AsQj6cDsUq4'),
+        method: 'PATCH',
+      })
+      .reply(204, '');
+
+    const finalState = await execute(
+      patch('dataValueSets', 'AsQj6cDsUq4', state => ({
+        ...state.data,
+        date: state.data.currentDate,
+      }))
+    )(state);
+
+    expect(finalState.data).to.eql('');
+  });
+
+  it('should recursively expand refs', async () => {
+    testServer
+      .intercept({
+        path: getPath('dataValueSets/AsQj6cDsUq4'),
+        method: 'PATCH',
+      })
+      .reply(204, '');
+
+    const finalState = await execute(
+      patch('dataValueSets', 'AsQj6cDsUq4', {
+        program: dataValue('program'),
+        orgUnit: 'hardcoded',
+        date: resp => resp.data.currentDate,
+      })
+    )(state);
+
+    expect(finalState.data).to.eql('');
   });
 });
 
