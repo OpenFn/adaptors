@@ -15,6 +15,16 @@ export const prepareNextState = (state, response, callback = s => s) => {
   return callback(nextState);
 };
 
+export async function fetchAndLog(method, url, opts) {
+  try {
+    const response = await commonRequest(method, url, opts);
+    logResponse(response);
+    return response;
+  } catch (err) {
+    return err;
+  }
+}
+
 export async function request(state, method, path, options = {}) {
   const {
     baseUrl = state.configuration.instanceUrl,
@@ -38,6 +48,7 @@ export async function request(state, method, path, options = {}) {
   }
 
   const { username, password } = state.configuration;
+
   const authHeaders = makeBasicAuthHeader(username, password);
 
   const opts = {
@@ -51,105 +62,45 @@ export async function request(state, method, path, options = {}) {
   };
 
   const url = `${baseUrl}${path}`;
-
-  let allResponses;
   let queryParams = opts?.query;
-  let allowPagination = isNaN(queryParams?.startIndex);
+  const requestOptions = queryParams ? { ...opts, query: queryParams } : opts;
 
-  do {
-    const requestOptions = queryParams ? { ...opts, query: queryParams } : opts;
-
-    const response = await commonRequest(method, url, requestOptions);
-    logResponse(response);
-
-    if (allResponses) {
-      allResponses.body.results.push(...response.body.results);
-    } else {
-      allResponses = response;
-    }
-    const nextUrl = response?.body?.links?.find(
-      link => link.rel === 'next'
-    )?.uri;
-
-    if (nextUrl) {
-      console.log(`Fetched ${response.body.results.length} results`);
-      console.log(`Fetching next page from ${nextUrl}`);
-      const urlObj = new URL(nextUrl);
-      const params = new URLSearchParams(urlObj.search);
-      const startIndex = params.get('startIndex');
-
-      queryParams = { ...queryParams, startIndex };
-    } else {
-      delete allResponses.body.links;
-      break;
-    }
-  } while (allowPagination);
-
-  return allResponses;
+  if (shouldPaginate({ underGlobalLimit: true, hasPageSize: query.pageSize })) {
+    return paginate(method, url, requestOptions);
+  } else {
+    return fetchAndLog(method, url, requestOptions);
+  }
 }
 
-export async function requestWithPagination(state, method, path, options = {}) {
-  const {
-    baseUrl = state.configuration.instanceUrl,
-    query = {},
-    data = {},
-    headers = { 'content-type': 'application/json' },
-    parseAs = 'json'
-  } = options;
-
-  if (baseUrl.length <= 0) {
-    throw new Error('Invalid instanceUrl. Include instanceUrl in state.configuration');
-  }
-
-  const isAbsoluteUrl = /^(https?:|\/\/)/i.test(path);
-
-  if (isAbsoluteUrl) {
-    throw new Error(`Invalid path argument: "${path}" appears to be an absolute URL. Please provide a relative path.`);
-  }
-
-  const { username, password } = state.configuration;
-  const authHeaders = makeBasicAuthHeader(username, password);
-
-  const opts = {
-    body: data,
-    headers: {
-      ...authHeaders,
-      ...headers
-    },
-    query,
-    parseAs
-  };
-
-  const url = `${baseUrl}${path}`;
+export async function paginate(method, url, opts) {
 
   let allResponses;
   let fetchedCount = 0;
 
-  const pageSize = query.pageSize ? parseInt(query.pageSize) : null;
-  const limit = query.limit ? parseInt(query.limit) : null;
-  const hasPaginationParams = pageSize || limit || query.startIndex;
 
-  let queryParams = { ...opts.query }
+  // global limit variable that is a source of truth incase there is a pageSize variable
+  const globalLimit = opts.query.limit;
 
-  if(hasPaginationParams && !queryParams.startIndex) {
-    queryParams.limit = pageSize || 100;
+  // Declare a variable that takes in all the options. We can then modify this variable to fetch the next page
+  let paginatedRequestOptions = { ...opts }
+
+
+  // if page size variable exists use that as limit. Delete pageSize from params since OpenMRS does recognize it.
+  if (opts.query.pageSize) {
+    paginatedRequestOptions.query.limit = opts.query.pageSize;
+    delete paginatedRequestOptions.query.pageSize;
   }
-
-
-  if (pageSize) {
-    // OpenMRS doesn't natively handle pageSIze so we handle it ourselves.
-    queryParams.limit = pageSize;
-    delete queryParams.pageSize; //  prevent pageSize from leaking into the OpenMRS request
-  } else if (hasPaginationParams && !queryParams.startIndex) {
-    queryParams.limit = 100; // fallback if no pageSize is given
-  }
-
 
   do {
-    const requestOptions = queryParams ? { ...opts, query: queryParams } : opts;
+    const response = await fetchAndLog(method, url, paginatedRequestOptions);
 
-    const response = await commonRequest(method, url, requestOptions)
-    logResponse(response);
+    // Stop itereation if there are no more objects
+    if(!response.body){
+      break;
+    }
+
+
+    fetchedCount += response.body.results.length;
 
     if (allResponses) {
       allResponses.body.results.push(...response.body.results);
@@ -157,20 +108,15 @@ export async function requestWithPagination(state, method, path, options = {}) {
       allResponses = response;
     }
 
-    fetchedCount += response.body.results.length;
-
-    if(limit && fetchedCount >= limit) {
-      allResponses.body.results = allResponses.body.results.slice(0, limit);
-      delete allResponses.body.links
-      break;
-    }
-
-    if(!hasPaginationParams || !shouldAllowPagination({ queryParams, response, fetchedCount,  limit })) {
+    // Stop iteration when global limit is reached
+    if (fetchedCount >= globalLimit) {
+      allResponses.body.results = allResponses.body.results.slice(0, globalLimit);
       delete allResponses.body.links;
       break;
     }
 
-    const nextUrl = response?.body?.links?.find(link => link.rel === 'next')?.uri;
+    const nextUrl = response?.body?.links?.find(link => link?.rel === 'next')?.uri;
+
 
     if (nextUrl) {
       console.log(`Fetched ${response.body.results.length} results`);
@@ -178,21 +124,22 @@ export async function requestWithPagination(state, method, path, options = {}) {
       const urlObj = new URL(nextUrl);
       const params = new URLSearchParams(urlObj.search);
       const startIndex = params.get('startIndex');
+      // update request options with a new startIndex for the next page
+      paginatedRequestOptions = { ...paginatedRequestOptions, startIndex };
 
-      queryParams = { ...queryParams, startIndex };
+    } else {
+      delete allResponses.body.links;
+      break;
     }
-
-  } while(true)
+  } while (true);
 
   return allResponses;
 }
 
-function shouldAllowPagination({ queryParams, response, fetchedCount, limit }){
-  const hasNextLink = response?.body?.links?.some(link => link.rel === 'next');
-  const hasStartIndex = queryParams?.startIndex !== undefined && !isNaN(queryParams?.startIndex);
-  const underGlobalLimit = limit ? fetchedCount < limit : true;
 
-  return (hasNextLink && underGlobalLimit) || hasStartIndex;
+
+function shouldPaginate({ underGlobalLimit, hasPageSize }) {
+  return underGlobalLimit && hasPageSize;
 }
 
 export function cleanPath(path) {
