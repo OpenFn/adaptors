@@ -1,5 +1,12 @@
 # @openfn/language-redis
 
+## 1.2.8
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
 ## 1.2.7
 
 ### Patch Changes

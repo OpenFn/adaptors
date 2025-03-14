@@ -5,3 +5,5 @@ packages:
   - 'tools/**'
   # exclude packages that are inside test directories
   - '!**/test/**'
+  # exclude testing
+  - '!packages/testing/**
