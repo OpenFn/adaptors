@@ -2,30 +2,6 @@
 
 The Varo adaptor works in conjunction with the Gmail adaptor. It takes proprietary data formats found in `state.data` and attempts to convert them to EMS format.
 
-Expected data structure:
-
-```
-{ 
-  state: {
-    data: [
-      {
-        metadata: {
-          content: '',
-          filename: '',
-        },
-      },
-      {
-        data: {
-          content: '',
-          filename: '',
-        },
-      },
-    ]
-  }
-}
-```
-
-
 ## Setup the primary workflow and jobs
 
 This will demonstrate how to pull messages from a Gmail account and pass them to the Varo adaptor which will convert them into EMS format to be used for downstream consumers in the workflow.
@@ -44,13 +20,13 @@ The workflow tracks the previously processed messages by storing the processed I
 
 1. Access the [Collections](http://localhost:4000/settings/collections) configuration in the administration area.
 1. Ensure the collection named `gmail-processed-ids` exists.
-1. Create a new token in the [Person Access Tokens](http://localhost:4000/profile/tokens) configuration.
+1. Create a new token in the [Personal Access Tokens](http://localhost:4000/profile/tokens) configuration.
 
 ### Workflow
 
 Place these files in the openfn/adaptors/workflows folder
 
-#### workflow.js
+#### workflow.json
 
 ```
 {
@@ -89,7 +65,7 @@ Place these files in the openfn/adaptors/workflows folder
 
 ### Jobs
 
-#### gmail.js
+#### jobGmail.js
 
 This job will define message parts of interest including: metadata, data and fridgeTag. Also important is a collection of previously-processed messageIds. This job will grab ids from the `gmail-processed-ids` collection and pass them into the request. Once the request is complete, the new, processed messageIds are placed into the collection for future retrieval.
 
@@ -121,12 +97,32 @@ fnIf(
 );
 ```
 
-#### varo.js
+#### jobVaro.js
 
-The function `getEmsData` works in conjunction with the Gmail adaptor and expects `state.data` in the format provided by the Gmail adaptor. The function accepts the incoming `state.data` which contains text files in EMS-like Varo format or FridgeTag format and transforms them into EMS-structured data.
+The function `getEmsData` expects an array of message contents, like the format provided by the Gmail adaptor. The data contains text files in EMS-like Varo format or FridgeTag format and transforms them into EMS-structured data.
+
+Expected data structure:
 
 ```
-getEmsData();
+[
+  {
+    metadata: {
+      content: '',
+      filename: '',
+    },
+  },
+  {
+    data: {
+      content: '',
+      filename: '',
+    },
+  },
+]
+```
+
+
+```
+getEmsData($.data);
 
 fn((state) => {
   console.log(state.data);
@@ -140,73 +136,37 @@ The `-m` flag tells OpenFn to use the monorepo instead of its own adaptor cache.
 
 ```
 cd openfn/adaptors/workflows
-openfn -m workflow.js
+openfn workflow.json -m
 ```
 
-## Setup the abbreviated Varo-only workflow
+## Advanced workflow operation
 
-It's beneficial to isolate the Varo adaptor during development to avoid the redundant step of repeatedly querying Gmail which also requires refreshing the access token each hour. This example shows how to use a pre-retrieved Gmail adaptor `state.data` in place of the actual Gmail adaptor.
+It's beneficial to isolate the Varo adaptor during development to avoid the redundant step of repeatedly querying Gmail which also requires refreshing the access token each hour. We can use advanced functionality of the OpenFn CLI to cache the output of the Gmail step which will enable us reuse its output while we are enhancing the Varo adaptor.
 
-### Workflow
-
-The Gmail adaptor adds message "content", which is a collection of objects in `state.data` which contain the desired contents of the messages.
+### Cache Gmail adaptor output
 
 We can configure the workflow to retrieve this message content from a local file which will bypass the need to use the Gmail adaptor to retrieve this information.
 
-#### workflowVaro.js
+- `-m` Use the monorepo.
+- `--cache-steps` Direct the CLI to cache the job output.
+- `--only getContentsFromMessages` Execute only the getContentsFromMessage step.
 
 ```
-{
-  "options": {
-    "start": "getEmsData"
-  },
-  "workflow": {
-    "steps": [
-      {
-        "id": "getEmsData",
-        "adaptor": "varo",
-        "expression": "jobVaroOnly.js",
-        "state": "allMessages.json"
-      }
-    ],
-   }
-}
+openfn workflow.json -m --cache-steps --only getContentsFromMessages
 ```
 
-### Job
+### Running the workflow with cached Gmail adaptor output
 
-#### varo.js
-
-Due to a quirk when injecting data into the state, we can't set the `state.data` property directly. Instead, we have to pull the messages from `state.messages` and manually assign it to `state.data` to simulate a payload that was delivered directly from the Gmail adaptor.
-
-```
-fn((state) => {
-  state.data = state.messages;
-  state.messages = null;
-  return state;
-});
-
-getEmsData();
-
-fn((state) => {
-  console.log(state.data);
-  return state;
-});
-```
-
-### Running the workflow
-
-The `-m` flag tells OpenFn to use the monorepo instead of its own adaptor cache.
+- `-m` Use the monorepo.
+- `--only getEmsData` Execute only the getEmsData step.
 
 ```
-cd openfn/adaptors/workflows
-openfn -m workflowVaro.js
+openfn workflow.json -m --only getEmsData
 ```
 
-These instructions will illustrate how to install OpenFn and the adaptor monorepo. The monorepo gives you access to in-development versions of the adaptors. Included are examples of setting up a workflow with:
+# Enhancing/developing the Varo adaptor
 
-- jobs to utilize the Gmail adaptor and the Varo adaptor
-- a job to simulate the Gmail adaptor and to isolate the Varo adaptor
+These instructions will illustrate how to install OpenFn and the adaptor monorepo. The monorepo gives you access to in-development versions of the adaptors.
 
 Recommended folder structure:
 
@@ -218,7 +178,6 @@ openfn
     └── workflows
 ```
 
-# Enhancing/developing the Varo adaptor
 
 ## Install OpenFn
 
