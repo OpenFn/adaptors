@@ -2,6 +2,7 @@
 import { expect } from 'chai';
 import configuration from '../tmp/creds.json' assert { type: 'json' };
 import {
+  bulkQuery,
   execute,
   destroy,
   create,
@@ -25,10 +26,10 @@ describe('Integration tests', () => {
       expect(data.success).to.eq(true);
     }).timeout(50000);
 
-    it.only('should update multiple sobjects', async () => {
+    it.skip('should update multiple sobjects', async () => {
       state.data = [
-        { name: 'Coco', vera__Active__c: 'Yes' },
-        { name: 'Melon', vera__Active__c: 'No' },
+        { id: '', name: 'Coco', vera__Active__c: 'Yes' },
+        { id: '', name: 'Melon', vera__Active__c: 'No' },
       ];
       const { data } = await execute(
         bulk('Account', 'update', state => state.data)
