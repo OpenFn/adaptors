@@ -13,6 +13,7 @@ import {
   ensureArray,
 } from './Utils';
 import { request } from './Client';
+import * as http from './http';
 
 /**
  * Execute a sequence of operations.
@@ -135,7 +136,6 @@ axios.interceptors.response.use(
  * @magic resourceType $.children.resourceTypes[*]
  * @param {Dhis2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
  * @param {Object} [options] - Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.
- * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @example <caption>Create a program</caption>
  * create('programs', {
@@ -252,7 +252,7 @@ axios.interceptors.response.use(
  *   ],
  * });
  */
-export function create(resourceType, data, options = {}, callback = s => s) {
+export function create(resourceType, data, options = {}) {
   return state => {
     console.log(`Preparing create operation...`);
 
@@ -288,7 +288,7 @@ export function create(resourceType, data, options = {}, callback = s => s) {
       const { location } = result.headers;
       if (location) console.log(`Record available @ ${location}`);
 
-      return handleResponse(result, state, callback);
+      return handleResponse(result, state);
     });
   };
 }
@@ -302,7 +302,6 @@ export function create(resourceType, data, options = {}, callback = s => s) {
  * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`
  * @param {Object} data - Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.
  * @param {Object} [options] - Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.
- * @param {function} [callback]  - Optional callback to handle the response
  * @returns {Operation}
  * @example <caption>a program</caption>
  * update('programs', 'qAZJCrNJK8H', {
@@ -423,13 +422,7 @@ export function create(resourceType, data, options = {}, callback = s => s) {
  *   incidentDate: '2013-10-17',
  * });
  */
-export function update(
-  resourceType,
-  path,
-  data,
-  options = {},
-  callback = s => s
-) {
+export function update(resourceType, path, data, options = {}) {
   return state => {
     console.log(`Preparing update operation...`);
 
@@ -465,119 +458,7 @@ export function update(
 
     return promise.then(result => {
       console.log(`Updated ${resolvedResourceType} at ${resolvedPath}`);
-      return handleResponse(result, state, callback);
-    });
-  };
-}
-
-/**
- * Get data. Generic helper method for getting data of any kind from DHIS2.
- * - This can be used to get `DataValueSets`,`events`,`trackers`,`etc.`
- * @public
- * @function
- * @param {string} resourceType - The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.
- * @param {Object} query - A query object that will limit what resources are retrieved when converted into request params.
- * @param {Object} [options] - Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use.
- * @param {Object} [options.params] - The parameters for the request.
- * @param {Object} [options.requestConfig] - The configuration for the request, including headers, etc.
- * @param {boolean} [options.asBase64=false] - Optional flag to indicate if the response should be returned as a Base64 encoded string.
- * @param {function} [callback]  - Optional callback to handle the response
- * @returns {Operation} state
- * @example <caption>Get all data values for the 'pBOMPrpg1QX' dataset</caption>
- * get('dataValueSets', {
- *   dataSet: 'pBOMPrpg1QX',
- *   orgUnit: 'DiszpKrYNg8',
- *   period: '201401',
- *   fields: '*',
- * });
- * @example <caption>Get all programs for an organization unit</caption>
- * get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
- * @example <caption>Get a single tracked entity given the provided ID. See [TrackedEntities docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities)</caption>
- * get('tracker/trackedEntities/F8yKM85NbxW');
- * @example <caption>Get an enrollment given the provided ID. See [Enrollment docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments)</caption>
- * get('tracker/enrollments/abcd');
- * @example <caption>Get all events matching given criteria. See [Events docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents)</caption>
- * get('tracker/events');
- * @example <caption>Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See [Relationships docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships)</caption>
- * get('tracker/relationships', {
- *   trackedEntity:['F8yKM85NbxW'],
- * });
- */
-export function get(resourceType, query, options = {}, callback = s => s) {
-  return state => {
-    console.log('Preparing get operation...');
-
-    const [resolvedResourceType, resolvedQuery, resolvedOptions] =
-      expandReferences(state, resourceType, query, options);
-
-    const { params, requestConfig, asBase64 = false } = resolvedOptions;
-    const { configuration } = state;
-
-    return request(configuration, {
-      method: 'get',
-      url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
-      params: {
-        ...resolvedQuery,
-        ...params,
-      },
-      responseType: asBase64 ? 'arraybuffer' : 'json',
-      ...requestConfig,
-    }).then(result => {
-      console.log(`Retrieved ${resolvedResourceType}`);
-      const response = asBase64 ? { data: encode(result.data) } : result;
-      return handleResponse(response, state, callback);
-    });
-  };
-}
-
-/**
- * Post data. Generic helper method for posting data of any kind to DHIS2.
- * This can be used to create `DataValueSets`,`events`,`trackers`,etc.
- * @public
- * @function
- * @param {string} resourceType - Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ...
- * @magic resourceType $.children.resourceTypes[*]
- * @param {Dhis2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
- * @param {Object} [options] - Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.
- * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation} state
- * @example <caption>Create an event</caption>
- * post("tracker", {
- *   events: [
- *     {
- *       program: "eBAyeGv0exc",
- *       orgUnit: "DiszpKrYNg8",
- *       status: "COMPLETED",
- *     },
- *   ],
- * });
- */
-export function post(
-  resourceType,
-  data,
-  query,
-  options = {},
-  callback = s => s
-) {
-  return state => {
-    console.log('Preparing post operation...');
-
-    const [resolvedResourceType, resolvedQuery, resolvedOptions, resolvedData] =
-      expandReferences(state, resourceType, query, options, data);
-
-    const { params, requestConfig } = resolvedOptions;
-    const { configuration } = state;
-
-    return request(configuration, {
-      method: 'post',
-      url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
-      params: { ...resolvedQuery, ...params },
-      responseType: 'json',
-      data: resolvedData,
-      ...requestConfig,
-    }).then(result => {
-      console.log(`Created ${resolvedResourceType}`);
-      return handleResponse(result, state, callback);
+      return handleResponse(result, state);
     });
   };
 }
@@ -590,7 +471,6 @@ export function post(
  * @param {Object} query - A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.
  * @param {Object} data - The data to use for update or create depending on the result of the query.
  * @param {{ apiVersion: object, requestConfig: object, params: object }} [options] - Optional configuration that will be applied to both the `get` and the `create` or `update` operations.
- * @param {function} [callback] - Optional callback to handle the response
  * @throws {RangeError} - Throws range error
  * @returns {Operation}
  * @example <caption>Upsert a trackedEntity</caption>
@@ -612,8 +492,7 @@ export function upsert(
   resourceType, // resourceType supplied to both the `get` and the `create/update`
   query, // query supplied to the `get`
   data, // data supplied to the `create/update`
-  options = {}, // options supplied to both the `get` and the `create/update`
-  callback = s => s // callback for the upsert itself.
+  options = {} // options supplied to both the `get` and the `create/update`
 ) {
   return state => {
     const [resolvedResourceType, resolvedOptions, resolvedData] =
@@ -634,31 +513,33 @@ export function upsert(
       // NOTE: that these parameters are all expanded by the `get`, `create`, and
       // `update` functions used inside this composed "upsert" function.
       console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
-      promise = get(
-        resourceType,
-        query,
-        options
-      )(state).then(resp => {
-        const resources = resp.data[resourceType];
-        if (resources.length > 1) {
-          throw new RangeError(
-            `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
-          );
-        } else if (resources.length <= 0) {
-          return create(resourceType, data, options)(state);
-        } else {
-          // Pick out the first (and only) resource in the array and grab its
-          // ID to be used in the subsequent `update` by the path determined
-          // by the `selectId(...)` function.
-          const path = resources[0][selectId(resourceType)];
-          return update(resourceType, path, data, options)(state);
-        }
-      });
+      promise = http
+        .get(
+          resourceType,
+          query,
+          options
+        )(state)
+        .then(resp => {
+          const resources = resp.data[resourceType];
+          if (resources.length > 1) {
+            throw new RangeError(
+              `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
+            );
+          } else if (resources.length <= 0) {
+            return create(resourceType, data, options)(state);
+          } else {
+            // Pick out the first (and only) resource in the array and grab its
+            // ID to be used in the subsequent `update` by the path determined
+            // by the `selectId(...)` function.
+            const path = resources[0][selectId(resourceType)];
+            return update(resourceType, path, data, options)(state);
+          }
+        });
     }
 
     return promise.then(result => {
       console.log(`Performed a "composed upsert" on ${resourceType}`);
-      return handleResponse(result, state, callback);
+      return handleResponse(result, state);
     });
   };
 }
@@ -758,57 +639,6 @@ export function discover(httpMethod, endpoint) {
 }
 
 /**
- * Patch a record. A generic helper function to send partial updates on one or more object properties.
- * - You are not required to send the full body of object properties.
- * - This is useful for cases where you don't want or need to update all properties on a object.
- * @public
- * @function
- * @param {string} resourceType - The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc.
- * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`
- * @param {Object} data - Data to update. Include only the fields you want to update. E.g. `{name: "New Name"}`
- * @param {Object} [options] - Optional configuration, including params for the update ({preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}). Defaults to `{operationName: 'patch', apiVersion: state.configuration.apiVersion, responseType: 'json'}`
- * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation}
- * @example <caption>a dataElement</caption>
- * patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
- */
-// TODO: @Elias, can this be deleted in favor of update? How does DHIS2 handle PATCH vs PUT?
-// I need to investigate on this. But I think DHIS2 forces to send all properties back when we do an update. If that's confirmed then this may be needed.
-export function patch(
-  resourceType,
-  path,
-  data,
-  options = {},
-  callback = s => s
-) {
-  return state => {
-    console.log('Preparing patch operation...');
-
-    const [resolvedResourceType, resolvedPath, resolvedData, resolvedOptions] =
-      expandReferences(state, resourceType, path, data, options);
-
-    const { params, requestConfig } = resolvedOptions;
-    const { configuration } = state;
-
-    return request(configuration, {
-      method: 'patch',
-      url: generateUrl(
-        configuration,
-        resolvedOptions,
-        resolvedResourceType,
-        resolvedPath
-      ),
-      params,
-      data: resolvedData,
-      ...requestConfig,
-    }).then(result => {
-      console.log(`Patched ${resolvedResourceType} at ${resolvedPath}`);
-      return handleResponse(result, state, callback);
-    });
-  };
-}
-
-/**
  * Delete a record. A generic helper function to delete an object
  * @public
  * @function
@@ -816,18 +646,11 @@ export function patch(
  * @param {string} path - Can be an `id` of an `object` or `path` to the `nested object` to `delete`.
  * @param {Object} [data] - Optional. This is useful when you want to remove multiple objects from a collection in one request. You can send `data` as, for example, `{"identifiableObjects": [{"id": "IDA"}, {"id": "IDB"}, {"id": "IDC"}]}`. See more {@link https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#deleting-objects on DHIS2 API docs}
  * @param {{apiVersion: number,operationName: string,resourceType: string}} [options] - Optional `options` for `del` operation including params e.g. `{preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}`. Run `discover` or see {@link https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#create-update-parameters DHIS2 documentation}. Defaults to `{operationName: 'delete', apiVersion: state.configuration.apiVersion, responseType: 'json'}`
- * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @example <caption>a tracked entity instance. See [Delete tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)</caption>
  * destroy('trackedEntities', 'LcRd6Nyaq7T');
  */
-export function destroy(
-  resourceType,
-  path,
-  data = null,
-  options = {},
-  callback = false
-) {
+export function destroy(resourceType, path, data = null, options = {}) {
   return state => {
     console.log('Preparing destroy operation...');
 
@@ -863,7 +686,7 @@ export function destroy(
 
     return promise.then(result => {
       console.log(`Deleted ${resolvedResourceType} at ${resolvedPath}`);
-      return handleResponse(result, state, callback);
+      return handleResponse(result, state);
     });
   };
 }
