@@ -46,11 +46,11 @@ Place these files in the openfn/adaptors/workflows folder
           "access_token": "[redacted]"
         },
         "next": {
-          "getEmsData": "Array.isArray(state.data) && state.data.length > 0"
+          "transformMessageContentsToEms": "Array.isArray(state.data) && state.data.length > 0"
         }
       },
       {
-        "id": "getEmsData",
+        "id": "transformMessageContentsToEms",
         "adaptor": "varo",
         "expression": "jobVaro.js",
       }
@@ -99,7 +99,7 @@ fnIf(
 
 #### jobVaro.js
 
-The function `getEmsData` expects an array of message contents, like the format provided by the Gmail adaptor. The data contains text files in EMS-like Varo format or FridgeTag format and transforms them into EMS-structured data.
+The function `transformMessageContentsToEms` expects an array of message contents. This property contains text files in EMS-like Varo format or FridgeTag format and transforms them into EMS-structured data. Tip: This format is automatically provided by the Gmail adaptor. 
 
 Expected data structure:
 
@@ -122,7 +122,7 @@ Expected data structure:
 
 
 ```
-getEmsData($.data);
+transformMessageContentsToEms($.data);
 
 fn((state) => {
   console.log(state.data);
@@ -158,10 +158,10 @@ openfn workflow.json -m --cache-steps --only getContentsFromMessages
 ### Running the workflow with cached Gmail adaptor output
 
 - `-m` Use the monorepo.
-- `--only getEmsData` Execute only the getEmsData step.
+- `--only transformMessageContentsToEms` Execute only the transformMessageContentsToEms step.
 
 ```
-openfn workflow.json -m --only getEmsData
+openfn workflow.json -m --only transformMessageContentsToEms
 ```
 
 # Enhancing/developing the Varo adaptor
