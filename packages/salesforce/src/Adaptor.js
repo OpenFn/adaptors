@@ -7,8 +7,7 @@ import {
 import { expandReferences, throwError } from '@openfn/language-common/util';
 import * as util from './util';
 
-import flatten from 'lodash/flatten';
-
+let connection = null;
 /**
  * @typedef {object} State
  * @property {object} data JSON Data.
@@ -93,16 +92,21 @@ export function execute(...operations) {
   const initialState = {
     references: [],
     data: null,
-    configuration: {},
+    configuration: {
+      loginUrl: 'https://login.salesforce.com',
+      version: '50.0',
+      logLevel: 'FATAL', // DEBUG, INFO, WARN, ERROR, FATAL, NONE
+    },
+  };
+  const mergedState = {
+    ...initialState,
+    ...state,
   };
 
   return state => {
-    return commonExecute(
-      util.loadAnyAscii,
-      util.createConnection,
-      ...flatten(operations),
-      util.removeConnection
-    )({ ...initialState, ...state });
+    util.createConnection(state);
+    connection = util.getConnection();
+    return commonExecute(util.loadAnyAscii, ...operations)(mergedState);
   };
 }
 
@@ -278,7 +282,6 @@ export function bulk(sObjectName, operation, records, options = {}) {
  */
 export function bulkQuery(query, options = {}) {
   return async state => {
-    const { connection } = state;
     const [resolvedQuery, resolvedOptions] = expandReferences(
       state,
       query,
@@ -343,7 +346,6 @@ export function bulkQuery(query, options = {}) {
  */
 export function create(sObjectName, records) {
   return state => {
-    let { connection } = state;
     const [resolvedSObjectName, resolvedRecords] = expandReferences(
       state,
       sObjectName,
@@ -382,8 +384,6 @@ export function create(sObjectName, records) {
  */
 export function describe(sObjectName) {
   return state => {
-    const { connection } = state;
-
     const [resolvedSObjectName] = expandReferences(state, sObjectName);
 
     return resolvedSObjectName
@@ -429,7 +429,6 @@ export function describe(sObjectName) {
  */
 export function destroy(sObjectName, ids, options = {}) {
   return state => {
-    const { connection } = state;
     const [resolvedSObjectName, resolvedIds, resolvedOptions] =
       expandReferences(state, sObjectName, ids, options);
 
@@ -482,7 +481,6 @@ export function destroy(sObjectName, ids, options = {}) {
  */
 export function get(path, options = {}) {
   return async state => {
-    const { connection } = state;
     const [resolvedPath, resolvedOptions] = expandReferences(
       state,
       path,
@@ -548,7 +546,6 @@ export function insert(sObjectName, records) {
  */
 export function post(path, data, options = {}) {
   return async state => {
-    const { connection } = state;
     const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
       state,
       path,
@@ -596,7 +593,6 @@ export function post(path, data, options = {}) {
  */
 export function query(query, options = {}) {
   return async state => {
-    const { connection } = state;
     const [resolvedQuery, resolvedOptions] = expandReferences(
       state,
       query,
@@ -692,7 +688,6 @@ export function query(query, options = {}) {
  */
 export function upsert(sObjectName, externalId, records) {
   return state => {
-    const { connection } = state;
     const [resolvedSObjectName, resolvedExternalId, resolvedRecords] =
       expandReferences(state, sObjectName, externalId, records);
 
@@ -742,7 +737,6 @@ export function upsert(sObjectName, externalId, records) {
  */
 export function update(sObjectName, records) {
   return state => {
-    let { connection } = state;
     const [resolvedSObjectName, resolvedRecords] = expandReferences(
       state,
       sObjectName,
@@ -782,7 +776,6 @@ export function update(sObjectName, records) {
  */
 export function request(path, options = {}) {
   return async state => {
-    const { connection } = state;
     const [resolvedPath, resolvedOptions] = expandReferences(
       state,
       path,
@@ -819,8 +812,6 @@ export function request(path, options = {}) {
  */
 export function retrieve(sObjectName, id) {
   return state => {
-    const { connection } = state;
-
     const [resolvedSObjectName, resolvedId] = expandReferences(
       state,
       sObjectName,

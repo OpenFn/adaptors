@@ -1,55 +1,79 @@
 import { Connection } from '@jsforce/jsforce-node';
 import { throwError } from '@openfn/language-common/util';
 
-function getConnection(state, options) {
-  const { apiVersion } = state.configuration;
+let connection = null;
 
-  const apiVersionRegex = /^\d{2}\.\d$/;
+async function basicAuth(configuration) {
+  const { loginUrl, username, password, securityToken, apiVersion } =
+    configuration;
 
-  if (apiVersion && apiVersionRegex.test(apiVersion)) {
-    options.version = apiVersion;
-  } else {
-    options.version = '47.0';
-  }
-  console.log('Using Salesforce API version:', options.version);
-
-  return new Connection(options);
-}
-
-async function createBasicAuthConnection(state) {
-  const { loginUrl, username, password, securityToken } = state.configuration;
-
-  const connection = getConnection(state, { loginUrl });
+  connection = new Connection({ loginUrl, version: apiVersion });
 
   await connection
     .login(username, securityToken ? password + securityToken : password)
-    .catch(e => {
-      console.error(`Failed to connect to salesforce as ${username}`);
-      throw e;
+    .catch(error => {
+      throwError('FAILED_AUTH', {
+        fix: 'Check your username, password, and security token',
+        message: `Failed to connect to salesforce as ${username}`,
+        error,
+      });
     });
 
   console.info(`Connected to salesforce as ${username}.`);
 
-  return {
-    ...state,
-    connection,
-  };
+  return state;
 }
 
-function createAccessTokenConnection(state) {
-  const { instance_url, access_token } = state.configuration;
+function tokenAuth(state) {
+  const { instance_url, access_token, apiVersion } = state.configuration;
 
-  const connection = getConnection(state, {
+  connection = new Connection({
     instanceUrl: instance_url,
     accessToken: access_token,
+    version: apiVersion,
   });
 
+  return state;
+}
+
+/**
+ * Creates a connection to Salesforce using Basic Auth or OAuth.
+ * @function createConnection
+ * @private
+ * @param {State} state - Runtime state.
+ * @returns {State}
+ */
+export function createConnection(state) {
+  if (connection) {
+    return state;
+  }
+  console.log('Using Salesforce API version:', connection.version);
   console.log(`Connected with ${connection._sessionType} session type`);
 
-  return {
-    ...state,
-    connection,
-  };
+  const { access_token } = state.configuration;
+
+  return access_token ? tokenAuth(state) : basicAuth(state);
+}
+
+/**
+ * Removes state.connection from state.
+ * @example
+ * removeConnection(state)
+ * @function
+ * @private
+ * @param {State} state
+ * @returns {State}
+ */
+export function removeConnection(state) {
+  connection = null;
+  return state;
+}
+
+export function getConnection() {
+  if (!connection) {
+    throwError('No connection');
+  }
+  return connection;
 }
 
 let anyAscii = undefined;
@@ -76,39 +100,6 @@ export const loadAnyAscii = state =>
  */
 export function toUTF8(input) {
   return anyAscii(input);
-}
-
-/**
- * Creates a connection to Salesforce using Basic Auth or OAuth.
- * @function createConnection
- * @private
- * @param {State} state - Runtime state.
- * @returns {State}
- */
-export function createConnection(state) {
-  if (state.connection) {
-    return state;
-  }
-
-  const { access_token } = state.configuration;
-
-  return access_token
-    ? createAccessTokenConnection(state)
-    : createBasicAuthConnection(state);
-}
-
-/**
- * Removes state.connection from state.
- * @example
- * removeConnection(state)
- * @function
- * @private
- * @param {State} state
- * @returns {State}
- */
-export function removeConnection(state) {
-  delete state.connection;
-  return state;
 }
 
 export async function pollJobResult(conn, job, pollInterval, pollTimeout) {

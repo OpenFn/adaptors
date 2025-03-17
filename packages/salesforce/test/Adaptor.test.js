@@ -34,18 +34,19 @@ describe('Adaptor', () => {
     });
   });
   describe('create', () => {
-    it('makes a new sObject', done => {
-      const fakeConnection = {
+    it.only('makes a new sObject', done => {
+      // let connection =
+      const connection = {
         create: function () {
           return Promise.resolve({ id: 10, success: true, errors: [] });
         },
       };
-      let state = { connection: fakeConnection, references: [] };
+      let state = { references: [] };
 
       let sObject = 'myObject';
       let fields = { field: 'value' };
 
-      let spy = sinon.spy(fakeConnection, 'create');
+      let spy = sinon.spy(connection, 'create');
 
       create(
         sObject,
