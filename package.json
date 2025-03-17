@@ -25,15 +25,15 @@
   "author": "Open Function Group",
   "license": "ISC",
   "devDependencies": {
-    "@changesets/cli": "2.27.5",
-    "@openfn/buildtools": "workspace:^1.0.2",
+    "@changesets/cli": "2.28.1",
+    "@openfn/buildtools": "workspace:^",
     "@openfn/generate-fhir": "workspace:^",
-    "@openfn/metadata": "workspace:^1.0.1",
-    "@openfn/parse-jsdoc": "workspace:^1.0.0",
+    "@openfn/metadata": "workspace:^",
+    "@openfn/parse-jsdoc": "workspace:^",
     "chokidar-cli": "^3.0.0",
-    "eslint": "8.26.0",
+    "eslint": "9.22.0",
     "esno": "^4.8.0",
     "lodash": "^4.17.21",
-    "mocha": "^10.7.3"
+    "mocha": "^11.1.0"
   }
 }

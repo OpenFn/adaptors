@@ -13,7 +13,7 @@ import { parseFridgeTag, parseFridgeTagToEms } from './FridgeTagUtils';
  *
  * @returns {Operation}
  */
-export function transformMessageContentsToEms(messageContents) {
+export function convertToEms(messageContents) {
   return async state => {
     const [resolvedMessageContents] = expandReferences(state, messageContents);
     const results = [];

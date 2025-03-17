@@ -23,11 +23,11 @@ export function parseVaroEmsToEms(metadata, data, dataPath) {
     records: [],
   };
 
-  const deviceDate = getRelativeDateFromUsbPluggedInfo(dataPath);
+  const deviceDate = parseRelativeDateFromUsbPluggedInfo(dataPath);
 
   for (const item of data.records) {
     const durations = [item.RELT]; // ignore RTCW?
-    const absoluteDate = getAdjustedDate(deviceDate, durations);
+    const absoluteDate = parseAdjustedDate(deviceDate, durations);
     const abst = parseIsoToAbbreviatedIso(absoluteDate);
 
     const record = {
@@ -52,7 +52,7 @@ export function parseVaroEmsToEms(metadata, data, dataPath) {
   return result;
 }
 
-function getRelativeDateFromUsbPluggedInfo(path) {
+function parseRelativeDateFromUsbPluggedInfo(path) {
   const regex = /_CURRENT_DATA_(?<duration>\w+?)_(?<date>\w+?)\.json$/;
   const match = path.match(regex);
 
@@ -68,10 +68,10 @@ function getRelativeDateFromUsbPluggedInfo(path) {
   const isoDate = parseAbbreviatedIsoToIso(usbPluggedInfo.date);
 
   // The relative date is: from when the USB drive was plugged in, the date, minus the relative duration.
-  return getAdjustedDate(isoDate, [usbPluggedInfo.duration], true);
+  return parseAdjustedDate(isoDate, [usbPluggedInfo.duration], true);
 }
 
-function getAdjustedDate(incomingDate, durations, subtract = false) {
+function parseAdjustedDate(incomingDate, durations, subtract = false) {
   // Parse duration in the format PnDTnHnMnS.
   function parseDuration(duration) {
     const regex =
