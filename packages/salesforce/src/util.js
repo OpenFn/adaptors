@@ -1,4 +1,4 @@
-import jsforce from 'jsforce';
+import { Connection } from '@jsforce/jsforce-node';
 import { throwError } from '@openfn/language-common/util';
 
 function getConnection(state, options) {
@@ -13,7 +13,7 @@ function getConnection(state, options) {
   }
   console.log('Using Salesforce API version:', options.version);
 
-  return new jsforce.Connection(options);
+  return new Connection(options);
 }
 
 async function createBasicAuthConnection(state) {
