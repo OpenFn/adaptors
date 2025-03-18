@@ -5,6 +5,7 @@ import { request, MockAgent, setGlobalDispatcher } from 'undici';
 import testData from './fixtures/data.json' assert { type: 'json' };
 import {
   arrayToString,
+  as,
   chunk,
   combine,
   cursor,
@@ -33,6 +34,7 @@ import {
   assert as assertCommon,
 } from '../src/Adaptor';
 import { startOfToday } from 'date-fns';
+import { expandReferences as newExpandReferences } from '../src/util';
 
 const mockAgent = new MockAgent();
 setGlobalDispatcher(mockAgent);
@@ -1108,5 +1110,59 @@ describe('assert', () => {
     }
 
     expect(error.message).to.eql(`assertion statement failed with false`);
+  });
+});
+
+describe('as', () => {
+
+  beforeEach(()=>{
+    mockPool.intercept({
+      path: '/as',
+      method: 'GET'
+    }).reply(200, {
+      message: 'this data object has been changed'
+    });
+  });
+
+  /**
+   * A mock operation that we can intercept the http requests it makes
+   * @param url
+   * @returns {function(*): Promise<*>}
+   */
+  const mockOperation = function (url) {
+    return async state => {
+      const [resolvedUrl] = newExpandReferences(state, url);
+
+      const { body} = await request(resolvedUrl);
+      const { message } = await body.json();
+
+      state.data = message;
+      return state;
+    };
+  };
+
+  it('it stores the result in the defined key', async() => {
+    let state = { data: 'Lorem Ipsum' };
+
+    const { foo: {data: fooData} } = await as('foo', mockOperation('https://localhost:1/as'))(state);
+
+    expect(fooData).to.eql('this data object has been changed');
+  });
+
+  it('should not change the value in the "data" key', async() => {
+    let state = { data: 'Lorem Ipsum' };
+
+    const { data } = await as('foo', mockOperation('https://localhost:1/as'))(state);
+
+    expect(data).to.eql(state.data);
+  });
+
+  it('should preserve the value of the data key even in the event of an error', async() => {
+    let state = { data: 'Lorem Ipsum' };
+
+    const { data, foo } = await as('foo', mockOperation('https://invalid-url'))(state);
+
+    expect(data).to.eql(state.data);
+    expect(foo).to.be.undefined;
   });
 });
