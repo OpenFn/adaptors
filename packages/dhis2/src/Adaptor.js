@@ -231,18 +231,18 @@ export function create(resourceType, data, options = {}, callback = s => s) {
       });
     }
 
-    return promise.then(result => {
+    return promise.then(response => {
       const details = `with response ${JSON.stringify(
-        result?.body?.message,
+        response?.body?.message,
         null,
         2
       )}`;
       console.log(`Created ${resolvedResourceType} ${details}`);
 
-      const { location } = result.headers;
+      const { location } = response.headers;
       if (location) console.log(`Record available @ ${location}`);
 
-      return handleResponse(result, state, callback);
+      return handleResponse(response, state, callback);
     });
   };
 }
@@ -414,9 +414,9 @@ export function update(
       });
     }
 
-    return promise.then(result => {
+    return promise.then(response => {
       console.log(`Updated ${resolvedResourceType} at ${resolvedPath}`);
-      return handleResponse(result, state, callback);
+      return handleResponse(response, state, callback);
     });
   };
 }
@@ -529,9 +529,9 @@ export function post(resourceType, data, options = {}, callback = s => s) {
       ),
       options: resolvedOptions,
       data: resolvedData,
-    }).then(result => {
+    }).then(response => {
       console.log(`Created ${resolvedResourceType}`);
-      return handleResponse(result, state, callback);
+      return handleResponse(response, state, callback);
     });
   };
 }
@@ -654,9 +654,9 @@ export function upsert(
       });
     }
 
-    return promise.then(result => {
+    return promise.then(response => {
       console.log(`Performed a "composed upsert" on ${resourceType}`);
-      return handleResponse(result, state, callback);
+      return handleResponse(response, state, callback);
     });
   };
 }
@@ -703,9 +703,9 @@ export function patch(
       ),
       options: resolvedOptions,
       data: resolvedData,
-    }).then(result => {
+    }).then(response => {
       console.log(`Patched ${resolvedResourceType} at ${resolvedPath}`);
-      return handleResponse(result, state, callback);
+      return handleResponse(response, state, callback);
     });
   };
 }
@@ -761,9 +761,9 @@ export function destroy(
       });
     }
 
-    return promise.then(result => {
+    return promise.then(response => {
       console.log(`Deleted ${resolvedResourceType} at ${resolvedPath}`);
-      return handleResponse(result, state, callback);
+      return handleResponse(response, state, callback);
     });
   };
 }
