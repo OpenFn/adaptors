@@ -11,6 +11,7 @@ import {
   jGet,
   mGet,
   jSet,
+  mSet
 } from '../src';
 
 describe('get', () => {
@@ -619,5 +620,117 @@ describe('jSet', () => {
 
     const state = {};
     await jSet('animals:1', { name: 'mammoth' })(state);
+  });
+});
+
+describe('mSet', () => {
+  const mockEntries = [
+    { key: 'patient:1', value: { name: 'Alice' } },
+    { key: 'doctor:1', value: { name: 'Bob' } }
+  ];
+
+  const mSetClient = {
+    json: {
+      mSet: async (...args) => {
+        expect(args).to.eql([
+          'patient:1', '$', '{"name":"Alice"}',
+          'doctor:1', '$', '{"name":"Bob"}'
+        ]);
+        return 'OK';
+      }
+    }
+  };
+
+  it('should set multiple JSON documents', async () => {
+    setMockClient(mSetClient);
+    const state = {};
+    const result = await mSet(mockEntries)(state);
+    expect(result).to.equal(state); // Maintains state immutability
+  });
+
+  it('should expand references in entries', async () => {
+    setMockClient(mSetClient);
+    
+    const state = {
+      data: {
+        patientId: '1',
+        doctorData: { name: 'Bob' }
+      }
+    };
+
+    const dynamicEntries = [
+      { 
+        key: state => `patient:${state.data.patientId}`,
+        value: { name: 'Alice' }
+      },
+      {
+        key: 'doctor:1',
+        value: state => state.data.doctorData
+      }
+    ];
+
+    await mSet(dynamicEntries)(state);
+  });
+
+  it('should throw for invalid entries structure', async () => {
+    setMockClient(mSetClient);
+
+    try {
+      // Test non-array input
+      await mSet('not-an-array')({});
+    } catch (error) {
+      expect(error.message).to.eql('TypeError: Invalid mSet argument');
+      expect(error.code).to.eql('MSET_ARG_ERROR');
+      expect(error.fix).to.include('array of key/value pairs');
+    }
+
+    try {
+      // Test malformed entry
+      await mSet([{ keys: 'patient', value: {} }])({});
+    } catch (error) {
+      expect(error.description).to.include('missing required \'key\'');
+    }
+  });
+
+  it('should validate key/value types', async () => {
+    setMockClient(mSetClient);
+
+    // Test numeric key
+    try {
+      await mSet([{ key: 123, value: {} }])({});
+    } catch (error) {
+      expect(error.fix).to.include('Key must be a string');
+    }
+
+    // Test missing value
+    try {
+      await mSet([{ key: 'patient' }])({});
+    } catch (error) {
+      expect(error.description).to.include('missing required \'value\'');
+    }
+  });
+
+  it('should handle JSON stringification', async () => {
+    let receivedArgs;
+    const stringTestClient = {
+      json: {
+        mSet: async (...args) => {
+          receivedArgs = args;
+          return 'OK';
+        }
+      }
+    };
+
+    setMockClient(stringTestClient);
+    
+    await mSet([
+      { key: 'test', value: { a: 1 } },
+      { key: 'str', value: 'already-string' }
+    ])({});
+
+    expect(receivedArgs).to.eql([
+      'test', '$', '{"a":1}',
+      'str', '$', 'already-string'
+    ]);
   });
 });
