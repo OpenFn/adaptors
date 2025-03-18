@@ -233,7 +233,7 @@ export function create(resourceType, data, options = {}, callback = s => s) {
 
     return promise.then(response => {
       const details = `with response ${JSON.stringify(
-        response?.body?.message,
+        response.body?.message,
         null,
         2
       )}`;
