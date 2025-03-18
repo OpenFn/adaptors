@@ -38,7 +38,6 @@ export function selectId(resourceType) {
   }
 }
 
-// Write a unit test for this one
 export function handleResponse(result, state, callback) {
   const { body, ...responseWithoutBody } = result;
 
