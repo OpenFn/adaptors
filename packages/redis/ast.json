@@ -457,12 +457,12 @@
         "entries"
       ],
       "docs": {
-        "description": "Sets multiple JSON documents at specified keys in a single operation.\nIf any key already exists, its value will be replaced by the new value.",
+        "description": "Sets multiple JSON objects at their respective keys. If a key already exists,\nthe existing value will be replaced by the new value.",
         "tags": [
           {
             "title": "example",
-            "description": "mSet([{ key: 'patient', value: { name: 'Alice' } }, { key: 'doctor', value: { name: 'Bob' } }]);",
-            "caption": "Set JSON documents for multiple keys"
+            "description": "mSet([{ key: 'patient', value: { name: 'victor', ihs_number: 12345 } },\n      { key: 'doctor', value: { name: 'Alice', specialization: 'cardiology' } }]);",
+            "caption": "Set multiple JSON objects"
           },
           {
             "title": "function",
@@ -476,31 +476,39 @@
           },
           {
             "title": "param",
-            "description": "Array of key/value pairs to set",
+            "description": "An array of key-value pairs to set in the JSON store.",
             "type": {
-              "type": "ArrayType",
-              "elements": [
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
                 {
                   "type": "RecordType",
                   "fields": [
                     {
+                      "type": "FieldType",
                       "key": "key",
                       "value": {
-                        "type": "UnionType",
-                        "elements": [
-                          { "type": "NameExpression", "name": "string" },
-                          { "type": "NameExpression", "name": "function" }
-                        ]
+                        "type": "NameExpression",
+                        "name": "string"
                       }
                     },
                     {
+                      "type": "FieldType",
                       "key": "value",
                       "value": {
                         "type": "UnionType",
                         "elements": [
-                          { "type": "NameExpression", "name": "string" },
-                          { "type": "NameExpression", "name": "object" },
-                          { "type": "NameExpression", "name": "function" }
+                          {
+                            "type": "NameExpression",
+                            "name": "string"
+                          },
+                          {
+                            "type": "NameExpression",
+                            "name": "object"
+                          }
                         ]
                       }
                     }

@@ -114,7 +114,6 @@ export const assertMSetArgs = (entries) => {
   });
 };
 
-// Reuse existing error helper from set()
 const throwArgumentError = (expectedType, fixMessage) => {
   const e = new Error(`TypeError: Invalid argument type`);
   e.code = 'ARGUMENT_ERROR';

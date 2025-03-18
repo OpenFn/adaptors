@@ -254,28 +254,30 @@ export function jSet(key, value) {
 }
 
 /**
- * Set values at the root path ('$') in JSON documents stored at multiple keys.
- * @example <caption>Set JSON document values for patient and doctor keys</caption>
- * mSet([{ key: "patient", value: { name: "John" } }, { key: "doctor", value: { age: 42 } }]);
+ * Sets multiple JSON objects at their respective keys. If a key already exists,
+ * the existing value will be replaced by the new value.
+ * @example <caption>Set multiple JSON objects</caption>
+ * mSet([{ key: 'patient', value: { name: 'victor', ihs_number: 12345 } },
+ *       { key: 'doctor', value: { name: 'Alice', specialization: 'cardiology' } }]);
  * @function
  * @public
- * @param {Array<{ key: string|function, value: any|function }>} entries - Array of key/value pairs
- * @state {RedisState}
+ * @param {Array<{ key: string, value: (string|object) }>} entries -
+ * An array of key-value pairs to set in the JSON store.
+ * @state references - an array of all previous data objects used in the Job
  * @returns {Operation}
  */
 export function mSet(entries) {
   return async state => {
     const [resolvedEntries] = expandReferences(state, entries);
-    
-    // New dedicated validation
+
     util.assertMSetArgs(resolvedEntries);
-    
+
     console.log(`Setting values for ${resolvedEntries.length} keys`);
-    
+
     const args = resolvedEntries.flatMap(({ key, value }) => [
       key,
       '$',
-      typeof value === 'string' ? value : JSON.stringify(value)
+      typeof value === 'string' ? value : JSON.stringify(value),
     ]);
 
     await client.json.mSet(...args);
@@ -310,7 +312,7 @@ export function scan(pattern, options = {}) {
     const [resolvedPattern, resolvedOptions] = expandReferences(
       state,
       pattern,
-      options
+      options,
     );
     console.log(`Scanning for keys matching '${resolvedPattern}'`);
 
