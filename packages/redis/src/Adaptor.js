@@ -254,6 +254,38 @@ export function jSet(key, value) {
 }
 
 /**
+ * Set values at the root path ('$') in JSON documents stored at multiple keys.
+ * @example <caption>Set JSON document values for patient and doctor keys</caption>
+ * mSet([{ key: "patient", value: { name: "John" } }, { key: "doctor", value: { age: 42 } }]);
+ * @function
+ * @public
+ * @param {Array<{ key: string|function, value: any|function }>} entries - Array of key/value pairs
+ * @state {RedisState}
+ * @returns {Operation}
+ */
+export function mSet(entries) {
+  return async state => {
+    const [resolvedEntries] = expandReferences(state, entries);
+    
+    // New dedicated validation
+    util.assertMSetArgs(resolvedEntries);
+    
+    console.log(`Setting values for ${resolvedEntries.length} keys`);
+    
+    const args = resolvedEntries.flatMap(({ key, value }) => [
+      key,
+      '$',
+      typeof value === 'string' ? value : JSON.stringify(value)
+    ]);
+
+    await client.json.mSet(...args);
+    console.log(`Set values for ${resolvedEntries.length} keys successfully`);
+
+    return state;
+  };
+}
+
+/**
  * Returns all keys which match the provided pattern.
  * scan iterates the whole database to find the matching keys
  * @example <caption>Scan for matching keys</caption>

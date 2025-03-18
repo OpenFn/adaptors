@@ -73,3 +73,52 @@ export const assertjGetArgs = key => {
     `Make sure to pass a string for jGet(): e.g., jGet('patient')`
   );
 };
+
+export const assertMSetArgs = (entries) => {
+  assertArgType(
+    entries,
+    'object',
+    'mSet requires an array of key/value objects: mSet([{ key: "name", value: "..." }])'
+  );
+  
+  if (!Array.isArray(entries)) {
+    throwArgumentError('array', 'mSet requires an array of key/value pairs');
+  }
+
+  entries.forEach((entry, index) => {
+    if (typeof entry !== 'object' || entry === null) {
+      throwArgumentError(
+        'object',
+        `Entry ${index} must be an object with { key, value }`
+      );
+    }
+
+    if (!('key' in entry)) {
+      throwArgumentError(
+        'key property',
+        `Entry ${index} is missing required 'key' property`
+      );
+    }
+    assertArgType(
+      entry.key,
+      'string',
+      `Key in entry ${index} must be a string`
+    );
+
+    if (!('value' in entry)) {
+      throwArgumentError(
+        'value property',
+        `Entry ${index} is missing required 'value' property`
+      );
+    }
+  });
+};
+
+// Reuse existing error helper from set()
+const throwArgumentError = (expectedType, fixMessage) => {
+  const e = new Error(`TypeError: Invalid argument type`);
+  e.code = 'ARGUMENT_ERROR';
+  e.description = `Expected ${expectedType}`;
+  e.fix = fixMessage;
+  throw e;
+};
