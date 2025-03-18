@@ -452,6 +452,81 @@
       "valid": true
     },
     {
+      "name": "mSet",
+      "params": [
+        "entries"
+      ],
+      "docs": {
+        "description": "Sets multiple JSON documents at specified keys in a single operation.\nIf any key already exists, its value will be replaced by the new value.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "mSet([{ key: 'patient', value: { name: 'Alice' } }, { key: 'doctor', value: { name: 'Bob' } }]);",
+            "caption": "Set JSON documents for multiple keys"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Array of key/value pairs to set",
+            "type": {
+              "type": "ArrayType",
+              "elements": [
+                {
+                  "type": "RecordType",
+                  "fields": [
+                    {
+                      "key": "key",
+                      "value": {
+                        "type": "UnionType",
+                        "elements": [
+                          { "type": "NameExpression", "name": "string" },
+                          { "type": "NameExpression", "name": "function" }
+                        ]
+                      }
+                    },
+                    {
+                      "key": "value",
+                      "value": {
+                        "type": "UnionType",
+                        "elements": [
+                          { "type": "NameExpression", "name": "string" },
+                          { "type": "NameExpression", "name": "object" },
+                          { "type": "NameExpression", "name": "function" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "name": "entries"
+          },
+          {
+            "title": "state",
+            "description": "references - an array of all previous data objects used in the Job"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "scan",
       "params": [
         "pattern",
