@@ -19,11 +19,6 @@ export const CONTENT_TYPES = {
   xls: 'application/vnd.ms-excel',
 };
 
-export function buildUrl(urlString, apiVersion) {
-  const pathSuffix = apiVersion ? `/${apiVersion}${urlString}` : `${urlString}`;
-  return '/api' + pathSuffix;
-}
-
 /**
  * Determines the attribute name for a DHIS2 system ID given a resource type.
  * @param {string} resourceType
@@ -80,7 +75,9 @@ export function generateUrlPath(
 
   console.log(apiMessage);
 
-  const urlPath = buildUrl(urlString, apiVersion);
+  const pathSuffix = apiVersion ? `/${apiVersion}${urlString}` : `${urlString}`;
+
+  const urlPath = '/api' + pathSuffix;
   if (path) return `${urlPath}/${path}`;
   return urlPath;
 }

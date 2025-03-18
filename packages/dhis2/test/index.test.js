@@ -12,7 +12,6 @@ import {
 import { dataValue } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import {
-  buildUrl,
   generateUrlPath,
   ensureArray,
   shouldUseNewTracker,
@@ -646,20 +645,6 @@ describe('URL builders', () => {
     fixture.options = {};
     fixture.resourceType = 'dataValueSets';
     done();
-  });
-
-  describe('buildUrl', () => {
-    it('the proper URL gets built from the "entity" string and the config', done => {
-      const configuration = { ...fixture.configuration, apiVersion: 33 };
-
-      const finalURL = buildUrl('/' + 'events', configuration.apiVersion);
-
-      const expectedURL = 'https://play.dhis2.org/2.36.4/api/33/events';
-
-      expect(`${configuration.hostUrl}${finalURL}`).to.eq(expectedURL);
-
-      done();
-    });
   });
 
   describe('generateURL', () => {
