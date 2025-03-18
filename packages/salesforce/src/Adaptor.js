@@ -98,8 +98,8 @@ export function execute(...operations) {
     data: null,
     configuration: {
       loginUrl: 'https://login.salesforce.com',
-      version: '50.0',
-      logLevel: 'FATAL', // DEBUG, INFO, WARN, ERROR, FATAL, NONE
+      apiVersion: '50.0',
+      logLevel: 'INFO', // DEBUG, INFO, WARN, ERROR, FATAL, NONE
     },
   };
 
@@ -173,8 +173,6 @@ export function execute(...operations) {
  */
 export function bulk(sObjectName, operation, records, options = {}) {
   return state => {
-    const { connection } = state;
-
     const [
       resolvedSObjectName,
       resolvedOperation,

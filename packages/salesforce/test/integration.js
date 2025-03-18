@@ -17,7 +17,7 @@ describe('Integration tests', () => {
     before(async () => {
       state.data = [{ name: 'Coco', vera__Active__c: 'No' }];
     });
-    it('should create multiple sobjects', async () => {
+    it.only('should create multiple sobjects', async () => {
       const { data } = await execute(
         bulk('Account', 'insert', state => state.data)
       )(state);

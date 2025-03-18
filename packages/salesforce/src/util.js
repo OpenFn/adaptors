@@ -3,9 +3,9 @@ import { throwError } from '@openfn/language-common/util';
 
 let connection = null;
 
-async function basicAuth(configuration) {
+async function basicAuth(state) {
   const { loginUrl, username, password, securityToken, apiVersion } =
-    configuration;
+    state.configuration;
 
   connection = new Connection({ loginUrl, version: apiVersion });
 
