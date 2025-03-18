@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import crypto from 'node:crypto';
-import { execute, create, update, get, upsert } from '../dist/index.js';
+import { execute, create, update, upsert, get } from '../dist/index.js';
 
 const getRandomProgramPayload = () => {
   const name = crypto.randomBytes(16).toString('hex');
@@ -275,7 +275,7 @@ describe('Integration tests', () => {
       expect(finalState.data.instances.length).to.eq(1);
 
       const finalState2 = await execute(
-        get('trackedEntityInstances', {
+        http.get('trackedEntityInstances', {
           program: 'fDd25txQckK',
           ou: 'DiszpKrYNg8',
           filter: ['w75KJ2mc4zz:Eq:Elanor', 'zDhUuAYrxNC:Eq:NotJackson'],

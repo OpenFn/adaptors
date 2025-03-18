@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { generateUrl } from '../Utils.js';
+import { prefixVersionToPath } from '../Utils.js';
 
 const createHelper = (configuration = {}) => {
   const { username, password } = configuration;
@@ -35,7 +35,7 @@ const createHelper = (configuration = {}) => {
   // get a list of all the org units
   const getOrgUnits = async () => {
     // so. this gives me some stuff, but I don't really know what it is or what to do with it
-    const url = generateUrl(configuration, {}, 'organisationUnits');
+    const url = prefixVersionToPath(configuration, {}, 'organisationUnits');
     const response = await get(url);
 
     return response.data;
@@ -46,7 +46,7 @@ const createHelper = (configuration = {}) => {
   const getPrograms = () => {};
 
   const getTrackedEntityTypes = async () => {
-    const url = generateUrl(configuration, {}, 'trackedEntityTypes');
+    const url = prefixVersionToPath(configuration, {}, 'trackedEntityTypes');
 
     const response = await get(url);
 
@@ -54,7 +54,11 @@ const createHelper = (configuration = {}) => {
   };
 
   const getAttributes = async () => {
-    const url = generateUrl(configuration, {}, 'trackedEntityAttributes');
+    const url = prefixVersionToPath(
+      configuration,
+      {},
+      'trackedEntityAttributes'
+    );
 
     const response = await get(url);
 
