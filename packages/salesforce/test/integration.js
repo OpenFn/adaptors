@@ -13,11 +13,11 @@ import {
 const state = { configuration };
 
 describe('Integration tests', () => {
-  describe('bulk', () => {
+  describe.skip('bulk', () => {
     before(async () => {
       state.data = [{ name: 'Coco', vera__Active__c: 'No' }];
     });
-    it.only('should create multiple sobjects', async () => {
+    it('should create multiple sobjects', async () => {
       const { data } = await execute(
         bulk('Account', 'insert', state => state.data)
       )(state);
@@ -37,7 +37,7 @@ describe('Integration tests', () => {
     }).timeout(50000);
   });
 
-  describe('create', () => {
+  describe.only('create', () => {
     it('should throw an error if input is invalid', async () => {
       [42, 'string', true].forEach(async input => {
         try {
