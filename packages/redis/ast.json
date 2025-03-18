@@ -457,7 +457,7 @@
         "entries"
       ],
       "docs": {
-        "description": "Sets multiple JSON objects at their respective keys. If a key already exists,\nthe existing value will be replaced by the new value.",
+        "description": "Set values at the root path ('$') in JSON documents stored at multiple keys.\nThis function allows setting multiple key-value pairs in Redis JSON documents in a single operation.\nIf a key already exists, its value will be replaced. If it does not exist, a new key-value pair will be created.",
         "tags": [
           {
             "title": "example",

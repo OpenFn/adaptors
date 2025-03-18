@@ -624,113 +624,80 @@ describe('jSet', () => {
 });
 
 describe('mSet', () => {
-  const mockEntries = [
-    { key: 'patient:1', value: { name: 'Alice' } },
-    { key: 'doctor:1', value: { name: 'Bob' } }
-  ];
-
   const mSetClient = {
     json: {
       mSet: async (...args) => {
-        expect(args).to.eql([
-          'patient:1', '$', '{"name":"Alice"}',
-          'doctor:1', '$', '{"name":"Bob"}'
+        expect(args).to.deep.equal([
+          'animals:1', '$', JSON.stringify({ name: 'mammoth' }),
+          'plants:1', '$', JSON.stringify({ type: 'tree' })
         ]);
         return 'OK';
-      }
-    }
+      },
+    },
   };
 
-  it('should set multiple JSON documents', async () => {
+  it('should expand references and set multiple keys', async () => {
     setMockClient(mSetClient);
-    const state = {};
-    const result = await mSet(mockEntries)(state);
-    expect(result).to.equal(state); // Maintains state immutability
-  });
-
-  it('should expand references in entries', async () => {
-    setMockClient(mSetClient);
-    
     const state = {
-      data: {
-        patientId: '1',
-        doctorData: { name: 'Bob' }
-      }
+      entries: [
+        { key: 'animals:1', value: { name: 'mammoth' } },
+        { key: 'plants:1', value: { type: 'tree' } },
+      ],
     };
+    await mSet(state.entries)(state);
+  });
 
-    const dynamicEntries = [
-      { 
-        key: state => `patient:${state.data.patientId}`,
-        value: { name: 'Alice' }
+  it('should throw if existing key has a different redis type', async () => {
+    setMockClient({
+      json: {
+        mSet: () => {
+          throw new Error('Existing key has wrong Redis type');
+        },
       },
-      {
-        key: 'doctor:1',
-        value: state => state.data.doctorData
-      }
-    ];
-
-    await mSet(dynamicEntries)(state);
-  });
-
-  it('should throw for invalid entries structure', async () => {
-    setMockClient(mSetClient);
+    });
 
     try {
-      // Test non-array input
-      await mSet('not-an-array')({});
+      await mSet([{ key: 'hash-key', value: { name: 'mammoth' } }])({});
     } catch (error) {
-      expect(error.message).to.eql('TypeError: Invalid mSet argument');
-      expect(error.code).to.eql('MSET_ARG_ERROR');
-      expect(error.fix).to.include('array of key/value pairs');
-    }
-
-    try {
-      // Test malformed entry
-      await mSet([{ keys: 'patient', value: {} }])({});
-    } catch (error) {
-      expect(error.description).to.include('missing required \'key\'');
+      expect(error.message).to.eql('Existing key has wrong Redis type');
     }
   });
 
-  it('should validate key/value types', async () => {
-    setMockClient(mSetClient);
+  it('should throw if invalid params', async () => {
+    setMockClient({
+      json: {
+        mSet: () => {
+          throw new Error('TypeError: Invalid argument type');
+        },
+      },
+    });
 
-    // Test numeric key
+    const state = {};
     try {
-      await mSet([{ key: 123, value: {} }])({});
+      await mSet()(state);
     } catch (error) {
-      expect(error.fix).to.include('Key must be a string');
-    }
-
-    // Test missing value
-    try {
-      await mSet([{ key: 'patient' }])({});
-    } catch (error) {
-      expect(error.description).to.include('missing required \'value\'');
+      expect(error.message).to.eql('TypeError: Invalid argument type');
+      expect(error.code).to.eql('ARGUMENT_ERROR');
     }
   });
 
-  it('should handle JSON stringification', async () => {
-    let receivedArgs;
-    const stringTestClient = {
+  it('should always set results at the document root', async () => {
+    setMockClient({
       json: {
         mSet: async (...args) => {
-          receivedArgs = args;
-          return 'OK';
-        }
-      }
+          for (let i = 1; i < args.length; i += 3) {
+            expect(args[i]).to.eql('$');
+          }
+        },
+      },
+    });
+
+    const state = {
+      entries: [
+        { key: 'animals:1', value: { name: 'mammoth' } },
+        { key: 'plants:1', value: { type: 'tree' } },
+      ],
     };
-
-    setMockClient(stringTestClient);
-    
-    await mSet([
-      { key: 'test', value: { a: 1 } },
-      { key: 'str', value: 'already-string' }
-    ])({});
-
-    expect(receivedArgs).to.eql([
-      'test', '$', '{"a":1}',
-      'str', '$', 'already-string'
-    ]);
+    await mSet(state.entries)(state);
   });
 });

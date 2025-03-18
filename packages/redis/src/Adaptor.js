@@ -254,8 +254,9 @@ export function jSet(key, value) {
 }
 
 /**
- * Sets multiple JSON objects at their respective keys. If a key already exists,
- * the existing value will be replaced by the new value.
+ * Set values at the root path ('$') in JSON documents stored at multiple keys.
+ * This function allows setting multiple key-value pairs in Redis JSON documents in a single operation.
+ * If a key already exists, its value will be replaced. If it does not exist, a new key-value pair will be created.
  * @example <caption>Set multiple JSON objects</caption>
  * mSet([{ key: 'patient', value: { name: 'victor', ihs_number: 12345 } },
  *       { key: 'doctor', value: { name: 'Alice', specialization: 'cardiology' } }]);
