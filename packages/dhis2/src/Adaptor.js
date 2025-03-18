@@ -10,7 +10,7 @@ import {
   selectId,
   shouldUseNewTracker,
   ensureArray,
-  generateUrlPath,
+  prefixVersionToPath,
   request,
 } from './Utils';
 
@@ -224,7 +224,7 @@ export function create(resourceType, data, options = {}, callback = s => s) {
     } else {
       promise = request(configuration, {
         method: 'POST',
-        path: generateUrlPath(
+        path: prefixVersionToPath(
           configuration,
           resolvedOptions,
           resolvedResourceType
@@ -406,7 +406,7 @@ export function update(
     } else {
       promise = request(configuration, {
         method: 'PUT',
-        path: generateUrlPath(
+        path: prefixVersionToPath(
           configuration,
           resolvedOptions,
           resolvedResourceType,
@@ -478,14 +478,14 @@ export function get(resourceType, options = {}, callback = s => s) {
 
     return request(configuration, {
       method: 'GET',
-      path: generateUrlPath(
+      path: prefixVersionToPath(
         configuration,
         resolvedOptions,
         resolvedResourceType
       ),
       options: resolvedOptions,
     }).then(result => {
-      console.log(`Retrieved ${resolvedResourceType}`);      
+      console.log(`Retrieved ${resolvedResourceType}`);
       const response = asBase64 ? { body: encode(result.body) } : result;
       return handleResponse(response, state, callback);
     });
@@ -525,7 +525,7 @@ export function post(resourceType, data, options = {}, callback = s => s) {
 
     return request(configuration, {
       method: 'POST',
-      path: generateUrlPath(
+      path: prefixVersionToPath(
         configuration,
         resolvedOptions,
         resolvedResourceType
@@ -607,7 +607,7 @@ export function upsert(
       console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
       promise = request(configuration, {
         method: 'GET',
-        path: generateUrlPath(
+        path: prefixVersionToPath(
           configuration,
           resolvedOptions,
           resolvedResourceType
@@ -628,7 +628,7 @@ export function upsert(
           console.log(`Preparing create operation...`);
           return request(configuration, {
             method: 'POST',
-            path: generateUrlPath(
+            path: prefixVersionToPath(
               configuration,
               resolvedOptions,
               resolvedResourceType
@@ -644,7 +644,7 @@ export function upsert(
           console.log(`Preparing update operation...`);
           return request(configuration, {
             method: 'PUT',
-            path: generateUrlPath(
+            path: prefixVersionToPath(
               configuration,
               resolvedOptions,
               resolvedResourceType,
@@ -698,7 +698,7 @@ export function patch(
 
     return request(configuration, {
       method: 'PATCH',
-      path: generateUrlPath(
+      path: prefixVersionToPath(
         configuration,
         resolvedOptions,
         resolvedResourceType,
@@ -753,7 +753,7 @@ export function destroy(
     } else {
       promise = request(configuration, {
         method: 'DELETE',
-        path: generateUrlPath(
+        path: prefixVersionToPath(
           configuration,
           resolvedOptions,
           resolvedResourceType,
@@ -854,7 +854,7 @@ function callNewTracker(
 
   return request(configuration, {
     method: 'POST',
-    path: generateUrlPath(
+    path: prefixVersionToPath(
       configuration,
       {
         ...options,

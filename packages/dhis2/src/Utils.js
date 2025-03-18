@@ -57,7 +57,7 @@ export function ensureArray(data, key) {
   return Array.isArray(data) ? { [key]: data } : { [key]: [data] };
 }
 
-export function generateUrlPath(
+export function prefixVersionToPath(
   configuration,
   options,
   resourceType,

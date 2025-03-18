@@ -12,7 +12,7 @@ import {
 import { dataValue } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import {
-  generateUrlPath,
+  prefixVersionToPath,
   ensureArray,
   shouldUseNewTracker,
 } from '../src/Utils';
@@ -649,7 +649,7 @@ describe('URL builders', () => {
 
   describe('generateURL', () => {
     it('should generate basic URL', done => {
-      const finalURL = generateUrlPath(
+      const finalURL = prefixVersionToPath(
         fixture.configuration,
         fixture.options,
         fixture.resourceType
@@ -663,7 +663,7 @@ describe('URL builders', () => {
     it('should generate URL with specific api version from configuration', done => {
       const configuration = { ...fixture.configuration, apiVersion: 33 };
 
-      const finalURL = generateUrlPath(
+      const finalURL = prefixVersionToPath(
         configuration,
         fixture.options,
         fixture.resourceType
@@ -677,7 +677,7 @@ describe('URL builders', () => {
     it('should generate URL with specific api version from options', done => {
       const options = { ...fixture.options, apiVersion: 33 };
 
-      const finalURL = generateUrlPath(
+      const finalURL = prefixVersionToPath(
         fixture.configuration,
         options,
         fixture.resourceType
@@ -695,7 +695,7 @@ describe('URL builders', () => {
         params: { filter: ['a:eq:b', 'c:ge:d'] },
       };
 
-      const finalURL = generateUrlPath(
+      const finalURL = prefixVersionToPath(
         fixture.configuration,
         options,
         fixture.resourceType
