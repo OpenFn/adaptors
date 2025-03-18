@@ -1,12 +1,8 @@
-import axios from 'axios';
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences, encode } from '@openfn/language-common/util';
-import _ from 'lodash';
-const { indexOf } = _;
+
 import {
-  CONTENT_TYPES,
   handleResponse,
-  prettyJson,
   selectId,
   shouldUseNewTracker,
   ensureArray,
@@ -21,6 +17,7 @@ import {
  * @property {object} headers - An object of all request headers
  * @property {boolean} [asBase64=false] - Optional flag to indicate if the response should be returned as a Base64 encoded string when using the `get` operation.
  * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream'. Defaults to `json`
+ * @property {string} [apiVersion=42] - The apiVersion of the request. Defaults to 42.
  */
 
 /**
