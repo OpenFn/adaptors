@@ -1,6 +1,6 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import { create, upsert, query, get } from '../src/Adaptor';
+import { create, upsert, query, get, setMockConnection } from '../src/Adaptor';
 
 const { expect } = chai;
 
@@ -12,7 +12,9 @@ describe('Adaptor', () => {
           return Promise.resolve({ Id: 10 });
         },
       };
-      let state = { connection: fakeConnection, references: [] };
+      setMockConnection(fakeConnection);
+
+      let state = { references: [] };
 
       let spy = sinon.spy(fakeConnection, 'request');
 
@@ -34,19 +36,19 @@ describe('Adaptor', () => {
     });
   });
   describe('create', () => {
-    it.only('makes a new sObject', done => {
-      // let connection =
-      const connection = {
+    it('makes a new sObject', done => {
+      const fakeConnection = {
         create: function () {
           return Promise.resolve({ id: 10, success: true, errors: [] });
         },
       };
+      setMockConnection(fakeConnection);
       let state = { references: [] };
 
       let sObject = 'myObject';
       let fields = { field: 'value' };
 
-      let spy = sinon.spy(connection, 'create');
+      let spy = sinon.spy(fakeConnection, 'create');
 
       create(
         sObject,
@@ -68,18 +70,19 @@ describe('Adaptor', () => {
 
   describe('upsert', () => {
     it('is expected to call `upsert` on the connection', done => {
-      const connection = {
+      const fakeConnection = {
         upsert: function () {
           return Promise.resolve({ Id: 10 });
         },
       };
-      let state = { connection, references: [] };
+      setMockConnection(fakeConnection);
+      let state = { references: [] };
 
       let sObject = 'myObject';
       let externalId = 'MyExternalId';
       let fields = { field: 'value' };
 
-      let spy = sinon.spy(connection, 'upsert');
+      let spy = sinon.spy(fakeConnection, 'upsert');
 
       upsert(
         sObject,
@@ -107,9 +110,8 @@ describe('Adaptor', () => {
           });
         },
       };
-
+      setMockConnection(fakeConnection);
       let state = {
-        connection: fakeConnection,
         references: [],
       };
       let spy = sinon.spy(fakeConnection, 'query');
@@ -128,9 +130,8 @@ describe('Adaptor', () => {
           });
         },
       };
-
+      setMockConnection(fakeConnection);
       let state = {
-        connection: fakeConnection,
         references: [],
         qs: 'select Name from Account',
       };
@@ -151,7 +152,8 @@ describe('Adaptor', () => {
           });
         },
       };
-      const state = { connection: fakeConnection, references: [] };
+      setMockConnection(fakeConnection);
+      const state = { references: [] };
 
       query('select Name from Account')(state)
         .then(state => {
@@ -174,7 +176,8 @@ describe('Adaptor', () => {
           });
         },
       };
-      let state = { connection: fakeConnection, references: [] };
+      setMockConnection(fakeConnection);
+      let state = { references: [] };
       let spy = sinon.spy(fakeConnection, 'query');
 
       query('select Name from Account')(state)
@@ -207,7 +210,8 @@ describe('Adaptor', () => {
           });
         },
       };
-      let state = { connection: fakeConnection, references: [] };
+      setMockConnection(fakeConnection);
+      let state = { references: [] };
       let spy = sinon.spy(fakeConnection, 'query');
       let spyReq = sinon.spy(fakeConnection, 'request');
 
@@ -242,7 +246,8 @@ describe('Adaptor', () => {
           });
         },
       };
-      let state = { connection: fakeConnection, references: [] };
+      setMockConnection(fakeConnection);
+      let state = { references: [] };
       let spy = sinon.spy(fakeConnection, 'query');
       let spyReq = sinon.spy(fakeConnection, 'request');
 

@@ -10,9 +10,8 @@ import {
 describe('toUTF8', () => {
   it('Transliterate unicode to ASCII representation', async () => {
     const state = {
-      connection: {},
+      configuration: {},
     };
-
     // Run toUTF8 inside an execute block to ensure that any-ascii gets loaded correctly
     const convert = str => execute(state => toUTF8(str))(state);
 

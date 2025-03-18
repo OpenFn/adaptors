@@ -8,6 +8,10 @@ import { expandReferences, throwError } from '@openfn/language-common/util';
 import * as util from './util';
 
 let connection = null;
+
+export function setMockConnection(mock) {
+  connection = mock;
+}
 /**
  * @typedef {object} State
  * @property {object} data JSON Data.
@@ -98,15 +102,17 @@ export function execute(...operations) {
       logLevel: 'FATAL', // DEBUG, INFO, WARN, ERROR, FATAL, NONE
     },
   };
-  const mergedState = {
-    ...initialState,
-    ...state,
-  };
 
   return state => {
     util.createConnection(state);
     connection = util.getConnection();
-    return commonExecute(util.loadAnyAscii, ...operations)(mergedState);
+    return commonExecute(
+      util.loadAnyAscii,
+      ...operations
+    )({
+      ...initialState,
+      ...state,
+    });
   };
 }
 
@@ -353,7 +359,6 @@ export function create(sObjectName, records) {
     );
     util.assertNoNesting(resolvedRecords);
     console.info(`Creating ${resolvedSObjectName}`, resolvedRecords);
-
     return connection
       .create(resolvedSObjectName, resolvedRecords)
       .then(response => {

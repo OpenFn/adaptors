@@ -47,8 +47,6 @@ export function createConnection(state) {
   if (connection) {
     return state;
   }
-  console.log('Using Salesforce API version:', connection.version);
-  console.log(`Connected with ${connection._sessionType} session type`);
 
   const { access_token } = state.configuration;
 
@@ -73,6 +71,9 @@ export function getConnection() {
   if (!connection) {
     throwError('No connection');
   }
+  console.log('Using Salesforce API version:', connection.version);
+  console.log(`Connected with ${connection._sessionType} session type`);
+
   return connection;
 }
 
