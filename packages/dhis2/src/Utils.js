@@ -106,7 +106,6 @@ export async function request(configuration, requestData) {
     parseAs = 'json',
   } = options;
 
-  console.log(`Sending ${method} request to ${path}`);
   if (options) console.log(`with params: `, query);
 
   const authHeaders = configureAuth(configuration, headers);
