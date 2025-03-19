@@ -14,21 +14,13 @@ import { parseFridgeTag, parseFridgeTagToEms } from './FridgeTagUtils';
  * @returns {Operation}
  * @example <caption>Convert data to EMS-compliant data.</caption>
  * convertToEms(
- * ```
- * [
- *   {
- *     metadata: {
- *       content: '',
- *       filename: '',
- *     },
- *     data: {
- *       content: '',
- *       filename: '',
- *     },
- *   },
- * ]
- * ```
- * )
+ *   [
+ *     {
+ *       metadata: { content: '', filename: '' },
+ *       data: { content: '', filename: '' }
+ *     }
+ *   ]
+ * );
  */
 export function convertToEms(messageContents) {
   return async state => {
