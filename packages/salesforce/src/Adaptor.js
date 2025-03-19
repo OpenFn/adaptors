@@ -120,10 +120,7 @@ export function execute(...operations) {
   const initialState = {
     references: [],
     data: null,
-    configuration: {
-      loginUrl: 'https://login.salesforce.com',
-      apiVersion: '50.0',
-    },
+    configuration: {},
   };
 
   return state => {
