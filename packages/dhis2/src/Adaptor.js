@@ -11,6 +11,14 @@ import {
 } from './Utils';
 
 /**
+ * State object
+ * @typedef {Object} Dhis2State
+ * @property data - The response body (as JSON)
+ * @property response - The HTTP response from the Dhis2 server (excluding the body)
+ * @property references - An array of all previous data objects used in the Job
+ */
+
+/**
  * Options object
  * @typedef {Object} RequestOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
@@ -84,6 +92,7 @@ function configMigrationHelper(state) {
  * @param {Dhis2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
  * @param {function} [callback] - Optional callback to handle the response
+ * @state {Dhis2State}
  * @returns {Operation}
  * @example <caption>Create a program</caption>
  * create('programs', {
@@ -255,6 +264,7 @@ export function create(resourceType, data, options = {}, callback = s => s) {
  * @param {Object} data - Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
  * @param {function} [callback]  - Optional callback to handle the response
+ * @state {Dhis2State}
  * @returns {Operation}
  * @example <caption>a program</caption>
  * update('programs', 'qAZJCrNJK8H', {
@@ -425,7 +435,8 @@ export function update(
  * @param {string} resourceType - The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request
  * @param {function} [callback]  - Optional callback to handle the response
- * @returns {Operation} state
+ * @state {Dhis2State}
+ * @returns {Operation}
  * @example <caption>Get all data values for the 'pBOMPrpg1QX' dataset</caption>
  * get('dataValueSets', {
  *  query:{
@@ -497,7 +508,8 @@ export function get(resourceType, options = {}, callback = s => s) {
  * @param {Dhis2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
  * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation} state
+ * @state {Dhis2State}
+ * @returns {Operation}
  * @example <caption>Create an event</caption>
  * post("tracker", {
  *   events: [
@@ -545,6 +557,7 @@ export function post(resourceType, data, options = {}, callback = s => s) {
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request
  * @param {function} [callback] - Optional callback to handle the response
  * @throws {RangeError} - Throws range error
+ * @state {Dhis2State}
  * @returns {Operation}
  * @example <caption>Upsert a trackedEntity</caption>
  * upsert('trackedEntities', {}, {
@@ -666,6 +679,7 @@ export function upsert(
  * @param {Object} data - Data to update. Include only the fields you want to update. E.g. `{name: "New Name"}`
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
  * @param {function} [callback] - Optional callback to handle the response
+ * @state {Dhis2State}
  * @returns {Operation}
  * @example <caption>a dataElement</caption>
  * patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
@@ -714,6 +728,7 @@ export function patch(
  * @param {Object} [data] - Optional. This is useful when you want to remove multiple objects from a collection in one request. You can send `data` as, for example, `{"identifiableObjects": [{"id": "IDA"}, {"id": "IDB"}, {"id": "IDC"}]}`. See more {@link https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#deleting-objects on DHIS2 API docs}
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
  * @param {function} [callback] - Optional callback to handle the response
+ * @state {Dhis2State}
  * @returns {Operation}
  * @example <caption>a tracked entity instance. See [Delete tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)</caption>
  * destroy('trackedEntities', 'LcRd6Nyaq7T');
