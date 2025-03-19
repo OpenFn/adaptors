@@ -1,5 +1,17 @@
 # @openfn/language-openmrs
 
+## 4.4.0
+
+### Minor Changes
+
+- 23ccb01: Allow errors to be passed to the http helpers. This overrides the
+  behaviour to throw if an error code is returned
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
 ## 4.3.0
 
 ### Minor Changes

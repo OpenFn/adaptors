@@ -10,7 +10,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "execute(\n  createPayment(data)\n)(state)"
+            "description": "createPayment(data)",
+            "caption": "Create a payment with a reference to a customer"
           },
           {
             "title": "public",
@@ -53,7 +54,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "execute(\n  createContact(data)\n)(state)"
+            "description": "createContact(data)",
+            "caption": "Create a contact"
           },
           {
             "title": "public",
@@ -96,7 +98,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "execute(\n  createCollectionRequest(data)\n)(state)"
+            "description": "createCollectionRequest(data)",
+            "caption": "Create a collection request"
           },
           {
             "title": "public",

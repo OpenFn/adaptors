@@ -1,5 +1,12 @@
 # @openfn/language-mailchimp
 
+## 1.0.12
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
 ## 1.0.11
 
 ### Patch Changes

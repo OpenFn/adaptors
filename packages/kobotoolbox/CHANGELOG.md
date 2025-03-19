@@ -1,5 +1,18 @@
 # @openfn/language-kobotoolbox
 
+## 3.0.2
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
+## 3.0.1
+
+### Patch Changes
+
+- a8b91d2: Fix results handling for getSubmissions
+
 ## 3.0.0
 
 ### Major Changes

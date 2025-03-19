@@ -1,5 +1,12 @@
 ## 2.3.0
 
+## 2.3.1
+
+### Patch Changes
+
+- 23ccb01: Allow the errorMap passed into the request helper to be false, which
+  suppresses all errors
+
 ### Minor Changes
 
 - b3d7f59: Common util functions `encode` and `decode` can now take a JavaScript

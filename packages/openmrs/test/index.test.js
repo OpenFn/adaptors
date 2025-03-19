@@ -31,7 +31,7 @@ const configuration = {
 const state = {
   configuration,
   patient: testData.patient,
-  encounter: testData.encounter
+  encounter: testData.encounter,
 };
 
 describe('execute', () => {
@@ -71,7 +71,7 @@ describe('execute', () => {
   });
 });
 
-describe('http', () => {
+describe('http.request', () => {
   it('should GET with a query', async () => {
     testServer
       .intercept({
@@ -130,10 +130,64 @@ describe('http', () => {
     expect(data.results[0].display).to.eql('Sarah 1');
     expect(data.results[1].display).to.eql('Sarah 2');
   });
+
+  it('should throw if the server returns a 404', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        query: { q: 'Sarah 1' },
+        method: 'GET',
+      })
+      .reply(404, {}, { ...jsonHeaders });
+
+    let error;
+    try {
+      await http.request('GET', '/ws/rest/v1/patient', {
+        query: { q: 'Sarah 1' },
+      })(state);
+    } catch (e) {
+      error = e;
+    }
+    expect(error.statusCode).to.equal(404);
+  });
+
+  it('should suppress 404 errors with the error map', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        query: { q: 'Sarah 1' },
+        method: 'GET',
+      })
+      .reply(404, {}, { ...jsonHeaders });
+
+    const result = await http.request('GET', '/ws/rest/v1/patient', {
+      query: { q: 'Sarah 1' },
+      errors: { 404: false },
+    })(state);
+
+    expect(result.response.statusCode).to.equal(404);
+  });
+
+  it('should suppress all errors with the error map', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        query: { q: 'Sarah 1' },
+        method: 'GET',
+      })
+      .reply(404, {}, { ...jsonHeaders });
+
+    const result = await http.request('GET', '/ws/rest/v1/patient', {
+      query: { q: 'Sarah 1' },
+      errors: false,
+    })(state);
+
+    expect(result.response.statusCode).to.equal(404);
+  });
 });
 
 describe('http.get', () => {
-  beforeEach(()=>{
+  beforeEach(() => {
     // Basic patient query interceptor
     testServer
       .intercept({
@@ -177,22 +231,22 @@ describe('http.get', () => {
 
   it('should make a get request that includes query params', async () => {
     const options = {
-      query: { q: 'Sarah', startIndex: 1 }
-    }
+      query: { q: 'Sarah', startIndex: 1 },
+    };
 
     const { data } = await http.get('/ws/rest/v1/patient', options)(state);
     expect(data.results[0].display).to.eql(testData.patientResults[0].display);
   });
 });
 
-describe('http.post', () =>{
-  beforeEach(()=>{
+describe('http.post', () => {
+  beforeEach(() => {
     // Basic patient query interceptor
     testServer
       .intercept({
         path: '/ws/rest/v1/patient',
         method: 'POST',
-        data: testData.newPatient
+        data: testData.newPatient,
       })
       .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
 
@@ -201,18 +255,24 @@ describe('http.post', () =>{
       .intercept({
         path: '/ws/rest/v1/wrong-url',
         method: 'POST',
-        data: testData.newPatient
+        data: testData.newPatient,
       })
       .reply(404, { ...jsonHeaders });
   });
 
   it('should make http request with the "POST" verb', async () => {
-    const response = await http.post('/ws/rest/v1/patient', testData.newPatient)(state);
+    const response = await http.post(
+      '/ws/rest/v1/patient',
+      testData.newPatient
+    )(state);
     expect(response.response.method).to.eql('POST');
   });
 
   it('should make a successful POST request to openmrs', async () => {
-    const { data } = await http.post('/ws/rest/v1/patient',  testData.newPatient)(state);
+    const { data } = await http.post(
+      '/ws/rest/v1/patient',
+      testData.newPatient
+    )(state);
     expect(data.results[0].display).to.eql(testData.patientResults[0].display);
   });
 
@@ -220,13 +280,13 @@ describe('http.post', () =>{
     try {
       await http.post('/ws/rest/v1/wrong-url', testData.newPatient)(state);
     } catch (e) {
-      expect(e.statusCode).to.eql(404)
+      expect(e.statusCode).to.eql(404);
     }
   });
 });
 
-describe('http.delete', () =>{
-  beforeEach(()=>{
+describe('http.delete', () => {
+  beforeEach(() => {
     // Basic patient query interceptor
     testServer
       .intercept({
@@ -258,7 +318,7 @@ describe('http.delete', () =>{
     try {
       await http.delete('/ws/rest/v1/patient/non-existent')(state);
     } catch (e) {
-      expect(e.statusCode).to.eql(404)
+      expect(e.statusCode).to.eql(404);
     }
   });
 });

@@ -30,10 +30,8 @@ export function execute(...operations) {
 
 /**
  * Create an encounter
- * @example
- * execute(
- *   encounter(data)
- * )(state)
+ * @example <caption>Create an encounter</caption
+ * encounter(encounterData)
  * @function
  * @param {object} encounterData - Payload data for the encounter
  * @returns {Operation}

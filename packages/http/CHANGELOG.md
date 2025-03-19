@@ -1,5 +1,85 @@
 # @openfn/language-http
 
+## 7.0.1
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
+## 7.0.0
+
+### Major Changes
+
+- 8b28b87: - Remove all callback functions
+- 57a2a63: - Add `contentType` option to requests. This defaults to `json`
+- ba84591: - Add a `data` argument to `put()`, `patch()` and `post()`
+- Remove the deprecated `json` property on `RequestOptions`
+
+### Patch Changes
+
+- b1ce36f: - Remove duplicated body response from `http`.
+
+### Migration Guide
+
+#### Content Types
+
+The HTTP adaptor now assumes that all requests are JSON, unless otherwise
+specified.
+
+You can set the `contentType` option or pass a `'Content-Type'` header to
+manually set the content type. For example, to upload a form:
+
+```js
+post($.url, $.data, { contentType: 'form' });
+```
+
+#### Updated put, patch and post signatures
+
+`put()`, `patch()` and `post()` have had their signatures changed from
+`post(path, options, callback)` to `post(path, data, options)`.
+
+The payload attached to the body, which in 6.0 was passed on the options object
+as `body`, is now the second argument to the function.
+
+So if you used to do this:
+
+```js
+post('/patient', { body: $.patient });
+```
+
+You must edit your code to do this:
+
+```js
+post('/patient', $.patient);
+```
+
+You can still pass options to the request via the third argument:
+
+```js
+post('/patient', $.patient, { query: $.query, headers: $.headers });
+```
+
+Callbacks have now been removed, use `.then()` instead.
+
+So if you used to do this:
+
+```js
+post('/patient', { body: $.patient }, next => {
+  state.results.push(next.response.body);
+  return next;
+});
+```
+
+You must edit your code to do this:
+
+```js
+post('/patient', $.patient).then(next => {
+  state.results.push(next.response.body);
+  return next;
+});
+```
+
 ## 6.5.4
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # @openfn/language-beyonic
 
+## 0.3.11
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
+## 0.3.10
+
+### Patch Changes
+
+- 8a8c28d: - cleanup examples wrapped with `execute()` function
+  - Add example caption and add sample payload
+
 ## 0.3.9
 
 ### Patch Changes
