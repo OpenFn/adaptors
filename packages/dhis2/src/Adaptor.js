@@ -201,7 +201,7 @@ function configMigrationHelper(state) {
  * });
  */
 export function create(resourceType, data, options = {}, callback = s => s) {
-  return state => {
+  return async state => {
     console.log(`Preparing create operation...`);
 
     const [resolvedResourceType, resolvedData, resolvedOptions] =
@@ -209,9 +209,9 @@ export function create(resourceType, data, options = {}, callback = s => s) {
 
     const { configuration } = state;
 
-    let promise;
+    let response;
     if (shouldUseNewTracker(resolvedResourceType)) {
-      promise = callNewTracker(
+      response = await callNewTracker(
         'create',
         configuration,
         resolvedOptions,
@@ -219,7 +219,7 @@ export function create(resourceType, data, options = {}, callback = s => s) {
         resolvedData
       );
     } else {
-      promise = request(configuration, {
+      response = await request(configuration, {
         method: 'POST',
         path: prefixVersionToPath(
           configuration,
@@ -231,19 +231,17 @@ export function create(resourceType, data, options = {}, callback = s => s) {
       });
     }
 
-    return promise.then(response => {
-      const details = `with response ${JSON.stringify(
-        response.body?.message,
-        null,
-        2
-      )}`;
-      console.log(`Created ${resolvedResourceType} ${details}`);
+    const details = `with response ${JSON.stringify(
+      response.body?.message,
+      null,
+      2
+    )}`;
+    console.log(`Created ${resolvedResourceType} ${details}`);
 
-      const { location } = response.headers;
-      if (location) console.log(`Record available @ ${location}`);
+    const { location } = response.headers;
+    if (location) console.log(`Record available @ ${location}`);
 
-      return handleResponse(response, state, callback);
-    });
+    return handleResponse(response, state, callback);
   };
 }
 
@@ -384,16 +382,16 @@ export function update(
   options = {},
   callback = s => s
 ) {
-  return state => {
+  return async state => {
     console.log(`Preparing update operation...`);
 
     const [resolvedResourceType, resolvedPath, resolvedData, resolvedOptions] =
       expandReferences(state, resourceType, path, data, options);
     const { configuration } = state;
 
-    let promise;
+    let response;
     if (shouldUseNewTracker(resolvedResourceType)) {
-      promise = callNewTracker(
+      response = await callNewTracker(
         'update',
         configuration,
         resolvedOptions,
@@ -401,7 +399,7 @@ export function update(
         resolvedData
       );
     } else {
-      promise = request(configuration, {
+      response = await request(configuration, {
         method: 'PUT',
         path: prefixVersionToPath(
           configuration,
@@ -414,10 +412,8 @@ export function update(
       });
     }
 
-    return promise.then(response => {
-      console.log(`Updated ${resolvedResourceType} at ${resolvedPath}`);
-      return handleResponse(response, state, callback);
-    });
+    console.log(`Updated ${resolvedResourceType} at ${resolvedPath}`);
+    return handleResponse(response, state, callback);
   };
 }
 
@@ -461,7 +457,7 @@ export function update(
  * });
  */
 export function get(resourceType, options = {}, callback = s => s) {
-  return state => {
+  return async state => {
     console.log('Preparing get operation...');
 
     const [resolvedResourceType, resolvedOptions] = expandReferences(
@@ -473,7 +469,9 @@ export function get(resourceType, options = {}, callback = s => s) {
     const { asBase64 = false } = resolvedOptions;
     const { configuration } = state;
 
-    return request(configuration, {
+    let response;
+
+    response = await request(configuration, {
       method: 'GET',
       path: prefixVersionToPath(
         configuration,
@@ -481,11 +479,11 @@ export function get(resourceType, options = {}, callback = s => s) {
         resolvedResourceType
       ),
       options: resolvedOptions,
-    }).then(result => {
-      console.log(`Retrieved ${resolvedResourceType}`);
-      const response = asBase64 ? { body: encode(result.body) } : result;
-      return handleResponse(response, state, callback);
     });
+
+    console.log(`Retrieved ${resolvedResourceType}`);
+    response = asBase64 ? { body: encode(response.body) } : response;
+    return handleResponse(response, state, callback);
   };
 }
 
@@ -512,15 +510,16 @@ export function get(resourceType, options = {}, callback = s => s) {
  * });
  */
 export function post(resourceType, data, options = {}, callback = s => s) {
-  return state => {
+  return async state => {
     console.log('Preparing post operation...');
 
     const [resolvedResourceType, resolvedOptions, resolvedData] =
       expandReferences(state, resourceType, options, data);
 
     const { configuration } = state;
+    let response;
 
-    return request(configuration, {
+    response = await request(configuration, {
       method: 'POST',
       path: prefixVersionToPath(
         configuration,
@@ -529,10 +528,10 @@ export function post(resourceType, data, options = {}, callback = s => s) {
       ),
       options: resolvedOptions,
       data: resolvedData,
-    }).then(response => {
-      console.log(`Created ${resolvedResourceType}`);
-      return handleResponse(response, state, callback);
     });
+
+    console.log(`Created ${resolvedResourceType}`);
+    return handleResponse(response, state, callback);
   };
 }
 
@@ -584,14 +583,14 @@ export function upsert(
   options = {}, // options supplied to both the `get` and the `create/update`
   callback = s => s // callback for the upsert itself.
 ) {
-  return state => {
+  return async state => {
     const [resolvedResourceType, resolvedOptions, resolvedData, resolvedQuery] =
       expandReferences(state, resourceType, options, data, query);
 
-    let promise;
+    let response;
     const { configuration } = state;
     if (shouldUseNewTracker(resolvedResourceType)) {
-      promise = callNewTracker(
+      response = await callNewTracker(
         'create_and_update',
         configuration,
         resolvedOptions,
@@ -599,10 +598,8 @@ export function upsert(
         resolvedData
       );
     } else {
-      // NOTE: that these parameters are all expanded by the `get`, `create`, and
-      // `update` functions used inside this composed "upsert" function.
       console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
-      promise = request(configuration, {
+      response = await request(configuration, {
         method: 'GET',
         path: prefixVersionToPath(
           configuration,
@@ -615,49 +612,46 @@ export function upsert(
             ...resolvedQuery,
           },
         },
-      }).then(resp => {
-        const resources = resp.body[resourceType];
-        if (resources.length > 1) {
-          throw new RangeError(
-            `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
-          );
-        } else if (resources.length <= 0) {
-          console.log(`Preparing create operation...`);
-          return request(configuration, {
-            method: 'POST',
-            path: prefixVersionToPath(
-              configuration,
-              resolvedOptions,
-              resolvedResourceType
-            ),
-            options: resolvedOptions,
-            data: resolvedData,
-          });
-        } else {
-          // Pick out the first (and only) resource in the array and grab its
-          // ID to be used in the subsequent `update` by the path determined
-          // by the `selectId(...)` function.
-          const path = resources[0][selectId(resourceType)];
-          console.log(`Preparing update operation...`);
-          return request(configuration, {
-            method: 'PUT',
-            path: prefixVersionToPath(
-              configuration,
-              resolvedOptions,
-              resolvedResourceType,
-              path
-            ),
-            options: resolvedOptions,
-            data: resolvedData,
-          });
-        }
       });
+      const resources = response.body[resourceType];
+      if (resources.length > 1) {
+        throw new RangeError(
+          `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
+        );
+      } else if (resources.length <= 0) {
+        console.log(`Preparing create operation...`);
+        response = await request(configuration, {
+          method: 'POST',
+          path: prefixVersionToPath(
+            configuration,
+            resolvedOptions,
+            resolvedResourceType
+          ),
+          options: resolvedOptions,
+          data: resolvedData,
+        });
+      } else {
+        // Pick out the first (and only) resource in the array and grab its
+        // ID to be used in the subsequent `update` by the path determined
+        // by the `selectId(...)` function.
+        const path = resources[0][selectId(resourceType)];
+        console.log(`Preparing update operation...`);
+        response = await request(configuration, {
+          method: 'PUT',
+          path: prefixVersionToPath(
+            configuration,
+            resolvedOptions,
+            resolvedResourceType,
+            path
+          ),
+          options: resolvedOptions,
+          data: resolvedData,
+        });
+      }
     }
 
-    return promise.then(response => {
-      console.log(`Performed a "composed upsert" on ${resourceType}`);
-      return handleResponse(response, state, callback);
-    });
+    console.log(`Performed a "composed upsert" on ${resourceType}`);
+    return handleResponse(response, state, callback);
   };
 }
 
@@ -685,15 +679,16 @@ export function patch(
   options = {},
   callback = s => s
 ) {
-  return state => {
+  return async state => {
     console.log('Preparing patch operation...');
 
     const [resolvedResourceType, resolvedPath, resolvedData, resolvedOptions] =
       expandReferences(state, resourceType, path, data, options);
 
     const { configuration } = state;
+    let response;
 
-    return request(configuration, {
+    response = await request(configuration, {
       method: 'PATCH',
       path: prefixVersionToPath(
         configuration,
@@ -703,10 +698,10 @@ export function patch(
       ),
       options: resolvedOptions,
       data: resolvedData,
-    }).then(response => {
-      console.log(`Patched ${resolvedResourceType} at ${resolvedPath}`);
-      return handleResponse(response, state, callback);
     });
+
+    console.log(`Patched ${resolvedResourceType} at ${resolvedPath}`);
+    return handleResponse(response, state, callback);
   };
 }
 
@@ -730,7 +725,7 @@ export function destroy(
   options = {},
   callback = s => s
 ) {
-  return state => {
+  return async state => {
     console.log('Preparing destroy operation...');
 
     const [resolvedResourceType, resolvedPath, resolvedData, resolvedOptions] =
@@ -738,9 +733,9 @@ export function destroy(
 
     const { configuration } = state;
 
-    let promise;
+    let response;
     if (shouldUseNewTracker(resolvedResourceType)) {
-      promise = callNewTracker(
+      response = await callNewTracker(
         'delete',
         configuration,
         resolvedOptions,
@@ -748,7 +743,7 @@ export function destroy(
         resolvedData
       );
     } else {
-      promise = request(configuration, {
+      response = await request(configuration, {
         method: 'DELETE',
         path: prefixVersionToPath(
           configuration,
@@ -761,10 +756,8 @@ export function destroy(
       });
     }
 
-    return promise.then(response => {
-      console.log(`Deleted ${resolvedResourceType} at ${resolvedPath}`);
-      return handleResponse(response, state, callback);
-    });
+    console.log(`Deleted ${resolvedResourceType} at ${resolvedPath}`);
+    return handleResponse(response, state, callback);
   };
 }
 
