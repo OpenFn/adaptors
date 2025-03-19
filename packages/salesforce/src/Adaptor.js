@@ -5,13 +5,9 @@ import {
 } from '@openfn/language-common';
 
 import { expandReferences, throwError } from '@openfn/language-common/util';
+import flatten from 'lodash/flatten';
 import * as util from './util';
 
-let connection = null;
-
-export function setMockConnection(mock) {
-  connection = mock;
-}
 /**
  * @typedef {object} State
  * @property {object} data JSON Data.
@@ -85,6 +81,34 @@ export function setMockConnection(mock) {
  * @property {boolean} [autoFetch=false] - When true, automatically fetches next batch of records if available.
  * */
 
+let connection = null;
+
+/**
+ * Creates a connection to Salesforce using Basic Auth or OAuth.
+ * @function createConnection
+ * @private
+ * @param {State} state - Runtime state.
+ * @returns {State}
+ */
+export async function createConnection(state) {
+  if (connection) {
+    return state;
+  }
+
+  const { configuration } = state;
+  connection = configuration.access_token
+    ? await util.tokenAuth(configuration)
+    : await util.basicAuth(configuration);
+
+  util.checkConnection(connection);
+
+  return state;
+}
+
+export function setMockConnection(mock) {
+  connection = mock;
+}
+
 /**
  * Executes an operation.
  * @function
@@ -104,11 +128,10 @@ export function execute(...operations) {
   };
 
   return state => {
-    util.createConnection(state);
-    connection = util.getConnection();
     return commonExecute(
       util.loadAnyAscii,
-      ...operations
+      createConnection,
+      ...flatten(operations)
     )({
       ...initialState,
       ...state,
