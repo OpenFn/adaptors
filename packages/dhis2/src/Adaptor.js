@@ -27,8 +27,7 @@ import {
  * @typedef {Object} RequestOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
  * @property {object} headers - An object of all request headers
- * @property {boolean} [asBase64=false] - Optional flag to indicate if the response should be returned as a Base64 encoded string when using the `get` operation.
- * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream'. Defaults to `json`
+ * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', 'stream', or 'base64'. Defaults to `json`
  * @property {string} [apiVersion=42] - The apiVersion of the request. Defaults to 42.
  */
 
@@ -467,8 +466,7 @@ export function update(
  *   headers:{
  *       Accept: 'image/*'
  *   },
- *   parseAs: 'text',
- *   asBase64: true
+ *   parseAs: 'base64',
  * });
  */
 export function get(resourceType, options = {}, callback = s => s) {
@@ -481,7 +479,7 @@ export function get(resourceType, options = {}, callback = s => s) {
       options
     );
 
-    const { asBase64 = false } = resolvedOptions;
+    const { parseAs} = resolvedOptions;
     const { configuration } = state;
 
     let response;
@@ -497,7 +495,7 @@ export function get(resourceType, options = {}, callback = s => s) {
     });
 
     console.log(`Retrieved ${resolvedResourceType}`);
-    response = asBase64 ? { body: encode(response.body) } : response;
+    response = parseAs === 'base64' ? { body: encode(response.body) } : response;
     return handleResponse(response, state, callback);
   };
 }
