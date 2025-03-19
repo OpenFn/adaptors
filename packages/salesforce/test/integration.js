@@ -8,11 +8,30 @@ import {
   update,
   query,
   bulk,
+  http,
 } from '../dist/index.js';
 
 const state = { configuration };
 
 describe('Integration tests', () => {
+  describe('http', () => {
+    describe('get', () => {
+      it('fetches account information', async () => {
+        const { data } = await execute(http.get('/sobjects/Account/describe'))(
+          state
+        );
+        expect(data.name).to.eq('Account');
+      }).timeout(5000);
+      it('should throw an error if the path is invalid', async () => {
+        try {
+          await execute(http.get('/sobjects/Account/describe/invalid'))(state);
+        } catch (error) {
+          expect(error.errorCode).to.eq('NOT_FOUND');
+          expect(error.message).to.eq('The requested resource does not exist');
+        }
+      }).timeout(5000);
+    });
+  });
   describe('bulk', () => {
     before(async () => {
       state.data = [{ name: 'Coco', vera__Active__c: 'No' }];
