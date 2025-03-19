@@ -31,7 +31,7 @@
     "@openfn/metadata": "workspace:^",
     "@openfn/parse-jsdoc": "workspace:^",
     "chokidar-cli": "^3.0.0",
-    "eslint": "9.22.0",
+    "eslint": "8.26.0",
     "esno": "^4.8.0",
     "lodash": "^4.17.21",
     "mocha": "^11.1.0"
