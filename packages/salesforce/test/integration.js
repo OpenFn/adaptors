@@ -13,7 +13,7 @@ import {
 const state = { configuration };
 
 describe('Integration tests', () => {
-  describe.skip('bulk', () => {
+  describe('bulk', () => {
     before(async () => {
       state.data = [{ name: 'Coco', vera__Active__c: 'No' }];
     });
@@ -37,7 +37,7 @@ describe('Integration tests', () => {
     }).timeout(50000);
   });
 
-  describe.only('create', () => {
+  describe('create', () => {
     it('should throw an error if input is invalid', async () => {
       [42, 'string', true].forEach(async input => {
         try {
