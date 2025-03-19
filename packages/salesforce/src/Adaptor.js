@@ -123,7 +123,6 @@ export function execute(...operations) {
     configuration: {
       loginUrl: 'https://login.salesforce.com',
       apiVersion: '50.0',
-      logLevel: 'INFO', // DEBUG, INFO, WARN, ERROR, FATAL, NONE
     },
   };
 
