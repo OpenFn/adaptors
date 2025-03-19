@@ -2,10 +2,15 @@ import { Connection } from '@jsforce/jsforce-node';
 import { throwError } from '@openfn/language-common/util';
 
 export const basicAuth = async configuration => {
-  const { loginUrl, username, password, securityToken, apiVersion } =
-    configuration;
+  const {
+    loginUrl,
+    username,
+    password,
+    securityToken,
+    apiVersion: version,
+  } = configuration;
 
-  const conn = new Connection({ loginUrl, version: apiVersion });
+  const conn = new Connection({ loginUrl, version });
 
   await conn
     .login(username, securityToken ? password + securityToken : password)
@@ -22,19 +27,18 @@ export const basicAuth = async configuration => {
 };
 
 export const tokenAuth = configuration => {
-  const { instance_url, access_token, apiVersion } = configuration;
+  const {
+    instance_url: instanceUrl,
+    access_token: accessToken,
+    apiVersion: version,
+  } = configuration;
 
-  const conn = new Connection({
-    instanceUrl: instance_url,
-    accessToken: access_token,
-    version: apiVersion,
-  });
+  const conn = new Connection({ instanceUrl, accessToken, version });
 
   return conn;
 };
 
 export const checkConnection = async connection => {
-  // console.log(typeof (await connection));
   if (!connection) {
     throwError('No connection');
   }
