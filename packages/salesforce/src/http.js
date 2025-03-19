@@ -1,5 +1,6 @@
 import { composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
+import * as util from './util';
 
 /**
  * @typedef {Object} SimpleRequestOptions
@@ -45,16 +46,13 @@ export function get(path, options) {
       path,
       options
     );
-    const { headers = {}, query } = resolvedOptions;
     console.log(`GET: ${resolvedPath}`);
-    const requestOptions = {
-      url: resolvedPath,
-      method: 'GET',
-      query,
-      headers: { 'content-type': 'application/json', ...headers },
-    };
+    const { query, ...otherOptions } = resolvedOptions;
+    const url = query
+      ? `${resolvedPath}?${util.buildQuery(query)}`
+      : resolvedPath;
 
-    const result = await connection.request(requestOptions);
+    const result = await connection.requestGet(url, otherOptions);
 
     return composeNextState(state, result);
   };
@@ -90,19 +88,18 @@ export function post(path, data, options) {
       data,
       options
     );
-    const { query, headers = {} } = resolvedOptions;
+    const { query, ...otherOptions } = resolvedOptions;
+    const url = query
+      ? `${resolvedPath}?${util.buildQuery(query)}`
+      : resolvedPath;
 
     console.log(`POST: ${resolvedPath}`);
 
-    const requestOptions = {
-      url: resolvedPath,
-      method: 'POST',
-      query,
-      headers: { 'content-type': 'application/json', ...headers },
-      body: JSON.stringify(resolvedData),
-    };
-
-    const result = await connection.request(requestOptions);
+    const result = await connection.requestPost(
+      url,
+      resolvedData,
+      otherOptions
+    );
 
     return composeNextState(state, result);
   };
@@ -122,20 +119,24 @@ export function post(path, data, options) {
  * @state {SalesforceState}
  * @returns {Operation}
  */
-export function request(path, options = {}) {
+export function request(path, options) {
   return async state => {
     const { connection } = state;
-    const [resolvedPath, resolvedOptions] = expandReferences(
+    const [resolvedPath, resolvedOptions = {}] = expandReferences(
       state,
       path,
       options
     );
     const { method = 'GET', json, body, headers, query } = resolvedOptions;
+    console.log(`${method}: ${resolvedPath}`);
+
+    const url = query
+      ? `${resolvedPath}?${util.buildQuery(query)}`
+      : resolvedPath;
 
     const requestOptions = {
-      url: resolvedPath,
+      url,
       method,
-      query,
       headers: json
         ? { 'content-type': 'application/json', ...headers }
         : headers,
