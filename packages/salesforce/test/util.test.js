@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { execute } from '../src/Adaptor';
+import { execute, setMockConnection } from '../src/Adaptor';
 import {
   toUTF8,
   removeNestings,
@@ -9,9 +9,8 @@ import {
 
 describe('toUTF8', () => {
   it('Transliterate unicode to ASCII representation', async () => {
-    const state = {
-      configuration: {},
-    };
+    const state = {};
+    setMockConnection({});
     // Run toUTF8 inside an execute block to ensure that any-ascii gets loaded correctly
     const convert = str => execute(state => toUTF8(str))(state);
 
