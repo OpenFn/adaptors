@@ -7,11 +7,28 @@ import { parseFridgeTag, parseFridgeTagToEms } from './FridgeTagUtils';
 
 /**
  * Processes EMS data from the provided list of message contents.
- *
- * Iterates over message content, validates their metadata and content,
- * parses the data, and transforms it into EMS-compatible results.
- *
+ * @public
+ * @function
+ * @param {Array} messageContents - Array of message content objects.
+ * @state {Array} data - The converted, EMS-compliant version of each message contents.
  * @returns {Operation}
+ * @example <caption>Convert data to EMS-compliant data.</caption>
+ * convertToEms(
+ * ```
+ * [
+ *   {
+ *     metadata: {
+ *       content: '',
+ *       filename: '',
+ *     },
+ *     data: {
+ *       content: '',
+ *       filename: '',
+ *     },
+ *   },
+ * ]
+ * ```
+ * )
  */
 export function convertToEms(messageContents) {
   return async state => {

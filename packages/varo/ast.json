@@ -1,5 +1,54 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "convertToEms",
+      "params": [
+        "messageContents"
+      ],
+      "docs": {
+        "description": "Processes EMS data from the provided list of message contents.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Array of message content objects.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Array"
+            },
+            "name": "messageContents"
+          },
+          {
+            "title": "state",
+            "description": "{Array} data - The converted, EMS-compliant version of each message contents."
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "example",
+            "description": "convertToEms(\n```\n[\n  {\n    metadata: {\n      content: '',\n      filename: '',\n    },\n    data: {\n      content: '',\n      filename: '',\n    },\n  },\n]\n```\n)",
+            "caption": "Convert data to EMS-compliant data."
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
   "exports": [],
   "common": [
     {
