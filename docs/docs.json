@@ -27019,6 +27019,154 @@
 {"name":"twilio","adaptor":"@openfn/language-twilio","version":"0.5.2","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#sendsms\\\">sendSMS(params)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### sendSMS\\n\\n<p><code>sendSMS(params) ⇒ Operation</code></p>\\n\\nSends an SMS message to a specific phone number\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>Object</code> | an object containing 'body', 'from', and 'to' keys. |\\n\\n**Example**\\n```js\\nsendSMS({\\n body: dataValue('sampleText'),\\n from: dataValue('myFromNumber'),\\n to: dataValue('ukMobile'),\\n});\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# Language twilio\\n\\nLanguage Pack for building expressions and operations to interact with the\\ntwilio API.\\n\\n## Documentation\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/twilio-configuration-schema/)\\ndefinition.\\n\\n### sendSMS\\n\\n#### sample expression, sending an sms\\n\\n```js\\nsendSMS({\\n  body: dataValue('text'),\\n  from: '+15005550006',\\n  to: dataValue('recipient'),\\n});\\n```\\n\\n## local usage\\n\\n```sh\\n~/devtools/core/bin/core execute \\\\\\n  -l ~/devtools/adaptors/language-twilio \\\\\\n  -s ./tmp/state.json \\\\\\n  -o ./tmp/output.json \\\\\\n  -e ./tmp/expression.js\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-twilio\\n\\n## 0.5.2\\n\\n### Patch Changes\\n\\n- Security fix: update jsonpath-plus version\\n\\n## 0.5.1\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 0.5.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 0.4.2\\n\\n### Patch Changes\\n\\n- 6afba70: Fix sendSMS\\n\\n## 0.4.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 0.4.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 0.3.4\\n\\n### Patch Changes\\n\\n- a22daa6: rename credential-schema to configuration-schemawq\\n\\n## 0.3.3\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies [2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 0.3.2\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 0.3.1\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 0.3.0\\n\\n### Minor Changes\\n\\n- a36a072: ymigrated twilio to monorepo\\n\\n### Patch Changes\\n\\n- Updated dependencies [f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\"","functions":["sendSMS"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"accountSid":{"title":"Account ID","type":"string","description":"Your Twilio account id","writeOnly":true,"minLength":1,"examples":["account_id"]},"authToken":{"title":"Auth Token","type":"string","description":"Your Twilio auth token","writeOnly":true,"minLength":1,"examples":["evenMoreSecret"]}},"type":"object","additionalProperties":true,"required":["accountSid","authToken"]}},
 [
   {
+    "id": "convertToEms",
+    "longname": "convertToEms",
+    "name": "convertToEms",
+    "kind": "function",
+    "scope": "global",
+    "description": "Processes EMS data from the provided list of message contents.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Array"
+          ]
+        },
+        "description": "Array of message content objects.",
+        "name": "messageContents"
+      }
+    ],
+    "examples": [
+      "<caption>Convert data to EMS-compliant data.</caption>\nconvertToEms(\n  [\n    {\n      metadata: { content: '', filename: '' },\n      data: { content: '', filename: '' }\n    }\n  ]\n);"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 25,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/varo/src"
+    },
+    "state": [
+      {
+        "name": "data",
+        "description": "The converted, EMS-compliant version of each message contents.",
+        "type": "Array"
+      }
+    ],
+    "order": 0,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "alterState",
+    "common": true,
+    "name": "alterState",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "combine",
+    "common": true,
+    "name": "combine",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fnIf",
+    "common": true,
+    "name": "fnIf",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "http",
+    "common": true,
+    "name": "http",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  }
+],
+{"name":"varo","adaptor":"@openfn/language-varo","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#converttoems\\\">convertToEms(messageContents)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### convertToEms\\n\\n<p><code>convertToEms(messageContents) ⇒ Operation</code></p>\\n\\nProcesses EMS data from the provided list of message contents.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| messageContents | <code>Array</code> | Array of message content objects. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The converted, EMS-compliant version of each message contents. |\\n**Example:** Convert data to EMS-compliant data.\\n```js\\nconvertToEms(\\n  [\\n    {\\n      metadata: { content: '', filename: '' },\\n      data: { content: '', filename: '' }\\n    }\\n  ]\\n);\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-varo <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nThe Varo adaptor works in conjunction with the Gmail adaptor. It takes proprietary data formats found in `state.data` and attempts to convert them to EMS format.\\n\\n## Setup the primary workflow and jobs\\n\\nThis will demonstrate how to pull messages from a Gmail account and pass them to the Varo adaptor which will convert them into EMS format to be used for downstream consumers in the workflow.\\n\\nThe workflow requires some pre-configuration, namely the Gmail `access_token` and the OpenFn `collection_token`.\\n\\n### Token configuration\\n\\n#### Gmail token\\n\\nUse Postman to retrieve an access token. This is a short-lived token will last 60 minutes and will have to be manually retrieved. See the documentation in the [Gmail adaptor readme](https://docs.openfn.org/adaptors/packages/gmail-readme#use-the-postman-application-to-query-the-oauth-enpoint-and-retrieve-an-access-token) for a guide on how to configure Postman to retrieve the access token.\\n\\n#### OpenFn collections token\\n\\nThe workflow tracks the previously processed messages by storing the processed IDs in an OpenFn collection. OpenFn requires authorization to access a given collection.\\n\\n1. Access the [Collections](http://localhost:4000/settings/collections) configuration in the administration area.\\n1. Ensure the collection named `gmail-processed-ids` exists.\\n1. Create a new token in the [Personal Access Tokens](http://localhost:4000/profile/tokens) configuration.\\n\\n### Workflow\\n\\nPlace these files in the openfn/adaptors/workflows folder\\n\\n#### workflow.json\\n\\n```\\n{\\n  \\\"options\\\": {\\n    \\\"start\\\": \\\"getContentsFromMessages\\\"\\n  },\\n  \\\"workflow\\\": {\\n    \\\"steps\\\": [\\n      {\\n        \\\"id\\\": \\\"getContentsFromMessages\\\",\\n        \\\"adaptors\\\": [\\n          \\\"gmail\\\",\\n          \\\"collections\\\"\\n        ],\\n        \\\"expression\\\": \\\"jobGmail.js\\\",\\n        \\\"configuration\\\": {\\n          \\\"access_token\\\": \\\"[redacted]\\\"\\n        },\\n        \\\"next\\\": {\\n          \\\"convertToEms\\\": \\\"Array.isArray(state.data) && state.data.length > 0\\\"\\n        }\\n      },\\n      {\\n        \\\"id\\\": \\\"convertToEms\\\",\\n        \\\"adaptor\\\": \\\"varo\\\",\\n        \\\"expression\\\": \\\"jobVaro.js\\\",\\n      }\\n    ],\\n    \\\"credentials\\\": {\\n      \\\"collections_endpoint\\\": \\\"http://localhost:4000/collections\\\",\\n      \\\"collections_token\\\": \\\"[redacted]\\\"\\n    }\\n  }\\n}\\n```\\n\\n### Jobs\\n\\n#### jobGmail.js\\n\\nThis job will define message parts of interest including: metadata, data and fridgeTag. Also important is a collection of previously-processed messageIds. This job will grab ids from the `gmail-processed-ids` collection and pass them into the request. Once the request is complete, the new, processed messageIds are placed into the collection for future retrieval.\\n\\n```\\nconst contents = [\\n  { name: \\\"metadata\\\", file: /\\\\d{12}_\\\\d{8}T\\\\d{6}Z\\\\.json$/ },\\n  { name: \\\"data\\\", file: /_CURRENT_DATA_.*\\\\.json$/ },\\n  {\\n    name: \\\"data\\\",\\n    archive: /_varo_data\\\\.zip$/,\\n    file: /_CURRENT_DATA_.*\\\\.json$/,\\n  },\\n  { name: \\\"fridgeTag\\\", file: /\\\\d{12}_\\\\d{12}_\\\\d{8}T\\\\d{6}Z\\\\.txt$/ },\\n];\\n\\nconst collectionName = \\\"gmail-processed-ids\\\";\\nconst itemName = \\\"processedIds\\\";\\n\\ncollections.get(collectionName, itemName);\\n\\ngetContentsFromMessages({\\n  contents,\\n  processedIds: $.data,\\n});\\n\\nfnIf(\\n  (state) => Array.isArray(state.processedIds),\\n  collections.set(collectionName, itemName, $.processedIds)\\n);\\n```\\n\\n#### jobVaro.js\\n\\nThe function `convertToEms` expects an array of message contents. This property contains text files in EMS-like Varo format or FridgeTag format and transforms them into EMS-structured data. Tip: This format is automatically provided by the Gmail adaptor. \\n\\nExpected data structure:\\n\\n```\\n[\\n  {\\n    metadata: {\\n      content: '',\\n      filename: '',\\n    },\\n    data: {\\n      content: '',\\n      filename: '',\\n    },\\n  },\\n]\\n```\\n\\n\\n```\\nconvertToEms($.data);\\n\\nfn((state) => {\\n  console.log(state.data);\\n  return state;\\n});\\n```\\n\\n### Running the workflow\\n\\nThe `-m` flag tells OpenFn to use the monorepo instead of its own adaptor cache.\\n\\n```\\ncd openfn/adaptors/workflows\\nopenfn workflow.json -m\\n```\\n\\n## Advanced workflow operation\\n\\nIt's beneficial to isolate the Varo adaptor during development to avoid the redundant step of repeatedly querying Gmail which also requires refreshing the access token each hour. We can use advanced functionality of the OpenFn CLI to cache the output of the Gmail step which will enable us reuse its output while we are enhancing the Varo adaptor.\\n\\n### Cache Gmail adaptor output\\n\\nWe can configure the workflow to retrieve this message content from a local file which will bypass the need to use the Gmail adaptor to retrieve this information.\\n\\n- `-m` Use the monorepo.\\n- `--cache-steps` Direct the CLI to cache the job output.\\n- `--only getContentsFromMessages` Execute only the getContentsFromMessage step.\\n\\n```\\nopenfn workflow.json -m --cache-steps --only getContentsFromMessages\\n```\\n\\n### Running the workflow with cached Gmail adaptor output\\n\\n- `-m` Use the monorepo.\\n- `--only convertToEms` Execute only the convertToEms step.\\n\\n```\\nopenfn workflow.json -m --only convertToEms\\n```\\n\\n# Enhancing/developing the Varo adaptor\\n\\nThese instructions will illustrate how to install OpenFn and the adaptor monorepo. The monorepo gives you access to in-development versions of the adaptors.\\n\\nRecommended folder structure:\\n\\n```\\nopenfn\\n├── lightning\\n└── adaptors\\n    ├── adaptors\\n    └── workflows\\n```\\n\\n\\n## Install OpenFn\\n\\nPrerequisite is Docker in installed, up-to-date, and running on your computer.\\n\\n### Clone the Lightning repository\\n\\n```\\ncd openfn\\ngit clone https://github.com/OpenFn/lightning.git\\n```\\n\\n### Build the containers\\n\\nThis will build three docker containers:\\n\\n1. lightning-web\\n1. postgres\\n1. ws-worker\\n\\n```\\ndocker compose build && docker compose run --rm web mix ecto.migrate\\ndocker compose up -d\\n```\\n\\nThe web application will be running on [localhost port 4000](http://localhost:4000).\\n\\n## Install the monorepo\\n\\nTo use the monorepo locally you'll need some prerequesite build tools installed.\\n\\n### Prerequesites\\n\\nasdf, nodejs, pnpm\\n\\n```\\ngit clone https://github.com/asdf-vm/asdf.git ~/.asdf\\n\\nasdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git\\nasdf plugin-add pnpm\\n```\\n\\n### Clone the monorepo repository\\n\\n```\\ncd openfn/adaptors\\ngit clone https://github.com/OpenFn/adaptors.git\\n```\\n\\n### Install the build tools\\n\\n```\\nasdf install # Install tool versions\\npnpm install\\npnpm build\\npnpm run setup\\n```\\n\\n### Switch to the working branch of the varo adaptor\\n\\n```\\ncd openfn/adaptors/adaptors\\ngit checkout nhgh-varo\\n```\\n\\n\"","changelog":"\"# @openfn/language-varo\\n\\n## 1.0.0\\n\\nInitial release. Handles the parsing of Varo Ems-like format and the parsing of FridgeTag format.\\n\"","functions":["convertToEms"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{},"type":"object","additionalProperties":true,"required":[]}},
+[
+  {
     "id": "alterState",
     "common": true,
     "name": "alterState",
