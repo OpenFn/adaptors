@@ -1,11 +1,8 @@
-import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'node:fs/promises';
 import { expect } from 'chai';
 import { parseFridgeTagToEms, parseFridgeTag } from '../src/FridgeTagUtils';
 import { parseVaroEmsToEms } from '../src/VaroEmsUtils';
-
-const __dirname = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
 describe('parseFridgeTagToEms', () => {
   it('converts raw fridgetag data into ems data', async () => {
@@ -60,10 +57,7 @@ describe('parseVaroEmsToEms', () => {
 
 async function getFixture(filename) {
   try {
-    return await fs.readFile(
-      path.join(__dirname, 'test/fixtures', filename),
-      'utf-8'
-    );
+    return await fs.readFile(path.resolve('test/fixtures', filename), 'utf-8');
   } catch (err) {
     throw new Error(
       `Failed to load fixture: ${filename}. Error: ${err.message}`
