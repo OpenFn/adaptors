@@ -41,7 +41,7 @@
           },
           {
             "title": "example",
-            "description": "convertToEms(\n```\n[\n  {\n    metadata: {\n      content: '',\n      filename: '',\n    },\n    data: {\n      content: '',\n      filename: '',\n    },\n  },\n]\n```\n)",
+            "description": "convertToEms(\n  [\n    {\n      metadata: { content: '', filename: '' },\n      data: { content: '', filename: '' }\n    }\n  ]\n);",
             "caption": "Convert data to EMS-compliant data."
           }
         ]
