@@ -1,5 +1,9 @@
 import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences, encode } from '@openfn/language-common/util';
+import {
+  expandReferences,
+  encode,
+  throwError,
+} from '@openfn/language-common/util';
 
 import {
   handleResponse,
@@ -628,9 +632,12 @@ export function upsert(
       });
       const resources = response.body[resourceType];
       if (resources.length > 1) {
-        throw new RangeError(
-          `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
-        );
+        throwError(409, {
+          description:
+            'Upsert failed: Multiple records found for a non-unique attribute.',
+          fix: 'Ensure the attribute is unique or modify the request to target a single record.',
+          error: 'Conflict',
+        });
       } else if (resources.length <= 0) {
         console.log(`Preparing create operation...`);
         response = await request(configuration, {
