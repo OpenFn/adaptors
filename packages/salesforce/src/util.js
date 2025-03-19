@@ -1,15 +1,13 @@
 import { Connection } from '@jsforce/jsforce-node';
 import { throwError } from '@openfn/language-common/util';
 
-let connection = null;
-
-async function basicAuth(state) {
+export const basicAuth = async configuration => {
   const { loginUrl, username, password, securityToken, apiVersion } =
-    state.configuration;
+    configuration;
 
-  connection = new Connection({ loginUrl, version: apiVersion });
+  const conn = new Connection({ loginUrl, version: apiVersion });
 
-  await connection
+  await conn
     .login(username, securityToken ? password + securityToken : password)
     .catch(error => {
       throwError('FAILED_AUTH', {
@@ -18,56 +16,25 @@ async function basicAuth(state) {
         error,
       });
     });
+  console.info(`Connecting to salesforce as ${username}.`);
 
-  console.info(`Connected to salesforce as ${username}.`);
+  return conn;
+};
 
-  return state;
-}
+export const tokenAuth = configuration => {
+  const { instance_url, access_token, apiVersion } = configuration;
 
-function tokenAuth(state) {
-  const { instance_url, access_token, apiVersion } = state.configuration;
-
-  connection = new Connection({
+  const conn = new Connection({
     instanceUrl: instance_url,
     accessToken: access_token,
     version: apiVersion,
   });
 
-  return state;
-}
+  return conn;
+};
 
-/**
- * Creates a connection to Salesforce using Basic Auth or OAuth.
- * @function createConnection
- * @private
- * @param {State} state - Runtime state.
- * @returns {State}
- */
-export function createConnection(state) {
-  if (connection) {
-    return state;
-  }
-
-  const { access_token } = state.configuration;
-
-  return access_token ? tokenAuth(state) : basicAuth(state);
-}
-
-/**
- * Removes state.connection from state.
- * @example
- * removeConnection(state)
- * @function
- * @private
- * @param {State} state
- * @returns {State}
- */
-export function removeConnection(state) {
-  connection = null;
-  return state;
-}
-
-export function getConnection() {
+export const checkConnection = async connection => {
+  // console.log(typeof (await connection));
   if (!connection) {
     throwError('No connection');
   }
@@ -75,7 +42,7 @@ export function getConnection() {
   console.log(`Connected with ${connection._sessionType} session type`);
 
   return connection;
-}
+};
 
 let anyAscii = undefined;
 
