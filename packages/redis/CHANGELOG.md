@@ -1,5 +1,15 @@
 # @openfn/language-redis
 
+## 1.3.0
+
+### Minor Changes
+
+- f713bc5: add mSet() function on redis adaptor
+
+### Patch Changes
+
+- f713bc5: use `util.throwError` for throwing errors
+
 ## 1.2.8
 
 ### Patch Changes
