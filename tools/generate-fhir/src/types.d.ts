@@ -13,6 +13,15 @@ export type MappingSpec = {
 
   /** Array of string regexes */
   valueSets?: string[];
+
+  propsToIgnoreInDocs?: string[];
+
+  /** After creation has run, execute this code */
+  initialiser?: (resource) => void;
+
+  // Allow builder shorthand values to be captured in typings
+  // eg, a refernce can be a string or Reference
+  typeShorthands?: Record<string, string[]>;
 };
 
 export type Mapping = {
@@ -27,7 +36,7 @@ export type Mapping = {
 // Proprietary schema to describe a particular prop
 export type Schema = {
   id: string;
-  type: string;
+  type: string[];
   isArray: boolean;
   defaults: Record<string, any>;
   /** True if this prop includes a system */
@@ -40,7 +49,7 @@ export type profileId = string;
 
 export type SpecJSON = Record<profileId, ProfileSpec>;
 
-// This (partially)) defines the JSON structure of a fhir spec for a profile
+// This (partially) defines the JSON structure of a fhir spec for a profile
 export type ProfileSpec = {
   id: string; // profile id
   resourceType: string; // should be StructureDefinition

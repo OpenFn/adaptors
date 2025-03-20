@@ -1,0 +1,15 @@
+{
+  "include": ["src/**/*.ts"],
+  "ts-node": {
+    // is this gonna blow up in node 19 though??
+    "experimentalSpecifierResolution": "node"
+  },
+  "compilerOptions": {
+    "strict": true,
+    "outDir": "dist",
+    "module": "es2020",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
+  }
+}

@@ -1,14 +1,8 @@
-// TODO utils shouldn't be in the generated template!
-
-// utils includes little builder functions
-
 import _ from 'lodash';
 
-const systemMap = {
-  SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID',
-  MRN: 'http://moh.gov.et/fhir/hiv/identifier/MRN',
-  UAN: 'http://moh.gov.et/fhir/hiv/identifier/UAN',
-};
+import type * as FHIR from './fhir';
+
+let systemMap = {};
 
 // https://hl7.org/fhir/R4/datatypes.html#dateTime
 const datetimeregex =
@@ -34,54 +28,59 @@ export const mapSystems = obj => {
  * Builder functions will use this mappings when they encounter them in system keys. Useful for setting shortcuts.
  * @public
  * @function
- * @example <caption>Set shortcut sustem mappings</caption>
- * util.setSystemMap({
+ * @example <caption>Set shortcut system mappings</caption>
+ * b.setSystemMap({
  *   SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'
  * });
- * builders.patient('patient', { identifier: util.identifier('xyz', 'SmartCareId') })
- * };
+ * create(builders.patient({ identifier: b.identifier('xyz', 'SmartCareId') }))
  */
-export const setSystemMap = newMappings => {
+export const setSystemMap = newMappings => state => {
+  systemMap = newMappings;
+  return state;
+};
+
+export const extendSystemMap = newMappings => {
   Object.assign(systemMap, newMappings);
 };
 
 /**
- * Create an identifier resource. Systems will be mapped against the system map.
- * The input can be a string value, or an identifier object.
- * If input is an array of identifiers, an array of mapped/parsed values will be returned.
+ * Create an Identifier. Systems will be mapped against the system map. Pass extensions as extra arguments.
  * @public
  * @function
- * @param input - an array of strings, or a identifier value as a string or object
+ * @param id - A string identifier, a FHIR identifier object, or an array of either.
+ * @param ext - Any other arguments will be treated as extensions
  * @param {string} [system] - the string system to use by default if
  */
-export const identifier = (input, system) => {
+export const identifier = (id: string | FHIR.Identifier, ...ext) => {
   // If an array of inputs is passed in, map each element of the array
   // because it's very common to support a set of identifiers, rather than just one
-  if (Array.isArray(input)) {
-    return input.map(i => identifier(i, system));
+  // Note that in this mode, each argument should be an object
+  if (Array.isArray(id)) {
+    return id.map(i => identifier(i));
   }
 
-  if (input) {
-    if (typeof input === 'string') {
-      return mapSystems({
-        value: input,
-        system,
-      });
-    } else if (system) {
-      return mapSystems({
-        // Is system a default or override?
-        // Probably a default?
-        system,
-        ...input,
-      });
-    } else {
-      return mapSystems(input);
+  const i: FHIR.Identifier = {};
+  if (typeof id === 'string') {
+    i.value = id;
+  } else {
+    if (id.type) {
+      id.type = concept(id.type);
     }
+    Object.assign(i, id);
+    // TODO can we default the system anyhow?
   }
+
+  // TODO warn for unexpected keys?
+
+  ext.forEach(e => {
+    addExtension(i, e.url, e.value);
+  });
+
+  return mapSystems(i);
 };
 
 /**
- * Alias for util.identifier()
+ * Alias for b.identifier()
  * @public
  * @function
  */
@@ -110,6 +109,36 @@ export const addExtension = (resource, url, value) => {
 };
 
 /**
+ * Create an extension with a system and value
+ * Values will be typemapped (ie, `value` -> `valueString`)
+ * Optionally pass extra keys on the third argument
+ * @public
+ * @function
+ * @param {string} url - the URL to set for the extension
+ * @param value - the value that the extension should contain
+ * @param props - extra props to add to the extension
+ */
+export const extension = (
+  url: string,
+  value: any,
+  props: Omit<FHIR.Extension, 'url'> = {}
+) => {
+  const ext = {
+    url: url,
+  };
+
+  composite(ext, 'value', value);
+  return { extension: [Object.assign(ext, props)] };
+};
+
+/**
+ * Alias for b.extension()
+ * @public
+ * @function
+ */
+export const ext = extension;
+
+/**
  * Find an extension with a given url in some array
  * @public
  * @function
@@ -125,53 +154,90 @@ export const findExtension = (obj, targetUrl, path) => {
   return result;
 };
 
-// TODO should this also take display text?
-
 /**
  * Create a coding object { code, system }. Systems will be mapped using the system map.
  * @public
  * @function
  * @param {string} code - the code value
- * @param {string} system - URL to the system. Well be mapped using the system map.
+ * @param {string} system - URL to the system. Will be mapped using the system map.
  */
-export const coding = (code, system) => ({ code, system: mapSystems(system) });
+export const coding = (
+  code: string,
+  system: string,
+  extra: Omit<FHIR.Coding, 'code' | 'system'> = {}
+) =>
+  mapSystems({
+    code,
+    system,
+    ...extra,
+  });
+
+export const c = coding;
 
 /**
- * Create a codeableConcept. Codings can be coding objects or
- * [code, system] tuples
- * if the first argument is a string, it will be set as the text.
+ * Create a value object { code, system } with optional system. Systems will be mapped.
+ * @function
+ * @param {string} value - the value
+ * @param {string} system - URL to the system. Well be mapped using the system map.
+ */
+// TODO drop this? What is it for?
+export const value = (value, system, ...extra) =>
+  mapSystems({
+    value,
+    system,
+    ...extra,
+  });
+
+/**
+ * Create a CodeableConcept. Codings can be coding objects or
+ * [code, system, extra] tuples (such as passed to b.coding())
  * Systems will be mapped with the system map
  * @public
  * @function
+ * @param {string} value - the value
+ * @param {object} extra - Extra properties to write to the coding
  * @example <caption><Create a codeableConcept</caption>
  * const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  * * @example <caption><Create a codeableConcept with text</caption>
  * const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  */
-export const concept = (text, ...codings) => {
-  const result = {};
-  let incomingCodings = codings;
-  if (typeof text === 'string') {
-    result.text = text;
-  } else {
-    incomingCodings = [text].concat(codings);
+type ConceptCoding =
+  | FHIR.Coding
+  | [string, string, Omit<FHIR.Coding, 'code' | 'system'>?];
+
+export const concept = (
+  codings: ConceptCoding | ConceptCoding[],
+  extra: Omit<FHIR.CodeableConcept, 'coding'> = {}
+): FHIR.CodeableConcept => {
+  // This looks like a valid concept - just return it
+  if ((codings as any).coding) {
+    return codings as unknown as FHIR.CodeableConcept;
+  }
+  // Work out if we've been passed one or many codings
+  if (
+    // This looks like a single coding object
+    !Array.isArray(codings) ||
+    // This looks like a single tuple
+    typeof codings[0] === 'string'
+  ) {
+    // @ts-ignore
+    codings = [codings];
   }
 
-  const c = [];
-  for (const item of incomingCodings) {
-    if (Array.isArray(item)) {
-      c.push(coding(item[0], item[1]));
-    } else {
-      c.push(item);
-    }
-  }
-  result.coding = c;
-
-  return result;
+  return {
+    ...extra,
+    coding: codings.map(c => {
+      if (Array.isArray(c)) {
+        return coding(...c);
+      } else {
+        return c;
+      }
+    }),
+  };
 };
 
 /**
- * Alias for util.concept()
+ * Alias for b.concept()
  * @public
  * @function
  */
@@ -187,7 +253,7 @@ export const cc = concept;
  * @function
  * @param ref - the thing to generate a reference from
  */
-export const reference = (ref, opts) => {
+export const reference = (ref, opts = {}) => {
   if (Array.isArray(ref)) {
     return ref.map(reference, opts);
   }
@@ -215,7 +281,7 @@ export const reference = (ref, opts) => {
 };
 
 /**
- * Alias for util.reference()
+ * Alias for b.reference()
  * @public
  * @function
  */

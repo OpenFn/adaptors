@@ -1,22 +1,100 @@
 import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 import { print, parse } from 'recast';
 
+// TODO this is a strange type - shouldn't it be n.statement?
 import { StatementKind } from 'ast-types/gen/kinds';
-import { getBuilderName, getTypeName, sortKeys } from './util';
+import {
+  getBuilderName,
+  getInterfaceName,
+  getTypeName,
+  sortKeys,
+} from './util';
+import { Mapping, MappingSpec, Schema } from './types';
+import { generateType } from './generate-types';
 
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
 
 const generateCode = (
   schema: Record<string, Schema[]>,
-  mappings: MappingSpec = {}
-) => {
+  mappings: MappingSpec = {},
+  options: {
+    simpleSignatures?: boolean;
+    fhirTypes?: Record<string, true>;
+  } = {}
+): { builders: string; profiles: Record<string, string> } => {
   const statements: n.Statement[] = [];
+
+  statements.push(b.exportAllDeclaration(b.stringLiteral('./datatypes'), null));
+
+  const imports: n.Statement[] = [];
+
+  const profiles = {};
+
+  // generate a builder for each profile
+  const orderedResources = Object.keys(schema).sort();
+  for (const resourceType of orderedResources) {
+    // Note that the schema has already applied include/exclude filters
+    const sortedProfiles = sortKeys(schema[resourceType]) as Schema[];
+    for (const profile of sortedProfiles) {
+      // import this builder
+      const name = getTypeName(profile);
+      const iface = getInterfaceName(profile);
+      imports.push(
+        b.importDeclaration(
+          [
+            b.importDefaultSpecifier(b.identifier(name)),
+            b.importSpecifier(b.identifier(iface)),
+          ],
+          b.stringLiteral(`./profiles/${profile.id}`)
+        )
+      );
+
+      profiles[profile.id] = generateProfile(
+        profile,
+        Object.assign(
+          {
+            initialiser: mappings.initialiser,
+            typeShorthands: mappings.typeShorthands,
+          },
+          mappings.overrides?.[resourceType]
+        ),
+        options.fhirTypes
+      );
+
+      // Generate an entrypoint function
+      statements.push(
+        ...generateEntry(
+          name,
+          resourceType,
+          schema[resourceType],
+          options.simpleSignatures,
+          mappings.propsToIgnoreInDocs
+        )
+      );
+    }
+  }
+
+  const program = b.program([...imports, ...statements]);
+
+  const builders = print(program).code;
+
+  return { builders, profiles };
+};
+
+const generateProfile = (
+  profile: Schema,
+  mappings: MappingSpec,
+  fhirTypes: Record<string, true> = {}
+) => {
+  const statements = [];
+
+  const overrides = Object.assign({}, mappings.any, mappings[profile.id]);
 
   statements.push(
     b.importDeclaration(
-      [b.importNamespaceSpecifier(b.identifier('util'))],
-      b.stringLiteral('./utils.js')
+      [b.importNamespaceSpecifier(b.identifier('dt'))],
+      b.stringLiteral('../datatypes')
     )
   );
   statements.push(
@@ -25,40 +103,86 @@ const generateCode = (
       b.stringLiteral('lodash')
     )
   );
+  statements.push(
+    b.importDeclaration(
+      [b.importNamespaceSpecifier(b.identifier('FHIR'))],
+      b.stringLiteral('../fhir')
+    )
+  );
 
-  // generate a builder for each variant
-  const orderedResources = Object.keys(schema).sort();
-  for (const resourceType of orderedResources) {
-    // Note that the schema has already applied include/exclude filters
+  // TODO It would be better to define this once and import it,
+  // but that's a bit harder to work out with Lightning I think?
+  statements.push(
+    b.tsTypeAliasDeclaration(
+      b.identifier('MaybeArray<T>'),
+      b.tsUnionType([
+        b.tsTypeReference(b.identifier('T')),
+        b.tsTypeReference(b.identifier('T[]')),
+      ])
+    )
+  );
 
-    // Generate an entrypoint function
-    statements.push(generateEntry(resourceType, schema[resourceType]));
+  const typedef = generateType(
+    profile.type,
+    profile,
+    {
+      ...mappings,
+      overrides,
+    },
+    fhirTypes
+  );
 
-    // Now generate an actual builder for each profile
-    const sortedProfiles = sortKeys(schema[resourceType]);
-    for (const profile of sortedProfiles) {
-      const m = mappings.overrides?.[resourceType] ?? {};
-      const overrides = Object.assign({}, m.any, m[profile.id]);
-      const name = getTypeName(profile);
+  statements.push(typedef);
 
-      statements.push(generateBuilder(name, profile, overrides));
-    }
-  }
+  const fn = generateBuilder(profile, overrides, mappings.initialiser);
+
+  statements.push(b.exportDefaultDeclaration(fn));
+
+  // TODO export default
 
   const program = b.program(statements);
-
   return print(program).code;
 };
 
 export default generateCode;
 
-const generateEntry = (resourceType: string, variants: Schema[]) => {
+// For each prop in the schema, generate a prop in jsdocs
+const generateJsDocs = (schema: Schema[], ignore: string[] = []) => {
+  const props: string[] = [];
+
+  // TODO for now, just generate for the first schema
+  const profile = schema[0];
+  const validProps = Object.keys(profile.props).filter(
+    p => !ignore.includes(p)
+  );
+  for (const propName of validProps) {
+    const prop = profile.props[propName];
+    // TODO do I need the typemap here?
+    props.push(`{${prop.type.join('|')}} [props.${propName}] - ${prop.desc}`);
+  }
+
+  return props.map(p => `  * @param ${p}`).join('\n');
+};
+
+const generateEntry = (
+  name: string,
+  resourceType: string,
+  variants: Schema[],
+  simpleSignatures?: boolean,
+  propsToIgnoreInDocs: string[] = []
+) => {
+  const declarations = [];
+
+  const statements = [];
   const comment = parse(`/**
   * Create a FHIR ${resourceType} resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant
-  * @param props - Properties to apply to the resource
+  * @param {string} type - The profile id for the resource variant.${
+    simpleSignatures ? ' Optional.' : ''
+  }
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
+${generateJsDocs(variants, propsToIgnoreInDocs)}
  */
 `);
 
@@ -67,54 +191,146 @@ const generateEntry = (resourceType: string, variants: Schema[]) => {
       b.identifier('mappings'),
       b.objectExpression(
         variants.map(schema =>
-          b.objectProperty(
-            b.stringLiteral(schema.id),
-            b.identifier(
-              `${getBuilderName(resourceType)}_${schema.id.replace(/-/g, '_')}`
-            )
-          )
+          b.objectProperty(b.stringLiteral(schema.id), b.identifier(name))
         )
       )
     ),
   ]);
-  // TODO handle errors for invalid types
-  const mapper = parse(`
-    return mappings[type](props)
-`);
+  statements.push(map);
 
-  const ex = b.exportDeclaration(
+  // Generate the main tssignature
+  // Also push an override for the simple interface
+  const signature = b.exportDeclaration(
+    false,
+    b.tsDeclareFunction(b.identifier(getBuilderName(resourceType)), [
+      b.tsParameterProperty(
+        b.identifier.from({
+          name: 'type',
+          typeAnnotation: b.tsTypeAnnotation(b.tsStringKeyword()),
+        })
+      ),
+      b.tsParameterProperty(
+        b.identifier.from({
+          name: INPUT_NAME,
+          typeAnnotation: b.tsTypeAnnotation(
+            b.tsTypeReference(b.identifier(getInterfaceName(variants[0])))
+          ),
+        })
+      ),
+    ])
+  );
+  declarations.push(signature);
+
+  if (simpleSignatures) {
+    // TODO how do we know the default type?
+    const handleOptionalType = parse(`// Handle optional type parameter
+  if (typeof type !== "string") {
+    props = type;
+    type = "${variants[0].id}";
+  }`);
+    statements.push(...handleOptionalType.program.body);
+
+    const override = b.exportDeclaration(
+      false,
+      b.tsDeclareFunction(
+        b.identifier(getBuilderName(resourceType)),
+        [
+          b.tsParameterProperty(
+            // TODO need a full type for this. Where do we get it?
+            b.identifier.from({
+              name: INPUT_NAME,
+              typeAnnotation: b.tsTypeAnnotation(
+                b.tsTypeReference(b.identifier(getInterfaceName(variants[0])))
+              ),
+            })
+          ),
+        ]
+        // What is the return type?
+        // It's not the same as our props - it's a fhir object
+        // b.tsTypeAnnotation(b.tsTypeReference(b.identifier('Patient')))
+      )
+    );
+
+    declarations.push(override);
+  }
+
+  const mapper = parse(`
+  if (type in mappings) {
+      return mappings[type](props)
+  }
+  throw new Error(\`Error: profile "\${type}" not recognised\`)
+`);
+  statements.push(...mapper.program.body);
+
+  const impl = b.exportDeclaration(
     false,
     b.functionDeclaration(
       b.identifier(getBuilderName(resourceType)),
-      [b.identifier('type'), b.identifier(INPUT_NAME)],
-      b.blockStatement([map, ...mapper.program.body])
+      [
+        b.tsParameterProperty(
+          b.identifier.from({
+            name: 'type',
+            typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
+          })
+        ),
+        b.tsParameterProperty(
+          // TODO need a full type for this. Where do we get it?
+          b.identifier.from({
+            name: INPUT_NAME,
+            typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
+            optional: true,
+          })
+        ),
+      ],
+      b.blockStatement(statements)
     )
   );
+  declarations.push(impl);
 
-  ex.comments = comment.program.comments;
-  ex.comments[0].leading = true;
+  // Add the comment to the first declaration
+  declarations[0].comments = comment.program.comments;
+  declarations[0].comments![0].leading = true;
 
-  return ex;
+  return declarations;
 };
 
-const generateBuilder = (resourceName, schema, mappings) => {
+const generateBuilder = (schema, mappings, initialiser: (r: any) => void) => {
   const body: StatementKind[] = [];
 
   body.push(initResource(schema.type));
 
-  // this may be temporary
-  // const setDefaults = parse('Object.assign(resource, props);');
-  // body.push(...setDefaults.program.body);
-
   body.push(...mapProps(schema, mappings));
 
-  body.push(addMeta(schema, mappings));
+  if (initialiser) {
+    try {
+      const init = parse(initialiser.toString());
+      // Pull the statements out of the function body
+      // and add them in-line
+      const fn = init.program.body[0].expression;
+      body.push(...fn.body.body.filter(n => n.type !== 'ReturnStatement'));
+    } catch (e) {
+      console.error(`Failed to process initialiser for ${schema.type}`);
+      console.error(e);
+    }
+  }
 
   body.push(returnResource());
 
   const fn = b.functionDeclaration(
-    b.identifier(getBuilderName(resourceName)),
-    [b.identifier(INPUT_NAME)],
+    null,
+    [
+      b.identifier.from({
+        name: INPUT_NAME,
+        typeAnnotation: b.tsTypeAnnotation(
+          b.tsTypeReference(
+            b.identifier('Partial'),
+            b.tsTypeParameterInstantiation([
+              b.tsTypeReference(b.identifier(`${schema.type}_Props`)),
+            ])
+          )
+        ),
+      }),
+    ],
     b.blockStatement(body)
   );
 
@@ -139,26 +355,11 @@ const mapProps = (schema, mappings) => {
       } else if (spec.typeDef) {
         props.push(mapTypeDef(key, mappings[key], spec));
       } else {
-        switch (spec.type) {
-          case 'string':
-          case 'Period':
-            props.push(mapSimpleProp(key, mappings[key], spec));
-            break;
-          case 'Reference':
-            props.push(mapReference(key, mappings[key], spec));
-            break;
-          case 'Identifier':
-            props.push(mapIdentifier(key, mappings[key] || {}, spec));
-            break;
-          case 'CodeableConcept':
-            props.push(mapCodeableConcept(key, mappings[key] || {}, spec));
-            break;
-          default:
-            // console.warn(
-            //   `WARNING: using simple mapping for ${schema.id}.${key}`
-            // );
-            props.push(mapSimpleProp(key, mappings[key], spec));
-          // TODO: warn unused type
+        // TODO what happens if the type is like `reference | identifier`? Such contrasting types?
+        if (spec.type.includes('Reference')) {
+          props.push(mapReference(key, mappings[key], spec));
+        } else if (spec.type.includes('Identifier')) {
+          props.push(mapIdentifier(key, mappings[key] || {}, spec));
         }
       }
     } else {
@@ -229,8 +430,6 @@ const addDefaults = (propName: string, mapping: Mapping, schema: Schema) => {
 // A simple prop will just take what's in the input and map it right across
 // Mapping rules could add extra complications here, like aliasing and converting
 const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
-  if (propName === 'code') {
-  }
   // This is the actual assignment
   const assignProp = assignToInput(
     propName,
@@ -283,7 +482,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          b.objectExpression([])
+          b.objectExpression([b.spreadProperty(b.identifier('item'))])
         ),
       ])
     );
@@ -304,7 +503,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
         b.expressionStatement(
           b.callExpression(
             b.memberExpression(
-              b.identifier('util'),
+              b.identifier('dt'),
               b.identifier('addExtension')
             ),
             [
@@ -315,19 +514,11 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           )
         )
       );
+      assignments.push(ifPropInInput(prop, body, alts, inputName));
     } else {
-      body.push(
-        b.expressionStatement(
-          b.assignmentExpression(
-            '=',
-            b.memberExpression(b.identifier(safePropName), b.identifier(prop)),
-            sourceValue
-          )
-        )
-      );
+      // Don't bother to explicitly map simple assignments
+      // TODO: handle datatypes and special things here too
     }
-
-    assignments.push(ifPropInInput(prop, body, alts, inputName));
   }
 
   if (schema.hasSystem) {
@@ -337,10 +528,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           '=',
           b.identifier(safePropName),
           b.callExpression(
-            b.memberExpression(
-              b.identifier('util'),
-              b.identifier('mapSystems')
-            ),
+            b.memberExpression(b.identifier('dt'), b.identifier('mapSystems')),
             [b.identifier(safePropName)]
           )
         )
@@ -355,7 +543,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          b.objectExpression([])
+          b.objectExpression([b.spreadProperty(b.identifier('item'))])
         ),
       ])
     );
@@ -422,7 +610,7 @@ const mapCodeableConcept = (
 const mapExtension = (propName: string, mapping: Mapping) => {
   const callBuilder = b.expressionStatement(
     b.callExpression(
-      b.memberExpression(b.identifier('util'), b.identifier('addExtension')),
+      b.memberExpression(b.identifier('dt'), b.identifier('addExtension')),
       [
         b.identifier(RESOURCE_NAME),
         b.stringLiteral(mapping.extension),
@@ -444,7 +632,7 @@ const mapReference = (propName: string, _mapping: Mapping, schema: Schema) => {
   }
 
   const callBuilder = b.callExpression(
-    b.memberExpression(b.identifier('util'), b.identifier('reference')),
+    b.memberExpression(b.identifier('dt'), b.identifier('reference')),
     [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))]
   );
 
@@ -454,8 +642,12 @@ const mapReference = (propName: string, _mapping: Mapping, schema: Schema) => {
 };
 
 const mapComposite = (propName: string, _mapping: Mapping, _schema: Schema) => {
+  const deleteKey = b.unaryExpression(
+    'delete',
+    b.memberExpression(b.identifier(RESOURCE_NAME), b.identifier(propName))
+  );
   const callBuilder = b.callExpression(
-    b.memberExpression(b.identifier('util'), b.identifier('composite')),
+    b.memberExpression(b.identifier('dt'), b.identifier('composite')),
     // util.composite(resource, 'x'', input.x)
     [
       b.identifier(RESOURCE_NAME),
@@ -464,22 +656,9 @@ const mapComposite = (propName: string, _mapping: Mapping, _schema: Schema) => {
     ]
   );
 
-  return ifPropInInput(propName, [b.expressionStatement(callBuilder)]);
-};
-
-// this will ensure a meta prop on the data
-const addMeta = (schema, _mapping) => {
-  return b.expressionStatement(
-    b.assignmentExpression(
-      '=',
-      b.memberExpression(b.identifier(RESOURCE_NAME), b.identifier('meta')),
-      b.objectExpression([
-        b.objectProperty(
-          b.identifier('profile'),
-          b.arrayExpression([b.stringLiteral(schema.url)])
-        ),
-      ])
-    )
+  return ifPropInInput(
+    propName,
+    [deleteKey, callBuilder].map(b.expressionStatement)
   );
 };
 
@@ -489,13 +668,11 @@ const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {
   const statements: StatementKind[] = [];
 
   const createIdentifier = b.callExpression(
-    b.memberExpression(b.identifier('util'), b.identifier('identifier')),
+    b.memberExpression(b.identifier('dt'), b.identifier('identifier')),
     [
       b.memberExpression(b.identifier(INPUT_NAME), b.identifier(name)),
-      defaultSystem
-        ? b.stringLiteral(defaultSystem)
-        : b.identifier('undefined'),
-    ]
+      defaultSystem && b.stringLiteral(defaultSystem),
+    ].filter(ast => ast)
   );
   if (schema.isArray) {
     // if this is an array type, we should force the input to be an array
@@ -516,19 +693,10 @@ const initResource = (resourceType: string) => {
     b.stringLiteral(resourceType)
   );
 
-  const t = `<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>${resourceType}</b></p></div>`;
-  const text = b.objectProperty(
-    b.identifier('text'),
-    b.objectExpression([
-      b.objectProperty(b.identifier('status'), b.stringLiteral('generated')),
-      b.objectProperty(b.identifier('div'), b.stringLiteral(t)),
-    ])
-  );
-
   return b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier(RESOURCE_NAME),
-      b.objectExpression([rt, text])
+      b.objectExpression([rt, b.spreadProperty(b.identifier(INPUT_NAME))])
     ),
   ]);
 };
