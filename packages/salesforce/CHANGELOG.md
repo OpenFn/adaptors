@@ -1,5 +1,28 @@
 # @openfn/language-salesforce
 
+## 5.0.5
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
+## 5.0.4
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
+## 5.0.3
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
 ## 5.0.2
 
 Major modernization of the Salesforce adaptor, focusing on standardized state

@@ -92,7 +92,7 @@ describe('request()', () => {
       err = e;
     }
     expect(err.code).to.eql('UNEXPECTED_RELATIVE_URL');
-    expect(err.description).to.not.be.undefined
+    expect(err.description).to.not.be.undefined;
   });
 
   it('should throw if url is absolute and does not match baseUrl', async () => {
@@ -215,7 +215,6 @@ describe('get()', () => {
     expect(responseWithoutDuration).to.eql({
       method: 'GET',
       headers: { 'content-type': 'application/json' },
-      body: { x: 31 },
       statusCode: 201,
       statusMessage: 'Created',
       url: 'https://www.example.com/json',
@@ -286,8 +285,10 @@ describe('get()', () => {
         headers: { 'x-openfn': 'testing' },
       })
     )(state);
-
-    expect(data).to.eql({ 'x-openfn': 'testing' });
+    expect(data).to.eql({
+      'x-openfn': 'testing',
+      'Content-Type': 'application/json',
+    });
   });
 
   it('sets up a basic auth header', async () => {
@@ -381,37 +382,6 @@ describe('get()', () => {
     expect(data).eql({ ok: true });
   });
 
-  it('pass state to the callback', async () => {
-    testServer
-      .intercept({
-        path: '/api/callback',
-        method: 'GET',
-      })
-      .reply(
-        200,
-        { id: 3 },
-        {
-          headers: jsonHeaders,
-        }
-      );
-
-    const state = {
-      configuration: { baseUrl: 'https://www.example.com' },
-      data: {},
-    };
-
-    let callbackState;
-
-    const finalState = await execute(
-      get('api/callback', {}, state => {
-        callbackState = state;
-        return state;
-      })
-    )(state);
-
-    expect(callbackState).to.eql(finalState);
-  });
-
   it('should throw for a 404 response', async () => {
     testServer
       .intercept({
@@ -471,46 +441,91 @@ describe('get()', () => {
     expect(response.statusCode).to.eql(404);
   });
 
-  it('can be called inside an each block', async () => {
+});
+
+describe('contentType', () => {
+  it('should prefer contentType option to content-type header', async () => {
+    let req;
     testServer
       .intercept({
         path: '/api/fake-json',
-        method: 'GET',
+        method: 'POST',
       })
-      .reply(200, ({ body }) => body)
-      .persist();
-
+      .reply(200, r => {
+        req = r;
+        return { id: 1, name: 'a', age: 42 };
+      });
     const state = {
       configuration: {},
-      things: [
-        { name: 'a', age: 42 },
-        { name: 'b', age: 83 },
-        { name: 'c', age: 112 },
-      ],
-      replies: [],
     };
 
-    const finalState = await execute(
-      each(
-        '$.things[*]',
-        get(
-          'https://www.example.com/api/fake-json',
-          {
-            body: state => state.data,
-          },
-          next => {
-            next.replies.push(next.response.body);
-            return next;
-          }
-        )
+    const response = await execute(
+      post(
+        'https://www.example.com/api/fake-json',
+        { name: 'a', age: 42 },
+        { headers: { 'Content-Type': 'application/json' }, contentType: 'form' }
       )
     )(state);
 
-    expect(finalState.replies).to.eql([
-      '{"name":"a","age":42}',
-      '{"name":"b","age":83}',
-      '{"name":"c","age":112}',
-    ]);
+    expect(req.body instanceof FormData).to.equal(true);
+    expect(JSON.parse(response.data).id).to.eql(1);
+  });
+
+  it('should handle invalid contentType and default to application/json', async () => {
+    let req;
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'POST',
+      })
+      .reply(200, r => {
+        req = r;
+        return { id: 1, name: 'a', age: 42 };
+      });
+    const state = {
+      configuration: {},
+    };
+
+    const response = await execute(
+      post(
+        'https://www.example.com/api/fake-json',
+        { name: 'a', age: 42 },
+        { contentType: 'file' }
+      )
+    )(state);
+
+    
+    expect(req.body).to.equal(JSON.stringify({ name: 'a', age: 42 }));
+    expect(JSON.parse(response.data).id).to.eql(1);
+    expect(req.headers['Content-Type']).to.equal('application/json');
+  });
+
+  it('should use content-type header when given', async () => {
+    let req;
+    testServer
+      .intercept({
+        path: '/api/fake-json',
+        method: 'POST',
+      })
+      .reply(200, r => {
+        req = r;
+        return { id: 1, name: 'a', age: 42 };
+      });
+    const state = {
+      configuration: {},
+    };
+
+    const response = await execute(
+      post(
+        'https://www.example.com/api/fake-json',
+        { name: 'a', age: 42 },
+        { headers: { 'Content-Type': 'application/json' } }
+      )
+    )(state);
+
+    expect(req.body).to.equal(JSON.stringify({ name: 'a', age: 42 }));
+    expect(JSON.parse(response.data).id).to.eql(1);
+    expect(req.headers['Content-Type']).to.equal('application/json');
   });
 });
 
@@ -531,9 +546,7 @@ describe('post', () => {
     const state = {};
 
     await execute(
-      post('https://www.example.com/api/json', {
-        body: { name: 'tony stark', age: 24 },
-      })
+      post('https://www.example.com/api/json', { name: 'tony stark', age: 24 })
     )(state);
 
     expect(req.body).to.equal(JSON.stringify({ name: 'tony stark', age: 24 }));
@@ -565,8 +578,8 @@ describe('post', () => {
     };
 
     const { data } = await execute(
-      post('https://www.example.com/api/form-data', {
-        form: formData,
+      post('https://www.example.com/api/form-data', formData, {
+        contentType: 'form',
       })
     )({});
 
@@ -592,138 +605,16 @@ describe('post', () => {
       },
     };
     const { response } = await execute(
-      post('https://www.example.com/api/custom-success-codes', {
-        body: state => state.data,
-        errors: { 502: false },
-      })
+      post(
+        'https://www.example.com/api/custom-success-codes',
+        state => state.data,
+        {
+          errors: { 502: false },
+        }
+      )
     )(state);
 
     expect(response.statusCode).to.eq(502);
-  });
-
-  it('can be called inside an each block', async () => {
-    testServer
-      .intercept({
-        path: '/api/json',
-        method: 'POST',
-      })
-      .reply(200, ({ body }) => body)
-      .persist();
-
-    const state = {
-      configuration: {},
-      things: [
-        { name: 'a', age: 42 },
-        { name: 'b', age: 83 },
-        { name: 'c', age: 112 },
-      ],
-      replies: [],
-    };
-
-    const finalState = await execute(
-      each(
-        '$.things[*]',
-        post(
-          'https://www.example.com/api/json',
-          {
-            body: state => state.data,
-          },
-          next => {
-            next.replies.push(next.response.body);
-            return next;
-          }
-        )
-      )
-    )(state);
-
-    expect(finalState.replies).to.eql([
-      '{"name":"a","age":42}',
-      '{"name":"b","age":83}',
-      '{"name":"c","age":112}',
-    ]);
-  });
-
-  it('can be called inside an each with old "json" request config', async () => {
-    testServer
-      .intercept({
-        path: '/api/fake-json',
-        method: 'POST',
-      })
-      .reply(200, ({ body }) => body)
-      .persist();
-
-    const state = {
-      configuration: {},
-      things: [
-        { name: 'a', age: 42 },
-        { name: 'b', age: 83 },
-        { name: 'c', age: 112 },
-      ],
-      replies: [],
-    };
-
-    const finalState = await execute(
-      each(
-        '$.things[*]',
-        post(
-          'https://www.example.com/api/fake-json',
-          {
-            json: state => state.data,
-          },
-          next => {
-            next.replies.push(next.response.body);
-            return next;
-          }
-        )
-      )
-    )(state);
-
-    expect(finalState.replies).to.eql([
-      '{"name":"a","age":42}',
-      '{"name":"b","age":83}',
-      '{"name":"c","age":112}',
-    ]);
-  });
-
-  it('should make an http request from inside the parseCSV callback', async function () {
-    testServer
-      .intercept({
-        path: '/api/csv-reader',
-        method: 'POST',
-      })
-      .reply(200, ({ body }) => body, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .persist();
-
-    const csv = 'id,name\n1,taylor\n2,mtuchi\n3,joe\n4,stu\n5,elias';
-    const state = { references: [], data: [], apiResponses: [] };
-
-    const resultingState = await parseCsv(
-      csv,
-      { chunkSize: 2 },
-      (state, rows) =>
-        post(
-          'https://www.example.com/api/csv-reader',
-          {
-            body: rows,
-          },
-          state => {
-            state.apiResponses.push(...state.response.body);
-            return state;
-          }
-        )(state)
-    )(state);
-
-    expect(resultingState.apiResponses).to.eql([
-      { id: '1', name: 'taylor' },
-      { id: '2', name: 'mtuchi' },
-      { id: '3', name: 'joe' },
-      { id: '4', name: 'stu' },
-      { id: '5', name: 'elias' },
-    ]);
   });
 });
 
@@ -745,58 +636,13 @@ describe('put', () => {
     const state = {};
 
     const { response } = await execute(
-      put('https://www.example.com/api/fake-items/6', {
-        body,
-      })
+      put('https://www.example.com/api/fake-items/6', body)
     )(state);
 
     expect(response.statusCode).to.eql(200);
     expect(req.body).to.equal(JSON.stringify(body));
   });
 
-  it('can be called inside an each block', async () => {
-    testServer
-      .intercept({
-        path: '/api/json',
-        method: 'put',
-      })
-      .reply(200, ({ body }) => body)
-      .persist();
-
-    const state = {
-      configuration: {
-        baseUrl: 'https://www.example.com',
-      },
-      things: [
-        { name: 'a', age: 42 },
-        { name: 'b', age: 83 },
-        { name: 'c', age: 112 },
-      ],
-      replies: [],
-    };
-
-    const finalState = await execute(
-      each(
-        '$.things[*]',
-        put(
-          '/api/json',
-          {
-            body: state => state.data,
-          },
-          next => {
-            next.replies.push(next.response.body);
-            return next;
-          }
-        )
-      )
-    )(state);
-
-    expect(finalState.replies).to.eql([
-      '{"name":"a","age":42}',
-      '{"name":"b","age":83}',
-      '{"name":"c","age":112}',
-    ]);
-  });
 });
 
 describe('patch', () => {
@@ -817,58 +663,13 @@ describe('patch', () => {
     const state = {};
 
     const { response } = await execute(
-      patch('https://www.example.com/api/items/7', {
-        body,
-      })
+      patch('https://www.example.com/api/items/7', body)
     )(state);
 
     expect(response.statusCode).to.eql(200);
     expect(req.body).to.equal(JSON.stringify(body));
   });
 
-  it('can be called inside an each block', async () => {
-    testServer
-      .intercept({
-        path: '/api/fake-json',
-        method: 'PATCH',
-      })
-      .reply(200, ({ body }) => body)
-      .persist();
-
-    const state = {
-      configuration: {
-        baseUrl: 'https://www.example.com',
-      },
-      things: [
-        { name: 'a', age: 42 },
-        { name: 'b', age: 83 },
-        { name: 'c', age: 112 },
-      ],
-      replies: [],
-    };
-
-    const finalState = await execute(
-      each(
-        '$.things[*]',
-        patch(
-          '/api/fake-json',
-          state => ({
-            body: state.data,
-          }),
-          next => {
-            next.replies.push(next.response.body);
-            return next;
-          }
-        )
-      )
-    )(state);
-
-    expect(finalState.replies).to.eql([
-      '{"name":"a","age":42}',
-      '{"name":"b","age":83}',
-      '{"name":"c","age":112}',
-    ]);
-  });
 });
 
 describe('delete', () => {
@@ -891,48 +692,6 @@ describe('delete', () => {
     )(state);
 
     expect(response.statusCode).to.eql(204);
-  });
-
-  it('can be called inside an each block', async () => {
-    testServer
-      .intercept({
-        path: '/api/fake-json',
-        method: 'DELETE',
-      })
-      .reply(200, ({ body }) => body)
-      .persist();
-
-    const state = {
-      configuration: {},
-      things: [
-        { name: 'a', age: 42 },
-        { name: 'b', age: 83 },
-        { name: 'c', age: 112 },
-      ],
-      replies: [],
-    };
-
-    const finalState = await execute(
-      each(
-        '$.things[*]',
-        del(
-          'https://www.example.com/api/fake-json',
-          {
-            body: state => state.data,
-          },
-          next => {
-            next.replies.push(next.response.body);
-            return next;
-          }
-        )
-      )
-    )(state);
-
-    expect(finalState.replies).to.eql([
-      '{"name":"a","age":42}',
-      '{"name":"b","age":83}',
-      '{"name":"c","age":112}',
-    ]);
   });
 });
 
@@ -966,10 +725,13 @@ describe('tls', () => {
         state.httpsOptions = { ca: state.configuration.privateKey };
         return state;
       }),
-      post('https://www.example.com/api/sslCertCheck', state => ({
-        body: state.data,
-        agentOptions: state.httpsOptions,
-      }))
+      post(
+        'https://www.example.com/api/sslCertCheck',
+        state => state.data,
+        state => ({
+          agentOptions: state.httpsOptions,
+        })
+      )
     )(state);
     expect(finalState.data).to.eql({ a: 1 });
   });
@@ -985,8 +747,7 @@ describe('tls', () => {
     };
 
     const finalState = await execute(
-      post('https://www.example.com/api/sslCertCheck', {
-        body: state => state.data,
+      post('https://www.example.com/api/sslCertCheck', state => state.data, {
         tls: { ca: state.configuration.privateKey },
       })
     )(state);
@@ -1008,8 +769,7 @@ describe('tls', () => {
         state.httpsOptions = { ca: state.configuration.privateKey };
         return state;
       }),
-      post('https://www.example.com/api/sslCertCheck', {
-        body: state => state.data,
+      post('https://www.example.com/api/sslCertCheck', state => state.data, {
         tls: state => state.httpsOptions,
       })
     )(state);

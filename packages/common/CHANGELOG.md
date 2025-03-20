@@ -1,4 +1,29 @@
-## 2.0.0
+## 2.3.0
+
+## 2.3.1
+
+### Patch Changes
+
+- 23ccb01: Allow the errorMap passed into the request helper to be false, which
+  suppresses all errors
+
+### Minor Changes
+
+- b3d7f59: Common util functions `encode` and `decode` can now take a JavaScript
+  object and stringify
+- 41e8cc3: Added an 'assert' function that throws an error when an expression or
+  function resolves to false
+
+### Patch Changes
+
+- 2d709ff: Ensure that RegExp objects can be safely passed as references
+
+## 2.2.1
+
+### Patch Changes
+
+- 6dffdbd: Fixed an issue in the HTTP helpers where responses without a body can
+  cause an error to be thrown.
 
 ## 2.2.0
 
@@ -40,6 +65,8 @@
 ### Patch Changes
 
 - 8146c23: Fix typings in package.json
+
+## 2.0.0
 
 The 2.0 version of common removes axios and re-writes the `http` namespace.
 

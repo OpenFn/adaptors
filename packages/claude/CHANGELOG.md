@@ -1,0 +1,24 @@
+# @openfn/language-claude
+
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
+## 1.0.2
+
+### Patch Changes
+
+- Expose documenatation, expand references and expose options.
+
+## 1.0.1
+
+### Patch Changes
+
+- Fix config schema
+
+## 1.0.0
+
+Initial release.

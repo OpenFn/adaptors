@@ -1,5 +1,8 @@
 import { expect } from 'chai';
-import { expandReferences, normalizeOauthConfig } from '../../src/util/index.js';
+import {
+  expandReferences,
+  normalizeOauthConfig,
+} from '../../src/util/index.js';
 
 describe('util expandReferences', () => {
   it('should not modify string references', () => {
@@ -9,6 +12,26 @@ describe('util expandReferences', () => {
     const [resolvedName] = expandReferences(state, name);
 
     expect(resolvedName).to.equal('mulder');
+  });
+
+  it('should ignore regex literals', () => {
+    const regex = /scully/;
+    const state = {};
+
+    const [resolvedRegex] = expandReferences(state, regex);
+
+    expect(resolvedRegex instanceof RegExp).to.be.true;
+    expect(resolvedRegex.test('scully')).to.be.true;
+  });
+
+  it('should ignore regex instances', () => {
+    const regex = new RegExp('scully');
+    const state = {};
+
+    const [resolvedRegex] = expandReferences(state, regex);
+
+    expect(resolvedRegex instanceof RegExp).to.be.true;
+    expect(resolvedRegex.test('scully')).to.be.true;
   });
 
   it('should expand function references', () => {

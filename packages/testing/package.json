@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-testing",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "description": "OpenFn test adaptor. Internal use only.",
   "type": "module",
   "exports": {
@@ -26,7 +26,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:*"
+    "@openfn/language-common": "workspace:2.3.0"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",

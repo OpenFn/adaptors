@@ -3,6 +3,7 @@ import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
 import path from 'node:path';
+import throwError from './throw-error';
 
 const clients = new Map();
 
@@ -46,6 +47,10 @@ export const enableMockClient = baseUrl => {
 };
 
 const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
+  if (errorMap === false) {
+    return;
+  }
+
   const errMapMessage = errorMap[response.statusCode];
 
   const isError =
@@ -238,19 +243,32 @@ function encodeRequestBody(body) {
 }
 
 async function readResponseBody(response, parseAs) {
-  const contentType = response.headers['content-type'];
+  try {
+    const contentType = response.headers['content-type'];
+    if (+response.headers['content-length'] === 0) {
+      return undefined;
+    }
 
-  switch (parseAs) {
-    case 'json':
-      return response.body.json();
-    case 'text':
-      return response.body.text();
-    case 'stream':
-      return response.body;
-    default:
-      return contentType && contentType.includes('application/json')
-        ? response.body.json()
-        : response.body.text();
+    switch (parseAs) {
+      case 'json':
+        return await response.body.json();
+      case 'text':
+        return response.body.text();
+      case 'stream':
+        return response.body;
+      default:
+        return contentType && contentType.includes('application/json')
+          ? await response.body.json()
+          : response.body.text();
+    }
+  } catch (error) {
+    throwError(response.statusCode, {
+      description: 'Error parsing the response body',
+      parseAs,
+      contentType: response.headers['content-type'],
+      bodyLength: +response.headers['content-length'],
+      error: error.message,
+    });
   }
 }
 

@@ -59,7 +59,7 @@ export function options(opts = {}) {
 /**
  * Options provided to the HTTP request
  * @typedef {Object} CommonRequestOptions
- * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors.
+ * @property {object|boolean} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors.
  * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.

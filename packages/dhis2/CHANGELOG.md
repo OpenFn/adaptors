@@ -1,5 +1,45 @@
 # @openfn/language-dhis2
 
+## 6.3.1
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
+## 6.3.0
+
+### Minor Changes
+
+- Added a 'findAttributeValueById' function; GHS points out that this is more
+  durable than the display names used by 'findAttributeValue'
+
+## 6.2.0
+
+### Minor Changes
+
+- 0156632: Add `asBase64` option in dhis2 `get()` function
+
+## 6.1.0
+
+### Minor Changes
+
+- c19d561: Added support for personal access tokens in dhis2
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
+## 6.0.3
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
 ## 6.0.2
 
 ### Patch Changes

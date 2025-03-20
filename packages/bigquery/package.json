@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-bigquery",
-  "version": "3.0.7",
+  "version": "3.0.10",
   "description": "A Google BigQuery language package for use with Open Function",
   "main": "dist/index.cjs",
   "scripts": {
@@ -30,7 +30,6 @@
     "xml2js": "0.5.0"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",

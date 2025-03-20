@@ -26,53 +26,50 @@ import * as util from './Utils';
 /**
  * Make a GET request
  * @example
- * get("patient");
+ * get("patients");
  * @function
  * @public
  * @param {string} path - Path to resource
  * @param {RequestOptions} options - Optional request options
- * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {HttpState}
  */
-export function get(path, options, callback) {
-  return request('GET', path, null, options, callback);
+export function get(path, options) {
+  return request('GET', path, null, options);
 }
 
 /**
  * Make a POST request
  * @example
- * post("patient", { "name":"Bukayo" });
+ * post("patient", { "name": "Bukayo" });
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {object} data - Object which will be attached to the POST body
+ * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
- * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {HttpState}
  */
-export function post(path, options, callback) {
-  return request('POST', path, null, options, callback);
+export function post(path, body, options) {
+  return request('POST', path, body, options);
 }
 
 /**
  * Make a general HTTP request
  * @example
- * request("POST", "patient", { "name":"Bukayo" });
+ * request("POST", "patient", { "name": "Bukayo" });
  * @function
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
- * @param {object} data - Object which will be attached to the POST body
+ * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
- * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
  * @state {HttpState}
  */
-export function request(method, path, body, options = {}, callback = s => s) {
+export function request(method, path, body, options = {}) {
   return async state => {
-    const [resolvedMethod, resolvedPath, resolvedData, resolvedoptions] =
+    const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
       expandReferences(state, method, path, body, options);
 
     const response = await util.request(
@@ -80,12 +77,12 @@ export function request(method, path, body, options = {}, callback = s => s) {
       resolvedMethod,
       resolvedPath,
       {
-        data: resolvedData,
+        body: resolvedBody,
         ...resolvedoptions,
       }
     );
 
-    return util.prepareNextState(state, response, callback);
+    return util.prepareNextState(state, response);
   };
 }
 

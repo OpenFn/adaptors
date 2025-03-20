@@ -1,5 +1,28 @@
 # @openfn/language-hive
 
+## 0.3.11
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
+## 0.3.10
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
+## 0.3.9
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
 ## 0.3.8
 
 ### Patch Changes

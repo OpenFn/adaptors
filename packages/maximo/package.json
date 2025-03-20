@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-maximo",
-  "version": "0.5.9",
+  "version": "0.5.13",
   "description": "An IBM Maximo EAM Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -26,7 +26,6 @@
     "utf8": "^2.1.2"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "^2.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",

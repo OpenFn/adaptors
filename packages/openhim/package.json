@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-openhim",
-  "version": "0.3.6",
+  "version": "0.3.10",
   "description": "openhim Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -26,7 +26,6 @@
     "superagent": "^3.7.0"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "^1.0.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.1.2",

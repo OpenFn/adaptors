@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-http",
-  "version": "6.5.2",
+  "version": "7.0.1",
   "description": "An HTTP request language package for use with Open Function",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -39,7 +39,6 @@
     "cheerio-tableparser": "^1.0.1"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "0.4.1",
     "chai": "^4.3.10",
     "deep-eql": "4.1.1",
     "esno": "^0.16.3",

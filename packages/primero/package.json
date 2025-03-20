@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-primero",
-  "version": "3.0.7",
+  "version": "3.0.10",
   "description": "A UNICEF Primero language package for use with Open Function",
   "exports": {
     ".": {
@@ -39,7 +39,6 @@
     "request": "^2.72.0"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",

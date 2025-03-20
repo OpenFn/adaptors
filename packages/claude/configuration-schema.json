@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "apiKey": {
+      "title": "API Key",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Your Anthropic API token",
+      "type": "string",
+      "minLength": 1,
+      "examples": ["sk-ant-api03-YOUR_SECRET_KEY"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["apiKey"]
+}

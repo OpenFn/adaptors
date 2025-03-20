@@ -2,12 +2,9 @@
   "operations": [
     {
       "name": "getForms",
-      "params": [
-        "params",
-        "callback"
-      ],
+      "params": [],
       "docs": {
-        "description": "Make a request to get the list of forms",
+        "description": "Make a request to fetch all survey forms accessible to the authorized user. Calls `/api/v2/assets/?asset_type=survey`.",
         "tags": [
           {
             "title": "public",
@@ -16,7 +13,7 @@
           },
           {
             "title": "example",
-            "description": "getForms({}, state => {\n   console.log(state.data);\n   return state;\n});"
+            "description": "getForms();"
           },
           {
             "title": "function",
@@ -24,22 +21,8 @@
             "name": null
           },
           {
-            "title": "param",
-            "description": "Query, Headers and Authentication parameters",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function to execute after fetching form list",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
+            "title": "state",
+            "description": "data - an array of form objects"
           },
           {
             "title": "returns",
@@ -56,15 +39,21 @@
     {
       "name": "getSubmissions",
       "params": [
-        "params",
-        "callback"
+        "formId",
+        "options"
       ],
       "docs": {
-        "description": "Get submissions for a specific form",
+        "description": "Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`.",
         "tags": [
           {
             "title": "example",
-            "description": "getSubmissions({formId: 'aXecHjmbATuF6iGFmvBLBX'}, state => {\n  console.log(state.data);\n  return state;\n});"
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX');",
+            "caption": "Get all submissions for a specific form"
+          },
+          {
+            "title": "example",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \"2022-06-12T21:54:20\" } } });",
+            "caption": "Get form submissions with a query"
           },
           {
             "title": "function",
@@ -78,21 +67,29 @@
           },
           {
             "title": "param",
-            "description": "Form Id and data to make the fetch or filter",
+            "description": "Form Id to get the specific submissions",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "string"
             },
-            "name": "params"
+            "name": "formId"
           },
           {
             "title": "param",
-            "description": "(Optional) Callback function to execute after fetching form submissions",
+            "description": "Optional query params for the request",
             "type": {
-              "type": "NameExpression",
-              "name": "function"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
-            "name": "callback"
+            "name": "options",
+            "default": "{}"
+          },
+          {
+            "title": "state",
+            "description": "data - an array of submission objects"
           },
           {
             "title": "returns",
@@ -109,15 +106,14 @@
     {
       "name": "getDeploymentInfo",
       "params": [
-        "params",
-        "callback"
+        "formId"
       ],
       "docs": {
-        "description": "Get deployment information for a specific form",
+        "description": "Get deployment information for a specific form. Calls `/api/v2/assets/<id>/deployment/`.",
         "tags": [
           {
             "title": "example",
-            "description": "getDeploymentInfo({formId: 'aXecHjmbATuF6iGFmvBLBX'}, state => {\n  console.log(state.data);\n  return state;\n});"
+            "description": "getDeploymentInfo('aXecHjmbATuF6iGFmvBLBX');"
           },
           {
             "title": "function",
@@ -131,21 +127,16 @@
           },
           {
             "title": "param",
-            "description": "Form Id and data to make the fetch or filter",
+            "description": "Form Id to get the deployment information",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "string"
             },
-            "name": "params"
+            "name": "formId"
           },
           {
-            "title": "param",
-            "description": "(Optional) Callback function to execute after fetching form deployment information",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
+            "title": "state",
+            "description": "data - an object containing deployment information"
           },
           {
             "title": "returns",
@@ -437,7 +428,7 @@
         "operation"
       ],
       "docs": {
-        "description": "Scopes an array of data based on a JSONPath.\nUseful when the source data has `n` items you would like to map to\nan operation.\nThe operation will receive a slice of the data based of each item\nof the JSONPath provided.\n\nIt also ensures the results of an operation make their way back into\nthe state's references.",
+        "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
         "tags": [
           {
             "title": "public",
@@ -451,7 +442,18 @@
           },
           {
             "title": "example",
-            "description": "each(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
+            "description": "each(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+            "caption": "Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+            "caption": "Iterate over items in state.data and pass each one into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);",
+            "caption": "Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation"
           },
           {
             "title": "param",

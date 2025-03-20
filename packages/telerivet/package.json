@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-telerivet",
-  "version": "0.3.6",
+  "version": "0.3.10",
   "description": "telerivet Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -26,7 +26,6 @@
     "superagent": "^3.7.0"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "^1.1.0",
     "chai": "^3.5.0",
     "deep-eql": "^0.1.3",

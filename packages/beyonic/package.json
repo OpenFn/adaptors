@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-beyonic",
-  "version": "0.3.7",
+  "version": "0.3.11",
   "description": "beyonic Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -38,7 +38,6 @@
     "superagent": "^8.0.0"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",

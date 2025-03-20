@@ -30,7 +30,6 @@
     "@openfn/generate-fhir": "workspace:^",
     "@openfn/metadata": "workspace:^1.0.1",
     "@openfn/parse-jsdoc": "workspace:^1.0.0",
-    "@openfn/simple-ast": "0.4.1",
     "chokidar-cli": "^3.0.0",
     "eslint": "8.26.0",
     "esno": "^4.8.0",

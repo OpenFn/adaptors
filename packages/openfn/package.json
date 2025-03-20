@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-openfn",
-  "version": "2.0.7",
+  "version": "2.0.10",
   "description": "An (experimental) adaptor for accessing the OpenFn web API",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -29,7 +29,6 @@
     "axios": "^1.7.7"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "^0.4.1",
     "assertion-error": "^1.0.1",
     "chai": "^3.4.0",
     "deep-eql": "^0.1.3",

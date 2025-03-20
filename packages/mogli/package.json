@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-mogli",
-  "version": "0.5.9",
+  "version": "0.5.12",
   "description": "A Mogli SMS Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -29,7 +29,6 @@
     "yargs": "^3.32.0"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "^2.0.0",
     "chai": "^4.3.7",
     "deep-eql": "^0.1.3",

@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-openspp",
-  "version": "2.0.6",
+  "version": "2.0.9",
   "description": "An OpenFn adaptor for working with the OpenSPP json rpc",
   "type": "module",
   "exports": {
@@ -32,14 +32,13 @@
     "odoo-await": "^3.4.1"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "esno": "^0.16.3",
     "odoo-await": "^3.4.1",
     "rimraf": "3.0.2",
-    "undici": "^5.28.4"
+    "undici": "^5.28.5"
   },
   "repository": {
     "type": "git",

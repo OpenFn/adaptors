@@ -24,8 +24,8 @@ export const configureAuth = (auth, headers = {}) => {
 export const prepareNextState = (state, response, callback = s => s) => {
   const { body, ...responseWithoutBody } = response;
   const nextState = {
-    ...composeNextState(state, body.objects ?? body),
-    response: { ...responseWithoutBody, ...{ meta: body.meta } },
+    ...composeNextState(state, body?.objects ?? body),
+    response: { ...responseWithoutBody, ...{ meta: body?.meta } },
   };
 
   return callback(nextState);

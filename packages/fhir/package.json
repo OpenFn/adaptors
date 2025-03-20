@@ -21,10 +21,9 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:^2.1.1",
-    "undici": "^5.28.4"
+    "undici": "^5.28.5"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "^0.4.1",
     "assertion-error": "2.0.0",
     "chai": "^4.3.6",
     "deep-eql": "4.1.1",

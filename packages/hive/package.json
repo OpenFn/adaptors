@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-hive",
-  "version": "0.3.8",
+  "version": "0.3.11",
   "description": "An Apache HIVE adaptor for OpenFn",
   "type": "module",
   "exports": {
@@ -32,7 +32,6 @@
     "hive-driver": "1.0.0"
   },
   "devDependencies": {
-    "@openfn/simple-ast": "0.4.1",
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",

@@ -1,5 +1,42 @@
 # @openfn/language-kobotoolbox
 
+## 3.0.2
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
+## 3.0.1
+
+### Patch Changes
+
+- a8b91d2: Fix results handling for getSubmissions
+
+## 3.0.0
+
+### Major Changes
+
+- b01d4f0: Update all functions in the main API (remove callbacks and clean up
+  signatures, see the Migration Guide)
+- 882ce29: Rewrite onto common http helpers (using undici)
+
+### Minor Changes
+
+- 6d536b2: Renaming `baseURL` to `baseUrl` to match all other adaptors, and
+  logging a warning if `baseURL` is used
+- 311d3b2: Add http namespace with `get()`, `post()`, `put()`
+
+## Migration guide
+
+- callbacks have removed from all functions. You can use `.then()` or `fn()` to
+  access the data returned by a function, ie, `getForms().then(state => state)`
+- `getForms(params, callback)` is now `getForms()`, and will now only download
+  assets of type survey. Use `http.get('assets/')` to retrieve other assets (and
+  add query parameters)
+- `getSubmissions(params, callback)` is now `getSubmissions(formId, { query })`.
+- `getDeploymentInfo(params, callback)` is now `getDeploymentInfo(formId)`
+
 ## 2.4.3
 
 ### Patch Changes

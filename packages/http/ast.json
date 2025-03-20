@@ -1,119 +1,11 @@
 {
   "operations": [
     {
-      "name": "execute",
-      "params": [
-        "operations"
-      ],
-      "docs": {
-        "description": "Options provided to the HTTP request",
-        "tags": [
-          {
-            "title": "typedef",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "RequestOptions"
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "property",
-            "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
-            "type": {
-              "type": "UnionType",
-              "elements": [
-                {
-                  "type": "NameExpression",
-                  "name": "object"
-                },
-                {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              ]
-            },
-            "name": "body"
-          },
-          {
-            "title": "property",
-            "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "errors"
-          },
-          {
-            "title": "property",
-            "description": "Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "form"
-          },
-          {
-            "title": "property",
-            "description": "An object of query parameters to be encoded into the URL.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "query"
-          },
-          {
-            "title": "property",
-            "description": "An object of headers to append to the request.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "headers"
-          },
-          {
-            "title": "property",
-            "description": "Parse the response body as json, text or stream. By default will use the response headers.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "parseAs"
-          },
-          {
-            "title": "property",
-            "description": "Request timeout in ms. Default: 300 seconds.",
-            "type": {
-              "type": "NameExpression",
-              "name": "number"
-            },
-            "name": "timeout"
-          },
-          {
-            "title": "property",
-            "description": "TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "tls"
-          }
-        ]
-      },
-      "valid": false
-    },
-    {
       "name": "request",
       "params": [
         "method",
         "path",
-        "params",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Make a HTTP request. If `configuration.baseUrl` is set, paths must be relative.",
@@ -125,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "request(\n  'GET',\n  '/myEndpoint',\n   {\n     query: {foo: 'bar', a: 1},\n     headers: {'content-type': 'application/json'},\n   }\n)"
+            "description": "request(\n  'GET',\n  '/patient',\n   {\n     query: {foo: 'bar', a: 1},\n     headers: {'content-type': 'application/json'},\n   }\n)"
           },
           {
             "title": "function",
@@ -152,21 +44,12 @@
           },
           {
             "title": "param",
-            "description": "Query, Headers and Authentication parameters",
+            "description": "Body, Query, Headers and Authentication parameters",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
             },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
+            "name": "options"
           },
           {
             "title": "state",
@@ -188,8 +71,7 @@
       "name": "get",
       "params": [
         "path",
-        "params",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Make a GET request. If `configuration.baseUrl` is set, paths must be relative.",
@@ -201,74 +83,7 @@
           },
           {
             "title": "example",
-            "description": "get('/myEndpoint', {\n  query: {foo: 'bar', a: 1},\n  headers: {'content-type': 'application/json'},\n})"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Query, Headers and Authentication parameters",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
-            },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "state",
-            "description": "{HttpState}"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "post",
-      "params": [
-        "path",
-        "params",
-        "callback"
-      ],
-      "docs": {
-        "description": "Make a POST request. If `configuration.baseUrl` is set, paths must be relative.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "post('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
+            "description": "get('/patient', {\n  query: {foo: 'bar', a: 1},\n  headers: {'content-type': 'application/json'},\n})"
           },
           {
             "title": "function",
@@ -291,16 +106,80 @@
               "type": "NameExpression",
               "name": "RequestOptions"
             },
-            "name": "params"
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "post",
+      "params": [
+        "path",
+        "data",
+        "options"
+      ],
+      "docs": {
+        "description": "Make a POST request. If `configuration.baseUrl` is set, paths must be relative.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "post('/patient' $.data)",
+            "caption": "POST a resource with from state"
+          },
+          {
+            "title": "example",
+            "description": "post('/patient' $.data, {\n  headers: { 'content-type': 'application/fhir+json' },\n})",
+            "caption": "POST a resource with custom headers"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
           },
           {
             "title": "param",
-            "description": "(Optional) Callback function",
+            "description": "Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.",
             "type": {
               "type": "NameExpression",
-              "name": "function"
+              "name": "string"
             },
-            "name": "callback"
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Body data to append to the request. JSON will be converted to a string.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Query, Headers and Authentication parameters",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
           },
           {
             "title": "state",
@@ -322,8 +201,8 @@
       "name": "put",
       "params": [
         "path",
-        "params",
-        "callback"
+        "data",
+        "options"
       ],
       "docs": {
         "description": "Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.",
@@ -335,7 +214,13 @@
           },
           {
             "title": "example",
-            "description": "put('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
+            "description": "put('/patient', $.data)",
+            "caption": "PUT a resource from state"
+          },
+          {
+            "title": "example",
+            "description": "put('/patient', $.data, {\n  headers: { 'content-type': 'application/fhir+json' },\n})",
+            "caption": "PUT a resource with custom headers"
           },
           {
             "title": "function",
@@ -353,21 +238,21 @@
           },
           {
             "title": "param",
-            "description": "Body, Query, Headers and Auth parameters",
+            "description": "Body data to append to the request. JSON will be converted to a string.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
             },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
+            "name": "options-null"
           },
           {
             "title": "state",
@@ -383,14 +268,14 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "patch",
       "params": [
         "path",
-        "params",
-        "callback"
+        "data",
+        "options"
       ],
       "docs": {
         "description": "Make a PATCH request. If `configuration.baseUrl` is set, paths must be relative.",
@@ -402,7 +287,13 @@
           },
           {
             "title": "example",
-            "description": "patch('/myEndpoint', {\n   body: {'foo': 'bar'},\n   headers: {'content-type': 'application/json'},\n })"
+            "description": "patch('/patient', $.data)",
+            "caption": "PATCH a resource from state"
+          },
+          {
+            "title": "example",
+            "description": "patch('/patient', $.data, {\n  headers: { 'content-type': 'application/fhir+json' },\n})",
+            "caption": "PATCH a resource with custom headers"
           },
           {
             "title": "function",
@@ -420,21 +311,21 @@
           },
           {
             "title": "param",
-            "description": "Body, Query, Headers and Auth parameters",
+            "description": "Body data to append to the request. JSON will be converted to a string.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
             },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
+            "name": "options"
           },
           {
             "title": "state",
@@ -456,8 +347,7 @@
       "name": "del",
       "params": [
         "path",
-        "params",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Make a DELETE request. If `configuration.baseUrl` is set, paths must be relative.",
@@ -469,7 +359,7 @@
           },
           {
             "title": "example",
-            "description": "del(`/myendpoint/${state => state.data.id}`, {\n   headers: {'content-type': 'application/json'}\n })"
+            "description": "del(`/myendpoint/${$.data.id}`)"
           },
           {
             "title": "function",
@@ -487,21 +377,12 @@
           },
           {
             "title": "param",
-            "description": "Body, Query, Headers and Auth parameters",
+            "description": "Query, Headers and Auth parameters",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
             },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
+            "name": "options"
           },
           {
             "title": "state",
@@ -522,9 +403,8 @@
     {
       "name": "parseXML",
       "params": [
-        "body",
-        "script",
-        "callback"
+        "data",
+        "script"
       ],
       "docs": {
         "description": "Parse XML with the Cheerio parser",
@@ -540,7 +420,7 @@
           },
           {
             "title": "example",
-            "description": "parseXML(\n  (state) => state.response,\n  ($) => {\n    return $(\"table[class=your_table]\").parsetable(true, true, true);\n  },\n  (next) => ({ ...next, results: next.data.body })\n);",
+            "description": "parseXML(\n  (state) => state.response,\n  ($) => {\n    return $(\"table[class=your_table]\").parsetable(true, true, true);\n  },\n  (next) => ({ ...next, results: next.data.data })\n);",
             "caption": "Using parseXML with a callback"
           },
           {
@@ -550,12 +430,12 @@
           },
           {
             "title": "param",
-            "description": "data string to be parsed",
+            "description": "Body string to be parsed",
             "type": {
               "type": "NameExpression",
               "name": "String"
             },
-            "name": "body"
+            "name": "data"
           },
           {
             "title": "param",
@@ -565,15 +445,6 @@
               "name": "function"
             },
             "name": "script"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "state",

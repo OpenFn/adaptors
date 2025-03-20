@@ -1,5 +1,49 @@
 # @openfn/language-openmrs
 
+## 4.4.0
+
+### Minor Changes
+
+- 23ccb01: Allow errors to be passed to the http helpers. This overrides the
+  behaviour to throw if an error code is returned
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
+## 4.3.0
+
+### Minor Changes
+
+- 909d81f: Added `http.post()`, `http.delete()` and `http.get()`.
+
+  removed the undocumented callback in `http.request()`.
+
+## 4.2.0
+
+### Minor Changes
+
+- 5d6839e: Implement namespaced http.request() function. The function makes a
+  call against the `instanceUrl` and the path provided, while allowing
+  manipulation to the API call as needed.
+
+## 4.1.6
+
+### Patch Changes
+
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
+
+## 4.1.5
+
+### Patch Changes
+
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
+
 ## 4.1.4
 
 ### Patch Changes
