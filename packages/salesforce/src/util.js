@@ -1,6 +1,14 @@
 import { Connection } from '@jsforce/jsforce-node';
 import { throwError } from '@openfn/language-common/util';
 
+const checkConnection = connection => {
+  if (!connection) {
+    throwError('No connection');
+  }
+  console.log('Using Salesforce API version:', connection.version);
+  console.log(`Connected with ${connection._sessionType} session type`);
+};
+
 export const basicAuth = async configuration => {
   const {
     loginUrl,
@@ -11,6 +19,7 @@ export const basicAuth = async configuration => {
   } = configuration;
 
   const conn = new Connection({ loginUrl, version });
+  console.info(`Connecting to salesforce as ${username}.`);
 
   await conn
     .login(username, securityToken ? password + securityToken : password)
@@ -21,7 +30,7 @@ export const basicAuth = async configuration => {
         error,
       });
     });
-  console.info(`Connecting to salesforce as ${username}.`);
+  checkConnection(conn);
 
   return conn;
 };
@@ -34,18 +43,8 @@ export const tokenAuth = configuration => {
   } = configuration;
 
   const conn = new Connection({ instanceUrl, accessToken, version });
-
+  checkConnection(conn);
   return conn;
-};
-
-export const checkConnection = async connection => {
-  if (!connection) {
-    throwError('No connection');
-  }
-  console.log('Using Salesforce API version:', connection.version);
-  console.log(`Connected with ${connection._sessionType} session type`);
-
-  return connection;
 };
 
 let anyAscii = undefined;

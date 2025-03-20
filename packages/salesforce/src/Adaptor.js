@@ -100,8 +100,6 @@ export async function createConnection(state) {
     ? await util.tokenAuth(configuration)
     : await util.basicAuth(configuration);
 
-  util.checkConnection(connection);
-
   return state;
 }
 
