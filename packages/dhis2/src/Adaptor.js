@@ -552,9 +552,10 @@ export function post(resourceType, data, options = {}, callback = s => s) {
 
 /**
  * Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
+ * This function does not work with the absolute tracker path `api/tracker` but rather the new tracker paths and deprecated tracker endpoints.
  * @public
  * @function
- * @param {string} resourceType - The type of a resource to `upsert`. E.g. `trackedEntities`
+ * @param {string} resourceType - The type of a resource to `upsert`. E.g. `trackedEntities`.
  * @param {Object} query - A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.
  * @param {Object} data - The data to use for update or create depending on the result of the query.
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request
