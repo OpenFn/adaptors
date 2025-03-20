@@ -113,7 +113,7 @@ const build = async (lang: string) => {
       data.scope = 'global';
     }
     // Set scope to be the file name
-    else if (data.meta?.filename && data.meta.filename !== 'Adaptor.js') {
+    else if (data.meta?.filename && !data.meta.filename.includes('Adaptor.')) {
       data.scope = data.meta.filename.split('.')[0];
     }
   });
