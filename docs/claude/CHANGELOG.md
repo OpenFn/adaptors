@@ -1,5 +1,11 @@
 # @openfn/language-claude
 
+## 1.0.4
+
+### Patch Changes
+
+- 36a849c: Update example in docs to be more relevant
+
 ## 1.0.3
 
 ### Patch Changes
