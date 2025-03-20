@@ -479,7 +479,7 @@ export function get(resourceType, options = {}, callback = s => s) {
       options
     );
 
-    const { parseAs} = resolvedOptions;
+    const { parseAs } = resolvedOptions;
     const { configuration } = state;
 
     let response;
@@ -495,7 +495,8 @@ export function get(resourceType, options = {}, callback = s => s) {
     });
 
     console.log(`Retrieved ${resolvedResourceType}`);
-    response = parseAs === 'base64' ? { body: encode(response.body) } : response;
+    response =
+      parseAs === 'base64' ? { body: encode(response.body) } : response;
     return handleResponse(response, state, callback);
   };
 }
