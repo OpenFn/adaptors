@@ -113,4 +113,36 @@ describe('http', () => {
         .catch(done);
     });
   });
+  describe('post', () => {
+    it('should post a request to Salesforce', done => {
+      const fakeConnection = {
+        requestPost: () => {
+          return Promise.resolve({
+            id: '0015g00000LJ2wGAAT',
+            success: true,
+            errors: [],
+          });
+        },
+      };
+      let state = { connection: fakeConnection, references: [] };
+
+      let spy = sinon.spy(fakeConnection, 'requestPost');
+
+      http
+        .post('/sobjects/Account', {
+          body: { Name: 'test' },
+        })(state)
+        .then(state => {
+          expect(spy.args[0]).to.eql([
+            '/sobjects/Account',
+            { body: { Name: 'test' } },
+            {},
+          ]);
+          expect(spy.called).to.eql(true);
+          expect(state.data.success).to.eql(true);
+        })
+        .then(done)
+        .catch(done);
+    });
+  });
 });
