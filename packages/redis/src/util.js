@@ -1,12 +1,12 @@
+import { throwError } from '@openfn/language-common/util';
 // throws if a argument does not match the type
 const assertArgType = (arg, type, fix) => {
   if (typeof arg !== type) {
-    const e = new Error('TypeError: Invalid argument type');
-    e.code = 'ARGUMENT_ERROR';
-    e.description = `Expected argument to be '${type}', but received: ${typeof arg}`;
-    e.fix = fix;
-
-    throw e;
+    throwError('ARGUMENT_ERROR', {
+      message: 'TypeError: Invalid argument type',
+      description: `Expected argument to be '${type}', but received: ${typeof arg}`,
+      fix,
+    });
   }
 };
 
@@ -74,13 +74,13 @@ export const assertjGetArgs = key => {
   );
 };
 
-export const assertMSetArgs = (entries) => {
+export const assertMSetArgs = entries => {
   assertArgType(
     entries,
     'object',
     'mSet requires an array of key/value objects: mSet([{ key: "name", value: "..." }])'
   );
-  
+
   if (!Array.isArray(entries)) {
     throwArgumentError('array', 'mSet requires an array of key/value pairs');
   }
@@ -115,9 +115,8 @@ export const assertMSetArgs = (entries) => {
 };
 
 const throwArgumentError = (expectedType, fixMessage) => {
-  const e = new Error(`TypeError: Invalid argument type`);
-  e.code = 'ARGUMENT_ERROR';
-  e.description = `Expected ${expectedType}`;
-  e.fix = fixMessage;
-  throw e;
+  throwError('ARGUMENT_ERROR', {
+    description: `Expected ${expectedType}`,
+    fix: fixMessage,
+  });
 };
