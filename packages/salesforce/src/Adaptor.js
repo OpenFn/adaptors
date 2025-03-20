@@ -5,6 +5,7 @@ import {
 } from '@openfn/language-common';
 
 import { expandReferences, throwError } from '@openfn/language-common/util';
+import { Connection } from '@jsforce/jsforce-node';
 import flatten from 'lodash/flatten';
 import * as util from './util';
 
@@ -83,25 +84,66 @@ import * as util from './util';
 
 let connection = null;
 
+const checkConnection = connection => {
+  if (!connection) {
+    throwError('No connection');
+  }
+  console.log(`Connected with ${connection._sessionType} session type`);
+  console.log('Using Salesforce API version:', connection.version);
+};
+
+const basicAuth = async configuration => {
+  const {
+    loginUrl,
+    username,
+    password,
+    securityToken,
+    apiVersion: version,
+  } = configuration;
+
+  connection = new Connection({ loginUrl, version });
+  console.info(`Connecting to salesforce as ${username}.`);
+
+  await connection
+    .login(username, securityToken ? password + securityToken : password)
+    .catch(error => {
+      throwError('FAILED_AUTH', {
+        fix: 'Check your username, password, and security token',
+        message: `Failed to connect to salesforce as ${username}`,
+        error,
+      });
+    });
+  checkConnection(connection);
+};
+
+const tokenAuth = configuration => {
+  const {
+    instance_url: instanceUrl,
+    access_token: accessToken,
+    apiVersion: version,
+  } = configuration;
+
+  connection = new Connection({ instanceUrl, accessToken, version });
+  checkConnection(connection);
+};
+
 /**
  * Creates a connection to Salesforce using Basic Auth or OAuth.
- * @function createConnection
+ * @function connect
  * @private
  * @param {State} state - Runtime state.
  * @returns {State}
  */
-export async function createConnection(state) {
+const connect = async state => {
   if (connection) {
     return state;
   }
-
   const { configuration } = state;
-  connection = configuration.access_token
-    ? await util.tokenAuth(configuration)
-    : await util.basicAuth(configuration);
-
+  configuration.access_token
+    ? await tokenAuth(configuration)
+    : await basicAuth(configuration);
   return state;
-}
+};
 
 export function setMockConnection(mock) {
   connection = mock;
@@ -123,8 +165,8 @@ export function execute(...operations) {
 
   return state => {
     return commonExecute(
+      connect,
       util.loadAnyAscii,
-      createConnection,
       ...flatten(operations)
     )({
       ...initialState,
