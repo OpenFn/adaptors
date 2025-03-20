@@ -48,15 +48,11 @@ export function execute(...operations) {
 /**
  * Make a HTTP request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example
- * request(
- *   'GET',
- *   '/patient',
- *    {
- *      query: {foo: 'bar', a: 1},
- *      headers: {'content-type': 'application/json'},
- *    }
- * )
+ * @example <caption>Make a GET request</caption>
+ * request("GET", "/patient", {
+ *   query: { foo: "bar", a: 1 },
+ *   headers: { "content-type": "application/json" },
+ * });
  * @function
  * @param {string} method - The HTTP method to use.
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
@@ -71,11 +67,11 @@ export function request(method, path, options) {
 /**
  * Make a GET request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example
- * get('/patient', {
- *   query: {foo: 'bar', a: 1},
- *   headers: {'content-type': 'application/json'},
- * })
+ * @example <caption>GET request with query parameters and custom headers</caption>
+ * get("/patient", {
+ *   query: { foo: "bar", a: 1 },
+ *   headers: { "content-type": "application/json" },
+ * });
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} options - Body, Query, Headers and Authentication parameters
@@ -90,11 +86,11 @@ export function get(path, options) {
  * Make a POST request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example <caption>POST a resource with from state</caption>
- * post('/patient' $.data)
-   @example <caption>POST a resource with custom headers</caption>
- * post('/patient' $.data, {
+ * post('/patient', $.data);
+ * @example <caption>POST a resource with custom headers</caption>
+ * post('/patient', $.data, {
  *   headers: { 'content-type': 'application/fhir+json' },
- * })
+ * });
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {object} data - Body data to append to the request. JSON will be converted to a string.
@@ -111,7 +107,7 @@ export function post(path, data, options) {
  * Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example <caption>PUT a resource from state</caption>
- * put('/patient', $.data)
+ * put('/patient', $.data);
  * @example <caption>PUT a resource with custom headers</caption>
  * put('/patient', $.data, {
  *   headers: { 'content-type': 'application/fhir+json' },
@@ -131,11 +127,11 @@ export function put(path, data, options) {
  * Make a PATCH request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example <caption>PATCH a resource from state</caption>
- * patch('/patient', $.data)
+ * patch('/patient', $.data);
  * @example <caption>PATCH a resource with custom headers</caption>
  * patch('/patient', $.data, {
  *   headers: { 'content-type': 'application/fhir+json' },
- * })
+ * });
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {object} data - Body data to append to the request. JSON will be converted to a string.
@@ -150,8 +146,8 @@ export function patch(path, data, options) {
 /**
  * Make a DELETE request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example
- * del(`/myendpoint/${$.data.id}`)
+ * @example <caption>DELETE a resource by ID</caption>
+ * del(`/myendpoint/${$.data.id}`);
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {RequestOptions} options - Query, Headers and Auth parameters
@@ -165,21 +161,18 @@ export function del(path, options) {
 /**
  * Parse XML with the Cheerio parser
  * @public
- * @example
+ * @example <caption>Parse XML from state.response</caption>
  *  parseXML(
  *   (state) => state.response,
  *   ($) => {
  *     return $("table[class=your_table]").parsetable(true, true, true);
  *   }
  * );
- * @example <caption>Using parseXML with a callback</caption>
- *  parseXML(
+ * @example <caption>Using parseXML with a callback to extract data</caption>
+ * parseXML(
  *   (state) => state.response,
- *   ($) => {
- *     return $("table[class=your_table]").parsetable(true, true, true);
- *   },
- *   (next) => ({ ...next, results: next.data.data })
- * );
+ *   ($) => $("table[class=your_table]").parsetable(true, true, true)
+ * ).then((next) => ({ ...next, results: next.data.data }));
  * @function
  * @param {String} data - Body string to be parsed
  * @param {function} script - script for extracting data
