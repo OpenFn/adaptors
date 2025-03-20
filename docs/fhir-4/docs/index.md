@@ -1,3 +1,19 @@
+<dl>
+<dt>
+    <a href="#addtobundle">addToBundle(resources, [name])</a></dt>
+<dt>
+    <a href="#create">create(resource)</a></dt>
+<dt>
+    <a href="#delete">delete(reference)</a></dt>
+<dt>
+    <a href="#read">read(reference)</a></dt>
+<dt>
+    <a href="#search">search(resourceType, options)</a></dt>
+<dt>
+    <a href="#update">update(reference, resource)</a></dt>
+<dt>
+    <a href="#uploadbundle">uploadBundle(bundle)</a></dt>
+</dl>
 
 This adaptor exports the following namespaced functions:
 
@@ -481,36 +497,210 @@ This adaptor exports the following namespaced functions:
 <dt>
     <a href="#datatypes_setSystemMap">datatypes.setSystemMap()</a>
 </dt>
-
-<dt>
-    <a href="#Adaptor_addToBundle">Adaptor.addToBundle(resources, [name])</a>
-</dt>
-
-<dt>
-    <a href="#Adaptor_create">Adaptor.create(resource)</a>
-</dt>
-
-<dt>
-    <a href="#Adaptor_read">Adaptor.read(reference)</a>
-</dt>
-
-<dt>
-    <a href="#Adaptor_search">Adaptor.search(resourceType, options)</a>
-</dt>
-
-<dt>
-    <a href="#Adaptor_update">Adaptor.update(reference, resource)</a>
-</dt>
-
-<dt>
-    <a href="#Adaptor_uploadBundle">Adaptor.uploadBundle(bundle)</a>
-</dt>
-
-<dt>
-    <a href="#Adaptor__delete">Adaptor._delete(reference)</a>
-</dt>
 </dl>
 
+
+## Functions
+### addToBundle
+
+<p><code>addToBundle(resources, [name]) ⇒</code></p>
+
+Add a resource to a bundle on state, using the `name` as the key (or `bundle` by default).
+The resource will be upserted (via PUT).
+A new bundle will be generated if one does not already exist.
+
+**Returns**: Operation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resources | <code>object/array</code> | A resource or array of resources to add to the bundle |
+| [name] | <code>string</code> | A name (key) for this bundle on state (defaults to `bundle`) |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| bundle | the updated bundle |
+**Example:** Add a new patient resource to the default bundle
+```js
+addToBundle(b.patient($.patientDetails))
+```
+
+* * *
+
+### create
+
+<p><code>create(resource) ⇒</code></p>
+
+Create a new resource. The resource does not need to include an id.
+The created resource will be returned to state.data.
+
+**Returns**: Operation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resource | <code>object</code> | The resource to create. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the newly created resource. |
+| response | the HTTP response returned by the server. |
+**Example:** Create a Patient with a builder function
+```js
+create(b.patient({
+  name: { family: "Messi", given: "Lionel", use: "official" },
+}))
+```
+
+* * *
+
+### delete
+
+<p><code>delete(reference) ⇒</code></p>
+
+Delete a single FHIR resource.
+
+**Returns**: Operation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| reference | <code>string</code> | The type and ID of the resource to delete, eg, `Patient/123` |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| response | the HTTP response returned by the server. |
+**Example:** Delete a single Patient resource
+```js
+delete('Patient/12345')
+```
+
+* * *
+
+### read
+
+<p><code>read(reference) ⇒</code></p>
+
+Fetch a single FHIR resource.
+
+**Returns**: Operation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| reference | <code>string</code> | The type and ID of the resource to read, eg, `Patient/123` |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the newly updated resource, as returned by the server |
+| response | the HTTP response returned by the server. |
+**Example:** Read a single Patient resource
+```js
+read('Patient/12345')
+```
+
+* * *
+
+### search
+
+<p><code>search(resourceType, options) ⇒</code></p>
+
+Search for matching FHIR resources. Exclude _ from search parameters, and pass query terms on options.query.
+
+**Returns**: Operation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resourceType | <code>string</code> | The type of the resource to search for. |
+| options | <code>object</code> | Parameters, query and filter. |
+| [options.*] | <code>object</code> | Pass supported query parameters without underscore. See [FHIR Search Summary](https://www.hl7.org/fhir/R4/search.html#Summary). |
+| [options.query] | <code>object</code> | query terms to search for. These are appended to the query URL veratim.. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the newly updated resource, as returned by the server |
+| response | the HTTP response returned by the server. |
+**Example:** Search with parameter and query term
+```js
+search('Patient', {
+  lastUpdated: $.cursor,
+  count: 10,
+  query: { given: 'messi' },
+})
+```
+**Example:** Search for patients with a given name containing "eve"
+```js
+search('Patient', {
+  query: { 'given:contains': 'eve' },
+})
+```
+
+* * *
+
+### update
+
+<p><code>update(reference, resource) ⇒</code></p>
+
+Update a resource. If the resource does not already exist, it will be created and `state.response.statusCode` will be 201.
+Otherwise, the existing resource will be replaced.
+To partially update a resource, use `patch()`.
+
+**Returns**: Operation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| reference | <code>string</code> | The type and ID of the resource to update, eg, `Patient/123` |
+| resource | <code>object</code> | The new version of this resource. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the newly updated resource, as returned by the server |
+| response | the HTTP response returned by the server. |
+**Example:** Update a Patient with a builder function
+```js
+update('Patient/123', b.patient({
+  id: 'Patient/123',
+  name: { family: "Messi", given: "Lionel", use: "official" },
+}))
+```
+
+* * *
+
+### uploadBundle
+
+<p><code>uploadBundle(bundle) ⇒</code></p>
+
+Upload a bundle from state (created by addToBundle) as a transaction.
+
+**Returns**: Operation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| bundle | <code>string/object</code> | A bundle object or name of a bundle on state |
+
+**Example:** Upload the default bundle
+```js
+uploadBundle()
+```
+**Example:** Create and a bundle with a custom name
+```js
+addToBundle($.patients, 'patientsBundle')
+uploadBundle('patientsBundle')
+```
+**Example:** Upload a bundle from state
+```js
+uploadBundle($.patientsBundle)
+```
+
+* * *
 
 
 ## builders
@@ -4346,217 +4536,6 @@ b.setSystemMap({
   SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'
 });
 create(builders.patient({ identifier: b.identifier('xyz', 'SmartCareId') }))
-```
-
-* * *
-
-
-## Adaptor
-
-These functions belong to the Adaptor namespace.
-### Adaptor.addToBundle {#Adaptor_addToBundle}
-
-<p><code>addToBundle(resources, [name]) ⇒</code></p>
-
-Add a resource to a bundle on state, using the `name` as the key (or `bundle` by default).
-The resource will be upserted (via PUT).
-A new bundle will be generated if one does not already exist.
-
-**Returns**: Operation  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| resources | <code>object/array</code> | A resource or array of resources to add to the bundle |
-| [name] | <code>string</code> | A name (key) for this bundle on state (defaults to `bundle`) |
-
-This operation writes the following keys to state:
-
-| State Key | Description |
-| --- | --- |
-| bundle | the updated bundle |
-**Example:** Add a new patient resource to the default bundle
-```js
-addToBundle(b.patient($.patientDetails))
-```
-
-* * *
-
-
-### Adaptor.create {#Adaptor_create}
-
-<p><code>create(resource) ⇒</code></p>
-
-Create a new resource. The resource does not need to include an id.
-The created resource will be returned to state.data.
-
-**Returns**: Operation  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| resource | <code>object</code> | The resource to create. |
-
-This operation writes the following keys to state:
-
-| State Key | Description |
-| --- | --- |
-| data | the newly created resource. |
-| response | the HTTP response returned by the server. |
-**Example:** Create a Patient with a builder function
-```js
-create(b.patient({
-  name: { family: "Messi", given: "Lionel", use: "official" },
-}))
-```
-
-* * *
-
-
-### Adaptor.read {#Adaptor_read}
-
-<p><code>read(reference) ⇒</code></p>
-
-Fetch a single FHIR resource.
-
-**Returns**: Operation  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| reference | <code>string</code> | The type and ID of the resource to read, eg, `Patient/123` |
-
-This operation writes the following keys to state:
-
-| State Key | Description |
-| --- | --- |
-| data | the newly updated resource, as returned by the server |
-| response | the HTTP response returned by the server. |
-**Example:** Read a single Patient resource
-```js
-read('Patient/12345')
-```
-
-* * *
-
-
-### Adaptor.search {#Adaptor_search}
-
-<p><code>search(resourceType, options) ⇒</code></p>
-
-Search for matching FHIR resources. Exclude _ from search parameters, and pass query terms on options.query.
-
-**Returns**: Operation  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| resourceType | <code>string</code> | The type of the resource to search for. |
-| options | <code>object</code> | Parameters, query and filter. |
-| [options.*] | <code>object</code> | Pass supported query parameters without underscore. See [FHIR Search Summary](https://www.hl7.org/fhir/R4/search.html#Summary). |
-| [options.query] | <code>object</code> | query terms to search for. These are appended to the query URL veratim.. |
-
-This operation writes the following keys to state:
-
-| State Key | Description |
-| --- | --- |
-| data | the newly updated resource, as returned by the server |
-| response | the HTTP response returned by the server. |
-**Example:** Search with parameter and query term
-```js
-search('Patient', {
-  lastUpdated: $.cursor,
-  count: 10,
-  query: { given: 'messi' },
-})
-```
-**Example:** Search for patients with a given name containing "eve"
-```js
-search('Patient', {
-  query: { 'given:contains': 'eve' },
-})
-```
-
-* * *
-
-
-### Adaptor.update {#Adaptor_update}
-
-<p><code>update(reference, resource) ⇒</code></p>
-
-Update a resource. If the resource does not already exist, it will be created and `state.response.statusCode` will be 201.
-Otherwise, the existing resource will be replaced.
-To partially update a resource, use `patch()`.
-
-**Returns**: Operation  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| reference | <code>string</code> | The type and ID of the resource to update, eg, `Patient/123` |
-| resource | <code>object</code> | The new version of this resource. |
-
-This operation writes the following keys to state:
-
-| State Key | Description |
-| --- | --- |
-| data | the newly updated resource, as returned by the server |
-| response | the HTTP response returned by the server. |
-**Example:** Update a Patient with a builder function
-```js
-update('Patient/123', b.patient({
-  id: 'Patient/123',
-  name: { family: "Messi", given: "Lionel", use: "official" },
-}))
-```
-
-* * *
-
-
-### Adaptor.uploadBundle {#Adaptor_uploadBundle}
-
-<p><code>uploadBundle(bundle) ⇒</code></p>
-
-Upload a bundle from state (created by addToBundle) as a transaction.
-
-**Returns**: Operation  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| bundle | <code>string/object</code> | A bundle object or name of a bundle on state |
-
-**Example:** Upload the default bundle
-```js
-uploadBundle()
-```
-**Example:** Create and a bundle with a custom name
-```js
-addToBundle($.patients, 'patientsBundle')
-uploadBundle('patientsBundle')
-```
-**Example:** Upload a bundle from state
-```js
-uploadBundle($.patientsBundle)
-```
-
-* * *
-
-
-### Adaptor._delete {#Adaptor__delete}
-
-<p><code>\_delete(reference) ⇒</code></p>
-
-Delete a single FHIR resource.
-
-**Returns**: Operation  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| reference | <code>string</code> | The type and ID of the resource to delete, eg, `Patient/123` |
-
-This operation writes the following keys to state:
-
-| State Key | Description |
-| --- | --- |
-| response | the HTTP response returned by the server. |
-**Example:** Delete a single Patient resource
-```js
-delete('Patient/12345')
 ```
 
 * * *
