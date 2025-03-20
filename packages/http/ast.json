@@ -17,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "request(\"GET\", \"/patient\", {\n  query: { foo: \"bar\", a: 1 },\n  headers: { \"content-type\": \"application/json\" },\n});",
+            "description": "request('GET', '/patient', {\n  query: { foo: 'bar', a: 1 },\n  headers: { 'content-type': 'application/json' },\n});",
             "caption": "Make a GET request"
           },
           {
@@ -84,7 +84,7 @@
           },
           {
             "title": "example",
-            "description": "get(\"/patient\", {\n  query: { foo: \"bar\", a: 1 },\n  headers: { \"content-type\": \"application/json\" },\n});",
+            "description": "get('/patient', {\n  query: { foo: 'bar', a: 1 },\n  headers: { 'content-type': 'application/json' },\n});",
             "caption": "GET request with query parameters and custom headers"
           },
           {

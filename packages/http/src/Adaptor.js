@@ -49,9 +49,9 @@ export function execute(...operations) {
  * Make a HTTP request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example <caption>Make a GET request</caption>
- * request("GET", "/patient", {
- *   query: { foo: "bar", a: 1 },
- *   headers: { "content-type": "application/json" },
+ * request('GET', '/patient', {
+ *   query: { foo: 'bar', a: 1 },
+ *   headers: { 'content-type': 'application/json' },
  * });
  * @function
  * @param {string} method - The HTTP method to use.
@@ -68,9 +68,9 @@ export function request(method, path, options) {
  * Make a GET request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
  * @example <caption>GET request with query parameters and custom headers</caption>
- * get("/patient", {
- *   query: { foo: "bar", a: 1 },
- *   headers: { "content-type": "application/json" },
+ * get('/patient', {
+ *   query: { foo: 'bar', a: 1 },
+ *   headers: { 'content-type': 'application/json' },
  * });
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
