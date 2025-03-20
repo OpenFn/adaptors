@@ -484,7 +484,7 @@ export function get(resourceType, options = {}, callback = s => s) {
     const response = await request(state.configuration, {
       method: 'GET',
       path: prefixVersionToPath(
-        configuration,
+        state.configuration,
         resolvedOptions,
         resolvedResourceType
       ),
