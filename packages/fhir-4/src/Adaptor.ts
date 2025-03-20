@@ -195,6 +195,7 @@ export function update(reference: string, resource: any) {
  * Delete a single FHIR resource.
  * @public
  * @function
+ * @alias delete
  * @param {string} reference - The type and ID of the resource to delete, eg, `Patient/123`
  * @state response - the HTTP response returned by the server.
  * @example <caption>Delete a single Patient resource</caption>
