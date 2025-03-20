@@ -5,7 +5,7 @@ import {
 } from '@openfn/language-common';
 
 import { createClient } from 'redis';
-import * as util from './Utils';
+import * as util from './util';
 
 let client = null;
 
@@ -250,6 +250,41 @@ export function jSet(key, value) {
     console.log(`Set value for ${resolvedKey} key successfully`);
 
     return state;
+  };
+}
+
+/**
+ * Set values at the root path ('$') in JSON documents stored at multiple keys.
+ * This function allows setting multiple key-value pairs in Redis JSON documents in a single operation.
+ * If a key already exists, its value will be replaced. If it does not exist, a new key-value pair will be created.
+ * @example <caption>Set multiple JSON objects</caption>
+ * mSet([{ key: 'patient', value: { name: 'victor', ihs_number: 12345 } },
+ *       { key: 'doctor', value: { name: 'Alice', specialization: 'cardiology' } }]);
+ * @function
+ * @public
+ * @param {Array<{ key: string, value: (string|object) }>} entries -
+ * An array of key-value pairs to set in the JSON store.
+ * @state references - an array of all previous data objects used in the Job
+ * @returns {Operation}
+ */
+export function mSet(entries) {
+  return async state => {
+    const [resolvedEntries] = expandReferences(state, entries);
+
+    util.assertMSetArgs(resolvedEntries);
+
+    console.log(`Setting values for ${resolvedEntries.length} keys`);
+
+    const args = resolvedEntries.map(({ key, value }) => ({
+      key,
+      path: '$',
+      value: typeof value === 'string' ? value : JSON.stringify(value),
+    }));
+
+    const result = await client.json.mSet(args);
+    console.log(`Set values for ${resolvedEntries.length} keys successfully`);
+
+    return composeNextState(state, result);
   };
 }
 
