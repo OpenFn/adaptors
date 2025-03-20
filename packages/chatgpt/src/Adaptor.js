@@ -61,7 +61,7 @@ export function execute(...operations) {
 /**
  * Prompt the GPT chat interface to respond
  * @example
- * prompt('Write a haiku about surfing.');
+ * prompt(`Filter these emails and pick out the most urgent: ${JSON.stringify($.data)}`);
  * @public
  * @function
  * @param {string} message - The prompt
