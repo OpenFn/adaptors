@@ -189,8 +189,7 @@ describe('get', () => {
         headers: {
           Accept: 'image/*',
         },
-        parseAs: 'text',
-        asBase64: true,
+        parseAs: 'base64',
       })
     )(state);
     expect(finalState.data).to.eql(
@@ -595,7 +594,7 @@ describe('upsert', () => {
             }
           )
         )(state),
-      'Cannot upsert on Non-unique attribute. The operation found more than one records for your request.'
+      '409: Upsert failed: Multiple records found for a non-unique attribute.'
     );
   });
 

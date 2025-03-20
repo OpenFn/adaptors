@@ -68,6 +68,10 @@
             "name": "callback"
           },
           {
+            "title": "state",
+            "description": "{Dhis2State}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -213,6 +217,10 @@
             "name": "callback"
           },
           {
+            "title": "state",
+            "description": "{Dhis2State}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -333,8 +341,12 @@
             "name": "callback"
           },
           {
+            "title": "state",
+            "description": "{Dhis2State}"
+          },
+          {
             "title": "returns",
-            "description": "state",
+            "description": null,
             "type": {
               "type": "NameExpression",
               "name": "Operation"
@@ -447,8 +459,12 @@
             "name": "callback"
           },
           {
+            "title": "state",
+            "description": "{Dhis2State}"
+          },
+          {
             "title": "returns",
-            "description": "state",
+            "description": null,
             "type": {
               "type": "NameExpression",
               "name": "Operation"
@@ -543,6 +559,10 @@
               "type": "NameExpression",
               "name": "RangeError"
             }
+          },
+          {
+            "title": "state",
+            "description": "{Dhis2State}"
           },
           {
             "title": "returns",
@@ -640,6 +660,10 @@
             "name": "callback"
           },
           {
+            "title": "state",
+            "description": "{Dhis2State}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -731,6 +755,10 @@
               }
             },
             "name": "callback"
+          },
+          {
+            "title": "state",
+            "description": "{Dhis2State}"
           },
           {
             "title": "returns",

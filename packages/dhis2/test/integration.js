@@ -12,7 +12,7 @@ const getRandomProgramPayload = () => {
 const configuration = {
   username: 'admin',
   password: 'district',
-  hostUrl: 'https://play.im.dhis2.org/stable-2-40-5',
+  hostUrl: 'https://play.im.dhis2.org/stable-2-40-7'
 };
 
 describe('Integration tests', () => {
@@ -155,7 +155,7 @@ describe('Integration tests', () => {
         ...fixture.initialState,
         event: 'rBjxtO8npTb',
         data: {
-          href: 'https://play.dhis2.org/2.36.6/api/events/rBjxtO8npTb',
+          href: 'https://play.dhis2.org/stable-2-40-7/api/events/rBjxtO8npTb',
           event: 'rBjxtO8npTb',
           status: 'ACTIVE',
           program: 'M3xtLkYBlKI',
@@ -253,10 +253,10 @@ describe('Integration tests', () => {
     it('should get dataValueSets matching the query specified', async () => {
       const finalState = await execute(
         get('dataValueSets', {
-          dataSet: 'pBOMPrpg1QX',
-          orgUnit: 'DiszpKrYNg8',
-          period: '201401',
-          fields: '*',
+       query:{   dataSet: 'pBOMPrpg1QX',
+        orgUnit: 'sx4lYrYvpJ2',
+        period: '201401',
+        fields: '*',}
         })
       )(state);
 
@@ -266,19 +266,23 @@ describe('Integration tests', () => {
     it('should get a single TEI based on multiple filters', async () => {
       const finalState = await execute(
         get('tracker/trackedEntities', {
+        query:{
           program: 'fDd25txQckK',
           orgUnit: 'DiszpKrYNg8',
           filter: ['w75KJ2mc4zz:Eq:Elanor'],
+        }
         })
       )(state);
 
       expect(finalState.data.instances.length).to.eq(1);
 
       const finalState2 = await execute(
-        http.get('trackedEntityInstances', {
-          program: 'fDd25txQckK',
-          ou: 'DiszpKrYNg8',
-          filter: ['w75KJ2mc4zz:Eq:Elanor', 'zDhUuAYrxNC:Eq:NotJackson'],
+        get('trackedEntityInstances', {
+      query:{
+        program: 'fDd25txQckK',
+        orgUnit: 'DiszpKrYNg8',
+        filter: ['w75KJ2mc4zz:Eq:Elanor', 'zDhUuAYrxNC:Eq:NotJackson'],
+      }
         })
       )(state);
 
@@ -288,15 +292,19 @@ describe('Integration tests', () => {
     it('should get a no TEIs if non match the filters', async () => {
       const finalState = await execute(
         get('trackedEntityInstances', {
-          program: 'IpHINAT79UW',
-          ou: 'DiszpKrYNg8',
-          filter: [
-            'w75KJ2mc4zz:Eq:Tim',
-            'flGbXLXCrEo:Eq:124-not-a-real-id', // case ID
-            'zDhUuAYrxNC:Eq:Thompson',
-          ],
+       query:{
+        program: 'IpHINAT79UW',
+        orgUnit: 'DiszpKrYNg8',
+        filter: [
+          'w75KJ2mc4zz:Eq:Tim',
+          'flGbXLXCrEo:Eq:124-not-a-real-id', // case ID
+          'zDhUuAYrxNC:Eq:Thompson',
+        ],
+       }
         })
       )(state);
+    
+      
 
       expect(finalState.data.trackedEntityInstances.length).to.eq(0);
     });
@@ -343,7 +351,7 @@ describe('Integration tests', () => {
           'trackedEntityInstances',
           {
             program: 'IpHINAT79UW',
-            ou: 'DiszpKrYNg8',
+            orgUnit: 'DiszpKrYNg8',
             filter: ['w75KJ2mc4zz:Eq:John', 'zDhUuAYrxNC:Eq:Thompson'],
           },
           state => state.data
@@ -353,7 +361,7 @@ describe('Integration tests', () => {
       expect(finalState.data.httpStatus).to.eq('OK');
     });
 
-    it('should upsert a trackedEntityInstance via update as query matches one data', async () => {
+    it.only('should upsert a trackedEntityInstance via update as query matches one data', async () => {
       const state = {
         ...fixture.initialState,
         data: {
@@ -372,7 +380,7 @@ describe('Integration tests', () => {
           'trackedEntityInstances',
           {
             program: 'IpHINAT79UW',
-            ou: 'TSyzvBiovKh',
+            orgUnit: 'TSyzvBiovKh',
             filter: ['w75KJ2mc4zz:Eq:Qassim'],
           },
           state => state.data
@@ -382,7 +390,7 @@ describe('Integration tests', () => {
       expect(finalState.data.httpStatus).to.eq('OK');
     });
 
-    it.skip('should fail upserting a trackedEntityInstance by throwing rangeError as query matches many data', async () => {
+    it('should fail upserting a trackedEntityInstance by throwing rangeError as query matches many data', async () => {
       const state = {
         ...fixture.initialState,
         data: {
@@ -416,7 +424,7 @@ describe('Integration tests', () => {
             upsert(
               'trackedEntityInstances',
               {
-                ou: 'DiszpKrYNg8',
+                orgUnit: 'DiszpKrYNg8',
                 filter: ['zDhUuAYrxNC:Eq:Thompson'],
               },
               state => state.data
