@@ -60,13 +60,13 @@ describe('http', () => {
   describe('get', () => {
     it('should append correct query parameters to the request URL', done => {
       const fakeConnection = {
-        requestGet: () => {
+        request: () => {
           return Promise.resolve({ latestDateCovered: '2020-01-01T00:00:00Z' });
         },
       };
       let state = { connection: fakeConnection };
 
-      let spy = sinon.spy(fakeConnection, 'requestGet');
+      let spy = sinon.spy(fakeConnection, 'request');
 
       const startDate = '2020-01-01T00:00:00Z';
       const endDate = '2020-01-02T00:00:00Z';
@@ -75,12 +75,12 @@ describe('http', () => {
           query: { start: startDate, end: endDate },
         })(state)
         .then(state => {
-          expect(spy.args[0][0]).to.include(
+          const reqArgs = spy.args.flat()[0];
+          expect(reqArgs.url).to.include(
             `start=${encodeURIComponent(startDate)}`
           );
-          expect(spy.args[0][0]).to.include(
-            `end=${encodeURIComponent(endDate)}`
-          );
+          expect(reqArgs.url).to.include(`end=${encodeURIComponent(endDate)}`);
+          expect(reqArgs.method).to.eql('GET');
           expect(spy.called).to.eql(true);
           expect(state.data).to.eql({
             latestDateCovered: '2020-01-01T00:00:00Z',
@@ -91,21 +91,25 @@ describe('http', () => {
     });
     it('fetches an account record', done => {
       const fakeConnection = {
-        requestGet: function () {
+        request: function () {
           return Promise.resolve({ Id: 10 });
         },
       };
       let state = { connection: fakeConnection, references: [] };
 
-      let spy = sinon.spy(fakeConnection, 'requestGet');
+      let spy = sinon.spy(fakeConnection, 'request');
 
       http
         .get('/services/data/v58.0/sobjects/Account/10')(state)
         .then(state => {
-          expect(spy.args[0]).to.eql([
-            '/services/data/v58.0/sobjects/Account/10',
-            {},
-          ]);
+          const reqArgs = spy.args.flat()[0];
+
+          expect(reqArgs).to.eql({
+            body: undefined,
+            headers: undefined,
+            method: 'GET',
+            url: '/services/data/v58.0/sobjects/Account/10',
+          });
           expect(spy.called).to.eql(true);
           expect(state.data).to.eql({ Id: 10 });
         })
@@ -116,7 +120,7 @@ describe('http', () => {
   describe('post', () => {
     it('should post a request to Salesforce', done => {
       const fakeConnection = {
-        requestPost: () => {
+        request: () => {
           return Promise.resolve({
             id: '0015g00000LJ2wGAAT',
             success: true,
@@ -124,20 +128,24 @@ describe('http', () => {
           });
         },
       };
-      let state = { connection: fakeConnection, references: [] };
+      let state = { connection: fakeConnection };
 
-      let spy = sinon.spy(fakeConnection, 'requestPost');
+      let spy = sinon.spy(fakeConnection, 'request');
 
       http
         .post('/sobjects/Account', {
-          body: { Name: 'test' },
+          Name: 'test',
         })(state)
         .then(state => {
-          expect(spy.args[0]).to.eql([
-            '/sobjects/Account',
-            { body: { Name: 'test' } },
-            {},
-          ]);
+          const reqArgs = spy.args.flat()[0];
+          expect(reqArgs).to.eql({
+            body: JSON.stringify({ Name: 'test' }),
+            headers: {
+              'content-type': 'application/json',
+            },
+            method: 'POST',
+            url: '/sobjects/Account',
+          });
           expect(spy.called).to.eql(true);
           expect(state.data.success).to.eql(true);
         })
