@@ -480,11 +480,8 @@ export function get(resourceType, options = {}, callback = s => s) {
     );
 
     const { parseAs } = resolvedOptions;
-    const { configuration } = state;
 
-    let response;
-
-    response = await request(configuration, {
+    const response = await request(state.configuration, {
       method: 'GET',
       path: prefixVersionToPath(
         configuration,
@@ -494,9 +491,11 @@ export function get(resourceType, options = {}, callback = s => s) {
       options: resolvedOptions,
     });
 
+    if (parseAs === 'base64') {
+      response.body = encode(response.body);
+    }
     console.log(`Retrieved ${resolvedResourceType}`);
-    response =
-      parseAs === 'base64' ? { body: encode(response.body) } : response;
+
     return handleResponse(response, state, callback);
   };
 }
