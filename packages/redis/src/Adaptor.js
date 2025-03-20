@@ -275,16 +275,16 @@ export function mSet(entries) {
 
     console.log(`Setting values for ${resolvedEntries.length} keys`);
 
-    const args = resolvedEntries.flatMap(({ key, value }) => [
+    const args = resolvedEntries.map(({ key, value }) => ({
       key,
-      '$',
-      typeof value === 'string' ? value : JSON.stringify(value),
-    ]);
-
-    await client.json.mSet(...args);
+      path: "$",
+      value: typeof value === "string" ? value : JSON.stringify(value),
+    }));
+    
+    const result = await client.json.mSet(args);
     console.log(`Set values for ${resolvedEntries.length} keys successfully`);
 
-    return state;
+    return composeNextState(state, result);  
   };
 }
 

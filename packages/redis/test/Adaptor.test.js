@@ -626,10 +626,10 @@ describe('jSet', () => {
 describe('mSet', () => {
   const mSetClient = {
     json: {
-      mSet: async (...args) => {
+      mSet: async (args) => {
         expect(args).to.deep.equal([
-          'animals:1', '$', JSON.stringify({ name: 'mammoth' }),
-          'plants:1', '$', JSON.stringify({ type: 'tree' })
+          { key: 'animals:1', path: '$', value: JSON.stringify({ name: 'mammoth' }) },
+          { key: 'plants:1', path: '$', value: JSON.stringify({ type: 'tree' }) },
         ]);
         return 'OK';
       },
@@ -684,10 +684,10 @@ describe('mSet', () => {
   it('should always set results at the document root', async () => {
     setMockClient({
       json: {
-        mSet: async (...args) => {
-          for (let i = 1; i < args.length; i += 3) {
-            expect(args[i]).to.eql('$');
-          }
+        mSet: async (args) => {
+          args.forEach(({ path }) => {
+            expect(path).to.eql('$');
+          });
         },
       },
     });
