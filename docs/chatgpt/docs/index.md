@@ -19,7 +19,7 @@ Prompt the GPT chat interface to respond
 
 **Example**
 ```js
-prompt('Write a haiku about surfing.');
+prompt(`Filter these emails and pick out the most urgent: ${JSON.stringify($.data)}`);
 ```
 
 * * *
