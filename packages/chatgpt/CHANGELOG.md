@@ -1,5 +1,11 @@
 # @openfn/language-chatgpt
 
+## 1.0.3
+
+### Patch Changes
+
+- 36a849c: Update example in docs to be more relevant
+
 ## 1.0.2
 
 ### Patch Changes
