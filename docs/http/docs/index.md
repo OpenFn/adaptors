@@ -52,9 +52,9 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example**
+**Example:** DELETE a resource by ID
 ```js
-del(`/myendpoint/${$.data.id}`)
+del(`/myendpoint/${$.data.id}`);
 ```
 
 * * *
@@ -78,12 +78,12 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example**
+**Example:** GET request with query parameters and custom headers
 ```js
 get('/patient', {
-  query: {foo: 'bar', a: 1},
-  headers: {'content-type': 'application/json'},
-})
+  query: { foo: 'bar', a: 1 },
+  headers: { 'content-type': 'application/json' },
+});
 ```
 
 * * *
@@ -106,24 +106,21 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the parsed XML as a JSON object |
 | references | an array of all previous data objects used in the Job |
-**Example**
+**Example:** Parse XML from state.response
 ```js
-parseXML(
+ parseXML(
   (state) => state.response,
   ($) => {
     return $("table[class=your_table]").parsetable(true, true, true);
   }
 );
 ```
-**Example:** Using parseXML with a callback
+**Example:** Using parseXML with a callback to extract data
 ```js
- parseXML(
+parseXML(
   (state) => state.response,
-  ($) => {
-    return $("table[class=your_table]").parsetable(true, true, true);
-  },
-  (next) => ({ ...next, results: next.data.data })
-);
+  ($) => $("table[class=your_table]").parsetable(true, true, true)
+).then((next) => ({ ...next, results: next.data.data }));
 ```
 
 * * *
@@ -150,13 +147,13 @@ This operation writes the following keys to state:
 | references | an array of all previous data objects used in the Job |
 **Example:** PATCH a resource from state
 ```js
-patch('/patient', $.data)
+patch('/patient', $.data);
 ```
 **Example:** PATCH a resource with custom headers
 ```js
 patch('/patient', $.data, {
   headers: { 'content-type': 'application/fhir+json' },
-})
+});
 ```
 
 * * *
@@ -183,14 +180,13 @@ This operation writes the following keys to state:
 | references | an array of all previous data objects used in the Job |
 **Example:** POST a resource with from state
 ```js
-post('/patient' $.data)
-   
+post('/patient', $.data);
 ```
 **Example:** POST a resource with custom headers
 ```js
-post('/patient' $.data, {
+post('/patient', $.data, {
   headers: { 'content-type': 'application/fhir+json' },
-})
+});
 ```
 
 * * *
@@ -217,7 +213,7 @@ This operation writes the following keys to state:
 | references | an array of all previous data objects used in the Job |
 **Example:** PUT a resource from state
 ```js
-put('/patient', $.data)
+put('/patient', $.data);
 ```
 **Example:** PUT a resource with custom headers
 ```js
@@ -248,16 +244,12 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
-**Example**
+**Example:** Make a GET request
 ```js
-request(
-  'GET',
-  '/patient',
-   {
-     query: {foo: 'bar', a: 1},
-     headers: {'content-type': 'application/json'},
-   }
-)
+request('GET', '/patient', {
+  query: { foo: 'bar', a: 1 },
+  headers: { 'content-type': 'application/json' },
+});
 ```
 
 * * *

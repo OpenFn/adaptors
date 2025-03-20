@@ -1,5 +1,11 @@
 # @openfn/language-http
 
+## 7.0.2
+
+### Patch Changes
+
+- 7174293: improve function examples
+
 ## 7.0.1
 
 ### Patch Changes

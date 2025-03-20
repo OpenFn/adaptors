@@ -14,6 +14,8 @@
 <dt>
     <a href="#mget">mGet(keys)</a></dt>
 <dt>
+    <a href="#mset">mSet(entries)</a></dt>
+<dt>
     <a href="#scan">scan(pattern, options)</a></dt>
 <dt>
     <a href="#set">set(key, value)</a></dt>
@@ -195,6 +197,32 @@ This operation writes the following keys to state:
 **Example:** Get JSON document values of the patient and doctor keys
 ```js
 mGet(["patient", "doctor"]);
+```
+
+* * *
+
+### mSet
+
+<p><code>mSet(entries) ⇒ Operation</code></p>
+
+Set values at the root path ('$') in JSON documents stored at multiple keys.
+This function allows setting multiple key-value pairs in Redis JSON documents in a single operation.
+If a key already exists, its value will be replaced. If it does not exist, a new key-value pair will be created.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| entries | <code>Array.&lt;{key: string, value: (string\|object)}&gt;</code> | An array of key-value pairs to set in the JSON store. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| references | an array of all previous data objects used in the Job |
+**Example:** Set multiple JSON objects
+```js
+mSet([{ key: 'patient', value: { name: 'victor', ihs_number: 12345 } },
+      { key: 'doctor', value: { name: 'Alice', specialization: 'cardiology' } }]);
 ```
 
 * * *
