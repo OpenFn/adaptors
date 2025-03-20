@@ -1,12 +1,12 @@
+import { throwError } from '@openfn/language-common/util';
 // throws if a argument does not match the type
 const assertArgType = (arg, type, fix) => {
   if (typeof arg !== type) {
-    const e = new Error('TypeError: Invalid argument type');
-    e.code = 'ARGUMENT_ERROR';
-    e.description = `Expected argument to be '${type}', but received: ${typeof arg}`;
-    e.fix = fix;
-
-    throw e;
+    throwError('ARGUMENT_ERROR', {
+      message: 'TypeError: Invalid argument type',
+      description: `Expected argument to be '${type}', but received: ${typeof arg}`,
+      fix,
+    });
   }
 };
 
@@ -72,4 +72,51 @@ export const assertjGetArgs = key => {
     'string',
     `Make sure to pass a string for jGet(): e.g., jGet('patient')`
   );
+};
+
+export const assertMSetArgs = entries => {
+  assertArgType(
+    entries,
+    'object',
+    'mSet requires an array of key/value objects: mSet([{ key: "name", value: "..." }])'
+  );
+
+  if (!Array.isArray(entries)) {
+    throwArgumentError('array', 'mSet requires an array of key/value pairs');
+  }
+
+  entries.forEach((entry, index) => {
+    if (typeof entry !== 'object' || entry === null) {
+      throwArgumentError(
+        'object',
+        `Entry ${index} must be an object with { key, value }`
+      );
+    }
+
+    if (!('key' in entry)) {
+      throwArgumentError(
+        'key property',
+        `Entry ${index} is missing required 'key' property`
+      );
+    }
+    assertArgType(
+      entry.key,
+      'string',
+      `Key in entry ${index} must be a string`
+    );
+
+    if (!('value' in entry)) {
+      throwArgumentError(
+        'value property',
+        `Entry ${index} is missing required 'value' property`
+      );
+    }
+  });
+};
+
+const throwArgumentError = (expectedType, fixMessage) => {
+  throwError('ARGUMENT_ERROR', {
+    description: `Expected ${expectedType}`,
+    fix: fixMessage,
+  });
 };
