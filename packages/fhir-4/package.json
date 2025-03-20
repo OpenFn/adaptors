@@ -17,7 +17,7 @@
   "type": "module",
   "fhir": {
     "specUrl": "https://hl7.org/fhir/R4B/definitions.json.zip",
-    "adaptorGeneratedDate": "2025-02-26T16:03:47.179Z",
+    "adaptorGeneratedDate": "2025-03-20T10:52:25.542Z",
     "generatorVersion": "0.3.0",
     "options": {
       "simpleBuilders": true

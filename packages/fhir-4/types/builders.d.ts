@@ -563,6 +563,313 @@ declare type Duration = {
      *  */
     code?: string;
 };
+declare type Element = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+};
+declare type ElementDefinition = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+    /**
+     * Extensions that cannot be ignored even if unrecognized
+     *  */
+    modifierExtension?: Extension[];
+    /**
+     * Path of the element in the hierarchy of elements
+     *  */
+    path?: string;
+    /**
+     * xmlAttr | xmlText | typeAttr | cdaText | xhtml
+     *  */
+    representation?: string;
+    /**
+     * Name for this particular element (in a set of slices)
+     *  */
+    sliceName?: string;
+    /**
+     * If this slice definition constrains an inherited slice definition (or not)
+     *  */
+    sliceIsConstraining?: boolean;
+    /**
+     * Name for element to display with or prompt for element
+     *  */
+    label?: string;
+    /**
+     * Corresponding codes in terminologies
+     *  */
+    code?: Coding;
+    /**
+     * This element is sliced - slices follow
+     *  */
+    slicing?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Path to element value
+         *  */
+        discriminator: string;
+        /**
+         * Text description of how slicing works (or not)
+         *  */
+        description: string;
+        /**
+         * If elements must be in same order as slices
+         *  */
+        ordered: boolean;
+        /**
+         * closed | open | openAtEnd
+         *  */
+        rules: string;
+    };
+    /**
+     * Concise definition for space-constrained presentation
+     *  */
+    short?: string;
+    /**
+     * Full formal definition as narrative text
+     *  */
+    definition?: markdown;
+    /**
+     * Comments about the use of this element
+     *  */
+    comment?: markdown;
+    /**
+     * Why this resource has been created
+     *  */
+    requirements?: markdown;
+    /**
+     * Other names
+     *  */
+    alias?: string[];
+    /**
+     * Minimum Cardinality
+     *  */
+    min?: number;
+    /**
+     * Maximum Cardinality (a number or *)
+     *  */
+    max?: string;
+    /**
+     * Base definition information for tools
+     *  */
+    base?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Path that identifies the base element
+         *  */
+        path: string;
+        /**
+         * Min cardinality of the base element
+         *  */
+        min: number;
+        /**
+         * Max cardinality of the base element
+         *  */
+        max: string;
+    };
+    /**
+     * Reference to definition of content for the element
+     *  */
+    contentReference?: string;
+    /**
+     * Data type and Profile for this element
+     *  */
+    type?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Data type or Resource (reference to definition)
+         *  */
+        code: string;
+        /**
+         * Profiles (StructureDefinition or IG) - one must apply
+         *  */
+        profile: any;
+        /**
+         * Profile (StructureDefinition or IG) on the Reference/canonical target - one must apply
+         *  */
+        targetProfile: any;
+        /**
+         * contained | referenced | bundled - how aggregated
+         *  */
+        aggregation: string;
+        /**
+         * either | independent | specific
+         *  */
+        versioning: string;
+    };
+    /**
+     * Specified value if missing from instance
+     *  */
+    defaultValue?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    /**
+     * Implicit meaning when this element is missing
+     *  */
+    meaningWhenMissing?: markdown;
+    /**
+     * What the order of the elements means
+     *  */
+    orderMeaning?: string;
+    /**
+     * Value must be exactly this
+     *  */
+    fixed?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    /**
+     * Value must have at least these property values
+     *  */
+    pattern?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    /**
+     * Example value (as defined for type)
+     *  */
+    example?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Describes the purpose of this example
+         *  */
+        label: string;
+        /**
+         * Value of Example (one of allowed types)
+         *  */
+        value: base64Binary;
+    };
+    /**
+     * Minimum Allowed Value (for some types)
+     *  */
+    minValue?: string | string | string | string | number | number | number | number | Quantity;
+    /**
+     * Maximum Allowed Value (for some types)
+     *  */
+    maxValue?: string | string | string | string | number | number | number | number | Quantity;
+    /**
+     * Max length for strings
+     *  */
+    maxLength?: number;
+    /**
+     * Reference to invariant about presence
+     *  */
+    condition?: string[];
+    /**
+     * Condition that must evaluate to true
+     *  */
+    constraint?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Target of 'condition' reference above
+         *  */
+        key: string;
+        /**
+         * Why this constraint is necessary or appropriate
+         *  */
+        requirements: string;
+        /**
+         * error | warning
+         *  */
+        severity: string;
+        /**
+         * Human description of constraint
+         *  */
+        human: string;
+        /**
+         * FHIRPath expression of constraint
+         *  */
+        expression: string;
+        /**
+         * XPath expression of constraint
+         *  */
+        xpath: string;
+        /**
+         * Reference to original source of constraint
+         *  */
+        source: any;
+    };
+    /**
+     * If the element must be supported
+     *  */
+    mustSupport?: boolean;
+    /**
+     * If this modifies the meaning of other elements
+     *  */
+    isModifier?: boolean;
+    /**
+     * Reason that this element is marked as a modifier
+     *  */
+    isModifierReason?: string;
+    /**
+     * Include when _summary = true?
+     *  */
+    isSummary?: boolean;
+    /**
+     * ValueSet details if this is coded
+     *  */
+    binding?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * required | extensible | preferred | example
+         *  */
+        strength: string;
+        /**
+         * Human explanation of the value set
+         *  */
+        description: string;
+        /**
+         * Source of value set
+         *  */
+        valueSet: any;
+    };
+    /**
+     * Map element to another set of definitions
+     *  */
+    mapping?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Reference to mapping declaration
+         *  */
+        identity: string;
+        /**
+         * Computable language of mapping
+         *  */
+        language: string;
+        /**
+         * Details of the mapping
+         *  */
+        map: string;
+        /**
+         * Comments about the mapping or its use
+         *  */
+        comment: string;
+    };
+};
 declare type Expression = {
     /**
      * Unique id for inter-element referencing
@@ -769,7 +1076,67 @@ declare type Money = {
      *  */
     currency?: string;
 };
+declare type MoneyQuantity = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+    /**
+     * Numerical value (with implicit precision)
+     *  */
+    value?: number;
+    /**
+     * < | <= | >= | > - how to understand the value
+     *  */
+    comparator?: string;
+    /**
+     * Unit representation
+     *  */
+    unit?: string;
+    /**
+     * System that defines coded unit form
+     *  */
+    system?: string;
+    /**
+     * Coded form of the unit
+     *  */
+    code?: string;
+};
 declare type Quantity = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+    /**
+     * Numerical value (with implicit precision)
+     *  */
+    value?: number;
+    /**
+     * < | <= | >= | > - how to understand the value
+     *  */
+    comparator?: string;
+    /**
+     * Unit representation
+     *  */
+    unit?: string;
+    /**
+     * System that defines coded unit form
+     *  */
+    system?: string;
+    /**
+     * Coded form of the unit
+     *  */
+    code?: string;
+};
+declare type SimpleQuantity = {
     /**
      * Unique id for inter-element referencing
      *  */
@@ -872,6 +1239,36 @@ declare type Period = {
      * End time with inclusive boundary, if not ongoing
      *  */
     end?: string;
+};
+declare type Population = {
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+    /**
+     * Extensions that cannot be ignored even if unrecognized
+     *  */
+    modifierExtension?: Extension[];
+    /**
+     * The age of the specific population
+     *  */
+    age?: Range | (string[] | CodeableConcept);
+    /**
+     * The gender of the specific population
+     *  */
+    gender?: string[] | CodeableConcept;
+    /**
+     * Race of the specific population
+     *  */
+    race?: string[] | CodeableConcept;
+    /**
+     * The existing physiological conditions of the specific population to which this applies
+     *  */
+    physiologicalCondition?: string[] | CodeableConcept;
 };
 declare type ProdCharacteristic = {
     /**
@@ -1312,6 +1709,20 @@ declare type base64Binary = {
      *  */
     value?: string;
 };
+declare type code = {
+    /**
+     * xml:id (or equivalent in JSON)
+     *  */
+    id?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+    /**
+     * Primitive value for code
+     *  */
+    value?: string;
+};
 declare type markdown = {
     /**
      * xml:id (or equivalent in JSON)
@@ -1383,7 +1794,62 @@ declare type xhtml = {
     value?: string;
 };
 
-declare type MaybeArray$1D<T> = T | T[];
+type FHIR_Address = Address;
+type FHIR_Age = Age;
+type FHIR_Annotation = Annotation;
+type FHIR_Attachment = Attachment;
+type FHIR_BackboneElement = BackboneElement;
+type FHIR_CodeableConcept = CodeableConcept;
+type FHIR_CodeableReference = CodeableReference;
+type FHIR_Coding = Coding;
+type FHIR_ContactDetail = ContactDetail;
+type FHIR_ContactPoint = ContactPoint;
+type FHIR_Contributor = Contributor;
+type FHIR_Count = Count;
+type FHIR_DataRequirement = DataRequirement;
+type FHIR_Distance = Distance;
+type FHIR_Dosage = Dosage;
+type FHIR_Duration = Duration;
+type FHIR_Element = Element;
+type FHIR_ElementDefinition = ElementDefinition;
+type FHIR_Expression = Expression;
+type FHIR_Extension = Extension;
+type FHIR_HumanName = HumanName;
+type FHIR_Identifier = Identifier;
+type FHIR_MarketingStatus = MarketingStatus;
+type FHIR_Meta = Meta;
+type FHIR_Money = Money;
+type FHIR_MoneyQuantity = MoneyQuantity;
+type FHIR_Narrative = Narrative;
+type FHIR_ParameterDefinition = ParameterDefinition;
+type FHIR_Period = Period;
+type FHIR_Population = Population;
+type FHIR_ProdCharacteristic = ProdCharacteristic;
+type FHIR_ProductShelfLife = ProductShelfLife;
+type FHIR_Quantity = Quantity;
+type FHIR_Range = Range;
+type FHIR_Ratio = Ratio;
+type FHIR_RatioRange = RatioRange;
+type FHIR_Reference = Reference;
+type FHIR_RelatedArtifact = RelatedArtifact;
+type FHIR_SampledData = SampledData;
+type FHIR_Signature = Signature;
+type FHIR_SimpleQuantity = SimpleQuantity;
+type FHIR_Timing = Timing;
+type FHIR_TriggerDefinition = TriggerDefinition;
+type FHIR_UsageContext = UsageContext;
+type FHIR_base64Binary = base64Binary;
+type FHIR_code = code;
+type FHIR_markdown = markdown;
+type FHIR_oid = oid;
+type FHIR_url = url;
+type FHIR_uuid = uuid;
+type FHIR_xhtml = xhtml;
+declare namespace FHIR {
+  export type { FHIR_Address as Address, FHIR_Age as Age, FHIR_Annotation as Annotation, FHIR_Attachment as Attachment, FHIR_BackboneElement as BackboneElement, FHIR_CodeableConcept as CodeableConcept, FHIR_CodeableReference as CodeableReference, FHIR_Coding as Coding, FHIR_ContactDetail as ContactDetail, FHIR_ContactPoint as ContactPoint, FHIR_Contributor as Contributor, FHIR_Count as Count, FHIR_DataRequirement as DataRequirement, FHIR_Distance as Distance, FHIR_Dosage as Dosage, FHIR_Duration as Duration, FHIR_Element as Element, FHIR_ElementDefinition as ElementDefinition, FHIR_Expression as Expression, FHIR_Extension as Extension, FHIR_HumanName as HumanName, FHIR_Identifier as Identifier, FHIR_MarketingStatus as MarketingStatus, FHIR_Meta as Meta, FHIR_Money as Money, FHIR_MoneyQuantity as MoneyQuantity, FHIR_Narrative as Narrative, FHIR_ParameterDefinition as ParameterDefinition, FHIR_Period as Period, FHIR_Population as Population, FHIR_ProdCharacteristic as ProdCharacteristic, FHIR_ProductShelfLife as ProductShelfLife, FHIR_Quantity as Quantity, FHIR_Range as Range, FHIR_Ratio as Ratio, FHIR_RatioRange as RatioRange, FHIR_Reference as Reference, FHIR_RelatedArtifact as RelatedArtifact, FHIR_SampledData as SampledData, FHIR_Signature as Signature, FHIR_SimpleQuantity as SimpleQuantity, FHIR_Timing as Timing, FHIR_TriggerDefinition as TriggerDefinition, FHIR_UsageContext as UsageContext, FHIR_base64Binary as base64Binary, FHIR_code as code, FHIR_markdown as markdown, FHIR_oid as oid, FHIR_url as url, FHIR_uuid as uuid, FHIR_xhtml as xhtml };
+}
+
+declare type MaybeArray$1E<T> = T | T[];
 declare type Account_Props = {
     id?: string;
     meta?: Meta;
@@ -1393,11 +1859,11 @@ declare type Account_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1D<string | Identifier>;
+    identifier?: MaybeArray$1E<string | Identifier>;
     status?: string;
     type?: string[] | CodeableConcept;
     name?: string;
-    subject?: MaybeArray$1D<string | Reference>;
+    subject?: MaybeArray$1E<string | Reference>;
     servicePeriod?: Period;
     coverage?: BackboneElement[];
     owner?: string | Reference;
@@ -1407,7 +1873,7 @@ declare type Account_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$1C<T> = T | T[];
+declare type MaybeArray$1D<T> = T | T[];
 declare type ActivityDefinition_Props = {
     id?: string;
     meta?: Meta;
@@ -1418,7 +1884,7 @@ declare type ActivityDefinition_Props = {
     extension?: Extension[];
     modifierExtension?: Extension[];
     url?: string;
-    identifier?: MaybeArray$1C<string | Identifier>;
+    identifier?: MaybeArray$1D<string | Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -1431,14 +1897,14 @@ declare type ActivityDefinition_Props = {
     contact?: ContactDetail[];
     description?: markdown;
     useContext?: UsageContext[];
-    jurisdiction?: MaybeArray$1C<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray$1D<string[] | CodeableConcept>;
     purpose?: markdown;
     usage?: string;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    topic?: MaybeArray$1C<string[] | CodeableConcept>;
+    topic?: MaybeArray$1D<string[] | CodeableConcept>;
     author?: ContactDetail[];
     editor?: ContactDetail[];
     reviewer?: ContactDetail[];
@@ -1457,16 +1923,16 @@ declare type ActivityDefinition_Props = {
     product?: string | Reference | string[] | CodeableConcept;
     quantity?: Quantity;
     dosage?: Dosage[];
-    bodySite?: MaybeArray$1C<string[] | CodeableConcept>;
-    specimenRequirement?: MaybeArray$1C<string | Reference>;
-    observationRequirement?: MaybeArray$1C<string | Reference>;
-    observationResultRequirement?: MaybeArray$1C<string | Reference>;
+    bodySite?: MaybeArray$1D<string[] | CodeableConcept>;
+    specimenRequirement?: MaybeArray$1D<string | Reference>;
+    observationRequirement?: MaybeArray$1D<string | Reference>;
+    observationResultRequirement?: MaybeArray$1D<string | Reference>;
     transform?: any;
     dynamicValue?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$1B<T> = T | T[];
+declare type MaybeArray$1C<T> = T | T[];
 declare type AdministrableProductDefinition_Props = {
     id?: string;
     meta?: Meta;
@@ -1476,20 +1942,20 @@ declare type AdministrableProductDefinition_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1B<string | Identifier>;
+    identifier?: MaybeArray$1C<string | Identifier>;
     status?: string;
-    formOf?: MaybeArray$1B<string | Reference>;
+    formOf?: MaybeArray$1C<string | Reference>;
     administrableDoseForm?: string[] | CodeableConcept;
     unitOfPresentation?: string[] | CodeableConcept;
-    producedFrom?: MaybeArray$1B<string | Reference>;
-    ingredient?: MaybeArray$1B<string[] | CodeableConcept>;
+    producedFrom?: MaybeArray$1C<string | Reference>;
+    ingredient?: MaybeArray$1C<string[] | CodeableConcept>;
     device?: string | Reference;
     property?: BackboneElement[];
     routeOfAdministration?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$1A<T> = T | T[];
+declare type MaybeArray$1B<T> = T | T[];
 declare type AdverseEvent_Props = {
     id?: string;
     meta?: Meta;
@@ -1501,28 +1967,28 @@ declare type AdverseEvent_Props = {
     modifierExtension?: Extension[];
     identifier?: string | Identifier;
     actuality?: string;
-    category?: MaybeArray$1A<string[] | CodeableConcept>;
+    category?: MaybeArray$1B<string[] | CodeableConcept>;
     event?: string[] | CodeableConcept;
     subject?: string | Reference;
     encounter?: string | Reference;
     date?: string;
     detected?: string;
     recordedDate?: string;
-    resultingCondition?: MaybeArray$1A<string | Reference>;
+    resultingCondition?: MaybeArray$1B<string | Reference>;
     location?: string | Reference;
     seriousness?: string[] | CodeableConcept;
     severity?: string[] | CodeableConcept;
     outcome?: string[] | CodeableConcept;
     recorder?: string | Reference;
-    contributor?: MaybeArray$1A<string | Reference>;
+    contributor?: MaybeArray$1B<string | Reference>;
     suspectEntity?: BackboneElement[];
-    subjectMedicalHistory?: MaybeArray$1A<string | Reference>;
-    referenceDocument?: MaybeArray$1A<string | Reference>;
-    study?: MaybeArray$1A<string | Reference>;
+    subjectMedicalHistory?: MaybeArray$1B<string | Reference>;
+    referenceDocument?: MaybeArray$1B<string | Reference>;
+    study?: MaybeArray$1B<string | Reference>;
     [key: string]: any;
 };
 
-declare type MaybeArray$1z<T> = T | T[];
+declare type MaybeArray$1A<T> = T | T[];
 declare type AllergyIntolerance_Props = {
     id?: string;
     meta?: Meta;
@@ -1532,7 +1998,7 @@ declare type AllergyIntolerance_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1z<string | Identifier>;
+    identifier?: MaybeArray$1A<string | Identifier>;
     clinicalStatus?: string[] | CodeableConcept;
     verificationStatus?: string[] | CodeableConcept;
     type?: string;
@@ -1551,7 +2017,7 @@ declare type AllergyIntolerance_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$1y<T> = T | T[];
+declare type MaybeArray$1z<T> = T | T[];
 declare type Appointment_Props = {
     id?: string;
     meta?: Meta;
@@ -1561,32 +2027,32 @@ declare type Appointment_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1y<string | Identifier>;
+    identifier?: MaybeArray$1z<string | Identifier>;
     status?: string;
     cancelationReason?: string[] | CodeableConcept;
-    serviceCategory?: MaybeArray$1y<string[] | CodeableConcept>;
-    serviceType?: MaybeArray$1y<string[] | CodeableConcept>;
-    specialty?: MaybeArray$1y<string[] | CodeableConcept>;
+    serviceCategory?: MaybeArray$1z<string[] | CodeableConcept>;
+    serviceType?: MaybeArray$1z<string[] | CodeableConcept>;
+    specialty?: MaybeArray$1z<string[] | CodeableConcept>;
     appointmentType?: string[] | CodeableConcept;
-    reasonCode?: MaybeArray$1y<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$1y<string | Reference>;
+    reasonCode?: MaybeArray$1z<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$1z<string | Reference>;
     priority?: number;
     description?: string;
-    supportingInformation?: MaybeArray$1y<string | Reference>;
+    supportingInformation?: MaybeArray$1z<string | Reference>;
     start?: string;
     end?: string;
     minutesDuration?: number;
-    slot?: MaybeArray$1y<string | Reference>;
+    slot?: MaybeArray$1z<string | Reference>;
     created?: string;
     comment?: string;
     patientInstruction?: string;
-    basedOn?: MaybeArray$1y<string | Reference>;
+    basedOn?: MaybeArray$1z<string | Reference>;
     participant?: BackboneElement[];
     requestedPeriod?: Period[];
     [key: string]: any;
 };
 
-declare type MaybeArray$1x<T> = T | T[];
+declare type MaybeArray$1y<T> = T | T[];
 declare type AppointmentResponse_Props = {
     id?: string;
     meta?: Meta;
@@ -1596,18 +2062,18 @@ declare type AppointmentResponse_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1x<string | Identifier>;
+    identifier?: MaybeArray$1y<string | Identifier>;
     appointment?: string | Reference;
     start?: string;
     end?: string;
-    participantType?: MaybeArray$1x<string[] | CodeableConcept>;
+    participantType?: MaybeArray$1y<string[] | CodeableConcept>;
     actor?: string | Reference;
     participantStatus?: string;
     comment?: string;
     [key: string]: any;
 };
 
-declare type MaybeArray$1w<T> = T | T[];
+declare type MaybeArray$1x<T> = T | T[];
 declare type BiologicallyDerivedProduct_Props = {
     id?: string;
     meta?: Meta;
@@ -1617,13 +2083,13 @@ declare type BiologicallyDerivedProduct_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1w<string | Identifier>;
+    identifier?: MaybeArray$1x<string | Identifier>;
     productCategory?: string;
     productCode?: string[] | CodeableConcept;
     status?: string;
-    request?: MaybeArray$1w<string | Reference>;
+    request?: MaybeArray$1x<string | Reference>;
     quantity?: number;
-    parent?: MaybeArray$1w<string | Reference>;
+    parent?: MaybeArray$1x<string | Reference>;
     collection?: BackboneElement;
     processing?: BackboneElement[];
     manipulation?: BackboneElement;
@@ -1631,7 +2097,7 @@ declare type BiologicallyDerivedProduct_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$1v<T> = T | T[];
+declare type MaybeArray$1w<T> = T | T[];
 declare type BodyStructure_Props = {
     id?: string;
     meta?: Meta;
@@ -1641,18 +2107,18 @@ declare type BodyStructure_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1v<string | Identifier>;
+    identifier?: MaybeArray$1w<string | Identifier>;
     active?: boolean;
     morphology?: string[] | CodeableConcept;
     location?: string[] | CodeableConcept;
-    locationQualifier?: MaybeArray$1v<string[] | CodeableConcept>;
+    locationQualifier?: MaybeArray$1w<string[] | CodeableConcept>;
     description?: string;
     image?: Attachment[];
     patient?: string | Reference;
     [key: string]: any;
 };
 
-declare type MaybeArray$1u<T> = T | T[];
+declare type MaybeArray$1v<T> = T | T[];
 declare type CarePlan_Props = {
     id?: string;
     meta?: Meta;
@@ -1662,15 +2128,15 @@ declare type CarePlan_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1u<string | Identifier>;
+    identifier?: MaybeArray$1v<string | Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    basedOn?: MaybeArray$1u<string | Reference>;
-    replaces?: MaybeArray$1u<string | Reference>;
-    partOf?: MaybeArray$1u<string | Reference>;
+    basedOn?: MaybeArray$1v<string | Reference>;
+    replaces?: MaybeArray$1v<string | Reference>;
+    partOf?: MaybeArray$1v<string | Reference>;
     status?: string;
     intent?: string;
-    category?: MaybeArray$1u<string[] | CodeableConcept>;
+    category?: MaybeArray$1v<string[] | CodeableConcept>;
     title?: string;
     description?: string;
     subject?: string | Reference;
@@ -1678,17 +2144,17 @@ declare type CarePlan_Props = {
     period?: Period;
     created?: string;
     author?: string | Reference;
-    contributor?: MaybeArray$1u<string | Reference>;
-    careTeam?: MaybeArray$1u<string | Reference>;
-    addresses?: MaybeArray$1u<string | Reference>;
-    supportingInfo?: MaybeArray$1u<string | Reference>;
-    goal?: MaybeArray$1u<string | Reference>;
+    contributor?: MaybeArray$1v<string | Reference>;
+    careTeam?: MaybeArray$1v<string | Reference>;
+    addresses?: MaybeArray$1v<string | Reference>;
+    supportingInfo?: MaybeArray$1v<string | Reference>;
+    goal?: MaybeArray$1v<string | Reference>;
     activity?: BackboneElement[];
     note?: Annotation[];
     [key: string]: any;
 };
 
-declare type MaybeArray$1t<T> = T | T[];
+declare type MaybeArray$1u<T> = T | T[];
 declare type CareTeam_Props = {
     id?: string;
     meta?: Meta;
@@ -1698,23 +2164,23 @@ declare type CareTeam_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1t<string | Identifier>;
+    identifier?: MaybeArray$1u<string | Identifier>;
     status?: string;
-    category?: MaybeArray$1t<string[] | CodeableConcept>;
+    category?: MaybeArray$1u<string[] | CodeableConcept>;
     name?: string;
     subject?: string | Reference;
     encounter?: string | Reference;
     period?: Period;
     participant?: BackboneElement[];
-    reasonCode?: MaybeArray$1t<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$1t<string | Reference>;
-    managingOrganization?: MaybeArray$1t<string | Reference>;
+    reasonCode?: MaybeArray$1u<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$1u<string | Reference>;
+    managingOrganization?: MaybeArray$1u<string | Reference>;
     telecom?: ContactPoint[];
     note?: Annotation[];
     [key: string]: any;
 };
 
-declare type MaybeArray$1s<T> = T | T[];
+declare type MaybeArray$1t<T> = T | T[];
 declare type ChargeItem_Props = {
     id?: string;
     meta?: Meta;
@@ -1724,11 +2190,11 @@ declare type ChargeItem_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1s<string | Identifier>;
+    identifier?: MaybeArray$1t<string | Identifier>;
     definitionUri?: string[];
     definitionCanonical?: any[];
     status?: string;
-    partOf?: MaybeArray$1s<string | Reference>;
+    partOf?: MaybeArray$1t<string | Reference>;
     code?: string[] | CodeableConcept;
     subject?: string | Reference;
     context?: string | Reference;
@@ -1738,22 +2204,22 @@ declare type ChargeItem_Props = {
     requestingOrganization?: string | Reference;
     costCenter?: string | Reference;
     quantity?: Quantity;
-    bodysite?: MaybeArray$1s<string[] | CodeableConcept>;
+    bodysite?: MaybeArray$1t<string[] | CodeableConcept>;
     factorOverride?: number;
     priceOverride?: Money;
     overrideReason?: string;
     enterer?: string | Reference;
     enteredDate?: string;
-    reason?: MaybeArray$1s<string[] | CodeableConcept>;
-    service?: MaybeArray$1s<string | Reference>;
+    reason?: MaybeArray$1t<string[] | CodeableConcept>;
+    service?: MaybeArray$1t<string | Reference>;
     product?: string | Reference | string[] | CodeableConcept;
-    account?: MaybeArray$1s<string | Reference>;
+    account?: MaybeArray$1t<string | Reference>;
     note?: Annotation[];
-    supportingInformation?: MaybeArray$1s<string | Reference>;
+    supportingInformation?: MaybeArray$1t<string | Reference>;
     [key: string]: any;
 };
 
-declare type MaybeArray$1r<T> = T | T[];
+declare type MaybeArray$1s<T> = T | T[];
 declare type ChargeItemDefinition_Props = {
     id?: string;
     meta?: Meta;
@@ -1764,7 +2230,7 @@ declare type ChargeItemDefinition_Props = {
     extension?: Extension[];
     modifierExtension?: Extension[];
     url?: string;
-    identifier?: MaybeArray$1r<string | Identifier>;
+    identifier?: MaybeArray$1s<string | Identifier>;
     version?: string;
     title?: string;
     derivedFromUri?: string[];
@@ -1777,19 +2243,19 @@ declare type ChargeItemDefinition_Props = {
     contact?: ContactDetail[];
     description?: markdown;
     useContext?: UsageContext[];
-    jurisdiction?: MaybeArray$1r<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray$1s<string[] | CodeableConcept>;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
     code?: string[] | CodeableConcept;
-    instance?: MaybeArray$1r<string | Reference>;
+    instance?: MaybeArray$1s<string | Reference>;
     applicability?: BackboneElement[];
     propertyGroup?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$1q<T> = T | T[];
+declare type MaybeArray$1r<T> = T | T[];
 declare type Citation_Props = {
     id?: string;
     meta?: Meta;
@@ -1800,7 +2266,7 @@ declare type Citation_Props = {
     extension?: Extension[];
     modifierExtension?: Extension[];
     url?: string;
-    identifier?: MaybeArray$1q<string | Identifier>;
+    identifier?: MaybeArray$1r<string | Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -1811,7 +2277,7 @@ declare type Citation_Props = {
     contact?: ContactDetail[];
     description?: markdown;
     useContext?: UsageContext[];
-    jurisdiction?: MaybeArray$1q<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray$1r<string[] | CodeableConcept>;
     purpose?: markdown;
     copyright?: markdown;
     approvalDate?: string;
@@ -1824,14 +2290,14 @@ declare type Citation_Props = {
     summary?: BackboneElement[];
     classification?: BackboneElement[];
     note?: Annotation[];
-    currentState?: MaybeArray$1q<string[] | CodeableConcept>;
+    currentState?: MaybeArray$1r<string[] | CodeableConcept>;
     statusDate?: BackboneElement[];
     relatesTo?: BackboneElement[];
     citedArtifact?: BackboneElement;
     [key: string]: any;
 };
 
-declare type MaybeArray$1p<T> = T | T[];
+declare type MaybeArray$1q<T> = T | T[];
 declare type Claim_Props = {
     id?: string;
     meta?: Meta;
@@ -1841,7 +2307,7 @@ declare type Claim_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1p<string | Identifier>;
+    identifier?: MaybeArray$1q<string | Identifier>;
     status?: string;
     type?: string[] | CodeableConcept;
     subType?: string[] | CodeableConcept;
@@ -1871,7 +2337,7 @@ declare type Claim_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$1o<T> = T | T[];
+declare type MaybeArray$1p<T> = T | T[];
 declare type ClaimResponse_Props = {
     id?: string;
     meta?: Meta;
@@ -1881,7 +2347,7 @@ declare type ClaimResponse_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1o<string | Identifier>;
+    identifier?: MaybeArray$1p<string | Identifier>;
     status?: string;
     type?: string[] | CodeableConcept;
     subType?: string[] | CodeableConcept;
@@ -1905,13 +2371,13 @@ declare type ClaimResponse_Props = {
     formCode?: string[] | CodeableConcept;
     form?: Attachment;
     processNote?: BackboneElement[];
-    communicationRequest?: MaybeArray$1o<string | Reference>;
+    communicationRequest?: MaybeArray$1p<string | Reference>;
     insurance?: BackboneElement[];
     error?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$1n<T> = T | T[];
+declare type MaybeArray$1o<T> = T | T[];
 declare type ClinicalImpression_Props = {
     id?: string;
     meta?: Meta;
@@ -1921,7 +2387,7 @@ declare type ClinicalImpression_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1n<string | Identifier>;
+    identifier?: MaybeArray$1o<string | Identifier>;
     status?: string;
     statusReason?: string[] | CodeableConcept;
     code?: string[] | CodeableConcept;
@@ -1932,19 +2398,19 @@ declare type ClinicalImpression_Props = {
     date?: string;
     assessor?: string | Reference;
     previous?: string | Reference;
-    problem?: MaybeArray$1n<string | Reference>;
+    problem?: MaybeArray$1o<string | Reference>;
     investigation?: BackboneElement[];
     protocol?: string[];
     summary?: string;
     finding?: BackboneElement[];
-    prognosisCodeableConcept?: MaybeArray$1n<string[] | CodeableConcept>;
-    prognosisReference?: MaybeArray$1n<string | Reference>;
-    supportingInfo?: MaybeArray$1n<string | Reference>;
+    prognosisCodeableConcept?: MaybeArray$1o<string[] | CodeableConcept>;
+    prognosisReference?: MaybeArray$1o<string | Reference>;
+    supportingInfo?: MaybeArray$1o<string | Reference>;
     note?: Annotation[];
     [key: string]: any;
 };
 
-declare type MaybeArray$1m<T> = T | T[];
+declare type MaybeArray$1n<T> = T | T[];
 declare type ClinicalUseDefinition_Props = {
     id?: string;
     meta?: Meta;
@@ -1954,21 +2420,21 @@ declare type ClinicalUseDefinition_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1m<string | Identifier>;
+    identifier?: MaybeArray$1n<string | Identifier>;
     type?: string;
-    category?: MaybeArray$1m<string[] | CodeableConcept>;
-    subject?: MaybeArray$1m<string | Reference>;
+    category?: MaybeArray$1n<string[] | CodeableConcept>;
+    subject?: MaybeArray$1n<string | Reference>;
     status?: string[] | CodeableConcept;
     contraindication?: BackboneElement;
     indication?: BackboneElement;
     interaction?: BackboneElement;
-    population?: MaybeArray$1m<string | Reference>;
+    population?: MaybeArray$1n<string | Reference>;
     undesirableEffect?: BackboneElement;
     warning?: BackboneElement;
     [key: string]: any;
 };
 
-declare type MaybeArray$1l<T> = T | T[];
+declare type MaybeArray$1m<T> = T | T[];
 declare type Communication_Props = {
     id?: string;
     meta?: Meta;
@@ -1978,33 +2444,33 @@ declare type Communication_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1l<string | Identifier>;
+    identifier?: MaybeArray$1m<string | Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    basedOn?: MaybeArray$1l<string | Reference>;
-    partOf?: MaybeArray$1l<string | Reference>;
-    inResponseTo?: MaybeArray$1l<string | Reference>;
+    basedOn?: MaybeArray$1m<string | Reference>;
+    partOf?: MaybeArray$1m<string | Reference>;
+    inResponseTo?: MaybeArray$1m<string | Reference>;
     status?: string;
     statusReason?: string[] | CodeableConcept;
-    category?: MaybeArray$1l<string[] | CodeableConcept>;
+    category?: MaybeArray$1m<string[] | CodeableConcept>;
     priority?: string;
-    medium?: MaybeArray$1l<string[] | CodeableConcept>;
+    medium?: MaybeArray$1m<string[] | CodeableConcept>;
     subject?: string | Reference;
     topic?: string[] | CodeableConcept;
-    about?: MaybeArray$1l<string | Reference>;
+    about?: MaybeArray$1m<string | Reference>;
     encounter?: string | Reference;
     sent?: string;
     received?: string;
-    recipient?: MaybeArray$1l<string | Reference>;
+    recipient?: MaybeArray$1m<string | Reference>;
     sender?: string | Reference;
-    reasonCode?: MaybeArray$1l<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$1l<string | Reference>;
+    reasonCode?: MaybeArray$1m<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$1m<string | Reference>;
     payload?: BackboneElement[];
     note?: Annotation[];
     [key: string]: any;
 };
 
-declare type MaybeArray$1k<T> = T | T[];
+declare type MaybeArray$1l<T> = T | T[];
 declare type CommunicationRequest_Props = {
     id?: string;
     meta?: Meta;
@@ -2014,32 +2480,32 @@ declare type CommunicationRequest_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1k<string | Identifier>;
-    basedOn?: MaybeArray$1k<string | Reference>;
-    replaces?: MaybeArray$1k<string | Reference>;
+    identifier?: MaybeArray$1l<string | Identifier>;
+    basedOn?: MaybeArray$1l<string | Reference>;
+    replaces?: MaybeArray$1l<string | Reference>;
     groupIdentifier?: string | Identifier;
     status?: string;
     statusReason?: string[] | CodeableConcept;
-    category?: MaybeArray$1k<string[] | CodeableConcept>;
+    category?: MaybeArray$1l<string[] | CodeableConcept>;
     priority?: string;
     doNotPerform?: boolean;
-    medium?: MaybeArray$1k<string[] | CodeableConcept>;
+    medium?: MaybeArray$1l<string[] | CodeableConcept>;
     subject?: string | Reference;
-    about?: MaybeArray$1k<string | Reference>;
+    about?: MaybeArray$1l<string | Reference>;
     encounter?: string | Reference;
     payload?: BackboneElement[];
     occurrence?: string | Period;
     authoredOn?: string;
     requester?: string | Reference;
-    recipient?: MaybeArray$1k<string | Reference>;
+    recipient?: MaybeArray$1l<string | Reference>;
     sender?: string | Reference;
-    reasonCode?: MaybeArray$1k<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$1k<string | Reference>;
+    reasonCode?: MaybeArray$1l<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$1l<string | Reference>;
     note?: Annotation[];
     [key: string]: any;
 };
 
-declare type MaybeArray$1j<T> = T | T[];
+declare type MaybeArray$1k<T> = T | T[];
 declare type Contract_Props = {
     id?: string;
     meta?: Meta;
@@ -2049,7 +2515,7 @@ declare type Contract_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1j<string | Identifier>;
+    identifier?: MaybeArray$1k<string | Identifier>;
     url?: string;
     version?: string;
     status?: string;
@@ -2060,10 +2526,10 @@ declare type Contract_Props = {
     issued?: string;
     applies?: Period;
     expirationType?: string[] | CodeableConcept;
-    subject?: MaybeArray$1j<string | Reference>;
-    authority?: MaybeArray$1j<string | Reference>;
-    domain?: MaybeArray$1j<string | Reference>;
-    site?: MaybeArray$1j<string | Reference>;
+    subject?: MaybeArray$1k<string | Reference>;
+    authority?: MaybeArray$1k<string | Reference>;
+    domain?: MaybeArray$1k<string | Reference>;
+    site?: MaybeArray$1k<string | Reference>;
     name?: string;
     title?: string;
     subtitle?: string;
@@ -2072,11 +2538,11 @@ declare type Contract_Props = {
     scope?: string[] | CodeableConcept;
     topic?: string[] | CodeableConcept | string | Reference;
     type?: string[] | CodeableConcept;
-    subType?: MaybeArray$1j<string[] | CodeableConcept>;
+    subType?: MaybeArray$1k<string[] | CodeableConcept>;
     contentDefinition?: BackboneElement;
     term?: BackboneElement[];
-    supportingInfo?: MaybeArray$1j<string | Reference>;
-    relevantHistory?: MaybeArray$1j<string | Reference>;
+    supportingInfo?: MaybeArray$1k<string | Reference>;
+    relevantHistory?: MaybeArray$1k<string | Reference>;
     signer?: BackboneElement[];
     friendly?: BackboneElement[];
     legal?: BackboneElement[];
@@ -2085,7 +2551,7 @@ declare type Contract_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$1i<T> = T | T[];
+declare type MaybeArray$1j<T> = T | T[];
 declare type Coverage_Props = {
     id?: string;
     meta?: Meta;
@@ -2095,7 +2561,7 @@ declare type Coverage_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1i<string | Identifier>;
+    identifier?: MaybeArray$1j<string | Identifier>;
     status?: string;
     type?: string[] | CodeableConcept;
     policyHolder?: string | Reference;
@@ -2105,17 +2571,17 @@ declare type Coverage_Props = {
     dependent?: string;
     relationship?: string[] | CodeableConcept;
     period?: Period;
-    payor?: MaybeArray$1i<string | Reference>;
+    payor?: MaybeArray$1j<string | Reference>;
     class?: BackboneElement[];
     order?: number;
     network?: string;
     costToBeneficiary?: BackboneElement[];
     subrogation?: boolean;
-    contract?: MaybeArray$1i<string | Reference>;
+    contract?: MaybeArray$1j<string | Reference>;
     [key: string]: any;
 };
 
-declare type MaybeArray$1h<T> = T | T[];
+declare type MaybeArray$1i<T> = T | T[];
 declare type CoverageEligibilityRequest_Props = {
     id?: string;
     meta?: Meta;
@@ -2125,7 +2591,7 @@ declare type CoverageEligibilityRequest_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1h<string | Identifier>;
+    identifier?: MaybeArray$1i<string | Identifier>;
     status?: string;
     priority?: string[] | CodeableConcept;
     purpose?: string[];
@@ -2142,7 +2608,7 @@ declare type CoverageEligibilityRequest_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$1g<T> = T | T[];
+declare type MaybeArray$1h<T> = T | T[];
 declare type CoverageEligibilityResponse_Props = {
     id?: string;
     meta?: Meta;
@@ -2152,7 +2618,7 @@ declare type CoverageEligibilityResponse_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1g<string | Identifier>;
+    identifier?: MaybeArray$1h<string | Identifier>;
     status?: string;
     purpose?: string[];
     patient?: string | Reference;
@@ -2170,7 +2636,7 @@ declare type CoverageEligibilityResponse_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$1f<T> = T | T[];
+declare type MaybeArray$1g<T> = T | T[];
 declare type DetectedIssue_Props = {
     id?: string;
     meta?: Meta;
@@ -2180,14 +2646,14 @@ declare type DetectedIssue_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1f<string | Identifier>;
+    identifier?: MaybeArray$1g<string | Identifier>;
     status?: string;
     code?: string[] | CodeableConcept;
     severity?: string;
     patient?: string | Reference;
     identified?: string | Period;
     author?: string | Reference;
-    implicated?: MaybeArray$1f<string | Reference>;
+    implicated?: MaybeArray$1g<string | Reference>;
     evidence?: BackboneElement[];
     detail?: string;
     reference?: string;
@@ -2195,7 +2661,7 @@ declare type DetectedIssue_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$1e<T> = T | T[];
+declare type MaybeArray$1f<T> = T | T[];
 declare type Device_Props = {
     id?: string;
     meta?: Meta;
@@ -2205,11 +2671,11 @@ declare type Device_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1e<string | Identifier>;
+    identifier?: MaybeArray$1f<string | Identifier>;
     definition?: string | Reference;
     udiCarrier?: BackboneElement[];
     status?: string;
-    statusReason?: MaybeArray$1e<string[] | CodeableConcept>;
+    statusReason?: MaybeArray$1f<string[] | CodeableConcept>;
     distinctIdentifier?: string;
     manufacturer?: string;
     manufactureDate?: string;
@@ -2229,12 +2695,12 @@ declare type Device_Props = {
     location?: string | Reference;
     url?: string;
     note?: Annotation[];
-    safety?: MaybeArray$1e<string[] | CodeableConcept>;
+    safety?: MaybeArray$1f<string[] | CodeableConcept>;
     parent?: string | Reference;
     [key: string]: any;
 };
 
-declare type MaybeArray$1d<T> = T | T[];
+declare type MaybeArray$1e<T> = T | T[];
 declare type DeviceDefinition_Props = {
     id?: string;
     meta?: Meta;
@@ -2244,7 +2710,7 @@ declare type DeviceDefinition_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1d<string | Identifier>;
+    identifier?: MaybeArray$1e<string | Identifier>;
     udiDeviceIdentifier?: BackboneElement[];
     manufacturer?: string | string | Reference;
     deviceName?: BackboneElement[];
@@ -2252,10 +2718,10 @@ declare type DeviceDefinition_Props = {
     type?: string[] | CodeableConcept;
     specialization?: BackboneElement[];
     version?: string[];
-    safety?: MaybeArray$1d<string[] | CodeableConcept>;
+    safety?: MaybeArray$1e<string[] | CodeableConcept>;
     shelfLifeStorage?: ProductShelfLife[];
     physicalCharacteristics?: ProdCharacteristic;
-    languageCode?: MaybeArray$1d<string[] | CodeableConcept>;
+    languageCode?: MaybeArray$1e<string[] | CodeableConcept>;
     capability?: BackboneElement[];
     property?: BackboneElement[];
     owner?: string | Reference;
@@ -2269,7 +2735,7 @@ declare type DeviceDefinition_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$1c<T> = T | T[];
+declare type MaybeArray$1d<T> = T | T[];
 declare type DeviceMetric_Props = {
     id?: string;
     meta?: Meta;
@@ -2279,7 +2745,7 @@ declare type DeviceMetric_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1c<string | Identifier>;
+    identifier?: MaybeArray$1d<string | Identifier>;
     type?: string[] | CodeableConcept;
     unit?: string[] | CodeableConcept;
     source?: string | Reference;
@@ -2292,7 +2758,7 @@ declare type DeviceMetric_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$1b<T> = T | T[];
+declare type MaybeArray$1c<T> = T | T[];
 declare type DeviceRequest_Props = {
     id?: string;
     meta?: Meta;
@@ -2302,11 +2768,11 @@ declare type DeviceRequest_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1b<string | Identifier>;
+    identifier?: MaybeArray$1c<string | Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    basedOn?: MaybeArray$1b<string | Reference>;
-    priorRequest?: MaybeArray$1b<string | Reference>;
+    basedOn?: MaybeArray$1c<string | Reference>;
+    priorRequest?: MaybeArray$1c<string | Reference>;
     groupIdentifier?: string | Identifier;
     status?: string;
     intent?: string;
@@ -2320,17 +2786,43 @@ declare type DeviceRequest_Props = {
     requester?: string | Reference;
     performerType?: string[] | CodeableConcept;
     performer?: string | Reference;
+    reasonCode?: MaybeArray$1c<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$1c<string | Reference>;
+    insurance?: MaybeArray$1c<string | Reference>;
+    supportingInfo?: MaybeArray$1c<string | Reference>;
+    note?: Annotation[];
+    relevantHistory?: MaybeArray$1c<string | Reference>;
+    [key: string]: any;
+};
+
+declare type MaybeArray$1b<T> = T | T[];
+declare type DeviceUseStatement_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: MaybeArray$1b<string | Identifier>;
+    basedOn?: MaybeArray$1b<string | Reference>;
+    status?: string;
+    subject?: string | Reference;
+    derivedFrom?: MaybeArray$1b<string | Reference>;
+    timing?: Timing | Period | string;
+    recordedOn?: string;
+    source?: string | Reference;
+    device?: string | Reference;
     reasonCode?: MaybeArray$1b<string[] | CodeableConcept>;
     reasonReference?: MaybeArray$1b<string | Reference>;
-    insurance?: MaybeArray$1b<string | Reference>;
-    supportingInfo?: MaybeArray$1b<string | Reference>;
+    bodySite?: string[] | CodeableConcept;
     note?: Annotation[];
-    relevantHistory?: MaybeArray$1b<string | Reference>;
     [key: string]: any;
 };
 
 declare type MaybeArray$1a<T> = T | T[];
-declare type DeviceUseStatement_Props = {
+declare type DiagnosticReport_Props = {
     id?: string;
     meta?: Meta;
     implicitRules?: string;
@@ -2342,46 +2834,20 @@ declare type DeviceUseStatement_Props = {
     identifier?: MaybeArray$1a<string | Identifier>;
     basedOn?: MaybeArray$1a<string | Reference>;
     status?: string;
-    subject?: string | Reference;
-    derivedFrom?: MaybeArray$1a<string | Reference>;
-    timing?: Timing | Period | string;
-    recordedOn?: string;
-    source?: string | Reference;
-    device?: string | Reference;
-    reasonCode?: MaybeArray$1a<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$1a<string | Reference>;
-    bodySite?: string[] | CodeableConcept;
-    note?: Annotation[];
-    [key: string]: any;
-};
-
-declare type MaybeArray$19<T> = T | T[];
-declare type DiagnosticReport_Props = {
-    id?: string;
-    meta?: Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: Narrative;
-    contained?: any[];
-    extension?: Extension[];
-    modifierExtension?: Extension[];
-    identifier?: MaybeArray$19<string | Identifier>;
-    basedOn?: MaybeArray$19<string | Reference>;
-    status?: string;
-    category?: MaybeArray$19<string[] | CodeableConcept>;
+    category?: MaybeArray$1a<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
     subject?: string | Reference;
     encounter?: string | Reference;
     effective?: string | Period;
     issued?: string;
-    performer?: MaybeArray$19<string | Reference>;
-    resultsInterpreter?: MaybeArray$19<string | Reference>;
-    specimen?: MaybeArray$19<string | Reference>;
-    result?: MaybeArray$19<string | Reference>;
-    imagingStudy?: MaybeArray$19<string | Reference>;
+    performer?: MaybeArray$1a<string | Reference>;
+    resultsInterpreter?: MaybeArray$1a<string | Reference>;
+    specimen?: MaybeArray$1a<string | Reference>;
+    result?: MaybeArray$1a<string | Reference>;
+    imagingStudy?: MaybeArray$1a<string | Reference>;
     media?: BackboneElement[];
     conclusion?: string;
-    conclusionCode?: MaybeArray$19<string[] | CodeableConcept>;
+    conclusionCode?: MaybeArray$1a<string[] | CodeableConcept>;
     presentedForm?: Attachment[];
     [key: string]: any;
 };
@@ -2398,8 +2864,44 @@ declare type DomainResource_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$18<T> = T | T[];
+declare type MaybeArray$19<T> = T | T[];
 declare type Encounter_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: MaybeArray$19<string | Identifier>;
+    status?: string;
+    statusHistory?: BackboneElement[];
+    class?: Coding;
+    classHistory?: BackboneElement[];
+    type?: MaybeArray$19<string[] | CodeableConcept>;
+    serviceType?: string[] | CodeableConcept;
+    priority?: string[] | CodeableConcept;
+    subject?: string | Reference;
+    episodeOfCare?: MaybeArray$19<string | Reference>;
+    basedOn?: MaybeArray$19<string | Reference>;
+    participant?: BackboneElement[];
+    appointment?: MaybeArray$19<string | Reference>;
+    period?: Period;
+    length?: Duration;
+    reasonCode?: MaybeArray$19<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$19<string | Reference>;
+    diagnosis?: BackboneElement[];
+    account?: MaybeArray$19<string | Reference>;
+    hospitalization?: BackboneElement;
+    location?: BackboneElement[];
+    serviceProvider?: string | Reference;
+    partOf?: string | Reference;
+    [key: string]: any;
+};
+
+declare type MaybeArray$18<T> = T | T[];
+declare type EnrollmentRequest_Props = {
     id?: string;
     meta?: Meta;
     implicitRules?: string;
@@ -2410,32 +2912,16 @@ declare type Encounter_Props = {
     modifierExtension?: Extension[];
     identifier?: MaybeArray$18<string | Identifier>;
     status?: string;
-    statusHistory?: BackboneElement[];
-    class?: Coding;
-    classHistory?: BackboneElement[];
-    type?: MaybeArray$18<string[] | CodeableConcept>;
-    serviceType?: string[] | CodeableConcept;
-    priority?: string[] | CodeableConcept;
-    subject?: string | Reference;
-    episodeOfCare?: MaybeArray$18<string | Reference>;
-    basedOn?: MaybeArray$18<string | Reference>;
-    participant?: BackboneElement[];
-    appointment?: MaybeArray$18<string | Reference>;
-    period?: Period;
-    length?: Duration;
-    reasonCode?: MaybeArray$18<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$18<string | Reference>;
-    diagnosis?: BackboneElement[];
-    account?: MaybeArray$18<string | Reference>;
-    hospitalization?: BackboneElement;
-    location?: BackboneElement[];
-    serviceProvider?: string | Reference;
-    partOf?: string | Reference;
+    created?: string;
+    insurer?: string | Reference;
+    provider?: string | Reference;
+    candidate?: string | Reference;
+    coverage?: string | Reference;
     [key: string]: any;
 };
 
 declare type MaybeArray$17<T> = T | T[];
-declare type EnrollmentRequest_Props = {
+declare type EnrollmentResponse_Props = {
     id?: string;
     meta?: Meta;
     implicitRules?: string;
@@ -2446,16 +2932,17 @@ declare type EnrollmentRequest_Props = {
     modifierExtension?: Extension[];
     identifier?: MaybeArray$17<string | Identifier>;
     status?: string;
+    request?: string | Reference;
+    outcome?: string;
+    disposition?: string;
     created?: string;
-    insurer?: string | Reference;
-    provider?: string | Reference;
-    candidate?: string | Reference;
-    coverage?: string | Reference;
+    organization?: string | Reference;
+    requestProvider?: string | Reference;
     [key: string]: any;
 };
 
 declare type MaybeArray$16<T> = T | T[];
-declare type EnrollmentResponse_Props = {
+declare type EpisodeOfCare_Props = {
     id?: string;
     meta?: Meta;
     implicitRules?: string;
@@ -2466,41 +2953,20 @@ declare type EnrollmentResponse_Props = {
     modifierExtension?: Extension[];
     identifier?: MaybeArray$16<string | Identifier>;
     status?: string;
-    request?: string | Reference;
-    outcome?: string;
-    disposition?: string;
-    created?: string;
-    organization?: string | Reference;
-    requestProvider?: string | Reference;
-    [key: string]: any;
-};
-
-declare type MaybeArray$15<T> = T | T[];
-declare type EpisodeOfCare_Props = {
-    id?: string;
-    meta?: Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: Narrative;
-    contained?: any[];
-    extension?: Extension[];
-    modifierExtension?: Extension[];
-    identifier?: MaybeArray$15<string | Identifier>;
-    status?: string;
     statusHistory?: BackboneElement[];
-    type?: MaybeArray$15<string[] | CodeableConcept>;
+    type?: MaybeArray$16<string[] | CodeableConcept>;
     diagnosis?: BackboneElement[];
     patient?: string | Reference;
     managingOrganization?: string | Reference;
     period?: Period;
-    referralRequest?: MaybeArray$15<string | Reference>;
+    referralRequest?: MaybeArray$16<string | Reference>;
     careManager?: string | Reference;
-    team?: MaybeArray$15<string | Reference>;
-    account?: MaybeArray$15<string | Reference>;
+    team?: MaybeArray$16<string | Reference>;
+    account?: MaybeArray$16<string | Reference>;
     [key: string]: any;
 };
 
-declare type MaybeArray$14<T> = T | T[];
+declare type MaybeArray$15<T> = T | T[];
 declare type EventDefinition_Props = {
     id?: string;
     meta?: Meta;
@@ -2511,7 +2977,7 @@ declare type EventDefinition_Props = {
     extension?: Extension[];
     modifierExtension?: Extension[];
     url?: string;
-    identifier?: MaybeArray$14<string | Identifier>;
+    identifier?: MaybeArray$15<string | Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -2524,14 +2990,14 @@ declare type EventDefinition_Props = {
     contact?: ContactDetail[];
     description?: markdown;
     useContext?: UsageContext[];
-    jurisdiction?: MaybeArray$14<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray$15<string[] | CodeableConcept>;
     purpose?: markdown;
     usage?: string;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    topic?: MaybeArray$14<string[] | CodeableConcept>;
+    topic?: MaybeArray$15<string[] | CodeableConcept>;
     author?: ContactDetail[];
     editor?: ContactDetail[];
     reviewer?: ContactDetail[];
@@ -2541,7 +3007,7 @@ declare type EventDefinition_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$13<T> = T | T[];
+declare type MaybeArray$14<T> = T | T[];
 declare type Evidence_Props = {
     id?: string;
     meta?: Meta;
@@ -2552,7 +3018,7 @@ declare type Evidence_Props = {
     extension?: Extension[];
     modifierExtension?: Extension[];
     url?: string;
-    identifier?: MaybeArray$13<string | Identifier>;
+    identifier?: MaybeArray$14<string | Identifier>;
     version?: string;
     title?: string;
     citeAs?: string | Reference | markdown;
@@ -2579,7 +3045,7 @@ declare type Evidence_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$12<T> = T | T[];
+declare type MaybeArray$13<T> = T | T[];
 declare type EvidenceReport_Props = {
     id?: string;
     meta?: Meta;
@@ -2592,8 +3058,8 @@ declare type EvidenceReport_Props = {
     url?: string;
     status?: string;
     useContext?: UsageContext[];
-    identifier?: MaybeArray$12<string | Identifier>;
-    relatedIdentifier?: MaybeArray$12<string | Identifier>;
+    identifier?: MaybeArray$13<string | Identifier>;
+    relatedIdentifier?: MaybeArray$13<string | Identifier>;
     citeAs?: string | Reference | markdown;
     type?: string[] | CodeableConcept;
     note?: Annotation[];
@@ -2610,7 +3076,7 @@ declare type EvidenceReport_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$11<T> = T | T[];
+declare type MaybeArray$12<T> = T | T[];
 declare type EvidenceVariable_Props = {
     id?: string;
     meta?: Meta;
@@ -2621,7 +3087,7 @@ declare type EvidenceVariable_Props = {
     extension?: Extension[];
     modifierExtension?: Extension[];
     url?: string;
-    identifier?: MaybeArray$11<string | Identifier>;
+    identifier?: MaybeArray$12<string | Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -2647,7 +3113,7 @@ declare type EvidenceVariable_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$10<T> = T | T[];
+declare type MaybeArray$11<T> = T | T[];
 declare type ExplanationOfBenefit_Props = {
     id?: string;
     meta?: Meta;
@@ -2657,7 +3123,7 @@ declare type ExplanationOfBenefit_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$10<string | Identifier>;
+    identifier?: MaybeArray$11<string | Identifier>;
     status?: string;
     type?: string[] | CodeableConcept;
     subType?: string[] | CodeableConcept;
@@ -2703,7 +3169,7 @@ declare type ExplanationOfBenefit_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$$<T> = T | T[];
+declare type MaybeArray$10<T> = T | T[];
 declare type FamilyMemberHistory_Props = {
     id?: string;
     meta?: Meta;
@@ -2713,7 +3179,7 @@ declare type FamilyMemberHistory_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$$<string | Identifier>;
+    identifier?: MaybeArray$10<string | Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
     status?: string;
@@ -2727,14 +3193,14 @@ declare type FamilyMemberHistory_Props = {
     age?: Age | Range | string;
     estimatedAge?: boolean;
     deceased?: boolean | Age | Range | string;
-    reasonCode?: MaybeArray$$<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$$<string | Reference>;
+    reasonCode?: MaybeArray$10<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$10<string | Reference>;
     note?: Annotation[];
     condition?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$_<T> = T | T[];
+declare type MaybeArray$$<T> = T | T[];
 declare type Flag_Props = {
     id?: string;
     meta?: Meta;
@@ -2744,9 +3210,9 @@ declare type Flag_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$_<string | Identifier>;
+    identifier?: MaybeArray$$<string | Identifier>;
     status?: string;
-    category?: MaybeArray$_<string[] | CodeableConcept>;
+    category?: MaybeArray$$<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
     subject?: string | Reference;
     period?: Period;
@@ -2755,7 +3221,7 @@ declare type Flag_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$Z<T> = T | T[];
+declare type MaybeArray$_<T> = T | T[];
 declare type Goal_Props = {
     id?: string;
     meta?: Meta;
@@ -2765,10 +3231,10 @@ declare type Goal_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$Z<string | Identifier>;
+    identifier?: MaybeArray$_<string | Identifier>;
     lifecycleStatus?: string;
     achievementStatus?: string[] | CodeableConcept;
-    category?: MaybeArray$Z<string[] | CodeableConcept>;
+    category?: MaybeArray$_<string[] | CodeableConcept>;
     priority?: string[] | CodeableConcept;
     description?: string[] | CodeableConcept;
     subject?: string | Reference;
@@ -2777,14 +3243,14 @@ declare type Goal_Props = {
     statusDate?: string;
     statusReason?: string;
     expressedBy?: string | Reference;
-    addresses?: MaybeArray$Z<string | Reference>;
+    addresses?: MaybeArray$_<string | Reference>;
     note?: Annotation[];
-    outcomeCode?: MaybeArray$Z<string[] | CodeableConcept>;
-    outcomeReference?: MaybeArray$Z<string | Reference>;
+    outcomeCode?: MaybeArray$_<string[] | CodeableConcept>;
+    outcomeReference?: MaybeArray$_<string | Reference>;
     [key: string]: any;
 };
 
-declare type MaybeArray$Y<T> = T | T[];
+declare type MaybeArray$Z<T> = T | T[];
 declare type Group_Props = {
     id?: string;
     meta?: Meta;
@@ -2794,7 +3260,7 @@ declare type Group_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$Y<string | Identifier>;
+    identifier?: MaybeArray$Z<string | Identifier>;
     active?: boolean;
     type?: string;
     actual?: boolean;
@@ -2807,7 +3273,7 @@ declare type Group_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$X<T> = T | T[];
+declare type MaybeArray$Y<T> = T | T[];
 declare type GuidanceResponse_Props = {
     id?: string;
     meta?: Meta;
@@ -2818,24 +3284,24 @@ declare type GuidanceResponse_Props = {
     extension?: Extension[];
     modifierExtension?: Extension[];
     requestIdentifier?: string | Identifier;
-    identifier?: MaybeArray$X<string | Identifier>;
+    identifier?: MaybeArray$Y<string | Identifier>;
     module?: string | any | string[] | CodeableConcept;
     status?: string;
     subject?: string | Reference;
     encounter?: string | Reference;
     occurrenceDateTime?: string;
     performer?: string | Reference;
-    reasonCode?: MaybeArray$X<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$X<string | Reference>;
+    reasonCode?: MaybeArray$Y<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$Y<string | Reference>;
     note?: Annotation[];
-    evaluationMessage?: MaybeArray$X<string | Reference>;
+    evaluationMessage?: MaybeArray$Y<string | Reference>;
     outputParameters?: string | Reference;
     result?: string | Reference;
     dataRequirement?: DataRequirement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$W<T> = T | T[];
+declare type MaybeArray$X<T> = T | T[];
 declare type HealthcareService_Props = {
     id?: string;
     meta?: Meta;
@@ -2845,34 +3311,34 @@ declare type HealthcareService_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$W<string | Identifier>;
+    identifier?: MaybeArray$X<string | Identifier>;
     active?: boolean;
     providedBy?: string | Reference;
-    category?: MaybeArray$W<string[] | CodeableConcept>;
-    type?: MaybeArray$W<string[] | CodeableConcept>;
-    specialty?: MaybeArray$W<string[] | CodeableConcept>;
-    location?: MaybeArray$W<string | Reference>;
+    category?: MaybeArray$X<string[] | CodeableConcept>;
+    type?: MaybeArray$X<string[] | CodeableConcept>;
+    specialty?: MaybeArray$X<string[] | CodeableConcept>;
+    location?: MaybeArray$X<string | Reference>;
     name?: string;
     comment?: string;
     extraDetails?: markdown;
     photo?: Attachment;
     telecom?: ContactPoint[];
-    coverageArea?: MaybeArray$W<string | Reference>;
-    serviceProvisionCode?: MaybeArray$W<string[] | CodeableConcept>;
+    coverageArea?: MaybeArray$X<string | Reference>;
+    serviceProvisionCode?: MaybeArray$X<string[] | CodeableConcept>;
     eligibility?: BackboneElement[];
-    program?: MaybeArray$W<string[] | CodeableConcept>;
-    characteristic?: MaybeArray$W<string[] | CodeableConcept>;
-    communication?: MaybeArray$W<string[] | CodeableConcept>;
-    referralMethod?: MaybeArray$W<string[] | CodeableConcept>;
+    program?: MaybeArray$X<string[] | CodeableConcept>;
+    characteristic?: MaybeArray$X<string[] | CodeableConcept>;
+    communication?: MaybeArray$X<string[] | CodeableConcept>;
+    referralMethod?: MaybeArray$X<string[] | CodeableConcept>;
     appointmentRequired?: boolean;
     availableTime?: BackboneElement[];
     notAvailable?: BackboneElement[];
     availabilityExceptions?: string;
-    endpoint?: MaybeArray$W<string | Reference>;
+    endpoint?: MaybeArray$X<string | Reference>;
     [key: string]: any;
 };
 
-declare type MaybeArray$V<T> = T | T[];
+declare type MaybeArray$W<T> = T | T[];
 declare type ImagingStudy_Props = {
     id?: string;
     meta?: Meta;
@@ -2882,30 +3348,30 @@ declare type ImagingStudy_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$V<string | Identifier>;
+    identifier?: MaybeArray$W<string | Identifier>;
     status?: string;
     modality?: Coding[];
     subject?: string | Reference;
     encounter?: string | Reference;
     started?: string;
-    basedOn?: MaybeArray$V<string | Reference>;
+    basedOn?: MaybeArray$W<string | Reference>;
     referrer?: string | Reference;
-    interpreter?: MaybeArray$V<string | Reference>;
-    endpoint?: MaybeArray$V<string | Reference>;
+    interpreter?: MaybeArray$W<string | Reference>;
+    endpoint?: MaybeArray$W<string | Reference>;
     numberOfSeries?: number;
     numberOfInstances?: number;
     procedureReference?: string | Reference;
-    procedureCode?: MaybeArray$V<string[] | CodeableConcept>;
+    procedureCode?: MaybeArray$W<string[] | CodeableConcept>;
     location?: string | Reference;
-    reasonCode?: MaybeArray$V<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$V<string | Reference>;
+    reasonCode?: MaybeArray$W<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$W<string | Reference>;
     note?: Annotation[];
     description?: string;
     series?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$U<T> = T | T[];
+declare type MaybeArray$V<T> = T | T[];
 declare type Immunization_Props = {
     id?: string;
     meta?: Meta;
@@ -2915,7 +3381,7 @@ declare type Immunization_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$U<string | Identifier>;
+    identifier?: MaybeArray$V<string | Identifier>;
     status?: string;
     statusReason?: string[] | CodeableConcept;
     vaccineCode?: string[] | CodeableConcept;
@@ -2934,19 +3400,19 @@ declare type Immunization_Props = {
     doseQuantity?: Quantity;
     performer?: BackboneElement[];
     note?: Annotation[];
-    reasonCode?: MaybeArray$U<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$U<string | Reference>;
+    reasonCode?: MaybeArray$V<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$V<string | Reference>;
     isSubpotent?: boolean;
-    subpotentReason?: MaybeArray$U<string[] | CodeableConcept>;
+    subpotentReason?: MaybeArray$V<string[] | CodeableConcept>;
     education?: BackboneElement[];
-    programEligibility?: MaybeArray$U<string[] | CodeableConcept>;
+    programEligibility?: MaybeArray$V<string[] | CodeableConcept>;
     fundingSource?: string[] | CodeableConcept;
     reaction?: BackboneElement[];
     protocolApplied?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$T<T> = T | T[];
+declare type MaybeArray$U<T> = T | T[];
 declare type ImmunizationEvaluation_Props = {
     id?: string;
     meta?: Meta;
@@ -2956,7 +3422,7 @@ declare type ImmunizationEvaluation_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$T<string | Identifier>;
+    identifier?: MaybeArray$U<string | Identifier>;
     status?: string;
     patient?: string | Reference;
     date?: string;
@@ -2964,7 +3430,7 @@ declare type ImmunizationEvaluation_Props = {
     targetDisease?: string[] | CodeableConcept;
     immunizationEvent?: string | Reference;
     doseStatus?: string[] | CodeableConcept;
-    doseStatusReason?: MaybeArray$T<string[] | CodeableConcept>;
+    doseStatusReason?: MaybeArray$U<string[] | CodeableConcept>;
     description?: string;
     series?: string;
     doseNumber?: number | string;
@@ -2972,7 +3438,7 @@ declare type ImmunizationEvaluation_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$S<T> = T | T[];
+declare type MaybeArray$T<T> = T | T[];
 declare type ImmunizationRecommendation_Props = {
     id?: string;
     meta?: Meta;
@@ -2982,7 +3448,7 @@ declare type ImmunizationRecommendation_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$S<string | Identifier>;
+    identifier?: MaybeArray$T<string | Identifier>;
     patient?: string | Reference;
     date?: string;
     authority?: string | Reference;
@@ -2990,7 +3456,7 @@ declare type ImmunizationRecommendation_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$R<T> = T | T[];
+declare type MaybeArray$S<T> = T | T[];
 declare type Ingredient_Props = {
     id?: string;
     meta?: Meta;
@@ -3002,16 +3468,16 @@ declare type Ingredient_Props = {
     modifierExtension?: Extension[];
     identifier?: string | Identifier;
     status?: string;
-    for?: MaybeArray$R<string | Reference>;
+    for?: MaybeArray$S<string | Reference>;
     role?: string[] | CodeableConcept;
-    function?: MaybeArray$R<string[] | CodeableConcept>;
+    function?: MaybeArray$S<string[] | CodeableConcept>;
     allergenicIndicator?: boolean;
     manufacturer?: BackboneElement[];
     substance?: BackboneElement;
     [key: string]: any;
 };
 
-declare type MaybeArray$Q<T> = T | T[];
+declare type MaybeArray$R<T> = T | T[];
 declare type InsurancePlan_Props = {
     id?: string;
     meta?: Meta;
@@ -3021,24 +3487,24 @@ declare type InsurancePlan_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$Q<string | Identifier>;
+    identifier?: MaybeArray$R<string | Identifier>;
     status?: string;
-    type?: MaybeArray$Q<string[] | CodeableConcept>;
+    type?: MaybeArray$R<string[] | CodeableConcept>;
     name?: string;
     alias?: string[];
     period?: Period;
     ownedBy?: string | Reference;
     administeredBy?: string | Reference;
-    coverageArea?: MaybeArray$Q<string | Reference>;
+    coverageArea?: MaybeArray$R<string | Reference>;
     contact?: BackboneElement[];
-    endpoint?: MaybeArray$Q<string | Reference>;
-    network?: MaybeArray$Q<string | Reference>;
+    endpoint?: MaybeArray$R<string | Reference>;
+    network?: MaybeArray$R<string | Reference>;
     coverage?: BackboneElement[];
     plan?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$P<T> = T | T[];
+declare type MaybeArray$Q<T> = T | T[];
 declare type Invoice_Props = {
     id?: string;
     meta?: Meta;
@@ -3048,7 +3514,7 @@ declare type Invoice_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$P<string | Identifier>;
+    identifier?: MaybeArray$Q<string | Identifier>;
     status?: string;
     cancelledReason?: string;
     type?: string[] | CodeableConcept;
@@ -3067,7 +3533,7 @@ declare type Invoice_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$O<T> = T | T[];
+declare type MaybeArray$P<T> = T | T[];
 declare type Library_Props = {
     id?: string;
     meta?: Meta;
@@ -3078,7 +3544,7 @@ declare type Library_Props = {
     extension?: Extension[];
     modifierExtension?: Extension[];
     url?: string;
-    identifier?: MaybeArray$O<string | Identifier>;
+    identifier?: MaybeArray$P<string | Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -3092,14 +3558,14 @@ declare type Library_Props = {
     contact?: ContactDetail[];
     description?: markdown;
     useContext?: UsageContext[];
-    jurisdiction?: MaybeArray$O<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray$P<string[] | CodeableConcept>;
     purpose?: markdown;
     usage?: string;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    topic?: MaybeArray$O<string[] | CodeableConcept>;
+    topic?: MaybeArray$P<string[] | CodeableConcept>;
     author?: ContactDetail[];
     editor?: ContactDetail[];
     reviewer?: ContactDetail[];
@@ -3111,7 +3577,7 @@ declare type Library_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$N<T> = T | T[];
+declare type MaybeArray$O<T> = T | T[];
 declare type List_Props = {
     id?: string;
     meta?: Meta;
@@ -3121,7 +3587,7 @@ declare type List_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$N<string | Identifier>;
+    identifier?: MaybeArray$O<string | Identifier>;
     status?: string;
     mode?: string;
     title?: string;
@@ -3137,8 +3603,38 @@ declare type List_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$M<T> = T | T[];
+declare type MaybeArray$N<T> = T | T[];
 declare type Location_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: MaybeArray$N<string | Identifier>;
+    status?: string;
+    operationalStatus?: Coding;
+    name?: string;
+    alias?: string[];
+    description?: string;
+    mode?: string;
+    type?: MaybeArray$N<string[] | CodeableConcept>;
+    telecom?: ContactPoint[];
+    address?: Address;
+    physicalType?: string[] | CodeableConcept;
+    position?: BackboneElement;
+    managingOrganization?: string | Reference;
+    partOf?: string | Reference;
+    hoursOfOperation?: BackboneElement[];
+    availabilityExceptions?: string;
+    endpoint?: MaybeArray$N<string | Reference>;
+    [key: string]: any;
+};
+
+declare type MaybeArray$M<T> = T | T[];
+declare type ManufacturedItemDefinition_Props = {
     id?: string;
     meta?: Meta;
     implicitRules?: string;
@@ -3149,45 +3645,15 @@ declare type Location_Props = {
     modifierExtension?: Extension[];
     identifier?: MaybeArray$M<string | Identifier>;
     status?: string;
-    operationalStatus?: Coding;
-    name?: string;
-    alias?: string[];
-    description?: string;
-    mode?: string;
-    type?: MaybeArray$M<string[] | CodeableConcept>;
-    telecom?: ContactPoint[];
-    address?: Address;
-    physicalType?: string[] | CodeableConcept;
-    position?: BackboneElement;
-    managingOrganization?: string | Reference;
-    partOf?: string | Reference;
-    hoursOfOperation?: BackboneElement[];
-    availabilityExceptions?: string;
-    endpoint?: MaybeArray$M<string | Reference>;
-    [key: string]: any;
-};
-
-declare type MaybeArray$L<T> = T | T[];
-declare type ManufacturedItemDefinition_Props = {
-    id?: string;
-    meta?: Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: Narrative;
-    contained?: any[];
-    extension?: Extension[];
-    modifierExtension?: Extension[];
-    identifier?: MaybeArray$L<string | Identifier>;
-    status?: string;
     manufacturedDoseForm?: string[] | CodeableConcept;
     unitOfPresentation?: string[] | CodeableConcept;
-    manufacturer?: MaybeArray$L<string | Reference>;
-    ingredient?: MaybeArray$L<string[] | CodeableConcept>;
+    manufacturer?: MaybeArray$M<string | Reference>;
+    ingredient?: MaybeArray$M<string[] | CodeableConcept>;
     property?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$K<T> = T | T[];
+declare type MaybeArray$L<T> = T | T[];
 declare type Measure_Props = {
     id?: string;
     meta?: Meta;
@@ -3198,7 +3664,7 @@ declare type Measure_Props = {
     extension?: Extension[];
     modifierExtension?: Extension[];
     url?: string;
-    identifier?: MaybeArray$K<string | Identifier>;
+    identifier?: MaybeArray$L<string | Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -3211,14 +3677,14 @@ declare type Measure_Props = {
     contact?: ContactDetail[];
     description?: markdown;
     useContext?: UsageContext[];
-    jurisdiction?: MaybeArray$K<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray$L<string[] | CodeableConcept>;
     purpose?: markdown;
     usage?: string;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    topic?: MaybeArray$K<string[] | CodeableConcept>;
+    topic?: MaybeArray$L<string[] | CodeableConcept>;
     author?: ContactDetail[];
     editor?: ContactDetail[];
     reviewer?: ContactDetail[];
@@ -3228,7 +3694,7 @@ declare type Measure_Props = {
     disclaimer?: markdown;
     scoring?: string[] | CodeableConcept;
     compositeScoring?: string[] | CodeableConcept;
-    type?: MaybeArray$K<string[] | CodeableConcept>;
+    type?: MaybeArray$L<string[] | CodeableConcept>;
     riskAdjustment?: string;
     rateAggregation?: string;
     rationale?: markdown;
@@ -3241,7 +3707,7 @@ declare type Measure_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$J<T> = T | T[];
+declare type MaybeArray$K<T> = T | T[];
 declare type MeasureReport_Props = {
     id?: string;
     meta?: Meta;
@@ -3251,7 +3717,7 @@ declare type MeasureReport_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$J<string | Identifier>;
+    identifier?: MaybeArray$K<string | Identifier>;
     status?: string;
     type?: string;
     measure?: any;
@@ -3261,11 +3727,11 @@ declare type MeasureReport_Props = {
     period?: Period;
     improvementNotation?: string[] | CodeableConcept;
     group?: BackboneElement[];
-    evaluatedResource?: MaybeArray$J<string | Reference>;
+    evaluatedResource?: MaybeArray$K<string | Reference>;
     [key: string]: any;
 };
 
-declare type MaybeArray$I<T> = T | T[];
+declare type MaybeArray$J<T> = T | T[];
 declare type Media_Props = {
     id?: string;
     meta?: Meta;
@@ -3275,9 +3741,9 @@ declare type Media_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$I<string | Identifier>;
-    basedOn?: MaybeArray$I<string | Reference>;
-    partOf?: MaybeArray$I<string | Reference>;
+    identifier?: MaybeArray$J<string | Identifier>;
+    basedOn?: MaybeArray$J<string | Reference>;
+    partOf?: MaybeArray$J<string | Reference>;
     status?: string;
     type?: string[] | CodeableConcept;
     modality?: string[] | CodeableConcept;
@@ -3287,7 +3753,7 @@ declare type Media_Props = {
     created?: string | Period;
     issued?: string;
     operator?: string | Reference;
-    reasonCode?: MaybeArray$I<string[] | CodeableConcept>;
+    reasonCode?: MaybeArray$J<string[] | CodeableConcept>;
     bodySite?: string[] | CodeableConcept;
     deviceName?: string;
     device?: string | Reference;
@@ -3300,7 +3766,7 @@ declare type Media_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$H<T> = T | T[];
+declare type MaybeArray$I<T> = T | T[];
 declare type Medication_Props = {
     id?: string;
     meta?: Meta;
@@ -3310,7 +3776,7 @@ declare type Medication_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$H<string | Identifier>;
+    identifier?: MaybeArray$I<string | Identifier>;
     code?: string[] | CodeableConcept;
     status?: string;
     manufacturer?: string | Reference;
@@ -3321,7 +3787,7 @@ declare type Medication_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$G<T> = T | T[];
+declare type MaybeArray$H<T> = T | T[];
 declare type MedicationAdministration_Props = {
     id?: string;
     meta?: Meta;
@@ -3331,29 +3797,29 @@ declare type MedicationAdministration_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$G<string | Identifier>;
+    identifier?: MaybeArray$H<string | Identifier>;
     instantiates?: string[];
-    partOf?: MaybeArray$G<string | Reference>;
+    partOf?: MaybeArray$H<string | Reference>;
     status?: string;
-    statusReason?: MaybeArray$G<string[] | CodeableConcept>;
+    statusReason?: MaybeArray$H<string[] | CodeableConcept>;
     category?: string[] | CodeableConcept;
     medication?: string[] | CodeableConcept | string | Reference;
     subject?: string | Reference;
     context?: string | Reference;
-    supportingInformation?: MaybeArray$G<string | Reference>;
+    supportingInformation?: MaybeArray$H<string | Reference>;
     effective?: string | Period;
     performer?: BackboneElement[];
-    reasonCode?: MaybeArray$G<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$G<string | Reference>;
+    reasonCode?: MaybeArray$H<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$H<string | Reference>;
     request?: string | Reference;
-    device?: MaybeArray$G<string | Reference>;
+    device?: MaybeArray$H<string | Reference>;
     note?: Annotation[];
     dosage?: BackboneElement;
-    eventHistory?: MaybeArray$G<string | Reference>;
+    eventHistory?: MaybeArray$H<string | Reference>;
     [key: string]: any;
 };
 
-declare type MaybeArray$F<T> = T | T[];
+declare type MaybeArray$G<T> = T | T[];
 declare type MedicationDispense_Props = {
     id?: string;
     meta?: Meta;
@@ -3363,34 +3829,34 @@ declare type MedicationDispense_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$F<string | Identifier>;
-    partOf?: MaybeArray$F<string | Reference>;
+    identifier?: MaybeArray$G<string | Identifier>;
+    partOf?: MaybeArray$G<string | Reference>;
     status?: string;
     statusReason?: string[] | CodeableConcept | string | Reference;
     category?: string[] | CodeableConcept;
     medication?: string[] | CodeableConcept | string | Reference;
     subject?: string | Reference;
     context?: string | Reference;
-    supportingInformation?: MaybeArray$F<string | Reference>;
+    supportingInformation?: MaybeArray$G<string | Reference>;
     performer?: BackboneElement[];
     location?: string | Reference;
-    authorizingPrescription?: MaybeArray$F<string | Reference>;
+    authorizingPrescription?: MaybeArray$G<string | Reference>;
     type?: string[] | CodeableConcept;
     quantity?: Quantity;
     daysSupply?: Quantity;
     whenPrepared?: string;
     whenHandedOver?: string;
     destination?: string | Reference;
-    receiver?: MaybeArray$F<string | Reference>;
+    receiver?: MaybeArray$G<string | Reference>;
     note?: Annotation[];
     dosageInstruction?: Dosage[];
     substitution?: BackboneElement;
-    detectedIssue?: MaybeArray$F<string | Reference>;
-    eventHistory?: MaybeArray$F<string | Reference>;
+    detectedIssue?: MaybeArray$G<string | Reference>;
+    eventHistory?: MaybeArray$G<string | Reference>;
     [key: string]: any;
 };
 
-declare type MaybeArray$E<T> = T | T[];
+declare type MaybeArray$F<T> = T | T[];
 declare type MedicationKnowledge_Props = {
     id?: string;
     meta?: Meta;
@@ -3407,25 +3873,25 @@ declare type MedicationKnowledge_Props = {
     amount?: Quantity;
     synonym?: string[];
     relatedMedicationKnowledge?: BackboneElement[];
-    associatedMedication?: MaybeArray$E<string | Reference>;
-    productType?: MaybeArray$E<string[] | CodeableConcept>;
+    associatedMedication?: MaybeArray$F<string | Reference>;
+    productType?: MaybeArray$F<string[] | CodeableConcept>;
     monograph?: BackboneElement[];
     ingredient?: BackboneElement[];
     preparationInstruction?: markdown;
-    intendedRoute?: MaybeArray$E<string[] | CodeableConcept>;
+    intendedRoute?: MaybeArray$F<string[] | CodeableConcept>;
     cost?: BackboneElement[];
     monitoringProgram?: BackboneElement[];
     administrationGuidelines?: BackboneElement[];
     medicineClassification?: BackboneElement[];
     packaging?: BackboneElement;
     drugCharacteristic?: BackboneElement[];
-    contraindication?: MaybeArray$E<string | Reference>;
+    contraindication?: MaybeArray$F<string | Reference>;
     regulatory?: BackboneElement[];
     kinetics?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$D<T> = T | T[];
+declare type MaybeArray$E<T> = T | T[];
 declare type MedicationRequest_Props = {
     id?: string;
     meta?: Meta;
@@ -3435,42 +3901,42 @@ declare type MedicationRequest_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$D<string | Identifier>;
+    identifier?: MaybeArray$E<string | Identifier>;
     status?: string;
     statusReason?: string[] | CodeableConcept;
     intent?: string;
-    category?: MaybeArray$D<string[] | CodeableConcept>;
+    category?: MaybeArray$E<string[] | CodeableConcept>;
     priority?: string;
     doNotPerform?: boolean;
     reported?: boolean | string | Reference;
     medication?: string[] | CodeableConcept | string | Reference;
     subject?: string | Reference;
     encounter?: string | Reference;
-    supportingInformation?: MaybeArray$D<string | Reference>;
+    supportingInformation?: MaybeArray$E<string | Reference>;
     authoredOn?: string;
     requester?: string | Reference;
     performer?: string | Reference;
     performerType?: string[] | CodeableConcept;
     recorder?: string | Reference;
-    reasonCode?: MaybeArray$D<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$D<string | Reference>;
+    reasonCode?: MaybeArray$E<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$E<string | Reference>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    basedOn?: MaybeArray$D<string | Reference>;
+    basedOn?: MaybeArray$E<string | Reference>;
     groupIdentifier?: string | Identifier;
     courseOfTherapyType?: string[] | CodeableConcept;
-    insurance?: MaybeArray$D<string | Reference>;
+    insurance?: MaybeArray$E<string | Reference>;
     note?: Annotation[];
     dosageInstruction?: Dosage[];
     dispenseRequest?: BackboneElement;
     substitution?: BackboneElement;
     priorPrescription?: string | Reference;
-    detectedIssue?: MaybeArray$D<string | Reference>;
-    eventHistory?: MaybeArray$D<string | Reference>;
+    detectedIssue?: MaybeArray$E<string | Reference>;
+    eventHistory?: MaybeArray$E<string | Reference>;
     [key: string]: any;
 };
 
-declare type MaybeArray$C<T> = T | T[];
+declare type MaybeArray$D<T> = T | T[];
 declare type MedicationStatement_Props = {
     id?: string;
     meta?: Meta;
@@ -3480,11 +3946,11 @@ declare type MedicationStatement_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$C<string | Identifier>;
-    basedOn?: MaybeArray$C<string | Reference>;
-    partOf?: MaybeArray$C<string | Reference>;
+    identifier?: MaybeArray$D<string | Identifier>;
+    basedOn?: MaybeArray$D<string | Reference>;
+    partOf?: MaybeArray$D<string | Reference>;
     status?: string;
-    statusReason?: MaybeArray$C<string[] | CodeableConcept>;
+    statusReason?: MaybeArray$D<string[] | CodeableConcept>;
     category?: string[] | CodeableConcept;
     medication?: string[] | CodeableConcept | string | Reference;
     subject?: string | Reference;
@@ -3492,15 +3958,15 @@ declare type MedicationStatement_Props = {
     effective?: string | Period;
     dateAsserted?: string;
     informationSource?: string | Reference;
-    derivedFrom?: MaybeArray$C<string | Reference>;
-    reasonCode?: MaybeArray$C<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$C<string | Reference>;
+    derivedFrom?: MaybeArray$D<string | Reference>;
+    reasonCode?: MaybeArray$D<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$D<string | Reference>;
     note?: Annotation[];
     dosage?: Dosage[];
     [key: string]: any;
 };
 
-declare type MaybeArray$B<T> = T | T[];
+declare type MaybeArray$C<T> = T | T[];
 declare type MedicinalProductDefinition_Props = {
     id?: string;
     meta?: Meta;
@@ -3510,7 +3976,7 @@ declare type MedicinalProductDefinition_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$B<string | Identifier>;
+    identifier?: MaybeArray$C<string | Identifier>;
     type?: string[] | CodeableConcept;
     domain?: string[] | CodeableConcept;
     version?: string;
@@ -3518,21 +3984,21 @@ declare type MedicinalProductDefinition_Props = {
     statusDate?: string;
     description?: markdown;
     combinedPharmaceuticalDoseForm?: string[] | CodeableConcept;
-    route?: MaybeArray$B<string[] | CodeableConcept>;
+    route?: MaybeArray$C<string[] | CodeableConcept>;
     indication?: markdown;
     legalStatusOfSupply?: string[] | CodeableConcept;
     additionalMonitoringIndicator?: string[] | CodeableConcept;
-    specialMeasures?: MaybeArray$B<string[] | CodeableConcept>;
+    specialMeasures?: MaybeArray$C<string[] | CodeableConcept>;
     pediatricUseIndicator?: string[] | CodeableConcept;
-    classification?: MaybeArray$B<string[] | CodeableConcept>;
+    classification?: MaybeArray$C<string[] | CodeableConcept>;
     marketingStatus?: MarketingStatus[];
-    packagedMedicinalProduct?: MaybeArray$B<string[] | CodeableConcept>;
-    ingredient?: MaybeArray$B<string[] | CodeableConcept>;
+    packagedMedicinalProduct?: MaybeArray$C<string[] | CodeableConcept>;
+    ingredient?: MaybeArray$C<string[] | CodeableConcept>;
     impurity?: CodeableReference[];
-    attachedDocument?: MaybeArray$B<string | Reference>;
-    masterFile?: MaybeArray$B<string | Reference>;
+    attachedDocument?: MaybeArray$C<string | Reference>;
+    masterFile?: MaybeArray$C<string | Reference>;
     contact?: BackboneElement[];
-    clinicalTrial?: MaybeArray$B<string | Reference>;
+    clinicalTrial?: MaybeArray$C<string | Reference>;
     code?: Coding[];
     name?: BackboneElement[];
     crossReference?: BackboneElement[];
@@ -3541,7 +4007,7 @@ declare type MedicinalProductDefinition_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$A<T> = T | T[];
+declare type MaybeArray$B<T> = T | T[];
 declare type MolecularSequence_Props = {
     id?: string;
     meta?: Meta;
@@ -3551,7 +4017,7 @@ declare type MolecularSequence_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$A<string | Identifier>;
+    identifier?: MaybeArray$B<string | Identifier>;
     type?: string;
     coordinateSystem?: number;
     patient?: string | Reference;
@@ -3565,12 +4031,12 @@ declare type MolecularSequence_Props = {
     quality?: BackboneElement[];
     readCoverage?: number;
     repository?: BackboneElement[];
-    pointer?: MaybeArray$A<string | Reference>;
+    pointer?: MaybeArray$B<string | Reference>;
     structureVariant?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$z<T> = T | T[];
+declare type MaybeArray$A<T> = T | T[];
 declare type NutritionOrder_Props = {
     id?: string;
     meta?: Meta;
@@ -3580,7 +4046,7 @@ declare type NutritionOrder_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$z<string | Identifier>;
+    identifier?: MaybeArray$A<string | Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
     instantiates?: string[];
@@ -3590,9 +4056,9 @@ declare type NutritionOrder_Props = {
     encounter?: string | Reference;
     dateTime?: string;
     orderer?: string | Reference;
-    allergyIntolerance?: MaybeArray$z<string | Reference>;
-    foodPreferenceModifier?: MaybeArray$z<string[] | CodeableConcept>;
-    excludeFoodModifier?: MaybeArray$z<string[] | CodeableConcept>;
+    allergyIntolerance?: MaybeArray$A<string | Reference>;
+    foodPreferenceModifier?: MaybeArray$A<string[] | CodeableConcept>;
+    excludeFoodModifier?: MaybeArray$A<string[] | CodeableConcept>;
     oralDiet?: BackboneElement;
     supplement?: BackboneElement[];
     enteralFormula?: BackboneElement;
@@ -3600,7 +4066,7 @@ declare type NutritionOrder_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$y<T> = T | T[];
+declare type MaybeArray$z<T> = T | T[];
 declare type NutritionProduct_Props = {
     id?: string;
     meta?: Meta;
@@ -3611,9 +4077,9 @@ declare type NutritionProduct_Props = {
     extension?: Extension[];
     modifierExtension?: Extension[];
     status?: string;
-    category?: MaybeArray$y<string[] | CodeableConcept>;
+    category?: MaybeArray$z<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
-    manufacturer?: MaybeArray$y<string | Reference>;
+    manufacturer?: MaybeArray$z<string | Reference>;
     nutrient?: BackboneElement[];
     ingredient?: BackboneElement[];
     knownAllergen?: CodeableReference[];
@@ -3623,7 +4089,7 @@ declare type NutritionProduct_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$x<T> = T | T[];
+declare type MaybeArray$y<T> = T | T[];
 declare type Observation_Props = {
     id?: string;
     meta?: Meta;
@@ -3633,34 +4099,34 @@ declare type Observation_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$x<string | Identifier>;
-    basedOn?: MaybeArray$x<string | Reference>;
-    partOf?: MaybeArray$x<string | Reference>;
+    identifier?: MaybeArray$y<string | Identifier>;
+    basedOn?: MaybeArray$y<string | Reference>;
+    partOf?: MaybeArray$y<string | Reference>;
     status?: string;
-    category?: MaybeArray$x<string[] | CodeableConcept>;
+    category?: MaybeArray$y<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
     subject?: string | Reference;
-    focus?: MaybeArray$x<string | Reference>;
+    focus?: MaybeArray$y<string | Reference>;
     encounter?: string | Reference;
     effective?: string | Period | Timing;
     issued?: string;
-    performer?: MaybeArray$x<string | Reference>;
+    performer?: MaybeArray$y<string | Reference>;
     value?: Quantity | string[] | CodeableConcept | string | boolean | number | Range | Ratio | SampledData | Period;
     dataAbsentReason?: string[] | CodeableConcept;
-    interpretation?: MaybeArray$x<string[] | CodeableConcept>;
+    interpretation?: MaybeArray$y<string[] | CodeableConcept>;
     note?: Annotation[];
     bodySite?: string[] | CodeableConcept;
     method?: string[] | CodeableConcept;
     specimen?: string | Reference;
     device?: string | Reference;
     referenceRange?: BackboneElement[];
-    hasMember?: MaybeArray$x<string | Reference>;
-    derivedFrom?: MaybeArray$x<string | Reference>;
+    hasMember?: MaybeArray$y<string | Reference>;
+    derivedFrom?: MaybeArray$y<string | Reference>;
     component?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$w<T> = T | T[];
+declare type MaybeArray$x<T> = T | T[];
 declare type ObservationDefinition_Props = {
     id?: string;
     meta?: Meta;
@@ -3670,9 +4136,9 @@ declare type ObservationDefinition_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    category?: MaybeArray$w<string[] | CodeableConcept>;
+    category?: MaybeArray$x<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
-    identifier?: MaybeArray$w<string | Identifier>;
+    identifier?: MaybeArray$x<string | Identifier>;
     permittedDataType?: string[];
     multipleResultsAllowed?: boolean;
     method?: string[] | CodeableConcept;
@@ -3686,8 +4152,31 @@ declare type ObservationDefinition_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$v<T> = T | T[];
+declare type MaybeArray$w<T> = T | T[];
 declare type Organization_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: MaybeArray$w<string | Identifier>;
+    active?: boolean;
+    type?: MaybeArray$w<string[] | CodeableConcept>;
+    name?: string;
+    alias?: string[];
+    telecom?: ContactPoint[];
+    address?: Address[];
+    partOf?: string | Reference;
+    contact?: BackboneElement[];
+    endpoint?: MaybeArray$w<string | Reference>;
+    [key: string]: any;
+};
+
+declare type MaybeArray$v<T> = T | T[];
+declare type OrganizationAffiliation_Props = {
     id?: string;
     meta?: Meta;
     implicitRules?: string;
@@ -3698,43 +4187,20 @@ declare type Organization_Props = {
     modifierExtension?: Extension[];
     identifier?: MaybeArray$v<string | Identifier>;
     active?: boolean;
-    type?: MaybeArray$v<string[] | CodeableConcept>;
-    name?: string;
-    alias?: string[];
+    period?: Period;
+    organization?: string | Reference;
+    participatingOrganization?: string | Reference;
+    network?: MaybeArray$v<string | Reference>;
+    code?: MaybeArray$v<string[] | CodeableConcept>;
+    specialty?: MaybeArray$v<string[] | CodeableConcept>;
+    location?: MaybeArray$v<string | Reference>;
+    healthcareService?: MaybeArray$v<string | Reference>;
     telecom?: ContactPoint[];
-    address?: Address[];
-    partOf?: string | Reference;
-    contact?: BackboneElement[];
     endpoint?: MaybeArray$v<string | Reference>;
     [key: string]: any;
 };
 
 declare type MaybeArray$u<T> = T | T[];
-declare type OrganizationAffiliation_Props = {
-    id?: string;
-    meta?: Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: Narrative;
-    contained?: any[];
-    extension?: Extension[];
-    modifierExtension?: Extension[];
-    identifier?: MaybeArray$u<string | Identifier>;
-    active?: boolean;
-    period?: Period;
-    organization?: string | Reference;
-    participatingOrganization?: string | Reference;
-    network?: MaybeArray$u<string | Reference>;
-    code?: MaybeArray$u<string[] | CodeableConcept>;
-    specialty?: MaybeArray$u<string[] | CodeableConcept>;
-    location?: MaybeArray$u<string | Reference>;
-    healthcareService?: MaybeArray$u<string | Reference>;
-    telecom?: ContactPoint[];
-    endpoint?: MaybeArray$u<string | Reference>;
-    [key: string]: any;
-};
-
-declare type MaybeArray$t<T> = T | T[];
 declare type PackagedProductDefinition_Props = {
     id?: string;
     meta?: Meta;
@@ -3744,24 +4210,24 @@ declare type PackagedProductDefinition_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$t<string | Identifier>;
+    identifier?: MaybeArray$u<string | Identifier>;
     name?: string;
     type?: string[] | CodeableConcept;
-    packageFor?: MaybeArray$t<string | Reference>;
+    packageFor?: MaybeArray$u<string | Reference>;
     status?: string[] | CodeableConcept;
     statusDate?: string;
     containedItemQuantity?: Quantity[];
     description?: markdown;
     legalStatusOfSupply?: BackboneElement[];
     marketingStatus?: MarketingStatus[];
-    characteristic?: MaybeArray$t<string[] | CodeableConcept>;
+    characteristic?: MaybeArray$u<string[] | CodeableConcept>;
     copackagedIndicator?: boolean;
-    manufacturer?: MaybeArray$t<string | Reference>;
+    manufacturer?: MaybeArray$u<string | Reference>;
     package?: BackboneElement;
     [key: string]: any;
 };
 
-declare type MaybeArray$s<T> = T | T[];
+declare type MaybeArray$t<T> = T | T[];
 declare type Patient_Props = {
     id?: string;
     meta?: Meta;
@@ -3771,7 +4237,7 @@ declare type Patient_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$s<string | Identifier>;
+    identifier?: MaybeArray$t<string | Identifier>;
     active?: boolean;
     name?: HumanName[];
     telecom?: ContactPoint[];
@@ -3784,13 +4250,13 @@ declare type Patient_Props = {
     photo?: Attachment[];
     contact?: BackboneElement[];
     communication?: BackboneElement[];
-    generalPractitioner?: MaybeArray$s<string | Reference>;
+    generalPractitioner?: MaybeArray$t<string | Reference>;
     managingOrganization?: string | Reference;
     link?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$r<T> = T | T[];
+declare type MaybeArray$s<T> = T | T[];
 declare type PaymentNotice_Props = {
     id?: string;
     meta?: Meta;
@@ -3800,7 +4266,7 @@ declare type PaymentNotice_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$r<string | Identifier>;
+    identifier?: MaybeArray$s<string | Identifier>;
     status?: string;
     request?: string | Reference;
     response?: string | Reference;
@@ -3815,7 +4281,7 @@ declare type PaymentNotice_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$q<T> = T | T[];
+declare type MaybeArray$r<T> = T | T[];
 declare type PaymentReconciliation_Props = {
     id?: string;
     meta?: Meta;
@@ -3825,7 +4291,7 @@ declare type PaymentReconciliation_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$q<string | Identifier>;
+    identifier?: MaybeArray$r<string | Identifier>;
     status?: string;
     period?: Period;
     created?: string;
@@ -3843,7 +4309,7 @@ declare type PaymentReconciliation_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$p<T> = T | T[];
+declare type MaybeArray$q<T> = T | T[];
 declare type Person_Props = {
     id?: string;
     meta?: Meta;
@@ -3853,7 +4319,7 @@ declare type Person_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$p<string | Identifier>;
+    identifier?: MaybeArray$q<string | Identifier>;
     name?: HumanName[];
     telecom?: ContactPoint[];
     gender?: string;
@@ -3866,7 +4332,7 @@ declare type Person_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$o<T> = T | T[];
+declare type MaybeArray$p<T> = T | T[];
 declare type PlanDefinition_Props = {
     id?: string;
     meta?: Meta;
@@ -3877,7 +4343,7 @@ declare type PlanDefinition_Props = {
     extension?: Extension[];
     modifierExtension?: Extension[];
     url?: string;
-    identifier?: MaybeArray$o<string | Identifier>;
+    identifier?: MaybeArray$p<string | Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -3891,14 +4357,14 @@ declare type PlanDefinition_Props = {
     contact?: ContactDetail[];
     description?: markdown;
     useContext?: UsageContext[];
-    jurisdiction?: MaybeArray$o<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray$p<string[] | CodeableConcept>;
     purpose?: markdown;
     usage?: string;
     copyright?: markdown;
     approvalDate?: string;
     lastReviewDate?: string;
     effectivePeriod?: Period;
-    topic?: MaybeArray$o<string[] | CodeableConcept>;
+    topic?: MaybeArray$p<string[] | CodeableConcept>;
     author?: ContactDetail[];
     editor?: ContactDetail[];
     reviewer?: ContactDetail[];
@@ -3910,8 +4376,31 @@ declare type PlanDefinition_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$n<T> = T | T[];
+declare type MaybeArray$o<T> = T | T[];
 declare type Practitioner_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: MaybeArray$o<string | Identifier>;
+    active?: boolean;
+    name?: HumanName[];
+    telecom?: ContactPoint[];
+    address?: Address[];
+    gender?: string;
+    birthDate?: string;
+    photo?: Attachment[];
+    qualification?: BackboneElement[];
+    communication?: MaybeArray$o<string[] | CodeableConcept>;
+    [key: string]: any;
+};
+
+declare type MaybeArray$n<T> = T | T[];
+declare type PractitionerRole_Props = {
     id?: string;
     meta?: Meta;
     implicitRules?: string;
@@ -3922,45 +4411,22 @@ declare type Practitioner_Props = {
     modifierExtension?: Extension[];
     identifier?: MaybeArray$n<string | Identifier>;
     active?: boolean;
-    name?: HumanName[];
-    telecom?: ContactPoint[];
-    address?: Address[];
-    gender?: string;
-    birthDate?: string;
-    photo?: Attachment[];
-    qualification?: BackboneElement[];
-    communication?: MaybeArray$n<string[] | CodeableConcept>;
-    [key: string]: any;
-};
-
-declare type MaybeArray$m<T> = T | T[];
-declare type PractitionerRole_Props = {
-    id?: string;
-    meta?: Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: Narrative;
-    contained?: any[];
-    extension?: Extension[];
-    modifierExtension?: Extension[];
-    identifier?: MaybeArray$m<string | Identifier>;
-    active?: boolean;
     period?: Period;
     practitioner?: string | Reference;
     organization?: string | Reference;
-    code?: MaybeArray$m<string[] | CodeableConcept>;
-    specialty?: MaybeArray$m<string[] | CodeableConcept>;
-    location?: MaybeArray$m<string | Reference>;
-    healthcareService?: MaybeArray$m<string | Reference>;
+    code?: MaybeArray$n<string[] | CodeableConcept>;
+    specialty?: MaybeArray$n<string[] | CodeableConcept>;
+    location?: MaybeArray$n<string | Reference>;
+    healthcareService?: MaybeArray$n<string | Reference>;
     telecom?: ContactPoint[];
     availableTime?: BackboneElement[];
     notAvailable?: BackboneElement[];
     availabilityExceptions?: string;
-    endpoint?: MaybeArray$m<string | Reference>;
+    endpoint?: MaybeArray$n<string | Reference>;
     [key: string]: any;
 };
 
-declare type MaybeArray$l<T> = T | T[];
+declare type MaybeArray$m<T> = T | T[];
 declare type Procedure_Props = {
     id?: string;
     meta?: Meta;
@@ -3970,11 +4436,11 @@ declare type Procedure_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$l<string | Identifier>;
+    identifier?: MaybeArray$m<string | Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    basedOn?: MaybeArray$l<string | Reference>;
-    partOf?: MaybeArray$l<string | Reference>;
+    basedOn?: MaybeArray$m<string | Reference>;
+    partOf?: MaybeArray$m<string | Reference>;
     status?: string;
     statusReason?: string[] | CodeableConcept;
     category?: string[] | CodeableConcept;
@@ -3986,22 +4452,22 @@ declare type Procedure_Props = {
     asserter?: string | Reference;
     performer?: BackboneElement[];
     location?: string | Reference;
-    reasonCode?: MaybeArray$l<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$l<string | Reference>;
-    bodySite?: MaybeArray$l<string[] | CodeableConcept>;
+    reasonCode?: MaybeArray$m<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$m<string | Reference>;
+    bodySite?: MaybeArray$m<string[] | CodeableConcept>;
     outcome?: string[] | CodeableConcept;
-    report?: MaybeArray$l<string | Reference>;
-    complication?: MaybeArray$l<string[] | CodeableConcept>;
-    complicationDetail?: MaybeArray$l<string | Reference>;
-    followUp?: MaybeArray$l<string[] | CodeableConcept>;
+    report?: MaybeArray$m<string | Reference>;
+    complication?: MaybeArray$m<string[] | CodeableConcept>;
+    complicationDetail?: MaybeArray$m<string | Reference>;
+    followUp?: MaybeArray$m<string[] | CodeableConcept>;
     note?: Annotation[];
     focalDevice?: BackboneElement[];
-    usedReference?: MaybeArray$l<string | Reference>;
-    usedCode?: MaybeArray$l<string[] | CodeableConcept>;
+    usedReference?: MaybeArray$m<string | Reference>;
+    usedCode?: MaybeArray$m<string[] | CodeableConcept>;
     [key: string]: any;
 };
 
-declare type MaybeArray$k<T> = T | T[];
+declare type MaybeArray$l<T> = T | T[];
 declare type Questionnaire_Props = {
     id?: string;
     meta?: Meta;
@@ -4012,7 +4478,7 @@ declare type Questionnaire_Props = {
     extension?: Extension[];
     modifierExtension?: Extension[];
     url?: string;
-    identifier?: MaybeArray$k<string | Identifier>;
+    identifier?: MaybeArray$l<string | Identifier>;
     version?: string;
     name?: string;
     title?: string;
@@ -4025,7 +4491,7 @@ declare type Questionnaire_Props = {
     contact?: ContactDetail[];
     description?: markdown;
     useContext?: UsageContext[];
-    jurisdiction?: MaybeArray$k<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray$l<string[] | CodeableConcept>;
     purpose?: markdown;
     copyright?: markdown;
     approvalDate?: string;
@@ -4036,7 +4502,7 @@ declare type Questionnaire_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$j<T> = T | T[];
+declare type MaybeArray$k<T> = T | T[];
 declare type QuestionnaireResponse_Props = {
     id?: string;
     meta?: Meta;
@@ -4047,8 +4513,8 @@ declare type QuestionnaireResponse_Props = {
     extension?: Extension[];
     modifierExtension?: Extension[];
     identifier?: string | Identifier;
-    basedOn?: MaybeArray$j<string | Reference>;
-    partOf?: MaybeArray$j<string | Reference>;
+    basedOn?: MaybeArray$k<string | Reference>;
+    partOf?: MaybeArray$k<string | Reference>;
     questionnaire?: any;
     status?: string;
     subject?: string | Reference;
@@ -4060,7 +4526,7 @@ declare type QuestionnaireResponse_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$i<T> = T | T[];
+declare type MaybeArray$j<T> = T | T[];
 declare type RegulatedAuthorization_Props = {
     id?: string;
     meta?: Meta;
@@ -4070,24 +4536,24 @@ declare type RegulatedAuthorization_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$i<string | Identifier>;
-    subject?: MaybeArray$i<string | Reference>;
+    identifier?: MaybeArray$j<string | Identifier>;
+    subject?: MaybeArray$j<string | Reference>;
     type?: string[] | CodeableConcept;
     description?: markdown;
-    region?: MaybeArray$i<string[] | CodeableConcept>;
+    region?: MaybeArray$j<string[] | CodeableConcept>;
     status?: string[] | CodeableConcept;
     statusDate?: string;
     validityPeriod?: Period;
     indication?: CodeableReference;
     intendedUse?: string[] | CodeableConcept;
-    basis?: MaybeArray$i<string[] | CodeableConcept>;
+    basis?: MaybeArray$j<string[] | CodeableConcept>;
     holder?: string | Reference;
     regulator?: string | Reference;
     case?: BackboneElement;
     [key: string]: any;
 };
 
-declare type MaybeArray$h<T> = T | T[];
+declare type MaybeArray$i<T> = T | T[];
 declare type RelatedPerson_Props = {
     id?: string;
     meta?: Meta;
@@ -4097,10 +4563,10 @@ declare type RelatedPerson_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$h<string | Identifier>;
+    identifier?: MaybeArray$i<string | Identifier>;
     active?: boolean;
     patient?: string | Reference;
-    relationship?: MaybeArray$h<string[] | CodeableConcept>;
+    relationship?: MaybeArray$i<string[] | CodeableConcept>;
     name?: HumanName[];
     telecom?: ContactPoint[];
     gender?: string;
@@ -4112,7 +4578,7 @@ declare type RelatedPerson_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$g<T> = T | T[];
+declare type MaybeArray$h<T> = T | T[];
 declare type RequestGroup_Props = {
     id?: string;
     meta?: Meta;
@@ -4122,11 +4588,11 @@ declare type RequestGroup_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$g<string | Identifier>;
+    identifier?: MaybeArray$h<string | Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    basedOn?: MaybeArray$g<string | Reference>;
-    replaces?: MaybeArray$g<string | Reference>;
+    basedOn?: MaybeArray$h<string | Reference>;
+    replaces?: MaybeArray$h<string | Reference>;
     groupIdentifier?: string | Identifier;
     status?: string;
     intent?: string;
@@ -4136,15 +4602,62 @@ declare type RequestGroup_Props = {
     encounter?: string | Reference;
     authoredOn?: string;
     author?: string | Reference;
-    reasonCode?: MaybeArray$g<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$g<string | Reference>;
+    reasonCode?: MaybeArray$h<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$h<string | Reference>;
     note?: Annotation[];
     action?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$f<T> = T | T[];
+declare type MaybeArray$g<T> = T | T[];
 declare type ResearchDefinition_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    url?: string;
+    identifier?: MaybeArray$g<string | Identifier>;
+    version?: string;
+    name?: string;
+    title?: string;
+    shortTitle?: string;
+    subtitle?: string;
+    status?: string;
+    experimental?: boolean;
+    subject?: string[] | CodeableConcept | string | Reference;
+    date?: string;
+    publisher?: string;
+    contact?: ContactDetail[];
+    description?: markdown;
+    comment?: string[];
+    useContext?: UsageContext[];
+    jurisdiction?: MaybeArray$g<string[] | CodeableConcept>;
+    purpose?: markdown;
+    usage?: string;
+    copyright?: markdown;
+    approvalDate?: string;
+    lastReviewDate?: string;
+    effectivePeriod?: Period;
+    topic?: MaybeArray$g<string[] | CodeableConcept>;
+    author?: ContactDetail[];
+    editor?: ContactDetail[];
+    reviewer?: ContactDetail[];
+    endorser?: ContactDetail[];
+    relatedArtifact?: RelatedArtifact[];
+    library?: any[];
+    population?: string | Reference;
+    exposure?: string | Reference;
+    exposureAlternative?: string | Reference;
+    outcome?: string | Reference;
+    [key: string]: any;
+};
+
+declare type MaybeArray$f<T> = T | T[];
+declare type ResearchElementDefinition_Props = {
     id?: string;
     meta?: Meta;
     implicitRules?: string;
@@ -4183,60 +4696,13 @@ declare type ResearchDefinition_Props = {
     endorser?: ContactDetail[];
     relatedArtifact?: RelatedArtifact[];
     library?: any[];
-    population?: string | Reference;
-    exposure?: string | Reference;
-    exposureAlternative?: string | Reference;
-    outcome?: string | Reference;
-    [key: string]: any;
-};
-
-declare type MaybeArray$e<T> = T | T[];
-declare type ResearchElementDefinition_Props = {
-    id?: string;
-    meta?: Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: Narrative;
-    contained?: any[];
-    extension?: Extension[];
-    modifierExtension?: Extension[];
-    url?: string;
-    identifier?: MaybeArray$e<string | Identifier>;
-    version?: string;
-    name?: string;
-    title?: string;
-    shortTitle?: string;
-    subtitle?: string;
-    status?: string;
-    experimental?: boolean;
-    subject?: string[] | CodeableConcept | string | Reference;
-    date?: string;
-    publisher?: string;
-    contact?: ContactDetail[];
-    description?: markdown;
-    comment?: string[];
-    useContext?: UsageContext[];
-    jurisdiction?: MaybeArray$e<string[] | CodeableConcept>;
-    purpose?: markdown;
-    usage?: string;
-    copyright?: markdown;
-    approvalDate?: string;
-    lastReviewDate?: string;
-    effectivePeriod?: Period;
-    topic?: MaybeArray$e<string[] | CodeableConcept>;
-    author?: ContactDetail[];
-    editor?: ContactDetail[];
-    reviewer?: ContactDetail[];
-    endorser?: ContactDetail[];
-    relatedArtifact?: RelatedArtifact[];
-    library?: any[];
     type?: string;
     variableType?: string;
     characteristic?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$d<T> = T | T[];
+declare type MaybeArray$e<T> = T | T[];
 declare type ResearchStudy_Props = {
     id?: string;
     meta?: Meta;
@@ -4246,26 +4712,26 @@ declare type ResearchStudy_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$d<string | Identifier>;
+    identifier?: MaybeArray$e<string | Identifier>;
     title?: string;
-    protocol?: MaybeArray$d<string | Reference>;
-    partOf?: MaybeArray$d<string | Reference>;
+    protocol?: MaybeArray$e<string | Reference>;
+    partOf?: MaybeArray$e<string | Reference>;
     status?: string;
     primaryPurposeType?: string[] | CodeableConcept;
     phase?: string[] | CodeableConcept;
-    category?: MaybeArray$d<string[] | CodeableConcept>;
-    focus?: MaybeArray$d<string[] | CodeableConcept>;
-    condition?: MaybeArray$d<string[] | CodeableConcept>;
+    category?: MaybeArray$e<string[] | CodeableConcept>;
+    focus?: MaybeArray$e<string[] | CodeableConcept>;
+    condition?: MaybeArray$e<string[] | CodeableConcept>;
     contact?: ContactDetail[];
     relatedArtifact?: RelatedArtifact[];
-    keyword?: MaybeArray$d<string[] | CodeableConcept>;
-    location?: MaybeArray$d<string[] | CodeableConcept>;
+    keyword?: MaybeArray$e<string[] | CodeableConcept>;
+    location?: MaybeArray$e<string[] | CodeableConcept>;
     description?: markdown;
-    enrollment?: MaybeArray$d<string | Reference>;
+    enrollment?: MaybeArray$e<string | Reference>;
     period?: Period;
     sponsor?: string | Reference;
     principalInvestigator?: string | Reference;
-    site?: MaybeArray$d<string | Reference>;
+    site?: MaybeArray$e<string | Reference>;
     reasonStopped?: string[] | CodeableConcept;
     note?: Annotation[];
     arm?: BackboneElement[];
@@ -4273,7 +4739,7 @@ declare type ResearchStudy_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$c<T> = T | T[];
+declare type MaybeArray$d<T> = T | T[];
 declare type ResearchSubject_Props = {
     id?: string;
     meta?: Meta;
@@ -4283,7 +4749,7 @@ declare type ResearchSubject_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$c<string | Identifier>;
+    identifier?: MaybeArray$d<string | Identifier>;
     status?: string;
     period?: Period;
     study?: string | Reference;
@@ -4294,7 +4760,7 @@ declare type ResearchSubject_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$b<T> = T | T[];
+declare type MaybeArray$c<T> = T | T[];
 declare type RiskAssessment_Props = {
     id?: string;
     meta?: Meta;
@@ -4304,7 +4770,7 @@ declare type RiskAssessment_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$b<string | Identifier>;
+    identifier?: MaybeArray$c<string | Identifier>;
     basedOn?: string | Reference;
     parent?: string | Reference;
     status?: string;
@@ -4315,16 +4781,16 @@ declare type RiskAssessment_Props = {
     occurrence?: string | Period;
     condition?: string | Reference;
     performer?: string | Reference;
-    reasonCode?: MaybeArray$b<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$b<string | Reference>;
-    basis?: MaybeArray$b<string | Reference>;
+    reasonCode?: MaybeArray$c<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$c<string | Reference>;
+    basis?: MaybeArray$c<string | Reference>;
     prediction?: BackboneElement[];
     mitigation?: string;
     note?: Annotation[];
     [key: string]: any;
 };
 
-declare type MaybeArray$a<T> = T | T[];
+declare type MaybeArray$b<T> = T | T[];
 declare type Schedule_Props = {
     id?: string;
     meta?: Meta;
@@ -4334,18 +4800,18 @@ declare type Schedule_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$a<string | Identifier>;
+    identifier?: MaybeArray$b<string | Identifier>;
     active?: boolean;
-    serviceCategory?: MaybeArray$a<string[] | CodeableConcept>;
-    serviceType?: MaybeArray$a<string[] | CodeableConcept>;
-    specialty?: MaybeArray$a<string[] | CodeableConcept>;
-    actor?: MaybeArray$a<string | Reference>;
+    serviceCategory?: MaybeArray$b<string[] | CodeableConcept>;
+    serviceType?: MaybeArray$b<string[] | CodeableConcept>;
+    specialty?: MaybeArray$b<string[] | CodeableConcept>;
+    actor?: MaybeArray$b<string | Reference>;
     planningHorizon?: Period;
     comment?: string;
     [key: string]: any;
 };
 
-declare type MaybeArray$9<T> = T | T[];
+declare type MaybeArray$a<T> = T | T[];
 declare type ServiceRequest_Props = {
     id?: string;
     meta?: Meta;
@@ -4355,19 +4821,19 @@ declare type ServiceRequest_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$9<string | Identifier>;
+    identifier?: MaybeArray$a<string | Identifier>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    basedOn?: MaybeArray$9<string | Reference>;
-    replaces?: MaybeArray$9<string | Reference>;
+    basedOn?: MaybeArray$a<string | Reference>;
+    replaces?: MaybeArray$a<string | Reference>;
     requisition?: string | Identifier;
     status?: string;
     intent?: string;
-    category?: MaybeArray$9<string[] | CodeableConcept>;
+    category?: MaybeArray$a<string[] | CodeableConcept>;
     priority?: string;
     doNotPerform?: boolean;
     code?: string[] | CodeableConcept;
-    orderDetail?: MaybeArray$9<string[] | CodeableConcept>;
+    orderDetail?: MaybeArray$a<string[] | CodeableConcept>;
     quantity?: Quantity | Ratio | Range;
     subject?: string | Reference;
     encounter?: string | Reference;
@@ -4376,22 +4842,22 @@ declare type ServiceRequest_Props = {
     authoredOn?: string;
     requester?: string | Reference;
     performerType?: string[] | CodeableConcept;
-    performer?: MaybeArray$9<string | Reference>;
-    locationCode?: MaybeArray$9<string[] | CodeableConcept>;
-    locationReference?: MaybeArray$9<string | Reference>;
-    reasonCode?: MaybeArray$9<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$9<string | Reference>;
-    insurance?: MaybeArray$9<string | Reference>;
-    supportingInfo?: MaybeArray$9<string | Reference>;
-    specimen?: MaybeArray$9<string | Reference>;
-    bodySite?: MaybeArray$9<string[] | CodeableConcept>;
+    performer?: MaybeArray$a<string | Reference>;
+    locationCode?: MaybeArray$a<string[] | CodeableConcept>;
+    locationReference?: MaybeArray$a<string | Reference>;
+    reasonCode?: MaybeArray$a<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$a<string | Reference>;
+    insurance?: MaybeArray$a<string | Reference>;
+    supportingInfo?: MaybeArray$a<string | Reference>;
+    specimen?: MaybeArray$a<string | Reference>;
+    bodySite?: MaybeArray$a<string[] | CodeableConcept>;
     note?: Annotation[];
     patientInstruction?: string;
-    relevantHistory?: MaybeArray$9<string | Reference>;
+    relevantHistory?: MaybeArray$a<string | Reference>;
     [key: string]: any;
 };
 
-declare type MaybeArray$8<T> = T | T[];
+declare type MaybeArray$9<T> = T | T[];
 declare type Slot_Props = {
     id?: string;
     meta?: Meta;
@@ -4401,10 +4867,10 @@ declare type Slot_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$8<string | Identifier>;
-    serviceCategory?: MaybeArray$8<string[] | CodeableConcept>;
-    serviceType?: MaybeArray$8<string[] | CodeableConcept>;
-    specialty?: MaybeArray$8<string[] | CodeableConcept>;
+    identifier?: MaybeArray$9<string | Identifier>;
+    serviceCategory?: MaybeArray$9<string[] | CodeableConcept>;
+    serviceType?: MaybeArray$9<string[] | CodeableConcept>;
+    specialty?: MaybeArray$9<string[] | CodeableConcept>;
     appointmentType?: string[] | CodeableConcept;
     schedule?: string | Reference;
     status?: string;
@@ -4415,7 +4881,7 @@ declare type Slot_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$7<T> = T | T[];
+declare type MaybeArray$8<T> = T | T[];
 declare type Specimen_Props = {
     id?: string;
     meta?: Meta;
@@ -4425,23 +4891,23 @@ declare type Specimen_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$7<string | Identifier>;
+    identifier?: MaybeArray$8<string | Identifier>;
     accessionIdentifier?: string | Identifier;
     status?: string;
     type?: string[] | CodeableConcept;
     subject?: string | Reference;
     receivedTime?: string;
-    parent?: MaybeArray$7<string | Reference>;
-    request?: MaybeArray$7<string | Reference>;
+    parent?: MaybeArray$8<string | Reference>;
+    request?: MaybeArray$8<string | Reference>;
     collection?: BackboneElement;
     processing?: BackboneElement[];
     container?: BackboneElement[];
-    condition?: MaybeArray$7<string[] | CodeableConcept>;
+    condition?: MaybeArray$8<string[] | CodeableConcept>;
     note?: Annotation[];
     [key: string]: any;
 };
 
-declare type MaybeArray$6<T> = T | T[];
+declare type MaybeArray$7<T> = T | T[];
 declare type SpecimenDefinition_Props = {
     id?: string;
     meta?: Meta;
@@ -4453,14 +4919,14 @@ declare type SpecimenDefinition_Props = {
     modifierExtension?: Extension[];
     identifier?: string | Identifier;
     typeCollected?: string[] | CodeableConcept;
-    patientPreparation?: MaybeArray$6<string[] | CodeableConcept>;
+    patientPreparation?: MaybeArray$7<string[] | CodeableConcept>;
     timeAspect?: string;
-    collection?: MaybeArray$6<string[] | CodeableConcept>;
+    collection?: MaybeArray$7<string[] | CodeableConcept>;
     typeTested?: BackboneElement[];
     [key: string]: any;
 };
 
-declare type MaybeArray$5<T> = T | T[];
+declare type MaybeArray$6<T> = T | T[];
 declare type Substance_Props = {
     id?: string;
     meta?: Meta;
@@ -4470,9 +4936,9 @@ declare type Substance_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$5<string | Identifier>;
+    identifier?: MaybeArray$6<string | Identifier>;
     status?: string;
-    category?: MaybeArray$5<string[] | CodeableConcept>;
+    category?: MaybeArray$6<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
     description?: string;
     instance?: BackboneElement[];
@@ -4480,7 +4946,7 @@ declare type Substance_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$4<T> = T | T[];
+declare type MaybeArray$5<T> = T | T[];
 declare type SubstanceDefinition_Props = {
     id?: string;
     meta?: Meta;
@@ -4490,17 +4956,17 @@ declare type SubstanceDefinition_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$4<string | Identifier>;
+    identifier?: MaybeArray$5<string | Identifier>;
     version?: string;
     status?: string[] | CodeableConcept;
-    classification?: MaybeArray$4<string[] | CodeableConcept>;
+    classification?: MaybeArray$5<string[] | CodeableConcept>;
     domain?: string[] | CodeableConcept;
-    grade?: MaybeArray$4<string[] | CodeableConcept>;
+    grade?: MaybeArray$5<string[] | CodeableConcept>;
     description?: markdown;
-    informationSource?: MaybeArray$4<string | Reference>;
+    informationSource?: MaybeArray$5<string | Reference>;
     note?: Annotation[];
-    manufacturer?: MaybeArray$4<string | Reference>;
-    supplier?: MaybeArray$4<string | Reference>;
+    manufacturer?: MaybeArray$5<string | Reference>;
+    supplier?: MaybeArray$5<string | Reference>;
     moiety?: BackboneElement[];
     property?: BackboneElement[];
     molecularWeight?: BackboneElement[];
@@ -4512,7 +4978,7 @@ declare type SubstanceDefinition_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray$3<T> = T | T[];
+declare type MaybeArray$4<T> = T | T[];
 declare type SupplyDelivery_Props = {
     id?: string;
     meta?: Meta;
@@ -4522,9 +4988,9 @@ declare type SupplyDelivery_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$3<string | Identifier>;
-    basedOn?: MaybeArray$3<string | Reference>;
-    partOf?: MaybeArray$3<string | Reference>;
+    identifier?: MaybeArray$4<string | Identifier>;
+    basedOn?: MaybeArray$4<string | Reference>;
+    partOf?: MaybeArray$4<string | Reference>;
     status?: string;
     patient?: string | Reference;
     type?: string[] | CodeableConcept;
@@ -4532,11 +4998,11 @@ declare type SupplyDelivery_Props = {
     occurrence?: string | Period | Timing;
     supplier?: string | Reference;
     destination?: string | Reference;
-    receiver?: MaybeArray$3<string | Reference>;
+    receiver?: MaybeArray$4<string | Reference>;
     [key: string]: any;
 };
 
-declare type MaybeArray$2<T> = T | T[];
+declare type MaybeArray$3<T> = T | T[];
 declare type SupplyRequest_Props = {
     id?: string;
     meta?: Meta;
@@ -4546,7 +5012,7 @@ declare type SupplyRequest_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$2<string | Identifier>;
+    identifier?: MaybeArray$3<string | Identifier>;
     status?: string;
     category?: string[] | CodeableConcept;
     priority?: string;
@@ -4556,15 +5022,15 @@ declare type SupplyRequest_Props = {
     occurrence?: string | Period | Timing;
     authoredOn?: string;
     requester?: string | Reference;
-    supplier?: MaybeArray$2<string | Reference>;
-    reasonCode?: MaybeArray$2<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$2<string | Reference>;
+    supplier?: MaybeArray$3<string | Reference>;
+    reasonCode?: MaybeArray$3<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray$3<string | Reference>;
     deliverFrom?: string | Reference;
     deliverTo?: string | Reference;
     [key: string]: any;
 };
 
-declare type MaybeArray$1<T> = T | T[];
+declare type MaybeArray$2<T> = T | T[];
 declare type Task_Props = {
     id?: string;
     meta?: Meta;
@@ -4574,12 +5040,12 @@ declare type Task_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    identifier?: MaybeArray$1<string | Identifier>;
+    identifier?: MaybeArray$2<string | Identifier>;
     instantiatesCanonical?: any;
     instantiatesUri?: string;
-    basedOn?: MaybeArray$1<string | Reference>;
+    basedOn?: MaybeArray$2<string | Reference>;
     groupIdentifier?: string | Identifier;
-    partOf?: MaybeArray$1<string | Reference>;
+    partOf?: MaybeArray$2<string | Reference>;
     status?: string;
     statusReason?: string[] | CodeableConcept;
     businessStatus?: string[] | CodeableConcept;
@@ -4594,14 +5060,14 @@ declare type Task_Props = {
     authoredOn?: string;
     lastModified?: string;
     requester?: string | Reference;
-    performerType?: MaybeArray$1<string[] | CodeableConcept>;
+    performerType?: MaybeArray$2<string[] | CodeableConcept>;
     owner?: string | Reference;
     location?: string | Reference;
     reasonCode?: string[] | CodeableConcept;
     reasonReference?: string | Reference;
-    insurance?: MaybeArray$1<string | Reference>;
+    insurance?: MaybeArray$2<string | Reference>;
     note?: Annotation[];
-    relevantHistory?: MaybeArray$1<string | Reference>;
+    relevantHistory?: MaybeArray$2<string | Reference>;
     restriction?: BackboneElement;
     input?: BackboneElement[];
     output?: BackboneElement[];
@@ -4632,7 +5098,7 @@ declare type TestReport_Props = {
     [key: string]: any;
 };
 
-declare type MaybeArray<T> = T | T[];
+declare type MaybeArray$1<T> = T | T[];
 declare type VerificationResult_Props = {
     id?: string;
     meta?: Meta;
@@ -4642,13 +5108,13 @@ declare type VerificationResult_Props = {
     contained?: any[];
     extension?: Extension[];
     modifierExtension?: Extension[];
-    target?: MaybeArray<string | Reference>;
+    target?: MaybeArray$1<string | Reference>;
     targetLocation?: string[];
     need?: string[] | CodeableConcept;
     status?: string;
     statusDate?: string;
     validationType?: string[] | CodeableConcept;
-    validationProcess?: MaybeArray<string[] | CodeableConcept>;
+    validationProcess?: MaybeArray$1<string[] | CodeableConcept>;
     frequency?: Timing;
     lastPerformed?: string;
     nextScheduled?: string;
@@ -4658,6 +5124,29 @@ declare type VerificationResult_Props = {
     validator?: BackboneElement[];
     [key: string]: any;
 };
+
+declare type MaybeArray<T> = T | T[];
+declare type VisionPrescription_Props = {
+    id?: string;
+    meta?: Meta;
+    implicitRules?: string;
+    language?: string;
+    text?: Narrative;
+    contained?: any[];
+    extension?: Extension[];
+    modifierExtension?: Extension[];
+    identifier?: MaybeArray<string | Identifier>;
+    status?: string;
+    created?: string;
+    patient?: string | Reference;
+    encounter?: string | Reference;
+    dateWritten?: string;
+    prescriber?: string | Reference;
+    lensSpecification?: BackboneElement[];
+    [key: string]: any;
+};
+
+
 
 declare const mapSystems: (obj: any) => any;
 /**
@@ -7658,6 +8147,23 @@ declare function testReport(props: TestReport_Props): any;
  */
 declare function verificationResult(type: string, props: VerificationResult_Props): any;
 declare function verificationResult(props: VerificationResult_Props): any;
+/**
+  * Create a FHIR VisionPrescription resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant. Optional.
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
+  * @param {Identifier} [props.identifier] - Business Identifier for vision prescription
+  * @param {string} [props.status] - active | cancelled | draft | entered-in-error
+  * @param {dateTime} [props.created] - Response creation date
+  * @param {Reference} [props.patient] - Who prescription is for
+  * @param {Reference} [props.encounter] - Created during encounter / admission / stay
+  * @param {dateTime} [props.dateWritten] - When prescription was authorized
+  * @param {Reference} [props.prescriber] - Who authorized the vision prescription
+  * @param {BackboneElement} [props.lensSpecification] - Vision lens authorization
+ */
+declare function visionPrescription(type: string, props: VisionPrescription_Props): any;
+declare function visionPrescription(props: VisionPrescription_Props): any;
 
-export { account, activityDefinition, addExtension, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, biologicallyDerivedProduct, bodyStructure, c, carePlan, careTeam, cc, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, coding, communication, communicationRequest, composite, concept, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, ext, extendSystemMap, extension, familyMemberHistory, findExtension, flag, goal, group, guidanceResponse, healthcareService, id, identifier, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, mapSystems, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, ref, reference, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, riskAssessment, schedule, serviceRequest, setSystemMap, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, value, verificationResult };
+export { account, activityDefinition, addExtension, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, biologicallyDerivedProduct, bodyStructure, c, carePlan, careTeam, cc, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, coding, communication, communicationRequest, composite, concept, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, ext, extendSystemMap, extension, familyMemberHistory, findExtension, flag, goal, group, guidanceResponse, healthcareService, id, identifier, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, mapSystems, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, ref, reference, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, riskAssessment, schedule, serviceRequest, setSystemMap, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, value, verificationResult, visionPrescription };
 
