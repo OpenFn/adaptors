@@ -5,7 +5,7 @@ import {
 } from '@openfn/language-common';
 
 import { createClient } from 'redis';
-import * as util from './Utils';
+import * as util from './util';
 
 let client = null;
 
@@ -277,14 +277,14 @@ export function mSet(entries) {
 
     const args = resolvedEntries.map(({ key, value }) => ({
       key,
-      path: "$",
-      value: typeof value === "string" ? value : JSON.stringify(value),
+      path: '$',
+      value: typeof value === 'string' ? value : JSON.stringify(value),
     }));
-    
+
     const result = await client.json.mSet(args);
     console.log(`Set values for ${resolvedEntries.length} keys successfully`);
 
-    return composeNextState(state, result);  
+    return composeNextState(state, result);
   };
 }
 
@@ -313,7 +313,7 @@ export function scan(pattern, options = {}) {
     const [resolvedPattern, resolvedOptions] = expandReferences(
       state,
       pattern,
-      options,
+      options
     );
     console.log(`Scanning for keys matching '${resolvedPattern}'`);
 
