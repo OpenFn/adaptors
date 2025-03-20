@@ -9,6 +9,7 @@ import {
   update,
   query,
   bulk,
+  fn,
 } from '../dist/index.js';
 
 const state = { configuration };
@@ -26,16 +27,22 @@ describe('Integration tests', () => {
       expect(data.success).to.eq(true);
     }).timeout(50000);
 
-    it.skip('should update multiple sobjects', async () => {
+    it('should update multiple sobjects', async () => {
       state.data = [
         { id: '', name: 'Coco', vera__Active__c: 'Yes' },
         { id: '', name: 'Melon', vera__Active__c: 'No' },
       ];
       const { data } = await execute(
+        bulkQuery("SELECT Id, Name FROM Account WHERE Name = 'Coco' LIMIT 2"),
+        fn(state => {
+          state.data = state.data.map(d => ({ Id: d.Id, Name: 'Melon' }));
+          return state;
+        }),
         bulk('Account', 'update', state => state.data)
       )(state);
 
       expect(data.success).to.eq(true);
+      expect(data.completed.length).to.eq(2);
     }).timeout(50000);
 
     it('should fail if there is an error', async () => {
