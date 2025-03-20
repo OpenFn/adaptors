@@ -46,12 +46,13 @@ export function get(path, options) {
       path,
       options
     );
-    console.log(`GET: ${resolvedPath}`);
+
     const { query, ...otherOptions } = resolvedOptions;
     const url = query
       ? `${resolvedPath}?${util.buildQuery(query)}`
       : resolvedPath;
 
+    console.log(`GET: ${url}`);
     const result = await connection.requestGet(url, otherOptions);
 
     return composeNextState(state, result);
@@ -93,7 +94,7 @@ export function post(path, data, options) {
       ? `${resolvedPath}?${util.buildQuery(query)}`
       : resolvedPath;
 
-    console.log(`POST: ${resolvedPath}`);
+    console.log(`POST: ${url}`);
 
     const result = await connection.requestPost(
       url,
@@ -128,12 +129,9 @@ export function request(path, options) {
       options
     );
     const { method = 'GET', json, body, headers, query } = resolvedOptions;
-    console.log(`${method}: ${resolvedPath}`);
-
     const url = query
       ? `${resolvedPath}?${util.buildQuery(query)}`
       : resolvedPath;
-
     const requestOptions = {
       url,
       method,
@@ -142,6 +140,8 @@ export function request(path, options) {
         : headers,
       body: json ? JSON.stringify(json) : body,
     };
+
+    console.log(`${method}: ${url}`);
 
     const result = await connection.request(requestOptions);
 
