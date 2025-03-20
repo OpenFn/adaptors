@@ -16,6 +16,29 @@ const state = { configuration };
 describe('Integration tests', () => {
   describe('http', () => {
     describe('get', () => {
+      it('fetches account updated information', async () => {
+        const createStartandEndDate = (daysAgo = 20) => {
+          const endDate = new Date();
+          const startDate = new Date();
+          startDate.setUTCDate(endDate.getUTCDate() - daysAgo); //Not more than 30 days ago
+
+          return {
+            startDate: startDate.toISOString(),
+            endDate: endDate.toISOString(),
+          };
+        };
+        const { startDate, endDate } = createStartandEndDate();
+
+        const { data } = await execute(
+          http.get('/services/data/v46.0/sobjects/Account/updated', {
+            query: { start: startDate, end: endDate },
+          })
+        )(state);
+
+        expect(data.latestDateCovered.split('T')[0]).to.eq(
+          endDate.split('T')[0]
+        );
+      }).timeout(5000);
       it('fetches account information', async () => {
         const { data } = await execute(http.get('/sobjects/Account/describe'))(
           state

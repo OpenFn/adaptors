@@ -58,6 +58,37 @@ describe('http', () => {
     });
   });
   describe('get', () => {
+    it('should append correct query parameters to the request URL', done => {
+      const fakeConnection = {
+        requestGet: () => {
+          return Promise.resolve({ latestDateCovered: '2020-01-01T00:00:00Z' });
+        },
+      };
+      let state = { connection: fakeConnection };
+
+      let spy = sinon.spy(fakeConnection, 'requestGet');
+
+      const startDate = '2020-01-01T00:00:00Z';
+      const endDate = '2020-01-02T00:00:00Z';
+      http
+        .get('/sobjects/Account/updated', {
+          query: { start: startDate, end: endDate },
+        })(state)
+        .then(state => {
+          expect(spy.args[0][0]).to.include(
+            `start=${encodeURIComponent(startDate)}`
+          );
+          expect(spy.args[0][0]).to.include(
+            `end=${encodeURIComponent(endDate)}`
+          );
+          expect(spy.called).to.eql(true);
+          expect(state.data).to.eql({
+            latestDateCovered: '2020-01-01T00:00:00Z',
+          });
+        })
+        .then(done)
+        .catch(done);
+    });
     it('fetches an account record', done => {
       const fakeConnection = {
         requestGet: function () {
