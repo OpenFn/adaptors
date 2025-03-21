@@ -36,8 +36,8 @@ describe('Adaptor', () => {
         },
       };
       setMockConnection(fakeConnection);
+      let state = { references: [] };
 
-      const state = {};
       const sObject = 'myObject';
       const fields = { field: 'value' };
 

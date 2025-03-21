@@ -3,14 +3,12 @@ import {
   composeNextState,
   chunk,
 } from '@openfn/language-common';
-
 import {
   expandReferences,
   assertRelativeUrl,
   throwError,
 } from '@openfn/language-common/util';
 import { Connection } from '@jsforce/jsforce-node';
-
 import * as util from './util';
 
 /**
@@ -70,49 +68,6 @@ import * as util from './util';
 
 let connection = null;
 
-const checkConnection = connection => {
-  if (!connection) {
-    throwError('No connection');
-  }
-  console.log(`Connected with ${connection._sessionType} session type`);
-  console.log('Using Salesforce API version:', connection.version);
-};
-
-const basicAuth = async configuration => {
-  const {
-    loginUrl,
-    username,
-    password,
-    securityToken,
-    apiVersion: version,
-  } = configuration;
-
-  connection = new Connection({ loginUrl, version });
-  console.info(`Connecting to salesforce as ${username}.`);
-
-  await connection
-    .login(username, securityToken ? password + securityToken : password)
-    .catch(error => {
-      throwError('FAILED_AUTH', {
-        fix: 'Check your username, password, and security token',
-        message: `Failed to connect to salesforce as ${username}`,
-        error,
-      });
-    });
-  checkConnection(connection);
-};
-
-const tokenAuth = configuration => {
-  const {
-    instance_url: instanceUrl,
-    access_token: accessToken,
-    apiVersion: version,
-  } = configuration;
-
-  connection = new Connection({ instanceUrl, accessToken, version });
-  checkConnection(connection);
-};
-
 /**
  * Creates a connection to Salesforce using Basic Auth or OAuth.
  * @function connect
@@ -124,10 +79,41 @@ const connect = async state => {
   if (connection) {
     return state;
   }
+
   const { configuration } = state;
-  configuration.access_token
-    ? await tokenAuth(configuration)
-    : await basicAuth(configuration);
+  const { apiVersion: version } = configuration;
+
+  if (configuration.access_token) {
+    const { instance_url: instanceUrl, access_token: accessToken } =
+      configuration;
+    connection = new Connection({ instanceUrl, accessToken, version });
+  } else {
+    const { loginUrl, username, password, securityToken } = configuration;
+    connection = new Connection({ loginUrl, version });
+
+    console.info(`Attempting Salesforce connection for user: ${username}`);
+
+    // Simple, direct login without extra Promise wrapping
+    await connection
+      .login(username, securityToken ? password + securityToken : password)
+      .catch(error => {
+        throwError('FAILED_AUTH', {
+          fix: 'Check your username, password, and security token',
+          message: `Failed to connect to salesforce as ${username}`,
+          error,
+        });
+      });
+  }
+
+  if (!connection) {
+    throwError('CONNECTION_ERROR', { message: 'No connection established' });
+  }
+
+  console.info(
+    `Successfully connected to Salesforce with ${connection._sessionType} session type`
+  );
+  console.info(`API Version: ${connection.version}`);
+
   return state;
 };
 
