@@ -1,6 +1,4 @@
-import { composeNextState } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
-import * as util from './util';
+import { salesforceRequest } from './Adaptor';
 
 /**
  * @typedef {Object} SimpleRequestOptions
@@ -39,71 +37,26 @@ import * as util from './util';
  * @returns {Operation}
  */
 export function get(path, options) {
-  return async state => {
-    const { connection } = state;
-    const [resolvedPath, resolvedOptions = {}] = expandReferences(
-      state,
-      path,
-      options
-    );
-
-    const { query, ...otherOptions } = resolvedOptions;
-    const url = query
-      ? `${resolvedPath}?${util.buildQuery(query)}`
-      : resolvedPath;
-
-    console.log(`GET: ${url}`);
-    const result = await connection.requestGet(url, otherOptions);
-
-    return composeNextState(state, result);
-  };
+  return salesforceRequest(path, options);
 }
 
 /**
  * Send a POST request to salesforce server configured in `state.configuration`.
  * @public
- * @example <caption>Make a POST request to a custom Salesforce flow</caption>
- * http.post("/actions/custom/flow/POC_OpenFN_Test_Flow", {
- *   body: {
- *     inputs: [
- *       {
- *         CommentCount: 6,
- *         FeedItemId: "0D5D0000000cfMY",
- *       },
- *     ],
- *   },
+ * @example <caption>POST request to Salesforce</caption>
+ * http.post("/jobs/query", {
+ *   operation: "query",
+ *   query: "SELECT Id, Name FROM Account LIMIT 1000",
  * });
  * @function
  * @param {string} path - The Salesforce API endpoint.
- * @param {object} data - A JSON Object request body.
+ * @param {object} body - A JSON Object request body.
  * @param {SimpleRequestOptions} [options] - Configure headers and query parameters for the request.
  * @state {SalesforceState}
  * @returns {Operation}
  */
-export function post(path, data, options) {
-  return async state => {
-    const { connection } = state;
-    const [resolvedPath, resolvedData, resolvedOptions = {}] = expandReferences(
-      state,
-      path,
-      data,
-      options
-    );
-    const { query, ...otherOptions } = resolvedOptions;
-    const url = query
-      ? `${resolvedPath}?${util.buildQuery(query)}`
-      : resolvedPath;
-
-    console.log(`POST: ${url}`);
-
-    const result = await connection.requestPost(
-      url,
-      resolvedData,
-      otherOptions
-    );
-
-    return composeNextState(state, result);
-  };
+export function post(path, body, options) {
+  return salesforceRequest(path, { json: body, method: 'POST', ...options });
 }
 
 /**
@@ -121,30 +74,5 @@ export function post(path, data, options) {
  * @returns {Operation}
  */
 export function request(path, options) {
-  return async state => {
-    const { connection } = state;
-    const [resolvedPath, resolvedOptions = {}] = expandReferences(
-      state,
-      path,
-      options
-    );
-    const { method = 'GET', json, body, headers, query } = resolvedOptions;
-    const url = query
-      ? `${resolvedPath}?${util.buildQuery(query)}`
-      : resolvedPath;
-    const requestOptions = {
-      url,
-      method,
-      headers: json
-        ? { 'content-type': 'application/json', ...headers }
-        : headers,
-      body: json ? JSON.stringify(json) : body,
-    };
-
-    console.log(`${method}: ${url}`);
-
-    const result = await connection.request(requestOptions);
-
-    return composeNextState(state, result);
-  };
+  return salesforceRequest(path, options);
 }

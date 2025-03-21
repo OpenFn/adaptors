@@ -4,8 +4,13 @@ import {
   chunk,
 } from '@openfn/language-common';
 
-import { expandReferences, throwError } from '@openfn/language-common/util';
+import {
+  expandReferences,
+  throwError,
+  assertRelativeUrl,
+} from '@openfn/language-common/util';
 import { Connection } from '@jsforce/jsforce-node';
+
 import * as util from './util';
 
 /**
@@ -744,6 +749,40 @@ export function retrieve(sObjectName, id) {
       .then(result => {
         return composeNextState(state, result);
       });
+  };
+}
+
+export function salesforceRequest(path, request) {
+  return async state => {
+    const { connection } = state;
+    const [resolvedPath, resolvedRequest = {}] = expandReferences(
+      state,
+      path,
+      request
+    );
+
+    assertRelativeUrl(resolvedPath);
+
+    const { method = 'GET', json, body, headers, query } = resolvedRequest;
+
+    const url = query
+      ? `${resolvedPath}?${new URLSearchParams(query).toString()}`
+      : resolvedPath;
+
+    const httpRequest = {
+      url,
+      method,
+      headers: json
+        ? { 'content-type': 'application/json', ...headers }
+        : headers,
+      body: json ? JSON.stringify(json) : body,
+    };
+
+    console.log(`${method}: ${url}`);
+
+    const result = await connection.request(httpRequest);
+
+    return composeNextState(state, result);
   };
 }
 
