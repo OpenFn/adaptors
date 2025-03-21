@@ -6,7 +6,6 @@ import {
 
 import { expandReferences, throwError } from '@openfn/language-common/util';
 import { Connection } from '@jsforce/jsforce-node';
-import flatten from 'lodash/flatten';
 import * as util from './util';
 
 /**
@@ -167,7 +166,7 @@ export function execute(...operations) {
     return commonExecute(
       connect,
       util.loadAnyAscii,
-      ...flatten(operations)
+      ...operations
     )({
       ...initialState,
       ...state,
