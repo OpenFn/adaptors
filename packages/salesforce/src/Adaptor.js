@@ -5,9 +5,8 @@ import {
 } from '@openfn/language-common';
 
 import { expandReferences, throwError } from '@openfn/language-common/util';
+import { Connection } from '@jsforce/jsforce-node';
 import * as util from './util';
-
-import flatten from 'lodash/flatten';
 
 /**
  * @typedef {object} State
@@ -82,6 +81,61 @@ import flatten from 'lodash/flatten';
  * @property {boolean} [autoFetch=false] - When true, automatically fetches next batch of records if available.
  * */
 
+let connection = null;
+
+/**
+ * Creates a connection to Salesforce using Basic Auth or OAuth.
+ * @function connect
+ * @private
+ * @param {State} state - Runtime state.
+ * @returns {State}
+ */
+const connect = async state => {
+  if (connection) {
+    return state;
+  }
+
+  const { configuration } = state;
+  const { apiVersion: version } = configuration;
+
+  if (configuration.access_token) {
+    const { instance_url: instanceUrl, access_token: accessToken } =
+      configuration;
+    connection = new Connection({ instanceUrl, accessToken, version });
+  } else {
+    const { loginUrl, username, password, securityToken } = configuration;
+    connection = new Connection({ loginUrl, version });
+
+    console.info(`Attempting Salesforce connection for user: ${username}`);
+
+    // Simple, direct login without extra Promise wrapping
+    await connection
+      .login(username, securityToken ? password + securityToken : password)
+      .catch(error => {
+        throwError('FAILED_AUTH', {
+          fix: 'Check your username, password, and security token',
+          message: `Failed to connect to salesforce as ${username}`,
+          error,
+        });
+      });
+  }
+
+  if (!connection) {
+    throwError('CONNECTION_ERROR', { message: 'No connection established' });
+  }
+
+  console.info(
+    `Successfully connected to Salesforce with ${connection._sessionType} session type`
+  );
+  console.info(`API Version: ${connection.version}`);
+
+  return state;
+};
+
+export function setMockConnection(mock) {
+  connection = mock;
+}
+
 /**
  * Executes an operation.
  * @function
@@ -98,11 +152,13 @@ export function execute(...operations) {
 
   return state => {
     return commonExecute(
+      connect,
       util.loadAnyAscii,
-      util.createConnection,
-      ...flatten(operations),
-      util.removeConnection
-    )({ ...initialState, ...state });
+      ...operations
+    )({
+      ...initialState,
+      ...state,
+    });
   };
 }
 
@@ -163,8 +219,6 @@ export function execute(...operations) {
  */
 export function bulk(sObjectName, operation, records, options = {}) {
   return state => {
-    const { connection } = state;
-
     const [
       resolvedSObjectName,
       resolvedOperation,
@@ -278,7 +332,6 @@ export function bulk(sObjectName, operation, records, options = {}) {
  */
 export function bulkQuery(query, options = {}) {
   return async state => {
-    const { connection } = state;
     const [resolvedQuery, resolvedOptions] = expandReferences(
       state,
       query,
@@ -343,7 +396,6 @@ export function bulkQuery(query, options = {}) {
  */
 export function create(sObjectName, records) {
   return state => {
-    let { connection } = state;
     const [resolvedSObjectName, resolvedRecords] = expandReferences(
       state,
       sObjectName,
@@ -351,7 +403,6 @@ export function create(sObjectName, records) {
     );
     util.assertNoNesting(resolvedRecords);
     console.info(`Creating ${resolvedSObjectName}`, resolvedRecords);
-
     return connection
       .create(resolvedSObjectName, resolvedRecords)
       .then(response => {
@@ -382,8 +433,6 @@ export function create(sObjectName, records) {
  */
 export function describe(sObjectName) {
   return state => {
-    const { connection } = state;
-
     const [resolvedSObjectName] = expandReferences(state, sObjectName);
 
     return resolvedSObjectName
@@ -429,7 +478,6 @@ export function describe(sObjectName) {
  */
 export function destroy(sObjectName, ids, options = {}) {
   return state => {
-    const { connection } = state;
     const [resolvedSObjectName, resolvedIds, resolvedOptions] =
       expandReferences(state, sObjectName, ids, options);
 
@@ -482,7 +530,6 @@ export function destroy(sObjectName, ids, options = {}) {
  */
 export function get(path, options = {}) {
   return async state => {
-    const { connection } = state;
     const [resolvedPath, resolvedOptions] = expandReferences(
       state,
       path,
@@ -548,7 +595,6 @@ export function insert(sObjectName, records) {
  */
 export function post(path, data, options = {}) {
   return async state => {
-    const { connection } = state;
     const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
       state,
       path,
@@ -596,7 +642,6 @@ export function post(path, data, options = {}) {
  */
 export function query(query, options = {}) {
   return async state => {
-    const { connection } = state;
     const [resolvedQuery, resolvedOptions] = expandReferences(
       state,
       query,
@@ -692,7 +737,6 @@ export function query(query, options = {}) {
  */
 export function upsert(sObjectName, externalId, records) {
   return state => {
-    const { connection } = state;
     const [resolvedSObjectName, resolvedExternalId, resolvedRecords] =
       expandReferences(state, sObjectName, externalId, records);
 
@@ -742,7 +786,6 @@ export function upsert(sObjectName, externalId, records) {
  */
 export function update(sObjectName, records) {
   return state => {
-    let { connection } = state;
     const [resolvedSObjectName, resolvedRecords] = expandReferences(
       state,
       sObjectName,
@@ -782,7 +825,6 @@ export function update(sObjectName, records) {
  */
 export function request(path, options = {}) {
   return async state => {
-    const { connection } = state;
     const [resolvedPath, resolvedOptions] = expandReferences(
       state,
       path,
@@ -819,8 +861,6 @@ export function request(path, options = {}) {
  */
 export function retrieve(sObjectName, id) {
   return state => {
-    const { connection } = state;
-
     const [resolvedSObjectName, resolvedId] = expandReferences(
       state,
       sObjectName,

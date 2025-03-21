@@ -91,7 +91,7 @@ describe('Integration tests', () => {
 
   describe('update', () => {
     it('should update a single sobject', async () => {
-      const { data } = await execute([
+      const { data } = await execute(
         query("Select Id, Name from Account where Name = 'test' limit 1"),
         update('Account', state => {
           const data = state.data.records[0];
@@ -100,14 +100,14 @@ describe('Integration tests', () => {
             Name: 'new name',
             vera__Active__c: 'Yes',
           };
-        }),
-      ])(state);
+        })
+      )(state);
 
       expect(data.success).to.eq(true);
     }).timeout(5000);
 
     it('should update multiple sobject', async () => {
-      const { data } = await execute([
+      const { data } = await execute(
         create('Account', [
           { name: 'Coco', vera__Active__c: 'No' },
           { name: 'Melon', vera__Active__c: 'Yes' },
@@ -120,8 +120,8 @@ describe('Integration tests', () => {
             vera__Active__c: 'Yes',
           }));
           return data;
-        }),
-      ])(state);
+        })
+      )(state);
 
       expect(data.success).to.eq(true);
     }).timeout(5000);
@@ -129,16 +129,16 @@ describe('Integration tests', () => {
 
   describe('destroy', () => {
     it('should destroy a single sobject', async () => {
-      const finalState = await execute([
+      const finalState = await execute(
         create('Account', { name: 'Coco', vera__Active__c: 'No' }),
-        destroy('Account', state => state.data.completed[0]),
-      ])(state);
+        destroy('Account', state => state.data.completed[0])
+      )(state);
 
       expect(finalState.data.success).to.eq(true);
     }).timeout(5000);
 
     it('should destroy multiple sobject', async () => {
-      const { data } = await execute([
+      const { data } = await execute(
         create('Account', [
           { name: 'Coco', vera__Active__c: 'No' },
           { name: 'Melon', vera__Active__c: 'Yes' },
@@ -146,8 +146,8 @@ describe('Integration tests', () => {
 
         destroy('Account', state => state.data.completed, {
           failOnError: true,
-        }),
-      ])(state);
+        })
+      )(state);
 
       expect(data.success).to.eq(true);
     }).timeout(10000);
