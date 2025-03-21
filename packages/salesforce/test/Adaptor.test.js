@@ -1,6 +1,6 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import { create, upsert, query, get, setMockConnection } from '../src/Adaptor';
+import { create, upsert, query, http, setMockConnection } from '../src/index';
 
 const { expect } = chai;
 
@@ -18,7 +18,8 @@ describe('Adaptor', () => {
 
       let spy = sinon.spy(fakeConnection, 'request');
 
-      get('/services/data/v58.0/sobjects/Account/10')(state)
+      http
+        .get('/services/data/v58.0/sobjects/Account/10')(state)
         .then(state => {
           expect(spy.args[0]).to.eql([
             {
