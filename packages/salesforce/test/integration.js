@@ -79,6 +79,25 @@ describe('Integration tests', () => {
       }).timeout(5000);
     });
   });
+  describe('query', () => {
+    it('should return 1000 records', async () => {
+      const { data } = await execute(
+        query('SELECT Id, Name FROM Account LIMIT 1000')
+      )(state);
+
+      expect(data.done).to.eq(true);
+      expect(data.totalSize).to.eq(1000);
+    }).timeout(5000);
+
+    it('should return all records', async () => {
+      const { data } = await execute(
+        query('SELECT Id, Name FROM Account', { autoFetch: true })
+      )(state);
+      expect(data.done).to.eq(true);
+      expect(data.totalSize).to.greaterThan(2000);
+    }).timeout(5000);
+  });
+
   describe('bulk', () => {
     before(async () => {
       state.data = [{ name: 'Coco', vera__Active__c: 'No' }];

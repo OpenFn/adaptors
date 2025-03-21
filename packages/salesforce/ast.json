@@ -540,30 +540,21 @@
           },
           {
             "title": "param",
-            "description": "A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause",
+            "description": "A SOQL query string. Must be less than 4000 characters in WHERE clause",
             "type": {
-              "type": "UnionType",
-              "elements": [
-                {
-                  "type": "NameExpression",
-                  "name": "string"
-                },
-                {
-                  "type": "NameExpression",
-                  "name": "function"
-                }
-              ]
+              "type": "NameExpression",
+              "name": "string"
             },
             "name": "query"
           },
           {
             "title": "param",
-            "description": "Optional configuration for the query operation",
+            "description": "Optional query options, {@link https://jsforce.github.io/jsforce/types/query.QueryOptions.html query options}",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "QueryOptions"
+                "name": "object"
               }
             },
             "name": "options"
