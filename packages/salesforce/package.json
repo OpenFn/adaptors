@@ -45,7 +45,6 @@
     "jsonpath": "^1.1.1",
     "nock": "13.2.9",
     "rimraf": "3.0.2",
-    "sinon": "^14.0.2",
     "type-detect": "1.0.0"
   },
   "type": "module",
