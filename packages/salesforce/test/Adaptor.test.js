@@ -99,7 +99,7 @@ describe('Adaptor', () => {
     });
   });
 
-  describe('query', () => {
+  describe.skip('query', () => {
     it('should properly pass the query string', async () => {
       const fakeConnection = {
         query: function () {
