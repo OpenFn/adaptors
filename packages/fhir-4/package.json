@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-fhir-4",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "OpenFn FHIR r4 adaptor",
   "scripts": {
     "build": "pnpm clean && build-adaptor fhir-4 src docs",
@@ -24,7 +24,7 @@
     }
   },
   "dependencies": {
-    "@openfn/language-common": "workspace",
+    "@openfn/language-common": "workspace:*",
     "@swc/core": "^1.10.9",
     "@types/fhir": "^0.0.41",
     "fhir": "^4.12.0",
