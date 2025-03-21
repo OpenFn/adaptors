@@ -1939,9 +1939,6 @@ importers:
       any-ascii:
         specifier: ^0.3.2
         version: 0.3.2
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
     devDependencies:
       assertion-error:
         specifier: 1.1.0
