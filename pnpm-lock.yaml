@@ -534,7 +534,7 @@ importers:
   packages/fhir-4:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace
+        specifier: workspace:*
         version: link:../common
       '@swc/core':
         specifier: ^1.10.9
