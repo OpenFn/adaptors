@@ -1,4 +1,9 @@
-import { salesforceRequest } from './Adaptor';
+import { composeNextState } from '@openfn/language-common';
+import {
+  expandReferences,
+  assertRelativeUrl,
+} from '@openfn/language-common/util';
+import { sfRequest } from './Adaptor';
 
 /**
  * @typedef {Object} SimpleRequestOptions
@@ -16,6 +21,51 @@ import { salesforceRequest } from './Adaptor';
  * @property {object} query - Object request query.
  * @property {object} body - Object request body.
  */
+
+/**
+ * Send a request to salesforce server configured in `state.configuration`.
+ * @public
+ * @example <caption>Make a POST request to a custom Salesforce flow</caption>
+ * http.request("/actions/custom/flow/POC_OpenFN_Test_Flow", {
+ *   method: "POST",
+ *   body: { inputs: [{}] },
+ * });
+ * @function
+ * @param {string} path - The Salesforce API endpoint.
+ * @param {FullRequestOptions} [options] - Configure headers, query and body parameters for the request.
+ * @state {SalesforceState}
+ * @returns {Operation}
+ */
+export function request(path, request) {
+  return async state => {
+    const [resolvedPath, resolvedRequest = {}] = expandReferences(
+      state,
+      path,
+      request
+    );
+
+    assertRelativeUrl(resolvedPath);
+
+    const { method = 'GET', body, headers, query } = resolvedRequest;
+
+    const url = query
+      ? `${resolvedPath}?${new URLSearchParams(query).toString()}`
+      : resolvedPath;
+
+    const httpRequest = {
+      url,
+      method,
+      headers: { 'content-type': 'application/json', ...headers },
+      body: JSON.stringify(body),
+    };
+
+    console.log(`${method}: ${url}`);
+
+    const result = await sfRequest(httpRequest);
+
+    return composeNextState(state, result);
+  };
+}
 
 /**
  * Send a GET request on salesforce server configured in `state.configuration`.
@@ -36,7 +86,7 @@ import { salesforceRequest } from './Adaptor';
  * @returns {Operation}
  */
 export function get(path, options) {
-  return salesforceRequest(path, options);
+  return request(path, options);
 }
 
 /**
@@ -55,23 +105,5 @@ export function get(path, options) {
  * @returns {Operation}
  */
 export function post(path, body, options) {
-  return salesforceRequest(path, { body, method: 'POST', ...options });
-}
-
-/**
- * Send a request to salesforce server configured in `state.configuration`.
- * @public
- * @example <caption>Make a POST request to a custom Salesforce flow</caption>
- * http.request("/actions/custom/flow/POC_OpenFN_Test_Flow", {
- *   method: "POST",
- *   body: { inputs: [{}] },
- * });
- * @function
- * @param {string} path - The Salesforce API endpoint.
- * @param {FullRequestOptions} [options] - Configure headers, query and body parameters for the request.
- * @state {SalesforceState}
- * @returns {Operation}
- */
-export function request(path, options) {
-  return salesforceRequest(path, options);
+  return request(path, { body, method: 'POST', ...options });
 }

@@ -3,11 +3,7 @@ import {
   composeNextState,
   chunk,
 } from '@openfn/language-common';
-import {
-  expandReferences,
-  assertRelativeUrl,
-  throwError,
-} from '@openfn/language-common/util';
+import { expandReferences, throwError } from '@openfn/language-common/util';
 import { Connection } from '@jsforce/jsforce-node';
 import * as util from './util';
 
@@ -738,35 +734,9 @@ export function retrieve(sObjectName, id) {
   };
 }
 
-export function salesforceRequest(path, request) {
-  return async state => {
-    const [resolvedPath, resolvedRequest = {}] = expandReferences(
-      state,
-      path,
-      request
-    );
-
-    assertRelativeUrl(resolvedPath);
-
-    const { method = 'GET', body, headers, query } = resolvedRequest;
-
-    const url = query
-      ? `${resolvedPath}?${new URLSearchParams(query).toString()}`
-      : resolvedPath;
-
-    const httpRequest = {
-      url,
-      method,
-      headers: { 'content-type': 'application/json', ...headers },
-      body: JSON.stringify(body),
-    };
-
-    console.log(`${method}: ${url}`);
-
-    const result = await connection.request(httpRequest);
-
-    return composeNextState(state, result);
-  };
+// Privately expose the salesforce request function to utils & tests
+export function sfRequest(httpRequest) {
+  return connection.request(httpRequest);
 }
 
 export {
