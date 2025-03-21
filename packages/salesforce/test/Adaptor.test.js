@@ -1,8 +1,6 @@
-import chai from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
 import { create, upsert, query, http, setMockConnection } from '../src/index';
-
-const { expect } = chai;
 
 describe('Adaptor', () => {
   describe('get', () => {
