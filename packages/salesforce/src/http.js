@@ -14,8 +14,7 @@ import { salesforceRequest } from './Adaptor';
  * @property {string} [method=GET] - HTTP method to use.
  * @property {object} headers - Object of request headers.
  * @property {object} query - Object request query.
- * @property {object} json - Object request body.
- * @property {string} body - A string request body.
+ * @property {object} body - Object request body.
  */
 
 /**
@@ -56,7 +55,7 @@ export function get(path, options) {
  * @returns {Operation}
  */
 export function post(path, body, options) {
-  return salesforceRequest(path, { json: body, method: 'POST', ...options });
+  return salesforceRequest(path, { body, method: 'POST', ...options });
 }
 
 /**
@@ -65,7 +64,7 @@ export function post(path, body, options) {
  * @example <caption>Make a POST request to a custom Salesforce flow</caption>
  * http.request("/actions/custom/flow/POC_OpenFN_Test_Flow", {
  *   method: "POST",
- *   json: { inputs: [{}] },
+ *   body: { inputs: [{}] },
  * });
  * @function
  * @param {string} path - The Salesforce API endpoint.

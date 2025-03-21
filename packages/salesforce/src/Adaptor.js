@@ -6,8 +6,8 @@ import {
 
 import {
   expandReferences,
-  throwError,
   assertRelativeUrl,
+  throwError,
 } from '@openfn/language-common/util';
 import { Connection } from '@jsforce/jsforce-node';
 
@@ -754,7 +754,6 @@ export function retrieve(sObjectName, id) {
 
 export function salesforceRequest(path, request) {
   return async state => {
-    const { connection } = state;
     const [resolvedPath, resolvedRequest = {}] = expandReferences(
       state,
       path,
@@ -763,7 +762,7 @@ export function salesforceRequest(path, request) {
 
     assertRelativeUrl(resolvedPath);
 
-    const { method = 'GET', json, body, headers, query } = resolvedRequest;
+    const { method = 'GET', body, headers, query } = resolvedRequest;
 
     const url = query
       ? `${resolvedPath}?${new URLSearchParams(query).toString()}`
@@ -772,10 +771,8 @@ export function salesforceRequest(path, request) {
     const httpRequest = {
       url,
       method,
-      headers: json
-        ? { 'content-type': 'application/json', ...headers }
-        : headers,
-      body: json ? JSON.stringify(json) : body,
+      headers: { 'content-type': 'application/json', ...headers },
+      body: JSON.stringify(body),
     };
 
     console.log(`${method}: ${url}`);
