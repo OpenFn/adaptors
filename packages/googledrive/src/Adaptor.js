@@ -49,7 +49,7 @@ export function execute(...operations) {
 }
 
 /**
- * Uploads a large file to Google Drive using streaming.
+ * Uploads a file to Google Drive using streaming.
  * @param {Object} state - OpenFn state object.
  * @param {string} filePath - Path to the file to be uploaded.
  * @param {string|null} [folderId=null] - Optional folder ID to upload the file into.
@@ -81,7 +81,7 @@ async function uploadFile(state, filePath, folderId = null) {
 }
 
 /**
- * Downloads a large file from Google Drive using streaming.
+ * Downloads a file from Google Drive using streaming.
  * @param {Object} state - OpenFn state object.
  * @param {string} fileId - ID of the file to download.
  * @param {string} outputPath - Path to save the downloaded file.
