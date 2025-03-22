@@ -2,7 +2,6 @@ import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   makeBasicAuthHeader,
-  logResponse,
 } from '@openfn/language-common/util';
 
 export const prepareNextState = (state, response, callback = s => s) => {
@@ -18,20 +17,45 @@ export const prepareNextState = (state, response, callback = s => s) => {
 export async function fetchAndLog(method, url, opts) {
   try {
     const response = await commonRequest(method, url, opts);
-    logResponse(response);
+    const { statusCode, duration } = response;
+
+    const urlWithQuery = Object.keys(opts.query || {}).length
+      ? `${url}?${new URLSearchParams(opts.query).toString()}`
+      : url;
+
+    const message = `${method} ${urlWithQuery} - ${statusCode} in ${duration}ms`;
+    if (response instanceof Error) {
+      console.error(message);
+    } else {
+      console.log(message);
+    }
+    response.url = urlWithQuery;
     return response;
   } catch (err) {
     return err;
   }
 }
 
+// TODO get should pass autopage true and options
+// TODO http functions should all pass autopage false (at least for now)
+// TODO this currently returns { result, response }. Is that right? It'll break everything!!
 export async function request(state, method, path, options = {}) {
+  const { username, password, instanceUrl: baseUrl } = state.configuration;
+
   const {
-    baseUrl = state.configuration.instanceUrl,
+    // baseUrl = instanceUrl, // TODO should not be able to override baseUrl on config
     query = {},
     data = {},
     headers = { 'content-type': 'application/json' },
     parseAs = 'json',
+
+    // autopage control flag
+    autopage = false,
+
+    // autopage options
+    limit,
+    pageSize, // TODO what is openmrs default?
+    startIndex,
   } = options;
 
   if (baseUrl.length <= 0) {
@@ -47,8 +71,6 @@ export async function request(state, method, path, options = {}) {
     );
   }
 
-  const { username, password } = state.configuration;
-
   const authHeaders = makeBasicAuthHeader(username, password);
 
   const opts = {
@@ -59,85 +81,89 @@ export async function request(state, method, path, options = {}) {
     },
     query,
     parseAs,
+
+    limit,
+    pageSize,
+    startIndex,
   };
 
   const url = `${baseUrl}${path}`;
-  let queryParams = opts?.query;
-  const requestOptions = queryParams ? { ...opts, query: queryParams } : opts;
 
-  return (shouldPaginate({ underGlobalLimit: true, hasPageSize: query.pageSize }))
-    ? paginate(method, url, requestOptions)
-    : fetchAndLog(method, url, requestOptions);
-}
-
-export async function paginate(method, url, opts) {
-
-  let allResponses;
-  let fetchedCount = 0;
-
-
-  // global limit variable that is a source of truth incase there is a pageSize variable
-  const globalLimit = opts.query.limit;
-
-  // Declare a variable that takes in all the options. We can then modify this variable to fetch the next page
-  let paginatedRequestOptions = { ...opts }
-
-
-  // if page size variable exists use that as limit. Delete pageSize from params since OpenMRS does recognize it.
-  if (opts.query.pageSize) {
-    paginatedRequestOptions.query.limit = opts.query.pageSize;
-    delete paginatedRequestOptions.query.pageSize;
+  if (autopage && method === 'GET') {
+    return paginate(method, url, opts);
   }
 
-  do {
-    const response = await fetchAndLog(method, url, paginatedRequestOptions);
+  // Map limit and startIndex to the query
+  if (!isNaN(opts.limit)) {
+    opts.query.limit = opts.limit;
+  }
+  if (!isNaN(opts.startIndex)) {
+    opts.query.startIndex = opts.startIndex;
+  }
 
-    // Stop itereation if there are no more objects
+  const response = await fetchAndLog(method, url, opts);
+  const { body, ...responseWithoutBody } = response;
+  return { response: responseWithoutBody, data: body };
+}
+
+// TODO: work out page size (if startIndex AND limit are set, this is the page size I think)
+export async function paginate(method, url, opts) {
+  const results = [];
+  const responses = [];
+
+  // the maximum number of items to download
+  const { limit: maxResults = Infinity, pageSize = 1000 } = opts;
+  let { startIndex = 1 } = opts;
+
+  // Declare a variable that takes in all the options. We can then modify this variable to fetch the next page
+  let paginatedRequestOptions = { ...opts };
+
+  do {
+    // Calculate the page size for this request
+    paginatedRequestOptions.query = Object.assign({}, opts.query, {
+      limit: Math.min(pageSize, maxResults - results.length),
+      startIndex,
+    });
+
+    // Fetch a page of data
+    const response = await fetchAndLog(method, url, paginatedRequestOptions);
+    const { body, ...responseWithoutBody } = response;
+    responses.push(responseWithoutBody);
+    // Stop iteration if there are no more objects
     if (!response.body) {
       break;
     }
 
+    // If there is data, save it
+    results.push(...response.body.results);
 
-    fetchedCount += response.body.results.length;
+    // Decide whether to request another page
+    const hasNext = response.body.links.find(link => link?.rel === 'next');
 
-    if (allResponses) {
-      allResponses.body.results.push(...response.body.results);
-    } else {
-      allResponses = response;
-    }
-
-    // Stop iteration when global limit is reached
-    if (fetchedCount >= globalLimit) {
-      allResponses.body.results = allResponses.body.results.slice(0, globalLimit);
-      delete allResponses.body.links;
+    if (!hasNext || results.length === maxResults) {
       break;
     }
+    startIndex += results.length;
 
-    const nextUrl = response?.body?.links?.find(link => link?.rel === 'next')?.uri;
-
-
-    if (nextUrl) {
-      console.log(`Fetched ${response.body.results.length} results`);
-      console.log(`Fetching next page from ${nextUrl}`);
-      const urlObj = new URL(nextUrl);
-      const params = new URLSearchParams(urlObj.search);
-      const startIndex = params.get('startIndex');
-      // update request options with a new startIndex for the next page
-      paginatedRequestOptions = { ...paginatedRequestOptions, startIndex };
-
-    } else {
-      delete allResponses.body.links;
-      break;
-    }
+    //  if (nextUrl) {
+    //     console.log(`Fetched ${response.body.results.length} results`);
+    //     console.log(`Fetching next page from ${nextUrl}`);
+    //     const urlObj = new URL(nextUrl);
+    //     const params = new URLSearchParams(urlObj.search);
+    //     const startIndex = params.get('startIndex');
+    //     // update request options with a new startIndex for the next page
+    //     paginatedRequestOptions = { ...paginatedRequestOptions, startIndex };
+    //   } else {
+    //     delete allResponses.body.links;
+    //     break;
+    //   }
   } while (true);
 
-  return allResponses;
-}
-
-
-
-function shouldPaginate({ underGlobalLimit, hasPageSize }) {
-  return underGlobalLimit && hasPageSize;
+  // Note that paginated request does not include all the responses
+  // TODO this result is quite contrived
+  // should we return responses plural?
+  // Should we nest results in { results } to pretend like this is a normal request?
+  return { response: responses, data: { results } };
 }
 
 export function cleanPath(path) {
