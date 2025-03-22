@@ -1,89 +1,178 @@
-import { expandReferences } from '@openfn/language-common/util';
-import * as util from './Utils';
+import fs from 'fs';
+import { execute as commonExecute } from '@openfn/language-common';
+import { request as sendRequest } from '@openfn/language-http';
+import { google } from 'googleapis';
 
-/**
- * State object
- * @typedef {Object} HttpState
- * @property data - the parsed response body
- * @property response - the response from the HTTP server, including headers, statusCode, body, etc
- * @property references - an array of all previous data objects used in the Job
- **/
+let client = undefined;
 
-/**
- * Options provided to the HTTP request
- * @typedef {Object} RequestOptions
- * @public
- * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
- * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
- * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
- * @property {object} query - An object of query parameters to be encoded into the URL.
- * @property {object} headers - An object of headers to append to the request.
- * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
- * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
- * @property {object} tls - TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
- */
+function createConnection(state) {
+  const { accessToken } = state.configuration;
+  const auth = new google.auth.OAuth2();
+  auth.credentials = { access_token: accessToken };
+  client = google.drive({ version: 'v3', auth });
+  return state;
+}
 
-/**
- * Make a GET request
- * @example
- * get("patients");
- * @function
- * @public
- * @param {string} path - Path to resource
- * @param {RequestOptions} options - Optional request options
- * @returns {Operation}
- * @state {HttpState}
- */
-export function get(path, options) {
-  return request('GET', path, null, options);
+function removeConnection(state) {
+  client = undefined;
+  return state;
 }
 
 /**
- * Make a POST request
+ * Execute a sequence of oper.
+ * Wraps `language-common/execute`, and prepends initial state for http.
  * @example
- * post("patient", { "name": "Bukayo" });
- * @function
- * @public
- * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
+ * execute(
+ *   create('foo'),
+ *   delete('bar')
+ * )(state)
+ * @private
+ * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
- * @state {HttpState}
  */
-export function post(path, body, options) {
-  return request('POST', path, body, options);
+export function execute(...operations) {
+  const initialState = {
+    references: [],
+    data: null,
+  };
+
+  return state => {
+    return commonExecute(
+      createConnection,
+      ...operations,
+      removeConnection
+    )({
+      ...initialState,
+      ...state,
+    });
+  };
 }
 
 /**
- * Make a general HTTP request
- * @example
- * request("POST", "patient", { "name": "Bukayo" });
- * @function
- * @public
- * @param {string} method - HTTP method to use
- * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
- * @returns {Operation}
- * @state {HttpState}
+ * Uploads a large file to Google Drive using streaming.
+ * @param {Object} state - OpenFn state object.
+ * @param {string} filePath - Path to the file to be uploaded.
+ * @param {string|null} [folderId=null] - Optional folder ID to upload the file into.
+ * @returns {Promise<Object>} Updated state including the uploaded file details.
  */
-export function request(method, path, body, options = {}) {
-  return async state => {
-    const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
-      expandReferences(state, method, path, body, options);
+async function uploadFile(state, filePath, folderId = null) {
+  const fileMetadata = {
+    name: filePath.split('/').pop(),
+    parents: folderId ? [folderId] : [],
+  };
 
-    const response = await util.request(
-      state.configuration,
-      resolvedMethod,
-      resolvedPath,
-      {
-        body: resolvedBody,
-        ...resolvedoptions,
-      }
+  const media = {
+    mimeType: 'application/octet-stream',
+    body: fs.createReadStream(filePath),
+  };
+
+  try {
+    const response = await client.files.create({
+      requestBody: fileMetadata,
+      media,
+      fields: 'id, name',
+    });
+    console.log(`Uploaded File ID: ${response.data.id}`);
+    return { ...state, data: response.data };
+  } catch (err) {
+    console.error('Upload error:', err);
+    throw err;
+  }
+}
+
+/**
+ * Downloads a large file from Google Drive using streaming.
+ * @param {Object} state - OpenFn state object.
+ * @param {string} fileId - ID of the file to download.
+ * @param {string} outputPath - Path to save the downloaded file.
+ * @returns {Promise<Object>} Updated state with file details.
+ */
+async function downloadFile(state, fileId, outputPath) {
+
+  const dest = fs.createWriteStream(outputPath);
+
+  try {
+    const response = await client.files.get(
+      { fileId, alt: 'media' },
+      { responseType: 'stream' }
     );
 
-    return util.prepareNextState(state, response);
+    return new Promise((resolve, reject) => {
+      response.data
+        .pipe(dest)
+        .on('finish', () => {
+          console.log('Download complete:', outputPath);
+          resolve({ ...state, data: { fileId, outputPath } });
+        })
+        .on('error', err => {
+          console.error('Download failed:', err);
+          reject(err);
+        });
+    });
+  } catch (err) {
+    console.error('Download error:', err);
+    throw err;
+  }
+}
+
+/**
+ * Transfers a file from Google Drive to another API endpoint via streaming.
+ * @param {Object} state - OpenFn state object.
+ * @param {string} fileId - ID of the file to transfer.
+ * @param {string} targetUrl - The target API URL.
+ * @returns {Promise<Object>} HTTP response from the target API.
+ */
+async function transferFile(state, fileId, targetUrl) {
+  const response = await client.files.get(
+    { fileId, alt: 'media' },
+    { responseType: 'stream' }
+  );
+
+  return sendRequest('POST', targetUrl, { body: response.data });
+}
+
+/**
+ * Updates an existing file in Google Drive with new content.
+ * @param {Object} state - OpenFn state object.
+ * @param {string} fileId - ID of the file to update.
+ * @param {string} filePath - Path to the new file content.
+ * @returns {Promise<Object>} Updated state including the updated file details.
+ */
+async function updateFile(state, fileId, filePath) {
+
+  const media = {
+    mimeType: 'application/octet-stream',
+    body: fs.createReadStream(filePath),
   };
+
+  try {
+    const response = await client.files.update({
+      fileId,
+      media,
+      fields: 'id, name',
+    });
+    console.log(`Updated File ID: ${response.data.id}`);
+    return { ...state, data: response.data };
+  } catch (err) {
+    console.error('Update error:', err);
+    throw err;
+  }
+}
+
+export function put(fileId, filePath) {
+  return state => updateFile(state, fileId, filePath);
+}
+
+export function post(filePath, folderId = null) {
+  return state => uploadFile(state, filePath, folderId);
+}
+
+export function get(fileId, outputPath) {
+  return state => downloadFile(state, fileId, outputPath);
+}
+
+export function transfer(fileId, targetUrl) {
+  return state => transferFile(state, fileId, targetUrl);
 }
 
 export {
