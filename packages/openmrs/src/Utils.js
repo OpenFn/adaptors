@@ -36,8 +36,8 @@ export async function fetchAndLog(method, url, opts) {
   }
 }
 
-// TODO get should pass autopage true and options
-// TODO http functions should all pass autopage false (at least for now)
+// TODO get() should pass autopage true and options
+// TODO http.*() functions should all pass autopage false (at least for now)
 // TODO this currently returns { result, response }. Is that right? It'll break everything!!
 export async function request(state, method, path, options = {}) {
   const { username, password, instanceUrl: baseUrl } = state.configuration;
@@ -144,19 +144,6 @@ export async function paginate(method, url, opts) {
       break;
     }
     startIndex += results.length;
-
-    //  if (nextUrl) {
-    //     console.log(`Fetched ${response.body.results.length} results`);
-    //     console.log(`Fetching next page from ${nextUrl}`);
-    //     const urlObj = new URL(nextUrl);
-    //     const params = new URLSearchParams(urlObj.search);
-    //     const startIndex = params.get('startIndex');
-    //     // update request options with a new startIndex for the next page
-    //     paginatedRequestOptions = { ...paginatedRequestOptions, startIndex };
-    //   } else {
-    //     delete allResponses.body.links;
-    //     break;
-    //   }
   } while (true);
 
   // Note that paginated request does not include all the responses
