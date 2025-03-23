@@ -1,75 +1,71 @@
 import { expect } from 'chai';
-import { enableMockClient } from '@openfn/language-common/util';
+import sinon from 'sinon';
+import fs from 'fs';
+import { google } from 'googleapis';
+import { post, get, put, transfer } from '../src';
 
-import { request, dataValue } from '../src/Adaptor.js';
+describe('Google Drive Adaptor', () => {
+  let sandbox;
+  let mockDrive;
 
-// This creates a mock client which acts like a fake server.
-// It enables pattern-matching on the request object and custom responses
-// For the full mock API see
-// https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
-const testServer = enableMockClient('https://fake.server.com');
+  beforeEach(() => {
+    sandbox = sinon.createSandbox();
+    mockDrive = sandbox.stub(google.drive('v3').files);
+  });
 
-describe('request', () => {
-  it('makes a post request to the right endpoint', async () => {
-    // Setup a mock endpoint
-    testServer
-      .intercept({
-        path: '/api/patients',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      // Set the reply from this endpoint
-      // The body will be returned to state.data
-      .reply(200, { id: 7, fullName: 'Mamadou', gender: 'M' });
+  afterEach(() => {
+    sandbox.restore();
+  });
 
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
-      },
-    };
+  describe('post (upload)', () => {
+    it('should upload a file successfully', async () => {
+      const state = { configuration: { accessToken: 'mockToken' } };
+      const filePath = 'test.txt';
+      sandbox.stub(fs, 'createReadStream').returns('mockStream');
+      mockDrive.create.resolves({ data: { id: '123', name: 'test.txt' } });
 
-    const finalState = await request('POST', 'patients', {
-      name: state.data.fullName,
-      gender: state.data.gender,
-    })(state);
-
-    expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-      id: 7,
+      const result = await post(filePath)(state);
+      expect(result.data.id).to.equal('123');
+      expect(result.data.name).to.equal('test.txt');
     });
   });
 
-  it('throws an error if the service returns 403', async () => {
-    testServer
-      .intercept({
-        path: '/api/noAccess',
-        method: 'POST',
-      })
-      .reply(403);
+  describe('get (download)', () => {
+    it('should download a file successfully', async () => {
+      const state = { configuration: { accessToken: 'mockToken' } };
+      const fileId = '123';
+      const outputPath = 'test.txt';
+      const stream = sandbox.stub(fs, 'createWriteStream');
+      mockDrive.get.resolves({ data: { pipe: sinon.spy() } });
 
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-    };
-
-    const error = await request('POST', 'noAccess', { name: 'taylor' })(
-      state
-    ).catch(error => {
-      return error;
+      const result = await get(fileId, outputPath)(state);
+      expect(result.data.fileId).to.equal('123');
     });
+  });
 
-    expect(error.statusMessage).to.eql('Forbidden');
+  describe('put (update)', () => {
+    it('should update a file successfully', async () => {
+      const state = { configuration: { accessToken: 'mockToken' } };
+      const fileId = '123';
+      const filePath = 'test.txt';
+      sandbox.stub(fs, 'createReadStream').returns('mockStream');
+      mockDrive.update.resolves({ data: { id: '123', name: 'updated.txt' } });
+
+      const result = await put(fileId, filePath)(state);
+      expect(result.data.id).to.equal('123');
+      expect(result.data.name).to.equal('updated.txt');
+    });
+  });
+
+  describe('transfer', () => {
+    it('should transfer a file successfully', async () => {
+      const state = { configuration: { accessToken: 'mockToken' } };
+      const fileId = '123';
+      const targetUrl = 'https://example.com/upload';
+      mockDrive.get.resolves({ data: { pipe: sinon.spy() } });
+
+      const result = await transfer(fileId, targetUrl)(state);
+      expect(result).to.exist;
+    });
   });
 });
