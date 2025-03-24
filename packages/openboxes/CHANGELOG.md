@@ -2,4 +2,5 @@
 
 ## 1.0.0
 
-Initial release.
+A new OpenBoxes adaptor. Has `get` and `post` functionality and a generic http
+function for anything outside that scope.
