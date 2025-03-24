@@ -142,7 +142,7 @@
           },
           {
             "title": "example",
-            "description": "*  request('POST', '/products/ff808181812576850182aee36930040b', { body: { name: 'Coffee', description: 'Arabica coffee from the highlands of Ethiopia' } });",
+            "description": "request('POST', '/products/ff808181812576850182aee36930040b', { body: { name: 'Coffee', description: 'Arabica coffee from the highlands of Ethiopia' } });",
             "caption": "Update a product"
           },
           {

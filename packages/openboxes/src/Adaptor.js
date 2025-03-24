@@ -40,18 +40,18 @@ export function get(path, options) {
 /**
  * Make a POST request
  * @example
- * post("products", 
- * {
-    "id": "ff80818163e2de8d0163eba1b1e90002",
-    "productCode": null,
-    "name": "New product",
-    "category": {
-        "id": "ff80818163e2de8d0163eb93c5a00001",
-        "name": "New category"
-    },
-    "description": null,
-    "dateCreated": "2018-06-10T21:37:12Z",
-    "lastUpdated": "2018-06-10T21:37:12Z"
+  post("products", 
+   {
+      "id": "ff80818163e2de8d0163eba1b1e90002",
+      "productCode": null,
+      "name": "New product",
+      "category": {
+          "id": "ff80818163e2de8d0163eb93c5a00001",
+          "name": "New category"
+        },
+      "description": null,
+      "dateCreated": "2018-06-10T21:37:12Z",
+      "lastUpdated": "2018-06-10T21:37:12Z"
   });
  * @function
  * @public
@@ -74,7 +74,7 @@ export function post(path, body, options) {
  * request("POST", "/stockMovements/ff808181642fc9c101642fcccc420004", 
  *  {
      body: {
-     "name": "new stock movement",
+        "name": "new stock movement",
         "description": "new stock movement",
         "origin.id": "1",
         "destination.id": "2",
