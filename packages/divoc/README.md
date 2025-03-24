@@ -13,12 +13,6 @@ View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/divoc-configuration-schema/)
 for required and optional `configuration` properties.
 
-### A example expression using the `create` function
-
-```js
-post('patient', { name: 'Bukayo' });
-```
-
 ## Development
 
 Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
