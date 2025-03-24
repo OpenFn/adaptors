@@ -53,6 +53,15 @@ export function execute(...operations) {
  *   query: { foo: 'bar', a: 1 },
  *   headers: { 'content-type': 'application/json' },
  * });
+ * @example <caption>Make a POST request with a body</caption>
+ * request('POST', '/todos', {
+ *   body:{
+ *     "userId": 1,
+ *     "title": "delectus aut autem",
+ *     "completed": false
+ *   },
+ *   headers: { 'content-type': 'application/json' },
+ * });
  * @function
  * @param {string} method - The HTTP method to use.
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
