@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "The DIVOC server baseUrl",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://demo-divoc.egov.org.in"]
+    },
+    "access_token": {
+      "title": "Access token",
+      "type": "string",
+      "description": "Your DIVOC access token",
+      "examples": ["eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["password", "username"]
+}
