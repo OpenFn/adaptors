@@ -5,6 +5,11 @@ import { google } from 'googleapis';
 
 let client = undefined;
 
+/**
+ * Creates a connection to Google Drive using OAuth2 authentication.
+ * @param {Object} state - object containing the access token.
+ * @returns {Object} Updated state with Google Drive client initialized.
+ */
 function createConnection(state) {
   const { accessToken } = state.configuration;
   const auth = new google.auth.OAuth2();
@@ -13,6 +18,11 @@ function createConnection(state) {
   return state;
 }
 
+/**
+ * Removes the Google Drive client connection.
+ * @param {Object} state - object.
+ * @returns {Object} Updated state with client reset.
+ */
 function removeConnection(state) {
   client = undefined;
   return state;
@@ -88,7 +98,6 @@ async function uploadFile(state, filePath, folderId = null) {
  * @returns {Promise<Object>} Updated state with file details.
  */
 async function downloadFile(state, fileId, outputPath) {
-
   const dest = fs.createWriteStream(outputPath);
 
   try {
@@ -139,7 +148,6 @@ async function transferFile(state, fileId, targetUrl) {
  * @returns {Promise<Object>} Updated state including the updated file details.
  */
 async function updateFile(state, fileId, filePath) {
-
   const media = {
     mimeType: 'application/octet-stream',
     body: fs.createReadStream(filePath),
@@ -159,21 +167,46 @@ async function updateFile(state, fileId, filePath) {
   }
 }
 
+/**
+ * Exports a function to update a file in Google Drive.
+ * @param {string} fileId - ID of the file to update.
+ * @param {string} filePath - Path to the new file content.
+ * @returns {Function} Function to execute the file update.
+ */
 export function put(fileId, filePath) {
   return state => updateFile(state, fileId, filePath);
 }
 
+/**
+ * Exports a function to upload a file to Google Drive.
+ * @param {string} filePath - Path to the file to be uploaded.
+ * @param {string|null} [folderId=null] - Optional folder ID.
+ * @returns {Function} Function to execute the file upload.
+ */
 export function post(filePath, folderId = null) {
   return state => uploadFile(state, filePath, folderId);
 }
 
+/**
+ * Exports a function to download a file from Google Drive.
+ * @param {string} fileId - ID of the file to download.
+ * @param {string} outputPath - Path to save the downloaded file.
+ * @returns {Function} Function to execute the file download.
+ */
 export function get(fileId, outputPath) {
   return state => downloadFile(state, fileId, outputPath);
 }
 
+/**
+ * Exports a function to transfer a file from Google Drive to another API.
+ * @param {string} fileId - ID of the file to transfer.
+ * @param {string} targetUrl - The target API URL.
+ * @returns {Function} Function to execute the file transfer.
+ */
 export function transfer(fileId, targetUrl) {
   return state => transferFile(state, fileId, targetUrl);
 }
+
 
 export {
   dataPath,
