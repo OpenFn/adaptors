@@ -532,7 +532,7 @@ export function query(query, options) {
   return async state => {
     const [
       resolvedQuery,
-      resolvedOptions = { autoFetch: true, maxFetch: 10000 },
+      resolvedOptions = { autoFetch: false, maxFetch: 10000 },
     ] = expandReferences(state, query, options);
     console.log(`Executing query: ${resolvedQuery}`);
     const { autoFetch, maxFetch } = resolvedOptions;
