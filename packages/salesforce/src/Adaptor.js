@@ -56,12 +56,6 @@ import * as util from './util';
  * @property {integer} [pollInterval=3000] - Polling interval in milliseconds.
  * */
 
-/**
- * @typedef {Object} QueryOptions
- * @public
- * @property {boolean} [autoFetch=false] - When true, automatically fetches next batch of records if available.
- * */
-
 let connection = null;
 
 /**
@@ -528,77 +522,40 @@ export function insert(sObjectName, records) {
  * @example <caption>Query patients by Health ID using a lazy state reference</caption>
  * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
  * @function
- * @param {(string|function)} query - A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause
- * @param {QueryOptions} [options] - Optional configuration for the query operation
+ * @param {string} query - A SOQL query string. Must be less than 4000 characters in WHERE clause
+ * @param {object} [options] - Optional query options, {@link https://jsforce.github.io/jsforce/types/query.QueryOptions.html query options}
  * @state {SalesforceState}
  * @property data - Array of result objects of the form <code>\{ done, totalSize, records \}</code>
  * @returns {Operation}
  */
-export function query(query, options = {}) {
+export function query(query, options) {
   return async state => {
-    const [resolvedQuery, resolvedOptions] = expandReferences(
-      state,
-      query,
-      options
-    );
+    const [
+      resolvedQuery,
+      resolvedOptions = { autoFetch: false, maxFetch: 10000 },
+    ] = expandReferences(state, query, options);
     console.log(`Executing query: ${resolvedQuery}`);
-    const autoFetch = resolvedOptions.autoFetch || resolvedOptions.autofetch;
+    const { autoFetch, maxFetch } = resolvedOptions;
 
     if (autoFetch) {
-      console.log('autoFetch is enabled: all records will be downloaded');
+      console.log(
+        `autoFetch is enabled: A maximum of ${maxFetch} records will be downloaded`
+      );
     }
 
-    const result = {
-      done: true,
-      totalSize: 0,
-      records: [],
-    };
-
-    const processRecords = async res => {
-      const { done, totalSize, records, nextRecordsUrl } = res;
-
-      result.done = done;
-      result.totalSize = totalSize;
-      result.records.push(...records);
-
-      if (!done && !autoFetch && nextRecordsUrl) {
-        result.nextRecordsUrl = nextRecordsUrl;
-      }
-      if (!done && autoFetch) {
-        console.log('Fetched records so far:', result.records.length);
-        console.log('Fetching next records...');
-
-        try {
-          const newResult = await connection.request({ url: nextRecordsUrl });
-          await processRecords(newResult);
-        } catch (err) {
-          const { message, errorCode } = err;
-          console.error(`Error ${errorCode}: ${message}`);
-          throw err;
-        }
-      }
-    };
-
-    try {
-      const qResult = await connection.query(resolvedQuery);
-      if (qResult.totalSize > 0) {
-        console.log('Total records:', qResult.totalSize);
-        await processRecords(qResult);
-        console.log('Done ✔ retrieved records:', result.records.length);
-      } else {
-        console.log('No records found.');
-      }
-    } catch (err) {
-      const { message, errorCode } = err;
-      console.log(`Error ${errorCode}: ${message}`);
-      throw err;
-    }
-
-    console.log(
-      'Results retrieved and pushed to position [0] of the references array.'
+    const { records, totalSize, done } = await connection.query(
+      resolvedQuery,
+      resolvedOptions
     );
+    const totalFetched = records.length;
 
-    return composeNextState(state, result);
+    if (records.length > 0) {
+      console.log('total in database : ' + totalSize);
+      console.log('total fetched : ' + totalFetched);
+    }
+    const allResults = { done, records, totalSize, totalFetched };
+
+    return composeNextState(state, allResults);
   };
 }
 
