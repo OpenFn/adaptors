@@ -1,7 +1,7 @@
 ---
-'@openfn/language-salesforce': patch
+'@openfn/language-salesforce': minor
 ---
 
-Modernize query function implementation using jsforce v3, adding support for
+Modernize `query()` implementation using jsforce v3, adding support for
 additional query options [ `maxFetch`, `headers`, `responseTarget` and
 `scanAll`].
