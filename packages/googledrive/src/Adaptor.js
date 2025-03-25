@@ -80,6 +80,7 @@ async function uploadFile(state, filePath, folderId = null) {
     const response = await client.files.create({
       requestBody: fileMetadata,
       media,
+      uploadType: 'resumable',
       fields: 'id, name',
     });
     console.log(`Uploaded File ID: ${response.data.id}`);
@@ -157,6 +158,7 @@ async function updateFile(state, fileId, filePath) {
     const response = await client.files.update({
       fileId,
       media,
+      uploadType: 'resumable',
       fields: 'id, name',
     });
     console.log(`Updated File ID: ${response.data.id}`);
