@@ -528,15 +528,14 @@ export function insert(sObjectName, records) {
  * @property data - Array of result objects of the form <code>\{ done, totalSize, records \}</code>
  * @returns {Operation}
  */
-export function query(query, options = {}) {
+export function query(query, options) {
   return async state => {
-    const [resolvedQuery, resolvedOptions] = expandReferences(
-      state,
-      query,
-      options
-    );
+    const [
+      resolvedQuery,
+      resolvedOptions = { autoFetch: true, maxFetch: 10000 },
+    ] = expandReferences(state, query, options);
     console.log(`Executing query: ${resolvedQuery}`);
-    const { autoFetch = true, maxFetch = 10000 } = resolvedOptions;
+    const { autoFetch, maxFetch } = resolvedOptions;
 
     if (autoFetch) {
       console.log(
@@ -544,34 +543,17 @@ export function query(query, options = {}) {
       );
     }
 
-    let result = {};
-    const records = [];
-    await new Promise((resolve, reject) => {
-      result = connection
-        .query(resolvedQuery)
-        .on('record', record => {
-          records.push(record);
-        })
-        .on('end', () => {
-          console.log('total in database : ' + result.totalSize);
-          console.log('total fetched : ' + result.totalFetched);
-          resolve();
-        })
-        .on('error', err => {
-          const { message, errorCode } = err;
-          console.error(`Error ${errorCode}: ${message}`);
-          throwError('QUERY_ERROR', { message, errorCode });
-          reject();
-        })
-        .run(resolvedOptions);
-    });
+    const { records, totalSize, done } = await connection.query(
+      resolvedQuery,
+      resolvedOptions
+    );
+    const totalFetched = records.length;
 
-    const allResults = {
-      done: result.totalFetched === result.totalSize,
-      records,
-      totalSize: result.totalSize,
-      totalFetched: result.totalFetched,
-    };
+    if (records.length > 0) {
+      console.log('total in database : ' + totalSize);
+      console.log('total fetched : ' + totalFetched);
+    }
+    const allResults = { done, records, totalSize, totalFetched };
 
     return composeNextState(state, allResults);
   };
