@@ -87,172 +87,172 @@ describe('Adaptor', () => {
         .catch(done);
     });
   });
-
   describe('query', () => {
+    // Common test responses and mocks can be moved to the top
     const qsResponse = {
       done: true,
       totalSize: 1,
+      totalFetched: 1,
       records: [{ Name: 'OpenFn' }],
     };
-    it('should properly pass the query string', async () => {
-      let reqArgs;
-      const fakeConnection = {
-        query: args => {
-          reqArgs = args;
-          return Promise.resolve(qsResponse);
-        },
-      };
-      setMockConnection(fakeConnection);
-      const state = {};
-
-      query('select Name from Account')(state).then(state => {
-        expect(reqArgs).to.eql('select Name from Account');
-        expect(state.data).to.eql(qsResponse);
-      });
+    const connectionConfig = config => ({
+      query: (soql, options) => {
+        if (config.validateQuery) {
+          config.validateQuery(soql);
+        }
+        if (config.validateOptions) {
+          config.validateOptions(options);
+        }
+        if (config.error) {
+          return Promise.reject(config.error);
+        }
+        return {
+          done: config.done || false,
+          records: config.records || [],
+          totalSize: config.totalSize || 0,
+          totalFetched: config.totalFetched || 0,
+        };
+      },
     });
-    it('should properly pass the query string from state', async () => {
-      let reqArgs;
 
-      const fakeConnection = {
-        query: args => {
-          reqArgs = args;
-          return Promise.resolve(qsResponse);
+    beforeEach(() => {
+      setMockConnection(null);
+    });
+
+    it('should properly pass the query string', async () => {
+      const connection = connectionConfig({
+        done: true,
+        totalSize: 1,
+        totalFetched: 1,
+        records: [{ Name: 'OpenFn' }],
+        validateQuery: query => {
+          expect(query).to.eq('select Name from Account');
         },
-      };
-      setMockConnection(fakeConnection);
+      });
+
+      setMockConnection(connection);
+
       const state = {
         qs: 'select Name from Account',
       };
+      const result = await query(state => state.qs)(state);
+      expect(result.data).to.eql(qsResponse);
+    });
 
-      query(state => state.qs)(state).then(state => {
-        expect(reqArgs).to.eql('select Name from Account');
-        expect(state.data).to.eql(qsResponse);
+    it('should fetch 0 records', async () => {
+      const connection = connectionConfig({
+        done: true,
+        totalSize: 0,
+        totalFetched: 0,
+        records: [],
+      });
+      setMockConnection(connection);
+
+      const state = {};
+      const result = await query('select Name from Account')(state);
+
+      expect(result.data).to.eql({
+        done: true,
+        totalSize: 0,
+        totalFetched: 0,
+        records: [],
       });
     });
 
-    it('should fetch 0 records', done => {
-      let reqArgs;
-      const fakeConnection = {
-        query: args => {
-          reqArgs = args;
-          return Promise.resolve({
-            done: true,
-            totalSize: 0,
-            records: [],
-          });
-        },
-      };
-      setMockConnection(fakeConnection);
-      const state = {};
+    it('should fetch 1 record', async () => {
+      const connection = connectionConfig({
+        done: true,
+        totalSize: 1,
+        totalFetched: 1,
+        records: [{ Name: 'OpenFn' }],
+      });
+      setMockConnection(connection);
 
-      query('select Name from Account')(state)
-        .then(state => {
-          expect(state.data).to.eql({
-            done: true,
-            totalSize: 0,
-            records: [],
-          });
-        })
-        .then(done);
+      const state = {};
+      const result = await query('select Name from Account')(state);
+
+      expect(result.data).to.eql(qsResponse);
     });
 
-    it('should fetch 1 record', done => {
-      let reqArgs;
-      const fakeConnection = {
-        query: args => {
-          reqArgs = args;
-          return Promise.resolve(qsResponse);
-        },
-      };
-      setMockConnection(fakeConnection);
-      const state = {};
+    it('should fetch all pages if autoFetch is true', async () => {
+      const mockRecords = Array(10001)
+        .fill()
+        .map((_, i) => ({
+          Id: `00${i}`,
+          Name: `Test ${i}`,
+        }));
 
-      query('select Name from Account')(state)
-        .then(state => {
-          expect(reqArgs).to.eql('select Name from Account');
-          expect(state.data).to.eql(qsResponse);
-        })
-        .then(done);
+      const connection = connectionConfig({
+        done: true,
+        totalSize: mockRecords.length,
+        totalFetched: mockRecords.length,
+        records: mockRecords,
+        validateOptions: options => {
+          expect(options.autoFetch).to.eq(true);
+        },
+      });
+      setMockConnection(connection);
+
+      const state = {};
+      const result = await query('select Name from Account', {
+        autoFetch: true,
+      })(state);
+
+      expect(result.data.records.length).to.eq(10001);
+      expect(result.data.done).to.eq(true);
+      expect(result.data.totalSize).to.eq(10001);
+      expect(result.data.totalFetched).to.eq(10001);
     });
-    it('should fetch all page if autoFetch is true', done => {
-      let qsArgs;
-      let reqArgs;
-      const fakeConnection = {
-        query: args => {
-          qsArgs = args;
-          return Promise.resolve({
-            done: false,
-            totalSize: 5713,
-            nextRecordsUrl:
-              '/services/data/v47.0/query/0r8yy3Dlrs3Ol9EACO-2000',
-            records: [{ Name: 'Open' }],
-          });
-        },
-        request: args => {
-          reqArgs = args;
-          return Promise.resolve({
-            done: true,
-            totalSize: 5713,
-            records: [{ Name: 'Fn' }],
-          });
-        },
-      };
-      setMockConnection(fakeConnection);
-      const state = {};
 
-      query('select Name from Account', { autoFetch: true })(state)
-        .then(state => {
-          expect(qsArgs).to.eql('select Name from Account');
-          expect(reqArgs.url).to.eql(
-            '/services/data/v47.0/query/0r8yy3Dlrs3Ol9EACO-2000'
-          );
-          expect(state.data).to.eql({
-            done: true,
-            totalSize: 5713,
-            records: [{ Name: 'Open' }, { Name: 'Fn' }],
-          });
-        })
-        .then(done);
+    it('should not fetch another page if autofetch is false', async () => {
+      const mockRecords = Array(2000)
+        .fill()
+        .map((_, i) => ({
+          Id: `00${i}`,
+          Name: `Test ${i}`,
+        }));
+
+      const connection = connectionConfig({
+        totalSize: 5000,
+        totalFetched: 2000,
+        records: mockRecords,
+        validateOptions: options => {
+          expect(options.autoFetch).to.eq(false);
+        },
+      });
+      setMockConnection(connection);
+
+      const state = {};
+      const result = await query('SELECT Id FROM Account', {
+        autoFetch: false,
+      })(state);
+
+      expect(result.data.done).to.eq(false);
+      expect(result.data.records.length).to.eq(2000);
+      expect(result.data.totalSize).to.eq(5000);
+      expect(result.data.totalFetched).to.eq(2000);
     });
-    it('should not fetch another page if autofetch is false', done => {
-      let qsArgs;
-      let reqArgs;
-      const fakeConnection = {
-        query: args => {
-          qsArgs = args;
-          return Promise.resolve({
-            done: false,
-            totalSize: 5713,
-            nextRecordsUrl:
-              '/services/data/v47.0/query/0r8yy3Dlrs3Ol9EACO-2000',
-            records: [{ Name: 'Open' }],
-          });
-        },
-        request: args => {
-          reqArgs = args;
-          return Promise.resolve({
-            done: true,
-            totalSize: 5713,
-            records: [{ Name: 'Fn' }],
-          });
-        },
-      };
-      setMockConnection(fakeConnection);
-      const state = {};
 
-      query('select Name from Account')(state)
-        .then(state => {
-          expect(qsArgs).to.eql('select Name from Account');
-          expect(reqArgs).to.eql(undefined);
-          expect(state.data).to.eql({
-            done: false,
-            totalSize: 5713,
-            nextRecordsUrl:
-              '/services/data/v47.0/query/0r8yy3Dlrs3Ol9EACO-2000',
-            records: [{ Name: 'Open' }],
-          });
-        })
-        .then(done);
+    it('should handle query errors', async () => {
+      const connection = connectionConfig({
+        error: {
+          data: {
+            message: "unexpected token: 'invalid'",
+            errorCode: 'MALFORMED_QUERY',
+          },
+          errorCode: 'MALFORMED_QUERY',
+        },
+      });
+      setMockConnection(connection);
+
+      const state = {};
+      try {
+        await query('SELECT Invalid FROM Account')(state);
+        expect.fail('Should have thrown an error');
+      } catch (error) {
+        expect(error.data.message).to.contain("unexpected token: 'invalid'");
+        expect(error.errorCode).to.contain('MALFORMED_QUERY');
+      }
     });
   });
 });
