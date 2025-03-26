@@ -782,65 +782,6 @@ export function destroy(
   };
 }
 
-/**
- * Gets an attribute value by its uid
- * @public
- * @example
- * findAttributeValueById(state.tei, 'y1w2R6leVmh')
- * @function
- * @param {Object} trackedEntity - A tracked entity instance (TEI) object
- * @param {string} attributeUid - The uid to search for in the TEI's attributes
- * @returns {string}
- */
-export function findAttributeValueById(trackedEntity, attributeUid) {
-  return trackedEntity?.attributes?.find(a => a?.attribute == attributeUid)
-    ?.value;
-}
-
-/**
- * Gets an attribute value by its case-insensitive display name
- * @public
- * @example
- * findAttributeValue(state.data.trackedEntities[0], 'first name')
- * @function
- * @param {Object} trackedEntity - A tracked entity instance (TEI) object
- * @param {string} attributeDisplayName - The 'displayName' to search for in the TEI's attributes
- * @returns {string}
- */
-export function findAttributeValue(trackedEntity, attributeDisplayName) {
-  return trackedEntity?.attributes?.find(
-    a => a?.displayName.toLowerCase() == attributeDisplayName.toLowerCase()
-  )?.value;
-}
-
-/**
- * Converts an attribute ID and value into a DHIS2 attribute object
- * @public
- * @example
- * attr('w75KJ2mc4zz', 'Elias')
- * @function
- * @param {string} attribute - A tracked entity instance (TEI) attribute ID.
- * @param {string} value - The value for that attribute.
- * @returns {object}
- */
-export function attr(attribute, value) {
-  return { attribute, value };
-}
-
-/**
- * Converts a dataElement and value into a DHIS2 dataValue object
- * @public
- * @example
- * dv('f7n9E0hX8qk', 12)
- * @function
- * @param {string} dataElement - A data element ID.
- * @param {string} value - The value for that data element.
- * @returns {object}
- */
-export function dv(dataElement, value) {
-  return { dataElement, value };
-}
-
 function callNewTracker(
   type = 'update',
   configuration,

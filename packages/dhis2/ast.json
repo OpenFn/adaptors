@@ -384,7 +384,7 @@
           },
           {
             "title": "example",
-            "description": "get('trackedEntityInstances/qHVDKszQmdx/BqaEWTBG3RB/image', {\n  headers:{\n      Accept: 'image/*'\n  },\n  parseAs: 'text',\n  asBase64: true\n});",
+            "description": "get('trackedEntityInstances/qHVDKszQmdx/BqaEWTBG3RB/image', {\n  headers:{\n      Accept: 'image/*'\n  },\n  parseAs: 'base64',\n});",
             "caption": "Get an image from a trackedEntityInstance."
           }
         ]
@@ -489,7 +489,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.",
+        "description": "Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.\nThis function does not work with the absolute tracker path `api/tracker` but rather the new tracker paths and deprecated tracker endpoints.",
         "tags": [
           {
             "title": "public",
@@ -503,7 +503,7 @@
           },
           {
             "title": "param",
-            "description": "The type of a resource to `upsert`. E.g. `trackedEntities`",
+            "description": "The type of a resource to `upsert`. E.g. `trackedEntities`.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -772,218 +772,6 @@
             "title": "example",
             "description": "destroy('trackedEntities', 'LcRd6Nyaq7T');",
             "caption": "a tracked entity instance. See [Delete tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "findAttributeValueById",
-      "params": [
-        "trackedEntity",
-        "attributeUid"
-      ],
-      "docs": {
-        "description": "Gets an attribute value by its uid",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "findAttributeValueById(state.tei, 'y1w2R6leVmh')"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "A tracked entity instance (TEI) object",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "trackedEntity"
-          },
-          {
-            "title": "param",
-            "description": "The uid to search for in the TEI's attributes",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "attributeUid"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "findAttributeValue",
-      "params": [
-        "trackedEntity",
-        "attributeDisplayName"
-      ],
-      "docs": {
-        "description": "Gets an attribute value by its case-insensitive display name",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "findAttributeValue(state.data.trackedEntities[0], 'first name')"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "A tracked entity instance (TEI) object",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "trackedEntity"
-          },
-          {
-            "title": "param",
-            "description": "The 'displayName' to search for in the TEI's attributes",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "attributeDisplayName"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "attr",
-      "params": [
-        "attribute",
-        "value"
-      ],
-      "docs": {
-        "description": "Converts an attribute ID and value into a DHIS2 attribute object",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "attr('w75KJ2mc4zz', 'Elias')"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "A tracked entity instance (TEI) attribute ID.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "attribute"
-          },
-          {
-            "title": "param",
-            "description": "The value for that attribute.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "value"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "dv",
-      "params": [
-        "dataElement",
-        "value"
-      ],
-      "docs": {
-        "description": "Converts a dataElement and value into a DHIS2 dataValue object",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "dv('f7n9E0hX8qk', 12)"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "A data element ID.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "dataElement"
-          },
-          {
-            "title": "param",
-            "description": "The value for that data element.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "value"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            }
           }
         ]
       },
