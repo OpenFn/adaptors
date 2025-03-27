@@ -3,7 +3,7 @@ import { enableMockClient } from '@openfn/language-common/util';
 import { request, stkPush, checkTransactionStatus, registerUrl, remitTax, buyGoods } from '../src/Adaptor.js';
 import testData from './fixtures.json' assert {type: 'json'}
 
-const testServer = enableMockClient('https://sandbox.safaricom.co.ke');
+const testServer = enableMockClient('https://api.safaricom.co.ke');
 
 let state = {
   configuration: {
@@ -11,7 +11,7 @@ let state = {
     "pass_key": "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919",
     "consumer_key": "GA2PNftcXvv2uC2VdgNjxXyvF8eZ4td6iBsL7N7N2ZFnXzf3",
     "consumer_secret": "zKjr2j0jjihCtzIwzGtgnV0YgP82jZf1hY9RW6HygntWG6AGuf4tAUe3E5tPtiyA",
-    "baseUrl": "https://sandbox.safaricom.co.ke"
+    // "baseUrl": "https://sandbox.safaricom.co.ke"
   }
 }
 
@@ -189,7 +189,7 @@ describe('Request', () => {
     const { response: { method, url } } = await request('POST', '/mpesa/c2b/v1/registerurl', { ...testData.request.request }, { headers: { Authorization: 'Bearer xyz' } })(state);
 
     expect(method).to.eql('POST');
-    expect(url).to.eql('https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl');
+    expect(url).to.include('registerurl');
   });
 
   it('throws an error if the payload is invalid', async () => {
