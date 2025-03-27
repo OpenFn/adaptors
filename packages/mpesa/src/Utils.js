@@ -5,7 +5,7 @@ import {
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 
-
+let defaultBaseUrl = 'https://api.safaricom.co.ke';
 let access_token;
 
 export const prepareNextState = (state, response) => {
@@ -39,7 +39,7 @@ export const getTimestamp = () => {
 
 export const getAccessToken = async (configuration) => {
 
-  const { consumer_key, consumer_secret, baseUrl } = configuration;
+  const { consumer_key, consumer_secret, baseUrl = defaultBaseUrl } = configuration;
 
   const auth_header = makeBasicAuthHeader(consumer_key, consumer_secret);
 
@@ -60,7 +60,7 @@ export const request = async (state, method, path, options) => {
   
   const { headers = {} } = options;
   
-  const { baseUrl } = state.configuration;
+  const { baseUrl = defaultBaseUrl } = state.configuration;
 
   const errors = {
     404: 'Page not found',
