@@ -3,8 +3,7 @@ import sinon from 'sinon';
 import fs from 'fs';
 import { PassThrough } from 'stream';
 import { google } from 'googleapis';
-import { execute } from '../src';
-import { post, get, put, transfer } from '../src';
+import { execute, create, get, update } from '../src';
 
 describe('Google Drive Adaptor', () => {
   let sandbox;
@@ -15,86 +14,203 @@ describe('Google Drive Adaptor', () => {
     sandbox = sinon.createSandbox();
 
     // Mock OAuth2 authentication
-    sandbox.stub(google.auth, 'OAuth2').returns(function () {
-      this.credentials = { access_token: 'mockToken' };
-    });
+    const mockAuth = {
+      credentials: { access_token: 'mockToken' },
+    };
+    sandbox.stub(google.auth, 'OAuth2').returns(mockAuth);
 
-    // Mock Google Drive API and `.files` property
+    // Mock Google Drive API
     mockFiles = {
       create: sandbox.stub(),
       get: sandbox.stub(),
       update: sandbox.stub(),
     };
     mockDrive = { files: mockFiles };
-
-    // Stub google.drive() to return our mockDrive
     sandbox.stub(google, 'drive').returns(mockDrive);
+
+    // Mock fs methods
+    sandbox.stub(fs, 'createReadStream').returns(new PassThrough());
+    sandbox.stub(fs, 'createWriteStream').returns(new PassThrough());
   });
 
   afterEach(() => {
     sandbox.restore();
   });
 
-  describe('post (upload)', () => {
-    it('should upload a file successfully', async () => {
+  describe('Connection', () => {
+    it('should initialize client with access token', async () => {
       const state = { configuration: { accessToken: 'mockToken' } };
-      const filePath = 'test.txt';
-
-      sandbox.stub(fs, 'createReadStream').returns('mockStream');
-      mockFiles.create.resolves({ data: { id: '123', name: 'test.txt' } });
-
-      const result = await execute(post(filePath))(state);
-      expect(result.data.id).to.equal('123');
-      expect(result.data.name).to.equal('test.txt');
+      await execute()(state);
+      expect(google.auth.OAuth2.calledOnce).to.be.true;
+      expect(google.drive.calledOnceWithExactly({
+        version: 'v3',
+        auth: { credentials: { access_token: 'mockToken' } }
+      })).to.be.true;
     });
   });
 
-  describe('get (download)', () => {
-    it('should download a file successfully', async () => {
-      const state = { configuration: { accessToken: 'mockToken' } };
-      const fileId = '123';
-      const outputPath = 'test.txt';
+  describe('create()', () => {
+    const state = { configuration: { accessToken: 'mockToken' } };
 
-      // Use real PassThrough streams for proper event handling
-      const mockWriteStream = new PassThrough();
-      sandbox.stub(fs, 'createWriteStream').returns(mockWriteStream);
+    it('should upload file with resumable upload', async () => {
+      const mockResponse = {
+        data: {
+          id: 'file123',
+          name: 'test.txt',
+          webViewLink: 'https://drive.google.com/file/d/file123/view',
+          size: '1024',
+          mimeType: 'text/plain',
+          createdTime: '2023-01-01T00:00:00.000Z'
+        }
+      };
+      mockFiles.create.callsArgWith(1, null, mockResponse);
 
-      // Mock readable stream with sample data
-      const mockStream = new PassThrough();
-      mockStream.end('test data'); // End with sample data
+      const result = await execute(create({ filePath: 'test.txt' }))(state);
+      
+      expect(mockFiles.create.calledOnce).to.be.true;
+      const callArgs = mockFiles.create.firstCall.args[0];
+      expect(callArgs.uploadType).to.equal('resumable');
+      expect(callArgs.supportsAllDrives).to.be.true;
+      expect(callArgs.fields).to.include('size,mimeType,createdTime');
+      
+      expect(result.data).to.deep.equal(mockResponse.data);
+    });
 
-      mockFiles.get.resolves({ data: mockStream });
+    it('should handle folder specification', async () => {
+      const mockResponse = { data: {} };
+      mockFiles.create.callsArgWith(1, null, mockResponse);
 
-      const result = await execute(get(fileId, outputPath))(state);
-      expect(result.data.fileId).to.equal('123');
+      const params = { 
+        filePath: 'test.txt', 
+        folderId: 'folder123',
+        fileName: 'custom-name.txt'
+      };
+      await execute(create(params))(state);
+      
+      const callArgs = mockFiles.create.firstCall.args[0];
+      expect(callArgs.requestBody.parents).to.deep.equal(['folder123']);
+      expect(callArgs.requestBody.name).to.equal('custom-name.txt');
+    });
+
+    it('should handle API errors', async () => {
+      const error = new Error('API Error');
+      error.code = 403;
+      mockFiles.create.callsArgWith(1, error);
+
+      try {
+        await execute(create({ filePath: 'test.txt' }))(state);
+        expect.fail('Should have thrown error');
+      } catch (e) {
+        expect(e.message).to.equal('Permission denied for file creation');
+      }
+    });
+
+    it('should handle missing parent folder error', async () => {
+      const error = new Error('Not Found');
+      error.code = 404;
+      mockFiles.create.callsArgWith(1, error);
+
+      try {
+        await execute(create({ filePath: 'test.txt', folderId: 'missing' }))(state);
+        expect.fail('Should have thrown error');
+      } catch (e) {
+        expect(e.message).to.equal('Parent folder not found (ID: missing)');
+      }
     });
   });
 
-  describe('put (update)', () => {
-    it('should update a file successfully', async () => {
-      const state = { configuration: { accessToken: 'mockToken' } };
-      const fileId = '123';
-      const filePath = 'test.txt';
+  describe('get()', () => {
+    const state = { configuration: { accessToken: 'mockToken' } };
 
-      sandbox.stub(fs, 'createReadStream').returns('mockStream');
-      mockFiles.update.resolves({ data: { id: '123', name: 'updated.txt' } });
+    it('should download file successfully', async () => {
+      const mockResponse = {
+        data: new PassThrough()
+      };
+      mockResponse.data.end('file content');
+      mockFiles.get.callsArgWith(2, null, mockResponse);
 
-      const result = await execute(put(fileId, filePath))(state);
-      expect(result.data.id).to.equal('123');
-      expect(result.data.name).to.equal('updated.txt');
+      const result = await execute(get({ 
+        fileId: 'file123', 
+        outputPath: 'download.txt' 
+      }))(state);
+
+      expect(mockFiles.get.calledOnce).to.be.true;
+      expect(mockFiles.get.firstCall.args[0]).to.deep.equal({
+        fileId: 'file123',
+        alt: 'media'
+      });
+      expect(result.data).to.deep.equal({
+        fileId: 'file123',
+        outputPath: 'download.txt'
+      });
+    });
+
+    it('should handle download errors', async () => {
+      const error = new Error('Download failed');
+      mockFiles.get.callsArgWith(2, error);
+
+      try {
+        await execute(get({ fileId: 'file123', outputPath: 'download.txt' }))(state);
+        expect.fail('Should have thrown error');
+      } catch (e) {
+        expect(e.message).to.equal('Download failed');
+      }
     });
   });
 
-  describe('transfer', () => {
-    it('should transfer a file successfully', async () => {
-      const state = { configuration: { accessToken: 'mockToken' } };
-      const fileId = '123';
-      const targetUrl = 'https://example.com/upload';
+  describe('update()', () => {
+    const state = { configuration: { accessToken: 'mockToken' } };
 
-      mockFiles.get.resolves({ data: { pipe: sinon.spy() } });
+    it('should update file with resumable upload', async () => {
+      const mockResponse = {
+        data: {
+          id: 'file123',
+          name: 'updated.txt',
+          webViewLink: 'https://drive.google.com/file/d/file123/view',
+          size: '2048'
+        }
+      };
+      mockFiles.update.callsArgWith(1, null, mockResponse);
 
-      const result = await execute(transfer(fileId, targetUrl))(state);
-      expect(result).to.exist;
+      const result = await execute(update({ 
+        fileId: 'file123', 
+        filePath: 'updated.txt',
+        fileName: 'renamed.txt'
+      }))(state);
+      
+      expect(mockFiles.update.calledOnce).to.be.true;
+      const callArgs = mockFiles.update.firstCall.args[0];
+      expect(callArgs.uploadType).to.equal('resumable');
+      expect(callArgs.supportsAllDrives).to.be.true;
+      expect(callArgs.requestBody.name).to.equal('renamed.txt');
+      
+      expect(result.data).to.deep.equal(mockResponse.data);
+    });
+
+    it('should handle file not found error', async () => {
+      const error = new Error('Not Found');
+      error.code = 404;
+      mockFiles.update.callsArgWith(1, error);
+
+      try {
+        await execute(update({ fileId: 'missing', filePath: 'test.txt' }))(state);
+        expect.fail('Should have thrown error');
+      } catch (e) {
+        expect(e.message).to.equal('File not found (ID: missing)');
+      }
+    });
+
+    it('should handle permission errors', async () => {
+      const error = new Error('Forbidden');
+      error.code = 403;
+      mockFiles.update.callsArgWith(1, error);
+
+      try {
+        await execute(update({ fileId: 'restricted', filePath: 'test.txt' }))(state);
+        expect.fail('Should have thrown error');
+      } catch (e) {
+        expect(e.message).to.equal('Permission denied for file update');
+      }
     });
   });
 });

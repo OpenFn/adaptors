@@ -1,14 +1,24 @@
 import fs from 'fs';
-import { execute as commonExecute } from '@openfn/language-common';
-import { request as sendRequest } from '@openfn/language-http';
+import { logError } from './Utils';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
+
+import {
+  normalizeOauthConfig,
+  expandReferences,
+} from '@openfn/language-common/util';
+
 import { google } from 'googleapis';
 
 let client = undefined;
 
 /**
+ * @private
  * Creates a connection to Google Drive using OAuth2 authentication.
  * @param {Object} state - object containing the access token.
- * @returns {Object} Updated state with Google Drive client initialized.
+ * @returns {Object} state with Google Drive client initialized.
  */
 function createConnection(state) {
   const { accessToken } = state.configuration;
@@ -19,9 +29,10 @@ function createConnection(state) {
 }
 
 /**
+ * @private
  * Removes the Google Drive client connection.
  * @param {Object} state - object.
- * @returns {Object} Updated state with client reset.
+ * @returns {Object} state with client reset.
  */
 function removeConnection(state) {
   client = undefined;
@@ -50,175 +61,196 @@ export function execute(...operations) {
     return commonExecute(
       createConnection,
       ...operations,
-      removeConnection
+      removeConnection,
     )({
       ...initialState,
       ...state,
+      configuration: normalizeOauthConfig(state.configuration),
     });
   };
 }
 
 /**
- * Uploads a file to Google Drive using streaming.
- * @param {Object} state - OpenFn state object.
- * @param {string} filePath - Path to the file to be uploaded.
- * @param {string|null} [folderId=null] - Optional folder ID to upload the file into.
- * @returns {Promise<Object>} Updated state including the uploaded file details.
+ * Uploads a file to Google Drive with resumable upload support.
+ * @public
+ * @example
+ * create({
+ *   filePath: '/path/to/file.txt',
+ *   fileName: 'custom-name.txt', // optional
+ *   folderId: 'drive-folder-id' // optional
+ * })
+ * @param {Object} params - File upload parameters
+ * @param {string} params.filePath - Local path to the file to upload
+ * @param {string} [params.fileName] - Custom name for the uploaded file
+ * @param {string} [params.folderId] - ID of the parent folder
+ * @returns {Operation} An operation that uploads the file
  */
-async function uploadFile(state, filePath, folderId = null) {
-  const fileMetadata = {
-    name: filePath.split('/').pop(),
-    parents: folderId ? [folderId] : [],
-  };
+export function create(params) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+    const { filePath, fileName, folderId } = resolvedParams;
 
-  const media = {
-    mimeType: 'application/octet-stream',
-    body: fs.createReadStream(filePath),
-  };
+    const fileMetadata = {
+      name: fileName || filePath.split('/').pop(),
+      parents: folderId ? [folderId] : [],
+    };
 
-  try {
-    const response = await client.files.create({
-      requestBody: fileMetadata,
-      media,
-      uploadType: 'resumable',
-      fields: 'id, name',
-    });
-    console.log(`Uploaded File ID: ${response.data.id}`);
-    return { ...state, data: response.data };
-  } catch (err) {
-    console.error('Upload error:', err);
-    throw err;
-  }
-}
-
-/**
- * Downloads a file from Google Drive using streaming.
- * @param {Object} state - OpenFn state object.
- * @param {string} fileId - ID of the file to download.
- * @param {string} outputPath - Path to save the downloaded file.
- * @returns {Promise<Object>} Updated state with file details.
- */
-async function downloadFile(state, fileId, outputPath) {
-  const dest = fs.createWriteStream(outputPath);
-
-  try {
-    const response = await client.files.get(
-      { fileId, alt: 'media' },
-      { responseType: 'stream' }
-    );
+    const media = {
+      mimeType: 'application/octet-stream',
+      body: fs.createReadStream(filePath),
+    };
 
     return new Promise((resolve, reject) => {
-      response.data
-        .pipe(dest)
-        .on('finish', () => {
-          console.log('Download complete:', outputPath);
-          resolve({ ...state, data: { fileId, outputPath } });
-        })
-        .on('error', err => {
-          console.error('Download failed:', err);
-          reject(err);
-        });
+      client.files.create(
+        {
+          requestBody: fileMetadata,
+          media: media,
+          fields: 'id,name,webViewLink,size,mimeType,createdTime',
+          uploadType: 'resumable',
+          supportsAllDrives: true, // Important for shared drives
+        },
+        (err, response) => {
+          if (err) {
+            logError(err);
+            if (err.code === 404) {
+              reject(new Error(`Parent folder not found (ID: ${folderId})`));
+            } else if (err.code === 403) {
+              reject(new Error('Permission denied for file creation'));
+            } else {
+              reject(err);
+            }
+          } else {
+            console.log('ID:', response.data.id);
+            console.log('Name:', response.data.name);
+            console.log('URL:', response.data.webViewLink);
+            resolve(composeNextState(state, response.data));
+          }
+        },
+      );
     });
-  } catch (err) {
-    console.error('Download error:', err);
-    throw err;
-  }
-}
-
-/**
- * Transfers a file from Google Drive to another API endpoint via streaming.
- * @param {Object} state - OpenFn state object.
- * @param {string} fileId - ID of the file to transfer.
- * @param {string} targetUrl - The target API URL.
- * @returns {Promise<Object>} HTTP response from the target API.
- */
-async function transferFile(state, fileId, targetUrl) {
-  const response = await client.files.get(
-    { fileId, alt: 'media' },
-    { responseType: 'stream' }
-  );
-
-  return sendRequest('POST', targetUrl, { body: response.data });
-}
-
-/**
- * Updates an existing file in Google Drive with new content.
- * @param {Object} state - OpenFn state object.
- * @param {string} fileId - ID of the file to update.
- * @param {string} filePath - Path to the new file content.
- * @returns {Promise<Object>} Updated state including the updated file details.
- */
-async function updateFile(state, fileId, filePath) {
-  const media = {
-    mimeType: 'application/octet-stream',
-    body: fs.createReadStream(filePath),
   };
+}
 
-  try {
-    const response = await client.files.update({
-      fileId,
-      media,
-      uploadType: 'resumable',
-      fields: 'id, name',
+/**
+ * Downloads a file from Google Drive.
+ * @public
+ * @example
+ * get({
+ *   fileId: 'drive-file-id',
+ *   outputPath: '/path/to/save.txt'
+ * })
+ * @param {Object} params - File download parameters
+ * @param {string} params.fileId - ID of the file to download
+ * @param {string} params.outputPath - Local path to save the file
+ * @returns {Operation} An operation that downloads the file
+ */
+export function get(params) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+    const { fileId, outputPath } = resolvedParams;
+    const dest = fs.createWriteStream(outputPath);
+
+    return new Promise((resolve, reject) => {
+      client.files.get(
+        { fileId, alt: 'media' },
+        { responseType: 'stream' },
+        (err, response) => {
+          if (err) {
+            logError(err);
+            reject(err);
+            return;
+          }
+
+          response.data
+            .pipe(dest)
+            .on('finish', () => {
+              console.log(`Downloaded ${fileId} to ${outputPath}`);
+              resolve(composeNextState(state, { fileId, outputPath }));
+            })
+            .on('error', err => {
+              logError(err);
+              reject(err);
+            });
+        },
+      );
     });
-    console.log(`Updated File ID: ${response.data.id}`);
-    return { ...state, data: response.data };
-  } catch (err) {
-    console.error('Update error:', err);
-    throw err;
-  }
+  };
 }
 
 /**
- * Exports a function to update a file in Google Drive.
- * @param {string} fileId - ID of the file to update.
- * @param {string} filePath - Path to the new file content.
- * @returns {Function} Function to execute the file update.
+ * Updates an existing file in Google Drive with resumable upload support.
+ * @public
+ * @example
+ * update({
+ *   fileId: 'existing-file-id',
+ *   filePath: '/path/to/new-content.txt',
+ *   fileName: 'updated-name.txt' // optional
+ * })
+ * @param {Object} params - File update parameters
+ * @param {string} params.fileId - ID of the file to update
+ * @param {string} params.filePath - Local path to the new content
+ * @param {string} [params.fileName] - New name for the file
+ * @returns {Operation} An operation that updates the file
  */
-export function put(fileId, filePath) {
-  return state => updateFile(state, fileId, filePath);
-}
+export function update(params) {
+  return state => {
+    const [resolvedParams] = expandReferences(state, params);
+    const { fileId, filePath, fileName } = resolvedParams;
 
-/**
- * Exports a function to upload a file to Google Drive.
- * @param {string} filePath - Path to the file to be uploaded.
- * @param {string|null} [folderId=null] - Optional folder ID.
- * @returns {Function} Function to execute the file upload.
- */
-export function post(filePath, folderId = null) {
-  return state => uploadFile(state, filePath, folderId);
-}
+    const fileMetadata = {
+      name: fileName || filePath.split('/').pop(),
+    };
 
-/**
- * Exports a function to download a file from Google Drive.
- * @param {string} fileId - ID of the file to download.
- * @param {string} outputPath - Path to save the downloaded file.
- * @returns {Function} Function to execute the file download.
- */
-export function get(fileId, outputPath) {
-  return state => downloadFile(state, fileId, outputPath);
-}
+    const media = {
+      mimeType: 'application/octet-stream',
+      body: fs.createReadStream(filePath),
+    };
 
-/**
- * Exports a function to transfer a file from Google Drive to another API.
- * @param {string} fileId - ID of the file to transfer.
- * @param {string} targetUrl - The target API URL.
- * @returns {Function} Function to execute the file transfer.
- */
-export function transfer(fileId, targetUrl) {
-  return state => transferFile(state, fileId, targetUrl);
+    return new Promise((resolve, reject) => {
+      client.files.update(
+        {
+          fileId,
+          requestBody: fileMetadata,
+          media: media,
+          fields: 'id,name,webViewLink,size',
+          uploadType: 'resumable',
+          supportsAllDrives: true, // Important for shared drives
+        },
+        (err, response) => {
+          if (err) {
+            logError(err);
+            if (err.code === 404) {
+              reject(new Error(`File not found (ID: ${fileId})`));
+            } else if (err.code === 403) {
+              reject(new Error('Permission denied for file update'));
+            } else {
+              reject(err);
+            }
+          } else {
+            console.log('Successfully updated file:');
+            console.log('ID:', response.data.id);
+            console.log('Name:', response.data.name);
+            console.log('URL:', response.data.webViewLink);
+            resolve(composeNextState(state, response.data));
+          }
+        },
+      );
+    });
+  };
 }
-
 
 export {
+  alterState,
+  combine,
+  cursor,
   dataPath,
   dataValue,
-  dateFns,
-  cursor,
   each,
   field,
   fields,
   fn,
+  fnIf,
+  http,
   lastReferenceValue,
   merge,
   sourceValue,
