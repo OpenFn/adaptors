@@ -58,14 +58,17 @@ export const getAccessToken = async (configuration) => {
 
 
 export const request = async (state, method, path, options) => {
-  
-  const { headers = {} } = options;
-  
+
   const { baseUrl = defaultBaseUrl } = state.configuration;
 
   const errors = {
     404: 'Page not found',
   };
+
+  if (!access_token && (!options.headers?.Authorization)) {
+    access_token = await getAccessToken(state.configuration);
+  }
+
 
   let opts = {
     parseAs: 'json',
@@ -74,14 +77,12 @@ export const request = async (state, method, path, options) => {
     ...options,
     headers: {
       'content-type': 'application/json',
-      ...headers,
+      'Authorization': `Bearer ${access_token}`,
+      ...options.headers,
     },
   };
 
-  if (!access_token && (!headers.Authorization)) {
-    access_token = await getAccessToken(state.configuration);
-    opts = { ...opts, headers: { ...opts.headers, Authorization: `Bearer ${access_token}` } }
-  }
+
 
   const safePath = nodepath.join(path);
 
