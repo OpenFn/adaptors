@@ -13,6 +13,7 @@ import {
   getMessageResult,
   getContentIndicators,
   getMessageContent,
+  sendMessageWithAttachments,
   createConnection,
   removeConnection,
 } from './Utils';
@@ -153,6 +154,17 @@ export function getContentsFromMessages(options) {
     };
 
     return nextState;
+  };
+}
+
+export function sendMessage(message) {
+  return async state => {
+    const [resolvedMessage] = expandReferences(state, message);
+    const result = await sendMessageWithAttachments(resolvedMessage);
+
+    return {
+      ...composeNextState(state, result),
+    };
   };
 }
 
