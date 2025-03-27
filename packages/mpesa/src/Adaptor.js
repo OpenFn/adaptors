@@ -29,10 +29,10 @@ import * as util from './Utils';
  * @typedef {Object} STKPushObject
  * @public
  * @property {number} Amount - Amount charged.
- * @property {number} PartyA - The phone number sending money. Expected to be a valid Safaricom Number that is M-pesa registered in the format 2547XXXXXXXX
- * @property {number} PartyB - The organization that recerives the funds
+ * @property {number} PartyA - The phone number that receives the STK push prompt. Expected to be a valid Safaricom Number that is M-pesa registered in the format 2547XXXXXXXX
+ * @property {number} PartyB - The organization that receives the funds
  * @property {number} PhoneNumber - The mobile number to receive the STK pin prompt
- * @property {URL} CallBackURL - A valid secure URL that is used to receive notifications from M-Pesa API. It is the endpoint to which the results will be snt by M-Pesa API
+ * @property {URL} CallBackURL - A valid secure URL that is used to receive notifications from M-Pesa API. It is the endpoint to which the results will be sent by M-Pesa API
  * @property {string} AccountReference - Along with the business name, this value is also displayed to the customer in the STK pin prompt message. Maximum of 12 characters
  * @property {string} TransactionDesc - Any additional information/comment that can be sent along with the request from you system.
  */
