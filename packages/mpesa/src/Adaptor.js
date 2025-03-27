@@ -5,7 +5,7 @@ import * as util from './Utils';
  * State object
  * @typedef {Object} HttpState
  * @property data - the parsed response body
- * @property response - the response from the HTTP server, including headers, statusCode, body, etc
+ * @property response - the response from the DARAJA API server (excluding the body)
  * @property references - an array of all previous data objects used in the Job
  **/
 
