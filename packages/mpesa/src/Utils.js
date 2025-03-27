@@ -1,6 +1,7 @@
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
+  logResponse,
   makeBasicAuthHeader,
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
@@ -84,5 +85,7 @@ export const request = async (state, method, path, options) => {
 
   const safePath = nodepath.join(path);
 
-  return commonRequest(method, safePath, opts);
+  const response = await commonRequest(method, safePath, opts);
+  logResponse(response);
+  return response;
 };
