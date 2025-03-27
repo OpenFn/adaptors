@@ -37,8 +37,8 @@ import * as util from './Utils';
  * Initiate a STK pin prompt to a Safaricom mobile number.
  * @function
  * @public
- * @param {STKPushObject} data 
- * @param {RequestOptions} options 
+ * @param {STKPushObject} data - The object that will be attached to the POST request body
+ * @param {RequestOptions} options - Optional request object. Includes headers, error mappings and query params
  * @example <caption>Initiate STK Push</caption>
  * stkPush({
     "Amount": 1,
@@ -81,10 +81,10 @@ export function stkPush(data, options = {}) {
  * Check transaction status data object.
  * @typedef {Object} TransactionStatusObject
  * @public
- * @property {string} Initiator - The name of the initator initiating the request. 
+ * @property {string} Initiator - The name of the initiator initiating the request. 
  * @property {string} SecurityCredential - Encrypted credential of the user getting transaction status.
  * @property {string} TransactionID - Unique identifier to identify a transaction on Mpesa.
- * @property {number} PartyA - Organization/MSISDN receiveing the transaction.
+ * @property {number} PartyA - Organization/MSISDN receiving the transaction.
  * @property {number} IdentifierType - Type of organization receiving the transaction. Example: "4" Orgnaization shortcode.
  * @property {URL} ResultURL - The path that stores information of a transaction.
  * @property {URL} QueueTimeOutURL - The path that stores information of timeout transaction.
@@ -97,8 +97,8 @@ export function stkPush(data, options = {}) {
  * Check the status of the transaction
  * @function
  * @public
- * @param {TransactionStatusObject} data 
- * @param {RequestOptions} options 
+ * @param {TransactionStatusObject} data - The object that will be attached to the POST request body
+ * @param {RequestOptions} options - Optional request object. Includes headers, error mappings and query params
  * @example <caption>Check status of a transaction</caption>
  * checkTransactionStatus({
     "Initiator": "testapi",
@@ -152,8 +152,8 @@ export function checkTransactionStatus(data, options = {}) {
  * Register a URL that allows receiving payment notifications to your paybill.
  * @public
  * @function
- * @param {RegisterUrlObject} data 
- * @param {RequestOptions} options 
+ * @param {RegisterUrlObject} data  - The object that will be attached to the POST request body
+ * @param {RequestOptions} options  - Optional request object. Includes headers, error mappings and query params
  * @example <caption>Register a URL to receive payment notifications</caption>
  * registerUrl({
     "ShortCode": 600426,
@@ -197,8 +197,8 @@ export function registerUrl(data, options) {
  * Remit tax to the Kenya Revenue Authority (KRA).
  * @public
  * @function
- * @param {RemitTaxObject} data 
- * @param {RequestOptions} options 
+ * @param {RemitTaxObject} data  - The object that will be attached to the POST request body
+ * @param {RequestOptions} options - Optional request object. Includes headers, error mappings and query params
  * @example <caption>Pay tax to KRA</caption>
  * remitTax({
     "Initiator": "testapi",
@@ -250,8 +250,8 @@ export function remitTax(data, options = {}) {
  * Pay for goods and services directly from your business account to a till number, merchant store number or Merchant HO
  * @function
  * @public
- * @param {BuyGoodsObject} data 
- * @param {RequestOptions} options 
+ * @param {BuyGoodsObject} data - The object that will be attached to the POST request body
+ * @param {RequestOptions} options - Optional request object. Includes headers, error mappings and query params
  * @example <caption>Pay for goods</caption>
  * buyGoods({
     "Initiator": "testapi",
@@ -287,7 +287,7 @@ export function buyGoods(data, options = {}) {
 
 /**
  * Make a general HTTP request
- * @example <caption>Regsiter a URL to receive payment notifications</caption>
+ * @example <caption>Register a URL to receive payment notifications</caption>
  * request("POST", "/mpesa/c2b/v1/registerurl", 
  *  {
  *    "ShortCode": 600426,
