@@ -74,6 +74,8 @@ export function stkPush(data, options = {}) {
       TransactionType: 'CustomerPayBillOnline',
     });
 
+    console.log('Initiating STK Push request...');
+
     const response = await util.request(state, 'POST', '/mpesa/stkpush/v1/processrequest', { ...options, body: jsonBody })
     return util.prepareNextState(state, response)
   }
@@ -134,6 +136,8 @@ export function checkTransactionStatus(data, options = {}) {
       ...data
     });
 
+    console.log('Initiating check transaction request...');
+
     const response = await util.request(state, 'POST', '/mpesa/transactionstatus/v1/query', { ...options, body: jsonBody });
     return util.prepareNextState(state, response)
   }
@@ -171,6 +175,8 @@ export function registerUrl(data, options) {
     const jsonBody = JSON.stringify({
       ...data,
     });
+
+    console.log('Initiating register URL request...');
 
     const response = await util.request(state, 'POST', '/mpesa/c2b/v1/registerurl', { ...options, body: jsonBody });
     return util.prepareNextState(state, response)
@@ -222,6 +228,8 @@ export function remitTax(data, options = {}) {
       CommandID: 'PayTaxToKRA',
       ...data,
     });
+
+    console.log('Initiating remit tax request...');
 
     const response = await util.request(state, 'POST', '/mpesa/b2b/v1/remittax', { ...options, body: jsonBody });
     return util.prepareNextState(state, response)
@@ -275,6 +283,8 @@ export function buyGoods(data, options = {}) {
       ...data,
     });
 
+    console.log('Initiating buy goods request...');
+
     const response = await util.request(state, 'POST', '/mpesa/b2b/v1/paymentrequest', { ...options, body: jsonBody });
     return util.prepareNextState(state, response)
   }
@@ -303,6 +313,9 @@ export function request(method, path, body, options = {}) {
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
       expandReferences(state, method, path, body, options);
+
+
+    console.log('Initiating request...');
 
     const response = await util.request(
       state,
