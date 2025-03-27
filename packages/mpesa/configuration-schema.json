@@ -3,34 +3,37 @@
   "properties": {
     "baseUrl": {
       "title": "Base URL",
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "description": "The base URL (http://www.example.com)",
+      "description": "The base URL (https://api.safaricom.co.ke)",
       "format": "uri",
       "minLength": 1,
-      "examples": ["https://example.com"]
+      "examples": ["https://api.safaricom.co.ke"]
     },
-    "username": {
-      "title": "Username",
+    "short_code": {
+      "title": "Short code",
       "type": "string",
-      "description": "Username",
-      "examples": ["test@openfn.org"]
+      "description": "This is the organization's shortcode used to identify YOUR organization. Usually a 5 to 6-digit account number",
+      "examples": ["654321"]
     },
-    "password": {
-      "title": "Password",
+    "pass_key": {
+      "title": "Pass key",
       "type": "string",
-      "description": "Password",
-      "writeOnly": true,
-      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+      "description": "Your app's pass key sent to you via email once you go live",
+      "examples": ["bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"]
+    },
+    "consumer_key": {
+      "title": "Consumer key",
+      "type": "string",
+      "description": "Your app's consumer key sent to you via email once you go live",
+      "examples": ["GA2PNftcXvv2uC2VdgNjxXyvF8eZ4td6iBsL7N7N2ZFnXzf3"]
+    },
+    "consumer_secret": {
+      "title": "Consumer key",
+      "type": "string",
+      "description": "Your app's consumer secret sent to you via email once you go live",
+      "examples": ["zKjr2j0jjihCtzIwzGtgnV0YgP82jZf1hY9RW6HygntWG6AGuf4tAUe3E5tPtiyA"]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["password", "username"]
+  "required": ["short_code", "pass_key", "consumer_key", "consumer_secret"]
 }

@@ -29,6 +29,15 @@
             "name": "data"
           },
           {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
             "title": "example",
             "description": "stkPush({\n\"Amount\": 1,\n\"PartyA\": 254708374149,\n\"PartyB\": 174379,\n\"PhoneNumber\": 254708374149,\n\"CallBackURL\": \"https://mydomain.com/path\",\n\"AccountReference\": \"CompanyXLTD\",\n\"TransactionDesc\": \"Payment of X\"\n});",
             "caption": "Initiate STK Push"
@@ -47,7 +56,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "checkTransactionStatus",
@@ -78,6 +87,15 @@
             "name": "data"
           },
           {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
             "title": "example",
             "description": "checkTransactionStatus({\n\"Initiator\": \"testapi\",\n\"SecurityCredential\": \"ctHDk+dN14A22B5GyQQvISSTY3K1tVnCTuQGoG7PsTCadzTkl5wz44Rhpkb0BZDvfRA==\",\n\"TransactionID\": \"OEI2AK4Q16\",\n\"PartyA\": 600998,\n\"IdentifierType\": 4,\n\"ResultURL\": \"https://mydomain.com/TransactionStatus/result/\",\n\"QueueTimeOutURL\": \"https://mydomain.com/TransactionStatus/queue/\",\n\"Remarks\": \"fdfdfdfdf\",\n\"Occassion\": \"null\",\n});",
             "caption": "Check status of a transaction"
@@ -96,7 +114,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "registerUrl",
@@ -127,6 +145,15 @@
             "name": "data"
           },
           {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
             "title": "example",
             "description": "registerUrl({\n\"ShortCode\": 600426,\n\"ResponseType\": \"Completed\",\n\"ConfirmationURL\": \"https://mydomain.com/confirmation\",\n\"ValidationURL\": \"https://mydomain.com/validation\"\n});",
             "caption": "Register a URL to receive payment notifications"
@@ -145,7 +172,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "remitTax",
@@ -176,6 +203,15 @@
             "name": "data"
           },
           {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
             "title": "example",
             "description": "remitTax({\n\"Initiator\": \"testapi\",\n\"SecurityCredential\": \"Uq1qluCjSYfMF3XEvlpfuatnWwWerwq42fB+mMd8nsKdAVO04DGHhG/s3xO3g7POki9B8i7cSoEkBux4bQrlDLDWJhaTrt1TdbE+ZQ==\",\n\"Amount\": 1,\n\"PartyA\": 600995,\n\"AccountReference\": 353353,\n\"Remarks\": \"ok\",\n\"QueueTimeOutURL\": \"https://mydomain.com/b2b/queue/\",\n\"ResultURL\": \"https://mydomain.com/b2b/result/\"\n})",
             "caption": "Pay tax to KRA"
@@ -194,7 +230,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "buyGoods",
@@ -225,6 +261,15 @@
             "name": "data"
           },
           {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
             "title": "example",
             "description": "buyGoods({\n\"Initiator\": \"testapi\",\n\"SecurityCredential\": \"sbMXpuhMX5LzieNiDrx9TgscfaBxxvie0WlBDdGli4MWu4s5gbhYVlBy+T89xHQdoYwcG202KNp403ln2dLFnytPqw==\",\n\"Amount\": 1,\n\"PartyA\": 600999,\n\"PartyB\": 600000,\n\"AccountReference\": 353353,\n\"Requester\": 254708374149,\n\"Remarks\": \"ok\",\n\"QueueTimeOutURL\": \"https://mydomain.com/b2b/queue/\",\n\"ResultURL\": \"https://mydomain.com/b2b/result/\"\n});",
             "caption": "Pay for goods"
@@ -243,7 +288,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "request",
