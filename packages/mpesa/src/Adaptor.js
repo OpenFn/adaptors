@@ -306,7 +306,7 @@ export function request(method, path, body, options = {}) {
       expandReferences(state, method, path, body, options);
 
 
-    console.log('Initiating request to ...');
+    console.log(`Initiating ${method} request to: ${resolvedBody}`);
 
     const response = await util.request(
       state,
