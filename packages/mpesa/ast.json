@@ -21,7 +21,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "The object that will be attached to the POST request body",
             "type": {
               "type": "NameExpression",
               "name": "STKPushObject"
@@ -30,7 +30,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "Optional request object. Includes headers, error mappings and query params",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
@@ -79,7 +79,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "The object that will be attached to the POST request body",
             "type": {
               "type": "NameExpression",
               "name": "TransactionStatusObject"
@@ -88,7 +88,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "Optional request object. Includes headers, error mappings and query params",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
@@ -137,7 +137,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "The object that will be attached to the POST request body",
             "type": {
               "type": "NameExpression",
               "name": "RegisterUrlObject"
@@ -146,7 +146,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "Optional request object. Includes headers, error mappings and query params",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
@@ -195,7 +195,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "The object that will be attached to the POST request body",
             "type": {
               "type": "NameExpression",
               "name": "RemitTaxObject"
@@ -204,7 +204,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "Optional request object. Includes headers, error mappings and query params",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
@@ -253,7 +253,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "The object that will be attached to the POST request body",
             "type": {
               "type": "NameExpression",
               "name": "BuyGoodsObject"
@@ -262,7 +262,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "Optional request object. Includes headers, error mappings and query params",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
@@ -304,7 +304,7 @@
           {
             "title": "example",
             "description": "request(\"POST\", \"/mpesa/c2b/v1/registerurl\", \n {\n   \"ShortCode\": 600426,\n   \"ResponseType\": \"Completed\",\n   \"ConfirmationURL\": \"https://mydomain.com/confirmation\",\n   \"ValidationURL\": \"https://mydomain.com/validation\"\n });",
-            "caption": "Regsiter a URL to receive payment notifications"
+            "caption": "Register a URL to receive payment notifications"
           },
           {
             "title": "function",

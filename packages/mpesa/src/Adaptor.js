@@ -61,17 +61,17 @@ export function stkPush(data, options = {}) {
 
     const password = short_code + pass_key + timestamp;
 
-    const jsonBody = JSON.stringify({
+    const body = {
       ...data,
       BusinessShortCode: short_code,
       Password: Buffer.from(password).toString('base64'),
       Timestamp: timestamp,
       TransactionType: 'CustomerPayBillOnline',
-    });
+    };
 
     console.log('Initiating STK Push request...');
 
-    const response = await util.request(state, 'POST', '/mpesa/stkpush/v1/processrequest', { ...options, body: jsonBody })
+    const response = await util.request(state, 'POST', '/mpesa/stkpush/v1/processrequest', { ...options, body })
     return util.prepareNextState(state, response)
   }
 }
@@ -123,17 +123,17 @@ export function checkTransactionStatus(data, options = {}) {
 
     const password = short_code + pass_key + timestamp;
 
-    const jsonBody = JSON.stringify({
+    const body = {
       BusinessShortCode: short_code,
       Password: Buffer.from(password).toString('base64'),
       Timestamp: timestamp,
       CommandID: 'TransactionStatusQuery',
       ...data
-    });
+    };
 
     console.log('Initiating check transaction request...');
 
-    const response = await util.request(state, 'POST', '/mpesa/transactionstatus/v1/query', { ...options, body: jsonBody });
+    const response = await util.request(state, 'POST', '/mpesa/transactionstatus/v1/query', { ...options, body });
     return util.prepareNextState(state, response)
   }
 }
@@ -167,13 +167,9 @@ export function checkTransactionStatus(data, options = {}) {
 export function registerUrl(data, options) {
   return async state => {
 
-    const jsonBody = JSON.stringify({
-      ...data,
-    });
-
     console.log('Initiating register URL request...');
 
-    const response = await util.request(state, 'POST', '/mpesa/c2b/v1/registerurl', { ...options, body: jsonBody });
+    const response = await util.request(state, 'POST', '/mpesa/c2b/v1/registerurl', { ...options, body: { ...data } });
     return util.prepareNextState(state, response)
   }
 }
@@ -216,17 +212,17 @@ export function registerUrl(data, options) {
 export function remitTax(data, options = {}) {
   return async state => {
 
-    const jsonBody = JSON.stringify({
+    const body = {
       SenderIdentifierType: '4',
       RecieverIdentifierType: '4',
       PartyB: 572572,
       CommandID: 'PayTaxToKRA',
       ...data,
-    });
+    }
 
     console.log('Initiating remit tax request...');
 
-    const response = await util.request(state, 'POST', '/mpesa/b2b/v1/remittax', { ...options, body: jsonBody });
+    const response = await util.request(state, 'POST', '/mpesa/b2b/v1/remittax', { ...options, body });
     return util.prepareNextState(state, response)
   }
 }
@@ -271,16 +267,16 @@ export function remitTax(data, options = {}) {
 export function buyGoods(data, options = {}) {
   return async state => {
 
-    const jsonBody = JSON.stringify({
+    const body = {
       CommandID: 'BusinessBuyGoods',
       SenderIdentifierType: '4',
       RecieverIdentifierType: '4',
       ...data,
-    });
+    }
 
     console.log('Initiating buy goods request...');
 
-    const response = await util.request(state, 'POST', '/mpesa/b2b/v1/paymentrequest', { ...options, body: jsonBody });
+    const response = await util.request(state, 'POST', '/mpesa/b2b/v1/paymentrequest', { ...options, body });
     return util.prepareNextState(state, response)
   }
 }
@@ -310,7 +306,7 @@ export function request(method, path, body, options = {}) {
       expandReferences(state, method, path, body, options);
 
 
-    console.log('Initiating request...');
+    console.log('Initiating request to ...');
 
     const response = await util.request(
       state,
