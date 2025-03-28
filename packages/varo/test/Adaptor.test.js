@@ -3,6 +3,8 @@ import fs from 'node:fs/promises';
 import { expect } from 'chai';
 import { parseFridgeTagToEms, parseFridgeTag } from '../src/FridgeTagUtils';
 import { parseVaroEmsToEms } from '../src/VaroEmsUtils';
+import { mapEmsProperties } from '../src/Utils';
+import { describe, it } from 'node:test';
 
 describe('parseFridgeTagToEms', () => {
   it('converts raw fridgetag data into ems data', async () => {
@@ -52,6 +54,35 @@ describe('parseVaroEmsToEms', () => {
     expect(firstEmsRecord.TVC).to.eql(firstDataRecord.TVC);
     expect(firstEmsRecord.ABST).to.eql('20241115T094554Z');
     expect(ems.LAT).to.eql(metadata.location.used.latitude);
+  });
+});
+
+describe('mapEmsProperties', () => {
+  const root = { LSER: 'one', EMOD: null };
+  const records = [{ TAMB: false, EERR: null }];
+
+  const result = mapEmsProperties(root, records, null, 'FAKE_TEST');
+  const record = result?.records?.[0];
+
+  it('includes expected root properties', () => {
+    expect(result.LSER).to.eql('one');
+    expect(result).to.not.have.property('EMOD'); // explicitly null, not required
+  });
+
+  it('includes expected record properties', () => {
+    expect(record).to.have.property('TAMB');
+    expect(record.TAMB).to.eql(false);
+    expect(record).to.have.property('FAKE_TEST'); // required field
+  });
+
+  it('excludes unexpected or null record properties', () => {
+    expect(record).to.not.have.property('EERR'); // explicitly null, not required
+    expect(record).to.not.have.property('ABST'); // not present in input
+  });
+
+  it('does not return null or empty record', () => {
+    expect(record).to.not.be.null;
+    expect(Object.keys(record)).to.have.length.above(0);
   });
 });
 

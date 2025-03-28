@@ -1,7 +1,7 @@
 import { composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import { parseMetadata } from './Utils';
+import { parseMetadata, mapEmsProperties } from './Utils';
 import { parseVaroEmsToEms } from './VaroEmsUtils';
 import { parseFridgeTag, parseFridgeTagToEms } from './FridgeTagUtils';
 
