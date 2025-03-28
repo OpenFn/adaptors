@@ -1,0 +1,103 @@
+{
+    "stkPush": {
+        "request": {
+            "Amount": 1,
+            "PartyA": 254708374149,
+            "PartyB": 174379,
+            "PhoneNumber": 254708374149,
+            "CallBackURL": "https://mydomain.com/path",
+            "AccountReference": "CompanyXLTD",
+            "TransactionDesc": "Payment of X"
+        },
+        "response": {
+            "MerchantRequestID": "8131-4f68-ab7a-5e68879d780e102231",
+            "CheckoutRequestID": "ws_CO_27032025083424885708374149",
+            "ResponseCode": "0",
+            "ResponseDescription": "Success. Request accepted for processing",
+            "CustomerMessage": "Success. Request accepted for processing"
+        }
+    },
+    "checkTransactionStatus": {
+        "request": {
+            "Initiator": "testapi",
+            "SecurityCredential": "hpSUl8pV1mN15YNONUEu0ZUK60NC12fGvpMEaU7xIuhw/MqnTOeQ28xCG/GTul6F6iUrzMjCnE6AOQVs25wapGIsv6auMg+mdlnFdamx+p9dblDtzvr1PGdsDGP3uFEdE+pm5cjhixY+LWMX3yU/fplZyftqbrYo3NIpN/+QVj7St99eEg8aEDXsctHDk+dN14A2w+tDppZcQaDQLlyjJlyV2koJn59rO4ugi9C8de3x2fkE2P5cZaQHXDqrbgpkLa+XXOR+irne3LH264YKOJuabKpIxFN2B5GyQQvISSTY3K1tVnCTuQGoG7PsTCadzTkl5wz44Rhpkb0BZDvfRA==",
+            "TransactionID": "OEI2AK4Q16",
+            "PartyA": 600998,
+            "IdentifierType": 4,
+            "ResultURL": "https://mydomain.com/TransactionStatus/result/",
+            "QueueTimeOutURL": "https://mydomain.com/TransactionStatus/queue/",
+            "Remarks": "fdfdfdfdf",
+            "Occassion": "null"
+        },
+        "response": {
+            "OriginatorConversationID": "b54f-471d-93d9-f7f3bf3f7c0e3675400",
+            "ConversationID": "AG_20250327_201079fe2f745aaf03f4",
+            "ResponseCode": "0",
+            "ResponseDescription": "Accept the service request successfully."
+        }
+    },
+    "registerURL": {
+        "request": {
+            "ShortCode": 600426,
+            "ResponseType": "Completed",
+            "ConfirmationURL": "https://mydomain.com/confirmation",
+            "ValidationURL": "https://mydomain.com/validation"
+        },
+        "response": {
+            "OriginatorCoversationID": "6543-425e-a177-2e84b1462ecd2485086",
+            "ResponseCode": "00000000",
+            "ResponseDescription": "Success"
+        }
+    },
+    "remitTax": {
+        "request": {
+            "Initiator": "testapi",
+            "SecurityCredential": "kjx/E5eUFxDCP/qkaHJHigrKdYP1LchXSSGOoH70NwS/lejFkBqNtzhNE17rINllDa74tQN+pmCoS206G9KaKkSN5U7FLcFfmniN/zJ2F71k2A7X+7GU88ACHU5her7IolfnIwLc7PLdZJfsPxlewvbQuNV24KUpwD0CqBFL6nizdoECanR8DO/lW76mV8dUjKuoeW90POVTirxOw7zfOV38TZBPP4xFT3heMRWgZYcu4SO5Uq1qluCjSYfMF3XEvlpfuatnWwWerwq42fB+mMd8nsKdAVO04DGHhG/s3xO3g7POki9B8i7cSoEkBux4bQrlDLDWJhaTrt1TdbE+ZQ==",
+            "Amount": 1,
+            "PartyA": 600995,
+            "AccountReference": 353353,
+            "Remarks": "ok",
+            "QueueTimeOutURL": "https://mydomain.com/b2b/queue/",
+            "ResultURL": "https://mydomain.com/b2b/result/"
+        },
+        "response": {
+            "OriginatorConversationID": "b3ac-4f86-9167-882bec989b5126791",
+            "ConversationID": "AG_20250327_2010569ef589703b5eff",
+            "ResponseCode": "0",
+            "ResponseDescription": "Accept the service request successfully."
+        }
+    },
+    "buyGoods": {
+        "request": {
+            "Initiator": "testapi",
+            "SecurityCredential": "O3GKFpGS18y7S3NxMei527suW4abdxWdJ/0TCzN8cfCERzuE5uKCfZviK2125KWBg/XI0thcub4pT8BXVe/nu1AAT4LE1Ah1CLuuDBsmN2dWtrFtivz9Y/jEWbjzFTlxmWgHsFvfuEadV1BkDfgFxZYmFwo84ItDrnNd+Xu4t6Z4HEeNRRWVQpE5VD95zWfkLEZ8wYJ4hhPkBnfHedYLSVdreUrp2Z3Xt59aN8/MBvb51b6tQAUoY7LzSZzKsbMXpuhMX5LzieNiDrx9TgscfaBxxvie0WlBDdGli4MWu4s5gbhYVlBy+T89xHQdoYwcG202KNp403ln2dLFnytPqw==",
+            "Amount": 1,
+            "PartyA": 600999,
+            "PartyB": 600000,
+            "AccountReference": 353353,
+            "Requester": 254708374149,
+            "Remarks": "ok",
+            "QueueTimeOutURL": "https://mydomain.com/b2b/queue/",
+            "ResultURL": "https://mydomain.com/b2b/result/"
+        },
+        "response": {
+            "OriginatorConversationID": "8131-4f68-ab7a-5e68879d780e103214",
+            "ConversationID": "AG_20250327_20102c5d74cfaa56b887",
+            "ResponseCode": "0",
+            "ResponseDescription": "Accept the service request successfully."
+        }
+    },
+    "request": {
+        "request": {
+            "ShortCode": 600426,
+            "ResponseType": "Completed",
+            "ConfirmationURL": "https://mydomain.com/confirmation",
+            "ValidationURL": "https://mydomain.com/validation"
+        },
+        "response": {
+            "OriginatorCoversationID": "6543-425e-a177-2e84b1462ecd2485507",
+            "ResponseCode": "00000000",
+            "ResponseDescription": "Success"
+        }
+    }
+}
