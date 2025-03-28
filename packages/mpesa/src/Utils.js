@@ -86,7 +86,5 @@ export const request = async (state, method, path, options) => {
 
   const safePath = nodepath.join(path);
 
-  const response = await commonRequest(method, safePath, opts);
-  logResponse(response);
-  return response;
+  return commonRequest(method, safePath, opts).then(logResponse);
 };
