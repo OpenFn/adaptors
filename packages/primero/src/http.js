@@ -1,8 +1,5 @@
-import {
-  expandReferences,
-} from '@openfn/language-common/util';
+import { expandReferences } from '@openfn/language-common/util';
 import { request, prepareNextState } from './Utils';
-
 
 /**
  * State object
@@ -33,12 +30,14 @@ import { request, prepareNextState } from './Utils';
  */
 export function get(path, options = {}) {
   return async state => {
-
-    const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
+    const [resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      path,
+      options
+    );
 
     const response = await request(state, 'GET', resolvedPath, resolvedOptions);
-    
-    console.log('✓', response.body.data.length, `${resolvedPath} fetched.`);
+
     return prepareNextState(state, response);
   };
 }
@@ -61,17 +60,18 @@ export function get(path, options = {}) {
  */
 export function post(path, data, options = {}) {
   return async state => {
-
-    const [resolvedPath, resolvedOptions, resolvedData] = expandReferences(state, path, options, data);
+    const [resolvedPath, resolvedOptions, resolvedData] = expandReferences(
+      state,
+      path,
+      options,
+      data
+    );
 
     const response = await request(state, 'POST', resolvedPath, {
-        ...resolvedOptions,
-        body: resolvedData
+      ...resolvedOptions,
+      body: resolvedData,
     });
-        
-    console.log('✓', `${resolvedPath} created.`);
     return prepareNextState(state, response);
-
   };
 }
 
@@ -93,17 +93,18 @@ export function post(path, data, options = {}) {
  */
 export function patch(path, data, options = {}) {
   return async state => {
-
-    const [resolvedPath, resolvedOptions, resolvedData] = expandReferences(state, path, options, data);
+    const [resolvedPath, resolvedOptions, resolvedData] = expandReferences(
+      state,
+      path,
+      options,
+      data
+    );
 
     const response = await request(state, 'PATCH', resolvedPath, {
-        ...resolvedOptions,
-        body: resolvedData
-    });    
-    
-    console.log('✓', `${resolvedPath} updated.`);
-    return prepareNextState(state, response);
+      ...resolvedOptions,
+      body: resolvedData,
+    });
 
+    return prepareNextState(state, response);
   };
 }
-
