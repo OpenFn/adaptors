@@ -99,9 +99,9 @@ describe('Integration tests', () => {
     }).timeout(5000);
 
     it('should return maximum of 10000 records by default', async () => {
-      const { data } = await execute(query('SELECT Id, Name FROM Account'))(
-        state
-      );
+      const { data } = await execute(
+        query('SELECT Id, Name FROM Account', { autoFetch: true })
+      )(state);
       expect(data.done).to.eq(true);
       expect(data.totalSize).to.greaterThan(2000);
       expect(data.totalSize).to.lessThanOrEqual(10000);
