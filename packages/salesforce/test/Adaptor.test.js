@@ -88,7 +88,6 @@ describe('Adaptor', () => {
     });
   });
   describe('query', () => {
-    // Common test responses and mocks can be moved to the top
     const qsResponse = {
       done: true,
       totalSize: 1,
