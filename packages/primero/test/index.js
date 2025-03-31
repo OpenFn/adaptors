@@ -1,10 +1,7 @@
 import Adaptor from '../src';
-import { enableMockClient } from '@openfn/language-common/util';
 import pkg from 'chai';
 const { expect } = pkg;
 import nock from 'nock';
-
-
 
 const { execute, getCases, alterState } = Adaptor;
 
@@ -91,5 +88,3 @@ describe.skip('The getCases() function', () => {
     });
   });
 });
-
-
