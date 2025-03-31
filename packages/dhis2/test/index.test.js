@@ -1,14 +1,5 @@
 import chai from 'chai';
-import {
-  execute,
-  create,
-  update,
-  get,
-  upsert,
-  findAttributeValue,
-  findAttributeValueById,
-  patch,
-} from '../src/Adaptor';
+import { execute, create, update, get, upsert, patch } from '../src/Adaptor';
 import { dataValue } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import {
@@ -16,6 +7,8 @@ import {
   ensureArray,
   shouldUseNewTracker,
 } from '../src/Utils';
+
+import * as util from '../src/util';
 
 const { expect } = chai;
 
@@ -749,7 +742,7 @@ describe('findAttributeValueById', () => {
       ],
     };
 
-    const theValue = findAttributeValueById(tei, 'Rslz2y06aBf');
+    const theValue = util.findAttributeValueById(tei, 'Rslz2y06aBf');
     expect(theValue).to.eql('McTesterson');
   });
 });
@@ -771,7 +764,7 @@ describe('findAttributeValue', () => {
       ],
     };
 
-    const theValue = findAttributeValue(tei, 'Surname');
+    const theValue = util.findAttributeValue(tei, 'Surname');
     expect(theValue).to.eql('McTesterson');
   });
 });
