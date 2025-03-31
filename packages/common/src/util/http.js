@@ -249,6 +249,10 @@ async function readResponseBody(response, parseAs) {
       return undefined;
     }
 
+    if (response.statusCode === 204) {
+      return '';
+    }
+
     switch (parseAs) {
       case 'json':
         return await response.body.json();
