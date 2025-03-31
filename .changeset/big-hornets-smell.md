@@ -2,7 +2,8 @@
 '@openfn/language-primero': minor
 ---
 
-- Add http generic helpers with `GET`, `POST`, and `PATCH`.
+- Added a new http namespace, containing HTTP helpers for `get()`, `post()` and `patch()`.
+- These functions will allow the users to make any requests with the `POST`, `PATCH`, and `GET` methods to `primero`.
 - With these new updates, you can now do this:
 
 ```
