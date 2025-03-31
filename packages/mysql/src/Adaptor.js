@@ -2,18 +2,12 @@ import {
   execute as commonExecute,
   expandReferences,
 } from '@openfn/language-common';
-import { resolve as resolveUrl } from 'url';
 import mysql from 'mysql';
 import squel from 'squel';
 
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for mysql.
- * @example
- * execute(
- *   create('foo'),
- *   delete('bar')
- * )(state)
  * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
@@ -62,12 +56,8 @@ function cleanupState(state) {
 
 /**
  * Insert a record
- * @example
- * execute(
- *   insert('table', fields(
- *      field('name', dataValue('name'))
- *   ))
- * )(state)
+ * @example <caption>Insert a record into the `users` table</caption>
+ * insert("users", { name: (state) => state.data.name });
  * @function
  * @public
  * @param {string} table - The target table
@@ -123,12 +113,8 @@ export function insert(table, fields) {
 
 /**
  * Insert or Update a record if matched
- * @example
- * execute(
- *   upsert('table', fields(
- *      field('name', dataValue('name'))
- *   ))
- * )(state)
+ * @example <caption>Upsert a record</caption>
+ * upsert("table", { name: (state) => state.data.name });
  * @function
  * @public
  * @param {string} table - The target table
@@ -200,7 +186,7 @@ export function upsert(table, fields) {
 /**
  * Insert or update multiple records using ON DUPLICATE KEY
  * @public
- * @example
+ * @example <caption>Upsert multiple records</caption>
  * upsertMany(
  *   'users', // the DB table
  *   [
@@ -257,10 +243,8 @@ export function upsertMany(table, data) {
 
 /**
  * Execute a SQL statement
- * @example
- * execute(
- *   query({ sql: 'select * from users;' })
- * )(state)
+ * @example <caption>Execute a SQL statement</caption>
+ * query({ sql: 'select * from users;' })
  * @function
  * @public
  * @param {object} options - Payload data for the message
@@ -299,10 +283,8 @@ export function query(options) {
 
 /**
  * Execute a SQL statement
- * @example
- * execute(
- *   sqlString(state => "select * from items;")
- * )(state)
+ * @example <caption>Execute a SQL statement</caption>
+ * sqlString(state => "select * from items;")
  * @function
  * @public
  * @param {String} queryString - A query string (or function which takes state and returns a string)
@@ -315,18 +297,20 @@ export function sqlString(queryString) {
 }
 
 export {
-  field,
-  fields,
-  sourceValue,
-  alterState,
   fn,
   fnIf,
-  arrayToString,
   each,
-  combine,
+  http,
   merge,
+  field,
+  fields,
+  cursor,
+  dateFns,
+  combine,
   dataPath,
   dataValue,
+  alterState,
+  sourceValue,
+  arrayToString,
   lastReferenceValue,
-  http,
 } from '@openfn/language-common';
