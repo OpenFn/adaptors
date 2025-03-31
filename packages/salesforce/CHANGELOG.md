@@ -4,50 +4,40 @@
 
 ### Major Changes
 
-- 8ce9783: ## Breaking Change
+- 8ce97838: Add `http` function in salesforce (#1070)
+- 1fbfdc18: Update salesforce to use `connection` client (#1063)
+- 38de07ed: update jsforce to v3 (#1060)
 
-  Previously, `http.get()`, `http.post()`, etc. could be used to make HTTP
-  requests to any external system. These functions have been removed and
-  replaced with Salesforce-only HTTP operations.
+### Migration Guide
 
-  ### What Changed?
+#### Removed general-purpose HTTP functions
 
-  - Removed general-purpose HTTP functions (`http.get()`, `http.post()`, and
-    `http.request()`)
-  - HTTP operations are now restricted to Salesforce API endpoints only
+Previously, `http.get()`, `http.post()`, etc. could be used to make HTTP
+requests to any external system. These functions have been removed and replaced
+with Salesforce API endpoints only.
 
-  ### Required Changes
+##### Before:
 
-  #### Before:
+This used to work for any external API
 
-  ```js
-  // This used to work for any external API
-  http.get('https://external-api.com/data');
-  http.post('https://another-service.com/endpoint', data);
-  ```
+```js
+http.get('https://external-api.com/data');
+http.post('https://another-service.com/endpoint', data);
+```
 
-  #### After
+##### Now:
 
-  ```js
-  // Only Salesforce API operations are supported
-  http.get('Account', { query: { start: '2025-03-03' } });
-  http.post('Contact', { Name: 'test' });
-  ```
+Only Salesforce API operations are supported
 
-  #### Migration Steps
+```js
+http.get('Account', { query: { start: '2025-03-03' } });
+http.post('Contact', { Name: 'test' });
+```
 
-  1. For Salesforce operations: Continue using `http.get()`, `http.post()`, etc.
+##### For non-Salesforce HTTP requests:
 
-  2. For non-Salesforce HTTP requests:
-
-     - Move these operations to a different adaptor (like
-       `@openfn/language-http`)
-     - Or use `@openfn/language-common` for generic HTTP operations
-
-### Patch Changes
-
-- 38de07e: - Update jsforce library to v3 nodejs build
-- 1fbfdc1: replace `state.connection` with a global `connection` client
+- Move these operations to a different adaptor (like `@openfn/language-http`)
+- Or use `@openfn/language-common` for generic HTTP operations
 
 ## 5.0.5
 
