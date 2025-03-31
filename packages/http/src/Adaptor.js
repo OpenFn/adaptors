@@ -51,7 +51,6 @@ export function execute(...operations) {
  * @example <caption>Make a GET request</caption>
  * request('GET', '/patient', {
  *   query: { foo: 'bar', a: 1 },
- *   headers: { 'content-type': 'application/json' },
  * });
  * @example <caption>Make a POST request with a body</caption>
  * request('POST', '/todos', {
@@ -60,7 +59,6 @@ export function execute(...operations) {
  *     "title": "delectus aut autem",
  *     "completed": false
  *   },
- *   headers: { 'content-type': 'application/json' },
  * });
  * @function
  * @param {string} method - The HTTP method to use.
@@ -79,7 +77,6 @@ export function request(method, path, options) {
  * @example <caption>GET request with query parameters and custom headers</caption>
  * get('/patient', {
  *   query: { foo: 'bar', a: 1 },
- *   headers: { 'content-type': 'application/json' },
  * });
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
