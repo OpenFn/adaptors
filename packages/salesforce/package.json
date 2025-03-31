@@ -35,7 +35,7 @@
   "dependencies": {
     "@openfn/language-common": "workspace:*",
     "any-ascii": "^0.3.2",
-    "jsforce": "^1.11.1",
+    "@jsforce/jsforce-node": "^3.6.6",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
