@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import crypto from 'node:crypto';
-import { execute, create, update, upsert, get } from '../dist/index.js';
+import { execute, create, update, upsert } from '../dist/index.js';
+import { get } from '../src/http';
 
 const getRandomProgramPayload = () => {
   const name = crypto.randomBytes(16).toString('hex');
@@ -12,7 +13,7 @@ const getRandomProgramPayload = () => {
 const configuration = {
   username: 'admin',
   password: 'district',
-  hostUrl: 'https://play.im.dhis2.org/stable-2-40-7'
+  hostUrl: 'https://play.im.dhis2.org/stable-2-40-7',
 };
 
 describe('Integration tests', () => {
@@ -253,10 +254,12 @@ describe('Integration tests', () => {
     it('should get dataValueSets matching the query specified', async () => {
       const finalState = await execute(
         get('dataValueSets', {
-       query:{   dataSet: 'pBOMPrpg1QX',
-        orgUnit: 'sx4lYrYvpJ2',
-        period: '201401',
-        fields: '*',}
+          query: {
+            dataSet: 'pBOMPrpg1QX',
+            orgUnit: 'sx4lYrYvpJ2',
+            period: '201401',
+            fields: '*',
+          },
         })
       )(state);
 
@@ -266,11 +269,11 @@ describe('Integration tests', () => {
     it('should get a single TEI based on multiple filters', async () => {
       const finalState = await execute(
         get('tracker/trackedEntities', {
-        query:{
-          program: 'fDd25txQckK',
-          orgUnit: 'DiszpKrYNg8',
-          filter: ['w75KJ2mc4zz:Eq:Elanor'],
-        }
+          query: {
+            program: 'fDd25txQckK',
+            orgUnit: 'DiszpKrYNg8',
+            filter: ['w75KJ2mc4zz:Eq:Elanor'],
+          },
         })
       )(state);
 
@@ -278,11 +281,11 @@ describe('Integration tests', () => {
 
       const finalState2 = await execute(
         get('trackedEntityInstances', {
-      query:{
-        program: 'fDd25txQckK',
-        orgUnit: 'DiszpKrYNg8',
-        filter: ['w75KJ2mc4zz:Eq:Elanor', 'zDhUuAYrxNC:Eq:NotJackson'],
-      }
+          query: {
+            program: 'fDd25txQckK',
+            orgUnit: 'DiszpKrYNg8',
+            filter: ['w75KJ2mc4zz:Eq:Elanor', 'zDhUuAYrxNC:Eq:NotJackson'],
+          },
         })
       )(state);
 
@@ -292,19 +295,17 @@ describe('Integration tests', () => {
     it('should get a no TEIs if non match the filters', async () => {
       const finalState = await execute(
         get('trackedEntityInstances', {
-       query:{
-        program: 'IpHINAT79UW',
-        orgUnit: 'DiszpKrYNg8',
-        filter: [
-          'w75KJ2mc4zz:Eq:Tim',
-          'flGbXLXCrEo:Eq:124-not-a-real-id', // case ID
-          'zDhUuAYrxNC:Eq:Thompson',
-        ],
-       }
+          query: {
+            program: 'IpHINAT79UW',
+            orgUnit: 'DiszpKrYNg8',
+            filter: [
+              'w75KJ2mc4zz:Eq:Tim',
+              'flGbXLXCrEo:Eq:124-not-a-real-id', // case ID
+              'zDhUuAYrxNC:Eq:Thompson',
+            ],
+          },
         })
       )(state);
-    
-      
 
       expect(finalState.data.trackedEntityInstances.length).to.eq(0);
     });

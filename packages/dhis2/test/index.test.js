@@ -6,7 +6,6 @@ import {
   upsert,
   findAttributeValue,
   findAttributeValueById,
-  patch,
 } from '../src/Adaptor';
 import { get, post, request, patch } from '../src/http';
 import { dataValue } from '@openfn/language-common';
@@ -346,11 +345,7 @@ describe('post', () => {
 
 describe('request', () => {
   const state = {
-    configuration: {
-      username: 'admin',
-      password: 'district',
-      hostUrl: 'https://play.dhis2.org/2.36.4',
-    },
+    configuration,
     data: {
       program: 'program1',
       orgUnit: 'org50',
@@ -362,18 +357,13 @@ describe('request', () => {
 
   it('should create a tracker resource', async () => {
     testServer
-      .post('/api/tracker?importStrategy=CREATE', {
-        orgUnit: 'TSyzvBiovKh',
-        trackedEntityType: 'nEenWmSyUEp',
-        attributes: [
-          {
-            attribute: 'w75KJ2mc4zz',
-            value: 'Qassime',
-          },
-        ],
+      .intercept({
+        path: getPath('tracker'),
+        method: 'POST',
+        query: {
+          importStrategy: 'CREATE',
+        },
       })
-      .times(2)
-      .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
       .reply(200, {
         httpStatus: 'OK',
         message: 'the response',
@@ -391,7 +381,7 @@ describe('request', () => {
             },
           ],
         },
-        params: {
+        query: {
           importStrategy: 'CREATE',
         },
       })
@@ -404,10 +394,15 @@ describe('request', () => {
   });
 
   it('should get a trackedEntity', async () => {
-    testServer.get('/api/tracker/trackedEntities/F8yKM85NbxW').reply(200, {
-      httpStatus: 'OK',
-      message: 'the response',
-    });
+    testServer
+      .intercept({
+        path: getPath('tracker/trackedEntities/F8yKM85NbxW'),
+        method: 'GET',
+      })
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'the response',
+      });
 
     const finalState = await execute(
       request('GET', 'tracker/trackedEntities/F8yKM85NbxW')

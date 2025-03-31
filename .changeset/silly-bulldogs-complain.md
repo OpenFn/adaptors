@@ -2,8 +2,8 @@
 '@openfn/language-dhis2': major
 ---
 
-- Implement a namespaced `http` for all generic functions.
-- Add a generic request function in the `http` file.
+- Added a new http namespace, containing HTTP helpers for `get()`, `post()` and `patch()`.
+- Added a `request()` function in the `http` file.
 - Remove all callbacks
 
 ### Migration Change

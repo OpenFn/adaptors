@@ -38,14 +38,14 @@ export function selectId(resourceType) {
   }
 }
 
-export function handleResponse(result, state, callback) {
+export function handleResponse(result, state) {
   const { body, ...responseWithoutBody } = result;
 
   const nextState = {
     ...composeNextState(state, body),
     response: responseWithoutBody,
   };
-  return callback(nextState);
+  return nextState;
 }
 
 export function prettyJson(data) {
