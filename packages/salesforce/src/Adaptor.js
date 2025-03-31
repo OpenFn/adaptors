@@ -543,19 +543,13 @@ export function query(query, options) {
       );
     }
 
-    const { records, totalSize, done } = await connection.query(
-      resolvedQuery,
-      resolvedOptions
-    );
-    const totalFetched = records.length;
+    const result = await connection.query(resolvedQuery, resolvedOptions);
+    const totalFetched = result.records.length;
 
-    if (records.length > 0) {
-      console.log('total in database : ' + totalSize);
-      console.log('total fetched : ' + totalFetched);
-    }
-    const allResults = { done, records, totalSize, totalFetched };
+    console.log('Fetched : ' + totalFetched);
+    console.log('Total : ' + result.totalSize);
 
-    return composeNextState(state, allResults);
+    return composeNextState(state, { ...result, totalFetched });
   };
 }
 
