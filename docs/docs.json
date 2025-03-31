@@ -42259,7 +42259,7 @@
     "level": 0
   }
 ],
-{"name":"primero","adaptor":"@openfn/language-primero","version":"3.0.10","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#createcase\\\">createCase(params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#createreferrals\\\">createReferrals(params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getcases\\\">getCases(query, options, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getforms\\\">getForms(query, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getlocations\\\">getLocations(query, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getlookups\\\">getLookups(query, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getreferrals\\\">getReferrals(params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#updatecase\\\">updateCase(id, params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#updatereferral\\\">updateReferral(params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#upsertcase\\\">upsertCase(params, callback)</a></dt>\\n</dl>\\n\\n\\n## Functions\\n### createCase\\n\\n<p><code>createCase(params, callback) ⇒ Operation</code></p>\\n\\nCreate a new case in Primero\\n\\nUse this function to create a new case in Primero based on a set of Data.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | an object with some case data. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Create a new case in Primero based on a set of Data\\n```js\\ncreateCase({\\n  data: {\\n    age: 16,\\n    sex: \\\"female\\\",\\n    name: \\\"Edwine Edgemont\\\",\\n  },\\n});\\n```\\n\\n* * *\\n\\n### createReferrals\\n\\n<p><code>createReferrals(params, callback) ⇒ Operation</code></p>\\n\\nCreate referrals in Primero\\n\\nUse this function to bulk refer to one or multiple cases from Primero to a single user\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | an object with referral data. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Create referrals for multiple cases in Primero\\n```js\\ncreateReferrals({\\n  data: {\\n    ids: [\\n      \\\"749e9c6e-60db-45ec-8f5a-69da7c223a79\\\",\\n      \\\"dcea6052-07d9-4cfa-9abf-9a36987cdd25\\\",\\n    ],\\n    transitioned_to: \\\"primero_cp\\\",\\n    notes: \\\"This is a bulk referral\\\",\\n  },\\n});\\n```\\n\\n* * *\\n\\n### getCases\\n\\n<p><code>getCases(query, options, callback) ⇒ Operation</code></p>\\n\\nUse this function to get cases from Primero based on a set of query parameters.\\nNote that in many implementations, the `remote` attribute should be set to `true` to ensure that only cases marked for remote access will be retrieved.\\nSet `case_id` on the query object to fetch a specific case.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| query | <code>object</code> | Query parameters to send to primero, which will be built into URL parameters. See [Primero Docs](https://github.com/primeroIMS/primero/blob/master/doc/api/cases/get.md) for a list of valid parameters. |\\n| options | <code>object</code> | (Optional) Additional options |\\n| options.withReferrals | <code>boolean</code> | Set to true to include referrals with each case. This will generate an extra request for each case and may take some time to process. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Fetch all cases\\n```js\\ngetCases();\\n```\\n**Example:** Fetch all cases which match query criteria\\n```js\\ngetCases({\\n  remote: true,\\n  sex: \\\"male\\\",\\n  age: \\\"10..15\\\",\\n  protection_concerns :\\\"unaccompanied,separated\\\",\\n});\\n```\\n**Example:** Fetch a specific case by id\\n```js\\ngetCases({\\n  case_id: \\\"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\\\",\\n});\\n```\\n**Example:** Get all remote cases and their referrals\\n```js\\ngetCases(\\n { remote: true },\\n { withReferrals: true }\\n);\\n```\\n\\n* * *\\n\\n### getForms\\n\\n<p><code>getForms(query, callback) ⇒ Operation</code></p>\\n\\nGet forms from Primero\\n\\nUse this function to get forms from Primero that are accessible to this user based on a set of query parameters.\\nThe user can filter the form list by record type and module.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| query | <code>object</code> | an object with a query param at minimum |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Get the list of all forms\\n```js\\ngetForms();\\n```\\n**Example:** Get the list of all forms for a specific module\\n```js\\ngetForms({\\n  module_id: \\\"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\\\",\\n});\\n```\\n\\n* * *\\n\\n### getLocations\\n\\n<p><code>getLocations(query, callback) ⇒ Operation</code></p>\\n\\nGet locations from Primero\\n\\nUse this function to get a paginated list of all locations that are accessible to this user from Primero.\\nNote: You can specify a `per` value to fetch records per page(Defaults to 20).\\nAlso you can specify `page` value to fetch pagination (Defaults to 1).\\nAnother parameter is `hierarchy: true` (Defaults to false)\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| query | <code>object</code> | an object with a query param at minimum |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Get loocations from Primero with query parameters\\n```js\\ngetLocations({\\n  page: 1,\\n  per: 20\\n})\\n```\\n\\n* * *\\n\\n### getLookups\\n\\n<p><code>getLookups(query, callback) ⇒ Operation</code></p>\\n\\nGet lookups from Primero\\n\\nUse this function to get a paginated list of all lookups that are accessible to this user from Primero.\\nNote: You can specify a `per` value to fetch records per page(Defaults to 20).\\nAlso you can specify `page` value to fetch pagination (Defaults to 1)\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| query | <code>object</code> | an object with a query param at minimum |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Get lookups from Primero with query parameters\\n```js\\ngetLookups({\\n  per: 10000,\\n  page: 5\\n});\\n```\\n\\n* * *\\n\\n### getReferrals\\n\\n<p><code>getReferrals(params, callback) ⇒ Operation</code></p>\\n\\nGet referrals for a specific case in Primero\\n\\nUse this function to get the list of referrals of one case from Primero.\\nThe search can be done using either `record id` or `case id`.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | an object with an externalId field to select the attribute to use for matching on case and an externalId value for that case. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Get referrals for a case in Primero by record id\\n```js\\ngetReferrals({\\n  externalId: \\\"record_id\\\",\\n  id: \\\"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\\\",\\n});\\n```\\n**Example:** Get referrals for a case in Primero by case id\\n```js\\n getReferrals({\\n  id: \\\"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\\\",\\n});\\n```\\n\\n* * *\\n\\n### updateCase\\n\\n<p><code>updateCase(id, params, callback) ⇒ Operation</code></p>\\n\\nUpdate an existing case in Primero\\n\\nUse this function to update an existing case from Primero.\\nIn this implementation, the function uses a case ID to check for the case to update,\\nThen merge the values submitted in this call into an existing case.\\nFields not specified in this request will not be modified.\\nFor nested subform fields, the subform arrays will be recursively merged,\\nkeeping both the existing values and appending the new\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| id | <code>string</code> | A case ID to use for the update. |\\n| params | <code>object</code> | an object with some case data. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Update case for a specific case id\\n```js\\nupdateCase(\\\"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\\\", {\\n  data: {\\n    age: 16,\\n    sex: \\\"female\\\",\\n    name: \\\"Fiona Edgemont\\\",\\n  },\\n});\\n```\\n\\n* * *\\n\\n### updateReferral\\n\\n<p><code>updateReferral(params, callback) ⇒ Operation</code></p>\\n\\nUpdate a single referral for a specific case in Primero\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | an object with an caseExternalId value to use, the id and the referral id to update. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Update referral by record id\\n```js\\nupdateReferral({\\n  caseExternalId: \\\"record_id\\\",\\n  id: \\\"749e9c6e-60db-45ec-8f5a-69da7c223a79\\\",\\n  caseId: \\\"dcea6052-07d9-4cfa-9abf-9a36987cdd25\\\",\\n  data: (state) => state.data,\\n});\\n```\\n\\n* * *\\n\\n### upsertCase\\n\\n<p><code>upsertCase(params, callback) ⇒ Operation</code></p>\\n\\nUpsert case to Primero\\n\\nUse this function to update an existing case from Primero or to create it otherwise.\\nIn this implementation, we first fetch the list of cases,\\nthen we check if the case exist before choosing the right operation to do.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | an object with an externalIds and some case data. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Upsert case for a specific case id\\n```js\\nupsertCase({\\n  externalIds: [\\\"case_id\\\"],\\n  data: state => ({\\n    age: 20,\\n    sex: \\\"male\\\",\\n    name: \\\"Alex\\\",\\n    status: \\\"open\\\",\\n    case_id: \\\"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\\\",\\n  }),\\n});\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-primero\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with UNICEF's\\nPrimero API.\\n\\n**See Update Docs Site: https://docs.openfn.org/adaptors/packages/primero-docs**\\n\\n## Primero API Versions\\n\\n### Adaptor for Primero v2.0\\n\\nThis documentation outlines the functions available for Primero `v2.0` in the\\nmain branch. The API documentation is available at:\\nhttps://github.com/primeroIMS/primero/tree/development_v2/app/controllers/api\\n\\n### Adaptor for Primero v1.0 still available on the `v1` branch.\\n\\n`v1.0.7` of this adaptor was built for the Primero `v1.1` API:\\nhttps://github.com/OpenFn/language-primero/blob/v1/README.md\\n\\n[Primero API v1.1 Documentation](https://docs.google.com/document/d/1jpaT2_UBBnc3PxPYlLMBEzNUkyfuxRZiksywG5MKM0Q/edit)\\n\\n#### Primero Authentication Strategies\\n\\nThe Primero team is considering a shift to Microsoft Azure Active Directory B2C\\nfor auth. We can likely accommodate this with a similar pattern as has been used\\nin our Microsoft Dynamics, Github, or Google Sheets adaptors, but we'll need to\\nawait final doucmentation for Primero's `v2` API before making changes.\\n\\n[Azure Active Directory B2C](https://docs.microsoft.com/en-us/azure/active-directory-b2c/)\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-primero\\n\\n## 3.0.10\\n\\n### Patch Changes\\n\\n- Updated dependencies [23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 3.0.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [b3d7f59]\\n- Updated dependencies [2d709ff]\\n- Updated dependencies [41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 3.0.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 3.0.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [a47d8d5]\\n- Updated dependencies [9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 3.0.6\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 3.0.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 3.0.4\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus [33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 3.0.3\\n\\n### Patch Changes\\n\\n- 8d866e4: Update tough-cookie dependency\\n\\n## 3.0.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 3.0.1\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 3.0.0\\n\\n### Major Changes\\n\\n- Export new common http helpers (http namespace)\\n\\n## 2.12.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 2.12.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [4c08444]\\n- Updated dependencies [73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 2.12.2\\n\\n### Patch Changes\\n\\n- 3ad9122: - Improve `getCases()` withReferrals docs\\n  - Add logs when fetching case referrals\\n\\n## 2.12.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 2.12.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 2.11.14\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 2.11.13\\n\\n### Patch Changes\\n\\n- Updated dependencies [12f02ed5]\\n  - @openfn/language-common@1.13.4\\n\\n## 2.11.12\\n\\n### Patch Changes\\n\\n- Updated dependencies [88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 2.11.11\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 2.11.10\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.1\\n\\n## 2.11.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 2.11.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [c19efbe]\\n  - @openfn/language-common@1.11.1\\n\\n## 2.11.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [85c35b8]\\n  - @openfn/language-common@1.11.0\\n\\n## 2.11.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [df09270]\\n  - @openfn/language-common@1.10.3\\n\\n## 2.11.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [26a303e]\\n  - @openfn/language-common@1.10.2\\n\\n## 2.11.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [8c32eb3]\\n  - @openfn/language-common@1.10.1\\n\\n## 2.11.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [aad9549]\\n  - @openfn/language-common@1.10.0\\n\\n## 2.11.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [111807f]\\n  - @openfn/language-common@1.9.0\\n\\n## 2.11.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 2.11.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 2.10.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [929bca6]\\n  - @openfn/language-common@1.7.7\\n\\n## 2.10.5\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies [2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 2.10.4\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 2.10.3\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*_ @module Adaptor _/\\n- 059c956: added examples in docstring\\n\\n## 2.10.2\\n\\n### Patch Changes\\n\\n- f2a91a4: Update package exports\\n- Updated dependencies [f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\\n## 2.10.1\\n\\n### Patch Changes\\n\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- ecf5d30: remove sinon since it was not being used\\n- Updated dependencies [8566b26]\\n- Updated dependencies [b3d45ff]\\n- Updated dependencies [b5eb665]\\n- Updated dependencies [ecf5d30]\\n  - @openfn/language-common@1.7.4\\n\\n## 2.10.0\\n\\n### Minor Changes\\n\\n- 33742bf: Modify `composeNextState` so that `getCases` can pass it a third\\n  argument: the metadata from Primero's response.\\n\\n  `getCases` will now not only return an array of `cases` in `state.data`, but\\n  metadata related to pagination in `state.metadata`.\\n\\n### Patch Changes\\n\\n- 2014694: remove travis url in readme\\n- bb764db: Conditionally check for 'withReferrals' in case no options are\\n  provided\\\"\\n\\n## 2.9.2\\n\\n### Patch Changes\\n\\n- e04aa28: Rename credential-schema to configuration-schema, update descriptions\\n\\n## 2.9.1\\n\\n### Patch Changes\\n\\n- d4ac748: Skipped failing test until we have a new strat (it's working)\\n\\n## 2.9.0\\n\\n### Minor Changes\\n\\n- b37a4ad: add language primero into monorepo\\n\\n### Patch Changes\\n\\n- adb97a0: Fixed issue where upsertCase always took state.data for main params\\n\"","functions":["createCase","createReferrals","getCases","getForms","getLocations","getLookups","getReferrals","updateCase","updateReferral","upsertCase"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"url":{"title":"URL","type":"string","description":"The Primero host url","format":"uri","minLength":1,"examples":["https://primero.org/some-org"]},"user":{"title":"User","type":"string","description":"The username","minLength":1,"examples":["admin"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"minLength":1,"examples":["@super(!)Superpass"]},"basicAuth":{"title":"Use Basic Auth","type":"boolean","examples":[true]}},"type":"object","additionalProperties":true,"required":["url"]}},
+{"name":"primero","adaptor":"@openfn/language-primero","version":"3.1.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#createcase\\\">createCase(params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#createreferrals\\\">createReferrals(params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getcases\\\">getCases(query, options, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getforms\\\">getForms(query, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getlocations\\\">getLocations(query, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getlookups\\\">getLookups(query, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getreferrals\\\">getReferrals(params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#updatecase\\\">updateCase(id, params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#updatereferral\\\">updateReferral(params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#upsertcase\\\">upsertCase(params, callback)</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#http_get\\\">http.get(path, [options])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_patch\\\">http.patch(path, data, [options])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_post\\\">http.post(path, data, [options])</a>\\n</dt>\\n</dl>\\n\\n\\n## Functions\\n### createCase\\n\\n<p><code>createCase(params, callback) ⇒ Operation</code></p>\\n\\nCreate a new case in Primero\\n\\nUse this function to create a new case in Primero based on a set of Data.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | an object with some case data. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Create a new case in Primero based on a set of Data\\n```js\\ncreateCase({\\n  data: {\\n    age: 16,\\n    sex: \\\"female\\\",\\n    name: \\\"Edwine Edgemont\\\",\\n  },\\n});\\n```\\n\\n* * *\\n\\n### createReferrals\\n\\n<p><code>createReferrals(params, callback) ⇒ Operation</code></p>\\n\\nCreate referrals in Primero\\n\\nUse this function to bulk refer to one or multiple cases from Primero to a single user\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | an object with referral data. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Create referrals for multiple cases in Primero\\n```js\\ncreateReferrals({\\n  data: {\\n    ids: [\\n      \\\"749e9c6e-60db-45ec-8f5a-69da7c223a79\\\",\\n      \\\"dcea6052-07d9-4cfa-9abf-9a36987cdd25\\\",\\n    ],\\n    transitioned_to: \\\"primero_cp\\\",\\n    notes: \\\"This is a bulk referral\\\",\\n  },\\n});\\n```\\n\\n* * *\\n\\n### getCases\\n\\n<p><code>getCases(query, options, callback) ⇒ Operation</code></p>\\n\\nUse this function to get cases from Primero based on a set of query parameters.\\nNote that in many implementations, the `remote` attribute should be set to `true` to ensure that only cases marked for remote access will be retrieved.\\nSet `case_id` on the query object to fetch a specific case.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| query | <code>object</code> | Query parameters to send to primero, which will be built into URL parameters. See [Primero Docs](https://github.com/primeroIMS/primero/blob/master/doc/api/cases/get.md) for a list of valid parameters. |\\n| options | <code>object</code> | (Optional) Additional options |\\n| options.withReferrals | <code>boolean</code> | Set to true to include referrals with each case. This will generate an extra request for each case and may take some time to process. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Fetch all cases\\n```js\\ngetCases();\\n```\\n**Example:** Fetch all cases which match query criteria\\n```js\\ngetCases({\\n  remote: true,\\n  sex: \\\"male\\\",\\n  age: \\\"10..15\\\",\\n  protection_concerns :\\\"unaccompanied,separated\\\",\\n});\\n```\\n**Example:** Fetch a specific case by id\\n```js\\ngetCases({\\n  case_id: \\\"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\\\",\\n});\\n```\\n**Example:** Get all remote cases and their referrals\\n```js\\ngetCases(\\n { remote: true },\\n { withReferrals: true }\\n);\\n```\\n\\n* * *\\n\\n### getForms\\n\\n<p><code>getForms(query, callback) ⇒ Operation</code></p>\\n\\nGet forms from Primero\\n\\nUse this function to get forms from Primero that are accessible to this user based on a set of query parameters.\\nThe user can filter the form list by record type and module.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| query | <code>object</code> | an object with a query param at minimum |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Get the list of all forms\\n```js\\ngetForms();\\n```\\n**Example:** Get the list of all forms for a specific module\\n```js\\ngetForms({\\n  module_id: \\\"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\\\",\\n});\\n```\\n\\n* * *\\n\\n### getLocations\\n\\n<p><code>getLocations(query, callback) ⇒ Operation</code></p>\\n\\nGet locations from Primero\\n\\nUse this function to get a paginated list of all locations that are accessible to this user from Primero.\\nNote: You can specify a `per` value to fetch records per page(Defaults to 20).\\nAlso you can specify `page` value to fetch pagination (Defaults to 1).\\nAnother parameter is `hierarchy: true` (Defaults to false)\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| query | <code>object</code> | an object with a query param at minimum |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Get loocations from Primero with query parameters\\n```js\\ngetLocations({\\n  page: 1,\\n  per: 20\\n})\\n```\\n\\n* * *\\n\\n### getLookups\\n\\n<p><code>getLookups(query, callback) ⇒ Operation</code></p>\\n\\nGet lookups from Primero\\n\\nUse this function to get a paginated list of all lookups that are accessible to this user from Primero.\\nNote: You can specify a `per` value to fetch records per page(Defaults to 20).\\nAlso you can specify `page` value to fetch pagination (Defaults to 1)\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| query | <code>object</code> | an object with a query param at minimum |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Get lookups from Primero with query parameters\\n```js\\ngetLookups({\\n  per: 10000,\\n  page: 5\\n});\\n```\\n\\n* * *\\n\\n### getReferrals\\n\\n<p><code>getReferrals(params, callback) ⇒ Operation</code></p>\\n\\nGet referrals for a specific case in Primero\\n\\nUse this function to get the list of referrals of one case from Primero.\\nThe search can be done using either `record id` or `case id`.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | an object with an externalId field to select the attribute to use for matching on case and an externalId value for that case. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Get referrals for a case in Primero by record id\\n```js\\ngetReferrals({\\n  externalId: \\\"record_id\\\",\\n  id: \\\"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\\\",\\n});\\n```\\n**Example:** Get referrals for a case in Primero by case id\\n```js\\n getReferrals({\\n  id: \\\"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\\\",\\n});\\n```\\n\\n* * *\\n\\n### updateCase\\n\\n<p><code>updateCase(id, params, callback) ⇒ Operation</code></p>\\n\\nUpdate an existing case in Primero\\n\\nUse this function to update an existing case from Primero.\\nIn this implementation, the function uses a case ID to check for the case to update,\\nThen merge the values submitted in this call into an existing case.\\nFields not specified in this request will not be modified.\\nFor nested subform fields, the subform arrays will be recursively merged,\\nkeeping both the existing values and appending the new\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| id | <code>string</code> | A case ID to use for the update. |\\n| params | <code>object</code> | an object with some case data. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Update case for a specific case id\\n```js\\nupdateCase(\\\"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\\\", {\\n  data: {\\n    age: 16,\\n    sex: \\\"female\\\",\\n    name: \\\"Fiona Edgemont\\\",\\n  },\\n});\\n```\\n\\n* * *\\n\\n### updateReferral\\n\\n<p><code>updateReferral(params, callback) ⇒ Operation</code></p>\\n\\nUpdate a single referral for a specific case in Primero\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | an object with an caseExternalId value to use, the id and the referral id to update. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Update referral by record id\\n```js\\nupdateReferral({\\n  caseExternalId: \\\"record_id\\\",\\n  id: \\\"749e9c6e-60db-45ec-8f5a-69da7c223a79\\\",\\n  caseId: \\\"dcea6052-07d9-4cfa-9abf-9a36987cdd25\\\",\\n  data: (state) => state.data,\\n});\\n```\\n\\n* * *\\n\\n### upsertCase\\n\\n<p><code>upsertCase(params, callback) ⇒ Operation</code></p>\\n\\nUpsert case to Primero\\n\\nUse this function to update an existing case from Primero or to create it otherwise.\\nIn this implementation, we first fetch the list of cases,\\nthen we check if the case exist before choosing the right operation to do.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | an object with an externalIds and some case data. |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example:** Upsert case for a specific case id\\n```js\\nupsertCase({\\n  externalIds: [\\\"case_id\\\"],\\n  data: state => ({\\n    age: 20,\\n    sex: \\\"male\\\",\\n    name: \\\"Alex\\\",\\n    status: \\\"open\\\",\\n    case_id: \\\"6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz\\\",\\n  }),\\n});\\n```\\n\\n* * *\\n\\n\\n## http\\n\\nThese functions belong to the http namespace.\\n### http.get {#http_get}\\n\\n<p><code>get(path, [options]) ⇒ Operation</code></p>\\n\\nMake a GET request to any Primero endpoint.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | Path to the resource. |\\n| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** GET all cases\\n```js\\nhttp.get('/cases');\\n```\\n\\n* * *\\n\\n\\n### http.patch {#http_patch}\\n\\n<p><code>patch(path, data, [options]) ⇒ Operation</code></p>\\n\\nMake a PATCH request to Primero\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | Path to the resource. |\\n| data | <code>object</code> |  | the body data in JSON format. |\\n| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** Update a single case resource \\n```js\\nhttp.patch('cases/344f3c08-affc-4d8a-b4d3-925b9f4d2867', {\\n  age: 17,\\n  sex: \\\"female\\\",\\n  name: \\\"Edwine Edgemont\\\",\\n });\\n```\\n\\n* * *\\n\\n\\n### http.post {#http_post}\\n\\n<p><code>post(path, data, [options]) ⇒ Operation</code></p>\\n\\nMake a POST request to any Primero endpoint.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | Path to the resource. |\\n| data | <code>object</code> |  | the body data in JSON format. |\\n| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** POST a case to Primero\\n```js\\nhttp.post('cases',{\\n    age: 16,\\n    sex: \\\"female\\\",\\n    name: \\\"Edwine Edgemont\\\",\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### PrimeroHttpState\\n\\nState object\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |\\n| references | An array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions object\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| query | <code>object</code> |  | An object of query parameters to be encoded into the URL |\\n| headers | <code>object</code> |  | An object of all request headers |\\n| [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-primero\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with UNICEF's\\nPrimero API.\\n\\n**See Update Docs Site: https://docs.openfn.org/adaptors/packages/primero-docs**\\n\\n## Primero API Versions\\n\\n### Adaptor for Primero v2.0\\n\\nThis documentation outlines the functions available for Primero `v2.0` in the\\nmain branch. The API documentation is available at:\\nhttps://github.com/primeroIMS/primero/tree/development_v2/app/controllers/api\\n\\n### Adaptor for Primero v1.0 still available on the `v1` branch.\\n\\n`v1.0.7` of this adaptor was built for the Primero `v1.1` API:\\nhttps://github.com/OpenFn/language-primero/blob/v1/README.md\\n\\n[Primero API v1.1 Documentation](https://docs.google.com/document/d/1jpaT2_UBBnc3PxPYlLMBEzNUkyfuxRZiksywG5MKM0Q/edit)\\n\\n#### Primero Authentication Strategies\\n\\nThe Primero team is considering a shift to Microsoft Azure Active Directory B2C\\nfor auth. We can likely accommodate this with a similar pattern as has been used\\nin our Microsoft Dynamics, Github, or Google Sheets adaptors, but we'll need to\\nawait final doucmentation for Primero's `v2` API before making changes.\\n\\n[Azure Active Directory B2C](https://docs.microsoft.com/en-us/azure/active-directory-b2c/)\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-primero\\n\\n## 3.1.0\\n\\n### Minor Changes\\n\\n- 7fecd5b: - Added a new http namespace, containing HTTP helpers for `get()`,\\n  `post()` and `patch()`.\\n\\n  - These functions will allow the users to make any requests with the `POST`,\\n    `PATCH`, and `GET` methods to `primero`.\\n  - With these new updates, you can now do this:\\n\\n  ```\\n\\n  http.get('cases', {\\n      query:{ remote: true }\\n  })\\n\\n  ```\\n\\n## 3.0.10\\n\\n### Patch Changes\\n\\n- Updated dependencies [23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 3.0.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [b3d7f59]\\n- Updated dependencies [2d709ff]\\n- Updated dependencies [41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 3.0.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 3.0.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [a47d8d5]\\n- Updated dependencies [9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 3.0.6\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 3.0.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 3.0.4\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus [33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 3.0.3\\n\\n### Patch Changes\\n\\n- 8d866e4: Update tough-cookie dependency\\n\\n## 3.0.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 3.0.1\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 3.0.0\\n\\n### Major Changes\\n\\n- Export new common http helpers (http namespace)\\n\\n## 2.12.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 2.12.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [4c08444]\\n- Updated dependencies [73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 2.12.2\\n\\n### Patch Changes\\n\\n- 3ad9122: - Improve `getCases()` withReferrals docs\\n  - Add logs when fetching case referrals\\n\\n## 2.12.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 2.12.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 2.11.14\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 2.11.13\\n\\n### Patch Changes\\n\\n- Updated dependencies [12f02ed5]\\n  - @openfn/language-common@1.13.4\\n\\n## 2.11.12\\n\\n### Patch Changes\\n\\n- Updated dependencies [88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 2.11.11\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 2.11.10\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.1\\n\\n## 2.11.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 2.11.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [c19efbe]\\n  - @openfn/language-common@1.11.1\\n\\n## 2.11.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [85c35b8]\\n  - @openfn/language-common@1.11.0\\n\\n## 2.11.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [df09270]\\n  - @openfn/language-common@1.10.3\\n\\n## 2.11.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [26a303e]\\n  - @openfn/language-common@1.10.2\\n\\n## 2.11.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [8c32eb3]\\n  - @openfn/language-common@1.10.1\\n\\n## 2.11.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [aad9549]\\n  - @openfn/language-common@1.10.0\\n\\n## 2.11.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [111807f]\\n  - @openfn/language-common@1.9.0\\n\\n## 2.11.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 2.11.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 2.10.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [929bca6]\\n  - @openfn/language-common@1.7.7\\n\\n## 2.10.5\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies [2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 2.10.4\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 2.10.3\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*_ @module Adaptor _/\\n- 059c956: added examples in docstring\\n\\n## 2.10.2\\n\\n### Patch Changes\\n\\n- f2a91a4: Update package exports\\n- Updated dependencies [f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\\n## 2.10.1\\n\\n### Patch Changes\\n\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- ecf5d30: remove sinon since it was not being used\\n- Updated dependencies [8566b26]\\n- Updated dependencies [b3d45ff]\\n- Updated dependencies [b5eb665]\\n- Updated dependencies [ecf5d30]\\n  - @openfn/language-common@1.7.4\\n\\n## 2.10.0\\n\\n### Minor Changes\\n\\n- 33742bf: Modify `composeNextState` so that `getCases` can pass it a third\\n  argument: the metadata from Primero's response.\\n\\n  `getCases` will now not only return an array of `cases` in `state.data`, but\\n  metadata related to pagination in `state.metadata`.\\n\\n### Patch Changes\\n\\n- 2014694: remove travis url in readme\\n- bb764db: Conditionally check for 'withReferrals' in case no options are\\n  provided\\\"\\n\\n## 2.9.2\\n\\n### Patch Changes\\n\\n- e04aa28: Rename credential-schema to configuration-schema, update descriptions\\n\\n## 2.9.1\\n\\n### Patch Changes\\n\\n- d4ac748: Skipped failing test until we have a new strat (it's working)\\n\\n## 2.9.0\\n\\n### Minor Changes\\n\\n- b37a4ad: add language primero into monorepo\\n\\n### Patch Changes\\n\\n- adb97a0: Fixed issue where upsertCase always took state.data for main params\\n\"","functions":["createCase","createReferrals","getCases","getForms","getLocations","getLookups","getReferrals","updateCase","updateReferral","upsertCase"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"url":{"title":"URL","type":"string","description":"The Primero host url","format":"uri","minLength":1,"examples":["https://primero.org/some-org"]},"user":{"title":"User","type":"string","description":"The username","minLength":1,"examples":["admin"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"minLength":1,"examples":["@super(!)Superpass"]},"basicAuth":{"title":"Use Basic Auth","type":"boolean","examples":[true]}},"type":"object","additionalProperties":true,"required":["url"]}},
 [
   {
     "id": "createCase",
@@ -42356,6 +42356,64 @@
       "path": "/home/runner/work/adaptors/adaptors/packages/primero/src"
     },
     "order": 10,
+    "level": 0
+  },
+  {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a GET request to any Primero endpoint.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to the resource.",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "{}",
+        "description": "An object containing query params and headers for the request",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>GET all cases</caption>\nhttp.get('/cases');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 31,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/primero/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "PrimeroHttpState"
+      }
+    ],
+    "order": 17,
+    "newscope": true,
     "level": 0
   },
   {
@@ -42619,6 +42677,223 @@
       "path": "/home/runner/work/adaptors/adaptors/packages/primero/src"
     },
     "order": 9,
+    "level": 0
+  },
+  {
+    "id": "patch",
+    "longname": "patch",
+    "name": "patch",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a PATCH request to Primero",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to the resource.",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "the body data in JSON format.",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "{}",
+        "description": "An object containing query params and headers for the request",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Update a single case resource </caption>\nhttp.patch('cases/344f3c08-affc-4d8a-b4d3-925b9f4d2867', {\n  age: 17,\n  sex: \"female\",\n  name: \"Edwine Edgemont\",\n });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 94,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/primero/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "PrimeroHttpState"
+      }
+    ],
+    "order": 19,
+    "level": 0
+  },
+  {
+    "id": "post",
+    "longname": "post",
+    "name": "post",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a POST request to any Primero endpoint.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to the resource.",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "the body data in JSON format.",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "{}",
+        "description": "An object containing query params and headers for the request",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>POST a case to Primero</caption>\nhttp.post('cases',{\n    age: 16,\n    sex: \"female\",\n    name: \"Edwine Edgemont\",\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 61,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/primero/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "PrimeroHttpState"
+      }
+    ],
+    "order": 18,
+    "level": 0
+  },
+  {
+    "id": "PrimeroHttpState",
+    "longname": "PrimeroHttpState",
+    "name": "PrimeroHttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "The response body (as JSON)",
+        "name": "data"
+      },
+      {
+        "description": "The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format",
+        "name": "response"
+      },
+      {
+        "description": "An array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 4,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/primero/src"
+    },
+    "order": 15,
+    "level": 0
+  },
+  {
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of all request headers",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "'json'",
+        "description": "The response format to parse (e.g., 'json', 'text', or 'stream')",
+        "name": "parseAs"
+      }
+    ],
+    "meta": {
+      "lineno": 12,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/primero/src"
+    },
+    "order": 16,
     "level": 0
   },
   {

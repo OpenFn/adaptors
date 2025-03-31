@@ -21,6 +21,22 @@
     <a href="#upsertcase">upsertCase(params, callback)</a></dt>
 </dl>
 
+This adaptor exports the following namespaced functions:
+
+<dl>
+<dt>
+    <a href="#http_get">http.get(path, [options])</a>
+</dt>
+
+<dt>
+    <a href="#http_patch">http.patch(path, data, [options])</a>
+</dt>
+
+<dt>
+    <a href="#http_post">http.post(path, data, [options])</a>
+</dt>
+</dl>
+
 
 ## Functions
 ### createCase
@@ -326,4 +342,130 @@ upsertCase({
 
 * * *
 
+
+## http
+
+These functions belong to the http namespace.
+### http.get {#http_get}
+
+<p><code>get(path, [options]) ⇒ Operation</code></p>
+
+Make a GET request to any Primero endpoint.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| path | <code>string</code> |  | Path to the resource. |
+| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |
+| references | An array of all previous data objects used in the Job |
+**Example:** GET all cases
+```js
+http.get('/cases');
+```
+
+* * *
+
+
+### http.patch {#http_patch}
+
+<p><code>patch(path, data, [options]) ⇒ Operation</code></p>
+
+Make a PATCH request to Primero
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| path | <code>string</code> |  | Path to the resource. |
+| data | <code>object</code> |  | the body data in JSON format. |
+| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |
+| references | An array of all previous data objects used in the Job |
+**Example:** Update a single case resource 
+```js
+http.patch('cases/344f3c08-affc-4d8a-b4d3-925b9f4d2867', {
+  age: 17,
+  sex: "female",
+  name: "Edwine Edgemont",
+ });
+```
+
+* * *
+
+
+### http.post {#http_post}
+
+<p><code>post(path, data, [options]) ⇒ Operation</code></p>
+
+Make a POST request to any Primero endpoint.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| path | <code>string</code> |  | Path to the resource. |
+| data | <code>object</code> |  | the body data in JSON format. |
+| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |
+| references | An array of all previous data objects used in the Job |
+**Example:** POST a case to Primero
+```js
+http.post('cases',{
+    age: 16,
+    sex: "female",
+    name: "Edwine Edgemont",
+});
+```
+
+* * *
+
+
+##  Interfaces
+
+### PrimeroHttpState
+
+State object
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |
+| references | An array of all previous data objects used in the Job |
+
+
+* * *
+
+### RequestOptions
+
+Options object
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| query | <code>object</code> |  | An object of query parameters to be encoded into the URL |
+| headers | <code>object</code> |  | An object of all request headers |
+| [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |
+
+
+* * *
 
