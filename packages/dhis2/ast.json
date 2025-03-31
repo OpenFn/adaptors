@@ -5,8 +5,7 @@
       "params": [
         "resourceType",
         "data",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Create a record",
@@ -54,18 +53,6 @@
               }
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
           },
           {
             "title": "state",
@@ -149,8 +136,7 @@
         "resourceType",
         "path",
         "data",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Update data. A generic helper function to update a resource object of any type.\nUpdating an object requires to send `all required fields` or the `full body`",
@@ -203,18 +189,6 @@
               }
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
           },
           {
             "title": "state",
@@ -348,18 +322,6 @@
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
             "title": "throws",
             "description": "Throws range error",
             "type": {
@@ -391,7 +353,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "destroy",
@@ -399,8 +361,7 @@
         "resourceType",
         "path",
         "data",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Delete a record. A generic helper function to delete an object",
@@ -458,18 +419,6 @@
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
             "title": "state",
             "description": "{Dhis2State}"
           },
@@ -485,218 +434,6 @@
             "title": "example",
             "description": "destroy('trackedEntities', 'LcRd6Nyaq7T');",
             "caption": "a tracked entity instance. See [Delete tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "findAttributeValueById",
-      "params": [
-        "trackedEntity",
-        "attributeUid"
-      ],
-      "docs": {
-        "description": "Gets an attribute value by its uid",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "findAttributeValueById(state.tei, 'y1w2R6leVmh')"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "A tracked entity instance (TEI) object",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "trackedEntity"
-          },
-          {
-            "title": "param",
-            "description": "The uid to search for in the TEI's attributes",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "attributeUid"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "findAttributeValue",
-      "params": [
-        "trackedEntity",
-        "attributeDisplayName"
-      ],
-      "docs": {
-        "description": "Gets an attribute value by its case-insensitive display name",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "findAttributeValue(state.data.trackedEntities[0], 'first name')"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "A tracked entity instance (TEI) object",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "trackedEntity"
-          },
-          {
-            "title": "param",
-            "description": "The 'displayName' to search for in the TEI's attributes",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "attributeDisplayName"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "attr",
-      "params": [
-        "attribute",
-        "value"
-      ],
-      "docs": {
-        "description": "Converts an attribute ID and value into a DHIS2 attribute object",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "attr('w75KJ2mc4zz', 'Elias')"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "A tracked entity instance (TEI) attribute ID.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "attribute"
-          },
-          {
-            "title": "param",
-            "description": "The value for that attribute.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "value"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "dv",
-      "params": [
-        "dataElement",
-        "value"
-      ],
-      "docs": {
-        "description": "Converts a dataElement and value into a DHIS2 dataValue object",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "dv('f7n9E0hX8qk', 12)"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "A data element ID.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "dataElement"
-          },
-          {
-            "title": "param",
-            "description": "The value for that data element.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "value"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            }
           }
         ]
       },

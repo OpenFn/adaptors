@@ -1,12 +1,5 @@
 import chai from 'chai';
-import {
-  execute,
-  create,
-  update,
-  upsert,
-  findAttributeValue,
-  findAttributeValueById,
-} from '../src/Adaptor';
+import { execute, create, update, upsert } from '../src/Adaptor';
 import { get, post, request, patch } from '../src/http';
 import { dataValue } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
@@ -15,6 +8,8 @@ import {
   ensureArray,
   shouldUseNewTracker,
 } from '../src/Utils';
+
+import * as util from '../src/util';
 
 const { expect } = chai;
 
@@ -487,7 +482,7 @@ describe('patch', () => {
     },
   };
 
-  it('should make an authenticated PUT to the right url', async () => {
+  it('should make an authenticated PATCH to the right url', async () => {
     testServer
       .intercept({
         path: getPath('dataValueSets/AsQj6cDsUq4'),
@@ -820,7 +815,7 @@ describe('findAttributeValueById', () => {
       ],
     };
 
-    const theValue = findAttributeValueById(tei, 'Rslz2y06aBf');
+    const theValue = util.findAttributeValueById(tei, 'Rslz2y06aBf');
     expect(theValue).to.eql('McTesterson');
   });
 });
@@ -842,7 +837,7 @@ describe('findAttributeValue', () => {
       ],
     };
 
-    const theValue = findAttributeValue(tei, 'Surname');
+    const theValue = util.findAttributeValue(tei, 'Surname');
     expect(theValue).to.eql('McTesterson');
   });
 });
