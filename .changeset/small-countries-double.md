@@ -16,10 +16,6 @@ do this instead:
 
 ```
 
-fn(state =>{
-   const s = util.findAttributeValueById(state.tei, 'y1w2R6leVmh');
-   console.log(s);
-   return state;
-})
+util.findAttributeValueById(state.tei, 'y1w2R6leVmh');
 
 ```

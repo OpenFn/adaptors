@@ -1,12 +1,5 @@
 import chai from 'chai';
-import {
-  execute,
-  create,
-  update,
-  get,
-  upsert,
-  patch,
-} from '../src/Adaptor';
+import { execute, create, update, get, upsert, patch } from '../src/Adaptor';
 import { dataValue } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import {
@@ -15,7 +8,7 @@ import {
   shouldUseNewTracker,
 } from '../src/Utils';
 
-import * as util from '../src/util'
+import * as util from '../src/util';
 
 const { expect } = chai;
 
@@ -405,7 +398,7 @@ describe('update', () => {
   });
 });
 
-describe.skip('patch', () => {
+describe('patch', () => {
   const state = {
     configuration,
     data: {
