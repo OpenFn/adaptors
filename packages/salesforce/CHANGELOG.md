@@ -1,5 +1,44 @@
 # @openfn/language-salesforce
 
+## 6.0.0
+
+### Major Changes
+
+- 8ce97838: Add `http` function in salesforce (#1070)
+- 1fbfdc18: Update salesforce to use `connection` client (#1063)
+- 38de07ed: update jsforce to v3 (#1060)
+
+### Migration Guide
+
+#### Removed general-purpose HTTP functions
+
+Previously, `http.get()`, `http.post()`, etc. could be used to make HTTP
+requests to any external system. These functions have been removed and replaced
+with Salesforce API endpoints only.
+
+##### Before:
+
+This used to work for any external API
+
+```js
+http.get('https://external-api.com/data');
+http.post('https://another-service.com/endpoint', data);
+```
+
+##### Now:
+
+Only Salesforce API operations are supported
+
+```js
+http.get('Account', { query: { start: '2025-03-03' } });
+http.post('Contact', { Name: 'test' });
+```
+
+##### For non-Salesforce HTTP requests:
+
+- Move these operations to a different adaptor (like `@openfn/language-http`)
+- Or use `@openfn/language-common` for generic HTTP operations
+
 ## 5.0.5
 
 ### Patch Changes
