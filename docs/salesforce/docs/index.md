@@ -10,15 +10,9 @@
 <dt>
     <a href="#destroy">destroy(sObjectName, ids, [options])</a></dt>
 <dt>
-    <a href="#get">get(path, [options])</a></dt>
-<dt>
     <a href="#insert">insert(sObjectName, records)</a></dt>
 <dt>
-    <a href="#post">post(path, data, [options])</a></dt>
-<dt>
     <a href="#query">query(query, [options])</a></dt>
-<dt>
-    <a href="#request">request(path, [options])</a></dt>
 <dt>
     <a href="#retrieve">retrieve(sObjectName, id)</a></dt>
 <dt>
@@ -30,6 +24,18 @@
 This adaptor exports the following namespaced functions:
 
 <dl>
+<dt>
+    <a href="#http_get">http.get(path, [options])</a>
+</dt>
+
+<dt>
+    <a href="#http_post">http.post(path, body, [options])</a>
+</dt>
+
+<dt>
+    <a href="#http_request">http.request(path, [options])</a>
+</dt>
+
 <dt>
     <a href="#util_toUTF8">util.toUTF8(input)</a>
 </dt>
@@ -272,43 +278,6 @@ destroy("Account", $.data);
 
 * * *
 
-### get
-
-<p><code>get(path, [options]) ⇒ Operation</code></p>
-
-Send a GET request on salesforce server configured in `state.configuration`.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| path | <code>string</code> | The Salesforce API endpoint. |
-| [options] | [<code>SimpleRequestOptions</code>](#simplerequestoptions) | Configure headers and query parameters for the request. |
-
-This operation writes the following keys to state:
-
-| State Key | Description |
-| --- | --- |
-| data | API response data. Can be either an object or array of objects |
-| references | History of all previous states |
-**Example:** Make a GET request to a custom Salesforce flow
-```js
-get('/actions/custom/flow/POC_OpenFN_Test_Flow');
-```
-**Example:** Make a GET request to a custom Salesforce flow with query parameters
-```js
-get('/actions/custom/flow/POC_OpenFN_Test_Flow', { query: { Status: 'Active' } });
-```
-**Example:** Make a GET request then map the response
-```js
-get('/jobs/query/v1/jobs/001XXXXXXXXXXXXXXX/results', (state) => {
- // Mapping the response
- state.mapping = state.data.map(d => ({ name: d.name, id: d.extId }));
- return state;
-});
-```
-
-* * *
-
 ### insert
 
 <p><code>insert(sObjectName, records) ⇒ Operation</code></p>
@@ -342,41 +311,6 @@ fn((state) => {
   return state;
 });
 insert("Account", $.data);
-```
-
-* * *
-
-### post
-
-<p><code>post(path, data, [options]) ⇒ Operation</code></p>
-
-Send a POST request to salesforce server configured in `state.configuration`.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| path | <code>string</code> | The Salesforce API endpoint. |
-| data | <code>object</code> | A JSON Object request body. |
-| [options] | [<code>SimpleRequestOptions</code>](#simplerequestoptions) | Configure headers and query parameters for the request. |
-
-This operation writes the following keys to state:
-
-| State Key | Description |
-| --- | --- |
-| data | API response data. Can be either an object or array of objects |
-| references | History of all previous states |
-**Example:** Make a POST request to a custom Salesforce flow
-```js
-post("/actions/custom/flow/POC_OpenFN_Test_Flow", {
-  body: {
-    inputs: [
-      {
-        CommentCount: 6,
-        FeedItemId: "0D5D0000000cfMY",
-      },
-    ],
-  },
-});
 ```
 
 * * *
@@ -420,34 +354,6 @@ query(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.hea
 **Example:** Query patients by Health ID using a lazy state reference
 ```js
 query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
-```
-
-* * *
-
-### request
-
-<p><code>request(path, [options]) ⇒ Operation</code></p>
-
-Send a request to salesforce server configured in `state.configuration`.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| path | <code>string</code> | The Salesforce API endpoint. |
-| [options] | [<code>FullRequestOptions</code>](#fullrequestoptions) | Configure headers, query and body parameters for the request. |
-
-This operation writes the following keys to state:
-
-| State Key | Description |
-| --- | --- |
-| data | API response data. Can be either an object or array of objects |
-| references | History of all previous states |
-**Example:** Make a POST request to a custom Salesforce flow
-```js
-request("/actions/custom/flow/POC_OpenFN_Test_Flow", {
-  method: "POST",
-  json: { inputs: [{}] },
-});
 ```
 
 * * *
@@ -567,6 +473,105 @@ upsert("UpsertTable__c", {
 * * *
 
 
+## http
+
+These functions belong to the http namespace.
+### http.get {#http_get}
+
+<p><code>get(path, [options]) ⇒ Operation</code></p>
+
+Send a GET request on salesforce server configured in `state.configuration`.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | The Salesforce API endpoint. |
+| [options] | [<code>SimpleRequestOptions</code>](#simplerequestoptions) | Configure headers and query parameters for the request. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | API response data. Can be either an object or array of objects |
+| references | History of all previous states |
+**Example:** Make a GET request to a custom Salesforce flow
+```js
+http.get('/actions/custom/flow/POC_OpenFN_Test_Flow');
+```
+**Example:** Make a GET request to a custom Salesforce flow with query parameters
+```js
+http.get('/actions/custom/flow/POC_OpenFN_Test_Flow', { query: { Status: 'Active' } });
+```
+**Example:** Make a GET request then map the response
+```js
+http.get("/jobs/query/v1/jobs/001XXXXXXXXXXXXXXX/results").then((state) => {
+  state.mapping = state.data.map((d) => ({ name: d.name, id: d.extId }));
+  return state;
+});
+```
+
+* * *
+
+
+### http.post {#http_post}
+
+<p><code>post(path, body, [options]) ⇒ Operation</code></p>
+
+Send a POST request to salesforce server configured in `state.configuration`.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | The Salesforce API endpoint. |
+| body | <code>object</code> | A JSON Object request body. |
+| [options] | [<code>SimpleRequestOptions</code>](#simplerequestoptions) | Configure headers and query parameters for the request. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | API response data. Can be either an object or array of objects |
+| references | History of all previous states |
+**Example:** POST request to Salesforce
+```js
+http.post("/jobs/query", {
+  operation: "query",
+  query: "SELECT Id, Name FROM Account LIMIT 1000",
+});
+```
+
+* * *
+
+
+### http.request {#http_request}
+
+<p><code>request(path, [options]) ⇒ Operation</code></p>
+
+Send a request to salesforce server configured in `state.configuration`.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | The Salesforce API endpoint. |
+| [options] | [<code>FullRequestOptions</code>](#fullrequestoptions) | Configure headers, query and body parameters for the request. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | API response data. Can be either an object or array of objects |
+| references | History of all previous states |
+**Example:** Make a POST request to a custom Salesforce flow
+```js
+http.request("/actions/custom/flow/POC_OpenFN_Test_Flow", {
+  method: "POST",
+  body: { inputs: [{}] },
+});
+```
+
+* * *
+
+
 ## util
 
 These functions belong to the util namespace.
@@ -638,8 +643,7 @@ Options provided to the Salesforce HTTP request
 | [method] | <code>string</code> | <code>&quot;GET&quot;</code> | HTTP method to use. |
 | headers | <code>object</code> |  | Object of request headers. |
 | query | <code>object</code> |  | Object request query. |
-| json | <code>object</code> |  | Object request body. |
-| body | <code>string</code> |  | A string request body. |
+| body | <code>object</code> |  | Object request body. |
 
 
 * * *
