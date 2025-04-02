@@ -1,7 +1,11 @@
 import { composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import { parseMetadata, mapEmsProperties } from './Utils';
+import {
+  parseMetadata,
+  parseRecordsToReport,
+  parseReportToFiles,
+} from './Utils';
 import { parseVaroEmsToEms } from './VaroEmsUtils';
 import { parseFridgeTag, parseFridgeTagToEms } from './FridgeTagUtils';
 
@@ -59,6 +63,21 @@ export function convertToEms(messageContents) {
     console.log('Converted message contents', results.length);
 
     return { ...composeNextState(state, results) };
+  };
+}
+
+export function convertRecordsToFiles(records, reportType) {
+  return async state => {
+    const [resolvedRecords, resolvedReportType] = expandReferences(
+      state,
+      records,
+      reportType
+    );
+
+    const report = parseRecordsToReport(resolvedRecords, resolvedReportType);
+    const files = parseReportToFiles(report, resolvedReportType);
+
+    return { ...composeNextState(state, files) };
   };
 }
 

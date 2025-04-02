@@ -1,10 +1,10 @@
 import path from 'path';
 import fs from 'node:fs/promises';
+import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import { parseFridgeTagToEms, parseFridgeTag } from '../src/FridgeTagUtils';
 import { parseVaroEmsToEms } from '../src/VaroEmsUtils';
-import { mapEmsProperties } from '../src/Utils';
-import { describe, it } from 'node:test';
+import { parseRecordsToReport } from '../src/Utils';
 
 describe('parseFridgeTagToEms', () => {
   it('converts raw fridgetag data into ems data', async () => {
@@ -57,27 +57,35 @@ describe('parseVaroEmsToEms', () => {
   });
 });
 
-describe('mapEmsProperties', () => {
-  const root = { LSER: 'one', EMOD: null };
-  const records = [{ TAMB: false, EERR: null }];
+describe('parseRecordsToReport', () => {
+  let report, record;
 
-  const result = mapEmsProperties(root, records, null, 'FAKE_TEST');
-  const record = result?.records?.[0];
+  before(async () => {
+    const rawData = await getFixture('emsCollection.json');
+    const data = JSON.parse(rawData);
+    const collection = data.map(i => i.value);
+    collection[0].HAMB = false;
 
-  it('includes expected root properties', () => {
-    expect(result.LSER).to.eql('one');
-    expect(result).to.not.have.property('EMOD'); // explicitly null, not required
+    report = parseRecordsToReport(collection, 'EMS', 'FAKE_TEST');
+    record = report?.records?.[0];
+  });
+
+  it('includes expected report properties', () => {
+    expect(report.ESER).to.eql('004800265547501820383131'); // ESER should be copied from LSER.
+    expect(report).to.not.have.property('EERR');
   });
 
   it('includes expected record properties', () => {
+    expect(report).to.have.property('FAKE_TEST'); // indicated as required.
+    expect(report.FAKE_TEST).to.eql(null);
+    expect(record.HAMB).to.eql(false); // explicitly 'false', not truthy.
     expect(record).to.have.property('TAMB');
-    expect(record.TAMB).to.eql(false);
-    expect(record).to.have.property('FAKE_TEST'); // required field
   });
 
   it('excludes unexpected or null record properties', () => {
-    expect(record).to.not.have.property('EERR'); // explicitly null, not required
-    expect(record).to.not.have.property('ABST'); // not present in input
+    expect(report).to.not.have.property('TAMB'); // found on record, not report.
+    expect(record).to.not.have.property('RELT'); // should not be included on record.
+    expect(record).to.not.have.property('AMFR'); // found on report, not record.
   });
 
   it('does not return null or empty record', () => {
