@@ -11,7 +11,6 @@ let state = {
     "pass_key": "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919",
     "consumer_key": "GA2PNftcXvv2uC2VdgNjxXyvF8eZ4td6iBsL7N7N2ZFnXzf3",
     "consumer_secret": "zKjr2j0jjihCtzIwzGtgnV0YgP82jZf1hY9RW6HygntWG6AGuf4tAUe3E5tPtiyA",
-    // "baseUrl": "https://sandbox.safaricom.co.ke"
   }
 }
 
