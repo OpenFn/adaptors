@@ -36189,6 +36189,881 @@
     "level": 0
   }
 ],
+{"name":"mpesa","adaptor":"@openfn/language-mpesa","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#buygoods\\\">buyGoods(data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#checktransactionstatus\\\">checkTransactionStatus(data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#registerurl\\\">registerUrl(data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#remittax\\\">remitTax(data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, options)</a></dt>\\n<dt>\\n    <a href=\\\"#stkpush\\\">stkPush(data, options)</a></dt>\\n</dl>\\n\\n\\n## Functions\\n### buyGoods\\n\\n<p><code>buyGoods(data, options) ⇒ Operation</code></p>\\n\\nPay for goods and services directly from your business account to a till number, merchant store number or Merchant HO\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | [<code>BuyGoodsObject</code>](#buygoodsobject) | The object that will be attached to the POST request body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request object. Includes headers, error mappings and query params |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the DARAJA API server (excluding the body) |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Pay for goods\\n```js\\nbuyGoods({\\n    \\\"Initiator\\\": \\\"testapi\\\",\\n    \\\"SecurityCredential\\\": \\\"sbMXpuhMX5LzieNiDrx9TgscfaBxxvie0WlBDdGli4MWu4s5gbhYVlBy+T89xHQdoYwcG202KNp403ln2dLFnytPqw==\\\",\\n    \\\"Amount\\\": 1,\\n    \\\"PartyA\\\": 600999,\\n    \\\"PartyB\\\": 600000,\\n    \\\"AccountReference\\\": 353353,\\n    \\\"Requester\\\": 254708374149,\\n    \\\"Remarks\\\": \\\"ok\\\",\\n    \\\"QueueTimeOutURL\\\": \\\"https://mydomain.com/b2b/queue/\\\",\\n    \\\"ResultURL\\\": \\\"https://mydomain.com/b2b/result/\\\"\\n});\\n```\\n\\n* * *\\n\\n### checkTransactionStatus\\n\\n<p><code>checkTransactionStatus(data, options) ⇒ Operation</code></p>\\n\\nCheck the status of the transaction\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | [<code>TransactionStatusObject</code>](#transactionstatusobject) | The object that will be attached to the POST request body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request object. Includes headers, error mappings and query params |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the DARAJA API server (excluding the body) |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Check status of a transaction\\n```js\\ncheckTransactionStatus({\\n    \\\"Initiator\\\": \\\"testapi\\\",\\n    \\\"SecurityCredential\\\": \\\"ctHDk+dN14A22B5GyQQvISSTY3K1tVnCTuQGoG7PsTCadzTkl5wz44Rhpkb0BZDvfRA==\\\",\\n    \\\"TransactionID\\\": \\\"OEI2AK4Q16\\\",\\n    \\\"PartyA\\\": 600998,\\n    \\\"IdentifierType\\\": 4,\\n    \\\"ResultURL\\\": \\\"https://mydomain.com/TransactionStatus/result/\\\",\\n    \\\"QueueTimeOutURL\\\": \\\"https://mydomain.com/TransactionStatus/queue/\\\",\\n    \\\"Remarks\\\": \\\"fdfdfdfdf\\\",\\n    \\\"Occassion\\\": \\\"null\\\",\\n});\\n```\\n\\n* * *\\n\\n### registerUrl\\n\\n<p><code>registerUrl(data, options) ⇒ Operation</code></p>\\n\\nRegister a URL that allows receiving payment notifications to your paybill.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | [<code>RegisterUrlObject</code>](#registerurlobject) | The object that will be attached to the POST request body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request object. Includes headers, error mappings and query params |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the DARAJA API server (excluding the body) |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Register a URL to receive payment notifications\\n```js\\nregisterUrl({\\n    \\\"ShortCode\\\": 600426,\\n    \\\"ResponseType\\\": \\\"Completed\\\",\\n    \\\"ConfirmationURL\\\": \\\"https://mydomain.com/confirmation\\\",\\n    \\\"ValidationURL\\\": \\\"https://mydomain.com/validation\\\"\\n});\\n```\\n\\n* * *\\n\\n### remitTax\\n\\n<p><code>remitTax(data, options) ⇒ Operation</code></p>\\n\\nRemit tax to the Kenya Revenue Authority (KRA).\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | [<code>RemitTaxObject</code>](#remittaxobject) | The object that will be attached to the POST request body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request object. Includes headers, error mappings and query params |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the DARAJA API server (excluding the body) |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Pay tax to KRA\\n```js\\nremitTax({\\n    \\\"Initiator\\\": \\\"testapi\\\",\\n    \\\"SecurityCredential\\\": \\\"Uq1qluCjSYfMF3XEvlpfuatnWwWerwq42fB+mMd8nsKdAVO04DGHhG/s3xO3g7POki9B8i7cSoEkBux4bQrlDLDWJhaTrt1TdbE+ZQ==\\\",\\n    \\\"Amount\\\": 1,\\n    \\\"PartyA\\\": 600995,\\n    \\\"AccountReference\\\": 353353,\\n    \\\"Remarks\\\": \\\"ok\\\",\\n    \\\"QueueTimeOutURL\\\": \\\"https://mydomain.com/b2b/queue/\\\",\\n    \\\"ResultURL\\\": \\\"https://mydomain.com/b2b/result/\\\"\\n})\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(method, path, body, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource. |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the DARAJA API server (excluding the body) |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Register a URL to receive payment notifications\\n```js\\nrequest(\\\"POST\\\", \\\"/mpesa/c2b/v1/registerurl\\\", \\n {\\n   \\\"ShortCode\\\": 600426,\\n   \\\"ResponseType\\\": \\\"Completed\\\",\\n   \\\"ConfirmationURL\\\": \\\"https://mydomain.com/confirmation\\\",\\n   \\\"ValidationURL\\\": \\\"https://mydomain.com/validation\\\"\\n });\\n```\\n\\n* * *\\n\\n### stkPush\\n\\n<p><code>stkPush(data, options) ⇒ Operation</code></p>\\n\\nInitiate a STK pin prompt to a Safaricom mobile number.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | [<code>STKPushObject</code>](#stkpushobject) | The object that will be attached to the POST request body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request object. Includes headers, error mappings and query params |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the DARAJA API server (excluding the body) |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Initiate STK Push\\n```js\\nstkPush({\\n    \\\"Amount\\\": 1,\\n    \\\"PartyA\\\": 254708374149,\\n    \\\"PartyB\\\": 174379,\\n    \\\"PhoneNumber\\\": 254708374149,\\n    \\\"CallBackURL\\\": \\\"https://mydomain.com/path\\\",\\n    \\\"AccountReference\\\": \\\"CompanyXLTD\\\",\\n    \\\"TransactionDesc\\\": \\\"Payment of X\\\"\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### BuyGoodsObject\\n\\nBuy goods parameter definition\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| Initiator | <code>string</code> | The M-Pesa API operator username. This user needs Org Business Pay Bill API initiator role on M-Pesa |\\n| SecurityCredential | <code>string</code> | The encrypted password of the M-Pesa API operator. |\\n| Amount | <code>number</code> | The transaction amount. |\\n| PartyA | <code>number</code> | Your shortcode. The shortcode from which money will be deducted. |\\n| AccountReference | <code>string</code> | The account number to be associated with the payment. Up to 13 characters |\\n| Remarks | <code>string</code> | Any additional information to be associated with the transaction. |\\n| QueueTimeOutURL | <code>URL</code> | A URL that will be used to notify your system in case the request times out before processing. |\\n| ResultURL | <code>URL</code> | A URL that will be used to send transaction results after processing. |\\n\\n\\n* * *\\n\\n### HttpState\\n\\nState object\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the DARAJA API server (excluding the body) |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RegisterUrlObject\\n\\nRegister URL parameter definition\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| ShortCode | <code>numeric</code> | Usually, a unique number is tagged to an M-PESA pay bill/till number of the organization. |\\n| ResponseType | <code>string</code> | This parameter specifies what is to happen if for any reason the validation URL is not reachable. Sample values: 'Canceled', 'Completed' |\\n| ConfirmationURL | <code>URL</code> | This is the URL that receives the confirmation request from API upon payment completion. |\\n| ValidationURL | <code>URL</code> | This is the URL that receives the validation request from the API upon payment submission. |\\n\\n\\n* * *\\n\\n### RemitTaxObject\\n\\nRemit tax parameter definition\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| Initiator | <code>string</code> | The M-Pesa API operator username. |\\n| SecurityCredential | <code>string</code> | The encrypted password of the M-Pesa API operator. |\\n| Amount | <code>number</code> | The transaction amount. |\\n| PartyA | <code>number</code> | This is your own shortcode from which the money will be deducted. |\\n| AccountReference | <code>string</code> | The payment registration number (PRN) issued by KRA. |\\n| Remarks | <code>string</code> | Any additional information to be associated with the transaction. |\\n| QueueTimeOutURL | <code>URL</code> | A URL that will be used to notify your system in case the request times out before processing. |\\n| ResultURL | <code>URL</code> | A URL that will be used to send transaction results after processing. |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n\\n\\n* * *\\n\\n### STKPushObject\\n\\nSTKPush request data object\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| Amount | <code>number</code> | Amount charged. |\\n| PartyA | <code>number</code> | The phone number that receives the STK push prompt. Expected to be a valid Safaricom Number that is M-pesa registered in the format 2547XXXXXXXX |\\n| PartyB | <code>number</code> | The organization that receives the funds |\\n| PhoneNumber | <code>number</code> | The mobile number to receive the STK pin prompt |\\n| CallBackURL | <code>URL</code> | A valid secure URL that is used to receive notifications from M-Pesa API. It is the endpoint to which the results will be sent by M-Pesa API |\\n| AccountReference | <code>string</code> | Along with the business name, this value is also displayed to the customer in the STK pin prompt message. Maximum of 12 characters |\\n| TransactionDesc | <code>string</code> | Any additional information/comment that can be sent along with the request from you system. |\\n\\n\\n* * *\\n\\n### TransactionStatusObject\\n\\nCheck transaction status data object.\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| Initiator | <code>string</code> | The name of the initiator initiating the request. |\\n| SecurityCredential | <code>string</code> | Encrypted credential of the user getting transaction status. |\\n| TransactionID | <code>string</code> | Unique identifier to identify a transaction on Mpesa. |\\n| PartyA | <code>number</code> | Organization/MSISDN receiving the transaction. |\\n| IdentifierType | <code>number</code> | Type of organization receiving the transaction. Example: \\\"4\\\" Orgnaization shortcode. |\\n| ResultURL | <code>URL</code> | The path that stores information of a transaction. |\\n| QueueTimeOutURL | <code>URL</code> | The path that stores information of timeout transaction. |\\n| Remarks | <code>string</code> | Comments that are sent along with the transaction. |\\n| Occassion | <code>string</code> | Optional parameter. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-mpesa <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\nmpesa API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/mpesa-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/mpesa-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-mpesa\\n\\n## 1.0.0\\n\\nNew Mpesa adaptor that allows to make `STK push prompts`, `register listener URLS`,\\n`remit taxes to KRA`, `buy goods and services` and exposes a `generic http helper` for any other actions outside this scope.\\n\"","functions":["buyGoods","checkTransactionStatus","registerUrl","remitTax","request","stkPush"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","description":"The base URL (https://api.safaricom.co.ke)","format":"uri","minLength":1,"examples":["https://api.safaricom.co.ke"]},"short_code":{"title":"Short code","type":"string","description":"This is the organization's shortcode used to identify YOUR organization. Usually a 5 to 6-digit account number","examples":["654321"]},"pass_key":{"title":"Pass key","type":"string","description":"Your app's pass key sent to you via email once you go live","examples":["bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"]},"consumer_key":{"title":"Consumer key","type":"string","description":"Your app's consumer key sent to you via email once you go live","examples":["GA2PNftcXvv2uC2VdgNjxXyvF8eZ4td6iBsL7N7N2ZFnXzf3"]},"consumer_secret":{"title":"Consumer key","type":"string","description":"Your app's consumer secret sent to you via email once you go live","examples":["zKjr2j0jjihCtzIwzGtgnV0YgP82jZf1hY9RW6HygntWG6AGuf4tAUe3E5tPtiyA"]}},"type":"object","additionalProperties":true,"required":["short_code","pass_key","consumer_key","consumer_secret"]}},
+[
+  {
+    "id": "buyGoods",
+    "longname": "buyGoods",
+    "name": "buyGoods",
+    "kind": "function",
+    "scope": "global",
+    "description": "Pay for goods and services directly from your business account to a till number, merchant store number or Merchant HO",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "BuyGoodsObject"
+          ]
+        },
+        "description": "The object that will be attached to the POST request body",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request object. Includes headers, error mappings and query params",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Pay for goods</caption>\nbuyGoods({\n    \"Initiator\": \"testapi\",\n    \"SecurityCredential\": \"sbMXpuhMX5LzieNiDrx9TgscfaBxxvie0WlBDdGli4MWu4s5gbhYVlBy+T89xHQdoYwcG202KNp403ln2dLFnytPqw==\",\n    \"Amount\": 1,\n    \"PartyA\": 600999,\n    \"PartyB\": 600000,\n    \"AccountReference\": 353353,\n    \"Requester\": 254708374149,\n    \"Remarks\": \"ok\",\n    \"QueueTimeOutURL\": \"https://mydomain.com/b2b/queue/\",\n    \"ResultURL\": \"https://mydomain.com/b2b/result/\"\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 267,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mpesa/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 11,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "BuyGoodsObject",
+    "longname": "BuyGoodsObject",
+    "name": "BuyGoodsObject",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Buy goods parameter definition",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The M-Pesa API operator username. This user needs Org Business Pay Bill API initiator role on M-Pesa",
+        "name": "Initiator"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The encrypted password of the M-Pesa API operator.",
+        "name": "SecurityCredential"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "The transaction amount.",
+        "name": "Amount"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Your shortcode. The shortcode from which money will be deducted.",
+        "name": "PartyA"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The account number to be associated with the payment. Up to 13 characters",
+        "name": "AccountReference"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Any additional information to be associated with the transaction.",
+        "name": "Remarks"
+      },
+      {
+        "type": {
+          "names": [
+            "URL"
+          ]
+        },
+        "description": "A URL that will be used to notify your system in case the request times out before processing.",
+        "name": "QueueTimeOutURL"
+      },
+      {
+        "type": {
+          "names": [
+            "URL"
+          ]
+        },
+        "description": "A URL that will be used to send transaction results after processing.",
+        "name": "ResultURL"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 230,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mpesa/src"
+    },
+    "order": 10,
+    "level": 0
+  },
+  {
+    "id": "checkTransactionStatus",
+    "longname": "checkTransactionStatus",
+    "name": "checkTransactionStatus",
+    "kind": "function",
+    "scope": "global",
+    "description": "Check the status of the transaction",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "TransactionStatusObject"
+          ]
+        },
+        "description": "The object that will be attached to the POST request body",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request object. Includes headers, error mappings and query params",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Check status of a transaction</caption>\ncheckTransactionStatus({\n    \"Initiator\": \"testapi\",\n    \"SecurityCredential\": \"ctHDk+dN14A22B5GyQQvISSTY3K1tVnCTuQGoG7PsTCadzTkl5wz44Rhpkb0BZDvfRA==\",\n    \"TransactionID\": \"OEI2AK4Q16\",\n    \"PartyA\": 600998,\n    \"IdentifierType\": 4,\n    \"ResultURL\": \"https://mydomain.com/TransactionStatus/result/\",\n    \"QueueTimeOutURL\": \"https://mydomain.com/TransactionStatus/queue/\",\n    \"Remarks\": \"fdfdfdfdf\",\n    \"Occassion\": \"null\",\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 117,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mpesa/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 5,
+    "level": 0
+  },
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the DARAJA API server (excluding the body)",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 4,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mpesa/src"
+    },
+    "order": 0,
+    "level": 0
+  },
+  {
+    "id": "registerUrl",
+    "longname": "registerUrl",
+    "name": "registerUrl",
+    "kind": "function",
+    "scope": "global",
+    "description": "Register a URL that allows receiving payment notifications to your paybill.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "RegisterUrlObject"
+          ]
+        },
+        "description": "The object that will be attached to the POST request body",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request object. Includes headers, error mappings and query params",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Register a URL to receive payment notifications</caption>\nregisterUrl({\n    \"ShortCode\": 600426,\n    \"ResponseType\": \"Completed\",\n    \"ConfirmationURL\": \"https://mydomain.com/confirmation\",\n    \"ValidationURL\": \"https://mydomain.com/validation\"\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 167,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mpesa/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 7,
+    "level": 0
+  },
+  {
+    "id": "RegisterUrlObject",
+    "longname": "RegisterUrlObject",
+    "name": "RegisterUrlObject",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Register URL parameter definition",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "numeric"
+          ]
+        },
+        "description": "Usually, a unique number is tagged to an M-PESA pay bill/till number of the organization.",
+        "name": "ShortCode"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "This parameter specifies what is to happen if for any reason the validation URL is not reachable. Sample values: 'Canceled', 'Completed'",
+        "name": "ResponseType"
+      },
+      {
+        "type": {
+          "names": [
+            "URL"
+          ]
+        },
+        "description": "This is the URL that receives the confirmation request from API upon payment completion.",
+        "name": "ConfirmationURL"
+      },
+      {
+        "type": {
+          "names": [
+            "URL"
+          ]
+        },
+        "description": "This is the URL that receives the validation request from the API upon payment submission.",
+        "name": "ValidationURL"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 141,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mpesa/src"
+    },
+    "order": 6,
+    "level": 0
+  },
+  {
+    "id": "remitTax",
+    "longname": "remitTax",
+    "name": "remitTax",
+    "kind": "function",
+    "scope": "global",
+    "description": "Remit tax to the Kenya Revenue Authority (KRA).",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "RemitTaxObject"
+          ]
+        },
+        "description": "The object that will be attached to the POST request body",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request object. Includes headers, error mappings and query params",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Pay tax to KRA</caption>\nremitTax({\n    \"Initiator\": \"testapi\",\n    \"SecurityCredential\": \"Uq1qluCjSYfMF3XEvlpfuatnWwWerwq42fB+mMd8nsKdAVO04DGHhG/s3xO3g7POki9B8i7cSoEkBux4bQrlDLDWJhaTrt1TdbE+ZQ==\",\n    \"Amount\": 1,\n    \"PartyA\": 600995,\n    \"AccountReference\": 353353,\n    \"Remarks\": \"ok\",\n    \"QueueTimeOutURL\": \"https://mydomain.com/b2b/queue/\",\n    \"ResultURL\": \"https://mydomain.com/b2b/result/\"\n})"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 212,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mpesa/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 9,
+    "level": 0
+  },
+  {
+    "id": "RemitTaxObject",
+    "longname": "RemitTaxObject",
+    "name": "RemitTaxObject",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Remit tax parameter definition",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The M-Pesa API operator username.",
+        "name": "Initiator"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The encrypted password of the M-Pesa API operator.",
+        "name": "SecurityCredential"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "The transaction amount.",
+        "name": "Amount"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "This is your own shortcode from which the money will be deducted.",
+        "name": "PartyA"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The payment registration number (PRN) issued by KRA.",
+        "name": "AccountReference"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Any additional information to be associated with the transaction.",
+        "name": "Remarks"
+      },
+      {
+        "type": {
+          "names": [
+            "URL"
+          ]
+        },
+        "description": "A URL that will be used to notify your system in case the request times out before processing.",
+        "name": "QueueTimeOutURL"
+      },
+      {
+        "type": {
+          "names": [
+            "URL"
+          ]
+        },
+        "description": "A URL that will be used to send transaction results after processing.",
+        "name": "ResultURL"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 178,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mpesa/src"
+    },
+    "order": 8,
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a general HTTP request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "HTTP method to use",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource.",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Register a URL to receive payment notifications</caption>\nrequest(\"POST\", \"/mpesa/c2b/v1/registerurl\", \n {\n   \"ShortCode\": 600426,\n   \"ResponseType\": \"Completed\",\n   \"ConfirmationURL\": \"https://mydomain.com/confirmation\",\n   \"ValidationURL\": \"https://mydomain.com/validation\"\n });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 303,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mpesa/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 12,
+    "level": 0
+  },
+  {
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to the HTTP request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
+        "name": "errors"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of headers to append to the request.",
+        "name": "headers"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 12,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mpesa/src"
+    },
+    "order": 1,
+    "level": 0
+  },
+  {
+    "id": "stkPush",
+    "longname": "stkPush",
+    "name": "stkPush",
+    "kind": "function",
+    "scope": "global",
+    "description": "Initiate a STK pin prompt to a Safaricom mobile number.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "STKPushObject"
+          ]
+        },
+        "description": "The object that will be attached to the POST request body",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request object. Includes headers, error mappings and query params",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Initiate STK Push</caption>\nstkPush({\n    \"Amount\": 1,\n    \"PartyA\": 254708374149,\n    \"PartyB\": 174379,\n    \"PhoneNumber\": 254708374149,\n    \"CallBackURL\": \"https://mydomain.com/path\",\n    \"AccountReference\": \"CompanyXLTD\",\n    \"TransactionDesc\": \"Payment of X\"\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 55,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mpesa/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "STKPushObject",
+    "longname": "STKPushObject",
+    "name": "STKPushObject",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "STKPush request data object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Amount charged.",
+        "name": "Amount"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "The phone number that receives the STK push prompt. Expected to be a valid Safaricom Number that is M-pesa registered in the format 2547XXXXXXXX",
+        "name": "PartyA"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "The organization that receives the funds",
+        "name": "PartyB"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "The mobile number to receive the STK pin prompt",
+        "name": "PhoneNumber"
+      },
+      {
+        "type": {
+          "names": [
+            "URL"
+          ]
+        },
+        "description": "A valid secure URL that is used to receive notifications from M-Pesa API. It is the endpoint to which the results will be sent by M-Pesa API",
+        "name": "CallBackURL"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Along with the business name, this value is also displayed to the customer in the STK pin prompt message. Maximum of 12 characters",
+        "name": "AccountReference"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Any additional information/comment that can be sent along with the request from you system.",
+        "name": "TransactionDesc"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 22,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mpesa/src"
+    },
+    "order": 2,
+    "level": 0
+  },
+  {
+    "id": "TransactionStatusObject",
+    "longname": "TransactionStatusObject",
+    "name": "TransactionStatusObject",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Check transaction status data object.",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The name of the initiator initiating the request.",
+        "name": "Initiator"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Encrypted credential of the user getting transaction status.",
+        "name": "SecurityCredential"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Unique identifier to identify a transaction on Mpesa.",
+        "name": "TransactionID"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Organization/MSISDN receiving the transaction.",
+        "name": "PartyA"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Type of organization receiving the transaction. Example: \"4\" Orgnaization shortcode.",
+        "name": "IdentifierType"
+      },
+      {
+        "type": {
+          "names": [
+            "URL"
+          ]
+        },
+        "description": "The path that stores information of a transaction.",
+        "name": "ResultURL"
+      },
+      {
+        "type": {
+          "names": [
+            "URL"
+          ]
+        },
+        "description": "The path that stores information of timeout transaction.",
+        "name": "QueueTimeOutURL"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Comments that are sent along with the transaction.",
+        "name": "Remarks"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Optional parameter.",
+        "name": "Occassion"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 80,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/mpesa/src"
+    },
+    "order": 4,
+    "level": 0
+  }
+],
 {"name":"msgraph","adaptor":"@openfn/language-msgraph","version":"0.7.11","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#create\\\">create(resource, data, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, query, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getdrive\\\">getDrive(specifier, name, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#getfile\\\">getFile(pathOrId, options, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#getfolder\\\">getFolder(pathOrId, options, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#uploadfile\\\">uploadFile(resource, data, callback)</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#Utils_sheetToBuffer\\\">Utils.sheetToBuffer(rows, options)</a>\\n</dt>\\n</dl>\\n\\n\\n## Functions\\n### create\\n\\n<p><code>create(resource, data, callback) ⇒ Operation</code></p>\\n\\nCreate some resource in msgraph\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| resource | <code>string</code> | The type of entity that will be created |\\n| data | <code>object</code> | The data to create the new resource |\\n| callback | <code>function</code> | An optional callback function |\\n\\n**Example**\\n```js\\ncreate(\\\"applications\\\", {\\\"displayName\\\": \\\"My App\\\"})\\n```\\n\\n* * *\\n\\n### get\\n\\n<p><code>get(path, query, callback) ⇒ Operation</code></p>\\n\\nMake a GET request to msgraph resource\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| query | <code>object</code> | Query, Headers and Authentication parameters |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n**Example**\\n```js\\nget('sites/root/lists')\\n```\\n\\n* * *\\n\\n### getDrive\\n\\n<p><code>getDrive(specifier, name, [callback]) ⇒ Operation</code></p>\\n\\nGet a Drive or SharePoint document library. The drive metadata will be written\\nto state.drives, where it can be used by other adaptor functions.\\nPass { id } to get a drive by id or { id, owner } to get default drive for\\nsome parent resource, like a group\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| specifier | <code>Object</code> |  | A definition of the drive to retrieve    - id {string} - The ID of the resource or owner.    - owner {string} - The type of drive owner (e.g. sites, groups). |\\n| name | <code>string</code> |  | The local name of the drive used to write to state.drives, ie, state.drives[name] |\\n| [callback] | <code>function</code> | <code>s &#x3D;&gt; s</code> | (Optional) Callback function |\\n\\n**Example:** Get a drive by ID\\n```js\\ngetDrive({ id: \\\"YXzpkoLwR06bxC8tNdg71m\\\" })\\n```\\n**Example:** Get the default drive for a site\\n```js\\ngetDrive({ id: \\\"openfn.sharepoint.com\\\", owner: \\\"sites\\\" })\\n```\\n\\n* * *\\n\\n### getFile\\n\\n<p><code>getFile(pathOrId, options, [callback]) ⇒ Operation</code></p>\\n\\nGet file metadata or file content.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| pathOrId | <code>string</code> |  | A path to a file or file id |\\n| options | <code>object</code> |  | (Optional) Query parameters |\\n| [callback] | <code>function</code> | <code>s &#x3D;&gt; s</code> | (Optional) Callback function |\\n\\n**Example:** Get a file by ID\\n```js\\ngetFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW')\\n```\\n**Example:** Get a file for a named drive by id\\n```js\\ngetFile(\\\"01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW\\\",{ driveName: \\\"mydrive\\\"})\\n```\\n\\n* * *\\n\\n### getFolder\\n\\n<p><code>getFolder(pathOrId, options, [callback]) ⇒ Operation</code></p>\\n\\nGet the contents or metadata of a folder.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| pathOrId | <code>string</code> |  | A path to a folder or folder id |\\n| options | <code>object</code> |  | (Optional) Query parameters |\\n| [callback] | <code>function</code> | <code>s &#x3D;&gt; s</code> | (Optional) Callback function |\\n\\n**Example:** Get a folder by ID\\n```js\\ngetFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3')\\n```\\n**Example:** Get a folder for a named drive by id\\n```js\\ngetFolder(\\\"01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3\\\",{ driveName: \\\"mydrive\\\"})\\n```\\n\\n* * *\\n\\n### uploadFile\\n\\n<p><code>uploadFile(resource, data, callback) ⇒ Operation</code></p>\\n\\nUpload a file to a drive\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| resource | <code>Object</code> | Resource Object |\\n| [resource.driveId] | <code>String</code> | Drive Id |\\n| [resource.driveId] | <code>String</code> | Site Id |\\n| [resource.folderId] | <code>String</code> | Parent folder id |\\n| [resource.contentType] | <code>String</code> | Resource content-type |\\n| [resource.onConflict] | <code>String</code> | Specify conflict behavior if file with the same name exists. Can be \\\"rename | fail | replace\\\" |\\n| data | <code>Object</code> | A buffer containing the file. |\\n| callback | <code>function</code> | Optional callback function |\\n\\n**Example:** Upload Excel file to a drive using `driveId` and `parantItemId`\\n```js\\nuploadFile(\\n  state => ({\\n    driveId: state.driveId,\\n    folderId: state.folderId,\\n    fileName: `Tracker.xlsx`,\\n  }),\\n  state => state.buffer\\n);\\n```\\n**Example:** Upload Excel file to a SharePoint drive using `siteId` and `parantItemId`\\n```js\\nuploadFile(\\n  state => ({\\n    siteId: state.siteId,\\n    folderId: state.folderId,\\n    fileName: `Report.xlsx`,\\n  }),\\n  state => state.buffer\\n);\\n```\\n\\n* * *\\n\\n\\n## Utils\\n\\nThese functions belong to the Utils namespace.\\n### Utils.sheetToBuffer {#Utils_sheetToBuffer}\\n\\n<p><code>sheetToBuffer(rows, options) ⇒</code></p>\\n\\nThe function `sheetToBuffer` takes in rows, options and optional callback, It creates a workbook\\nand worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a\\nbuffer.\\n\\n**Returns**: a buffer containing the Excel file in `state.buffer`.  \\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| rows |  | The `rows` parameter is an array of objects representing the data to be written to the Excel sheet. Each object in the array represents a row in the sheet, and the keys of the object represent the column headers. The values of the object represent the data in each cell of the row. |\\n| options |  | The `options` parameter is an object that contains additional configuration options |\\n| [options.wsName] | <code>String</code> | Worksheet name i.e 32 Characters |\\n| [options.bookType] | <code>String</code> | File format of the exported file, Default is 'xlsx'. See [here](https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats) for the function. It can have the following properties: |\\n\\n**Example:** Create a buffer containing excel file with `xlsx` output format  \\n```js\\nsheetToBuffer('$.data[*]', {\\n wsName: 'Invalid Grant Codes',\\n bookType: 'xlsx',\\n});\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-msgraph <img src='assets/sq-256x256.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\n[Microsoft Graph API](https://learn.microsoft.com/en-us/graph/use-the-api).\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/msgraph-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/msgraph-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-msgraph\\n\\n## 0.7.11\\n\\n### Patch Changes\\n\\n- Updated dependencies [23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 0.7.10\\n\\n### Patch Changes\\n\\n- Updated dependencies [b3d7f59]\\n- Updated dependencies [2d709ff]\\n- Updated dependencies [41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 0.7.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 0.7.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [a47d8d5]\\n- Updated dependencies [9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 0.7.7\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 0.7.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 0.7.5\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus [33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 0.7.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 0.7.3\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 0.7.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 0.7.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [4c08444]\\n- Updated dependencies [73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 0.7.0\\n\\n### Minor Changes\\n\\n- 1d2a641: Normalize configuration keys for oauth. `access_token` and\\n  `accessToken` are now both supported (`access_token` is preferred)\\n\\n## 0.6.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 0.6.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 0.5.5\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 0.5.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [12f02ed5]\\n  - @openfn/language-common@1.13.4\\n\\n## 0.5.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 0.5.2\\n\\n### Patch Changes\\n\\n- Security updates (lodash,undici)\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 0.5.1\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.1\\n\\n## 0.5.0\\n\\n### Minor Changes\\n\\n- bae5d3b6: Add the cursor() function from common. See the job writing guide for\\n  more information.\\n\\n### Patch Changes\\n\\n- Updated dependencies [1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 0.4.0\\n\\n### Minor Changes\\n\\n- 4cd6587: Add `uploadFile` and `sheetToBuffer` function\\n\\n### Patch Changes\\n\\n- Updated dependencies [c19efbe]\\n  - @openfn/language-common@1.11.1\\n\\n## 0.3.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [85c35b8]\\n  - @openfn/language-common@1.11.0\\n\\n## 0.3.4\\n\\n### Patch Changes\\n\\n- 1c183e9: Fix getFile unit tests\\n\\n## 0.3.3\\n\\n### Patch Changes\\n\\n- b90e8a2: Add support for stream\\n- Updated dependencies [df09270]\\n  - @openfn/language-common@1.10.3\\n\\n## 0.3.2\\n\\n### Patch Changes\\n\\n- 9cc4952: fix url in request util\\n\\n## 0.3.1\\n\\n### Patch Changes\\n\\n- f45f477: Clean-up state before throwing an error\\n\\n## 0.3.0\\n\\n### Minor Changes\\n\\n- 9366e53: - Switch from `nodejs` default `fetch` to `undici` `fetch`\\n  - Added the following `sharepoint` functions\\n    - `getDrive()`\\n    - `getFolder()`\\n    - `getFile()`\\n\\n## 0.2.0\\n\\n### Minor Changes\\n\\n- d33c0ee: export parseCsv from common\\n\\n### Patch Changes\\n\\n- Updated dependencies [8c32eb3]\\n  - @openfn/language-common@1.10.1\\n\\n## 0.1.1\\n\\n### Patch Changes\\n\\n- aad9549: Ensure that standard OAuth2 credentials with snake-cased\\n  \\\"access_token\\\" keys can be used for OAuth2-reliant adaptors\\n- Updated dependencies [aad9549]\\n  - @openfn/language-common@1.10.0\\n\\n## 0.1.0\\n\\n### Minor Changes\\n\\n- 93d82a8: Add msgraph adaptor with get() and create() functions\\n\\n### Patch Changes\\n\\n- Updated dependencies [111807f]\\n  - @openfn/language-common@1.9.0\\n\"","functions":["create","get","getDrive","getFile","getFolder","uploadFile"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","$comment":"OAuth2","properties":{"apiVersion":{"title":"API Version","anyOf":[{"type":"string"},{"type":"null"}],"placeholder":"v1.0","description":"Microsoft Graph api version","minLength":1,"examples":["v1.0","beta"]},"access_token":{"title":"Access Token","type":"string","description":"Your Microsoft Graph access token","writeOnly":true,"minLength":1,"examples":["eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRl"]}},"type":"object","additionalProperties":true,"required":["access_token"]}},
 [
   {
