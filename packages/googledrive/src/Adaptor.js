@@ -1,9 +1,10 @@
-import fs from 'fs';
 import { logError } from './Utils';
 import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
+
+import { throwError } from '@openfn/language-common/util';
 
 import {
   normalizeOauthConfig,
@@ -11,6 +12,7 @@ import {
 } from '@openfn/language-common/util';
 
 import { google } from 'googleapis';
+import { Readable } from 'stream';
 
 let client = undefined;
 
@@ -71,63 +73,50 @@ export function execute(...operations) {
 }
 
 /**
- * Uploads a file to Google Drive with resumable upload support.
+ * Uploads a file to Google Drive.
  * @public
  * @example
  * create({
- *   filePath: '/path/to/file.txt',
- *   fileName: 'custom-name.txt', // optional
- *   folderId: 'drive-folder-id' // optional
+ *   fileString: 'base64-encoded-file-content',
+ *   fileName: 'custom-name.txt',
+ *   folderId: 'drive-folder-id'
  * })
- * @param {Object} params - File upload parameters
- * @param {string} params.filePath - Local path to the file to upload
- * @param {string} [params.fileName] - Custom name for the uploaded file
- * @param {string} [params.folderId] - ID of the parent folder
- * @returns {Operation} An operation that uploads the file
+ * @param {Object} params - File upload parameters.
+ * @param {string} params.fileString - Base64 encoded file content.
+ * @param {string} params.fileName - Name for the uploaded file.
+ * @param {string} [params.folderId] - ID of the parent folder.
+ * @returns {Function} An operation that uploads the file.
  */
 export function create(params) {
   return state => {
     const [resolvedParams] = expandReferences(state, params);
-    const { filePath, fileName, folderId } = resolvedParams;
+    const { fileString, fileName, folderId } = resolvedParams;
 
     const fileMetadata = {
-      name: fileName || filePath.split('/').pop(),
+      name: fileName,
       parents: folderId ? [folderId] : [],
     };
 
     const media = {
       mimeType: 'application/octet-stream',
-      body: fs.createReadStream(filePath),
+      body: Readable.from(Buffer.from(fileString, 'base64')),
     };
 
-    return new Promise((resolve, reject) => {
-      client.files.create(
-        {
-          requestBody: fileMetadata,
-          media: media,
-          fields: 'id,name,webViewLink,size,mimeType,createdTime',
-          uploadType: 'resumable',
-          supportsAllDrives: true, // Important for shared drives
-        },
-        (err, response) => {
-          if (err) {
-            logError(err);
-            if (err.code === 404) {
-              reject(new Error(`Parent folder not found (ID: ${folderId})`));
-            } else if (err.code === 403) {
-              reject(new Error('Permission denied for file creation'));
-            } else {
-              reject(err);
-            }
-          } else {
-            console.log('ID:', response.data.id);
-            console.log('Name:', response.data.name);
-            console.log('URL:', response.data.webViewLink);
-            resolve(composeNextState(state, response.data));
-          }
-        },
-      );
-    });
+    return client.files
+      .create({
+        requestBody: fileMetadata,
+        media: media,
+        fields: 'id,name,webViewLink,size,mimeType,createdTime',
+        uploadType: 'multipart',
+        supportsAllDrives: true,
+      })
+      .then(response => {
+        return composeNextState(state, response.data);
+      })
+      .catch(err => {
+        logError(err);
+        throw err;
+      });
   };
 }
 
@@ -135,107 +124,71 @@ export function create(params) {
  * Downloads a file from Google Drive.
  * @public
  * @example
- * get({
- *   fileId: 'drive-file-id',
- *   outputPath: '/path/to/save.txt'
- * })
- * @param {Object} params - File download parameters
- * @param {string} params.fileId - ID of the file to download
- * @param {string} params.outputPath - Local path to save the file
- * @returns {Operation} An operation that downloads the file
+ * get({ fileId: 'drive-file-id' })
+ * @param {Object} params - File download parameters.
+ * @param {string} params.fileId - ID of the file to download.
+ * @returns {Function} An operation that retrieves the file as a base64 string.
  */
 export function get(params) {
   return state => {
     const [resolvedParams] = expandReferences(state, params);
-    const { fileId, outputPath } = resolvedParams;
-    const dest = fs.createWriteStream(outputPath);
+    const { fileId } = resolvedParams;
 
-    return new Promise((resolve, reject) => {
-      client.files.get(
-        { fileId, alt: 'media' },
-        { responseType: 'stream' },
-        (err, response) => {
-          if (err) {
-            logError(err);
-            reject(err);
-            return;
-          }
-
-          response.data
-            .pipe(dest)
-            .on('finish', () => {
-              console.log(`Downloaded ${fileId} to ${outputPath}`);
-              resolve(composeNextState(state, { fileId, outputPath }));
-            })
-            .on('error', err => {
-              logError(err);
-              reject(err);
-            });
-        },
-      );
-    });
+    return client.files
+      .get({ fileId, alt: 'media' }, { responseType: 'arraybuffer' })
+      .then(response => {
+        const fileString = Buffer.from(response.data).toString('base64');
+        return composeNextState(state, { fileId, fileString });
+      })
+      .catch(err => {
+        logError(err);
+        throw err;
+      });
   };
 }
 
 /**
- * Updates an existing file in Google Drive with resumable upload support.
+ * Updates an existing file in Google Drive.
  * @public
  * @example
  * update({
  *   fileId: 'existing-file-id',
- *   filePath: '/path/to/new-content.txt',
- *   fileName: 'updated-name.txt' // optional
+ *   fileString: 'base64-encoded-file-content',
+ *   fileName: 'updated-name.txt'
  * })
- * @param {Object} params - File update parameters
- * @param {string} params.fileId - ID of the file to update
- * @param {string} params.filePath - Local path to the new content
- * @param {string} [params.fileName] - New name for the file
- * @returns {Operation} An operation that updates the file
+ * @param {Object} params - File update parameters.
+ * @param {string} params.fileId - ID of the file to update.
+ * @param {string} params.fileString - Base64 encoded new content.
+ * @param {string} [params.fileName] - New name for the file.
+ * @returns {Function} An operation that updates the file.
  */
 export function update(params) {
   return state => {
     const [resolvedParams] = expandReferences(state, params);
-    const { fileId, filePath, fileName } = resolvedParams;
+    const { fileId, fileString, fileName } = resolvedParams;
 
-    const fileMetadata = {
-      name: fileName || filePath.split('/').pop(),
-    };
-
+    const fileMetadata = { name: fileName };
     const media = {
       mimeType: 'application/octet-stream',
-      body: fs.createReadStream(filePath),
+      body: Readable.from(Buffer.from(fileString, 'base64')),
     };
 
-    return new Promise((resolve, reject) => {
-      client.files.update(
-        {
-          fileId,
-          requestBody: fileMetadata,
-          media: media,
-          fields: 'id,name,webViewLink,size',
-          uploadType: 'resumable',
-          supportsAllDrives: true, // Important for shared drives
-        },
-        (err, response) => {
-          if (err) {
-            logError(err);
-            if (err.code === 404) {
-              reject(new Error(`File not found (ID: ${fileId})`));
-            } else if (err.code === 403) {
-              reject(new Error('Permission denied for file update'));
-            } else {
-              reject(err);
-            }
-          } else {
-            console.log('Successfully updated file:');
-            console.log('ID:', response.data.id);
-            console.log('Name:', response.data.name);
-            console.log('URL:', response.data.webViewLink);
-            resolve(composeNextState(state, response.data));
-          }
-        },
-      );
-    });
+    return client.files
+      .update({
+        fileId,
+        requestBody: fileMetadata,
+        media: media,
+        fields: 'id,name,webViewLink,size',
+        uploadType: 'multipart',
+        supportsAllDrives: true,
+      })
+      .then(response => {
+        return composeNextState(state, response.data);
+      })
+      .catch(err => {
+        logError(err);
+        throw err;
+      });
   };
 }
 

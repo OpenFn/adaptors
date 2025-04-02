@@ -6,7 +6,7 @@
         "params"
       ],
       "docs": {
-        "description": "Uploads a file to Google Drive with resumable upload support.",
+        "description": "Uploads a file to Google Drive.",
         "tags": [
           {
             "title": "public",
@@ -15,11 +15,11 @@
           },
           {
             "title": "example",
-            "description": "create({\n  filePath: '/path/to/file.txt',\n  fileName: 'custom-name.txt', // optional\n  folderId: 'drive-folder-id' // optional\n})"
+            "description": "create({\n  fileString: 'base64-encoded-file-content',\n  fileName: 'custom-name.txt',\n  folderId: 'drive-folder-id'\n})"
           },
           {
             "title": "param",
-            "description": "File upload parameters",
+            "description": "File upload parameters.",
             "type": {
               "type": "NameExpression",
               "name": "Object"
@@ -28,28 +28,25 @@
           },
           {
             "title": "param",
-            "description": "Local path to the file to upload",
+            "description": "Base64 encoded file content.",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "params.filePath"
+            "name": "params.fileString"
           },
           {
             "title": "param",
-            "description": "Custom name for the uploaded file",
+            "description": "Name for the uploaded file.",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
+              "type": "NameExpression",
+              "name": "string"
             },
             "name": "params.fileName"
           },
           {
             "title": "param",
-            "description": "ID of the parent folder",
+            "description": "ID of the parent folder.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -61,10 +58,10 @@
           },
           {
             "title": "returns",
-            "description": "An operation that uploads the file",
+            "description": "An operation that uploads the file.",
             "type": {
               "type": "NameExpression",
-              "name": "Operation"
+              "name": "Function"
             }
           }
         ]
@@ -86,11 +83,11 @@
           },
           {
             "title": "example",
-            "description": "get({\n  fileId: 'drive-file-id',\n  outputPath: '/path/to/save.txt'\n})"
+            "description": "get({ fileId: 'drive-file-id' })"
           },
           {
             "title": "param",
-            "description": "File download parameters",
+            "description": "File download parameters.",
             "type": {
               "type": "NameExpression",
               "name": "Object"
@@ -99,7 +96,7 @@
           },
           {
             "title": "param",
-            "description": "ID of the file to download",
+            "description": "ID of the file to download.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -107,20 +104,11 @@
             "name": "params.fileId"
           },
           {
-            "title": "param",
-            "description": "Local path to save the file",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "params.outputPath"
-          },
-          {
             "title": "returns",
-            "description": "An operation that downloads the file",
+            "description": "An operation that retrieves the file as a base64 string.",
             "type": {
               "type": "NameExpression",
-              "name": "Operation"
+              "name": "Function"
             }
           }
         ]
@@ -133,7 +121,7 @@
         "params"
       ],
       "docs": {
-        "description": "Updates an existing file in Google Drive with resumable upload support.",
+        "description": "Updates an existing file in Google Drive.",
         "tags": [
           {
             "title": "public",
@@ -142,11 +130,11 @@
           },
           {
             "title": "example",
-            "description": "update({\n  fileId: 'existing-file-id',\n  filePath: '/path/to/new-content.txt',\n  fileName: 'updated-name.txt' // optional\n})"
+            "description": "update({\n  fileId: 'existing-file-id',\n  fileString: 'base64-encoded-file-content',\n  fileName: 'updated-name.txt'\n})"
           },
           {
             "title": "param",
-            "description": "File update parameters",
+            "description": "File update parameters.",
             "type": {
               "type": "NameExpression",
               "name": "Object"
@@ -155,7 +143,7 @@
           },
           {
             "title": "param",
-            "description": "ID of the file to update",
+            "description": "ID of the file to update.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -164,16 +152,16 @@
           },
           {
             "title": "param",
-            "description": "Local path to the new content",
+            "description": "Base64 encoded new content.",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "params.filePath"
+            "name": "params.fileString"
           },
           {
             "title": "param",
-            "description": "New name for the file",
+            "description": "New name for the file.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -185,10 +173,10 @@
           },
           {
             "title": "returns",
-            "description": "An operation that updates the file",
+            "description": "An operation that updates the file.",
             "type": {
               "type": "NameExpression",
-              "name": "Operation"
+              "name": "Function"
             }
           }
         ]

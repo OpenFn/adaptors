@@ -29,7 +29,6 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "@openfn/language-http": "workspace:*",
     "googleapis": "100.0.0"
   },
   "devDependencies": {
