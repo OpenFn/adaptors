@@ -91,7 +91,6 @@ describe('Adaptor', () => {
     const qsResponse = {
       done: true,
       totalSize: 1,
-      totalFetched: 1,
       records: [{ Name: 'OpenFn' }],
     };
     const connectionConfig = config => ({
@@ -109,7 +108,6 @@ describe('Adaptor', () => {
           done: config.done || false,
           records: config.records || [],
           totalSize: config.totalSize || 0,
-          totalFetched: config.totalFetched || 0,
         };
       },
     });
@@ -122,7 +120,6 @@ describe('Adaptor', () => {
       const connection = connectionConfig({
         done: true,
         totalSize: 1,
-        totalFetched: 1,
         records: [{ Name: 'OpenFn' }],
         validateQuery: query => {
           expect(query).to.eq('select Name from Account');
@@ -142,18 +139,18 @@ describe('Adaptor', () => {
       const connection = connectionConfig({
         done: true,
         totalSize: 0,
-        totalFetched: 0,
         records: [],
       });
       setMockConnection(connection);
 
       const state = {};
-      const result = await query('select Name from Account')(state);
+      const result = await query(
+        'select Name from Account where Name = "invalid"'
+      )(state);
 
       expect(result.data).to.eql({
         done: true,
         totalSize: 0,
-        totalFetched: 0,
         records: [],
       });
     });
@@ -162,18 +159,17 @@ describe('Adaptor', () => {
       const connection = connectionConfig({
         done: true,
         totalSize: 1,
-        totalFetched: 1,
         records: [{ Name: 'OpenFn' }],
       });
       setMockConnection(connection);
 
       const state = {};
-      const result = await query('select Name from Account')(state);
+      const result = await query('select Name from Account limit 1')(state);
 
       expect(result.data).to.eql(qsResponse);
     });
 
-    it('should fetch all pages if autoFetch is true', async () => {
+    it('should fetch all pages if limit is false', async () => {
       const mockRecords = Array(10001)
         .fill()
         .map((_, i) => ({
@@ -184,26 +180,23 @@ describe('Adaptor', () => {
       const connection = connectionConfig({
         done: true,
         totalSize: mockRecords.length,
-        totalFetched: mockRecords.length,
         records: mockRecords,
         validateOptions: options => {
-          expect(options.autoFetch).to.eq(true);
+          expect(options.maxFetch).to.eq(Infinity);
         },
       });
       setMockConnection(connection);
 
       const state = {};
       const result = await query('select Name from Account', {
-        autoFetch: true,
+        limit: false,
       })(state);
-
       expect(result.data.records.length).to.eq(10001);
       expect(result.data.done).to.eq(true);
       expect(result.data.totalSize).to.eq(10001);
-      expect(result.data.totalFetched).to.eq(10001);
     });
 
-    it('should not fetch another page if autofetch is false', async () => {
+    it('should not fetch another page if limit is applied', async () => {
       const mockRecords = Array(2000)
         .fill()
         .map((_, i) => ({
@@ -212,24 +205,25 @@ describe('Adaptor', () => {
         }));
 
       const connection = connectionConfig({
+        done: false,
         totalSize: 5000,
-        totalFetched: 2000,
         records: mockRecords,
         validateOptions: options => {
-          expect(options.autoFetch).to.eq(false);
+          expect(options.maxFetch).to.eq(2000);
         },
+        nextRecordsUrl: 'services/data/v50.0/query/0r8xx44Rcpi7M4DAEU-2000',
       });
       setMockConnection(connection);
 
       const state = {};
       const result = await query('SELECT Id FROM Account', {
-        autoFetch: false,
+        limit: 2000,
       })(state);
 
       expect(result.data.done).to.eq(false);
       expect(result.data.records.length).to.eq(2000);
       expect(result.data.totalSize).to.eq(5000);
-      expect(result.data.totalFetched).to.eq(2000);
+      expect(result.data.nextRecordsUrl);
     });
 
     it('should handle query errors', async () => {

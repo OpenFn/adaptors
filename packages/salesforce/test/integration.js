@@ -99,22 +99,23 @@ describe('Integration tests', () => {
     }).timeout(5000);
 
     it('should return maximum of 10000 records by default', async () => {
-      const { data } = await execute(
-        query('SELECT Id, Name FROM Account', { autoFetch: true })
-      )(state);
+      const { data } = await execute(query('SELECT Id, Name FROM Account'))(
+        state
+      );
       expect(data.done).to.eq(true);
       expect(data.totalSize).to.greaterThan(2000);
       expect(data.totalSize).to.lessThanOrEqual(10000);
     }).timeout(10000);
 
-    it('should return maximum of 2000 records if autoFetch is false', async () => {
+    it('should return maximum of 2000 records if limit is 2000', async () => {
       const { data } = await execute(
-        query('SELECT Id, Name FROM Account', { autoFetch: false })
+        query('SELECT Id, Name FROM Account', { limit: 2000 })
       )(state);
+
       expect(data.done).to.eq(false);
-      expect(data.totalFetched).to.eq(2000);
       expect(data.totalSize).to.greaterThan(2000);
       expect(data.totalSize).to.lessThanOrEqual(10000);
+      expect(data.nextRecordsUrl);
     }).timeout(10000);
   });
 
