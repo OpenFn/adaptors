@@ -516,40 +516,35 @@ export function insert(sObjectName, records) {
  *
  * @public
  * @example <caption>Run a query and download all matching records</caption>
- * query('SELECT Id FROM Patient__c', { autoFetch: true });
+ * query('SELECT Id FROM Patient__c', { limit: false });
  * @example <caption>Query patients by Health ID</caption>
  * query(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);
  * @example <caption>Query patients by Health ID using a lazy state reference</caption>
  * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
  * @function
  * @param {string} query - A SOQL query string. Must be less than 4000 characters in WHERE clause
- * @param {object} [options] - Optional query options, {@link https://jsforce.github.io/jsforce/types/query.QueryOptions.html query options}
+ * @param {object} [options] - Query options
+ * @param {number} [options.limit=10000] - Maximum number of records to fetch. If `limit: false`, no limit will be applied.
  * @state {SalesforceState}
  * @property data - Array of result objects of the form <code>\{ done, totalSize, records \}</code>
  * @returns {Operation}
  */
 export function query(query, options) {
   return async state => {
-    const [
-      resolvedQuery,
-      resolvedOptions = { autoFetch: false, maxFetch: 10000 },
-    ] = expandReferences(state, query, options);
+    const [resolvedQuery, resolvedOptions = { limit: 10000 }] =
+      expandReferences(state, query, options);
     console.log(`Executing query: ${resolvedQuery}`);
-    const { autoFetch, maxFetch } = resolvedOptions;
+    const { limit } = resolvedOptions;
 
-    if (autoFetch) {
-      console.log(
-        `autoFetch is enabled: A maximum of ${maxFetch} records will be downloaded`
-      );
-    }
+    const result = await connection.query(resolvedQuery, {
+      autoFetch: true,
+      maxFetch: !limit ? Infinity : limit,
+    });
 
-    const result = await connection.query(resolvedQuery, resolvedOptions);
-    const totalFetched = result.records.length;
+    console.log('Fetched: ' + result.records.length);
+    console.log('Total: ' + result.totalSize);
 
-    console.log('Fetched : ' + totalFetched);
-    console.log('Total : ' + result.totalSize);
-
-    return composeNextState(state, { ...result, totalFetched });
+    return composeNextState(state, result);
   };
 }
 
