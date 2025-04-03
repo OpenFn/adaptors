@@ -148,12 +148,10 @@ export function getContentsFromMessages(options) {
       }
     } while (nextPageToken);
 
-    const nextState = {
+    return {
       ...composeNextState(state, contents),
       processedIds: newIds,
     };
-
-    return nextState;
   };
 }
 

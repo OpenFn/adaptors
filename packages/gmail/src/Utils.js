@@ -138,12 +138,16 @@ export async function sendMessageWithAttachments(message) {
   const rawMessage = lines.join('\r\n');
   const encodedMessage = encodeEmail(rawMessage);
 
-  const result = await gmail.users.messages.send({
-    userId: 'me',
-    requestBody: { raw: encodedMessage },
-  });
+  try {
+    const result = await gmail.users.messages.send({
+      userId: 'me',
+      requestBody: { raw: encodedMessage },
+    });
 
-  return result.data;
+    return result.data;
+  } catch (error) {
+    throw new Error('Error fetching messages: ' + error.message);
+  }
 }
 
 function encodeEmail(email) {
@@ -185,8 +189,10 @@ async function createArchiveFromFiles(files) {
   const zip = new JSZip();
 
   for (const file of files) {
-    const content = await Promise.resolve(file.content);
-    zip.file(file.filename, content);
+    zip.file(file.filename, file.content, {
+      compression: 'DEFLATE',
+      compressionOptions: { level: 9 },
+    });
   }
 
   return await zip.generateAsync({ type: 'base64' });
