@@ -520,7 +520,7 @@
           },
           {
             "title": "example",
-            "description": "query('SELECT Id FROM Patient__c', { autoFetch: true });",
+            "description": "query('SELECT Id FROM Patient__c', { limit: false });",
             "caption": "Run a query and download all matching records"
           },
           {
@@ -549,7 +549,7 @@
           },
           {
             "title": "param",
-            "description": "Optional query options, {@link https://jsforce.github.io/jsforce/types/query.QueryOptions.html query options}",
+            "description": "Query options",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -560,12 +560,25 @@
             "name": "options"
           },
           {
+            "title": "param",
+            "description": "Maximum number of records to fetch. If `limit: false`, no limit will be applied.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.limit",
+            "default": "10000"
+          },
+          {
             "title": "state",
             "description": "{SalesforceState}"
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "upsert",
