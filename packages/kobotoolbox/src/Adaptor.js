@@ -1,8 +1,5 @@
-import {
-  execute as commonExecute,
-  composeNextState,
-} from '@openfn/language-common';
-import { expandReferences, logResponse } from '@openfn/language-common/util';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 
 import * as util from './util';
 
@@ -70,6 +67,10 @@ export function getForms() {
  * @public
  * @param {string} formId - Form Id to get the specific submissions
  * @param {object} [options={}] - Optional query params for the request
+ * @param {object} [options.query] - Query parameters to filter the submissions
+ * @param {number} [options.limit=10000] - Maximum number of submissions to fetch
+ * @param {number} [options.pageSize=1000] - Number of submissions to fetch per page
+ * @param {number} [options.start=0] - Starting index for pagination
  * @state data - an array of submission objects
  * @returns {Operation}
  */
@@ -92,15 +93,15 @@ export function getSubmissions(formId, options) {
       }
     }
 
-    const { body } = await util.paginateRequest(state, 'GET', url, {
+    const response = await util.paginateRequest(state, 'GET', url, {
       query: { ...qs },
       limit,
       pageSize,
       start,
     });
 
-    console.log('✓', body?.results?.length, 'submissions fetched.');
-    return composeNextState(state, body);
+    console.log('✓', response.body?.results?.length, 'submissions fetched.');
+    return util.prepareNextState(state, response);
   };
 }
 
