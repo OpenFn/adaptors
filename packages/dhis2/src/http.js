@@ -24,7 +24,7 @@ import * as util from './Utils';
  * - This can be used to get `DataValueSets`,`events`,`trackers`,`etc.`
  * @public
  * @function
- * @param {string} resourceType - The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.
+ * @param {string} path - Path to resource(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request
  * @state {Dhis2State}
  * @returns {Operation}
@@ -57,13 +57,13 @@ import * as util from './Utils';
  *   parseAs: 'base64',
  * });
  */
-export function get(resourceType, options = {}) {
+export function get(path, options = {}) {
   return async state => {
     console.log('Preparing get operation...');
 
-    const [resolvedResourceType, resolvedOptions] = expandReferences(
+    const [resolvedPath, resolvedOptions] = expandReferences(
       state,
-      resourceType,
+      path,
       options
     );
 
@@ -74,7 +74,7 @@ export function get(resourceType, options = {}) {
       path: util.prefixVersionToPath(
         state.configuration,
         resolvedOptions,
-        resolvedResourceType
+        resolvedPath
       ),
       options: resolvedOptions,
     });
@@ -82,7 +82,7 @@ export function get(resourceType, options = {}) {
     if (parseAs === 'base64') {
       response.body = encode(response.body);
     }
-    console.log(`Retrieved ${resolvedResourceType}`);
+    console.log(`Retrieved ${resolvedPath}`);
 
     return util.handleResponse(response, state);
   };
@@ -93,8 +93,8 @@ export function get(resourceType, options = {}) {
  * This can be used to create `DataValueSets`,`events`,`trackers`,etc.
  * @public
  * @function
- * @param {string} resourceType - Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ...
- * @magic resourceType $.children.resourceTypes[*]
+ * @param {string} path - Path to resource. E.g. `trackedEntities`, `programs`, `events`, ...
+ * @magic path $.children.resourceTypes[*]
  * @param {Dhis2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
  * @state {Dhis2State}
@@ -110,12 +110,16 @@ export function get(resourceType, options = {}) {
  *   ],
  * });
  */
-export function post(resourceType, data, options = {}) {
+export function post(path, data, options = {}) {
   return async state => {
     console.log('Preparing post operation...');
 
-    const [resolvedResourceType, resolvedOptions, resolvedData] =
-      expandReferences(state, resourceType, options, data);
+    const [resolvedPath, resolvedOptions, resolvedData] = expandReferences(
+      state,
+      path,
+      options,
+      data
+    );
 
     const { configuration } = state;
     let response;
@@ -125,13 +129,13 @@ export function post(resourceType, data, options = {}) {
       path: util.prefixVersionToPath(
         configuration,
         resolvedOptions,
-        resolvedResourceType
+        resolvedPath
       ),
       options: resolvedOptions,
       data: resolvedData,
     });
 
-    console.log(`Created ${resolvedResourceType}`);
+    console.log(`Created ${resolvedPath}`);
     return util.handleResponse(response, state);
   };
 }
