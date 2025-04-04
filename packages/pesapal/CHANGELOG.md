@@ -2,4 +2,4 @@
 
 ## 1.0.0
 
-Initial release.
+Implement `get`, `post` and `request` for the pesapal adaptor
