@@ -16,6 +16,7 @@ import {
 /**
  * State object
  * @typedef {Object} Dhis2State
+ * @private
  * @property data - The response body (as JSON)
  * @property response - The HTTP response from the Dhis2 server (excluding the body)
  * @property references - An array of all previous data objects used in the Job
