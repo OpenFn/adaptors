@@ -1,8 +1,6 @@
-import chai from 'chai';
-const { expect } = chai;
+import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { request } from '../src/Utils';
-
+import { request, paginateRequest } from '../src/util';
 import { http } from '../src';
 
 import {
@@ -276,7 +274,7 @@ describe('http.post', () => {
 describe('getSubmissions', () => {
   const formId = 'aXecHjmbATuF6iGFmvBLBX';
 
-  it('should get a list of submissions', async () => {
+  it.only('should get a list of submissions', async () => {
     testServer
       .intercept({
         path: `/api/v2/assets/${formId}/data/`,
@@ -293,7 +291,8 @@ describe('getSubmissions', () => {
         { ...jsonHeaders }
       );
     const state = { configuration };
-    const { data } = await execute(getSubmissions(formId))(state);
+    const { data, response } = await execute(getSubmissions(formId))(state);
+    console.log({ data, response });
     expect(data[0]['First_Name_of_Patient']).to.eql('Kwothe');
   });
 
