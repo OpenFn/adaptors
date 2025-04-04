@@ -30,9 +30,9 @@ import * as util from './util';
  * @state {KoboToolboxHttpState}
  * @returns {operation}
  */
-export function get(path, options = {}) {
+export function get(path, options) {
   return async state => {
-    const [resolvedPath, resolvedOptions] = expandReferences(
+    const [resolvedPath, resolvedOptions = {}] = expandReferences(
       state,
       path,
       options
@@ -67,9 +67,9 @@ export function get(path, options = {}) {
  * @state {KoboToolboxHttpState}
  * @returns {operation}
  */
-export function post(path, data, options = {}) {
+export function post(path, data, options) {
   return async state => {
-    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
+    const [resolvedPath, resolvedData, resolvedOptions = {}] = expandReferences(
       state,
       path,
       data,
@@ -109,9 +109,9 @@ export function post(path, data, options = {}) {
  * @state {KoboToolboxHttpState}
  * @returns {operation}
  */
-export function put(path, data, options = {}) {
+export function put(path, data, options) {
   return async state => {
-    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
+    const [resolvedPath, resolvedData, resolvedOptions = {}] = expandReferences(
       state,
       path,
       data,
