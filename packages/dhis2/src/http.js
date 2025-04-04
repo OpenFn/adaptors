@@ -20,7 +20,7 @@ import * as util from './Utils';
  */
 
 /**
- * Get data. Generic helper method for getting data of any kind from DHIS2.
+ * Get data. HTTP helper method for getting data of any kind from DHIS2.
  * - This can be used to get `DataValueSets`,`events`,`trackers`,`etc.`
  * @public
  * @function
@@ -89,7 +89,7 @@ export function get(resourceType, options = {}) {
 }
 
 /**
- * Post data. Generic helper method for posting data of any kind to DHIS2.
+ * Post data. HTTP helper method for posting data of any kind to DHIS2.
  * This can be used to create `DataValueSets`,`events`,`trackers`,etc.
  * @public
  * @function
@@ -137,7 +137,7 @@ export function post(resourceType, data, options = {}) {
 }
 
 /**
- * Patch a record. A generic helper function to send partial updates on one or more object properties.
+ * Patch a record. A HTTP helper function to send partial updates on one or more object properties.
  * - You are not required to send the full body of object properties.
  * - This is useful for cases where you don't want or need to update all properties on a object.
  * @public
