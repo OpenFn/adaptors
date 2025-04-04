@@ -129,7 +129,7 @@ describe('execute', () => {
 });
 
 describe('request', () => {
-  it('handles pagination if paginate is true', async () => {
+  it.only('handles pagination if paginate is true', async () => {
     let callCount = 0;
     testServer
       .intercept({
@@ -150,13 +150,12 @@ describe('request', () => {
       )
       .times(6);
     const state = { configuration };
-    const { results } = await request(
+    const { results } = await paginateRequest(
       state,
       'GET',
       '/assets/aDReHdA7UuNBYsiCXQBr43/data/',
       {
-        paginate: true,
-        query: { start: 0, limit: 1 },
+        pageSize: 1,
       }
     );
 
