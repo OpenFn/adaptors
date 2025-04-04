@@ -196,8 +196,6 @@ export async function request(method, fullUrlOrPath, options = {}) {
     origin: baseUrl,
   });
 
-  
-
   const statusText = getReasonPhrase(response.statusCode);
 
   await assertOK(response, errors, url, method, startTime);
