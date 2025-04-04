@@ -2,9 +2,9 @@ import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import { expandReferences, logResponse } from '@openfn/language-common/util';
 
-import * as util from './Utils';
+import * as util from './util';
 
 /**
  * Options object
@@ -52,11 +52,11 @@ export function execute(...operations) {
 export function getForms() {
   return async state => {
     const url = `/assets/?asset_type=survey`;
+    const { body } = await util.request(state, 'GET', url, {});
 
-    const response = await util.request(state, 'GET', url, {});
+    console.log('✓', body.results?.length, 'forms fetched.');
 
-    console.log('✓', response.body.results.length, 'forms fetched.');
-    return util.prepareNextState(state, response);
+    return composeNextState(state, body);
   };
 }
 
@@ -73,31 +73,34 @@ export function getForms() {
  * @state data - an array of submission objects
  * @returns {Operation}
  */
-export function getSubmissions(formId, options = {}) {
+export function getSubmissions(formId, options) {
   return async state => {
-    const [resolvedFormId, resolvedOptions] = expandReferences(
+    const [resolvedFormId, resolvedOptions = {}] = expandReferences(
       state,
       formId,
       options
     );
 
+    const { query, limit, pageSize, start } = resolvedOptions;
     const url = `/assets/${resolvedFormId}/data/`;
-    const query = {};
-    if (resolvedOptions.query) {
-      if (typeof resolvedOptions.query == 'string') {
-        query.query = resolvedOptions.query;
+    const qs = {};
+    if (query) {
+      if (typeof query === 'string') {
+        qs.query = query;
       } else {
-        query.query = JSON.stringify(resolvedOptions.query);
+        qs.query = JSON.stringify(query);
       }
     }
 
-    const { results } = await util.request(state, 'GET', url, {
-      paginate: true,
-      query,
+    const { body } = await util.paginateRequest(state, 'GET', url, {
+      query: { ...qs },
+      limit,
+      pageSize,
+      start,
     });
 
-    console.log('✓', results.length, 'submissions fetched.');
-    return composeNextState(state, results);
+    console.log('✓', body?.results?.length, 'submissions fetched.');
+    return composeNextState(state, body);
   };
 }
 
