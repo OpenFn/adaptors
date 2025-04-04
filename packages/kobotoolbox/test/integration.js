@@ -36,7 +36,7 @@ describe('Integration tests', () => {
       }).timeout(5000);
     });
     describe('get', () => {
-      it.only('should throw an error if path is absolute', async () => {
+      it('should throw an error if path is absolute', async () => {
         try {
           await execute(http.get('https://www.google.com'))(state);
         } catch (error) {
@@ -47,7 +47,7 @@ describe('Integration tests', () => {
         }
       }).timeout(5000);
 
-      it.only('fetches submission data with a query', async () => {
+      it('fetches submission data with a query', async () => {
         const { data } = await execute(
           http.get('/assets/aUe2eV8pHK9DUEUxT9rCcs/data/', {
             query: {
@@ -73,14 +73,14 @@ describe('Integration tests', () => {
   });
 
   describe('getSubmissions', () => {
-    it.skip('should get a list of submissions', async () => {
-      const { data, response } = await execute(
-        getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', { limit: 3 })
+    it.only('should get a list of submissions', async () => {
+      const { data } = await execute(
+        getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', { pageSize: 3 })
       )(state);
 
-      console.log({ data, response });
+      console.log({ data });
       // expect(data.length).to.eq(2);
-    }).timeout(5000);
+    }).timeout(50000);
   });
 
   describe('getDeploymentInfo', () => {
