@@ -37,14 +37,6 @@ import * as util from './Utils';
  *   fields: '*',
  * }
  * });
- * @example <caption>Get all programs for an organization unit</caption>
- * http.get('programs', { query : { orgUnit: 'TSyzvBiovKh', fields: '*' } });
- * @example <caption>Get a single tracked entity given the provided ID. See [TrackedEntities docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities)</caption>
- * http.get('tracker/trackedEntities/F8yKM85NbxW');
- * @example <caption>Get an enrollment given the provided ID. See [Enrollment docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments)</caption>
- * http.get('tracker/enrollments/abcd');
- * @example <caption>Get all events matching given criteria. See [Events docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents)</caption>
- * http.get('tracker/events');
  * @example <caption>Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See [Relationships docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships)</caption>
  * http.get('tracker/relationships', {
  *   query: { trackedEntity:['F8yKM85NbxW'] }
