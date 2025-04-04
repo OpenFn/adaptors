@@ -1,5 +1,6 @@
 import chai from 'chai';
-import { execute, create, update, get, upsert, patch } from '../src/Adaptor';
+import { execute, create, update, upsert } from '../src/Adaptor';
+import { get, post, request, patch } from '../src/http';
 import { dataValue } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import {
@@ -298,9 +299,9 @@ describe('post', () => {
         message: 'the response',
       });
 
-    const finalState = await execute(
-      create('tracker', { events: [state.data] })
-    )(state);
+    const finalState = await execute(post('tracker', { events: [state.data] }))(
+      state
+    );
 
     expect(finalState.data).to.eql({
       httpStatus: 'OK',
@@ -320,7 +321,7 @@ describe('post', () => {
       });
 
     const finalState = await execute(
-      create('tracker', {
+      post('tracker', {
         relationships: [
           {
             program: 'abc',
@@ -328,6 +329,78 @@ describe('post', () => {
           },
         ],
       })
+    )(state);
+
+    expect(finalState.data).to.eql({
+      httpStatus: 'OK',
+      message: 'the response',
+    });
+  });
+});
+
+describe('request', () => {
+  const state = {
+    configuration,
+    data: {
+      program: 'program1',
+      orgUnit: 'org50',
+      trackedEntityType: 'nEenWmSyUEp',
+      status: 'COMPLETED',
+      date: '02-02-20',
+    },
+  };
+
+  it('should create a tracker resource', async () => {
+    testServer
+      .intercept({
+        path: getPath('tracker'),
+        method: 'POST',
+        query: {
+          importStrategy: 'CREATE',
+        },
+      })
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'the response',
+      });
+
+    const finalState = await execute(
+      request('POST', 'tracker', {
+        data: {
+          orgUnit: 'TSyzvBiovKh',
+          trackedEntityType: 'nEenWmSyUEp',
+          attributes: [
+            {
+              attribute: 'w75KJ2mc4zz',
+              value: 'Qassime',
+            },
+          ],
+        },
+        query: {
+          importStrategy: 'CREATE',
+        },
+      })
+    )(state);
+
+    expect(finalState.data).to.eql({
+      httpStatus: 'OK',
+      message: 'the response',
+    });
+  });
+
+  it('should get a trackedEntity', async () => {
+    testServer
+      .intercept({
+        path: getPath('tracker/trackedEntities/F8yKM85NbxW'),
+        method: 'GET',
+      })
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'the response',
+      });
+
+    const finalState = await execute(
+      request('GET', 'tracker/trackedEntities/F8yKM85NbxW')
     )(state);
 
     expect(finalState.data).to.eql({
@@ -409,7 +482,7 @@ describe('patch', () => {
     },
   };
 
-  it('should make an authenticated PUT to the right url', async () => {
+  it('should make an authenticated PATCH to the right url', async () => {
     testServer
       .intercept({
         path: getPath('dataValueSets/AsQj6cDsUq4'),
