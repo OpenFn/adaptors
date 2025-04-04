@@ -1,5 +1,11 @@
 # @openfn/language-satusehat
 
+## 2.0.11
+
+### Patch Changes
+
+- cfaba6d: Export `util.uuid` from `common`
+
 ## 2.0.10
 
 ### Patch Changes
