@@ -11,7 +11,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "get(\"patients\");"
+            "description": "get('URLSetup/GetIpnList')",
+            "caption": "Get all registered IPN URLs for a merchant"
           },
           {
             "title": "function",
@@ -65,11 +66,12 @@
         "options"
       ],
       "docs": {
-        "description": "Make a POST request",
+        "description": "Make a POST request to Pesapal",
         "tags": [
           {
             "title": "example",
-            "description": "post(\"patient\", { \"name\": \"Bukayo\" });"
+            "description": "post('Transactions/SubmitOrderRequest', \n{\n\"id\": \"TEST-05\",\n\"currency\": \"KES\",\n\"amount\": \"1\",\n\"description\": \"Testing\",\n\"callback_url\": \"https://www.myapplication.com/response-page\",\n\"notification_id\": \"fe078e53-78da-4a83-aa89-e7ded5c456e6\",\n\"billing_address\": {\n\"email_address\": \"john.doe@example.com\",\n\"phone_number\": \"0712xxxxxx\",\n\"country_code\": \"\",\n\"first_name\": \"Doe\",\n\"middle_name\": \"\",\n\"last_name\": \"John\",\n\"line_1\": \"\",\n\"line_2\": \"\",\n\"city\": \"\",\n\"state\": \"\",\n\"postal_code\": \"\",\n\"zip_code\": \"\"\n}\n})",
+            "caption": "Send an order request"
           },
           {
             "title": "function",
@@ -137,7 +139,13 @@
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", \"patient\", { \"name\": \"Bukayo\" });"
+            "description": "request(\"POST\", \"URLSetup/RegisterIPN\", {\n  \"url\": \"https://www.myapplication.com/ipn\",\n  \"ipn_notification_type\": \"GET\"\n });",
+            "caption": "Register IPN URL"
+          },
+          {
+            "title": "example",
+            "description": "request('GET', 'GetTransactionStatus', {}, {query:{\n  orderTrackingId: '123456'\n}})",
+            "caption": "Get transaction status"
           },
           {
             "title": "function",

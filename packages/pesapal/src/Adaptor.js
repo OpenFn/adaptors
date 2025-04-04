@@ -106,7 +106,7 @@ export function request(method, path, body, options = {}) {
         body: resolvedBody,
         ...resolvedoptions,
       }
-    );
+    );    
 
     return util.prepareNextState(state, response);
   };
