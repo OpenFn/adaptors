@@ -213,4 +213,5 @@ export {
   lastReferenceValue,
   merge,
   sourceValue,
+  util,
 } from '@openfn/language-common';
