@@ -5,15 +5,16 @@ import {
   logResponse,
 } from '@openfn/language-common/util';
 
-export const prepareNextState = (state, response) => {
+export function prepareNextState(state, response) {
   const { body, ...responseWithoutBody } = response;
-
+  if (!responseWithoutBody) {
+    return composeNextState(state, body);
+  }
   return {
-    ...composeNextState(state, response.body),
+    ...composeNextState(state, body),
     response: responseWithoutBody,
   };
-};
-
+}
 export function request(state, method, path, opts) {
   const { baseURL, apiVersion, username, password } = state.configuration;
 
@@ -49,18 +50,6 @@ export function request(state, method, path, opts) {
 
   return commonRequest(method, path, options).then(logResponse);
 }
-
-// limit: 10k
-// start: 0
-// pageSize: 1k
-// let start, limit;
-
-// const startDigit =
-//   nextUrl.searchParams.get('start') !== null
-//     ? nextUrl.searchParams.get('start')
-//     : 0;
-// start = Number(startDigit);
-// limit = nextUrl.searchParams.get('limit');
 
 export async function paginateRequest(state, method, path, opts = {}) {
   const { baseURL, apiVersion, username, password } = state.configuration;
@@ -112,10 +101,9 @@ export async function paginateRequest(state, method, path, opts = {}) {
     baseUrl: `${baseUrl}/api/${apiVersion}`,
   };
 
-  console.log({ options });
-  const responses = {
+  const response = {
     body: {
-      count,
+      count: 0,
       previous: null,
       next: null,
       results: [],
@@ -127,21 +115,22 @@ export async function paginateRequest(state, method, path, opts = {}) {
       logResponse
     );
 
-    responses.body.next = body.next;
-    responses.body.previous = body.previous;
-    responses.body.count = body.count;
-    responses.body.results.push(...body.results);
-    if (body.next && body.count !== limit) {
+    count += pageSize;
+
+    response.body.next = body.next;
+    response.body.previous = body.previous;
+    response.body.count = body.count;
+    response.body.results.push(...body.results);
+    if (body.next) {
       const nextUrl = new URL(body.next);
 
       options.query = {
         ...options.query,
         start: nextUrl.searchParams.get('start'),
-        limit: pageSize,
       };
     } else {
       break;
     }
-  } while (true);
-  return responses;
+  } while (count < limit);
+  return response;
 }
