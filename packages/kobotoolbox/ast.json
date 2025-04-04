@@ -88,6 +88,57 @@
             "default": "{}"
           },
           {
+            "title": "param",
+            "description": "Query parameters to filter the submissions",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options.query"
+          },
+          {
+            "title": "param",
+            "description": "Maximum number of submissions to fetch",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.limit",
+            "default": "10000"
+          },
+          {
+            "title": "param",
+            "description": "Number of submissions to fetch per page",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.pageSize",
+            "default": "1000"
+          },
+          {
+            "title": "param",
+            "description": "Starting index for pagination",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.start",
+            "default": "0"
+          },
+          {
             "title": "state",
             "description": "data - an array of submission objects"
           },
@@ -101,7 +152,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "getDeploymentInfo",
