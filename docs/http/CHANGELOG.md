@@ -1,5 +1,11 @@
 # @openfn/language-http
 
+## 7.0.3
+
+### Patch Changes
+
+- 2073994: - Add a `POST` example to the `request()` function
+
 ## 7.0.2
 
 ### Patch Changes

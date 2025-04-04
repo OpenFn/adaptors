@@ -82,7 +82,6 @@ This operation writes the following keys to state:
 ```js
 get('/patient', {
   query: { foo: 'bar', a: 1 },
-  headers: { 'content-type': 'application/json' },
 });
 ```
 
@@ -248,7 +247,16 @@ This operation writes the following keys to state:
 ```js
 request('GET', '/patient', {
   query: { foo: 'bar', a: 1 },
-  headers: { 'content-type': 'application/json' },
+});
+```
+**Example:** Make a POST request with a body
+```js
+request('POST', '/todos', {
+  body:{
+    "userId": 1,
+    "title": "delectus aut autem",
+    "completed": false
+  },
 });
 ```
 
