@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { Readable } from 'stream';
 import { google } from 'googleapis';
 import { execute, create, get, update } from '../src';
 
@@ -18,9 +17,13 @@ describe('Google Drive Adapter', () => {
 
     // Mock Google Drive API
     mockFiles = {
-      create: sandbox.stub().resolves({ data: { id: 'file123', name: 'test.txt' } }),
+      create: sandbox
+        .stub()
+        .resolves({ data: { id: 'file123', name: 'test.txt' } }),
       get: sandbox.stub().resolves({ data: Buffer.from('file content') }),
-      update: sandbox.stub().resolves({ data: { id: 'file123', name: 'updated.txt' } }),
+      update: sandbox
+        .stub()
+        .resolves({ data: { id: 'file123', name: 'updated.txt' } }),
     };
     mockDrive = { files: mockFiles };
     sandbox.stub(google, 'drive').returns(mockDrive);
@@ -33,12 +36,11 @@ describe('Google Drive Adapter', () => {
   describe('create()', () => {
     it('should upload a file successfully', async () => {
       const state = { configuration: { access_token: 'mockToken' } };
-      const params = {
-        fileString: Buffer.from('file content').toString('base64'),
-        fileName: 'test.txt',
-      };
-      
-      const result = await execute(create(params))(state);
+
+      const content = Buffer.from('file content').toString('base64');
+      const fileName = 'test.txt';
+
+      const result = await execute(create(content, fileName))(state);
       expect(mockFiles.create.calledOnce).to.be.true;
       expect(result.data).to.have.property('id', 'file123');
     });
@@ -47,24 +49,24 @@ describe('Google Drive Adapter', () => {
   describe('get()', () => {
     it('should download a file successfully', async () => {
       const state = { configuration: { access_token: 'mockToken' } };
-      const params = { fileId: 'file123' };
-      
-      const result = await execute(get(params))(state);
+      const fileId = 'file123';
+
+      const result = await execute(get(fileId))(state);
       expect(mockFiles.get.calledOnce).to.be.true;
-      expect(result.data.fileString).to.equal(Buffer.from('file content').toString('base64'));
+      expect(result.data.content).to.equal(
+        Buffer.from('file content').toString('base64'),
+      );
     });
   });
 
   describe('update()', () => {
     it('should update a file successfully', async () => {
       const state = { configuration: { access_token: 'mockToken' } };
-      const params = {
-        fileId: 'file123',
-        fileString: Buffer.from('new content').toString('base64'),
-        fileName: 'updated.txt',
-      };
-      
-      const result = await execute(update(params))(state);
+      const fileId = 'file123';
+      const content = Buffer.from('new content').toString('base64');
+      const fileName = 'updated.txt';
+
+      const result = await execute(update(fileId, content, fileName))(state);
       expect(mockFiles.update.calledOnce).to.be.true;
       expect(result.data).to.have.property('name', 'updated.txt');
     });
