@@ -3,7 +3,9 @@
     {
       "name": "create",
       "params": [
-        "params"
+        "content",
+        "fileName",
+        "options"
       ],
       "docs": {
         "description": "Uploads a file to Google Drive.",
@@ -15,16 +17,7 @@
           },
           {
             "title": "example",
-            "description": "create({\n  fileString: 'base64-encoded-file-content',\n  fileName: 'custom-name.txt',\n  folderId: 'drive-folder-id'\n})"
-          },
-          {
-            "title": "param",
-            "description": "File upload parameters.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "params"
+            "description": "create(\n 'base64-encoded-file-content',\n 'custom-name.txt',\n {\n   folderId: 'drive-folder-id'\n }\n)"
           },
           {
             "title": "param",
@@ -33,7 +26,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "params.fileString"
+            "name": "content"
           },
           {
             "title": "param",
@@ -42,19 +35,25 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "params.fileName"
+            "name": "fileName"
+          },
+          {
+            "title": "param",
+            "description": "File upload parameters.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "options"
           },
           {
             "title": "param",
             "description": "ID of the parent folder.",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
+              "type": "NameExpression",
+              "name": "string"
             },
-            "name": "params.folderId"
+            "name": "options.folderId"
           },
           {
             "title": "returns",
@@ -71,7 +70,7 @@
     {
       "name": "get",
       "params": [
-        "params"
+        "fileId"
       ],
       "docs": {
         "description": "Downloads a file from Google Drive.",
@@ -87,21 +86,12 @@
           },
           {
             "title": "param",
-            "description": "File download parameters.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "params"
-          },
-          {
-            "title": "param",
             "description": "ID of the file to download.",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "params.fileId"
+            "name": "fileId"
           },
           {
             "title": "returns",
@@ -113,12 +103,14 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "update",
       "params": [
-        "params"
+        "fileId",
+        "content",
+        "fileName"
       ],
       "docs": {
         "description": "Updates an existing file in Google Drive.",
@@ -134,21 +126,12 @@
           },
           {
             "title": "param",
-            "description": "File update parameters.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "params"
-          },
-          {
-            "title": "param",
             "description": "ID of the file to update.",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "params.fileId"
+            "name": "fileId"
           },
           {
             "title": "param",
@@ -157,19 +140,25 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "params.fileString"
+            "name": "content"
           },
           {
             "title": "param",
             "description": "New name for the file.",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
+              "type": "NameExpression",
+              "name": "string"
             },
-            "name": "params.fileName"
+            "name": "fileName"
+          },
+          {
+            "title": "param",
+            "description": "File update options.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "options"
           },
           {
             "title": "returns",
