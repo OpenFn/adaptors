@@ -1,10 +1,12 @@
 import { expect } from 'chai';
+import { afterEach } from 'mocha';
 
 import { enableMockClient } from '@openfn/language-common/util';
 import testData from './fixtures.json' assert { type: 'json' };
-import { request } from '../src/Utils';
+import { request, requestWithPagination } from '../src/Utils';
 
 const testServer = enableMockClient('https://util-tests.openmrs.org');
+
 const jsonHeaders = {
   headers: {
     'Content-Type': 'application/json',
@@ -172,240 +174,113 @@ describe('mock server', () => {
   });
 });
 
-describe('request without autopage', () => {
+describe('request()', () => {
   it('should GET with no query parameters', async () => {
     // This will actually give a 400 from real openmrs, but it's fine
-    const { data, response } = await request(
-      state,
-      'GET',
-      '/ws/rest/v1/patient',
-      {
-        baseUrl: state.configuration.instanceUrl,
-      }
-    );
+    const response = await request(state, 'GET', '/ws/rest/v1/patient', {
+      baseUrl: state.configuration.instanceUrl,
+    });
 
     expect(response.statusCode).to.eql(200);
     expect(response.url).to.match(/\/patient$/);
 
     // We don't really care about the result data here
-    expect(data.results.length).to.eql(31);
+    expect(response.body.results.length).to.eql(31);
   });
 
   it('should GET with a query', async () => {
-    const { data, response } = await request(
-      state,
-      'GET',
-      '/ws/rest/v1/patient',
-      {
-        query: { q: 'bill' },
-        baseUrl: state.configuration.instanceUrl,
-      }
-    );
+    const response = await request(state, 'GET', '/ws/rest/v1/patient', {
+      query: { q: 'bill' },
+      baseUrl: state.configuration.instanceUrl,
+    });
 
     expect(response.statusCode).to.eql(200);
     expect(response.url).to.match(/\?q=bill$/);
-    expect(data.results.length).to.eql(10);
-    expect(data.results[0].display).to.eql('bill bailey 1');
+    expect(response.body.results.length).to.eql(10);
+    expect(response.body.results[0].display).to.eql('bill bailey 1');
   });
 
   it('should GET with a query and limit', async () => {
-    const { data, response } = await request(
-      state,
-      'GET',
-      '/ws/rest/v1/patient',
-      {
-        query: { q: 'bill' },
-        limit: 1,
-        baseUrl: state.configuration.instanceUrl,
-      }
-    );
+    const response = await request(state, 'GET', '/ws/rest/v1/patient', {
+      query: { q: 'bill', limit: 1 },
+      baseUrl: state.configuration.instanceUrl,
+    });
 
     expect(response.statusCode).to.eql(200);
     expect(response.url).to.match(/\?q=bill&limit=1$/);
-    expect(data.results.length).to.eql(1);
-    expect(data.results[0].display).to.eql('bill bailey 1');
+    expect(response.body.results.length).to.eql(1);
+    expect(response.body.results[0].display).to.eql('bill bailey 1');
 
     // Should include a next link
-    expect(data.links.length).to.eql(1);
-    expect(data.links[0].rel).to.eql('next');
+    expect(response.body.links.length).to.eql(1);
+    expect(response.body.links[0].rel).to.eql('next');
   });
 
   it('should GET with a query and startIndex', async () => {
-    const { data, response } = await request(
-      state,
-      'GET',
-      '/ws/rest/v1/patient',
-      {
-        query: { q: 'bill' },
-        startIndex: 10,
-        baseUrl: state.configuration.instanceUrl,
-      }
-    );
-    console.log(data);
-    console.log(data.links);
+    const response = await request(state, 'GET', '/ws/rest/v1/patient', {
+      query: { q: 'bill', startIndex: 10 },
+      baseUrl: state.configuration.instanceUrl,
+    });
 
     expect(response.statusCode).to.eql(200);
     expect(response.url).to.match(/\?q=bill&startIndex=10$/);
-    expect(data.results.length).to.eql(1);
-    expect(data.results[0].display).to.eql('bill bailey 10');
+    expect(response.body.results.length).to.eql(1);
+    expect(response.body.results[0].display).to.eql('bill bailey 10');
 
     // Should not include a next link
-    expect(data.links.length).to.eql(0);
-  });
-
-  // This is probably redundant now because I'm handling autopage differenly
-  it.skip('should not auto-fetch if the user sets startIndex', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah', limit: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          results: [{ display: 'Sarah 1' }],
-          links: [
-            {
-              rel: 'next',
-              uri: 'https://util-tests.openmrs.org/ws/rest/v1/patient?q=Sarah&limit=1&startIndex=1',
-              resourceAlias: null,
-            },
-          ],
-        },
-        { ...jsonHeaders }
-      );
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah', limit: 1, startIndex: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          results: [{ display: 'Sarah 2' }],
-        },
-        { ...jsonHeaders }
-      );
-
-    const { body } = await request(state, 'GET', '/ws/rest/v1/patient', {
-      query: { q: 'Sarah', limit: 1, startIndex: 1 },
-      baseUrl: state.configuration.instanceUrl,
-    });
-
-    expect(body.results[0].display).to.eql('Sarah 2');
-    expect(body.results.length).to.eql(1);
+    expect(response.body.links.length).to.eql(0);
   });
 });
 
-describe('request with autopage', () => {
-  it('should GET with a limit', async () => {
-    const { data, response } = await request(
-      state,
-      'GET',
-      '/ws/rest/v1/patient',
-      {
-        query: { q: 'bill' },
-        baseUrl: state.configuration.instanceUrl,
-        autopage: true,
-        limit: 5,
-      }
-    );
-    console.log(data);
-    expect(response.length).to.eql(1);
-    expect(response[0].statusCode).to.eql(200);
+describe('requestWithPagination', () => {
+  it('should get all items', async () => {
+    const totalNumberOfBills = get({ q: 'bill' }).results.length;
 
-    expect(data.results.length).to.eql(5);
-    expect(data.results[0].display).to.eql('bill bailey 1');
-  });
-
-  it('should GET over several pages', async () => {
-    const { data, response } = await request(
-      state,
-      'GET',
-      '/ws/rest/v1/patient',
-      {
-        query: { q: 'bill' },
-        baseUrl: state.configuration.instanceUrl,
-        autopage: true,
-        pageSize: 5,
-      }
-    );
-    // Should be 2 requests
-    expect(response.length).to.eql(2);
-    expect(response[0].statusCode).to.eql(200);
-    expect(response[1].statusCode).to.eql(200);
-
-    // should be 10 results
-    expect(data.results.length).to.eql(10);
-    expect(data.results[0].display).to.eql('bill bailey 1');
-  });
-
-  it('should GET over several pages with a limit', async () => {
-    const { data, response } = await request(
-      state,
-      'GET',
-      '/ws/rest/v1/patient',
-      {
-        query: { q: 'bill' },
-        baseUrl: state.configuration.instanceUrl,
-        autopage: true,
-        pageSize: 5,
-        limit: 6,
-      }
-    );
-    // Should be 2 requests
-    expect(response.length).to.eql(2);
-    expect(response[0].statusCode).to.eql(200);
-    expect(response[1].statusCode).to.eql(200);
-
-    // should be 10 results
-    expect(data.results.length).to.eql(6);
-    expect(data.results[0].display).to.eql('bill bailey 1');
-  });
-
-  it.skip('should auto-fetch patients with a limit', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah', limit: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          results: [{ display: 'Sarah 1' }],
-          links: [
-            {
-              rel: 'next',
-              uri: 'https://util-tests.openmrs.org/ws/rest/v1/patient?q=Sarah&limit=1&startIndex=1',
-              resourceAlias: null,
-            },
-          ],
-        },
-        { ...jsonHeaders }
-      );
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah', limit: 1, startIndex: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          results: [{ display: 'Sarah 2' }],
-        },
-        { ...jsonHeaders }
-      );
-
-    const { body } = await request(state, 'GET', '/ws/rest/v1/patient', {
-      query: { q: 'Sarah', limit: 1 },
+    const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
+      query: { q: 'bill' },
       baseUrl: state.configuration.instanceUrl,
     });
+    expect(data.length).to.eql(totalNumberOfBills);
+    expect(data[0].display).to.eql('bill bailey 1');
+  });
 
-    expect(body.results[0].display).to.eql('Sarah 1');
-    expect(body.results[1].display).to.eql('Sarah 2');
+  it('should get some items', async () => {
+    const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
+      query: { q: 'bill' },
+      baseUrl: state.configuration.instanceUrl,
+      limit: 5,
+    });
+
+    expect(data.length).to.eql(5);
+    expect(data[0].display).to.eql('bill bailey 1');
+  });
+
+  it('should not return more items than exist', async () => {
+    const totalNumberOfBills = get({ q: 'bill' }).results.length;
+    const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
+      query: { q: 'bill' },
+      baseUrl: state.configuration.instanceUrl,
+      limit: 20,
+    });
+
+    expect(data.length).to.eql(totalNumberOfBills);
+    expect(data[0].display).to.eql('bill bailey 1');
+  });
+
+  // I can see that this works in logs
+  // but not sure how I'm going to assert it properly
+  // undici 7 has a call history API but it straight up doesn't work
+  // maybe an undocumented on-item callback?
+  it.skip('should get with a page size', async () => {
+    const totalNumberOfBills = get({ q: 'bill' }).results.length;
+
+    const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
+      query: { q: 'bill' },
+      baseUrl: state.configuration.instanceUrl,
+      pageSize: 2,
+    });
+
+    expect(data.length).to.eql(totalNumberOfBills);
+    expect(data[0].display).to.eql('bill bailey 1');
   });
 });

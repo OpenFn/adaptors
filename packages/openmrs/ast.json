@@ -17,7 +17,7 @@
           {
             "title": "example",
             "description": "get(\"patient\", { q: \"brian\", limit: 1 })",
-            "caption": "List patients by name with a limit(<a href=\"https://rest.openmrs.org/#search-patients\">see OpenMRS API</a>)"
+            "caption": "Search patients by name with a limit (<a href=\"https://rest.openmrs.org/#search-patients\">see OpenMRS API</a>)"
           },
           {
             "title": "example",
@@ -147,12 +147,12 @@
           {
             "title": "example",
             "description": "create(\"encounter\", {\n  encounterDatetime: '2023-05-25T06:08:25.000+0000',\n  patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',\n  encounterType: 'dd528487-82a5-4082-9c72-ed246bd49591',\n  location: 'ba685651-ed3b-4e63-9b35-78893060758a',\n  encounterProviders: [],\n  visit: {\n    patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',\n    visitType: '7b0f5697-27e3-40c4-8bae-f4049abfb4ed',\n    startDatetime: '2023-05-25T06:08:25.000+0000',\n    stopDatetime: '2023-05-25T06:09:25.000+0000',\n  },\n})",
-            "caption": "Create an encounter"
+            "caption": "Create an encounter (<a href=\"https://rest.openmrs.org/#create-an-encounter\">see OpenMRS API</a>)"
           },
           {
             "title": "example",
             "description": "create(\"patient\", {\n  identifiers: [\n    {\n      identifier: '4023287',\n      identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',\n      preferred: true,\n    },\n  ],\n  person: {\n    gender: 'M',\n    age: 42,\n    birthdate: '1970-01-01T00:00:00.000+0100',\n    birthdateEstimated: false,\n    names: [\n      {\n        givenName: 'Doe',\n        familyName: 'John',\n      },\n    ],\n  },\n})",
-            "caption": "Create a patient"
+            "caption": "Create a patient (<a href=\"https://rest.openmrs.org/#create-a-patient\">see OpenMRS API</a>)"
           }
         ]
       },
@@ -198,6 +198,10 @@
           {
             "title": "state",
             "description": "{HttpState}"
+          },
+          {
+            "title": "state",
+            "description": "data The updated resource"
           },
           {
             "title": "returns",
@@ -258,6 +262,10 @@
             "description": "{HttpState}"
           },
           {
+            "title": "state",
+            "description": "data The updated or newly created resource"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -268,7 +276,7 @@
           {
             "title": "example",
             "description": "upsert(\"patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a\", {\n  identifiers: [\n    {\n      identifier: '4023287',\n      identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',\n      preferred: true,\n    },\n  ],\n  person: {\n    gender: 'M',\n    age: 42,\n    birthdate: '1970-01-01T00:00:00.000+0100',\n    birthdateEstimated: false,\n    names: [\n      {\n        givenName: 'Doe',\n        familyName: 'John',\n      },\n    ],\n  },\n})",
-            "caption": "Upsert a patient"
+            "caption": "Upsert a patient (<a href=\"https://rest.openmrs.org/#patients-overview\">see OpenMRS API</a>)"
           }
         ]
       },
