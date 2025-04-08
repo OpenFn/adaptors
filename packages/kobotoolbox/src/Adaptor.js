@@ -49,11 +49,11 @@ export function execute(...operations) {
 export function getForms() {
   return async state => {
     const url = `/assets/?asset_type=survey`;
-    const { body } = await util.request(state, 'GET', url, {});
+    const response = await util.request(state, 'GET', url, {});
 
-    console.log('✓', body.results?.length, 'forms fetched.');
+    console.log('✓', response.body.results?.length, 'forms fetched.');
 
-    return composeNextState(state, body);
+    return util.prepareNextState(state, response);
   };
 }
 
