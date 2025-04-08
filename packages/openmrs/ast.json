@@ -60,7 +60,7 @@
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "RestQueryOptions"
+                "name": "RestOptions"
               }
             },
             "name": "options",

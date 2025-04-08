@@ -1,10 +1,10 @@
 // Set up state to use the public openmrs demo sandbox
 fn(state => {
-  // state.configuration = {
-  //   instanceUrl: 'https://o3.openmrs.org/openmrs',
-  //   username: 'admin',
-  //   password: 'Admin123',
-  // };
+  state.configuration = {
+    instanceUrl: 'https://o3.openmrs.org/openmrs',
+    username: 'admin',
+    password: 'Admin123',
+  };
   return state;
 });
 
@@ -68,9 +68,17 @@ destroy(`person/${$.person.uuid}`, {
 get(`person/${$.person.uuid}`).catch((error, state) => {
   if (error.statusCode === 404) {
     // TODO ideally we could validate a 404 here
-    console.log(`Failed to get Spider Man ${state.person.uuid} (this is good!)`);
+    console.log(
+      `Failed to get Spider Man ${state.person.uuid} (this is good!)`
+    );
   } else {
-    console.error(error)
+    console.error(error);
   }
   return state;
 });
+
+fn(state => ({
+  data: state.data,
+  person: state.person,
+  response: state.response, // should be blank
+}));
