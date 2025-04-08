@@ -101,6 +101,7 @@ export async function request(state, method, path, options = {}) {
     headers = { 'content-type': 'application/json' },
     parseAs = 'json',
     _onrequest,
+    errors,
   } = options; // secret option for debug & test
 
   if (baseUrl.length <= 0) {
@@ -127,6 +128,7 @@ export async function request(state, method, path, options = {}) {
     query,
     parseAs,
     baseUrl,
+    errors,
     _onrequest,
   };
 

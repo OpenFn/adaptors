@@ -1,5 +1,31 @@
 # @openfn/language-primero
 
+## 3.1.0
+
+### Minor Changes
+
+- 7fecd5b: - Added a new http namespace, containing HTTP helpers for `get()`,
+  `post()` and `patch()`.
+
+  - These functions will allow the users to make any requests with the `POST`,
+    `PATCH`, and `GET` methods to `primero`.
+  - With these new updates, you can now do this:
+
+  ```
+
+  http.get('cases', {
+      query:{ remote: true }
+  })
+
+  ```
+
+## 3.0.10
+
+### Patch Changes
+
+- Updated dependencies [23ccb01]
+  - @openfn/language-common@2.3.1
+
 ## 3.0.9
 
 ### Patch Changes

@@ -7,7 +7,8 @@ import * as util from './Utils';
  * @property {object} query - An object of query parameters to be encoded into the URL
  * @property {object} headers - An object of all request headers
  * @property {object} body - The request body (as JSON)
- * @property {string} [parseAs=json] - The response format to parse (e.g., 'json', 'text', or 'stream')
+ * @property {object|boolean} errors - Pass `false` to not throw on errors. Pass a map of errorCodes: error messages, ie, `{ 404: 'Resource not found' }`, or `false` to suppress errors for a specific code.
+ * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
  */
 
 /**
@@ -57,7 +58,14 @@ export function request(method, path, options = {}) {
  *      limit: 1
  *    }
  *  }
- *  )
+ * )
+ * @example <caption>Don't throw if OpenMRS returns a 404 error code</caption>
+ * http.get(
+ *  "/ws/rest/v1/patient",
+ *  {
+ *    errors: { 404: false }
+ *  }
+ * )
  * @param {string} path - path to resource
  * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
  * @state {HttpState}

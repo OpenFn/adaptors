@@ -37,6 +37,40 @@ describe('http.request', () => {
 
     expect(data.results[0].display).to.eql(testData.patientResults[0].display);
   });
+
+  it('should suppress 404 errors with the error map', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        query: { q: 'Sarah 1' },
+        method: 'GET',
+      })
+      .reply(404, {}, { ...jsonHeaders });
+
+    const result = await http.request('GET', '/ws/rest/v1/patient', {
+      query: { q: 'Sarah 1' },
+      errors: { 404: false },
+    })(state);
+
+    expect(result.response.statusCode).to.equal(404);
+  });
+
+  it('should suppress all errors with the error map', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        query: { q: 'Sarah 1' },
+        method: 'GET',
+      })
+      .reply(404, {}, { ...jsonHeaders });
+
+    const result = await http.request('GET', '/ws/rest/v1/patient', {
+      query: { q: 'Sarah 1' },
+      errors: false,
+    })(state);
+
+    expect(result.response.statusCode).to.equal(404);
+  });
 });
 
 describe('http.get', () => {

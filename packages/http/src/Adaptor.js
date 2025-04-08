@@ -5,9 +5,9 @@ import { request as sendRequest, xmlParser } from './util';
  * Options provided to the HTTP request
  * @typedef {Object} RequestOptions
  * @public
- * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
  * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
- * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
+ * @property {string} contentType - Sets the `Content-Type` header on the request. Defaults to `json`. Supported values: `json`, `xml`, `string`, and `form` (for FormData).
+ * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).This is only applicable to the request function
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.
  * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
@@ -48,150 +48,146 @@ export function execute(...operations) {
 /**
  * Make a HTTP request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example
- * request(
- *   'GET',
- *   '/myEndpoint',
- *    {
- *      query: {foo: 'bar', a: 1},
- *      headers: {'content-type': 'application/json'},
- *    }
- * )
+ * @example <caption>Make a GET request</caption>
+ * request('GET', '/patient', {
+ *   query: { foo: 'bar', a: 1 },
+ * });
+ * @example <caption>Make a POST request with a body</caption>
+ * request('POST', '/todos', {
+ *   body:{
+ *     "userId": 1,
+ *     "title": "delectus aut autem",
+ *     "completed": false
+ *   },
+ * });
  * @function
  * @param {string} method - The HTTP method to use.
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
- * @param {RequestOptions} params - Query, Headers and Authentication parameters
- * @param {function} callback - (Optional) Callback function
+ * @param {RequestOptions} options - Body, Query, Headers and Authentication parameters
  * @state {HttpState}
  * @returns {Operation}
  */
-export function request(method, path, params, callback) {
-  return sendRequest(method, path, params, callback);
+export function request(method, path, options) {
+  return sendRequest(method, path, options);
 }
 
 /**
  * Make a GET request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example
- * get('/myEndpoint', {
- *   query: {foo: 'bar', a: 1},
- *   headers: {'content-type': 'application/json'},
- * })
+ * @example <caption>GET request with query parameters and custom headers</caption>
+ * get('/patient', {
+ *   query: { foo: 'bar', a: 1 },
+ * });
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
- * @param {RequestOptions} params - Query, Headers and Authentication parameters
- * @param {function} callback - (Optional) Callback function
+ * @param {RequestOptions} options - Body, Query, Headers and Authentication parameters
  * @state {HttpState}
  * @returns {Operation}
  */
-export function get(path, params, callback) {
-  return sendRequest('GET', path, params, callback);
+export function get(path, options) {
+  return sendRequest('GET', path, options);
 }
 
 /**
  * Make a POST request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example
- *  post('/myEndpoint', {
- *    body: {'foo': 'bar'},
- *    headers: {'content-type': 'application/json'},
- *  })
+ * @example <caption>POST a resource with from state</caption>
+ * post('/patient', $.data);
+ * @example <caption>POST a resource with custom headers</caption>
+ * post('/patient', $.data, {
+ *   headers: { 'content-type': 'application/fhir+json' },
+ * });
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
- * @param {RequestOptions} params - Body, Query, Headers and Authentication parameters
- * @param {function} callback - (Optional) Callback function
+ * @param {object} data - Body data to append to the request. JSON will be converted to a string.
+ * @param {RequestOptions} options - Query, Headers and Authentication parameters
  * @state {HttpState}
  * @returns {operation}
  */
 
-export function post(path, params, callback) {
-  return sendRequest('POST', path, params, callback);
+export function post(path, data, options) {
+  return sendRequest('POST', path, { body: data, ...options });
 }
 
 /**
  * Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example
- *  put('/myEndpoint', {
- *    body: {'foo': 'bar'},
- *    headers: {'content-type': 'application/json'},
- *  })
+ * @example <caption>PUT a resource from state</caption>
+ * put('/patient', $.data);
+ * @example <caption>PUT a resource with custom headers</caption>
+ * put('/patient', $.data, {
+ *   headers: { 'content-type': 'application/fhir+json' },
+ * })
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
- * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
- * @param {function} callback - (Optional) Callback function
+ * @param {object} data - Body data to append to the request. JSON will be converted to a string.
+ * @param {RequestOptions} options- Query, Headers and Auth parameters
  * @state {HttpState}
  * @returns {Operation}
  */
-export function put(path, params, callback) {
-  return sendRequest('PUT', path, params, callback);
+export function put(path, data, options) {
+  return sendRequest('PUT', path, { body: data, ...options });
 }
 
 /**
  * Make a PATCH request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example
- *  patch('/myEndpoint', {
- *    body: {'foo': 'bar'},
- *    headers: {'content-type': 'application/json'},
- *  })
+ * @example <caption>PATCH a resource from state</caption>
+ * patch('/patient', $.data);
+ * @example <caption>PATCH a resource with custom headers</caption>
+ * patch('/patient', $.data, {
+ *   headers: { 'content-type': 'application/fhir+json' },
+ * });
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
- * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
- * @param {function} callback - (Optional) Callback function
+ * @param {object} data - Body data to append to the request. JSON will be converted to a string.
+ * @param {RequestOptions} options - Query, Headers and Auth parameters
  * @state {HttpState}
  * @returns {Operation}
  */
-export function patch(path, params, callback) {
-  return sendRequest('PATCH', path, params, callback);
+export function patch(path, data, options) {
+  return sendRequest('PATCH', path, { body: data, ...options });
 }
 
 /**
  * Make a DELETE request. If `configuration.baseUrl` is set, paths must be relative.
  * @public
- * @example
- *  del(`/myendpoint/${state => state.data.id}`, {
- *    headers: {'content-type': 'application/json'}
- *  })
+ * @example <caption>DELETE a resource by ID</caption>
+ * del(`/myendpoint/${$.data.id}`);
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
- * @param {RequestOptions} params - Body, Query, Headers and Auth parameters
- * @param {function} callback - (Optional) Callback function
+ * @param {RequestOptions} options - Query, Headers and Auth parameters
  * @state {HttpState}
  * @returns {Operation}
  */
-export function del(path, params, callback) {
-  return sendRequest('DELETE', path, params, callback);
+export function del(path, options) {
+  return sendRequest('DELETE', path, options);
 }
 
 /**
  * Parse XML with the Cheerio parser
  * @public
- * @example
+ * @example <caption>Parse XML from state.response</caption>
  *  parseXML(
  *   (state) => state.response,
  *   ($) => {
  *     return $("table[class=your_table]").parsetable(true, true, true);
  *   }
  * );
- * @example <caption>Using parseXML with a callback</caption>
- *  parseXML(
+ * @example <caption>Using parseXML with a callback to extract data</caption>
+ * parseXML(
  *   (state) => state.response,
- *   ($) => {
- *     return $("table[class=your_table]").parsetable(true, true, true);
- *   },
- *   (next) => ({ ...next, results: next.data.body })
- * );
+ *   ($) => $("table[class=your_table]").parsetable(true, true, true)
+ * ).then((next) => ({ ...next, results: next.data.data }));
  * @function
- * @param {String} body - data string to be parsed
+ * @param {String} data - Body string to be parsed
  * @param {function} script - script for extracting data
- * @param {function} callback - (Optional) Callback function
  * @state data - the parsed XML as a JSON object
  * @state references - an array of all previous data objects used in the Job
  * @returns {Operation}
  */
-export function parseXML(body, script, callback) {
-  return xmlParser(body, script, callback);
+export function parseXML(data, script) {
+  return xmlParser({ body: data }, script);
 }
 
 export {

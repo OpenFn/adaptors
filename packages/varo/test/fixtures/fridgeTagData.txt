@@ -1,0 +1,61 @@
+Vers: 0.5
+Sensor: 1
+Conf:
+ Serial: 159380198264
+ Alarm:
+  0:
+   T AL: -0.5, t AL: 60
+  1:
+   T AL: +8.0, t AL: 600
+ Int Sensor:
+  Timeout: 1, Offset: +0.0
+ Test Res: 1, Test TS: 2022-04-20 07:30
+Errors:
+ 7:
+  Err Count: 1, Err TS: 2024-09-24 14:16
+ 15:
+  Err Count: 4, Err TS: 2024-09-04 13:47
+Hist:
+ TS Actv: 2024-08-28 15:54
+ TS Report Creation: 2024-10-08 13:59
+ 1:
+  Date: 2024-10-08
+  Min T: +18.5, TS Min T: 08:15
+  Max T: +21.2, TS Max T: 13:40
+  Avrg T: +19.2
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 840, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 16
+  Checked:
+   TS PM: 13:59
+ 2:
+  Date: 2024-10-07
+  Min T: +20.2, TS Min T: 23:57
+  Max T: +21.7, TS Max T: 14:26
+  Avrg T: +21.1
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 3:
+  Date: 2024-10-06
+  Min T: +21.1, TS Min T: 07:34
+  Max T: +21.5, TS Max T: 00:00
+  Avrg T: +21.3
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0

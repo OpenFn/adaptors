@@ -253,7 +253,7 @@ describe('upsert', () => {
   });
 });
 
-describe('delete', () => {
+describe('destroy', () => {
   it('should delete an encounter by uuid', async () => {
     testServer
       .intercept({
@@ -262,12 +262,12 @@ describe('delete', () => {
       })
       .reply(200, { uuid: '123', voided: true }, { ...jsonHeaders });
 
-    const { data } = await execute(adaptor.delete('/encounter/123'))(state);
+    const { data } = await execute(adaptor.destroy('/encounter/123'))(state);
 
     expect(data.uuid).to.eql('123');
   });
 
-  it('should delete a resource with options', async () => {
+  it('should destroy a resource with options', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/encounter/456?purge=true',
@@ -276,7 +276,7 @@ describe('delete', () => {
       .reply(200, { uuid: '456', voided: false }, { ...jsonHeaders });
 
     const { data } = await execute(
-      adaptor.delete('/encounter/456', { purge: true })
+      adaptor.destroy('/encounter/456', { purge: true })
     )(state);
 
     expect(data.uuid).to.eql('456');
@@ -291,7 +291,7 @@ describe('delete', () => {
       .reply(404, { error: 'Not Found' }, { ...jsonHeaders });
 
     try {
-      await execute(adaptor.delete('encounter/789'))(state);
+      await execute(adaptor.destroy('encounter/789'))(state);
     } catch (error) {
       expect(error.body.error).to.eql('Not Found');
     }

@@ -1,32 +1,25 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import { create, upsert, query, get } from '../src/Adaptor';
-
-const { expect } = chai;
+import { expect } from 'chai';
+import { create, upsert, query, http, setMockConnection } from '../src/index';
 
 describe('Adaptor', () => {
   describe('get', () => {
     it('fetches an account record', done => {
       const fakeConnection = {
-        request: function () {
+        request: reqArgs => {
+          expect(reqArgs).to.eql({
+            url: '/sobjects/Account/10',
+            method: 'GET',
+            body: undefined,
+            headers: { 'content-type': 'application/json' },
+          });
           return Promise.resolve({ Id: 10 });
         },
       };
-      let state = { connection: fakeConnection, references: [] };
+      setMockConnection(fakeConnection);
 
-      let spy = sinon.spy(fakeConnection, 'request');
-
-      get('/services/data/v58.0/sobjects/Account/10')(state)
+      http
+        .get('/sobjects/Account/10')({})
         .then(state => {
-          expect(spy.args[0]).to.eql([
-            {
-              url: '/services/data/v58.0/sobjects/Account/10',
-              method: 'GET',
-              query: undefined,
-              headers: { 'content-type': 'application/json' },
-            },
-          ]);
-          expect(spy.called).to.eql(true);
           expect(state.data).to.eql({ Id: 10 });
         })
         .then(done)
@@ -35,25 +28,25 @@ describe('Adaptor', () => {
   });
   describe('create', () => {
     it('makes a new sObject', done => {
+      let reqArgs;
       const fakeConnection = {
-        create: function () {
+        create: (...args) => {
+          reqArgs = args;
           return Promise.resolve({ id: 10, success: true, errors: [] });
         },
       };
-      let state = { connection: fakeConnection, references: [] };
+      setMockConnection(fakeConnection);
+      let state = { references: [] };
 
-      let sObject = 'myObject';
-      let fields = { field: 'value' };
-
-      let spy = sinon.spy(fakeConnection, 'create');
+      const sObject = 'myObject';
+      const fields = { field: 'value' };
 
       create(
         sObject,
         fields
       )(state)
         .then(state => {
-          expect(spy.args[0]).to.eql([sObject, fields]);
-          expect(spy.called).to.eql(true);
+          expect(reqArgs).to.eql([sObject, fields]);
           expect(state.data).to.eql({
             success: true,
             errors: [],
@@ -67,18 +60,19 @@ describe('Adaptor', () => {
 
   describe('upsert', () => {
     it('is expected to call `upsert` on the connection', done => {
-      const connection = {
-        upsert: function () {
+      let reqArgs;
+      const fakeConnection = {
+        upsert: (...args) => {
+          reqArgs = args;
           return Promise.resolve({ Id: 10 });
         },
       };
-      let state = { connection, references: [] };
+      setMockConnection(fakeConnection);
+      const state = { references: [] };
 
-      let sObject = 'myObject';
-      let externalId = 'MyExternalId';
-      let fields = { field: 'value' };
-
-      let spy = sinon.spy(connection, 'upsert');
+      const sObject = 'myObject';
+      const externalId = 'MyExternalId';
+      const fields = { field: 'value' };
 
       upsert(
         sObject,
@@ -86,8 +80,7 @@ describe('Adaptor', () => {
         fields
       )(state)
         .then(state => {
-          expect(spy.args[0]).to.eql([sObject, fields, externalId]);
-          expect(spy.called).to.eql(true);
+          expect(reqArgs).to.eql([sObject, fields, externalId]);
           expect(state.data).to.eql({ Id: 10 });
         })
         .then(done)
@@ -96,53 +89,52 @@ describe('Adaptor', () => {
   });
 
   describe('query', () => {
+    const qsResponse = {
+      done: true,
+      totalSize: 1,
+      records: [{ Name: 'OpenFn' }],
+    };
     it('should properly pass the query string', async () => {
+      let reqArgs;
       const fakeConnection = {
-        query: function () {
-          return Promise.resolve({
-            done: true,
-            totalSize: 1,
-            records: [{ Name: 'OpenFn' }],
-          });
+        query: args => {
+          reqArgs = args;
+          return Promise.resolve(qsResponse);
         },
       };
-
-      let state = {
-        connection: fakeConnection,
-        references: [],
-      };
-      let spy = sinon.spy(fakeConnection, 'query');
+      setMockConnection(fakeConnection);
+      const state = {};
 
       query('select Name from Account')(state).then(state => {
-        expect(spy.calledWith('select Name from Account')).to.eql(true);
+        expect(reqArgs).to.eql('select Name from Account');
+        expect(state.data).to.eql(qsResponse);
       });
     });
     it('should properly pass the query string from state', async () => {
+      let reqArgs;
+
       const fakeConnection = {
-        query: function () {
-          return Promise.resolve({
-            done: true,
-            totalSize: 1,
-            records: [{ Name: 'OpenFn' }],
-          });
+        query: args => {
+          reqArgs = args;
+          return Promise.resolve(qsResponse);
         },
       };
-
-      let state = {
-        connection: fakeConnection,
-        references: [],
+      setMockConnection(fakeConnection);
+      const state = {
         qs: 'select Name from Account',
       };
-      let spy = sinon.spy(fakeConnection, 'query');
 
       query(state => state.qs)(state).then(state => {
-        expect(spy.calledWith('select Name from Account')).to.eql(true);
+        expect(reqArgs).to.eql('select Name from Account');
+        expect(state.data).to.eql(qsResponse);
       });
     });
 
     it('should fetch 0 records', done => {
+      let reqArgs;
       const fakeConnection = {
-        query: function () {
+        query: args => {
+          reqArgs = args;
           return Promise.resolve({
             done: true,
             totalSize: 0,
@@ -150,7 +142,8 @@ describe('Adaptor', () => {
           });
         },
       };
-      const state = { connection: fakeConnection, references: [] };
+      setMockConnection(fakeConnection);
+      const state = {};
 
       query('select Name from Account')(state)
         .then(state => {
@@ -164,32 +157,29 @@ describe('Adaptor', () => {
     });
 
     it('should fetch 1 record', done => {
+      let reqArgs;
       const fakeConnection = {
-        query: function () {
-          return Promise.resolve({
-            done: true,
-            totalSize: 1,
-            records: [{ Name: 'OpenFn' }],
-          });
+        query: args => {
+          reqArgs = args;
+          return Promise.resolve(qsResponse);
         },
       };
-      let state = { connection: fakeConnection, references: [] };
-      let spy = sinon.spy(fakeConnection, 'query');
+      setMockConnection(fakeConnection);
+      const state = {};
 
       query('select Name from Account')(state)
         .then(state => {
-          expect(spy.called).to.eql(true);
-          expect(state.data).to.eql({
-            done: true,
-            totalSize: 1,
-            records: [{ Name: 'OpenFn' }],
-          });
+          expect(reqArgs).to.eql('select Name from Account');
+          expect(state.data).to.eql(qsResponse);
         })
         .then(done);
     });
     it('should fetch all page if autoFetch is true', done => {
+      let qsArgs;
+      let reqArgs;
       const fakeConnection = {
-        query: function () {
+        query: args => {
+          qsArgs = args;
           return Promise.resolve({
             done: false,
             totalSize: 5713,
@@ -198,7 +188,8 @@ describe('Adaptor', () => {
             records: [{ Name: 'Open' }],
           });
         },
-        request: function () {
+        request: args => {
+          reqArgs = args;
           return Promise.resolve({
             done: true,
             totalSize: 5713,
@@ -206,14 +197,15 @@ describe('Adaptor', () => {
           });
         },
       };
-      let state = { connection: fakeConnection, references: [] };
-      let spy = sinon.spy(fakeConnection, 'query');
-      let spyReq = sinon.spy(fakeConnection, 'request');
+      setMockConnection(fakeConnection);
+      const state = {};
 
       query('select Name from Account', { autoFetch: true })(state)
         .then(state => {
-          expect(spy.called).to.eql(true);
-          expect(spyReq.called).to.eql(true);
+          expect(qsArgs).to.eql('select Name from Account');
+          expect(reqArgs.url).to.eql(
+            '/services/data/v47.0/query/0r8yy3Dlrs3Ol9EACO-2000'
+          );
           expect(state.data).to.eql({
             done: true,
             totalSize: 5713,
@@ -223,8 +215,11 @@ describe('Adaptor', () => {
         .then(done);
     });
     it('should not fetch another page if autofetch is false', done => {
+      let qsArgs;
+      let reqArgs;
       const fakeConnection = {
-        query: function () {
+        query: args => {
+          qsArgs = args;
           return Promise.resolve({
             done: false,
             totalSize: 5713,
@@ -233,7 +228,8 @@ describe('Adaptor', () => {
             records: [{ Name: 'Open' }],
           });
         },
-        request: function () {
+        request: args => {
+          reqArgs = args;
           return Promise.resolve({
             done: true,
             totalSize: 5713,
@@ -241,14 +237,13 @@ describe('Adaptor', () => {
           });
         },
       };
-      let state = { connection: fakeConnection, references: [] };
-      let spy = sinon.spy(fakeConnection, 'query');
-      let spyReq = sinon.spy(fakeConnection, 'request');
+      setMockConnection(fakeConnection);
+      const state = {};
 
       query('select Name from Account')(state)
         .then(state => {
-          expect(spy.called).to.eql(true);
-          expect(spyReq.called).to.eql(false);
+          expect(qsArgs).to.eql('select Name from Account');
+          expect(reqArgs).to.eql(undefined);
           expect(state.data).to.eql({
             done: false,
             totalSize: 5713,

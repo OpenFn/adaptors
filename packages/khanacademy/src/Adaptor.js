@@ -9,11 +9,6 @@ import qs from 'qs';
 /**
  * Execute a sequence of operations.
  * Wraps `@openfn/language-common/execute`, and prepends initial state for khanacademy.
- * @example
- * execute(
- *   create('foo'),
- *   delete('bar')
- * )(state)
  * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
@@ -31,10 +26,9 @@ export function execute(...operations) {
 
 /**
  * Fetch data from the Khan Academy API
- * @example
- * execute(
- *   fetch(params)
- * )(state)
+ * @example <caption>Fetch data from the Khan Academy API</caption>
+ * fetch({ getEndpoint: "topictree", queryParams: { subject: "math" } });
+ * @public
  * @function
  * @param {object} params - data to make the query
  * @returns {Operation}

@@ -51,12 +51,18 @@ const assertUrl = (pathOrUrl, baseUrl) => {
   }
 };
 
+export const CONTENT_TYPES = {
+  xml: 'application/xml',
+  json: 'application/json',
+  string: 'text/plain',
+};
+
 /**
  * Request helper function
  * @function
  * @private
  */
-export function request(method, path, params, callback = s => s) {
+export function request(method, path, params) {
   return state => {
     const [resolvedPath, resolvedParams = {}] = expandReferences(
       state,
@@ -64,17 +70,24 @@ export function request(method, path, params, callback = s => s) {
       params
     );
 
-    let { body, headers = {} } = resolvedParams;
+    let { body, contentType = 'json', headers = {} } = resolvedParams;
 
-    if (resolvedParams.json) {
-      console.warn(
-        'WARNING: The `json` option has been deprecated. Use `body` instead'
-      );
-      body = resolvedParams.json;
-    }
+    const contentTypeHeader = Object.keys(headers).find(
+      key => key.toLowerCase() === 'content-type'
+    );
 
-    if (resolvedParams.form) {
-      body = encodeFormBody(resolvedParams.form);
+    if (contentType === 'form') {
+      delete headers[contentTypeHeader];
+      headers = { ...headers };
+
+      body = encodeFormBody(body);
+    } else if (contentTypeHeader) {
+      headers = { ...headers };
+    } else {
+      headers = {
+        ...headers,
+        'Content-Type': CONTENT_TYPES[contentType] || 'application/json',
+      };
     }
 
     const baseUrl = state.configuration?.baseUrl;
@@ -108,14 +121,14 @@ export function request(method, path, params, callback = s => s) {
 
     return commonRequest(method, resolvedPath, options)
       .then(response => {
+        const { body, ...responseWithoutBody } = response;
         logResponse(response);
 
         return {
-          ...composeNextState(state, response.body),
-          response,
+          ...composeNextState(state, body),
+          response: responseWithoutBody,
         };
       })
-      .then(callback)
       .catch(err => {
         logResponse(err);
 
@@ -128,7 +141,7 @@ export function request(method, path, params, callback = s => s) {
  * @function
  * @private
  */
-export function xmlParser(body, script, callback = s => s) {
+export function xmlParser(body, script) {
   return state => {
     const [resolvedBody] = expandReferences(state, body);
     const $ = cheerio.load(resolvedBody);
@@ -138,12 +151,12 @@ export function xmlParser(body, script, callback = s => s) {
       const result = script($);
       try {
         const r = JSON.parse(result);
-        return callback(composeNextState(state, r));
+        return composeNextState(state, r);
       } catch (e) {
-        return callback(composeNextState(state, { body: result }));
+        return composeNextState(state, { body: result });
       }
     } else {
-      return callback(composeNextState(state, { body: resolvedBody }));
+      return composeNextState(state, { body: resolvedBody });
     }
   };
 }
