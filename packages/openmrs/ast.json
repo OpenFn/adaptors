@@ -7,7 +7,7 @@
         "options"
       ],
       "docs": {
-        "description": "Fetch resources from OpenMRS. Use this to fetch a single resource,\nor to search a list. Query parameters will be appended to the request URL,\nrefer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.",
+        "description": "Fetch resources from OpenMRS. Use this to fetch a single resource,\nor to search a list. Query parameters will be appended to the request URL,\nrefer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.\nPagination is handled automatically, pass a limit to restrict the total number\nof items that are retrieved.",
         "tags": [
           {
             "title": "example",
