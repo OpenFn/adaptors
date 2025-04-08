@@ -240,6 +240,11 @@ function encodeRequestBody(body) {
 
 async function readResponseBody(response, parseAs) {
   try {
+    // TODO maybe just if the stream is empty?
+    if (response.statusCode === 204) {
+      return {};
+    }
+
     const contentType = response.headers['content-type'];
     if (+response.headers['content-length'] === 0) {
       return undefined;

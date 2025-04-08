@@ -180,6 +180,8 @@ export function create(path, data) {
 
     console.log(`Successfully created ${resolvedPath}`);
 
+    // TODO I think we should use composeNextState no?
+    // No http semantics?
     return prepareNextState(state, response);
   };
 }
@@ -313,7 +315,7 @@ export function upsert(path, data) {
  * @state {HttpState}
  * @returns {Operation}
  */
-function _delete(path, options) {
+export function destroy(path, options) {
   return async state => {
     const [resolvedPath, resolvedOptions = {}] = expandReferences(
       state,
@@ -322,7 +324,9 @@ function _delete(path, options) {
     );
 
     const { instanceUrl: baseUrl } = state.configuration;
-    const response = await request(
+
+    // TODO if this returns anything other than a 204, we should throw
+    await request(
       state,
       'DELETE',
       cleanPath(`/ws/rest/v1/${resolvedPath}`),
@@ -331,12 +335,11 @@ function _delete(path, options) {
         query: resolvedOptions,
       }
     );
-
-    return prepareNextState(state, response);
+    return state;
   };
 }
 
-export { _delete as delete };
+// export { _delete as remove };
 
 export {
   alterState,

@@ -281,6 +281,91 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "destroy",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Delete a resource. Must include a UUID in the path.\nThrows an error if the resource does not exist.",
+        "tags": [
+          {
+            "title": "alias",
+            "description": null,
+            "name": "delete"
+          },
+          {
+            "title": "example",
+            "description": "delete(\"patient/12346\");",
+            "caption": "Void a patient"
+          },
+          {
+            "title": "example",
+            "description": "delete(\"patient/12346\", {\n  purge: true\n});",
+            "caption": "Purge a patient"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource (excluding `/ws/rest/v1/`)",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options",
+            "default": "{}"
+          },
+          {
+            "title": "param",
+            "description": "The resource will be voided/retired unless true",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options.purge",
+            "default": "false"
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ],
   "exports": [],

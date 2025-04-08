@@ -7,11 +7,6 @@ import { request, requestWithPagination } from '../src/Utils';
 
 const testServer = enableMockClient('https://util-tests.openmrs.org');
 
-const jsonHeaders = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
 const configuration = {
   username: 'test',
   password: 'strongpassword',
@@ -108,6 +103,13 @@ describe('mock server', () => {
     const result = await response.body.json();
 
     expect(result).to.eql({ uuid: 'bill-1', display: 'bill bailey 1' });
+  });
+  it("should return 404 for a patient that doesn't exist", async () => {
+    const response = await testServer.request({
+      method: 'GET',
+      path: '/ws/rest/v1/patient/romesh-1',
+    });
+    expect(response.statusCode).to.equal(404);
   });
   it('should get all matching items if no limit', async () => {
     const response = await testServer.request({
