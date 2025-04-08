@@ -1,4 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import {
   request,
@@ -81,18 +84,16 @@ export function get(path, options) {
       options
     );
 
-    const { instanceUrl: baseUrl } = state.configuration;
-    const response = await requestWithPagination(
+    const result = await requestWithPagination(
       state,
-      'GET',
       cleanPath(`/ws/rest/v1/${resolvedPath}`),
       {
-        baseUrl,
+        baseUrl: state.configuration?.instanceUrl,
         query: resolvedOptions,
       }
     );
 
-    return prepareNextState(state, response);
+    return composeNextState(state, result);
   };
 }
 

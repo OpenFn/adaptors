@@ -72,9 +72,10 @@ describe('get', () => {
 
     const { data } = await execute(get('encounter/123'))(state);
 
-    expect(data.uuid).to.eql('123');
+    expect(data.length).to.equal(1);
+    expect(data[0].uuid).to.eql('123');
   });
-  it('should be robust to leading and trailing slashes', async () => {
+  it('should be robust to leading and trailing slashes: /encounter/123', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/encounter/123',
@@ -84,9 +85,10 @@ describe('get', () => {
 
     const { data } = await execute(get('/encounter/123'))(state);
 
-    expect(data.uuid).to.eql('123');
+    expect(data.length).to.equal(1);
+    expect(data[0].uuid).to.eql('123');
   });
-  it('should be robust to leading and trailing slashes', async () => {
+  it('should be robust to leading and trailing slashes: encounter/123/', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/encounter/123',
@@ -96,9 +98,10 @@ describe('get', () => {
 
     const { data } = await execute(get('encounter/123/'))(state);
 
-    expect(data.uuid).to.eql('123');
+    expect(data.length).to.equal(1);
+    expect(data[0].uuid).to.eql('123');
   });
-  it('should be robust to leading and trailing slashes', async () => {
+  it('should be robust to leading and trailing slashes: encounter/123', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/encounter/123',
@@ -108,7 +111,8 @@ describe('get', () => {
 
     const { data } = await execute(get('encounter/123'))(state);
 
-    expect(data.uuid).to.eql('123');
+    expect(data.length).to.equal(1);
+    expect(data[0].uuid).to.eql('123');
   });
   it('should parse query params', async () => {
     testServer
@@ -121,7 +125,7 @@ describe('get', () => {
 
     const { data } = await execute(get('patient', { q: 'Sarah' }))(state);
 
-    expect(data.results[0].uuid).to.eql(testData.patientResults[0].uuid);
+    expect(data[0].uuid).to.eql(testData.patientResults[0].uuid);
   });
 });
 
@@ -160,7 +164,7 @@ describe('create', () => {
     const { data } = await execute(create('patient', state => state.patient))(
       state
     );
-    expect(data.results[0].display).to.eql(testData.patient.display);
+    expect(data.display).to.eql(testData.patient.display);
   });
   it('should throw an error if the resource is not found', async () => {
     testServer

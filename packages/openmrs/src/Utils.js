@@ -4,14 +4,12 @@ import {
   makeBasicAuthHeader,
 } from '@openfn/language-common/util';
 
-export const prepareNextState = (state, response, callback = s => s) => {
+export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
-  const nextState = {
+  return {
     ...composeNextState(state, body),
     response: responseWithoutBody,
   };
-
-  return callback(nextState);
 };
 
 export async function fetchAndLog(method, url, opts = {}) {
@@ -43,9 +41,7 @@ export async function fetchAndLog(method, url, opts = {}) {
 export async function requestWithPagination(state, path, options = {}) {
   const results = [];
 
-  // the maximum number of items to download
-  const { limit: maxResults = 1e4, pageSize } = options;
-  let { startIndex } = options;
+  let { pageSize, startIndex, limit: maxResults = Infinity } = options;
 
   // Declare a variable that takes in all the options. We can then modify this variable to fetch the next page
   let requestOptions = { ...options };
@@ -59,13 +55,15 @@ export async function requestWithPagination(state, path, options = {}) {
       requestOptions.query.startIndex = startIndex;
     }
 
-    if (!isNaN(pageSize) || !isNaN(maxResults)) {
+    if (maxResults < Infinity) {
       // If there's a limit or page size, fetch
       // a page of items (the limit or the page size, whichever is smaller)
       requestOptions.query.limit = Math.min(
         pageSize || maxResults,
         maxResults - results.length
       );
+    } else if (!isNaN(pageSize)) {
+      requestOptions.query.limit = pageSize;
     }
 
     // Fetch a page of data

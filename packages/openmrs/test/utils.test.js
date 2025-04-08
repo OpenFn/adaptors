@@ -78,7 +78,6 @@ testServer
     } else {
       const { results, next } = get(args.query);
 
-      // TODO need to include next stuff
       const links = [];
       if (next) {
         links.push({
@@ -310,7 +309,6 @@ describe('requestWithPagination', () => {
     expect(data[0].display).to.eql('bill bailey 1');
   });
 
-  // maybe an undocumented on-item callback? Yes, that. Or on url.
   it('should get all with a page size', async () => {
     const totalNumberOfBills = get({ q: 'bill' }).results.length;
 
