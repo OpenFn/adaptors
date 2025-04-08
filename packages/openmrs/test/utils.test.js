@@ -310,31 +310,39 @@ describe('requestWithPagination', () => {
     expect(data[0].display).to.eql('bill bailey 1');
   });
 
-  // I can see that this works in logs
-  // but not sure how I'm going to assert it properly
-  // undici 7 has a call history API but it straight up doesn't work
   // maybe an undocumented on-item callback? Yes, that. Or on url.
-  it.only('should get all with a page size', async () => {
+  it('should get all with a page size', async () => {
     const totalNumberOfBills = get({ q: 'bill' }).results.length;
+
+    const requests = [];
 
     const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
       query: { q: 'bill' },
       baseUrl: state.configuration.instanceUrl,
       pageSize: 2,
+      _onrequest: r => {
+        requests.push(r);
+      },
     });
 
+    expect(requests.length).to.eql(5);
     expect(data.length).to.eql(totalNumberOfBills);
     expect(data[0].display).to.eql('bill bailey 1');
   });
 
-  it.only('should get some with a page size', async () => {
+  it('should get some with a page size', async () => {
+    const requests = [];
     const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
       query: { q: 'bill' },
       baseUrl: state.configuration.instanceUrl,
       pageSize: 2,
       limit: 5,
+      _onrequest: r => {
+        requests.push(r);
+      },
     });
 
+    expect(requests.length).to.eql(3);
     expect(data.length).to.eql(5);
   });
 });

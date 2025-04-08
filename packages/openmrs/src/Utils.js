@@ -14,7 +14,7 @@ export const prepareNextState = (state, response, callback = s => s) => {
   return callback(nextState);
 };
 
-export async function fetchAndLog(method, url, opts) {
+export async function fetchAndLog(method, url, opts = {}) {
   const response = await commonRequest(method, url, opts);
   const { statusCode, duration } = response;
 
@@ -29,6 +29,14 @@ export async function fetchAndLog(method, url, opts) {
     console.log(message);
   }
   response.url = urlWithQuery;
+
+  // For test and debug
+  opts._onrequest?.({
+    url: urlWithQuery,
+    query: opts.query,
+    method,
+  });
+
   return response;
 }
 
@@ -94,7 +102,8 @@ export async function request(state, method, path, options = {}) {
     data = {},
     headers = { 'content-type': 'application/json' },
     parseAs = 'json',
-  } = options;
+    _onrequest,
+  } = options; // secret option for debug & test
 
   if (baseUrl.length <= 0) {
     throw new Error(
@@ -120,6 +129,7 @@ export async function request(state, method, path, options = {}) {
     query,
     parseAs,
     baseUrl,
+    _onrequest,
   };
 
   return fetchAndLog(method, path, requestOptions);
