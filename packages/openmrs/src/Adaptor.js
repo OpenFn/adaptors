@@ -1,6 +1,14 @@
-import { execute as commonExecute } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { request, prepareNextState, cleanPath } from './Utils';
+import {
+  request,
+  prepareNextState,
+  cleanPath,
+  requestWithPagination,
+} from './Utils';
 
 /**
  * State object
@@ -48,6 +56,8 @@ export function execute(...operations) {
  * Fetch resources from OpenMRS. Use this to fetch a single resource,
  * or to search a list. Query parameters will be appended to the request URL,
  * refer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.
+ * Pagination is handled automatically, pass a limit to restrict the total number
+ * of items that are retrieved.
  * @example <caption>List all patients</caption>
  * get("patient")
  * @example <caption>Search patients by name with a limit (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
@@ -74,18 +84,16 @@ export function get(path, options) {
       options
     );
 
-    const { instanceUrl: baseUrl } = state.configuration;
-    const response = await request(
+    const result = await requestWithPagination(
       state,
-      'GET',
       cleanPath(`/ws/rest/v1/${resolvedPath}`),
       {
-        baseUrl,
+        baseUrl: state.configuration?.instanceUrl,
         query: resolvedOptions,
       }
     );
 
-    return prepareNextState(state, response);
+    return composeNextState(state, result);
   };
 }
 
@@ -172,6 +180,8 @@ export function create(path, data) {
 
     console.log(`Successfully created ${resolvedPath}`);
 
+    // TODO I think we should use composeNextState no?
+    // No http semantics?
     return prepareNextState(state, response);
   };
 }
@@ -305,7 +315,7 @@ export function upsert(path, data) {
  * @state {HttpState}
  * @returns {Operation}
  */
-function _delete(path, options) {
+export function destroy(path, options) {
   return async state => {
     const [resolvedPath, resolvedOptions = {}] = expandReferences(
       state,
@@ -314,7 +324,9 @@ function _delete(path, options) {
     );
 
     const { instanceUrl: baseUrl } = state.configuration;
-    const response = await request(
+
+    // TODO if this returns anything other than a 204, we should throw
+    const result = await request(
       state,
       'DELETE',
       cleanPath(`/ws/rest/v1/${resolvedPath}`),
@@ -323,12 +335,9 @@ function _delete(path, options) {
         query: resolvedOptions,
       }
     );
-
-    return prepareNextState(state, response);
+    return composeNextState(state, result.body);
   };
 }
-
-export { _delete as delete };
 
 export {
   alterState,

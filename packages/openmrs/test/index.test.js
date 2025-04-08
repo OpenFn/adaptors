@@ -1,12 +1,12 @@
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect } from 'chai';
-import { request } from '../src/Utils';
+
 import testData from './fixtures.json' assert { type: 'json' };
 
-import { get, create, update, upsert, execute, fhir, http } from '../src';
+import { get, create, update, upsert, execute } from '../src';
 import * as adaptor from '../src';
 
-const testServer = enableMockClient('https://fn.openmrs.org');
+const testServer = enableMockClient('https://index-tests.openmrs.org');
 const jsonHeaders = {
   headers: {
     'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ const jsonHeaders = {
 const configuration = {
   username: 'test',
   password: 'strongpassword',
-  instanceUrl: 'https://fn.openmrs.org',
+  instanceUrl: 'https://index-tests.openmrs.org',
 };
 
 const state = {
@@ -61,419 +61,6 @@ describe('execute', () => {
   });
 });
 
-describe('http.request', () => {
-  it('should GET with a query', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah 1' },
-        method: 'GET',
-      })
-      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
-
-    const { data } = await http.request('GET', '/ws/rest/v1/patient', {
-      query: { q: 'Sarah 1' },
-    })(state);
-
-    expect(data.results[0].display).to.eql(testData.patientResults[0].display);
-  });
-
-  it('should auto-fetch patients with a limit', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah', limit: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          results: [{ display: 'Sarah 1' }],
-          links: [
-            {
-              rel: 'next',
-              uri: 'https://fn.openmrs.org/ws/rest/v1/patient?q=Sarah&limit=1&startIndex=1',
-              resourceAlias: null,
-            },
-          ],
-        },
-        { ...jsonHeaders }
-      );
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah', limit: 1, startIndex: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          results: [{ display: 'Sarah 2' }],
-        },
-        { ...jsonHeaders }
-      );
-
-    const { data } = await http.request('GET', '/ws/rest/v1/patient', {
-      query: { q: 'Sarah', limit: 1 },
-    })(state);
-
-    expect(data.results[0].display).to.eql('Sarah 1');
-    expect(data.results[1].display).to.eql('Sarah 2');
-  });
-
-  it('should throw if the server returns a 404', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah 1' },
-        method: 'GET',
-      })
-      .reply(404, {}, { ...jsonHeaders });
-
-    let error;
-    try {
-      await http.request('GET', '/ws/rest/v1/patient', {
-        query: { q: 'Sarah 1' },
-      })(state);
-    } catch (e) {
-      error = e;
-    }
-    expect(error.statusCode).to.equal(404);
-  });
-
-  it('should suppress 404 errors with the error map', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah 1' },
-        method: 'GET',
-      })
-      .reply(404, {}, { ...jsonHeaders });
-
-    const result = await http.request('GET', '/ws/rest/v1/patient', {
-      query: { q: 'Sarah 1' },
-      errors: { 404: false },
-    })(state);
-
-    expect(result.response.statusCode).to.equal(404);
-  });
-
-  it('should suppress all errors with the error map', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah 1' },
-        method: 'GET',
-      })
-      .reply(404, {}, { ...jsonHeaders });
-
-    const result = await http.request('GET', '/ws/rest/v1/patient', {
-      query: { q: 'Sarah 1' },
-      errors: false,
-    })(state);
-
-    expect(result.response.statusCode).to.equal(404);
-  });
-});
-
-describe('http.get', () => {
-  beforeEach(() => {
-    // Basic patient query interceptor
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        method: 'GET',
-      })
-      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
-
-    // Patient query with params interceptor
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah', startIndex: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          results: testData.patientResults,
-          links: [
-            {
-              rel: 'next',
-              uri: 'https://fn.openmrs.org/ws/rest/v1/patient?q=Sarah&limit=1&startIndex=1',
-              resourceAlias: null,
-            },
-          ],
-        },
-        { ...jsonHeaders }
-      );
-  });
-
-  it('should make http request with the "GET" verb', async () => {
-    const response = await http.get('/ws/rest/v1/patient')(state);
-    expect(response.response.method).to.eql('GET');
-  });
-
-  it('should make a basic get request to openmrs', async () => {
-    const { data } = await http.get('/ws/rest/v1/patient')(state);
-    expect(data.results[0].display).to.eql(testData.patientResults[0].display);
-  });
-
-  it('should make a get request that includes query params', async () => {
-    const options = {
-      query: { q: 'Sarah', startIndex: 1 },
-    };
-
-    const { data } = await http.get('/ws/rest/v1/patient', options)(state);
-    expect(data.results[0].display).to.eql(testData.patientResults[0].display);
-  });
-});
-
-describe('http.post', () => {
-  beforeEach(() => {
-    // Basic patient query interceptor
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        method: 'POST',
-        data: testData.newPatient,
-      })
-      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
-
-    // Invalid request interceptor
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/wrong-url',
-        method: 'POST',
-        data: testData.newPatient,
-      })
-      .reply(404, { ...jsonHeaders });
-  });
-
-  it('should make http request with the "POST" verb', async () => {
-    const response = await http.post(
-      '/ws/rest/v1/patient',
-      testData.newPatient
-    )(state);
-    expect(response.response.method).to.eql('POST');
-  });
-
-  it('should make a successful POST request to openmrs', async () => {
-    const { data } = await http.post(
-      '/ws/rest/v1/patient',
-      testData.newPatient
-    )(state);
-    expect(data.results[0].display).to.eql(testData.patientResults[0].display);
-  });
-
-  it('should throw an error for an invalid request', async () => {
-    try {
-      await http.post('/ws/rest/v1/wrong-url', testData.newPatient)(state);
-    } catch (e) {
-      expect(e.statusCode).to.eql(404);
-    }
-  });
-});
-
-describe('http.delete', () => {
-  beforeEach(() => {
-    // Basic patient query interceptor
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient/abc',
-        method: 'DELETE',
-      })
-      .reply(200, { ...jsonHeaders });
-
-    // Invalid request interceptor
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient/non-existent',
-        method: 'DELETE',
-      })
-      .reply(404, { ...jsonHeaders });
-  });
-
-  it('should make http request with the "DELETE" verb', async () => {
-    const response = await http.delete('/ws/rest/v1/patient/abc')(state);
-    expect(response.response.method).to.eql('DELETE');
-  });
-
-  it('should make a successful DELETE request to openmrs', async () => {
-    const response = await http.delete('/ws/rest/v1/patient/abc')(state);
-    expect(response.response.statusCode).to.eql(200);
-  });
-
-  it('should throw an error for an invalid request', async () => {
-    try {
-      await http.delete('/ws/rest/v1/patient/non-existent')(state);
-    } catch (e) {
-      expect(e.statusCode).to.eql(404);
-    }
-  });
-});
-
-describe('fhir', () => {
-  it('should GET with a query', async () => {
-    testServer
-      .intercept({
-        path: '/ws/fhir2/R4/Patient',
-        query: { q: 'Sarah 1' },
-        method: 'GET',
-      })
-      .reply(200, { entry: [{ display: 'Sarah 1' }] }, { ...jsonHeaders });
-
-    const { data } = await fhir.get('Patient', { q: 'Sarah 1' })(state);
-    expect(data.entry[0].display).to.eql('Sarah 1');
-  });
-  it('should auto-fetch with a query', async () => {
-    testServer
-      .intercept({
-        path: '/ws/fhir2/R4/Practitioner',
-        query: { _count: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          entry: [
-            {
-              display: 'Sarah 1',
-            },
-          ],
-          link: [
-            {
-              relation: 'next',
-              url: 'https://fn.openmrs.org/ws/fhir2/R4/Practitioner?_getpages=c24e0803-e3b6-411f-ac28-190997d4c31a&_getpagesoffset=2&_count=1&_bundletype=searchset',
-            },
-          ],
-        },
-        { ...jsonHeaders }
-      );
-    testServer
-      .intercept({
-        path: '/ws/fhir2/R4/Practitioner?_getpages=c24e0803-e3b6-411f-ac28-190997d4c31a&_getpagesoffset=2&_count=1&_bundletype=searchset',
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          entry: [{ display: 'Sarah 2' }],
-        },
-        { ...jsonHeaders }
-      );
-
-    const { data } = await fhir.get('Practitioner', { count: 1 })(state);
-    expect(data.entry[0].display).to.eql('Sarah 1');
-    expect(data.entry[1].display).to.eql('Sarah 2');
-  });
-});
-describe('request', () => {
-  it('should GET with a query', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah 1' },
-        method: 'GET',
-      })
-      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
-
-    const { body } = await request(state, 'GET', '/ws/rest/v1/patient', {
-      query: { q: 'Sarah 1' },
-      baseUrl: state.configuration.instanceUrl,
-    });
-
-    expect(body.results[0].display).to.eql(testData.patientResults[0].display);
-  });
-  it('should auto-fetch patients with a limit', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah', limit: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          results: [{ display: 'Sarah 1' }],
-          links: [
-            {
-              rel: 'next',
-              uri: 'https://fn.openmrs.org/ws/rest/v1/patient?q=Sarah&limit=1&startIndex=1',
-              resourceAlias: null,
-            },
-          ],
-        },
-        { ...jsonHeaders }
-      );
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah', limit: 1, startIndex: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          results: [{ display: 'Sarah 2' }],
-        },
-        { ...jsonHeaders }
-      );
-
-    const { body } = await request(state, 'GET', '/ws/rest/v1/patient', {
-      query: { q: 'Sarah', limit: 1 },
-      baseUrl: state.configuration.instanceUrl,
-    });
-
-    expect(body.results[0].display).to.eql('Sarah 1');
-    expect(body.results[1].display).to.eql('Sarah 2');
-  });
-
-  it('should not auto-fetch if the user sets startIndex', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah', limit: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          results: [{ display: 'Sarah 1' }],
-          links: [
-            {
-              rel: 'next',
-              uri: 'https://fn.openmrs.org/ws/rest/v1/patient?q=Sarah&limit=1&startIndex=1',
-              resourceAlias: null,
-            },
-          ],
-        },
-        { ...jsonHeaders }
-      );
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah', limit: 1, startIndex: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          results: [{ display: 'Sarah 2' }],
-        },
-        { ...jsonHeaders }
-      );
-
-    const { body } = await request(state, 'GET', '/ws/rest/v1/patient', {
-      query: { q: 'Sarah', limit: 1, startIndex: 1 },
-      baseUrl: state.configuration.instanceUrl,
-    });
-
-    expect(body.results[0].display).to.eql('Sarah 2');
-    expect(body.results.length).to.eql(1);
-  });
-});
-
 describe('get', () => {
   it('should get an encounter by uuid', async () => {
     testServer
@@ -485,9 +72,10 @@ describe('get', () => {
 
     const { data } = await execute(get('encounter/123'))(state);
 
-    expect(data.uuid).to.eql('123');
+    expect(data.length).to.equal(1);
+    expect(data[0].uuid).to.eql('123');
   });
-  it('should be robust to leading and trailing slashes', async () => {
+  it('should be robust to leading and trailing slashes: /encounter/123', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/encounter/123',
@@ -497,9 +85,10 @@ describe('get', () => {
 
     const { data } = await execute(get('/encounter/123'))(state);
 
-    expect(data.uuid).to.eql('123');
+    expect(data.length).to.equal(1);
+    expect(data[0].uuid).to.eql('123');
   });
-  it('should be robust to leading and trailing slashes', async () => {
+  it('should be robust to leading and trailing slashes: encounter/123/', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/encounter/123',
@@ -509,9 +98,10 @@ describe('get', () => {
 
     const { data } = await execute(get('encounter/123/'))(state);
 
-    expect(data.uuid).to.eql('123');
+    expect(data.length).to.equal(1);
+    expect(data[0].uuid).to.eql('123');
   });
-  it('should be robust to leading and trailing slashes', async () => {
+  it('should be robust to leading and trailing slashes: encounter/123', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/encounter/123',
@@ -521,7 +111,8 @@ describe('get', () => {
 
     const { data } = await execute(get('encounter/123'))(state);
 
-    expect(data.uuid).to.eql('123');
+    expect(data.length).to.equal(1);
+    expect(data[0].uuid).to.eql('123');
   });
   it('should parse query params', async () => {
     testServer
@@ -534,7 +125,7 @@ describe('get', () => {
 
     const { data } = await execute(get('patient', { q: 'Sarah' }))(state);
 
-    expect(data.results[0].uuid).to.eql(testData.patientResults[0].uuid);
+    expect(data[0].uuid).to.eql(testData.patientResults[0].uuid);
   });
 });
 
@@ -573,7 +164,7 @@ describe('create', () => {
     const { data } = await execute(create('patient', state => state.patient))(
       state
     );
-    expect(data.results[0].display).to.eql(testData.patient.display);
+    expect(data.display).to.eql(testData.patient.display);
   });
   it('should throw an error if the resource is not found', async () => {
     testServer
@@ -662,7 +253,7 @@ describe('upsert', () => {
   });
 });
 
-describe('delete', () => {
+describe('destroy', () => {
   it('should delete an encounter by uuid', async () => {
     testServer
       .intercept({
@@ -671,12 +262,12 @@ describe('delete', () => {
       })
       .reply(200, { uuid: '123', voided: true }, { ...jsonHeaders });
 
-    const { data } = await execute(adaptor.delete('/encounter/123'))(state);
+    const { data } = await execute(adaptor.destroy('/encounter/123'))(state);
 
     expect(data.uuid).to.eql('123');
   });
 
-  it('should delete a resource with options', async () => {
+  it('should destroy a resource with options', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/encounter/456?purge=true',
@@ -685,7 +276,7 @@ describe('delete', () => {
       .reply(200, { uuid: '456', voided: false }, { ...jsonHeaders });
 
     const { data } = await execute(
-      adaptor.delete('/encounter/456', { purge: true })
+      adaptor.destroy('/encounter/456', { purge: true })
     )(state);
 
     expect(data.uuid).to.eql('456');
@@ -700,7 +291,7 @@ describe('delete', () => {
       .reply(404, { error: 'Not Found' }, { ...jsonHeaders });
 
     try {
-      await execute(adaptor.delete('encounter/789'))(state);
+      await execute(adaptor.destroy('encounter/789'))(state);
     } catch (error) {
       expect(error.body.error).to.eql('Not Found');
     }

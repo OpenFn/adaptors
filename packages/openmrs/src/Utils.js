@@ -2,27 +2,107 @@ import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   makeBasicAuthHeader,
-  logResponse,
 } from '@openfn/language-common/util';
 
-export const prepareNextState = (state, response, callback = s => s) => {
+export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
-  const nextState = {
+  return {
     ...composeNextState(state, body),
     response: responseWithoutBody,
   };
-
-  return callback(nextState);
 };
 
+export async function fetchAndLog(method, url, opts = {}) {
+  const response = await commonRequest(method, url, opts);
+  const { statusCode, duration } = response;
+
+  const urlWithQuery = Object.keys(opts.query || {}).length
+    ? `${url}?${new URLSearchParams(opts.query).toString()}`
+    : url;
+
+  const message = `${method} ${urlWithQuery} - ${statusCode} in ${duration}ms`;
+  if (response instanceof Error) {
+    console.error(message);
+  } else {
+    console.log(message);
+  }
+  response.url = urlWithQuery;
+
+  // For test and debug
+  opts._onrequest?.({
+    url: urlWithQuery,
+    query: opts.query,
+    method,
+  });
+
+  return response;
+}
+
+export async function requestWithPagination(state, path, options = {}) {
+  const results = [];
+
+  let { pageSize, startIndex, limit: maxResults = Infinity } = options;
+
+  // Declare a variable that takes in all the options. We can then modify this variable to fetch the next page
+  let requestOptions = { ...options };
+
+  let hasMoreContent = true;
+  do {
+    requestOptions.query ??= {};
+
+    // include startIndex if relevant
+    if (!isNaN(startIndex)) {
+      requestOptions.query.startIndex = startIndex;
+    }
+
+    if (maxResults < Infinity) {
+      // If there's a limit or page size, fetch
+      // a page of items (the limit or the page size, whichever is smaller)
+      requestOptions.query.limit = Math.min(
+        pageSize || maxResults,
+        maxResults - results.length
+      );
+    } else if (!isNaN(pageSize)) {
+      requestOptions.query.limit = pageSize;
+    }
+
+    // Fetch a page of data
+    const response = await request(state, 'GET', path, requestOptions);
+
+    // If a search, the data will be in the form { results }
+    // otherwise just return the data verbatim (in an array)
+    if (response.body.results) {
+      results.push(...response.body.results);
+
+      // If there is data, save it
+      if (!startIndex) {
+        startIndex = 0;
+      }
+      startIndex += response.body.results.length;
+    } else {
+      results.push(response.body);
+    }
+
+    // Decide whether to request another page
+    hasMoreContent =
+      results.length < maxResults &&
+      response.body.links?.find(link => link?.rel === 'next');
+  } while (hasMoreContent);
+
+  return results;
+}
+
 export async function request(state, method, path, options = {}) {
+  const { username, password, instanceUrl: baseUrl } = state.configuration;
+
   const {
-    baseUrl = state.configuration.instanceUrl,
     query = {},
     data = {},
     headers = { 'content-type': 'application/json' },
     parseAs = 'json',
-  } = options;
+    _onrequest,
+    errors,
+  } = options; // secret option for debug & test
 
   if (baseUrl.length <= 0) {
     throw new Error(
@@ -33,16 +113,13 @@ export async function request(state, method, path, options = {}) {
   const isAbsoluteUrl = /^(https?:|\/\/)/i.test(path);
   if (isAbsoluteUrl) {
     throw new Error(
-      `Invalid path argument: "${path}" appears to be an absolute URL. Please provide a relative path.`
+      `Invalid path argument: "${path}" appears to be an absolute URL. Please provide a relative path`
     );
   }
 
-  const { username, password } = state.configuration;
   const authHeaders = makeBasicAuthHeader(username, password);
 
-  const opts = {
-    ...options,
-    baseUrl,
+  const requestOptions = {
     body: data,
     headers: {
       ...authHeaders,
@@ -50,42 +127,12 @@ export async function request(state, method, path, options = {}) {
     },
     query,
     parseAs,
+    baseUrl,
+    errors,
+    _onrequest,
   };
 
-  let allResponses;
-  let queryParams = opts?.query;
-  let allowPagination = isNaN(queryParams?.startIndex);
-
-  do {
-    const requestOptions = queryParams ? { ...opts, query: queryParams } : opts;
-
-    const response = await commonRequest(method, path, requestOptions);
-    logResponse(response);
-
-    if (allResponses) {
-      allResponses.body.results.push(...response.body.results);
-    } else {
-      allResponses = response;
-    }
-    const nextUrl = response?.body?.links?.find(
-      link => link.rel === 'next'
-    )?.uri;
-
-    if (nextUrl) {
-      console.log(`Fetched ${response.body.results.length} results`);
-      console.log(`Fetching next page from ${nextUrl}`);
-      const urlObj = new URL(nextUrl);
-      const params = new URLSearchParams(urlObj.search);
-      const startIndex = params.get('startIndex');
-
-      queryParams = { ...queryParams, startIndex };
-    } else {
-      delete allResponses.body.links;
-      break;
-    }
-  } while (allowPagination);
-
-  return allResponses;
+  return fetchAndLog(method, path, requestOptions);
 }
 
 export function cleanPath(path) {
