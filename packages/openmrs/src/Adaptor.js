@@ -3,16 +3,12 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import {
-  request,
-  cleanPath,
-  requestWithPagination,
-} from './Utils';
+import { request, cleanPath, requestWithPagination } from './Utils';
 
 /**
  * OpenMRS query object. This is a brief overview with commonly used parameters that cut across multiple requests. For more details about parameters specific to your request visit the [OpenMRS Docs](https://rest.openmrs.org/)
- * @typedef {object} RestQueryOptions
- * @property {string} q - Search by query for listings
+ * @typedef {object} RestOptions
+ * @property {string} q - Query string to filter the results
  * @property {number} limit - Number of listings returned in the `results` array.
  * @property {boolean} purge - For delete operations only. Use with caution! The resource will be voided unless purge = true. Purging will attempt to remove the resource irreversibly. Resources that are referenced from existing data can not be purged.
  * @property {number} startindex - Commonly used with `query.q` and `query.limit` for pagination to position the cursor.
@@ -61,7 +57,7 @@ export function execute(...operations) {
  * @function
  * @public
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
- * @param {RestQueryOptions} [options = {}] Query parameters (eg `limit`, `q`)
+ * @param {RestOptions} [options = {}] Query parameters (eg `limit`, `q`)
  * @state data An array of result objects
  * @returns {Operation}
  */
