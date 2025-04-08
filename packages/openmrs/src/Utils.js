@@ -36,31 +36,51 @@ export async function requestWithPagination(state, path, options = {}) {
   const results = [];
 
   // the maximum number of items to download
-  const { limit: maxResults = Infinity, pageSize = 1000 } = options;
-  let { startIndex = 1 } = options;
+  const { limit: maxResults = 1e4, pageSize } = options;
+  let { startIndex } = options;
 
   // Declare a variable that takes in all the options. We can then modify this variable to fetch the next page
   let requestOptions = { ...options };
 
   let hasMoreContent = true;
   do {
-    // Calculate the page size for this request
-    requestOptions.query = Object.assign({}, options.query, {
-      limit: Math.min(pageSize, maxResults - results.length),
-      startIndex,
-    });
+    requestOptions.query ??= {};
+
+    // include startIndex if relevant
+    if (!isNaN(startIndex)) {
+      requestOptions.query.startIndex = startIndex;
+    }
+
+    if (!isNaN(pageSize) || !isNaN(maxResults)) {
+      // If there's a limit or page size, fetch
+      // a page of items (the limit or the page size, whichever is smaller)
+      requestOptions.query.limit = Math.min(
+        pageSize || maxResults,
+        maxResults - results.length
+      );
+    }
 
     // Fetch a page of data
     const response = await request(state, 'GET', path, requestOptions);
 
-    // If there is data, save it
-    results.push(...response.body.results);
-    startIndex += response.body.results.length;
+    // If a search, the data will be in the form { results }
+    // otherwise just return the data verbatim (in an array)
+    if (response.body.results) {
+      results.push(...response.body.results);
+
+      // If there is data, save it
+      if (!startIndex) {
+        startIndex = 0;
+      }
+      startIndex += response.body.results.length;
+    } else {
+      results.push(response.body);
+    }
 
     // Decide whether to request another page
     hasMoreContent =
       results.length < maxResults &&
-      response.body.links.find(link => link?.rel === 'next');
+      response.body.links?.find(link => link?.rel === 'next');
   } while (hasMoreContent);
 
   return results;

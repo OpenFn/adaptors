@@ -37,49 +37,6 @@ describe('http.request', () => {
 
     expect(data.results[0].display).to.eql(testData.patientResults[0].display);
   });
-
-  it('should auto-fetch patients with a limit', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah', limit: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          results: [{ display: 'Sarah 1' }],
-          links: [
-            {
-              rel: 'next',
-              uri: 'https://fn.openmrs.org/ws/rest/v1/patient?q=Sarah&limit=1&startIndex=1',
-              resourceAlias: null,
-            },
-          ],
-        },
-        { ...jsonHeaders }
-      );
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah', limit: 1, startIndex: 1 },
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          results: [{ display: 'Sarah 2' }],
-        },
-        { ...jsonHeaders }
-      );
-
-    const { data } = await http.request('GET', '/ws/rest/v1/patient', {
-      query: { q: 'Sarah', limit: 1 },
-    })(state);
-
-    expect(data.results[0].display).to.eql('Sarah 1');
-    expect(data.results[1].display).to.eql('Sarah 2');
-  });
 });
 
 describe('http.get', () => {

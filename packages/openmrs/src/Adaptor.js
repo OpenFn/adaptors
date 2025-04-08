@@ -1,6 +1,11 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { request, prepareNextState, cleanPath } from './Utils';
+import {
+  request,
+  prepareNextState,
+  cleanPath,
+  requestWithPagination,
+} from './Utils';
 
 /**
  * State object
@@ -48,6 +53,8 @@ export function execute(...operations) {
  * Fetch resources from OpenMRS. Use this to fetch a single resource,
  * or to search a list. Query parameters will be appended to the request URL,
  * refer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.
+ * Pagination is handled automatically, pass a limit to restrict the total number
+ * of items that are retrieved.
  * @example <caption>List all patients</caption>
  * get("patient")
  * @example <caption>Search patients by name with a limit (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
@@ -75,7 +82,7 @@ export function get(path, options) {
     );
 
     const { instanceUrl: baseUrl } = state.configuration;
-    const response = await request(
+    const response = await requestWithPagination(
       state,
       'GET',
       cleanPath(`/ws/rest/v1/${resolvedPath}`),

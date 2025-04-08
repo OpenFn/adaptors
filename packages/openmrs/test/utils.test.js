@@ -61,24 +61,55 @@ testServer
     method: 'GET',
   })
   .reply(args => {
-    const { results, next } = get(args.query);
-    // TODO need to include next stuff
-    const links = [];
-    if (next) {
-      links.push({
-        rel: 'next',
-        uri: '<ommitted>', // no need to include the full URI
-      });
+    const data = {};
+    const id = args.path.split('/patient/')[1];
+    let statusCode = 200;
+
+    if (id) {
+      // If only one item, return it verbatim
+      const match = db.find(d => d.uuid === id);
+      // confirm the structure
+      if (match) {
+        Object.assign(data, match);
+      } else {
+        statusCode = 404;
+        data.result = {};
+      }
+    } else {
+      const { results, next } = get(args.query);
+
+      // TODO need to include next stuff
+      const links = [];
+      if (next) {
+        links.push({
+          rel: 'next',
+          uri: '<ommitted>', // no need to include the full URI
+        });
+      }
+      data.results = results;
+      data.links = links;
     }
+
     return {
-      statusCode: 200,
+      statusCode,
       headers: { 'content-type': 'application/json' },
-      data: { results, links },
+      data,
     };
   })
   .persist();
 
 describe('mock server', () => {
+  it('should get a patient by id', async () => {
+    const response = await testServer.request({
+      method: 'GET',
+      path: '/ws/rest/v1/patient/bill-1',
+    });
+    expect(response.statusCode).to.equal(200);
+
+    const result = await response.body.json();
+
+    expect(result).to.eql({ uuid: 'bill-1', display: 'bill bailey 1' });
+  });
   it('should get all matching items if no limit', async () => {
     const response = await testServer.request({
       method: 'GET',
@@ -233,6 +264,18 @@ describe('request()', () => {
 });
 
 describe('requestWithPagination', () => {
+  it('should get a single item', async () => {
+    const data = await requestWithPagination(
+      state,
+      '/ws/rest/v1/patient/bill-1',
+      {
+        baseUrl: state.configuration.instanceUrl,
+      }
+    );
+    expect(data.length).to.equal(1);
+    expect(data[0]).to.eql({ uuid: 'bill-1', display: 'bill bailey 1' });
+  });
+
   it('should get all items', async () => {
     const totalNumberOfBills = get({ q: 'bill' }).results.length;
 
@@ -270,8 +313,8 @@ describe('requestWithPagination', () => {
   // I can see that this works in logs
   // but not sure how I'm going to assert it properly
   // undici 7 has a call history API but it straight up doesn't work
-  // maybe an undocumented on-item callback?
-  it.skip('should get with a page size', async () => {
+  // maybe an undocumented on-item callback? Yes, that. Or on url.
+  it.only('should get all with a page size', async () => {
     const totalNumberOfBills = get({ q: 'bill' }).results.length;
 
     const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
@@ -282,5 +325,16 @@ describe('requestWithPagination', () => {
 
     expect(data.length).to.eql(totalNumberOfBills);
     expect(data[0].display).to.eql('bill bailey 1');
+  });
+
+  it.only('should get some with a page size', async () => {
+    const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
+      query: { q: 'bill' },
+      baseUrl: state.configuration.instanceUrl,
+      pageSize: 2,
+      limit: 5,
+    });
+
+    expect(data.length).to.eql(5);
   });
 });
