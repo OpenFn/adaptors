@@ -1,10 +1,10 @@
 // Set up state to use the public openmrs demo sandbox
 fn(state => {
-  state.configuration = {
-    instanceUrl: 'https://o3.openmrs.org/openmrs',
-    username: 'admin',
-    password: 'Admin123',
-  };
+  // state.configuration = {
+  //   instanceUrl: 'https://o3.openmrs.org/openmrs',
+  //   username: 'admin',
+  //   password: 'Admin123',
+  // };
   return state;
 });
 

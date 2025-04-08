@@ -1,4 +1,4 @@
-import { composeNextState } from '@openfn/language-common';
+import { composeNextState, util } from '@openfn/language-common';
 import {
   request as commonRequest,
   makeBasicAuthHeader,
@@ -36,6 +36,19 @@ export async function fetchAndLog(method, url, opts = {}) {
   });
 
   return response;
+}
+
+export function validateCredentials(state) {
+  const config = state.configuration || {};
+
+  for (const key of ['instanceUrl']) {
+    if (!config[key]) {
+      util.throwError('INVALID_CREDENTIALS', {
+        description: `configuration.${key}`,
+        fix: 'Ensure that all required credentials are set on state.configuration',
+      });
+    }
+  }
 }
 
 export async function requestWithPagination(state, path, options = {}) {
@@ -93,6 +106,8 @@ export async function requestWithPagination(state, path, options = {}) {
 }
 
 export async function request(state, method, path, options = {}) {
+  validateCredentials(state);
+
   const { username, password, instanceUrl: baseUrl } = state.configuration;
 
   const {

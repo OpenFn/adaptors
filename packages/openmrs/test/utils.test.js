@@ -89,9 +89,9 @@ testServer
       data,
       responseOptions: {
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
         },
-      }
+      },
     };
   })
   .persist();
@@ -211,11 +211,20 @@ describe('mock server', () => {
 });
 
 describe('request()', () => {
+  it('should throw if no baseUrl provided', async () => {
+    let err;
+    try {
+      await request({}, 'GET', '/ws/rest/v1/patient');
+    } catch (e) {
+      err = e;
+    }
+
+    expect(err.message).to.match(/INVALID_CREDENTIALS/);
+  });
+
   it('should GET with no query parameters', async () => {
     // This will actually give a 400 from real openmrs, but it's fine
-    const response = await request(state, 'GET', '/ws/rest/v1/patient', {
-      baseUrl: state.configuration.instanceUrl,
-    });
+    const response = await request(state, 'GET', '/ws/rest/v1/patient');
 
     expect(response.statusCode).to.eql(200);
     expect(response.url).to.match(/\/patient$/);
@@ -227,7 +236,6 @@ describe('request()', () => {
   it('should GET with a query', async () => {
     const response = await request(state, 'GET', '/ws/rest/v1/patient', {
       query: { q: 'bill' },
-      baseUrl: state.configuration.instanceUrl,
     });
 
     expect(response.statusCode).to.eql(200);
@@ -239,7 +247,6 @@ describe('request()', () => {
   it('should GET with a query and limit', async () => {
     const response = await request(state, 'GET', '/ws/rest/v1/patient', {
       query: { q: 'bill', limit: 1 },
-      baseUrl: state.configuration.instanceUrl,
     });
 
     expect(response.statusCode).to.eql(200);
@@ -255,7 +262,6 @@ describe('request()', () => {
   it('should GET with a query and startIndex', async () => {
     const response = await request(state, 'GET', '/ws/rest/v1/patient', {
       query: { q: 'bill', startIndex: 10 },
-      baseUrl: state.configuration.instanceUrl,
     });
 
     expect(response.statusCode).to.eql(200);
@@ -273,9 +279,7 @@ describe('requestWithPagination', () => {
     const data = await requestWithPagination(
       state,
       '/ws/rest/v1/patient/bill-1',
-      {
-        baseUrl: state.configuration.instanceUrl,
-      }
+      {}
     );
     expect(data.length).to.equal(1);
     expect(data[0]).to.eql({ uuid: 'bill-1', display: 'bill bailey 1' });
@@ -286,7 +290,6 @@ describe('requestWithPagination', () => {
 
     const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
       query: { q: 'bill' },
-      baseUrl: state.configuration.instanceUrl,
     });
     expect(data.length).to.eql(totalNumberOfBills);
     expect(data[0].display).to.eql('bill bailey 1');
@@ -295,7 +298,6 @@ describe('requestWithPagination', () => {
   it('should get some items', async () => {
     const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
       query: { q: 'bill' },
-      baseUrl: state.configuration.instanceUrl,
       limit: 5,
     });
 
@@ -307,7 +309,6 @@ describe('requestWithPagination', () => {
     const totalNumberOfBills = get({ q: 'bill' }).results.length;
     const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
       query: { q: 'bill' },
-      baseUrl: state.configuration.instanceUrl,
       limit: 20,
     });
 
@@ -322,7 +323,6 @@ describe('requestWithPagination', () => {
 
     const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
       query: { q: 'bill' },
-      baseUrl: state.configuration.instanceUrl,
       pageSize: 2,
       _onrequest: r => {
         requests.push(r);
@@ -338,7 +338,6 @@ describe('requestWithPagination', () => {
     const requests = [];
     const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
       query: { q: 'bill' },
-      baseUrl: state.configuration.instanceUrl,
       pageSize: 2,
       limit: 5,
       _onrequest: r => {
