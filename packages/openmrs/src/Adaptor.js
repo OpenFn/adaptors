@@ -326,7 +326,7 @@ export function destroy(path, options) {
     const { instanceUrl: baseUrl } = state.configuration;
 
     // TODO if this returns anything other than a 204, we should throw
-    await request(
+    const result = await request(
       state,
       'DELETE',
       cleanPath(`/ws/rest/v1/${resolvedPath}`),
@@ -335,11 +335,9 @@ export function destroy(path, options) {
         query: resolvedOptions,
       }
     );
-    return state;
+    return composeNextState(state, result.body);
   };
 }
-
-// export { _delete as remove };
 
 export {
   alterState,
