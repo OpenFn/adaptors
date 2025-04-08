@@ -34,22 +34,27 @@ const defaultObjects = [
 
 const paginatedResponse = (
   url,
-  limit = 30000,
+  pageSize = 30000,
   start = 0,
   objects = defaultObjects
 ) => {
   const s = parseInt(start);
-  const l = parseInt(limit);
+  const l = parseInt(pageSize);
   const results = objects.slice(s, s + l);
-  if (objects.length > s + l) {
-    const next = `${url}/?format=json&start=${s + l}&limit=${l}`;
+  const count = objects.length;
+  const previous = `${url}?format=json&start=${s}&pageSize=${l}`;
+  let next = null;
+  if (count > s + l) {
+    next = `${url}?format=json&start=${s + l}&pageSize=${l}`;
 
     return {
       next,
+      count,
+      previous,
       results,
     };
   } else {
-    return { results };
+    return { results, count, previous, next };
   }
 };
 
@@ -57,39 +62,39 @@ describe('paginatedResponse', () => {
   const items = [1, 2, 3];
   it('should return the first item', () => {
     const start = 0;
-    const limit = 1;
-    const { next, results } = paginatedResponse('www', limit, start, items);
+    const pageSize = 1;
+    const { next, results } = paginatedResponse('www', pageSize, start, items);
     expect(results).to.eql([1]);
   });
-  it('should return 2 items with limit 2', () => {
+  it('should return 2 items with pageSize 2', () => {
     const start = 0;
-    const limit = 2;
-    const { next, results } = paginatedResponse('www', limit, start, items);
+    const pageSize = 2;
+    const { next, results } = paginatedResponse('www', pageSize, start, items);
     expect(results).to.eql([1, 2]);
   });
-  it('should return 2 items with start 1 and limit 2', () => {
+  it('should return 2 items with start 1 and pageSize 2', () => {
     const start = 1;
-    const limit = 2;
-    const { next, results } = paginatedResponse('www', limit, start, items);
+    const pageSize = 2;
+    const { next, results } = paginatedResponse('www', pageSize, start, items);
     expect(results).to.eql([2, 3]);
   });
   it('should return all items', () => {
     const start = 0;
-    const limit = 3;
-    const { next, results } = paginatedResponse('www', limit, start, items);
+    const pageSize = 3;
+    const { next, results } = paginatedResponse('www', pageSize, start, items);
     expect(results).to.eql([1, 2, 3]);
   });
-  it('should return all items if limit is greater', () => {
+  it('should return all items if pageSize is greater', () => {
     const start = 0;
-    const limit = 100;
-    const { next, results } = paginatedResponse('www', limit, start, items);
+    const pageSize = 100;
+    const { next, results } = paginatedResponse('www', pageSize, start, items);
     expect(results).to.eql([1, 2, 3]);
   });
   it('should return the correct next link', () => {
     const start = 1;
-    const limit = 1;
-    const { next, results } = paginatedResponse('www', limit, start, items);
-    expect(next).to.eql('www/?format=json&start=2&limit=1');
+    const pageSize = 1;
+    const { next, results } = paginatedResponse('www', pageSize, start, items);
+    expect(next).to.eql('www?format=json&start=2&pageSize=1');
     expect(results).to.eql([2]);
   });
 });
@@ -128,8 +133,8 @@ describe('execute', () => {
   });
 });
 
-describe('request', () => {
-  it.only('handles pagination if paginate is true', async () => {
+describe('pagenateRequest', () => {
+  it('handles pagination by default', async () => {
     let callCount = 0;
     testServer
       .intercept({
@@ -150,7 +155,7 @@ describe('request', () => {
       )
       .times(6);
     const state = { configuration };
-    const { results } = await paginateRequest(
+    const { body } = await paginateRequest(
       state,
       'GET',
       '/assets/aDReHdA7UuNBYsiCXQBr43/data/',
@@ -160,9 +165,9 @@ describe('request', () => {
     );
 
     expect(callCount).to.eql(6);
-    expect(results).to.eql(defaultObjects);
+    expect(body.results).to.eql(defaultObjects);
   });
-  it('does not handle pagination if paginate is false', async () => {
+  it('does not handle pagination if limit is set', async () => {
     let callCount = 0;
     testServer
       .intercept({
@@ -183,17 +188,20 @@ describe('request', () => {
       )
       .times(1);
     const state = { configuration };
-    const { body } = await request(
+    const { body } = await paginateRequest(
       state,
       'GET',
       '/assets/aDReHdA7UuNBYsiCXQBr43/data/',
       {
-        paginate: false,
+        limit: 1,
       }
     );
 
     expect(callCount).to.eql(1);
-    expect(body.results).to.eql(defaultObjects);
+    expect(body.count).to.eql(6);
+    expect(body.previous).to.contain('?format=json&start=0&pageSize=1');
+    expect(body.next).to.contain('?format=json&start=1&pageSize=1');
+    expect(body.results).to.eql([{ uid: '1' }]);
   });
 });
 
@@ -202,7 +210,7 @@ describe('http.get', () => {
     testServer
       .intercept({
         path: '/api/v2/assets/',
-        query: { format: 'json' },
+        query: { format: 'json', metadata: 'on' },
         method: 'GET',
       })
       .reply(
@@ -214,14 +222,13 @@ describe('http.get', () => {
       );
     const state = { configuration };
 
-    const response = await http.get('/assets/')(state);
-    expect(response.response.headers['content-type']).to.eql(
-      'application/json'
-    );
+    const { response, data } = await http.get('/assets/', {
+      query: { metadata: 'on' },
+    })(state);
+    expect(data.results[0].name).to.eql('Feedback Survey Test');
+    expect(response.headers['content-type']).to.eql('application/json');
   });
-});
 
-describe('http.get', () => {
   it('should make a GET request', async () => {
     testServer
       .intercept({
@@ -273,12 +280,12 @@ describe('http.post', () => {
 describe('getSubmissions', () => {
   const formId = 'aXecHjmbATuF6iGFmvBLBX';
 
-  it.only('should get a list of submissions', async () => {
+  it('should get a list of submissions', async () => {
     testServer
       .intercept({
         path: `/api/v2/assets/${formId}/data/`,
         method: 'GET',
-        query: { format: 'json' },
+        query: { format: 'json', limit: 1000, start: 0 },
       })
       .reply(
         200,
@@ -290,9 +297,8 @@ describe('getSubmissions', () => {
         { ...jsonHeaders }
       );
     const state = { configuration };
-    const { data, response } = await execute(getSubmissions(formId))(state);
-    console.log({ data, response });
-    expect(data[0]['First_Name_of_Patient']).to.eql('Kwothe');
+    const { data } = await execute(getSubmissions(formId))(state);
+    expect(data.results[0]['First_Name_of_Patient']).to.eql('Kwothe');
   });
 
   it('should get a list of submissions with a query', async () => {
@@ -302,6 +308,8 @@ describe('getSubmissions', () => {
         method: 'GET',
         query: {
           format: 'json',
+          limit: 1000,
+          start: 0,
           query: '{"_submission_time":{"$gte":"2022-06-12T21:54:20"}}',
         },
       })
@@ -320,7 +328,7 @@ describe('getSubmissions', () => {
         query: { _submission_time: { $gte: '2022-06-12T21:54:20' } },
       })
     )(state);
-    expect(data[0]['First_Name_of_Patient']).to.eql('Kwothe');
+    expect(data.results[0]['First_Name_of_Patient']).to.eql('Kwothe');
   });
 });
 
