@@ -86,8 +86,12 @@ testServer
 
     return {
       statusCode,
-      headers: { 'content-type': 'application/json' },
       data,
+      responseOptions: {
+        headers: {
+          'content-type': 'application/json'
+        },
+      }
     };
   })
   .persist();

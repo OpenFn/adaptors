@@ -5,19 +5,9 @@ import {
 import { expandReferences } from '@openfn/language-common/util';
 import {
   request,
-  prepareNextState,
   cleanPath,
   requestWithPagination,
 } from './Utils';
-
-/**
- * State object
- * @typedef {object} HttpState
- * @private
- * @property data - The parsed response body
- * @property response - The response from the OpenMRS server
- * @property references  - An array of all previous data objects used in the job
- */
 
 /**
  * OpenMRS query object. This is a brief overview with commonly used parameters that cut across multiple requests. For more details about parameters specific to your request visit the [OpenMRS Docs](https://rest.openmrs.org/)
@@ -72,8 +62,7 @@ export function execute(...operations) {
  * @public
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
  * @param {RestQueryOptions} [options = {}] Query parameters (eg `limit`, `q`)
- * @state {HttpState}
- * @state data The requested resources
+ * @state data An array of result objects
  * @returns {Operation}
  */
 export function get(path, options) {
@@ -103,8 +92,7 @@ export function get(path, options) {
  * @function
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
  * @param {object} data - Resource definition
- * @state {HttpState}
- * @state data The newly created resource
+ * @state data The newly created resource, as returned by OpenMRS
  * @returns {Operation}
  * @example <caption>Create a person (<a href="https://rest.openmrs.org/#create-a-person">see OpenMRS API</a>)</caption>
  * create("person", {
@@ -161,6 +149,14 @@ export function get(path, options) {
  *     ],
  *   },
  * })
+  @example <caption>Create a patientIdentifier subresource (<a href="https://rest.openmrs.org/#create-a-patientidentifier-sub-resource-with-properties">see OpenMRS API</a>)</caption>
+ * create("patient", { 
+ *  "identifier" : "111:CLINIC1",
+ *  "identifierType" : "a5d38e09-efcb-4d91-a526-50ce1ba5011a",
+ *  "location" : "8d6c993e-c2cc-11de-8d13-0010c6dffd0f",
+ *  "preferred" : true
+ * })
+}
  */
 export function create(path, data) {
   return async state => {
@@ -180,9 +176,7 @@ export function create(path, data) {
 
     console.log(`Successfully created ${resolvedPath}`);
 
-    // TODO I think we should use composeNextState no?
-    // No http semantics?
-    return prepareNextState(state, response);
+    return composeNextState(state, response.body);
   };
 }
 
@@ -194,8 +188,7 @@ export function create(path, data) {
  * @function
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
  * @param {Object} data - Resource properties to update
- * @state {HttpState}
- * @state data The updated resource
+ * @state data The full updated resource, as returned by OpenMRS
  * @returns {Operation}
  * @example <caption>Update a person (<a href="https://rest.openmrs.org/#create-a-person">see OpenMRS API</a>)</caption>
  * update('person/3cad37ad-984d-4c65-a019-3eb120c9c373', {
@@ -222,7 +215,7 @@ export function update(path, data) {
 
     console.log(`Successfully updated ${resolvedPath}`);
 
-    return prepareNextState(state, response);
+    return composeNextState(state, response.body);
   };
 }
 
@@ -232,8 +225,7 @@ export function update(path, data) {
  * @function
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
  * @param {Object} data - The resource data
- * @state {HttpState}
- * @state data The updated or newly created resource
+ * @state data The created/updated resource, as returned by OpenMRS
  * @returns {Operation}
  * @example <caption>Upsert a patient (<a href="https://rest.openmrs.org/#patients-overview">see OpenMRS API</a>)</caption>
  * upsert("patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a", {
@@ -312,7 +304,7 @@ export function upsert(path, data) {
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
  * @param {object}  [options = {}]
  * @param {object}  [options.purge=false] The resource will be voided/retired unless true
- * @state {HttpState}
+ * @state data The response from OpenMRS
  * @returns {Operation}
  */
 export function destroy(path, options) {
@@ -325,8 +317,7 @@ export function destroy(path, options) {
 
     const { instanceUrl: baseUrl } = state.configuration;
 
-    // TODO if this returns anything other than a 204, we should throw
-    const result = await request(
+    const response = await request(
       state,
       'DELETE',
       cleanPath(`/ws/rest/v1/${resolvedPath}`),
@@ -335,7 +326,7 @@ export function destroy(path, options) {
         query: resolvedOptions,
       }
     );
-    return composeNextState(state, result.body);
+    return composeNextState(state, response.body);
   };
 }
 

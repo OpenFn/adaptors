@@ -68,11 +68,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
-          },
-          {
-            "title": "state",
-            "description": "data The requested resources"
+            "description": "data An array of result objects"
           },
           {
             "title": "returns",
@@ -125,11 +121,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
-          },
-          {
-            "title": "state",
-            "description": "data The newly created resource"
+            "description": "data The newly created resource, as returned by OpenMRS"
           },
           {
             "title": "returns",
@@ -153,6 +145,11 @@
             "title": "example",
             "description": "create(\"patient\", {\n  identifiers: [\n    {\n      identifier: '4023287',\n      identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',\n      preferred: true,\n    },\n  ],\n  person: {\n    gender: 'M',\n    age: 42,\n    birthdate: '1970-01-01T00:00:00.000+0100',\n    birthdateEstimated: false,\n    names: [\n      {\n        givenName: 'Doe',\n        familyName: 'John',\n      },\n    ],\n  },\n})",
             "caption": "Create a patient (<a href=\"https://rest.openmrs.org/#create-a-patient\">see OpenMRS API</a>)"
+          },
+          {
+            "title": "example",
+            "description": "create(\"patient\", { \n \"identifier\" : \"111:CLINIC1\",\n \"identifierType\" : \"a5d38e09-efcb-4d91-a526-50ce1ba5011a\",\n \"location\" : \"8d6c993e-c2cc-11de-8d13-0010c6dffd0f\",\n \"preferred\" : true\n})\n}",
+            "caption": "Create a patientIdentifier subresource (<a href=\"https://rest.openmrs.org/#create-a-patientidentifier-sub-resource-with-properties\">see OpenMRS API</a>)"
           }
         ]
       },
@@ -197,11 +194,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
-          },
-          {
-            "title": "state",
-            "description": "data The updated resource"
+            "description": "data The full updated resource, as returned by OpenMRS"
           },
           {
             "title": "returns",
@@ -259,11 +252,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
-          },
-          {
-            "title": "state",
-            "description": "data The updated or newly created resource"
+            "description": "data The created/updated resource, as returned by OpenMRS"
           },
           {
             "title": "returns",
@@ -353,7 +342,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "data The response from OpenMRS"
           },
           {
             "title": "returns",
