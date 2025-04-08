@@ -7,7 +7,11 @@
         "options"
       ],
       "docs": {
+<<<<<<< HEAD
         "description": "Fetch resources from OpenMRS. Use this to fetch a single resource,\nor to search a list. Query parameters will be appended to the request URL,\nrefer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.\nPagination is handled automatically, pass a limit to restrict the total number\nof items that are retrieved.",
+=======
+        "description": "Fetch resources from OpenMRS. Use this to fetch a single resource,\nor to search a list. Query parameters will be appended to the request URL,\nrefer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.",
+>>>>>>> epic/openmrs-5
         "tags": [
           {
             "title": "example",
@@ -17,7 +21,11 @@
           {
             "title": "example",
             "description": "get(\"patient\", { q: \"brian\", limit: 1 })",
+<<<<<<< HEAD
             "caption": "Search patients by name with a limit (<a href=\"https://rest.openmrs.org/#search-patients\">see OpenMRS API</a>)"
+=======
+            "caption": "List patients by name with a limit(<a href=\"https://rest.openmrs.org/#search-patients\">see OpenMRS API</a>)"
+>>>>>>> epic/openmrs-5
           },
           {
             "title": "example",
@@ -198,10 +206,13 @@
           {
             "title": "state",
             "description": "{HttpState}"
+<<<<<<< HEAD
           },
           {
             "title": "state",
             "description": "data The updated resource"
+=======
+>>>>>>> epic/openmrs-5
           },
           {
             "title": "returns",
@@ -260,10 +271,13 @@
           {
             "title": "state",
             "description": "{HttpState}"
+<<<<<<< HEAD
           },
           {
             "title": "state",
             "description": "data The updated or newly created resource"
+=======
+>>>>>>> epic/openmrs-5
           },
           {
             "title": "returns",
@@ -276,7 +290,11 @@
           {
             "title": "example",
             "description": "upsert(\"patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a\", {\n  identifiers: [\n    {\n      identifier: '4023287',\n      identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',\n      preferred: true,\n    },\n  ],\n  person: {\n    gender: 'M',\n    age: 42,\n    birthdate: '1970-01-01T00:00:00.000+0100',\n    birthdateEstimated: false,\n    names: [\n      {\n        givenName: 'Doe',\n        familyName: 'John',\n      },\n    ],\n  },\n})",
+<<<<<<< HEAD
             "caption": "Upsert a patient (<a href=\"https://rest.openmrs.org/#patients-overview\">see OpenMRS API</a>)"
+=======
+            "caption": "Upsert a patient"
+>>>>>>> epic/openmrs-5
           }
         ]
       },
