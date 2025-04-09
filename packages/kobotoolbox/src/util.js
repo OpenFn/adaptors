@@ -15,7 +15,7 @@ export function prepareNextState(state, response) {
     response: responseWithoutBody,
   };
 }
-export function request(state, method, path, opts) {
+export function request(state, method, path, opts = {}) {
   const { baseURL, apiVersion, username, password } = state.configuration;
 
   let baseUrl;
