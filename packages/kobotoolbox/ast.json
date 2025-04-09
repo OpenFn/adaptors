@@ -52,7 +52,7 @@
           },
           {
             "title": "example",
-            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \"2022-06-12T21:54:20\" } } });",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \"2025-03-12T21:54:20\" } } });",
             "caption": "Get form submissions with a query"
           },
           {
@@ -89,7 +89,7 @@
           },
           {
             "title": "param",
-            "description": "Query parameters to filter the submissions",
+            "description": "Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}",
             "type": {
               "type": "OptionalType",
               "expression": {
