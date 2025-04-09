@@ -42,10 +42,10 @@ const paginatedResponse = (
   const l = parseInt(pageSize);
   const results = objects.slice(s, s + l);
   const count = objects.length;
-  const previous = `${url}?format=json&start=${s}&pageSize=${l}`;
+  const previous = `${url}?format=json&start=${s}&limit=${l}`;
   let next = null;
   if (count > s + l) {
-    next = `${url}?format=json&start=${s + l}&pageSize=${l}`;
+    next = `${url}?format=json&start=${s + l}&limit=${l}`;
 
     return {
       next,
@@ -94,7 +94,7 @@ describe('paginatedResponse', () => {
     const start = 1;
     const pageSize = 1;
     const { next, results } = paginatedResponse('www', pageSize, start, items);
-    expect(next).to.eql('www?format=json&start=2&pageSize=1');
+    expect(next).to.eql('www?format=json&start=2&limit=1');
     expect(results).to.eql([2]);
   });
 });
@@ -199,8 +199,8 @@ describe('pagenateRequest', () => {
 
     expect(callCount).to.eql(1);
     expect(body.count).to.eql(6);
-    expect(body.previous).to.contain('?format=json&start=0&pageSize=1');
-    expect(body.next).to.contain('?format=json&start=1&pageSize=1');
+    expect(body.previous).to.contain('?format=json&start=0&limit=1');
+    expect(body.next).to.contain('?format=json&start=1&limit=1');
     expect(body.results).to.eql([{ uid: '1' }]);
   });
 });
