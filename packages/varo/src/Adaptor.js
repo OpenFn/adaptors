@@ -66,7 +66,7 @@ export function convertToEms(messageContents) {
   };
 }
 
-export function convertRecordsToFiles(records, reportType) {
+export function convertRecordsToMessageContent(records, reportType) {
   return async state => {
     const [resolvedRecords, resolvedReportType] = expandReferences(
       state,
@@ -75,9 +75,10 @@ export function convertRecordsToFiles(records, reportType) {
     );
 
     const report = parseRecordsToReport(resolvedRecords, resolvedReportType);
-    const files = parseReportToFiles(report, resolvedReportType);
+    const subject = `OpenFn | ${reportType.toUpperCase()}`;
+    const files = parseReportToFiles(report);
 
-    return { ...composeNextState(state, files) };
+    return { ...composeNextState(state, { subject, files }) };
   };
 }
 

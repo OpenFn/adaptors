@@ -18,33 +18,17 @@ export function parseMetadata(message) {
 // EDOP, EMSV, LACC, LAT, LNG, LSV, SIGN
 
 const defs = {
-  ems: {
-    report: (
-      'ACAT,ADOP,AID,AMFR,AMOD,APQS,ASER,CDAT,CDAT2,CID,CNAM,CNAM2,' +
-      'CSER,CSER2,CSOF,CSOF2,DNAM,EDOP,EID,EMFR,EMOD,EMSV,EPQS,ESER,' +
-      'FID,FNAM,LACC,LAT,LDOP,LID,LMFR,LMOD,LNG,LPQS,LSER,LSV,RNAM,SIGN'
-    ).split(','),
+  report: (
+    'ACAT,ADOP,AID,AMFR,AMID,AMOD,APQS,ASER,CDAT,CDAT2,CID,CNAM,CNAM2,' +
+    'CSER,CSER2,CSOF,CSOF2,DLST,DNAM,EDOP,EID,EMFR,EMOD,EMSV,EPQS,ESER,' +
+    'FID,FNAM,LACC,LAT,LDOP,LID,LMFR,LMOD,LNG,LPQS,LSER,LSV,RNAM,SIGN'
+  ).split(','),
 
-    record: (
-      'ABST,ACCD,ACSV,ALRM,BEMD,BLOG,CMPR,CMPR2,CMPS,CMPS2,CSOF,CSOF2,' +
-      'DCCD,DCSV,DORF,DORV,DRCF,DRCV,EERR,FANS,HAMB,HCOM,HOLD,IDRF,IDRV,' +
-      'LERR,MSW,SVA,TAMB,TCON,TCON2,TFRZ,TPCB,TPCB2,TVC'
-    ).split(','),
-  },
-
-  rtmd: {
-    report: (
-      'ACAT,ADOP,AID,AMFR,AMID,AMOD,APQS,ASER,CDAT,CDAT2,CID,CNAM,CNAM2,' +
-      'CSER,CSER2,CSOF,CSOF2,DNAM,EDOP,EID,EMFR,EMOD,EMSV,EPQS,ESER,FID,' +
-      'FNAM,LACC,LAT,LDOP,LID,LMFR,LMOD,LNG,LPQS,LSER,LSV,RNAM,SIGN,DLST'
-    ).split(','),
-
-    record: (
-      'ABST,ACCD,ACSV,ALRM,BEMD,BLOG,CMPR,CMPR2,CMPS,CMPS2,CSOF,CSOF2,' +
-      'DCCD,DCSV,DORF,DORV,DRCF,DRCV,EERR,FANS,HAMB,HCOM,HOLD,IDRF,IDRV,' +
-      'LERR,MSW,SVA,TAMB,TCON,TCON2,TFRZ,TPCB,TPCB2,TVC'
-    ).split(','),
-  },
+  record: (
+    'ABST,ACCD,ACSV,ALRM,BEMD,BLOG,CMPR,CMPR2,CMPS,CMPS2,CSOF,CSOF2,' +
+    'DCCD,DCSV,DORF,DORV,DRCF,DRCV,EERR,FANS,HAMB,HCOM,HOLD,IDRF,IDRV,' +
+    'LERR,MSW,SVA,TAMB,TCON,TCON2,TFRZ,TPCB,TPCB2,TVC'
+  ).split(','),
 };
 
 export function parseRecordsToReport(
@@ -75,21 +59,16 @@ export function parseRecordsToReport(
     }
   }
 
-  const type = reportType.toLowerCase();
+  const reportRecord = records[0];
+  copyLoggerToEmd(reportRecord);
 
-  const def = defs[type];
-  if (!def) {
-    console.error(`Unsupported report type: ${type}`);
-    return null;
-  }
+  const report = mapProperties(reportRecord, records, reqReport, reqRecord);
+  report['zReportType'] = reportType;
 
-  const report = records[0];
-  copyLoggerToEmd(report);
-
-  return mapProperties(def, report, records, reqReport, reqRecord);
+  return report;
 }
 
-function mapProperties(def, report, records, reqReport, reqRecord) {
+function mapProperties(report, records, reqReport, reqRecord) {
   const resolveReqKeys = (option, defaults) => {
     if (option === true) return defaults;
     if (typeof option === 'string' && option.trim()) {
@@ -112,11 +91,11 @@ function mapProperties(def, report, records, reqReport, reqRecord) {
 
   if (!report) return null;
 
-  const reqReportKeys = resolveReqKeys(reqReport, def.report);
-  const reqRecordKeys = resolveReqKeys(reqRecord, def.record);
+  const reqReportKeys = resolveReqKeys(reqReport, defs.report);
+  const reqRecordKeys = resolveReqKeys(reqRecord, defs.record);
 
-  const reportKeys = [...new Set([...def.report, ...reqReportKeys])];
-  const recordKeys = [...new Set([...def.record, ...reqRecordKeys])];
+  const reportKeys = [...new Set([...defs.report, ...reqReportKeys])];
+  const recordKeys = [...new Set([...defs.record, ...reqRecordKeys])];
 
   const reportResult = extract(report, reportKeys, reqReportKeys);
   const recordResults =
@@ -130,63 +109,11 @@ function mapProperties(def, report, records, reqReport, reqRecord) {
   };
 }
 
-export function parseReportToFiles(report, reportType) {
-  const metadata = mapReportToMetadata(report, reportType);
-
+export function parseReportToFiles(report) {
   return {
-    metadata: {
-      filename: 'metadata.json',
-      content: JSON.stringify(metadata, null, 4),
-    },
     data: {
       filename: 'data.json',
       content: JSON.stringify(report, null, 4),
     },
-  };
-}
-
-function mapReportToMetadata(report, reportType) {
-  if (!report) {
-    console.error('No report provided to mapReportToMetadata.');
-    return null;
-  }
-
-  return {
-    appInfo: {
-      isAutomaticTime: true,
-      isTrueTime: true,
-      os: 'CCDX',
-      osVersion: 'latest',
-      phoneModel: 'OpenFn',
-      version: 'latest',
-    },
-    facility: {
-      country: report.CID,
-      district: null,
-      managerName: null,
-      managerPhone: null,
-      name: null,
-      state: null,
-    },
-    isLoggerReport: true,
-    refrigerator: {
-      barcodeData: null,
-      deviceId: report.ESER,
-      deviceManufacturer: report.EMFR,
-      manufacturer: report.AMFR,
-      model: report.AMOD,
-      applianceId: report.ASER,
-    },
-    notes: null,
-    location: {
-      gpsCorrectionUsed: null,
-      used: {
-        latitude: report.LAT,
-        longitude: report.LNG,
-      },
-    },
-    version: 5,
-    versionVariant: reportType,
-    emailSentTimeStamp: new Date().getTime(),
   };
 }
