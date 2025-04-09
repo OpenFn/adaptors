@@ -62,12 +62,12 @@ export function getForms() {
  * @example <caption>Get all submissions for a specific form</caption>
  * getSubmissions('aXecHjmbATuF6iGFmvBLBX');
  * @example <caption>Get form submissions with a query</caption>
- * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: "2022-06-12T21:54:20" } } });
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: "2025-03-12T21:54:20" } } });
  * @function
  * @public
  * @param {string} formId - Form Id to get the specific submissions
  * @param {object} [options={}] - Optional query params for the request
- * @param {object} [options.query] - Query parameters to filter the submissions
+ * @param {object} [options.query] - Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}
  * @param {number} [options.limit=10000] - Maximum number of submissions to fetch
  * @param {number} [options.pageSize=1000] - Number of submissions to fetch per page
  * @param {number} [options.start=0] - Starting index for pagination
