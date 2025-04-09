@@ -13,12 +13,12 @@ import * as util from './Utils';
 
 /**
  * Make a HTTP request to any OpenMRS endpoint
- * @example <caption>GET request with a URL query</caption>
+ * @example <caption>GET request with a query parameters</caption>
  * http.request("GET",
  *   "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8", {
  *    query:{
  *       limit: 1,
- *       offset: 20
+ *       startIndex: 20
  *    },
  * });
  * @function
