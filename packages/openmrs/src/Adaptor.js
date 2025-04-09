@@ -6,13 +6,12 @@ import { expandReferences } from '@openfn/language-common/util';
 import { request, cleanPath, requestWithPagination } from './Utils';
 
 /**
- * Options to append to the request. Most options are appended to the URL as query parameters - see the [OpenMRS Docs](https://rest.openmrs.org/) for all supported parameters.
+ * Options to append to the request. Unless otherwise specified, options are appended to the URL as query parameters - see the [OpenMRS Docs](https://rest.openmrs.org/) for all supported parameters.
  * @typedef {object} RestOptions
- * @property {string} q - Query string to filter the results
- * @property {number} limit - Total number of listings returned in the `results` array. Results will be paginated.
- * @property {number} pageSize - (maps to the limit query parameter)
- * @property {number} startIndex - Commonly used with `query.q` and `query.limit` for pagination to position the cursor.
- * @property {boolean} includeAll - Include voided/retired/disabled resources in the response.
+ * @property {string} query - (OpenFn only) Query string. Maps to `q` in OpenMRS.
+ * @property {number} max - (OpenFn only) Restrict the maximum number of retrieved records. May be fetched in several pages. Not used if limit is set.
+ * @property {number} pageSize - (OpenFn only) Limits the size of each page of data. Not used if limit is set.
+ * @property {boolean} singleton - (OpenFn only) If set to true, only the first result will be returned. Useful for "get by id" APIs.
  */
 
 /**
@@ -61,7 +60,7 @@ export function execute(...operations) {
  * @state data An array of result objects
  * @returns {Operation}
  */
-export function get(path, options) {
+export function get(path, options = {}) {
   return async state => {
     const [resolvedPath, resolvedOptions] = expandReferences(
       state,
@@ -69,14 +68,46 @@ export function get(path, options) {
       options
     );
 
-    const result = await requestWithPagination(
+    if (resolvedOptions.limit) {
+      const keysToRemove = Object.keys(resolvedOptions).filter(k =>
+        k.match(/^(max|pageSize)$/)
+      );
+      if (keysToRemove.length) {
+        console.warn(
+          `Warning: ignoring option [${keysToRemove.join(
+            ','
+          )}] as "limit" is set`
+        );
+        delete resolvedOptions.max;
+        delete resolvedOptions.pageSize;
+      }
+    }
+
+    const { max, singleton, limit, pageSize, query, ...queryParams } =
+      resolvedOptions;
+
+    // Alias options.query to q (just for readability in job code)
+    if (resolvedOptions.query) {
+      queryParams.q = resolvedOptions.query;
+    }
+
+    const requestOptions = {
+      baseUrl: state.configuration?.instanceUrl,
+      query: queryParams,
+      max,
+      limit,
+      pageSize,
+    };
+
+    let result = await requestWithPagination(
       state,
       cleanPath(`/ws/rest/v1/${resolvedPath}`),
-      {
-        baseUrl: state.configuration?.instanceUrl,
-        query: resolvedOptions,
-      }
+      requestOptions
     );
+
+    if (singleton) {
+      result = result[0];
+    }
 
     return composeNextState(state, result);
   };

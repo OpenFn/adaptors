@@ -24,6 +24,31 @@ const state = {
   encounter: testData.encounter,
 };
 
+// Helper function to set up a single paginated call
+const mockPage = (resourceType, itemIds = ['1'], hasMore, query) => {
+  testServer
+    .intercept({
+      path: `/ws/rest/v1/${resourceType}`,
+      method: 'GET',
+      query,
+    })
+    .reply(
+      200,
+      {
+        results: itemIds.map(uuid => ({ uuid })),
+        links: hasMore
+          ? [
+              {
+                rel: 'next',
+                uri: '.',
+              },
+            ]
+          : [],
+      },
+      { ...jsonHeaders }
+    );
+};
+
 describe('execute', () => {
   it('executes each operation in sequence', done => {
     let state = { configuration };
@@ -62,7 +87,7 @@ describe('execute', () => {
 });
 
 describe('get', () => {
-  it('should get an encounter by uuid', async () => {
+  it('should get a single item by uuid', async () => {
     testServer
       .intercept({
         path: '/ws/rest/v1/encounter/123',
@@ -75,6 +100,111 @@ describe('get', () => {
     expect(data.length).to.equal(1);
     expect(data[0].uuid).to.eql('123');
   });
+
+  it('should get a singleton', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/encounter/123',
+        method: 'GET',
+      })
+      .reply(200, { uuid: '123' }, { ...jsonHeaders });
+
+    // prettier-ignore
+    const { data } = await execute(
+      get('encounter/123', { singleton: true })
+    )(state);
+
+    expect(data.uuid).to.eql('123');
+  });
+
+  it('should get all items by default', async () => {
+    // should I just import the mock server from utils?
+    mockPage('encounter', ['1', '2'], true);
+    mockPage('encounter', ['3', '4'], true, { startIndex: 3 });
+    mockPage('encounter', ['5', '6'], false, { startIndex: 5 });
+
+    // prettier-ignore
+    const { data } = await execute(
+      get('encounter')
+    )(state);
+
+    expect(data.length).to.eql(6);
+    expect(data[0]).to.eql({ uuid: '1' });
+  });
+
+  it('should get with a limit', async () => {
+    // should I just import the mock server from utils?
+    mockPage('encounter', ['1', '2'], false, { limit: 22 });
+
+    // prettier-ignore
+    const { data } = await execute(
+      get('encounter', { limit: 22 })
+    )(state);
+
+    expect(data.length).to.eql(2);
+  });
+
+  it('should get with a max', async () => {
+    // should I just import the mock server from utils?
+    mockPage('encounter', ['1', '2'], false, { limit: 22 });
+
+    // prettier-ignore
+    const { data } = await execute(
+      get('encounter', { max: 22 })
+    )(state);
+
+    expect(data.length).to.eql(2);
+  });
+
+  it('should prefer limit to max', async () => {
+    mockPage('encounter', ['1', '2'], false, { limit: 22 });
+
+    // prettier-ignore
+    const { data } = await execute(
+      get('encounter', { max: 33, limit: 22 })
+    )(state);
+
+    expect(data.length).to.eql(2);
+  });
+
+  it('should only get one page with limit', async () => {
+    mockPage('encounter__', ['1', '2'], true, { limit: 22 });
+    mockPage('encounter__', ['3', '4'], true, { limit: 22 });
+
+    // prettier-ignore
+    const { data } = await execute(
+      get('encounter__', { limit: 22 })
+    )(state);
+
+    expect(data.length).to.eql(2);
+  });
+
+  it('should get multiple pages with max and pageSize', async () => {
+    mockPage('encounter', ['1', '2'], true, { limit: 2 });
+    mockPage('encounter', ['3', '4'], false, { limit: 2, startIndex: 3 });
+
+    // prettier-ignore
+    const { data } = await execute(
+      get('encounter', { max: 20, pageSize: 2 })
+    )(state);
+
+    expect(data.length).to.eql(4);
+  });
+
+  it('should parse query params', async () => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        query: { q: 'Sarah' },
+        method: 'GET',
+      })
+      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
+
+    const { data } = await execute(get('patient', { q: 'Sarah' }))(state);
+
+    expect(data[0].uuid).to.eql(testData.patientResults[0].uuid);
+  });
+
   it('should be robust to leading and trailing slashes: /encounter/123', async () => {
     testServer
       .intercept({
@@ -88,6 +218,7 @@ describe('get', () => {
     expect(data.length).to.equal(1);
     expect(data[0].uuid).to.eql('123');
   });
+
   it('should be robust to leading and trailing slashes: encounter/123/', async () => {
     testServer
       .intercept({
@@ -101,6 +232,7 @@ describe('get', () => {
     expect(data.length).to.equal(1);
     expect(data[0].uuid).to.eql('123');
   });
+
   it('should be robust to leading and trailing slashes: encounter/123', async () => {
     testServer
       .intercept({
@@ -113,19 +245,6 @@ describe('get', () => {
 
     expect(data.length).to.equal(1);
     expect(data[0].uuid).to.eql('123');
-  });
-  it('should parse query params', async () => {
-    testServer
-      .intercept({
-        path: '/ws/rest/v1/patient',
-        query: { q: 'Sarah' },
-        method: 'GET',
-      })
-      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
-
-    const { data } = await execute(get('patient', { q: 'Sarah' }))(state);
-
-    expect(data[0].uuid).to.eql(testData.patientResults[0].uuid);
   });
 });
 

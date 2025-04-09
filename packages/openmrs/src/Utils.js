@@ -54,7 +54,9 @@ export function validateCredentials(state) {
 export async function requestWithPagination(state, path, options = {}) {
   const results = [];
 
-  let { pageSize, startIndex, limit: maxResults = Infinity } = options;
+  let { pageSize, startIndex, limit, max } = options;
+
+  const maxResults = max ?? limit ?? Infinity;
 
   // Declare a variable that takes in all the options. We can then modify this variable to fetch the next page
   let requestOptions = { ...options };
@@ -68,7 +70,9 @@ export async function requestWithPagination(state, path, options = {}) {
       requestOptions.query.startIndex = startIndex;
     }
 
-    if (maxResults < Infinity) {
+    if (limit) {
+      requestOptions.query.limit = limit;
+    } else if (maxResults < Infinity) {
       // If there's a limit or page size, fetch
       // a page of items (the limit or the page size, whichever is smaller)
       requestOptions.query.limit = Math.min(
@@ -89,7 +93,7 @@ export async function requestWithPagination(state, path, options = {}) {
 
       // If there is data, save it
       if (!startIndex) {
-        startIndex = 0;
+        startIndex = 1;
       }
       startIndex += response.body.results.length;
     } else {
@@ -98,6 +102,7 @@ export async function requestWithPagination(state, path, options = {}) {
 
     // Decide whether to request another page
     hasMoreContent =
+      !limit &&
       results.length < maxResults &&
       response.body.links?.find(link => link?.rel === 'next');
   } while (hasMoreContent);
