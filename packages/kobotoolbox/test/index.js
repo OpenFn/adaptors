@@ -1,13 +1,14 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { request, paginateRequest } from '../src/util';
+
 import { http } from '../src';
+import * as util from '../src/util';
 
 import {
-  getSubmissions,
-  getForms,
-  getDeploymentInfo,
   execute,
+  getForms,
+  getSubmissions,
+  getDeploymentInfo,
 } from '../src/Adaptor';
 
 const testServer = enableMockClient('https://test.kobotoolbox.org');
@@ -34,7 +35,7 @@ const defaultObjects = [
 
 const paginatedResponse = (
   url,
-  pageSize = 30000,
+  pageSize = 1000,
   start = 0,
   objects = defaultObjects
 ) => {
@@ -99,41 +100,40 @@ describe('paginatedResponse', () => {
   });
 });
 
-describe('execute', () => {
-  it('executes each operation in sequence', done => {
-    let state = {};
-    let operations = [
-      state => {
-        return { counter: 1 };
-      },
-      state => {
-        return { counter: 2 };
-      },
-      state => {
-        return { counter: 3 };
-      },
-    ];
-
-    execute(...operations)(state)
-      .then(finalState => {
-        expect(finalState).to.eql({ counter: 3 });
+describe('request', () => {
+  it('should make GET a request', async () => {
+    testServer
+      .intercept({
+        path: '/api/v2/assets/aUe2eV8pHK9DUEUxT9rCcs/data/',
+        query: { format: 'json' },
+        method: 'GET',
       })
-      .then(done)
-      .catch(done);
-  });
+      .reply(
+        200,
+        req => {
+          return {
+            count: 1,
+            next: null,
+            previous: null,
+            results: [{ name: 'Feedback Survey Test', asset_type: 'survey' }],
+          };
+        },
+        { ...jsonHeaders }
+      );
+    const state = { configuration };
+    const response = await util.request(
+      state,
+      'GET',
+      '/assets/aUe2eV8pHK9DUEUxT9rCcs/data/'
+    );
 
-  it('assigns references, data to the initialState', () => {
-    let state = {};
-
-    let finalState = execute()(state);
-
-    execute()(state).then(finalState => {
-      expect(finalState).to.eql({ references: [], data: null });
-    });
+    expect(response.method).to.eq('GET');
+    expect(response.statusCode).to.eq(200);
+    expect(response.statusMessage).to.eq('OK');
+    expect(response.body.count).to.eq(response.body.results.length);
   });
 });
-
-describe('pagenateRequest', () => {
+describe('paginateRequest', () => {
   it('handles pagination by default', async () => {
     let callCount = 0;
     testServer
@@ -155,7 +155,7 @@ describe('pagenateRequest', () => {
       )
       .times(6);
     const state = { configuration };
-    const { body } = await paginateRequest(
+    const { body } = await util.paginateRequest(
       state,
       'GET',
       '/assets/aDReHdA7UuNBYsiCXQBr43/data/',
@@ -188,7 +188,7 @@ describe('pagenateRequest', () => {
       )
       .times(1);
     const state = { configuration };
-    const { body } = await paginateRequest(
+    const { body } = await util.paginateRequest(
       state,
       'GET',
       '/assets/aDReHdA7UuNBYsiCXQBr43/data/',
@@ -375,5 +375,39 @@ describe('getDeploymentInfo', () => {
     const state = { configuration };
     const { data } = await execute(getDeploymentInfo(formId))(state);
     expect(data.asset.name).to.eql('Feedback Survey Test');
+  });
+});
+
+describe('execute', () => {
+  it('executes each operation in sequence', done => {
+    let state = {};
+    let operations = [
+      state => {
+        return { counter: 1 };
+      },
+      state => {
+        return { counter: 2 };
+      },
+      state => {
+        return { counter: 3 };
+      },
+    ];
+
+    execute(...operations)(state)
+      .then(finalState => {
+        expect(finalState).to.eql({ counter: 3 });
+      })
+      .then(done)
+      .catch(done);
+  });
+
+  it('assigns references, data to the initialState', () => {
+    let state = {};
+
+    let finalState = execute()(state);
+
+    execute()(state).then(finalState => {
+      expect(finalState).to.eql({ references: [], data: null });
+    });
   });
 });
