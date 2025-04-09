@@ -83,6 +83,17 @@ describe('Integration tests', () => {
       expect(data.count).to.eq(data.results.length);
       expect(data.previous).to.contain('?format=json&limit=3');
     }).timeout(50000);
+
+    it('should get a list of submissions with a query', async () => {
+      const { data } = await execute(
+        getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', {
+          query: { _submission_time: { $gte: '2025-04-04T21:54:20' } },
+        })
+      )(state);
+
+      expect(data.next).to.eq(null);
+      expect(data.count).to.eq(data.results.length);
+    });
   });
 
   describe('getDeploymentInfo', () => {
