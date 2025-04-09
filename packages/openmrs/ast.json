@@ -12,6 +12,11 @@
           {
             "title": "example",
             "description": "get(\"patient\")",
+            "caption": "List patients"
+          },
+          {
+            "title": "example",
+            "description": "get(\"patient\", { max: Infinity })",
             "caption": "List all patients"
           },
           {

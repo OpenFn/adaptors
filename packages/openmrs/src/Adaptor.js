@@ -8,10 +8,10 @@ import { request, cleanPath, requestWithPagination } from './Utils';
 /**
  * Options to append to the request. Unless otherwise specified, options are appended to the URL as query parameters - see the [OpenMRS Docs](https://rest.openmrs.org/) for all supported parameters.
  * @typedef {object} RestOptions
- * @property {string} query - (OpenFn only) Query string. Maps to `q` in OpenMRS.
- * @property {number=10000} max - (OpenFn only) Restrict the maximum number of retrieved records. May be fetched in several pages. Not used if limit is set.
- * @property {number=1000} pageSize - (OpenFn only) Limits the size of each page of data. Not used if limit is set.
- * @property {boolean} singleton - (OpenFn only) If set to true, only the first result will be returned. Useful for "get by id" APIs.
+ * @property {string} [query] - (OpenFn only) Query string. Maps to `q` in OpenMRS.
+ * @property {number} [max=10000] - (OpenFn only) Restrict the maximum number of retrieved records. May be fetched in several pages. Not used if limit is set.
+ * @property {number} [pageSize=1000] - (OpenFn only) Limits the size of each page of data. Not used if limit is set.
+ * @property {boolean} [singleton] - (OpenFn only) If set to true, only the first result will be returned. Useful for "get by id" APIs.
  */
 
 /**
@@ -41,14 +41,19 @@ export function execute(...operations) {
  * Fetch resources from OpenMRS. Use this to fetch a single resource,
  * or to search a list. Query parameters will be appended to the request URL,
  * refer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.
- * Pagination is handled automatically, pass a limit to restrict the total number
- * of items that are retrieved.
- * @example <caption>List all patients</caption>
+ * Pagination is handled automatically by default (maximum 10k items). Set `max`
+ * to paginate with a higher limit, or pass `limit` to force a single request, as
+ * per the OpenMRS Rest API.
+ * @example <caption>List patients</caption>
  * get("patient")
- * @example <caption>Search patients by name with a limit (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
- * get("patient", { q: "brian", limit: 1 })
- * @example <caption>Fetch patient by UUID</caption>
+ * @example <caption>List all patients (with pagination)</caption>
+ * get("patient", { max: Infinity })
+ * @example <caption>Search up to 100 patients by name (allowing pagination) (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
+ * get("patient", { q: "brian", max: 100 })
+ * @example <caption>Fetch patient by UUID (returns an array of 1 item)</caption>
  * get("patient/abc")
+ * @example <caption>Search up to 10 patients by name (in a single request) (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
+ * get("patient", { q: "brian", limit: 10 })
  * @example <caption>List allergy subresources</caption>
  * get("patient/abc/allergy")
  * @example <caption>Get allergy subresource by its UUID and parent patient UUID</caption>
@@ -82,8 +87,12 @@ export function get(path, options = {}) {
         delete resolvedOptions.pageSize;
       }
     }
-    const { max, singleton, limit, pageSize, query, ...queryParams } =
+    let { max, singleton, limit, pageSize, query, ...queryParams } =
       resolvedOptions;
+
+    if (singleton) {
+      max = 1;
+    }
 
     // Alias options.query to q (just for readability in job code)
     if (resolvedOptions.query) {

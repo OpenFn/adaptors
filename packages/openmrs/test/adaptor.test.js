@@ -104,7 +104,7 @@ describe('get', () => {
   it('should get a singleton', async () => {
     testServer
       .intercept({
-        path: '/ws/rest/v1/encounter/123',
+        path: '/ws/rest/v1/encounter/123?limit=1',
         method: 'GET',
       })
       .reply(200, { uuid: '123' }, { ...jsonHeaders });
