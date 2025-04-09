@@ -120,8 +120,9 @@ describe('get', () => {
   it('should get all items by default', async () => {
     // should I just import the mock server from utils?
     mockPage('encounter', ['1', '2'], true);
-    mockPage('encounter', ['3', '4'], true, { startIndex: 3 });
-    mockPage('encounter', ['5', '6'], false, { startIndex: 5 });
+    // note that limit is added after the first request
+    mockPage('encounter', ['3', '4'], true, { startIndex: 3, limit: 2 });
+    mockPage('encounter', ['5', '6'], false, { startIndex: 5, limit: 2 });
 
     // prettier-ignore
     const { data } = await execute(
@@ -130,6 +131,28 @@ describe('get', () => {
 
     expect(data.length).to.eql(6);
     expect(data[0]).to.eql({ uuid: '1' });
+  });
+
+  it('should get all items by with a page size', async () => {
+    // should I just import the mock server from utils?
+    mockPage('encounter', ['1', '2', '3', '4'], true, { limit: 4 });
+    // note that limit is added after the first request
+    mockPage('encounter', ['5', '6', '7', '8'], true, {
+      startIndex: 5,
+      limit: 4,
+    });
+    mockPage('encounter', ['9', '10'], false, { startIndex: 9, limit: 4 });
+
+    // prettier-ignore
+    const { data } = await execute(
+      get('encounter', {
+        pageSize: 4
+      })
+    )(state);
+
+    expect(data.length).to.eql(10);
+    expect(data[0]).to.eql({ uuid: '1' });
+    expect(data[9]).to.eql({ uuid: '10' });
   });
 
   it('should get with a limit', async () => {

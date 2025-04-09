@@ -56,12 +56,14 @@ export async function requestWithPagination(state, path, options = {}) {
 
   let { pageSize, startIndex, limit, max } = options;
 
-  const maxResults = max ?? limit ?? Infinity;
+  const maxResults = max ?? limit ?? 1e4;
 
   // Declare a variable that takes in all the options. We can then modify this variable to fetch the next page
   let requestOptions = { ...options };
 
   let hasMoreContent = true;
+  let isFirstRequest = true;
+  const didUserPassLimit = Boolean(max || limit);
   do {
     requestOptions.query ??= {};
 
@@ -72,9 +74,10 @@ export async function requestWithPagination(state, path, options = {}) {
 
     if (limit) {
       requestOptions.query.limit = limit;
-    } else if (maxResults < Infinity) {
-      // If there's a limit or page size, fetch
-      // a page of items (the limit or the page size, whichever is smaller)
+    } else if (didUserPassLimit || !isFirstRequest) {
+      // If there's an explicit limit or page size,
+      // or this is not the first request,
+      // set the limit in the URL
       requestOptions.query.limit = Math.min(
         pageSize || maxResults,
         maxResults - results.length
@@ -99,7 +102,10 @@ export async function requestWithPagination(state, path, options = {}) {
     } else {
       results.push(response.body);
     }
-
+    if (isFirstRequest && !pageSize) {
+      pageSize = results.length;
+    }
+    isFirstRequest = false;
     // Decide whether to request another page
     hasMoreContent =
       !limit &&

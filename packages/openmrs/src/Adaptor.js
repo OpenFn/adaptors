@@ -9,8 +9,8 @@ import { request, cleanPath, requestWithPagination } from './Utils';
  * Options to append to the request. Unless otherwise specified, options are appended to the URL as query parameters - see the [OpenMRS Docs](https://rest.openmrs.org/) for all supported parameters.
  * @typedef {object} RestOptions
  * @property {string} query - (OpenFn only) Query string. Maps to `q` in OpenMRS.
- * @property {number} max - (OpenFn only) Restrict the maximum number of retrieved records. May be fetched in several pages. Not used if limit is set.
- * @property {number} pageSize - (OpenFn only) Limits the size of each page of data. Not used if limit is set.
+ * @property {number=10000} max - (OpenFn only) Restrict the maximum number of retrieved records. May be fetched in several pages. Not used if limit is set.
+ * @property {number=1000} pageSize - (OpenFn only) Limits the size of each page of data. Not used if limit is set.
  * @property {boolean} singleton - (OpenFn only) If set to true, only the first result will be returned. Useful for "get by id" APIs.
  */
 
@@ -82,7 +82,6 @@ export function get(path, options = {}) {
         delete resolvedOptions.pageSize;
       }
     }
-
     const { max, singleton, limit, pageSize, query, ...queryParams } =
       resolvedOptions;
 
