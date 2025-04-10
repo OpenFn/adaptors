@@ -310,7 +310,7 @@ export function upsert(path, data, params = {}) {
     console.log(`Preparing composed upsert on ${resolvedPath}`);
 
     const { instanceUrl: baseUrl } = state.configuration;
-    return await request(
+    const res = await request(
       state,
       'GET',
       cleanPath(`/ws/rest/v1/${resolvedPath}`),
@@ -319,30 +319,30 @@ export function upsert(path, data, params = {}) {
         query: resolvedParams,
         errors: { 404: false },
       }
-    ).then(res => {
-      let count;
-      if (res.body.results) {
-        count = res.body.results.length;
-      } else {
-        count = Object.keys(res.body).length ? 1 : 0;
-      }
+    );
+    // For get-by-id
+    let found = res.statusCode <= 400;
+    // for search
+    const count = res.body.results?.length ?? 1;
 
-      if (count > 1) {
-        throw new RangeError(
-          `Found more than one record for your request; cannot upsert on non-unique attribute.`
-        );
-      } else if (count === 0) {
-        console.log(`${resolvedPath} found: creating new resource`);
+    if (found && count > 1) {
+      throw new RangeError(
+        `Found more than one record for your request; cannot upsert on non-unique attribute.`
+      );
+    } else if (!found || count === 0) {
+      console.log(`${resolvedPath} not found: creating new resource`);
 
-        const path = params.q
-          ? resolvedPath
-          : resolvedPath.split('/').slice(0, -1).join('/'); // remove the ID
-        return create(path, resolvedData)(state);
-      } else {
-        console.log(`${resolvedPath} found: updating existing resource`);
-        return update(resolvedPath, resolvedData)(state);
-      }
-    });
+      const path = resolvedParams.q
+        ? resolvedPath
+        : resolvedPath.split('/').slice(0, -1).join('/'); // remove the ID
+      return create(path, resolvedData)(state);
+    } else {
+      const path = resolvedParams.q
+        ? `${resolvedPath}/${res.body.results[0].uuid}` // append the ID
+        : resolvedPath;
+      console.log(`${path} found: updating existing resource`);
+      return update(path, resolvedData)(state);
+    }
   };
 }
 
@@ -388,17 +388,18 @@ export function destroy(path, options) {
 
 export {
   alterState,
-  fn,
-  fnIf,
-  field,
-  fields,
+  arrayToString,
   cursor,
-  dateFns,
-  sourceValue,
-  merge,
   dataPath,
   dataValue,
-  lastReferenceValue,
+  dateFns,
   each,
-  arrayToString,
+  field,
+  fields,
+  fn,
+  fnIf,
+  lastReferenceValue,
+  merge,
+  sourceValue,
+  util,
 } from '@openfn/language-common';
