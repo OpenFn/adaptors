@@ -42150,6 +42150,297 @@
     "level": 0
   }
 ],
+{"name":"pesapal","adaptor":"@openfn/language-pesapal","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, options)</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, body, options)</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, options)</a></dt>\\n</dl>\\n\\n\\n## Functions\\n### get\\n\\n<p><code>get(path, options) ⇒ Operation</code></p>\\n\\nMake a GET request to Pesapal\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the Pesapal server, including headers, statusCode, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get all registered IPN URLs for a merchant\\n```js\\nget('URLSetup/GetIpnList')\\n```\\n\\n* * *\\n\\n### post\\n\\n<p><code>post(path, body, options) ⇒ Operation</code></p>\\n\\nMake a POST request to Pesapal\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the Pesapal server, including headers, statusCode, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Send an order request \\n```js\\npost('Transactions/SubmitOrderRequest', \\n    {\\n        \\\"id\\\": \\\"TEST-05\\\",\\n        \\\"currency\\\": \\\"KES\\\",\\n        \\\"amount\\\": \\\"1\\\",\\n        \\\"description\\\": \\\"Testing\\\",\\n        \\\"callback_url\\\": \\\"https://www.myapplication.com/response-page\\\",\\n        \\\"notification_id\\\": \\\"fe078e53-78da-4a83-aa89-e7ded5c456e6\\\",\\n        \\\"billing_address\\\": {\\n            \\\"email_address\\\": \\\"john.doe@example.com\\\",\\n            \\\"phone_number\\\": \\\"0712xxxxxx\\\",\\n            \\\"country_code\\\": \\\"\\\",\\n            \\\"first_name\\\": \\\"Doe\\\",\\n            \\\"middle_name\\\": \\\"\\\",\\n            \\\"last_name\\\": \\\"John\\\",\\n            \\\"line_1\\\": \\\"\\\",\\n            \\\"line_2\\\": \\\"\\\",\\n            \\\"city\\\": \\\"\\\",\\n            \\\"state\\\": \\\"\\\",\\n            \\\"postal_code\\\": \\\"\\\",\\n            \\\"zip_code\\\": \\\"\\\"\\n        }\\n})\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(method, path, body, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request to Pesapal\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the Pesapal server, including headers, statusCode, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Register IPN URL\\n```js\\nrequest(\\\"POST\\\", \\\"URLSetup/RegisterIPN\\\", {\\n  \\\"url\\\": \\\"https://www.myapplication.com/ipn\\\",\\n  \\\"ipn_notification_type\\\": \\\"GET\\\"\\n });\\n```\\n**Example:** Get transaction status\\n```js\\nrequest('GET', 'GetTransactionStatus', {}, {query:{\\n  orderTrackingId: '123456'\\n}})\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### RequestOptions\\n\\nOptions provided to the Pesapal request\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string. |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-pesapal <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\npesapal API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/pesapal-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/pesapal-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-pesapal\\n\\n## 1.0.0\\n\\nImplement `get`, `post` and `request` for the pesapal adaptor\\n\"","functions":["get","post","request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","description":"The base URL (https://pay.pesapal.com)","format":"uri","minLength":1,"examples":["https://pay.pesapal.com"]},"consumer_key":{"title":"Consumer key","type":"string","description":"Your app's consumer key sent to you via email once you go live","examples":["GA2PNftcXvv2uC2VdgNjxXyvF8eZ4td6iBsL7N7N2ZFnXzf3"]},"consumer_secret":{"title":"Consumer key","type":"string","description":"Your app's consumer secret sent to you via email once you go live","examples":["zKjr2j0jjihCtzIwzGtgnV0YgP82jZf1hY9RW6HygntWG6AGuf4tAUe3E5tPtiyA"]},"apiVersion":{"title":"Api Version","type":"string","placeholder":"pesapalv3","description":"Pesapal api version","examples":["pesapalv3"]},"access_token":{"title":"Access Token","type":"string","description":"Your Pesapal access token","examples":["eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"]}},"type":"object","additionalProperties":true,"required":[]}},
+[
+  {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a GET request to Pesapal",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Get all registered IPN URLs for a merchant</caption>\nget('URLSetup/GetIpnList')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 34,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/pesapal/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 2,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the Pesapal server, including headers, statusCode, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "access": "private",
+    "meta": {
+      "lineno": 4,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/pesapal/src"
+    },
+    "order": 0
+  },
+  {
+    "id": "post",
+    "longname": "post",
+    "name": "post",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a POST request to Pesapal",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Send an order request </caption>\npost('Transactions/SubmitOrderRequest', \n    {\n        \"id\": \"TEST-05\",\n        \"currency\": \"KES\",\n        \"amount\": \"1\",\n        \"description\": \"Testing\",\n        \"callback_url\": \"https://www.myapplication.com/response-page\",\n        \"notification_id\": \"fe078e53-78da-4a83-aa89-e7ded5c456e6\",\n        \"billing_address\": {\n            \"email_address\": \"john.doe@example.com\",\n            \"phone_number\": \"0712xxxxxx\",\n            \"country_code\": \"\",\n            \"first_name\": \"Doe\",\n            \"middle_name\": \"\",\n            \"last_name\": \"John\",\n            \"line_1\": \"\",\n            \"line_2\": \"\",\n            \"city\": \"\",\n            \"state\": \"\",\n            \"postal_code\": \"\",\n            \"zip_code\": \"\"\n        }\n})"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 72,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/pesapal/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a general HTTP request to Pesapal",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "HTTP method to use",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Register IPN URL</caption>\nrequest(\"POST\", \"URLSetup/RegisterIPN\", {\n  \"url\": \"https://www.myapplication.com/ipn\",\n  \"ipn_notification_type\": \"GET\"\n });",
+      "<caption>Get transaction status</caption>\nrequest('GET', 'GetTransactionStatus', {}, {query:{\n  orderTrackingId: '123456'\n}})"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 96,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/pesapal/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 4,
+    "level": 0
+  },
+  {
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to the Pesapal request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object",
+            "string"
+          ]
+        },
+        "description": "body data to append to the request. JSON will be converted to a string.",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
+        "name": "errors"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of headers to append to the request.",
+        "name": "headers"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 13,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/pesapal/src"
+    },
+    "order": 1,
+    "level": 0
+  }
+],
 {"name":"postgresql","adaptor":"@openfn/language-postgresql","version":"6.0.9","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#describetable\\\">describeTable(tableName, [options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#findvalue\\\">findValue([filter])</a></dt>\\n<dt>\\n    <a href=\\\"#insert\\\">insert(table, record, [options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#insertmany\\\">insertMany(table, records, [options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#inserttable\\\">insertTable(tableName, columns, [options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#modifytable\\\">modifyTable(tableName, columns, [options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#sql\\\">sql(sqlQuery, [options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#upsert\\\">upsert(table, uuid, record, [options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#upsertif\\\">upsertIf(logical, table, uuid, record, [options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#upsertmany\\\">upsertMany(table, uuid, data, [options], callback)</a></dt>\\n</dl>\\n\\n\\n## Functions\\n### describeTable\\n\\n<p><code>describeTable(tableName, [options], callback) ⇒ Operation</code></p>\\n\\nList the columns of a table in a database.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| tableName | <code>string</code> | The name of the table to describe |\\n| [options] | <code>object</code> | Optional options argument |\\n| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |\\n| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example**\\n```js\\ndescribeTable('clinic_visits')\\n```\\n\\n* * *\\n\\n### findValue\\n\\n<p><code>findValue([filter]) ⇒ value</code></p>\\n\\nFetch a uuid key given a condition\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| [filter] | <code>object</code> | A filter object with the lookup table, a uuid and the condition |\\n| [filter.uuid] | <code>string</code> | The uuid value to search for in the specified relation. |\\n| [filter.relation] | <code>string</code> | The name of the relation to search for the uuid value. |\\n| [filter.where] | <code>object</code> | An object that contains key-value pairs to filter the search results. |\\n| [filter.operator] | <code>object</code> | An object that contains key-value pairs to specify the type of comparison to perform on the where clause. |\\n\\n**Example**\\n```js\\nfindValue({\\n   uuid: 'id',\\n   relation: 'users',\\n   where: { first_name: 'Mamadou' },\\n   operator: { first_name: 'like' }\\n })\\n```\\n\\n* * *\\n\\n### insert\\n\\n<p><code>insert(table, record, [options], callback) ⇒ Operation</code></p>\\n\\nInsert a record\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| table | <code>string</code> | The target table |\\n| record | <code>object</code> | Payload data for the record as a JS object or function |\\n| [options] | <code>object</code> | Optional options argument |\\n| [options.setNull] | <code>string</code> | A string value that specifies the behavior for inserting null values. |\\n| [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |\\n| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |\\n| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example**\\n```js\\ninsert('users', { name: 'Elodie', id: 7 }, { setNull: \\\"'NaN'\\\", logValues: true });\\n```\\n\\n* * *\\n\\n### insertMany\\n\\n<p><code>insertMany(table, records, [options], callback) ⇒ Operation</code></p>\\n\\nInsert many records, using the keys of the first as the column template\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| table | <code>string</code> | The target table |\\n| records | <code>array</code> | An array or a function that takes state and returns an array |\\n| [options] | <code>object</code> | Optional options argument |\\n| [options.setNull] | <code>string</code> | A string value that specifies the behavior for inserting null values. |\\n| [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |\\n| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |\\n| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example**\\n```js\\ninsertMany('users', state => state.data.recordArray, { setNull: \\\"'undefined'\\\", logValues: true });\\n```\\n\\n* * *\\n\\n### insertTable\\n\\n<p><code>insertTable(tableName, columns, [options], callback) ⇒ Operation</code></p>\\n\\nCreate a table in database when given an array of columns and a table_name.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| tableName | <code>string</code> | The name of the table to create |\\n| columns | <code>array</code> | An array of form columns |\\n| [options] | <code>object</code> | Optional options argument |\\n| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |\\n| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example**\\n```js\\ninsertTable('table_name', state => state.data.map(\\n  column => ({\\n    name: column.name,\\n    type: column.type,\\n    required: true, // optional\\n    unique: false, // optional - to be set to true for unique constraint\\n  })\\n));\\n```\\n\\n* * *\\n\\n### modifyTable\\n\\n<p><code>modifyTable(tableName, columns, [options], callback) ⇒ Operation</code></p>\\n\\nAlter an existing table in the database.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| tableName | <code>string</code> | The name of the table to alter |\\n| columns | <code>array</code> | An array of form columns |\\n| [options] | <code>object</code> | Optional options argument |\\n| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |\\n| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example**\\n```js\\nmodifyTable('table_name', state => state.data.map(\\n  newColumn => ({\\n    name: newColumn.name,\\n    type: newColumn.type,\\n    required: true, // optional\\n    unique: false, // optional - to be set to true for unique constraint\\n  })\\n));\\n```\\n\\n* * *\\n\\n### sql\\n\\n<p><code>sql(sqlQuery, [options], callback) ⇒ Operation</code></p>\\n\\nExecute an SQL statement\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| sqlQuery | <code>string</code> | The SQL query as a string. |\\n| [options] | <code>object</code> | Optional options argument |\\n| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |\\n| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example**\\n```js\\nsql(state => `select(*) from ${state.data.tableName};`, { writeSql: true })\\n```\\n\\n* * *\\n\\n### upsert\\n\\n<p><code>upsert(table, uuid, record, [options], callback) ⇒ Operation</code></p>\\n\\nInsert or update a record using ON CONFLICT UPDATE\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| table | <code>string</code> | The target table |\\n| uuid | <code>string</code> | The uuid column to determine a matching/existing record |\\n| record | <code>object</code> | Payload data for the record as a JS object or function |\\n| [options] | <code>object</code> | Optional options argument |\\n| [options.setNull] | <code>string</code> | A string value that specifies the behavior for inserting null values. |\\n| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |\\n| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |\\n| [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example**\\n```js\\nupsert(\\n  'users', // the DB table\\n  'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME\\n  { name: 'Elodie', id: 7 },\\n  { setNull: [\\\"''\\\", \\\"'undefined'\\\"], writeSql:true, execute: true, logValues: true }\\n)\\n```\\n\\n* * *\\n\\n### upsertIf\\n\\n<p><code>upsertIf(logical, table, uuid, record, [options], callback) ⇒ Operation</code></p>\\n\\nInsert or update a record based on a logical condition using ON CONFLICT UPDATE\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| logical | <code>string</code> | a data to check existing value for. |\\n| table | <code>string</code> | The target table |\\n| uuid | <code>string</code> | The uuid column to determine a matching/existing record |\\n| record | <code>object</code> | Payload data for the record as a JS object or function |\\n| [options] | <code>object</code> | Optional options argument |\\n| [options.setNull] | <code>string</code> | A string value that specifies the behavior for inserting null values. |\\n| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |\\n| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |\\n| [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example**\\n```js\\nupsertIf(\\n  dataValue('name'),\\n  'users', // the DB table\\n  'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME\\n  { name: 'Elodie', id: 7 },\\n  { writeSql:true, execute: true }\\n)\\n```\\n\\n* * *\\n\\n### upsertMany\\n\\n<p><code>upsertMany(table, uuid, data, [options], callback) ⇒ Operation</code></p>\\n\\nInsert or update multiple records using ON CONFLICT UPDATE and excluded\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| table | <code>string</code> | The target table |\\n| uuid | <code>string</code> | The uuid column to determine a matching/existing record |\\n| data | <code>array</code> | An array of objects or a function that returns an array |\\n| [options] | <code>object</code> | Optional options argument |\\n| [options.setNull] | <code>string</code> | A string value that specifies the behavior for inserting null values. |\\n| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |\\n| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |\\n| [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n**Example**\\n```js\\nupsertMany(\\n  'users', // the DB table\\n  'email', // a DB column with a unique constraint OR a CONSTRAINT NAME\\n  [\\n    { name: 'one', email: 'one@openfn.org' },\\n    { name: 'two', email: 'two@openfn.org' },\\n  ]\\n { logValues: true }\\n)\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# Language PostgreSQL\\n\\nLanguage Pack for building expressions and operations to run PostgreSQL queries.\\n\\n## Documentation\\n\\n## required configuration for Heroku postgres\\n\\n```json\\n{\\n  \\\"host\\\": \\\"some-host-url.compute-1.amazonaws.com\\\",\\n  \\\"port\\\": \\\"5432\\\",\\n  \\\"database\\\": \\\"wouldntyouliketoknow\\\",\\n  \\\"user\\\": \\\"me\\\",\\n  \\\"password\\\": \\\"noway\\\",\\n  \\\"ssl\\\": true,\\n  \\\"allowSelfSignedCert\\\": true\\n}\\n```\\n\\n## `sql(query)`\\n\\nExecute an sql query. An option can be added to either log the query or not and\\neither execute the query or no. The options can be omitted as well.\\n\\n#### sample usage\\n\\n```js\\nsql(\\n  state =>\\n    `INSERT INTO untitled_table (name, the_geom) VALUES ('` +\\n    dataValue('form.first_name')(state) +\\n    `', ST_SetSRID(ST_Point(` +\\n    dataValue('lat')(state) +\\n    `, ` +\\n    dataValue('long')(state) +\\n    `),4326))`,\\n  { writeSql: true, execute: true }\\n);\\n```\\n\\n## Find a single value for a table\\n\\nThis helper function allows to build a specific query where `sql` would not be\\nbest suited. It returns a single value and not a promise. An example of usage\\nwould be in building a mapping object with a value from a lookup table.\\n\\n```js\\nalterState(async state => {\\n  const user = {\\n    id: 1,\\n    name: 'Mamadou',\\n    user_id: await findValue({\\n      uuid: 'id',\\n      relation: 'users',\\n      where: { first_name: 'Mama%' },\\n      operator: { first_name: 'like' }, // operator is optional. \\\"=\\\" is used by default.\\n    })(state),\\n  };\\n\\n  return upsert(...)(state);\\n});\\n```\\n\\n## Insert a single record\\n\\nThis functions is used to insert a single record in postgres database. An option\\n`writeSql` allows to log the generated sql query. The `setNull` option allows to\\nreplace the specified elements with `NULL`.\\n\\n```js\\ninsert(\\n  'users',\\n  {\\n    email: 'antony@gmail.com',\\n    first_name: 'Antony',\\n    inserted_at: '2020-08-27 00:00:00',\\n    updated_at: '2020-08-27 00:00:00',\\n  },\\n  { setNull: [\\\"''\\\", \\\"'undefined'\\\"], writeSql: true, logValues: true }\\n);\\n```\\n\\n## Insert or Update using a unique column as a key\\n\\nInsert or Update if matched. An option, `execute`, allows to either run the\\ngenerated query or no.\\n\\n```js\\nupsert(\\n  'users',\\n  'email',\\n  {\\n    email: 'luca@openfn.org',\\n    first_name: 'Luca',\\n    inserted_at: '2010-01-01 00:00:00',\\n    updated_at: '2010-01-01 00:00:00',\\n  },\\n  {\\n    setNull: [\\\"'NaN'\\\", \\\"'undefined'\\\"],\\n    writeSql: false,\\n    execute: true,\\n    logValues: true,\\n  }\\n);\\n```\\n\\n## Insert or Update if a value exist in the record\\n\\nThis function will upsert a record only if the logical given is true. In this\\ncase we check if `dataValue('name')` exists.\\n\\n```js\\nupsertIf(dataValue('name'), 'users', 'ON CONSTRAINT users_pkey', {\\n  name: 'Elodie',\\n  id: 7,\\n});\\n```\\n\\n## Insert many records in postgresql\\n\\nThis function allows the insert of a set of records inside a table all at once.\\n\\n```js\\ninsertMany(\\n  'users',\\n  state =>\\n    state.data.people.map(s => {\\n      return {\\n        first_name: ['Luca', 'Mohamed', 'Elodie'],\\n        inserted_at: '2020-01-01 00:00:00',\\n        updated_at: '2020-01-01 00:00:00',\\n      };\\n    }),\\n  { logValues: true }\\n);\\n```\\n\\n## Upsert many records in postgresql\\n\\nThis function allows the upsert of a set of records inside a table all at once.\\n\\n```js\\nupsertMany('users', 'ON CONSTRAINT users_pkey', state =>\\n  state.data.people.map(s => {\\n    return {\\n      first_name: ['Luca', 'Mohamed', 'Elodie'],\\n      inserted_at: '2020-01-01 00:00:00',\\n      updated_at: '2020-01-01 00:00:00',\\n    };\\n  })\\n);\\n```\\n\\n## Describe a table from postgres\\n\\nThis function is used to fetch the list of columns of a given table in the\\ndatabase.\\n\\n```js\\ndescribeTable('users', { writeSql: true, execute: false });\\n```\\n\\n## Create a table in the database\\n\\nThis function allows to create a table in a database from a given array of\\ncolumns. The key `identity` can be use for a column to auto-generate a value.\\n\\n```js\\ninsertTable('users', state =>\\n  state.data.map(column => ({\\n    name: column.name,\\n    type: column.type,\\n    required: true, // optional\\n    unique: false, // optional - set to true for unique constraint\\n  }))\\n);\\n```\\n\\n## Alter a table in the database\\n\\nThis function allows to add new columns to a table. Beware of the fact that you\\ncannot add new columns with names that already exist in the table.\\n\\n```js\\nmodifyTable(\\n  'users',\\n  state =>\\n    state.data.map(newColumn => ({\\n      name: newColumn.name,\\n      type: newColumn.type,\\n      required: true, // optional\\n      unique: false, // optional - set to true for unique constraint\\n    })),\\n  { writeSql: false, execute: true }\\n);\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-postgresql\\n\\n## 6.0.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 6.0.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [b3d7f59]\\n- Updated dependencies [2d709ff]\\n- Updated dependencies [41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 6.0.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 6.0.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [a47d8d5]\\n- Updated dependencies [9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 6.0.5\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 6.0.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 6.0.3\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus [33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 6.0.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 6.0.1\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 6.0.0\\n\\n### Major Changes\\n\\n- Export new common http helpers (http namespace)\\n\\n## 5.0.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 5.0.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [4c08444]\\n- Updated dependencies [73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 5.0.0\\n\\n### Major Changes\\n\\n- 6a4081b8: - Update all operations to use util `expandReferences`\\n  - Add `findValue` result to state\\n\\n### Minor Changes\\n\\n- 5fb82f07: Export `group` operation from common\\n\\n### Patch Changes\\n\\n- Updated dependencies [5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 4.2.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 4.1.15\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 4.1.14\\n\\n### Patch Changes\\n\\n- Updated dependencies [12f02ed5]\\n  - @openfn/language-common@1.13.4\\n\\n## 4.1.13\\n\\n### Patch Changes\\n\\n- Updated dependencies [88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 4.1.12\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 4.1.11\\n\\n### Patch Changes\\n\\n- 02ab7a89: - Change `host` format from `uri or ipv4` to `string` in\\n  `configuration-schema.json`\\n  - Update required list to include `user`, `password` and `database`\\n\\n## 4.1.10\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.1\\n\\n## 4.1.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 4.1.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [c19efbe]\\n  - @openfn/language-common@1.11.1\\n\\n## 4.1.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [85c35b8]\\n  - @openfn/language-common@1.11.0\\n\\n## 4.1.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [df09270]\\n  - @openfn/language-common@1.10.3\\n\\n## 4.1.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [26a303e]\\n  - @openfn/language-common@1.10.2\\n\\n## 4.1.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [8c32eb3]\\n  - @openfn/language-common@1.10.1\\n\\n## 4.1.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [aad9549]\\n  - @openfn/language-common@1.10.0\\n\\n## 4.1.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [111807f]\\n  - @openfn/language-common@1.9.0\\n\\n## 4.1.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 4.1.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 4.0.0\\n\\n### Major Changes\\n\\n- ecd0b53: add optional callback in sql and update response structure\\n\\n## 3.4.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [929bca6]\\n  - @openfn/language-common@1.7.7\\n\\n## 3.4.5\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies [2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 3.4.4\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 3.4.3\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*_ @module Adaptor _/\\n\\n## 3.4.2\\n\\n### Patch Changes\\n\\n- f2a91a4: Update package exports\\n- Updated dependencies [f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\\n## 3.4.1\\n\\n### Patch Changes\\n\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- ecf5d30: remove sinon since it was not being used\\n- Updated dependencies [8566b26]\\n- Updated dependencies [b3d45ff]\\n- Updated dependencies [b5eb665]\\n- Updated dependencies [ecf5d30]\\n  - @openfn/language-common@1.7.4\\n\\n## 3.4.0\\n\\n### Minor Changes\\n\\n- 44ae341: Migrate postgresql\\n\\n### Patch Changes\\n\\n- e04aa28: Rename credential-schema to configuration-schema, update descriptions\\n\"","functions":["describeTable","findValue","insert","insertMany","insertTable","modifyTable","sql","upsert","upsertIf","upsertMany"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"host":{"title":"Host","type":"string","description":"Postgres instance host URL or IP address","minLength":1,"examples":["some-host.compute-1.amazonaws.com","201.220.61.246"]},"port":{"title":"Port","type":"integer","default":5432,"description":"Database instance port","minLength":1,"examples":[5432]},"database":{"title":"Database","type":"string","description":"The database name","minLength":1,"examples":["demo-db"]},"user":{"title":"User","type":"string","description":"User name","minLength":1,"examples":["admin"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"minLength":1,"examples":["@super(!)Secretpass"]},"ssl":{"title":"Use SSL","type":"boolean","examples":[true]},"allowSelfSignedCert":{"title":"Allow self-signed certificate","type":"boolean","examples":[true]}},"type":"object","additionalProperties":true,"required":["host","user","database","password"]}},
 [
   {
