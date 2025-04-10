@@ -1,5 +1,59 @@
 # @openfn/language-openmrs
 
+## 5.0.0
+
+### Major Changes
+
+- 0388dcc: Remove all callbacks.
+
+  Removed `getEncounter()`, `getEncounters()`, `getPatient()`, `searchPatient()`
+  and `searchPerson()`.
+
+  ## Migration Guide
+
+  All removed functionality is now captured by the `get(path, options)` function
+  introduced in `4.10.0`. Just pass a path to the resource you need, and add a
+  `{ query }` options object to search.
+
+  For example:
+
+  - Instead of `getEncounters()` , do `get('encounters')`
+  - Instead of `getEncounter('1234')`, do `get('encounters/1234')`
+  - Instead of `searchPatient({ query: 'sarah' })`, do
+    `get('patient', { query: 'sarah' })`
+  - Instead of callback arguments, you can either use `.then()`:
+
+  ```js
+  get('encounter/1234', state => {
+    // the fetched resource is on state.data
+    return state;
+  });
+  ```
+
+  Or use an fn block:
+
+  ```js
+  get('encounter/1234');
+  fn(state => {
+    // the fetched resource is on state.data
+    return state;
+  });
+  ```
+
+### Minor Changes
+
+- 20cbad3: - Added new `destroy` function
+  - Added `state` annotations for all requests.
+  - Improved the examples on the `get` function.
+  - Added a typedef for OpenMRS options that only includes query params.
+  - Removed the `throw` declaration on the upsert docbloc.
+  - Updated the`upsert`example signatures.
+
+### Patch Changes
+
+- Updated dependencies [d7105c0]
+  - @openfn/language-common@2.3.2
+
 ## 4.4.0
 
 ### Minor Changes

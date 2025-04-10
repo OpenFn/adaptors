@@ -1,5 +1,12 @@
 # @openfn/language-telerivet
 
+## 0.3.11
+
+### Patch Changes
+
+- Updated dependencies [d7105c0]
+  - @openfn/language-common@2.3.2
+
 ## 0.3.10
 
 ### Patch Changes

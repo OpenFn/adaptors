@@ -1,5 +1,11 @@
 ## 2.3.0
 
+## 2.3.2
+
+### Patch Changes
+
+- d7105c0: Improved handling of response bodies with no content
+
 ## 2.3.1
 
 ### Patch Changes
