@@ -243,9 +243,10 @@ function encodeRequestBody(body) {
 }
 
 async function readResponseBody(response, parseAs) {
+  const contentLength = response.body?.readableLength ?? 0;
+  const contentType = response.headers['content-type'];
   try {
-    const contentType = response.headers['content-type'];
-    if (+response.headers['content-length'] === 0) {
+    if (Number.isNaN(contentLength) || contentLength === 0) {
       return undefined;
     }
 
@@ -266,7 +267,7 @@ async function readResponseBody(response, parseAs) {
       description: 'Error parsing the response body',
       parseAs,
       contentType: response.headers['content-type'],
-      bodyLength: +response.headers['content-length'],
+      bodyLength: contentLength,
       error: error.message,
     });
   }

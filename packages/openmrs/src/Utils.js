@@ -1,4 +1,4 @@
-import { composeNextState } from '@openfn/language-common';
+import { composeNextState, util } from '@openfn/language-common';
 import {
   request as commonRequest,
   makeBasicAuthHeader,
@@ -38,15 +38,32 @@ export async function fetchAndLog(method, url, opts = {}) {
   return response;
 }
 
+export function validateCredentials(state) {
+  const config = state.configuration || {};
+
+  for (const key of ['instanceUrl']) {
+    if (!config[key]) {
+      util.throwError('INVALID_CREDENTIALS', {
+        description: `configuration.${key}`,
+        fix: 'Ensure that all required credentials are set on state.configuration',
+      });
+    }
+  }
+}
+
 export async function requestWithPagination(state, path, options = {}) {
   const results = [];
 
-  let { pageSize, startIndex, limit: maxResults = Infinity } = options;
+  let { pageSize, startIndex, limit, max } = options;
+
+  const maxResults = max ?? limit ?? 1e4;
 
   // Declare a variable that takes in all the options. We can then modify this variable to fetch the next page
   let requestOptions = { ...options };
 
   let hasMoreContent = true;
+  let isFirstRequest = true;
+  const didUserPassLimit = Boolean(max || limit);
   do {
     requestOptions.query ??= {};
 
@@ -55,9 +72,12 @@ export async function requestWithPagination(state, path, options = {}) {
       requestOptions.query.startIndex = startIndex;
     }
 
-    if (maxResults < Infinity) {
-      // If there's a limit or page size, fetch
-      // a page of items (the limit or the page size, whichever is smaller)
+    if (limit) {
+      requestOptions.query.limit = limit;
+    } else if (didUserPassLimit || !isFirstRequest) {
+      // If there's an explicit limit or page size,
+      // or this is not the first request,
+      // set the limit in the URL
       requestOptions.query.limit = Math.min(
         pageSize || maxResults,
         maxResults - results.length
@@ -76,15 +96,19 @@ export async function requestWithPagination(state, path, options = {}) {
 
       // If there is data, save it
       if (!startIndex) {
-        startIndex = 0;
+        startIndex = 1;
       }
       startIndex += response.body.results.length;
     } else {
       results.push(response.body);
     }
-
+    if (isFirstRequest && !pageSize) {
+      pageSize = results.length;
+    }
+    isFirstRequest = false;
     // Decide whether to request another page
     hasMoreContent =
+      !limit &&
       results.length < maxResults &&
       response.body.links?.find(link => link?.rel === 'next');
   } while (hasMoreContent);
@@ -93,6 +117,8 @@ export async function requestWithPagination(state, path, options = {}) {
 }
 
 export async function request(state, method, path, options = {}) {
+  validateCredentials(state);
+
   const { username, password, instanceUrl: baseUrl } = state.configuration;
 
   const {

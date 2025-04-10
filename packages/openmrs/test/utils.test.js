@@ -27,23 +27,35 @@ const generateData = (name, count) => {
   }));
 };
 
+const MOCK_DEFAULT_LIMIT = 10;
+
+const assertNoDuplicates = arr => {
+  const ids = {};
+  arr.forEach(d => {
+    expect(ids[d.uuid]).to.be.undefined;
+    ids[d.uuid] = true;
+  });
+};
+
+// Note: tests assume all records have an "a" in them!
 let db = generateData('bill bailey', 10)
   .concat(generateData('fran bailey', 10))
   .concat(generateData('sarah pascoe', 10))
   .concat(generateData('richard ayoade', 1));
 
-const get = ({ q = '', limit = 1000, startIndex = 1 }) => {
+// default server limit is 10
+const get = ({ q = '', limit = MOCK_DEFAULT_LIMIT, startIndex = 1 }) => {
   // note that start index i is 1 based
   // offset it here to match our array
   startIndex -= 1;
 
   const allResults = db.filter(d => d.display.includes(q));
   const filteredResults = allResults.slice(startIndex, startIndex + limit);
-  const remainingResults = allResults.slice(startIndex + limit + 1);
+  const remainingResults = allResults.slice(startIndex + limit);
   return {
     results: filteredResults,
     next: remainingResults.length && {
-      limit: limit,
+      max: limit,
       start: startIndex + limit,
     },
   };
@@ -86,8 +98,12 @@ testServer
 
     return {
       statusCode,
-      headers: { 'content-type': 'application/json' },
       data,
+      responseOptions: {
+        headers: {
+          'content-type': 'application/json',
+        },
+      },
     };
   })
   .persist();
@@ -104,6 +120,7 @@ describe('mock server', () => {
 
     expect(result).to.eql({ uuid: 'bill-1', display: 'bill bailey 1' });
   });
+
   it("should return 404 for a patient that doesn't exist", async () => {
     const response = await testServer.request({
       method: 'GET',
@@ -111,19 +128,36 @@ describe('mock server', () => {
     });
     expect(response.statusCode).to.equal(404);
   });
-  it('should get all matching items if no limit', async () => {
+
+  it('should get all matching items within default limit', async () => {
     const response = await testServer.request({
       method: 'GET',
       path: '/ws/rest/v1/patient',
       query: {
-        q: 'bill',
+        q: 'a',
       },
     });
     expect(response.statusCode).to.equal(200);
     const { results: body } = await response.body.json();
 
-    expect(body.length).to.equal(10);
-    expect(body.every(item => item.uuid.includes('bill'))).to.equal(true);
+    expect(body.length).to.equal(MOCK_DEFAULT_LIMIT);
+    expect(body.every(item => item.display.includes('a'))).to.equal(true);
+  });
+
+  it('should get matching items with custom limit', async () => {
+    const response = await testServer.request({
+      method: 'GET',
+      path: '/ws/rest/v1/patient',
+      query: {
+        q: 'a',
+        limit: 100,
+      },
+    });
+    expect(response.statusCode).to.equal(200);
+    const { results: body } = await response.body.json();
+
+    expect(body.length).to.equal(db.length);
+    expect(body.every(item => item.display.includes('a'))).to.equal(true);
   });
 
   it('should get all matching items #2', async () => {
@@ -173,6 +207,30 @@ describe('mock server', () => {
     expect(body[2].uuid).to.equal('bill-3');
   });
 
+  it('should get all items one at a time', async () => {
+    let lastBody;
+    const items = [];
+    let startIndex = 1;
+    do {
+      const response = await testServer.request({
+        method: 'GET',
+        path: '/ws/rest/v1/patient',
+        query: {
+          q: 'a',
+          limit: 1,
+          startIndex,
+        },
+      });
+      lastBody = await response.body.json();
+      expect(response.statusCode).to.equal(200);
+      items.push(...lastBody.results);
+      startIndex += 1;
+    } while (lastBody.links.length);
+
+    expect(items.length).to.equal(db.length);
+    assertNoDuplicates(items);
+  });
+
   it('should get all matching items from startIndex', async () => {
     const response = await testServer.request({
       method: 'GET',
@@ -207,23 +265,32 @@ describe('mock server', () => {
 });
 
 describe('request()', () => {
+  it('should throw if no baseUrl provided', async () => {
+    let err;
+    try {
+      await request({}, 'GET', '/ws/rest/v1/patient');
+    } catch (e) {
+      err = e;
+    }
+
+    expect(err.message).to.match(/INVALID_CREDENTIALS/);
+  });
+
   it('should GET with no query parameters', async () => {
     // This will actually give a 400 from real openmrs, but it's fine
-    const response = await request(state, 'GET', '/ws/rest/v1/patient', {
-      baseUrl: state.configuration.instanceUrl,
-    });
+    const response = await request(state, 'GET', '/ws/rest/v1/patient');
 
     expect(response.statusCode).to.eql(200);
     expect(response.url).to.match(/\/patient$/);
 
     // We don't really care about the result data here
-    expect(response.body.results.length).to.eql(31);
+    // It should just return within the default limit
+    expect(response.body.results.length).to.eql(MOCK_DEFAULT_LIMIT);
   });
 
   it('should GET with a query', async () => {
     const response = await request(state, 'GET', '/ws/rest/v1/patient', {
       query: { q: 'bill' },
-      baseUrl: state.configuration.instanceUrl,
     });
 
     expect(response.statusCode).to.eql(200);
@@ -235,7 +302,6 @@ describe('request()', () => {
   it('should GET with a query and limit', async () => {
     const response = await request(state, 'GET', '/ws/rest/v1/patient', {
       query: { q: 'bill', limit: 1 },
-      baseUrl: state.configuration.instanceUrl,
     });
 
     expect(response.statusCode).to.eql(200);
@@ -251,7 +317,6 @@ describe('request()', () => {
   it('should GET with a query and startIndex', async () => {
     const response = await request(state, 'GET', '/ws/rest/v1/patient', {
       query: { q: 'bill', startIndex: 10 },
-      baseUrl: state.configuration.instanceUrl,
     });
 
     expect(response.statusCode).to.eql(200);
@@ -269,30 +334,35 @@ describe('requestWithPagination', () => {
     const data = await requestWithPagination(
       state,
       '/ws/rest/v1/patient/bill-1',
-      {
-        baseUrl: state.configuration.instanceUrl,
-      }
+      {}
     );
     expect(data.length).to.equal(1);
     expect(data[0]).to.eql({ uuid: 'bill-1', display: 'bill bailey 1' });
   });
 
-  it('should get all items', async () => {
-    const totalNumberOfBills = get({ q: 'bill' }).results.length;
-
+  it('should get all matching items by default', async () => {
     const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
-      query: { q: 'bill' },
-      baseUrl: state.configuration.instanceUrl,
+      query: { q: 'a' },
     });
-    expect(data.length).to.eql(totalNumberOfBills);
-    expect(data[0].display).to.eql('bill bailey 1');
+
+    assertNoDuplicates(data);
+
+    expect(data.length).to.eql(db.length);
   });
 
-  it('should get some items', async () => {
+  it('should not download extra pages if limit is set', async () => {
+    const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
+      query: { q: 'a' },
+      limit: 20,
+    });
+
+    expect(data.length).to.eql(20);
+  });
+
+  it('should get some items with max', async () => {
     const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
       query: { q: 'bill' },
-      baseUrl: state.configuration.instanceUrl,
-      limit: 5,
+      max: 5,
     });
 
     expect(data.length).to.eql(5);
@@ -303,22 +373,20 @@ describe('requestWithPagination', () => {
     const totalNumberOfBills = get({ q: 'bill' }).results.length;
     const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
       query: { q: 'bill' },
-      baseUrl: state.configuration.instanceUrl,
-      limit: 20,
+      max: 20,
     });
 
     expect(data.length).to.eql(totalNumberOfBills);
     expect(data[0].display).to.eql('bill bailey 1');
   });
 
-  it('should get all with a page size', async () => {
+  it('should get all with multiple pages and a page size', async () => {
     const totalNumberOfBills = get({ q: 'bill' }).results.length;
 
     const requests = [];
 
     const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
       query: { q: 'bill' },
-      baseUrl: state.configuration.instanceUrl,
       pageSize: 2,
       _onrequest: r => {
         requests.push(r);
@@ -334,9 +402,8 @@ describe('requestWithPagination', () => {
     const requests = [];
     const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
       query: { q: 'bill' },
-      baseUrl: state.configuration.instanceUrl,
       pageSize: 2,
-      limit: 5,
+      max: 5,
       _onrequest: r => {
         requests.push(r);
       },

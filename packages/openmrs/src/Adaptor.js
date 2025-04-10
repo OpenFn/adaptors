@@ -3,30 +3,15 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import {
-  request,
-  prepareNextState,
-  cleanPath,
-  requestWithPagination,
-} from './Utils';
+import { request, cleanPath, requestWithPagination } from './Utils';
 
 /**
- * State object
- * @typedef {object} HttpState
- * @private
- * @property data - The parsed response body
- * @property response - The response from the OpenMRS server
- * @property references  - An array of all previous data objects used in the job
- */
-
-/**
- * OpenMRS query object. This is a brief overview with commonly used parameters that cut across multiple requests. For more details about parameters specific to your request visit the [OpenMRS Docs](https://rest.openmrs.org/)
- * @typedef {object} RestQueryOptions
- * @property {string} q - Search by query for listings
- * @property {number} limit - Number of listings returned in the `results` array.
- * @property {boolean} purge - For delete operations only. Use with caution! The resource will be voided unless purge = true. Purging will attempt to remove the resource irreversibly. Resources that are referenced from existing data can not be purged.
- * @property {number} startindex - Commonly used with `query.q` and `query.limit` for pagination to position the cursor.
- * @property {boolean} includeAll - Include voided/retired/disabled resources in the response.
+ * Options to append to the request. Unless otherwise specified, options are appended to the URL as query parameters - see the [OpenMRS Docs](https://rest.openmrs.org/) for all supported parameters.
+ * @typedef {object} RestOptions
+ * @property {string} [query] - (OpenFn only) Query string. Maps to `q` in OpenMRS.
+ * @property {number} [max=10000] - (OpenFn only) Restrict the maximum number of retrieved records. May be fetched in several pages. Not used if limit is set.
+ * @property {number} [pageSize=1000] - (OpenFn only) Limits the size of each page of data. Not used if limit is set.
+ * @property {boolean} [singleton] - (OpenFn only) If set to true, only the first result will be returned. Useful for "get by id" APIs.
  */
 
 /**
@@ -56,14 +41,19 @@ export function execute(...operations) {
  * Fetch resources from OpenMRS. Use this to fetch a single resource,
  * or to search a list. Query parameters will be appended to the request URL,
  * refer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.
- * Pagination is handled automatically, pass a limit to restrict the total number
- * of items that are retrieved.
- * @example <caption>List all patients</caption>
+ * Pagination is handled automatically by default (maximum 10k items). Set `max`
+ * to paginate with a higher limit, or pass `limit` to force a single request, as
+ * per the OpenMRS Rest API.
+ * @example <caption>List patients</caption>
  * get("patient")
- * @example <caption>Search patients by name with a limit (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
- * get("patient", { q: "brian", limit: 1 })
- * @example <caption>Fetch patient by UUID</caption>
+ * @example <caption>List all patients (with pagination)</caption>
+ * get("patient", { max: Infinity })
+ * @example <caption>Search up to 100 patients by name (allowing pagination) (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
+ * get("patient", { q: "brian", max: 100 })
+ * @example <caption>Fetch patient by UUID (returns an array of 1 item)</caption>
  * get("patient/abc")
+ * @example <caption>Search up to 10 patients by name (in a single request) (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
+ * get("patient", { q: "brian", limit: 10 })
  * @example <caption>List allergy subresources</caption>
  * get("patient/abc/allergy")
  * @example <caption>Get allergy subresource by its UUID and parent patient UUID</caption>
@@ -71,12 +61,11 @@ export function execute(...operations) {
  * @function
  * @public
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
- * @param {RestQueryOptions} [options = {}] Query parameters (eg `limit`, `q`)
- * @state {HttpState}
- * @state data The requested resources
+ * @param {RestOptions} [options = {}] Query parameters (eg `limit`, `q`)
+ * @state data An array of result objects
  * @returns {Operation}
  */
-export function get(path, options) {
+export function get(path, options = {}) {
   return async state => {
     const [resolvedPath, resolvedOptions] = expandReferences(
       state,
@@ -84,14 +73,49 @@ export function get(path, options) {
       options
     );
 
-    const result = await requestWithPagination(
+    if (resolvedOptions.limit) {
+      const keysToRemove = Object.keys(resolvedOptions).filter(k =>
+        k.match(/^(max|pageSize)$/)
+      );
+      if (keysToRemove.length) {
+        console.warn(
+          `Warning: ignoring option [${keysToRemove.join(
+            ','
+          )}] as "limit" is set`
+        );
+        delete resolvedOptions.max;
+        delete resolvedOptions.pageSize;
+      }
+    }
+    let { max, singleton, limit, pageSize, query, ...queryParams } =
+      resolvedOptions;
+
+    if (singleton) {
+      max = 1;
+    }
+
+    // Alias options.query to q (just for readability in job code)
+    if (resolvedOptions.query) {
+      queryParams.q = resolvedOptions.query;
+    }
+
+    const requestOptions = {
+      baseUrl: state.configuration?.instanceUrl,
+      query: queryParams,
+      max,
+      limit,
+      pageSize,
+    };
+
+    let result = await requestWithPagination(
       state,
       cleanPath(`/ws/rest/v1/${resolvedPath}`),
-      {
-        baseUrl: state.configuration?.instanceUrl,
-        query: resolvedOptions,
-      }
+      requestOptions
     );
+
+    if (singleton) {
+      result = result[0];
+    }
 
     return composeNextState(state, result);
   };
@@ -103,8 +127,7 @@ export function get(path, options) {
  * @function
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
  * @param {object} data - Resource definition
- * @state {HttpState}
- * @state data The newly created resource
+ * @state data The newly created resource, as returned by OpenMRS
  * @returns {Operation}
  * @example <caption>Create a person (<a href="https://rest.openmrs.org/#create-a-person">see OpenMRS API</a>)</caption>
  * create("person", {
@@ -161,6 +184,14 @@ export function get(path, options) {
  *     ],
  *   },
  * })
+  @example <caption>Create a patientIdentifier subresource (<a href="https://rest.openmrs.org/#create-a-patientidentifier-sub-resource-with-properties">see OpenMRS API</a>)</caption>
+ * create("patient", { 
+ *  "identifier" : "111:CLINIC1",
+ *  "identifierType" : "a5d38e09-efcb-4d91-a526-50ce1ba5011a",
+ *  "location" : "8d6c993e-c2cc-11de-8d13-0010c6dffd0f",
+ *  "preferred" : true
+ * })
+}
  */
 export function create(path, data) {
   return async state => {
@@ -180,9 +211,7 @@ export function create(path, data) {
 
     console.log(`Successfully created ${resolvedPath}`);
 
-    // TODO I think we should use composeNextState no?
-    // No http semantics?
-    return prepareNextState(state, response);
+    return composeNextState(state, response.body);
   };
 }
 
@@ -194,8 +223,7 @@ export function create(path, data) {
  * @function
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
  * @param {Object} data - Resource properties to update
- * @state {HttpState}
- * @state data The updated resource
+ * @state data The full updated resource, as returned by OpenMRS
  * @returns {Operation}
  * @example <caption>Update a person (<a href="https://rest.openmrs.org/#create-a-person">see OpenMRS API</a>)</caption>
  * update('person/3cad37ad-984d-4c65-a019-3eb120c9c373', {
@@ -222,7 +250,7 @@ export function update(path, data) {
 
     console.log(`Successfully updated ${resolvedPath}`);
 
-    return prepareNextState(state, response);
+    return composeNextState(state, response.body);
   };
 }
 
@@ -232,8 +260,7 @@ export function update(path, data) {
  * @function
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
  * @param {Object} data - The resource data
- * @state {HttpState}
- * @state data The updated or newly created resource
+ * @state data The created/updated resource, as returned by OpenMRS
  * @returns {Operation}
  * @example <caption>Upsert a patient (<a href="https://rest.openmrs.org/#patients-overview">see OpenMRS API</a>)</caption>
  * upsert("patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a", {
@@ -312,7 +339,7 @@ export function upsert(path, data) {
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
  * @param {object}  [options = {}]
  * @param {object}  [options.purge=false] The resource will be voided/retired unless true
- * @state {HttpState}
+ * @state data The response from OpenMRS
  * @returns {Operation}
  */
 export function destroy(path, options) {
@@ -325,8 +352,7 @@ export function destroy(path, options) {
 
     const { instanceUrl: baseUrl } = state.configuration;
 
-    // TODO if this returns anything other than a 204, we should throw
-    const result = await request(
+    const response = await request(
       state,
       'DELETE',
       cleanPath(`/ws/rest/v1/${resolvedPath}`),
@@ -335,7 +361,7 @@ export function destroy(path, options) {
         query: resolvedOptions,
       }
     );
-    return composeNextState(state, result.body);
+    return composeNextState(state, response.body);
   };
 }
 
