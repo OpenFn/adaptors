@@ -7,8 +7,9 @@ cleaner API and automatic pagination on `get()`.
 
 ### Major Changes
 
+- Signatures changed for `get()`, `update()`, `upsert()`, and `create()`
 - Removed `getEncounter()`, `getEncounters()`, `getPatient()`, `searchPatient()`
-  and `searchPerson()`
+  and `post()` and `searchPerson()`
 - Added automatic pagination to `get()`
 - Removed `response` (and http semantics generally) from `get()`,
 - Remove all callbacks
@@ -25,9 +26,13 @@ cleaner API and automatic pagination on `get()`.
 
 ### Migration Guide
 
-All removed functionality is now captured by the `get(path, options)` function
-introduced in `4.10.0`. Just pass a path to the resource you need, and add a
-`{ query }` options object to search.
+Signatures have all changed for the main OpenMRS rest functions `get()`,
+`update()`, `upsert()`, and `create()`. Generally they take the form
+`verb(path, [data], [options])`.
+
+All removed getters (ie, `getPatient()`) are replaced by the
+`get(path, options)` function introduced in `4.10.0`. Just pass a path to the
+resource you need, and add a `{ query }` options object to search.
 
 For example:
 
