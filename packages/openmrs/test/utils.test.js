@@ -412,4 +412,68 @@ describe('requestWithPagination', () => {
     expect(requests.length).to.eql(3);
     expect(data.length).to.eql(5);
   });
+
+  it('should warn if the default max limit is hit', async () => {
+    const oldDb = db;
+    const warn = console.warn;
+
+    // Note that there are more than the default max number of items
+    db = new Array(1e4 + 100).fill(1).map((i, uuid) => ({
+      uuid,
+      display: 'a',
+    }));
+
+    const logs = [];
+    console.warn = msg => {
+      logs.push(msg);
+    };
+
+    const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
+      q: 'a',
+      // important to use default max
+      pageSize: 5e3,
+    });
+
+    expect(data.length).to.equal(1e4);
+
+    expect(logs.length).to.equal(1);
+    expect(logs[0]).to.match(
+      /default maximum number of items has been reached/i
+    );
+
+    // Restore the database for the next test
+    db = oldDb;
+    console.warn = warn;
+  });
+
+  it('should nod warn if the a custom max limit is hit', async () => {
+    const oldDb = db;
+    const warn = console.warn;
+
+    // Note that there are more than the default max number of items
+    db = new Array(1e4 + 100).fill(1).map((i, uuid) => ({
+      uuid,
+      display: 'a',
+    }));
+
+    const logs = [];
+    console.warn = msg => {
+      logs.push(msg);
+    };
+
+    const data = await requestWithPagination(state, '/ws/rest/v1/patient', {
+      q: 'a',
+      // important to use default max
+      pageSize: 5e3,
+      max: 1e4,
+    });
+
+    expect(data.length).to.equal(1e4);
+
+    expect(logs.length).to.equal(0);
+
+    // Restore the database for the next test
+    db = oldDb;
+    console.warn = warn;
+  });
 });

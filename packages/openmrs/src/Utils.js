@@ -56,12 +56,13 @@ export async function requestWithPagination(state, path, options = {}) {
 
   let { pageSize, startIndex, limit, max } = options;
 
+  const isUsingDefaultMax = max === undefined;
   const maxResults = max ?? limit ?? 1e4;
 
   // Declare a variable that takes in all the options. We can then modify this variable to fetch the next page
   let requestOptions = { ...options };
 
-  let hasMoreContent = true;
+  let shouldFetchMoreContent = false;
   let isFirstRequest = true;
   const didUserPassLimit = Boolean(max || limit);
   do {
@@ -102,17 +103,32 @@ export async function requestWithPagination(state, path, options = {}) {
     } else {
       results.push(response.body);
     }
-    if (isFirstRequest && !pageSize) {
-      pageSize = results.length;
-    }
+
+    if (isFirstRequest)
+      if (!pageSize) {
+        pageSize = results.length;
+      }
 
     isFirstRequest = false;
+
+    // OpenMRS will tell us if there is more data to return
+    const hasMoreContent = response.body.links?.find(
+      link => link?.rel === 'next'
+    );
+
+    // If the user hasn't set a max but we've hit the limit, we should warn them
+    if (isUsingDefaultMax && hasMoreContent && results.length === maxResults) {
+      console.warn(
+        `Warning: The default maximum number of items has been reached (${maxResults}), but more items are available on the server. To download all available items, make another request with startIndex=${
+          maxResults + 1
+        } or set max to Infinity`
+      );
+    }
+
     // Decide whether to request another page
-    hasMoreContent =
-      !limit &&
-      results.length < maxResults &&
-      response.body.links?.find(link => link?.rel === 'next');
-  } while (hasMoreContent);
+    shouldFetchMoreContent =
+      !limit && results.length < maxResults && hasMoreContent;
+  } while (shouldFetchMoreContent);
 
   return results;
 }
