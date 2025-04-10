@@ -1,11 +1,7 @@
 import { composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import {
-  parseMetadata,
-  parseRecordsToReport,
-  parseReportToFiles,
-} from './Utils';
+import { parseMetadata, parseRecordsToReport } from './Utils';
 import { parseVaroEmsToEms } from './VaroEmsUtils';
 import { parseFridgeTag, parseFridgeTagToEms } from './FridgeTagUtils';
 
@@ -66,19 +62,35 @@ export function convertToEms(messageContents) {
   };
 }
 
-export function convertRecordsToMessageContent(records, reportType) {
+export function convertRecordsToReport(records) {
   return async state => {
-    const [resolvedRecords, resolvedReportType] = expandReferences(
+    const [resolvedRecords] = expandReferences(state, records);
+
+    const report = parseRecordsToReport(resolvedRecords);
+
+    return { ...composeNextState(state, report) };
+  };
+}
+
+export function convertReportToMessageContent(report, reportType = 'unknown') {
+  return async state => {
+    const [resolvedReport, resolvedReportType] = expandReferences(
       state,
-      records,
+      report,
       reportType
     );
 
-    const report = parseRecordsToReport(resolvedRecords, resolvedReportType);
-    const subject = `OpenFn | ${reportType.toUpperCase()}`;
-    const files = parseReportToFiles(report);
+    resolvedReport['zReportType'] = reportType;
 
-    return { ...composeNextState(state, { subject, files }) };
+    const messageContent = {
+      subject: `OpenFn | ${resolvedReportType.toUpperCase()}`,
+      data: {
+        filename: 'data.json',
+        content: JSON.stringify(resolvedReport, null, 4),
+      },
+    };
+
+    return { ...composeNextState(state, messageContent) };
   };
 }
 

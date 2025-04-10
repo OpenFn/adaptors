@@ -31,14 +31,9 @@ const defs = {
   ).split(','),
 };
 
-export function parseRecordsToReport(
-  records,
-  reportType,
-  reqReport,
-  reqRecord
-) {
+export function parseRecordsToReport(records, reqReport, reqRecord) {
   if (!Array.isArray(records) || records.length === 0) {
-    console.error('No records to process for report type: ' + reportType);
+    console.error('No records to process for report.');
     return null;
   }
 
@@ -62,20 +57,17 @@ export function parseRecordsToReport(
   const reportRecord = records[0];
   copyLoggerToEmd(reportRecord);
 
-  const report = mapProperties(reportRecord, records, reqReport, reqRecord);
-  report['zReportType'] = reportType;
-
-  return report;
+  return mapProperties(reportRecord, records, reqReport, reqRecord);
 }
 
 function mapProperties(report, records, reqReport, reqRecord) {
-  const resolveReqKeys = (option, defaults) => {
+  function resolveReqKeys(option, defaults) {
     if (option === true) return defaults;
     if (typeof option === 'string' && option.trim()) {
       return option.split(',').map(k => k.trim());
     }
     return [];
-  };
+  }
 
   function extract(source, keys, reqKeys) {
     const result = {};
@@ -106,14 +98,5 @@ function mapProperties(report, records, reqReport, reqRecord) {
   return {
     ...reportResult,
     records: recordResults,
-  };
-}
-
-export function parseReportToFiles(report) {
-  return {
-    data: {
-      filename: 'data.json',
-      content: JSON.stringify(report, null, 4),
-    },
   };
 }
