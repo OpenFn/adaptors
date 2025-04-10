@@ -232,10 +232,11 @@
       "name": "upsert",
       "params": [
         "path",
-        "data"
+        "data",
+        "params"
       ],
       "docs": {
-        "description": "Upsert a record. If the resource exists, it will be updated. Otherwise, a new resource will be created.",
+        "description": "Update a resource if it already exists, or otherwise create a new one.\n\nUpsert will first make a request for the target item (using the `path` and `params`) to see if it exists, and then issue a second create or update request.\nIf the query request returns multiple items, the upsert will throw an error.",
         "tags": [
           {
             "title": "public",
@@ -266,6 +267,15 @@
             "name": "data"
           },
           {
+            "title": "param",
+            "description": "Query parameters to append to the initial query",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "params"
+          },
+          {
             "title": "state",
             "description": "data The created/updated resource, as returned by OpenMRS"
           },
@@ -281,6 +291,11 @@
             "title": "example",
             "description": "upsert(\"patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a\", {\n  identifiers: [\n    {\n      identifier: '4023287',\n      identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',\n      preferred: true,\n    },\n  ],\n  person: {\n    gender: 'M',\n    age: 42,\n    birthdate: '1970-01-01T00:00:00.000+0100',\n    birthdateEstimated: false,\n    names: [\n      {\n        givenName: 'Doe',\n        familyName: 'John',\n      },\n    ],\n  },\n})",
             "caption": "Upsert a patient (<a href=\"https://rest.openmrs.org/#patients-overview\">see OpenMRS API</a>)"
+          },
+          {
+            "title": "example",
+            "description": "upsert(\"patient\", $.data, { q: \"Lamine Yamal\" })",
+            "caption": "Upsert a patient using a query to identify the record"
           }
         ]
       },

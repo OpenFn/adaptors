@@ -345,51 +345,95 @@ describe('create', () => {
 });
 
 describe('upsert', () => {
-  it('should update a patient', async () => {
-    testServer
-      .intercept({
-        path: `/ws/rest/v1/patient/${testData.patient.uuid}`,
-        method: 'GET',
-      })
-      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
+  const existingUuid = 'abc';
+  const nonExistingUuid = 'xyz';
 
-    testServer
-      .intercept({
-        path: `/ws/rest/v1/patient/${testData.patient.uuid}`,
-        method: 'POST',
-      })
-      .reply(200, ({ body }) => body, {
-        ...jsonHeaders,
-      });
+  // set up fixtures to be shared by these tests
+  testServer
+    .intercept({
+      path: `/ws/rest/v1/patient/${existingUuid}`,
+      method: 'GET',
+    })
+    .reply(200, { ...testData.patientResults }, { ...jsonHeaders })
+    .persist();
 
+  testServer
+    .intercept({
+      path: `/ws/rest/v1/patient/${nonExistingUuid}`,
+      method: 'GET',
+    })
+    .reply(404, {}, { ...jsonHeaders })
+    .persist();
+
+  testServer
+    .intercept({
+      path: `/ws/rest/v1/patient/${existingUuid}`,
+      method: 'POST',
+    })
+    .reply(200, ({ body }) => body, {
+      ...jsonHeaders,
+    })
+    .persist();
+
+  testServer
+    .intercept({
+      path: `/ws/rest/v1/patient`,
+      method: 'GET',
+      query: {
+        q: 'batman',
+      },
+    })
+    .reply(404, { results: testData.patientResults }, { ...jsonHeaders })
+    .persist();
+
+  testServer
+    .intercept({
+      path: `/ws/rest/v1/patient`,
+      method: 'GET',
+      query: {
+        q: 'spiderman',
+      },
+    })
+    .reply(404, {}, { ...jsonHeaders })
+    .persist();
+
+  testServer
+    .intercept({
+      path: `/ws/rest/v1/patient`,
+      method: 'POST',
+    })
+    .reply(200, ({ body }) => body, {
+      ...jsonHeaders,
+    })
+    .persist();
+
+  it('should update an existing patient', async () => {
     const result = await upsert(
-      `patient/${testData.patient.uuid}`,
+      `patient/${existingUuid}`,
       state => state.patient
     )(state);
 
     expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
-  it('should create a patient', async () => {
-    testServer
-      .intercept({
-        path: `/ws/rest/v1/patient/${testData.patient.uuid}`,
-        method: 'GET',
-      })
-      .reply(200, { results: [] }, { ...jsonHeaders });
-
-    testServer
-      .intercept({
-        path: `/ws/rest/v1/patient`,
-        method: 'POST',
-      })
-      .reply(200, ({ body }) => body, {
-        ...jsonHeaders,
-      });
-
+  it('should create a new patient', async () => {
     const result = await upsert(
-      `patient/${testData.patient.uuid}`,
+      `patient/${nonExistingUuid}`,
       state => state.patient
     )(state);
+
+    expect(result.data.person.display).to.eql(testData.patient.person.display);
+  });
+  it('update an existing patient with a query', async () => {
+    const result = await upsert('patient', state => state.patient, {
+      q: 'batman',
+    })(state);
+
+    expect(result.data.person.display).to.eql(testData.patient.person.display);
+  });
+  it('create a new patient with a query', async () => {
+    const result = await upsert('patient', state => state.patient, {
+      q: 'spiderman',
+    })(state);
 
     expect(result.data.person.display).to.eql(testData.patient.person.display);
   });

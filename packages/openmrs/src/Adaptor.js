@@ -270,11 +270,15 @@ export function update(path, data) {
 }
 
 /**
- * Upsert a record. If the resource exists, it will be updated. Otherwise, a new resource will be created.
+ * Update a resource if it already exists, or otherwise create a new one.
+ *
+ * Upsert will first make a request for the target item (using the `path` and `params`) to see if it exists, and then issue a second create or update request.
+ * If the query request returns multiple items, the upsert will throw an error.
  * @public
  * @function
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
  * @param {Object} data - The resource data
+ * @param {Object} params - Query parameters to append to the initial query
  * @state data The created/updated resource, as returned by OpenMRS
  * @returns {Operation}
  * @example <caption>Upsert a patient (<a href="https://rest.openmrs.org/#patients-overview">see OpenMRS API</a>)</caption>
@@ -299,43 +303,54 @@ export function update(path, data) {
  *     ],
  *   },
  * })
+ * @example <caption>Upsert a patient using a query to identify the record</caption>
+ * upsert("patient", $.data, { q: "Lamine Yamal" })
  */
-export function upsert(path, data) {
+export function upsert(path, data, params = {}) {
   return async state => {
-    const [resolvedPath, resolvedData] = expandReferences(state, path, data);
-
-    const resourceName =
-      resolvedPath[0] === '/'
-        ? resolvedPath.split('/')[1]
-        : resolvedPath.split('/')[0];
-
-    console.log(
-      `Preparing composed upsert (via 'get' then 'create' OR 'update') on ${resourceName}`
+    const [resolvedPath, resolvedData, resolvedParams] = expandReferences(
+      state,
+      path,
+      data,
+      params
     );
 
+    console.log(`Preparing composed upsert on ${resolvedPath}`);
+
     const { instanceUrl: baseUrl } = state.configuration;
-    return await request(
+    const res = await request(
       state,
       'GET',
       cleanPath(`/ws/rest/v1/${resolvedPath}`),
       {
         baseUrl,
+        query: resolvedParams,
+        errors: { 404: false },
       }
-    ).then(resp => {
-      const resource = resp.body.results;
-      if (resource.length > 1) {
-        throw new RangeError(
-          `Found more than one record for your request; cannot upsert on non-unique attribute.`
-        );
-      } else if (resource.length === 0) {
-        console.log(`No ${resourceName} found.`);
-        const path = resolvedPath.split('/').slice(0, -1).join('/'); // remove the ID
-        return create(path, resolvedData)(state);
-      } else {
-        console.log(`One ${resourceName} found.`);
-        return update(resolvedPath, resolvedData)(state);
-      }
-    });
+    );
+    // For get-by-id
+    let found = res.statusCode <= 400;
+    // for search
+    const count = res.body.results?.length ?? 1;
+
+    if (found && count > 1) {
+      throw new RangeError(
+        `Found more than one record for your request; cannot upsert on non-unique attribute.`
+      );
+    } else if (!found || count === 0) {
+      console.log(`${resolvedPath} not found: creating new resource`);
+
+      const path = resolvedParams.q
+        ? resolvedPath
+        : resolvedPath.split('/').slice(0, -1).join('/'); // remove the ID
+      return create(path, resolvedData)(state);
+    } else {
+      const path = resolvedParams.q
+        ? `${resolvedPath}/${res.body.results[0].uuid}` // append the ID
+        : resolvedPath;
+      console.log(`${path} found: updating existing resource`);
+      return update(path, resolvedData)(state);
+    }
   };
 }
 
@@ -381,17 +396,18 @@ export function destroy(path, options) {
 
 export {
   alterState,
-  fn,
-  fnIf,
-  field,
-  fields,
+  arrayToString,
   cursor,
-  dateFns,
-  sourceValue,
-  merge,
   dataPath,
   dataValue,
-  lastReferenceValue,
+  dateFns,
   each,
-  arrayToString,
+  field,
+  fields,
+  fn,
+  fnIf,
+  lastReferenceValue,
+  merge,
+  sourceValue,
+  util,
 } from '@openfn/language-common';
