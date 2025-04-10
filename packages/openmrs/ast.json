@@ -7,27 +7,37 @@
         "options"
       ],
       "docs": {
-        "description": "Fetch resources from OpenMRS. Use this to fetch a single resource,\nor to search a list. Query parameters will be appended to the request URL,\nrefer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.\nPagination is handled automatically, pass a limit to restrict the total number\nof items that are retrieved.",
+        "description": "Fetch resources from OpenMRS. Use this to fetch a single resource,\nor to search a list.\n\nOptions will be appended as query parameters to the request URL,\nrefer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.\n\nPagination is handled automatically by default (maximum 10k items). Set `max`\nto paginate with a higher limit, or pass `limit` to force a single request, as\nper the OpenMRS Rest API.",
         "tags": [
           {
             "title": "example",
-            "description": "get(\"patient\")",
-            "caption": "List patients"
+            "description": "get(\"concept\")",
+            "caption": "List all concepts (up to a maximum of 10k items, with pagination)"
           },
           {
             "title": "example",
-            "description": "get(\"patient\", { max: Infinity })",
-            "caption": "List all patients"
+            "description": "get(\"concept\", { query: \"brian\", max: Infinity })",
+            "caption": "List all concepts (with pagination)"
           },
           {
             "title": "example",
-            "description": "get(\"patient\", { q: \"brian\", limit: 1 })",
-            "caption": "Search patients by name with a limit (<a href=\"https://rest.openmrs.org/#search-patients\">see OpenMRS API</a>)"
+            "description": "get(\"patient\", { query: \"brian\", max: 100 })",
+            "caption": "Search up to 100 patients by name (allowing pagination) (<a href=\"https://rest.openmrs.org/#search-patients\">see OpenMRS API</a>)"
           },
           {
             "title": "example",
             "description": "get(\"patient/abc\")",
-            "caption": "Fetch patient by UUID"
+            "caption": "Fetch patient by UUID (returns an array of 1 item)"
+          },
+          {
+            "title": "example",
+            "description": "get(\"patient/abc\", { singleton: true })",
+            "caption": "Fetch patient by UUID (returns an object of patient data)"
+          },
+          {
+            "title": "example",
+            "description": "get(\"patient\", { query: \"brian\", limit: 10 })",
+            "caption": "Search up to 10 patients by name (in a single request without pagination) (<a href=\"https://rest.openmrs.org/#search-patients\">see OpenMRS API</a>)"
           },
           {
             "title": "example",
@@ -60,12 +70,12 @@
           },
           {
             "title": "param",
-            "description": "Query parameters (eg `limit`, `q`)",
+            "description": "Includes `max`, `query`, and extra query parameters",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "RestOptions"
+                "name": "GetOptions"
               }
             },
             "name": "options",
@@ -153,7 +163,7 @@
           },
           {
             "title": "example",
-            "description": "create(\"patient\", { \n \"identifier\" : \"111:CLINIC1\",\n \"identifierType\" : \"a5d38e09-efcb-4d91-a526-50ce1ba5011a\",\n \"location\" : \"8d6c993e-c2cc-11de-8d13-0010c6dffd0f\",\n \"preferred\" : true\n})\n}",
+            "description": "create(\"patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3/identifier\", { \n \"identifier\" : \"111:CLINIC1\",\n \"identifierType\" : \"a5d38e09-efcb-4d91-a526-50ce1ba5011a\",\n \"location\" : \"8d6c993e-c2cc-11de-8d13-0010c6dffd0f\",\n \"preferred\" : true\n})\n}",
             "caption": "Create a patientIdentifier subresource (<a href=\"https://rest.openmrs.org/#create-a-patientidentifier-sub-resource-with-properties\">see OpenMRS API</a>)"
           }
         ]
@@ -285,11 +295,6 @@
       "docs": {
         "description": "Delete a resource. Must include a UUID in the path.\nThrows an error if the resource does not exist.",
         "tags": [
-          {
-            "title": "alias",
-            "description": null,
-            "name": "delete"
-          },
           {
             "title": "example",
             "description": "delete(\"patient/12346\");",

@@ -7,9 +7,9 @@ import { request, cleanPath, requestWithPagination } from './Utils';
 
 /**
  * Options to append to the request. Unless otherwise specified, options are appended to the URL as query parameters - see the [OpenMRS Docs](https://rest.openmrs.org/) for all supported parameters.
- * @typedef {object} RestOptions
+ * @typedef {object} GetOptions
  * @property {string} [query] - (OpenFn only) Query string. Maps to `q` in OpenMRS.
- * @property {number} [max=10000] - (OpenFn only) Restrict the maximum number of retrieved records. May be fetched in several pages. Not used if limit is set.
+ * @property {number} [max=10000] - (OpenFn only) Restrict the maximum number of retrieved records. May be fetched in several pages. Not used if `limit` is set.
  * @property {number} [pageSize=1000] - (OpenFn only) Limits the size of each page of data. Not used if limit is set.
  * @property {boolean} [singleton] - (OpenFn only) If set to true, only the first result will be returned. Useful for "get by id" APIs.
  */
@@ -39,21 +39,26 @@ export function execute(...operations) {
 
 /**
  * Fetch resources from OpenMRS. Use this to fetch a single resource,
- * or to search a list. Query parameters will be appended to the request URL,
+ * or to search a list.
+ *
+ * Options will be appended as query parameters to the request URL,
  * refer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.
+ *
  * Pagination is handled automatically by default (maximum 10k items). Set `max`
  * to paginate with a higher limit, or pass `limit` to force a single request, as
  * per the OpenMRS Rest API.
- * @example <caption>List patients</caption>
- * get("patient")
- * @example <caption>List all patients (with pagination)</caption>
- * get("patient", { max: Infinity })
+ * @example <caption>List all concepts (up to a maximum of 10k items, with pagination)</caption>
+ * get("concept")
+ * @example <caption>List all concepts (with pagination)</caption>
+ * get("concept", { query: "brian", max: Infinity })
  * @example <caption>Search up to 100 patients by name (allowing pagination) (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
- * get("patient", { q: "brian", max: 100 })
+ * get("patient", { query: "brian", max: 100 })
  * @example <caption>Fetch patient by UUID (returns an array of 1 item)</caption>
  * get("patient/abc")
- * @example <caption>Search up to 10 patients by name (in a single request) (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
- * get("patient", { q: "brian", limit: 10 })
+ * @example <caption>Fetch patient by UUID (returns an object of patient data)</caption>
+ * get("patient/abc", { singleton: true })
+ * @example <caption>Search up to 10 patients by name (in a single request without pagination) (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
+ * get("patient", { query: "brian", limit: 10 })
  * @example <caption>List allergy subresources</caption>
  * get("patient/abc/allergy")
  * @example <caption>Get allergy subresource by its UUID and parent patient UUID</caption>
@@ -61,7 +66,7 @@ export function execute(...operations) {
  * @function
  * @public
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
- * @param {RestOptions} [options = {}] Query parameters (eg `limit`, `q`)
+ * @param {GetOptions} [options = {}] Includes `max`, `query`, and extra query parameters
  * @state data An array of result objects
  * @returns {Operation}
  */
@@ -115,6 +120,8 @@ export function get(path, options = {}) {
 
     if (singleton) {
       result = result[0];
+    } else {
+      console.log(`get() downloaded ${result.length} resources`);
     }
 
     return composeNextState(state, result);
@@ -185,7 +192,7 @@ export function get(path, options = {}) {
  *   },
  * })
   @example <caption>Create a patientIdentifier subresource (<a href="https://rest.openmrs.org/#create-a-patientidentifier-sub-resource-with-properties">see OpenMRS API</a>)</caption>
- * create("patient", { 
+ * create("patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3/identifier", { 
  *  "identifier" : "111:CLINIC1",
  *  "identifierType" : "a5d38e09-efcb-4d91-a526-50ce1ba5011a",
  *  "location" : "8d6c993e-c2cc-11de-8d13-0010c6dffd0f",
@@ -327,11 +334,10 @@ export function upsert(path, data) {
 /**
  * Delete a resource. Must include a UUID in the path.
  * Throws an error if the resource does not exist.
- * @alias delete
  * @example <caption>Void a patient</caption>
- * delete("patient/12346");
+ * destroy("patient/12346");
  * @example <caption>Purge a patient</caption>
- * delete("patient/12346", {
+ * destroy("patient/12346", {
  *   purge: true
  * });
  * @function

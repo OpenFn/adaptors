@@ -1,5 +1,12 @@
 # @openfn/language-openspp
 
+## 2.0.10
+
+### Patch Changes
+
+- Updated dependencies [d7105c0]
+  - @openfn/language-common@2.3.2
+
 ## 2.0.9
 
 ### Patch Changes

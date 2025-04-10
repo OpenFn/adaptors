@@ -105,6 +105,7 @@ export async function requestWithPagination(state, path, options = {}) {
     if (isFirstRequest && !pageSize) {
       pageSize = results.length;
     }
+
     isFirstRequest = false;
     // Decide whether to request another page
     hasMoreContent =
