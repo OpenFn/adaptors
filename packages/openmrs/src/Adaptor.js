@@ -112,19 +112,27 @@ export function get(path, options = {}) {
       pageSize,
     };
 
-    let result = await requestWithPagination(
-      state,
-      cleanPath(`/ws/rest/v1/${resolvedPath}`),
-      requestOptions
-    );
+    try {
+      let result = await requestWithPagination(
+        state,
+        cleanPath(`/ws/rest/v1/${resolvedPath}`),
+        requestOptions
+      );
 
-    if (singleton) {
-      result = result[0];
-    } else {
-      console.log(`get() downloaded ${result.length} resources`);
+      if (singleton) {
+        result = result[0];
+      } else {
+        console.log(`get() downloaded ${result.length} resources`);
+      }
+
+      return composeNextState(state, result);
+    } catch (e) {
+      if (e.statusCode === 400 && !queryParams.q) {
+        e.fix =
+          'Many OpenMRS list endpoints expect a query to be passed - try setting the query option on get()';
+      }
+      throw e;
     }
-
-    return composeNextState(state, result);
   };
 }
 

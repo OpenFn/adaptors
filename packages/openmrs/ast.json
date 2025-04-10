@@ -297,12 +297,12 @@
         "tags": [
           {
             "title": "example",
-            "description": "delete(\"patient/12346\");",
+            "description": "destroy(\"patient/12346\");",
             "caption": "Void a patient"
           },
           {
             "title": "example",
-            "description": "delete(\"patient/12346\", {\n  purge: true\n});",
+            "description": "destroy(\"patient/12346\", {\n  purge: true\n});",
             "caption": "Purge a patient"
           },
           {

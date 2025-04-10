@@ -13,29 +13,38 @@ export const prepareNextState = (state, response) => {
 };
 
 export async function fetchAndLog(method, url, opts = {}) {
-  const response = await commonRequest(method, url, opts);
-  const { statusCode, duration } = response;
+  try {
+    const response = await commonRequest(method, url, opts);
+    const { statusCode, duration } = response;
 
-  const urlWithQuery = Object.keys(opts.query || {}).length
-    ? `${url}?${new URLSearchParams(opts.query).toString()}`
-    : url;
+    const urlWithQuery = Object.keys(opts.query || {}).length
+      ? `${url}?${new URLSearchParams(opts.query).toString()}`
+      : url;
 
-  const message = `${method} ${urlWithQuery} - ${statusCode} in ${duration}ms`;
-  if (response instanceof Error) {
-    console.error(message);
-  } else {
-    console.log(message);
+    const message = `${method} ${urlWithQuery} - ${statusCode} in ${duration}ms`;
+    if (response instanceof Error) {
+      console.error(message);
+    } else {
+      console.log(message);
+    }
+    response.url = urlWithQuery;
+
+    // For test and debug
+    opts._onrequest?.({
+      url: urlWithQuery,
+      query: opts.query,
+      method,
+    });
+
+    return response;
+  } catch (e) {
+    // OpenMRS errors come with a huge stack trace - let's just remove that
+    // it should return a message an a code which are way more useful
+    if (e.body?.error?.detail && e.body?.error?.message) {
+      delete e.body.error.detail;
+    }
+    throw e;
   }
-  response.url = urlWithQuery;
-
-  // For test and debug
-  opts._onrequest?.({
-    url: urlWithQuery,
-    query: opts.query,
-    method,
-  });
-
-  return response;
 }
 
 export function validateCredentials(state) {
