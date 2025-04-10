@@ -344,7 +344,7 @@ describe('create', () => {
   });
 });
 
-describe.only('upsert', () => {
+describe('upsert', () => {
   const existingUuid = 'abc';
   const nonExistingUuid = 'xyz';
 
