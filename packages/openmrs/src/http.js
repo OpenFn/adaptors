@@ -1,5 +1,13 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
+/**
+ * State object
+ * @typedef {Object} HttpState
+ * @private
+ * @property data - The response body (as JSON)
+ * @property response - The HTTP response from the OpenMRS server (excluding the body)
+ * @property references - An array containing all previous data objects
+ */
 
 /**
  * Options object
