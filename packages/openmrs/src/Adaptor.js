@@ -41,24 +41,24 @@ export function execute(...operations) {
  * Fetch resources from OpenMRS. Use this to fetch a single resource,
  * or to search a list.
  *
- * Options will be appended as query parameters will be appended to the request URL,
+ * Options will be appended as query parameters to the request URL,
  * refer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.
  *
  * Pagination is handled automatically by default (maximum 10k items). Set `max`
  * to paginate with a higher limit, or pass `limit` to force a single request, as
  * per the OpenMRS Rest API.
- * @example <caption>List patients (up to a maximum of 10k items, with pagination)</caption>
- * get("patient")
- * @example <caption>List all patients (with pagination)</caption>
- * get("patient", { max: Infinity })
+ * @example <caption>List all concepts (up to a maximum of 10k items, with pagination)</caption>
+ * get("concept")
+ * @example <caption>List all concepts (with pagination)</caption>
+ * get("concept", { query: "brian", max: Infinity })
  * @example <caption>Search up to 100 patients by name (allowing pagination) (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
- * get("patient", { q: "brian", max: 100 })
+ * get("patient", { query: "brian", max: 100 })
  * @example <caption>Fetch patient by UUID (returns an array of 1 item)</caption>
  * get("patient/abc")
  * @example <caption>Fetch patient by UUID (returns an object of patient data)</caption>
  * get("patient/abc", { singleton: true })
  * @example <caption>Search up to 10 patients by name (in a single request without pagination) (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
- * get("patient", { q: "brian", limit: 10 })
+ * get("patient", { query: "brian", limit: 10 })
  * @example <caption>List allergy subresources</caption>
  * get("patient/abc/allergy")
  * @example <caption>Get allergy subresource by its UUID and parent patient UUID</caption>
@@ -120,6 +120,8 @@ export function get(path, options = {}) {
 
     if (singleton) {
       result = result[0];
+    } else {
+      console.log(`get() downloaded ${result.length} resources`);
     }
 
     return composeNextState(state, result);
@@ -332,11 +334,10 @@ export function upsert(path, data) {
 /**
  * Delete a resource. Must include a UUID in the path.
  * Throws an error if the resource does not exist.
- * @alias delete
  * @example <caption>Void a patient</caption>
- * delete("patient/12346");
+ * destroy("patient/12346");
  * @example <caption>Purge a patient</caption>
- * delete("patient/12346", {
+ * destroy("patient/12346", {
  *   purge: true
  * });
  * @function
