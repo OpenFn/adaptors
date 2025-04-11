@@ -27,7 +27,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 /**
- * Get items in your catalogue and their stats like stock on hand and AMC
+ * Gte a list of items in the catalogue and their stats like stock on hand and AMC
  * @public
  * @function
  * @example <caption>Get items in your catalogue</caption>
