@@ -78,7 +78,5 @@ export const request = async (state, options) => {
 
   opts.headers = { ...opts.headers, 'Authorization': `Bearer ${bearerToken}` }
 
-  const safePath = nodepath.join('graphql');
-
-  return commonRequest('POST', safePath, opts).then(logResponse);
+  return commonRequest('POST', 'graphql', opts).then(logResponse);
 };
