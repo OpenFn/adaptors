@@ -19,48 +19,46 @@ import { v4 as uuidv4 } from 'uuid';
  */
 
 /**
- * @typedef {Object} RequestOptions
- * @property {GenericRequestBody} body - The body of the post request
- * @property {object} headers - An object of headers to append to the request.
- * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
+ * @typedef {Object} GetItemsVariables
+ * @property {string} key - The unique key of each item in the list
+ * @property {object} storeId - The msupply store id the list is being fetched from
  */
 
 
 /**
- * Gte a list of items in the catalogue and their stats like stock on hand and AMC
+ * @typedef {Object} InsertOutboundShipmentvariables
+ * @property {string} otherPartyId - recieving party id
+ * @property {object} storeId - The msupply store id the shipment is being made on
+ */
+
+/**
+ * @typedef {Object} UpsertOutboundShipmentvariables
+ * @property {Object} uinput - The payload for the target shipment
+ * @property {object} storeId - The msupply store id the shipment is being made on
+ */
+
+
+/**
+ * Get the list of items in the catalogue
  * @public
  * @function
- * @example <caption>Get items in your catalogue</caption>
+ * @example <caption>Get items in the catalogue</caption>
  * getItemsWithStats({
-   body: {
-     variables: {
        "key": "name",
-        "first": 20,
-        "isDesc": false,
-        "offset": 0,
-        "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
-        "filter": {
-            "isVisibleOrOnHand": true,
-            "isActive": true
-        }
-     }
-   }
+       "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
 })
- * @param {RequestOptions} options  - Request object containing your variables
+ * @param {GetItemsVariables} variables - GraphQL query variables
  * @returns {Operation}
  * @state {HttpState}
  */
-export function getItemsWithStats(options) {
+export function getItemsWithStats(variables) {
   return async state => {
-    const [resolvedOptions] = expandReferences(state, options);
+    const [resolvedVariables] = expandReferences(state, variables);
 
     let opts = {
-      ...resolvedOptions,
       body: {
         query: getItemsQueryString,
-        variables: {
-          ...resolvedOptions.body.variables
-        }
+        variables: resolvedVariables
       },
     }
     const response = await util.request(state, opts);
@@ -75,28 +73,23 @@ export function getItemsWithStats(options) {
  * @function
  * @example <caption>Create an outbound shipment</caption>
  * insertOutboundShipment({
-   body: {
-     variables: {
        "otherPartyId": "861102F624354F15ABEB48DC207A4C2D",
        "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C"
-     }
-   }
 })
- * @param {RequestOptions} options - Request object containing your variables
+ * @param {InsertOutboundShipmentvariables} variables - GraphQL query variables
  * @returns {Operation}
  * @state {HttpState}
  */
-export function insertOutboundShipment(options) {
+export function insertOutboundShipment(variables) {
   return async state => {
-    const [resolvedOptions] = expandReferences(state, options);
+    const [resolvedVariables] = expandReferences(state, variables);
 
     let opts = {
-      ...resolvedOptions,
       body: {
         query: insertOutboundShipmentQuery,
         variables: {
           id: uuidv4(),
-          ...resolvedOptions.body.variables
+          ...resolvedVariables
         }
       },
     }
@@ -111,8 +104,6 @@ export function insertOutboundShipment(options) {
  * @function
  * @example <caption>Add items to an outbound shipment</caption>
  * upsertOutboundShipment({
-   body: {
-     variables: {
        "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
         "input": {
            "insertOutboundShipmentLines": [
@@ -131,14 +122,10 @@ export function insertOutboundShipment(options) {
           "insertOutboundShipmentServiceLines": [],
           "updateOutboundShipmentServiceLines": [],
           "deleteOutboundShipmentServiceLines": []
-         }
-     }
-   }  
+         } 
 })
  * @example <caption>Update outbound shipment status to 'PICKED'</caption>
  * upsertOutboundShipment({
- *  body: {
- *    variables: {
  *      "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
  *      "input": {
  *        "updateOutboundShipments": [
@@ -147,25 +134,20 @@ export function insertOutboundShipment(options) {
  *            "status": "PICKED"
  *           }
  *         ]
- *       }
- *    }
- *  }
+ *      }
  * })
- * @param {RequestOptions} options - Request object containing your variables
+ * @param {UpsertOutboundShipmentvariables} variables - GraphQL query variables
  * @returns {Operation}
  * @state {HttpState}
  */
-export function upsertOutboundShipment(options) {
+export function upsertOutboundShipment(variables) {
   return async state => {
-    const [resolvedOptions] = expandReferences(state, options);
+    const [resolvedVariables] = expandReferences(state, variables);
 
     let opts = {
-      ...resolvedOptions,
       body: {
         query: upsertOutboundShipmentQuery,
-        variables: {
-          ...resolvedOptions.body.variables
-        }
+        variables: resolvedVariables
       },
     }
 
@@ -180,9 +162,7 @@ export function upsertOutboundShipment(options) {
  * @public
  * @function
  * @example <caption>Get you stock lines</caption>
- * request({
-   body: {
-      query: `query stockLines(
+ * request(`query stockLines(
             $first: Int,
             $offset: Int,
             $key: StockLineSortFieldInput!,
@@ -209,7 +189,7 @@ export function upsertOutboundShipment(options) {
               }
             }
           }`,
-      variables: {
+     {
         "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
         "first": 20,
         "offset": 0,
@@ -222,26 +202,24 @@ export function upsertOutboundShipment(options) {
               "equalTo": "DFE0F611AD84A0419D36F8FEFAD1894C"
             }
           }
-        }
       }
-    }
 })
- *@param {GenericRequestOptions} options - Options object containing your query and variables
- * @returns {Operation}
+ *@param {string} query - GraphQl query string
+ *@param {Object} varibales - GraphQl query variables
+ * @returns {Operation} 
  * @state {HttpState}
  */
-export function request(options = {}) {
+export function query(query, variables) {
   return async state => {
-    const [resolvedOptions] = expandReferences(state, options);
+    const [resolvedQuery, resolvedVariables] = expandReferences(state, query, variables);
 
     const response = await util.request(
       state,
       {
         body: {
-          query: resolvedOptions.body.query,
-          variables: resolvedOptions.body.variables,
+          query: resolvedQuery,
+          variables: resolvedVariables,
         },
-        ...resolvedOptions,
       }
     );
 

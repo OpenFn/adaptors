@@ -3,10 +3,10 @@
     {
       "name": "getItemsWithStats",
       "params": [
-        "options"
+        "variables"
       ],
       "docs": {
-        "description": "Get items in your catalogue and their stats like stock on hand and AMC",
+        "description": "Get the list of items in the catalogue",
         "tags": [
           {
             "title": "public",
@@ -20,17 +20,17 @@
           },
           {
             "title": "example",
-            "description": "getItemsWithStats({\nbody: {\nvariables: {\n\"key\": \"name\",\n\"first\": 20,\n\"isDesc\": false,\n\"offset\": 0,\n\"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n\"filter\": {\n\"isVisibleOrOnHand\": true,\n\"isActive\": true\n}\n}\n}\n})",
-            "caption": "Get items in your catalogue"
+            "description": "getItemsWithStats({\n\"key\": \"name\",\n\"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n})",
+            "caption": "Get items in the catalogue"
           },
           {
             "title": "param",
-            "description": "Request object containing your variables",
+            "description": "GraphQL query variables",
             "type": {
               "type": "NameExpression",
-              "name": "RequestOptions"
+              "name": "GetItemsVariables"
             },
-            "name": "options"
+            "name": "variables"
           },
           {
             "title": "returns",
@@ -51,7 +51,7 @@
     {
       "name": "insertOutboundShipment",
       "params": [
-        "options"
+        "variables"
       ],
       "docs": {
         "description": "Create an outbound shipment.",
@@ -68,17 +68,17 @@
           },
           {
             "title": "example",
-            "description": "insertOutboundShipment({\nbody: {\nvariables: {\n\"otherPartyId\": \"861102F624354F15ABEB48DC207A4C2D\",\n\"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\"\n}\n}\n})",
+            "description": "insertOutboundShipment({\n\"otherPartyId\": \"861102F624354F15ABEB48DC207A4C2D\",\n\"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\"\n})",
             "caption": "Create an outbound shipment"
           },
           {
             "title": "param",
-            "description": "Request object containing your variables",
+            "description": "GraphQL query variables",
             "type": {
               "type": "NameExpression",
-              "name": "RequestOptions"
+              "name": "InsertOutboundShipmentvariables"
             },
-            "name": "options"
+            "name": "variables"
           },
           {
             "title": "returns",
@@ -99,7 +99,7 @@
     {
       "name": "upsertOutboundShipment",
       "params": [
-        "options"
+        "variables"
       ],
       "docs": {
         "description": "Update an outbound shipment",
@@ -116,22 +116,22 @@
           },
           {
             "title": "example",
-            "description": "upsertOutboundShipment({\nbody: {\nvariables: {\n\"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n\"input\": {\n\"insertOutboundShipmentLines\": [\n{\n\"id\": \"01961fde-0d43-7bdc-a52d-f2c9b81758ca\",\n\"numberOfPacks\": 10,\n\"stockLineId\": \"01954360-782d-7933-9493-4099e7e9a20c\",\n\"invoiceId\": \"01961fce-9ef6-7198-93c1-866395094e48\"\n}\n],\n\"updateOutboundShipmentLines\": [],\n\"deleteOutboundShipmentLines\": [],\n\"insertOutboundShipmentUnallocatedLines\": [],\n\"updateOutboundShipmentUnallocatedLines\": [],\n\"deleteOutboundShipmentUnallocatedLines\": [],\n\"insertOutboundShipmentServiceLines\": [],\n\"updateOutboundShipmentServiceLines\": [],\n\"deleteOutboundShipmentServiceLines\": []\n}\n}\n}  \n})",
+            "description": "upsertOutboundShipment({\n\"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n\"input\": {\n\"insertOutboundShipmentLines\": [\n{\n\"id\": \"01961fde-0d43-7bdc-a52d-f2c9b81758ca\",\n\"numberOfPacks\": 10,\n\"stockLineId\": \"01954360-782d-7933-9493-4099e7e9a20c\",\n\"invoiceId\": \"01961fce-9ef6-7198-93c1-866395094e48\"\n}\n],\n\"updateOutboundShipmentLines\": [],\n\"deleteOutboundShipmentLines\": [],\n\"insertOutboundShipmentUnallocatedLines\": [],\n\"updateOutboundShipmentUnallocatedLines\": [],\n\"deleteOutboundShipmentUnallocatedLines\": [],\n\"insertOutboundShipmentServiceLines\": [],\n\"updateOutboundShipmentServiceLines\": [],\n\"deleteOutboundShipmentServiceLines\": []\n} \n})",
             "caption": "Add items to an outbound shipment"
           },
           {
             "title": "example",
-            "description": "upsertOutboundShipment({\n body: {\n   variables: {\n     \"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n     \"input\": {\n       \"updateOutboundShipments\": [\n         {\n           \"id\": \"01961fce-9ef6-7198-93c1-866395094e48\",\n           \"status\": \"PICKED\"\n          }\n        ]\n      }\n   }\n }\n})",
+            "description": "upsertOutboundShipment({\n     \"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n     \"input\": {\n       \"updateOutboundShipments\": [\n         {\n           \"id\": \"01961fce-9ef6-7198-93c1-866395094e48\",\n           \"status\": \"PICKED\"\n          }\n        ]\n     }\n})",
             "caption": "Update outbound shipment status to 'PICKED'"
           },
           {
             "title": "param",
-            "description": "Request object containing your variables",
+            "description": "GraphQL query variables",
             "type": {
               "type": "NameExpression",
-              "name": "RequestOptions"
+              "name": "UpsertOutboundShipmentvariables"
             },
-            "name": "options"
+            "name": "variables"
           },
           {
             "title": "returns",
@@ -150,9 +150,10 @@
       "valid": true
     },
     {
-      "name": "request",
+      "name": "query",
       "params": [
-        "options"
+        "query",
+        "variables"
       ],
       "docs": {
         "description": "Make a generic GraphQL request",
@@ -169,17 +170,26 @@
           },
           {
             "title": "example",
-            "description": "request({\nbody: {\nquery: `query stockLines(\n$first: Int,\n$offset: Int,\n$key: StockLineSortFieldInput!,\n$desc: Boolean,\n$filter: StockLineFilterInput,\n$storeId: String!\n) {\nstockLines(\nstoreId: $storeId,\nfilter: $filter,\npage: {first: $first, offset: $offset},\nsort: {key: $key, desc: $desc}\n) {\n... on StockLineConnector {\n__typename\nnodes {\nitem {\ncode\nname\nunitName\n}\n}\ntotalCount\n}\n}\n}`,\nvariables: {\n\"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n\"first\": 20,\n\"offset\": 0,\n\"key\": \"expiryDate\",\n\"desc\": false,\n\"filter\": {\n\"hasPacksInStore\": true,\n\"masterList\": {\n\"existsForStoreId\": {\n\"equalTo\": \"DFE0F611AD84A0419D36F8FEFAD1894C\"\n}\n}\n}\n}\n}\n})",
+            "description": "request(`query stockLines(\n$first: Int,\n$offset: Int,\n$key: StockLineSortFieldInput!,\n$desc: Boolean,\n$filter: StockLineFilterInput,\n$storeId: String!\n) {\nstockLines(\nstoreId: $storeId,\nfilter: $filter,\npage: {first: $first, offset: $offset},\nsort: {key: $key, desc: $desc}\n) {\n... on StockLineConnector {\n__typename\nnodes {\nitem {\ncode\nname\nunitName\n}\n}\ntotalCount\n}\n}\n}`,\n{\n\"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n\"first\": 20,\n\"offset\": 0,\n\"key\": \"expiryDate\",\n\"desc\": false,\n\"filter\": {\n\"hasPacksInStore\": true,\n\"masterList\": {\n\"existsForStoreId\": {\n\"equalTo\": \"DFE0F611AD84A0419D36F8FEFAD1894C\"\n}\n}\n}\n})",
             "caption": "Get you stock lines"
           },
           {
             "title": "param",
-            "description": "Options object containing your query and variables",
+            "description": "GraphQl query string",
             "type": {
               "type": "NameExpression",
-              "name": "GenericRequestOptions"
+              "name": "string"
             },
-            "name": "options"
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "GraphQl query variables",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "varibales"
           },
           {
             "title": "returns",
@@ -195,7 +205,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     }
   ],
   "exports": [],
