@@ -14,27 +14,27 @@ import { v4 as uuidv4 } from 'uuid';
 
 /**
  * @typedef {Object} RequestBody
- * @property {String} query - The GraphQL query string
+ * @property {string} query - The GraphQL query string
  * @property {object} variables - The variables for that query string
  */
 
 /**
  * @typedef {Object} GetItemsVariables
  * @property {string} key - The unique key of each item in the list
- * @property {object} storeId - The msupply store id  the list is being fetched from
+ * @property {string} storeId - The msupply store id  the list is being fetched from
  */
 
 
 /**
  * @typedef {Object} InsertOutboundShipmentvariables
  * @property {string} otherPartyId - The recieving party id
- * @property {object} storeId - The id of the store the shipment is being made from
+ * @property {string} storeId - The id of the store the shipment is being made from
  */
 
 /**
  * @typedef {Object} UpsertOutboundShipmentvariables
  * @property {Object} input - The payload for the target shipment
- * @property {object} storeId - The id of the store the shipment is being made from
+ * @property {string} storeId - The id of the store the shipment is being made from
  */
 
 
