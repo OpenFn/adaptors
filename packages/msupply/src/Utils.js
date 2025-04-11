@@ -20,7 +20,7 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-export const login = async (state, options) => {
+export const login = async (state) => {
   const { username, password, baseUrl } = state.configuration;
 
   const opts = {
@@ -45,17 +45,17 @@ export const login = async (state, options) => {
     },
   };
 
-  const { body  } = await commonRequest('POST', 'graphql', opts);
+  const { body } = await commonRequest('POST', 'graphql', opts);
   bearerToken = body.data.authToken.token;
   return body.data.authToken.token;
 }
 
 
 export const request = async (state, options) => {
-  const { baseUrl } = state.configuration;
+  const { baseUrl, token = '' } = state.configuration;
 
-  if(options.headers?.Authorization){
-    bearerToken = options.headers.Authorization.split("")[1];
+  if (token) {
+    bearerToken = token
   }
 
   const errors = {
@@ -74,7 +74,7 @@ export const request = async (state, options) => {
   };
 
   if (!bearerToken)
-    await login(state, opts)
+    await login(state)
 
   opts.headers = { ...opts.headers, 'Authorization': `Bearer ${bearerToken}` }
 

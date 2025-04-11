@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { getItemsWithStats, insertOutboundShipment, request, upsertOutboundShipment } from '../src/Adaptor.js';
+import { getItemsWithStats, insertOutboundShipment, query, upsertOutboundShipment } from '../src/Adaptor.js';
 import testData from './fixtures.json' assert {type: 'json'}
 
 
@@ -11,7 +11,8 @@ let state = {
   configuration: {
     "username": "username",
     "password": "password",
-    "baseUrl": "https://fake.server.com"
+    "baseUrl": "https://fake.server.com",
+    "token": "xyz"
   }
 }
 
@@ -24,14 +25,7 @@ describe('Get items with stats', () => {
       })
       .reply(200, testData.getItemsWithStats.response);
 
-    const { data } = await getItemsWithStats({
-      body: {
-        variables: testData.getItemsWithStats.variables,
-      },
-      headers: {
-        Authorization: "Bearer xyz"
-      }
-    })(state);
+    const { data } = await getItemsWithStats(testData.getItemsWithStats.variables)(state);
 
     expect(data).to.eql(testData.getItemsWithStats.response);
   });
@@ -46,14 +40,7 @@ describe('Create outbound shipments', () => {
       })
       .reply(200, testData.insertOutboundShipment.response);
 
-    const { data } = await insertOutboundShipment({
-      body: {
-        variables: testData.insertOutboundShipment.variables,
-      },      
-      headers: {
-        Authorization: "Bearer xyz"
-      }
-    })(state);
+    const { data } = await insertOutboundShipment(testData.insertOutboundShipment.variables)(state);
 
     expect(data).to.eql(testData.insertOutboundShipment.response);
   });
@@ -68,14 +55,7 @@ describe('Upsert outbound shipments', () => {
       })
       .reply(200, testData.upsertOutboundShipment.response);
 
-    const { data } = await upsertOutboundShipment({
-      body: {
-       variables: testData.upsertOutboundShipment.variables, 
-      },
-      headers: {
-        Authorization: "Bearer xyz"
-      }
-    })(state);
+    const { data } = await upsertOutboundShipment(testData.upsertOutboundShipment.variables)(state);
 
     expect(data).to.eql(testData.upsertOutboundShipment.response);
   });
@@ -90,42 +70,11 @@ describe('Request', () => {
       })
       .reply(200, testData.request.response);
 
-    const { data } = await request({
-      body: {
-        query: `query stockLines(
-          $first: Int,
-          $offset: Int,
-          $key: StockLineSortFieldInput!,
-          $desc: Boolean,
-          $filter: StockLineFilterInput,
-          $storeId: String!
-        ) {
-          stockLines(
-            storeId: $storeId,
-            filter: $filter,
-            page: {first: $first, offset: $offset},
-            sort: {key: $key, desc: $desc}
-          ) {
-            ... on StockLineConnector {
-              __typename
-              nodes {
-                item {
-                  code
-                  name
-                  unitName
-                }
-              }
-              totalCount
-            }
-          }
-        }
-        `,
-        variables: testData.request.variables,
-      },
-      headers: {
-        Authorization: "Bearer xyz"
-      }
-    })(state);
+    const { data } = await query(`
+      query isCentralServer {
+        isCentralServer
+      }`
+    )(state);
 
     expect(data).to.eql(testData.request.response);
   });
