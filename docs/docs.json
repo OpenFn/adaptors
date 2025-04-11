@@ -38091,6 +38091,393 @@
     "level": 0
   }
 ],
+{"name":"msupply","adaptor":"@openfn/language-msupply","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#getitemswithstats\\\">getItemsWithStats(variables)</a></dt>\\n<dt>\\n    <a href=\\\"#insertoutboundshipment\\\">insertOutboundShipment(variables)</a></dt>\\n<dt>\\n    <a href=\\\"#query\\\">query(query, variables)</a></dt>\\n<dt>\\n    <a href=\\\"#upsertoutboundshipment\\\">upsertOutboundShipment(variables)</a></dt>\\n</dl>\\n\\n\\n## Functions\\n### getItemsWithStats\\n\\n<p><code>getItemsWithStats(variables) ⇒ Operation</code></p>\\n\\nGet the list of items in the catalogue\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| variables | [<code>GetItemsVariables</code>](#getitemsvariables) | GraphQL query variables |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get items in the catalogue\\n```js\\ngetItemsWithStats({\\n       \\\"key\\\": \\\"name\\\",\\n       \\\"storeId\\\": \\\"DFE0F611AD84A0419D36F8FEFAD1894C\\\",\\n})\\n```\\n\\n* * *\\n\\n### insertOutboundShipment\\n\\n<p><code>insertOutboundShipment(variables) ⇒ Operation</code></p>\\n\\nCreate an outbound shipment.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| variables | [<code>InsertOutboundShipmentvariables</code>](#insertoutboundshipmentvariables) | GraphQL query variables |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Create an outbound shipment\\n```js\\ninsertOutboundShipment({\\n       \\\"otherPartyId\\\": \\\"861102F624354F15ABEB48DC207A4C2D\\\",\\n       \\\"storeId\\\": \\\"DFE0F611AD84A0419D36F8FEFAD1894C\\\"\\n})\\n```\\n\\n* * *\\n\\n### query\\n\\n<p><code>query(query, variables) ⇒ Operation</code></p>\\n\\nMake a generic GraphQL request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| query | <code>string</code> | GraphQl query string |\\n| variables | <code>Object</code> | GraphQl query variables |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\nquery(`\\n  query isCentralServer {\\n    isCentralServer\\n  }`\\n)\\n```\\n\\n* * *\\n\\n### upsertOutboundShipment\\n\\n<p><code>upsertOutboundShipment(variables) ⇒ Operation</code></p>\\n\\nUpdate an outbound shipment\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| variables | [<code>UpsertOutboundShipmentvariables</code>](#upsertoutboundshipmentvariables) | GraphQL query variables |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Update outbound shipment status to 'PICKED'\\n```js\\nupsertOutboundShipment({\\n     \\\"storeId\\\": \\\"DFE0F611AD84A0419D36F8FEFAD1894C\\\",\\n     \\\"input\\\": {\\n       \\\"updateOutboundShipments\\\": [\\n         {\\n           \\\"id\\\": \\\"01961fce-9ef6-7198-93c1-866395094e48\\\",\\n           \\\"status\\\": \\\"PICKED\\\"\\n          }\\n        ]\\n     }\\n})\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### GetItemsVariables\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| key | <code>string</code> | The unique key of each item in the list |\\n| storeId | <code>string</code> | The msupply store id  the list is being fetched from |\\n\\n\\n* * *\\n\\n### HttpState\\n\\nState object\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### InsertOutboundShipmentvariables\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| otherPartyId | <code>string</code> | The recieving party id |\\n| storeId | <code>string</code> | The id of the store the shipment is being made from |\\n\\n\\n* * *\\n\\n### RequestBody\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| query | <code>string</code> | The GraphQL query string |\\n| variables | <code>object</code> | The variables for that query string |\\n\\n\\n* * *\\n\\n### UpsertOutboundShipmentvariables\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| input | <code>Object</code> | The payload for the target shipment |\\n| storeId | <code>string</code> | The id of the store the shipment is being made from |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-msupply <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\nmsupply API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/msupply-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/msupply-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-msupply\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["getItemsWithStats","insertOutboundShipment","query","upsertOutboundShipment"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","description":"The base URL (http://www.example.com)","format":"uri","minLength":1,"examples":["https://example.com"]},"username":{"title":"Username","type":"string","description":"Username","examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]}},"type":"object","additionalProperties":true,"required":["password","username","baseUrl"]}},
+[
+  {
+    "id": "GetItemsVariables",
+    "longname": "GetItemsVariables",
+    "name": "GetItemsVariables",
+    "kind": "typedef",
+    "scope": "global",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The unique key of each item in the list",
+        "name": "key"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The msupply store id  the list is being fetched from",
+        "name": "storeId"
+      }
+    ],
+    "meta": {
+      "lineno": 21,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/msupply/src"
+    },
+    "order": 2,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "getItemsWithStats",
+    "longname": "getItemsWithStats",
+    "name": "getItemsWithStats",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get the list of items in the catalogue",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "GetItemsVariables"
+          ]
+        },
+        "description": "GraphQL query variables",
+        "name": "variables"
+      }
+    ],
+    "examples": [
+      "<caption>Get items in the catalogue</caption>\ngetItemsWithStats({\n       \"key\": \"name\",\n       \"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n})"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 54,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/msupply/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 5,
+    "level": 0
+  },
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the HTTP server, including headers, statusCode, body, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 6,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/msupply/src"
+    },
+    "order": 0,
+    "level": 0
+  },
+  {
+    "id": "insertOutboundShipment",
+    "longname": "insertOutboundShipment",
+    "name": "insertOutboundShipment",
+    "kind": "function",
+    "scope": "global",
+    "description": "Create an outbound shipment.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "InsertOutboundShipmentvariables"
+          ]
+        },
+        "description": "GraphQL query variables",
+        "name": "variables"
+      }
+    ],
+    "examples": [
+      "<caption>Create an outbound shipment</caption>\ninsertOutboundShipment({\n       \"otherPartyId\": \"861102F624354F15ABEB48DC207A4C2D\",\n       \"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\"\n})"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 83,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/msupply/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 6,
+    "level": 0
+  },
+  {
+    "id": "InsertOutboundShipmentvariables",
+    "longname": "InsertOutboundShipmentvariables",
+    "name": "InsertOutboundShipmentvariables",
+    "kind": "typedef",
+    "scope": "global",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The recieving party id",
+        "name": "otherPartyId"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The id of the store the shipment is being made from",
+        "name": "storeId"
+      }
+    ],
+    "meta": {
+      "lineno": 28,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/msupply/src"
+    },
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "query",
+    "longname": "query",
+    "name": "query",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a generic GraphQL request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "GraphQl query string",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "GraphQl query variables",
+        "name": "variables"
+      }
+    ],
+    "examples": [
+      "query(`\n  query isCentralServer {\n    isCentralServer\n  }`\n)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 153,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/msupply/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 8,
+    "level": 0
+  },
+  {
+    "id": "RequestBody",
+    "longname": "RequestBody",
+    "name": "RequestBody",
+    "kind": "typedef",
+    "scope": "global",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The GraphQL query string",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "The variables for that query string",
+        "name": "variables"
+      }
+    ],
+    "meta": {
+      "lineno": 15,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/msupply/src"
+    },
+    "order": 1,
+    "level": 0
+  },
+  {
+    "id": "upsertOutboundShipment",
+    "longname": "upsertOutboundShipment",
+    "name": "upsertOutboundShipment",
+    "kind": "function",
+    "scope": "global",
+    "description": "Update an outbound shipment",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "UpsertOutboundShipmentvariables"
+          ]
+        },
+        "description": "GraphQL query variables",
+        "name": "variables"
+      }
+    ],
+    "examples": [
+      "<caption>Update outbound shipment status to 'PICKED'</caption>\nupsertOutboundShipment({\n     \"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n     \"input\": {\n       \"updateOutboundShipments\": [\n         {\n           \"id\": \"01961fce-9ef6-7198-93c1-866395094e48\",\n           \"status\": \"PICKED\"\n          }\n        ]\n     }\n})"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 121,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/msupply/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 7,
+    "level": 0
+  },
+  {
+    "id": "UpsertOutboundShipmentvariables",
+    "longname": "UpsertOutboundShipmentvariables",
+    "name": "UpsertOutboundShipmentvariables",
+    "kind": "typedef",
+    "scope": "global",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "The payload for the target shipment",
+        "name": "input"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The id of the store the shipment is being made from",
+        "name": "storeId"
+      }
+    ],
+    "meta": {
+      "lineno": 34,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/msupply/src"
+    },
+    "order": 4,
+    "level": 0
+  }
+],
 {"name":"mysql","adaptor":"@openfn/language-mysql","version":"2.1.2","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#insert\\\">insert(table, fields)</a></dt>\\n<dt>\\n    <a href=\\\"#query\\\">query(options)</a></dt>\\n<dt>\\n    <a href=\\\"#sqlstring\\\">sqlString(queryString)</a></dt>\\n<dt>\\n    <a href=\\\"#upsert\\\">upsert(table, fields)</a></dt>\\n<dt>\\n    <a href=\\\"#upsertmany\\\">upsertMany(table, data)</a></dt>\\n</dl>\\n\\n\\n## Functions\\n### insert\\n\\n<p><code>insert(table, fields) ⇒ Operation</code></p>\\n\\nInsert a record\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| table | <code>string</code> | The target table |\\n| fields | <code>object</code> | A fields object |\\n\\n**Example:** Insert a record into the `users` table\\n```js\\ninsert(\\\"users\\\", { name: (state) => state.data.name });\\n```\\n\\n* * *\\n\\n### query\\n\\n<p><code>query(options) ⇒ Operation</code></p>\\n\\nExecute a SQL statement\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| options | <code>object</code> | Payload data for the message |\\n\\n**Example:** Execute a SQL statement\\n```js\\nquery({ sql: 'select * from users;' })\\n```\\n\\n* * *\\n\\n### sqlString\\n\\n<p><code>sqlString(queryString) ⇒ Operation</code></p>\\n\\nExecute a SQL statement\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| queryString | <code>String</code> | A query string (or function which takes state and returns a string) |\\n\\n**Example:** Execute a SQL statement\\n```js\\nsqlString(state => \\\"select * from items;\\\")\\n```\\n\\n* * *\\n\\n### upsert\\n\\n<p><code>upsert(table, fields) ⇒ Operation</code></p>\\n\\nInsert or Update a record if matched\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| table | <code>string</code> | The target table |\\n| fields | <code>object</code> | A fields object |\\n\\n**Example:** Upsert a record\\n```js\\nupsert(\\\"table\\\", { name: (state) => state.data.name });\\n```\\n\\n* * *\\n\\n### upsertMany\\n\\n<p><code>upsertMany(table, data) ⇒ Operation</code></p>\\n\\nInsert or update multiple records using ON DUPLICATE KEY\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| table | <code>string</code> | The target table |\\n| data | <code>array</code> | An array of objects or a function that returns an array |\\n\\n**Example:** Upsert multiple records\\n```js\\nupsertMany(\\n  'users', // the DB table\\n  [\\n    { name: 'one', email: 'one@openfn.org' },\\n    { name: 'two', email: 'two@openfn.org' },\\n  ]\\n)\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# Language MySQL\\n\\nLanguage Pack for building expressions and operations to run MySQL queries.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/mysql-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/mysql-configuration-schema/)\\ndefinition.\\n\\n## Execute a query\\n\\nExecute an sql query with the node mysql package.\\n\\n```js\\nquery({\\n  sql: state => {\\n    return `select * from ${state.data.table} where id = ?;`;\\n  },\\n  timeout: 4000,\\n  values: ['007'],\\n});\\n```\\n\\n## Execute a sql query\\n\\nThis function takes either a `string` or a `function` that takes states and\\nreturns a string.\\n\\n```js\\nsqlString(state => {\\n  return (\\n    `INSERT INTO untitled_table (name, the_geom) VALUES ('` +\\n    state.data.version +\\n    `', ` +\\n    dataValue('form.Choix_tache')(state) +\\n    `)`\\n  );\\n});\\n```\\n\\n## Insert a single record\\n\\nThis function is used to insert a single record in a MySQL database.\\n\\n```js\\ninsert(\\n  'some_table',\\n  fields(\\n    field('firstname', dataValue('form.patient_firstname')),\\n    field('lastname', dataValue('form.patient_lastname'))\\n  )\\n);\\n```\\n\\n## Insert or update a single record\\n\\nThis function is used to insert a single record in a MySQL database or update it\\nif there is a match.\\n\\n```js\\nupsert(\\n  'some_table',\\n  fields(\\n    field('firstname', dataValue('form.patient_firstname')),\\n    field('lastname', dataValue('form.patient_lastname'))\\n  )\\n);\\n```\\n\\n## Upsert many records\\n\\nThis function allows the upsert of a set of records inside a table all at once.\\n\\n```js\\nupsertMany(\\n  'users', // the DB table\\n  [\\n    { name: 'one', email: 'one@openfn.org' },\\n    { name: 'two', email: 'two@openfn.org' },\\n  ]\\n);\\n```\\n\\nor\\n\\n```js\\nupsertMany('users', state =>\\n  state.data.users.map(user => {\\n    name: user['name'],\\n    email: user['email']\\n  })\\n);\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-mysql\\n\\n## 2.1.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 2.1.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 2.1.0\\n\\n### Minor Changes\\n\\n- e87110f: - add `cursor` and `dateFns` from `@openfn/language-common`\\n  - cleanup examples wrapped with `execute()` function\\n  - Add example caption and add sample payload\\n  - remove unused import of url\\n\\n## 2.0.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [b3d7f59]\\n- Updated dependencies [2d709ff]\\n- Updated dependencies [41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 2.0.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 2.0.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [a47d8d5]\\n- Updated dependencies [9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 2.0.5\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 2.0.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 2.0.3\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus [33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 2.0.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 2.0.1\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies [8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 2.0.0\\n\\n### Major Changes\\n\\n- Export new common http helpers (http namespace)\\n\\n## 1.5.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 1.5.2\\n\\n### Patch Changes\\n\\n- 73d0a02: Make documentation public\\n- Updated dependencies [4c08444]\\n- Updated dependencies [73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 1.5.1\\n\\n### Patch Changes\\n\\n- Updated dependencies [5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 1.5.0\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies [106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 1.4.15\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 1.4.14\\n\\n### Patch Changes\\n\\n- Updated dependencies [12f02ed5]\\n  - @openfn/language-common@1.13.4\\n\\n## 1.4.13\\n\\n### Patch Changes\\n\\n- Updated dependencies [88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 1.4.12\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 1.4.11\\n\\n### Patch Changes\\n\\n- e9d0dac9: - Change `host` format from `uri` to `string` in\\n  `configuration-schema.json`\\n  - Update required list to include `user` and `password`\\n\\n## 1.4.10\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.1\\n\\n## 1.4.9\\n\\n### Patch Changes\\n\\n- Updated dependencies [1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 1.4.8\\n\\n### Patch Changes\\n\\n- Updated dependencies [c19efbe]\\n  - @openfn/language-common@1.11.1\\n\\n## 1.4.7\\n\\n### Patch Changes\\n\\n- Updated dependencies [85c35b8]\\n  - @openfn/language-common@1.11.0\\n\\n## 1.4.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [df09270]\\n  - @openfn/language-common@1.10.3\\n\\n## 1.4.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [26a303e]\\n  - @openfn/language-common@1.10.2\\n\\n## 1.4.4\\n\\n### Patch Changes\\n\\n- Updated dependencies [8c32eb3]\\n  - @openfn/language-common@1.10.1\\n\\n## 1.4.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [aad9549]\\n  - @openfn/language-common@1.10.0\\n\\n## 1.4.2\\n\\n### Patch Changes\\n\\n- Updated dependencies [111807f]\\n  - @openfn/language-common@1.9.0\\n\\n## 1.4.1\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 1.4.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies [2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 1.3.5\\n\\n### Patch Changes\\n\\n- Updated dependencies [929bca6]\\n  - @openfn/language-common@1.7.7\\n\\n## 1.3.4\\n\\n### Patch Changes\\n\\n- ef828e7: update old urls in readme\\n- 14f481e: mark execute as private\\n- Updated dependencies [2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 1.3.3\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 1.3.2\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 1.3.1\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*_ @module Adaptor _/\\n\\n## 1.3.0\\n\\n### Minor Changes\\n\\n- 9d674c5: Migrate MySQL\\n\"","functions":["insert","query","sqlString","upsert","upsertMany"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"host":{"title":"Host URL","type":"string","description":"The database instance host URL","format":"string","minLength":1,"examples":["some-host-url.compute-1.amazonaws.com"]},"port":{"title":"Port","type":"integer","default":3306,"description":"Database instance port","minLength":1,"examples":[3306]},"database":{"title":"Database","type":"string","description":"The database name","minLength":1,"examples":["demo-db"]},"user":{"title":"Username","type":"string","description":"The username to log in the database","minLength":1,"examples":["admin-demo"]},"password":{"title":"Password","type":"string","description":"The password to log in the database","writeOnly":true,"minLength":1,"examples":["@super(!)Secretpass"]}},"type":"object","additionalProperties":true,"required":["host","database","user","password"]}},
 [
   {
