@@ -1,24 +1,14 @@
 <dl>
 <dt>
-    <a href="#create">create(resourceType, data, [callback])</a></dt>
+    <a href="#create">create(path, data)</a></dt>
 <dt>
-    <a href="#get">get(path, query, [callback])</a></dt>
+    <a href="#destroy">destroy(path, [options])</a></dt>
 <dt>
-    <a href="#getencounter">getEncounter(uuid, [callback])</a></dt>
+    <a href="#get">get(path, [options])</a></dt>
 <dt>
-    <a href="#getencounters">getEncounters(query, [callback])</a></dt>
+    <a href="#update">update(path, data)</a></dt>
 <dt>
-    <a href="#getpatient">getPatient(uuid, [callback])</a></dt>
-<dt>
-    <a href="#post">post(path, data, [callback])</a></dt>
-<dt>
-    <a href="#searchpatient">searchPatient(query, [callback])</a></dt>
-<dt>
-    <a href="#searchperson">searchPerson(query, [callback])</a></dt>
-<dt>
-    <a href="#update">update(resourceType, path, data, [callback])</a></dt>
-<dt>
-    <a href="#upsert">upsert(resourceType, query, data, [callback])</a></dt>
+    <a href="#upsert">upsert(path, data, params)</a></dt>
 </dl>
 
 This adaptor exports the following namespaced functions:
@@ -49,18 +39,22 @@ This adaptor exports the following namespaced functions:
 ## Functions
 ### create
 
-<p><code>create(resourceType, data, [callback]) ⇒ Operation</code></p>
+<p><code>create(path, data) ⇒ Operation</code></p>
 
-Create a record
+Create a resource. For a list of valid resources, see [OpenMRS Docs](https://rest.openmrs.org/)
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| resourceType | <code>string</code> | Type of resource to create. E.g. `person`, `patient`, `encounter`, ... |
-| data | <code>OpenMRSData</code> | Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects. |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+| path | <code>string</code> | Path to resource (excluding `/ws/rest/v1/`) |
+| data | <code>object</code> | Resource definition |
 
-**Example:** Create a person
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The newly created resource, as returned by OpenMRS |
+**Example:** Create a person (<a href="https://rest.openmrs.org/#create-a-person">see OpenMRS API</a>)
 ```js
 create("person", {
   names: [
@@ -81,7 +75,7 @@ create("person", {
   ],
 });
 ```
-**Example:** Create an encounter
+**Example:** Create an encounter (<a href="https://rest.openmrs.org/#create-an-encounter">see OpenMRS API</a>)
 ```js
 create("encounter", {
   encounterDatetime: '2023-05-25T06:08:25.000+0000',
@@ -97,7 +91,7 @@ create("encounter", {
   },
 })
 ```
-**Example:** Create a patient
+**Example:** Create a patient (<a href="https://rest.openmrs.org/#create-a-patient">see OpenMRS API</a>)
 ```js
 create("patient", {
   identifiers: [
@@ -120,215 +114,190 @@ create("patient", {
     ],
   },
 })
+  
+```
+**Example:** Create a patientIdentifier subresource (<a href="https://rest.openmrs.org/#create-a-patientidentifier-sub-resource-with-properties">see OpenMRS API</a>)
+```js
+create("patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3/identifier", { 
+ "identifier" : "111:CLINIC1",
+ "identifierType" : "a5d38e09-efcb-4d91-a526-50ce1ba5011a",
+ "location" : "8d6c993e-c2cc-11de-8d13-0010c6dffd0f",
+ "preferred" : true
+})
+}
+```
+
+* * *
+
+### destroy
+
+<p><code>destroy(path, [options]) ⇒ Operation</code></p>
+
+Delete a resource. Must include a UUID in the path.
+Throws an error if the resource does not exist.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| path | <code>string</code> |  | Path to resource (excluding `/ws/rest/v1/`) |
+| [options] | <code>object</code> | <code>{}</code> |  |
+| [options.purge] | <code>object</code> | <code>false</code> | The resource will be voided/retired unless true |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response from OpenMRS |
+**Example:** Void a patient
+```js
+destroy("patient/12346");
+```
+**Example:** Purge a patient
+```js
+destroy("patient/12346", {
+  purge: true
+});
 ```
 
 * * *
 
 ### get
 
-<p><code>get(path, query, [callback]) ⇒ Operation</code></p>
+<p><code>get(path, [options]) ⇒ Operation</code></p>
 
-Make a get request to any OpenMRS REST endpoint.
+Fetch resources from OpenMRS. Use this to fetch a single resource,
+or to search a list.
+
+Options will be appended as query parameters to the request URL,
+refer to [OpenMRS Docs](https://rest.openmrs.org/) for details.
+
+Pagination is handled automatically by default (maximum 10k items). Set `max`
+to paginate with a higher limit, or pass `limit` to force a single request, as
+per the OpenMRS Rest API.
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| path | <code>string</code> | Path to resource (excluding /ws/rest/v1/) |
-| query | <code>object</code> | parameters for the request |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| path | <code>string</code> |  | Path to resource (excluding `/ws/rest/v1/`) |
+| [options] | [<code>GetOptions</code>](#getoptions) | <code>{}</code> | Includes `max`, `query`, and extra query parameters |
 
-**Example**
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | An array of result objects |
+**Example:** List all concepts (up to a maximum of 10k items, with pagination)
 ```js
-get("patient", {
-  q: "Patient",
-  limit: 1,
-});
+get("concept")
 ```
-
-* * *
-
-### getEncounter
-
-<p><code>getEncounter(uuid, [callback]) ⇒ Operation</code></p>
-
-Gets encounter matching a uuid
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| uuid | <code>object</code> | A uuid for the encounter |
-| [callback] | <code>function</code> | Optional callback to handle the response |
-
-**Example**
+**Example:** List all concepts (with pagination)
 ```js
-getEncounter("123")
+get("concept", { query: "brian", max: Infinity })
 ```
-
-* * *
-
-### getEncounters
-
-<p><code>getEncounters(query, [callback]) ⇒ Operation</code></p>
-
-Gets encounters matching params
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| query | <code>object</code> | Object for the patient |
-| [callback] | <code>function</code> | Optional callback to handle the response |
-
-**Example**
+**Example:** Search up to 100 patients by name (allowing pagination) (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)
 ```js
-getEncounters({ patient: "123", fromdate: "2023-05-18" })
+get("patient", { query: "brian", max: 100 })
 ```
-
-* * *
-
-### getPatient
-
-<p><code>getPatient(uuid, [callback]) ⇒ Operation</code></p>
-
-Gets patient matching a uuid
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| uuid | <code>string</code> | A uuid for the patient |
-| [callback] | <code>function</code> | Optional callback to handle the response |
-
-**Example:** Get a patient by uuid
+**Example:** Fetch patient by UUID (returns an array of 1 item)
 ```js
-getPatient('681f8785-c9ca-4dc8-a091-7b869316ff93')
+get("patient/abc")
 ```
-
-* * *
-
-### post
-
-<p><code>post(path, data, [callback]) ⇒ Operation</code></p>
-
-Make a post request to any OpenMRS rest endpoint
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| path | <code>string</code> | Path to resource (excluding /ws/rest/v1/) |
-| data | <code>object</code> | Object which defines data that will be used to create a given instance of resource |
-| [callback] | <code>function</code> | Optional callback to handle the response |
-
-**Example**
+**Example:** Fetch patient by UUID (returns an object of patient data)
 ```js
-post(
-  "idgen/identifiersource/8549f706-7e85-4c1d-9424-217d50a2988b/identifier",
-  {}
-);
+get("patient/abc", { singleton: true })
 ```
-
-* * *
-
-### searchPatient
-
-<p><code>searchPatient(query, [callback]) ⇒ Operation</code></p>
-
-Fetch all non-retired patients that match any specified parameters
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| query | <code>object</code> | Object with query for the patient. |
-| [callback] | <code>function</code> | Optional callback to handle the response |
-
-**Example**
+**Example:** Search up to 10 patients by name (in a single request without pagination) (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)
 ```js
-searchPatient({ q: "Sarah"})
+get("patient", { query: "brian", limit: 10 })
 ```
-
-* * *
-
-### searchPerson
-
-<p><code>searchPerson(query, [callback]) ⇒ Operation</code></p>
-
-Fetch all non-retired persons that match any specified parameters
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| query | <code>object</code> | object with query for the person |
-| [callback] | <code>function</code> | Optional callback to handle the response |
-
-**Example**
+**Example:** List allergy subresources
 ```js
-searchPerson({ q: "Sarah" })
+get("patient/abc/allergy")
+```
+**Example:** Get allergy subresource by its UUID and parent patient UUID
+```js
+get("patient/abc/allergy/xyz")
 ```
 
 * * *
 
 ### update
 
-<p><code>update(resourceType, path, data, [callback]) ⇒ Operation</code></p>
+<p><code>update(path, data) ⇒ Operation</code></p>
 
-Update data. A generic helper function to update a resource object of any type.
-Updating an object requires to send `all required fields` or the `full body`
+Update a resource. Only properties included in the data will be affected.
+For a list of valid resources and for update rules, see the Update sections
+of the [OpenMRS Docs](https://rest.openmrs.org/)
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| resourceType | <code>string</code> | The type of resource to be updated. E.g. `person`, `patient`, etc. |
-| path | <code>string</code> | The `id` or `path` to the `object` to be updated. E.g. `e739808f-f166-42ae-aaf3-8b3e8fa13fda` or `e739808f-f166-42ae-aaf3-8b3e8fa13fda/{collection-name}/{object-id}` |
-| data | <code>Object</code> | Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation. |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+| path | <code>string</code> | Path to resource (excluding `/ws/rest/v1/`) |
+| data | <code>Object</code> | Resource properties to update |
 
-**Example:** a person
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The full updated resource, as returned by OpenMRS |
+**Example:** Update a person (<a href="https://rest.openmrs.org/#create-a-person">see OpenMRS API</a>)
 ```js
-update("person", '3cad37ad-984d-4c65-a019-3eb120c9c373',{"gender":"M","birthdate":"1997-01-13"})
+update('person/3cad37ad-984d-4c65-a019-3eb120c9c373', {
+  'gender': 'M',
+  'birthdate':'1997-01-13'
+})
 ```
 
 * * *
 
 ### upsert
 
-<p><code>upsert(resourceType, query, data, [callback]) ⇒ Operation</code></p>
+<p><code>upsert(path, data, params) ⇒ Operation</code></p>
 
-Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
+Update a resource if it already exists, or otherwise create a new one.
 
-**Throws**:
-
-- <code>RangeError</code> - Throws range error
+Upsert will first make a request for the target item (using the `path` and `params`) to see if it exists, and then issue a second create or update request.
+If the query request returns multiple items, the upsert will throw an error.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| resourceType | <code>string</code> | The type of a resource to `upsert`. E.g. `trackedEntityInstances` |
-| query | <code>Object</code> | A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created. |
-| data | <code>Object</code> | The data to use for update or create depending on the result of the query. |
-| [callback] | <code>function</code> | Optional callback to handle the response |
+| path | <code>string</code> | Path to resource (excluding `/ws/rest/v1/`) |
+| data | <code>Object</code> | The resource data |
+| params | <code>Object</code> | Query parameters to append to the initial query |
 
-**Example:** For an existing patient using upsert
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The created/updated resource, as returned by OpenMRS |
+**Example:** Upsert a patient (<a href="https://rest.openmrs.org/#patients-overview">see OpenMRS API</a>)
 ```js
-upsert('patient', { q: '10007JJ' }, { person: { age: 50 } });
-```
-**Example:** For non existing patient creating a patient record using upsert 
-```js
-upsert(
-  "patient",
-  { q: "1000EHE" },
-  {
-    identifiers: [
+upsert("patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a", {
+  identifiers: [
+    {
+      identifier: '4023287',
+      identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',
+      preferred: true,
+    },
+  ],
+  person: {
+    gender: 'M',
+    age: 42,
+    birthdate: '1970-01-01T00:00:00.000+0100',
+    birthdateEstimated: false,
+    names: [
       {
-        identifier: "1000EHE",
-        identifierType: "05a29f94-c0ed-11e2-94be-8c13b969e334",
-        location: "44c3efb0-2583-4c80-a79e-1f756a03c0a1",
-        preferred: true,
+        givenName: 'Doe',
+        familyName: 'John',
       },
     ],
-    person: {
-      gender: "M",
-      age: 42,
-    },
-  }
-);
+  },
+})
+```
+**Example:** Upsert a patient using a query to identify the record
+```js
+upsert("patient", $.data, { q: "Lamine Yamal" })
 ```
 
 * * *
@@ -347,8 +316,15 @@ Make a DELETE request to an OpenMRS endpoint
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | path | <code>string</code> |  | path to resource |
-| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+| [options] | [<code>HTTPRequestOptions</code>](#httprequestoptions) | <code>{}</code> | An object containing query params and headers for the request |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the OpenMRS server (excluding the body) |
+| references | An array containing all previous data objects |
 **Example:** Delete a resource
 ```js
 http.delete(
@@ -370,8 +346,15 @@ Unlike the main `get()`, this does not append anything to the path you provide.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | path | <code>string</code> |  | path to resource |
-| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+| [options] | [<code>HTTPRequestOptions</code>](#httprequestoptions) | <code>{}</code> | An object containing query params and headers for the request |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the OpenMRS server (excluding the body) |
+| references | An array containing all previous data objects |
 **Example:** GET a resource with a query
 ```js
 http.get(
@@ -407,8 +390,15 @@ Make a POST request to an OpenMRS endpoint
 | --- | --- | --- | --- |
 | path | <code>string</code> |  | path to resource |
 | data | <code>any</code> |  | the payload |
-| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+| [options] | [<code>HTTPRequestOptions</code>](#httprequestoptions) | <code>{}</code> | An object containing query params and headers for the request |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the OpenMRS server (excluding the body) |
+| references | An array containing all previous data objects |
 **Example:** Post with a JSON payload
 ```js
 http.post(
@@ -443,15 +433,22 @@ Make a HTTP request to any OpenMRS endpoint
 | --- | --- | --- | --- |
 | method | <code>string</code> |  | HTTP method to use |
 | path | <code>string</code> |  | Path to resource |
-| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query, headers, and body for the request |
+| [options] | [<code>HTTPRequestOptions</code>](#httprequestoptions) | <code>{}</code> | An object containing query, headers, and body for the request |
 
-**Example:** GET request with a URL query
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the OpenMRS server (excluding the body) |
+| references | An array containing all previous data objects |
+**Example:** GET request with a query parameters
 ```js
 http.request("GET",
   "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8", {
    query:{
       limit: 1,
-      offset: 20
+      startIndex: 20
    },
 });
 ```
@@ -475,6 +472,13 @@ Make a get request to any FHIR endpoint in OpenMRS
 | query | [<code>FhirParameters</code>](#fhirparameters) | Request parameters |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the OpenMRS server (excluding the body) |
+| references | An array containing all previous data objects |
 **Example:** Get encounters based on lastUpdated field
 ```js
 fhir.get('Encounter', { count: 100, lastUpdated: 'ge2024-01-01T00:00:00Z' })
@@ -518,7 +522,23 @@ This combines [ FHIR search parameters](https://fhir.openmrs.org/artifacts.html)
 
 * * *
 
-### RequestOptions
+### GetOptions
+
+Options to append to the request. Unless otherwise specified, options are appended to the URL as query parameters - see the [OpenMRS Docs](https://rest.openmrs.org/) for all supported parameters.
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [query] | <code>string</code> |  | (OpenFn only) Query string. Maps to `q` in OpenMRS. |
+| [max] | <code>number</code> | <code>10000</code> | (OpenFn only) Restrict the maximum number of retrieved records. May be fetched in several pages. Not used if `limit` is set. |
+| [pageSize] | <code>number</code> | <code>1000</code> | (OpenFn only) Limits the size of each page of data. Not used if limit is set. |
+| [singleton] | <code>boolean</code> |  | (OpenFn only) If set to true, only the first result will be returned. Useful for "get by id" APIs. |
+
+
+* * *
+
+### HTTPRequestOptions
 
 Options object
 
