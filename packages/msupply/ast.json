@@ -1,16 +1,17 @@
 {
   "operations": [
     {
-      "name": "request",
+      "name": "getItemsWithStats",
       "params": [
         "options"
       ],
       "docs": {
-        "description": "Make a general HTTP request",
+        "description": "Get items in your catalogue and their stats like stock on hand and AMC",
         "tags": [
           {
-            "title": "example",
-            "description": "request(\"POST\", \"patient\", { \"name\": \"Bukayo\" });"
+            "title": "public",
+            "description": null,
+            "type": null
           },
           {
             "title": "function",
@@ -18,45 +19,158 @@
             "name": null
           },
           {
-            "title": "public",
-            "description": null,
-            "type": null
+            "title": "example",
+            "description": "getItemsWithStats({\nvariables: {\n\"key\": \"name\",\n\"first\": 20,\n\"isDesc\": false,\n\"offset\": 0,\n\"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n\"filter\": {\n\"isVisibleOrOnHand\": true,\n\"isActive\": true\n}\n}\n})",
+            "caption": "Get items in your catalogue"
           },
           {
             "title": "param",
-            "description": "HTTP method to use",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "method"
-          },
-          {
-            "title": "param",
-            "description": "Path to resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Object which will be attached to the POST body",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
+            "description": "Request object containing your variables",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
             },
             "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "insertOutboundShipment",
+      "params": [
+        "options"
+      ],
+      "docs": {
+        "description": "Create an outbound shipment.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "insertOutboundShipment({\nvariables: {\n\"otherPartyId\": \"861102F624354F15ABEB48DC207A4C2D\",\n\"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\"\n}\n})",
+            "caption": "Create an outbound shipment"
+          },
+          {
+            "title": "param",
+            "description": "Request object containing your variables",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "upsertOutboundShipment",
+      "params": [
+        "options"
+      ],
+      "docs": {
+        "description": "Update an outbound shipment",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "upsertOutboundShipment({\nvariables: {\n\"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n\"input\": {\n\"insertOutboundShipmentLines\": [\n{\n\"id\": \"01961fde-0d43-7bdc-a52d-f2c9b81758ca\",\n\"numberOfPacks\": 10,\n\"stockLineId\": \"01954360-782d-7933-9493-4099e7e9a20c\",\n\"invoiceId\": \"01961fce-9ef6-7198-93c1-866395094e48\"\n}\n],\n\"updateOutboundShipmentLines\": [],\n\"deleteOutboundShipmentLines\": [],\n\"insertOutboundShipmentUnallocatedLines\": [],\n\"updateOutboundShipmentUnallocatedLines\": [],\n\"deleteOutboundShipmentUnallocatedLines\": [],\n\"insertOutboundShipmentServiceLines\": [],\n\"updateOutboundShipmentServiceLines\": [],\n\"deleteOutboundShipmentServiceLines\": []\n}\n}\n})",
+            "caption": "Add items to an outbound shipment"
+          },
+          {
+            "title": "example",
+            "description": "upsertOutboundShipment({\nvariables: {\n\"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n\"input\": {\n\"updateOutboundShipments\": [\n{\n\"id\": \"01961fce-9ef6-7198-93c1-866395094e48\",\n\"status\": \"PICKED\"\n}\n]\n}\n}\n})",
+            "caption": "Update outbound shipment status to 'PICKED'"
+          },
+          {
+            "title": "param",
+            "description": "Request object containing your variables",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "request",
+      "params": [
+        "options"
+      ],
+      "docs": {
+        "description": "Make a general GraphQL request",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "request({\nbody: {\nquery: `query stockLines(\n$first: Int,\n$offset: Int,\n$key: StockLineSortFieldInput!,\n$desc: Boolean,\n$filter: StockLineFilterInput,\n$storeId: String!\n) {\nstockLines(\nstoreId: $storeId,\nfilter: $filter,\npage: {first: $first, offset: $offset},\nsort: {key: $key, desc: $desc}\n) {\n... on StockLineConnector {\n__typename\nnodes {\n__typename\navailableNumberOfPacks\nbatch\ncostPricePerPack\nexpiryDate\nid\nitemId\nonHold\npackSize\nsellPricePerPack\nstoreId\ntotalNumberOfPacks\nsupplierName\nitem {\ncode\nname\nunitName\nmasterLists(storeId: $storeId) {\nname\n}\n}\n}\ntotalCount\n}\n}\n}\n`,\nvariables: {\n\"storeId\": \"DFE0F611AD84A0419D36F8FEFAD1894C\",\n\"first\": 20,\n\"offset\": 0,\n\"key\": \"expiryDate\",\n\"desc\": false,\n\"filter\": {\n\"hasPacksInStore\": true,\n\"masterList\": {\n\"existsForStoreId\": {\n\"equalTo\": \"DFE0F611AD84A0419D36F8FEFAD1894C\"\n}\n}\n}\n}\n}\n})",
+            "caption": "Get you stock lines"
           },
           {
             "title": "returns",

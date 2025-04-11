@@ -11,7 +11,40 @@ import { v4 as uuidv4 } from 'uuid';
  * @property references - an array of all previous data objects used in the Job
  **/
 
+/**
+ * @typedef {Object} RequestOptions
+ * @property {object} variables - The list of variables to pass to the graphql query
+ */
 
+/**
+ * @typedef {Object} GenericRequestOptions
+ * @property {object} query - The graphql query string
+ * @property {object} variables - The list of variables to pass to the graphql query
+ */
+
+
+/**
+ * Get items in your catalogue and their stats like stock on hand and AMC
+ * @public
+ * @function
+ * @example <caption>Get items in your catalogue</caption>
+ * getItemsWithStats({
+    variables: {
+        "key": "name",
+        "first": 20,
+        "isDesc": false,
+        "offset": 0,
+        "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
+        "filter": {
+            "isVisibleOrOnHand": true,
+            "isActive": true
+        }
+    }
+})
+ * @param {RequestOptions} options  - Request object containing your variables
+ * @returns  {Operation}
+ * @state {HttpState}
+ */
 export function getItemsWithStats(options) {
   return async state => {
     const [resolvedOptions] = expandReferences(state, options);
@@ -30,6 +63,22 @@ export function getItemsWithStats(options) {
   }
 }
 
+
+/**
+ * Create an outbound shipment.
+ * @public
+ * @function
+ * @example <caption>Create an outbound shipment</caption>
+ * insertOutboundShipment({
+    variables: {
+        "otherPartyId": "861102F624354F15ABEB48DC207A4C2D",
+        "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C"
+    }
+ * })
+ * @param {RequestOptions} options  - Request object containing your variables
+ * @returns {Operation}
+ * @state {HttpState}
+ */
 export function insertOutboundShipment(options) {
   return async state => {
     const [resolvedOptions] = expandReferences(state, options);
@@ -49,7 +98,53 @@ export function insertOutboundShipment(options) {
   }
 }
 
+/**
+ * Update an outbound shipment
+ * @public
+ * @function
+ * @example <caption>Add items to an outbound shipment</caption>
+ * upsertOutboundShipment({
+    variables: {
+        "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
+        "input": {
+          "insertOutboundShipmentLines": [
+            {
+              "id": "01961fde-0d43-7bdc-a52d-f2c9b81758ca",
+              "numberOfPacks": 10,
+              "stockLineId": "01954360-782d-7933-9493-4099e7e9a20c",
+              "invoiceId": "01961fce-9ef6-7198-93c1-866395094e48"
+            }
+          ],
+          "updateOutboundShipmentLines": [],
+          "deleteOutboundShipmentLines": [],
+          "insertOutboundShipmentUnallocatedLines": [],
+          "updateOutboundShipmentUnallocatedLines": [],
+          "deleteOutboundShipmentUnallocatedLines": [],
+          "insertOutboundShipmentServiceLines": [],
+          "updateOutboundShipmentServiceLines": [],
+          "deleteOutboundShipmentServiceLines": []
+        }
+      }
+})
+ * @example <caption>Update outbound shipment status to 'PICKED'</caption>
+ * upsertOutboundShipment({
+    variables: {
+        "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
+        "input": {
+            "updateOutboundShipments": [
+                {
+                    "id": "01961fce-9ef6-7198-93c1-866395094e48",
+                    "status": "PICKED"
+                }
+            ]
+        }
+    }
+})
 
+ * @param {RequestOptions} options - Request object containing your variables
+ * @returns {Operation}
+ * @state {HttpState}
+ */
 export function upsertOutboundShipment(options) {
   return async state => {
     const [resolvedOptions] = expandReferences(state, options);
@@ -71,15 +166,58 @@ export function upsertOutboundShipment(options) {
 
 
 /**
- * Make a general HTTP request
- * @example
- * request("POST", "patient", { "name": "Bukayo" });
- * @function
+ * Make a general GraphQL request
  * @public
- * @param {string} method - HTTP method to use
- * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
+ * @function
+ * @example <caption>Get you stock lines</caption>
+ * request({
+  body: {
+    query: `query stockLines(
+          $first: Int,
+          $offset: Int,
+          $key: StockLineSortFieldInput!,
+          $desc: Boolean,
+          $filter: StockLineFilterInput,
+          $storeId: String!
+        ) {
+          stockLines(
+            storeId: $storeId,
+            filter: $filter,
+            page: {first: $first, offset: $offset},
+            sort: {key: $key, desc: $desc}
+          ) {
+            ... on StockLineConnector {
+              __typename
+              nodes {
+                item {
+                  code
+                  name
+                  unitName
+                }
+              }
+              totalCount
+            }
+          }
+        }
+        `,
+    variables: {
+      "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
+      "first": 20,
+      "offset": 0,
+      "key": "expiryDate",
+      "desc": false,
+      "filter": {
+        "hasPacksInStore": true,
+        "masterList": {
+          "existsForStoreId": {
+            "equalTo": "DFE0F611AD84A0419D36F8FEFAD1894C"
+          }
+        }
+      }
+    }
+  }
+})
+ *@param {GenericRequestOptions} options - Options object containing your query and variables
  * @returns {Operation}
  * @state {HttpState}
  */
