@@ -59,3 +59,14 @@ _Add links to API docs and any other app docs that might be useful_
 ### Logo Links
 
 _Add links to where to find the app's logo for the adaptor logo_
+
+## Adaptor QA Checklist
+
+Please disclose how we should test this adaptor. If you're not sure, please
+check out the
+[QA Checklist](https://github.com/openfn/adaptors/blob/main/QA.md).
+
+- [] Adaptor is listed on [app.openfn.org](https://app.openfn.org)
+- [] Adaptor has documentation on [docs.openfn.org](https://docs.openfn.org)
+- [] Adaptor logo is correct on app.openfn.org
+- [] Adaptor has a configurable credential on app.openfn.org

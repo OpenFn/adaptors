@@ -33,3 +33,11 @@ identifiable information._
 
 _What behaviour do you expect to see? Or how would you like to see the problem
 fixed?_
+
+## Adaptor QA Checklist
+
+Please disclose how we should test this adaptor. If you're not sure, please
+check out the
+[QA Checklist](https://github.com/openfn/adaptors/blob/main/QA.md).
+
+- [] No errors when doing xyz
