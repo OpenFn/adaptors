@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 /**
  * @typedef {Object} RequestBody
- * @property {object} query - The GraphQL query string
+ * @property {String} query - The GraphQL query string
  * @property {object} variables - The variables for that query string
  */
 
