@@ -1,5 +1,12 @@
 # @openfn/language-ghana-bdr
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies [d7105c0]
+  - @openfn/language-common@2.3.2
+
 ## 0.1.4
 
 ### Patch Changes
