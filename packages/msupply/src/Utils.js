@@ -45,9 +45,9 @@ export const login = async (state, options) => {
     },
   };
 
-  const { body: { data: { authToken: { token } } } } = await commonRequest('POST', 'graphql', opts);
-  bearerToken = token;
-  return token;
+  const { body  } = await commonRequest('POST', 'graphql', opts);
+  bearerToken = body.data.authToken.token;
+  return body.data.authToken.token;
 }
 
 
