@@ -5,7 +5,7 @@ import {
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 
-let beaerToken = '';
+let bearerToken = '';
 
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
@@ -46,13 +46,17 @@ export const login = async (state, options) => {
   };
 
   const { body: { data: { authToken: { token } } } } = await commonRequest('POST', 'graphql', opts);
-  beaerToken = token;
+  bearerToken = token;
   return token;
 }
 
 
 export const request = async (state, options) => {
   const { baseUrl } = state.configuration;
+
+  if(options.headers?.Authorization){
+    bearerToken = options.headers.Authorization.split("")[1];
+  }
 
   const errors = {
     404: 'Page not found',
@@ -69,10 +73,10 @@ export const request = async (state, options) => {
     },
   };
 
-  if (!beaerToken)
+  if (!bearerToken)
     await login(state, opts)
 
-  opts.headers = { ...opts.headers, 'Authorization': `Bearer ${beaerToken}` }
+  opts.headers = { ...opts.headers, 'Authorization': `Bearer ${bearerToken}` }
 
   const safePath = nodepath.join('graphql');
 

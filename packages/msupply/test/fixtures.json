@@ -1,0 +1,128 @@
+{
+    "getItemsWithStats": {
+        "variables": {
+            "key": "name",
+            "first": 20,
+            "isDesc": false,
+            "offset": 0,
+            "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
+            "filter": {
+                "isVisibleOrOnHand": true,
+                "isActive": true
+            }
+        },
+        "response": {
+            "data": {
+                "items": {
+                    "__typename": "ItemConnector",
+                    "nodes": [
+                        {
+                            "code": "BCG",
+                            "id": "A086F3E3EB6A104591731737349EBCB9",
+                            "name": "BCG vaccine",
+                            "unitName": "Vial",
+                            "defaultPackSize": 1,
+                            "availableStockOnHand": 1500,
+                            "stats": {
+                                "averageMonthlyConsumption": 500,
+                                "availableStockOnHand": 1500,
+                                "availableMonthsOfStockOnHand": 3,
+                                "monthsOfStockOnHand": 3,
+                                "totalConsumption": 1500,
+                                "stockOnHand": 1500
+                            }
+                        }
+                    ],
+                    "totalCount": 1
+                }
+            }
+        }
+    },
+    "insertOutboundShipment": {
+        "variables": {
+            "otherPartyId": "861102F624354F15ABEB48DC207A4C2D",
+            "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C"
+        },
+        "response": {
+            "data": {
+                "insertOutboundShipment": {
+                    "__typename": "InvoiceNode",
+                    "id": "b2dcffc7-0696-438e-800a-8a8c9a9c3e57",
+                    "invoiceNumber": 6
+                }
+            }
+        }
+    },
+    "upsertOutboundShipment": {
+        "variables": {
+            "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
+            "input": {
+                "updateOutboundShipments": [
+                    {
+                        "id": "01961fce-9ef6-7198-93c1-866395094e48",
+                        "theirReference": "OpenFn Group"
+                    }
+                ]
+            }
+        },
+        "response": {
+            "data": {
+                "batchOutboundShipment": {
+                    "__typename": "BatchOutboundShipmentResponse",
+                    "insertOutboundShipmentUnallocatedLines": null,
+                    "deleteOutboundShipmentLines": null,
+                    "deleteOutboundShipmentServiceLines": null,
+                    "deleteOutboundShipmentUnallocatedLines": null,
+                    "deleteOutboundShipments": null,
+                    "insertOutboundShipmentLines": null,
+                    "insertOutboundShipmentServiceLines": null,
+                    "insertOutboundShipments": null,
+                    "updateOutboundShipmentLines": null,
+                    "updateOutboundShipmentServiceLines": null,
+                    "updateOutboundShipmentUnallocatedLines": null,
+                    "updateOutboundShipments": [
+                        {
+                            "id": "01961fce-9ef6-7198-93c1-866395094e48",
+                            "response": {}
+                        }
+                    ],
+                    "allocateOutboundShipmentUnallocatedLines": null
+                }
+            }
+        }
+    },
+    "request": {
+        "variables": {
+            "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
+            "first": 20,
+            "offset": 0,
+            "key": "expiryDate",
+            "desc": false,
+            "filter": {
+                "hasPacksInStore": true,
+                "masterList": {
+                    "existsForStoreId": {
+                        "equalTo": "DFE0F611AD84A0419D36F8FEFAD1894C"
+                    }
+                }
+            }
+        },
+        "response": {
+            "data": {
+                "stockLines": {
+                    "__typename": "StockLineConnector",
+                    "nodes": [
+                        {
+                            "item": {
+                                "code": "BCG",
+                                "name": "BCG vaccine",
+                                "unitName": "Vial"
+                            }
+                        }
+                    ],
+                    "totalCount": 1
+                }
+            }
+        }
+    }
+}

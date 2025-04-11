@@ -11,15 +11,18 @@ import { v4 as uuidv4 } from 'uuid';
  * @property references - an array of all previous data objects used in the Job
  **/
 
+
 /**
- * @typedef {Object} RequestOptions
- * @property {object} variables - The list of variables to pass to the graphql query
+ * @typedef {Object} RequestBody
+ * @property {object} query - The GraphQL query string
+ * @property {object} variables - The variables for that query string
  */
 
 /**
- * @typedef {Object} GenericRequestOptions
- * @property {object} query - The graphql query string
- * @property {object} variables - The list of variables to pass to the graphql query
+ * @typedef {Object} RequestOptions
+ * @property {GenericRequestBody} body - The body of the post request
+ * @property {object} headers - An object of headers to append to the request.
+ * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
  */
 
 
@@ -29,8 +32,9 @@ import { v4 as uuidv4 } from 'uuid';
  * @function
  * @example <caption>Get items in your catalogue</caption>
  * getItemsWithStats({
-    variables: {
-        "key": "name",
+   body: {
+     variables: {
+       "key": "name",
         "first": 20,
         "isDesc": false,
         "offset": 0,
@@ -39,10 +43,11 @@ import { v4 as uuidv4 } from 'uuid';
             "isVisibleOrOnHand": true,
             "isActive": true
         }
-    }
+     }
+   }
 })
  * @param {RequestOptions} options  - Request object containing your variables
- * @returns  {Operation}
+ * @returns {Operation}
  * @state {HttpState}
  */
 export function getItemsWithStats(options) {
@@ -54,7 +59,7 @@ export function getItemsWithStats(options) {
       body: {
         query: getItemsQueryString,
         variables: {
-          ...resolvedOptions.variables
+          ...resolvedOptions.body.variables
         }
       },
     }
@@ -70,12 +75,14 @@ export function getItemsWithStats(options) {
  * @function
  * @example <caption>Create an outbound shipment</caption>
  * insertOutboundShipment({
-    variables: {
-        "otherPartyId": "861102F624354F15ABEB48DC207A4C2D",
-        "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C"
-    }
- * })
- * @param {RequestOptions} options  - Request object containing your variables
+   body: {
+     variables: {
+       "otherPartyId": "861102F624354F15ABEB48DC207A4C2D",
+       "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C"
+     }
+   }
+})
+ * @param {RequestOptions} options - Request object containing your variables
  * @returns {Operation}
  * @state {HttpState}
  */
@@ -89,7 +96,7 @@ export function insertOutboundShipment(options) {
         query: insertOutboundShipmentQuery,
         variables: {
           id: uuidv4(),
-          ...resolvedOptions.variables
+          ...resolvedOptions.body.variables
         }
       },
     }
@@ -104,10 +111,11 @@ export function insertOutboundShipment(options) {
  * @function
  * @example <caption>Add items to an outbound shipment</caption>
  * upsertOutboundShipment({
-    variables: {
-        "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
+   body: {
+     variables: {
+       "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
         "input": {
-          "insertOutboundShipmentLines": [
+           "insertOutboundShipmentLines": [
             {
               "id": "01961fde-0d43-7bdc-a52d-f2c9b81758ca",
               "numberOfPacks": 10,
@@ -123,24 +131,26 @@ export function insertOutboundShipment(options) {
           "insertOutboundShipmentServiceLines": [],
           "updateOutboundShipmentServiceLines": [],
           "deleteOutboundShipmentServiceLines": []
-        }
-      }
+         }
+     }
+   }  
 })
  * @example <caption>Update outbound shipment status to 'PICKED'</caption>
  * upsertOutboundShipment({
-    variables: {
-        "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
-        "input": {
-            "updateOutboundShipments": [
-                {
-                    "id": "01961fce-9ef6-7198-93c1-866395094e48",
-                    "status": "PICKED"
-                }
-            ]
-        }
-    }
-})
-
+ *  body: {
+ *    variables: {
+ *      "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
+ *      "input": {
+ *        "updateOutboundShipments": [
+ *          {
+ *            "id": "01961fce-9ef6-7198-93c1-866395094e48",
+ *            "status": "PICKED"
+ *           }
+ *         ]
+ *       }
+ *    }
+ *  }
+ * })
  * @param {RequestOptions} options - Request object containing your variables
  * @returns {Operation}
  * @state {HttpState}
@@ -154,7 +164,7 @@ export function upsertOutboundShipment(options) {
       body: {
         query: upsertOutboundShipmentQuery,
         variables: {
-          ...resolvedOptions.variables
+          ...resolvedOptions.body.variables
         }
       },
     }
@@ -166,56 +176,55 @@ export function upsertOutboundShipment(options) {
 
 
 /**
- * Make a general GraphQL request
+ * Make a generic GraphQL request
  * @public
  * @function
  * @example <caption>Get you stock lines</caption>
  * request({
-  body: {
-    query: `query stockLines(
-          $first: Int,
-          $offset: Int,
-          $key: StockLineSortFieldInput!,
-          $desc: Boolean,
-          $filter: StockLineFilterInput,
-          $storeId: String!
-        ) {
-          stockLines(
-            storeId: $storeId,
-            filter: $filter,
-            page: {first: $first, offset: $offset},
-            sort: {key: $key, desc: $desc}
+   body: {
+      query: `query stockLines(
+            $first: Int,
+            $offset: Int,
+            $key: StockLineSortFieldInput!,
+            $desc: Boolean,
+            $filter: StockLineFilterInput,
+            $storeId: String!
           ) {
-            ... on StockLineConnector {
-              __typename
-              nodes {
-                item {
-                  code
-                  name
-                  unitName
+            stockLines(
+              storeId: $storeId,
+              filter: $filter,
+              page: {first: $first, offset: $offset},
+              sort: {key: $key, desc: $desc}
+            ) {
+              ... on StockLineConnector {
+                __typename
+                nodes {
+                  item {
+                    code
+                    name
+                    unitName
+                  }
                 }
+                totalCount
               }
-              totalCount
             }
-          }
-        }
-        `,
-    variables: {
-      "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
-      "first": 20,
-      "offset": 0,
-      "key": "expiryDate",
-      "desc": false,
-      "filter": {
-        "hasPacksInStore": true,
-        "masterList": {
-          "existsForStoreId": {
-            "equalTo": "DFE0F611AD84A0419D36F8FEFAD1894C"
+          }`,
+      variables: {
+        "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
+        "first": 20,
+        "offset": 0,
+        "key": "expiryDate",
+        "desc": false,
+        "filter": {
+          "hasPacksInStore": true,
+          "masterList": {
+            "existsForStoreId": {
+              "equalTo": "DFE0F611AD84A0419D36F8FEFAD1894C"
+            }
           }
         }
       }
     }
-  }
 })
  *@param {GenericRequestOptions} options - Options object containing your query and variables
  * @returns {Operation}
