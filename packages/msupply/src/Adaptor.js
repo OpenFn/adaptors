@@ -21,20 +21,20 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * @typedef {Object} GetItemsVariables
  * @property {string} key - The unique key of each item in the list
- * @property {object} storeId - The msupply store id the list is being fetched from
+ * @property {object} storeId - The msupply store id  the list is being fetched from
  */
 
 
 /**
  * @typedef {Object} InsertOutboundShipmentvariables
- * @property {string} otherPartyId - recieving party id
- * @property {object} storeId - The msupply store id the shipment is being made on
+ * @property {string} otherPartyId - The recieving party id
+ * @property {object} storeId - The id of the store the shipment is being made from
  */
 
 /**
  * @typedef {Object} UpsertOutboundShipmentvariables
- * @property {Object} uinput - The payload for the target shipment
- * @property {object} storeId - The msupply store id the shipment is being made on
+ * @property {Object} input - The payload for the target shipment
+ * @property {object} storeId - The id of the store the shipment is being made from
  */
 
 
