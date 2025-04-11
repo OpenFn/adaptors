@@ -1407,6 +1407,37 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
 
+  packages/msupply:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+      uuid:
+        specifier: ^11.1.0
+        version: 11.1.0
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      esno:
+        specifier: ^0.16.3
+        version: 0.16.3
+      mocha:
+        specifier: ^10.7.3
+        version: 10.7.3
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      undici:
+        specifier: ^5.22.1
+        version: 5.28.5
+
   packages/mysql:
     dependencies:
       '@openfn/language-common':
@@ -15666,6 +15697,11 @@ packages:
       is-typed-array: 1.1.10
       which-typed-array: 1.1.9
     dev: true
+
+  /uuid@11.1.0:
+    resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
+    hasBin: true
+    dev: false
 
   /uuid@2.0.3:
     resolution: {integrity: sha512-FULf7fayPdpASncVy4DLh3xydlXEJJpvIELjYjNeQWYUZ9pclcpvCZSr2gkmN2FrrGcI7G/cJsIEwk5/8vfXpg==}
