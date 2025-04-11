@@ -1,4 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
 import * as util from './util';
@@ -68,7 +71,7 @@ export function getForms() {
  * @param {string} formId - Form Id to get the specific submissions
  * @param {object} [options={}] - Optional query params for the request
  * @param {object} [options.query] - Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}
- * @param {number} [options.limit=10000] - Maximum number of submissions to fetch
+ * @param {number} [options.max=10000] - Maximum number of submissions to fetch
  * @param {number} [options.pageSize=1000] - Number of submissions to fetch per page
  * @param {number} [options.start=0] - Starting index for pagination
  * @state data - an array of submission objects
@@ -81,9 +84,28 @@ export function getSubmissions(formId, options) {
       formId,
       options
     );
-
-    const { query, limit, pageSize, start } = resolvedOptions;
-    const url = `/assets/${resolvedFormId}/data/`;
+    if (resolvedOptions.limit) {
+      const keysToRemove = Object.keys(resolvedOptions).filter(k =>
+        k.match(/^(max|pageSize)$/)
+      );
+      if (keysToRemove.length) {
+        console.warn(
+          `Warning: ignoring option [${keysToRemove.join(
+            ','
+          )}] as "limit" is set`
+        );
+        delete resolvedOptions.max;
+        delete resolvedOptions.pageSize;
+      }
+    }
+    const {
+      query,
+      limit,
+      pageSize = 1e3,
+      start = 0,
+      max = 1e4,
+    } = resolvedOptions;
+    const path = `/assets/${resolvedFormId}/data/`;
     const qs = {};
     if (query) {
       if (typeof query === 'string') {
@@ -92,16 +114,21 @@ export function getSubmissions(formId, options) {
         qs.query = JSON.stringify(query);
       }
     }
-
-    const response = await util.paginateRequest(state, 'GET', url, {
+    const requestOptions = {
       query: { ...qs },
+      max,
+      start,
       limit,
       pageSize,
-      start,
-    });
+    };
+    const result = await util.requestWithPagination(
+      state,
+      path,
+      requestOptions
+    );
 
-    console.log('✓', response.body?.results?.length, 'submissions fetched.');
-    return util.prepareNextState(state, response);
+    console.log('✓', result?.length, 'submissions fetched.');
+    return composeNextState(state, result);
   };
 }
 
