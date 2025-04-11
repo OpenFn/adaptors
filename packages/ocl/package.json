@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "2.3.2"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "assertion-error": "^1.0.1",
