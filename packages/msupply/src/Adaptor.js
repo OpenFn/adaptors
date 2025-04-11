@@ -102,28 +102,6 @@ export function insertOutboundShipment(variables) {
  * Update an outbound shipment
  * @public
  * @function
- * @example <caption>Add items to an outbound shipment</caption>
- * upsertOutboundShipment({
-       "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
-        "input": {
-           "insertOutboundShipmentLines": [
-            {
-              "id": "01961fde-0d43-7bdc-a52d-f2c9b81758ca",
-              "numberOfPacks": 10,
-              "stockLineId": "01954360-782d-7933-9493-4099e7e9a20c",
-              "invoiceId": "01961fce-9ef6-7198-93c1-866395094e48"
-            }
-          ],
-          "updateOutboundShipmentLines": [],
-          "deleteOutboundShipmentLines": [],
-          "insertOutboundShipmentUnallocatedLines": [],
-          "updateOutboundShipmentUnallocatedLines": [],
-          "deleteOutboundShipmentUnallocatedLines": [],
-          "insertOutboundShipmentServiceLines": [],
-          "updateOutboundShipmentServiceLines": [],
-          "deleteOutboundShipmentServiceLines": []
-         } 
-})
  * @example <caption>Update outbound shipment status to 'PICKED'</caption>
  * upsertOutboundShipment({
  *      "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
