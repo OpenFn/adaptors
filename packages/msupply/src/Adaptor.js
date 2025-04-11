@@ -161,55 +161,18 @@ export function upsertOutboundShipment(variables) {
  * Make a generic GraphQL request
  * @public
  * @function
- * @example <caption>Get you stock lines</caption>
- * query(`query stockLines(
-            $first: Int,
-            $offset: Int,
-            $key: StockLineSortFieldInput!,
-            $desc: Boolean,
-            $filter: StockLineFilterInput,
-            $storeId: String!
-          ) {
-            stockLines(
-              storeId: $storeId,
-              filter: $filter,
-              page: {first: $first, offset: $offset},
-              sort: {key: $key, desc: $desc}
-            ) {
-              ... on StockLineConnector {
-                __typename
-                nodes {
-                  item {
-                    code
-                    name
-                    unitName
-                  }
-                }
-                totalCount
-              }
-            }
-          }`,
-     {
-        "storeId": "DFE0F611AD84A0419D36F8FEFAD1894C",
-        "first": 20,
-        "offset": 0,
-        "key": "expiryDate",
-        "desc": false,
-        "filter": {
-          "hasPacksInStore": true,
-          "masterList": {
-            "existsForStoreId": {
-              "equalTo": "DFE0F611AD84A0419D36F8FEFAD1894C"
-            }
-          }
-      }
-})
+ * @example
+ * query(`
+  query isCentralServer {
+    isCentralServer
+  }`
+)
  *@param {string} query - GraphQl query string
- *@param {Object} varibales - GraphQl query variables
+ *@param {Object} variables - GraphQl query variables
  * @returns {Operation} 
  * @state {HttpState}
  */
-export function query(query, variables) {
+export function query(query, variables = {}) {
   return async state => {
     const [resolvedQuery, resolvedVariables] = expandReferences(state, query, variables);
 
