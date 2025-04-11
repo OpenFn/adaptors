@@ -162,7 +162,7 @@ export function upsertOutboundShipment(variables) {
  * @public
  * @function
  * @example <caption>Get you stock lines</caption>
- * request(`query stockLines(
+ * query(`query stockLines(
             $first: Int,
             $offset: Int,
             $key: StockLineSortFieldInput!,
