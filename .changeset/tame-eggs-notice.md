@@ -1,5 +1,5 @@
 ---
-'@openfn/language-kobotoolbox': major
+'@openfn/language-kobotoolbox': minor
 ---
 
 add pagination support in getSubmissions
