@@ -7,14 +7,6 @@ import { expandReferences } from '@openfn/language-common/util';
 import * as util from './util';
 
 /**
- * Options object
- * @typedef {Object} RequestOptions
- * @property {object} query - An object of query parameters to be encoded into the URL
- * @property {object} headers - An object of all request headers
- * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
- */
-
-/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for http.
  * @example
@@ -70,10 +62,10 @@ export function getForms() {
  * @public
  * @param {string} formId - Form Id to get the specific submissions
  * @param {object} [options={}] - Optional query params for the request
+ * @param {number} [options.limit] - Limit the number of submissions to fetch
  * @param {object} [options.query] - Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}
- * @param {number} [options.max=10000] - Maximum number of submissions to fetch
- * @param {number} [options.pageSize=1000] - Number of submissions to fetch per page
- * @param {number} [options.start=0] - Starting index for pagination
+ * @param {number} [options.max=10000] - (Openfn only) Restrict the maximum number of retrieved submissions. May be fetched in several pages. Not used if `limit` is set.
+ * @param {number} [options.pageSize=1000] - (Openfn only) Limits the size of each page of submissions. Not used if limit is set.
  * @state data - an array of submission objects
  * @returns {Operation}
  */
@@ -98,13 +90,7 @@ export function getSubmissions(formId, options) {
         delete resolvedOptions.pageSize;
       }
     }
-    const {
-      query,
-      limit,
-      pageSize = 1e3,
-      start = 0,
-      max = 1e4,
-    } = resolvedOptions;
+    const { query, limit, pageSize = 1e3, max = 1e4 } = resolvedOptions;
     const path = `/assets/${resolvedFormId}/data/`;
     const qs = {};
     if (query) {
@@ -117,7 +103,6 @@ export function getSubmissions(formId, options) {
     const requestOptions = {
       query: { ...qs },
       max,
-      start,
       limit,
       pageSize,
     };

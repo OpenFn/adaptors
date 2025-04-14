@@ -109,7 +109,7 @@
                 "name": "number"
               }
             },
-            "name": "options.limit",
+            "name": "options.max",
             "default": "10000"
           },
           {
