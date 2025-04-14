@@ -5,7 +5,6 @@
       "params": [
         "method",
         "path",
-        "body",
         "options"
       ],
       "docs": {
@@ -42,15 +41,6 @@
               "name": "string"
             },
             "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Object which will be attached to the POST body",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
           },
           {
             "title": "param",
