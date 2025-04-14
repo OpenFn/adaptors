@@ -21,7 +21,8 @@
     "slack:notify": "cd tools/slack && pnpm notify",
     "generate": "pnpm -C tools/generate cli generate",
     "prerelease": "node scripts/prerelease.mjs --no-warnings",
-    "version:changeset": "pnpm changeset version && node scripts/changelog-dates.js"
+    "version": "pnpm changeset version && pnpm run changelog",
+    "changelog": "pnpm -C tools/changelog changelog"
   },
   "author": "Open Function Group",
   "license": "ISC",
@@ -36,10 +37,6 @@
     "esno": "^4.8.0",
     "lodash": "^4.17.21",
     "mocha": "^10.7.3",
-    "remark": "^15.0.1",
-    "remark-stringify": "^11.0.0",
-    "typescript": "4.8.4",
-    "remark-parse": "^11.0.0",
-    "date-fns": "^2.25.0"
+    "typescript": "4.8.4"
   }
 }
