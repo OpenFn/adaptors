@@ -538,7 +538,7 @@ export function query(query, options) {
 
     const result = await connection.query(resolvedQuery, {
       autoFetch: true,
-      maxFetch: !limit ? Infinity : limit,
+      maxFetch: limit || Infinity,
     });
 
     console.log('Fetched: ' + result.records.length);

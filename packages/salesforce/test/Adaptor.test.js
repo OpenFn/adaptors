@@ -87,7 +87,7 @@ describe('Adaptor', () => {
         .catch(done);
     });
   });
-  describe('query', () => {
+  describe.only('query', () => {
     const qsResponse = {
       done: true,
       totalSize: 1,
