@@ -27,7 +27,7 @@ describe('getSubmissions', () => {
   it('should get a list of submissions', async () => {
     testServer
       .intercept({
-        path: `/api/v2/assets/${formId}/data/`,
+        path: `/api/v2/assets/${formId}/data`,
         method: 'GET',
         query: { format: 'json', limit: 1000, start: 0 },
       })
@@ -48,7 +48,7 @@ describe('getSubmissions', () => {
   it('should get a list of submissions with a query', async () => {
     testServer
       .intercept({
-        path: `/api/v2/assets/${formId}/data/`,
+        path: `/api/v2/assets/${formId}/data`,
         method: 'GET',
         query: {
           format: 'json',
@@ -98,13 +98,13 @@ describe('getForms', () => {
   });
 });
 
-describe.only('getDeploymentInfo', () => {
+describe('getDeploymentInfo', () => {
   const formId = 'aXecHjmbATuF6iGFmvBLBX';
 
   beforeEach(() => {
     testServer
       .intercept({
-        path: `/api/v2/assets/${formId}/deployment/`,
+        path: `/api/v2/assets/${formId}/deployment`,
         method: 'GET',
         query: { format: 'json' },
       })

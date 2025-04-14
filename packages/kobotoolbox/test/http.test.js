@@ -14,11 +14,11 @@ const configuration = {
   apiVersion: 'v2',
   baseUrl: 'https://http-test.kobotoolbox.org',
 };
-describe.skip('http.get', () => {
+describe('http.get', () => {
   it('should GET with a query', async () => {
     testServer
       .intercept({
-        path: '/api/v2/assets/',
+        path: '/api/v2/assets',
         query: { format: 'json', metadata: 'on' },
         method: 'GET',
       })
@@ -41,7 +41,7 @@ describe.skip('http.get', () => {
   it('should make a GET request', async () => {
     testServer
       .intercept({
-        path: '/api/v2/assets/',
+        path: '/api/v2/assets',
         query: { format: 'json' },
         method: 'GET',
       })
@@ -58,11 +58,11 @@ describe.skip('http.get', () => {
   });
 });
 
-describe.skip('http.post', () => {
+describe('http.post', () => {
   it('should make a POST request', async () => {
     testServer
       .intercept({
-        path: '/api/v2/assets/',
+        path: '/api/v2/assets',
         query: { format: 'json' },
         method: 'POST',
         data: {

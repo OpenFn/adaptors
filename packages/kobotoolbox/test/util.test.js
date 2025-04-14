@@ -122,7 +122,7 @@ describe('responseWithPagination', () => {
   });
 });
 
-describe.skip('request', () => {
+describe('request', () => {
   it('should make GET a request', async () => {
     testServer
       .intercept({
@@ -152,12 +152,48 @@ describe.skip('request', () => {
     expect(response.body.count).to.eq(response.body.results.length);
   });
 });
-describe.skip('requestWithPagination', () => {
+describe('requestWithPagination', () => {
+  it('stops fetching when default maximum items reached', async () => {
+    let callCount = 0;
+    // Create an array of 10001 items to exceed default max
+    const manyObjects = Array.from({ length: 10001 }, (_, i) => ({
+      uid: String(i),
+    }));
+
+    testServer
+      .intercept({
+        path: /\/api\/v2\/assets\/aDReHdA7UuNBYsiCXQBr33\/data/,
+        method: 'GET',
+      })
+      .reply(
+        200,
+        req => {
+          callCount++;
+          return responseWithPagination(
+            `${req.origin}${req.path}`,
+            req.query.limit,
+            req.query.start,
+            manyObjects
+          );
+        },
+        { ...jsonHeaders }
+      )
+      .times(11); // Allow enough calls to reach max
+
+    const state = { configuration };
+    const data = await util.requestWithPagination(
+      state,
+      '/assets/aDReHdA7UuNBYsiCXQBr33/data/'
+    );
+
+    expect(data.length).to.eql(10000); // Should stop at 10000 items
+    expect(callCount).to.be.lessThan(11); // Should not make all available calls
+  });
   it('handles pagination by default', async () => {
     let callCount = 0;
     testServer
       .intercept({
-        path: /\/api\/v2\/assets\/aDReHdA7UuNBYsiCXQBr43\/data\//,
+        path: /\/api\/v2\/assets\/aDReHdA7UuNBYsiCXQBr43\/data/,
         method: 'GET',
       })
       .reply(
@@ -189,7 +225,7 @@ describe.skip('requestWithPagination', () => {
     let callCount = 0;
     testServer
       .intercept({
-        path: /\/api\/v2\/assets\/aDReHdA7UuNBYsiCXQBr43\/data\//,
+        path: /\/api\/v2\/assets\/aDReHdA7UuNBYsiCXQBr23\/data/,
         method: 'GET',
       })
       .reply(
@@ -208,7 +244,7 @@ describe.skip('requestWithPagination', () => {
     const state = { configuration };
     const data = await util.requestWithPagination(
       state,
-      '/assets/aDReHdA7UuNBYsiCXQBr43/data/',
+      '/assets/aDReHdA7UuNBYsiCXQBr23/data/',
       {
         limit: 1,
       }
@@ -216,5 +252,23 @@ describe.skip('requestWithPagination', () => {
 
     expect(callCount).to.eql(1);
     expect(data).to.eql([{ uid: '1' }]);
+  });
+});
+
+describe('cleanPath', () => {
+  it('should remove the first slash from the path', () => {
+    expect(util.cleanPath('http://example.com')).to.eq('http://example.com');
+    expect(util.cleanPath('https://example.com//path')).to.eq(
+      'https://example.com/path'
+    );
+
+    expect(util.cleanPath('http://site.com//api//v1')).to.eq(
+      'http://site.com/api/v1'
+    );
+    expect(util.cleanPath('no/slashes/here')).to.eq('no/slashes/here');
+  });
+
+  it('should remove trailing slashes', () => {
+    expect(util.cleanPath('/test/')).to.eql('/test');
   });
 });
