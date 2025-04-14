@@ -34,15 +34,11 @@ export function request(state, method, path, opts = {}) {
     baseUrl,
   };
 
-  console.log({ requestPath });
   return commonRequest(method, requestPath, options).then(logResponse);
 }
 
 export async function requestWithPagination(state, path, options = {}) {
   const results = [];
-
-  const { baseUrl, apiVersion } = state.configuration;
-  const requestPath = cleanPath(`/api/${apiVersion}/${path}`);
 
   let { pageSize, start, limit, max } = options;
 
@@ -50,12 +46,12 @@ export async function requestWithPagination(state, path, options = {}) {
   const maxResults = max ?? limit ?? 1e4;
 
   // Declare a variable that takes in all the options. We can then modify this variable to fetch the next page
-  let requestOptions = { baseUrl, ...options };
+  let requestOptions = { ...options };
 
   let shouldFetchMoreContent = false;
   let isFirstRequest = true;
   const didUserPassLimit = Boolean(max || limit);
-  console.log({ didUserPassLimit });
+
   do {
     requestOptions.query ??= {};
 
@@ -79,7 +75,7 @@ export async function requestWithPagination(state, path, options = {}) {
     }
 
     // Fetch a page of data
-    const response = await request(state, 'GET', requestPath, requestOptions);
+    const response = await request(state, 'GET', path, requestOptions);
 
     // If a search, the data will be in the form { results }
     // otherwise just return the data verbatim (in an array)
