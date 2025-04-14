@@ -38,14 +38,14 @@ async function updateChangelog(adaptorName, adaptorVersionList) {
         !releasedDate &&
         versionOnlyRegex.test(astVersion.trim())
       ) {
-        const convertedDate = format(new Date(), 'dd MMMM yyyy');
+        const convertedDate = format(new Date(), 'yyyy MMMM d');
         item.children[0].value = `${astVersion} ${convertedDate}`;
       }
 
       if (releasedDate?.date) {
         const convertedDate = format(
           new Date(releasedDate.date),
-          'dd MMMM yyyy'
+          'yyyy MMMM d'
         );
         item.children[0].value = `${astVersion} ${convertedDate}`;
       }

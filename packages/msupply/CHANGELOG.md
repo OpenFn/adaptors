@@ -1,5 +1,5 @@
 # @openfn/language-msupply
 
-## 1.0.0 11 April 2025
+## 1.0.0
 
 Initial release.
