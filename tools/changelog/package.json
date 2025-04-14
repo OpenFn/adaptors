@@ -5,11 +5,11 @@
   "description": "",
   "main": "index.js",
   "bin": {
-    "changelog": "src/update-latest-versions.js"
+    "update-latest-versions": "src/update-latest-versions.js"
   },
   "scripts": {
-    "changelog": "esno src/update-latest-versions.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "update-latest-versions": "esno src/update-latest-versions.js",
+    "update-historical-versions": "esno src/update-version-histories.js"
   },
   "author": "",
   "license": "ISC",

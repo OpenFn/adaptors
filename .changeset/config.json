@@ -15,9 +15,5 @@
     "@openfn/parse-jsdoc",
     "@openfn/slack-notify",
     "import-tests"
-  ],
-  "snapshot": {
-    "prereleaseTemplate": "{datetime}",
-    "useCalculatedVersion": true
-  }
+  ]
 }

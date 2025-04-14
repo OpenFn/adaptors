@@ -1,13 +1,7 @@
-import fs from 'fs';
 
-const packagesDir = '../../packages';
+import { updateChangelog } from './updateChangelog';
+import getAdaptorsFromDir from './utils';
 
-function getAdaptorsFromDir() {
-  return fs
-    .readdirSync(packagesDir, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory())
-    .map(dirent => dirent.name);
-}
 
 async function fetchVersions(adaptor) {
   try {
@@ -27,16 +21,18 @@ async function fetchVersions(adaptor) {
   }
 }
 
-export default async function getVersionHistory() {
-  const output = [];
+async function getVersionHistory() {
   const adaptors = getAdaptorsFromDir();
   for (const adaptor of adaptors) {
     const adaptorName = `@openfn/language-${adaptor}`;
     const data = await fetchVersions(adaptorName);
-    output.push(data);
-  }
+    console.log(`Fetching ${adaptor}`);
+    
 
-  return output;
+    if (!data.error) {      
+      await updateChangelog(adaptor, data);
+    }
+  }
 }
 
 getVersionHistory();
