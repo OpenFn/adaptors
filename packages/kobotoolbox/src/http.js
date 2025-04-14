@@ -22,9 +22,7 @@ import * as util from './util';
  * @public
  * @function
  * @example <caption>GET assets resource</caption>
- * http.get(
- *  "/assets/",
- *  )
+ * http.get('assets')
  * @param {string} path - path to resource
  * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
  * @state {KoboToolboxHttpState}
