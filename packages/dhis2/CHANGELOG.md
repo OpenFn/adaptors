@@ -1,71 +1,71 @@
 # @openfn/language-dhis2
 
-## 6.3.2
+## 6.3.2 2025 April 11
 
 ### Patch Changes
 
-- Updated dependencies [d7105c0]
-  - @openfn/language-common@2.3.2
+* Updated dependencies \[d7105c0]
+  * @openfn/language-common@2.3.2
 
-## 6.3.1
+## 6.3.1 2025 March 14
 
 ### Patch Changes
 
-- Updated dependencies [23ccb01]
-  - @openfn/language-common@2.3.1
+* Updated dependencies \[23ccb01]
+  * @openfn/language-common@2.3.1
 
-## 6.3.0
+## 6.3.0 2025 January 30
 
 ### Minor Changes
 
-- Added a 'findAttributeValueById' function; GHS points out that this is more
+* Added a 'findAttributeValueById' function; GHS points out that this is more
   durable than the display names used by 'findAttributeValue'
 
-## 6.2.0
+## 6.2.0 2025 January 28
 
 ### Minor Changes
 
-- 0156632: Add `asBase64` option in dhis2 `get()` function
+* 0156632: Add `asBase64` option in dhis2 `get()` function
 
-## 6.1.0
+## 6.1.0 2025 January 16
 
 ### Minor Changes
 
-- c19d561: Added support for personal access tokens in dhis2
+* c19d561: Added support for personal access tokens in dhis2
 
 ### Patch Changes
 
-- Updated dependencies [b3d7f59]
-- Updated dependencies [2d709ff]
-- Updated dependencies [41e8cc3]
-  - @openfn/language-common@2.3.0
+* Updated dependencies \[b3d7f59]
+* Updated dependencies \[2d709ff]
+* Updated dependencies \[41e8cc3]
+  * @openfn/language-common@2.3.0
 
-## 6.0.3
-
-### Patch Changes
-
-- Updated dependencies [6dffdbd]
-  - @openfn/language-common@2.2.1
-
-## 6.0.2
+## 6.0.3 2025 January 16
 
 ### Patch Changes
 
-- Updated dependencies [a47d8d5]
-- Updated dependencies [9240428]
-  - @openfn/language-common@2.2.0
+* Updated dependencies \[6dffdbd]
+  * @openfn/language-common@2.2.1
 
-## 6.0.1
+## 6.0.2 2025 January 9
 
 ### Patch Changes
 
-- ab94b7c: Fix links in docs examples
+* Updated dependencies \[a47d8d5]
+* Updated dependencies \[9240428]
+  * @openfn/language-common@2.2.0
 
-## 6.0.0
+## 6.0.1 2024 December 4
+
+### Patch Changes
+
+* ab94b7c: Fix links in docs examples
+
+## 6.0.0 2024 November 28
 
 ### Major Changes
 
-- b44a3b1: Migrates the adaptor to the new Tracker API (v36+) for
+* b44a3b1: Migrates the adaptor to the new Tracker API (v36+) for
   `trackedEntities`, `enrollments`, `events` and `relationships`. Note that
   `trackedEntities` is no longer used.
 
@@ -124,142 +124,142 @@
 
 ### Minor Changes
 
-- d30f39f: Added new post() operation
+* d30f39f: Added new post() operation
 
-## 5.0.8
+## 5.0.8 2024 November 26
 
 ### Patch Changes
 
-- 94be282: Fix an issue where the path argument of update does not accept a
+* 94be282: Fix an issue where the path argument of update does not accept a
   function value
 
-## 5.0.7
+## 5.0.7 2024 November 8
 
 ### Patch Changes
 
-- 6cb5377: Removed support for DHIS2 v42
+* 6cb5377: Removed support for DHIS2 v42
 
-## 5.0.6
-
-### Patch Changes
-
-- Updated docs for each()
-- Updated dependencies
-  - @openfn/language-common@2.1.1
-
-## 5.0.5
+## 5.0.6 2024 October 28
 
 ### Patch Changes
 
-- Updated dependencies [03a1a74]
-  - @openfn/language-common@2.1.0
+* Updated docs for each()
+* Updated dependencies
+  * @openfn/language-common@2.1.1
 
-## 5.0.4
-
-### Patch Changes
-
-- Fixed security vulnerability in jsonpath-plus [33973a2]
-  - @openfn/language-common@2.0.3
-
-## 5.0.3
+## 5.0.5 2024 October 18
 
 ### Patch Changes
 
-- 3fd13c2: Update axios to 1.7.7
+* Updated dependencies \[03a1a74]
+  * @openfn/language-common@2.1.0
 
-## 5.0.2
-
-### Patch Changes
-
-- Updated dependencies [77a690f]
-  - @openfn/language-common@2.0.2
-
-## 5.0.1
+## 5.0.4 2024 October 15
 
 ### Patch Changes
 
-- 8146c23: Fix typings in package.json
-- Updated dependencies [8146c23]
-  - @openfn/language-common@2.0.1
+* Fixed security vulnerability in jsonpath-plus \[33973a2]
+  * @openfn/language-common@2.0.3
 
-## 5.0.0
+## 5.0.3 2024 October 9
+
+### Patch Changes
+
+* 3fd13c2: Update axios to 1.7.7
+
+## 5.0.2 2024 September 24
+
+### Patch Changes
+
+* Updated dependencies \[77a690f]
+  * @openfn/language-common@2.0.2
+
+## 5.0.1 2024 August 16
+
+### Patch Changes
+
+* 8146c23: Fix typings in package.json
+* Updated dependencies \[8146c23]
+  * @openfn/language-common@2.0.1
+
+## 5.0.0 2024 August 1
 
 ### Major Changes
 
-- Export new common http helpers (http namespace)
+* Export new common http helpers (http namespace)
 
 ## 4.2.1
 
 ### Patch Changes
 
-- Updated dependencies [4fe527c]
-  - @openfn/language-common@2.0.0
+* Updated dependencies \[4fe527c]
+  * @openfn/language-common@2.0.0
 
-## 4.2.0
-
-### Minor Changes
-
-- 5fb82f07: Export `group` operation from common
-
-### Patch Changes
-
-- Updated dependencies [5fb82f07]
-  - @openfn/language-common@1.15.0
-
-## 4.1.0
+## 4.2.0 2024 June 19
 
 ### Minor Changes
 
-- 73433c20: Add `fnIf` operation
+* 5fb82f07: Export `group` operation from common
 
 ### Patch Changes
 
-- Updated dependencies [106ecf6d]
-  - @openfn/language-common@1.14.0
+* Updated dependencies \[5fb82f07]
+  * @openfn/language-common@1.15.0
 
-## 4.0.5
+## 4.1.0 2024 June 13
 
-### Patch Changes
+### Minor Changes
 
-- Fix attribute metadata
-
-## 4.0.4
+* 73433c20: Add `fnIf` operation
 
 ### Patch Changes
 
-- Security updates (lodash,undici)
-- Updated dependencies
-  - @openfn/language-common@1.13.2
+* Updated dependencies \[106ecf6d]
+  * @openfn/language-common@1.14.0
 
-## 4.0.3
-
-### Patch Changes
-
-- 222184d: remove Class Log and replaced
-
-  - `Log.success` with `console.log`
-  - `Log.warn` with `console.warn`
-  - `Log.error` with `console.error`
-
-## 4.0.2
+## 4.0.5 2024 May 14
 
 ### Patch Changes
 
-- 1bd612e: improve error logs response
+* Fix attribute metadata
 
-## 4.0.1
+## 4.0.4 2024 May 8
 
 ### Patch Changes
 
-- Update lock files
-- Updated dependencies
-  - @openfn/language-common@1.8.1
+* Security updates (lodash,undici)
+* Updated dependencies
+  * @openfn/language-common@1.13.2
+
+## 4.0.3 2023 October 24
+
+### Patch Changes
+
+* 222184d: remove Class Log and replaced
+
+  * `Log.success` with `console.log`
+  * `Log.warn` with `console.warn`
+  * `Log.error` with `console.error`
+
+## 4.0.2 2023 July 21
+
+### Patch Changes
+
+* 1bd612e: improve error logs response
+
+## 4.0.1 2023 June 19
+
+### Patch Changes
+
+* Update lock files
+* Updated dependencies
+  * @openfn/language-common@1.8.1
 
 ## 4.0.0
 
 ### Major Changes
 
-- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+* 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
   `each` block; add eslint
 
   The packages receiving a major bump here exposed functions that didn't work as
@@ -271,110 +271,110 @@
 
 ### Patch Changes
 
-- Updated dependencies [2c1d603]
-  - @openfn/language-common@1.8.0
+* Updated dependencies \[2c1d603]
+  * @openfn/language-common@1.8.0
 
-## 3.2.12
-
-### Patch Changes
-
-- 57742d1: improve logs output
-
-## 3.2.11
+## 3.2.12 2023 May 31
 
 ### Patch Changes
 
-- 705caab: Remove tools as devdependencies
+* 57742d1: improve logs output
 
-## 3.2.10
-
-### Patch Changes
-
-- 929bca6: Use metadata helper function from common
-- Updated dependencies [929bca6]
-  - @openfn/language-common@1.7.7
-
-## 3.2.9
+## 3.2.11 2023 March 31
 
 ### Patch Changes
 
-- 14f481e: mark execute as private
-- Updated dependencies [2b4c61a]
-  - @openfn/language-common@1.7.6
+* 705caab: Remove tools as devdependencies
 
-## 3.2.8
+## 3.2.10 2023 March 31
 
 ### Patch Changes
 
-- Fix metadata function export
+* 929bca6: Use metadata helper function from common
+* Updated dependencies \[929bca6]
+  * @openfn/language-common@1.7.7
 
-## 3.2.7
-
-### Patch Changes
-
-- c09b821: Add @magic annotations
-
-## 3.2.6
+## 3.2.9 2023 March 30
 
 ### Patch Changes
 
-- df6098d: replace sample state with configuration
+* 14f481e: mark execute as private
+* Updated dependencies \[2b4c61a]
+  * @openfn/language-common@1.7.6
 
-## 3.2.5
-
-### Patch Changes
-
-- f2aed32: add examples
-
-## 3.2.4
+## 3.2.8 2023 March 24
 
 ### Patch Changes
 
-- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+* Fix metadata function export
 
-## 3.2.3
-
-### Patch Changes
-
-- f2a91a4: Update package exports
-- Updated dependencies [f2a91a4]
-  - @openfn/language-common@1.7.5
-
-## 3.2.2
+## 3.2.7 2023 March 10
 
 ### Patch Changes
 
-- 9a2755e: Update dependency on language-common
-- 8566b26: Fix typings
-- b3d45ff: Fix CJS export of npm package.
-- ecf5d30: remove sinon since it was not being used
-- Updated dependencies [8566b26]
-- Updated dependencies [b3d45ff]
-- Updated dependencies [b5eb665]
-- Updated dependencies [ecf5d30]
-  - @openfn/language-common@1.7.4
-  - @openfn/buildtools@1.0.2
+* c09b821: Add @magic annotations
 
-## 3.2.1
+## 3.2.6 2023 February 16
 
 ### Patch Changes
 
-- e04aa28: Rename credential-schema to configuration-schema, update descriptions
+* df6098d: replace sample state with configuration
 
-## 3.2.0
+## 3.2.5 2023 February 15
+
+### Patch Changes
+
+* f2aed32: add examples
+
+## 3.2.4 2023 January 13
+
+### Patch Changes
+
+* 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
+
+## 3.2.3 2022 November 11
+
+### Patch Changes
+
+* f2a91a4: Update package exports
+* Updated dependencies \[f2a91a4]
+  * @openfn/language-common@1.7.5
+
+## 3.2.2 2022 November 4
+
+### Patch Changes
+
+* 9a2755e: Update dependency on language-common
+* 8566b26: Fix typings
+* b3d45ff: Fix CJS export of npm package.
+* ecf5d30: remove sinon since it was not being used
+* Updated dependencies \[8566b26]
+* Updated dependencies \[b3d45ff]
+* Updated dependencies \[b5eb665]
+* Updated dependencies \[ecf5d30]
+  * @openfn/language-common@1.7.4
+  * @openfn/buildtools@1.0.2
+
+## 3.2.1 2022 October 21
+
+### Patch Changes
+
+* e04aa28: Rename credential-schema to configuration-schema, update descriptions
+
+## 3.2.0 2022 October 19
 
 ### Minor Changes
 
-- f670bf8: Added credential schema to enable new ui
+* f670bf8: Added credential schema to enable new ui
 
-## 3.1.0
+## 3.1.0 2022 October 18
 
 ### Minor Changes
 
-- 8d6e8ce: Migrate dhis2 into repo
+* 8d6e8ce: Migrate dhis2 into repo
 
 ### Patch Changes
 
-- Updated dependencies [4671e89]
-- Updated dependencies [8d6e8ce]
-  - @openfn/buildtools@1.0.1
+* Updated dependencies \[4671e89]
+* Updated dependencies \[8d6e8ce]
+  * @openfn/buildtools@1.0.1

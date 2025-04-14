@@ -1,52 +1,52 @@
 # @openfn/language-googlehealthcare
 
-## 1.1.3
+## 1.1.3 2024 October 28
 
 ### Patch Changes
 
-- Updated docs for each()
-- Updated dependencies
-  - @openfn/language-common@2.1.1
+* Updated docs for each()
+* Updated dependencies
+  * @openfn/language-common@2.1.1
 
-## 1.1.2
-
-### Patch Changes
-
-- 8146c23: Fix typings in package.json
-- Updated dependencies [8146c23]
-  - @openfn/language-common@2.0.1
-
-## 1.1.1
+## 1.1.2 2024 August 16
 
 ### Patch Changes
 
-- Updated dependencies [4fe527c]
-  - @openfn/language-common@2.0.0
+* 8146c23: Fix typings in package.json
+* Updated dependencies \[8146c23]
+  * @openfn/language-common@2.0.1
 
-## 1.1.0
+## 1.1.1 2024 August 1
+
+### Patch Changes
+
+* Updated dependencies \[4fe527c]
+  * @openfn/language-common@2.0.0
+
+## 1.1.0 2024 June 13
 
 ### Minor Changes
 
-- 73433c20: Add `fnIf` operation
+* 73433c20: Add `fnIf` operation
 
 ### Patch Changes
 
-- Updated dependencies [106ecf6d]
-  - @openfn/language-common@1.14.0
+* Updated dependencies \[106ecf6d]
+  * @openfn/language-common@1.14.0
 
-## 1.0.1
+## 1.0.1 2024 May 8
 
 ### Patch Changes
 
-- Security updates (lodash,undici)
-- Updated dependencies
-  - @openfn/language-common@1.13.2
+* Security updates (lodash,undici)
+* Updated dependencies
+  * @openfn/language-common@1.13.2
 
-## 1.0.0
+## 1.0.0 2023 July 21
 
 ### Major Changes
 
-- 7df7e20: remove `projectId`, `dataSetId`, `cloudRegion`, and `fhirStoreId` out
+* 7df7e20: remove `projectId`, `dataSetId`, `cloudRegion`, and `fhirStoreId` out
   of configuration
 
   The new implementation of `createFhirResource(fhirStore, resource, callback)`
@@ -55,15 +55,15 @@
   information
   (`{cloudRegion: string, projectId: string, datasetId: string, fhirStoreId: string}`).
 
-## 0.1.0
+## 0.1.0 2023 June 30
 
 ### Minor Changes
 
-- 861d774: add createFhirResource function
+* 861d774: add createFhirResource function
 
 ### Patch Changes
 
-- aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access_token" keys can be used for OAuth2-reliant adaptors
-- Updated dependencies [aad9549]
-  - @openfn/language-common@1.10.0
+* aad9549: Ensure that standard OAuth2 credentials with snake-cased
+  "access\_token" keys can be used for OAuth2-reliant adaptors
+* Updated dependencies \[aad9549]
+  * @openfn/language-common@1.10.0

@@ -1,50 +1,50 @@
 # @openfn/language-surveycto
 
-## 2.2.3
+## 2.2.3 2024 August 16
 
 ### Patch Changes
 
-- 8146c23: Fix typings in package.json
-- Updated dependencies [8146c23]
-  - @openfn/language-common@2.0.1
+* 8146c23: Fix typings in package.json
+* Updated dependencies \[8146c23]
+  * @openfn/language-common@2.0.1
 
-## 2.2.2
+## 2.2.2 2024 August 6
 
 ### Patch Changes
 
-- d54ab59: Fix an issue assembling surveyCTO urls (which manifested as
+* d54ab59: Fix an issue assembling surveyCTO urls (which manifested as
   `TypeError: Cannot read properties of undefined (reading 'toString'`)
 
-## 2.2.1
+## 2.2.1 2024 August 1
 
 ### Patch Changes
 
-- f51c5d0: Enforce that absolute urls must not be passed to HTTP functions
-- Updated dependencies [4fe527c]
-  - @openfn/language-common@2.0.0
+* f51c5d0: Enforce that absolute urls must not be passed to HTTP functions
+* Updated dependencies \[4fe527c]
+  * @openfn/language-common@2.0.0
 
-## 2.2.0
+## 2.2.0 2024 June 13
 
 ### Minor Changes
 
-- 73433c20: Add `fnIf` operation
+* 73433c20: Add `fnIf` operation
 
 ### Patch Changes
 
-- Updated dependencies [106ecf6d]
-  - @openfn/language-common@1.14.0
+* Updated dependencies \[106ecf6d]
+  * @openfn/language-common@1.14.0
 
-## 2.1.1
+## 2.1.1 2024 May 17
 
 ### Patch Changes
 
-- 6c588212: Fix `servername` typo in the `configuration-schema`
+* 6c588212: Fix `servername` typo in the `configuration-schema`
 
-## 2.1.0
+## 2.1.0 2024 May 8
 
 ### Minor Changes
 
-- b67f81be: Add a `cursor()` function which adds support for the surveyCTO
+* b67f81be: Add a `cursor()` function which adds support for the surveyCTO
   string format dates.
 
   The date option in `fetchSubmissions` can now accept a surveyCTO date, an
@@ -55,31 +55,31 @@
 
 ### Patch Changes
 
-- Updated dependencies [88f99a8f]
-  - @openfn/language-common@1.13.3
+* Updated dependencies \[88f99a8f]
+  * @openfn/language-common@1.13.3
 
-## 2.0.0
+## 2.0.0 2024 April 23
 
 ### Major Changes
 
-- 59ae7b50: - Refactor `fetchSubmissions()` function
-  - Update `instanceName` to `servername` in `configuration-schema.json`
-  - Add `apiVersion` in `configuration-schema.json`. Defaults to `v1`
-  - Add `request()` function for surveyCTO API requests
+* 59ae7b50: - Refactor `fetchSubmissions()` function
+  * Update `instanceName` to `servername` in `configuration-schema.json`
+  * Add `apiVersion` in `configuration-schema.json`. Defaults to `v1`
+  * Add `request()` function for surveyCTO API requests
 
-## 1.2.1
+## 1.2.1 2023 June 19
 
 ### Patch Changes
 
-- Update lock files
-- Updated dependencies
-  - @openfn/language-common@1.8.1
+* Update lock files
+* Updated dependencies
+  * @openfn/language-common@1.8.1
 
 ## 1.2.0
 
 ### Minor Changes
 
-- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+* 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
   `each` block; add eslint
 
   The packages receiving a major bump here exposed functions that didn't work as
@@ -91,42 +91,42 @@
 
 ### Patch Changes
 
-- Updated dependencies [2c1d603]
-  - @openfn/language-common@1.8.0
+* Updated dependencies \[2c1d603]
+  * @openfn/language-common@1.8.0
 
-## 1.1.4
-
-### Patch Changes
-
-- 14f481e: mark execute as private
-- Updated dependencies [2b4c61a]
-  - @openfn/language-common@1.7.6
-
-## 1.1.3
+## 1.1.4 2023 March 30
 
 ### Patch Changes
 
-- f7ebd3c: remove sample configuration
+* 14f481e: mark execute as private
+* Updated dependencies \[2b4c61a]
+  * @openfn/language-common@1.7.6
 
-## 1.1.2
-
-### Patch Changes
-
-- f2aed32: add examples
-
-## 1.1.1
+## 1.1.3 2023 February 15
 
 ### Patch Changes
 
-- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+* f7ebd3c: remove sample configuration
 
-## 1.1.0
+## 1.1.2 2023 February 15
+
+### Patch Changes
+
+* f2aed32: add examples
+
+## 1.1.1 2023 January 13
+
+### Patch Changes
+
+* 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
+
+## 1.1.0 2022 November 18
 
 ### Minor Changes
 
-- 776bb13: migrate surveycto
+* 776bb13: migrate surveycto
 
 ### Patch Changes
 
-- Updated dependencies [f2a91a4]
-  - @openfn/language-common@1.7.5
+* Updated dependencies \[f2a91a4]
+  * @openfn/language-common@1.7.5

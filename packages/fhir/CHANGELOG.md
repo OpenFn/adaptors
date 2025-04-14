@@ -1,38 +1,38 @@
 # @openfn/language-fhir
 
-## 5.0.3
+## 5.0.3 2024 October 28
 
 ### Patch Changes
 
-- Updated docs for each()
-- Updated dependencies
-  - @openfn/language-common@2.1.1
+* Updated docs for each()
+* Updated dependencies
+  * @openfn/language-common@2.1.1
 
-## 5.0.2
-
-### Patch Changes
-
-- 8146c23: Fix typings in package.json
-- Updated dependencies [8146c23]
-  - @openfn/language-common@2.0.1
-
-## 5.0.1
+## 5.0.2 2024 August 16
 
 ### Patch Changes
 
-- 940996b: Use common helper code to handle invalid absolute URLs
-- Updated dependencies [4fe527c]
-  - @openfn/language-common@2.0.0
+* 8146c23: Fix typings in package.json
+* Updated dependencies \[8146c23]
+  * @openfn/language-common@2.0.1
 
-## 5.0.0
+## 5.0.1 2024 August 1
+
+### Patch Changes
+
+* 940996b: Use common helper code to handle invalid absolute URLs
+* Updated dependencies \[4fe527c]
+  * @openfn/language-common@2.0.0
+
+## 5.0.0 2024 July 19
 
 #### Added
 
-- Improved type definitions for `request()` and `get()`
+* Improved type definitions for `request()` and `get()`
 
 #### Changed
 
-- Updated `request` function to the new signature:
+* Updated `request` function to the new signature:
 
   ```js
   export const request =
@@ -44,7 +44,7 @@
     });
   ```
 
-- Updated `post` function to the new signature:
+* Updated `post` function to the new signature:
 
   ```js
   export const post = (path, data, options, callback) => state => ({
@@ -54,7 +54,7 @@
   });
   ```
 
-- Updated `get` function to the new signature:
+* Updated `get` function to the new signature:
 
   ```js
   export const get = (path, params, options, callback) => state => ({
@@ -64,7 +64,7 @@
   });
   ```
 
-- Updated `create` function to the new signature:
+* Updated `create` function to the new signature:
 
   ```js
   export const create = (resource, resource, params, callback) => state => ({
@@ -74,7 +74,7 @@
   });
   ```
 
-- Updated `createTransactionBundle` function:
+* Updated `createTransactionBundle` function:
 
   ```js
   export const createTransactionBundle = (entries, callback) => state => ({
@@ -83,7 +83,7 @@
   });
   ```
 
-- Updated `getClaim` function to the new signature:
+* Updated `getClaim` function to the new signature:
   ```js
   export const getClaim =
     (claimId, params, callback = s => s) =>
@@ -92,72 +92,73 @@
       data,
     });
   ```
-- Updated `configuration-schema.json`
-  - Removed `authType`
-  - Rename `token` to `access_token`
-  - Add `username` and `password`
+
+* Updated `configuration-schema.json`
+  * Removed `authType`
+  * Rename `token` to `access_token`
+  * Add `username` and `password`
 
 #### Removed
 
-- Removed `parseAs` from the options.
+* Removed `parseAs` from the options.
 
-## 4.0.0
+## 4.0.0 2024 June 14
 
 ### Major Changes
 
-- a42ffeb9: - All HTTP methods now write `{ data, response }` to state, where
+* a42ffeb9: - All HTTP methods now write `{ data, response }` to state, where
   data is the response body and response is the raw response
-  - All HTTP methods now support a `throwOnError` param, which defaults to true.
+  * All HTTP methods now support a `throwOnError` param, which defaults to true.
     If false, the adaptor will not throw if the HTTP status is <=400
-  - request: return { data, response } directly
-  - request: fix an issue where default headers would override user headers
-  - request: if the body contains application/json content, parse it as JSON
+  * request: return { data, response } directly
+  * request: fix an issue where default headers would override user headers
+  * request: if the body contains application/json content, parse it as JSON
 
-## 3.2.0
-
-### Minor Changes
-
-- 73433c20: Add `fnIf` operation
-
-### Patch Changes
-
-- Updated dependencies [106ecf6d]
-  - @openfn/language-common@1.14.0
-
-## 3.1.2
-
-### Patch Changes
-
-- 2b283549: - Update `create()` example
-  - Update required properties in configuration schema
-
-## 3.1.1
-
-### Patch Changes
-
-- Security updates (lodash,undici)
-- Updated dependencies
-  - @openfn/language-common@1.13.2
-
-## 3.1.0
+## 3.2.0 2024 June 13
 
 ### Minor Changes
 
-- d94e9ee: Migrate from axios to using `fetch` from `undici` and add uniti tests
-
-## 3.0.1
+* 73433c20: Add `fnIf` operation
 
 ### Patch Changes
 
-- Update lock files
-- Updated dependencies
-  - @openfn/language-common@1.8.1
+* Updated dependencies \[106ecf6d]
+  * @openfn/language-common@1.14.0
+
+## 3.1.2 2024 May 17
+
+### Patch Changes
+
+* 2b283549: - Update `create()` example
+  * Update required properties in configuration schema
+
+## 3.1.1 2024 May 8
+
+### Patch Changes
+
+* Security updates (lodash,undici)
+* Updated dependencies
+  * @openfn/language-common@1.13.2
+
+## 3.1.0 2023 July 28
+
+### Minor Changes
+
+* d94e9ee: Migrate from axios to using `fetch` from `undici` and add uniti tests
+
+## 3.0.1 2023 June 19
+
+### Patch Changes
+
+* Update lock files
+* Updated dependencies
+  * @openfn/language-common@1.8.1
 
 ## 3.0.0
 
 ### Major Changes
 
-- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+* 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
   `each` block; add eslint
 
   The packages receiving a major bump here exposed functions that didn't work as
@@ -169,68 +170,68 @@
 
 ### Patch Changes
 
-- Updated dependencies [2c1d603]
-  - @openfn/language-common@1.8.0
+* Updated dependencies \[2c1d603]
+  * @openfn/language-common@1.8.0
 
-## 2.0.0
+## 2.0.0 2023 June 6
 
 ### Major Changes
 
-- d4b4094: - Update configuration schema,
-  - Add `get()` function
-  - Fix `create()` axios config
-  - Remove unused code
-  - Improve error handling
-  - Improve response handling
+* d4b4094: - Update configuration schema,
+  * Add `get()` function
+  * Fix `create()` axios config
+  * Remove unused code
+  * Improve error handling
+  * Improve response handling
 
-## 1.1.5
-
-### Patch Changes
-
-- 14f481e: mark execute as private
-- Updated dependencies [2b4c61a]
-  - @openfn/language-common@1.7.6
-
-## 1.1.4
+## 1.1.5 2023 March 30
 
 ### Patch Changes
 
-- f7ebd3c: remove sample configuration
+* 14f481e: mark execute as private
+* Updated dependencies \[2b4c61a]
+  * @openfn/language-common@1.7.6
 
-## 1.1.3
-
-### Patch Changes
-
-- f2aed32: add examples
-
-## 1.1.2
+## 1.1.4 2023 February 15
 
 ### Patch Changes
 
-- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+* f7ebd3c: remove sample configuration
 
-## 1.1.1
+## 1.1.3 2023 February 15
 
 ### Patch Changes
 
-- f2a91a4: Update package exports
-- Updated dependencies [f2a91a4]
-  - @openfn/language-common@1.7.5
+* f2aed32: add examples
 
-## 1.1.0
+## 1.1.2 2023 January 13
+
+### Patch Changes
+
+* 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
+
+## 1.1.1 2022 November 11
+
+### Patch Changes
+
+* f2a91a4: Update package exports
+* Updated dependencies \[f2a91a4]
+  * @openfn/language-common@1.7.5
+
+## 1.1.0 2022 November 4
 
 ### Minor Changes
 
-- fee607e: Migrate FHIR, update package export
+* fee607e: Migrate FHIR, update package export
 
 ### Patch Changes
 
-- cb5d0ed: Updated to @openfn/simple-ast v0.4.1
-- 8566b26: Fix typings
-- b3d45ff: Fix CJS export of npm package.
-- ecf5d30: remove sinon since it was not being used
-- Updated dependencies [8566b26]
-- Updated dependencies [b3d45ff]
-- Updated dependencies [b5eb665]
-- Updated dependencies [ecf5d30]
-  - @openfn/language-common@1.7.4
+* cb5d0ed: Updated to @openfn/simple-ast v0.4.1
+* 8566b26: Fix typings
+* b3d45ff: Fix CJS export of npm package.
+* ecf5d30: remove sinon since it was not being used
+* Updated dependencies \[8566b26]
+* Updated dependencies \[b3d45ff]
+* Updated dependencies \[b5eb665]
+* Updated dependencies \[ecf5d30]
+  * @openfn/language-common@1.7.4
