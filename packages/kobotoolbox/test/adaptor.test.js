@@ -29,7 +29,7 @@ describe('getSubmissions', () => {
       .intercept({
         path: `/api/v2/assets/${formId}/data`,
         method: 'GET',
-        query: { format: 'json', limit: 1000, start: 0 },
+        query: { format: 'json', limit: 1000 },
       })
       .reply(
         200,
@@ -53,7 +53,6 @@ describe('getSubmissions', () => {
         query: {
           format: 'json',
           limit: 1000,
-          start: 0,
           query: '{"_submission_time":{"$gte":"2022-06-12T21:54:20"}}',
         },
       })
