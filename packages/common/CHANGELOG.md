@@ -1,78 +1,78 @@
-## 2.3.0 2025 January 16
+## 2.3.0
 
-## 2.3.2 2025 April 11
-
-### Patch Changes
-
-* d7105c0: Improved handling of response bodies with no content
-
-## 2.3.1 2025 March 14
+## 2.3.2
 
 ### Patch Changes
 
-* 23ccb01: Allow the errorMap passed into the request helper to be false, which
+- d7105c0: Improved handling of response bodies with no content
+
+## 2.3.1
+
+### Patch Changes
+
+- 23ccb01: Allow the errorMap passed into the request helper to be false, which
   suppresses all errors
 
 ### Minor Changes
 
-* b3d7f59: Common util functions `encode` and `decode` can now take a JavaScript
+- b3d7f59: Common util functions `encode` and `decode` can now take a JavaScript
   object and stringify
-* 41e8cc3: Added an 'assert' function that throws an error when an expression or
+- 41e8cc3: Added an 'assert' function that throws an error when an expression or
   function resolves to false
 
 ### Patch Changes
 
-* 2d709ff: Ensure that RegExp objects can be safely passed as references
+- 2d709ff: Ensure that RegExp objects can be safely passed as references
 
-## 2.2.1 2025 January 16
+## 2.2.1
 
 ### Patch Changes
 
-* 6dffdbd: Fixed an issue in the HTTP helpers where responses without a body can
+- 6dffdbd: Fixed an issue in the HTTP helpers where responses without a body can
   cause an error to be thrown.
 
-## 2.2.0 2025 January 9
+## 2.2.0
 
 ### Minor Changes
 
-* a47d8d5: `decode`, `encode` and `uuid` are now correctly documented as being
+- a47d8d5: `decode`, `encode` and `uuid` are now correctly documented as being
   in the `util` namespace
 
 ### Patch Changes
 
-* 9240428: security: Update dependencies
+- 9240428: security: Update dependencies
 
-## 2.1.1 2024 October 28
+## 2.1.1
 
 ### Patch Changes
 
-* Updated docs for each()
+- Updated docs for each()
 
-## 2.1.0 2024 October 18
+## 2.1.0
 
 ### Minor Changes
 
-* 03a1a74: Add `encode`, `decode` and `uuid` helpers
+- 03a1a74: Add `encode`, `decode` and `uuid` helpers
 
-## 2.0.3 2024 October 15
-
-### Patch Changes
-
-* 33973a2: Fix a critical security issue in jsonpath-plus
-
-## 2.0.2 2024 September 24
+## 2.0.3
 
 ### Patch Changes
 
-* 77a690f: improve cursor setup message
+- 33973a2: Fix a critical security issue in jsonpath-plus
 
-## 2.0.1 2024 August 16
+## 2.0.2
 
 ### Patch Changes
 
-* 8146c23: Fix typings in package.json
+- 77a690f: improve cursor setup message
 
-## 2.0.0 2024 August 1
+## 2.0.1
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+
+## 2.0.0
 
 The 2.0 version of common removes axios and re-writes the `http` namespace.
 
@@ -96,72 +96,72 @@ content type to JSON.
 
 ### Major Changes
 
-* Replace axios-based http operations with cleaner, undici-based ones
-* Removed axios export
+- Replace axios-based http operations with cleaner, undici-based ones
+- Removed axios export
 
 ### Minor Changes
 
-* Add options helpers to http namespace
+- Add options helpers to http namespace
 
 ### Patch Changes
 
-* 4c08444: document `date-fns` functions
+- 4c08444: document `date-fns` functions
 
-## 1.15.0 2024 June 19
-
-### Minor Changes
-
-* 5fb82f07: - Add `group()` operation
-  * Initialize `state.references` in `composeNextState()`
-
-## 1.14.0 2024 June 13
+## 1.15.0
 
 ### Minor Changes
 
-* 106ecf6d: Add `fnIf` operation
+- 5fb82f07: - Add `group()` operation
+  - Initialize `state.references` in `composeNextState()`
 
-## 1.13.5 2024 June 11
+## 1.14.0
+
+### Minor Changes
+
+- 106ecf6d: Add `fnIf` operation
+
+## 1.13.5
 
 ### Patch Changes
 
-* http helpers: Fix an issue where query parameters in the URL did not get sent
+- http helpers: Fix an issue where query parameters in the URL did not get sent
   to the server
 
-## 1.13.4 2024 May 21
+## 1.13.4
 
 ### Patch Changes
 
-* 12f02ed5: http helpers: Ensure redirects append base url
+- 12f02ed5: http helpers: Ensure redirects append base url
 
-## 1.13.3 2024 May 8
-
-### Patch Changes
-
-* 88f99a8f: cursor: support format option
-
-## 1.13.2 2024 May 8
+## 1.13.3
 
 ### Patch Changes
 
-* Security updates (lodash,undici)
+- 88f99a8f: cursor: support format option
 
-## 1.13.1 2024 April 12
+## 1.13.2
 
 ### Patch Changes
 
-* Fix jsdoc link
+- Security updates (lodash,undici)
 
-## 1.13.0 2024 April 12
+## 1.13.1
+
+### Patch Changes
+
+- Fix jsdoc link
+
+## 1.13.0
 
 ### Minor Changes
 
-* 1ad86651: Added cursor() helper
+- 1ad86651: Added cursor() helper
 
-## 1.12.0 2024 January 24
+## 1.12.0
 
 ### Minor Changes
 
-* 7f52699: New HTTP helper functions have been added to common in
+- 7f52699: New HTTP helper functions have been added to common in
   `src/util/http.js`
 
   These are based on the `undici` library. They are functions, not operations,
@@ -203,61 +203,61 @@ content type to JSON.
   The existing http operations in `src/http.js` have been deprecated, and
   adaptors should migrate to the new helpers.
 
-## 1.11.1 2023 September 20
+## 1.11.1
 
 ### Patch Changes
 
-* c19efbe: don't attempt to expand references for a buffer
+- c19efbe: don't attempt to expand references for a buffer
 
-## 1.11.0 2023 September 8
+## 1.11.0
 
 ### Minor Changes
 
-* 85c35b8: Add validate function to validate data against a JSON schema
+- 85c35b8: Add validate function to validate data against a JSON schema
 
-## 1.10.3 2023 August 14
-
-### Patch Changes
-
-* df09270: Fix streaming interface to parseCSV
-
-## 1.10.2 2023 July 14
+## 1.10.3
 
 ### Patch Changes
 
-* 26a303e: add expandReferences for csvData and parsingOptions
+- df09270: Fix streaming interface to parseCSV
 
-## 1.10.1 2023 July 14
+## 1.10.2
 
 ### Patch Changes
 
-* 8c32eb3: - update parseCsv to await callback
-  * Added documentation for splitKeys
+- 26a303e: add expandReferences for csvData and parsingOptions
 
-## 1.10.0 2023 June 30
+## 1.10.1
+
+### Patch Changes
+
+- 8c32eb3: - update parseCsv to await callback
+  - Added documentation for splitKeys
+
+## 1.10.0
 
 ### Minor Changes
 
-* aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access\_token" keys can be used for OAuth2-reliant adaptors
+- aad9549: Ensure that standard OAuth2 credentials with snake-cased
+  "access_token" keys can be used for OAuth2-reliant adaptors
 
-## 1.9.0 2023 June 23
+## 1.9.0
 
 ### Minor Changes
 
-* 111807f: Add support for `parseCsv` in common
+- 111807f: Add support for `parseCsv` in common
 
-## 1.8.1 2023 June 19
+## 1.8.1
 
 ### Patch Changes
 
-* Update lock files
+- Update lock files
 
 ## 1.8.0
 
 ### Minor Changes
 
-* 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
   `each` block; add eslint
 
   The packages receiving a major bump here exposed functions that didn't work as
@@ -267,41 +267,41 @@ content type to JSON.
 
   See https://github.com/OpenFn/adaptors/issues/275 for more details.
 
-## 1.7.7 2023 March 31
+## 1.7.7
 
 ### Patch Changes
 
-* 929bca6: Export metadata helper function
+- 929bca6: Export metadata helper function
 
-## 1.7.6 2023 March 30
-
-### Patch Changes
-
-* 2b4c61a: mark execute private and ast build
-
-## 1.7.5 2022 November 11
+## 1.7.6
 
 ### Patch Changes
 
-* f2a91a4: Update package exports
+- 2b4c61a: mark execute private and ast build
 
-## 1.7.4 2022 November 4
+## 1.7.5
 
 ### Patch Changes
 
-* 8566b26: Fix typings
-* b3d45ff: Fix CJS export of npm package.
-* b5eb665: Adjusted docs for common and built to markdown
-* # ecf5d30: remove sinon since it was not being used
+- f2a91a4: Update package exports
+
+## 1.7.4
+
+### Patch Changes
+
+- 8566b26: Fix typings
+- b3d45ff: Fix CJS export of npm package.
+- b5eb665: Adjusted docs for common and built to markdown
+- # ecf5d30: remove sinon since it was not being used
 
 Bumped all package versions to their latest.
 
 # v0.0.4
 
-* Added `arrayToString` helper.\
+- Added `arrayToString` helper.  
   Allowing you to join an array of string'able primitives (strings and integers)
   into a string.
-* Added `toArray` helper.\
+- Added `toArray` helper.  
   This can be used to coerce certain types of data into an array, this can be
   useful when the source data has an ambiguous format. For example a given key
   in the data may have an object as it's value (when there is only one item),
