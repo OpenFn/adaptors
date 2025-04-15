@@ -827,7 +827,7 @@ describe('helpers', () => {
 
       const base64Encoded = encode(binaryData, { parseJson: false });
 
-      expect(await result.body).to.eql(base64Encoded);
+      expect(result.body).to.eql(base64Encoded);
     });
   });
 });
