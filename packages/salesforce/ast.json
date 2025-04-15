@@ -587,7 +587,7 @@
           },
           {
             "title": "state",
-            "description": "{Object} response - An object of result metadata.\n                    <code>{ done, totalSize, nextUrlRecords?: string }</code>\n                    where nextUrlRecords is only present when done is false"
+            "description": "{Object} response - An object of result metadata.\n                    <code>{ done, totalSize, nextRecordsUrl?: string }</code>\n                    where nextRecordsUrl is only present when done is false"
           },
           {
             "title": "returns",
