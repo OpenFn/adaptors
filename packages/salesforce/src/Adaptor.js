@@ -529,22 +529,31 @@ export function insert(sObjectName, records) {
  * @property data - Array of result objects of the form <code>\{ done, totalSize, records \}</code>
  * @returns {Operation}
  */
+
 export function query(query, options) {
   return async state => {
-    const [resolvedQuery, resolvedOptions = { limit: 10000 }] =
+    const defaultLimit = 1e4;
+    const [resolvedQuery, resolvedOptions = { limit: defaultLimit }] =
       expandReferences(state, query, options);
     console.log(`Executing query: ${resolvedQuery}`);
-    const { limit } = resolvedOptions;
 
-    const result = await connection.query(resolvedQuery, {
+    const { limit } = resolvedOptions;
+    const { records, ...response } = await connection.query(resolvedQuery, {
       autoFetch: true,
       maxFetch: limit || Infinity,
     });
 
-    console.log('Fetched: ' + result.records.length);
-    console.log('Total: ' + result.totalSize);
+    const fetchedRecords = records.length;
 
-    return composeNextState(state, result);
+    if (!response.done && fetchedRecords === defaultLimit) {
+      console.warn(
+        `Warning: The default maximum number of items has been reached (${defaultLimit}), but more items are available on the server. To download all available items, adjust limit to ${response.totalSize} or set limit to false`
+      );
+    }
+    console.log('Fetched: ' + fetchedRecords);
+    console.log('Total: ' + response.totalSize);
+
+    return { ...composeNextState(state, records), response };
   };
 }
 
