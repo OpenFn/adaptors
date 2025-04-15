@@ -55,7 +55,7 @@ export function getForms() {
 /**
  * Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`.
  * @example <caption>Get all submissions for a specific form</caption>
- * getSubmissions('aXecHjmbATuF6iGFmvBLBX');
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX', {limit: Infinity});
  * @example <caption>Get form submissions with a query</caption>
  * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: "2025-03-12T21:54:20" } } });
  * @function
@@ -90,7 +90,7 @@ export function getSubmissions(formId, options) {
         delete resolvedOptions.pageSize;
       }
     }
-    const { query, limit, pageSize = 1e3, max = 1e4 } = resolvedOptions;
+    const { query, limit, pageSize, max } = resolvedOptions;
     const path = `/assets/${resolvedFormId}/data/`;
     const qs = {};
     if (query) {

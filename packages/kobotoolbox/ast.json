@@ -89,6 +89,18 @@
           },
           {
             "title": "param",
+            "description": "Limit the number of submissions to fetch",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.limit"
+          },
+          {
+            "title": "param",
             "description": "Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}",
             "type": {
               "type": "OptionalType",
@@ -101,7 +113,7 @@
           },
           {
             "title": "param",
-            "description": "Maximum number of submissions to fetch",
+            "description": "(Openfn only) Restrict the maximum number of retrieved submissions. May be fetched in several pages. Not used if `limit` is set.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -114,7 +126,7 @@
           },
           {
             "title": "param",
-            "description": "Number of submissions to fetch per page",
+            "description": "(Openfn only) Limits the size of each page of submissions. Not used if limit is set.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -124,19 +136,6 @@
             },
             "name": "options.pageSize",
             "default": "1000"
-          },
-          {
-            "title": "param",
-            "description": "Starting index for pagination",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "number"
-              }
-            },
-            "name": "options.start",
-            "default": "0"
           },
           {
             "title": "state",
