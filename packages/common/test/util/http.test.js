@@ -810,5 +810,20 @@ describe('helpers', () => {
         id: '2',
       });
     });
+
+    it('should force as base64', async () => {
+      client
+        .intercept({
+          path: '/api',
+          method: 'GET',
+        })
+        .reply(200, 'GDJ91ZYBlDkLFS4/DZwdssA6jFHdBlgdTk');
+
+      const result = await request('GET', 'https://www.example.com/api', {
+        parseAs: 'base64',
+      });
+
+      expect(await result.body).to.eql('GDJ91ZYBlDkLFS4/DZwdssA6jFHdBlgdTk');
+    });
   });
 });

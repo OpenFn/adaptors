@@ -4,6 +4,7 @@ import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
 import path from 'node:path';
 import throwError from './throw-error';
+import { encode } from './base64';
 
 const clients = new Map();
 
@@ -257,6 +258,9 @@ async function readResponseBody(response, parseAs) {
         return response.body.text();
       case 'stream':
         return response.body;
+      case 'base64':
+        const arrayBuffer = await response.body.arrayBuffer();
+        return encode(arrayBuffer, { parseJson: false });
       default:
         return contentType && contentType.includes('application/json')
           ? await response.body.json()
