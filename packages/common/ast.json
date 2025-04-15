@@ -1603,7 +1603,7 @@
         "args"
       ],
       "docs": {
-        "description": "Creates a general-purpose logger that prints values to the console while\nmaintaining the state chain. Suitable for regular application logging\nand monitoring runtime behavior.",
+        "description": "Outputs a message to the console while maintaining the state.",
         "tags": [
           {
             "title": "public",
@@ -1619,6 +1619,11 @@
             "title": "example",
             "description": "log('Hello', 'World')\n// Logs: Hello World\nlog($.user.name)\n// Logs value of state.user.name",
             "caption": "Log specific values"
+          },
+          {
+            "title": "example",
+            "description": "log(({ configuration, ...rest }) => rest);",
+            "caption": "Log a specific object from state"
           },
           {
             "title": "example",
@@ -1654,7 +1659,7 @@
         "args"
       ],
       "docs": {
-        "description": "Creates a development-focused logger that prints detailed diagnostic information\nto the console while maintaining the state chain. Useful for debugging and\ndetailed inspection during development.",
+        "description": "Outputs a message to the console with the debug log level while maintaining the state.",
         "tags": [
           {
             "title": "public",
@@ -1670,6 +1675,11 @@
             "title": "example",
             "description": "debug('Hello', 'World')\n// Logs: Hello World\ndebug($.user.name)\n// Logs value of state.user.name",
             "caption": "Log specific values"
+          },
+          {
+            "title": "example",
+            "description": "debug(({ configuration, ...rest }) => rest);",
+            "caption": "Log a specific object from state"
           },
           {
             "title": "example",

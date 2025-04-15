@@ -934,9 +934,7 @@ export function assert(expression, errorMessage) {
 }
 
 /**
- * Creates a general-purpose logger that prints values to the console while
- * maintaining the state chain. Suitable for regular application logging
- * and monitoring runtime behavior.
+ * Outputs a message to the console while maintaining the state.
  * @public
  * @function
  * @example <caption>Log specific values</caption>
@@ -944,6 +942,8 @@ export function assert(expression, errorMessage) {
  * // Logs: Hello World
  * log($.user.name)
  * // Logs value of state.user.name
+ * @example <caption>Log a specific object from state</caption>
+ * log(({ configuration, ...rest }) => rest);
  * @example <caption>Multiple arguments including state references</caption>
  * log('User:', $.user.name, 'Age:', $.user.age)
  * // Logs: User: John Age: 30
@@ -959,9 +959,7 @@ export function log(...args) {
 }
 
 /**
- * Creates a development-focused logger that prints detailed diagnostic information
- * to the console while maintaining the state chain. Useful for debugging and
- * detailed inspection during development.
+ * Outputs a message to the console with the debug log level while maintaining the state.
  * @public
  * @function
  * @example <caption>Log specific values</caption>
@@ -969,6 +967,8 @@ export function log(...args) {
  * // Logs: Hello World
  * debug($.user.name)
  * // Logs value of state.user.name
+ * @example <caption>Log a specific object from state</caption>
+ * debug(({ configuration, ...rest }) => rest);
  * @example <caption>Multiple arguments including state references</caption>
  * debug('User:', $.user.name, 'Age:', $.user.age)
  * // Logs: User: John Age: 30
