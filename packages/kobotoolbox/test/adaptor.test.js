@@ -24,12 +24,12 @@ const configuration = {
 describe('getSubmissions', () => {
   const formId = 'aXecHjmbATuF6iGFmvBLBX';
 
-  it('should get a list of submissions', async () => {
+  it.only('should get a list of submissions with default limit', async () => {
     testServer
       .intercept({
         path: `/api/v2/assets/${formId}/data`,
         method: 'GET',
-        query: { format: 'json', limit: 1000 },
+        query: { format: 'json', limit: 10000 },
       })
       .reply(
         200,

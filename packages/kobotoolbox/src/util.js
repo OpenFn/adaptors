@@ -45,17 +45,14 @@ export async function requestWithPagination(state, path, options = {}) {
   const isUsingDefaultMax = max === undefined;
   const maxResults = max ?? limit ?? 1e4;
 
-  // Declare a variable that takes in all the options. We can then modify this variable to fetch the next page
-  let requestOptions = { ...options };
-
-  let shouldFetchMoreContent = false;
   let isFirstRequest = true;
+  let requestOptions = { ...options };
+  let shouldFetchMoreContent = false;
   const didUserPassLimit = Boolean(max || limit);
 
   do {
     requestOptions.query ??= {};
 
-    // include start if relevant
     if (!isNaN(start)) {
       requestOptions.query.start = start;
     }
@@ -74,15 +71,11 @@ export async function requestWithPagination(state, path, options = {}) {
       requestOptions.query.limit = pageSize;
     }
 
-    // Fetch a page of data
     const response = await request(state, 'GET', path, requestOptions);
 
-    // If a search, the data will be in the form { results }
-    // otherwise just return the data verbatim (in an array)
     if (response.body.results) {
       results.push(...response.body.results);
 
-      // If there is data, save it
       if (!start) {
         start = 1;
       }
@@ -90,8 +83,6 @@ export async function requestWithPagination(state, path, options = {}) {
         const nextUrl = new URL(response?.body?.next);
         start = nextUrl.searchParams.get('start');
       }
-
-      // start += response.body.results.length;
     } else {
       results.push(response.body);
     }
