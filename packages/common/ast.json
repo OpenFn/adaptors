@@ -1617,11 +1617,6 @@
           },
           {
             "title": "example",
-            "description": "log()\n// Logs entire state object",
-            "caption": "Log entire state when no args provided"
-          },
-          {
-            "title": "example",
             "description": "log('Hello', 'World')\n// Logs: Hello World\nlog($.user.name)\n// Logs value of state.user.name",
             "caption": "Log specific values"
           },
@@ -1632,29 +1627,11 @@
           },
           {
             "title": "param",
-            "description": "Values or state references to log. Can be:\n  - Primitive values (string, number, boolean)\n  - State references (using $ syntax to reference state properties)\n  - Objects\n  - Arrays\nIf no args provided, logs entire state",
+            "description": "Values to log: primitives, objects, or state references",
             "type": {
               "type": "RestType",
               "expression": {
-                "type": "UnionType",
-                "elements": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  },
-                  {
-                    "type": "NameExpression",
-                    "name": "number"
-                  },
-                  {
-                    "type": "NameExpression",
-                    "name": "boolean"
-                  },
-                  {
-                    "type": "NameExpression",
-                    "name": "StateReference"
-                  }
-                ]
+                "type": "AllLiteral"
               }
             },
             "name": "args"
@@ -1691,11 +1668,6 @@
           },
           {
             "title": "example",
-            "description": "debug()\n// Logs entire state object",
-            "caption": "Log entire state when no args provided"
-          },
-          {
-            "title": "example",
             "description": "debug('Hello', 'World')\n// Logs: Hello World\ndebug($.user.name)\n// Logs value of state.user.name",
             "caption": "Log specific values"
           },
@@ -1706,29 +1678,11 @@
           },
           {
             "title": "param",
-            "description": "Values or state references to log. Can be:\n  - Primitive values (string, number, boolean)\n  - State references (using $ syntax to reference state properties)\n  - Objects\n  - Arrays\nIf no args provided, logs entire state",
+            "description": "Values to log: primitives, objects, or state references",
             "type": {
               "type": "RestType",
               "expression": {
-                "type": "UnionType",
-                "elements": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  },
-                  {
-                    "type": "NameExpression",
-                    "name": "number"
-                  },
-                  {
-                    "type": "NameExpression",
-                    "name": "boolean"
-                  },
-                  {
-                    "type": "NameExpression",
-                    "name": "StateReference"
-                  }
-                ]
+                "type": "AllLiteral"
               }
             },
             "name": "args"
