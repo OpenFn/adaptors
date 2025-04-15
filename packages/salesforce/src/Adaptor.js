@@ -509,11 +509,9 @@ export function insert(sObjectName, records) {
 
 /**
  * Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.
- * This operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.
  * Note that in an event of a query error, error logs will be printed but the operation will not throw the error.
  *
  * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ learn more here}.
- *
  * @public
  * @example <caption>Run a query and download all matching records</caption>
  * query('SELECT Id FROM Patient__c', { max: false });
@@ -528,7 +526,10 @@ export function insert(sObjectName, records) {
  * @param {object} [options] - Query options
  * @param {number} [options.max=10000] - Maximum number of records to fetch. If `max: false`, no limit will be applied.
  * @state {SalesforceState}
- * @property data - Array of result objects of the form <code>\{ done, totalSize, records \}</code>
+ * @state {Array} data - Array of result objects
+ * @state {Object} response - An object of result metadata.
+ *                     <code>{ done, totalSize, nextRecordsUrl?: string }</code>
+ *                     where nextRecordsUrl is only present when done is false
  * @returns {Operation}
  */
 

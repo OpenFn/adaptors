@@ -511,7 +511,7 @@
         "options"
       ],
       "docs": {
-        "description": "Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.\nThis operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.\nNote that in an event of a query error, error logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ learn more here}.",
+        "description": "Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.\nNote that in an event of a query error, error logs will be printed but the operation will not throw the error.\n\nThe Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ learn more here}.",
         "tags": [
           {
             "title": "public",
@@ -580,6 +580,22 @@
           {
             "title": "state",
             "description": "{SalesforceState}"
+          },
+          {
+            "title": "state",
+            "description": "{Array} data - Array of result objects"
+          },
+          {
+            "title": "state",
+            "description": "{Object} response - An object of result metadata.\n                    <code>{ done, totalSize, nextUrlRecords?: string }</code>\n                    where nextUrlRecords is only present when done is false"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
