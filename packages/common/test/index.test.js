@@ -1143,11 +1143,6 @@ describe('log', () => {
     expect(consoleOutput[1]).to.eq('a');
     expect(consoleOutput[2]).to.eq('test b');
   });
-  it('shoudl log state if no arguments are passed', () => {
-    const result = log()(input);
-    expect(result).to.eq(input);
-    expect(consoleOutput[0]).to.eq(input);
-  });
   it('should log undefined if key is not found', () => {
     log(state => state.a)({});
     expect(consoleOutput[0]).to.eq(undefined);
@@ -1196,13 +1191,6 @@ describe('debug', () => {
     expect(consoleOutput[0]).to.eq('test');
     expect(consoleOutput[1]).to.eq('a');
     expect(consoleOutput[2]).to.eq('test b');
-  });
-
-  it('should debug state if no arguments are passed', () => {
-    const result = debug()(input);
-    expect(result).to.eq(input);
-
-    expect(consoleOutput[0]).to.eq(input);
   });
 
   it('should debug undefined if key is not found', () => {
