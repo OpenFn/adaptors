@@ -934,19 +934,11 @@ export function assert(expression, errorMessage) {
 }
 
 /**
- * Represents a reference to a value in the state object
- * @typedef {Object} StateReference
- * @property {string} key - JSON path to the value in the state object
- */
-/**
  * Creates a general-purpose logger that prints values to the console while
  * maintaining the state chain. Suitable for regular application logging
  * and monitoring runtime behavior.
  * @public
  * @function
- * @example <caption>Log entire state when no args provided</caption>
- * log()
- * // Logs entire state object
  * @example <caption>Log specific values</caption>
  * log('Hello', 'World')
  * // Logs: Hello World
@@ -955,23 +947,13 @@ export function assert(expression, errorMessage) {
  * @example <caption>Multiple arguments including state references</caption>
  * log('User:', $.user.name, 'Age:', $.user.age)
  * // Logs: User: John Age: 30
- * @param {...(string|number|boolean|StateReference)} args - Values or state references to log. Can be:
- *   - Primitive values (string, number, boolean)
- *   - State references (using $ syntax to reference state properties)
- *   - Objects
- *   - Arrays
- * If no args provided, logs entire state
+ * @param {...*} args - Values to log: primitives, objects, or state references
  * @returns {Operation}
  */
 export function log(...args) {
   return state => {
     const [resolvedArgs] = newExpandReferences(state, args);
-    if (resolvedArgs.length === 0 || !resolvedArgs) {
-      console.log(state);
-    } else {
-      console.log(...resolvedArgs);
-    }
-
+    console.log(...resolvedArgs);
     return state;
   };
 }
@@ -982,9 +964,6 @@ export function log(...args) {
  * detailed inspection during development.
  * @public
  * @function
- * @example <caption>Log entire state when no args provided</caption>
- * debug()
- * // Logs entire state object
  * @example <caption>Log specific values</caption>
  * debug('Hello', 'World')
  * // Logs: Hello World
@@ -993,23 +972,13 @@ export function log(...args) {
  * @example <caption>Multiple arguments including state references</caption>
  * debug('User:', $.user.name, 'Age:', $.user.age)
  * // Logs: User: John Age: 30
- * @param {...(string|number|boolean|StateReference)} args - Values or state references to log. Can be:
- *   - Primitive values (string, number, boolean)
- *   - State references (using $ syntax to reference state properties)
- *   - Objects
- *   - Arrays
- * If no args provided, logs entire state
+ * @param {...*} args - Values to log: primitives, objects, or state references
  * @returns {Operation}
  */
 export function debug(...args) {
   return state => {
     const [resolvedArgs] = newExpandReferences(state, args);
-    if (resolvedArgs.length === 0 || !resolvedArgs) {
-      console.debug(state);
-    } else {
-      console.debug(...resolvedArgs);
-    }
-
+    console.debug(...resolvedArgs);
     return state;
   };
 }
