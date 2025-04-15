@@ -939,7 +939,9 @@ export function assert(expression, errorMessage) {
  * @property {string} key - JSON path to the value in the state object
  */
 /**
- * Creates a state logger that prints values to the console while maintaining the state chain
+ * Creates a general-purpose logger that prints values to the console while
+ * maintaining the state chain. Suitable for regular application logging
+ * and monitoring runtime behavior.
  * @public
  * @function
  * @example <caption>Log entire state when no args provided</caption>
@@ -968,6 +970,44 @@ export function log(...args) {
       console.log(state);
     } else {
       console.log(...resolvedArgs);
+    }
+
+    return state;
+  };
+}
+
+/**
+ * Creates a development-focused logger that prints detailed diagnostic information
+ * to the console while maintaining the state chain. Useful for debugging and
+ * detailed inspection during development.
+ * @public
+ * @function
+ * @example <caption>Log entire state when no args provided</caption>
+ * debug()
+ * // Logs entire state object
+ * @example <caption>Log specific values</caption>
+ * debug('Hello', 'World')
+ * // Logs: Hello World
+ * debug($.user.name)
+ * // Logs value of state.user.name
+ * @example <caption>Multiple arguments including state references</caption>
+ * debug('User:', $.user.name, 'Age:', $.user.age)
+ * // Logs: User: John Age: 30
+ * @param {...(string|number|boolean|StateReference)} args - Values or state references to log. Can be:
+ *   - Primitive values (string, number, boolean)
+ *   - State references (using $ syntax to reference state properties)
+ *   - Objects
+ *   - Arrays
+ * If no args provided, logs entire state
+ * @returns {Operation}
+ */
+export function debug(...args) {
+  return state => {
+    const [resolvedArgs] = newExpandReferences(state, args);
+    if (resolvedArgs.length === 0 || !resolvedArgs) {
+      console.debug(state);
+    } else {
+      console.debug(...resolvedArgs);
     }
 
     return state;

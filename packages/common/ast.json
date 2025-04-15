@@ -1603,7 +1603,7 @@
         "args"
       ],
       "docs": {
-        "description": "Creates a state logger that prints values to the console while maintaining the state chain",
+        "description": "Creates a general-purpose logger that prints values to the console while\nmaintaining the state chain. Suitable for regular application logging\nand monitoring runtime behavior.",
         "tags": [
           {
             "title": "public",
@@ -1628,6 +1628,80 @@
           {
             "title": "example",
             "description": "log('User:', $.user.name, 'Age:', $.user.age)\n// Logs: User: John Age: 30",
+            "caption": "Multiple arguments including state references"
+          },
+          {
+            "title": "param",
+            "description": "Values or state references to log. Can be:\n  - Primitive values (string, number, boolean)\n  - State references (using $ syntax to reference state properties)\n  - Objects\n  - Arrays\nIf no args provided, logs entire state",
+            "type": {
+              "type": "RestType",
+              "expression": {
+                "type": "UnionType",
+                "elements": [
+                  {
+                    "type": "NameExpression",
+                    "name": "string"
+                  },
+                  {
+                    "type": "NameExpression",
+                    "name": "number"
+                  },
+                  {
+                    "type": "NameExpression",
+                    "name": "boolean"
+                  },
+                  {
+                    "type": "NameExpression",
+                    "name": "StateReference"
+                  }
+                ]
+              }
+            },
+            "name": "args"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "debug",
+      "params": [
+        "args"
+      ],
+      "docs": {
+        "description": "Creates a development-focused logger that prints detailed diagnostic information\nto the console while maintaining the state chain. Useful for debugging and\ndetailed inspection during development.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "debug()\n// Logs entire state object",
+            "caption": "Log entire state when no args provided"
+          },
+          {
+            "title": "example",
+            "description": "debug('Hello', 'World')\n// Logs: Hello World\ndebug($.user.name)\n// Logs value of state.user.name",
+            "caption": "Log specific values"
+          },
+          {
+            "title": "example",
+            "description": "debug('User:', $.user.name, 'Age:', $.user.age)\n// Logs: User: John Age: 30",
             "caption": "Multiple arguments including state references"
           },
           {

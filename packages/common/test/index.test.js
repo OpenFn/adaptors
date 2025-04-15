@@ -32,6 +32,7 @@ import {
   validate,
   assert as assertCommon,
   log,
+  debug,
 } from '../src/Adaptor';
 import { startOfToday } from 'date-fns';
 
@@ -1113,12 +1114,12 @@ describe('assert', () => {
 });
 
 describe('log', () => {
-  const input = { x: 'a', y: { z: 'b' } };
+  const input = { x: 'a', y: { z: 'b' }, u: null };
   let originalLog;
   let consoleOutput = [];
   beforeEach(() => {
     originalLog = console.log;
-    console.log = (...args) => (consoleOutput = args);
+    console.log = (...args) => consoleOutput.push(...args);
   });
 
   it('should log a message', () => {
@@ -1147,7 +1148,78 @@ describe('log', () => {
     expect(result).to.eq(input);
     expect(consoleOutput[0]).to.eq(input);
   });
+  it('should log undefined if key is not found', () => {
+    log(state => state.a)({});
+    expect(consoleOutput[0]).to.eq(undefined);
+  });
+  it('should log the value of a state reference', () => {
+    log(state => state.x)(input);
+    log(state => state.u)(input);
+    expect(consoleOutput[0]).to.eq('a');
+    expect(consoleOutput[1]).to.eq(null);
+  });
   afterEach(() => {
+    consoleOutput = [];
     console.log = originalLog;
+  });
+});
+
+describe('debug', () => {
+  const input = { x: 'a', y: { z: 'b' }, u: null };
+  let originalDebug;
+  let consoleOutput = [];
+
+  beforeEach(() => {
+    originalDebug = console.debug; // Using console.log since we changed debug to use it
+    console.debug = (...args) => consoleOutput.push(...args);
+  });
+
+  it('should debug a message', () => {
+    const result = debug('test')(input);
+    expect(result).to.eq(input);
+    expect(consoleOutput[0]).to.eq('test');
+  });
+
+  it('should debug multiple messages', () => {
+    debug('test', 'test2')(input);
+    expect(consoleOutput[0]).to.eq('test');
+    expect(consoleOutput[1]).to.eq('test2');
+  });
+
+  it('should debug multiple messages with state', () => {
+    debug(
+      'test',
+      state => state.x,
+      state => `test ${state.y.z}`
+    )(input);
+
+    expect(consoleOutput[0]).to.eq('test');
+    expect(consoleOutput[1]).to.eq('a');
+    expect(consoleOutput[2]).to.eq('test b');
+  });
+
+  it('should debug state if no arguments are passed', () => {
+    const result = debug()(input);
+    expect(result).to.eq(input);
+
+    expect(consoleOutput[0]).to.eq(input);
+  });
+
+  it('should debug undefined if key is not found', () => {
+    debug(state => state.a)({});
+    expect(consoleOutput[0]).to.eq(undefined);
+  });
+
+  it('should debug the value of a state reference', () => {
+    debug(state => state.x)(input);
+    debug(state => state.u)(input);
+
+    expect(consoleOutput[0]).to.eq('a');
+    expect(consoleOutput[1]).to.eq(null);
+  });
+
+  afterEach(() => {
+    consoleOutput = [];
+    console.log = originalDebug;
   });
 });
