@@ -1165,7 +1165,7 @@ describe('debug', () => {
   let consoleOutput = [];
 
   beforeEach(() => {
-    originalDebug = console.debug; // Using console.log since we changed debug to use it
+    originalDebug = console.debug;
     console.debug = (...args) => consoleOutput.push(...args);
   });
 
@@ -1208,6 +1208,6 @@ describe('debug', () => {
 
   afterEach(() => {
     consoleOutput = [];
-    console.log = originalDebug;
+    console.debug = originalDebug;
   });
 });
