@@ -31,6 +31,7 @@ import {
   toArray,
   validate,
   assert as assertCommon,
+  log,
 } from '../src/Adaptor';
 import { startOfToday } from 'date-fns';
 
@@ -1108,5 +1109,45 @@ describe('assert', () => {
     }
 
     expect(error.message).to.eql(`assertion statement failed with false`);
+  });
+});
+
+describe('log', () => {
+  const input = { x: 'a', y: { z: 'b' } };
+  let originalLog;
+  let consoleOutput = [];
+  beforeEach(() => {
+    originalLog = console.log;
+    console.log = (...args) => (consoleOutput = args);
+  });
+
+  it('should log a message', () => {
+    const result = log('test')(input);
+    expect(result).to.eq(input);
+    expect(consoleOutput[0]).to.eq('test');
+  });
+
+  it('should log multiple messages', () => {
+    log('test', 'test2')(input);
+    expect(consoleOutput[0]).to.eq('test');
+    expect(consoleOutput[1]).to.eq('test2');
+  });
+  it('should log multiple messages with state', () => {
+    log(
+      'test',
+      state => state.x,
+      state => `test ${state.y.z}`
+    )(input);
+    expect(consoleOutput[0]).to.eq('test');
+    expect(consoleOutput[1]).to.eq('a');
+    expect(consoleOutput[2]).to.eq('test b');
+  });
+  it('shoudl log state if no arguments are passed', () => {
+    const result = log()(input);
+    expect(result).to.eq(input);
+    expect(consoleOutput[0]).to.eq(input);
+  });
+  afterEach(() => {
+    console.log = originalLog;
   });
 });

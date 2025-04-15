@@ -932,3 +932,44 @@ export function assert(expression, errorMessage) {
     return state;
   };
 }
+
+/**
+ * Represents a reference to a value in the state object
+ * @typedef {Object} StateReference
+ * @property {string} key - JSON path to the value in the state object
+ */
+/**
+ * Creates a state logger that prints values to the console while maintaining the state chain
+ * @public
+ * @function
+ * @example <caption>Log entire state when no args provided</caption>
+ * log()
+ * // Logs entire state object
+ * @example <caption>Log specific values</caption>
+ * log('Hello', 'World')
+ * // Logs: Hello World
+ * log($.user.name)
+ * // Logs value of state.user.name
+ * @example <caption>Multiple arguments including state references</caption>
+ * log('User:', $.user.name, 'Age:', $.user.age)
+ * // Logs: User: John Age: 30
+ * @param {...(string|number|boolean|StateReference)} args - Values or state references to log. Can be:
+ *   - Primitive values (string, number, boolean)
+ *   - State references (using $ syntax to reference state properties)
+ *   - Objects
+ *   - Arrays
+ * If no args provided, logs entire state
+ * @returns {Operation}
+ */
+export function log(...args) {
+  return state => {
+    const [resolvedArgs] = newExpandReferences(state, args);
+    if (resolvedArgs.length === 0 || !resolvedArgs) {
+      console.log(state);
+    } else {
+      console.log(...resolvedArgs);
+    }
+
+    return state;
+  };
+}
