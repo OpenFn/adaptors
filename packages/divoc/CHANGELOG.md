@@ -1,13 +1,13 @@
 # @openfn/language-divoc
 
-## 0.1.1
+## 0.1.1 - 11 April 2025
 
 ### Patch Changes
 
-- Updated dependencies [d7105c0]
-  - @openfn/language-common@2.3.2
+* Updated dependencies \[d7105c0]
+  * @openfn/language-common@2.3.2
 
-## 0.1.0
+## 0.1.0 - 24 March 2025
 
 DIVOC (Digital Infrastructure for Verifiable Open Credentialing) is an
 open-source platform that enables countries to digitally orchestrate large-scale
