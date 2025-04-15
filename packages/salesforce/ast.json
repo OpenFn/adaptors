@@ -520,8 +520,13 @@
           },
           {
             "title": "example",
-            "description": "query('SELECT Id FROM Patient__c', { limit: false });",
+            "description": "query('SELECT Id FROM Patient__c', { max: false });",
             "caption": "Run a query and download all matching records"
+          },
+          {
+            "title": "example",
+            "description": "query('SELECT Id From Account Limit 10');",
+            "caption": "Run a query and limit records"
           },
           {
             "title": "example",
@@ -561,7 +566,7 @@
           },
           {
             "title": "param",
-            "description": "Maximum number of records to fetch. If `limit: false`, no limit will be applied.",
+            "description": "Maximum number of records to fetch. If `max: false`, no limit will be applied.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -569,7 +574,7 @@
                 "name": "number"
               }
             },
-            "name": "options.limit",
+            "name": "options.max",
             "default": "10000"
           },
           {
