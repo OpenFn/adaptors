@@ -516,7 +516,9 @@ export function insert(sObjectName, records) {
  *
  * @public
  * @example <caption>Run a query and download all matching records</caption>
- * query('SELECT Id FROM Patient__c', { limit: false });
+ * query('SELECT Id FROM Patient__c', { max: false });
+ * @example <caption>Run a query and limit records</caption>
+ * query('SELECT Id From Account Limit 10');
  * @example <caption>Query patients by Health ID</caption>
  * query(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);
  * @example <caption>Query patients by Health ID using a lazy state reference</caption>
@@ -524,7 +526,7 @@ export function insert(sObjectName, records) {
  * @function
  * @param {string} query - A SOQL query string. Must be less than 4000 characters in WHERE clause
  * @param {object} [options] - Query options
- * @param {number} [options.limit=10000] - Maximum number of records to fetch. If `limit: false`, no limit will be applied.
+ * @param {number} [options.max=10000] - Maximum number of records to fetch. If `max: false`, no limit will be applied.
  * @state {SalesforceState}
  * @property data - Array of result objects of the form <code>\{ done, totalSize, records \}</code>
  * @returns {Operation}
@@ -532,22 +534,22 @@ export function insert(sObjectName, records) {
 
 export function query(query, options) {
   return async state => {
-    const defaultLimit = 1e4;
-    const [resolvedQuery, resolvedOptions = { limit: defaultLimit }] =
+    const maxRecords = 1e4;
+    const [resolvedQuery, resolvedOptions = { max: maxRecords }] =
       expandReferences(state, query, options);
     console.log(`Executing query: ${resolvedQuery}`);
 
-    const { limit } = resolvedOptions;
+    const { max } = resolvedOptions;
     const { records, ...response } = await connection.query(resolvedQuery, {
       autoFetch: true,
-      maxFetch: limit || Infinity,
+      maxFetch: max || Infinity,
     });
 
     const fetchedRecords = records.length;
 
-    if (!response.done && fetchedRecords === defaultLimit) {
+    if (!response.done && fetchedRecords === maxRecords) {
       console.warn(
-        `Warning: The default maximum number of items has been reached (${defaultLimit}), but more items are available on the server. To download all available items, adjust limit to ${response.totalSize} or set limit to false`
+        `Warning: The default maximum number of items has been reached (${maxRecords}), but more items are available on the server. To download all available items, adjust limit to ${response.totalSize} or set limit to false`
       );
     }
     console.log('Fetched: ' + fetchedRecords);
