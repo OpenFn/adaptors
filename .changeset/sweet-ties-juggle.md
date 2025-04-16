@@ -36,11 +36,11 @@ query('select name from account', { autoFetch: true });
 
 **After**
 
-To fetch all records now, use the `max: false` option:
+To fetch all records now, use the `max: Infinity` option:
 
 ```js
-// New way - using max: false
-query('select name from account', { max: false });
+// New way - using max: Infinity
+query('select name from account', { max: Infinity });
 // Result:
 // state.data = [] // Array of records
 // state.response = { done, totalSize }
