@@ -10,6 +10,7 @@ import {
   parseUrl,
   ERROR_URL_MISMATCH,
 } from '../../src/util/http.js';
+import { encode } from '../../src/util/base64.js';
 
 const client = enableMockClient('https://www.example.com');
 
@@ -809,6 +810,24 @@ describe('helpers', () => {
       expect(body).to.eql({
         id: '2',
       });
+    });
+
+    it('should force as base64', async () => {
+      const binaryData = Buffer.from('This is binary content', 'utf8');
+      client
+        .intercept({
+          path: '/api',
+          method: 'GET',
+        })
+        .reply(200, binaryData);
+
+      const result = await request('GET', 'https://www.example.com/api', {
+        parseAs: 'base64',
+      });
+
+      const base64Encoded = encode(binaryData, { parseJson: false });
+
+      expect(result.body).to.eql(base64Encoded);
     });
   });
 });
