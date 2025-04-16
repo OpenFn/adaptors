@@ -90,32 +90,32 @@ describe('Integration tests', () => {
     }).timeout(50000);
 
     it('should return 1000 records', async () => {
-      const { data } = await execute(
+      const { response } = await execute(
         query('SELECT Id, Name FROM Account LIMIT 1000')
       )(state);
 
-      expect(data.done).to.eq(true);
-      expect(data.totalSize).to.eq(1000);
+      expect(response.done).to.eq(true);
+      expect(response.totalSize).to.eq(1000);
     }).timeout(5000);
 
     it('should return maximum of 10000 records by default', async () => {
-      const { data } = await execute(query('SELECT Id, Name FROM Account'))(
-        state
-      );
-      expect(data.done).to.eq(true);
-      expect(data.totalSize).to.greaterThan(2000);
-      expect(data.totalSize).to.lessThanOrEqual(10000);
+      const { data, response } = await execute(
+        query('SELECT Id, Name FROM Account')
+      )(state);
+      expect(response.done).to.eq(true);
+      expect(data.length).to.greaterThan(2000);
+      expect(response.totalSize).to.lessThanOrEqual(10000);
     }).timeout(10000);
 
-    it('should return maximum of 2000 records if limit is 2000', async () => {
-      const { data } = await execute(
-        query('SELECT Id, Name FROM Account', { limit: 2000 })
+    it('should return maximum of 2000 records if max is 2000', async () => {
+      const { response } = await execute(
+        query('SELECT Id, Name FROM Account', { max: 2000 })
       )(state);
 
-      expect(data.done).to.eq(false);
-      expect(data.totalSize).to.greaterThan(2000);
-      expect(data.totalSize).to.lessThanOrEqual(10000);
-      expect(data.nextRecordsUrl);
+      expect(response.done).to.eq(false);
+      expect(response.totalSize).to.greaterThan(2000);
+      expect(response.totalSize).to.lessThanOrEqual(10000);
+      expect(response.nextRecordsUrl);
     }).timeout(10000);
   });
 
