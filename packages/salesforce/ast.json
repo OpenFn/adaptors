@@ -520,7 +520,7 @@
           },
           {
             "title": "example",
-            "description": "query('SELECT Id FROM Patient__c', { max: false });",
+            "description": "query('SELECT Id FROM Patient__c', { max: Infinity });",
             "caption": "Run a query and download all matching records"
           },
           {

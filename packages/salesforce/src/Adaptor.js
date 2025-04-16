@@ -514,7 +514,7 @@ export function insert(sObjectName, records) {
  * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ learn more here}.
  * @public
  * @example <caption>Run a query and download all matching records</caption>
- * query('SELECT Id FROM Patient__c', { max: false });
+ * query('SELECT Id FROM Patient__c', { max: Infinity });
  * @example <caption>Run a query and limit records</caption>
  * query('SELECT Id From Account Limit 10');
  * @example <caption>Query patients by Health ID</caption>
