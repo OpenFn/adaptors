@@ -1603,7 +1603,7 @@
         "args"
       ],
       "docs": {
-        "description": "Outputs a message to the console while maintaining the state.",
+        "description": "Outputs a message to the console.",
         "tags": [
           {
             "title": "public",
@@ -1622,22 +1622,15 @@
           },
           {
             "title": "example",
-            "description": "log(({ configuration, ...rest }) => rest);",
-            "caption": "Log a specific object from state"
-          },
-          {
-            "title": "example",
             "description": "log('User:', $.user.name, 'Age:', $.user.age)\n// Logs: User: John Age: 30",
             "caption": "Multiple arguments including state references"
           },
           {
             "title": "param",
-            "description": "Values to log: primitives, objects, or state references",
+            "description": "A value or message to display in the logs",
             "type": {
-              "type": "RestType",
-              "expression": {
-                "type": "AllLiteral"
-              }
+              "type": "NameExpression",
+              "name": "any"
             },
             "name": "args"
           },
@@ -1659,7 +1652,7 @@
         "args"
       ],
       "docs": {
-        "description": "Outputs a message to the console with the debug log level while maintaining the state.",
+        "description": "Outputs a message to the console with the debug log level.",
         "tags": [
           {
             "title": "public",
@@ -1678,22 +1671,15 @@
           },
           {
             "title": "example",
-            "description": "debug(({ configuration, ...rest }) => rest);",
-            "caption": "Log a specific object from state"
-          },
-          {
-            "title": "example",
             "description": "debug('User:', $.user.name, 'Age:', $.user.age)\n// Logs: User: John Age: 30",
             "caption": "Multiple arguments including state references"
           },
           {
             "title": "param",
-            "description": "Values to log: primitives, objects, or state references",
+            "description": "A value or message to display in the logs",
             "type": {
-              "type": "RestType",
-              "expression": {
-                "type": "AllLiteral"
-              }
+              "type": "NameExpression",
+              "name": "any"
             },
             "name": "args"
           },
