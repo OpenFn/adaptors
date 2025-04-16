@@ -165,8 +165,8 @@ async function parseAttachments(attachments) {
 
   for (const attachment of attachments) {
     if (attachment.archive) {
-      const parsedAttachment = await parseArchiveAttachment(attachment);
-      parsedAttachments.push(parsedAttachment);
+      const archiveAttachment = await parseArchiveAttachment(attachment);
+      parsedAttachments.push(archiveAttachment);
     } else {
       parsedAttachments.push(attachment);
     }
@@ -176,26 +176,21 @@ async function parseAttachments(attachments) {
 }
 
 async function parseArchiveAttachment(attachment) {
-  const archive = await createArchiveFromFiles(attachment.archive);
-  const content = Buffer.from(archive, 'utf-8').toString('base64');
-
-  return {
-    filename: attachment.filename,
-    content,
-  };
-}
-
-async function createArchiveFromFiles(files) {
   const zip = new JSZip();
 
-  for (const file of files) {
+  for (const file of attachment.archive) {
     zip.file(file.filename, file.content, {
       compression: 'DEFLATE',
       compressionOptions: { level: 9 },
     });
   }
 
-  return await zip.generateAsync({ type: 'base64' });
+  const content = await zip.generateAsync({ type: 'base64' });
+
+  return {
+    filename: attachment.filename,
+    content,
+  };
 }
 
 // ---
