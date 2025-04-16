@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-varo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "OpenFn varo adaptor",
   "type": "module",
   "exports": {

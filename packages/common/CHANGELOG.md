@@ -1,5 +1,11 @@
 ## 2.3.0 - 16 January 2025
 
+## 2.3.3 - 16 April 2025
+
+### Patch Changes
+
+* b089c56: Implement support for `parseAs:'base64'` for binary data.
+
 ## 2.3.2 - 11 April 2025
 
 ### Patch Changes
@@ -302,8 +308,7 @@ Bumped all package versions to their latest.
   Allowing you to join an array of string'able primitives (strings and integers)
   into a string.
 * Added `toArray` helper.\
-  This can be used to coerce certain types of data into an array, this can be
-  useful when the source data has an ambiguous format. For example a given key
-  in the data may have an object as it's value (when there is only one item),
-  and an array of objects when there is more than one. `toArray` can be used to
-  reconcile this inconsistency.
+  This can be used to coerce certain types of data into an array, this can be useful
+  when the source data has an ambiguous format. For example a given key in the data
+  may have an object as it's value (when there is only one item), and an array of
+  objects when there is more than one. `toArray` can be used to reconcile this inconsistency.

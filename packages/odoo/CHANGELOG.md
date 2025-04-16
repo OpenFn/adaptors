@@ -1,5 +1,12 @@
 # @openfn/language-odoo
 
+## 1.0.5 - 16 April 2025
+
+### Patch Changes
+
+* Updated dependencies \[b089c56]
+  * @openfn/language-common@2.3.3
+
 ## 1.0.4 - 11 April 2025
 
 ### Patch Changes

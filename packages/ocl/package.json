@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-ocl",
-  "version": "1.2.13",
+  "version": "1.2.14",
   "description": "An OCL language package for use with Open Function",
   "main": "dist/index.cjs",
   "scripts": {
