@@ -10,6 +10,7 @@ import { Readable } from 'node:stream';
 
 import { request } from 'undici';
 import dateFns from 'date-fns';
+import throwErrorUtil from './util/throw-error';
 
 import { expandReferences as newExpandReferences, parseDate } from './util';
 
@@ -930,5 +931,34 @@ export function assert(expression, errorMessage) {
     }
 
     return state;
+  };
+}
+
+/**
+ * Creates a strucutured error message with tips and descriptions for a failing request
+ * @public
+ * @function
+ * @example
+ * throwError(500,'Request failed', 'Fix the baseUrl')
+ * @param {any} statusCode  - The status code of the failing request
+ * @param {string} description - The unique description for the error
+ * @param {string} fix - The tips for how to fix the error
+ * @param {object} extras - An optional object containing any other error information that can be displayed
+ * @returns {operation}
+ */
+export function throwError(statusCode, description, fix, extras = {}) {
+  return state => {
+    const [
+      resolvedStatusCode,
+      resolvedDescription,
+      resolvedFix,
+      resolvedExtras,
+    ] = newExpandReferences(state, statusCode, description, fix, extras);
+
+    return throwErrorUtil(resolvedStatusCode, {
+      description: resolvedDescription,
+      fix: resolvedFix,
+      ...resolvedExtras,
+    });
   };
 }

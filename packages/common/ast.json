@@ -1598,6 +1598,79 @@
       "valid": true
     },
     {
+      "name": "throwError",
+      "params": [
+        "statusCode",
+        "description",
+        "fix",
+        "extras"
+      ],
+      "docs": {
+        "description": "Creates a strucutred error message with tips and descriptions for a failing request",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "assert('a' === 'b', '\"a\" is not equal to \"b\"')"
+          },
+          {
+            "title": "param",
+            "description": "The status code of the failing request",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "statusCode"
+          },
+          {
+            "title": "param",
+            "description": "The unique description for the error",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "description"
+          },
+          {
+            "title": "param",
+            "description": "The tips for how to fix the error",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "fix"
+          },
+          {
+            "title": "param",
+            "description": "An optional object containing any other error information that can be displayed",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "extras"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "map",
       "params": [
         "path",
