@@ -58,7 +58,7 @@ export function execute(...operations) {
     return commonExecute(
       createConnection,
       ...operations,
-      removeConnection,
+      removeConnection
     )({
       ...initialState,
       ...state,
@@ -70,14 +70,12 @@ export function execute(...operations) {
 /**
  * Uploads a file to Google Drive.
  * @public
- * @example
- * create(
- *  'base64-encoded-file-content',
- *  'custom-name.txt',
- *  {
- *    folderId: 'drive-folder-id'
- *  }
- * )
+ * @example <caption>Upload a file to a root folder</caption>
+ * create("SGVsbG8gV29ybGQ=", "hello-world.txt");
+ * @example <caption>Upload a file to a specificfolder</caption>
+ * create("SGVsbG8gV29ybGQ=", "hello-world.txt", {
+ *   folderId: "15tLwRj0lmr4mGIslEm5QEAS8YJ1EAXep",
+ * });
  * @param {string} content - Base64 encoded file content.
  * @param {string} fileName - Name for the uploaded file.
  * @param {Object} options - File upload parameters.
@@ -119,8 +117,8 @@ export function create(content, fileName, options = {}) {
 /**
  * Downloads a file from Google Drive.
  * @public
- * @example
- * get({ fileId: 'drive-file-id' })
+ * @example <caption>Download a file</caption>
+ * get('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL')
  * @param {string} fileId - ID of the file to download.
  * @returns {Function} An operation that retrieves the file as a base64 string.
  */
@@ -131,7 +129,7 @@ export function get(fileId) {
     return client.files
       .get(
         { fileId: resolvedFileId, alt: 'media' },
-        { responseType: 'arraybuffer' },
+        { responseType: 'arraybuffer' }
       )
       .then(response => {
         const content = Buffer.from(response.data).toString('base64');
@@ -146,24 +144,21 @@ export function get(fileId) {
 /**
  * Updates an existing file in Google Drive.
  * @public
- * @example
- * update({
- *   fileId: 'existing-file-id',
- *   fileString: 'base64-encoded-file-content',
- *   fileName: 'updated-name.txt'
- * })
+ * @example <caption>Update a file</caption>
+ * update('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL', 'SGVsbG8gTWlrZQ==');
  * @param {string} fileId - ID of the file to update.
  * @param {string} content - Base64 encoded new content.
- * @param {string} fileName - New name for the file.
  * @param {Object} options - File update options.
  * @returns {Function} An operation that updates the file.
  */
-export function update(fileId, content, fileName) {
+export function update(fileId, content) {
   return state => {
-    const [resolvedFileId, resolvedContent, resolvedFileName] =
-      expandReferences(state, fileId, content, fileName);
+    const [resolvedFileId, resolvedContent] = expandReferences(
+      state,
+      fileId,
+      content
+    );
 
-    const fileMetadata = { name: resolvedFileName };
     const media = {
       mimeType: 'application/octet-stream',
       body: Readable.from(Buffer.from(resolvedContent, 'base64')),
@@ -172,7 +167,6 @@ export function update(fileId, content, fileName) {
     return client.files
       .update({
         fileId: resolvedFileId,
-        requestBody: fileMetadata,
         media: media,
         fields: 'id,name,webViewLink,size',
         uploadType: 'multipart',
