@@ -1,5 +1,5 @@
 import { expandReferences } from '@openfn/language-common/util';
-import * as util from './Utils';
+import * as util from './util';
 
 /**
  * State object
@@ -22,17 +22,15 @@ import * as util from './Utils';
  * @public
  * @function
  * @example <caption>GET assets resource</caption>
- * http.get(
- *  "/assets/",
- *  )
+ * http.get('assets')
  * @param {string} path - path to resource
  * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
  * @state {KoboToolboxHttpState}
  * @returns {operation}
  */
-export function get(path, options = {}) {
+export function get(path, options) {
   return async state => {
-    const [resolvedPath, resolvedOptions] = expandReferences(
+    const [resolvedPath, resolvedOptions = {}] = expandReferences(
       state,
       path,
       options
@@ -67,9 +65,9 @@ export function get(path, options = {}) {
  * @state {KoboToolboxHttpState}
  * @returns {operation}
  */
-export function post(path, data, options = {}) {
+export function post(path, data, options) {
   return async state => {
-    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
+    const [resolvedPath, resolvedData, resolvedOptions = {}] = expandReferences(
       state,
       path,
       data,
@@ -109,9 +107,9 @@ export function post(path, data, options = {}) {
  * @state {KoboToolboxHttpState}
  * @returns {operation}
  */
-export function put(path, data, options = {}) {
+export function put(path, data, options) {
   return async state => {
-    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
+    const [resolvedPath, resolvedData, resolvedOptions = {}] = expandReferences(
       state,
       path,
       data,

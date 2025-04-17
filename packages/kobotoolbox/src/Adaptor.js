@@ -4,15 +4,7 @@ import {
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import * as util from './Utils';
-
-/**
- * Options object
- * @typedef {Object} RequestOptions
- * @property {object} query - An object of query parameters to be encoded into the URL
- * @property {object} headers - An object of all request headers
- * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
- */
+import * as util from './util';
 
 /**
  * Execute a sequence of operations.
@@ -52,10 +44,10 @@ export function execute(...operations) {
 export function getForms() {
   return async state => {
     const url = `/assets/?asset_type=survey`;
-
     const response = await util.request(state, 'GET', url, {});
 
-    console.log('✓', response.body.results.length, 'forms fetched.');
+    console.log('✓', response.body.results?.length, 'forms fetched.');
+
     return util.prepareNextState(state, response);
   };
 }
@@ -63,41 +55,65 @@ export function getForms() {
 /**
  * Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`.
  * @example <caption>Get all submissions for a specific form</caption>
- * getSubmissions('aXecHjmbATuF6iGFmvBLBX');
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX', {limit: Infinity});
  * @example <caption>Get form submissions with a query</caption>
- * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: "2022-06-12T21:54:20" } } });
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: "2025-03-12T21:54:20" } } });
  * @function
  * @public
  * @param {string} formId - Form Id to get the specific submissions
  * @param {object} [options={}] - Optional query params for the request
+ * @param {number} [options.limit] - Limit the number of submissions to fetch
+ * @param {object} [options.query] - Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}
+ * @param {number} [options.max=10000] - (Openfn only) Restrict the maximum number of retrieved submissions. May be fetched in several pages. Not used if `limit` is set.
+ * @param {number} [options.pageSize=1000] - (Openfn only) Limits the size of each page of submissions. Not used if limit is set.
  * @state data - an array of submission objects
  * @returns {Operation}
  */
-export function getSubmissions(formId, options = {}) {
+export function getSubmissions(formId, options) {
   return async state => {
-    const [resolvedFormId, resolvedOptions] = expandReferences(
+    const [resolvedFormId, resolvedOptions = {}] = expandReferences(
       state,
       formId,
       options
     );
-
-    const url = `/assets/${resolvedFormId}/data/`;
-    const query = {};
-    if (resolvedOptions.query) {
-      if (typeof resolvedOptions.query == 'string') {
-        query.query = resolvedOptions.query;
-      } else {
-        query.query = JSON.stringify(resolvedOptions.query);
+    if (resolvedOptions.limit) {
+      const keysToRemove = Object.keys(resolvedOptions).filter(k =>
+        k.match(/^(max|pageSize)$/)
+      );
+      if (keysToRemove.length) {
+        console.warn(
+          `Warning: ignoring option [${keysToRemove.join(
+            ','
+          )}] as "limit" is set`
+        );
+        delete resolvedOptions.max;
+        delete resolvedOptions.pageSize;
       }
     }
+    const { query, limit, pageSize, max } = resolvedOptions;
+    const path = `/assets/${resolvedFormId}/data/`;
+    const qs = {};
+    if (query) {
+      if (typeof query === 'string') {
+        qs.query = query;
+      } else {
+        qs.query = JSON.stringify(query);
+      }
+    }
+    const requestOptions = {
+      query: { ...qs },
+      max,
+      limit,
+      pageSize,
+    };
+    const result = await util.requestWithPagination(
+      state,
+      path,
+      requestOptions
+    );
 
-    const { results } = await util.request(state, 'GET', url, {
-      paginate: true,
-      query,
-    });
-
-    console.log('✓', results.length, 'submissions fetched.');
-    return composeNextState(state, results);
+    console.log('✓', result?.length, 'submissions fetched.');
+    return composeNextState(state, result);
   };
 }
 

@@ -52,7 +52,7 @@
           },
           {
             "title": "example",
-            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \"2022-06-12T21:54:20\" } } });",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \"2025-03-12T21:54:20\" } } });",
             "caption": "Get form submissions with a query"
           },
           {
@@ -88,6 +88,56 @@
             "default": "{}"
           },
           {
+            "title": "param",
+            "description": "Limit the number of submissions to fetch",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.limit"
+          },
+          {
+            "title": "param",
+            "description": "Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options.query"
+          },
+          {
+            "title": "param",
+            "description": "(Openfn only) Restrict the maximum number of retrieved submissions. May be fetched in several pages. Not used if `limit` is set.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.max",
+            "default": "10000"
+          },
+          {
+            "title": "param",
+            "description": "(Openfn only) Limits the size of each page of submissions. Not used if limit is set.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.pageSize",
+            "default": "1000"
+          },
+          {
             "title": "state",
             "description": "data - an array of submission objects"
           },
@@ -101,7 +151,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "getDeploymentInfo",
