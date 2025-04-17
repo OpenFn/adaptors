@@ -17,7 +17,13 @@
           },
           {
             "title": "example",
-            "description": "create(\n 'base64-encoded-file-content',\n 'custom-name.txt',\n {\n   folderId: 'drive-folder-id'\n }\n)"
+            "description": "create(\"SGVsbG8gV29ybGQ=\", \"hello-world.txt\");",
+            "caption": "Upload a file to a root folder"
+          },
+          {
+            "title": "example",
+            "description": "create(\"SGVsbG8gV29ybGQ=\", \"hello-world.txt\", {\n  folderId: \"15tLwRj0lmr4mGIslEm5QEAS8YJ1EAXep\",\n});",
+            "caption": "Upload a file to a specificfolder"
           },
           {
             "title": "param",
@@ -82,7 +88,8 @@
           },
           {
             "title": "example",
-            "description": "get({ fileId: 'drive-file-id' })"
+            "description": "get('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL')",
+            "caption": "Download a file"
           },
           {
             "title": "param",
@@ -109,8 +116,7 @@
       "name": "update",
       "params": [
         "fileId",
-        "content",
-        "fileName"
+        "content"
       ],
       "docs": {
         "description": "Updates an existing file in Google Drive.",
@@ -122,7 +128,8 @@
           },
           {
             "title": "example",
-            "description": "update({\n  fileId: 'existing-file-id',\n  fileString: 'base64-encoded-file-content',\n  fileName: 'updated-name.txt'\n})"
+            "description": "update('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL', 'SGVsbG8gTWlrZQ==');",
+            "caption": "Update a file"
           },
           {
             "title": "param",
@@ -141,15 +148,6 @@
               "name": "string"
             },
             "name": "content"
-          },
-          {
-            "title": "param",
-            "description": "New name for the file.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "fileName"
           },
           {
             "title": "param",
