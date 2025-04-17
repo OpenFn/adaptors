@@ -7,7 +7,7 @@ Add query params to logged url responses.
 When you make a `GET` request using a query:
 
 ```
-get("comments", {  query:{
+http.get("comments", {  query:{
     postId: 1
 }})
 
