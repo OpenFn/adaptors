@@ -1,5 +1,18 @@
 # @openfn/language-mssql
 
+## 5.0.15 - 17 April 2025
+
+### Patch Changes
+
+* Add query parameters to URL request logs
+
+## 5.0.14 - 17 April 2025
+
+### Patch Changes
+
+* Updated dependencies \[454497a]
+  * @openfn/language-common@2.3.4
+
 ## 5.0.13 - 16 April 2025
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @openfn/language-fhir-fr
 
+## 1.0.12 - 17 April 2025
+
+### Patch Changes
+
+* Add query parameters to URL request logs
+
+## 1.0.11 - 17 April 2025
+
+### Patch Changes
+
+* Updated dependencies \[454497a]
+  * @openfn/language-common@2.3.4
+
 ## 1.0.10 - 16 April 2025
 
 ### Patch Changes

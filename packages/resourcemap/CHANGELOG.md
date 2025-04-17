@@ -1,5 +1,18 @@
 # @openfn/language-resourcemap
 
+## 0.4.16 - 17 April 2025
+
+### Patch Changes
+
+* Add query parameters to URL request logs
+
+## 0.4.15 - 17 April 2025
+
+### Patch Changes
+
+* Updated dependencies \[454497a]
+  * @openfn/language-common@2.3.4
+
 ## 0.4.14 - 16 April 2025
 
 ### Patch Changes
