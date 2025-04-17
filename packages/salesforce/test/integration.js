@@ -79,6 +79,46 @@ describe('Integration tests', () => {
       }).timeout(5000);
     });
   });
+  describe('query', () => {
+    it('should throw an error', async () => {
+      try {
+        await execute(query('invalid-query'))(state);
+      } catch (error) {
+        expect(error.errorCode).to.eq('MALFORMED_QUERY');
+        expect(error.data.message).to.eq("unexpected token: 'invalid'");
+      }
+    }).timeout(50000);
+
+    it('should return 1000 records', async () => {
+      const { response } = await execute(
+        query('SELECT Id, Name FROM Account LIMIT 1000')
+      )(state);
+
+      expect(response.done).to.eq(true);
+      expect(response.totalSize).to.eq(1000);
+    }).timeout(5000);
+
+    it('should return maximum of 10000 records by default', async () => {
+      const { data, response } = await execute(
+        query('SELECT Id, Name FROM Account')
+      )(state);
+      expect(response.done).to.eq(true);
+      expect(data.length).to.greaterThan(2000);
+      expect(response.totalSize).to.lessThanOrEqual(10000);
+    }).timeout(10000);
+
+    it('should return maximum of 2000 records if max is 2000', async () => {
+      const { response } = await execute(
+        query('SELECT Id, Name FROM Account', { max: 2000 })
+      )(state);
+
+      expect(response.done).to.eq(false);
+      expect(response.totalSize).to.greaterThan(2000);
+      expect(response.totalSize).to.lessThanOrEqual(10000);
+      expect(response.nextRecordsUrl);
+    }).timeout(10000);
+  });
+
   describe('bulk', () => {
     before(async () => {
       state.data = [{ name: 'Coco', vera__Active__c: 'No' }];
