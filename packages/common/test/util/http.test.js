@@ -149,13 +149,12 @@ describe('logResponse', () => {
     logResponse(response, {
       name: 'homelander',
     });
+    expect(consoleOutput?.[0]).to.deep.eql([
+      'GET https://www.example.com/api?name=homelander - 200 in 1ms',
+    ]);
 
     // Teardown: Restore console.log
     console.log = originalLog;
-
-    expect(consoleOutput?.[0]?.[0]?.split(' ')?.[1]).to.eql(
-      'https://www.example.com/api?name=homelander'
-    );
   });
 });
 
