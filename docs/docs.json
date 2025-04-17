@@ -32441,6 +32441,176 @@
     "level": 0
   }
 ],
+{"name":"googledrive","adaptor":"@openfn/language-googledrive","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#create\\\">create(content, fileName, options)</a></dt>\\n<dt>\\n    <a href=\\\"#get\\\">get(fileId)</a></dt>\\n<dt>\\n    <a href=\\\"#update\\\">update(fileId, content, options)</a></dt>\\n</dl>\\n\\n\\n## Functions\\n### create\\n\\n<p><code>create(content, fileName, options) ⇒ function</code></p>\\n\\nUploads a file to Google Drive.\\n\\n**Returns**: <code>function</code> - An operation that uploads the file.  \\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| content | <code>string</code> | Base64 encoded file content. |\\n| fileName | <code>string</code> | Name for the uploaded file. |\\n| options | <code>Object</code> | File upload parameters. |\\n| options.folderId | <code>string</code> | ID of the parent folder. |\\n\\n**Example:** Upload a file to a root folder\\n```js\\ncreate(\\\"SGVsbG8gV29ybGQ=\\\", \\\"hello-world.txt\\\");\\n```\\n**Example:** Upload a file to a specificfolder\\n```js\\ncreate(\\\"SGVsbG8gV29ybGQ=\\\", \\\"hello-world.txt\\\", {\\n  folderId: \\\"15tLwRj0lmr4mGIslEm5QEAS8YJ1EAXep\\\",\\n});\\n```\\n\\n* * *\\n\\n### get\\n\\n<p><code>get(fileId) ⇒ function</code></p>\\n\\nDownloads a file from Google Drive.\\n\\n**Returns**: <code>function</code> - An operation that retrieves the file as a base64 string.  \\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| fileId | <code>string</code> | ID of the file to download. |\\n\\n**Example:** Download a file\\n```js\\nget('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL')\\n```\\n\\n* * *\\n\\n### update\\n\\n<p><code>update(fileId, content, options) ⇒ function</code></p>\\n\\nUpdates an existing file in Google Drive.\\n\\n**Returns**: <code>function</code> - An operation that updates the file.  \\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| fileId | <code>string</code> | ID of the file to update. |\\n| content | <code>string</code> | Base64 encoded new content. |\\n| options | <code>Object</code> | File update options. |\\n\\n**Example:** Update a file\\n```js\\nupdate('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL', 'SGVsbG8gTWlrZQ==');\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-googledrive <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\ngoogledrive API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/googledrive-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/googledrive-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-googledrive\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["create","get","update"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","$comment":"OAuth2","properties":{"access_token":{"title":"Access Token","type":"string","description":"Your Google Drive access token","writeOnly":true,"minLength":1,"examples":["eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"]}},"type":"object","additionalProperties":true,"required":["access_token"]}},
+[
+  {
+    "id": "create",
+    "longname": "create",
+    "name": "create",
+    "kind": "function",
+    "scope": "global",
+    "description": "Uploads a file to Google Drive.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Base64 encoded file content.",
+        "name": "content"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Name for the uploaded file.",
+        "name": "fileName"
+      },
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "File upload parameters.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "ID of the parent folder.",
+        "name": "options.folderId"
+      }
+    ],
+    "examples": [
+      "<caption>Upload a file to a root folder</caption>\ncreate(\"SGVsbG8gV29ybGQ=\", \"hello-world.txt\");",
+      "<caption>Upload a file to a specificfolder</caption>\ncreate(\"SGVsbG8gV29ybGQ=\", \"hello-world.txt\", {\n  folderId: \"15tLwRj0lmr4mGIslEm5QEAS8YJ1EAXep\",\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "An operation that uploads the file."
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 85,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/googledrive/src"
+    },
+    "order": 3,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "global",
+    "description": "Downloads a file from Google Drive.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "ID of the file to download.",
+        "name": "fileId"
+      }
+    ],
+    "examples": [
+      "<caption>Download a file</caption>\nget('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "An operation that retrieves the file as a base64 string."
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 125,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/googledrive/src"
+    },
+    "order": 4,
+    "level": 0
+  },
+  {
+    "id": "update",
+    "longname": "update",
+    "name": "update",
+    "kind": "function",
+    "scope": "global",
+    "description": "Updates an existing file in Google Drive.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "ID of the file to update.",
+        "name": "fileId"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Base64 encoded new content.",
+        "name": "content"
+      },
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "File update options.",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Update a file</caption>\nupdate('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL', 'SGVsbG8gTWlrZQ==');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "An operation that updates the file."
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 154,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/googledrive/src"
+    },
+    "order": 5,
+    "level": 0
+  }
+],
 {"name":"googlehealthcare","adaptor":"@openfn/language-googlehealthcare","version":"1.1.3","docs":"\"\\n\\n## Functions\\n### createFhirResource\\n\\n<p><code>createFhirResource([fhirStore], resource, callback) ⇒ Operation</code></p>\\n\\nCreate some resource in Google Cloud Healthcare\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| [fhirStore] | <code>Object</code> | The FHIR store information.    - `cloudRegion` (string): The cloud region where the FHIR store is located.    - `projectId` (string): The ID of the project that contains the FHIR store.    - `datasetId` (string): The ID of the dataset that contains the FHIR store.    - `fhirStoreId` (string): The ID of the FHIR store. |\\n| resource | <code>object</code> | The FHIR resource data to be created |\\n| callback | <code>function</code> | An optional callback function |\\n\\n**Example**\\n```js\\ncreateFhirResource(\\n  {\\n    cloudRegion: \\\"us-central1\\\",\\n    projectId: \\\"adjective-noun-123\\\",\\n    datasetId: \\\"my-dataset\\\",\\n    fhirStoreId: \\\"my-fhir-store\\\",\\n  },\\n  {\\n    resourceType: \\\"Patient\\\",\\n    name: [{ use: \\\"official\\\", family: \\\"Smith\\\", given: [\\\"Darcy\\\"] }],\\n    gender: \\\"female\\\",\\n    birthDate: \\\"1970-01-01\\\",\\n  }\\n);\\n```\\n**Example**\\n```js\\ncreateFhirResource(\\n  {\\n    cloudRegion: \\\"us-central1\\\",\\n    projectId: \\\"adjective-noun-123\\\",\\n    datasetId: \\\"my-dataset\\\",\\n    fhirStoreId: \\\"my-fhir-store\\\",\\n  },\\n  (state) => ({\\n    resourceType: \\\"Encounter\\\",\\n    status: \\\"finished\\\",\\n    class: {\\n      system: \\\"http://hl7.org/fhir/v3/ActCode\\\",\\n      code: \\\"IMP\\\",\\n      display: \\\"inpatient encounter\\\",\\n    },\\n    reasonCode: [\\n      {\\n        text: \\\"The patient had an abnormal heart rate. She was concerned about this.\\\",\\n      },\\n    ],\\n    subject: {\\n      reference: `Patient/${state.data.id}`,\\n    },\\n  })\\n);\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-googlehealthcare <img src='assets/sq-256x256.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\n[Google Cloud Healthcare API](https://cloud.google.com/healthcare-api/docs/how-tos/fhir-resources#healthcare-create-patient-nodejs).\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/googlehealthcare-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/googlehealthcare-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-googlehealthcare\\n\\n## 1.1.3 - 28 October 2024\\n\\n### Patch Changes\\n\\n* Updated docs for each()\\n* Updated dependencies\\n  * @openfn/language-common@2.1.1\\n\\n## 1.1.2 - 16 August 2024\\n\\n### Patch Changes\\n\\n* 8146c23: Fix typings in package.json\\n* Updated dependencies \\\\[8146c23]\\n  * @openfn/language-common@2.0.1\\n\\n## 1.1.1 - 01 August 2024\\n\\n### Patch Changes\\n\\n* Updated dependencies \\\\[4fe527c]\\n  * @openfn/language-common@2.0.0\\n\\n## 1.1.0 - 13 June 2024\\n\\n### Minor Changes\\n\\n* 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n* Updated dependencies \\\\[106ecf6d]\\n  * @openfn/language-common@1.14.0\\n\\n## 1.0.1 - 08 May 2024\\n\\n### Patch Changes\\n\\n* Security updates (lodash,undici)\\n* Updated dependencies\\n  * @openfn/language-common@1.13.2\\n\\n## 1.0.0 - 21 July 2023\\n\\n### Major Changes\\n\\n* 7df7e20: remove `projectId`, `dataSetId`, `cloudRegion`, and `fhirStoreId` out\\n  of configuration\\n\\n  The new implementation of `createFhirResource(fhirStore, resource, callback)`\\n  allows you to use one set of credentials to access different Google Healthcare\\n  Cloud FHIR stores. `fhirStore` is an object that contains the FHIR store\\n  information\\n  (`{cloudRegion: string, projectId: string, datasetId: string, fhirStoreId: string}`).\\n\\n## 0.1.0 - 30 June 2023\\n\\n### Minor Changes\\n\\n* 861d774: add createFhirResource function\\n\\n### Patch Changes\\n\\n* aad9549: Ensure that standard OAuth2 credentials with snake-cased\\n  \\\"access\\\\_token\\\" keys can be used for OAuth2-reliant adaptors\\n* Updated dependencies \\\\[aad9549]\\n  * @openfn/language-common@1.10.0\\n\"","functions":["createFhirResource"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","$comment":"OAuth2","type":"object","properties":{"access_token":{"title":"Access Token","type":"string","description":"Your Google Cloud Healthcare access token","writeOnly":true,"minLength":1,"examples":["eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"]},"apiVersion":{"title":"API Version","type":"string","description":"The API version","default":"v1","examples":["v1","v1beta1"]}},"required":["access_token"]}},
 [
   {
