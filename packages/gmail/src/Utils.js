@@ -1,6 +1,8 @@
 import JSZip from 'jszip';
 import { google } from 'googleapis';
 
+const SEND_MESSAGE_BOUNDARY = '----=_Part_0_123456789.123456789';
+
 let gmail;
 
 export async function getMessagesResult(userId, query, pageToken) {
@@ -99,22 +101,16 @@ export async function getMessageContent(message, desiredContent) {
   }
 }
 
-// ---
-// Send message start
-// ---
-
 export async function sendMessageWithAttachments(message) {
-  const BOUNDARY = '----=_Part_0_123456789.123456789';
-
-  const attachments = await parseAttachments(message.attachments || []);
+  const attachments = await parseAttachments(message.attachments);
 
   const lines = [
     `To: ${message.to}`,
     `Subject: ${message.subject}`,
     'MIME-Version: 1.0',
-    `Content-Type: multipart/mixed; boundary="${BOUNDARY}"`,
+    `Content-Type: multipart/mixed; boundary="${SEND_MESSAGE_BOUNDARY}"`,
     '',
-    `--${BOUNDARY}`,
+    `--${SEND_MESSAGE_BOUNDARY}`,
     'Content-Type: text/plain; charset="UTF-8"',
     'Content-Transfer-Encoding: 7bit',
     '',
@@ -124,7 +120,7 @@ export async function sendMessageWithAttachments(message) {
   for (const attachment of attachments) {
     const file = attachment.filename;
     lines.push(
-      `--${BOUNDARY}`,
+      `--${SEND_MESSAGE_BOUNDARY}`,
       `Content-Type: application/octet-stream; name="${file}"`,
       'Content-Transfer-Encoding: base64',
       `Content-Disposition: attachment; filename="${file}"`,
@@ -133,10 +129,10 @@ export async function sendMessageWithAttachments(message) {
     );
   }
 
-  lines.push(`--${BOUNDARY}--`, '');
+  lines.push(`--${SEND_MESSAGE_BOUNDARY}--`, '');
 
   const rawMessage = lines.join('\r\n');
-  const encodedMessage = encodeEmail(rawMessage);
+  const encodedMessage = Buffer.from(rawMessage).toString('base64');
 
   try {
     const result = await gmail.users.messages.send({
@@ -148,14 +144,6 @@ export async function sendMessageWithAttachments(message) {
   } catch (error) {
     throw new Error('Error fetching messages: ' + error.message);
   }
-}
-
-function encodeEmail(email) {
-  return Buffer.from(email)
-    .toString('base64')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, '');
 }
 
 async function parseAttachments(attachments) {
@@ -192,10 +180,6 @@ async function parseArchiveAttachment(attachment) {
     content,
   };
 }
-
-// ---
-// Send message end
-// ---
 
 export function createConnection(state) {
   const { access_token } = state.configuration;
