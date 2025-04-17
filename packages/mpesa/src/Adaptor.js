@@ -7,6 +7,7 @@ import * as util from './Utils';
  * @property data - the parsed response body
  * @property response - the response from the DARAJA API server (excluding the body)
  * @property references - an array of all previous data objects used in the Job
+ * @private
  **/
 
 /**

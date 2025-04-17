@@ -17,6 +17,7 @@ import { createServer } from './mock';
  * @property data - the parsed response body. containt status and message response
  * @property response - the response from the Wigal SMS server, including headers, statusCode etc
  * @property references - an array of all previous data objects used in the Job
+ * @private
  **/
 /**
  * Executes an operation.

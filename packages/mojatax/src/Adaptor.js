@@ -8,6 +8,7 @@ import { execute as commonExecute } from '@openfn/language-common';
  * @property data - The response body (as JSON)
  * @property response - The HTTP response from the Mojatax server (excluding the body)
  * @property references - An array of all previous data objects used in the Job
+ * @private
  **/
 
 /**

@@ -9,6 +9,7 @@ import * as util from './Utils';
  * @property data - The response body (as JSON)
  * @property response - The HTTP response from the DIVOC server (excluding the body)
  * @property references - An array of the previous data object used in the job
+ * @private
  */
 
 /**

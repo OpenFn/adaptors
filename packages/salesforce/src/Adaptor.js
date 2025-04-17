@@ -25,6 +25,7 @@ import * as util from './util';
  * @typedef {Object} SalesforceState
  * @property data - API response data. Can be either an object or array of objects
  * @property references - History of all previous states
+ * @private
  **/
 
 /**

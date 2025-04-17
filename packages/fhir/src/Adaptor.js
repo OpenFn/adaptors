@@ -9,6 +9,7 @@ import * as util from './Utils';
  * @property data - the parsed response body
  * @property response - the response from the FHIR HTTP server (with the body removed)
  * @property references - an array of all the previous data values
+ * @private
  **/
 
 /**
