@@ -1,5 +1,7 @@
-import unzipper from 'unzipper';
+import JSZip from 'jszip';
 import { google } from 'googleapis';
+
+const SEND_MESSAGE_BOUNDARY = '----=_Part_0_123456789.123456789';
 
 let gmail;
 
@@ -99,6 +101,86 @@ export async function getMessageContent(message, desiredContent) {
   }
 }
 
+export async function sendMessageWithAttachments(message) {
+  const attachments = await parseAttachments(message.attachments);
+
+  const lines = [
+    `To: ${message.to}`,
+    `Subject: ${message.subject}`,
+    'MIME-Version: 1.0',
+    `Content-Type: multipart/mixed; boundary="${SEND_MESSAGE_BOUNDARY}"`,
+    '',
+    `--${SEND_MESSAGE_BOUNDARY}`,
+    'Content-Type: text/plain; charset="UTF-8"',
+    'Content-Transfer-Encoding: 7bit',
+    '',
+    message.body,
+  ];
+
+  for (const attachment of attachments) {
+    const file = attachment.filename;
+    lines.push(
+      `--${SEND_MESSAGE_BOUNDARY}`,
+      `Content-Type: application/octet-stream; name="${file}"`,
+      'Content-Transfer-Encoding: base64',
+      `Content-Disposition: attachment; filename="${file}"`,
+      '',
+      attachment.content
+    );
+  }
+
+  lines.push(`--${SEND_MESSAGE_BOUNDARY}--`, '');
+
+  const rawMessage = lines.join('\r\n');
+  const encodedMessage = Buffer.from(rawMessage).toString('base64');
+
+  try {
+    const result = await gmail.users.messages.send({
+      userId: 'me',
+      requestBody: { raw: encodedMessage },
+    });
+
+    return result.data;
+  } catch (error) {
+    throw new Error('Error fetching messages: ' + error.message);
+  }
+}
+
+async function parseAttachments(attachments) {
+  if (!attachments) return null;
+
+  const parsedAttachments = [];
+
+  for (const attachment of attachments) {
+    if (attachment.archive) {
+      const archiveAttachment = await parseArchiveAttachment(attachment);
+      parsedAttachments.push(archiveAttachment);
+    } else {
+      parsedAttachments.push(attachment);
+    }
+  }
+
+  return parsedAttachments;
+}
+
+async function parseArchiveAttachment(attachment) {
+  const zip = new JSZip();
+
+  for (const file of attachment.archive) {
+    zip.file(file.filename, file.content, {
+      compression: 'DEFLATE',
+      compressionOptions: { level: 9 },
+    });
+  }
+
+  const content = await zip.generateAsync({ type: 'base64' });
+
+  return {
+    filename: attachment.filename,
+    content,
+  };
+}
+
 export function createConnection(state) {
   const { access_token } = state.configuration;
 
@@ -172,24 +254,23 @@ async function extractFileFromArchiveAttachment(attachment, desiredContent) {
   }
 
   const compressedBuffer = Buffer.from(attachment.data, 'base64');
-  const directory = await unzipper.Open.buffer(compressedBuffer);
+  const zip = await JSZip.loadAsync(compressedBuffer);
 
-  const file = directory?.files.find(f =>
-    isExpressionMatch(f.path, desiredContent.file)
+  const filename = Object.keys(zip.files).find(name =>
+    isExpressionMatch(name, desiredContent.file)
   );
 
-  if (!file) {
+  if (!filename) {
     console.info(`File not found in the archive for: ${desiredContent.file}`);
     return null;
   }
 
-  const fileBuffer = await file.buffer();
-  const fileString = fileBuffer.toString('base64');
-  const fileContent = Buffer.from(fileString, 'base64').toString('utf-8');
+  const file = zip.files[filename];
+  const fileContent = await file.async('string');
 
   return {
     archiveFilename: attachment.filename,
-    filename: file.path,
+    filename,
     content: desiredContent.maxLength
       ? fileContent.substring(0, desiredContent.maxLength)
       : fileContent,

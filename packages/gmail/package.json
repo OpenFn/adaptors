@@ -30,7 +30,7 @@
   "dependencies": {
     "@openfn/language-common": "workspace:*",
     "googleapis": "100.0.0",
-    "unzipper": "^0.10.11"
+    "jszip": "^3.10.1"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
