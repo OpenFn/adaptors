@@ -2,19 +2,21 @@
 '@openfn/language-common': minor
 ---
 
-Add query params to `logResponse()`
+Add query params to logged url responses.
 
-
-If you used to do this:
-
-```
-logResponse(response)
+When you make a `GET` request using a query:
 
 ```
+get("comments", {  query:{
+    postId: 1
+}})
 
-You can add this:
 
 ```
-logResponse(response, query)
+
+The logs will include the query parameter for the rquest and you will get:
+
+```
+GET https://jsonplaceholder.typicode.com/commentspostId=1& - 200 in 159ms
 
 ```
