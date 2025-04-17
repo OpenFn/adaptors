@@ -153,7 +153,7 @@ describe('logResponse', () => {
     // Teardown: Restore console.log
     console.log = originalLog;
 
-    expect(consoleOutput[0][0].split(' ')[1]).to.eql(
+    expect(consoleOutput?.[0]?.[0]?.split(' ')?.[1]).to.eql(
       'https://www.example.com/api?name=homelander'
     );
   });
