@@ -155,6 +155,34 @@ export function getContentsFromMessages(options) {
   };
 }
 
+/**
+ * Configurable fields for composing an outbound Gmail message.
+ * @typedef {Object} SendMessageOptions
+ * @property {string} to - Recipient email address.
+ * @property {string} subject - Subject line of the email.
+ * @property {string} body - Email body content.
+ * @property {Array<{ filename: string, content: string|Buffer }>} [attachments] - Optional list of files to attach.
+ */
+
+/**
+ * Sends a Gmail message using the provided configuration.
+ * Supports attachments and standard email fields like subject, body, and recipients.
+ *
+ * @public
+ * @function
+ * @param {SendMessageOptions} message - The message configuration object.
+ * @state {Object} data - The Gmail API response from sending the message.
+ * @returns {Operation}
+ * @example
+ * sendMessage({
+ *   to: 'recipient@example.org',
+ *   subject: 'Test Message',
+ *   body: 'Hello from OpenFn!',
+ *   attachments: [
+ *     { filename: 'test.txt', content: 'Some text content' }
+ *   ]
+ * })
+ */
 export function sendMessage(message) {
   return async state => {
     const [resolvedMessage] = expandReferences(state, message);
@@ -170,7 +198,7 @@ export function sendMessage(message) {
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for http.
  * @private
- * @param {Operations} operations - Operations to be performed.
+ * @param {...Function} operations - Operations to be performed.
  * @returns {Operation}
  */
 export function execute(...operations) {
