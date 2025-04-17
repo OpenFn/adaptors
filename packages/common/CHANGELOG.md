@@ -1,5 +1,11 @@
 ## 2.3.0 - 16 January 2025
 
+## 2.3.4 - 17 April 2025
+
+### Patch Changes
+
+* 454497a: Add query parameters to URL request logs
+
 ## 2.3.3 - 16 April 2025
 
 ### Patch Changes

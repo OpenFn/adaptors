@@ -1,5 +1,18 @@
 # @openfn/language-dhis2
 
+## 6.3.5 - 17 April 2025
+
+### Patch Changes
+
+* Add query parameters to URL request logs
+
+## 6.3.4 - 17 April 2025
+
+### Patch Changes
+
+* Updated dependencies \[454497a]
+  * @openfn/language-common@2.3.4
+
 ## 6.3.3 - 16 April 2025
 
 ### Patch Changes

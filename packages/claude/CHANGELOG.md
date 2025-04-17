@@ -1,5 +1,18 @@
 # @openfn/language-claude
 
+## 1.0.8 - 17 April 2025
+
+### Patch Changes
+
+* Add query parameters to URL request logs
+
+## 1.0.7 - 17 April 2025
+
+### Patch Changes
+
+* Updated dependencies \[454497a]
+  * @openfn/language-common@2.3.4
+
 ## 1.0.6 - 16 April 2025
 
 ### Patch Changes

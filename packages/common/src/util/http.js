@@ -14,10 +14,15 @@ export const makeBasicAuthHeader = (username, password) => {
   return { Authorization: `Basic ${credentials}` };
 };
 
-export const logResponse = response => {
+export const logResponse = (response, query = {}) => {
   const { method, url, statusCode, duration } = response;
+
   if (method && url && duration && statusCode) {
-    const message = `${method} ${url} - ${statusCode} in ${duration}ms`;
+    const urlWithQuery = Object.keys(query || {}).length
+      ? `${url}?${new URLSearchParams(query).toString()}`
+      : url;
+
+    const message = `${method} ${urlWithQuery} - ${statusCode} in ${duration}ms`;
     if (response instanceof Error) {
       console.error(message);
       console.error('response body: ');

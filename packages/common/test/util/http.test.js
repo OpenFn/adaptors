@@ -9,6 +9,7 @@ import {
   del,
   parseUrl,
   ERROR_URL_MISMATCH,
+  logResponse,
 } from '../../src/util/http.js';
 import { encode } from '../../src/util/base64.js';
 
@@ -119,6 +120,43 @@ describe('parseUrl', () => {
     } catch (e) {
       expect(e.message).to.eql(ERROR_URL_MISMATCH);
     }
+  });
+});
+
+describe('logResponse', () => {
+  it('should include query parameters in the url', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+        query: {
+          name: 'homelander',
+        },
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api', {
+      query: {
+        name: 'homelander',
+      },
+    });
+    response.duration = 2;
+    let originalLog;
+    let consoleOutput = [];
+    
+    // Setup: Override console.log
+    originalLog = console.log;
+    console.log = (...args) => consoleOutput.push(args);
+
+    logResponse(response, {
+      name: 'homelander',
+    });
+    expect(consoleOutput?.[0]).to.deep.eql([
+      'GET https://www.example.com/api?name=homelander - 200 in 2ms',
+    ]);
+
+    // Teardown: Restore console.log
+    console.log = originalLog;
   });
 });
 
