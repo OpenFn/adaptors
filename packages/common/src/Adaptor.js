@@ -932,3 +932,49 @@ export function assert(expression, errorMessage) {
     return state;
   };
 }
+
+/**
+ * Outputs a message to the console.
+ * @public
+ * @function
+ * @example <caption>Log specific values</caption>
+ * log('Hello', 'World')
+ * // Logs: Hello World
+ * log($.user.name)
+ * // Logs value of state.user.name
+ * @example <caption>Multiple arguments including state references</caption>
+ * log('User:', $.user.name, 'Age:', $.user.age)
+ * // Logs: User: John Age: 30
+ * @param {any} args - A value or message to display in the logs
+ * @returns {Operation}
+ */
+export function log(...args) {
+  return state => {
+    const [resolvedArgs] = newExpandReferences(state, args);
+    console.log(...resolvedArgs);
+    return state;
+  };
+}
+
+/**
+ * Outputs a message to the console with the debug log level.
+ * @public
+ * @function
+ * @example <caption>Log specific values</caption>
+ * debug('Hello', 'World')
+ * // Logs: Hello World
+ * debug($.user.name)
+ * // Logs value of state.user.name
+ * @example <caption>Multiple arguments including state references</caption>
+ * debug('User:', $.user.name, 'Age:', $.user.age)
+ * // Logs: User: John Age: 30
+ * @param {any} args - A value or message to display in the logs
+ * @returns {Operation}
+ */
+export function debug(...args) {
+  return state => {
+    const [resolvedArgs] = newExpandReferences(state, args);
+    console.debug(...resolvedArgs);
+    return state;
+  };
+}
