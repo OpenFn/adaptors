@@ -140,8 +140,10 @@ describe('logResponse', () => {
         name: 'homelander',
       },
     });
+    response.duration = 2;
     let originalLog;
     let consoleOutput = [];
+    
     // Setup: Override console.log
     originalLog = console.log;
     console.log = (...args) => consoleOutput.push(args);
@@ -150,7 +152,7 @@ describe('logResponse', () => {
       name: 'homelander',
     });
     expect(consoleOutput?.[0]).to.deep.eql([
-      'GET https://www.example.com/api?name=homelander - 200 in 1ms',
+      'GET https://www.example.com/api?name=homelander - 200 in 2ms',
     ]);
 
     // Teardown: Restore console.log
