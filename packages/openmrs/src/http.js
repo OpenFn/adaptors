@@ -7,6 +7,7 @@ import * as util from './Utils';
  * @property data - The response body (as JSON)
  * @property response - The HTTP response from the OpenMRS server (excluding the body)
  * @property references - An array containing all previous data objects
+ * @private
  */
 
 /**
