@@ -65,7 +65,7 @@ export function parseFridgeTagToEms(metadata, nodes) {
         ABST: dateTime,
         TVC: temp,
         ALRM: alarm,
-        description: date + ' ' + tempField,
+        zdescription: date + ' ' + tempField,
       });
 
       function parseAlarm(alarmNode, description) {
