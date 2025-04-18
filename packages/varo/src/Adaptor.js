@@ -77,7 +77,7 @@ export function convertToEms(messageContents) {
  *     { "ASER": "BJBC 08 30", "ABST": "20241205T005440Z", "TVC": 5.2 },
  *   ]
  * );
- * 
+ *
  * state.data becomes:
  * {
  *   "ASER": "BJBC 08 30",
@@ -119,6 +119,7 @@ export function convertReportToMessageContent(report, reportType = 'unknown') {
     );
 
     resolvedReport['zReportType'] = reportType;
+    resolvedReport['zGeneratedTimestamp'] = new Date().toISOString();
 
     const messageContent = {
       subject: `OpenFn | ${resolvedReportType.toUpperCase()}`,
