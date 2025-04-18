@@ -66,7 +66,7 @@ describe('parseRecordsToReport', () => {
     const collection = data.map(i => i.value);
     collection[0].HAMB = false;
 
-    report = parseRecordsToReport(collection, 'EMS', 'FAKE_TEST');
+    report = parseRecordsToReport(collection, 'FAKE_TEST');
     record = report?.records?.[0];
   });
 
