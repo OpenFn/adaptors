@@ -113,6 +113,38 @@ describe('request()', () => {
 
     expect(err.code).to.eql('BASE_URL_MISMATCH');
   });
+
+  it('should accept parseAs to force parsed content', async () => {
+    testServer
+      .intercept({ path: '/json' })
+      .reply(
+        200,
+        {},
+        {
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      )
+      .times(2);
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+      },
+    };
+
+    // get json by
+    const result1 = await execute(request('GET', '/json'))(state);
+    expect(result1.data).to.eql({});
+
+    // force string
+    const result2 = await execute(request('GET', '/json', { parseAs: 'text' }))(
+      state
+    );
+
+    expect(result2.data).to.eql('{}');
+  });
 });
 
 describe('get()', () => {
@@ -440,7 +472,6 @@ describe('get()', () => {
 
     expect(response.statusCode).to.eql(404);
   });
-
 });
 
 describe('contentType', () => {
@@ -494,7 +525,6 @@ describe('contentType', () => {
       )
     )(state);
 
-    
     expect(req.body).to.equal(JSON.stringify({ name: 'a', age: 42 }));
     expect(JSON.parse(response.data).id).to.eql(1);
     expect(req.headers['Content-Type']).to.equal('application/json');
@@ -642,7 +672,6 @@ describe('put', () => {
     expect(response.statusCode).to.eql(200);
     expect(req.body).to.equal(JSON.stringify(body));
   });
-
 });
 
 describe('patch', () => {
@@ -669,7 +698,6 @@ describe('patch', () => {
     expect(response.statusCode).to.eql(200);
     expect(req.body).to.equal(JSON.stringify(body));
   });
-
 });
 
 describe('delete', () => {
