@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-gmail",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "OpenFn gmail adaptor",
   "type": "module",
   "exports": {
@@ -30,7 +30,7 @@
   "dependencies": {
     "@openfn/language-common": "workspace:*",
     "googleapis": "100.0.0",
-    "unzipper": "^0.10.11"
+    "jszip": "^3.10.1"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",

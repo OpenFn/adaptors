@@ -7,6 +7,7 @@ import { request, prepareNextState } from './Utils';
  * @property data - The response body (as JSON)
  * @property response - The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format
  * @property references - An array of all previous data objects used in the Job
+ * @private
  */
 
 /**

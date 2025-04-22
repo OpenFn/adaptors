@@ -932,3 +932,48 @@ export function assert(expression, errorMessage) {
     return state;
   };
 }
+
+/**
+ * Outputs a message, like calling `console.log`. Use this at the top level of your job code, but not inside callbacks.
+ * @public
+ * @function
+ * @example <caption>Log values from state</caption>
+ * log('Patient List::', $.patients);
+ * @example <caption>Use console.log inside a callback or fn block</caption>
+ * fn((state) => {
+ *   console.log(state.data);
+ *   return state;
+ * })
+ * @param {any} args - A value or message to display in the logs
+ * @returns {Operation}
+ */
+export function log(...args) {
+  return state => {
+    const [resolvedArgs] = newExpandReferences(state, args);
+    console.log(...resolvedArgs);
+    return state;
+  };
+}
+
+/**
+ * Outputs a message to the console with the debug log level. This is usually filtered out by default. Use this at the top level of your job code, but not inside callbacks.
+ * @public
+ * @function
+ * @example <caption>Log values from state</caption>
+ * debug('Patient List::', $.patients);
+ * @example <caption>Use console.debug inside a callback or fn block</caption>
+ * fn((state) => {
+ *   console.debug(state.data);
+ *   return state;
+ * })
+
+ * @param {any} args - A value or message to display in the logs
+ * @returns {Operation}
+ */
+export function debug(...args) {
+  return state => {
+    const [resolvedArgs] = newExpandReferences(state, args);
+    console.debug(...resolvedArgs);
+    return state;
+  };
+}

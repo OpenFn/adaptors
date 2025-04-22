@@ -1598,6 +1598,104 @@
       "valid": true
     },
     {
+      "name": "log",
+      "params": [
+        "args"
+      ],
+      "docs": {
+        "description": "Outputs a message, like calling `console.log`. Use this at the top level of your job code, but not inside callbacks.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "log('Patient List::', $.patients);",
+            "caption": "Log values from state"
+          },
+          {
+            "title": "example",
+            "description": "fn((state) => {\n  console.log(state.data);\n  return state;\n})",
+            "caption": "Use console.log inside a callback or fn block"
+          },
+          {
+            "title": "param",
+            "description": "A value or message to display in the logs",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "args"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "debug",
+      "params": [
+        "args"
+      ],
+      "docs": {
+        "description": "Outputs a message to the console with the debug log level. This is usually filtered out by default. Use this at the top level of your job code, but not inside callbacks.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "debug('Patient List::', $.patients);",
+            "caption": "Log values from state"
+          },
+          {
+            "title": "example",
+            "description": "fn((state) => {\n  console.debug(state.data);\n  return state;\n})",
+            "caption": "Use console.debug inside a callback or fn block"
+          },
+          {
+            "title": "param",
+            "description": "A value or message to display in the logs",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "args"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "map",
       "params": [
         "path",

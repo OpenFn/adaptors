@@ -8,6 +8,7 @@ import { request, prepareNextState, authorize } from './Utils';
  * @property data - The response body (as JSON)
  * @property response - The HTTP response from the Satusehat server (excluding the body)
  * @property references - An array of all previous data objects used in the Job
+ * @private
  */
 
 /**
