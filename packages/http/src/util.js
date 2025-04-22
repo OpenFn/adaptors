@@ -70,7 +70,7 @@ export function request(method, path, params) {
       params
     );
 
-    let { body, contentType = 'json', headers = {} } = resolvedParams;
+    let { body, contentType = 'json', headers = {}, parseAs } = resolvedParams;
 
     const contentTypeHeader = Object.keys(headers).find(
       key => key.toLowerCase() === 'content-type'
@@ -117,6 +117,7 @@ export function request(method, path, params) {
       body,
       tls,
       maxRedirections,
+      parseAs,
     };
 
     return commonRequest(method, resolvedPath, options)

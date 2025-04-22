@@ -672,7 +672,7 @@ describe('helpers', () => {
   });
 
   describe('parseAs', () => {
-    it('should auto parse as json', async () => {
+    it('should auto parse as json if content-type is application/json', async () => {
       client
         .intercept({
           path: '/api',
@@ -695,7 +695,7 @@ describe('helpers', () => {
       expect(result.body).to.eql({ name: 'mutchi' });
     });
 
-    it('should auto parse as text by default', async () => {
+    it('should auto parse as text by default (no content type)', async () => {
       client
         .intercept({
           path: '/api',

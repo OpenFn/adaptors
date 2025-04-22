@@ -244,7 +244,9 @@ function encodeRequestBody(body) {
 }
 
 async function readResponseBody(response, parseAs) {
-  const contentLength = response.body?.readableLength ?? 0;
+  const contentLength = parseInt(
+    response.headers['content-length'] ?? response.body?.readableLength
+  );
   const contentType = response.headers['content-type'];
   try {
     if (Number.isNaN(contentLength) || contentLength === 0) {
