@@ -259,7 +259,6 @@ export function create(resourceType, data, options = {}) {
  * @function
  * @param {string} resourceType - The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request
- * @param {function} [callback]  - Optional callback to handle the response
  * @state {Dhis2State}
  * @returns {Operation}
  * @example <caption>Get all data values for the 'pBOMPrpg1QX' dataset</caption>
@@ -291,7 +290,7 @@ export function create(resourceType, data, options = {}) {
  *   parseAs: 'base64',
  * });
  */
-export function get(resourceType, options = {}, callback = s => s) {
+export function get(resourceType, options = {}) {
   return async state => {
     console.log('Preparing get operation...');
 
@@ -318,7 +317,7 @@ export function get(resourceType, options = {}, callback = s => s) {
     }
     console.log(`Retrieved ${resolvedResourceType}`);
 
-    return handleResponse(response, state, callback);
+    return handleResponse(response, state);
   };
 }
 
