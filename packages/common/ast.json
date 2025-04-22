@@ -1603,7 +1603,7 @@
         "args"
       ],
       "docs": {
-        "description": "Outputs a message to the console.",
+        "description": "Outputs a message, like calling `console.log`. Use this at the top level of your job code, but not inside callbacks.",
         "tags": [
           {
             "title": "public",
@@ -1617,13 +1617,13 @@
           },
           {
             "title": "example",
-            "description": "log('Hello', 'World')\n// Logs: Hello World\nlog($.user.name)\n// Logs value of state.user.name",
-            "caption": "Log specific values"
+            "description": "log('Patient List::', $.patients);",
+            "caption": "Log values from state"
           },
           {
             "title": "example",
-            "description": "log('User:', $.user.name, 'Age:', $.user.age)\n// Logs: User: John Age: 30",
-            "caption": "Multiple arguments including state references"
+            "description": "fn((state) => {\n  console.log(state.data);\n  return state;\n})",
+            "caption": "Use console.log inside a callback or fn block"
           },
           {
             "title": "param",
@@ -1652,7 +1652,7 @@
         "args"
       ],
       "docs": {
-        "description": "Outputs a message to the console with the debug log level.",
+        "description": "Outputs a message to the console with the debug log level. This is usually filtered out by default. Use this at the top level of your job code, but not inside callbacks.",
         "tags": [
           {
             "title": "public",
@@ -1666,13 +1666,13 @@
           },
           {
             "title": "example",
-            "description": "debug('Hello', 'World')\n// Logs: Hello World\ndebug($.user.name)\n// Logs value of state.user.name",
-            "caption": "Log specific values"
+            "description": "debug('Patient List::', $.patients);",
+            "caption": "Log values from state"
           },
           {
             "title": "example",
-            "description": "debug('User:', $.user.name, 'Age:', $.user.age)\n// Logs: User: John Age: 30",
-            "caption": "Multiple arguments including state references"
+            "description": "fn((state) => {\n  console.debug(state.data);\n  return state;\n})",
+            "caption": "Use console.debug inside a callback or fn block"
           },
           {
             "title": "param",

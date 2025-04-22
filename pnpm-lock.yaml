@@ -537,7 +537,7 @@ importers:
   packages/fhir:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^2.1.1
+        specifier: workspace:^2.4.0
         version: link:../common
       undici:
         specifier: ^5.28.5
@@ -648,7 +648,7 @@ importers:
         specifier: workspace:*
         version: link:../common
       '@openfn/language-fhir':
-        specifier: ^5.0.3
+        specifier: ^5.0.4
         version: link:../fhir
       '@types/fhir':
         specifier: ^0.0.41
@@ -2182,7 +2182,7 @@ importers:
   packages/surveycto:
     dependencies:
       '@openfn/language-common':
-        specifier: workspace:^2.0.1
+        specifier: workspace:^2.4.0
         version: link:../common
       date-fns-tz:
         specifier: ^3.1.3
