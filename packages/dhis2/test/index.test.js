@@ -158,7 +158,7 @@ describe(' get', () => {
           'no filters applied, dhis2 might complain about needing "at least one orgUnit"',
       });
 
-    const finalState = await execute(http.get('dataValueSets'))(state);
+    const finalState = await execute(get('dataValueSets'))(state);
 
     expect(finalState.data).to.eql({
       httpStatus: 'OK',
@@ -186,6 +186,7 @@ describe(' get', () => {
         parseAs: 'base64',
       })
     )(state);
+    expect(finalState.response).to.eql(undefined);
     expect(finalState.data).to.eql(
       '77+977+977+977+9ABBKRklGAAECAAABAAEAAO+/ve+/vQBDAAgGBgcGBQgHBwcJCQgK'
     );
@@ -310,6 +311,7 @@ describe(' http.get', () => {
         parseAs: 'base64',
       })
     )(state);
+    expect(finalState.response).to.not.eql(undefined);
     expect(finalState.data).to.eql(
       '77+977+977+977+9ABBKRklGAAECAAABAAEAAO+/ve+/vQBDAAgGBgcGBQgHBwcJCQgK'
     );
