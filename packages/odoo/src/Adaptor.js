@@ -14,6 +14,7 @@ let odooConn = null;
  * @property data - The response body (as JSON)
  * @property response - The HTTP response from the Odoo server (excluding the body)
  * @property references - An array of all previous data objects used in the Job
+ * @private
  */
 
 /**

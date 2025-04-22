@@ -56,6 +56,7 @@ const disconnect = async state => {
  * @typedef {Object} RedisState
  * @property data - the result returned from Redis
  * @property references - an array of all previous data objects used in the Job
+ * @private
  **/
 
 /**

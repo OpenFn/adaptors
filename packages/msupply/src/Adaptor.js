@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
  * @property data - the parsed response body
  * @property response - the response from the HTTP server, including headers, statusCode, body, etc
  * @property references - an array of all previous data objects used in the Job
+ * @private
  **/
 
 
