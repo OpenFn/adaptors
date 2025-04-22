@@ -1598,6 +1598,104 @@
       "valid": true
     },
     {
+      "name": "log",
+      "params": [
+        "args"
+      ],
+      "docs": {
+        "description": "Outputs a message to the console.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "log('Hello', 'World')\n// Logs: Hello World\nlog($.user.name)\n// Logs value of state.user.name",
+            "caption": "Log specific values"
+          },
+          {
+            "title": "example",
+            "description": "log('User:', $.user.name, 'Age:', $.user.age)\n// Logs: User: John Age: 30",
+            "caption": "Multiple arguments including state references"
+          },
+          {
+            "title": "param",
+            "description": "A value or message to display in the logs",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "args"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "debug",
+      "params": [
+        "args"
+      ],
+      "docs": {
+        "description": "Outputs a message to the console with the debug log level.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "debug('Hello', 'World')\n// Logs: Hello World\ndebug($.user.name)\n// Logs value of state.user.name",
+            "caption": "Log specific values"
+          },
+          {
+            "title": "example",
+            "description": "debug('User:', $.user.name, 'Age:', $.user.age)\n// Logs: User: John Age: 30",
+            "caption": "Multiple arguments including state references"
+          },
+          {
+            "title": "param",
+            "description": "A value or message to display in the logs",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "args"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "map",
       "params": [
         "path",
