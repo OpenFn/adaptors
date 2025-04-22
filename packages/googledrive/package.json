@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-googledrive",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenFn Google Drive adaptor",
   "type": "module",
   "exports": {
