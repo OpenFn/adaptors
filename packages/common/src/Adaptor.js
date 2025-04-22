@@ -934,17 +934,16 @@ export function assert(expression, errorMessage) {
 }
 
 /**
- * Outputs a message to the console.
+ * Outputs a message, like calling `console.log`. Use this at the top level of your job code, but not inside callbacks.
  * @public
  * @function
- * @example <caption>Log specific values</caption>
- * log('Hello', 'World')
- * // Logs: Hello World
- * log($.user.name)
- * // Logs value of state.user.name
- * @example <caption>Multiple arguments including state references</caption>
- * log('User:', $.user.name, 'Age:', $.user.age)
- * // Logs: User: John Age: 30
+ * @example <caption>Log values from state</caption>
+ * log('Patient List::', $.patients);
+ * @example <caption>Use console.log inside a callback or fn block</caption>
+ * fn((state) => {
+ *   console.log(state.data);
+ *   return state;
+ * })
  * @param {any} args - A value or message to display in the logs
  * @returns {Operation}
  */
@@ -957,17 +956,17 @@ export function log(...args) {
 }
 
 /**
- * Outputs a message to the console with the debug log level.
+ * Outputs a message to the console with the debug log level. This is usually filtered out by default. Use this at the top level of your job code, but not inside callbacks.
  * @public
  * @function
- * @example <caption>Log specific values</caption>
- * debug('Hello', 'World')
- * // Logs: Hello World
- * debug($.user.name)
- * // Logs value of state.user.name
- * @example <caption>Multiple arguments including state references</caption>
- * debug('User:', $.user.name, 'Age:', $.user.age)
- * // Logs: User: John Age: 30
+ * @example <caption>Log values from state</caption>
+ * debug('Patient List::', $.patients);
+ * @example <caption>Use console.debug inside a callback or fn block</caption>
+ * fn((state) => {
+ *   console.debug(state.data);
+ *   return state;
+ * })
+
  * @param {any} args - A value or message to display in the logs
  * @returns {Operation}
  */
