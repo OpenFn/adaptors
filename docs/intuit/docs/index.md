@@ -97,18 +97,3 @@ Options object
 
 * * *
 
-### IntuitState
-
-State object
-
-**Properties**
-
-| Name | Description |
-| --- | --- |
-| data | The response body (as JSON) |
-| response | The HTTP response from the Quickbook(intuit) server (excluding the body) |
-| references | An array of all previous data objects used in the Job |
-
-
-* * *
-

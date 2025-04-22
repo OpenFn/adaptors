@@ -1,6 +1,8 @@
 <dl>
 <dt>
     <a href="#getcontentsfrommessages">getContentsFromMessages(options)</a></dt>
+<dt>
+    <a href="#sendmessage">sendMessage(message)</a></dt>
 </dl>
 
 
@@ -45,6 +47,37 @@ getContentsFromMessages(
 
 * * *
 
+### sendMessage
+
+<p><code>sendMessage(message) ⇒ Operation</code></p>
+
+Sends a Gmail message using the provided configuration.
+Supports attachments and standard email fields like subject, body, and recipients.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| message | [<code>SendMessageOptions</code>](#sendmessageoptions) | The message configuration object. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The Gmail API response from sending the message. |
+**Example**
+```js
+sendMessage({
+  to: 'recipient@example.org',
+  subject: 'Test Message',
+  body: 'Hello from OpenFn!',
+  attachments: [
+    { filename: 'test.txt', content: 'Some text content' }
+  ]
+})
+```
+
+* * *
+
 
 ##  Interfaces
 
@@ -78,6 +111,22 @@ Configurable options provided to the Gmail adaptor.
 | [processedIds] | <code>Array.&lt;string&gt;</code> |  | Ignore message ids which have already been processed. |
 | [email] | <code>string</code> |  | The user account to retrieve messages from. Defaults to the authenticated user. |
 | [maxResults] | <code>int</code> |  | Maximum number of messages to process per request. Default is 1000. |
+
+
+* * *
+
+### SendMessageOptions
+
+Configurable fields for composing an outbound Gmail message.
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| to | <code>string</code> | Recipient email address. |
+| subject | <code>string</code> | Subject line of the email. |
+| body | <code>string</code> | Email body content. |
+| [attachments] | <code>Array.&lt;{filename: string, content: (string\|Buffer)}&gt;</code> | Optional list of files to attach. |
 
 
 * * *

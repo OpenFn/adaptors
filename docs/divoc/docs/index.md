@@ -1,7 +1,3 @@
-<dl>
-<dt>
-    <a href="#certifyvaccination">certifyVaccination(data)</a></dt>
-</dl>
 
 
 ## Functions
@@ -75,21 +71,4 @@ certifyVaccination({
 
 * * *
 
-
-##  Interfaces
-
-### DivocHttpState
-
-State object
-
-**Properties**
-
-| Name | Description |
-| --- | --- |
-| data | The response body (as JSON) |
-| response | The HTTP response from the DIVOC server (excluding the body) |
-| references | An array of the previous data object used in the job |
-
-
-* * *
 

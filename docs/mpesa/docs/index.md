@@ -245,21 +245,6 @@ Buy goods parameter definition
 
 * * *
 
-### HttpState
-
-State object
-
-**Properties**
-
-| Name | Description |
-| --- | --- |
-| data | the parsed response body |
-| response | the response from the DARAJA API server (excluding the body) |
-| references | an array of all previous data objects used in the Job |
-
-
-* * *
-
 ### RegisterUrlObject
 
 Register URL parameter definition

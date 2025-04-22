@@ -52,21 +52,6 @@ sendSms({
 
 ##  Interfaces
 
-### SendSMSState
-
-State object
-
-**Properties**
-
-| Name | Description |
-| --- | --- |
-| data | the parsed response body. containt status and message response |
-| response | the response from the Wigal SMS server, including headers, statusCode etc |
-| references | an array of all previous data objects used in the Job |
-
-
-* * *
-
 ### SMSRequestObject
 
 SMS Request Object

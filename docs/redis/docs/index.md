@@ -290,20 +290,6 @@ set("patient", "mtuchi");
 
 ##  Interfaces
 
-### RedisState
-
-State object
-
-**Properties**
-
-| Name | Description |
-| --- | --- |
-| data | the result returned from Redis |
-| references | an array of all previous data objects used in the Job |
-
-
-* * *
-
 ### ScanOptions
 
 Options provided to the scan function

@@ -276,20 +276,3 @@ submitXls([{ name: 'Mamadou', phone: '000000' }], {
 * * *
 
 
-##  Interfaces
-
-### CommcareHttpState
-
-State object
-
-**Properties**
-
-| Name | Description |
-| --- | --- |
-| data | The response body (as JSON) |
-| response | The HTTP response from the CommCare server (excluding the body) |
-| references | An array of all previous data objects used in the Job |
-
-
-* * *
-

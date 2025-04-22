@@ -439,21 +439,6 @@ http.post('cases',{
 
 ##  Interfaces
 
-### PrimeroHttpState
-
-State object
-
-**Properties**
-
-| Name | Description |
-| --- | --- |
-| data | The response body (as JSON) |
-| response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |
-| references | An array of all previous data objects used in the Job |
-
-
-* * *
-
 ### RequestOptions
 
 Options object

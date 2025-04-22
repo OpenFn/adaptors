@@ -119,21 +119,6 @@ request('POST', '/products/ff808181812576850182aee36930040b', { body: { name: 'C
 
 ##  Interfaces
 
-### HttpState
-
-State object
-
-**Properties**
-
-| Name | Description |
-| --- | --- |
-| data | the parsed response body |
-| response | the response from the HTTP server, including headers, statusCode, body, etc |
-| references | an array of all previous data objects used in the Job |
-
-
-* * *
-
 ### RequestOptions
 
 Options provided to the HTTP request

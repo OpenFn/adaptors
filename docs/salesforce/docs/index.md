@@ -675,20 +675,6 @@ State object
 
 * * *
 
-### SalesforceState
-
-State object
-
-**Properties**
-
-| Name | Description |
-| --- | --- |
-| data | API response data. Can be either an object or array of objects |
-| references | History of all previous states |
-
-
-* * *
-
 ### SimpleRequestOptions
 **Properties**
 

@@ -18,6 +18,8 @@
 <dt>
     <a href="#datavalue">dataValue(path)</a></dt>
 <dt>
+    <a href="#debug">debug(args)</a></dt>
+<dt>
     <a href="#each">each(dataSource, operation)</a></dt>
 <dt>
     <a href="#expandreferences">expandReferences(value, [skipFilter])</a></dt>
@@ -41,6 +43,8 @@
     <a href="#jsonvalue">jsonValue(obj, path)</a></dt>
 <dt>
     <a href="#lastreferencevalue">lastReferenceValue(path)</a></dt>
+<dt>
+    <a href="#log">log(args)</a></dt>
 <dt>
     <a href="#map">map(path, operation, state)</a></dt>
 <dt>
@@ -295,6 +299,31 @@ item will be returned.
 **Example**
 ```js
 dataValue('key')
+```
+
+* * *
+
+### debug
+
+<p><code>debug(args) ⇒ Operation</code></p>
+
+Outputs a message to the console with the debug log level. This is usually filtered out by default. Use this at the top level of your job code, but not inside callbacks.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| args | <code>any</code> | A value or message to display in the logs |
+
+**Example:** Log values from state
+```js
+debug('Patient List::', $.patients);
+```
+**Example:** Use console.debug inside a callback or fn block
+```js
+fn((state) => {
+  console.debug(state.data);
+  return state;
+})
 ```
 
 * * *
@@ -555,6 +584,31 @@ Picks out the last reference value from source data.
 **Example**
 ```js
 lastReferenceValue('key')
+```
+
+* * *
+
+### log
+
+<p><code>log(args) ⇒ Operation</code></p>
+
+Outputs a message, like calling `console.log`. Use this at the top level of your job code, but not inside callbacks.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| args | <code>any</code> | A value or message to display in the logs |
+
+**Example:** Log values from state
+```js
+log('Patient List::', $.patients);
+```
+**Example:** Use console.log inside a callback or fn block
+```js
+fn((state) => {
+  console.log(state.data);
+  return state;
+})
 ```
 
 * * *
