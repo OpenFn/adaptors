@@ -1,0 +1,199 @@
+{
+    "newProduct": {
+        "id": "ff80818163e2de8d0163eba1b1e90002",
+        "productCode": null,
+        "name": "New product",
+        "category": {
+            "id": "ff80818163e2de8d0163eb93c5a00001",
+            "name": "New category"
+        },
+        "description": null,
+        "dateCreated": "2018-06-10T21:37:12Z",
+        "lastUpdated": "2018-06-10T21:37:12Z"
+    },
+    "products": [
+        {
+          "id": "ff80818193115ee501933ccabed50077",
+          "productCode": "1234568",
+          "name": "                       Case Spigen Tough Armor iPhone 16 Pro (MagSafe)",
+          "description": "   Case Spigen Tough Armor iPhone 16 Pro (MagSafe)",
+          "category": "Smartphones",
+          "unitOfMeasure": "Case",
+          "pricePerUnit": null,
+          "dateCreated": "2024-11-18T01:02:20Z",
+          "lastUpdated": "Nov 18, 2024",
+          "updatedBy": "CORRO O",
+          "color": null,
+          "handlingIcons": [
+            {
+              "icon": "fa-prescription-bottle",
+              "color": "#a9a9a9",
+              "label": "Reconditioned"
+            }
+          ],
+          "lotAndExpiryControl": false,
+          "active": true
+        },
+        {
+          "id": "ff8081817f4160ad018060ccedbe032a",
+          "productCode": "00000000000000000000001",
+          "name": "00000000000000000000001",
+          "description": "00000000000000000000001",
+          "category": "CONSOLAS",
+          "unitOfMeasure": null,
+          "pricePerUnit": null,
+          "dateCreated": "2022-04-25T12:58:05Z",
+          "lastUpdated": "Jun 02, 2022",
+          "updatedBy": "abdulrahman e",
+          "color": null,
+          "handlingIcons": [],
+          "lotAndExpiryControl": null,
+          "active": true
+        },
+        {
+          "id": "c1e3443475e74b5f0175ed028c9d0034",
+          "productCode": "ZU94",
+          "name": "01 Audífonos",
+          "description": null,
+          "category": "Software",
+          "unitOfMeasure": null,
+          "pricePerUnit": null,
+          "dateCreated": "2020-11-21T22:52:49Z",
+          "lastUpdated": "Mar 02, 2022",
+          "updatedBy": "JamesyJair T",
+          "color": null,
+          "handlingIcons": [],
+          "lotAndExpiryControl": null,
+          "active": true
+        },
+        {
+          "id": "ff808181812576850182aeebeb0c0410",
+          "productCode": "AMZ02",
+          "name": "02 Amazon Brand Solimo Ristretto Intenso",
+          "description": null,
+          "category": "Beverages",
+          "unitOfMeasure": null,
+          "pricePerUnit": null,
+          "dateCreated": "2022-08-18T03:07:53Z",
+          "lastUpdated": "Aug 18, 2022",
+          "updatedBy": "Selorica P",
+          "color": null,
+          "handlingIcons": [],
+          "lotAndExpiryControl": true,
+          "active": true
+        },
+        {
+          "id": "c1e344346df632ce016df661acc30103",
+          "productCode": "QH26",
+          "name": "02 Memorias USB",
+          "description": null,
+          "category": "Para Olivos",
+          "unitOfMeasure": null,
+          "pricePerUnit": null,
+          "dateCreated": "2019-10-23T02:10:59Z",
+          "lastUpdated": "Dec 05, 2022",
+          "updatedBy": "Awed I",
+          "color": null,
+          "handlingIcons": [
+            {
+              "icon": "fa-snowflake",
+              "color": "#3bafda",
+              "label": "Cold chain"
+            },
+            {
+              "icon": "fa-exclamation-triangle",
+              "color": "#ffa500",
+              "label": "Hazardous material"
+            }
+          ],
+          "lotAndExpiryControl": false,
+          "active": true
+        },
+        {
+          "id": "c1e344346df632ce016df66352fe010a",
+          "productCode": "CUBR-FEM-NGR-12.",
+          "name": "03 Cubrebocas mujer elefante negro",
+          "description": "cubrebocas",
+          "category": "Damas",
+          "unitOfMeasure": null,
+          "pricePerUnit": null,
+          "dateCreated": "2019-10-23T02:12:47Z",
+          "lastUpdated": "Mar 12, 2022",
+          "updatedBy": "Jeremiah N",
+          "color": null,
+          "handlingIcons": [],
+          "lotAndExpiryControl": null,
+          "active": true
+        },
+        {
+          "id": "c1e344344072bbd50140bedd280001e0",
+          "productCode": "CUBR-FEM-NGR-10.",
+          "name": "04 cubrebocas mujer mexico negro",
+          "description": "cubrebocas",
+          "category": "Damas",
+          "unitOfMeasure": "strip",
+          "pricePerUnit": 334,
+          "dateCreated": "2013-08-27T08:21:39Z",
+          "lastUpdated": "Sep 01, 2021",
+          "updatedBy": "Anahy R",
+          "color": null,
+          "handlingIcons": [
+            {
+              "icon": "fa-snowflake",
+              "color": "#3bafda",
+              "label": "Cold chain"
+            }
+          ],
+          "lotAndExpiryControl": null,
+          "active": true
+        },
+        {
+          "id": "c1e34434727d92fb0172e11d31fe0206",
+          "productCode": "ZPAQU-MAY-ENV-01",
+          "name": "05 Paquete 30 cubrebocas diferentes",
+          "description": null,
+          "category": "Damas",
+          "unitOfMeasure": null,
+          "pricePerUnit": null,
+          "dateCreated": "2020-06-23T12:18:06Z",
+          "lastUpdated": "Sep 01, 2021",
+          "updatedBy": "Anahy R",
+          "color": null,
+          "handlingIcons": [],
+          "lotAndExpiryControl": null,
+          "active": true
+        },
+        {
+          "id": "ff808181783955fa0178f54026aa0228",
+          "productCode": "06PAQU-MAY-ENV-10",
+          "name": "06 Paquete 2 cubrebocas de aves",
+          "description": "Allen-Bradley 199-DR1 Flat Din Rail",
+          "category": "Damas",
+          "unitOfMeasure": "Each",
+          "pricePerUnit": null,
+          "dateCreated": "2021-04-21T16:25:25Z",
+          "lastUpdated": "Mar 28, 2022",
+          "updatedBy": "Adam S",
+          "color": null,
+          "handlingIcons": [],
+          "lotAndExpiryControl": null,
+          "active": true
+        },
+        {
+          "id": "c1e34434766833b1017778d56dd803ee",
+          "productCode": "01BLUP-FEM-AZU-05.",
+          "name": "07 Playera polo mujer colibris azul",
+          "description": null,
+          "category": "Damas",
+          "unitOfMeasure": null,
+          "pricePerUnit": null,
+          "dateCreated": "2021-02-06T19:33:09Z",
+          "lastUpdated": "Sep 01, 2021",
+          "updatedBy": "Anahy R",
+          "color": null,
+          "handlingIcons": [],
+          "lotAndExpiryControl": null,
+          "active": true
+        }
+      ]
+}

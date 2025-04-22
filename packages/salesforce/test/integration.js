@@ -2,17 +2,83 @@
 import { expect } from 'chai';
 import configuration from '../tmp/creds.json' assert { type: 'json' };
 import {
+  bulkQuery,
   execute,
   destroy,
   create,
   update,
   query,
   bulk,
+  http,
+  fn,
 } from '../dist/index.js';
 
 const state = { configuration };
 
 describe('Integration tests', () => {
+  describe('http', () => {
+    describe('post', () => {
+      it('should post a request to Salesforce', async () => {
+        const { data } = await execute(
+          http.post('/jobs/query', {
+            operation: 'query',
+            query: 'SELECT Id, Name FROM Account LIMIT 1000',
+          })
+        )(state);
+
+        expect(data.operation).to.eq('query');
+      }).timeout(5000);
+    });
+    describe('get', () => {
+      it('should throw an error if path is absolute', async () => {
+        try {
+          await execute(http.get('https://www.google.com'))(state);
+        } catch (error) {
+          expect(error.code).to.eq('UNEXPECTED_ABSOLUTE_URL');
+          expect(error.description).to.eq(
+            'An absolute URL was provided (https://...) but only a path (/a/b/c) is supported'
+          );
+        }
+      }).timeout(5000);
+      it('fetches account updated information', async () => {
+        const createStartandEndDate = (daysAgo = 20) => {
+          const endDate = new Date();
+          const startDate = new Date();
+          startDate.setUTCDate(endDate.getUTCDate() - daysAgo); //Not more than 30 days ago
+
+          return {
+            startDate: startDate.toISOString(),
+            endDate: endDate.toISOString(),
+          };
+        };
+        const { startDate, endDate } = createStartandEndDate();
+
+        const { data } = await execute(
+          http.get('/services/data/v46.0/sobjects/Account/updated', {
+            query: { start: startDate, end: endDate },
+          })
+        )(state);
+
+        expect(data.latestDateCovered.split('T')[0]).to.eq(
+          endDate.split('T')[0]
+        );
+      }).timeout(5000);
+      it('fetches account information', async () => {
+        const { data } = await execute(http.get('/sobjects/Account/describe'))(
+          state
+        );
+        expect(data.name).to.eq('Account');
+      }).timeout(5000);
+      it('should throw an error if the path is invalid', async () => {
+        try {
+          await execute(http.get('/sobjects/Account/describe/invalid'))(state);
+        } catch (error) {
+          expect(error.errorCode).to.eq('NOT_FOUND');
+          expect(error.message).to.eq('The requested resource does not exist');
+        }
+      }).timeout(5000);
+    });
+  });
   describe('bulk', () => {
     before(async () => {
       state.data = [{ name: 'Coco', vera__Active__c: 'No' }];
@@ -23,6 +89,24 @@ describe('Integration tests', () => {
       )(state);
 
       expect(data.success).to.eq(true);
+    }).timeout(50000);
+
+    it('should update multiple sobjects', async () => {
+      state.data = [
+        { id: '', name: 'Coco', vera__Active__c: 'Yes' },
+        { id: '', name: 'Melon', vera__Active__c: 'No' },
+      ];
+      const { data } = await execute(
+        bulkQuery("SELECT Id, Name FROM Account WHERE Name = 'Coco' LIMIT 2"),
+        fn(state => {
+          state.data = state.data.map(d => ({ Id: d.Id, Name: 'Melon' }));
+          return state;
+        }),
+        bulk('Account', 'update', state => state.data)
+      )(state);
+
+      expect(data.success).to.eq(true);
+      expect(data.completed.length).to.eq(2);
     }).timeout(50000);
 
     it('should fail if there is an error', async () => {
@@ -91,7 +175,7 @@ describe('Integration tests', () => {
 
   describe('update', () => {
     it('should update a single sobject', async () => {
-      const { data } = await execute([
+      const { data } = await execute(
         query("Select Id, Name from Account where Name = 'test' limit 1"),
         update('Account', state => {
           const data = state.data.records[0];
@@ -100,14 +184,14 @@ describe('Integration tests', () => {
             Name: 'new name',
             vera__Active__c: 'Yes',
           };
-        }),
-      ])(state);
+        })
+      )(state);
 
       expect(data.success).to.eq(true);
     }).timeout(5000);
 
     it('should update multiple sobject', async () => {
-      const { data } = await execute([
+      const { data } = await execute(
         create('Account', [
           { name: 'Coco', vera__Active__c: 'No' },
           { name: 'Melon', vera__Active__c: 'Yes' },
@@ -120,8 +204,8 @@ describe('Integration tests', () => {
             vera__Active__c: 'Yes',
           }));
           return data;
-        }),
-      ])(state);
+        })
+      )(state);
 
       expect(data.success).to.eq(true);
     }).timeout(5000);
@@ -129,16 +213,16 @@ describe('Integration tests', () => {
 
   describe('destroy', () => {
     it('should destroy a single sobject', async () => {
-      const finalState = await execute([
+      const finalState = await execute(
         create('Account', { name: 'Coco', vera__Active__c: 'No' }),
-        destroy('Account', state => state.data.completed[0]),
-      ])(state);
+        destroy('Account', state => state.data.completed[0])
+      )(state);
 
       expect(finalState.data.success).to.eq(true);
     }).timeout(5000);
 
     it('should destroy multiple sobject', async () => {
-      const { data } = await execute([
+      const { data } = await execute(
         create('Account', [
           { name: 'Coco', vera__Active__c: 'No' },
           { name: 'Melon', vera__Active__c: 'Yes' },
@@ -146,8 +230,8 @@ describe('Integration tests', () => {
 
         destroy('Account', state => state.data.completed, {
           failOnError: true,
-        }),
-      ])(state);
+        })
+      )(state);
 
       expect(data.success).to.eq(true);
     }).timeout(10000);

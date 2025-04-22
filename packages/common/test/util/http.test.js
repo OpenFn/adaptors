@@ -10,6 +10,7 @@ import {
   parseUrl,
   ERROR_URL_MISMATCH,
 } from '../../src/util/http.js';
+import { encode } from '../../src/util/base64.js';
 
 const client = enableMockClient('https://www.example.com');
 
@@ -391,6 +392,25 @@ describe('options', () => {
     expect(error.message).to.eql(
       'GET to https://www.example.com/api/no-access returned 404: Not Found'
     );
+  });
+
+  it('should not throw for 404 if errors is false', async () => {
+    client
+      .intercept({
+        path: '/api/content',
+        method: 'GET',
+      })
+      .reply(404, {});
+
+    const response = await request(
+      'GET',
+      'https://www.example.com/api/content',
+      {
+        errors: false,
+      }
+    );
+
+    expect(response.statusCode).to.eql(404);
   });
 
   it('should encode keys and values of query', async () => {
@@ -806,6 +826,24 @@ describe('helpers', () => {
       expect(body).to.eql({
         id: '2',
       });
+    });
+
+    it('should force as base64', async () => {
+      const binaryData = Buffer.from('This is binary content', 'utf8');
+      client
+        .intercept({
+          path: '/api',
+          method: 'GET',
+        })
+        .reply(200, binaryData);
+
+      const result = await request('GET', 'https://www.example.com/api', {
+        parseAs: 'base64',
+      });
+
+      const base64Encoded = encode(binaryData, { parseJson: false });
+
+      expect(result.body).to.eql(base64Encoded);
     });
   });
 });

@@ -60,6 +60,67 @@ describe('create', () => {
     )(state);
     expect(data).to.eql(15);
   });
+
+  it('should return the whole resource created if downloadNewRecord is true', async () => {
+    const mock = {
+      create: (model, data, options) => {
+        expect(model).to.eql('res.partner');
+        expect(data).to.eql({ name: 'Jane Doe' });
+        expect(options).to.eql(23);
+
+        return 15;
+      },
+      read: (model, id, fields) => {
+        expect(model).to.eql('res.partner');
+        expect(id).to.eql([15]);
+        expect(fields).to.eql([]);
+
+        return [
+          {
+            id: 15,
+            display_name: 'Jane Doe',
+            message_is_follower: true,
+            has_message: true,
+            message_needaction: false,
+            message_needaction_counter: 0,
+          },
+        ];
+      },
+    };
+    setMockClient(mock);
+
+    const { data } = await create(
+      'res.partner',
+      { name: 'Jane Doe' },
+      { externalId: 23, downloadNewRecord: true }
+    )(state);
+    expect(data[0].id).to.eql(15);
+    expect(data[0]['display_name']).to.eql('Jane Doe');
+  });
+
+  it('should throw an error if a record already exists', async () => {
+    const mock = {
+      create: (model, data, options) => {
+        expect(model).to.eql('res.partner');
+        expect(data).to.eql({ name: 'Jane Doe' });
+        expect(options).to.eql(23);
+        throw new Error(
+          'Error: XML-RPC fault: errors.UniqueViolation: duplicate key value violates unique constraint "ir_model_data_module_name_uniq_index".'
+        );
+      },
+    };
+    setMockClient(mock);
+
+    await create(
+      'res.partner',
+      { name: 'Jane Doe' },
+      { externalId: 23 }
+    )(state).catch(error => {
+      expect(error).to.be.an('error');
+      expect(error.message).to.contain('UniqueViolation');
+      return error;
+    });
+  });
 });
 
 describe('update', () => {
