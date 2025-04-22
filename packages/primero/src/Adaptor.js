@@ -5,7 +5,7 @@ import {
 import { assembleError, scrubResponse, tryJson } from './Utils';
 import request from 'request';
 
-export const composeNextState = (state, data, meta) => {
+const composeNextState = (state, data, meta) => {
   const nextState = {
     ...state,
     data,

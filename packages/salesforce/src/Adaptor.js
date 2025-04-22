@@ -3,9 +3,11 @@ import {
   composeNextState,
   chunk,
 } from '@openfn/language-common';
+
 import { expandReferences, throwError } from '@openfn/language-common/util';
-import { Connection } from '@jsforce/jsforce-node';
 import * as util from './util';
+
+import flatten from 'lodash/flatten';
 
 /**
  * @typedef {object} State
@@ -38,6 +40,24 @@ import * as util from './util';
  **/
 
 /**
+ * Options provided to the Salesforce HTTP request
+ * @typedef {Object} FullRequestOptions
+ * @public
+ * @property {string} [method=GET] - HTTP method to use.
+ * @property {object} headers - Object of request headers.
+ * @property {object} query - Object request query.
+ * @property {object} json - Object request body.
+ * @property {string} body - A string request body.
+ */
+
+/**
+ * @typedef {Object} SimpleRequestOptions
+ * @public
+ * @property {object} headers - Object of request headers.
+ * @property {object} query - Object of request query.
+ * */
+
+/**
  * Options provided to the Salesforce bulk API request
  * @typedef {Object} BulkOptions
  * @public
@@ -62,61 +82,6 @@ import * as util from './util';
  * @property {boolean} [autoFetch=false] - When true, automatically fetches next batch of records if available.
  * */
 
-let connection = null;
-
-/**
- * Creates a connection to Salesforce using Basic Auth or OAuth.
- * @function connect
- * @private
- * @param {State} state - Runtime state.
- * @returns {State}
- */
-const connect = async state => {
-  if (connection) {
-    return state;
-  }
-
-  const { configuration } = state;
-  const { apiVersion: version } = configuration;
-
-  if (configuration.access_token) {
-    const { instance_url: instanceUrl, access_token: accessToken } =
-      configuration;
-    connection = new Connection({ instanceUrl, accessToken, version });
-  } else {
-    const { loginUrl, username, password, securityToken } = configuration;
-    connection = new Connection({ loginUrl, version });
-
-    console.info(`Attempting Salesforce connection for user: ${username}`);
-
-    // Simple, direct login without extra Promise wrapping
-    await connection
-      .login(username, securityToken ? password + securityToken : password)
-      .catch(error => {
-        throwError('FAILED_AUTH', {
-          fix: 'Check your username, password, and security token',
-          message: `Failed to connect to salesforce as ${username}`,
-          error,
-        });
-      });
-  }
-
-  if (!connection) {
-    throwError('CONNECTION_ERROR', { message: 'No connection established' });
-  }
-
-  console.info(
-    `Successfully connected to Salesforce with ${connection._sessionType} session type`
-  );
-  console.info(`API Version: ${connection.version}`);
-
-  return state;
-};
-
-export function setMockConnection(mock) {
-  connection = mock;
-}
-
 /**
  * Executes an operation.
  * @function
@@ -133,13 +98,11 @@ export function execute(...operations) {
 
   return state => {
     return commonExecute(
-      connect,
       util.loadAnyAscii,
-      ...operations
-    )({
-      ...initialState,
-      ...state,
-    });
+      util.createConnection,
+      ...flatten(operations),
+      util.removeConnection
+    )({ ...initialState, ...state });
   };
 }
 
@@ -200,6 +163,8 @@ export function execute(...operations) {
  */
 export function bulk(sObjectName, operation, records, options = {}) {
   return state => {
+    const { connection } = state;
+
     const [
       resolvedSObjectName,
       resolvedOperation,
@@ -313,6 +278,7 @@ export function bulk(sObjectName, operation, records, options = {}) {
  */
 export function bulkQuery(query, options = {}) {
   return async state => {
+    const { connection } = state;
     const [resolvedQuery, resolvedOptions] = expandReferences(
       state,
       query,
@@ -377,6 +343,7 @@ export function bulkQuery(query, options = {}) {
  */
 export function create(sObjectName, records) {
   return state => {
+    let { connection } = state;
     const [resolvedSObjectName, resolvedRecords] = expandReferences(
       state,
       sObjectName,
@@ -384,6 +351,7 @@ export function create(sObjectName, records) {
     );
     util.assertNoNesting(resolvedRecords);
     console.info(`Creating ${resolvedSObjectName}`, resolvedRecords);
+
     return connection
       .create(resolvedSObjectName, resolvedRecords)
       .then(response => {
@@ -414,6 +382,8 @@ export function create(sObjectName, records) {
  */
 export function describe(sObjectName) {
   return state => {
+    const { connection } = state;
+
     const [resolvedSObjectName] = expandReferences(state, sObjectName);
 
     return resolvedSObjectName
@@ -459,6 +429,7 @@ export function describe(sObjectName) {
  */
 export function destroy(sObjectName, ids, options = {}) {
   return state => {
+    const { connection } = state;
     const [resolvedSObjectName, resolvedIds, resolvedOptions] =
       expandReferences(state, sObjectName, ids, options);
 
@@ -491,6 +462,47 @@ export function destroy(sObjectName, ids, options = {}) {
 }
 
 /**
+ * Send a GET request on salesforce server configured in `state.configuration`.
+ * @public
+ * @example <caption>Make a GET request to a custom Salesforce flow</caption>
+ * get('/actions/custom/flow/POC_OpenFN_Test_Flow');
+ * @example <caption>Make a GET request to a custom Salesforce flow with query parameters</caption>
+ * get('/actions/custom/flow/POC_OpenFN_Test_Flow', { query: { Status: 'Active' } });
+ * @example <caption>Make a GET request then map the response</caption>
+ * get('/jobs/query/v1/jobs/001XXXXXXXXXXXXXXX/results', (state) => {
+ *  // Mapping the response
+ *  state.mapping = state.data.map(d => ({ name: d.name, id: d.extId }));
+ *  return state;
+ * });
+ * @function
+ * @param {string} path - The Salesforce API endpoint.
+ * @param {SimpleRequestOptions} [options] - Configure headers and query parameters for the request.
+ * @state {SalesforceState}
+ * @returns {Operation}
+ */
+export function get(path, options = {}) {
+  return async state => {
+    const { connection } = state;
+    const [resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      path,
+      options
+    );
+    const { headers, query } = resolvedOptions;
+    console.log(`GET: ${resolvedPath}`);
+    const requestOptions = {
+      url: resolvedPath,
+      method: 'GET',
+      query,
+      headers: { 'content-type': 'application/json', ...headers },
+    };
+
+    const result = await connection.request(requestOptions);
+
+    return composeNextState(state, result);
+  };
+}
+/**
  * Alias for "create(sObjectName, records)".
  * @public
  * @example <caption> Single record creation</caption>
@@ -511,6 +523,54 @@ export function destroy(sObjectName, ids, options = {}) {
  */
 export function insert(sObjectName, records) {
   return create(sObjectName, records);
+}
+
+/**
+ * Send a POST request to salesforce server configured in `state.configuration`.
+ * @public
+ * @example <caption>Make a POST request to a custom Salesforce flow</caption>
+ * post("/actions/custom/flow/POC_OpenFN_Test_Flow", {
+ *   body: {
+ *     inputs: [
+ *       {
+ *         CommentCount: 6,
+ *         FeedItemId: "0D5D0000000cfMY",
+ *       },
+ *     ],
+ *   },
+ * });
+ * @function
+ * @param {string} path - The Salesforce API endpoint.
+ * @param {object} data - A JSON Object request body.
+ * @param {SimpleRequestOptions} [options] - Configure headers and query parameters for the request.
+ * @state {SalesforceState}
+ * @returns {Operation}
+ */
+export function post(path, data, options = {}) {
+  return async state => {
+    const { connection } = state;
+    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
+      state,
+      path,
+      data,
+      options
+    );
+    const { query, headers } = resolvedOptions;
+
+    console.log(`POST: ${resolvedPath}`);
+
+    const requestOptions = {
+      url: resolvedPath,
+      method: 'POST',
+      query,
+      headers: { 'content-type': 'application/json', ...headers },
+      body: JSON.stringify(resolvedData),
+    };
+
+    const result = await connection.request(requestOptions);
+
+    return composeNextState(state, result);
+  };
 }
 
 /**
@@ -536,6 +596,7 @@ export function insert(sObjectName, records) {
  */
 export function query(query, options = {}) {
   return async state => {
+    const { connection } = state;
     const [resolvedQuery, resolvedOptions] = expandReferences(
       state,
       query,
@@ -631,6 +692,7 @@ export function query(query, options = {}) {
  */
 export function upsert(sObjectName, externalId, records) {
   return state => {
+    const { connection } = state;
     const [resolvedSObjectName, resolvedExternalId, resolvedRecords] =
       expandReferences(state, sObjectName, externalId, records);
 
@@ -680,6 +742,7 @@ export function upsert(sObjectName, externalId, records) {
  */
 export function update(sObjectName, records) {
   return state => {
+    let { connection } = state;
     const [resolvedSObjectName, resolvedRecords] = expandReferences(
       state,
       sObjectName,
@@ -704,6 +767,46 @@ export function update(sObjectName, records) {
 }
 
 /**
+ * Send a request to salesforce server configured in `state.configuration`.
+ * @public
+ * @example <caption>Make a POST request to a custom Salesforce flow</caption>
+ * request("/actions/custom/flow/POC_OpenFN_Test_Flow", {
+ *   method: "POST",
+ *   json: { inputs: [{}] },
+ * });
+ * @function
+ * @param {string} path - The Salesforce API endpoint.
+ * @param {FullRequestOptions} [options] - Configure headers, query and body parameters for the request.
+ * @state {SalesforceState}
+ * @returns {Operation}
+ */
+export function request(path, options = {}) {
+  return async state => {
+    const { connection } = state;
+    const [resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      path,
+      options
+    );
+    const { method = 'GET', json, body, headers, query } = resolvedOptions;
+
+    const requestOptions = {
+      url: resolvedPath,
+      method,
+      query,
+      headers: json
+        ? { 'content-type': 'application/json', ...headers }
+        : headers,
+      body: json ? JSON.stringify(json) : body,
+    };
+
+    const result = await connection.request(requestOptions);
+
+    return composeNextState(state, result);
+  };
+}
+
+/**
  * Retrieves a Salesforce sObject(s).
  * @public
  * @example <caption>Retrieve a specific ContentVersion record</caption>
@@ -716,6 +819,8 @@ export function update(sObjectName, records) {
  */
 export function retrieve(sObjectName, id) {
   return state => {
+    const { connection } = state;
+
     const [resolvedSObjectName, resolvedId] = expandReferences(
       state,
       sObjectName,
@@ -734,11 +839,6 @@ export function retrieve(sObjectName, id) {
   };
 }
 
-// Privately expose the salesforce request function to utils & tests
-export function sfRequest(httpRequest) {
-  return connection.request(httpRequest);
-}
-
 export {
   alterState,
   arrayToString,
@@ -753,6 +853,7 @@ export {
   fields,
   fn,
   fnIf,
+  http,
   humanProper,
   index,
   join,

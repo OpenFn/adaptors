@@ -12,8 +12,7 @@ type TestSpec = Record<FilePath, Content>;
 
 const generate = (
   schema: Record<string, Schema[]>,
-  mappings: MappingSpec = {},
-  options: { name: string; simpleSignatures?: boolean }
+  mappings: MappingSpec = {}
 ) => {
   // test gen won't clean up after itself
   // Tests are really only support to be a one-time template
@@ -25,7 +24,7 @@ const generate = (
   for (const resourceType of orderedResources) {
     const sortedProfiles = sortKeys(schema[resourceType]);
 
-    const testPath = `test/resources/${resourceType}.test.ts`;
+    const testPath = `test/${resourceType}.test.js`;
     const statements: n.Statement[] = [];
 
     statements.push(
@@ -40,8 +39,8 @@ const generate = (
 
     statements.push(
       b.importDeclaration(
-        [b.importSpecifier(b.identifier('builders'))],
-        b.stringLiteral(`../../src/index`)
+        [b.importNamespaceSpecifier(b.identifier('builders'))],
+        b.stringLiteral('../src/builders.js')
       )
     );
 
@@ -51,7 +50,7 @@ const generate = (
       }
       const tests: n.Statement[] = [];
 
-      tests.push(...createTestStub(profile, options.simpleSignatures));
+      tests.push(createTestStub(profile));
 
       // TODO for each example in the spec, generate a skipped test
 
@@ -73,8 +72,7 @@ const createDescribeBlock = (profileId: string, tests: n.Statement[]) =>
     ])
   );
 
-const createTestStub = (profile: Schema, simpleSignatures?: boolean) => {
-  const tests = [];
+const createTestStub = (profile: Schema) => {
   const createResource = b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier('resource'),
@@ -83,9 +81,7 @@ const createTestStub = (profile: Schema, simpleSignatures?: boolean) => {
           b.identifier('builders'),
           b.identifier(getBuilderName(profile.type))
         ),
-        simpleSignatures
-          ? [b.objectExpression([])]
-          : [b.stringLiteral(profile.id), b.objectExpression([])]
+        [b.stringLiteral(profile.id), b.objectExpression([])]
       )
     ),
   ]);
@@ -95,19 +91,15 @@ const createTestStub = (profile: Schema, simpleSignatures?: boolean) => {
       [b.identifier('resource')]
     )
   );
-  tests.push(
-    b.expressionStatement(
-      b.callExpression(b.identifier('it'), [
-        b.stringLiteral(`should create a simple ${profile.id}`),
-        b.arrowFunctionExpression(
-          [],
-          b.blockStatement([createResource, assertResource])
-        ),
-      ])
-    )
+  return b.expressionStatement(
+    b.callExpression(b.identifier('it'), [
+      b.stringLiteral(`should create a simple ${profile.id}`),
+      b.arrowFunctionExpression(
+        [],
+        b.blockStatement([createResource, assertResource])
+      ),
+    ])
   );
-
-  return tests;
 };
 
 export default generate;

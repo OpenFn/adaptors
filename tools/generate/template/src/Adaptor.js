@@ -87,20 +87,15 @@ export function request(method, path, body, options = {}) {
 }
 
 export {
-  combine,
-  cursor,
   dataPath,
   dataValue,
   dateFns,
+  cursor,
   each,
   field,
   fields,
   fn,
-  fnIf,
-  group,
   lastReferenceValue,
   merge,
-  scrubEmojis,
   sourceValue,
-  util,
 } from '@openfn/language-common';

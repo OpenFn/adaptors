@@ -419,6 +419,77 @@
       "valid": false
     },
     {
+      "name": "get",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Send a GET request on salesforce server configured in `state.configuration`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "get('/actions/custom/flow/POC_OpenFN_Test_Flow');",
+            "caption": "Make a GET request to a custom Salesforce flow"
+          },
+          {
+            "title": "example",
+            "description": "get('/actions/custom/flow/POC_OpenFN_Test_Flow', { query: { Status: 'Active' } });",
+            "caption": "Make a GET request to a custom Salesforce flow with query parameters"
+          },
+          {
+            "title": "example",
+            "description": "get('/jobs/query/v1/jobs/001XXXXXXXXXXXXXXX/results', (state) => {\n // Mapping the response\n state.mapping = state.data.map(d => ({ name: d.name, id: d.extId }));\n return state;\n});",
+            "caption": "Make a GET request then map the response"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The Salesforce API endpoint.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Configure headers and query parameters for the request.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "SimpleRequestOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "insert",
       "params": [
         "sObjectName",
@@ -487,6 +558,77 @@
               ]
             },
             "name": "records"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "post",
+      "params": [
+        "path",
+        "data",
+        "options"
+      ],
+      "docs": {
+        "description": "Send a POST request to salesforce server configured in `state.configuration`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "post(\"/actions/custom/flow/POC_OpenFN_Test_Flow\", {\n  body: {\n    inputs: [\n      {\n        CommentCount: 6,\n        FeedItemId: \"0D5D0000000cfMY\",\n      },\n    ],\n  },\n});",
+            "caption": "Make a POST request to a custom Salesforce flow"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The Salesforce API endpoint.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "A JSON Object request body.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Configure headers and query parameters for the request.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "SimpleRequestOptions"
+              }
+            },
+            "name": "options"
           },
           {
             "title": "state",
@@ -757,6 +899,67 @@
           {
             "title": "state",
             "description": "{SalesforceResultState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "request",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Send a request to salesforce server configured in `state.configuration`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "request(\"/actions/custom/flow/POC_OpenFN_Test_Flow\", {\n  method: \"POST\",\n  json: { inputs: [{}] },\n});",
+            "caption": "Make a POST request to a custom Salesforce flow"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The Salesforce API endpoint.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Configure headers, query and body parameters for the request.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "FullRequestOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{SalesforceState}"
           },
           {
             "title": "returns",

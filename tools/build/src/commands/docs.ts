@@ -13,7 +13,7 @@ import { Options } from '../pipeline';
 export default async (lang: string, options: Options = {}) => {
   if (options.watch) {
     const root = resolvePath(lang);
-    const glob = `${root}/src/**/*.(js|ts)`;
+    const glob = `${root}/src/**/*.js`;
     const watcher = chokidar.watch(glob, {
       persistent: true,
     });
@@ -36,12 +36,13 @@ const build = async (lang: string) => {
   console.log(`Building docs`);
   console.log();
 
-  const glob = `${root}/src/**/*.(js|ts)`;
+  const glob = `${root}/src/**/*.js`;
+
   const template = await readFile(
     '../../tools/build/src/util/docs-template.hbs'
   );
 
-  let templateData = await jsdoc2md.getTemplateData({
+  let templateData = jsdoc2md.getTemplateDataSync({
     files: glob,
     configure: [path.resolve('../../tools/build/jsdoc/config.json')],
     'no-cache': true,
@@ -113,7 +114,7 @@ const build = async (lang: string) => {
       data.scope = 'global';
     }
     // Set scope to be the file name
-    else if (data.meta?.filename && !data.meta.filename.includes('Adaptor.')) {
+    else if (data.meta?.filename && data.meta.filename !== 'Adaptor.js') {
       data.scope = data.meta.filename.split('.')[0];
     }
   });
@@ -140,7 +141,7 @@ const build = async (lang: string) => {
   };
 
   console.log('rendering jsdocs...');
-  const docs = await jsdoc2md.render(renderOpts);
+  const docs = jsdoc2md.renderSync(renderOpts);
 
   const readme = await fs.readFile(`${root}/README.md`, 'utf8', (err, data) =>
     err ? '### README' : data

@@ -1,18 +1,6 @@
-import {
-  execute as commonExecute,
-  composeNextState,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { request, cleanPath, requestWithPagination } from './Utils';
-
-/**
- * Options to append to the request. Unless otherwise specified, options are appended to the URL as query parameters - see the [OpenMRS Docs](https://rest.openmrs.org/) for all supported parameters.
- * @typedef {object} GetOptions
- * @property {string} [query] - (OpenFn only) Query string. Maps to `q` in OpenMRS.
- * @property {number} [max=10000] - (OpenFn only) Restrict the maximum number of retrieved records. May be fetched in several pages. Not used if `limit` is set.
- * @property {number} [pageSize=1000] - (OpenFn only) Limits the size of each page of data. Not used if limit is set.
- * @property {boolean} [singleton] - (OpenFn only) If set to true, only the first result will be returned. Useful for "get by id" APIs.
- */
+import { request, prepareNextState } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -38,113 +26,232 @@ export function execute(...operations) {
 }
 
 /**
- * Fetch resources from OpenMRS. Use this to fetch a single resource,
- * or to search a list.
- *
- * Options will be appended as query parameters to the request URL,
- * refer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.
- *
- * Pagination is handled automatically by default (maximum 10k items). Set `max`
- * to paginate with a higher limit, or pass `limit` to force a single request, as
- * per the OpenMRS Rest API.
- * @example <caption>List all concepts (up to a maximum of 10k items, with pagination)</caption>
- * get("concept")
- * @example <caption>List all concepts (with pagination)</caption>
- * get("concept", { query: "brian", max: Infinity })
- * @example <caption>Search up to 100 patients by name (allowing pagination) (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
- * get("patient", { query: "brian", max: 100 })
- * @example <caption>Fetch patient by UUID (returns an array of 1 item)</caption>
- * get("patient/abc")
- * @example <caption>Fetch patient by UUID (returns an object of patient data)</caption>
- * get("patient/abc", { singleton: true })
- * @example <caption>Search up to 10 patients by name (in a single request without pagination) (<a href="https://rest.openmrs.org/#search-patients">see OpenMRS API</a>)</caption>
- * get("patient", { query: "brian", limit: 10 })
- * @example <caption>List allergy subresources</caption>
- * get("patient/abc/allergy")
- * @example <caption>Get allergy subresource by its UUID and parent patient UUID</caption>
- * get("patient/abc/allergy/xyz")
+ * Gets patient matching a uuid
  * @function
  * @public
- * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
- * @param {GetOptions} [options = {}] Includes `max`, `query`, and extra query parameters
- * @state data An array of result objects
+ * @param {string} uuid - A uuid for the patient
+ * @param {function} [callback] - Optional callback to handle the response
+ * @example <caption>Get a patient by uuid</caption>
+ * getPatient('681f8785-c9ca-4dc8-a091-7b869316ff93')
  * @returns {Operation}
  */
-export function get(path, options = {}) {
+export function getPatient(uuid, callback = s => s) {
   return async state => {
-    const [resolvedPath, resolvedOptions] = expandReferences(
+    const [resolvedUuid] = expandReferences(state, uuid);
+    console.log(`Fetching patient by uuid: ${resolvedUuid}`);
+    const { instanceUrl: baseUrl } = state.configuration;
+
+    const response = await request(
       state,
-      path,
-      options
+      'GET',
+      `/ws/rest/v1/patient/${resolvedUuid}`,
+      {
+        baseUrl,
+      }
     );
 
-    if (resolvedOptions.limit) {
-      const keysToRemove = Object.keys(resolvedOptions).filter(k =>
-        k.match(/^(max|pageSize)$/)
-      );
-      if (keysToRemove.length) {
-        console.warn(
-          `Warning: ignoring option [${keysToRemove.join(
-            ','
-          )}] as "limit" is set`
-        );
-        delete resolvedOptions.max;
-        delete resolvedOptions.pageSize;
-      }
-    }
-    let { max, singleton, limit, pageSize, query, ...queryParams } =
-      resolvedOptions;
+    console.log(`Retrieved patient with uuid: ${resolvedUuid}...`);
 
-    if (singleton) {
-      max = 1;
-    }
-
-    // Alias options.query to q (just for readability in job code)
-    if (resolvedOptions.query) {
-      queryParams.q = resolvedOptions.query;
-    }
-
-    const requestOptions = {
-      baseUrl: state.configuration?.instanceUrl,
-      query: queryParams,
-      max,
-      limit,
-      pageSize,
-    };
-
-    try {
-      let result = await requestWithPagination(
-        state,
-        cleanPath(`/ws/rest/v1/${resolvedPath}`),
-        requestOptions
-      );
-
-      if (singleton) {
-        result = result[0];
-      } else {
-        console.log(`get() downloaded ${result.length} resources`);
-      }
-
-      return composeNextState(state, result);
-    } catch (e) {
-      if (e.statusCode === 400 && !queryParams.q) {
-        e.fix =
-          'Many OpenMRS list endpoints expect a query to be passed - try setting the query option on get()';
-      }
-      throw e;
-    }
+    return prepareNextState(state, response, callback);
   };
 }
 
 /**
- * Create a resource. For a list of valid resources, see {@link https://rest.openmrs.org/ OpenMRS Docs}
+ * Make a get request to any OpenMRS REST endpoint.
+ * @example
+ * get("patient", {
+ *   q: "Patient",
+ *   limit: 1,
+ * });
+ * @function
+ * @public
+ * @param {string} path - Path to resource (excluding /ws/rest/v1/)
+ * @param {object} query - parameters for the request
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function get(path, query, callback = s => s) {
+  return async state => {
+    const [resolvedPath, resolvedQuery = {}] = expandReferences(
+      state,
+      path,
+      query
+    );
+    const { instanceUrl: baseUrl } = state.configuration;
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/${resolvedPath}`,
+      {
+        baseUrl,
+        query: resolvedQuery,
+      }
+    );
+
+    // TODO: later decide if we want to throw for no-results.
+    // (This could be introduced as an option for this function.)
+    // if (response.body.results.length == 0) {
+    //   throw `Get operation returned no results for ${resolvedResource}.`;
+    // }
+
+    return prepareNextState(state, response, callback);
+  };
+}
+
+/**
+ * Make a post request to any OpenMRS rest endpoint
+ * @example
+ * post(
+ *   "idgen/identifiersource/8549f706-7e85-4c1d-9424-217d50a2988b/identifier",
+ *   {}
+ * );
+ * @function
+ * @public
+ * @param {string} path - Path to resource (excluding /ws/rest/v1/)
+ * @param {object} data - Object which defines data that will be used to create a given instance of resource
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function post(path, data, callback = s => s) {
+  return async state => {
+    const [resolvedPath, resolvedData] = expandReferences(state, path, data);
+    const { instanceUrl: baseUrl } = state.configuration;
+    const response = await request(
+      state,
+      'POST',
+      `/ws/rest/v1/${resolvedPath}`,
+      {
+        baseUrl,
+        data: resolvedData,
+      }
+    );
+
+    return prepareNextState(state, response, callback);
+  };
+}
+
+/**
+ * Fetch all non-retired patients that match any specified parameters
+ * @example
+ * searchPatient({ q: "Sarah"})
+ * @function
+ * @public
+ * @param {object} query - Object with query for the patient.
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function searchPatient(query, callback = s => s) {
+  return async state => {
+    const [resolvedQuery] = expandReferences(state, query);
+    const { instanceUrl: baseUrl } = state.configuration;
+
+    console.log('Searching for patient with query:', resolvedQuery);
+
+    const response = await request(state, 'GET', '/ws/rest/v1/patient', {
+      baseUrl,
+      query: resolvedQuery,
+    });
+
+    return prepareNextState(state, response, callback);
+  };
+}
+
+/**
+ * Fetch all non-retired persons that match any specified parameters
+ * @example
+ * searchPerson({ q: "Sarah" })
+ * @function
+ * @public
+ * @param {object} query - object with query for the person
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function searchPerson(query, callback = s => s) {
+  return async state => {
+    const [resolvedQuery = {}] = expandReferences(state, query);
+    const { instanceUrl: baseUrl } = state.configuration;
+
+    console.log(`Searching for person with query:`, resolvedQuery);
+
+    const response = await request(state, 'GET', '/ws/rest/v1/person', {
+      baseUrl,
+      query: resolvedQuery,
+    });
+
+    console.log(`Found ${response.body.results.length} people`);
+
+    return prepareNextState(state, response, callback);
+  };
+}
+
+/**
+ * Gets encounter matching a uuid
+ * @example
+ * getEncounter("123")
+ * @function
+ * @public
+ * @param {object} uuid - A uuid for the encounter
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function getEncounter(uuid, callback = s => s) {
+  return async state => {
+    const [resolvedUuid] = expandReferences(state, uuid);
+    console.log(`Fetching encounter with UUID: ${resolvedUuid}`);
+    const { instanceUrl: baseUrl } = state.configuration;
+
+    const response = await request(
+      state,
+      'GET',
+      `/ws/rest/v1/encounter/${resolvedUuid}`,
+      {
+        baseUrl,
+      }
+    );
+
+    console.log(
+      `Successfully retrieved for encounter with UUID: ${resolvedUuid}`
+    );
+
+    return prepareNextState(state, response, callback);
+  };
+}
+
+/**
+ * Gets encounters matching params
+ * @example
+ * getEncounters({ patient: "123", fromdate: "2023-05-18" })
+ * @function
+ * @public
+ * @param {object} query - Object for the patient
+ * @param {function} [callback] - Optional callback to handle the response
+ * @returns {Operation}
+ */
+export function getEncounters(query, callback = s => s) {
+  return async state => {
+    const [resolvedQuery] = expandReferences(state, query);
+    console.log('Fetching encounters by query', resolvedQuery);
+    const { instanceUrl: baseUrl } = state.configuration;
+
+    const response = await request(state, 'GET', `/ws/rest/v1/encounter/`, {
+      baseUrl,
+      query: resolvedQuery,
+    });
+    console.log(`Found ${response.body.results.length} results`);
+
+    return prepareNextState(state, response, callback);
+  };
+}
+
+/**
+ * Create a record
  * @public
  * @function
- * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
- * @param {object} data - Resource definition
- * @state data The newly created resource, as returned by OpenMRS
+ * @param {string} resourceType - Type of resource to create. E.g. `person`, `patient`, `encounter`, ...
+ * @param {OpenMRSData} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
+ * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
- * @example <caption>Create a person (<a href="https://rest.openmrs.org/#create-a-person">see OpenMRS API</a>)</caption>
+ * @example <caption>Create a person</caption>
  * create("person", {
  *   names: [
  *     {
@@ -163,7 +270,7 @@ export function get(path, options = {}) {
  *     },
  *   ],
  * });
- * @example <caption>Create an encounter (<a href="https://rest.openmrs.org/#create-an-encounter">see OpenMRS API</a>)</caption>
+ * @example <caption>Create an encounter</caption>
  * create("encounter", {
  *   encounterDatetime: '2023-05-25T06:08:25.000+0000',
  *   patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',
@@ -177,7 +284,7 @@ export function get(path, options = {}) {
  *     stopDatetime: '2023-05-25T06:09:25.000+0000',
  *   },
  * })
- * @example <caption>Create a patient (<a href="https://rest.openmrs.org/#create-a-patient">see OpenMRS API</a>)</caption>
+ * @example <caption>Create a patient</caption>
  * create("patient", {
  *   identifiers: [
  *     {
@@ -199,215 +306,154 @@ export function get(path, options = {}) {
  *     ],
  *   },
  * })
-  @example <caption>Create a patientIdentifier subresource (<a href="https://rest.openmrs.org/#create-a-patientidentifier-sub-resource-with-properties">see OpenMRS API</a>)</caption>
- * create("patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3/identifier", { 
- *  "identifier" : "111:CLINIC1",
- *  "identifierType" : "a5d38e09-efcb-4d91-a526-50ce1ba5011a",
- *  "location" : "8d6c993e-c2cc-11de-8d13-0010c6dffd0f",
- *  "preferred" : true
- * })
-}
  */
-export function create(path, data) {
+export function create(resourceType, data, callback = s => s) {
   return async state => {
-    const [resolvedPath, resolvedData] = expandReferences(state, path, data);
-    console.log(`Preparing to create ${resolvedPath}`);
+    const [resolvedResource, resolvedData] = expandReferences(
+      state,
+      resourceType,
+      data
+    );
+    console.log('Preparing to create', resolvedResource);
     const { instanceUrl: baseUrl } = state.configuration;
 
     const response = await request(
       state,
       'POST',
-      cleanPath(`/ws/rest/v1/${resolvedPath}`),
+      `/ws/rest/v1/${resolvedResource}`,
       {
         baseUrl,
         data: resolvedData,
       }
     );
 
-    console.log(`Successfully created ${resolvedPath}`);
+    console.log('Successfully created', resolvedResource);
 
-    return composeNextState(state, response.body);
+    return prepareNextState(state, response, callback);
   };
 }
 
 /**
- * Update a resource. Only properties included in the data will be affected.
- * For a list of valid resources and for update rules, see the Update sections
- * of the {@link https://rest.openmrs.org/ OpenMRS Docs}
+ * Update data. A generic helper function to update a resource object of any type.
+ * Updating an object requires to send `all required fields` or the `full body`
  * @public
  * @function
- * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
- * @param {Object} data - Resource properties to update
- * @state data The full updated resource, as returned by OpenMRS
+ * @param {string} resourceType - The type of resource to be updated. E.g. `person`, `patient`, etc.
+ * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `e739808f-f166-42ae-aaf3-8b3e8fa13fda` or `e739808f-f166-42ae-aaf3-8b3e8fa13fda/{collection-name}/{object-id}`
+ * @param {Object} data - Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.
+ * @param {function} [callback]  - Optional callback to handle the response
  * @returns {Operation}
- * @example <caption>Update a person (<a href="https://rest.openmrs.org/#create-a-person">see OpenMRS API</a>)</caption>
- * update('person/3cad37ad-984d-4c65-a019-3eb120c9c373', {
- *   'gender': 'M',
- *   'birthdate':'1997-01-13'
- * })
+ * @example <caption>a person</caption>
+ * update("person", '3cad37ad-984d-4c65-a019-3eb120c9c373',{"gender":"M","birthdate":"1997-01-13"})
  */
-export function update(path, data) {
+export function update(resourceType, path, data, callback = s => s) {
   return async state => {
-    const [resolvedPath, resolvedData] = expandReferences(state, path, data);
-
-    console.log(`Preparing to update ${resolvedPath}`);
+    const [resolvedResource, resolvedPath, resolvedData] = expandReferences(
+      state,
+      resourceType,
+      path,
+      data
+    );
+    console.log('Preparing to update', resolvedResource);
     const { instanceUrl: baseUrl } = state.configuration;
 
     const response = await request(
       state,
       'POST',
-      cleanPath(`/ws/rest/v1/${resolvedPath}`),
+      `/ws/rest/v1/${resolvedResource}/${resolvedPath}`,
       {
         baseUrl,
         data: resolvedData,
       }
     );
 
-    console.log(`Successfully updated ${resolvedPath}`);
+    console.log('Successfully updated', resolvedResource);
 
-    return composeNextState(state, response.body);
+    return prepareNextState(state, response, callback);
   };
 }
 
 /**
- * Update a resource if it already exists, or otherwise create a new one.
- *
- * Upsert will first make a request for the target item (using the `path` and `params`) to see if it exists, and then issue a second create or update request.
- * If the query request returns multiple items, the upsert will throw an error.
+ * Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
  * @public
  * @function
- * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
- * @param {Object} data - The resource data
- * @param {Object} params - Query parameters to append to the initial query
- * @state data The created/updated resource, as returned by OpenMRS
+ * @param {string} resourceType - The type of a resource to `upsert`. E.g. `trackedEntityInstances`
+ * @param {Object} query - A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.
+ * @param {Object} data - The data to use for update or create depending on the result of the query.
+ * @param {function} [callback] - Optional callback to handle the response
+ * @throws {RangeError} - Throws range error
  * @returns {Operation}
- * @example <caption>Upsert a patient (<a href="https://rest.openmrs.org/#patients-overview">see OpenMRS API</a>)</caption>
- * upsert("patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a", {
- *   identifiers: [
- *     {
- *       identifier: '4023287',
- *       identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',
- *       preferred: true,
- *     },
- *   ],
- *   person: {
- *     gender: 'M',
- *     age: 42,
- *     birthdate: '1970-01-01T00:00:00.000+0100',
- *     birthdateEstimated: false,
- *     names: [
+ * @example <caption>For an existing patient using upsert</caption>
+ * upsert('patient', { q: '10007JJ' }, { person: { age: 50 } });
+ * @example <caption>For non existing patient creating a patient record using upsert </caption>
+ * upsert(
+ *   "patient",
+ *   { q: "1000EHE" },
+ *   {
+ *     identifiers: [
  *       {
- *         givenName: 'Doe',
- *         familyName: 'John',
+ *         identifier: "1000EHE",
+ *         identifierType: "05a29f94-c0ed-11e2-94be-8c13b969e334",
+ *         location: "44c3efb0-2583-4c80-a79e-1f756a03c0a1",
+ *         preferred: true,
  *       },
  *     ],
- *   },
- * })
- * @example <caption>Upsert a patient using a query to identify the record</caption>
- * upsert("patient", $.data, { q: "Lamine Yamal" })
+ *     person: {
+ *       gender: "M",
+ *       age: 42,
+ *     },
+ *   }
+ * );
  */
-export function upsert(path, data, params = {}) {
+export function upsert(
+  resourceType, // resourceType supplied to both the `get` and the `create/update`
+  query, // query supplied to the `get`
+  data, // data supplied to the `create/update`
+  callback = s => s // callback for the upsert itself.
+) {
   return async state => {
-    const [resolvedPath, resolvedData, resolvedParams] = expandReferences(
-      state,
-      path,
-      data,
-      params
+    const [resolvedResource, resolvedData, resolvedQuery = {}] =
+      expandReferences(state, resourceType, data, query);
+
+    console.log(
+      "Preparing composed upsert (via 'get' then 'create' OR 'update') on",
+      resolvedResource
     );
-
-    console.log(`Preparing composed upsert on ${resolvedPath}`);
-
     const { instanceUrl: baseUrl } = state.configuration;
-    const res = await request(
-      state,
-      'GET',
-      cleanPath(`/ws/rest/v1/${resolvedPath}`),
-      {
-        baseUrl,
-        query: resolvedParams,
-        errors: { 404: false },
+    return await request(state, 'GET', `/ws/rest/v1/${resolvedResource}`, {
+      baseUrl,
+      query: resolvedQuery,
+    }).then(resp => {
+      const resource = resp.body.results;
+      if (resource.length > 1) {
+        throw new RangeError(
+          `Found more than one record for your request; cannot upsert on non-unique attribute.`
+        );
+      } else if (resource.length === 0) {
+        console.log(`No ${resolvedResource} found.`);
+        return create(resolvedResource, resolvedData, callback)(state);
+      } else {
+        console.log(`One ${resolvedResource} found.`);
+        const path = resource[0]?.uuid;
+        return update(resolvedResource, path, resolvedData, callback)(state);
       }
-    );
-    // For get-by-id
-    let found = res.statusCode <= 400;
-    // for search
-    const count = res.body.results?.length ?? 1;
-
-    if (found && count > 1) {
-      throw new RangeError(
-        `Found more than one record for your request; cannot upsert on non-unique attribute.`
-      );
-    } else if (!found || count === 0) {
-      console.log(`${resolvedPath} not found: creating new resource`);
-
-      const path = resolvedParams.q
-        ? resolvedPath
-        : resolvedPath.split('/').slice(0, -1).join('/'); // remove the ID
-      return create(path, resolvedData)(state);
-    } else {
-      const path = resolvedParams.q
-        ? `${resolvedPath}/${res.body.results[0].uuid}` // append the ID
-        : resolvedPath;
-      console.log(`${path} found: updating existing resource`);
-      return update(path, resolvedData)(state);
-    }
-  };
-}
-
-/**
- * Delete a resource. Must include a UUID in the path.
- * Throws an error if the resource does not exist.
- * @example <caption>Void a patient</caption>
- * destroy("patient/12346");
- * @example <caption>Purge a patient</caption>
- * destroy("patient/12346", {
- *   purge: true
- * });
- * @function
- * @public
- * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
- * @param {object}  [options = {}]
- * @param {object}  [options.purge=false] The resource will be voided/retired unless true
- * @state data The response from OpenMRS
- * @returns {Operation}
- */
-export function destroy(path, options) {
-  return async state => {
-    const [resolvedPath, resolvedOptions = {}] = expandReferences(
-      state,
-      path,
-      options
-    );
-
-    const { instanceUrl: baseUrl } = state.configuration;
-
-    const response = await request(
-      state,
-      'DELETE',
-      cleanPath(`/ws/rest/v1/${resolvedPath}`),
-      {
-        baseUrl,
-        query: resolvedOptions,
-      }
-    );
-    return composeNextState(state, response.body);
+    });
   };
 }
 
 export {
   alterState,
-  arrayToString,
-  cursor,
-  dataPath,
-  dataValue,
-  dateFns,
-  each,
-  field,
-  fields,
   fn,
   fnIf,
-  lastReferenceValue,
-  merge,
+  field,
+  fields,
+  cursor,
+  dateFns,
   sourceValue,
-  util,
+  merge,
+  dataPath,
+  dataValue,
+  lastReferenceValue,
+  each,
+  arrayToString,
 } from '@openfn/language-common';

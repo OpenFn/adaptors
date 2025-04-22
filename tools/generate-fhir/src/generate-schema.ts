@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { rimraf } from 'rimraf';
-import type { MappingSpec, Schema, SpecJSON } from './types';
+import type { MappingSpec } from './types';
 import { ValueSetDef } from './fetch-spec';
 
 // TODO should this go on disk?
@@ -59,20 +59,14 @@ const typeMappings = {
   positiveInt: 'number',
 };
 
-const generate = async (
-  specPath: string,
-  mappings: MappingSpec = {},
-  options: { clean?: false; debugOutput?: false } = {}
-) => {
+const generate = async (specPath: string, mappings: MappingSpec = {}) => {
   console.log('Generating schemas from ', specPath);
 
   const outputDir = path.resolve(path.dirname(specPath), '../schema');
 
-  if (options.clean) {
-    console.log('Cleaning output dir: ', outputDir);
-    await rimraf(outputDir);
-    await mkdir(outputDir, { recursive: true });
-  }
+  console.log('Cleaning output dir: ', outputDir);
+  await rimraf(outputDir);
+  await mkdir(outputDir, { recursive: true });
 
   const fullSpec = (await import(path.resolve(specPath), {
     assert: { type: 'json' },
@@ -100,33 +94,17 @@ const generate = async (
   for (const profileId in fullSpec) {
     const profile = fullSpec[profileId];
 
-    // Ignore inactive profiles
-    if (profile.active === false) {
-      console.log('ignoring inactive profile', profileId);
-      continue;
-    }
-
     // TODO is it useful to output this or not?
     if (mappings.exclude?.includes(profile.type)) {
-      console.log('ignoring excluded profile', profileId);
+      console.log('ignoring excluded ', profileId);
       continue;
     }
     if (mappings.include?.length && !mappings.include.includes(profile.type)) {
-      // console.log('ignoring not included profile', profileId);
+      console.log('ignoring not included ', profileId);
       continue;
     }
 
     if (profile.resourceType !== 'StructureDefinition') {
-      continue;
-    }
-
-    const category = profile.extension?.find(
-      e =>
-        e.url ===
-        'http://hl7.org/fhir/StructureDefinition/structuredefinition-category'
-    );
-    if (category?.valueString?.startsWith('Foundation.')) {
-      console.log('ignoring Foundation profile', profileId);
       continue;
     }
 
@@ -186,7 +164,7 @@ const generate = async (
           : el.patternCodeableConcept;
       }
 
-      if (type.includes('Identifier')) {
+      if (type === 'Identifier') {
         // TODO this isn't robust because it assumes a particular slicing
         // It's the schema's job to unpick this slicing
         // This is a quick fix - let's see how well it stands up!
@@ -226,12 +204,10 @@ const generate = async (
 
     // Output for debug
     // TODO maybe make optional?
-    if (options.debugOutput) {
-      await writeFile(
-        path.resolve(outputDir, `${resourceType}_${profileId}.json`),
-        JSON.stringify(result[resourceType], null, 2)
-      );
-    }
+    await writeFile(
+      path.resolve(outputDir, `${resourceType}_${profileId}.json`),
+      JSON.stringify(result[resourceType], null, 2)
+    );
   }
 
   console.log({ counts });
@@ -364,37 +340,17 @@ async function parseProp(
  * This will feed type docs and auto mappings
  * will return a simple string type or an object type def
  */
-function getSimpleType(prop: any): string[] {
-  return (
-    prop.type?.map((t: any) => {
-      if (t.code in typeMappings) {
-        return typeMappings[t.code];
-      }
-      return t.code;
-    }) ?? ['any']
-  );
-
-  // // TODO maybe restore this
+function getSimpleType(prop: any) {
+  // TODO maybe restore this
   // if (prop.type.length > 1) {
   //   console.log('WARNING: multiple types found on ', prop.path);
-  //   // return prop.type.map((t: any) => {
-  //   //   getSimpleType(t)[0];
-  //   // });
   // }
-  // if (prop.type) {
-  //   try {
-  //     for (const type of prop.type) {
-  //       if (type.code in typeMappings) {
-  //         return [typeMappings[type.code]];
-  //       }
-  //       return [type.code];
-  //     }
-  //   } catch (e) {
-  //     console.log('ERROR extracting type for prop ', prop.path);
-  //     console.log(prop);
-  //     throw e;
-  //   }
-  // }
+  for (const type of prop.type) {
+    if (type.code in typeMappings) {
+      return typeMappings[type.code];
+    }
+    return type.code;
+  }
 }
 
 export default generate;

@@ -64,7 +64,7 @@ export function setMockClient(mock) {
  * @public
  * @function
  * @example
- * prompt(`Filter these emails and pick out the most urgent: ${JSON.stringify($.data)}`);
+ * prompt('Write a haiku about surfing.');
  * @param {string} message - The prompt
  * @param {PromptOptions} opts - Model, Max Tokens, Temperature, and other options.
  * @returns {operation}

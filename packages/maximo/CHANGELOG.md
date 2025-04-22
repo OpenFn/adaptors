@@ -1,141 +1,120 @@
 # @openfn/language-maximo
 
-## 0.5.15 - 16 April 2025
+## 0.5.12
 
 ### Patch Changes
 
-* Updated dependencies \[b089c56]
-  * @openfn/language-common@2.3.3
+- 8a8c28d: - cleanup examples wrapped with `execute()` function
+  - Add example caption and add sample payload
 
-## 0.5.14 - 11 April 2025
-
-### Patch Changes
-
-* Updated dependencies \[d7105c0]
-  * @openfn/language-common@2.3.2
-
-## 0.5.13 - 14 March 2025
+## 0.5.11
 
 ### Patch Changes
 
-* Updated dependencies \[23ccb01]
-  * @openfn/language-common@2.3.1
+- Updated dependencies [b3d7f59]
+- Updated dependencies [2d709ff]
+- Updated dependencies [41e8cc3]
+  - @openfn/language-common@2.3.0
 
-## 0.5.12 - 10 March 2025
-
-### Patch Changes
-
-* 8a8c28d: - cleanup examples wrapped with `execute()` function
-  * Add example caption and add sample payload
-
-## 0.5.11 - 16 January 2025
+## 0.5.10
 
 ### Patch Changes
 
-* Updated dependencies \[b3d7f59]
-* Updated dependencies \[2d709ff]
-* Updated dependencies \[41e8cc3]
-  * @openfn/language-common@2.3.0
+- Updated dependencies [6dffdbd]
+  - @openfn/language-common@2.2.1
 
-## 0.5.10 - 16 January 2025
+## 0.5.9
 
 ### Patch Changes
 
-* Updated dependencies \[6dffdbd]
-  * @openfn/language-common@2.2.1
+- cb9b3c5: Security update
+- Updated dependencies [a47d8d5]
+- Updated dependencies [9240428]
+  - @openfn/language-common@2.2.0
 
-## 0.5.9 - 09 January 2025
-
-### Patch Changes
-
-* cb9b3c5: Security update
-* Updated dependencies \[a47d8d5]
-* Updated dependencies \[9240428]
-  * @openfn/language-common@2.2.0
-
-## 0.5.8 - 28 October 2024
+## 0.5.8
 
 ### Patch Changes
 
-* Updated docs for each()
-* Updated dependencies
-  * @openfn/language-common@2.1.1
+- Updated docs for each()
+- Updated dependencies
+  - @openfn/language-common@2.1.1
 
-## 0.5.7 - 18 October 2024
-
-### Patch Changes
-
-* Updated dependencies \[03a1a74]
-  * @openfn/language-common@2.1.0
-
-## 0.5.6 - 15 October 2024
+## 0.5.7
 
 ### Patch Changes
 
-* Fixed security vulnerability in jsonpath-plus \[33973a2]
-  * @openfn/language-common@2.0.3
+- Updated dependencies [03a1a74]
+  - @openfn/language-common@2.1.0
 
-## 0.5.5 - 09 October 2024
-
-### Patch Changes
-
-* 8d866e4: Update tough-cookie dependency
-
-## 0.5.4 - 24 September 2024
+## 0.5.6
 
 ### Patch Changes
 
-* Updated dependencies \[77a690f]
-  * @openfn/language-common@2.0.2
+- Fixed security vulnerability in jsonpath-plus [33973a2]
+  - @openfn/language-common@2.0.3
 
-## 0.5.3 - 16 August 2024
-
-### Patch Changes
-
-* 8146c23: Fix typings in package.json
-* Updated dependencies \[8146c23]
-  * @openfn/language-common@2.0.1
-
-## 0.5.2 - 01 August 2024
+## 0.5.5
 
 ### Patch Changes
 
-* Updated dependencies \[4fe527c]
-  * @openfn/language-common@2.0.0
+- 8d866e4: Update tough-cookie dependency
 
-## 0.5.1 - 25 July 2024
+## 0.5.4
 
 ### Patch Changes
 
-* 73d0a02: Make documentation public
-* Updated dependencies \[4c08444]
-* Updated dependencies \[73d0a02]
-  * @openfn/language-common@1.15.1
+- Updated dependencies [77a690f]
+  - @openfn/language-common@2.0.2
 
-## 0.5.0 - 13 June 2024
+## 0.5.3
+
+### Patch Changes
+
+- 8146c23: Fix typings in package.json
+- Updated dependencies [8146c23]
+  - @openfn/language-common@2.0.1
+
+## 0.5.2
+
+### Patch Changes
+
+- Updated dependencies [4fe527c]
+  - @openfn/language-common@2.0.0
+
+## 0.5.1
+
+### Patch Changes
+
+- 73d0a02: Make documentation public
+- Updated dependencies [4c08444]
+- Updated dependencies [73d0a02]
+  - @openfn/language-common@1.15.1
+
+## 0.5.0
 
 ### Minor Changes
 
-* 73433c20: Add `fnIf` operation
+- 73433c20: Add `fnIf` operation
 
 ### Patch Changes
 
-* Updated dependencies \[106ecf6d]
-  * @openfn/language-common@1.14.0
+- Updated dependencies [106ecf6d]
+  - @openfn/language-common@1.14.0
 
-## 0.4.1 - 19 June 2023
+## 0.4.1
 
 ### Patch Changes
 
-* Update lock files
-* Updated dependencies
-  * @openfn/language-common@1.8.1
+- Update lock files
+- Updated dependencies
+  - @openfn/language-common@1.8.1
 
 ## 0.4.0
 
 ### Minor Changes
 
-* 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
   `each` block; add eslint
 
   The packages receiving a major bump here exposed functions that didn't work as
@@ -147,43 +126,43 @@
 
 ### Patch Changes
 
-* Updated dependencies \[2c1d603]
-  * @openfn/language-common@1.8.0
+- Updated dependencies [2c1d603]
+  - @openfn/language-common@1.8.0
 
-## 0.3.5 - 30 March 2023
-
-### Patch Changes
-
-* 14f481e: mark execute as private
-* Updated dependencies \[2b4c61a]
-  * @openfn/language-common@1.7.6
-
-## 0.3.4 - 17 March 2023
+## 0.3.5
 
 ### Patch Changes
 
-* aed7e0b: fix required field in configuration schema
+- 14f481e: mark execute as private
+- Updated dependencies [2b4c61a]
+  - @openfn/language-common@1.7.6
 
-## 0.3.3 - 15 February 2023
-
-### Patch Changes
-
-* f7ebd3c: remove sample configuration
-
-## 0.3.2 - 15 February 2023
+## 0.3.4
 
 ### Patch Changes
 
-* f2aed32: add examples
+- aed7e0b: fix required field in configuration schema
 
-## 0.3.1 - 13 January 2023
+## 0.3.3
 
 ### Patch Changes
 
-* 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
+- f7ebd3c: remove sample configuration
 
-## 0.3.0 - 25 November 2022
+## 0.3.2
+
+### Patch Changes
+
+- f2aed32: add examples
+
+## 0.3.1
+
+### Patch Changes
+
+- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+
+## 0.3.0
 
 ### Minor Changes
 
-* 4d4be56: migrate maximo
+- 4d4be56: migrate maximo

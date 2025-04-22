@@ -203,7 +203,7 @@ branch`.
 Version numbers should be bumped with `changeset` and git tags should be pushed
 to the release branch BEFORE merging.
 
-1. Run `pnpm run version` from root to bump versions and add release dates
+1. Run `pnpm changeset version` from root to bump versions
 1. Run `pnpm install`
 1. Commit the new version numbers
 1. Push the branch

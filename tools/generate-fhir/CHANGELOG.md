@@ -1,12 +1,5 @@
 # @openfn/generate-fhir
 
-## 0.3.0
-
-- Generate Typescipt adaptor
-- Add support for core spec bundles
-
-Note that this version breaks IG generation
-
 ## 0.2.3
 
 ### Patch Changes

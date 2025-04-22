@@ -4,7 +4,6 @@ import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
 import path from 'node:path';
 import throwError from './throw-error';
-import { encode } from './base64';
 
 const clients = new Map();
 
@@ -48,10 +47,6 @@ export const enableMockClient = baseUrl => {
 };
 
 const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
-  if (errorMap === false) {
-    return;
-  }
-
   const errMapMessage = errorMap[response.statusCode];
 
   const isError =
@@ -244,10 +239,9 @@ function encodeRequestBody(body) {
 }
 
 async function readResponseBody(response, parseAs) {
-  const contentLength = response.body?.readableLength ?? 0;
-  const contentType = response.headers['content-type'];
   try {
-    if (Number.isNaN(contentLength) || contentLength === 0) {
+    const contentType = response.headers['content-type'];
+    if (+response.headers['content-length'] === 0) {
       return undefined;
     }
 
@@ -262,9 +256,6 @@ async function readResponseBody(response, parseAs) {
         return response.body.text();
       case 'stream':
         return response.body;
-      case 'base64':
-        const arrayBuffer = await response.body.arrayBuffer();
-        return encode(arrayBuffer, { parseJson: false });
       default:
         return contentType && contentType.includes('application/json')
           ? await response.body.json()
@@ -275,7 +266,7 @@ async function readResponseBody(response, parseAs) {
       description: 'Error parsing the response body',
       parseAs,
       contentType: response.headers['content-type'],
-      bodyLength: contentLength,
+      bodyLength: +response.headers['content-length'],
       error: error.message,
     });
   }

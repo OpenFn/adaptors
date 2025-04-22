@@ -118,6 +118,6 @@ dist
 .fuse_*
 
 .vscode/
-.idea
+
 
 /pnpm-publish-summary.json

@@ -121,38 +121,6 @@ The generator will run through the following steps each time it's called:
 Note the adaptor template stuff is never re-generated. The only re-generated
 files on build are in [src/gen] (or something) and are clearly marked
 
-## Initialisers
-
-A simple initialiser implementation exists
-
-On the mappings object, you can add an initializer:
-
-```js
-export default {
-  include: [],
-  initialiser: resource => {
-    resource.meta = {
-      profile: [
-        `http:l7.org/fhir/StructureDefinition/${resource.resourceType}`,
-      ],
-    };
-  },
-};
-```
-
-The code here will be copied into every single resource. It's a catch-all to do
-what you want.
-
-TODO: we should be able to specify an additional initialiser as an override for
-each resource.
-
-The implementation isn't very good - the function _body_ is copied into each
-resource, so it's possible to get variable name conflicts and such. Also you
-have to have an arrow function with a single parameter `resource` or it won't
-work.
-
-This is designed to handle the text and meta fields
-
 # TODO
 
 - [ ] Add an intialiser function in the mappings, which is useful for meta and

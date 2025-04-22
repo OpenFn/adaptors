@@ -1,4 +1,56 @@
+import jsforce from 'jsforce';
 import { throwError } from '@openfn/language-common/util';
+
+function getConnection(state, options) {
+  const { apiVersion } = state.configuration;
+
+  const apiVersionRegex = /^\d{2}\.\d$/;
+
+  if (apiVersion && apiVersionRegex.test(apiVersion)) {
+    options.version = apiVersion;
+  } else {
+    options.version = '47.0';
+  }
+  console.log('Using Salesforce API version:', options.version);
+
+  return new jsforce.Connection(options);
+}
+
+async function createBasicAuthConnection(state) {
+  const { loginUrl, username, password, securityToken } = state.configuration;
+
+  const connection = getConnection(state, { loginUrl });
+
+  await connection
+    .login(username, securityToken ? password + securityToken : password)
+    .catch(e => {
+      console.error(`Failed to connect to salesforce as ${username}`);
+      throw e;
+    });
+
+  console.info(`Connected to salesforce as ${username}.`);
+
+  return {
+    ...state,
+    connection,
+  };
+}
+
+function createAccessTokenConnection(state) {
+  const { instance_url, access_token } = state.configuration;
+
+  const connection = getConnection(state, {
+    instanceUrl: instance_url,
+    accessToken: access_token,
+  });
+
+  console.log(`Connected with ${connection._sessionType} session type`);
+
+  return {
+    ...state,
+    connection,
+  };
+}
 
 let anyAscii = undefined;
 
@@ -24,6 +76,39 @@ export const loadAnyAscii = state =>
  */
 export function toUTF8(input) {
   return anyAscii(input);
+}
+
+/**
+ * Creates a connection to Salesforce using Basic Auth or OAuth.
+ * @function createConnection
+ * @private
+ * @param {State} state - Runtime state.
+ * @returns {State}
+ */
+export function createConnection(state) {
+  if (state.connection) {
+    return state;
+  }
+
+  const { access_token } = state.configuration;
+
+  return access_token
+    ? createAccessTokenConnection(state)
+    : createBasicAuthConnection(state);
+}
+
+/**
+ * Removes state.connection from state.
+ * @example
+ * removeConnection(state)
+ * @function
+ * @private
+ * @param {State} state
+ * @returns {State}
+ */
+export function removeConnection(state) {
+  delete state.connection;
+  return state;
 }
 
 export async function pollJobResult(conn, job, pollInterval, pollTimeout) {

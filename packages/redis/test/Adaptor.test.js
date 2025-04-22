@@ -11,7 +11,6 @@ import {
   jGet,
   mGet,
   jSet,
-  mSet,
 } from '../src';
 
 describe('get', () => {
@@ -620,92 +619,5 @@ describe('jSet', () => {
 
     const state = {};
     await jSet('animals:1', { name: 'mammoth' })(state);
-  });
-});
-
-describe('mSet', () => {
-  const mSetClient = {
-    json: {
-      mSet: async args => {
-        expect(args).to.deep.equal([
-          {
-            key: 'animals:1',
-            path: '$',
-            value: JSON.stringify({ name: 'mammoth' }),
-          },
-          {
-            key: 'plants:1',
-            path: '$',
-            value: JSON.stringify({ type: 'tree' }),
-          },
-        ]);
-        return 'OK';
-      },
-    },
-  };
-
-  it('should expand references and set multiple keys', async () => {
-    setMockClient(mSetClient);
-    const state = {
-      entries: [
-        { key: 'animals:1', value: { name: 'mammoth' } },
-        { key: 'plants:1', value: { type: 'tree' } },
-      ],
-    };
-    await mSet(state.entries)(state);
-  });
-
-  it('should throw if existing key has a different redis type', async () => {
-    setMockClient({
-      json: {
-        mSet: () => {
-          throw new Error('Existing key has wrong Redis type');
-        },
-      },
-    });
-
-    try {
-      await mSet([{ key: 'hash-key', value: { name: 'mammoth' } }])({});
-    } catch (error) {
-      expect(error.message).to.eql('Existing key has wrong Redis type');
-    }
-  });
-
-  it('should throw if invalid params', async () => {
-    setMockClient({
-      json: {
-        mSet: () => {
-          throw new Error('TypeError: Invalid argument type');
-        },
-      },
-    });
-
-    const state = {};
-    try {
-      await mSet()(state);
-    } catch (error) {
-      expect(error.message).to.eql('TypeError: Invalid argument type');
-      expect(error.code).to.eql('ARGUMENT_ERROR');
-    }
-  });
-
-  it('should always set results at the document root', async () => {
-    setMockClient({
-      json: {
-        mSet: async args => {
-          args.forEach(({ path }) => {
-            expect(path).to.eql('$');
-          });
-        },
-      },
-    });
-
-    const state = {
-      entries: [
-        { key: 'animals:1', value: { name: 'mammoth' } },
-        { key: 'plants:1', value: { type: 'tree' } },
-      ],
-    };
-    await mSet(state.entries)(state);
   });
 });

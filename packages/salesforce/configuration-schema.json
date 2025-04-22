@@ -7,10 +7,8 @@
       "description": "The Salesforce instance login URL",
       "format": "uri",
       "minLength": 1,
-      "default": "https://login.salesforce.com",
       "examples": [
-        "https://login.salesforce.com",
-        "https://test.salesforce.com"
+        "https://somesalesforcelogin.url"
       ]
     },
     "username": {
@@ -47,7 +45,6 @@
       "placeholder": "52.0",
       "description": "Salesforce API Version",
       "minLength": 1,
-      "default": "50.0",
       "examples": [
         "59.0"
       ]
@@ -56,6 +53,7 @@
   "type": "object",
   "additionalProperties": true,
   "required": [
+    "loginUrl",
     "username",
     "password"
   ]
