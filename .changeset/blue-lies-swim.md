@@ -33,4 +33,5 @@
 '@openfn/language-surveycto': patch
 ---
 
-Better handling of HTML content in http requests
+- Better handling of HTML content in http requests
+- When logging HTTP requests, include query parameters
