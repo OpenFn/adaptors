@@ -134,8 +134,7 @@
       "name": "get",
       "params": [
         "resourceType",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Get data. Generic helper method for getting data of any kind from DHIS2.\n- This can be used to get `DataValueSets`,`events`,`trackers`,`etc.`",
@@ -170,18 +169,6 @@
               }
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
           },
           {
             "title": "state",

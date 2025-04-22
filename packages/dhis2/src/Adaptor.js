@@ -1,5 +1,9 @@
 import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences, throwError, encode } from '@openfn/language-common/util';
+import {
+  expandReferences,
+  throwError,
+  encode,
+} from '@openfn/language-common/util';
 import {
   handleResponse,
   selectId,
@@ -14,7 +18,6 @@ import {
  * @typedef {Object} Dhis2State
  * @private
  * @property data - The response body (as JSON)
- * @property response - The HTTP response from the Dhis2 server (excluding the body)
  * @property references - An array of all previous data objects used in the Job
  */
 
