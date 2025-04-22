@@ -27,7 +27,7 @@
       "examples": ["GA2PNftcXvv2uC2VdgNjxXyvF8eZ4td6iBsL7N7N2ZFnXzf3"]
     },
     "consumer_secret": {
-      "title": "Consumer key",
+      "title": "Consumer secret",
       "type": "string",
       "description": "Your app's consumer secret sent to you via email once you go live",
       "examples": ["zKjr2j0jjihCtzIwzGtgnV0YgP82jZf1hY9RW6HygntWG6AGuf4tAUe3E5tPtiyA"]
