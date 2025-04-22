@@ -76,7 +76,7 @@ export function get(path, options = {}) {
     }
     console.log(`Retrieved ${resolvedPath}`);
 
-    return util.handleResponse(response, state);
+    return util.handleHttpResponse(response, state);
   };
 }
 
@@ -128,7 +128,7 @@ export function post(path, data, options = {}) {
     });
 
     console.log(`Created ${resolvedPath}`);
-    return util.handleResponse(response, state);
+    return util.handleHttpResponse(response, state);
   };
 }
 
@@ -171,7 +171,7 @@ export function patch(resourceType, path, data, options = {}) {
     });
 
     console.log(`Patched ${resolvedResourceType} at ${resolvedPath}`);
-    return util.handleResponse(response, state);
+    return util.handleHttpResponse(response, state);
   };
 }
 
@@ -230,6 +230,6 @@ export function request(method, path, options = {}) {
     });
 
     console.log(`Successful ${resolvedMethod.toLowerCase()} operation...`);
-    return util.handleResponse(response, state);
+    return util.handleHttpResponse(response, state);
   };
 }

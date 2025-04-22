@@ -38,12 +38,21 @@ export function selectId(resourceType) {
   }
 }
 
-export function handleResponse(result, state) {
+export function handleHttpResponse(result, state) {
   const { body, ...responseWithoutBody } = result;
 
   const nextState = {
     ...composeNextState(state, body),
     response: responseWithoutBody,
+  };
+  return nextState;
+}
+
+export function handleResponse(result, state) {
+  const { body } = result;
+
+  const nextState = {
+    ...composeNextState(state, body),
   };
   return nextState;
 }
