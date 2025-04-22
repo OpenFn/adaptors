@@ -134,7 +134,7 @@ describe('request()', () => {
       },
     };
 
-    // get json by
+    // get json by default
     const result1 = await execute(request('GET', '/json'))(state);
     expect(result1.data).to.eql({});
 
