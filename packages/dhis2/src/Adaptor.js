@@ -1,8 +1,5 @@
 import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences, throwError } from '@openfn/language-common/util';
-
-import { encode } from '@openfn/language-common/types/util';
-
+import { expandReferences, throwError, encode } from '@openfn/language-common/util';
 import {
   handleResponse,
   selectId,
