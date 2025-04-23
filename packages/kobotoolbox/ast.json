@@ -47,7 +47,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX');",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit: Infinity });",
             "caption": "Get all submissions for a specific form"
           },
           {
@@ -89,7 +89,7 @@
           },
           {
             "title": "param",
-            "description": "Limit the number of submissions to fetch",
+            "description": "Restricts query to a single request. Use max to allow multiple requests",
             "type": {
               "type": "OptionalType",
               "expression": {

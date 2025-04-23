@@ -55,14 +55,14 @@ export function getForms() {
 /**
  * Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`.
  * @example <caption>Get all submissions for a specific form</caption>
- * getSubmissions('aXecHjmbATuF6iGFmvBLBX', {limit: Infinity});
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit: Infinity });
  * @example <caption>Get form submissions with a query</caption>
  * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: "2025-03-12T21:54:20" } } });
  * @function
  * @public
  * @param {string} formId - Form Id to get the specific submissions
  * @param {object} [options={}] - Optional query params for the request
- * @param {number} [options.limit] - Limit the number of submissions to fetch
+ * @param {number} [options.limit] - Restricts query to a single request. Use max to allow multiple requests
  * @param {object} [options.query] - Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}
  * @param {number} [options.max=10000] - (Openfn only) Restrict the maximum number of retrieved submissions. May be fetched in several pages. Not used if `limit` is set.
  * @param {number} [options.pageSize=1000] - (Openfn only) Limits the size of each page of submissions. Not used if limit is set.
@@ -80,6 +80,7 @@ export function getSubmissions(formId, options) {
       const keysToRemove = Object.keys(resolvedOptions).filter(k =>
         k.match(/^(max|pageSize)$/)
       );
+
       if (keysToRemove.length) {
         console.warn(
           `Warning: ignoring option [${keysToRemove.join(
