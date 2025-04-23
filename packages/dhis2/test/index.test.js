@@ -1,5 +1,13 @@
 import chai from 'chai';
-import { execute, create, update, get, upsert, patch } from '../src/Adaptor';
+import {
+  execute,
+  create,
+  update,
+  get,
+  upsert,
+  patch,
+  post,
+} from '../src/Adaptor';
 import { dataValue } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import {
@@ -379,9 +387,9 @@ describe('post', () => {
         message: 'the response',
       });
 
-    const finalState = await execute(
-      create('tracker', { events: [state.data] })
-    )(state);
+    const finalState = await execute(post('tracker', { events: [state.data] }))(
+      state
+    );
 
     expect(finalState.data).to.eql({
       httpStatus: 'OK',
@@ -401,7 +409,7 @@ describe('post', () => {
       });
 
     const finalState = await execute(
-      create('tracker', {
+      post('tracker', {
         relationships: [
           {
             program: 'abc',
