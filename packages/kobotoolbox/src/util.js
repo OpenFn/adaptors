@@ -40,13 +40,13 @@ export function request(state, method, path, opts = {}) {
 export async function requestWithPagination(state, path, options = {}) {
   const results = [];
 
-  let { pageSize, start, limit, max } = options;
+  let { pageSize, start, limit, max, ...otherOptions } = options;
 
   const isUsingDefaultMax = max === undefined;
   const maxResults = max ?? limit ?? 1e4;
 
   let isFirstRequest = true;
-  let requestOptions = { ...options };
+  let requestOptions = { query: { start, limit }, ...otherOptions };
   let shouldFetchMoreContent = false;
   const didUserPassLimit = Boolean(max || limit);
 
