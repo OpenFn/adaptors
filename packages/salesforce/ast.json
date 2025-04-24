@@ -520,7 +520,7 @@
           },
           {
             "title": "example",
-            "description": "query('SELECT Id FROM Patient__c', { max: Infinity });",
+            "description": "query('SELECT Id FROM Patient__c', { limit: Infinity });",
             "caption": "Run a query and download all matching records"
           },
           {
@@ -566,7 +566,7 @@
           },
           {
             "title": "param",
-            "description": "Maximum number of records to fetch. If `max: false`, no limit will be applied.",
+            "description": "Maximum number of records to fetch. If `limit: Infinity` is passed, all records will be fetched.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -574,7 +574,7 @@
                 "name": "number"
               }
             },
-            "name": "options.max",
+            "name": "options.limit",
             "default": "10000"
           },
           {
