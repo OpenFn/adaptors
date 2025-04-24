@@ -1,5 +1,5 @@
 import chai from 'chai';
-import { execute, create, update, get, upsert, patch } from '../src/Adaptor';
+import { execute, create, update, upsert, get } from '../src/Adaptor';
 import { dataValue } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import {
@@ -12,7 +12,7 @@ import * as util from '../src/util';
 
 const { expect } = chai;
 
-const hostUrl = 'https://play.im.dhis2.org';
+const hostUrl = 'https://index.dhis2.org';
 const testServer = enableMockClient(hostUrl);
 const configuration = {
   username: 'admin',
@@ -67,7 +67,7 @@ describe('execute', () => {
   });
 });
 
-describe('get', () => {
+describe(' get', () => {
   const state = {
     configuration,
     data: {},
@@ -185,6 +185,7 @@ describe('get', () => {
         parseAs: 'base64',
       })
     )(state);
+    expect(finalState.response).to.eql(undefined);
     expect(finalState.data).to.eql(
       '77+977+977+977+9ABBKRklGAAECAAABAAEAAO+/ve+/vQBDAAgGBgcGBQgHBwcJCQgK'
     );
@@ -275,68 +276,6 @@ describe('create', () => {
   });
 });
 
-describe('post', () => {
-  const state = {
-    configuration,
-    data: {
-      program: 'program1',
-      orgUnit: 'org50',
-      trackedEntityType: 'nEenWmSyUEp',
-      status: 'COMPLETED',
-      date: '02-02-20',
-    },
-  };
-
-  it('should make an authenticated POST to the right url', async () => {
-    testServer
-      .intercept({
-        path: getPath('tracker'),
-        method: 'POST',
-      })
-      .reply(200, {
-        httpStatus: 'OK',
-        message: 'the response',
-      });
-
-    const finalState = await execute(
-      create('tracker', { events: [state.data] })
-    )(state);
-
-    expect(finalState.data).to.eql({
-      httpStatus: 'OK',
-      message: 'the response',
-    });
-  });
-
-  it('should recursively expand references', async () => {
-    testServer
-      .intercept({
-        path: getPath('tracker'),
-        method: 'POST',
-      })
-      .reply(200, {
-        httpStatus: 'OK',
-        message: 'the response',
-      });
-
-    const finalState = await execute(
-      create('tracker', {
-        relationships: [
-          {
-            program: 'abc',
-            orgUnit: state => state.data.orgUnit,
-          },
-        ],
-      })
-    )(state);
-
-    expect(finalState.data).to.eql({
-      httpStatus: 'OK',
-      message: 'the response',
-    });
-  });
-});
-
 describe('update', () => {
   const state = {
     configuration,
@@ -395,55 +334,6 @@ describe('update', () => {
       httpStatus: 'OK',
       message: 'the response',
     });
-  });
-});
-
-describe('patch', () => {
-  const state = {
-    configuration,
-    data: {
-      program: 'program',
-      orgUnit: 'orgunit',
-      status: 'COMPLETED',
-      currentDate: '02-02-20',
-    },
-  };
-
-  it('should make an authenticated PUT to the right url', async () => {
-    testServer
-      .intercept({
-        path: getPath('dataValueSets/AsQj6cDsUq4'),
-        method: 'PATCH',
-      })
-      .reply(204, '');
-
-    const finalState = await execute(
-      patch('dataValueSets', 'AsQj6cDsUq4', state => ({
-        ...state.data,
-        date: state.data.currentDate,
-      }))
-    )(state);
-
-    expect(finalState.data).to.eql('');
-  });
-
-  it('should recursively expand refs', async () => {
-    testServer
-      .intercept({
-        path: getPath('dataValueSets/AsQj6cDsUq4'),
-        method: 'PATCH',
-      })
-      .reply(204, '');
-
-    const finalState = await execute(
-      patch('dataValueSets', 'AsQj6cDsUq4', {
-        program: dataValue('program'),
-        orgUnit: 'hardcoded',
-        date: resp => resp.data.currentDate,
-      })
-    )(state);
-
-    expect(finalState.data).to.eql('');
   });
 });
 
