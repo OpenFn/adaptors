@@ -357,35 +357,6 @@ export function join(targetPath, sourcePath, targetKey) {
 }
 
 /**
- * Recursively resolves objects that have resolvable values (functions).
- * @public
- * @function
- * @param {object} value - data
- * @param {Function} [skipFilter] - a function which returns true if a value should be skipped
- * @returns {Operation}
- */
-export function expandReferences(value, skipFilter) {
-  return state => {
-    if (skipFilter && skipFilter(value)) return value;
-
-    if (Array.isArray(value)) {
-      return value.map(v => expandReferences(v)(state));
-    }
-
-    if (typeof value == 'object' && !!value) {
-      return Object.keys(value).reduce((acc, key) => {
-        return { ...acc, [key]: expandReferences(value[key])(state) };
-      }, {});
-    }
-
-    if (typeof value == 'function') {
-      return expandReferences(value(state))(state);
-    }
-    return value;
-  };
-}
-
-/**
  * Returns a key, value pair in an array.
  * @public
  * @function
@@ -431,7 +402,7 @@ export function fields(...fields) {
 export function merge(dataSource, fields) {
   return state => {
     const initialData = source(dataSource)(state);
-    const additionalData = expandReferences(fields)(state);
+    const additionalData = newExpandReferences(state, fields);
 
     return initialData.reduce((acc, dataItem) => {
       return [...acc, { ...dataItem, ...additionalData }];

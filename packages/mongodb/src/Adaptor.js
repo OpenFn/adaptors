@@ -1,8 +1,8 @@
 import {
   execute as commonExecute,
-  expandReferences,
   composeNextState,
 } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 
 import pkg from 'mongodb';
 const { MongoClient } = pkg;
@@ -97,8 +97,10 @@ export function insertDocuments(params) {
     const { client } = state;
 
     try {
-      const { database, collection, documents, callback } =
-        expandReferences(params)(state);
+      const { database, collection, documents, callback } = expandReferences(
+        state,
+        params
+      );
 
       const db = client.db(database);
       const mCollection = db.collection(collection);
@@ -144,8 +146,10 @@ export function findDocuments(params) {
     const { client } = state;
 
     try {
-      const { database, collection, query, callback } =
-        expandReferences(params)(state);
+      const { database, collection, query, callback } = expandReferences(
+        state,
+        params
+      );
 
       const db = client.db(database);
       const mCollection = db.collection(collection);
@@ -191,7 +195,7 @@ export function updateDocument(params) {
     const { client } = state;
     try {
       const { database, collection, filter, changes, options, callback } =
-        expandReferences(params)(state);
+        expandReferences(state, params);
 
       const db = client.db(database);
       const mCollection = db.collection(collection);

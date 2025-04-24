@@ -1,9 +1,9 @@
 import {
   execute as commonExecute,
   composeNextState,
-  expandReferences,
   http, // Important: this is the OLD axios-based http
 } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 
 /**
  * Execute a sequence of operations.
@@ -53,8 +53,10 @@ export function execute(...operations) {
  */
 export function postData(params, callback) {
   return state => {
-    const { url, body, headers, agentOptions } =
-      expandReferences(params)(state);
+    const { url, body, headers, agentOptions } = expandReferences(
+      state,
+      params
+    );
 
     return http
       .post({

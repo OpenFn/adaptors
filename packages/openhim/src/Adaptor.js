@@ -1,7 +1,5 @@
-import {
-  execute as commonExecute,
-  expandReferences,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 import { post } from './Client';
 import { resolve as resolveUrl } from 'url';
 
@@ -38,7 +36,7 @@ export function execute(...operations) {
  */
 export function encounter(encounterData) {
   return state => {
-    const body = expandReferences(encounterData)(state);
+    const body = expandReferences(state, encounterData);
 
     const { username, password, apiUrl } = state.configuration;
 

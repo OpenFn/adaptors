@@ -1,8 +1,8 @@
 import {
   execute as commonExecute,
   composeNextState,
-  expandReferences,
 } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 import axios from 'axios';
 import { fileURLToPath } from 'url';
 import path, { resolve } from 'path';
@@ -96,7 +96,7 @@ function logout(state) {
 export function request(options, callback) {
   return state => {
     const { host, jwt } = state.configuration;
-    const { method, path, params, data } = expandReferences(options)(state);
+    const { method, path, params, data } = expandReferences(state, options);
 
     return axios({
       method,

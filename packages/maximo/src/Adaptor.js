@@ -50,7 +50,7 @@ export function fetch(params) {
       return new Error(`Server responded with ${response.statusCode}`);
     }
 
-    const { endpoint, query, postUrl } = expandReferences(params)(state);
+    const { endpoint, query, postUrl } = expandReferences(state, params);
 
     const { username, password, baseUrl } = state.configuration;
 
@@ -130,7 +130,7 @@ export function create(params) {
       return new Error(`Server responded with ${response.statusCode}`);
     }
 
-    const { endpoint, body } = expandReferences(params)(state);
+    const { endpoint, body } = expandReferences(state, params);
 
     const { username, password, baseUrl } = state.configuration;
 
@@ -198,7 +198,7 @@ export function update(params) {
       return new Error(`Server responded with ${response.statusCode}`);
     }
 
-    const { endpoint, body } = expandReferences(params)(state);
+    const { endpoint, body } = expandReferences(state, params);
 
     const { username, password, baseUrl } = state.configuration;
 
@@ -265,7 +265,7 @@ export function update75(params) {
       return new Error(`Server responded with ${response.statusCode}`);
     }
 
-    const { endpoint, body } = expandReferences(params)(state);
+    const { endpoint, body } = expandReferences(state, params);
 
     const { username, password, baseUrl } = state.configuration;
 
