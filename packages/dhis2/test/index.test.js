@@ -12,7 +12,7 @@ import * as util from '../src/util';
 
 const { expect } = chai;
 
-const hostUrl = 'https://play.im.dhis2.org';
+const hostUrl = 'https://index.dhis2.org';
 const testServer = enableMockClient(hostUrl);
 const configuration = {
   username: 'admin',
