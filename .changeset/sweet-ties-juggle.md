@@ -4,7 +4,7 @@
 
 - Modernize `query()` implementation using jsforce v3
 - Remove `autoFetch` option from `query()` function
-- Add `max` option to `query()` function
+- Add `limit` option to `query()` function
 - Change query result structure:
   - `state.data` now contains only the array of records
   - Query metadata (`done`, `totalSize`, `nextRecordsUrl`) moved to
@@ -36,11 +36,11 @@ query('select name from account', { autoFetch: true });
 
 **After**
 
-To fetch all records now, use the `max: Infinity` option:
+To fetch all records now, use the `limit: Infinity` option:
 
 ```js
-// New way - using max: Infinity
-query('select name from account', { max: Infinity });
+// New way - using limit: Infinity
+query('select name from account', { limit: Infinity });
 // Result:
 // state.data = [] // Array of records
 // state.response = { done, totalSize }
