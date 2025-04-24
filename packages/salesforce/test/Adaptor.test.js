@@ -173,7 +173,7 @@ describe('Adaptor', () => {
       expect(response).to.eql({ done: true, totalSize: 1 });
     });
 
-    it('should fetch all pages if max is false', async () => {
+    it('should fetch all pages if limit is Infinity', async () => {
       const mockRecords = Array(10001)
         .fill()
         .map((_, i) => ({
@@ -193,13 +193,13 @@ describe('Adaptor', () => {
 
       const state = {};
       const { data, response } = await query('select Name from Account', {
-        max: false,
+        limit: Infinity,
       })(state);
       expect(data.length).to.eq(10001);
       expect(response.done).to.eq(true);
       expect(response.totalSize).to.eq(10001);
     });
-    it('should fetch default maximum if max is not applied', async () => {
+    it('should fetch default maximum if limit is not applied', async () => {
       const mockRecords = Array(1e4)
         .fill()
         .map((_, i) => ({
@@ -223,7 +223,7 @@ describe('Adaptor', () => {
       expect(response.totalSize).to.eq(2e4);
     });
 
-    it('should not fetch another page if max is applied', async () => {
+    it('should not fetch another page if limit is applied', async () => {
       const mockRecords = Array(2000)
         .fill()
         .map((_, i) => ({
@@ -244,7 +244,7 @@ describe('Adaptor', () => {
 
       const state = {};
       const { data, response } = await query('SELECT Id FROM Account', {
-        max: 2000,
+        limit: 2000,
       })(state);
 
       expect(response.done).to.eq(false);
