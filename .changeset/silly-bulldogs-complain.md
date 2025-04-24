@@ -11,14 +11,14 @@
 If you used to do this:
 
 ```
-get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
+get('programs', { query: { orgUnit: 'TSyzvBiovKh', fields: '*' }});
 
 ```
 
 Do this instead: 
 
 ```
-http.get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
+http.get('programs', { query: { orgUnit: 'TSyzvBiovKh', fields: '*' } });
 
 ```
 
