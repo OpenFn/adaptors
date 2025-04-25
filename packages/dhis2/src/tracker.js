@@ -13,8 +13,7 @@ import * as util from './Utils';
 /**
  * Options object
  * @typedef {Object} RequestOptions
- * @property {object} query - An object of query parameters to be encoded into the URL
- * @property {object} headers - An object of all request headers
+ * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', 'stream', or 'base64'. Defaults to `json`
  * @property {string} [apiVersion=42] - The apiVersion of the request. Defaults to 42.
  */
 
@@ -24,7 +23,8 @@ import * as util from './Utils';
  * @function
  * @param {string} strategy - The effect the import should have. Can either be CREATE, UPDATE, CREATE_AND_UPDATE and DELETE.
  * @param {object} payload - The data to be imported.
- * @param {RequestOptions} [options] - An optional object containing query,and headers for the request
+ * @param {object} query - An object of query parameters to be encoded into the URL
+ * @param {RequestOptions} [options] - An optional object containing parseAs, and apiVersion for the request
  * @state {Dhis2State}
  * @returns {Operation}
  * @example <caption>Import a trackedEntity resource</caption>
@@ -43,12 +43,12 @@ import * as util from './Utils';
  *  ],
  * });
  */
-function _import(strategy, payload, options = {}, callback = s => s) {
+function _import(strategy, payload, query, options = {}) {
   return async state => {
     console.log('Preparing tracker import operation...');
 
-    const [resolvedStrategy, resolvedPayload, resolvedOptions] =
-      expandReferences(state, strategy, payload, options);
+    const [resolvedStrategy, resolvedPayload, resolvedQuery, resolvedOptions] =
+      expandReferences(state, strategy, payload, query, options);
 
     const response = await util.request(state.configuration, {
       method: 'POST',
@@ -63,14 +63,14 @@ function _import(strategy, payload, options = {}, callback = s => s) {
       options: {
         ...resolvedOptions,
         query: {
-          ...resolvedOptions.query,
+          ...resolvedQuery,
           async: false,
         },
       },
       data: resolvedPayload,
     });
 
-    return util.handleResponse(response, state, callback);
+    return util.handleHttpResponse(response, state);
   };
 }
 
@@ -80,26 +80,24 @@ export { _import as import };
  * Export data from DHIS2.
  * @public
  * @function
- * @param {string} resourceType - Path to the resource
- * @param {RequestOptions} [options] - An optional object containing query,and headers for the request
+ * @param {string} path - Path to the resource
+ * @param {object} query - An object of query parameters to be encoded into the URL
+ * @param {RequestOptions} [options] - An optional object containing parseAs, and apiVersion for the request
  * @state {Dhis2State}
  * @returns {Operation}
  * @example <caption>Export a trackedEntity resource using the id</caption>
  * tracker.export('trackedEntities/Gu5UKnIFnJf')
  * @example <caption>Export all enrollment resources</caption>
- * tracker.export('enrollments', {
- *   query: {
- *     orgUnit: 'TSyzvBiovKh',
- *   },
- * });
+ * tracker.export('enrollments', {orgUnit: 'TSyzvBiovKh'});
  */
-function _export(resourceType, options = {}, callback = s => s) {
+function _export(path, query, options = {}) {
   return async state => {
     console.log('Preparing tracker export operation...');
 
-    const [resolvedResourceType, resolvedOptions] = expandReferences(
+    const [resolvedPath, resolvedQuery, resolvedOptions] = expandReferences(
       state,
-      resourceType,
+      path,
+      query,
       options
     );
 
@@ -108,18 +106,18 @@ function _export(resourceType, options = {}, callback = s => s) {
       path: util.prefixVersionToPath(
         state.configuration,
         resolvedOptions,
-        `tracker/${resolvedResourceType}`
+        `tracker/${resolvedPath}`
       ),
       options: {
         ...resolvedOptions,
         query: {
-          ...resolvedOptions.query,
+          ...resolvedQuery,
           async: false,
         },
       },
     });
 
-    return util.handleResponse(response, state, callback);
+    return util.handleHttpResponse(response, state);
   };
 }
 

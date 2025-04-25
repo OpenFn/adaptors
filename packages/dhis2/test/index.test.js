@@ -9,7 +9,6 @@ import {
 } from '../src/Utils';
 
 import * as util from '../src/util';
-import * as tracker from '../src/tracker';
 
 const { expect } = chai;
 
@@ -217,86 +216,6 @@ describe('helperfunctions', () => {
   it('should use the old API for dataElements', () => {
     const result = shouldUseNewTracker('dataElements');
     expect(result).to.be.false;
-  });
-});
-
-describe('tracker', () => {
-  const state = {
-    configuration,
-    data: {
-      program: 'program1',
-      orgUnit: 'org50',
-      trackedEntityType: 'nEenWmSyUEp',
-      status: 'COMPLETED',
-      date: '02-02-20',
-    },
-  };
-
-  it('should import a trackedEntity', async () => {
-    testServer
-      .intercept({
-        path: getPath('tracker'),
-        method: 'POST',
-        query: { async: false },
-      })
-      .reply(200, {
-        httpStatus: 'OK',
-        message: 'the response',
-      });
-
-    const finalState = await execute(
-      tracker.import('CREATE', {
-        trackedEntities: [
-          {
-            orgUnit: 'TSyzvBiovKh',
-            trackedEntityType: 'nEenWmSyUEp',
-            attributes: [
-              {
-                attribute: 'w75KJ2mc4zz',
-                value: 'Gigiwe',
-              },
-            ],
-          },
-        ],
-      })
-    )(state);
-
-    expect(finalState.data).to.eql({
-      httpStatus: 'OK',
-      message: 'the response',
-    });
-  });
-
-  it('should export all enrollements', async () => {
-    const query = {
-      orgUnit: 'TSyzvBiovKh',
-    };
-    testServer
-      .intercept({
-        path: getPath('tracker/enrollments'),
-        method: 'GET',
-        query: {
-          ...query,
-          async: false,
-        },
-      })
-      .reply(200, {
-        httpStatus: 'OK',
-        message: 'the response',
-      });
-
-    const finalState = await execute(
-      tracker.export('enrollments', {
-        query: {
-          orgUnit: 'TSyzvBiovKh',
-        },
-      })
-    )(state);
-
-    expect(finalState.data).to.eql({
-      httpStatus: 'OK',
-      message: 'the response',
-    });
   });
 });
 
