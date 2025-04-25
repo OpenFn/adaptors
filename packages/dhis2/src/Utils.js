@@ -38,14 +38,23 @@ export function selectId(resourceType) {
   }
 }
 
-export function handleResponse(result, state, callback) {
+export function handleHttpResponse(result, state) {
   const { body, ...responseWithoutBody } = result;
 
   const nextState = {
     ...composeNextState(state, body),
     response: responseWithoutBody,
   };
-  return callback(nextState);
+  return nextState;
+}
+
+export function handleResponse(result, state) {
+  const { body } = result;
+
+  const nextState = {
+    ...composeNextState(state, body),
+  };
+  return nextState;
 }
 
 export function prettyJson(data) {
