@@ -19,6 +19,7 @@ import * as util from './Utils';
 
 /**
  * Import data into DHIS2 using the tracker endpoint.
+ * @alias import
  * @public
  * @function
  * @param {string} strategy - The effect the import should have. Can either be CREATE, UPDATE, CREATE_AND_UPDATE and DELETE.
@@ -78,6 +79,7 @@ export { _import as import };
 
 /**
  * Export data from DHIS2.
+ * @alias export
  * @public
  * @function
  * @param {string} path - Path to the resource
