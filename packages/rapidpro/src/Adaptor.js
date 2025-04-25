@@ -3,11 +3,7 @@ import {
   composeNextState,
   http, // Important: this is the OLD axios-based http.
 } from '@openfn/language-common';
-import {
-  expandReferences,
-  logResponse,
-  request,
-} from '@openfn/language-common/util';
+import { expandReferences } from '@openfn/language-common/util';
 
 const { axios } = http;
 export { axios };
@@ -60,19 +56,23 @@ export function addContact(params, callback) {
 
     const url = `${host}/api/${apiVersion || 'v2'}/contacts.json`;
 
-   return request('POST', url, {
-      body: resolvedParams,
+    const config = {
+      url,
+      data: resolvedParams,
       headers: { Authorization: `Token ${token}` },
-    }).then(response => {
-      logResponse(response);
-      console.log('Contact added with uuid:', response.body.uuid);
-      const nextState = {
-        ...composeNextState(state, response.data),
-        response,
-      };
-      if (callback) return callback(nextState);
-      return nextState;
-    });
+    };
+
+    return http
+      .post(config)(state)
+      .then(response => {
+        console.log('Contact added with uuid:', response.data.uuid);
+        const nextState = {
+          ...composeNextState(state, response.data),
+          response,
+        };
+        if (callback) return callback(nextState);
+        return nextState;
+      });
   };
 }
 
@@ -103,15 +103,7 @@ export function upsertContact(params, callback) {
       data: resolvedParams,
       headers: { Authorization: `Token ${token}` },
     };
-const response = request('POST', url, {
-  body: resolvedParams,
-  headers: { Authorization: `Token ${token}` },
-}).then(response => {
-  logResponse(response);
-  console.log('Contact added with uuid:', response.body.uuid);
-  return response
 
-})
     return http
       .post(config)(state)
       .then(resp => {
