@@ -1,7 +1,8 @@
+import { execute as commonExecute } from '@openfn/language-common';
 import {
-  execute as commonExecute,
-} from '@openfn/language-common';
-import { normalizeOauthConfig, expandReferences } from '@openfn/language-common/util';
+  normalizeOauthConfig,
+  expandReferences,
+} from '@openfn/language-common/util';
 import request from 'request';
 
 /**
@@ -42,7 +43,7 @@ export function createEntity(params) {
 
     const { resource, accessToken, apiVersion } = state.configuration;
 
-    const { entityName, body } = expandReferences(state, params);
+    const [entityName, body] = expandReferences(state, params);
 
     const url = `${resource}/api/data/v${apiVersion}/${entityName}`;
 
@@ -93,7 +94,7 @@ export function query(params) {
     }
 
     const { resource, accessToken, apiVersion } = state.configuration;
-    const { entityName, entityId, query } = expandReferences(state, params);
+    const [entityName, entityId, query] = expandReferences(state, params);
 
     const url = `${resource}/api/data/v${apiVersion}/${entityName}`;
 
@@ -168,7 +169,7 @@ export function updateEntity(params) {
 
     const { resource, accessToken, apiVersion } = state.configuration;
 
-    const { entityName, entityId, body } = expandReferences(state,params);
+    const [entityName, entityId, body] = expandReferences(state, params);
 
     const url = `${resource}/api/data/v${apiVersion}/${entityName}(${entityId})`;
 
@@ -220,7 +221,7 @@ export function deleteEntity(params) {
 
     const { resource, accessToken, apiVersion } = state.configuration;
 
-    const { entityName, entityId } = expandReferences(state,params);
+    const [entityName, entityId] = expandReferences(state, params);
 
     const url = `${resource}/api/data/v${apiVersion}/${entityName}(${entityId})`;
 

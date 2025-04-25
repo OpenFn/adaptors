@@ -131,7 +131,7 @@ export function postElement(params) {
     const { hostUrl } = state.configuration;
     const { sessionName } = state.session.result;
 
-    const { elementType, element, operation } = expandReferences(state, params);
+    const [elementType, element, operation] = expandReferences(state, params);
 
     const url = `${hostUrl}/webservice.php`;
     // const url = 'https://requestb.in/1irtrgz1';

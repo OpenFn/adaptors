@@ -99,7 +99,7 @@ export function changesApi(params, callback) {
 
   return state => {
     const { server, db, username, password } = state.configuration;
-    const query = expandReferences(state, params);
+    const [query] = expandReferences(state, params);
     const doc_ids = query.doc_ids;
     const scrubbedQuery = _.omit(query, [
       // Ignore last-event-id if state has a cursor...

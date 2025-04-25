@@ -51,9 +51,9 @@ export function execute(...operations) {
  */
 export function getMappings(ownerId, repositoryId, options, callback = false) {
   return state => {
-    const resolvedOwnerId = expandReferences(state, ownerId);
-    const resolvedRepositoryId = expandReferences(state, repositoryId);
-    const resolvedOptions = expandReferences(state, options);
+    const [resolvedOwnerId] = expandReferences(state, ownerId);
+    const [resolvedRepositoryId] = expandReferences(state, repositoryId);
+    const [resolvedOptions] = expandReferences(state, options);
 
     const { baseUrl } = state.configuration;
 
@@ -105,8 +105,8 @@ export function getMappings(ownerId, repositoryId, options, callback = false) {
  */
 export function get(path, query, callback = false) {
   return state => {
-    const resolvedPath = expandReferences(state, path);
-    const resolvedQuery = expandReferences(state, query);
+    const [resolvedPath] = expandReferences(state, path);
+    const [resolvedQuery] = expandReferences(state, query);
     const { baseUrl } = state.configuration;
 
     const url = `${baseUrl}/${resolvedPath}`;

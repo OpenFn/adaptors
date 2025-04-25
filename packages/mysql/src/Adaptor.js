@@ -66,7 +66,7 @@ export function insert(table, fields) {
   return state => {
     let { connection } = state;
 
-    const valuesObj = expandReferences(state, fields);
+    const [valuesObj] = expandReferences(state, fields);
 
     const squelMysql = squel.useFlavour('mysql');
 
@@ -123,7 +123,7 @@ export function upsert(table, fields) {
   return state => {
     let { connection } = state;
 
-    const valuesObj = expandReferences(state, fields);
+    const [valuesObj] = expandReferences(state, fields);
 
     const squelMysql = squel.useFlavour('mysql');
 
@@ -201,7 +201,7 @@ export function upsert(table, fields) {
 export function upsertMany(table, data) {
   return function (state) {
     return new Promise(function (resolve, reject) {
-      const rows = expandReferences(state, data);
+      const [rows] = expandReferences(state, data);
 
       if (!rows || rows.length === 0) {
         console.log('No records provided; skipping upsert.');
@@ -252,7 +252,7 @@ export function query(options) {
   return state => {
     let { connection } = state;
 
-    const opts = expandReferences(state, options);
+    const [opts] = expandReferences(state, options);
 
     console.log(
       'Executing MySQL statement with options: ' + JSON.stringify(opts, 2, null)

@@ -1,6 +1,4 @@
-import {
-  execute as commonExecute,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import { resolve as resolveUrl } from 'url';
 import js2xmlparser from 'js2xmlparser';
@@ -53,8 +51,10 @@ export function fetchSurveyData(params) {
     }
 
     console.log(params.surveyId);
-    const { surveyId, afterDate, beforeDate, postUrl } =
-      expandReferences(state, params);
+    const [surveyId, afterDate, beforeDate, postUrl] = expandReferences(
+      state,
+      params
+    );
     console.log(surveyId);
 
     const { accessToken, username } = state.configuration;
@@ -164,7 +164,7 @@ export function fetchSurveyData(params) {
  */
 export function submitRecord(jsonData) {
   return state => {
-    const jsonBody = expandReferences(state, jsonData);
+    const [jsonBody] = expandReferences(state, jsonData);
     const body = js2xmlparser('form', jsonBody);
 
     const { username, password, apiUrl } = state.configuration;

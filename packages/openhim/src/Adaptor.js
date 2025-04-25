@@ -36,7 +36,7 @@ export function execute(...operations) {
  */
 export function encounter(encounterData) {
   return state => {
-    const body = expandReferences(state, encounterData);
+    const [body] = expandReferences(state, encounterData);
 
     const { username, password, apiUrl } = state.configuration;
 

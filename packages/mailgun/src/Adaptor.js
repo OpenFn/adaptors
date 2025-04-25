@@ -71,7 +71,7 @@ export function send(params) {
     const { client } = state;
     const { domain } = state.configuration;
 
-    const body = expandReferences(state, params);
+    const [body] = expandReferences(state, params);
 
     if (body.attachment) {
       const response = request('GET', body.attachment.url);

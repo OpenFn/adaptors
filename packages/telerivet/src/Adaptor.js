@@ -34,7 +34,7 @@ export function execute(...operations) {
  */
 export function send(sendData) {
   return state => {
-    const body = expandReferences(state, sendData);
+    const [body] = expandReferences(state, sendData);
 
     const { projectId, apiKey } = state.configuration;
 

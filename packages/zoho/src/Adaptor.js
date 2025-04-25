@@ -42,7 +42,7 @@ export function execute(...operations) {
 export function addRow(db, table, rowData) {
   return state => {
     const action = 'ADDROW';
-    const body = expandReferences(state, rowData);
+    const [body] = expandReferences(state, rowData);
 
     const { account, authToken, apiVersion } = state.configuration;
 

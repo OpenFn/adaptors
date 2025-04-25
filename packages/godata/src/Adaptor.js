@@ -168,7 +168,7 @@ export function upsertContact(id, externalId, goDataContact, callback) {
   return state => {
     const { apiUrl, access_token } = state.configuration;
 
-    const data = expandReferences(state, goDataContact);
+    const [data] = expandReferences(state, goDataContact);
 
     const query = { where: {} };
     query.where[externalId] = data[externalId];
@@ -323,7 +323,7 @@ export function upsertOutbreak(outbreak, callback) {
   return state => {
     const { apiUrl, access_token } = state.configuration;
 
-    const { externalId, data } = expandReferences(state, outbreak);
+    const [externalId, data] = expandReferences(state, outbreak);
 
     const filter = JSON.stringify({ where: { id: externalId } });
 
@@ -490,7 +490,7 @@ export function upsertCase(id, externalId, goDataCase, callback) {
   return state => {
     const { apiUrl, access_token } = state.configuration;
 
-    const data = expandReferences(state, goDataCase);
+    const [data] = expandReferences(state, goDataCase);
 
     const query = { where: {} };
     query.where[externalId] = data[externalId];
@@ -647,7 +647,7 @@ export function upsertLocation(externalId, goDataLocation, callback) {
   return state => {
     const { apiUrl, access_token } = state.configuration;
 
-    const data = expandReferences(state, goDataLocation);
+    const [data] = expandReferences(state, goDataLocation);
 
     const query = { where: {} };
     query.where[externalId] = data[externalId];
@@ -806,7 +806,7 @@ export function upsertReferenceData(externalId, goDataReferenceData, callback) {
   return state => {
     const { apiUrl, access_token } = state.configuration;
 
-    const data = expandReferences(state, goDataReferenceData);
+    const [data] = expandReferences(state, goDataReferenceData);
 
     const query = { where: {} };
     query.where[externalId] = data[externalId];

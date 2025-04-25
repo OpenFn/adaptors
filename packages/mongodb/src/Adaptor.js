@@ -97,7 +97,7 @@ export function insertDocuments(params) {
     const { client } = state;
 
     try {
-      const { database, collection, documents, callback } = expandReferences(
+      const [database, collection, documents, callback] = expandReferences(
         state,
         params
       );
@@ -146,7 +146,7 @@ export function findDocuments(params) {
     const { client } = state;
 
     try {
-      const { database, collection, query, callback } = expandReferences(
+      const [database, collection, query, callback] = expandReferences(
         state,
         params
       );
@@ -194,7 +194,7 @@ export function updateDocument(params) {
   return state => {
     const { client } = state;
     try {
-      const { database, collection, filter, changes, options, callback } =
+      const [database, collection, filter, changes, options, callback] =
         expandReferences(state, params);
 
       const db = client.db(database);

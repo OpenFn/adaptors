@@ -63,7 +63,7 @@ export function sql(sqlQuery) {
  */
 export function addRow(table, rowData) {
   return state => {
-    const dataObject = expandReferences(state, rowData);
+    const [dataObject] = expandReferences(state, rowData);
 
     const sql = jsonSql.build({
       type: 'insert',

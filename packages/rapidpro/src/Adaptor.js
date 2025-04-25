@@ -50,7 +50,7 @@ export function execute(...operations) {
  */
 export function addContact(params, callback) {
   return state => {
-    const resolvedParams = expandReferences(state, params);
+    const [resolvedParams] = expandReferences(state, params);
 
     const { host, apiVersion, token } = state.configuration;
 
@@ -92,7 +92,7 @@ export function addContact(params, callback) {
  */
 export function upsertContact(params, callback) {
   return state => {
-    const resolvedParams = expandReferences(state, params);
+    const [resolvedParams] = expandReferences(state, params);
 
     const { host, apiVersion, token } = state.configuration;
 
@@ -162,7 +162,7 @@ export function upsertContact(params, callback) {
  */
 export function startFlow(params, callback) {
   return state => {
-    const resolvedParams = expandReferences(state, params);
+    const [resolvedParams] = expandReferences(state, params);
 
     const { host, apiVersion, token } = state.configuration;
 
@@ -211,7 +211,7 @@ export function startFlow(params, callback) {
  */
 export function sendBroadcast(params, callback) {
   return state => {
-    const resolvedParams = expandReferences(state, params);
+    const [resolvedParams] = expandReferences(state, params);
 
     const { host, apiVersion, token } = state.configuration;
 
