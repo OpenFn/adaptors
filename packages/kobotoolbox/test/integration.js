@@ -14,11 +14,10 @@ const state = { configuration };
 
 describe('Integration tests', () => {
   describe('http', () => {
-    //TODO: Investigate why we are getting 301
-    describe.skip('post', () => {
+    describe('post', () => {
       it('should post a request to kobo', async () => {
         const { data, response } = await execute(
-          http.post('assets', {
+          http.post('assets/', {
             name: 'Health Survey 2024',
             settings: {
               description:
@@ -31,8 +30,9 @@ describe('Integration tests', () => {
           })
         )(state).catch(console.error);
 
-        console.log({ response });
-        // expect(data.person.gender).to.eq('M');
+        expect(response.statusCode).to.eq(201);
+        expect(response.statusMessage).to.eq('Created');
+        expect(data).to.have.property('url');
       }).timeout(5000);
     });
     describe('get', () => {
@@ -41,9 +41,6 @@ describe('Integration tests', () => {
           await execute(http.get('https://www.google.com'))(state);
         } catch (error) {
           expect(error.code).to.eq('ERR_INVALID_URL');
-          // expect(error.description).to.eq(
-          //   'A request was attempted to an absolute URL, but a different base URL was specified. This is a potential security violation.'
-          // );
         }
       }).timeout(5000);
 
@@ -75,24 +72,20 @@ describe('Integration tests', () => {
 
   describe('getSubmissions', () => {
     it('should get a list of submissions', async () => {
-      const { data, response } = await execute(
-        getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', { pageSize: Infinity })
+      const { data } = await execute(
+        getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', { pageSize: 3 })
       )(state);
 
-      expect(response.next).to.eq(null);
-      expect(response.count).to.eq(data.results.length);
-      expect(response.previous).to.contain('?format=json&limit=3');
+      expect(data.length).to.greaterThan(3);
     }).timeout(50000);
 
     it('should get a list of submissions with a query', async () => {
-      const { data, response } = await execute(
+      const { data } = await execute(
         getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', {
           query: { _submission_time: { $gte: '2025-04-04T21:54:20' } },
         })
       )(state);
-
-      expect(response.next).to.eq(null);
-      expect(response.count).to.eq(data.results.length);
+      expect(data.length).to.greaterThan(0);
     });
   });
 
