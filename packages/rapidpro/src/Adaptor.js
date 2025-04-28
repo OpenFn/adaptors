@@ -222,7 +222,6 @@ export {
   fields,
   fn,
   fnIf,
-  http, // Important: this is the OLD axios-based http. Public docs will be incorrect.
   lastReferenceValue,
   merge,
   sourceValue,
