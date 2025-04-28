@@ -20,7 +20,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:^2.4.0",
+    "@openfn/language-common": "workspace:*",
     "undici": "^5.28.5"
   },
   "devDependencies": {
