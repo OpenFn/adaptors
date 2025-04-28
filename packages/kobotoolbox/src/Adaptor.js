@@ -63,7 +63,7 @@ export function getForms() {
  * @public
  * @param {string} formId - Form Id to get the specific submissions
  * @param {object} [options={}] - Optional query params for the request
- * @param {object} [options.query] - (Openfn only) Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}
+ * @param {object} [options.query] - (Openfn only) Query options to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}
  * @param {number} [options.limit=10000] - (Openfn only) Maximum number of submissions to fetch.
  * @param {number} [options.pageSize=1000] - (Openfn only) Limits the size of each page of submissions. Maximum value is 30000.
  * @state data - an array of submission objects

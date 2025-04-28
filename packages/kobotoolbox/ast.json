@@ -89,7 +89,7 @@
           },
           {
             "title": "param",
-            "description": "(Openfn only) Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}",
+            "description": "(Openfn only) Query options to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}",
             "type": {
               "type": "OptionalType",
               "expression": {
