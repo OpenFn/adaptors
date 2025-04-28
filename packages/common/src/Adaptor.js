@@ -402,7 +402,7 @@ export function fields(...fields) {
 export function merge(dataSource, fields) {
   return state => {
     const initialData = source(dataSource)(state);
-    const additionalData = newExpandReferences(state, fields);
+    const [additionalData] = newExpandReferences(state, fields);
 
     return initialData.reduce((acc, dataItem) => {
       return [...acc, { ...dataItem, ...additionalData }];
