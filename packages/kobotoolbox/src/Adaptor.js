@@ -43,8 +43,9 @@ export function execute(...operations) {
  */
 export function getForms() {
   return async state => {
-    const url = `/assets/?asset_type=survey`;
-    const response = await util.request(state, 'GET', url, {});
+    const response = await util.request(state, 'GET', 'assets', {
+      query: { asset_type: 'survey' },
+    });
 
     console.log('✓', response.body.results?.length, 'forms fetched.');
 
@@ -140,7 +141,6 @@ export {
   fields,
   fn,
   fnIf,
-  http,
   group,
   lastReferenceValue,
   merge,
