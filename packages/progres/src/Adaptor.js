@@ -53,8 +53,8 @@ export function execute(...operations) {
  */
 export function postData(params, callback) {
   return state => {
-    const [url, body, headers, agentOptions] = expandReferences(state, params);
-
+    const [resolvedParams] = expandReferences(state, params);
+    const { url, body, headers, agentOptions } = resolvedParams;
     return http
       .post({
         method: 'post',
