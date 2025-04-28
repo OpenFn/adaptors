@@ -42,7 +42,7 @@ export async function request(state, method, path, opts = {}) {
   };
 
   return commonRequest(method, requestPath, options).then(res => {
-    logResponse(res, query);
+    logResponse(res, options.query);
     return res;
   });
 }
