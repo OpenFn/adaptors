@@ -12,11 +12,17 @@ export function prepareNextState(state, response) {
     response: responseWithoutBody,
   };
 }
-export function request(state, method, path, opts = {}) {
+export async function request(state, method, path, opts = {}) {
   const { baseUrl, apiVersion, username, password } = state.configuration;
-  const { data = {}, query = {}, headers = {}, parseAs = 'json' } = opts;
+  const {
+    data = {},
+    query = {},
+    headers = {},
+    parseAs = 'json',
+    maxRedirections,
+  } = opts;
 
-  const requestPath = cleanPath(`/api/${apiVersion}/${path}`);
+  const requestPath = `/api/${apiVersion}/${path}`;
   const authHeaders = makeBasicAuthHeader(username, password);
 
   const options = {
@@ -30,6 +36,7 @@ export function request(state, method, path, opts = {}) {
       format: 'json',
       ...query,
     },
+    maxRedirections,
     parseAs,
     baseUrl,
   };
@@ -40,15 +47,15 @@ export function request(state, method, path, opts = {}) {
 export async function requestWithPagination(state, path, options = {}) {
   const results = [];
 
-  let { pageSize, start, limit, max, ...otherOptions } = options;
+  let { pageSize, start, limit, ...otherOptions } = options;
 
-  const isUsingDefaultMax = max === undefined;
-  const maxResults = max ?? limit ?? 1e4;
+  const isUsingDefaultMax = limit === undefined;
+  const maxResults = limit ?? 1e4;
 
   let isFirstRequest = true;
   let requestOptions = { query: { start, limit }, ...otherOptions };
   let shouldFetchMoreContent = false;
-  const didUserPassLimit = Boolean(max || limit);
+  const didUserPassLimit = Boolean(limit);
 
   do {
     requestOptions.query ??= {};
@@ -73,7 +80,7 @@ export async function requestWithPagination(state, path, options = {}) {
 
     const response = await request(state, 'GET', path, requestOptions);
 
-    if (response.body.results) {
+    if (response.body?.results) {
       results.push(...response.body.results);
 
       if (!start) {
@@ -113,10 +120,4 @@ export async function requestWithPagination(state, path, options = {}) {
   } while (shouldFetchMoreContent);
 
   return results;
-}
-
-export function cleanPath(path) {
-  return path
-    .replace(/([^:]\/)\/+/g, '$1') //remove double slashes while also preserving http:// or https://
-    .replace(/\/$/, ''); // remove trailing slash
 }
