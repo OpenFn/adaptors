@@ -1,53 +1,53 @@
 # @openfn/language-claude
 
-## 1.0.7
+## 1.0.7 - 28 April 2025
 
 ### Patch Changes
 
-- 99e4b48: - Better handling of HTML content in http requests
-  - When logging HTTP requests, include query parameters
-- Updated dependencies [99e4b48]
-- Updated dependencies [13bf08f]
-  - @openfn/language-common@2.4.0
+* 99e4b48: - Better handling of HTML content in http requests
+  * When logging HTTP requests, include query parameters
+* Updated dependencies \[99e4b48]
+* Updated dependencies \[13bf08f]
+  * @openfn/language-common@2.4.0
 
 ## 1.0.6 - 16 April 2025
 
 ### Patch Changes
 
-- Updated dependencies \[b089c56]
-  - @openfn/language-common@2.3.3
+* Updated dependencies \[b089c56]
+  * @openfn/language-common@2.3.3
 
 ## 1.0.5 - 11 April 2025
 
 ### Patch Changes
 
-- Updated dependencies \[d7105c0]
-  - @openfn/language-common@2.3.2
+* Updated dependencies \[d7105c0]
+  * @openfn/language-common@2.3.2
 
 ## 1.0.4 - 20 March 2025
 
 ### Patch Changes
 
-- 36a849c: Update example in docs to be more relevant
+* 36a849c: Update example in docs to be more relevant
 
 ## 1.0.3 - 14 March 2025
 
 ### Patch Changes
 
-- Updated dependencies \[23ccb01]
-  - @openfn/language-common@2.3.1
+* Updated dependencies \[23ccb01]
+  * @openfn/language-common@2.3.1
 
 ## 1.0.2 - 07 March 2025
 
 ### Patch Changes
 
-- Expose documenatation, expand references and expose options.
+* Expose documenatation, expand references and expose options.
 
 ## 1.0.1 - 06 March 2025
 
 ### Patch Changes
 
-- Fix config schema
+* Fix config schema
 
 ## 1.0.0 - 06 March 2025
 
