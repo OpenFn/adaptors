@@ -10,7 +10,6 @@ Improved pagination support in `getSubmissions`
   - Removed `paginate` option
   - Added new pagination options:
     - `limit`: Controls number of results returned
-    - `max`: Maximum number of results to fetch
     - `pageSize`: Number of items per page
 
 ### Examples
@@ -23,5 +22,5 @@ getSubmission('form-id', { limit: Infinity });
 getSubmission('form-id');
 
 // Fetch submissions with max results
-getSubmission('form-id', { max: 500 }); // Returns up to 500 submissions
+getSubmission('form-id', { limit: 500 }); // Returns up to 500 submissions
 ```
