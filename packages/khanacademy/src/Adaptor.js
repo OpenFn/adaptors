@@ -42,7 +42,8 @@ export function fetch(params) {
   return state => {
     const { email, password, consumerKey, secretKey } = state.configuration;
 
-    const [getEndpoint, queryParams, postUrl] = expandReferences(state, params);
+    const [resolvedParams] = expandReferences(state, params);
+    const {getEndpoint, queryParams, postUrl} = resolvedParams;
 
     const query = qs.stringify(queryParams);
 

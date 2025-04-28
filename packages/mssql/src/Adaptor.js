@@ -189,7 +189,8 @@ export function sql(params) {
     const { connection } = state;
 
     try {
-      const [query, options] = expandReferences(state, params);
+      const [resolvedParams] = expandReferences(state, params);
+      const { query, options } = resolvedParams;
 
       console.log(`Preparing to execute sql statement: ${query}`);
       return queryHandler(state, query, composeNextState, options);

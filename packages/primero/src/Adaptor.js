@@ -404,7 +404,8 @@ export function upsertCase(params, callback) {
   return state => {
     const { auth } = state;
     const { url } = state.configuration;
-    const [data, externalIds] = expandReferences(state, params);
+    const [resolvedParams] = expandReferences(state, params);
+    const { data, externalIds } = resolvedParams;
 
     const qs = {
       remote: true,
@@ -481,7 +482,8 @@ export function getReferrals(params, callback) {
     const { auth } = state;
     const { url } = state.configuration;
 
-    const [externalId, id] = expandReferences(state, params);
+    const [resolvedParams] = expandReferences(state, params);
+    const { externalId, id } = resolvedParams;
 
     let requestParams = {};
 
@@ -636,7 +638,8 @@ export function updateReferral(params, callback) {
     const { auth } = state;
     const { url } = state.configuration;
 
-    const [caseExternalId, caseId, id, data] = expandReferences(state, params);
+    const [resolvedParams] = expandReferences(state, params);
+    const { caseExternalId, caseId, id, data } = resolvedParams;
 
     let requestParams = {};
 

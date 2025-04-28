@@ -96,7 +96,8 @@ function logout(state) {
 export function request(options, callback) {
   return state => {
     const { host, jwt } = state.configuration;
-    const [method, path, params, data] = expandReferences(state, options);
+    const [resolvedOptions] = expandReferences(state, options);
+    const { method, path, params, data } = resolvedOptions;
 
     return axios({
       method,

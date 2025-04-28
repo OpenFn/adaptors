@@ -323,7 +323,8 @@ export function upsertOutbreak(outbreak, callback) {
   return state => {
     const { apiUrl, access_token } = state.configuration;
 
-    const [externalId, data] = expandReferences(state, outbreak);
+    const [resolvedOutbreak] = expandReferences(state, outbreak);
+    const {externalId, data} =  resolvedOutbreak;
 
     const filter = JSON.stringify({ where: { id: externalId } });
 

@@ -51,10 +51,8 @@ export function fetchSurveyData(params) {
     }
 
     console.log(params.surveyId);
-    const [surveyId, afterDate, beforeDate, postUrl] = expandReferences(
-      state,
-      params
-    );
+    const [resolvedParams] = expandReferences(state, params);
+    const { surveyId, afterDate, beforeDate, postUrl } = resolvedParams;
     console.log(surveyId);
 
     const { accessToken, username } = state.configuration;

@@ -43,7 +43,8 @@ export function execute(...operations) {
 export function sendSMS(params) {
   return state => {
     const { accountSid, authToken } = state.configuration;
-    const [body, from, to] = expandReferences(state, params);
+    const [resolvedParams] = expandReferences(state, params);
+    const {body, from, to} = resolvedParams;
 
     const client = require('twilio')(accountSid, authToken);
 

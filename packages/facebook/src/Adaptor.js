@@ -64,7 +64,8 @@ export function postMessage(params) {
 
     const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${accessToken}`;
 
-    const [headers, message, recipient] = expandReferences(state, params);
+    const [resolvedParams] = expandReferences(state, params);
+    const { headers, message, recipient } = resolvedParams;
 
     const body = {
       messaging_type: 'UPDATE',
