@@ -17,7 +17,7 @@ describe('Integration tests', () => {
     describe('post', () => {
       it('should post a request to kobo', async () => {
         const { data, response } = await execute(
-          http.post('assets/', {
+          http.post('assets', {
             name: 'Health Survey 2024',
             settings: {
               description:

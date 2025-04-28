@@ -22,7 +22,7 @@ export async function request(state, method, path, opts = {}) {
     maxRedirections,
   } = opts;
 
-  const requestPath = `/api/${apiVersion}/${path}`;
+  const requestPath = `/api/${apiVersion}/${path}/`;
   const authHeaders = makeBasicAuthHeader(username, password);
 
   const options = {
