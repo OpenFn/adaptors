@@ -1,5 +1,7 @@
 ---
-'@openfn/language-rapidpro': minor
+'@openfn/language-rapidpro': major
 ---
 
-Update `rapidPro` to not use deprecated `common-http`
+- Update `rapidPro` to not use deprecated `common-http`.
+- Remove support and export of `axios` 
+
