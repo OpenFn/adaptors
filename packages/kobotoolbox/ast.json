@@ -89,19 +89,7 @@
           },
           {
             "title": "param",
-            "description": "Restricts query to a single request. Use max to allow multiple requests",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "number"
-              }
-            },
-            "name": "options.limit"
-          },
-          {
-            "title": "param",
-            "description": "Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}",
+            "description": "(Openfn only) Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -113,7 +101,7 @@
           },
           {
             "title": "param",
-            "description": "(Openfn only) Restrict the maximum number of retrieved submissions. May be fetched in several pages. Not used if `limit` is set.",
+            "description": "(Openfn only) Maximum number of submissions to fetch.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -121,12 +109,12 @@
                 "name": "number"
               }
             },
-            "name": "options.max",
+            "name": "options.limit",
             "default": "10000"
           },
           {
             "title": "param",
-            "description": "(Openfn only) Limits the size of each page of submissions. Not used if limit is set.",
+            "description": "(Openfn only) Limits the size of each page of submissions. Maximum value is 30000.",
             "type": {
               "type": "OptionalType",
               "expression": {
