@@ -62,10 +62,9 @@ export function getForms() {
  * @public
  * @param {string} formId - Form Id to get the specific submissions
  * @param {object} [options={}] - Optional query params for the request
- * @param {number} [options.limit] - Restricts query to a single request. Use max to allow multiple requests
- * @param {object} [options.query] - Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}
- * @param {number} [options.max=10000] - (Openfn only) Restrict the maximum number of retrieved submissions. May be fetched in several pages. Not used if `limit` is set.
- * @param {number} [options.pageSize=1000] - (Openfn only) Limits the size of each page of submissions. Not used if limit is set.
+ * @param {object} [options.query] - (Openfn only) Query parameters to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}
+ * @param {number} [options.limit=10000] - (Openfn only) Maximum number of submissions to fetch.
+ * @param {number} [options.pageSize=1000] - (Openfn only) Limits the size of each page of submissions. Maximum value is 30000.
  * @state data - an array of submission objects
  * @returns {Operation}
  */
@@ -77,21 +76,13 @@ export function getSubmissions(formId, options) {
       options
     );
     if (resolvedOptions.limit) {
-      const keysToRemove = Object.keys(resolvedOptions).filter(k =>
-        k.match(/^(max|pageSize)$/)
-      );
+      if (resolvedOptions.pageSize) {
+        console.warn(`Warning: ignoring option pageSize as "limit" is set`);
 
-      if (keysToRemove.length) {
-        console.warn(
-          `Warning: ignoring option [${keysToRemove.join(
-            ','
-          )}] as "limit" is set`
-        );
-        delete resolvedOptions.max;
         delete resolvedOptions.pageSize;
       }
     }
-    const { query, limit, pageSize, max } = resolvedOptions;
+    const { query, limit, pageSize } = resolvedOptions;
     const path = `/assets/${resolvedFormId}/data/`;
     const qs = {};
     if (query) {
@@ -103,7 +94,6 @@ export function getSubmissions(formId, options) {
     }
     const requestOptions = {
       query: { ...qs },
-      max,
       limit,
       pageSize,
     };
