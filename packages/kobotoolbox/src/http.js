@@ -3,17 +3,20 @@ import * as util from './util';
 
 /**
  * State object
- * @typedef {Object} KoboToolboxHttpState
+ * @typedef {Object} HttpState
+ * @private
  * @property data - The response body (as JSON)
- * @property response - The HTTP response from the KoboToolbox server (excluding the body). Responses will be returned in JSON format
- * @property references - An array of all previous data objects used in the Job
+ * @property response - The HTTP response from the KoboToolbox server (excluding the body)
+ * @property references - An array containing all previous data objects
  */
 
 /**
  * Options object
- * @typedef {Object} RequestOptions
+ * @typedef {Object} HTTPRequestOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
  * @property {object} headers - An object of all request headers
+ * @property {object} body - The request body (as JSON)
+ * @property {number} maxRedirections - The maximum number of redirects to follow
  * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
  */
 
@@ -24,8 +27,8 @@ import * as util from './util';
  * @example <caption>GET assets resource</caption>
  * http.get('assets')
  * @param {string} path - path to resource
- * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
- * @state {KoboToolboxHttpState}
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
  * @returns {operation}
  */
 export function get(path, options) {
@@ -61,8 +64,8 @@ export function get(path, options) {
  *  );
  * @param {string} path - path to resource
  * @param {any} data - the body data in JSON format
- * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
- * @state {KoboToolboxHttpState}
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
  * @returns {operation}
  */
 export function post(path, data, options) {
@@ -103,8 +106,8 @@ export function post(path, data, options) {
  *  );
  * @param {string} path - path to resource
  * @param {any} data - the body data in JSON format
- * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
- * @state {KoboToolboxHttpState}
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
  * @returns {operation}
  */
 export function put(path, data, options) {
