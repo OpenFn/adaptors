@@ -40,7 +40,7 @@ describe('execute', () => {
   });
 });
 
-describe.skip('post', () => {
+describe('post', () => {
   before(() => {
     nock('https://fake.server.com').post('/api').reply(200, { foo: 'bar' });
   });
