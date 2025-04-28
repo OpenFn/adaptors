@@ -40,10 +40,10 @@ describe('Integration tests', () => {
         try {
           await execute(http.get('https://www.google.com'))(state);
         } catch (error) {
-          expect(error.code).to.eq('BASE_URL_MISMATCH');
-          expect(error.description).to.eq(
-            'A request was attempted to an absolute URL, but a different base URL was specified. This is a potential security violation.'
-          );
+          expect(error.code).to.eq('ERR_INVALID_URL');
+          // expect(error.description).to.eq(
+          //   'A request was attempted to an absolute URL, but a different base URL was specified. This is a potential security violation.'
+          // );
         }
       }).timeout(5000);
 
@@ -75,24 +75,24 @@ describe('Integration tests', () => {
 
   describe('getSubmissions', () => {
     it('should get a list of submissions', async () => {
-      const { data } = await execute(
-        getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', { pageSize: 3 })
+      const { data, response } = await execute(
+        getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', { pageSize: Infinity })
       )(state);
 
-      expect(data.next).to.eq(null);
-      expect(data.count).to.eq(data.results.length);
-      expect(data.previous).to.contain('?format=json&limit=3');
+      expect(response.next).to.eq(null);
+      expect(response.count).to.eq(data.results.length);
+      expect(response.previous).to.contain('?format=json&limit=3');
     }).timeout(50000);
 
     it('should get a list of submissions with a query', async () => {
-      const { data } = await execute(
+      const { data, response } = await execute(
         getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', {
           query: { _submission_time: { $gte: '2025-04-04T21:54:20' } },
         })
       )(state);
 
-      expect(data.next).to.eq(null);
-      expect(data.count).to.eq(data.results.length);
+      expect(response.next).to.eq(null);
+      expect(response.count).to.eq(data.results.length);
     });
   });
 

@@ -72,7 +72,7 @@ const responseWithPagination = (url, objects, query) => {
 const mockSubmissions = (formId, submissions, query = {}) => {
   const { pageSize, max, ...otherOpts } = query;
 
-  const path = `/api/v2/assets/${formId}/data`;
+  const path = `/api/v2/assets/${formId}/data/`;
   const url = `${configuration.baseUrl}${path}`;
   if (otherOpts.query && typeof otherOpts.query !== 'string') {
     otherOpts.query = JSON.stringify(otherOpts.query);
@@ -134,7 +134,7 @@ describe('getSubmissions', () => {
     )(state);
 
     expect(consoleOutput).to.eql([
-      'Warning: ignoring option [pageSize] as "limit" is set',
+      'Warning: ignoring option pageSize as "limit" is set',
     ]);
     expect(data.length).to.eql(100);
   });
@@ -189,7 +189,7 @@ describe('getDeploymentInfo', () => {
   beforeEach(() => {
     testServer
       .intercept({
-        path: `/api/v2/assets/${formId}/deployment`,
+        path: `/api/v2/assets/${formId}/deployment/`,
         method: 'GET',
         query: { format: 'json' },
       })

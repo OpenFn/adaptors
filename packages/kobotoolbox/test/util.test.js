@@ -254,21 +254,3 @@ describe('requestWithPagination', () => {
     expect(data).to.eql([{ uid: '1' }]);
   });
 });
-
-describe('cleanPath', () => {
-  it('should remove the first slash from the path', () => {
-    expect(util.cleanPath('http://example.com')).to.eq('http://example.com');
-    expect(util.cleanPath('https://example.com//path')).to.eq(
-      'https://example.com/path'
-    );
-
-    expect(util.cleanPath('http://site.com//api//v1')).to.eq(
-      'http://site.com/api/v1'
-    );
-    expect(util.cleanPath('no/slashes/here')).to.eq('no/slashes/here');
-  });
-
-  it('should remove trailing slashes', () => {
-    expect(util.cleanPath('/test/')).to.eql('/test');
-  });
-});
