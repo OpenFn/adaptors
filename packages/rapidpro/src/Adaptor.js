@@ -45,7 +45,7 @@ export function execute(...operations) {
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function addContact(params, callback) {
+export function addContact(params, callback = s => s) {
   return async state => {
     const [resolvedParams] = expandReferences(state, params);
 
@@ -53,24 +53,22 @@ export function addContact(params, callback) {
 
     const url = `${host}/api/${apiVersion || 'v2'}/contacts.json`;
 
-    return await fetch(url, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(resolvedParams),
-    }).then(async response => {
-      const result = await response.json();
+    });
 
-      console.log('Contact added with uuid:', result.uuid);
+    const result = await response.json();
 
-      const nextState = {
-        ...composeNextState(state, result),
-        response,
-      };
-      if (callback) return callback(nextState);
-      return nextState;
+    console.log('Contact added with uuid:', result.uuid);
+
+    return callback({
+      ...composeNextState(state, result),
+      response,
     });
   };
 }
@@ -89,7 +87,7 @@ export function addContact(params, callback) {
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function upsertContact(params, callback) {
+export function upsertContact(params, callback = s => s) {
   return async state => {
     const [resolvedParams] = expandReferences(state, params);
 
@@ -97,55 +95,42 @@ export function upsertContact(params, callback) {
 
     const url = `${host}/api/${apiVersion || 'v2'}/contacts.json`;
 
-    const config = {
-      url,
-      data: resolvedParams,
-      headers: { Authorization: `Token ${token}` },
-    };
-
-    return await fetch(url, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(config.data),
-    })
-      .then(async response => {
-        const result = await response.json();
-        if (result && result.urns && Array.isArray(result.urns['0'])) {
-          const newUrl = `${url}?urn=${config.data.urns[0]}`;
+      body: JSON.stringify(resolvedParams),
+    });
 
-          delete config.data['urns'];
-          return await fetch(newUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              ...config.headers,
-            },
-            body: JSON.stringify(config.data),
-          }).then(async response => {
-            const res = await response.json();
+    let result = await response.json();
+    if (result && result.urns && Array.isArray(result.urns['0'])) {
+      const newUrl = `${url}?urn=${resolvedParams.urns[0]}`;
 
-            console.log('Contact updated with uuid:', res.uuid);
-            return res;
-          });
-        } else {
-          console.log('Contact added with uuid:', result.uuid);
-          return result;
-        }
-      })
-      .catch(async err => {
-        throw err;
-      })
-      .then(response => {
-        const nextState = {
-          ...composeNextState(state, response),
-          response: {},
-        };
-        if (callback) return callback(nextState);
-        return nextState;
+      delete resolvedParams['urns'];
+      result = await fetch(newUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
+        },
+        body: JSON.stringify(resolvedParams),
       });
+      const res = await result.json();
+
+      console.log('Contact updated with uuid:', res.uuid);
+      return callback({
+        ...composeNextState(state, res),
+        response: {},
+      });
+    } else {
+      console.log('Contact added with uuid:', result.uuid);
+      return callback({
+        ...composeNextState(state, result),
+        response: {},
+      });
+    }
   };
 }
 
@@ -163,7 +148,7 @@ export function upsertContact(params, callback) {
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function startFlow(params, callback) {
+export function startFlow(params, callback = s => s) {
   return async state => {
     const [resolvedParams] = expandReferences(state, params);
 
@@ -171,34 +156,21 @@ export function startFlow(params, callback) {
 
     const url = `${host}/api/${apiVersion || 'v2'}/flow_starts.json`;
 
-    const config = {
-      url,
-      data: resolvedParams,
+    const response = await fetch(url, {
+      method: 'POST',
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'application/json',
       },
-    };
+      body: JSON.stringify(resolvedParams),
+    });
 
-    return await fetch(url, {
-      method: 'POST',
-      headers: config.headers,
-      body: JSON.stringify(config.data),
-    })
-      .catch(error => {
-        console.log(error);
-        throw 'That was an error from RapidPro.';
-      })
-      .then(async response => {
-        const result = await response.json();
-        console.log('Flow started:', result);
-        const nextState = {
-          ...composeNextState(state, result),
-          response,
-        };
-        if (callback) return callback(nextState);
-        return nextState;
-      });
+    const result = await response.json();
+    console.log('Flow started:', result);
+    return callback({
+      ...composeNextState(state, result),
+      response,
+    });
   };
 }
 
@@ -216,7 +188,7 @@ export function startFlow(params, callback) {
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function sendBroadcast(params, callback) {
+export function sendBroadcast(params, callback = s => s) {
   return async state => {
     const [resolvedParams] = expandReferences(state, params);
 
@@ -224,34 +196,20 @@ export function sendBroadcast(params, callback) {
 
     const url = `${host}/api/${apiVersion || 'v2'}/broadcasts.json`;
 
-    const config = {
-      url,
-      data: resolvedParams,
+    const response = await fetch(url, {
+      method: 'POST',
       headers: {
         Authorization: `Token ${token}`,
         'Content-Type': 'application/json',
       },
-    };
-
-    return await fetch(url, {
-      method: 'POST',
-      headers: config.headers,
-      body: JSON.stringify(config.data),
-    })
-      .catch(error => {
-        console.log(error);
-        throw 'That was an error from RapidPro.';
-      })
-      .then(async response => {
-        const result = await response.json();
-        console.log('Broadcast queued:', result);
-        const nextState = {
-          ...composeNextState(state, result),
-          response,
-        };
-        if (callback) return callback(nextState);
-        return nextState;
-      });
+      body: JSON.stringify(resolvedParams),
+    });
+    const result = await response.json();
+    console.log('Broadcast queued:', result);
+    return callback({
+      ...composeNextState(state, result),
+      response,
+    });
   };
 }
 
