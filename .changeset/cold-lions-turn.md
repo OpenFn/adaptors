@@ -2,8 +2,9 @@
 '@openfn/language-progres': major
 ---
 
-- Migrate from `axios` to `common.request`.
+- Migrate from `common.http` to `common.request`.
 - Remove `axios` and `nock` from progres.
+- Remove exportation of `http` from `common`, and the exportation of `axios`.
 - With the switch to `common-request` the function pattern changes from:
 
 ```
