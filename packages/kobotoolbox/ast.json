@@ -43,8 +43,13 @@
         "options"
       ],
       "docs": {
-        "description": "Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`.",
+        "description": "Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`",
         "tags": [
+          {
+            "title": "example",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX');.",
+            "caption": "Get submissions for a specific form"
+          },
           {
             "title": "example",
             "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit: Infinity });",
@@ -76,7 +81,7 @@
           },
           {
             "title": "param",
-            "description": "Optional query params for the request",
+            "description": "Options to control the request",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -89,7 +94,7 @@
           },
           {
             "title": "param",
-            "description": "(Openfn only) Query options to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}",
+            "description": "Query options to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -101,7 +106,7 @@
           },
           {
             "title": "param",
-            "description": "(Openfn only) Maximum number of submissions to fetch.",
+            "description": "Maximum number of submissions to fetch. Pass Infinity to disable the limit and download all submissions",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -114,7 +119,7 @@
           },
           {
             "title": "param",
-            "description": "(Openfn only) Limits the size of each page of submissions. Maximum value is 30000.",
+            "description": "Limits the size of each page of submissions. Maximum value is 30000.",
             "type": {
               "type": "OptionalType",
               "expression": {
