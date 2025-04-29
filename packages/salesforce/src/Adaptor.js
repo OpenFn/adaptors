@@ -760,7 +760,6 @@ export {
   group,
   jsonValue,
   lastReferenceValue,
-  map,
   merge,
   referencePath,
   scrubEmojis,
