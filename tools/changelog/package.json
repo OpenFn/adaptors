@@ -4,25 +4,21 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "bin": {
     "update-latest-versions": "src/update-latest-versions.js"
   },
   "scripts": {
-    "update-latest-versions": "esno src/update-latest-versions.js",
-    "update-historical-versions": "esno src/update-version-histories.js"
+    "update-latest-versions": "node src/update-latest-versions.js",
+    "update-historical-versions": "node src/update-version-histories.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "18.17.5",
-    "esno": "0.16.3",
-    "lodash": "^4.17.21",
-    "ts-node": "10.9.1",
-    "typescript": "4.8.4",
-    "yargs": "17.6.0",
+    "date-fns": "^2.25.0",
     "remark": "^15.0.1",
-    "remark-stringify": "^11.0.0",
     "remark-parse": "^11.0.0",
-    "date-fns": "^2.25.0"
+    "remark-stringify": "^11.0.0",
+    "yargs": "17.6.0"
   }
 }

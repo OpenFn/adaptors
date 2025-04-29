@@ -21,10 +21,10 @@
   },
   "scripts": {
     "build": "pnpm clean && pnpm build-adaptor fhir-ndr-et src ast docs",
-    "build:src": "esno build/build.ts",
+    "build:src": "tsx build/build.ts",
     "build:adaptor": "pnpm build-adaptor fhir-ndr-et",
-    "build:schema": "esno build/generate-schema.ts",
-    "load-schema": "esno build/fetch-schema.ts",
+    "build:schema": "tsx build/generate-schema.ts",
+    "load-schema": "tsx build/fetch-schema.ts",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist docs",
@@ -53,7 +53,6 @@
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
-    "esno": "^0.16.3",
     "rimraf": "3.0.2",
     "undici": "^5.22.1"
   },
