@@ -2,9 +2,7 @@
 '@openfn/language-kobotoolbox': major
 ---
 
-Improved pagination support and restricted HTTP methods to KoboToolbox API
-
-### Breaking Changes
+### Changes
 
 - Updated `getSubmission` pagination behavior:
 
@@ -36,21 +34,8 @@ Improved pagination support and restricted HTTP methods to KoboToolbox API
 
 2. HTTP Changes:
 
-- For KoboToolbox API requests: Continue using the built-in methods
-
-  ```js
-  // Old (general-purpose HTTP requests)
-  http.get('https://any-api.com/endpoint');
-
-  // New (KoboToolbox API only)
-  http.get('forms'); // Only works with KoboToolbox endpoints
-  ```
-
-  - For other API requests: Switch to `@openfn/language-http` or another
-    appropriate adaptor
-
 - Support for `maxRedirections` option in `HTTPRequestOptions`
   ```js
   // Auto follow redirects
-  http.get('assets/form-id/data', { maxRedirections: 5 });
+  http.get('assets/aXecHjmbATuF6iGFmvBLBX/data', { maxRedirections: 5 });
   ```
