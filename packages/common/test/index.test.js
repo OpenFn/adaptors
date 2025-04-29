@@ -19,7 +19,6 @@ import {
   join,
   jsonValue,
   lastReferenceValue,
-  map,
   merge,
   group,
   parseCsv,
@@ -97,28 +96,6 @@ describe('source', () => {
   it('references a given path', () => {
     let value = source('$.store.bicycle.color')(testData);
     expect(value).to.eql(['red']);
-  });
-});
-
-describe('map', () => {
-  xit('[DEPRECATED] can produce a one to one from an array', () => {
-    let items = [];
-
-    let state = { data: testData, references: [] };
-    let results = map(
-      '$.data.store.book[*]',
-      function (state) {
-        return { references: [1, ...state.references], ...state };
-      },
-      state
-    );
-
-    expect(results.references).to.eql([
-      { title: 'Sayings of the Century' },
-      { title: 'Sword of Honour' },
-      { title: 'Moby Dick' },
-      { title: 'The Lord of the Rings' },
-    ]);
   });
 });
 
