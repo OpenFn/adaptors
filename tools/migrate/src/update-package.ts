@@ -75,7 +75,6 @@ export const updatePackage = (pkg: Record<string, any>, lang: string) => {
 
   // Update dev dependencies (do this with _.defaults so we don't override existing values)
   _.defaults(updated.devDependencies, {
-    esno: '^0.16.3',
     '@openfn/buildtools': 'workspace:^1.0.1',
     '@openfn/simple-ast': '0.4.1',
   });
