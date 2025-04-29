@@ -1942,9 +1942,6 @@ importers:
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
-      axios:
-        specifier: ^1.7.7
-        version: 1.7.7
     devDependencies:
       assertion-error:
         specifier: ^1.0.1
@@ -1958,9 +1955,6 @@ importers:
       esno:
         specifier: ^0.16.3
         version: 0.16.3
-      nock:
-        specifier: ^13.0.5
-        version: 13.2.9
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
