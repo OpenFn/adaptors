@@ -41,10 +41,7 @@ export async function request(state, method, path, opts = {}) {
     baseUrl,
   };
 
-  return commonRequest(method, requestPath, options).then(res => {
-    logResponse(res, options.query);
-    return res;
-  });
+  return commonRequest(method, requestPath, options).then(logResponse);
 }
 
 export async function requestWithPagination(state, path, options = {}) {
