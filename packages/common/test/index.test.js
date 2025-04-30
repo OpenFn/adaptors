@@ -12,7 +12,6 @@ import {
   dataValue,
   each,
   execute,
-  field,
   fields,
   index,
   join,
@@ -34,6 +33,7 @@ import {
   debug,
 } from '../src/Adaptor';
 import { startOfToday } from 'date-fns';
+import { field } from '../src/util';
 
 const mockAgent = new MockAgent();
 setGlobalDispatcher(mockAgent);
