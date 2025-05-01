@@ -1,6 +1,6 @@
 # @openfn/language-gmail
 
-## 1.2.0
+## 1.2.0 - 22 April 2025
 
 ### Minor Changes
 
@@ -11,8 +11,8 @@
 
 - 99e4b48: - Better handling of HTML content in http requests
   - When logging HTTP requests, include query parameters
-- Updated dependencies [99e4b48]
-- Updated dependencies [13bf08f]
+- Updated dependencies \[99e4b48]
+- Updated dependencies \[13bf08f]
   - @openfn/language-common@2.4.0
 
 ## 1.1.4 - 16 April 2025
