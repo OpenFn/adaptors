@@ -145,16 +145,17 @@ export function get(url, options) {
  * @public
  * @function
  * @example <caption>Post a JSON object (setting the content-type header)</caption>
- *  http.post(
- *    'https://jsonplaceholder.typicode.com/todos',
- *    $.data,
- *    options().json(),
- *  })
+ * http.post(
+ *   "https://jsonplaceholder.typicode.com/todos",
+ *   $.data,
+ *   http.options().json()
+ * );
  * @param {string} url - URL to access
+ * @param {object} data - Body data to append to the request.
  * @param {CommonRequestOptions} options - Request options
  * @state {CommonHttpState}
  * @returns {Operation}
  */
-export function post(path, data, options) {
-  return req('POST', path, { body: data, ...options });
+export function post(url, data, options) {
+  return req('POST', url, { body: data, ...options });
 }
