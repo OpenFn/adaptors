@@ -57,12 +57,6 @@ import * as util from './util';
  * @property {integer} [pollInterval=3000] - Polling interval in milliseconds.
  * */
 
-/**
- * @typedef {Object} QueryOptions
- * @public
- * @property {boolean} [autoFetch=false] - When true, automatically fetches next batch of records if available.
- * */
-
 let connection = null;
 
 /**
@@ -516,90 +510,61 @@ export function insert(sObjectName, records) {
 
 /**
  * Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.
- * This operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.
  * Note that in an event of a query error, error logs will be printed but the operation will not throw the error.
  *
  * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ learn more here}.
- *
  * @public
  * @example <caption>Run a query and download all matching records</caption>
- * query('SELECT Id FROM Patient__c', { autoFetch: true });
+ * query('SELECT Id FROM Patient__c', { limit: Infinity });
+ * @example <caption>Run a query and limit records</caption>
+ * query('SELECT Id From Account Limit 10');
  * @example <caption>Query patients by Health ID</caption>
  * query(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);
  * @example <caption>Query patients by Health ID using a lazy state reference</caption>
  * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
  * @function
- * @param {(string|function)} query - A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause
- * @param {QueryOptions} [options] - Optional configuration for the query operation
+ * @param {string} query - A SOQL query string. Must be less than 4000 characters in WHERE clause
+ * @param {object} [options] - Query options
+ * @param {number} [options.limit=10000] - Maximum number of records to fetch. If `limit: Infinity` is passed, all records will be fetched.
  * @state {SalesforceState}
- * @property data - Array of result objects of the form <code>\{ done, totalSize, records \}</code>
+ * @state {Array} data - Array of result objects
+ * @state {Object} response - An object of result metadata.
+ *                     <code>{ done, totalSize, nextRecordsUrl?: string }</code>
+ *                     where nextRecordsUrl is only present when done is false
  * @returns {Operation}
  */
-export function query(query, options = {}) {
+
+export function query(query, options) {
   return async state => {
-    const [resolvedQuery, resolvedOptions] = expandReferences(
-      state,
-      query,
-      options
-    );
+    const maxRecords = 1e4;
+    const [resolvedQuery, resolvedOptions = { limit: maxRecords }] =
+      expandReferences(state, query, options);
     console.log(`Executing query: ${resolvedQuery}`);
-    const autoFetch = resolvedOptions.autoFetch || resolvedOptions.autofetch;
 
-    if (autoFetch) {
-      console.log('autoFetch is enabled: all records will be downloaded');
+    if (resolvedQuery.includes('LIMIT') || resolvedQuery.includes('limit')) {
+      console.warn(
+        'Warning: Query contains a LIMIT clause. We recommend using the `limit` option instead.'
+      );
     }
 
-    const result = {
-      done: true,
-      totalSize: 0,
-      records: [],
-    };
+    const { limit } = resolvedOptions;
+    const { records, ...response } = await connection.query(resolvedQuery, {
+      autoFetch: true,
+      maxFetch: limit,
+    });
 
-    const processRecords = async res => {
-      const { done, totalSize, records, nextRecordsUrl } = res;
+    const fetchedRecords = records.length;
 
-      result.done = done;
-      result.totalSize = totalSize;
-      result.records.push(...records);
-
-      if (!done && !autoFetch && nextRecordsUrl) {
-        result.nextRecordsUrl = nextRecordsUrl;
-      }
-      if (!done && autoFetch) {
-        console.log('Fetched records so far:', result.records.length);
-        console.log('Fetching next records...');
-
-        try {
-          const newResult = await connection.request({ url: nextRecordsUrl });
-          await processRecords(newResult);
-        } catch (err) {
-          const { message, errorCode } = err;
-          console.error(`Error ${errorCode}: ${message}`);
-          throw err;
-        }
-      }
-    };
-
-    try {
-      const qResult = await connection.query(resolvedQuery);
-      if (qResult.totalSize > 0) {
-        console.log('Total records:', qResult.totalSize);
-        await processRecords(qResult);
-        console.log('Done ✔ retrieved records:', result.records.length);
-      } else {
-        console.log('No records found.');
-      }
-    } catch (err) {
-      const { message, errorCode } = err;
-      console.log(`Error ${errorCode}: ${message}`);
-      throw err;
+    if (!response.done && fetchedRecords === maxRecords) {
+      console.warn(
+        `Warning: The default maximum number of items has been reached (${maxRecords}), but more items are available on the server. 
+         To download all available items, adjust limit to ${response.totalSize} or set limit to false`
+      );
     }
+    console.log('Fetched: ' + fetchedRecords);
+    console.log('Total: ' + response.totalSize);
 
-    console.log(
-      'Results retrieved and pushed to position [0] of the references array.'
-    );
-
-    return composeNextState(state, result);
+    return { ...composeNextState(state, records), response };
   };
 }
 
