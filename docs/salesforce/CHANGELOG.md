@@ -1,6 +1,55 @@
 # @openfn/language-salesforce
 
-## 6.0.3 - 22 April 2025
+## 7.0.0 - 01 May 2025
+
+### Major Changes
+
+- 8dd65a1: - Modernize `query()` implementation using jsforce v3
+
+  - Remove `autoFetch` option from `query()` function
+  - Add `limit` option to `query()` function
+  - Change query result structure:
+    - `state.data` now contains only the array of records
+    - Query metadata (`done`, `totalSize`, `nextRecordsUrl`) moved to
+      `state.response`
+
+- 3686988: remove map() function
+
+### Migration Guide
+
+The `autoFetch` option has been removed from the `query()` function. Previously,
+this option would automatically fetch all records when set to `true`.
+
+The query result structure has been updated:
+
+- Previously: `state.data` contained
+  `{ done, totalSize, records: [], nextRecordsUrl }`
+- Now:
+  - `state.data` contains only the array of records
+  - `state.response` contains `{ done, totalSize }` and `nextRecordsUrl` when
+    there are more records to fetch (`done: false`)
+
+**Before**
+
+```js
+// Old way - using autoFetch
+query('select name from account', { autoFetch: true });
+// Result: state.data = { done, totalSize, records: [] }
+```
+
+**After**
+
+To fetch all records now, use the `limit: Infinity` option:
+
+```js
+// New way - using limit: Infinity
+query('select name from account', { limit: Infinity });
+// Result:
+// state.data = [] // Array of records
+// state.response = { done, totalSize }
+```
+
+## 6.0.3 - 24 April 2025
 
 ### Patch Changes
 

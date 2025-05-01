@@ -320,32 +320,31 @@ insert("Account", $.data);
 <p><code>query(query, [options]) ⇒ Operation</code></p>
 
 Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.
-This operation uses [for querying salesforce records](https://jsforce.github.io/document/#using-soql) using SOQL query and handles pagination.
 Note that in an event of a query error, error logs will be printed but the operation will not throw the error.
 
 The Salesforce query API is subject to rate limits, [learn more here](https://sforce.co/3W9zyaQ).
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| query | <code>string</code> \| <code>function</code> | A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause |
-| [options] | [<code>QueryOptions</code>](#queryoptions) | Optional configuration for the query operation |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| query | <code>string</code> |  | A SOQL query string. Must be less than 4000 characters in WHERE clause |
+| [options] | <code>object</code> |  | Query options |
+| [options.limit] | <code>number</code> | <code>10000</code> | Maximum number of records to fetch. If `limit: Infinity` is passed, all records will be fetched. |
 
 This operation writes the following keys to state:
 
 | State Key | Description |
 | --- | --- |
-| data | API response data. Can be either an object or array of objects |
+| data | Array of result objects |
 | references | History of all previous states |
-**Properties**
-
-| Name | Description |
-| --- | --- |
-| data | Array of result objects of the form <code>\{ done, totalSize, records \}</code> |
-
+| response | An object of result metadata.                     <code>{ done, totalSize, nextRecordsUrl?: string }</code>                     where nextRecordsUrl is only present when done is false |
 **Example:** Run a query and download all matching records
 ```js
-query('SELECT Id FROM Patient__c', { autoFetch: true });
+query('SELECT Id FROM Patient__c', { limit: Infinity });
+```
+**Example:** Run a query and limit records
+```js
+query('SELECT Id From Account Limit 10');
 ```
 **Example:** Query patients by Health ID
 ```js
@@ -644,16 +643,6 @@ Options provided to the Salesforce HTTP request
 | headers | <code>object</code> |  | Object of request headers. |
 | query | <code>object</code> |  | Object request query. |
 | body | <code>object</code> |  | Object request body. |
-
-
-* * *
-
-### QueryOptions
-**Properties**
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| [autoFetch] | <code>boolean</code> | <code>false</code> | When true, automatically fetches next batch of records if available. |
 
 
 * * *
