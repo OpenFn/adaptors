@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-twilio",
+  "label": "Twilio",
   "version": "0.5.2",
   "description": "An Language Package for twilio",
   "main": "dist/index.cjs",

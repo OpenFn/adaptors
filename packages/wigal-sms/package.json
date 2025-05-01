@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-wigal-sms",
+  "label": "Wigal SMS",
   "version": "0.1.7",
   "description": "OpenFn wigal-sms adaptor",
   "type": "module",

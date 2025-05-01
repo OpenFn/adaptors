@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-odoo",
+  "label": "Odoo",
   "version": "1.0.6",
   "description": "OpenFn odoo adaptor",
   "type": "module",

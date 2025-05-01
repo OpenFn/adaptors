@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-azure-storage",
+  "label": "Azure Storage",
   "version": "2.0.12",
   "description": "OpenFn adaptor for Azure Storage",
   "type": "module",

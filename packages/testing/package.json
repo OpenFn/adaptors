@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-testing",
+  "label": "Testing",
   "version": "1.0.10",
   "description": "OpenFn test adaptor. Internal use only.",
   "type": "module",

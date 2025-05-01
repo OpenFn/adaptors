@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-fhir-ndr-et",
+  "label": "FHIR NDR Ehtiopia",
   "version": "0.1.14",
   "description": "OpenFn fhir adaptor for NDR HIV in Ehtiopia",
   "type": "module",

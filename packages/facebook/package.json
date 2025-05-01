@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-facebook",
+  "label": "Facebook",
   "version": "0.4.14",
   "description": "An Language Package for Facebook Messenger API",
   "main": "dist/index.cjs",

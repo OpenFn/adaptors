@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-cht",
+  "label": "Community Health Toolkit",
   "version": "1.0.12",
   "description": "OpenFn CHT adaptor",
   "type": "module",
