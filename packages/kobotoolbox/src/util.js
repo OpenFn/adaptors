@@ -49,7 +49,7 @@ export async function requestWithPagination(state, path, options = {}) {
 
   let { pageSize, start, limit, ...otherOptions } = options;
 
-  const isUsingDefaultMax = limit === undefined;
+  const isUsingDefaultLimit = limit === undefined;
   const maxResults = limit ?? 1e4;
 
   let isFirstRequest = true;
@@ -106,7 +106,11 @@ export async function requestWithPagination(state, path, options = {}) {
       : false;
 
     // If the user hasn't set a max but we've hit the limit, we should warn them
-    if (isUsingDefaultMax && hasMoreContent && results.length === maxResults) {
+    if (
+      isUsingDefaultLimit &&
+      hasMoreContent &&
+      results.length === maxResults
+    ) {
       console.warn(
         `Warning: The default maximum number of items has been reached (${maxResults}), but more items are available on the server. To download all available items, make another request with start=${
           maxResults + 1
