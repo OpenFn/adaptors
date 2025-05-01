@@ -69,7 +69,8 @@ const build = async (lang: string) => {
 
   const fileSet = new FileSet();
   // This glob does not support conditionals
-  await fileSet.add(`${root}/src/**/*.?s`);
+  // ts files are not supported right now
+  await fileSet.add(`${root}/src/**/*.js`);
   let common: any[] = [];
   if (lang !== 'common') {
     // try and load common's data
