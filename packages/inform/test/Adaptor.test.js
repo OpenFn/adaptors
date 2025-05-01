@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient, encode } from '@openfn/language-common/util';
 import { setGlobalDispatcher } from 'undici';
-import mockAgent from './MockAgent.js';
+import mockAgent from './mockAgent.js';
 import {
   getAttachmentMetadata,
   getForm,
