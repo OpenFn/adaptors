@@ -7,7 +7,7 @@ import {
   getSubmissions,
   getDeploymentInfo,
 } from '../src/Adaptor';
-
+import { responseWithPagination } from './helper';
 const testServer = enableMockClient('https://test.kobotoolbox.org');
 const jsonHeaders = {
   headers: {
@@ -21,56 +21,8 @@ const configuration = {
   baseUrl: 'https://test.kobotoolbox.org',
 };
 
-const responseWithPagination = (url, objects, query) => {
-  const { pageSize, start, limit } = query;
-
-  const startIndex =
-    start !== undefined ? Math.max(0, parseInt(start) || 0) : undefined;
-  const pageLimit =
-    pageSize !== undefined ? Math.max(1, parseInt(pageSize) || 0) : undefined;
-  const totalLimit = limit ? Math.max(1, parseInt(limit)) : null;
-
-  const totalCount = objects.length;
-
-  let results;
-  if (totalLimit) {
-    results = objects.slice(0, totalLimit);
-  } else if (startIndex !== undefined && pageLimit !== undefined) {
-    results = objects.slice(startIndex, startIndex + pageLimit);
-  } else {
-    results = objects;
-  }
-
-  const baseUrl = `${url}?format=json`;
-  const previous =
-    startIndex !== undefined && pageLimit !== undefined
-      ? `${baseUrl}&start=${startIndex}&limit=${pageLimit}`
-      : null;
-
-  let next = null;
-  if (totalLimit && startIndex + totalLimit < totalCount) {
-    next = `${baseUrl}&start=${
-      startIndex ? startIndex + totalLimit : totalLimit
-    }&limit=${totalLimit}`;
-  } else if (
-    !totalLimit &&
-    startIndex !== undefined &&
-    pageLimit !== undefined &&
-    totalCount > startIndex + pageLimit
-  ) {
-    next = `${baseUrl}&start=${startIndex + pageLimit}&limit=${pageLimit}`;
-  }
-
-  return {
-    count: totalCount,
-    next,
-    previous,
-    results,
-  };
-};
-
 const mockSubmissions = (formId, submissions, query = {}) => {
-  const { pageSize, max, ...otherOpts } = query;
+  const { pageSize, ...otherOpts } = query;
 
   const path = `/api/v2/assets/${formId}/data/`;
   const url = `${configuration.baseUrl}${path}`;
@@ -86,9 +38,17 @@ const mockSubmissions = (formId, submissions, query = {}) => {
         ...otherOpts,
       },
     })
-    .reply(200, responseWithPagination(url, submissions, query), {
-      ...jsonHeaders,
-    });
+    .reply(
+      200,
+      responseWithPagination(url, submissions, {
+        pageSize,
+        limit: otherOpts.limit,
+        start: otherOpts.start,
+      }),
+      {
+        ...jsonHeaders,
+      }
+    );
 };
 
 describe('getSubmissions', () => {
@@ -122,13 +82,14 @@ describe('getSubmissions', () => {
 
     expect(data).to.eql([{ uid: '1', name: 'Ruh' }]);
   });
-  it('should ignore max|pageSize if limit is set', async () => {
+
+  it('should ignore pageSize if limit is set', async () => {
     const state = { configuration };
 
     const manyObjects = Array.from({ length: 1001 }, (_, i) => ({
       uid: String(i),
     }));
-    mockSubmissions(formId, manyObjects, { limit: 100, pageSize: 10 });
+    mockSubmissions(formId, manyObjects, { limit: 100 });
     const { data } = await execute(
       getSubmissions(formId, { limit: 100, pageSize: 10 })
     )(state);

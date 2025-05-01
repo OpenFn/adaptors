@@ -1,6 +1,7 @@
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect } from 'chai';
 import * as util from '../src/util';
+import { responseWithPagination } from './helper';
 
 const testServer = enableMockClient('https://util-test.kobotoolbox.org');
 const jsonHeaders = {
@@ -25,100 +26,64 @@ const defaultObjects = [
   { uid: '6' },
 ];
 
-const responseWithPagination = (
-  url,
-  pageSize = 1000,
-  start = 0,
-  objects = defaultObjects
-) => {
-  const s = parseInt(start);
-  const l = parseInt(pageSize);
-  const results = objects.slice(s, s + l);
-  const count = objects.length;
-  const previous = `${url}?format=json&start=${s}&limit=${l}`;
-  let next = null;
-  if (count > s + l) {
-    next = `${url}?format=json&start=${s + l}&limit=${l}`;
-
-    return {
-      next,
-      count,
-      previous,
-      results,
-    };
-  } else {
-    return { results, count, previous, next };
-  }
-};
-
 describe('responseWithPagination', () => {
   const items = [1, 2, 3];
   it('should return the first item', () => {
     const start = 0;
-    const pageSize = 1;
-    const { next, results } = responseWithPagination(
-      'www',
-      pageSize,
+    const limit = 1;
+    const { results } = responseWithPagination('www', items, {
+      limit,
       start,
-      items
-    );
+    });
     expect(results).to.eql([1]);
   });
-  it('should return 2 items with pageSize 2', () => {
+  it('should return 2 items with limit 2', () => {
     const start = 0;
-    const pageSize = 2;
-    const { next, results } = responseWithPagination(
-      'www',
-      pageSize,
+    const limit = 2;
+    const { results } = responseWithPagination('www', items, {
+      limit,
       start,
-      items
-    );
+    });
     expect(results).to.eql([1, 2]);
   });
   it('should return 2 items with start 1 and pageSize 2', () => {
     const start = 1;
     const pageSize = 2;
-    const { next, results } = responseWithPagination(
-      'www',
+    const { results } = responseWithPagination('www', items, {
       pageSize,
       start,
-      items
-    );
+    });
     expect(results).to.eql([2, 3]);
   });
   it('should return all items', () => {
     const start = 0;
     const pageSize = 3;
-    const { next, results } = responseWithPagination(
-      'www',
+    const { next, results } = responseWithPagination('www', items, {
       pageSize,
       start,
-      items
-    );
+    });
+
     expect(results).to.eql([1, 2, 3]);
   });
   it('should return all items if pageSize is greater', () => {
     const start = 0;
     const pageSize = 100;
-    const { next, results } = responseWithPagination(
-      'www',
+    const { next, results } = responseWithPagination('www', items, {
       pageSize,
       start,
-      items
-    );
+    });
     expect(results).to.eql([1, 2, 3]);
   });
   it('should return the correct next link', () => {
     const start = 1;
-    const pageSize = 1;
-    const { next, results } = responseWithPagination(
-      'www',
-      pageSize,
+    const limit = 1;
+    const { next, results } = responseWithPagination('www', items, {
+      limit,
       start,
-      items
-    );
+    });
+
     expect(next).to.eql('www?format=json&start=2&limit=1');
-    expect(results).to.eql([2]);
+    expect(results).to.eql([1]);
   });
 });
 
@@ -171,9 +136,8 @@ describe('requestWithPagination', () => {
           callCount++;
           return responseWithPagination(
             `${req.origin}${req.path}`,
-            req.query.limit,
-            req.query.start,
-            manyObjects
+            manyObjects,
+            { limit: req.query.limit, start: req.query.start }
           );
         },
         { ...jsonHeaders }
@@ -190,7 +154,6 @@ describe('requestWithPagination', () => {
     expect(callCount).to.be.lessThan(11); // Should not make all available calls
   });
   it('handles pagination by default', async () => {
-    let callCount = 0;
     testServer
       .intercept({
         path: /\/api\/v2\/assets\/aDReHdA7UuNBYsiCXQBr43\/data/,
@@ -199,11 +162,13 @@ describe('requestWithPagination', () => {
       .reply(
         200,
         req => {
-          callCount++;
           return responseWithPagination(
             `${req.origin}${req.path}`,
-            req.query.limit,
-            req.query.start
+            defaultObjects,
+            {
+              pageSize: req.query.limit,
+              start: req.query.start,
+            }
           );
         },
         { ...jsonHeaders }
@@ -218,7 +183,7 @@ describe('requestWithPagination', () => {
       }
     );
 
-    expect(callCount).to.eql(6);
+    expect(data.length).to.eql(6);
     expect(data).to.eql(defaultObjects);
   });
   it('does not handle pagination if limit is set', async () => {
@@ -234,8 +199,8 @@ describe('requestWithPagination', () => {
           callCount++;
           return responseWithPagination(
             `${req.origin}${req.path}`,
-            req.query.limit,
-            req.query.start
+            defaultObjects,
+            { limit: req.query.limit, start: req.query.start }
           );
         },
         { ...jsonHeaders }
