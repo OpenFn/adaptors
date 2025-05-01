@@ -1,6 +1,4 @@
-## 2.3.0 - 16 January 2025
-
-## 2.4.0
+## 2.4.0 - 22 April 2025
 
 ### Minor Changes
 
@@ -29,6 +27,8 @@
 
 - 23ccb01: Allow the errorMap passed into the request helper to be false, which
   suppresses all errors
+
+## 2.3.0 - 16 January 2025
 
 ### Minor Changes
 
@@ -256,7 +256,7 @@ content type to JSON.
 ### Minor Changes
 
 - aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access_token" keys can be used for OAuth2-reliant adaptors
+  "access\_token" keys can be used for OAuth2-reliant adaptors
 
 ## 1.9.0 - 23 June 2023
 

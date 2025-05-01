@@ -66,7 +66,7 @@ export function execute(...operations) {
  * @function
  * @public
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
- * @param {GetOptions} [options = {}] Includes `max`, `query`, and extra query parameters
+ * @param {GetOptions} [options = {}] Query parameters and other options for the request.
  * @state data An array of result objects
  * @returns {Operation}
  */

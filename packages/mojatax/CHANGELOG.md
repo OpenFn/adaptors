@@ -1,13 +1,13 @@
 # @openfn/language-mojatax
 
-## 1.0.9
+## 1.0.9 - 22 April 2025
 
 ### Patch Changes
 
 - 99e4b48: - Better handling of HTML content in http requests
   - When logging HTTP requests, include query parameters
-- Updated dependencies [99e4b48]
-- Updated dependencies [13bf08f]
+- Updated dependencies \[99e4b48]
+- Updated dependencies \[13bf08f]
   - @openfn/language-common@2.4.0
 
 ## 1.0.8 - 16 April 2025

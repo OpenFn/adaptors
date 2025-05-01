@@ -62,7 +62,13 @@ export async function updateChangelog(adaptorName, adaptorVersionList = null) {
 
   const file = await remark().use(stringify).run(updatedAst);
 
-  const updatedMarkdown = String(await remark().use(stringify).stringify(file));
+  const updatedMarkdown = String(
+    await remark()
+      .use(stringify, {
+        bullet: '-',
+      })
+      .stringify(file)
+  );
 
   await writeFile(changelogPath, updatedMarkdown, 'utf8');
   console.log(`✔ ${adaptorName} changelog updated`);

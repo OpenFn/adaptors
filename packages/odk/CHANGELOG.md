@@ -1,13 +1,13 @@
 # @openfn/language-odk
 
-## 3.0.15
+## 3.0.15 - 22 April 2025
 
 ### Patch Changes
 
 - 99e4b48: - Better handling of HTML content in http requests
   - When logging HTTP requests, include query parameters
-- Updated dependencies [99e4b48]
-- Updated dependencies [13bf08f]
+- Updated dependencies \[99e4b48]
+- Updated dependencies \[13bf08f]
   - @openfn/language-common@2.4.0
 
 ## 3.0.14 - 16 April 2025
