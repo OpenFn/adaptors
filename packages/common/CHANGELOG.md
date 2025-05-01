@@ -1,6 +1,4 @@
-## 2.3.0 - 16 January 2025
-
-## 2.4.0
+## 2.4.0 - 22 April 2025
 
 ### Minor Changes
 
@@ -29,6 +27,8 @@
 
 - 23ccb01: Allow the errorMap passed into the request helper to be false, which
   suppresses all errors
+
+## 2.3.0 - 16 January 2025
 
 ### Minor Changes
 
