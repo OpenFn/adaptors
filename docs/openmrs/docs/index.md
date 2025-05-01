@@ -179,7 +179,7 @@ per the OpenMRS Rest API.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | path | <code>string</code> |  | Path to resource (excluding `/ws/rest/v1/`) |
-| [options] | [<code>GetOptions</code>](#getoptions) | <code>{}</code> | Includes `max`, `query`, and extra query parameters |
+| [options] | [<code>GetOptions</code>](#getoptions) | <code>{}</code> | Query parameters and other options for the request. |
 
 This operation writes the following keys to state:
 
