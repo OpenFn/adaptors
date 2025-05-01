@@ -896,6 +896,31 @@ importers:
         specifier: ^5.22.1
         version: 5.28.5
 
+  packages/inform:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      mocha:
+        specifier: ^10.7.3
+        version: 10.7.3
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      undici:
+        specifier: ^5.22.1
+        version: 5.28.5
+
   packages/intuit:
     dependencies:
       '@openfn/language-common':
@@ -8034,7 +8059,7 @@ packages:
     resolution: {integrity: sha512-rc6HkZswtl+KMi/IODZ8k7C/P37clC2Rf1HYI11GqdbgvggIyHjsU5MdjlTlaP6eu24c0sR3mcW2SqsVZ1sXUw==}
     engines: {node: '>=6'}
     dependencies:
-      type-detect: 4.0.8
+      type-detect: 4.1.0
     dev: true
 
   /deep-eql@4.1.2:

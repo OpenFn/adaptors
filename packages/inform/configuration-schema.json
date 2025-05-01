@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL (https://data.inform.unicef.org)",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://data.inform.unicef.org"]
+    },
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Your Inform access token",
+      "examples": [
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
+      ]
+    },
+    "apiVersion": {
+      "title": "Api Version",
+      "type": "string",
+      "placeholder": "v1",
+      "description": "Inform api version",
+      "examples": [
+        "v1"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["baseUrl", "access_token"]
+}
