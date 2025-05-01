@@ -197,41 +197,6 @@ export function lastReferenceValue(path) {
 }
 
 /**
- * Scopes an array of data based on a JSONPath.
- * Useful when the source data has `n` items you would like to map to
- * an operation.
- * The operation will receive a slice of the data based of each item
- * of the JSONPath provided.
- * @public
- * @function
- * @example
- * map("$.[*]",
- *   create("SObject",
- *     field("FirstName", sourceValue("$.firstName"))
- *   )
- * )
- * @param {string} path - JSONPath referencing a point in `state.data`.
- * @param {function} operation - The operation needed to be repeated.
- * @param {State} state - Runtime state.
- * @returns {State}
- */
-export const map = curry(function (path, operation, state) {
-  switch (typeof path) {
-    case 'string':
-      source(path)(state).map(function (data) {
-        return operation({ data, references: state.references });
-      });
-      return state;
-
-    case 'object':
-      path.map(function (data) {
-        return operation({ data, references: state.references });
-      });
-      return state;
-  }
-});
-
-/**
  * Simple switcher allowing other expressions to use either a JSONPath or
  * object literals as a data source.
  * - JSONPath referencing a point in `state`
