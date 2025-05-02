@@ -2,7 +2,8 @@ import { composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
 import { parseMetadata, parseRecordsToReport } from './Utils';
-import { parseVaroEmsToEms } from './VaroEmsUtils';
+import { parseRtmdCollectionToReports } from './RtmdUtils';
+import { parseVaroEmsToReport } from './VaroEmsUtils';
 import { parseFridgeTag, parseFridgeTagToEms } from './FridgeTagUtils';
 
 /**
@@ -91,7 +92,9 @@ export function convertRecordsToReport(records) {
   return async state => {
     const [resolvedRecords] = expandReferences(state, records);
 
-    const report = parseRecordsToReport(resolvedRecords);
+    //const report = parseRecordsToReport(resolvedRecords);
+    const report = {};
+    const reports = parseRtmdCollectionToReports(resolvedRecords);
 
     return { ...composeNextState(state, report) };
   };
