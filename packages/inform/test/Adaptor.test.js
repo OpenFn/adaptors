@@ -22,23 +22,25 @@ const configuration = {
 };
 
 describe('getForms', () => {
+  const result = [
+    {
+      public: true,
+      formid: 2,
+    },
+    {
+      public: false,
+      formid: 3,
+    },
+];
   it('should get all forms', async () => {
+
     testServer
       .intercept({
         path: `/api/${configuration.apiVersion}/forms`,
         method: 'GET',
       })
 
-      .reply(200, [
-        {
-          public: true,
-          formid: 2,
-        },
-        {
-          public: false,
-          formid: 3,
-        },
-      ]);
+      .reply(200,  result);
 
     const state = {
       configuration,
@@ -46,7 +48,7 @@ describe('getForms', () => {
 
     const finalState = await getForms()(state);
 
-    expect(finalState.data[0]).to.deep.eql({ public: true, formid: 2 });
+    expect(finalState.data).to.deep.eql(result);
   });
 
   it('should get all forms with filter queries', async () => {
@@ -61,16 +63,7 @@ describe('getForms', () => {
         },
       })
 
-      .reply(200, [
-        {
-          public: true,
-          formid: 2,
-        },
-        {
-          public: false,
-          formid: 3,
-        },
-      ]);
+      .reply(200, result);
 
     const state = {
       configuration,
@@ -82,42 +75,44 @@ describe('getForms', () => {
       page_size: 5,
     })(state);
 
-    expect(finalState.data[0]).to.deep.eql({ public: true, formid: 2 });
+    expect(finalState.data).to.deep.eql(result);
   });
 });
 
 describe('getForm', () => {
   it('should get a single form', async () => {
+    const result = {
+      public: true,
+      formid: 1234,
+    }
     testServer
       .intercept({
         path: `/api/${configuration.apiVersion}/forms/1234`,
         method: 'GET',
       })
 
-      .reply(200, {
-        public: true,
-        formid: 1234,
-      });
+      .reply(200,result );
 
     const state = {
       configuration,
     };
 
     const finalState = await getForm('1234')(state);
-    expect(finalState.data.formid).to.deep.eql(1234);
+    expect(finalState.data).to.deep.eql(result);
   });
 
   it('should get a single form structure', async () => {
+    const result = {
+      name: 'data',
+      type: 'survey',
+    }
     testServer
       .intercept({
         path: `/api/${configuration.apiVersion}/forms/1234/form.json`,
         method: 'GET',
       })
 
-      .reply(200, {
-        name: 'data',
-        type: 'survey',
-      });
+      .reply(200,result);
 
     const state = {
       configuration,
@@ -125,11 +120,19 @@ describe('getForm', () => {
 
     const finalState = await getForm('1234', { structureOnly: true })(state);
 
-    expect(finalState.data).to.deep.eql({ name: 'data', type: 'survey' });
+    expect(finalState.data).to.deep.eql(result);
   });
 });
 
 describe('getSubmissions', () => {
+  const result = [
+    {
+      _id: 7783155,
+    },
+    {
+      _id: 7783158,
+    },
+  ]
   it("should get a single form's submission", async () => {
     testServer
       .intercept({
@@ -137,14 +140,7 @@ describe('getSubmissions', () => {
         method: 'GET',
       })
 
-      .reply(200, [
-        {
-          _id: 7783155,
-        },
-        {
-          _id: 7783158,
-        },
-      ]);
+      .reply(200, result);
 
     const state = {
       configuration,
@@ -152,7 +148,7 @@ describe('getSubmissions', () => {
 
     const finalState = await getSubmissions('1234')(state);
 
-    expect(finalState.data[0]).to.deep.eql({ _id: 7783155 });
+    expect(finalState.data).to.deep.eql(result);
   });
 
   it("should get a single form's submission with filters", async () => {
@@ -166,14 +162,7 @@ describe('getSubmissions', () => {
         },
       })
 
-      .reply(200, [
-        {
-          _id: 7783155,
-        },
-        {
-          _id: 7783158,
-        },
-      ]);
+      .reply(200, result);
 
     const state = {
       configuration,
@@ -184,7 +173,7 @@ describe('getSubmissions', () => {
       limit: 1,
     })(state);
 
-    expect(finalState.data[1]).to.deep.eql({ _id: 7783158 });
+    expect(finalState.data).to.deep.eql(result);
   });
 });
 
