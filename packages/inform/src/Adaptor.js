@@ -202,9 +202,9 @@ export function downloadAttachment(attachmentId, options = {}) {
 
     const { headers } = response;
 
-    // Default to stream if no parseAs option is provided
-    // This is to ensure that the response is not parsed as JSON and is returned as a stream
 
+// The below manual redirect handling is needed because the request redirects to a different
+// url which fails when using undici Client. Instead, we need to fetch the new url manually.
     const parseAs = resolvedOptions?.parseAs || 'stream';
 
     if (headers.location) {
