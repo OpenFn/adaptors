@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-hubtel",
+  "label": "Hubtel",
   "version": "1.0.5",
   "description": "OpenFn hubtel adaptor",
   "type": "module",

@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-fhir-4",
+  "label": "FHIR r4",
   "version": "0.1.5",
   "description": "OpenFn FHIR r4 adaptor",
   "scripts": {

@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-intuit",
+  "label": "Intuit",
   "version": "1.0.4",
   "description": "OpenFn intuit adaptor",
   "type": "module",
