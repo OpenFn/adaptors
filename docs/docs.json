@@ -36350,6 +36350,802 @@
     "kind": "external-function"
   }
 ],
+{"name":"inform","adaptor":"@openfn/language-inform","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#downloadattachment\\\">downloadAttachment(attachmentId, options)</a></dt>\\n<dt>\\n    <a href=\\\"#getattachmentmetadata\\\">getAttachmentMetadata(attachmentId)</a></dt>\\n<dt>\\n    <a href=\\\"#getform\\\">getForm(formId, options)</a></dt>\\n<dt>\\n    <a href=\\\"#getforms\\\">getForms(options)</a></dt>\\n<dt>\\n    <a href=\\\"#getsubmission\\\">getSubmission(formId, submissionId)</a></dt>\\n<dt>\\n    <a href=\\\"#getsubmissions\\\">getSubmissions(formId, options)</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#http_get\\\">http.get(path, options)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_request\\\">http.request(method, path, options)</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### downloadAttachment\\n\\n<p><code>downloadAttachment(attachmentId, options) ⇒ Operation</code></p>\\n\\nDownload an attachment in binary or base64 format\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| attachmentId | <code>string</code> | Id of the attachment to be retrieved. |\\n| options | <code>object</code> | Optional request options. Supported options are: `filename` for the specific attachment to be downloaded, and `parseAs` for either 'stream` or 'base64`. Defaults to `parseAs: stream`. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Download an attachment\\n```js\\ndownloadAttachment('622038', {\\n  filename:\\n    'unicefbih/attachments/download_1.png',\\n});\\n```\\n**Example:** Download an attachment in base64 format\\n```js\\ndownloadAttachment('622038', {\\n  filename:\\n    'unicefbih/attachments/download_1.png',\\n  parseAs: 'base64',\\n});\\n```\\n\\n* * *\\n\\n### getAttachmentMetadata\\n\\n<p><code>getAttachmentMetadata(attachmentId) ⇒ Operation</code></p>\\n\\nFetch a single attachment's metadata\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| attachmentId | <code>string</code> | Id of the attachment to be retrieved. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\ngetAttachmentMetadata('621985')\\n```\\n\\n* * *\\n\\n### getForm\\n\\n<p><code>getForm(formId, options) ⇒ Operation</code></p>\\n\\nGet metadata or structural data for a single form\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| formId | <code>string</code> | Id of the form to be retrieved. |\\n| options | <code>object</code> |  |\\n| options.structureOnly | <code>boolean</code> | If true, only the form structure is returned in JSON format. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n**Example:**  Get a single form \\n```js\\ngetForm('6225')\\n```\\n**Example:**  Get a single form structure \\n```js\\ngetForm('6225', {\\n  structureOnly: true,\\n});\\n```\\n\\n* * *\\n\\n### getForms\\n\\n<p><code>getForms(options) ⇒ Operation</code></p>\\n\\nFetch all forms\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| options | <code>object</code> | Optional filter options. Some supported options are: `public`, `tags`, `page`, and `page_size`. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get all forms without filter options\\n```js\\ngetForms()\\n```\\n**Example:** Get all forms with filter options\\n```js\\ngetForms({\\n  public: true,\\n  page: 1,\\n  page_size: 5,\\n});\\n```\\n\\n* * *\\n\\n### getSubmission\\n\\n<p><code>getSubmission(formId, submissionId) ⇒ Operation</code></p>\\n\\nGet a single data submission for a single form\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| formId | <code>string</code> | Id of the form's submissions to be retrieved. |\\n| submissionId | <code>string</code> | Id of the submission to be retrieved. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n**Example**\\n```js\\ngetSubmission('6225', '7783155')\\n```\\n\\n* * *\\n\\n### getSubmissions\\n\\n<p><code>getSubmissions(formId, options) ⇒ Operation</code></p>\\n\\nGet submission data of a single form\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| formId | <code>string</code> | Id of the form's submissions to be retrieved. |\\n| options | <code>object</code> | Optional filter options. Some supported options are: `query`, `limit`, `start`, `page`, and `page_size`. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get submissions without filter options\\n```js\\ngetSubmissions('6225');\\n```\\n**Example:** Get submissions with filter options\\n```js\\ngetSubmissions('6225', {\\n  query: `{\\\"_submission_time\\\":{\\\"$gte\\\":\\\"2024-11-05\\\"}}`,\\n  limit: 1,\\n});\\n```\\n\\n* * *\\n\\n\\n## http\\n\\nThese functions belong to the http namespace.\\n### http.get {#http_get}\\n\\n<p><code>get(path, options) ⇒ Operation</code></p>\\n\\nMake a GET request to Inform\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get all forms\\n```js\\nhttp.get('forms')\\n```\\n\\n* * *\\n\\n\\n### http.request {#http_request}\\n\\n<p><code>request(method, path, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request to Inform\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n**Example:** Get all forms with a query\\n```js\\nhttp.request('GET', 'forms', {\\n  query: {\\n    public: true,\\n    page: 1,\\n    page_size: 5,\\n  },\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### RequestOptions\\n\\nOptions provided to the Inform request\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string. |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-inform <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\ninform API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/inform-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/inform-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-inform\\n\\n## 1.0.0\\n\\n- Implement an `inform` adaptor with `http` and helper functions\\n- A user can use `get()` and `request()` http helpers to make any request to inform\\n- A user can use different helper functions such as `getForm()`, `getSubmissions()` to get different types of data from `inform`\\n\"","functions":["downloadAttachment","getAttachmentMetadata","getForm","getForms","getSubmission","getSubmissions"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The base URL (https://data.inform.unicef.org)","format":"uri","minLength":1,"examples":["https://data.inform.unicef.org"]},"access_token":{"title":"Access Token","type":"string","description":"Your Inform access token","examples":["eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"]},"apiVersion":{"title":"Api Version","type":"string","placeholder":"v1","description":"Inform api version","examples":["v1"]}},"type":"object","additionalProperties":true,"required":["baseUrl","access_token"]}},
+[
+  {
+    "id": "downloadAttachment",
+    "longname": "downloadAttachment",
+    "name": "downloadAttachment",
+    "kind": "function",
+    "scope": "global",
+    "description": "Download an attachment in binary or base64 format",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Id of the attachment to be retrieved.",
+        "name": "attachmentId"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Optional request options. Supported options are: `filename` for the specific attachment to be downloaded, and `parseAs` for either 'stream` or 'base64`. Defaults to `parseAs: stream`.",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Download an attachment</caption>\ndownloadAttachment('622038', {\n  filename:\n    'unicefbih/attachments/download_1.png',\n});",
+      "<caption>Download an attachment in base64 format</caption>\ndownloadAttachment('622038', {\n  filename:\n    'unicefbih/attachments/download_1.png',\n  parseAs: 'base64',\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 184,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inform/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 6,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a GET request to Inform",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Get all forms</caption>\nhttp.get('forms')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 34,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inform/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 9,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "getAttachmentMetadata",
+    "longname": "getAttachmentMetadata",
+    "name": "getAttachmentMetadata",
+    "kind": "function",
+    "scope": "global",
+    "description": "Fetch a single attachment's metadata",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Id of the attachment to be retrieved.",
+        "name": "attachmentId"
+      }
+    ],
+    "examples": [
+      "getAttachmentMetadata('621985')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 150,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inform/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 5,
+    "level": 0
+  },
+  {
+    "id": "getForm",
+    "longname": "getForm",
+    "name": "getForm",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get metadata or structural data for a single form",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Id of the form to be retrieved.",
+        "name": "formId"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        },
+        "description": "If true, only the form structure is returned in JSON format.",
+        "name": "options.structureOnly"
+      }
+    ],
+    "examples": [
+      "<caption> Get a single form </caption>\ngetForm('6225')",
+      "<caption> Get a single form structure </caption>\ngetForm('6225', {\n  structureOnly: true,\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 59,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inform/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 2,
+    "level": 0
+  },
+  {
+    "id": "getForms",
+    "longname": "getForms",
+    "name": "getForms",
+    "kind": "function",
+    "scope": "global",
+    "description": "Fetch all forms",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Optional filter options. Some supported options are: `public`, `tags`, `page`, and `page_size`.",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Get all forms without filter options</caption>\ngetForms()",
+      "<caption>Get all forms with filter options</caption>\ngetForms({\n  public: true,\n  page: 1,\n  page_size: 5,\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 29,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inform/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 1,
+    "level": 0
+  },
+  {
+    "id": "getSubmission",
+    "longname": "getSubmission",
+    "name": "getSubmission",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get a single data submission for a single form",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Id of the form's submissions to be retrieved.",
+        "name": "formId"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Id of the submission to be retrieved.",
+        "name": "submissionId"
+      }
+    ],
+    "examples": [
+      "getSubmission('6225', '7783155')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 122,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inform/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 4,
+    "level": 0
+  },
+  {
+    "id": "getSubmissions",
+    "longname": "getSubmissions",
+    "name": "getSubmissions",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get submission data of a single form",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Id of the form's submissions to be retrieved.",
+        "name": "formId"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Optional filter options. Some supported options are: `query`, `limit`, `start`, `page`, and `page_size`.",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Get submissions without filter options</caption>\ngetSubmissions('6225');",
+      "<caption>Get submissions with filter options</caption>\ngetSubmissions('6225', {\n  query: `{\"_submission_time\":{\"$gte\":\"2024-11-05\"}}`,\n  limit: 1,\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 88,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inform/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "access": "private",
+    "meta": {
+      "lineno": 5,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inform/src"
+    },
+    "order": 0
+  },
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the Inform server, including headers, statusCode, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "access": "private",
+    "meta": {
+      "lineno": 4,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inform/src"
+    },
+    "order": 7
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a general HTTP request to Inform",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "HTTP method to use",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Get all forms with a query</caption>\nhttp.request('GET', 'forms', {\n  query: {\n    public: true,\n    page: 1,\n    page_size: 5,\n  },\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 56,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inform/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 10,
+    "level": 0
+  },
+  {
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to the Inform request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object",
+            "string"
+          ]
+        },
+        "description": "body data to append to the request. JSON will be converted to a string.",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
+        "name": "errors"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of headers to append to the request.",
+        "name": "headers"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 13,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inform/src"
+    },
+    "order": 8,
+    "level": 0
+  },
+  {
+    "id": "combine",
+    "common": true,
+    "name": "combine",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fnIf",
+    "common": true,
+    "name": "fnIf",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "group",
+    "common": true,
+    "name": "group",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "scrubEmojis",
+    "common": true,
+    "name": "scrubEmojis",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "util",
+    "common": true,
+    "name": "util",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "combine",
+    "common": true,
+    "name": "combine",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fnIf",
+    "common": true,
+    "name": "fnIf",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "group",
+    "common": true,
+    "name": "group",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "scrubEmojis",
+    "common": true,
+    "name": "scrubEmojis",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "util",
+    "common": true,
+    "name": "util",
+    "scope": "global",
+    "kind": "external"
+  }
+],
 {"name":"intuit","adaptor":"@openfn/language-intuit","version":"1.0.4","docs":"\"\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#http_get\\\">http.get(path, [options])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_post\\\">http.post(path, data, [options])</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n\\n## http\\n\\nThese functions belong to the http namespace.\\n### http.get {#http_get}\\n\\n<p><code>get(path, [options]) ⇒ Operation</code></p>\\n\\nMake a GET request to any intuit endpoint\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | Path to resource |\\n| [options] | [<code>IntuitOptions</code>](#intuitoptions) | <code>{}</code> | An object containing query and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Quickbook(intuit) server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** Get intuit user company information.\\n```js\\nhttp.get(\\\"/v3/company/9341453908059456/companyinfo/9341453908059456\\\");\\n```\\n\\n* * *\\n\\n\\n### http.post {#http_post}\\n\\n<p><code>post(path, data, [options]) ⇒ Operation</code></p>\\n\\nMake a POST request to any Intuit endpoint\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | Path to resource |\\n| data | <code>object</code> |  | The request body (as JSON) |\\n| [options] | [<code>IntuitOptions</code>](#intuitoptions) | <code>{}</code> | An object containing query, and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Quickbook(intuit) server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** Create an account on intuit.\\n```js\\nhttp.post(\\\"/v3/company/9341453908059456/account\\\",\\n {\\n      \\\"Name\\\": \\\"MyJobs_testing\\\",\\n      \\\"AccountType\\\": \\\"Accounts Receivable\\\"\\n },\\n {\\n query: {\\n   minorversion: 40,\\n  },\\n})\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### IntuitOptions\\n\\nOptions object\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| query | <code>object</code> |  | An object of query parameters to be encoded into the URL |\\n| headers | <code>object</code> |  | An object of all request headers |\\n| [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-intuit <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the intuit\\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/intuit-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/intuit-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `create` function\\n\\n```js\\nhttp.post(\\n  '/v3/company/9341453908059321/account',\\n  {\\n    Name: 'MyJobs_testing',\\n    AccountType: 'Accounts Receivable',\\n  },\\n  {\\n    query: {\\n      minorversion: 40,\\n    },\\n  }\\n);\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-intuit\\n\\n## 1.0.4 - 22 April 2025\\n\\n### Patch Changes\\n\\n- 99e4b48: - Better handling of HTML content in http requests\\n  - When logging HTTP requests, include query parameters\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 1.0.3 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 1.0.2 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 1.0.1 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 1.0.0 - 30 January 2025\\n\\nInitial release.\\n\"","functions":[],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"The Quickbooks(intuit) base URL","format":"uri","minLength":1,"examples":["https://sandbox-quickbooks.api.intuit.com"]},"access_token":{"title":"Access Token","type":"string","description":"Your Quickbooks(intuit) access token","examples":["eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"]}},"type":"object","additionalProperties":true,"required":["access_token","baseUrl"]}},
 [
   {
