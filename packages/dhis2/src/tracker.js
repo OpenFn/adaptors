@@ -11,7 +11,7 @@ import * as util from './Utils';
  */
 
 /**
- * Options object
+ * Options to append to the request. Apart from `parseAs` and `apiVersion`, all options are passed to the request as query parameters - see the [DHIS2 tracker Docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html#webapi_tracker_import_request_parameters) for all supported parameters.
  * @typedef {Object} RequestOptions
  * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', 'stream', or 'base64'. Defaults to `json`
  * @property {string} [apiVersion=42] - The apiVersion of the request. Defaults to 42.
@@ -24,8 +24,7 @@ import * as util from './Utils';
  * @function
  * @param {string} strategy - The effect the import should have. Can either be CREATE, UPDATE, CREATE_AND_UPDATE and DELETE.
  * @param {object} payload - The data to be imported.
- * @param {object} query - An object of query parameters to be encoded into the URL
- * @param {RequestOptions} [options] - An optional object containing parseAs, and apiVersion for the request
+ * @param {RequestOptions} [options] - An optional object containing parseAs, and apiVersion, and queries for the request
  * @state {Dhis2State}
  * @returns {Operation}
  * @example <caption>Import a trackedEntity resource</caption>
@@ -42,14 +41,20 @@ import * as util from './Utils';
  *     ],
  *   },
  *  ],
- * });
+ * },
+ * {
+ *  atomicMode: 'ALL',
+ * }
+ * );
  */
-function _import(strategy, payload, query, options = {}) {
+function _import(strategy, payload, options = {}) {
   return async state => {
     console.log('Preparing tracker import operation...');
 
-    const [resolvedStrategy, resolvedPayload, resolvedQuery, resolvedOptions] =
-      expandReferences(state, strategy, payload, query, options);
+    const [resolvedStrategy, resolvedPayload, resolvedOptions] =
+      expandReferences(state, strategy, payload, options);
+
+    const { apiVersion, parseAs, ...query } = resolvedOptions;
 
     const response = await util.request(state.configuration, {
       method: 'POST',
@@ -62,9 +67,10 @@ function _import(strategy, payload, query, options = {}) {
         'tracker'
       ),
       options: {
-        ...resolvedOptions,
+        apiVersion,
+        parseAs,
         query: {
-          ...resolvedQuery,
+          ...query,
           async: false,
         },
       },
