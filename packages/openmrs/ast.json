@@ -70,7 +70,7 @@
           },
           {
             "title": "param",
-            "description": "Includes `max`, `query`, and extra query parameters",
+            "description": "Query parameters and other options for the request.",
             "type": {
               "type": "OptionalType",
               "expression": {
