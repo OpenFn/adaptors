@@ -7,23 +7,22 @@ import { fetch } from 'undici';
  * @typedef {Object} HttpState
  * @private
  * @property data - the parsed response body
- * @property response - the response from the Inform server, including headers, statusCode, etc
  * @property references - an array of all previous data objects used in the Job
  **/
 
 /**
- * Make a GET request to Inform to get all forms
+ * Fetch all forms
+ * @example <caption>Get all forms without filter options</caption>
+ * getForms()
  * @example <caption>Get all forms with filter options</caption>
  * getForms({
  *   public: true,
  *   page: 1,
  *   page_size: 5,
  * });
- * @example <caption>Get all forms without filter options</caption>
- * getForms()
  * @function
  * @public
- * @param {object} options - Optional filter options. Supported options are: `public`, `tags`, `page`, and `page_size`.
+ * @param {object} options - Optional filter options. Some supported options are: `public`, `tags`, `page`, and `page_size`.
  * @returns {Operation}
  * @state {HttpState}
  */
@@ -42,7 +41,7 @@ export function getForms(options = {}) {
 }
 
 /**
- * Make a GET request to Inform to get a single form
+ * Get metadata or structural data for a single form
  * @example <caption> Get a single form </caption>
  * getForm('6225')
  * @example <caption> Get a single form structure </caption>
@@ -52,7 +51,8 @@ export function getForms(options = {}) {
  * @function
  * @public
  * @param {string} formId - Id of the form to be retrieved.
- * @param {object} options - Optional request options. Supported option is `structureOnly: true` that only returns the form structure in JSON format.
+ * @param {object} options
+ * @param {boolean} options.structureOnly - If true, only the form structure is returned in JSON format.
  * @returns {Operation}
  * @state {HttpState}
  */
@@ -70,7 +70,7 @@ export function getForm(formId, options = {}) {
 }
 
 /**
- * Make a GET request to Inform to get the submissions of a single form
+ * Get submission data of a single form
  * @example <caption>Get submissions without filter options</caption>
  * getSubmissions('6225');
  * @example <caption>Get submissions with filter options</caption>
@@ -81,7 +81,7 @@ export function getForm(formId, options = {}) {
  * @function
  * @public
  * @param {string} formId - Id of the form's submissions to be retrieved.
- * @param {object} options - Optional filter options. Supported options are: `query`, `limit`, `start`, `page`, and `page_size`.
+ * @param {object} options - Optional filter options. Some supported options are: `query`, `limit`, `start`, `page`, and `page_size`.
  * @returns {Operation}
  * @state {HttpState}
  */
@@ -109,7 +109,7 @@ export function getSubmissions(formId, options = {}) {
 }
 
 /**
- * Make a GET request to Inform to fetch a single data submission for a single form
+ * Get a single data submission for a single form
  * @example
  * getSubmission('6225', '7783155')
  * @function
@@ -138,7 +138,7 @@ export function getSubmission(formId, submissionId) {
 }
 
 /**
- * Make a GET request to Inform to fetch a single attachment's metadata
+ * Fetch a single attachment's metadata
  * @example
  * getAttachmentMetadata('621985')
  * @function
@@ -162,16 +162,16 @@ export function getAttachmentMetadata(attachmentId) {
 }
 
 /**
- * Make a GET request to Inform to download an attachment in binary or base64 format
+ * Download an attachment in binary or base64 format
  * @example <caption>Download an attachment</caption>
  * downloadAttachment('622038', {
  *   filename:
- *     'unicefbih/attachments/7205_primero_face_to_face_feedback/download_1-11_58_4.png',
+ *     'unicefbih/attachments/download_1.png',
  * });
  * @example <caption>Download an attachment in base64 format</caption>
  * downloadAttachment('622038', {
  *   filename:
- *     'unicefbih/attachments/7205_primero_face_to_face_feedback/download_1-11_58_4.png',
+ *     'unicefbih/attachments/download_1.png',
  *   parseAs: 'base64',
  * });
  * @function
@@ -202,6 +202,9 @@ export function downloadAttachment(attachmentId, options = {}) {
 
     const { headers } = response;
 
+    // Default to stream if no parseAs option is provided
+    // This is to ensure that the response is not parsed as JSON and is returned as a stream
+
     const parseAs = resolvedOptions?.parseAs || 'stream';
 
     if (headers.location) {
@@ -215,15 +218,10 @@ export function downloadAttachment(attachmentId, options = {}) {
 
       const buffer = Buffer.from(arrayBuffer);
 
-      switch (parseAs) {
-        case 'stream':
-          parsedBody = buffer;
-          break;
-        case 'base64':
-          parsedBody = encode(arrayBuffer, { parseJson: false });
-          break;
-        default:
-          parsedBody = buffer;
+      if (parseAs === 'base64') {
+        parsedBody = encode(arrayBuffer, { parseJson: false });
+      } else {
+        parsedBody = buffer;
       }
       response = {
         status: result.status,
