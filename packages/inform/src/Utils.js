@@ -6,27 +6,19 @@ import {
 import nodepath from 'node:path';
 
 export const prepareNextState = (state, response) => {
-  const { body, ...responseWithoutBody } = response;
-
   if (!state.references) {
     state.references = [];
   }
 
   return {
-    ...composeNextState(state, body),
-    response: responseWithoutBody,
+    ...composeNextState(state, response.body),
   };
 };
 
 export const request = (configuration = {}, method, path, options = {}) => {
   const { baseUrl, access_token, apiVersion = 'v1' } = configuration;
 
-  const {
-    query = {},
-    body = {},
-    headers = {},
-    parseAs = 'json',
-  } = options;
+  const { query = {}, body = {}, headers = {}, parseAs = 'json' } = options;
 
   const opts = {
     parseAs,
@@ -41,8 +33,7 @@ export const request = (configuration = {}, method, path, options = {}) => {
     ...options,
   };
 
- const safePath = nodepath.join(path);
-
+  const safePath = nodepath.join(path);
 
   return commonRequest(method, safePath, opts).then(response =>
     logResponse(response, query)

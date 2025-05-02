@@ -28,7 +28,7 @@ describe('getForms', () => {
       formid: 2,
     },
     {
-      public: false,
+      public: true,
       formid: 3,
     },
 ];

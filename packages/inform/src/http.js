@@ -6,7 +6,6 @@ import * as util from './Utils';
  * @typedef {Object} HttpState
  * @private
  * @property data - the parsed response body
- * @property response - the response from the Inform server, including headers, statusCode, etc
  * @property references - an array of all previous data objects used in the Job
  **/
 
