@@ -15,6 +15,19 @@ export const prepareNextState = (state, response) => {
   };
 };
 
+export const prepareHttpNextState = (state, response) => {
+  const { body, ...responseWithoutBody } = response;
+
+  if (!state.references) {
+    state.references = [];
+  }
+
+  return {
+    ...composeNextState(state, body),
+    response: responseWithoutBody,
+  };
+};
+
 export const request = (configuration = {}, method, path, options = {}) => {
   const { baseUrl, access_token, apiVersion = 'v1' } = configuration;
 
