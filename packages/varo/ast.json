@@ -51,7 +51,8 @@
     {
       "name": "convertRecordsToReport",
       "params": [
-        "records"
+        "records",
+        "reportType"
       ],
       "docs": {
         "description": "Read a collection of EMS-like data records and convert them to a standard EMS report/record format.\nSystematically separates report properties from record properties.",
@@ -74,6 +75,19 @@
               "name": "Array"
             },
             "name": "records"
+          },
+          {
+            "title": "param",
+            "description": "Optional. Source of the report, e.g., \"ems\" or \"rtmd\".",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "reportType",
+            "default": "'unknown'"
           },
           {
             "title": "state",

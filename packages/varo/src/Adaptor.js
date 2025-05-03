@@ -1,10 +1,13 @@
 import { composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import { parseMetadata, parseRecordsToReport } from './Utils';
-import { parseRtmdCollectionToReports } from './RtmdUtils';
+import { parseMetadata } from './Utils';
+import {
+  parseRecordsToReport,
+  parseRtmdCollectionToReports,
+} from './StreamingUtils';
 import { parseVaroEmsToReport } from './VaroEmsUtils';
-import { parseFridgeTag, parseFridgeTagToEms } from './FridgeTagUtils';
+import { parseFridgeTag, parseFridgeTagToReport } from './FridgeTagUtils';
 
 /**
  * Processes EMS data from the provided list of message contents.
@@ -26,7 +29,7 @@ import { parseFridgeTag, parseFridgeTagToEms } from './FridgeTagUtils';
 export function convertToEms(messageContents) {
   return async state => {
     const [resolvedMessageContents] = expandReferences(state, messageContents);
-    const results = [];
+    const reports = [];
 
     console.log('Incoming message contents', resolvedMessageContents.length);
 
@@ -36,8 +39,8 @@ export function convertToEms(messageContents) {
         if (!metadata) continue;
 
         const fridgeTagNodes = parseFridgeTag(content.fridgeTag.content);
-        const result = parseFridgeTagToEms(metadata, fridgeTagNodes);
-        results.push(result);
+        const result = parseFridgeTagToReport(metadata, fridgeTagNodes);
+        reports.push(result);
         continue;
       }
 
@@ -47,8 +50,8 @@ export function convertToEms(messageContents) {
 
         const data = JSON.parse(content.data.content);
         const dataPath = content.data.filename;
-        const result = parseVaroEmsToEms(metadata, data, dataPath);
-        results.push(result);
+        const result = parseVaroEmsToReport(metadata, data, dataPath);
+        reports.push(result);
         continue;
       }
 
@@ -57,9 +60,9 @@ export function convertToEms(messageContents) {
       );
     }
 
-    console.log('Converted message contents', results.length);
+    console.log('Converted message contents', reports.length);
 
-    return { ...composeNextState(state, results) };
+    return { ...composeNextState(state, reports) };
   };
 }
 
@@ -69,6 +72,7 @@ export function convertToEms(messageContents) {
  * @public
  * @function
  * @param {Array} records - Array of EMS-like JSON objects.
+ * @param {string} [reportType='unknown'] - Optional. Source of the report, e.g., "ems" or "rtmd".
  * @state {Array} data - The converted, EMS-compliant report with records.
  * @returns {Operation}
  * @example <caption>Convert data to EMS-compliant data.</caption>
@@ -88,15 +92,25 @@ export function convertToEms(messageContents) {
  *   ],
  * }
  */
-export function convertRecordsToReport(records) {
+export function convertRecordsToReport(records, reportType = 'unknown') {
   return async state => {
-    const [resolvedRecords] = expandReferences(state, records);
+    const [resolvedRecords, resolvedReportType] = expandReferences(
+      state,
+      records,
+      reportType
+    );
 
-    //const report = parseRecordsToReport(resolvedRecords);
-    const report = {};
-    const reports = parseRtmdCollectionToReports(resolvedRecords);
+    if (resolvedReportType == 'ems') {
+      const report = parseRecordsToReport(resolvedRecords);
+      return { ...composeNextState(state, [report]) };
+    }
 
-    return { ...composeNextState(state, report) };
+    if (resolvedReportType == 'rtmd') {
+      const reports = parseRtmdCollectionToReports(resolvedRecords);
+      return { ...composeNextState(state, reports) };
+    }
+
+    throw new Error(`Report type not supported: ${resolvedReportType}`);
   };
 }
 
