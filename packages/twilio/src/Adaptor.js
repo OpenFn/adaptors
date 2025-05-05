@@ -44,7 +44,7 @@ export function sendSMS(params) {
   return state => {
     const { accountSid, authToken } = state.configuration;
     const [resolvedParams] = expandReferences(state, params);
-    const {body, from, to} = resolvedParams;
+    const { body, from, to } = resolvedParams;
 
     const client = require('twilio')(accountSid, authToken);
 
@@ -68,13 +68,11 @@ export function sendSMS(params) {
 // export function bulkSMS(params) {}
 
 export {
-  field,
   fields,
   sourceValue,
   alterState,
   fn,
   fnIf,
-  http,
   each,
   merge,
   dataPath,
