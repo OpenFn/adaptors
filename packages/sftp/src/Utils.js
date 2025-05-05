@@ -20,3 +20,4 @@ export function handleResponse(response, state, callback) {
   if (callback) return callback(composeNextState(state, response));
   return composeNextState(state, response);
 }
+export { field } from '@openfn/language-common/util';
