@@ -92,7 +92,6 @@ export function send(params) {
 export {
   fn,
   fnIf,
-  field,
   alterState,
   fields,
   sourceValue,
