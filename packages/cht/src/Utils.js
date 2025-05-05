@@ -36,3 +36,4 @@ export const request = (configuration = {}, method, path, options) => {
 
   return commonRequest(method, path, opts);
 };
+export { field } from '@openfn/language-common/util';
