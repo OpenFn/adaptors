@@ -78,12 +78,10 @@ export const request = (state, method, path, options = {}) => {
 
   const { query = {}, body = {}, headers = {}, parseAs = 'json' } = options;
 
-  
-
   const opts = {
     parseAs,
     baseUrl: `${baseUrl}/api/v2/`,
-    body:{ data: body},
+    body: { data: body },
     query,
     headers: {
       'Content-type': 'application/json',
@@ -92,7 +90,7 @@ export const request = (state, method, path, options = {}) => {
     },
   };
 
-  
-
   return commonRequest(method, path, opts).then(logResponse);
 };
+
+export { field } from '@openfn/language-common/util';
