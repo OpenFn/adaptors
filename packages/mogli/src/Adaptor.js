@@ -202,7 +202,6 @@ export {
   each,
   join,
   fields,
-  field,
   source,
   sourceValue,
   combine,
