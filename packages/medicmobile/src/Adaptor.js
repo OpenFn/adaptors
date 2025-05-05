@@ -204,7 +204,6 @@ export {
   dataPath,
   dataValue,
   each,
-  field,
   fields,
   lastReferenceValue,
   merge,
