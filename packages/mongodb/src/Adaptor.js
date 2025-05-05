@@ -228,7 +228,6 @@ export function updateDocument(params) {
 }
 
 export {
-  field,
   fields,
   sourceValue,
   fn,
