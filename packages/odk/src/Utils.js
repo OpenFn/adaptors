@@ -78,3 +78,4 @@ export const request = (
 
   return commonRequest(method, path, opts).then(logResponse);
 };
+export { field } from '@openfn/language-common/util';
