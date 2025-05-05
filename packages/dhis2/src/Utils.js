@@ -70,6 +70,6 @@ export function generateUrl(configuration, options, resourceType, path = null) {
 
   if (path) return `${url}/${path}`;
   return url;
-};
+}
 
 export { field } from '@openfn/language-common/util';
