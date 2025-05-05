@@ -2,7 +2,8 @@ import chai from 'chai';
 const { expect } = chai
 import Adaptor from '../src';
 const { execute, send } = Adaptor;
-import { fields, field } from '@openfn/language-common';
+import { fields } from '@openfn/language-common';
+import { field } from '@openfn/language-common/util';
 
 describe.skip('execute', () => {
   it('sends an Email and expects a confirmation response', done => {
