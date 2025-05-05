@@ -51,3 +51,4 @@ export const request = (configuration, method, path, options = {}) => {
 
   return commonRequest(method, fullPath, opts).then(logResponse);
 };
+export { field } from '@openfn/language-common/util';
