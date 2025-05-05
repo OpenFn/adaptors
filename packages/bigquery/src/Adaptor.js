@@ -123,7 +123,6 @@ export {
   combine,
   dataValue,
   each,
-  field,
   fields,
   http,
   lastReferenceValue,
