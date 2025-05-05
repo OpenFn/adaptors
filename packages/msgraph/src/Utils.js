@@ -195,3 +195,5 @@ export function assertResources(resources) {
   if (!driveId && !siteId) throw new Error('"siteId" or "driveId" is required');
   if (!folderId) throw new Error('Parent Item Id is required');
 }
+
+export { field } from '@openfn/language-common/util';
