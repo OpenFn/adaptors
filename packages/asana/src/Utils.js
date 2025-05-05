@@ -43,3 +43,4 @@ export function request(state, path, params, callback = s => s) {
       throw err;
     });
 }
+export { field } from '@openfn/language-common/util';

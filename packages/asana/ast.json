@@ -781,59 +781,6 @@
       "valid": true
     },
     {
-      "name": "field",
-      "params": [
-        "key",
-        "value"
-      ],
-      "docs": {
-        "description": "Returns a key, value pair in an array.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "field('destination_field_name__c', 'value')"
-          },
-          {
-            "title": "param",
-            "description": "Name of the field",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "key"
-          },
-          {
-            "title": "param",
-            "description": "The value itself or a sourceable operation.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Value"
-            },
-            "name": "value"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Field"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "fields",
       "params": [
         "fields"
