@@ -95,7 +95,6 @@ export {
   fn,
   fnIf,
   alterState,
-  field,
   fields,
   sourceValue,
   merge,
