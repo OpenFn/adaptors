@@ -208,7 +208,6 @@ export function fetch(params) {
 export {
   fn,
   fnIf,
-  field,
   sourceValue,
   fields,
   alterState,
