@@ -7,7 +7,6 @@ import {
   encode,
   decode,
   uuid,
-  field,
 } from '@openfn/language-common/util';
 import * as cheerio from 'cheerio';
 import cheerioTableparser from 'cheerio-tableparser';
@@ -206,7 +205,6 @@ export {
    * @param {Value} value - The value itself or a sourceable operation.
    * @returns {Field}
    */
-  field,
 };
 
 export { field } from '@openfn/language-common/util';
