@@ -17,15 +17,14 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-
-export const authenticate = async (opts) => {
+export const authenticate = async opts => {
   const response = await commonRequest('POST', '/login', opts);
-  return response.headers['set-cookie'].split(';')[0]
-}
+  return response.headers['set-cookie'].split(';')[0];
+};
 
 export const request = async (state, method, path, options = {}) => {
   const { baseUrl, username, password } = state.configuration;
-  let headers = { 'Cookie': (cookie || options.headers?.Cookie) }
+  let headers = { Cookie: cookie || options.headers?.Cookie };
 
   const errors = { 404: 'Page not found' };
 
@@ -40,14 +39,17 @@ export const request = async (state, method, path, options = {}) => {
     },
   };
 
-
   const safePath = nodepath.join(path);
 
   if (!opts.headers.Cookie && username && password) {
-    cookie = await authenticate({ ...opts, parseAs: 'text/html', body: { username, password } });
-    opts = { ...opts, headers: { ...opts.headers, Cookie: cookie } }
+    cookie = await authenticate({
+      ...opts,
+      parseAs: 'text/html',
+      body: { username, password },
+    });
+    opts = { ...opts, headers: { ...opts.headers, Cookie: cookie } };
   }
-
 
   return commonRequest(method, safePath, opts);
 };
+export { field } from '@openfn/language-common/util';
