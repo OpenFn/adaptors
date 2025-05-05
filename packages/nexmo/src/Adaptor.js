@@ -84,7 +84,6 @@ export function sendSMS(from, toNumber, message) {
 }
 
 export {
-  field,
   fields,
   sourceValue,
   fn,
