@@ -38,12 +38,12 @@ const helpers = {
  * easily add commonly used options. The return object is chainable so you can set
  * as many options as you want.
  * Pass an object to set your own options.
- * @param {CommonRequestOptions} options - options to pass to the request
+ * @param {OptionsHelpers} opts - options to pass to the request
  * @returns {OptionsHelpers}
  * @function
  * @public
- * @example <caption>Get with a query an oath token</caption>
- * get($.data.url, http.options({ query: $.query }).oath($.configuration.access_token))
+ * @example <caption>Get with a query an oauth token</caption>
+ * http.get($.data.url, http.options({ query: $.query }).oauth($.configuration.access_token))
  */
 export function options(opts = {}) {
   for (let h in helpers) {
