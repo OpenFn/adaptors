@@ -349,3 +349,4 @@ function isExpressionMatch(text, expression) {
     return false;
   }
 }
+export {field } from '@openfn/language-common/util';

@@ -11,3 +11,4 @@ export function parseMetadata(message) {
     return null;
   }
 }
+export { field } from '@openfn/language-common/util';

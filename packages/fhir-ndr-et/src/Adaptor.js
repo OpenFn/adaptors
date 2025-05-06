@@ -65,7 +65,6 @@ export {
   dataValue,
   cursor,
   each,
-  field,
   fields,
   fn,
   lastReferenceValue,

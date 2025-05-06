@@ -3,4 +3,5 @@ export default Adaptor;
 
 export * from './Adaptor';
 export * as fhir from './fhir';
-export * as http from './http'
+export * as http from './http';
+export * as util from './Utils';

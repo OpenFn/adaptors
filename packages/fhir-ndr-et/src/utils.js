@@ -276,3 +276,5 @@ export const composite = (object, key, value) => {
 
 }
 
+export { field } from '@openfn/language-common/util';
+
