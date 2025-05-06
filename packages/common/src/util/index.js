@@ -12,7 +12,7 @@ export { uuid } from './uuid';
  * @function
  * @namespace util
  * @example
- * field('destination_field_name__c', 'value')
+ * util.field('destination_field_name__c', 'value')
  * @param {string} key - Name of the field
  * @param {Value} value - The value itself or a sourceable operation.
  * @returns {Field}
