@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://sandbox.momodeveloper.mtn.com/"]
+    },
+    "subscription_key": {
+      "title": "subscription Key",
+      "type": "string",
+      "description": "The subscription key is part of the header of all requests sent to the API Manager",
+      "examples": ["630ee209443d787927b08b3c57902"]
+    },
+    "api_key": {
+      "title": "API Key",
+      "type": "string",
+      "description": "",
+      "writeOnly": true,
+      "examples": ["630ee209443d787927b08b3c57902"]
+    },
+    "api_user": {
+      "title": "API User",
+      "type": "string",
+      "description": "",
+      "writeOnly": true,
+      "examples": ["630ee209443d787927b08b3c57902"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["api_key", "api_user", "subscription_key", "baseUrl"]
+}
