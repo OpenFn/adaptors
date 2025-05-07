@@ -97,11 +97,11 @@ This adaptor exports the following namespaced functions:
 </dt>
 
 <dt>
-    <a href="#http_options">http.options(options)</a>
+    <a href="#http_options">http.options(opts)</a>
 </dt>
 
 <dt>
-    <a href="#http_post">http.post(url, options)</a>
+    <a href="#http_post">http.post(url, data, options)</a>
 </dt>
 
 <dt>
@@ -995,7 +995,7 @@ http.get(
 
 ### http.options {#http_options}
 
-<p><code>options(options) ⇒ OptionsHelpers</code></p>
+<p><code>options(opts) ⇒ OptionsHelpers</code></p>
 
 Builder function to create request options. Returns an object with helpers to
 easily add commonly used options. The return object is chainable so you can set
@@ -1005,11 +1005,11 @@ Pass an object to set your own options.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| options | [<code>CommonRequestOptions</code>](#commonrequestoptions) | options to pass to the request |
+| opts | [<code>OptionsHelpers</code>](#optionshelpers) | options to pass to the request |
 
-**Example:** Get with a query an oath token
+**Example:** Get with a query an oauth token
 ```js
-get($.data.url, http.options({ query: $.query }).oath($.configuration.access_token))
+http.get($.data.url, http.options({ query: $.query }).oauth($.configuration.access_token))
 ```
 
 * * *
@@ -1017,7 +1017,7 @@ get($.data.url, http.options({ query: $.query }).oath($.configuration.access_tok
 
 ### http.post {#http_post}
 
-<p><code>post(url, options) ⇒ Operation</code></p>
+<p><code>post(url, data, options) ⇒ Operation</code></p>
 
 Make a POST request.
 
@@ -1025,6 +1025,7 @@ Make a POST request.
 | Param | Type | Description |
 | --- | --- | --- |
 | url | <code>string</code> | URL to access |
+| data | <code>object</code> | Body data to append to the request. |
 | options | [<code>CommonRequestOptions</code>](#commonrequestoptions) | Request options |
 
 This operation writes the following keys to state:
@@ -1036,11 +1037,11 @@ This operation writes the following keys to state:
 | references | an array of all previous data objects used in the Job |
 **Example:** Post a JSON object (setting the content-type header)
 ```js
- http.post(
-   'https://jsonplaceholder.typicode.com/todos',
-   $.data,
-   options().json(),
- })
+http.post(
+  "https://jsonplaceholder.typicode.com/todos",
+  $.data,
+  http.options().json()
+);
 ```
 
 * * *
