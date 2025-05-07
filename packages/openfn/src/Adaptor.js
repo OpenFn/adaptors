@@ -129,6 +129,7 @@ export {
   fn,
   fnIf,
   fields,
+  http,
   lastReferenceValue,
   merge,
   sourceValue,

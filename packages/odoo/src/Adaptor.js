@@ -222,6 +222,7 @@ export {
   each,
   fields,
   fn,
+  http,
   lastReferenceValue,
   merge,
   sourceValue,

@@ -209,6 +209,7 @@ export {
   dataValue,
   each,
   fields,
+  http,
   lastReferenceValue,
   merge,
   sourceValue,

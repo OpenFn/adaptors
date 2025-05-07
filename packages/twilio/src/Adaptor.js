@@ -73,6 +73,7 @@ export {
   alterState,
   fn,
   fnIf,
+  http,
   each,
   merge,
   dataPath,
