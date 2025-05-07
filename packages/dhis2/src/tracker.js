@@ -11,8 +11,8 @@ import * as util from './Utils';
  */
 
 /**
- * Options to append to the request. Apart from `parseAs` and `apiVersion`, all options are passed to the request as query parameters - see the [DHIS2 tracker Docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html#webapi_tracker_import_request_parameters) for all supported parameters.
- * @typedef {Object} RequestOptions
+ * All options, apart from those listed here, will be appended as query parameters to the URL
+ * @typedef {Object} TrackerOptions
  * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', 'stream', or 'base64'. Defaults to `json`
  * @property {string} [apiVersion=42] - The apiVersion of the request. Defaults to 42.
  */
@@ -24,7 +24,7 @@ import * as util from './Utils';
  * @function
  * @param {string} strategy - The effect the import should have. Can either be CREATE, UPDATE, CREATE_AND_UPDATE and DELETE.
  * @param {object} payload - The data to be imported.
- * @param {RequestOptions} [options] - An optional object containing parseAs, and apiVersion, and queries for the request
+ * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion, and queries for the request
  * @state {Dhis2State}
  * @returns {Operation}
  * @example <caption>Import a trackedEntity resource</caption>
@@ -90,7 +90,7 @@ export { _import as import };
  * @function
  * @param {string} path - Path to the resource
  * @param {object} query - An object of query parameters to be encoded into the URL
- * @param {RequestOptions} [options] - An optional object containing parseAs, and apiVersion for the request
+ * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion for the request
  * @state {Dhis2State}
  * @returns {Operation}
  * @example <caption>Export a trackedEntity resource using the id</caption>
