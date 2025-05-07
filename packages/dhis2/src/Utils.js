@@ -65,6 +65,24 @@ export function ensureArray(data, key) {
   return Array.isArray(data) ? { [key]: data } : { [key]: [data] };
 }
 
+export function trackerImportStrategy(importStrategy){
+  let strategy;
+  switch (importStrategy) {
+    case 'create':
+      strategy = 'CREATE';
+      break;
+    case 'update':
+      strategy = 'UPDATE';
+      break;
+    case 'delete':
+      strategy = 'DELETE';
+      break;
+    default:
+      strategy = 'CREATE_AND_UPDATE';
+  }
+  return strategy
+}
+
 export function prefixVersionToPath(
   configuration,
   options,

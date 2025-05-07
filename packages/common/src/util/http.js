@@ -211,7 +211,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
   };
 }
 
-function encodeRequestBody(body) {
+function encodeRequestBody(body) {  
   if (!body) {
     return undefined;
   }

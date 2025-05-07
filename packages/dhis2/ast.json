@@ -120,11 +120,6 @@
             "title": "example",
             "description": "create('enrollments', {\n  trackedEntity: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-09-17',\n  incidentDate: '2013-09-17',\n});",
             "caption": "Create an enrollment"
-          },
-          {
-            "title": "example",
-            "description": "create(\"tracker\", {\n  enrollments: [\n    {\n      trackedEntity: \"bmshzEacgxa\",\n      orgUnit: \"TSyzvBiovKh\",\n      program: \"gZBxv9Ujxg0\",\n      enrollmentDate: \"2013-09-17\",\n      incidentDate: \"2013-09-17\",\n    },\n  ],\n  trackedEntities: [\n    {\n      orgUnit: \"TSyzvBiovKh\",\n      trackedEntityType: \"nEenWmSyUEp\",\n      attributes: [\n        {\n          attribute: \"w75KJ2mc4zz\",\n          value: \"Gigiwe\",\n        },\n      ],\n    },\n  ],\n});",
-            "caption": "Create an multiple objects with the Tracker API"
           }
         ]
       },
