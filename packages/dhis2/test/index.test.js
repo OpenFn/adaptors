@@ -1,25 +1,29 @@
 import chai from 'chai';
-import {
-  execute,
-  create,
-  update,
-  get,
-  upsert,
-  findAttributeValue,
-  findAttributeValueById,
-} from '../src/Adaptor';
+import { execute, create, update, upsert, get } from '../src/Adaptor';
 import { dataValue } from '@openfn/language-common';
+import { enableMockClient } from '@openfn/language-common/util';
 import {
-  buildUrl,
-  generateUrl,
+  prefixVersionToPath,
   ensureArray,
   shouldUseNewTracker,
 } from '../src/Utils';
-import nock from 'nock';
+
+import * as util from '../src/util';
 
 const { expect } = chai;
 
-const testServer = nock('https://play.dhis2.org/2.36.4');
+const hostUrl = 'https://index.dhis2.org';
+const testServer = enableMockClient(hostUrl);
+const configuration = {
+  username: 'admin',
+  password: 'district',
+  hostUrl: `${hostUrl}/stable-2-40-7`,
+  apiVersion: '42',
+};
+
+const getPath = path => {
+  return `/stable-2-40-7/api/42/${path}`;
+};
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -63,13 +67,9 @@ describe('execute', () => {
   });
 });
 
-describe('get', () => {
+describe(' get', () => {
   const state = {
-    configuration: {
-      username: 'admin',
-      password: 'district',
-      hostUrl: 'https://play.dhis2.org/2.36.4',
-    },
+    configuration,
     data: {},
   };
 
@@ -80,23 +80,27 @@ describe('get', () => {
       orgUnit: 'DiszpKrYNg8',
       filter: ['this:Eq:that', 'then:gt:2'],
     };
-
-    // NOTE: It appears that this is the dhis2-desired format for array params.
-    const queryString =
-      'dataSet=pBOMPrpg1QX&period=201401&orgUnit=DiszpKrYNg8' +
-      '&filter=this:Eq:that&filter=then:gt:2' +
-      '&fields=*';
-
     testServer
-      .get(`/api/dataValueSets?${queryString}`)
-      .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
+      .intercept({
+        path: getPath('dataValueSets'),
+        method: 'GET',
+        query: {
+          ...query,
+          fields: '*',
+        },
+      })
       .reply(200, {
         httpStatus: 'OK',
         message: "you've got multiple filters and that's OK!",
       });
 
     const finalState = await execute(
-      get('dataValueSets', query, { params: { fields: '*' } })
+      get('dataValueSets', {
+        query: {
+          ...query,
+          fields: '*',
+        },
+      })
     )(state);
 
     expect(finalState.data).to.eql({
@@ -112,21 +116,27 @@ describe('get', () => {
       orgUnit: ['DiszpKrYNg8', 'otherThing'],
     };
 
-    // NOTE: It appears that this is the dhis2-desired format for array params.
-    const queryString =
-      'dataSet=pBOMPrpg1QX&period=201401&orgUnit=DiszpKrYNg8&orgUnit=otherThing' +
-      '&fields=*';
-
     testServer
-      .get(`/api/dataValueSets?${queryString}`)
-      .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
+      .intercept({
+        path: getPath('dataValueSets'),
+        method: 'GET',
+        query: {
+          ...query,
+          fields: '*',
+        },
+      })
       .reply(200, {
         httpStatus: 'OK',
         message: "you've got multiple filters and that's OK!",
       });
 
     const finalState = await execute(
-      get('dataValueSets', query, { params: { fields: '*' } })
+      get('dataValueSets', {
+        query: {
+          ...query,
+          fields: '*',
+        },
+      })
     )(state);
 
     expect(finalState.data).to.eql({
@@ -137,8 +147,10 @@ describe('get', () => {
 
   it('should make an authenticated GET to the right url no query', async () => {
     testServer
-      .get('/api/dataValueSets')
-      .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
+      .intercept({
+        path: getPath('dataValueSets'),
+        method: 'GET',
+      })
       .reply(200, {
         httpStatus: 'OK',
         message:
@@ -152,6 +164,31 @@ describe('get', () => {
       message:
         'no filters applied, dhis2 might complain about needing "at least one orgUnit"',
     });
+  });
+
+  it('should support base64 for images', async () => {
+    testServer
+      .intercept({
+        path: getPath('trackedEntityInstances/qHVDKszQmdx/BqaEWTBG3RB/image'),
+        method: 'GET',
+      })
+      .reply(
+        200,
+        '����\x00\x10JFIF\x00\x01\x02\x00\x00\x01\x00\x01\x00\x00��\x00C\x00\b\x06\x06\x07\x06\x05\b\x07\x07\x07\t\t\b\n'
+      );
+
+    const finalState = await execute(
+      get('trackedEntityInstances/qHVDKszQmdx/BqaEWTBG3RB/image', {
+        headers: {
+          Accept: 'image/*',
+        },
+        parseAs: 'base64',
+      })
+    )(state);
+    expect(finalState.response).to.eql(undefined);
+    expect(finalState.data).to.eql(
+      '77+977+977+977+9ABBKRklGAAECAAABAAEAAO+/ve+/vQBDAAgGBgcGBQgHBwcJCQgK'
+    );
   });
 });
 
@@ -184,11 +221,7 @@ describe('helperfunctions', () => {
 
 describe('create', () => {
   const state = {
-    configuration: {
-      username: 'admin',
-      password: 'district',
-      hostUrl: 'https://play.dhis2.org/2.36.4',
-    },
+    configuration,
     data: {
       program: 'program1',
       orgUnit: 'org50',
@@ -200,20 +233,11 @@ describe('create', () => {
 
   it('should make an authenticated POST to the right url', async () => {
     testServer
-      .post('/api/tracker', {
-        events: [
-          {
-            program: 'program1',
-            orgUnit: 'org50',
-            trackedEntityType: 'nEenWmSyUEp',
-            status: 'COMPLETED',
-            date: '02-02-20',
-          },
-        ],
+      .intercept({
+        path: getPath('tracker'),
+        method: 'POST',
+        query: { async: false },
       })
-      .query({ async: false })
-      .times(2)
-      .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
       .reply(200, {
         httpStatus: 'OK',
         message: 'the response',
@@ -231,15 +255,11 @@ describe('create', () => {
 
   it('should recursively expand references', async () => {
     testServer
-      .post('/api/tracker', {
-        events: [
-          {
-            program: 'abc',
-            orgUnit: 'org50',
-          },
-        ],
+      .intercept({
+        path: getPath('tracker'),
+        method: 'POST',
+        query: { async: false },
       })
-      .query({ async: false })
       .reply(200, {
         httpStatus: 'OK',
         message: 'the response',
@@ -256,92 +276,9 @@ describe('create', () => {
   });
 });
 
-describe('post', () => {
-  const state = {
-    configuration: {
-      username: 'admin',
-      password: 'district',
-      hostUrl: 'https://play.dhis2.org/2.36.4',
-    },
-    data: {
-      program: 'program1',
-      orgUnit: 'org50',
-      trackedEntityType: 'nEenWmSyUEp',
-      status: 'COMPLETED',
-      date: '02-02-20',
-    },
-  };
-
-  it('should make an authenticated POST to the right url', async () => {
-    testServer
-      .post('/api/tracker', {
-        events: [
-          {
-            program: 'program1',
-            orgUnit: 'org50',
-            trackedEntityType: 'nEenWmSyUEp',
-            status: 'COMPLETED',
-            date: '02-02-20',
-          },
-        ],
-      })
-      .times(2)
-      .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
-      .reply(200, {
-        httpStatus: 'OK',
-        message: 'the response',
-      });
-
-    const finalState = await execute(
-      create('tracker', { events: [state.data] })
-    )(state);
-
-    expect(finalState.data).to.eql({
-      httpStatus: 'OK',
-      message: 'the response',
-    });
-  });
-
-  it('should recursively expand references', async () => {
-    testServer
-      .post('/api/tracker', {
-        relationships: [
-          {
-            program: 'abc',
-            orgUnit: 'org50',
-          },
-        ],
-      })
-      .reply(200, {
-        httpStatus: 'OK',
-        message: 'the response',
-      });
-
-    const finalState = await execute(
-      create('tracker', {
-        relationships: [
-          {
-            program: 'abc',
-            orgUnit: state => state.data.orgUnit,
-          },
-        ],
-      })
-    )(state);
-
-    expect(finalState.data).to.eql({
-      httpStatus: 'OK',
-      message: 'the response',
-    });
-  });
-});
-
 describe('update', () => {
   const state = {
-    configuration: {
-      username: 'admin',
-      password: 'district',
-      hostUrl: 'https://play.dhis2.org/2.36.4',
-    },
+    configuration,
     data: {
       program: 'program',
       orgUnit: 'orgunit',
@@ -352,8 +289,10 @@ describe('update', () => {
 
   it('should make an authenticated PUT to the right url', async () => {
     testServer
-      .put('/api/dataValueSets/AsQj6cDsUq4')
-      .matchHeader('authorization', 'Basic YWRtaW46ZGlzdHJpY3Q=')
+      .intercept({
+        path: getPath('dataValueSets/AsQj6cDsUq4'),
+        method: 'PUT',
+      })
       .reply(200, {
         httpStatus: 'OK',
         message: 'the response',
@@ -374,10 +313,9 @@ describe('update', () => {
 
   it('should recursively expand refs', async () => {
     testServer
-      .put('/api/dataValueSets/AsQj6cDsUq4', {
-        program: 'program',
-        orgUnit: 'hardcoded',
-        date: '02-02-20',
+      .intercept({
+        path: getPath('dataValueSets/AsQj6cDsUq4'),
+        method: 'PUT',
       })
       .reply(200, {
         httpStatus: 'OK',
@@ -401,11 +339,7 @@ describe('update', () => {
 
 describe('upsert', () => {
   const state = {
-    configuration: {
-      username: 'admin',
-      password: 'district',
-      hostUrl: 'https://play.dhis2.org/2.36.4',
-    },
+    configuration,
     data: {
       org: 'orgunit',
       id: 'k68SkK5yDH9',
@@ -414,13 +348,21 @@ describe('upsert', () => {
 
   it('should make a get and then an update if one item is found', async () => {
     testServer
-      .get('/api/dataValueSets?orgUnit=DiszpKrYNg8')
+      .intercept({
+        path: getPath('dataValueSets'),
+        method: 'GET',
+        query: { orgUnit: 'DiszpKrYNg8' },
+      })
       .reply(200, {
         httpStatus: 'OK',
         message: 'the response',
         dataValueSets: [{ id: 123 }],
+      });
+    testServer
+      .intercept({
+        path: getPath('dataValueSets/123'),
+        method: 'PUT',
       })
-      .put('/api/dataValueSets/123')
       .reply(200, { httpStatus: 'OK', message: 'updated tei' });
 
     const finalState = await execute(
@@ -451,13 +393,22 @@ describe('upsert', () => {
 
   it('should make a get and then a create if nothing is found', async () => {
     testServer
-      .get('/api/dataValueSets?orgUnit=DiszpKrYNg8')
+      .intercept({
+        path: getPath('dataValueSets'),
+        method: 'GET',
+        query: { orgUnit: 'DiszpKrYNg8' },
+      })
       .reply(200, {
         httpStatus: 'OK',
         message: 'the response',
         dataValueSets: [],
+      });
+
+    testServer
+      .intercept({
+        path: getPath('dataValueSets'),
+        method: 'POST',
       })
-      .post('/api/dataValueSets')
       .reply(201, { httpStatus: 'OK', message: 'created tei' });
 
     const finalState = await execute(
@@ -487,11 +438,17 @@ describe('upsert', () => {
   });
 
   it('should make a get and FAIL if more than one thing is found', async () => {
-    testServer.get('/api/dataValueSets?orgUnit=DiszpKrYNg8').reply(200, {
-      httpStatus: 'OK',
-      message: 'the response',
-      dataValueSets: [{ id: 1 }, { id: 2 }, { id: 3 }],
-    });
+    testServer
+      .intercept({
+        path: getPath('dataValueSets'),
+        method: 'GET',
+        query: { orgUnit: 'DiszpKrYNg8' },
+      })
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'the response',
+        dataValueSets: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      });
 
     const expectThrowsAsync = async (method, errorMessage) => {
       let error = null;
@@ -520,52 +477,35 @@ describe('upsert', () => {
             }
           )
         )(state),
-      'Cannot upsert on Non-unique attribute. The operation found more than one records for your request.'
+      '409: Upsert failed: Multiple records found for a non-unique attribute.'
     );
   });
 
   it('should make a post only when new tracker is called', async () => {
     testServer
-      .post('/api/tracker', {
-        events: [
-          {
-            orgUnit: 'DiszpKrYNg8',
-            trackedEntityType: 'nEenWmSyUEp',
-            attributes: [
-              {
-                attribute: 'w75KJ2mc4zz',
-                value: 'Qassim',
-              },
-            ],
-          },
-        ],
+      .intercept({
+        path: getPath('tracker'),
+        method: 'POST',
+        query: { async: false },
       })
-      .query({ async: false })
       .reply(200, {
         httpStatus: 'OK',
         message: 'created tei',
       });
 
     const finalState = await execute(
-      upsert(
-        'events',
+      upsert('events', {}, [
         {
           orgUnit: 'DiszpKrYNg8',
-          trackedEntities: ['F8yKM85NbxW'],
+          trackedEntityType: 'nEenWmSyUEp',
+          attributes: [
+            {
+              attribute: 'w75KJ2mc4zz',
+              value: 'Qassim',
+            },
+          ],
         },
-        [
-          {
-            orgUnit: 'DiszpKrYNg8',
-            trackedEntityType: 'nEenWmSyUEp',
-            attributes: [
-              {
-                attribute: 'w75KJ2mc4zz',
-                value: 'Qassim',
-              },
-            ],
-          },
-        ]
-      )
+      ])
     )(state);
 
     expect(finalState.data).to.eql({
@@ -589,62 +529,44 @@ describe('URL builders', () => {
     done();
   });
 
-  describe('buildUrl', () => {
-    it('the proper URL gets built from the "entity" string and the config', done => {
-      const configuration = { ...fixture.configuration, apiVersion: 33 };
-
-      const finalURL = buildUrl(
-        '/' + 'events',
-        configuration.hostUrl,
-        configuration.apiVersion
-      );
-
-      const expectedURL = 'https://play.dhis2.org/2.36.4/api/33/events';
-
-      expect(finalURL).to.eq(expectedURL);
-
-      done();
-    });
-  });
-
   describe('generateURL', () => {
     it('should generate basic URL', done => {
-      const finalURL = generateUrl(
+      const finalURL = prefixVersionToPath(
         fixture.configuration,
         fixture.options,
         fixture.resourceType
       );
       const expectedURL = 'https://play.dhis2.org/2.36.4/api/dataValueSets';
 
-      expect(finalURL).to.eq(expectedURL);
+      expect(`${fixture.configuration.hostUrl}${finalURL}`).to.eq(expectedURL);
       done();
     });
 
     it('should generate URL with specific api version from configuration', done => {
       const configuration = { ...fixture.configuration, apiVersion: 33 };
 
-      const finalURL = generateUrl(
+      const finalURL = prefixVersionToPath(
         configuration,
         fixture.options,
         fixture.resourceType
       );
       const expectedURL = `https://play.dhis2.org/2.36.4/api/${configuration.apiVersion}/dataValueSets`;
 
-      expect(finalURL).to.eq(expectedURL);
+      expect(`${configuration.hostUrl}${finalURL}`).to.eq(expectedURL);
       done();
     });
 
     it('should generate URL with specific api version from options', done => {
       const options = { ...fixture.options, apiVersion: 33 };
 
-      const finalURL = generateUrl(
+      const finalURL = prefixVersionToPath(
         fixture.configuration,
         options,
         fixture.resourceType
       );
       const expectedURL = 'https://play.dhis2.org/2.36.4/api/33/dataValueSets';
 
-      expect(finalURL).to.eq(expectedURL);
+      expect(`${fixture.configuration.hostUrl}${finalURL}`).to.eq(expectedURL);
       done();
     });
 
@@ -655,7 +577,7 @@ describe('URL builders', () => {
         params: { filter: ['a:eq:b', 'c:ge:d'] },
       };
 
-      const finalURL = generateUrl(
+      const finalURL = prefixVersionToPath(
         fixture.configuration,
         options,
         fixture.resourceType
@@ -663,7 +585,7 @@ describe('URL builders', () => {
 
       const expectedURL = 'https://play.dhis2.org/2.36.4/api/33/dataValueSets';
 
-      expect(finalURL).to.eq(expectedURL);
+      expect(`${fixture.configuration.hostUrl}${finalURL}`).to.eq(expectedURL);
       done();
     });
   });
@@ -672,12 +594,7 @@ describe('URL builders', () => {
 describe('ensureArray', () => {
   it('when an array is passed it gets nested inside that "entity" key', async () => {
     const state = {
-      configuration: {
-        username: 'admin',
-        password: 'district',
-        hostUrl: 'https://play.dhis2.org/2.36.4',
-        apiVersion: '2.36.4',
-      },
+      configuration,
       data: [{ a: 1 }],
     };
 
@@ -688,11 +605,7 @@ describe('ensureArray', () => {
 
   it("when an object is passed it doesn't get nested", async () => {
     const state = {
-      configuration: {
-        username: 'admin',
-        password: 'district',
-        hostUrl: 'https://play.dhis2.org/2.36.4',
-      },
+      configuration,
       data: { b: 2 },
     };
 
@@ -719,7 +632,7 @@ describe('findAttributeValueById', () => {
       ],
     };
 
-    const theValue = findAttributeValueById(tei, 'Rslz2y06aBf');
+    const theValue = util.findAttributeValueById(tei, 'Rslz2y06aBf');
     expect(theValue).to.eql('McTesterson');
   });
 });
@@ -741,7 +654,7 @@ describe('findAttributeValue', () => {
       ],
     };
 
-    const theValue = findAttributeValue(tei, 'Surname');
+    const theValue = util.findAttributeValue(tei, 'Surname');
     expect(theValue).to.eql('McTesterson');
   });
 });
