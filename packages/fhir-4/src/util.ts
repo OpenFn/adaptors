@@ -112,3 +112,5 @@ export const request = (method, path, options: RequestOptions) => {
       throw e;
     });
 };
+
+export { field } from '@openfn/language-common/util';

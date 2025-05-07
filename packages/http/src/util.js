@@ -195,4 +195,16 @@ export {
    * console.log(id); // Output:'3f4e254e-8f6f-4f8b-9651-1c1c262cc83f'
    */
   uuid,
+  /**
+   * Returns a key, value pair in an array.
+   * @public
+   * @function
+   * @example
+   * field('destination_field_name__c', 'value')
+   * @param {string} key - Name of the field
+   * @param {Value} value - The value itself or a sourceable operation.
+   * @returns {Field}
+   */
 };
+
+export { field } from '@openfn/language-common/util';

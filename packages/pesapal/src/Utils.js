@@ -77,3 +77,5 @@ export const request = async (
 
   return commonRequest(method, safePath, opts).then(logResponse);
 };
+
+export { field } from '@openfn/language-common/util';

@@ -94,7 +94,6 @@ export {
   dateFns,
   cursor,
   each,
-  field,
   fields,
   fn,
   lastReferenceValue,

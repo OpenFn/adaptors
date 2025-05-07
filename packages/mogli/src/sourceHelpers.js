@@ -1,4 +1,5 @@
-import { sourceValue, field } from '@openfn/language-common';
+import { sourceValue } from '@openfn/language-common';
+import { field } from '@openfn/language-common/util';
 
 /**
  * Adds a lookup or 'dome insert' to a record.

@@ -240,7 +240,6 @@ export {
   dataPath,
   dataValue,
   each,
-  field,
   fields,
   fn,
   fnIf,

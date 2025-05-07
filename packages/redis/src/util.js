@@ -120,3 +120,5 @@ const throwArgumentError = (expectedType, fixMessage) => {
     fix: fixMessage,
   });
 };
+
+export { field } from '@openfn/language-common/util';

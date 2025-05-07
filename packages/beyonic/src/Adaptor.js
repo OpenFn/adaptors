@@ -105,7 +105,6 @@ export function createCollectionRequest(data) {
 export {
   fn,
   fnIf,
-  field,
   fields,
   sourceValue,
   merge,

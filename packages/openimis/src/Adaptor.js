@@ -111,7 +111,6 @@ export {
   dataValue,
   dateFns,
   each,
-  field,
   fields,
   fn,
   fnIf,

@@ -192,3 +192,5 @@ export function cleanPath(path) {
     .replace(/([^:]\/)\/+/g, '$1') //remove double slashes while also preserving http:// or https://
     .replace(/\/$/, ''); // remove trailing slash
 }
+
+export { field } from '@openfn/language-common/util';

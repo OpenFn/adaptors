@@ -19,15 +19,15 @@ definition.
 ```js
 createPayment(
   fields(
-    field('phonenumber', '+256773712831'),
-    field('first_name', 'Gideon'),
-    field('last_name', 'Zelalem'),
-    field('amount', 100.2),
-    field('currency', 'USD'),
-    field('account', 1),
-    field('description', 'Long-term contract for Arseal'),
-    field('payment_type', 'money'),
-    field('callback_url', 'https://my.website/payments/callback')
+    util.field('phonenumber', '+256773712831'),
+    util.field('first_name', 'Gideon'),
+    util.field('last_name', 'Zelalem'),
+    util.field('amount', 100.2),
+    util.field('currency', 'USD'),
+    util.field('account', 1),
+    util.field('description', 'Long-term contract for Arseal'),
+    util.field('payment_type', 'money'),
+    util.field('callback_url', 'https://my.website/payments/callback')
   )
 );
 ```
@@ -39,10 +39,10 @@ createPayment(
 ```js
 createCollectionRequest(
   fields(
-    field('instructions', 'Send me some money, please!'),
-    field('phonenumber', '+256773712831'),
-    field('amount', 5.0),
-    field('currency', 'USD')
+    util.field('instructions', 'Send me some money, please!'),
+    util.field('phonenumber', '+256773712831'),
+    util.field('amount', 5.0),
+    util.field('currency', 'USD')
   )
 );
 ```
@@ -54,10 +54,10 @@ createCollectionRequest(
 ```js
 createContact(
   fields(
-    field('first_name', 'Granit'),
-    field('last_name', 'Xhaka'),
-    field('phone_number', '+256773712831'),
-    field('email', 'granit@arsenal.com')
+    util.field('first_name', 'Granit'),
+    util.field('last_name', 'Xhaka'),
+    util.field('phone_number', '+256773712831'),
+    util.field('email', 'granit@arsenal.com')
   )
 );
 ```

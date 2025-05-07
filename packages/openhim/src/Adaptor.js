@@ -55,7 +55,6 @@ export function encounter(encounterData) {
 export {
   fn,
   fnIf,
-  field,
   fields,
   sourceValue,
   merge,

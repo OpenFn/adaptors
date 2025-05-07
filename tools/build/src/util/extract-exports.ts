@@ -10,9 +10,19 @@ export default (source: string) => {
   const externalFunctions = ast.body
     .filter(i => i.type == 'ExportNamedDeclaration')
     .filter((i: any) => i.specifiers.length > 0 && i.source?.value)
-    .filter((i: any) => i.source.value == '@openfn/language-common')
+    .filter((i: any) => i.source.value?.startsWith('@openfn/language-common'))
     .map((i: any) =>
-      i.specifiers.map(s => {
+      // extract a name for each export
+      // watch out for patterns like `export {} from common/util
+      i.specifiers?.map(s => {
+        let namespace = i.source.value.split('/');
+        // remove @openfn
+        namespace.shift();
+        // remove @language;
+        namespace.shift();
+        if (namespace.length) {
+          return namespace.concat(s.exported.name).join('.');
+        }
         return s.exported.name;
       })
     )

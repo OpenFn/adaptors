@@ -1,7 +1,7 @@
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
-  logResponse
+  logResponse,
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 
@@ -20,7 +20,7 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-export const login = async (state) => {
+export const login = async state => {
   const { username, password, baseUrl } = state.configuration;
 
   const opts = {
@@ -41,21 +41,20 @@ export const login = async (state) => {
       variables: {
         username,
         password,
-      }
+      },
     },
   };
 
   const { body } = await commonRequest('POST', 'graphql', opts);
   bearerToken = body.data.authToken.token;
   return body.data.authToken.token;
-}
-
+};
 
 export const request = async (state, options) => {
   const { baseUrl, token = '' } = state.configuration;
 
   if (token) {
-    bearerToken = token
+    bearerToken = token;
   }
 
   const errors = {
@@ -73,10 +72,10 @@ export const request = async (state, options) => {
     },
   };
 
-  if (!bearerToken)
-    await login(state)
+  if (!bearerToken) await login(state);
 
-  opts.headers = { ...opts.headers, 'Authorization': `Bearer ${bearerToken}` }
+  opts.headers = { ...opts.headers, Authorization: `Bearer ${bearerToken}` };
 
   return commonRequest('POST', 'graphql', opts).then(logResponse);
 };
+export { field } from '@openfn/language-common/util';

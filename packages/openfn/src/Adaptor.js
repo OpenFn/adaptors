@@ -126,7 +126,6 @@ export {
   dataPath,
   dataValue,
   each,
-  field,
   fn,
   fnIf,
   fields,

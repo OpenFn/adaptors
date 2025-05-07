@@ -24,3 +24,4 @@ export function handleResponse(response, state, callback) {
   if (callback) return callback(nextState);
   return nextState;
 }
+export { field } from '@openfn/language-common/util';

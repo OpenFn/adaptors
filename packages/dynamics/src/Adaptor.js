@@ -265,7 +265,6 @@ export function deleteEntity(params) {
 }
 
 export {
-  field,
   fields,
   sourceValue,
   alterState,

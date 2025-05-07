@@ -19,10 +19,10 @@ definition.
 ```js
 send(
   fields(
-    field('from', 'from_email'),
-    field('to', 'to_email'),
-    field('subject', 'Your Subject'),
-    field('text', 'Your message goes here')
+    util.field('from', 'from_email'),
+    util.field('to', 'to_email'),
+    util.field('subject', 'Your Subject'),
+    util.field('text', 'Your message goes here')
   )
 );
 ```

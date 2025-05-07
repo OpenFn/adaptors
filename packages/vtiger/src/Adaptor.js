@@ -132,7 +132,7 @@ export function postElement(params) {
     const { sessionName } = state.session.result;
 
     const [resolvedParams] = expandReferences(state, params);
-    const {elementType, element, operation} = resolvedParams;
+    const { elementType, element, operation } = resolvedParams;
 
     const url = `${hostUrl}/webservice.php`;
     // const url = 'https://requestb.in/1irtrgz1';
@@ -171,7 +171,6 @@ export function postElement(params) {
 }
 
 export {
-  field,
   fields,
   sourceValue,
   alterState,

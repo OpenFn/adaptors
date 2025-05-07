@@ -179,7 +179,6 @@ export {
   fnIf,
   chunk,
   merge,
-  field,
   fields,
   dateFns,
   dataPath,

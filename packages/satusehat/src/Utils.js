@@ -101,3 +101,4 @@ export async function request(configuration, path, opts) {
 
   return commonRequest(method, safePath, options).then(logResponse);
 }
+export { field } from '@openfn/language-common/util';

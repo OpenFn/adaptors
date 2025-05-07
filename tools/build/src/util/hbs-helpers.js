@@ -4,6 +4,10 @@ exports.toLowerCase = function (str) {
   return str ? str.toLowerCase() : str;
 };
 
+exports.toAnchorTag = function (str) {
+  return str ? str.toLowerCase().replace(/\./g, '_') : str;
+};
+
 exports.namespacedHeader = function (namespace, name) {
   return `### ${namespace}.${name} \{\#${namespace}_${name}\}`;
 };

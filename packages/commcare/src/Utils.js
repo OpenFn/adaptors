@@ -59,3 +59,5 @@ export async function request(configuration, path, opts) {
 
   return commonRequest(method, path, options).then(logResponse);
 }
+
+export { field } from '@openfn/language-common/util';

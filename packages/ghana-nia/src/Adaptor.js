@@ -109,7 +109,6 @@ export {
   fnIf,
   each,
   merge,
-  field,
   fields,
   cursor,
   dateFns,

@@ -7,7 +7,7 @@
 {{/if~}}
 <dt>
     {{#if name}}{{#sig no-gfm=true ~}}
-<a href="#{{toLowerCase (anchorName)}}">
+<a href="#{{toAnchorTag (anchorName)}}">
 {{~{@codeOpen}~}}
 {{#if @prefix}}{{@prefix}} {{/if~}}
 {{@accessSymbol}}{{#if (isEvent)}}"{{{name}}}"{{else}}{{{name}}}{{/if~}}
@@ -46,7 +46,7 @@ This adaptor exports the following from common:
 <dl>
 {{/if~}}
 <dt>
-    <a href="/adaptors/packages/common-docs#{{toLowerCase (anchorName)}}">{{externalName this}}</a>
+    <a href="/adaptors/packages/common-docs#{{toAnchorTag (anchorName)}}">{{externalName this}}</a>
 </dt>{{#if @last}}</dl>
 {{/if}}
 {{/commonFns}}
