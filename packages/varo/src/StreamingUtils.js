@@ -9,16 +9,26 @@ export function parseRtmdCollectionToReports(collection) {
   return groupDifferencesAndMergeRecords(collection, 'ESER', 'ABST');
 }
 
-export function parseRecordsToReport(records, reqReport, reqRecord) {
-  if (!Array.isArray(records) || records.length === 0) {
+export function parseFlatRecordsToReport(collection, reqReport, reqRecord) {
+  if (!Array.isArray(collection) || collection.length === 0) {
     console.error('No records to process for report.');
     return null;
   }
 
-  const reportRecord = records[0];
-  copyLoggerToEmd(reportRecord);
+  const reports = [];
+  const groups = groupByProperty(collection, 'LSER');
 
-  return mapProperties(reportRecord, records, reqReport, reqRecord);
+  for (const key in groups) {
+    const records = groups[key];
+    const reportRecord = records[0];
+
+    copyLoggerToEmd(reportRecord);
+
+    const report = mapProperties(reportRecord, records, reqReport, reqRecord);
+    reports.push(report);
+  }
+
+  return reports;
 }
 
 function groupDifferencesAndMergeRecords(
@@ -26,28 +36,28 @@ function groupDifferencesAndMergeRecords(
   reportsGroupKey,
   recordsGroupKey
 ) {
-  const grouped = groupByProperty(collection, reportsGroupKey);
-  const result = [];
+  const groups = groupByProperty(collection, reportsGroupKey);
+  const reports = [];
 
-  for (const key in grouped) {
-    const group = grouped[key];
-    const base = { ...group[0] };
+  for (const key in groups) {
+    const rawReports = groups[key];
+    const report = { ...rawReports[0] };
 
-    removeNullProps(base);
+    removeNullProps(report);
 
-    const allRecords = group.flatMap(r => r.records || []);
+    const allRecords = rawReports.flatMap(r => r.records || []);
     const mergedRecords = mergeRecords(allRecords, recordsGroupKey);
-    const allProps = getAllProps(group, [reportsGroupKey, 'records']);
-    const differingProps = getDifferingProps(group, allProps);
-    const differences = buildDifferences(group, base, differingProps);
+    const allProps = getAllProps(rawReports, [reportsGroupKey, 'records']);
+    const differingProps = getDifferingProps(rawReports, allProps);
+    const differences = buildDifferences(rawReports, report, differingProps);
 
-    base['records'] = mergedRecords;
-    base['zDifferences'] = differences;
+    report['records'] = mergedRecords;
+    report['zDifferences'] = differences;
 
-    result.push(base);
+    reports.push(report);
   }
 
-  return result;
+  return reports;
 }
 
 function groupByProperty(collection, property) {

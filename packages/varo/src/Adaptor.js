@@ -3,7 +3,7 @@ import { expandReferences } from '@openfn/language-common/util';
 
 import { parseMetadata } from './Utils';
 import {
-  parseRecordsToReport,
+  parseFlatRecordsToReport,
   parseRtmdCollectionToReports,
 } from './StreamingUtils';
 import { parseVaroEmsToReport } from './VaroEmsUtils';
@@ -71,12 +71,12 @@ export function convertToEms(messageContents) {
  * Systematically separates report properties from record properties.
  * @public
  * @function
- * @param {Array} records - Array of EMS-like JSON objects.
+ * @param {Array} items - Array of EMS-like JSON objects.
  * @param {string} [reportType='unknown'] - Optional. Source of the report, e.g., "ems" or "rtmd".
  * @state {Array} data - The converted, EMS-compliant report with records.
  * @returns {Operation}
  * @example <caption>Convert data to EMS-compliant data.</caption>
- * convertRecordsToReport(
+ * convertItemsToReport(
  *   [
  *     { "ASER": "BJBC 08 30", "ABST": "20241205T004440Z", "TVC": 5.0 },
  *     { "ASER": "BJBC 08 30", "ABST": "20241205T005440Z", "TVC": 5.2 },
@@ -92,25 +92,31 @@ export function convertToEms(messageContents) {
  *   ],
  * }
  */
-export function convertRecordsToReport(records, reportType = 'unknown') {
+export function convertItemsToReports(items, reportType = 'unknown') {
   return async state => {
     const [resolvedRecords, resolvedReportType] = expandReferences(
       state,
-      records,
+      items,
       reportType
     );
 
-    if (resolvedReportType == 'ems') {
-      const report = parseRecordsToReport(resolvedRecords);
-      return { ...composeNextState(state, [report]) };
+    const reportParsers = {
+      ems: parseFlatRecordsToReport,
+      rtmd: parseRtmdCollectionToReports,
+    };
+
+    const parser = reportParsers[resolvedReportType];
+    if (!parser) {
+      throw new Error(`Report type not supported: ${resolvedReportType}`);
     }
 
-    if (resolvedReportType == 'rtmd') {
-      const reports = parseRtmdCollectionToReports(resolvedRecords);
-      return { ...composeNextState(state, reports) };
-    }
+    const reports = parser(resolvedRecords);
 
-    throw new Error(`Report type not supported: ${resolvedReportType}`);
+    // for (const report of reports) {
+    //   report.records = '[redacted]';
+    // }
+
+    return { ...composeNextState(state, reports) };
   };
 }
 
@@ -119,34 +125,43 @@ export function convertRecordsToReport(records, reportType = 'unknown') {
  *
  * @public
  * @function
- * @param {Object} report - EMS-compliant report object.
+ * @param {Object} reports - EMS-compliant report objects.
  * @param {string} [reportType='unknown'] - Optional. Source of the report, e.g., "ems" or "rtmd".
  * @returns {Function} An operation function that receives `state` and returns updated message content.
  *
  * @example
- * // Convert EMS-compliant record to Varo message components.
- * convertReportToMessageContent(emsReport, "ems");
+ * // Convert EMS-compliant reports to Varo message components.
+ * convertReportsToMessageContents(emsReports, "ems");
  */
-export function convertReportToMessageContent(report, reportType = 'unknown') {
+export function convertReportsToMessageContents(
+  reports,
+  reportType = 'unknown'
+) {
   return async state => {
-    const [resolvedReport, resolvedReportType] = expandReferences(
+    const [resolvedReports, resolvedReportType] = expandReferences(
       state,
-      report,
+      reports,
       reportType
     );
 
-    resolvedReport['zReportType'] = reportType;
-    resolvedReport['zGeneratedTimestamp'] = new Date().toISOString();
+    const messageContents = [];
 
-    const messageContent = {
-      subject: `OpenFn | ${resolvedReportType.toUpperCase()}`,
-      data: {
-        filename: 'data.json',
-        content: JSON.stringify(resolvedReport, null, 4),
-      },
-    };
+    for (const resolvedReport of resolvedReports) {
+      resolvedReport['zReportType'] = resolvedReportType;
+      resolvedReport['zGeneratedTimestamp'] = new Date().toISOString();
 
-    return { ...composeNextState(state, messageContent) };
+      const messageContent = {
+        subject: `OpenFn | ${resolvedReportType.toUpperCase()}`,
+        data: {
+          filename: 'data.json',
+          content: JSON.stringify(resolvedReport, null, 4),
+        },
+      };
+
+      messageContents.push(messageContent);
+    }
+
+    return { ...composeNextState(state, messageContents) };
   };
 }
 
