@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import testData from './fixtures.json' assert {type: 'json'}
 import { request } from '../src/Adaptor.js';
+import testData from './fixtures.json' assert {type: 'json'};
 
 const testServer = enableMockClient('https://fake.server.com');
 
@@ -29,6 +29,31 @@ describe('request', () => {
         Authorization: 'xyz'
       }
     })(state);
+    expect(finalState.data).to.eql(testData.invoiceResponse);
+  });
+
+  it('gets and access token when one is not provided', async () => {
+    let authHeaderUsed = null;
+    // Setup a mock endpoint
+    testServer
+      .intercept({
+        path: '/collection/token/',
+        method: 'POST'
+      })
+      .reply(200, { access_token: 'xyz' });
+
+    testServer
+      .intercept({
+        path: '/collection/v2_0/invoice',
+        method: 'POST'
+      })
+      .reply(200, async (options, body) => {
+        authHeaderUsed = options.headers['Authorization'];
+        return testData.invoiceResponse;
+      });
+
+    const finalState = await request('POST', '/collection/v2_0/invoice', testData.invoiceBody)(state);
+    expect(authHeaderUsed).to.match(/^Bearer\s.+/);
     expect(finalState.data).to.eql(testData.invoiceResponse);
   });
 
