@@ -9,6 +9,10 @@ View the
 [docs site](https://docs.openfn.org/adaptors/packages/mtn-momo-docs) for
 full technical documentation.
 
+Visit the 
+[official MTN MoMo docs site](https://momodeveloper.mtn.com/api-documentation) for more information.
+
+
 ### Configuration
 
 View the
