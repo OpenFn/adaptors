@@ -7,8 +7,6 @@ import {
 import nodepath from 'node:path';
 
 
-let access_token;
-
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
@@ -43,14 +41,17 @@ export const getAccessToken = async (configuration) => {
 
 export const request = async (state, method, path, options) => {
 
-  const { baseUrl, subscription_key } = state.configuration;
+  const { baseUrl, subscription_key, access_token: savedToken } = state.configuration;
 
   const errors = {
     404: 'Page not found',
   };
+  //reuse token if already saved in state.configuration
+  let token = savedToken;
 
-  if (!access_token && (!options.headers?.Authorization)) {
-    access_token = await getAccessToken(state.configuration);
+  if (!token && (!options.headers?.Authorization)) {
+    token = await getAccessToken(state.configuration);
+    state.configuration.access_token = token; // persiste for next call
   }
 
   let opts = {
@@ -61,7 +62,7 @@ export const request = async (state, method, path, options) => {
     headers: {
       'Cache-Control': 'no-cache',
       'Ocp-Apim-Subscription-Key': subscription_key,
-      'Authorization': `Bearer ${access_token}`,
+      'Authorization': `Bearer ${token}`,
       ...options.headers,
     },
   };
