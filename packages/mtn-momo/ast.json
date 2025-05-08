@@ -13,12 +13,12 @@
         "tags": [
           {
             "title": "example",
-            "description": "request('GET', '/collection/v1_0/accountholder/MSISDN/46733123451/basicuserinfo', {}, { headers: { 'X-Target-Environment': 'sandbox' } });",
+            "description": "request(\"GET\", \"/collection/v1_0/accountholder/MSISDN/46733123451/basicuserinfo\", {}, { headers: { \"X-Target-Environment\": \"sandbox\" } });",
             "caption": "Get basic user information"
           },
           {
             "title": "example",
-            "description": "request('POST' '/collection/v2_0/invoice', \n {\n   \"externalId\": \"996b82e6-d498-4c7c-87ee-7b0654350a2c\",\n   \"amount\": \"100\",\n   \"currency\": \"EUR\",\n   \"validityDuration\": \"3600\",\n   \"intendedPayer: {\n     \"partyIdType\": \"MSISDN\",\n     \"partyId\": \"46733123450\"\n   },\n   \"payee\": {\n     \"partyIdType\": \"MSISDN\",\n     \"partyId\": \"46733123452\"\n   }\n  \"description\": \"\"\n },\n {\n   \"headers\": {\n     \"X-Target-Environment\": \"sandbox\",\n     \"X-Reference-Id\": \"ceb46c4f-1523-405b-9d16-dd9ad45e202c\"\n     }\n});",
+            "description": "request(\"POST\", \"/collection/v2_0/invoice\", \n {\n   \"externalId\": \"996b82e6-d498-4c7c-87ee-7b0654350a2c\",\n   \"amount\": \"100\",\n   \"currency\": \"EUR\",\n   \"validityDuration\": \"3600\",\n   \"intendedPayer\": {\n     \"partyIdType\": \"MSISDN\",\n     \"partyId\": \"46733123450\"\n   },\n   \"payee\": {\n     \"partyIdType\": \"MSISDN\",\n     \"partyId\": \"46733123452\"\n   }\n  \"description\": \"\"\n },\n {\n   \"headers\": {\n     \"X-Target-Environment\": \"sandbox\",\n     \"X-Reference-Id\": \"ceb46c4f-1523-405b-9d16-dd9ad45e202c\"\n     }\n});",
             "caption": "Create an invoice"
           },
           {
@@ -51,7 +51,7 @@
           },
           {
             "title": "param",
-            "description": "Object which will be attached to the POST body",
+            "description": "Object which will be attached to the HTTP request body",
             "type": {
               "type": "NameExpression",
               "name": "object"

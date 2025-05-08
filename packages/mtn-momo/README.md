@@ -1,18 +1,18 @@
-# language-mtn-mobile <img src='./assets/square.png' width="30" height="30"/>
+# language-mtn-momo <img src='./assets/square.png' width="30" height="30"/>
 
 An OpenFn **_adaptor_** for building integration jobs for use with the
-mtn-mobile API.
+mtn-momo API.
 
 ## Documentation
 
 View the
-[docs site](https://docs.openfn.org/adaptors/packages/mtn-mobile-docs) for
+[docs site](https://docs.openfn.org/adaptors/packages/mtn-momo-docs) for
 full technical documentation.
 
 ### Configuration
 
 View the
-[configuration-schema](https://docs.openfn.org/adaptors/packages/mtn-mobile-configuration-schema/)
+[configuration-schema](https://docs.openfn.org/adaptors/packages/mtn-momo-configuration-schema/)
 for required and optional `configuration` properties.
 
 ## Development
