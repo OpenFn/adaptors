@@ -24,7 +24,7 @@ import * as util from './Utils';
 
 
 /**
- * Make a HTTP request to the MTN MoMo API ([view docs](https://momodeveloper.mtn.com/api-documentation))
+ * Make a HTTP request to the [MTN MoMo API ](https://momodeveloper.mtn.com/API-collections#api=collection&operation=bc-authorize)
  * @example <caption>Get basic user information</caption>
  * request("GET", "/collection/v1_0/accountholder/MSISDN/46733123451/basicuserinfo", {}, { headers: { "X-Target-Environment": "sandbox" } });
  * @example <caption>Create an invoice</caption>
