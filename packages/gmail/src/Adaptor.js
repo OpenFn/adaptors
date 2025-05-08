@@ -186,10 +186,18 @@ export function getContentsFromMessages(options) {
 export function sendMessage(message) {
   return async state => {
     const [resolvedMessage] = expandReferences(state, message);
-    const result = await sendMessageWithAttachments(resolvedMessage);
+    const messages = Array.isArray(resolvedMessage)
+      ? resolvedMessage
+      : [resolvedMessage];
+
+    const results = [];
+    for (const msg of messages) {
+      const result = await sendMessageWithAttachments(msg);
+      results.push(result);
+    }
 
     return {
-      ...composeNextState(state, result),
+      ...composeNextState(state, results),
     };
   };
 }
