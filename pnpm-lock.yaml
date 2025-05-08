@@ -1365,7 +1365,7 @@ importers:
         specifier: ^5.22.1
         version: 5.28.5
 
-  packages/mtn-mobile:
+  packages/mtn-momo:
     dependencies:
       '@openfn/language-common':
         specifier: workspace:*
@@ -5025,7 +5025,7 @@ packages:
     dependencies:
       '@sinonjs/commons': 1.8.3
       lodash.get: 4.4.2
-      type-detect: 4.0.8
+      type-detect: 4.1.0
     dev: true
 
   /@sinonjs/samsam@7.0.1:
@@ -5033,7 +5033,7 @@ packages:
     dependencies:
       '@sinonjs/commons': 2.0.0
       lodash.get: 4.4.2
-      type-detect: 4.0.8
+      type-detect: 4.1.0
     dev: true
 
   /@sinonjs/samsam@8.0.2:
