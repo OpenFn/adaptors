@@ -9,7 +9,7 @@ export function parseRtmdCollectionToReports(collection) {
   return groupDifferencesAndMergeRecords(collection, 'ESER', 'ABST');
 }
 
-export function parseFlatRecordsToReport(collection, reqReport, reqRecord) {
+export function parseFlatRecordsToReports(collection, reqReport, reqRecord) {
   if (!Array.isArray(collection) || collection.length === 0) {
     console.error('No records to process for report.');
     return null;

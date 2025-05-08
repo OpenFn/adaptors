@@ -4,7 +4,7 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import { parseFridgeTagToReport, parseFridgeTag } from '../src/FridgeTagUtils';
 import { parseVaroEmsToReport } from '../src/VaroEmsUtils';
-import { parseRecordsToReport } from '../src/StreamingUtils';
+import { parseFlatRecordsToReports } from '../src/StreamingUtils';
 
 describe('parseFridgeTagToReport', () => {
   it('converts raw fridgetag data into ems report', async () => {
@@ -58,7 +58,7 @@ describe('parseVaroEmsToReport', () => {
   });
 });
 
-describe('parseRecordsToReport', () => {
+describe('parseFlatRecordsToReports', () => {
   let report, record;
 
   before(async () => {
@@ -67,7 +67,7 @@ describe('parseRecordsToReport', () => {
     const collection = data.map(i => i.value);
     collection[0].HAMB = false;
 
-    report = parseRecordsToReport(collection, 'FAKE_TEST');
+    report = parseFlatRecordsToReports(collection, 'FAKE_TEST')[0];
     record = report?.records?.[0];
   });
 

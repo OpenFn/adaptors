@@ -3,10 +3,10 @@ import { expandReferences } from '@openfn/language-common/util';
 
 import { parseMetadata } from './Utils';
 import {
-  parseFlatRecordsToReport,
+  parseFlatRecordsToReports,
   parseRtmdCollectionToReports,
 } from './StreamingUtils';
-import { parseVaroEmsToReport } from './VaroEmsUtils';
+import { parseVaroEmsToReports } from './VaroEmsUtils';
 import { parseFridgeTag, parseFridgeTagToReport } from './FridgeTagUtils';
 
 /**
@@ -50,7 +50,7 @@ export function convertToEms(messageContents) {
 
         const data = JSON.parse(content.data.content);
         const dataPath = content.data.filename;
-        const result = parseVaroEmsToReport(metadata, data, dataPath);
+        const result = parseVaroEmsToReports(metadata, data, dataPath);
         reports.push(result);
         continue;
       }
@@ -101,7 +101,7 @@ export function convertItemsToReports(items, reportType = 'unknown') {
     );
 
     const reportParsers = {
-      ems: parseFlatRecordsToReport,
+      ems: parseFlatRecordsToReports,
       rtmd: parseRtmdCollectionToReports,
     };
 
