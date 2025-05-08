@@ -107,8 +107,8 @@ export async function requestWithPagination(state, path, options = {}) {
 
     // If the user hasn't set a max but we've hit the limit, we should warn them
     if (
-      isUsingDefaultLimit &&
       hasMoreContent &&
+      isUsingDefaultLimit &&
       results.length === maxResults
     ) {
       console.warn(
