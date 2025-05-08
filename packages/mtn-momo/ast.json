@@ -9,7 +9,7 @@
         "options"
       ],
       "docs": {
-        "description": "Make a HTTP request to MTN MoMo API\nFInd the officiala MTN MoMo docs [here](https://momodeveloper.mtn.com/api-documentation)",
+        "description": "Make a HTTP request to the MTN MoMo API ([view docs](https://momodeveloper.mtn.com/api-documentation))",
         "tags": [
           {
             "title": "example",
