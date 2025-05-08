@@ -137,6 +137,8 @@ function getDifferingProps(records, props) {
 }
 
 function buildDifferences(records, base, differingProps) {
+  const uniqueSet = new Set();
+
   return records
     .map(record => {
       const diff = {};
@@ -146,8 +148,21 @@ function buildDifferences(records, base, differingProps) {
         }
       }
 
-      if (Object.keys(diff).length > 0) {
-        return diff;
+      // Sort properties to ensure consistent order
+      const sortedDiff = Object.keys(diff)
+        .sort()
+        .reduce((acc, key) => {
+          acc[key] = diff[key];
+          return acc;
+        }, {});
+
+      // Create a unique key based on the sorted difference object
+      const key = JSON.stringify(sortedDiff);
+
+      // Only include if not already present and has differences
+      if (Object.keys(diff).length > 0 && !uniqueSet.has(key)) {
+        uniqueSet.add(key);
+        return sortedDiff;
       }
 
       return null;

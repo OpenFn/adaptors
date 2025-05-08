@@ -44,3 +44,37 @@ export function deepEqual(a, b) {
 
   return true;
 }
+
+export function formatDeviceInfo(data) {
+  function formatType(label, mfr, mod, ser) {
+    let output = '';
+
+    if (mfr || mod || ser) {
+      output += `${label}\n`;
+
+      if (mfr) {
+        output += `  Manufacturer: ${mfr}\n`;
+      }
+
+      if (mod) {
+        output += `  Model: ${mod}\n`;
+      }
+
+      if (ser) {
+        output += `  Serial Number: ${ser}\n`;
+      }
+
+      output += '\n';
+    }
+
+    return output;
+  }
+
+  let output = '';
+
+  output += formatType('Appliance', data.AMFR, data.AMOD, data.ASER);
+  output += formatType('Logger', data.LMFR, data.LMOD, data.LSER);
+  output += formatType('EMD', data.EMFR, data.EMOD, data.ESER);
+
+  return output || 'No valid data found';
+}

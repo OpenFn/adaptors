@@ -1,12 +1,12 @@
 import { composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import { parseMetadata } from './Utils';
+import { parseMetadata, formatDeviceInfo } from './Utils';
 import {
   parseFlatRecordsToReports,
   parseRtmdCollectionToReports,
 } from './StreamingUtils';
-import { parseVaroEmsToReports } from './VaroEmsUtils';
+import { parseVaroEmsToReport } from './VaroEmsUtils';
 import { parseFridgeTag, parseFridgeTagToReport } from './FridgeTagUtils';
 
 /**
@@ -50,7 +50,7 @@ export function convertToEms(messageContents) {
 
         const data = JSON.parse(content.data.content);
         const dataPath = content.data.filename;
-        const result = parseVaroEmsToReports(metadata, data, dataPath);
+        const result = parseVaroEmsToReport(metadata, data, dataPath);
         reports.push(result);
         continue;
       }
@@ -146,15 +146,18 @@ export function convertReportsToMessageContents(
 
     const messageContents = [];
 
-    for (const resolvedReport of resolvedReports) {
-      resolvedReport['zReportType'] = resolvedReportType;
-      resolvedReport['zGeneratedTimestamp'] = new Date().toISOString();
+    for (const report of resolvedReports) {
+      report['zReportType'] = resolvedReportType;
+      report['zGeneratedTimestamp'] = new Date().toISOString();
+
+      const serialNumber = report['ESER'] || report['LSER'] || report['ASER'];
 
       const messageContent = {
-        subject: `OpenFn | ${resolvedReportType.toUpperCase()}`,
+        subject: `OpenFn | ${resolvedReportType.toUpperCase()} | ${serialNumber}`,
+        body: formatDeviceInfo(report),
         data: {
           filename: 'data.json',
-          content: JSON.stringify(resolvedReport, null, 4),
+          content: JSON.stringify(report, null, 4),
         },
       };
 
