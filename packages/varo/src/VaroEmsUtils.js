@@ -1,5 +1,5 @@
-export function parseVaroEmsToEms(metadata, data, dataPath) {
-  const result = {
+export function parseVaroEmsToReport(metadata, data, dataPath) {
+  const report = {
     CID: null,
     LAT: metadata.location.used.latitude,
     LNG: metadata.location.used.longitude,
@@ -46,10 +46,10 @@ export function parseVaroEmsToEms(metadata, data, dataPath) {
       TVC: item.TVC, // vaccine chamber temperature
     };
 
-    result.records.push(record);
+    report.records.push(record);
   }
 
-  return result;
+  return report;
 }
 
 function parseRelativeDateFromUsbPluggedInfo(path) {

@@ -1,44 +1,48 @@
-export function parseFridgeTagToEms(metadata, nodes) {
-  const result = {
-    records: [],
-    reports: [],
-  };
+export function parseFridgeTagToReport(metadata, nodes) {
+  const report = {};
+  const records = [];
+  const zReports = [];
 
-  applyMetadataToResult();
-  applyNodesToResult();
+  applyMetadataToReport();
+  applyNodesToReport();
 
-  function applyMetadataToResult() {
-    applyPropertyToResult('AMFR', metadata?.refrigerator?.manufacturer);
-    applyPropertyToResult('AMOD', metadata?.refrigerator?.model);
-    applyPropertyToResult('LMFR', metadata?.refrigerator?.deviceManufacturer);
+  report.records = records;
+  report.zReports = zReports;
 
-    applyPropertyToResult('CID', metadata?.facility?.country);
+  return report;
 
-    applyPropertyToResult('LAT', metadata?.location?.used?.latitude);
-    applyPropertyToResult('LNG', metadata?.location?.used?.longitude);
-    applyPropertyToResult('LACC', metadata?.location?.used?.accuracy);
+  function applyMetadataToReport() {
+    applyPropertyToReport('AMFR', metadata?.refrigerator?.manufacturer);
+    applyPropertyToReport('AMOD', metadata?.refrigerator?.model);
+    applyPropertyToReport('LMFR', metadata?.refrigerator?.deviceManufacturer);
+
+    applyPropertyToReport('CID', metadata?.facility?.country);
+
+    applyPropertyToReport('LAT', metadata?.location?.used?.latitude);
+    applyPropertyToReport('LNG', metadata?.location?.used?.longitude);
+    applyPropertyToReport('LACC', metadata?.location?.used?.accuracy);
   }
 
-  function applyNodesToResult() {
-    applyPropertyToResult('LMOD', nodes['Device']);
-    applyPropertyToResult('LSER', nodes['Conf']?.['Serial']);
-    applyPropertyToResult('LSV', nodes['Fw Vers']);
+  function applyNodesToReport() {
+    applyPropertyToReport('LMOD', nodes['Device']);
+    applyPropertyToReport('LSER', nodes['Conf']?.['Serial']);
+    applyPropertyToReport('LSV', nodes['Fw Vers']);
 
     let productionDate = nodes['Conf']?.['Test TS'];
     productionDate = productionDate ? new Date(productionDate) : null;
-    applyPropertyToResult('LDOP', productionDate);
+    applyPropertyToReport('LDOP', productionDate);
 
     let dayIndex = 1;
     let dayNode;
     while ((dayNode = nodes['Hist']?.[dayIndex++]) !== undefined) {
       applyDayToRecords(dayNode);
-      applyDayToReports(dayNode);
+      applyDayToZReports(dayNode);
     }
   }
 
-  function applyPropertyToResult(property, text) {
+  function applyPropertyToReport(property, text) {
     if (!text) return;
-    result[property] = text;
+    report[property] = text;
   }
 
   function applyDayToRecords(dayNode) {
@@ -61,11 +65,11 @@ export function parseFridgeTagToEms(metadata, nodes) {
         alarmDescription
       );
 
-      result.records.push({
+      records.push({
         ABST: dateTime,
         TVC: temp,
         ALRM: alarm,
-        description: date + ' ' + tempField,
+        zdescription: date + ' ' + tempField,
       });
 
       function parseAlarm(alarmNode, description) {
@@ -75,7 +79,7 @@ export function parseFridgeTagToEms(metadata, nodes) {
     }
   }
 
-  function applyDayToReports(dayNode) {
+  function applyDayToZReports(dayNode) {
     const report = {
       date: new Date(dayNode['Date']),
       duration: '1D',
@@ -83,12 +87,12 @@ export function parseFridgeTagToEms(metadata, nodes) {
       aggregates: [],
     };
 
-    applyAlarmsToReport(dayNode);
-    applyAggregatesToReport(dayNode);
+    applyAlarmsToZReport(dayNode);
+    applyAggregatesToZReport(dayNode);
 
-    result.reports.push(report);
+    zReports.push(report);
 
-    function applyAlarmsToReport(dayNode) {
+    function applyAlarmsToZReport(dayNode) {
       const date = dayNode['Date'];
 
       applyAlarmToAlarms(dayNode['Alarm']?.['0'], 'FRZE');
@@ -119,7 +123,7 @@ export function parseFridgeTagToEms(metadata, nodes) {
       }
     }
 
-    function applyAggregatesToReport(dayNode) {
+    function applyAggregatesToZReport(dayNode) {
       applyTvcToAggregates(dayNode);
 
       function applyTvcToAggregates(dayNode) {
@@ -132,8 +136,6 @@ export function parseFridgeTagToEms(metadata, nodes) {
       }
     }
   }
-
-  return result;
 }
 
 export function parseFridgeTag(text) {
