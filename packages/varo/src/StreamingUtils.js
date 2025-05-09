@@ -22,9 +22,10 @@ export function parseFlatRecordsToReports(collection, reqReport, reqRecord) {
     const records = groups[key];
     const reportRecord = records[0];
 
-    copyLoggerToEmd(reportRecord);
-
+    
     const report = mapProperties(reportRecord, records, reqReport, reqRecord);
+    promoteDeviceProperties(report, 'E');
+
     reports.push(report);
   }
 
@@ -53,6 +54,8 @@ function groupDifferencesAndMergeRecords(
 
     report['records'] = mergedRecords;
     report['zDifferences'] = differences;
+
+    promoteDeviceProperties(report, 'L');
 
     reports.push(report);
   }
@@ -229,7 +232,7 @@ function mapProperties(report, records, reqReport, reqRecord) {
   };
 }
 
-function copyLoggerToEmd(source) {
+function promoteDeviceProperties(source, destination) {
   const keyPairs = [
     ['LID', 'EID'],
     ['LMFR', 'EMFR'],
@@ -241,7 +244,9 @@ function copyLoggerToEmd(source) {
   ];
 
   for (const [lKey, eKey] of keyPairs) {
-    if (source[eKey] != null) continue;
-    if (source[lKey] != null) source[eKey] = source[lKey];
+    const [fromKey, toKey] = destination === 'E' ? [lKey, eKey] : [eKey, lKey];
+
+    if (source[toKey] != null) continue;
+    if (source[fromKey] != null) source[toKey] = source[fromKey];
   }
 }
