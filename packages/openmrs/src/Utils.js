@@ -96,6 +96,7 @@ export async function requestWithPagination(state, path, options = {}) {
       requestOptions.query.limit = pageSize;
     }
 
+    // console.log({ requestOptions });
     // Fetch a page of data
     const response = await request(state, 'GET', path, requestOptions);
 
@@ -150,7 +151,7 @@ export async function request(state, method, path, options = {}) {
   const {
     query = {},
     data = {},
-    headers = { 'content-type': 'application/json' },
+    headers,
     parseAs = 'json',
     _onrequest,
     errors,
@@ -174,6 +175,7 @@ export async function request(state, method, path, options = {}) {
   const requestOptions = {
     body: data,
     headers: {
+      'content-type': 'application/json',
       ...authHeaders,
       ...headers,
     },
@@ -183,6 +185,7 @@ export async function request(state, method, path, options = {}) {
     errors,
     _onrequest,
   };
+  console.log({ requestOptions });
 
   return fetchAndLog(method, path, requestOptions);
 }

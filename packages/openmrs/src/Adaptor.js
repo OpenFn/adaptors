@@ -92,7 +92,7 @@ export function get(path, options = {}) {
         delete resolvedOptions.pageSize;
       }
     }
-    let { max, singleton, limit, pageSize, query, ...queryParams } =
+    let { max, singleton, limit, pageSize, query, language, ...queryParams } =
       resolvedOptions;
 
     if (singleton) {
@@ -111,6 +111,10 @@ export function get(path, options = {}) {
       limit,
       pageSize,
     };
+
+    if (language) {
+      requestOptions.headers = { 'accept-language': language };
+    }
 
     try {
       let result = await requestWithPagination(
