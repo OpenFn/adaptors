@@ -28,14 +28,35 @@ const defaultObjects = [
 
 describe('responseWithPagination', () => {
   const items = [1, 2, 3];
-  it('should return the first item', () => {
+
+  // TODO - test URL building in a set of separate tests
+
+  // TODO - test defaults
+  //      - if there less items then the default limit,returns all
+  //      - if there are more items than the default limit, returns limit
+
+  // TODO: for testing resposneWithPagination,
+  // - Default start and default limit
+  // - Is limit >= number of items
+  // - Is limit < number of items
+  // - What if user pass a limit that is > than maxLimit
+  // - What if limit > number of items
+  // - If limit is 1
+  // Test limit maxPageSize
+  it.only('start 0, limit 1 should return the first item', () => {
     const start = 0;
     const limit = 1;
-    const { results } = responseWithPagination('www', items, {
+
+    // responseWithPagination(items, query: { start, limit }, settings: { url, defaultLimit, maxLimit })
+
+    const res = responseWithPagination('www', items, {
       limit,
       start,
+      // defaultLimit
     });
-    expect(results).to.eql([1]);
+    console.log(res);
+
+    expect(res.results).to.eql([1]);
   });
   it('should return 2 items with limit 2', () => {
     const start = 0;
@@ -46,6 +67,8 @@ describe('responseWithPagination', () => {
     });
     expect(results).to.eql([1, 2]);
   });
+
+  // Test page size
   it('should return 2 items with start 1 and pageSize 2', () => {
     const start = 1;
     const pageSize = 2;

@@ -81,7 +81,6 @@ export function getSubmissions(formId, options) {
     if (resolvedOptions.limit) {
       if (resolvedOptions.pageSize) {
         console.warn(`Warning: ignoring option pageSize as "limit" is set`);
-
         delete resolvedOptions.pageSize;
       }
     }

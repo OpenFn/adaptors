@@ -5,6 +5,8 @@ import {
   logResponse,
 } from '@openfn/language-common/util';
 
+export const DEFAULT_REQUEST_LIMIT = 1e4;
+
 export function prepareNextState(state, response) {
   const { body, ...responseWithoutBody } = response;
   return {
@@ -50,7 +52,7 @@ export async function requestWithPagination(state, path, options = {}) {
   let { pageSize, start, limit, ...otherOptions } = options;
 
   const isUsingDefaultLimit = limit === undefined;
-  const maxResults = limit ?? 1e4;
+  const maxResults = limit ?? DEFAULT_REQUEST_LIMIT;
 
   let isFirstRequest = true;
   let requestOptions = { query: { start, limit }, ...otherOptions };

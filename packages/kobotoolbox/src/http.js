@@ -21,6 +21,40 @@ import * as util from './util';
  */
 
 /**
+ * Make a HTTP request to any KoboToolbox endpoint
+ * @example <caption>Bulk updating of submissions</caption>
+ * http.request("PATCH", `assets/${$.form_uid}/data/bulk/`, {
+ *   body: {
+ *     submission_ids: [$.data.submission_id],
+ *     data: {
+ *       Transaction_status: "success",
+ *     },
+ *   },
+ * });
+ * @function
+ * @public
+ * @param {string} method - HTTP method to use
+ * @param {string} path - Path to resource
+ * @param {HTTPRequestOptions}  [options={}] - An object containing query, headers, and body for the request
+ * @state {HttpState}
+ * @returns {Operation}
+ */
+export function request(method, path, options = {}) {
+  return async state => {
+    const [resolvedMethod, resolvedPath, resolvedOptions = {}] =
+      expandReferences(state, method, path, options);
+
+    const response = await util.request(
+      state,
+      resolvedMethod,
+      resolvedPath,
+      resolvedOptions
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+/**
  * Make a GET request to any KoboToolbox endpoint.
  * @public
  * @function

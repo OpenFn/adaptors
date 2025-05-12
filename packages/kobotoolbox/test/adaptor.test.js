@@ -8,6 +8,7 @@ import {
   getDeploymentInfo,
 } from '../src/Adaptor';
 import { responseWithPagination } from './helper';
+import { DEFAULT_REQUEST_LIMIT } from '../src/util';
 const testServer = enableMockClient('https://test.kobotoolbox.org');
 const jsonHeaders = {
   headers: {
@@ -80,10 +81,42 @@ describe('getSubmissions', () => {
     mockSubmissions(formId, sampleResponse, { limit: 1 });
     const { data } = await execute(getSubmissions(formId, { limit: 1 }))(state);
 
+    expect(data.length).to.eql(1);
     expect(data).to.eql([{ uid: '1', name: 'Ruh' }]);
   });
 
-  it('should ignore pageSize if limit is set', async () => {
+  it('should not return more items than the default limit', async () => {
+    const state = { configuration };
+
+    const manyObjects = Array.from(
+      { length: DEFAULT_REQUEST_LIMIT + 1 },
+      (_, i) => ({
+        uid: String(i),
+      })
+    );
+    mockSubmissions(formId, manyObjects);
+    const { data } = await execute(getSubmissions(formId))(state);
+
+    expect(data.length).to.eql(DEFAULT_REQUEST_LIMIT);
+  });
+  // TODO should be able to explicity get more items than the default limit (ie, limit = DEFAULT_REQUEST_LIMIT + 2)
+  // TODO should get ALL items if the item count exceeds the default limit (ie, limit = Infinity)
+
+  // TODO: should use default page size
+  it('should use default page size', async () => {
+    const state = { configuration };
+    const manyObjects = Array.from({ length: 1001 }, (_, i) => ({
+      uid: String(i),
+    }));
+    mockSubmissions(formId, manyObjects);
+    const { data } = await execute(getSubmissions(formId))(state);
+    // How
+    expect(data.length).to.eql(1001);
+  });
+  // TODO: should allow page size to be overridden
+
+  // Bad test, remove
+  it.skip('should ignore pageSize if limit is set', async () => {
     const state = { configuration };
 
     const manyObjects = Array.from({ length: 1001 }, (_, i) => ({
