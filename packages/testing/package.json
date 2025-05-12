@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-testing",
+  "label": "Testing",
   "version": "1.0.10",
   "description": "OpenFn test adaptor. Internal use only.",
   "type": "module",
@@ -26,13 +27,12 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:2.3.0"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
-    "esno": "^4.7.0",
     "rimraf": "3.0.2",
     "undici": "^5.22.1"
   },

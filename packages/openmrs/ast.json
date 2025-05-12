@@ -1,75 +1,53 @@
 {
   "operations": [
     {
-      "name": "getPatient",
-      "params": [
-        "uuid",
-        "callback"
-      ],
-      "docs": {
-        "description": "Gets patient matching a uuid",
-        "tags": [
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "A uuid for the patient",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "uuid"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "example",
-            "description": "getPatient('681f8785-c9ca-4dc8-a091-7b869316ff93')",
-            "caption": "Get a patient by uuid"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "get",
       "params": [
         "path",
-        "query",
-        "callback"
+        "options"
       ],
       "docs": {
-        "description": "Make a get request to any OpenMRS REST endpoint.",
+        "description": "Fetch resources from OpenMRS. Use this to fetch a single resource,\nor to search a list.\n\nOptions will be appended as query parameters to the request URL,\nrefer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.\n\nPagination is handled automatically by default (maximum 10k items). Set `max`\nto paginate with a higher limit, or pass `limit` to force a single request, as\nper the OpenMRS Rest API.",
         "tags": [
           {
             "title": "example",
-            "description": "get(\"patient\", {\n  q: \"Patient\",\n  limit: 1,\n});"
+            "description": "get(\"concept\")",
+            "caption": "List all concepts (up to a maximum of 10k items, with pagination)"
+          },
+          {
+            "title": "example",
+            "description": "get(\"concept\", { query: \"brian\", max: Infinity })",
+            "caption": "List all concepts (with pagination)"
+          },
+          {
+            "title": "example",
+            "description": "get(\"patient\", { query: \"brian\", max: 100 })",
+            "caption": "Search up to 100 patients by name (allowing pagination) (<a href=\"https://rest.openmrs.org/#search-patients\">see OpenMRS API</a>)"
+          },
+          {
+            "title": "example",
+            "description": "get(\"patient/abc\")",
+            "caption": "Fetch patient by UUID (returns an array of 1 item)"
+          },
+          {
+            "title": "example",
+            "description": "get(\"patient/abc\", { singleton: true })",
+            "caption": "Fetch patient by UUID (returns an object of patient data)"
+          },
+          {
+            "title": "example",
+            "description": "get(\"patient\", { query: \"brian\", limit: 10 })",
+            "caption": "Search up to 10 patients by name (in a single request without pagination) (<a href=\"https://rest.openmrs.org/#search-patients\">see OpenMRS API</a>)"
+          },
+          {
+            "title": "example",
+            "description": "get(\"patient/abc/allergy\")",
+            "caption": "List allergy subresources"
+          },
+          {
+            "title": "example",
+            "description": "get(\"patient/abc/allergy/xyz\")",
+            "caption": "Get allergy subresource by its UUID and parent patient UUID"
           },
           {
             "title": "function",
@@ -83,7 +61,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource (excluding /ws/rest/v1/)",
+            "description": "Path to resource (excluding `/ws/rest/v1/`)",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -92,314 +70,20 @@
           },
           {
             "title": "param",
-            "description": "parameters for the request",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "query"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
+            "description": "Query parameters and other options for the request.",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "function"
+                "name": "GetOptions"
               }
             },
-            "name": "callback"
+            "name": "options",
+            "default": "{}"
           },
           {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "post",
-      "params": [
-        "path",
-        "data",
-        "callback"
-      ],
-      "docs": {
-        "description": "Make a post request to any OpenMRS rest endpoint",
-        "tags": [
-          {
-            "title": "example",
-            "description": "post(\n  \"idgen/identifiersource/8549f706-7e85-4c1d-9424-217d50a2988b/identifier\",\n  {}\n);"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Path to resource (excluding /ws/rest/v1/)",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Object which defines data that will be used to create a given instance of resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "searchPatient",
-      "params": [
-        "query",
-        "callback"
-      ],
-      "docs": {
-        "description": "Fetch all non-retired patients that match any specified parameters",
-        "tags": [
-          {
-            "title": "example",
-            "description": "searchPatient({ q: \"Sarah\"})"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Object with query for the patient.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "query"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "searchPerson",
-      "params": [
-        "query",
-        "callback"
-      ],
-      "docs": {
-        "description": "Fetch all non-retired persons that match any specified parameters",
-        "tags": [
-          {
-            "title": "example",
-            "description": "searchPerson({ q: \"Sarah\" })"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "object with query for the person",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "query"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getEncounter",
-      "params": [
-        "uuid",
-        "callback"
-      ],
-      "docs": {
-        "description": "Gets encounter matching a uuid",
-        "tags": [
-          {
-            "title": "example",
-            "description": "getEncounter(\"123\")"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "A uuid for the encounter",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "uuid"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getEncounters",
-      "params": [
-        "query",
-        "callback"
-      ],
-      "docs": {
-        "description": "Gets encounters matching params",
-        "tags": [
-          {
-            "title": "example",
-            "description": "getEncounters({ patient: \"123\", fromdate: \"2023-05-18\" })"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Object for the patient",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "query"
-          },
-          {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
+            "title": "state",
+            "description": "data An array of result objects"
           },
           {
             "title": "returns",
@@ -416,12 +100,11 @@
     {
       "name": "create",
       "params": [
-        "resourceType",
-        "data",
-        "callback"
+        "path",
+        "data"
       ],
       "docs": {
-        "description": "Create a record",
+        "description": "Create a resource. For a list of valid resources, see {@link https://rest.openmrs.org/ OpenMRS Docs}",
         "tags": [
           {
             "title": "public",
@@ -435,33 +118,25 @@
           },
           {
             "title": "param",
-            "description": "Type of resource to create. E.g. `person`, `patient`, `encounter`, ...",
+            "description": "Path to resource (excluding `/ws/rest/v1/`)",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "resourceType"
+            "name": "path"
           },
           {
             "title": "param",
-            "description": "Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.",
+            "description": "Resource definition",
             "type": {
               "type": "NameExpression",
-              "name": "OpenMRSData"
+              "name": "object"
             },
             "name": "data"
           },
           {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
+            "title": "state",
+            "description": "data The newly created resource, as returned by OpenMRS"
           },
           {
             "title": "returns",
@@ -474,17 +149,22 @@
           {
             "title": "example",
             "description": "create(\"person\", {\n  names: [\n    {\n      givenName: \"Mohit\",\n      familyName: \"Kumar\",\n    },\n  ],\n  gender: \"M\",\n  birthdate: \"1997-09-02\",\n  addresses: [\n    {\n      address1: \"30, Vivekananda Layout, Munnekolal,Marathahalli\",\n      cityVillage: \"Bengaluru\",\n      country: \"India\",\n      postalCode: \"560037\",\n    },\n  ],\n});",
-            "caption": "Create a person"
+            "caption": "Create a person (<a href=\"https://rest.openmrs.org/#create-a-person\">see OpenMRS API</a>)"
           },
           {
             "title": "example",
             "description": "create(\"encounter\", {\n  encounterDatetime: '2023-05-25T06:08:25.000+0000',\n  patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',\n  encounterType: 'dd528487-82a5-4082-9c72-ed246bd49591',\n  location: 'ba685651-ed3b-4e63-9b35-78893060758a',\n  encounterProviders: [],\n  visit: {\n    patient: '1fdaa696-e759-4a7d-a066-f1ae557c151b',\n    visitType: '7b0f5697-27e3-40c4-8bae-f4049abfb4ed',\n    startDatetime: '2023-05-25T06:08:25.000+0000',\n    stopDatetime: '2023-05-25T06:09:25.000+0000',\n  },\n})",
-            "caption": "Create an encounter"
+            "caption": "Create an encounter (<a href=\"https://rest.openmrs.org/#create-an-encounter\">see OpenMRS API</a>)"
           },
           {
             "title": "example",
             "description": "create(\"patient\", {\n  identifiers: [\n    {\n      identifier: '4023287',\n      identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',\n      preferred: true,\n    },\n  ],\n  person: {\n    gender: 'M',\n    age: 42,\n    birthdate: '1970-01-01T00:00:00.000+0100',\n    birthdateEstimated: false,\n    names: [\n      {\n        givenName: 'Doe',\n        familyName: 'John',\n      },\n    ],\n  },\n})",
-            "caption": "Create a patient"
+            "caption": "Create a patient (<a href=\"https://rest.openmrs.org/#create-a-patient\">see OpenMRS API</a>)"
+          },
+          {
+            "title": "example",
+            "description": "create(\"patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3/identifier\", { \n \"identifier\" : \"111:CLINIC1\",\n \"identifierType\" : \"a5d38e09-efcb-4d91-a526-50ce1ba5011a\",\n \"location\" : \"8d6c993e-c2cc-11de-8d13-0010c6dffd0f\",\n \"preferred\" : true\n})\n}",
+            "caption": "Create a patientIdentifier subresource (<a href=\"https://rest.openmrs.org/#create-a-patientidentifier-sub-resource-with-properties\">see OpenMRS API</a>)"
           }
         ]
       },
@@ -493,13 +173,11 @@
     {
       "name": "update",
       "params": [
-        "resourceType",
         "path",
-        "data",
-        "callback"
+        "data"
       ],
       "docs": {
-        "description": "Update data. A generic helper function to update a resource object of any type.\nUpdating an object requires to send `all required fields` or the `full body`",
+        "description": "Update a resource. Only properties included in the data will be affected.\nFor a list of valid resources and for update rules, see the Update sections\nof the {@link https://rest.openmrs.org/ OpenMRS Docs}",
         "tags": [
           {
             "title": "public",
@@ -513,16 +191,7 @@
           },
           {
             "title": "param",
-            "description": "The type of resource to be updated. E.g. `person`, `patient`, etc.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "resourceType"
-          },
-          {
-            "title": "param",
-            "description": "The `id` or `path` to the `object` to be updated. E.g. `e739808f-f166-42ae-aaf3-8b3e8fa13fda` or `e739808f-f166-42ae-aaf3-8b3e8fa13fda/{collection-name}/{object-id}`",
+            "description": "Path to resource (excluding `/ws/rest/v1/`)",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -531,7 +200,7 @@
           },
           {
             "title": "param",
-            "description": "Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.",
+            "description": "Resource properties to update",
             "type": {
               "type": "NameExpression",
               "name": "Object"
@@ -539,16 +208,8 @@
             "name": "data"
           },
           {
-            "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
+            "title": "state",
+            "description": "data The full updated resource, as returned by OpenMRS"
           },
           {
             "title": "returns",
@@ -560,8 +221,8 @@
           },
           {
             "title": "example",
-            "description": "update(\"person\", '3cad37ad-984d-4c65-a019-3eb120c9c373',{\"gender\":\"M\",\"birthdate\":\"1997-01-13\"})",
-            "caption": "a person"
+            "description": "update('person/3cad37ad-984d-4c65-a019-3eb120c9c373', {\n  'gender': 'M',\n  'birthdate':'1997-01-13'\n})",
+            "caption": "Update a person (<a href=\"https://rest.openmrs.org/#create-a-person\">see OpenMRS API</a>)"
           }
         ]
       },
@@ -570,13 +231,12 @@
     {
       "name": "upsert",
       "params": [
-        "resourceType",
-        "query",
+        "path",
         "data",
-        "callback"
+        "params"
       ],
       "docs": {
-        "description": "Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.",
+        "description": "Update a resource if it already exists, or otherwise create a new one.\n\nUpsert will first make a request for the target item (using the `path` and `params`) to see if it exists, and then issue a second create or update request.\nIf the query request returns multiple items, the upsert will throw an error.",
         "tags": [
           {
             "title": "public",
@@ -590,25 +250,16 @@
           },
           {
             "title": "param",
-            "description": "The type of a resource to `upsert`. E.g. `trackedEntityInstances`",
+            "description": "Path to resource (excluding `/ws/rest/v1/`)",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "resourceType"
+            "name": "path"
           },
           {
             "title": "param",
-            "description": "A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "query"
-          },
-          {
-            "title": "param",
-            "description": "The data to use for update or create depending on the result of the query.",
+            "description": "The resource data",
             "type": {
               "type": "NameExpression",
               "name": "Object"
@@ -617,23 +268,16 @@
           },
           {
             "title": "param",
-            "description": "Optional callback to handle the response",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "throws",
-            "description": "Throws range error",
+            "description": "Query parameters to append to the initial query",
             "type": {
               "type": "NameExpression",
-              "name": "RangeError"
-            }
+              "name": "Object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "state",
+            "description": "data The created/updated resource, as returned by OpenMRS"
           },
           {
             "title": "returns",
@@ -645,17 +289,97 @@
           },
           {
             "title": "example",
-            "description": "upsert('patient', { q: '10007JJ' }, { person: { age: 50 } });",
-            "caption": "For an existing patient using upsert"
+            "description": "upsert(\"patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a\", {\n  identifiers: [\n    {\n      identifier: '4023287',\n      identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',\n      preferred: true,\n    },\n  ],\n  person: {\n    gender: 'M',\n    age: 42,\n    birthdate: '1970-01-01T00:00:00.000+0100',\n    birthdateEstimated: false,\n    names: [\n      {\n        givenName: 'Doe',\n        familyName: 'John',\n      },\n    ],\n  },\n})",
+            "caption": "Upsert a patient (<a href=\"https://rest.openmrs.org/#patients-overview\">see OpenMRS API</a>)"
           },
           {
             "title": "example",
-            "description": "upsert(\n  \"patient\",\n  { q: \"1000EHE\" },\n  {\n    identifiers: [\n      {\n        identifier: \"1000EHE\",\n        identifierType: \"05a29f94-c0ed-11e2-94be-8c13b969e334\",\n        location: \"44c3efb0-2583-4c80-a79e-1f756a03c0a1\",\n        preferred: true,\n      },\n    ],\n    person: {\n      gender: \"M\",\n      age: 42,\n    },\n  }\n);",
-            "caption": "For non existing patient creating a patient record using upsert"
+            "description": "upsert(\"patient\", $.data, { q: \"Lamine Yamal\" })",
+            "caption": "Upsert a patient using a query to identify the record"
           }
         ]
       },
       "valid": true
+    },
+    {
+      "name": "destroy",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Delete a resource. Must include a UUID in the path.\nThrows an error if the resource does not exist.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "destroy(\"patient/12346\");",
+            "caption": "Void a patient"
+          },
+          {
+            "title": "example",
+            "description": "destroy(\"patient/12346\", {\n  purge: true\n});",
+            "caption": "Purge a patient"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource (excluding `/ws/rest/v1/`)",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options",
+            "default": "{}"
+          },
+          {
+            "title": "param",
+            "description": "The resource will be voided/retired unless true",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options.purge",
+            "default": "false"
+          },
+          {
+            "title": "state",
+            "description": "data The response from OpenMRS"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ],
   "exports": [],

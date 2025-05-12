@@ -1,44 +1,66 @@
 # @openfn/language-cartodb
 
-## 0.4.12
+## 0.4.15 - 22 April 2025
 
 ### Patch Changes
 
-- Updated dependencies [23ccb01]
+- Updated dependencies \[99e4b48]
+- Updated dependencies \[13bf08f]
+  - @openfn/language-common@2.4.0
+
+## 0.4.14 - 16 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[b089c56]
+  - @openfn/language-common@2.3.3
+
+## 0.4.13 - 11 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[d7105c0]
+  - @openfn/language-common@2.3.2
+
+## 0.4.12 - 14 March 2025
+
+### Patch Changes
+
+- Updated dependencies \[23ccb01]
   - @openfn/language-common@2.3.1
 
-## 0.4.11
+## 0.4.11 - 10 March 2025
 
 ### Patch Changes
 
 - 8a8c28d: - cleanup examples wrapped with `execute()` function
   - Add example caption and add sample payload
 
-## 0.4.10
+## 0.4.10 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [b3d7f59]
-- Updated dependencies [2d709ff]
-- Updated dependencies [41e8cc3]
+- Updated dependencies \[b3d7f59]
+- Updated dependencies \[2d709ff]
+- Updated dependencies \[41e8cc3]
   - @openfn/language-common@2.3.0
 
-## 0.4.9
+## 0.4.9 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [6dffdbd]
+- Updated dependencies \[6dffdbd]
   - @openfn/language-common@2.2.1
 
-## 0.4.8
+## 0.4.8 - 09 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [a47d8d5]
-- Updated dependencies [9240428]
+- Updated dependencies \[a47d8d5]
+- Updated dependencies \[9240428]
   - @openfn/language-common@2.2.0
 
-## 0.4.7
+## 0.4.7 - 28 October 2024
 
 ### Patch Changes
 
@@ -46,52 +68,52 @@
 - Updated dependencies
   - @openfn/language-common@2.1.1
 
-## 0.4.6
+## 0.4.6 - 18 October 2024
 
 ### Patch Changes
 
-- Updated dependencies [03a1a74]
+- Updated dependencies \[03a1a74]
   - @openfn/language-common@2.1.0
 
-## 0.4.5
+## 0.4.5 - 15 October 2024
 
 ### Patch Changes
 
-- Fixed security vulnerability in jsonpath-plus [33973a2]
+- Fixed security vulnerability in jsonpath-plus \[33973a2]
   - @openfn/language-common@2.0.3
 
-## 0.4.4
+## 0.4.4 - 24 September 2024
 
 ### Patch Changes
 
-- Updated dependencies [77a690f]
+- Updated dependencies \[77a690f]
   - @openfn/language-common@2.0.2
 
-## 0.4.3
+## 0.4.3 - 16 August 2024
 
 ### Patch Changes
 
 - 8146c23: Fix typings in package.json
-- Updated dependencies [8146c23]
+- Updated dependencies \[8146c23]
   - @openfn/language-common@2.0.1
 
-## 0.4.2
+## 0.4.2 - 01 August 2024
 
 ### Patch Changes
 
-- Updated dependencies [4fe527c]
+- Updated dependencies \[4fe527c]
   - @openfn/language-common@2.0.0
 
-## 0.4.1
+## 0.4.1 - 25 July 2024
 
 ### Patch Changes
 
 - 73d0a02: Make documentation public
-- Updated dependencies [4c08444]
-- Updated dependencies [73d0a02]
+- Updated dependencies \[4c08444]
+- Updated dependencies \[73d0a02]
   - @openfn/language-common@1.15.1
 
-## 0.4.0
+## 0.4.0 - 13 June 2024
 
 Republish to npmjs.com. No changes.
 
@@ -103,7 +125,7 @@ Republish to npmjs.com. No changes.
 
 ### Patch Changes
 
-- Updated dependencies [106ecf6d]
+- Updated dependencies \[106ecf6d]
   - @openfn/language-common@1.14.0
 
 ## 0.2.2
@@ -136,7 +158,7 @@ Republish to npmjs.com. No changes.
 
 ### Patch Changes
 
-- Updated dependencies [2c1d603]
+- Updated dependencies \[2c1d603]
   - @openfn/language-common@1.8.0
 
 ## 0.1.4
@@ -144,7 +166,7 @@ Republish to npmjs.com. No changes.
 ### Patch Changes
 
 - 14f481e: mark execute as private
-- Updated dependencies [2b4c61a]
+- Updated dependencies \[2b4c61a]
   - @openfn/language-common@1.7.6
 
 ## 0.1.3
@@ -163,7 +185,7 @@ Republish to npmjs.com. No changes.
 
 ### Patch Changes
 
-- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+- 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
 
 ## 0.1.0
 

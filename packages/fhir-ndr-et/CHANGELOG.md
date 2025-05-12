@@ -1,82 +1,105 @@
 # @openfn/language-fhir-ndr-et
 
-## 0.1.11
+## 0.1.14 - 22 April 2025
 
 ### Patch Changes
 
-- Updated dependencies [23ccb01]
+- Updated dependencies \[99e4b48]
+- Updated dependencies \[13bf08f]
+  - @openfn/language-common@2.4.0
+  - @openfn/language-fhir@5.0.4
+
+## 0.1.13 - 16 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[b089c56]
+  - @openfn/language-common@2.3.3
+
+## 0.1.12 - 11 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[d7105c0]
+  - @openfn/language-common@2.3.2
+
+## 0.1.11 - 14 March 2025
+
+### Patch Changes
+
+- Updated dependencies \[23ccb01]
   - @openfn/language-common@2.3.1
 
-## 0.1.10
+## 0.1.10 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [b3d7f59]
-- Updated dependencies [2d709ff]
-- Updated dependencies [41e8cc3]
+- Updated dependencies \[b3d7f59]
+- Updated dependencies \[2d709ff]
+- Updated dependencies \[41e8cc3]
   - @openfn/language-common@2.3.0
 
-## 0.1.9
+## 0.1.9 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [6dffdbd]
+- Updated dependencies \[6dffdbd]
   - @openfn/language-common@2.2.1
 
-## 0.1.8
+## 0.1.8 - 09 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [a47d8d5]
-- Updated dependencies [9240428]
+- Updated dependencies \[a47d8d5]
+- Updated dependencies \[9240428]
   - @openfn/language-common@2.2.0
 
-## 0.1.7
+## 0.1.7 - 03 November 2024
 
 ### Patch Changes
 
 - Fix typescript definitions
 
-## 0.1.6
+## 0.1.6 - 28 October 2024
 
 - Updated docs for each()
 - Updated dependencies
   - @openfn/language-common@2.1.1
   - @openfn/language-fhir@5.0.3
 
-## 0.1.5
+## 0.1.5 - 28 October 2024
 
 ### Patch Changes
 
 - Order the generated code alphabetically
 
-## 0.1.4
+## 0.1.4 - 23 October 2024
 
 ### Patch Changes
 
 - 47bf58f: Adjust build process to fix docs
 
-## 0.1.3
+## 0.1.3 - 18 October 2024
 
 ### Patch Changes
 
-- Updated dependencies [03a1a74]
+- Updated dependencies \[03a1a74]
   - @openfn/language-common@2.1.0
 
-## 0.1.2
+## 0.1.2 - 15 October 2024
 
 ### Patch Changes
 
-- Fixed security vulnerability in jsonpath-plus [33973a2]
+- Fixed security vulnerability in jsonpath-plus \[33973a2]
   - @openfn/language-common@2.0.3
 
-## 0.1.1
+## 0.1.1 - 09 October 2024
 
 ### Patch Changes
 
 - Update spec version
 
-## 0.1.0
+## 0.1.0 - 27 September 2024
 
 Initial release
 

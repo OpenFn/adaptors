@@ -1,6 +1,16 @@
 # @openfn/language-fhir
 
-## 5.0.3
+## 5.0.4 - 22 April 2025
+
+### Patch Changes
+
+- 99e4b48: - Better handling of HTML content in http requests
+  - When logging HTTP requests, include query parameters
+- Updated dependencies \[99e4b48]
+- Updated dependencies \[13bf08f]
+  - @openfn/language-common@2.4.0
+
+## 5.0.3 - 28 October 2024
 
 ### Patch Changes
 
@@ -8,23 +18,23 @@
 - Updated dependencies
   - @openfn/language-common@2.1.1
 
-## 5.0.2
+## 5.0.2 - 16 August 2024
 
 ### Patch Changes
 
 - 8146c23: Fix typings in package.json
-- Updated dependencies [8146c23]
+- Updated dependencies \[8146c23]
   - @openfn/language-common@2.0.1
 
-## 5.0.1
+## 5.0.1 - 01 August 2024
 
 ### Patch Changes
 
 - 940996b: Use common helper code to handle invalid absolute URLs
-- Updated dependencies [4fe527c]
+- Updated dependencies \[4fe527c]
   - @openfn/language-common@2.0.0
 
-## 5.0.0
+## 5.0.0 - 19 July 2024
 
 #### Added
 
@@ -84,6 +94,7 @@
   ```
 
 - Updated `getClaim` function to the new signature:
+
   ```js
   export const getClaim =
     (claimId, params, callback = s => s) =>
@@ -92,6 +103,7 @@
       data,
     });
   ```
+
 - Updated `configuration-schema.json`
   - Removed `authType`
   - Rename `token` to `access_token`
@@ -101,7 +113,7 @@
 
 - Removed `parseAs` from the options.
 
-## 4.0.0
+## 4.0.0 - 14 June 2024
 
 ### Major Changes
 
@@ -113,7 +125,7 @@
   - request: fix an issue where default headers would override user headers
   - request: if the body contains application/json content, parse it as JSON
 
-## 3.2.0
+## 3.2.0 - 13 June 2024
 
 ### Minor Changes
 
@@ -121,17 +133,17 @@
 
 ### Patch Changes
 
-- Updated dependencies [106ecf6d]
+- Updated dependencies \[106ecf6d]
   - @openfn/language-common@1.14.0
 
-## 3.1.2
+## 3.1.2 - 17 May 2024
 
 ### Patch Changes
 
 - 2b283549: - Update `create()` example
   - Update required properties in configuration schema
 
-## 3.1.1
+## 3.1.1 - 08 May 2024
 
 ### Patch Changes
 
@@ -139,13 +151,13 @@
 - Updated dependencies
   - @openfn/language-common@1.13.2
 
-## 3.1.0
+## 3.1.0 - 28 July 2023
 
 ### Minor Changes
 
 - d94e9ee: Migrate from axios to using `fetch` from `undici` and add uniti tests
 
-## 3.0.1
+## 3.0.1 - 19 June 2023
 
 ### Patch Changes
 
@@ -169,10 +181,10 @@
 
 ### Patch Changes
 
-- Updated dependencies [2c1d603]
+- Updated dependencies \[2c1d603]
   - @openfn/language-common@1.8.0
 
-## 2.0.0
+## 2.0.0 - 06 June 2023
 
 ### Major Changes
 
@@ -183,41 +195,41 @@
   - Improve error handling
   - Improve response handling
 
-## 1.1.5
+## 1.1.5 - 30 March 2023
 
 ### Patch Changes
 
 - 14f481e: mark execute as private
-- Updated dependencies [2b4c61a]
+- Updated dependencies \[2b4c61a]
   - @openfn/language-common@1.7.6
 
-## 1.1.4
+## 1.1.4 - 15 February 2023
 
 ### Patch Changes
 
 - f7ebd3c: remove sample configuration
 
-## 1.1.3
+## 1.1.3 - 15 February 2023
 
 ### Patch Changes
 
 - f2aed32: add examples
 
-## 1.1.2
+## 1.1.2 - 13 January 2023
 
 ### Patch Changes
 
-- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+- 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
 
-## 1.1.1
+## 1.1.1 - 11 November 2022
 
 ### Patch Changes
 
 - f2a91a4: Update package exports
-- Updated dependencies [f2a91a4]
+- Updated dependencies \[f2a91a4]
   - @openfn/language-common@1.7.5
 
-## 1.1.0
+## 1.1.0 - 04 November 2022
 
 ### Minor Changes
 
@@ -229,8 +241,8 @@
 - 8566b26: Fix typings
 - b3d45ff: Fix CJS export of npm package.
 - ecf5d30: remove sinon since it was not being used
-- Updated dependencies [8566b26]
-- Updated dependencies [b3d45ff]
-- Updated dependencies [b5eb665]
-- Updated dependencies [ecf5d30]
+- Updated dependencies \[8566b26]
+- Updated dependencies \[b3d45ff]
+- Updated dependencies \[b5eb665]
+- Updated dependencies \[ecf5d30]
   - @openfn/language-common@1.7.4

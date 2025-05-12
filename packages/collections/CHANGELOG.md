@@ -1,43 +1,65 @@
 # @openfn/language-collections
 
-## 0.7.5
+## 0.7.8 - 22 April 2025
 
 ### Patch Changes
 
-- Updated dependencies [23ccb01]
+- Updated dependencies \[99e4b48]
+- Updated dependencies \[13bf08f]
+  - @openfn/language-common@2.4.0
+
+## 0.7.7 - 16 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[b089c56]
+  - @openfn/language-common@2.3.3
+
+## 0.7.6 - 11 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[d7105c0]
+  - @openfn/language-common@2.3.2
+
+## 0.7.5 - 14 March 2025
+
+### Patch Changes
+
+- Updated dependencies \[23ccb01]
   - @openfn/language-common@2.3.1
 
-## 0.7.4
+## 0.7.4 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [b3d7f59]
-- Updated dependencies [2d709ff]
-- Updated dependencies [41e8cc3]
+- Updated dependencies \[b3d7f59]
+- Updated dependencies \[2d709ff]
+- Updated dependencies \[41e8cc3]
   - @openfn/language-common@2.3.0
 
-## 0.7.3
+## 0.7.3 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [6dffdbd]
+- Updated dependencies \[6dffdbd]
   - @openfn/language-common@2.2.1
 
-## 0.7.2
+## 0.7.2 - 09 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [a47d8d5]
-- Updated dependencies [9240428]
+- Updated dependencies \[a47d8d5]
+- Updated dependencies \[9240428]
   - @openfn/language-common@2.2.0
 
-## 0.7.1
+## 0.7.1 - 16 December 2024
 
 ### Patch Changes
 
 - Fixed some small issues in the docs
 
-## 0.7.0
+## 0.7.0 - 11 December 2024
 
 ### Minor Changes
 
@@ -52,13 +74,13 @@
 
 - cdb01db: Better error handling if the keygen function is invalid
 
-## 0.6.2
+## 0.6.2 - 07 December 2024
 
 ### Patch Changes
 
 - Expose mock agent for unit tests
 
-## 0.6.1
+## 0.6.1 - 05 December 2024
 
 ### Patch Changes
 
@@ -69,7 +91,7 @@
   collections.set('my-collection', 'some-key', state => state.data);
   ```
 
-## 0.6.0
+## 0.6.0 - 03 December 2024
 
 ### Minor Changes
 
@@ -89,33 +111,33 @@
 
   Note that this requires Lightning v2.10.5+
 
-## 0.5.2
+## 0.5.2 - 21 November 2024
 
 ### Patch Changes
 
 - Fix an issue where sometimes the JSON stream would skip tokens and result in a
   smaller payload being returned
 
-## 0.5.1
+## 0.5.1 - 15 November 2024
 
 ### Patch Changes
 
 - set() will now upsert items in batches of 1000
 
-## 0.5.0
+## 0.5.0 - 07 November 2024
 
 ### Minor Changes
 
 - b73b063: - Added pagination support
   - Removed `updated_*` time filters
 
-## 0.4.0
+## 0.4.0 - 01 November 2024
 
 ### Minor Changes
 
 - Fixed support for delete
 
-## 0.3.0
+## 0.3.0 - 01 November 2024
 
 ### Minor Changes
 
@@ -125,13 +147,13 @@
 
 - 32e5a03: Fix an issue where the query object isn't getting sent to the server
 
-## 0.2.0
+## 0.2.0 - 30 October 2024
 
 ### Minor Changes
 
 - f4deb81: Updates to latest spec
 
-## 0.1.0
+## 0.1.0 - 23 October 2024
 
 Initial experiemntal release, with `collections.get`, `collections.each`,
 `collections.remove` and `collections.set`

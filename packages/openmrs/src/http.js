@@ -1,9 +1,18 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
+/**
+ * State object
+ * @typedef {Object} HttpState
+ * @private
+ * @property data - The response body (as JSON)
+ * @property response - The HTTP response from the OpenMRS server (excluding the body)
+ * @property references - An array containing all previous data objects
+ * @private
+ */
 
 /**
  * Options object
- * @typedef {Object} RequestOptions
+ * @typedef {Object} HTTPRequestOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
  * @property {object} headers - An object of all request headers
  * @property {object} body - The request body (as JSON)
@@ -13,19 +22,20 @@ import * as util from './Utils';
 
 /**
  * Make a HTTP request to any OpenMRS endpoint
- * @example <caption>GET request with a URL query</caption>
+ * @example <caption>GET request with a query parameters</caption>
  * http.request("GET",
  *   "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8", {
  *    query:{
  *       limit: 1,
- *       offset: 20
+ *       startIndex: 20
  *    },
  * });
  * @function
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
- * @param {RequestOptions}  [options={}] - An object containing query, headers, and body for the request
+ * @param {HTTPRequestOptions}  [options={}] - An object containing query, headers, and body for the request
+ * @state {HttpState}
  * @returns {Operation}
  */
 export function request(method, path, options = {}) {
@@ -66,7 +76,8 @@ export function request(method, path, options = {}) {
  *  }
  * )
  * @param {string} path - path to resource
- * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
  * @returns {operation}
  */
 export function get(path, options = {}) {
@@ -111,7 +122,8 @@ export function get(path, options = {}) {
  * )
  * @param {string} path - path to resource
  * @param {any} data - the payload
- * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
  * @returns {operation}
  */
 export function post(path, data, options = {}) {
@@ -148,7 +160,8 @@ export function post(path, data, options = {}) {
  *  "/ws/rest/v1/patient/abc/"
  * )
  * @param {string} path - path to resource
- * @param {RequestOptions} [options={}] - An object containing query params and headers for the request
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
  * @returns {operation}
  */
 function _delete(path, options = {}) {

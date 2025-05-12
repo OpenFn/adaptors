@@ -1,4 +1,4 @@
-#!./node_modules/.bin/esno
+#!../../node_modules/.bin/tsx
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import process from 'node:process';

@@ -1,37 +1,59 @@
 # @openfn/language-mailchimp
 
-## 1.0.12
+## 1.0.15 - 22 April 2025
 
 ### Patch Changes
 
-- Updated dependencies [23ccb01]
+- Updated dependencies \[99e4b48]
+- Updated dependencies \[13bf08f]
+  - @openfn/language-common@2.4.0
+
+## 1.0.14 - 16 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[b089c56]
+  - @openfn/language-common@2.3.3
+
+## 1.0.13 - 11 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[d7105c0]
+  - @openfn/language-common@2.3.2
+
+## 1.0.12 - 14 March 2025
+
+### Patch Changes
+
+- Updated dependencies \[23ccb01]
   - @openfn/language-common@2.3.1
 
-## 1.0.11
+## 1.0.11 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [b3d7f59]
-- Updated dependencies [2d709ff]
-- Updated dependencies [41e8cc3]
+- Updated dependencies \[b3d7f59]
+- Updated dependencies \[2d709ff]
+- Updated dependencies \[41e8cc3]
   - @openfn/language-common@2.3.0
 
-## 1.0.10
+## 1.0.10 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [6dffdbd]
+- Updated dependencies \[6dffdbd]
   - @openfn/language-common@2.2.1
 
-## 1.0.9
+## 1.0.9 - 09 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [a47d8d5]
-- Updated dependencies [9240428]
+- Updated dependencies \[a47d8d5]
+- Updated dependencies \[9240428]
   - @openfn/language-common@2.2.0
 
-## 1.0.8
+## 1.0.8 - 28 October 2024
 
 ### Patch Changes
 
@@ -39,58 +61,58 @@
 - Updated dependencies
   - @openfn/language-common@2.1.1
 
-## 1.0.7
+## 1.0.7 - 18 October 2024
 
 ### Patch Changes
 
-- Updated dependencies [03a1a74]
+- Updated dependencies \[03a1a74]
   - @openfn/language-common@2.1.0
 
-## 1.0.6
+## 1.0.6 - 15 October 2024
 
 ### Patch Changes
 
-- Fixed security vulnerability in jsonpath-plus [33973a2]
+- Fixed security vulnerability in jsonpath-plus \[33973a2]
   - @openfn/language-common@2.0.3
 
-## 1.0.5
+## 1.0.5 - 09 October 2024
 
 ### Patch Changes
 
 - 3fd13c2: Update axios to 1.7.7
 
-## 1.0.4
+## 1.0.4 - 24 September 2024
 
 ### Patch Changes
 
-- Updated dependencies [77a690f]
+- Updated dependencies \[77a690f]
   - @openfn/language-common@2.0.2
 
-## 1.0.3
+## 1.0.3 - 16 August 2024
 
 ### Patch Changes
 
 - 8146c23: Fix typings in package.json
-- Updated dependencies [8146c23]
+- Updated dependencies \[8146c23]
   - @openfn/language-common@2.0.1
 
-## 1.0.2
+## 1.0.2 - 01 August 2024
 
 ### Patch Changes
 
-- Updated dependencies [4fe527c]
+- Updated dependencies \[4fe527c]
   - @openfn/language-common@2.0.0
 
-## 1.0.1
+## 1.0.1 - 25 July 2024
 
 ### Patch Changes
 
 - 73d0a02: Make documentation public
-- Updated dependencies [4c08444]
-- Updated dependencies [73d0a02]
+- Updated dependencies \[4c08444]
+- Updated dependencies \[73d0a02]
   - @openfn/language-common@1.15.1
 
-## 1.0.0
+## 1.0.0 - 25 June 2024
 
 ### Major Changes
 
@@ -106,7 +128,7 @@
   - state.response is now `{ headers, statusCode, body }` (it used to just be
     `body`)
 
-## 0.8.0
+## 0.8.0 - 13 June 2024
 
 ### Minor Changes
 
@@ -114,10 +136,10 @@
 
 ### Patch Changes
 
-- Updated dependencies [106ecf6d]
+- Updated dependencies \[106ecf6d]
   - @openfn/language-common@1.14.0
 
-## 0.7.4
+## 0.7.4 - 08 May 2024
 
 ### Patch Changes
 
@@ -125,19 +147,19 @@
 - Updated dependencies
   - @openfn/language-common@1.13.2
 
-## 0.7.3
+## 0.7.3 - 24 January 2024
 
 ### Patch Changes
 
 - 6afba70: Fix updateMember()
 
-## 0.7.2
+## 0.7.2 - 16 December 2023
 
 ### Patch Changes
 
 - 1131c34: Remove regex pattern for validation and changed minLength to 1
 
-## 0.7.1
+## 0.7.1 - 13 September 2023
 
 ### Patch Changes
 
@@ -145,7 +167,7 @@
 - 48394f5: - fix ast docs warnings
   - add status code log on request
 
-## 0.7.0
+## 0.7.0 - 24 August 2023
 
 ### Minor Changes
 
@@ -153,13 +175,13 @@
   - Improve error logs
   - Return `state` in request finalState
 
-## 0.6.0
+## 0.6.0 - 18 August 2023
 
 ### Minor Changes
 
 - 1582873: Add request, get and post functions
 
-## 0.5.0
+## 0.5.0 - 01 August 2023
 
 ### Minor Changes
 
@@ -173,7 +195,7 @@
   - updateMemberTags()
   - listAudienceInfo()
 
-## 0.4.1
+## 0.4.1 - 19 June 2023
 
 ### Patch Changes
 
@@ -197,43 +219,43 @@
 
 ### Patch Changes
 
-- Updated dependencies [2c1d603]
+- Updated dependencies \[2c1d603]
   - @openfn/language-common@1.8.0
 
-## 0.3.5
+## 0.3.5 - 30 March 2023
 
 ### Patch Changes
 
 - 14f481e: mark execute as private
-- Updated dependencies [2b4c61a]
+- Updated dependencies \[2b4c61a]
   - @openfn/language-common@1.7.6
 
-## 0.3.4
+## 0.3.4 - 15 February 2023
 
 ### Patch Changes
 
 - f7ebd3c: remove sample configuration
 
-## 0.3.3
+## 0.3.3 - 15 February 2023
 
 ### Patch Changes
 
 - f2aed32: add examples
 
-## 0.3.2
+## 0.3.2 - 13 January 2023
 
 ### Patch Changes
 
-- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+- 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
 
-## 0.3.1
+## 0.3.1 - 25 November 2022
 
 ### Patch Changes
 
 - cbb8968: Fix axios Inefficient Regular Expression Complexity vulnerability
 - e81561f: Updated ast and package.json
 
-## 0.3.0
+## 0.3.0 - 18 November 2022
 
 ### Minor Changes
 
@@ -241,5 +263,5 @@
 
 ### Patch Changes
 
-- Updated dependencies [f2a91a4]
+- Updated dependencies \[f2a91a4]
   - @openfn/language-common@1.7.5

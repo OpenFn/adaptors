@@ -17,8 +17,13 @@
           },
           {
             "title": "example",
-            "description": "request('GET', '/patient', {\n  query: { foo: 'bar', a: 1 },\n  headers: { 'content-type': 'application/json' },\n});",
+            "description": "request('GET', '/patient', {\n  query: { foo: 'bar', a: 1 },\n});",
             "caption": "Make a GET request"
+          },
+          {
+            "title": "example",
+            "description": "request('POST', '/todos', {\n  body:{\n    \"userId\": 1,\n    \"title\": \"delectus aut autem\",\n    \"completed\": false\n  },\n});",
+            "caption": "Make a POST request with a body"
           },
           {
             "title": "function",
@@ -84,7 +89,7 @@
           },
           {
             "title": "example",
-            "description": "get('/patient', {\n  query: { foo: 'bar', a: 1 },\n  headers: { 'content-type': 'application/json' },\n});",
+            "description": "get('/patient', {\n  query: { foo: 'bar', a: 1 },\n});",
             "caption": "GET request with query parameters and custom headers"
           },
           {

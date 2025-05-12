@@ -1,6 +1,7 @@
 {
   "name": "@openfn/language-intuit",
-  "version": "1.0.1",
+  "label": "Intuit",
+  "version": "1.0.4",
   "description": "OpenFn intuit adaptor",
   "type": "module",
   "exports": {
@@ -34,7 +35,6 @@
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
-    "esno": "^0.16.3",
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
     "undici": "^5.22.1"
