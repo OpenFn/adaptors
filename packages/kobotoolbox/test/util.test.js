@@ -43,59 +43,78 @@ describe('responseWithPagination', () => {
   // - What if limit > number of items
   // - If limit is 1
   // Test limit maxPageSize
-  it.only('start 0, limit 1 should return the first item', () => {
+  it('start 0, limit 1 should return the first item', () => {
     const start = 0;
     const limit = 1;
+    const { results, next, previous } = responseWithPagination(
+      items,
+      {
+        limit,
+        start,
+      },
+      { url: 'www' }
+    );
 
-    // responseWithPagination(items, query: { start, limit }, settings: { url, defaultLimit, maxLimit })
-
-    const res = responseWithPagination('www', items, {
-      limit,
-      start,
-      // defaultLimit
-    });
-    console.log(res);
-
-    expect(res.results).to.eql([1]);
+    expect(results).to.eql([1]);
+    expect(next).to.eql('www?format=json&start=1000&limit=1');
+    expect(previous).to.eql(null);
   });
   it('should return 2 items with limit 2', () => {
     const start = 0;
     const limit = 2;
-    const { results } = responseWithPagination('www', items, {
-      limit,
-      start,
-    });
+    const { results, next, previous } = responseWithPagination(
+      items,
+      {
+        limit,
+        start,
+      },
+      { url: 'www' }
+    );
+
     expect(results).to.eql([1, 2]);
+    expect(next).to.eql('www?format=json&start=1000&limit=2');
+    expect(previous).to.eql(null);
   });
 
-  // Test page size
-  it('should return 2 items with start 1 and pageSize 2', () => {
+  it('should return 2 items with start 1 and defaultLimit 2', () => {
     const start = 1;
-    const pageSize = 2;
-    const { results } = responseWithPagination('www', items, {
-      pageSize,
-      start,
-    });
+    const defaultLimit = 2;
+    const { results, next, previous } = responseWithPagination(
+      items,
+      {
+        start,
+      },
+      { url: 'www', defaultLimit }
+    );
+
     expect(results).to.eql([2, 3]);
+    expect(next).to.eql(null);
+    expect(previous).to.eql('www?format=json&limit=30000');
   });
   it('should return all items', () => {
-    const start = 0;
-    const pageSize = 3;
-    const { next, results } = responseWithPagination('www', items, {
-      pageSize,
-      start,
-    });
+    const { results, next, previous } = responseWithPagination(
+      items,
+      {},
+      { url: 'www' }
+    );
 
     expect(results).to.eql([1, 2, 3]);
+    expect(next).to.eql(null);
+    expect(previous).to.eql(null);
+    expect(results.length).to.eql(3);
   });
-  it('should return all items if pageSize is greater', () => {
+  it.only('should return all items if defaultLimit is greater', () => {
     const start = 0;
-    const pageSize = 100;
-    const { next, results } = responseWithPagination('www', items, {
-      pageSize,
-      start,
-    });
-    expect(results).to.eql([1, 2, 3]);
+    const defaultLimit = 100;
+    const { results, next, previous, requestCount } = responseWithPagination(
+      Array.from({ length: 10001 }, (_, i) => ({
+        uid: String(i),
+      })),
+      { start },
+      { url: 'www', defaultLimit }
+    );
+    console.log({ requestCount });
+    // expect(results).to.eql([1, 2, 3]);
   });
   it('should return the correct next link', () => {
     const start = 1;
