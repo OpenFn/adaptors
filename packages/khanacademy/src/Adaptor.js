@@ -1,8 +1,6 @@
-import {
-  execute as commonExecute,
-  expandReferences,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
 import { resolve as resolveUrl } from 'url';
+import { expandReferences } from '@openfn/language-common/util';
 import request from 'request';
 import qs from 'qs';
 
@@ -44,8 +42,8 @@ export function fetch(params) {
   return state => {
     const { email, password, consumerKey, secretKey } = state.configuration;
 
-    const { getEndpoint, queryParams, postUrl } =
-      expandReferences(params)(state);
+    const [resolvedParams] = expandReferences(state, params);
+    const {getEndpoint, queryParams, postUrl} = resolvedParams;
 
     const query = qs.stringify(queryParams);
 

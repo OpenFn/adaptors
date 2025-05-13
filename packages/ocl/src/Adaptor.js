@@ -1,7 +1,5 @@
-import {
-  execute as commonExecute,
-  expandReferences,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 import { buildMappingsUrl, handleResponse, request } from './Util';
 
 /**
@@ -53,9 +51,9 @@ export function execute(...operations) {
  */
 export function getMappings(ownerId, repositoryId, options, callback = false) {
   return state => {
-    const resolvedOwnerId = expandReferences(ownerId)(state);
-    const resolvedRepositoryId = expandReferences(repositoryId)(state);
-    const resolvedOptions = expandReferences(options)(state);
+    const [resolvedOwnerId] = expandReferences(state, ownerId);
+    const [resolvedRepositoryId] = expandReferences(state, repositoryId);
+    const [resolvedOptions] = expandReferences(state, options);
 
     const { baseUrl } = state.configuration;
 
@@ -107,8 +105,8 @@ export function getMappings(ownerId, repositoryId, options, callback = false) {
  */
 export function get(path, query, callback = false) {
   return state => {
-    const resolvedPath = expandReferences(path)(state);
-    const resolvedQuery = expandReferences(query)(state);
+    const [resolvedPath] = expandReferences(state, path);
+    const [resolvedQuery] = expandReferences(state, query);
     const { baseUrl } = state.configuration;
 
     const url = `${baseUrl}/${resolvedPath}`;

@@ -1,9 +1,11 @@
 import {
   execute as commonExecute,
-  expandReferences,
   composeNextState,
 } from '@openfn/language-common';
-import { normalizeOauthConfig } from '@openfn/language-common/util';
+import {
+  normalizeOauthConfig,
+  expandReferences,
+} from '@openfn/language-common/util';
 import request from 'request';
 
 /**
@@ -62,7 +64,8 @@ export function postMessage(params) {
 
     const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${accessToken}`;
 
-    const { headers, message, recipient } = expandReferences(params)(state);
+    const [resolvedParams] = expandReferences(state, params);
+    const { headers, message, recipient } = resolvedParams;
 
     const body = {
       messaging_type: 'UPDATE',

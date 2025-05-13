@@ -205,7 +205,6 @@ export {
   field,
   source,
   sourceValue,
-  map,
   combine,
   merge,
   dataPath,
