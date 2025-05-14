@@ -5,7 +5,7 @@ import {
   logResponse,
 } from '@openfn/language-common/util';
 
-export const DEFAULT_REQUEST_LIMIT = 1e4;
+export const DEFAULT_REQUEST_LIMIT = 3e4;
 
 export function prepareNextState(state, response) {
   const { body, ...responseWithoutBody } = response;
@@ -80,6 +80,7 @@ export async function requestWithPagination(state, path, options = {}) {
       requestOptions.query.limit = pageSize;
     }
 
+    console.log({ requestOptions });
     const response = await request(state, 'GET', path, requestOptions);
 
     if (response.body?.results) {
@@ -123,6 +124,14 @@ export async function requestWithPagination(state, path, options = {}) {
     // Decide whether to request another page
     shouldFetchMoreContent =
       !limit && results.length < maxResults && hasMoreContent;
+
+    console.log({
+      shouldFetchMoreContent,
+      limit,
+      results,
+      maxResults,
+      hasMoreContent,
+    });
   } while (shouldFetchMoreContent);
 
   return results;
