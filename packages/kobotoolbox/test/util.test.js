@@ -3,7 +3,9 @@ import { expect } from 'chai';
 import * as util from '../src/util';
 import { responseWithPagination } from './helper';
 
+const MAX_LIMIT = util.DEFAULT_MAX_LIMIT;
 const DEFAULT_LIMIT = util.DEFAULT_REQUEST_LIMIT;
+
 const testServer = enableMockClient('https://util-test.kobotoolbox.org');
 const jsonHeaders = {
   headers: {
@@ -122,8 +124,8 @@ describe('responseWithPagination', () => {
     );
 
     expect(results).to.eql([2, 3]);
-    expect(next).to.eql('www?format=json&start=3&limit=2');
-    expect(previous).to.eql(`www?format=json&limit=${DEFAULT_LIMIT}`);
+    expect(next).to.eql(null);
+    expect(previous).to.eql(`www?format=json&start=1&limit=${defaultLimit}`);
   });
   it('should return all items', () => {
     const { results, next, previous, requestCount } = responseWithPagination(
@@ -141,20 +143,24 @@ describe('responseWithPagination', () => {
   it('should return all items within maxLimit', () => {
     const { results, next, previous, requestCount, count } =
       responseWithPagination(
-        Array.from({ length: DEFAULT_LIMIT + 1 }, (_, i) => ({
+        Array.from({ length: MAX_LIMIT + 1 }, (_, i) => ({
           uid: String(i),
         })),
         {},
         { url: 'www' }
       );
 
-    expect(count).to.eql(DEFAULT_LIMIT + 1);
-    expect(results.length).to.eql(DEFAULT_LIMIT);
+    expect(count).to.eql(MAX_LIMIT + 1);
+    expect(results.length).to.eql(MAX_LIMIT);
     expect(next).to.eql(
-      `www?format=json&start=${DEFAULT_LIMIT}&limit=${DEFAULT_LIMIT}`
+      `www?format=json&start=${MAX_LIMIT}&limit=${DEFAULT_LIMIT}`
     );
-    expect(previous).to.eql(null);
-    expect(requestCount).to.eql(1);
+    expect(previous).to.eql(
+      `www?format=json&start=${
+        MAX_LIMIT - DEFAULT_LIMIT
+      }&limit=${DEFAULT_LIMIT}`
+    );
+    expect(requestCount).to.eql(Math.ceil(MAX_LIMIT / DEFAULT_LIMIT));
   });
   it('should return all items within maxLimit if defaultLimit is set', () => {
     const start = 0;
@@ -166,7 +172,6 @@ describe('responseWithPagination', () => {
       { start },
       { url: 'www', defaultLimit }
     );
-    console.log({ requestCount, next, previous });
     expect(results.length).to.eql(1001);
     expect(next).to.eql(null);
     expect(previous).to.eql(`www?format=json&start=1000&limit=${defaultLimit}`);
@@ -222,7 +227,7 @@ describe('request', () => {
 describe('requestWithPagination', () => {
   it('stops fetching when default maximum items reached', async () => {
     let callCount = 0;
-    const manyObjects = Array.from({ length: DEFAULT_LIMIT + 1 }, (_, i) => ({
+    const manyObjects = Array.from({ length: MAX_LIMIT + 1 }, (_, i) => ({
       uid: String(i),
     }));
 
@@ -250,10 +255,11 @@ describe('requestWithPagination', () => {
       '/assets/aDReHdA7UuNBYsiCXQBr33/data/'
     );
 
-    expect(data.length).to.eql(DEFAULT_LIMIT);
+    expect(data.length).to.eql(MAX_LIMIT);
     expect(callCount).to.eql(1);
   });
   it.only('handles pagination by default', async () => {
+    let requestCount = 0;
     testServer
       .intercept({
         path: /\/api\/v2\/assets\/aDReHdA7UuNBYsiCXQBr43\/data/,
@@ -262,15 +268,17 @@ describe('requestWithPagination', () => {
       .reply(
         200,
         req => {
-          console.log(req.query);
-          return responseWithPagination(
+          requestCount++;
+          const response = responseWithPagination(
             defaultObjects,
-            {},
+            { start: req.query.start, limit: req.query.limit },
             {
               url: `${req.origin}${req.path}`,
               defaultLimit: 1,
             }
           );
+          console.log({ response });
+          return response;
         },
         { ...jsonHeaders }
       )
@@ -286,6 +294,7 @@ describe('requestWithPagination', () => {
     );
 
     expect(data.length).to.eql(6);
+    expect(requestCount).to.eql(6);
     expect(data).to.eql(defaultObjects);
   });
   it('does not handle pagination if limit is set', async () => {
@@ -300,9 +309,9 @@ describe('requestWithPagination', () => {
         req => {
           callCount++;
           return responseWithPagination(
-            `${req.origin}${req.path}`,
             defaultObjects,
-            { limit: req.query.limit, start: req.query.start }
+            { limit: req.query.limit, start: req.query.start },
+            { url: `${req.origin}${req.path}` }
           );
         },
         { ...jsonHeaders }
