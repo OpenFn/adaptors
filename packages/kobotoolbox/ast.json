@@ -43,16 +43,21 @@
         "options"
       ],
       "docs": {
-        "description": "Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`.",
+        "description": "Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`",
         "tags": [
           {
             "title": "example",
-            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX');",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX');.",
+            "caption": "Get submissions for a specific form"
+          },
+          {
+            "title": "example",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit: Infinity });",
             "caption": "Get all submissions for a specific form"
           },
           {
             "title": "example",
-            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \"2022-06-12T21:54:20\" } } });",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \"2025-03-12T21:54:20\" } } });",
             "caption": "Get form submissions with a query"
           },
           {
@@ -76,7 +81,7 @@
           },
           {
             "title": "param",
-            "description": "Optional query params for the request",
+            "description": "Options to control the request",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -86,6 +91,44 @@
             },
             "name": "options",
             "default": "{}"
+          },
+          {
+            "title": "param",
+            "description": "Query options to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options.query"
+          },
+          {
+            "title": "param",
+            "description": "Maximum number of submissions to fetch. Pass Infinity to disable the limit and download all submissions",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.limit",
+            "default": "30000"
+          },
+          {
+            "title": "param",
+            "description": "Limits the size of each page of submissions. Maximum value is 30000.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.pageSize",
+            "default": "10000"
           },
           {
             "title": "state",
@@ -101,7 +144,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "getDeploymentInfo",
