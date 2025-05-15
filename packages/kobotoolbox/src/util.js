@@ -5,7 +5,8 @@ import {
   logResponse,
 } from '@openfn/language-common/util';
 
-export const DEFAULT_REQUEST_LIMIT = 3e4;
+export const DEFAULT_MAX_LIMIT = 3e4;
+export const DEFAULT_REQUEST_LIMIT = 1e4;
 
 export function prepareNextState(state, response) {
   const { body, ...responseWithoutBody } = response;
@@ -49,10 +50,15 @@ export async function request(state, method, path, opts = {}) {
 export async function requestWithPagination(state, path, options = {}) {
   const results = [];
 
-  let { pageSize, start, limit, ...otherOptions } = options;
+  let {
+    pageSize = DEFAULT_REQUEST_LIMIT,
+    start,
+    limit,
+    ...otherOptions
+  } = options;
 
   const isUsingDefaultLimit = limit === undefined;
-  const maxResults = limit ?? DEFAULT_REQUEST_LIMIT;
+  const maxResults = limit ?? DEFAULT_MAX_LIMIT;
 
   let isFirstRequest = true;
   let requestOptions = { query: { start, limit }, ...otherOptions };
@@ -80,9 +86,9 @@ export async function requestWithPagination(state, path, options = {}) {
       requestOptions.query.limit = pageSize;
     }
 
-    console.log({ requestOptions });
+    // console.log({ requestOptions });
     const response = await request(state, 'GET', path, requestOptions);
-
+    // console.log({ response });
     if (response.body?.results) {
       results.push(...response.body.results);
 
@@ -125,13 +131,13 @@ export async function requestWithPagination(state, path, options = {}) {
     shouldFetchMoreContent =
       !limit && results.length < maxResults && hasMoreContent;
 
-    console.log({
-      shouldFetchMoreContent,
-      limit,
-      results,
-      maxResults,
-      hasMoreContent,
-    });
+    // console.log({
+    //   shouldFetchMoreContent,
+    //   limit,
+    //   results,
+    //   maxResults,
+    //   hasMoreContent,
+    // });
   } while (shouldFetchMoreContent);
 
   return results;

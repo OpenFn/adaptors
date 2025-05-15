@@ -78,12 +78,7 @@ export function getSubmissions(formId, options) {
       formId,
       options
     );
-    if (resolvedOptions.limit) {
-      if (resolvedOptions.pageSize) {
-        console.warn(`Warning: ignoring option pageSize as "limit" is set`);
-        delete resolvedOptions.pageSize;
-      }
-    }
+
     const { query, limit, pageSize } = resolvedOptions;
     const path = `/assets/${resolvedFormId}/data/`;
     const qs = {};
