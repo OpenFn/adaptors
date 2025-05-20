@@ -170,7 +170,7 @@ export function getContentsFromMessages(options) {
  *
  * @public
  * @function
- * @param {SendMessageOptions} message - The message configuration object.
+ * @param {SendMessageOptions|SendMessageOptions[]} message - The message configuration object or array of objects.
  * @state {Object} data - The Gmail API response from sending the message.
  * @returns {Operation}
  * @example
