@@ -30,23 +30,25 @@ import * as util from './Utils';
  * @example <caption>Import some data and pass the `atomicMode` parameter</caption>
  * tracker.import('CREATE', $.trackerData, { atomicMode: 'ALL' })
  * @example <caption>Import a trackedEntity resource</caption>
- * tracker.import('CREATE', {
- * trackedEntities: [
+ * tracker.import(
+ *   'CREATE',
  *   {
- *     orgUnit: 'TSyzvBiovKh',
- *     trackedEntityType: 'nEenWmSyUEp',
- *     attributes: [
+ *     trackedEntities: [
  *       {
- *         attribute: 'w75KJ2mc4zz',
- *         value: 'Gigiwe',
+ *         orgUnit: 'TSyzvBiovKh',
+ *         trackedEntityType: 'nEenWmSyUEp',
+ *         attributes: [
+ *           {
+ *             attribute: 'w75KJ2mc4zz',
+ *             value: 'Gigiwe',
+ *           },
+ *         ],
  *       },
  *     ],
  *   },
- *  ],
- * },
- * {
- *  atomicMode: 'ALL',
- * }
+ *   {
+ *     atomicMode: 'ALL',
+ *   }
  * );
  */
 function _import(strategy, payload, options = {}) {
