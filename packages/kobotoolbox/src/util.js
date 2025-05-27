@@ -61,7 +61,7 @@ export async function requestWithPagination(state, path, options = {}) {
   const maxResults = limit ?? DEFAULT_MAX_LIMIT;
 
   let isFirstRequest = true;
-  let requestOptions = { query: { start, limit }, ...otherOptions };
+  let requestOptions = { query: { start, limit: pageSize }, ...otherOptions };
   let shouldFetchMoreContent = false;
   const didUserPassLimit = Boolean(limit);
 
@@ -72,9 +72,7 @@ export async function requestWithPagination(state, path, options = {}) {
       requestOptions.query.start = start;
     }
 
-    if (limit) {
-      requestOptions.query.limit = limit;
-    } else if (didUserPassLimit || !isFirstRequest) {
+    if (didUserPassLimit || !isFirstRequest) {
       // If there's an explicit limit or page size,
       // or this is not the first request,
       // set the limit in the URL
@@ -86,9 +84,8 @@ export async function requestWithPagination(state, path, options = {}) {
       requestOptions.query.limit = pageSize;
     }
 
-    // console.log({ requestOptions });
     const response = await request(state, 'GET', path, requestOptions);
-    // console.log({ response });
+
     if (response.body?.results) {
       results.push(...response.body.results);
 
@@ -128,16 +125,7 @@ export async function requestWithPagination(state, path, options = {}) {
     }
 
     // Decide whether to request another page
-    shouldFetchMoreContent =
-      !limit && results.length < maxResults && hasMoreContent;
-
-    // console.log({
-    //   shouldFetchMoreContent,
-    //   limit,
-    //   results,
-    //   maxResults,
-    //   hasMoreContent,
-    // });
+    shouldFetchMoreContent = results.length < maxResults && hasMoreContent;
   } while (shouldFetchMoreContent);
 
   return results;
