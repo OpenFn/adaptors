@@ -21,7 +21,6 @@ export function responseWithPagination(items, query, settings) {
   let shouldFetchMoreContent = false;
   let effectiveLimit = limit ?? defaultLimit;
   let isUsingDefaultLimit = !limit && defaultLimit === DEFAULT_REQUEST_LIMIT;
-  // console.log({ isUsingDefaultLimit, limit, defaultLimit });
 
   let maxResults = maxLimit;
   const hasNoLimitWithStartIndex = !limit && hasStartIndex;
@@ -36,15 +35,16 @@ export function responseWithPagination(items, query, settings) {
     const fetchedAll =
       response.results.length ===
       (limit < items.length ? effectiveLimit : items.length);
+
     const reachedMaxLimit = response.results.length >= maxResults;
 
-    shouldFetchMoreContent = !fetchedAll && !reachedMaxLimit;
+    shouldFetchMoreContent = !fetchedAll && !reachedMaxLimit && false;
 
     response.requestCount++;
     startIndex += effectiveLimit;
 
     response.next =
-      startIndex === items.length ||
+      startIndex >= items.length ||
       limit > items.length || // If there are less items than the limit, return all and no next link
       (!limit && !hasStartIndex && fetchedAll) || // If there are no items, start = 0 and no limit, return all and no next link
       (fetchedAll && hasNoLimitWithStartIndex) // If there are more items, no limit and start > 0, return all and no next link
@@ -60,20 +60,6 @@ export function responseWithPagination(items, query, settings) {
             0,
             startIndex - effectiveLimit
           )}&limit=${effectiveLimit}`;
-
-    console.log({
-      fetchedAll,
-      hasNoLimitWithStartIndex,
-      hasStartIndex,
-      effectiveLimit,
-      maxResults,
-      startIndex,
-      defaultLimit,
-      shouldFetchMoreContent,
-      currentResults: response.results.length,
-      Req: response.requestCount,
-      response,
-    });
   } while (shouldFetchMoreContent);
   return response;
 }
