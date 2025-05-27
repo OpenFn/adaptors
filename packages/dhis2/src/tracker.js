@@ -14,7 +14,6 @@ import * as util from './util';
  * All options, apart from those listed here, will be appended as query parameters to the URL
  * @typedef {Object} TrackerOptions
  * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', 'stream', or 'base64'. Defaults to `json`
- * @property {string} [apiVersion=42] - The apiVersion of the request. Defaults to 42.
  */
 
 /**
@@ -92,7 +91,7 @@ export { _import as import };
  * @alias export
  * @public
  * @function
- * @param {string} path - Path to the resource
+ * @param {string} path - Path to the resource, relative to the /tracker endpoint
  * @param {object} query - An object of query parameters to be encoded into the URL
  * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion for the request
  * @state {DHIS2State}
@@ -101,6 +100,8 @@ export { _import as import };
  * tracker.export('trackedEntities/Gu5UKnIFnJf')
  * @example <caption>Export all enrollment resources</caption>
  * tracker.export('enrollments', {orgUnit: 'TSyzvBiovKh'});
+ * @example <caption>Export all events</caption>
+ * tracker.export('events')
  */
 function _export(path, query, options = {}) {
   return async state => {
