@@ -185,34 +185,14 @@ function configMigrationHelper(state) {
  *   enrollmentDate: '2013-09-17',
  *   incidentDate: '2013-09-17',
  * });
- * @example <caption>Create an multiple objects with the Tracker API</caption>
- *  create("tracker", {
- *   enrollments: [
- *     {
- *       trackedEntity: "bmshzEacgxa",
- *       orgUnit: "TSyzvBiovKh",
- *       program: "gZBxv9Ujxg0",
- *       enrollmentDate: "2013-09-17",
- *       incidentDate: "2013-09-17",
- *     },
- *   ],
- *   trackedEntities: [
- *     {
- *       orgUnit: "TSyzvBiovKh",
- *       trackedEntityType: "nEenWmSyUEp",
- *       attributes: [
- *         {
- *           attribute: "w75KJ2mc4zz",
- *           value: "Gigiwe",
- *         },
- *       ],
- *     },
- *   ],
- * });
  */
 export function create(resourceType, data, options = {}) {
   return async state => {
     console.log(`Preparing create operation...`);
+
+    if (resourceType === 'tracker') {
+      throw new Error('Invalid resourceType. Use `tracker.import()` instead.');
+    }
 
     const [resolvedResourceType, resolvedData, resolvedOptions] =
       expandReferences(state, resourceType, data, options);
