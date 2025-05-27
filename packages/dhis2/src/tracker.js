@@ -27,6 +27,8 @@ import * as util from './Utils';
  * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion, and queries for the request
  * @state {Dhis2State}
  * @returns {Operation}
+ * @example <caption>Import some data and pass the `atomicMode` parameter</caption>
+ * tracker.import('CREATE', $.trackerData, { atomicMode: 'ALL' })
  * @example <caption>Import a trackedEntity resource</caption>
  * tracker.import('CREATE', {
  * trackedEntities: [
