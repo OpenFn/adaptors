@@ -3,8 +3,7 @@ import { expect } from 'chai';
 import * as util from '../src/util';
 import { responseWithPagination } from './helper';
 
-const MAX_LIMIT = util.DEFAULT_MAX_LIMIT;
-const DEFAULT_LIMIT = util.DEFAULT_REQUEST_LIMIT;
+const { DEFAULT_MAX_LIMIT, DEFAULT_REQUEST_LIMIT } = util;
 
 const testServer = enableMockClient('https://util-test.kobotoolbox.org');
 const jsonHeaders = {
@@ -140,29 +139,26 @@ describe('responseWithPagination', () => {
     expect(results.length).to.eql(3);
     expect(requestCount).to.eql(1);
   });
-  it('should return all items within maxLimit', () => {
+  it('should return next url if there are more items', async () => {
     const { results, next, previous, requestCount, count } =
       responseWithPagination(
-        Array.from({ length: MAX_LIMIT + 1 }, (_, i) => ({
+        Array.from({ length: DEFAULT_MAX_LIMIT + 1 }, (_, i) => ({
           uid: String(i),
         })),
         {},
         { url: 'www' }
       );
 
-    expect(count).to.eql(MAX_LIMIT + 1);
-    expect(results.length).to.eql(MAX_LIMIT);
+    expect(count).to.eql(DEFAULT_MAX_LIMIT + 1);
+
+    expect(results.length).to.eql(DEFAULT_REQUEST_LIMIT);
     expect(next).to.eql(
-      `www?format=json&start=${MAX_LIMIT}&limit=${DEFAULT_LIMIT}`
+      `www?format=json&start=${DEFAULT_REQUEST_LIMIT}&limit=${DEFAULT_REQUEST_LIMIT}`
     );
-    expect(previous).to.eql(
-      `www?format=json&start=${
-        MAX_LIMIT - DEFAULT_LIMIT
-      }&limit=${DEFAULT_LIMIT}`
-    );
-    expect(requestCount).to.eql(Math.ceil(MAX_LIMIT / DEFAULT_LIMIT));
+    expect(previous).to.eql(null);
+    expect(requestCount).to.eql(1);
   });
-  it('should return all items within maxLimit if defaultLimit is set', () => {
+  it('If defaultLimit is set return only defaultLimit results', async () => {
     const start = 0;
     const defaultLimit = 100;
     const { results, next, previous, requestCount } = responseWithPagination(
@@ -172,10 +168,12 @@ describe('responseWithPagination', () => {
       { start },
       { url: 'www', defaultLimit }
     );
-    expect(results.length).to.eql(1001);
-    expect(next).to.eql(null);
-    expect(previous).to.eql(`www?format=json&start=1000&limit=${defaultLimit}`);
-    expect(requestCount).to.eql(11);
+    expect(results.length).to.eql(defaultLimit);
+    expect(next).to.eql(
+      `www?format=json&start=${defaultLimit}&limit=${defaultLimit}`
+    );
+    expect(previous).to.eql(null);
+    expect(requestCount).to.eql(1);
   });
   it('should return the correct next link', () => {
     const start = 1;
@@ -226,11 +224,16 @@ describe('request', () => {
 });
 describe('requestWithPagination', () => {
   it('stops fetching when default maximum items reached', async () => {
-    let callCount = 0;
-    const manyObjects = Array.from({ length: MAX_LIMIT + 1 }, (_, i) => ({
-      uid: String(i),
-    }));
+    let requestCount = 0;
+    const manyObjects = Array.from(
+      { length: DEFAULT_MAX_LIMIT + 1 },
+      (_, i) => ({
+        uid: String(i),
+      })
+    );
 
+    const response = manyObjects.slice(0, DEFAULT_MAX_LIMIT);
+    const totalRequests = Math.ceil(response.length / DEFAULT_REQUEST_LIMIT);
     testServer
       .intercept({
         path: /\/api\/v2\/assets\/aDReHdA7UuNBYsiCXQBr33\/data/,
@@ -239,7 +242,7 @@ describe('requestWithPagination', () => {
       .reply(
         200,
         req => {
-          callCount++;
+          requestCount++;
           return responseWithPagination(
             manyObjects,
             { limit: req.query.limit, start: req.query.start },
@@ -247,7 +250,8 @@ describe('requestWithPagination', () => {
           );
         },
         { ...jsonHeaders }
-      );
+      )
+      .times(totalRequests);
 
     const state = { configuration };
     const data = await util.requestWithPagination(
@@ -255,10 +259,10 @@ describe('requestWithPagination', () => {
       '/assets/aDReHdA7UuNBYsiCXQBr33/data/'
     );
 
-    expect(data.length).to.eql(MAX_LIMIT);
-    expect(callCount).to.eql(1);
+    expect(data.length).to.eql(DEFAULT_MAX_LIMIT);
+    expect(requestCount).to.eql(totalRequests);
   });
-  it.only('handles pagination by default', async () => {
+  it('handles pagination by default', async () => {
     let requestCount = 0;
     testServer
       .intercept({
@@ -277,7 +281,7 @@ describe('requestWithPagination', () => {
               defaultLimit: 1,
             }
           );
-          console.log({ response });
+
           return response;
         },
         { ...jsonHeaders }
@@ -298,7 +302,7 @@ describe('requestWithPagination', () => {
     expect(data).to.eql(defaultObjects);
   });
   it('does not handle pagination if limit is set', async () => {
-    let callCount = 0;
+    let requestCount = 0;
     testServer
       .intercept({
         path: /\/api\/v2\/assets\/aDReHdA7UuNBYsiCXQBr23\/data/,
@@ -307,7 +311,7 @@ describe('requestWithPagination', () => {
       .reply(
         200,
         req => {
-          callCount++;
+          requestCount++;
           return responseWithPagination(
             defaultObjects,
             { limit: req.query.limit, start: req.query.start },
@@ -326,7 +330,7 @@ describe('requestWithPagination', () => {
       }
     );
 
-    expect(callCount).to.eql(1);
+    expect(requestCount).to.eql(1);
     expect(data).to.eql([{ uid: '1' }]);
   });
 });
