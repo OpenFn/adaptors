@@ -13,50 +13,126 @@ const getRandomProgramPayload = () => {
 const configuration = {
   username: 'admin',
   password: 'district',
-  hostUrl: 'https://play.im.dhis2.org/stable-2-40-7',
+  hostUrl: 'https://play.im.dhis2.org/stable-2-40-7-1',
+  apiVersion: '42',
 };
 
 describe('Integration tests', () => {
   const fixture = {};
 
-  before(done => {
-    fixture.initialState = {
+  // before(done => {
+  //   fixture.initialState = {
+  //     configuration,
+  //     program: 'IpHINAT79UW',
+  //     //TsWASDGtT4q
+  //     orgUnit: 'TSyzvBiovKh',
+  //     trackedEntityInstance: 'uhubxsfLanV',
+  //     // programStage: 'eaDHS084uMp',
+  //     programStage: 'CWaAcQYKVpq', // new!
+  //   };
+  //   done();
+
+  // });
+
+  before(async () => {
+    const state = {
       configuration,
-      program: 'IpHINAT79UW',
-      orgUnit: 'DiszpKrYNg8',
-      trackedEntityInstance: 'uhubxsfLanV',
-      // programStage: 'eaDHS084uMp',
-      programStage: 'CWaAcQYKVpq', // new!
+      // data: getRandomProgramPayload(),
     };
-    done();
+
+    try {
+      const operation = get('/system/id', {
+        query: {
+          limit: 5,
+        },
+      });
+
+      const enrollments = get('tracker/enrollments', {
+          query: {
+            orgUnit: 'TSyzvBiovKh',
+          },
+        });
+
+      const enrollment =     {
+        "enrollment": "wrwogbh6jmo",
+        "createdAt": "2018-08-07T15:47:18.688",
+        "createdAtClient": "2017-08-07T15:47:18.688",
+        "updatedAt": "2018-08-07T15:47:18.689",
+        "trackedEntity": "JNz4HHBT1QM",
+        "program": "IpHINAT79UW",
+        "status": "ACTIVE",
+        "orgUnit": "TSyzvBiovKh",
+        "orgUnitName": "Gerehun CHC",
+        "enrolledAt": "2026-01-02T12:05:00.000",
+        "occurredAt": "2026-01-02T12:05:00.000",
+        "followUp": false,
+        "deleted": false,
+        "notes": []
+      }
+
+      const enrollmentData = await execute(enrollments)(state);
+
+      console.log({enrollmentData: enrollmentData.data.instances[0]});
+      
+
+      const finalState = await execute(operation)(state);
+      const codes = finalState.data.codes;
+      fixture.initialState = {
+        configuration,
+        program: 'IpHINAT79UW',
+        //TsWASDGtT4q
+        orgUnit: 'TSyzvBiovKh',
+        trackedEntityInstance: codes.shift(),
+        // programStage: 'eaDHS084uMp',
+        programStage: 'A03MvHHogjR', // new!
+        "enrollment": "wrwogbh6jmo",
+        "trackedEntity": "JNz4HHBT1QM",
+      };
+
+    } catch (error) {
+      console.error('Error in before hook:', error);
+      throw error;
+    }
   });
 
   describe('create', () => {
-    it('should create an event program', async () => {
+    it.only('should create an event program', async () => {
       const state = {
         ...fixture.initialState,
         data: getRandomProgramPayload(),
       };
 
-      const finalState = await execute(create('programs', state => state.data))(
+      const finalState = await execute(create('programs', state => state.data, {
+        query:{
+          atomicMode: 'OBJECT'
+        }
+      }))(
         state
       );
 
       expect(finalState.data.status).to.eq('OK');
     });
 
-    it('should create a single event', async () => {
+    it('should create a single event', async () => {6
       const state = { ...fixture.initialState };
 
       const finalState = await execute(
         create('events', state => ({
           program: state.program,
           orgUnit: state.orgUnit,
-          trackedEntityInstance: state.trackedEntityInstance,
+          trackedEntity: state.trackedEntity,
           programStage: state.programStage,
-          status: 'COMPLETED',
-        }))
+          enrollment: state.enrollment,
+          "occurredAt": "2026-01-02T12:05:00.000",
+          // status: 'COMPLETED',
+
+        }), {
+          query:{
+            atomicMode: 'OBJECT'
+          }
+        })
       )(state);
+      console.log({finalState:finalState.data.validationReport.errorReports})
 
       expect(finalState.data.status).to.eq('OK');
     });
@@ -159,11 +235,11 @@ describe('Integration tests', () => {
           href: 'https://play.dhis2.org/stable-2-40-7/api/events/rBjxtO8npTb',
           event: 'rBjxtO8npTb',
           status: 'ACTIVE',
-          program: 'M3xtLkYBlKI',
+          program: fixture.initialState.program,
           programStage: 'CWaAcQYKVpq',
-          enrollment: 'V8uPJuhvlL7',
+          enrollment: fixture.initialState.enrollment,
           enrollmentStatus: 'ACTIVE',
-          orgUnit: 'DiszpKrYNg8',
+          orgUnit: fixture.initialState.orgUnit,
           orgUnitName: 'Ngelehun CHC',
           trackedEntityInstance: 'dNpxRu1mWG5',
           relationships: [],
@@ -192,6 +268,7 @@ describe('Integration tests', () => {
           state => state.data
         )
       )(state);
+      console.log({finalState:finalState})
       expect(finalState.data.status).to.eql('OK');
     });
 
@@ -362,7 +439,7 @@ describe('Integration tests', () => {
       expect(finalState.data.httpStatus).to.eq('OK');
     });
 
-    it.only('should upsert a trackedEntityInstance via update as query matches one data', async () => {
+    it('should upsert a trackedEntityInstance via update as query matches one data', async () => {
       const state = {
         ...fixture.initialState,
         data: {
