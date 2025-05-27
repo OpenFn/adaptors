@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { prefixVersionToPath } from '../Utils.js';
+import { prefixVersionToPath } from '../util.js';
 
 const createHelper = (configuration = {}) => {
   const { username, password } = configuration;

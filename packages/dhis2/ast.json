@@ -38,7 +38,7 @@
             "description": "Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.",
             "type": {
               "type": "NameExpression",
-              "name": "Dhis2Data"
+              "name": "DHIS2Data"
             },
             "name": "data"
           },
@@ -56,7 +56,7 @@
           },
           {
             "title": "state",
-            "description": "{Dhis2State}"
+            "description": "{DHIS2State}"
           },
           {
             "title": "returns",
@@ -167,7 +167,7 @@
           },
           {
             "title": "state",
-            "description": "{Dhis2State}"
+            "description": "{DHIS2State}"
           },
           {
             "title": "returns",
@@ -278,7 +278,7 @@
           },
           {
             "title": "state",
-            "description": "{Dhis2State}"
+            "description": "{DHIS2State}"
           },
           {
             "title": "returns",
@@ -417,7 +417,7 @@
           },
           {
             "title": "state",
-            "description": "{Dhis2State}"
+            "description": "{DHIS2State}"
           },
           {
             "title": "returns",
@@ -506,7 +506,7 @@
           },
           {
             "title": "state",
-            "description": "{Dhis2State}"
+            "description": "{DHIS2State}"
           },
           {
             "title": "returns",

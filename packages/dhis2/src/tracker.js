@@ -1,12 +1,12 @@
 import { expandReferences } from '@openfn/language-common/util';
-import * as util from './Utils';
+import * as util from './util';
 
 /**
  * State object
- * @typedef {Object} Dhis2State
+ * @typedef {Object} DHIS2State
  * @private
  * @property data - The response body (as JSON)
- * @property response - The HTTP response from the Dhis2 server (excluding the body)
+ * @property response - The HTTP response from the DHIS2 server (excluding the body)
  * @property references - An array of all previous data objects used in the Job
  */
 
@@ -25,7 +25,7 @@ import * as util from './Utils';
  * @param {string} strategy - The effect the import should have. Can either be CREATE, UPDATE, CREATE_AND_UPDATE and DELETE.
  * @param {object} payload - The data to be imported.
  * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion, and queries for the request
- * @state {Dhis2State}
+ * @state {DHIS2State}
  * @returns {Operation}
  * @example <caption>Import some data and pass the `atomicMode` parameter</caption>
  * tracker.import('CREATE', $.trackerData, { atomicMode: 'ALL' })
@@ -95,7 +95,7 @@ export { _import as import };
  * @param {string} path - Path to the resource
  * @param {object} query - An object of query parameters to be encoded into the URL
  * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion for the request
- * @state {Dhis2State}
+ * @state {DHIS2State}
  * @returns {Operation}
  * @example <caption>Export a trackedEntity resource using the id</caption>
  * tracker.export('trackedEntities/Gu5UKnIFnJf')
