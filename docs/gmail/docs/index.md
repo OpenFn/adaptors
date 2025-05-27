@@ -102,7 +102,7 @@ Supports attachments and standard email fields like subject, body, and recipient
 
 | Param | Type | Description |
 | --- | --- | --- |
-| message | [<code>SendMessageOptions</code>](#sendmessageoptions) | The message configuration object. |
+| message | [<code>SendMessageOptions</code>](#sendmessageoptions) \| [<code>Array.&lt;SendMessageOptions&gt;</code>](#sendmessageoptions) | The message configuration object or array of objects. |
 
 This operation writes the following keys to state:
 
