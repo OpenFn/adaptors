@@ -136,7 +136,7 @@ Download an attachment in binary or base64 format
 | Param | Type | Description |
 | --- | --- | --- |
 | attachmentId | <code>string</code> | Id of the attachment to be retrieved. |
-| options | <code>object</code> | Optional request options. Supported options are: `filename` for the specific attachment to be downloaded, and `parseAs` for either 'stream` or 'base64`. Defaults to `parseAs: stream`. |
+| options | <code>object</code> | Optional request options. Supported options are: `filename` for the specific attachment to be downloaded, and `parseAs` for either `stream` or `base64`. Defaults to `parseAs: stream`. |
 
 This operation writes the following keys to state:
 
@@ -148,14 +148,14 @@ This operation writes the following keys to state:
 ```js
 downloadAttachment('622038', {
   filename:
-    'unicefbih/attachments/download_1.png',
+    'project/attachments/download_1.png',
 });
 ```
 **Example:** Download an attachment in base64 format
 ```js
 downloadAttachment('622038', {
   filename:
-    'unicefbih/attachments/download_1.png',
+    'project/attachments/download_1.png',
   parseAs: 'base64',
 });
 ```
@@ -181,7 +181,7 @@ This operation writes the following keys to state:
 | references | an array of all previous data objects used in the Job |
 **Example**
 ```js
-getAttachmentMetadata('621985')
+getAttachmentMetadata('621985');
 ```
 
 * * *
@@ -196,7 +196,7 @@ Get metadata or structural data for a single form
 | Param | Type | Description |
 | --- | --- | --- |
 | formId | <code>string</code> | Id of the form to be retrieved. |
-| options | <code>object</code> |  |
+| options | <code>object</code> | Optional filter options. |
 | options.structureOnly | <code>boolean</code> | If true, only the form structure is returned in JSON format. |
 
 This operation writes the following keys to state:
@@ -207,7 +207,7 @@ This operation writes the following keys to state:
 | references | an array of all previous data objects used in the Job |
 **Example:**  Get a single form 
 ```js
-getForm('6225')
+getForm('6225');
 ```
 **Example:**  Get a single form structure 
 ```js
@@ -237,7 +237,7 @@ This operation writes the following keys to state:
 | references | an array of all previous data objects used in the Job |
 **Example:** Get all forms without filter options
 ```js
-getForms()
+getForms();
 ```
 **Example:** Get all forms with filter options
 ```js
@@ -270,7 +270,7 @@ This operation writes the following keys to state:
 | references | an array of all previous data objects used in the Job |
 **Example**
 ```js
-getSubmission('6225', '7783155')
+getSubmission('6225', '7783155');
 ```
 
 * * *
