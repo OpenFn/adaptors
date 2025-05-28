@@ -1,9 +1,5 @@
 import { execute as commonExecute } from '@openfn/language-common';
-import {
-  expandReferences,
-  throwError,
-  encode,
-} from '@openfn/language-common/util';
+import { expandReferences, throwError } from '@openfn/language-common/util';
 import {
   handleResponse,
   selectId,
@@ -236,69 +232,41 @@ export function create(resourceType, data, options = {}) {
 }
 
 /**
- * Get data. Generic helper method for getting data of any kind from DHIS2.
- * - This can be used to get `DataValueSets`,`events`,`trackers`,`etc.`
+ * Get any resource, as JSON, from DHIS2. Pass in any valid DHIS2 REST path, excluding /api and the version.
+ * - For the new tracker API, see `tracker.export()`
  * @public
  * @function
- * @param {string} resourceType - The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.
- * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request
+ * @param {string} path - Path to the resource
+ * @param {object} params - Optional object of query parameters to include in the request
  * @state {DHIS2State}
  * @returns {Operation}
  * @example <caption>Get all data values for the 'pBOMPrpg1QX' dataset</caption>
  * get('dataValueSets', {
- *  query:{
  *   dataSet: 'pBOMPrpg1QX',
  *   orgUnit: 'DiszpKrYNg8',
  *   period: '201401',
  *   fields: '*',
- * }
  * });
  * @example <caption>Get all programs for an organization unit</caption>
- * get('programs', { query : { orgUnit: 'TSyzvBiovKh', fields: '*' } });
+ * get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
  * @example <caption>Get a single tracked entity given the provided ID. See [TrackedEntities docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities)</caption>
  * get('tracker/trackedEntities/F8yKM85NbxW');
- * @example <caption>Get an enrollment given the provided ID. See [Enrollment docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments)</caption>
- * get('tracker/enrollments/abcd');
- * @example <caption>Get all events matching given criteria. See [Events docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents)</caption>
- * get('tracker/events');
- * @example <caption>Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See [Relationships docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships)</caption>
- * get('tracker/relationships', {
- *   query: { trackedEntity:['F8yKM85NbxW'] }
- * });
- * @example <caption>Get an image from a trackedEntityInstance.</caption>
- * get('trackedEntityInstances/qHVDKszQmdx/BqaEWTBG3RB/image', {
- *   headers:{
- *       Accept: 'image/*'
- *   },
- *   parseAs: 'base64',
- * });
  */
-export function get(resourceType, options = {}) {
+export function get(path, params = {}) {
   return async state => {
-    console.log('Preparing get operation...');
-
-    const [resolvedResourceType, resolvedOptions] = expandReferences(
+    const [resolvedPath, resolvedParams] = expandReferences(
       state,
-      resourceType,
-      options
+      path,
+      params
     );
-
-    const { parseAs } = resolvedOptions;
 
     const response = await request(state.configuration, {
       method: 'GET',
-      path: prefixVersionToPath(
-        state.configuration,
-        resolvedOptions,
-        resolvedResourceType
-      ),
-      options: resolvedOptions,
+      path: prefixVersionToPath(state.configuration, {}, resolvedPath),
+      options: { query: resolvedParams },
     });
 
-    if (parseAs === 'base64') {
-      response.body = encode(response.body);
-    }
-    console.log(`Retrieved ${resolvedResourceType}`);
+    console.log(`Retrieved ${resolvedPath}`);
 
     return handleResponse(response, state);
   };

@@ -254,12 +254,10 @@ describe('Integration tests', () => {
     it('should get dataValueSets matching the query specified', async () => {
       const finalState = await execute(
         get('dataValueSets', {
-          query: {
             dataSet: 'pBOMPrpg1QX',
             orgUnit: 'sx4lYrYvpJ2',
             period: '201401',
             fields: '*',
-          },
         })
       )(state);
 
@@ -269,11 +267,9 @@ describe('Integration tests', () => {
     it('should get a single TEI based on multiple filters', async () => {
       const finalState = await execute(
         get('tracker/trackedEntities', {
-          query: {
             program: 'fDd25txQckK',
             orgUnit: 'DiszpKrYNg8',
             filter: ['w75KJ2mc4zz:Eq:Elanor'],
-          },
         })
       )(state);
 
