@@ -13,7 +13,7 @@ import { fetch } from 'undici';
 /**
  * Fetch all forms
  * @example <caption>Get all forms without filter options</caption>
- * getForms()
+ * getForms();
  * @example <caption>Get all forms with filter options</caption>
  * getForms({
  *   public: true,
@@ -43,7 +43,7 @@ export function getForms(options = {}) {
 /**
  * Get metadata or structural data for a single form
  * @example <caption> Get a single form </caption>
- * getForm('6225')
+ * getForm('6225');
  * @example <caption> Get a single form structure </caption>
  * getForm('6225', {
  *   structureOnly: true,
@@ -51,7 +51,7 @@ export function getForms(options = {}) {
  * @function
  * @public
  * @param {string} formId - Id of the form to be retrieved.
- * @param {object} options
+ * @param {object} options - Optional filter options.
  * @param {boolean} options.structureOnly - If true, only the form structure is returned in JSON format.
  * @returns {Operation}
  * @state {HttpState}
@@ -111,7 +111,7 @@ export function getSubmissions(formId, options = {}) {
 /**
  * Get a single data submission for a single form
  * @example
- * getSubmission('6225', '7783155')
+ * getSubmission('6225', '7783155');
  * @function
  * @public
  * @param {string} formId - Id of the form's submissions to be retrieved.
@@ -140,7 +140,7 @@ export function getSubmission(formId, submissionId) {
 /**
  * Fetch a single attachment's metadata
  * @example
- * getAttachmentMetadata('621985')
+ * getAttachmentMetadata('621985');
  * @function
  * @public
  * @param {string} attachmentId - Id of the attachment to be retrieved.
@@ -166,18 +166,18 @@ export function getAttachmentMetadata(attachmentId) {
  * @example <caption>Download an attachment</caption>
  * downloadAttachment('622038', {
  *   filename:
- *     'unicefbih/attachments/download_1.png',
+ *     'project/attachments/download_1.png',
  * });
  * @example <caption>Download an attachment in base64 format</caption>
  * downloadAttachment('622038', {
  *   filename:
- *     'unicefbih/attachments/download_1.png',
+ *     'project/attachments/download_1.png',
  *   parseAs: 'base64',
  * });
  * @function
  * @public
  * @param {string} attachmentId - Id of the attachment to be retrieved.
- * @param {object} options - Optional request options. Supported options are: `filename` for the specific attachment to be downloaded, and `parseAs` for either 'stream` or 'base64`. Defaults to `parseAs: stream`.
+ * @param {object} options - Optional request options. Supported options are: `filename` for the specific attachment to be downloaded, and `parseAs` for either `stream` or `base64`. Defaults to `parseAs: stream`.
  * @returns {Operation}
  * @state {HttpState}
  */
@@ -202,9 +202,8 @@ export function downloadAttachment(attachmentId, options = {}) {
 
     const { headers } = response;
 
-
-// The below manual redirect handling is needed because the request redirects to a different
-// url which fails when using undici Client. Instead, we need to fetch the new url manually.
+    // The below manual redirect handling is needed because the request redirects to a different
+    // url which fails when using undici Client. Instead, we need to fetch the new url manually.
     const parseAs = resolvedOptions?.parseAs || 'stream';
 
     if (headers.location) {
