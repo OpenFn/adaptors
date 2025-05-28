@@ -3,5 +3,8 @@
 ---
 
 - Update square logo
-- Add semicolons to examples and remove sensitive data
+- Add semi-colon after each example.
+- Add options description to downloadAttachment function
+- Remove sensitive data in examples
+
 
