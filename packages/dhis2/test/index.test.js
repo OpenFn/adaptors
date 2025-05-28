@@ -2,12 +2,6 @@ import chai from 'chai';
 import { execute, create, update, upsert, get } from '../src/Adaptor';
 import { dataValue } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
-import {
-  prefixVersionToPath,
-  ensureArray,
-  shouldUseNewTracker,
-} from '../src/Utils';
-
 import * as util from '../src/util';
 
 const { expect } = chai;
@@ -194,27 +188,27 @@ describe(' get', () => {
 
 describe('helperfunctions', () => {
   it('should use the new tracker for enrollments', () => {
-    const result = shouldUseNewTracker('enrollments');
+    const result = util.shouldUseNewTracker('enrollments');
     expect(result).to.be.true;
   });
 
   it('should use the new tracker for events', () => {
-    const result = shouldUseNewTracker('events');
+    const result = util.shouldUseNewTracker('events');
     expect(result).to.be.true;
   });
 
   it('should use the new tracker for trackedEntities', () => {
-    const result = shouldUseNewTracker('trackedEntities');
+    const result = util.shouldUseNewTracker('trackedEntities');
     expect(result).to.be.true;
   });
 
   it('should use the old API for dataValueSets', () => {
-    const result = shouldUseNewTracker('dataValueSets');
+    const result = util.shouldUseNewTracker('dataValueSets');
     expect(result).to.be.false;
   });
 
   it('should use the old API for dataElements', () => {
-    const result = shouldUseNewTracker('dataElements');
+    const result = util.shouldUseNewTracker('dataElements');
     expect(result).to.be.false;
   });
 });
@@ -531,7 +525,7 @@ describe('URL builders', () => {
 
   describe('generateURL', () => {
     it('should generate basic URL', done => {
-      const finalURL = prefixVersionToPath(
+      const finalURL = util.prefixVersionToPath(
         fixture.configuration,
         fixture.options,
         fixture.resourceType
@@ -545,7 +539,7 @@ describe('URL builders', () => {
     it('should generate URL with specific api version from configuration', done => {
       const configuration = { ...fixture.configuration, apiVersion: 33 };
 
-      const finalURL = prefixVersionToPath(
+      const finalURL = util.prefixVersionToPath(
         configuration,
         fixture.options,
         fixture.resourceType
@@ -559,7 +553,7 @@ describe('URL builders', () => {
     it('should generate URL with specific api version from options', done => {
       const options = { ...fixture.options, apiVersion: 33 };
 
-      const finalURL = prefixVersionToPath(
+      const finalURL = util.prefixVersionToPath(
         fixture.configuration,
         options,
         fixture.resourceType
@@ -577,7 +571,7 @@ describe('URL builders', () => {
         params: { filter: ['a:eq:b', 'c:ge:d'] },
       };
 
-      const finalURL = prefixVersionToPath(
+      const finalURL = util.prefixVersionToPath(
         fixture.configuration,
         options,
         fixture.resourceType
@@ -598,7 +592,7 @@ describe('ensureArray', () => {
       data: [{ a: 1 }],
     };
 
-    const body = ensureArray(state.data, 'events');
+    const body = util.ensureArray(state.data, 'events');
 
     expect(body).to.eql({ events: [{ a: 1 }] });
   });
@@ -609,7 +603,7 @@ describe('ensureArray', () => {
       data: { b: 2 },
     };
 
-    const body = ensureArray(state.data, 'events');
+    const body = util.ensureArray(state.data, 'events');
 
     expect(body).to.eql({ events: [{ b: 2 }] });
   });

@@ -362,7 +362,7 @@ describe('Integration tests', () => {
       expect(finalState.data.httpStatus).to.eq('OK');
     });
 
-    it.only('should upsert a trackedEntityInstance via update as query matches one data', async () => {
+    it('should upsert a trackedEntityInstance via update as query matches one data', async () => {
       const state = {
         ...fixture.initialState,
         data: {
