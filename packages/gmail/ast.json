@@ -77,10 +77,28 @@
           },
           {
             "title": "param",
-            "description": "The message configuration object.",
+            "description": "The message configuration object or array of objects.",
             "type": {
-              "type": "NameExpression",
-              "name": "SendMessageOptions"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "SendMessageOptions"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "SendMessageOptions"
+                    }
+                  ]
+                }
+              ]
             },
             "name": "message"
           },
