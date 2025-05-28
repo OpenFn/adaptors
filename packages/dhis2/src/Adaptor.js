@@ -85,11 +85,11 @@ function configMigrationHelper(state) {
  * Create a record
  * @public
  * @function
- * @param {string} resourceType - Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ...
+ * @param {string} path - Path to the resource to be created
  * @magic resourceType $.children.resourceTypes[*]
  * @param {DHIS2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
- * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
- * @state {DHIS2State}
+ * @param {object} params - Optional object of query parameters to include in the request
+ * @state data - The created resource as returned by DHIS2
  * @returns {Operation}
  * @example <caption>Create a program</caption>
  * create('programs', {
@@ -182,37 +182,39 @@ function configMigrationHelper(state) {
  *   incidentDate: '2013-09-17',
  * });
  */
-export function create(resourceType, data, options = {}) {
+export function create(path, data, params = {}) {
   return async state => {
-    console.log(`Preparing create operation...`);
-
-    if (resourceType === 'tracker') {
+    if (path === 'tracker') {
       throw new Error('Invalid resourceType. Use `tracker.import()` instead.');
     }
 
-    const [resolvedResourceType, resolvedData, resolvedOptions] =
-      expandReferences(state, resourceType, data, options);
+    const [resolvedPath, resolvedData, resolvedParams] = expandReferences(
+      state,
+      path,
+      data,
+      params
+    );
 
     const { configuration } = state;
 
     let response;
-    if (shouldUseNewTracker(resolvedResourceType)) {
+    if (shouldUseNewTracker(resolvedPath)) {
       response = await callNewTracker(
         'create',
         configuration,
-        resolvedOptions,
-        resolvedResourceType,
+        {
+          query: resolvedParams,
+        },
+        resolvedPath,
         resolvedData
       );
     } else {
       response = await request(configuration, {
         method: 'POST',
-        path: prefixVersionToPath(
-          configuration,
-          resolvedOptions,
-          resolvedResourceType
-        ),
-        options: resolvedOptions,
+        path: prefixVersionToPath(configuration, {}, resolvedPath),
+        options: {
+          query: resolvedParams,
+        },
         data: resolvedData,
       });
     }
@@ -222,7 +224,7 @@ export function create(resourceType, data, options = {}) {
       null,
       2
     )}`;
-    console.log(`Created ${resolvedResourceType} ${details}`);
+    console.log(`Created ${resolvedPath} ${details}`);
 
     const { location } = response.headers;
     if (location) console.log(`Record available @ ${location}`);
@@ -238,7 +240,7 @@ export function create(resourceType, data, options = {}) {
  * @function
  * @param {string} path - Path to the resource
  * @param {object} params - Optional object of query parameters to include in the request
- * @state {DHIS2State}
+ * @state data - the resource returned by DHIS2
  * @returns {Operation}
  * @example <caption>Get all data values for the 'pBOMPrpg1QX' dataset</caption>
  * get('dataValueSets', {
@@ -281,7 +283,7 @@ export function get(path, params = {}) {
  * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`
  * @param {Object} data - Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
- * @state {DHIS2State}
+ * @state data - the resource returned by DHIS2
  * @returns {Operation}
  * @example <caption>a program</caption>
  * update('programs', 'qAZJCrNJK8H', {
