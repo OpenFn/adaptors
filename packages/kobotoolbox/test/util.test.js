@@ -51,13 +51,11 @@ describe('responseWithPagination', () => {
   });
 
   it('pagination values are included when additional items exis', () => {
-    const start = 0;
     const limit = 2;
     const { next, previous } = responseWithPagination(
       items,
       {
         limit,
-        start,
       },
       { url: 'www' }
     );
@@ -67,13 +65,12 @@ describe('responseWithPagination', () => {
   });
 
   it('should return first 100 items when requestLimit=100 for dataset of 1001 items', async () => {
-    const start = 0;
     const requestLimit = 100;
     const { results, next, previous } = responseWithPagination(
       Array.from({ length: 1001 }, (_, i) => ({
         uid: String(i),
       })),
-      { start },
+      {},
       { url: 'www', requestLimit }
     );
     expect(results.length).to.eql(requestLimit);
