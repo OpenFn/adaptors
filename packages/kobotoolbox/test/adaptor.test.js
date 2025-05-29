@@ -171,12 +171,12 @@ describe('getSubmissions', () => {
   });
   it('should allow custom pageSize', async () => {
     const state = { configuration };
-    const mockResponse = Array.from({ length: 10 }, (_, i) => ({
+    const mockData = Array.from({ length: 10 }, (_, i) => ({
       uid: String(i),
     }));
     const pageSize = 1;
 
-    const totalRequests = Math.ceil(mockResponse.length / pageSize);
+    const totalRequests = Math.ceil(mockData.length / pageSize);
 
     let requestCount = 0;
     testServer
@@ -190,7 +190,7 @@ describe('getSubmissions', () => {
           requestCount++;
           const { query, origin, path } = req;
           return responseWithPagination(
-            mockResponse,
+            mockData,
             {
               limit: query.limit,
               start: query.start,
@@ -217,11 +217,11 @@ describe('getSubmissions', () => {
   });
 
   it('should get ALL items if the item count exceeds the default limit (ie, limit = Infinity)', async () => {
-    const mockResponse = Array.from({ length: defaultLimit + 1 }, (_, i) => ({
+    const mockData = Array.from({ length: defaultLimit + 1 }, (_, i) => ({
       uid: String(i),
     }));
 
-    const totalRequests = Math.ceil(mockResponse.length / requestLimit);
+    const totalRequests = Math.ceil(mockData.length / requestLimit);
     let requestCount = 0;
     testServer
       .intercept({
@@ -234,7 +234,7 @@ describe('getSubmissions', () => {
           requestCount++;
           const { query, origin, path } = req;
           return responseWithPagination(
-            mockResponse,
+            mockData,
             {
               limit: query.limit,
               start: query.start,

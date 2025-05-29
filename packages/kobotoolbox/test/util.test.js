@@ -50,7 +50,7 @@ describe('responseWithPagination', () => {
     expect(results.length).to.eql(2);
   });
 
-  it('pagination values are included when additional items exis', () => {
+  it('pagination values are included when additional items exist', () => {
     const limit = 2;
     const { next, previous } = responseWithPagination(
       items,
