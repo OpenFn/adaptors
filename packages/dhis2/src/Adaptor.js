@@ -650,6 +650,7 @@ function callNewTracker(
       query: {
         ...options.query,
         async: false,
+        importStrategy,
       },
     },
     data: ensureArray(data, resourceType),

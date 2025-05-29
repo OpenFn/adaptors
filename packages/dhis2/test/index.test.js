@@ -90,8 +90,8 @@ describe(' get', () => {
 
     const finalState = await execute(
       get('dataValueSets', {
-          ...query,
-          fields: '*',
+        ...query,
+        fields: '*',
       })
     )(state);
 
@@ -124,8 +124,8 @@ describe(' get', () => {
 
     const finalState = await execute(
       get('dataValueSets', {
-          ...query,
-          fields: '*',
+        ...query,
+        fields: '*',
       })
     )(state);
 
@@ -155,7 +155,6 @@ describe(' get', () => {
         'no filters applied, dhis2 might complain about needing "at least one orgUnit"',
     });
   });
-
 });
 
 describe('helperfunctions', () => {
@@ -202,7 +201,7 @@ describe('create', () => {
       .intercept({
         path: getPath('tracker'),
         method: 'POST',
-        query: { async: false },
+        query: { async: false, importStrategy: 'CREATE' },
       })
       .reply(200, {
         httpStatus: 'OK',
@@ -224,7 +223,7 @@ describe('create', () => {
       .intercept({
         path: getPath('tracker'),
         method: 'POST',
-        query: { async: false },
+        query: { async: false, importStrategy: 'CREATE' },
       })
       .reply(200, {
         httpStatus: 'OK',
@@ -452,7 +451,7 @@ describe('upsert', () => {
       .intercept({
         path: getPath('tracker'),
         method: 'POST',
-        query: { async: false },
+        query: { async: false, importStrategy: 'CREATE_AND_UPDATE' },
       })
       .reply(200, {
         httpStatus: 'OK',
