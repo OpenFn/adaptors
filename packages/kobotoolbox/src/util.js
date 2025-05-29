@@ -66,9 +66,6 @@ export async function requestWithPagination(state, path, options = {}) {
 
   do {
     requestOptions.query ??= {};
-
-    if (!isNaN(start)) {
-    }
     requestOptions.query.start = start;
 
     if (didUserPassLimit || !isFirstRequest) {
@@ -88,9 +85,6 @@ export async function requestWithPagination(state, path, options = {}) {
     if (response.body?.results) {
       results.push(...response.body.results);
 
-      if (!start) {
-        start = 1;
-      }
       if (response?.body?.next) {
         const nextUrl = new URL(response?.body?.next);
         start = nextUrl.searchParams.get('start');
