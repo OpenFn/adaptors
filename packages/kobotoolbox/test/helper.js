@@ -1,10 +1,10 @@
-import { DEFAULT_REQUEST_LIMIT, DEFAULT_MAX_LIMIT } from '../src/util';
+import { DEFAULT_REQUEST_LIMIT, DEFAULT_LIMIT } from '../src/util';
 
 export function responseWithPagination(items, query, settings) {
   const {
     url,
-    defaultLimit = DEFAULT_REQUEST_LIMIT,
-    maxLimit = DEFAULT_MAX_LIMIT,
+    requestLimit = DEFAULT_REQUEST_LIMIT,
+    defaultLimit = DEFAULT_LIMIT,
   } = settings;
   const { start = 0, limit } = query;
 
@@ -19,10 +19,10 @@ export function responseWithPagination(items, query, settings) {
   let startIndex = parseInt(start);
   const hasStartIndex = startIndex > 0;
   let shouldFetchMoreContent = false;
-  let effectiveLimit = limit ?? defaultLimit;
-  let isUsingDefaultLimit = !limit && defaultLimit === DEFAULT_REQUEST_LIMIT;
+  let effectiveLimit = limit ?? requestLimit;
+  let isUsingDefaultLimit = !limit && requestLimit === DEFAULT_REQUEST_LIMIT;
 
-  let maxResults = maxLimit;
+  let maxResults = defaultLimit;
   const hasNoLimitWithStartIndex = !limit && hasStartIndex;
   if (hasNoLimitWithStartIndex) {
     maxResults = items.length - startIndex;
@@ -55,7 +55,7 @@ export function responseWithPagination(items, query, settings) {
       !hasStartIndex && startIndex <= effectiveLimit
         ? null
         : hasNoLimitWithStartIndex && isUsingDefaultLimit
-        ? `${url}?format=json&limit=${maxLimit}` // If no limit and start >0
+        ? `${url}?format=json&limit=${defaultLimit}` // If no limit and start >0
         : `${url}?format=json&start=${Math.max(
             0,
             startIndex - effectiveLimit

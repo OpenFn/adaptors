@@ -8,7 +8,10 @@ import {
   getDeploymentInfo,
 } from '../src/Adaptor';
 import { responseWithPagination } from './helper';
-import { DEFAULT_REQUEST_LIMIT, DEFAULT_MAX_LIMIT } from '../src/util';
+import { DEFAULT_REQUEST_LIMIT, DEFAULT_LIMIT } from '../src/util';
+const defaultLimit = DEFAULT_LIMIT;
+const requestLimit = DEFAULT_REQUEST_LIMIT;
+
 const testServer = enableMockClient('https://test.kobotoolbox.org');
 const jsonHeaders = {
   headers: {
@@ -20,46 +23,6 @@ const configuration = {
   password: 'strongpassword',
   apiVersion: 'v2',
   baseUrl: 'https://test.kobotoolbox.org',
-};
-
-const mockSubmissions = (formId, submissions, opts = {}) => {
-  const { pageSize, ...otherOpts } = opts;
-
-  const path = `/api/v2/assets/${formId}/data/`;
-  const url = `${configuration.baseUrl}${path}`;
-  if (otherOpts.query && typeof otherOpts.query !== 'string') {
-    otherOpts.query = JSON.stringify(otherOpts.query);
-  }
-  testServer
-    .intercept({
-      path,
-      method: 'GET',
-      query: {
-        format: 'json',
-        ...otherOpts,
-      },
-    })
-    .reply(
-      200,
-      (req, res) => {
-        const { query, origin } = req;
-        const results = responseWithPagination(
-          submissions,
-          {
-            limit: otherOpts.limit,
-            start: otherOpts.start,
-          },
-          {
-            url,
-            defaulLimit: pageSize,
-          }
-        );
-        return results;
-      },
-      {
-        ...jsonHeaders,
-      }
-    );
 };
 
 describe('getSubmissions', () => {
@@ -74,14 +37,14 @@ describe('getSubmissions', () => {
     originalLog = console.warn;
     console.warn = (...args) => consoleOutput.push(...args);
   });
-  const formId = 'aXecHjmbATuF6iGFmvBLBX';
 
-  it('should return submissions within default page limits', async () => {
+  it('should return paginated submissions using default limit', async () => {
     let requestCount = 0;
-    const totalRequests = Math.ceil(
-      sampleResponse.length / DEFAULT_REQUEST_LIMIT
-    );
-    console.log({ totalRequests });
+    const items = Array.from({ length: 4e4 }, (_, i) => ({
+      uid: String(i),
+    }));
+    const totalRequests = Math.ceil(defaultLimit / requestLimit);
+
     testServer
       .intercept({
         path: /\/api\/v2\/assets\/aXecHjmbATuF6iGFmvBLBX\/data/,
@@ -93,7 +56,7 @@ describe('getSubmissions', () => {
           requestCount++;
           const { query, origin, path } = req;
           const results = responseWithPagination(
-            sampleResponse,
+            items,
             {
               limit: query.limit,
               start: query.start,
@@ -112,12 +75,14 @@ describe('getSubmissions', () => {
     const { data } = await execute(getSubmissions('aXecHjmbATuF6iGFmvBLBX'))(
       state
     );
-    expect(data).to.eql(sampleResponse);
+
+    expect(totalRequests).to.eql(3);
     expect(requestCount).to.eql(totalRequests);
-    expect(data.length).to.eql(sampleResponse.length);
+    expect(data.length).to.eql(defaultLimit);
+    expect(items.length).to.greaterThan(data.length);
   });
 
-  it('should return submissions within specified limit', async () => {
+  it('should return 1 submission when limit=1', async () => {
     const limit = 1;
     const response = sampleResponse.slice(0, limit);
     const totalRequests = Math.ceil(response.length / DEFAULT_REQUEST_LIMIT);
@@ -156,63 +121,16 @@ describe('getSubmissions', () => {
     )(state);
 
     expect(data).to.eql(response);
-    expect(requestCount).to.eql(totalRequests);
-    expect(data.length).to.eql(response.length);
-  });
-
-  it('should not return more items than the default limit', async () => {
-    const manyObjects = Array.from(
-      { length: DEFAULT_MAX_LIMIT + 1 },
-      (_, i) => ({
-        uid: String(i),
-      })
-    );
-    const response = manyObjects.slice(0, DEFAULT_MAX_LIMIT);
-    const totalRequests = Math.ceil(response.length / DEFAULT_REQUEST_LIMIT);
-
-    let requestCount = 0;
-    testServer
-      .intercept({
-        path: /\/api\/v2\/assets\/aXecHjmbATuF6iGFmvBLBX\/data/,
-        method: 'GET',
-      })
-      .reply(
-        200,
-        req => {
-          requestCount++;
-          const { query, origin, path } = req;
-          return responseWithPagination(
-            manyObjects,
-            {
-              limit: query.limit,
-              start: query.start,
-            },
-            {
-              url: `${origin}${path}`,
-            }
-          );
-        },
-        {
-          ...jsonHeaders,
-        }
-      )
-      .times(totalRequests);
-    const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX')(state);
-
-    console.log({ requestCount, totalRequests });
-    expect(data.length).to.eql(DEFAULT_MAX_LIMIT);
-    expect(requestCount).to.eql(totalRequests);
+    expect(requestCount).to.eql(1);
+    expect(data.length).to.eql(1);
   });
 
   it('should be able to explicity get more items than the default max limit', async () => {
-    const manyObjects = Array.from(
-      { length: DEFAULT_MAX_LIMIT + 2 },
-      (_, i) => ({
-        uid: String(i),
-      })
-    );
+    const manyObjects = Array.from({ length: defaultLimit + 2 }, (_, i) => ({
+      uid: String(i),
+    }));
 
-    const totalRequests = Math.ceil(manyObjects.length / DEFAULT_REQUEST_LIMIT);
+    const totalRequests = Math.ceil(manyObjects.length / requestLimit);
 
     let requestCount = 0;
     testServer
@@ -243,12 +161,15 @@ describe('getSubmissions', () => {
       .times(totalRequests);
 
     const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
-      limit: DEFAULT_MAX_LIMIT + 2,
+      limit: 4e4,
     })(state);
-    expect(requestCount).to.eql(totalRequests);
-    expect(data.length).to.eql(manyObjects.length);
+
+    expect(requestCount).to.eql(4);
+    expect(totalRequests).to.eql(4);
+    expect(data.length).to.eql(3e4 + 2);
+    expect(data.length).to.greaterThan(defaultLimit);
   });
-  it('should allow page size to be overridden', async () => {
+  it('should allow custom pageSize', async () => {
     const state = { configuration };
     const mockResponse = Array.from({ length: 10 }, (_, i) => ({
       uid: String(i),
@@ -290,23 +211,17 @@ describe('getSubmissions', () => {
       pageSize,
     })(state);
 
-    expect(data.length).to.eql(totalRequests);
-    expect(requestCount).to.eql(totalRequests);
+    expect(data.length).to.eql(10);
+    expect(requestCount).to.eql(10);
+    expect(totalRequests).to.eql(10);
   });
 
   it('should get ALL items if the item count exceeds the default limit (ie, limit = Infinity)', async () => {
-    const mockResponse = Array.from(
-      { length: DEFAULT_MAX_LIMIT + 1 },
-      (_, i) => ({
-        uid: String(i),
-      })
-    );
+    const mockResponse = Array.from({ length: defaultLimit + 1 }, (_, i) => ({
+      uid: String(i),
+    }));
 
-    const totalRequests = Math.ceil(
-      mockResponse.length / DEFAULT_REQUEST_LIMIT
-    );
-    console.log({ totalRequests });
-
+    const totalRequests = Math.ceil(mockResponse.length / requestLimit);
     let requestCount = 0;
     testServer
       .intercept({
@@ -339,8 +254,8 @@ describe('getSubmissions', () => {
       limit: Infinity,
     })(state);
 
-    expect(data.length).to.eql(DEFAULT_MAX_LIMIT + 1);
-    expect(requestCount).to.eql(totalRequests);
+    expect(data.length).to.eql(3e4 + 1);
+    expect(requestCount).to.eql(4);
   });
 
   afterEach(() => {
