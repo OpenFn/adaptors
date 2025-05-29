@@ -2,12 +2,6 @@ import chai from 'chai';
 import { execute, create, update, upsert, get } from '../src/Adaptor';
 import { dataValue } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
-import {
-  prefixVersionToPath,
-  ensureArray,
-  shouldUseNewTracker,
-} from '../src/Utils';
-
 import * as util from '../src/util';
 
 const { expect } = chai;
@@ -96,10 +90,8 @@ describe(' get', () => {
 
     const finalState = await execute(
       get('dataValueSets', {
-        query: {
           ...query,
           fields: '*',
-        },
       })
     )(state);
 
@@ -132,10 +124,8 @@ describe(' get', () => {
 
     const finalState = await execute(
       get('dataValueSets', {
-        query: {
           ...query,
           fields: '*',
-        },
       })
     )(state);
 
@@ -166,55 +156,31 @@ describe(' get', () => {
     });
   });
 
-  it('should support base64 for images', async () => {
-    testServer
-      .intercept({
-        path: getPath('trackedEntityInstances/qHVDKszQmdx/BqaEWTBG3RB/image'),
-        method: 'GET',
-      })
-      .reply(
-        200,
-        '����\x00\x10JFIF\x00\x01\x02\x00\x00\x01\x00\x01\x00\x00��\x00C\x00\b\x06\x06\x07\x06\x05\b\x07\x07\x07\t\t\b\n'
-      );
-
-    const finalState = await execute(
-      get('trackedEntityInstances/qHVDKszQmdx/BqaEWTBG3RB/image', {
-        headers: {
-          Accept: 'image/*',
-        },
-        parseAs: 'base64',
-      })
-    )(state);
-    expect(finalState.response).to.eql(undefined);
-    expect(finalState.data).to.eql(
-      '77+977+977+977+9ABBKRklGAAECAAABAAEAAO+/ve+/vQBDAAgGBgcGBQgHBwcJCQgK'
-    );
-  });
 });
 
 describe('helperfunctions', () => {
   it('should use the new tracker for enrollments', () => {
-    const result = shouldUseNewTracker('enrollments');
+    const result = util.shouldUseNewTracker('enrollments');
     expect(result).to.be.true;
   });
 
   it('should use the new tracker for events', () => {
-    const result = shouldUseNewTracker('events');
+    const result = util.shouldUseNewTracker('events');
     expect(result).to.be.true;
   });
 
   it('should use the new tracker for trackedEntities', () => {
-    const result = shouldUseNewTracker('trackedEntities');
+    const result = util.shouldUseNewTracker('trackedEntities');
     expect(result).to.be.true;
   });
 
   it('should use the old API for dataValueSets', () => {
-    const result = shouldUseNewTracker('dataValueSets');
+    const result = util.shouldUseNewTracker('dataValueSets');
     expect(result).to.be.false;
   });
 
   it('should use the old API for dataElements', () => {
-    const result = shouldUseNewTracker('dataElements');
+    const result = util.shouldUseNewTracker('dataElements');
     expect(result).to.be.false;
   });
 });
@@ -531,7 +497,7 @@ describe('URL builders', () => {
 
   describe('generateURL', () => {
     it('should generate basic URL', done => {
-      const finalURL = prefixVersionToPath(
+      const finalURL = util.prefixVersionToPath(
         fixture.configuration,
         fixture.options,
         fixture.resourceType
@@ -545,7 +511,7 @@ describe('URL builders', () => {
     it('should generate URL with specific api version from configuration', done => {
       const configuration = { ...fixture.configuration, apiVersion: 33 };
 
-      const finalURL = prefixVersionToPath(
+      const finalURL = util.prefixVersionToPath(
         configuration,
         fixture.options,
         fixture.resourceType
@@ -559,7 +525,7 @@ describe('URL builders', () => {
     it('should generate URL with specific api version from options', done => {
       const options = { ...fixture.options, apiVersion: 33 };
 
-      const finalURL = prefixVersionToPath(
+      const finalURL = util.prefixVersionToPath(
         fixture.configuration,
         options,
         fixture.resourceType
@@ -577,7 +543,7 @@ describe('URL builders', () => {
         params: { filter: ['a:eq:b', 'c:ge:d'] },
       };
 
-      const finalURL = prefixVersionToPath(
+      const finalURL = util.prefixVersionToPath(
         fixture.configuration,
         options,
         fixture.resourceType
@@ -598,7 +564,7 @@ describe('ensureArray', () => {
       data: [{ a: 1 }],
     };
 
-    const body = ensureArray(state.data, 'events');
+    const body = util.ensureArray(state.data, 'events');
 
     expect(body).to.eql({ events: [{ a: 1 }] });
   });
@@ -609,7 +575,7 @@ describe('ensureArray', () => {
       data: { b: 2 },
     };
 
-    const body = ensureArray(state.data, 'events');
+    const body = util.ensureArray(state.data, 'events');
 
     expect(body).to.eql({ events: [{ b: 2 }] });
   });

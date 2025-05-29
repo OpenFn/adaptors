@@ -1,12 +1,12 @@
 import { expandReferences, encode } from '@openfn/language-common/util';
-import * as util from './Utils';
+import * as util from './util';
 
 /**
  * State object
- * @typedef {Object} Dhis2State
+ * @typedef {Object} DHIS2HttpState
  * @private
  * @property data - The response body (as JSON)
- * @property response - The HTTP response from the Dhis2 server (excluding the body)
+ * @property response - The HTTP response from the DHIS2 server (excluding the body)
  * @property references - An array of all previous data objects used in the Job
  */
 
@@ -20,15 +20,14 @@ import * as util from './Utils';
  */
 
 /**
- * Get data. HTTP helper method for getting data of any kind from DHIS2.
- * - This can be used to get `DataValueSets`,`events`,`trackers`,`etc.`
+ * Make a GET request to any DHIS2 endpoint.
  * @public
  * @function
- * @param {string} path - Path to resource(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.
+ * @param {string} path - Path to resource.
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request
- * @state {Dhis2State}
+ * @state {DHIS2HttpState}
  * @returns {Operation}
- * @example <caption>Get all data values for the 'pBOMPrpg1QX' dataset</caption>
+ * @example <caption>Get with query parameters</caption>
  * http.get('dataValueSets', {
  *  query:{
  *   dataSet: 'pBOMPrpg1QX',
@@ -36,10 +35,6 @@ import * as util from './Utils';
  *   period: '201401',
  *   fields: '*',
  * }
- * });
- * @example <caption>Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See [Relationships docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships)</caption>
- * http.get('tracker/relationships', {
- *   query: { trackedEntity:['F8yKM85NbxW'] }
  * });
  * @example <caption>Get an image from a trackedEntityInstance.</caption>
  * http.get('trackedEntityInstances/qHVDKszQmdx/BqaEWTBG3RB/image', {
@@ -74,24 +69,21 @@ export function get(path, options = {}) {
     if (parseAs === 'base64') {
       response.body = encode(response.body);
     }
-    console.log(`Retrieved ${resolvedPath}`);
-
     return util.handleHttpResponse(response, state);
   };
 }
 
 /**
- * Post data. HTTP helper method for posting data of any kind to DHIS2.
- * This can be used to create `DataValueSets`,`events`,`trackers`,etc.
+ * Make a POST request to any DHIS2 endpoint.
  * @public
  * @function
- * @param {string} path - Path to resource. E.g. `trackedEntities`, `programs`, `events`, ...
+ * @param {string} path - Path to resource.
  * @magic path $.children.resourceTypes[*]
- * @param {Dhis2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
+ * @param {DHIS2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
- * @state {Dhis2State}
+ * @state {DHIS2HttpState}
  * @returns {Operation}
- * @example <caption>Create an event</caption>
+ * @example <caption>Call the tracker endpoint with a JSON payload</caption>
  * http.post("tracker", {
  *   events: [
  *     {
@@ -127,24 +119,21 @@ export function post(path, data, options = {}) {
       data: resolvedData,
     });
 
-    console.log(`Created ${resolvedPath}`);
     return util.handleHttpResponse(response, state);
   };
 }
 
 /**
- * Patch a record. A HTTP helper function to send partial updates on one or more object properties.
- * - You are not required to send the full body of object properties.
- * - This is useful for cases where you don't want or need to update all properties on a object.
+ * Make a PATCH request to any DHIS2 endpoint.
  * @public
  * @function
- * @param {string} resourceType - The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc.
+ * @param {string} resourceType - The type of resource to be updated.
  * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`
  * @param {Object} data - Data to update. Include only the fields you want to update. E.g. `{name: "New Name"}`
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
- * @state {Dhis2State}
+ * @state {DHIS2HttpState}
  * @returns {Operation}
- * @example <caption>a dataElement</caption>
+ * @example <caption>Update a resource</caption>
  * patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
  */
 
@@ -169,14 +158,12 @@ export function patch(resourceType, path, data, options = {}) {
       options: resolvedOptions,
       data: resolvedData,
     });
-
-    console.log(`Patched ${resolvedResourceType} at ${resolvedPath}`);
     return util.handleHttpResponse(response, state);
   };
 }
 
 /**
- * Make a HTTP request to any dhis2 endpoint
+ * Make a HTTP request to any DHIS2 endpoint
  * @example <caption>GET request with a URL params</caption>
  * http.request("GET",
  *   "tracker/relationships", {
@@ -206,6 +193,7 @@ export function patch(resourceType, path, data, options = {}) {
  * @param {string} path - Path to resource
  * @param {RequestOptions}  [options] - An optional object containing query, requestConfig, and data for the request
  * @returns {Operation}
+ * @state {DHIS2HttpState}
  */
 export function request(method, path, options = {}) {
   return async state => {
@@ -229,7 +217,6 @@ export function request(method, path, options = {}) {
       data,
     });
 
-    console.log(`Successful ${resolvedMethod.toLowerCase()} operation...`);
     return util.handleHttpResponse(response, state);
   };
 }
