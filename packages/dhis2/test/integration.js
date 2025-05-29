@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import crypto from 'node:crypto';
-import { execute, create, update, upsert } from '../dist/index.js';
-import { get } from '../src/http';
+import { execute, create, update, upsert, get } from '../dist/index.js';
 
 const getRandomProgramPayload = () => {
   const name = crypto.randomBytes(16).toString('hex');
@@ -13,22 +12,43 @@ const getRandomProgramPayload = () => {
 const configuration = {
   username: 'admin',
   password: 'district',
-  hostUrl: 'https://play.im.dhis2.org/stable-2-40-7',
+  // If these tests are failing, check that this URL is correct!
+  hostUrl: 'https://play.im.dhis2.org/stable-2-40-7-1',
+  apiVersion: '42',
 };
+
+// These values may need to be updated when switching test servers
+const STARTING_ORG_UNIT = 'TSyzvBiovKh';
+const STARTING_PROGRAM_STAGE = 'EPEcjy3FWmI';
 
 describe('Integration tests', () => {
   const fixture = {};
 
-  before(done => {
-    fixture.initialState = {
+  before(async () => {
+    const state = {
       configuration,
-      program: 'IpHINAT79UW',
-      orgUnit: 'DiszpKrYNg8',
-      trackedEntityInstance: 'uhubxsfLanV',
-      // programStage: 'eaDHS084uMp',
-      programStage: 'CWaAcQYKVpq', // new!
     };
-    done();
+
+    try {
+      const enrollments = get('tracker/enrollments', {
+        orgUnit: STARTING_ORG_UNIT,
+      });
+
+      const enrollmentData = await execute(enrollments)(state);
+
+      const enrollment = enrollmentData.data.instances[0];
+      fixture.initialState = {
+        configuration,
+        program: enrollment.program,
+        orgUnit: enrollment.orgUnit,
+        programStage: STARTING_PROGRAM_STAGE,
+        enrollment: enrollment.enrollment,
+        trackedEntity: enrollment.trackedEntity,
+      };
+    } catch (error) {
+      console.error('Error in before hook:', error);
+      throw error;
+    }
   });
 
   describe('create', () => {
@@ -38,24 +58,35 @@ describe('Integration tests', () => {
         data: getRandomProgramPayload(),
       };
 
-      const finalState = await execute(create('programs', state => state.data))(
-        state
-      );
+      const finalState = await execute(
+        create('programs', state => state.data, {
+          atomicMode: 'OBJECT',
+        })
+      )(state);
 
       expect(finalState.data.status).to.eq('OK');
     });
 
     it('should create a single event', async () => {
+      6;
       const state = { ...fixture.initialState };
 
       const finalState = await execute(
-        create('events', state => ({
-          program: state.program,
-          orgUnit: state.orgUnit,
-          trackedEntityInstance: state.trackedEntityInstance,
-          programStage: state.programStage,
-          status: 'COMPLETED',
-        }))
+        create(
+          'events',
+          state => ({
+            program: state.program,
+            orgUnit: state.orgUnit,
+            trackedEntity: state.trackedEntity,
+            programStage: state.programStage,
+            enrollment: state.enrollment,
+            occurredAt: '2026-01-02T12:05:00.000',
+            status: 'COMPLETED',
+          }),
+          {
+            atomicMode: 'OBJECT',
+          }
+        )
       )(state);
 
       expect(finalState.data.status).to.eq('OK');
@@ -65,7 +96,7 @@ describe('Integration tests', () => {
       const state = {
         ...fixture.initialState,
         data: {
-          orgUnit: 'DiszpKrYNg8',
+          orgUnit: fixture.initialState.orgUnit,
           trackedEntityType: 'nEenWmSyUEp',
           attributes: [
             {
@@ -77,7 +108,9 @@ describe('Integration tests', () => {
       };
 
       const finalState = await execute(
-        create('trackedEntityInstances', state => state.data)
+        create('trackedEntityInstances', state => state.data, {
+          atomicMode: 'OBJECT',
+        })
       )(state);
 
       expect(finalState.data.status).to.eq('OK');
@@ -89,7 +122,7 @@ describe('Integration tests', () => {
         data: {
           dataElement: 'f7n9E0hX8qk',
           period: '201401',
-          orgUnit: 'DiszpKrYNg8',
+          orgUnit: fixture.initialState.orgUnit,
           value: '12',
         },
       };
@@ -108,7 +141,7 @@ describe('Integration tests', () => {
           dataSet: 'pBOMPrpg1QX',
           completeDate: '2014-02-03',
           period: '201401',
-          orgUnit: 'DiszpKrYNg8',
+          orgUnit: fixture.initialState.orgUnit,
           dataValues: [
             {
               dataElement: 'f7n9E0hX8qk',
@@ -157,40 +190,35 @@ describe('Integration tests', () => {
         event: 'rBjxtO8npTb',
         data: {
           href: 'https://play.dhis2.org/stable-2-40-7/api/events/rBjxtO8npTb',
-          event: 'rBjxtO8npTb',
           status: 'ACTIVE',
-          program: 'M3xtLkYBlKI',
-          programStage: 'CWaAcQYKVpq',
-          enrollment: 'V8uPJuhvlL7',
+          event: 'NPf66VBbSdF',
+          program: fixture.initialState.program,
+          programStage: fixture.initialState.programStage,
+          enrollment: fixture.initialState.enrollment,
           enrollmentStatus: 'ACTIVE',
-          orgUnit: 'DiszpKrYNg8',
-          orgUnitName: 'Ngelehun CHC',
+          orgUnit: fixture.initialState.orgUnit,
           trackedEntityInstance: 'dNpxRu1mWG5',
-          relationships: [],
-          eventDate: '2021-09-26T00:00:00.000',
-          dueDate: '2021-09-27T00:00:00.000',
-          storedBy: 'system',
-          dataValues: [],
-          notes: [],
+          orgUnitName: 'Gerehun CHC',
+          occurredAt: '2026-01-02T12:05:00.000',
           followup: false,
           deleted: false,
-          created: '2019-09-26T23:58:59.641',
-          lastUpdated: '2019-09-27T00:02:11.604',
-          createdAtClient: '2019-09-26T23:58:59.641',
-          lastUpdatedAtClient: '2019-09-27T00:02:11.604',
+          createdAt: '2025-05-29T11:00:28.801',
+          updatedAt: '2025-05-29T11:00:28.801',
           attributeOptionCombo: 'HllvX50cXC0',
           attributeCategoryOptions: 'xYerKDKCefk',
-          assignedUser: 'DXyJmlo9rge',
-          assignedUserUsername: 'android',
-          assignedUserDisplayName: 'Tim Barnes',
+          completedBy: 'admin',
+          completedAt: '2025-05-29T11:00:28.801',
+          assignedUser: {},
+          createdBy: {
+            uid: 'xE7jOejl9FI',
+            username: 'admin',
+            firstName: 'John',
+            surname: 'Traore',
+          },
         },
       };
       const finalState = await execute(
-        update(
-          'events',
-          state => state.event,
-          state => state.data
-        )
+        update('events', '', state => state.data)
       )(state);
       expect(finalState.data.status).to.eql('OK');
     });
@@ -199,7 +227,7 @@ describe('Integration tests', () => {
       const state = {
         ...fixture.initialState,
         data: {
-          orgUnit: 'DiszpKrYNg8',
+          orgUnit: fixture.initialState.orgUnit,
           trackedEntityType: 'nEenWmSyUEp',
           attributes: [
             {
@@ -246,18 +274,18 @@ describe('Integration tests', () => {
   });
 
   describe('get', () => {
-    const state = {
-      configuration,
-      data: {},
-    };
-
     it('should get dataValueSets matching the query specified', async () => {
+      const state = {
+        ...fixture.initialState,
+        configuration,
+        data: {},
+      };
       const finalState = await execute(
         get('dataValueSets', {
-            dataSet: 'pBOMPrpg1QX',
-            orgUnit: 'sx4lYrYvpJ2',
-            period: '201401',
-            fields: '*',
+          dataSet: 'pBOMPrpg1QX',
+          orgUnit: state.orgUnit,
+          period: '201401',
+          fields: '*',
         })
       )(state);
 
@@ -265,23 +293,26 @@ describe('Integration tests', () => {
     });
 
     it('should get a single TEI based on multiple filters', async () => {
+      const state = {
+        ...fixture.initialState,
+        configuration,
+        data: {},
+      };
       const finalState = await execute(
         get('tracker/trackedEntities', {
-            program: 'fDd25txQckK',
-            orgUnit: 'DiszpKrYNg8',
-            filter: ['w75KJ2mc4zz:Eq:Elanor'],
+          program: state.program,
+          orgUnit: state.orgUnit,
+          filter: ['w75KJ2mc4zz:Eq:Sarama'],
         })
       )(state);
 
-      expect(finalState.data.instances.length).to.eq(1);
+      expect(finalState.data.instances.length).to.eq(2);
 
       const finalState2 = await execute(
         get('trackedEntityInstances', {
-          query: {
-            program: 'fDd25txQckK',
-            orgUnit: 'DiszpKrYNg8',
-            filter: ['w75KJ2mc4zz:Eq:Elanor', 'zDhUuAYrxNC:Eq:NotJackson'],
-          },
+          program: state.program,
+          ou: state.orgUnit,
+          filter: ['w75KJ2mc4zz:Eq:NotSarama', 'zDhUuAYrxNC:Eq:NotJackson'],
         })
       )(state);
 
@@ -289,17 +320,20 @@ describe('Integration tests', () => {
     }).timeout(3000);
 
     it('should get a no TEIs if non match the filters', async () => {
+      const state = {
+        ...fixture.initialState,
+        configuration,
+        data: {},
+      };
       const finalState = await execute(
         get('trackedEntityInstances', {
-          query: {
-            program: 'IpHINAT79UW',
-            orgUnit: 'DiszpKrYNg8',
-            filter: [
-              'w75KJ2mc4zz:Eq:Tim',
-              'flGbXLXCrEo:Eq:124-not-a-real-id', // case ID
-              'zDhUuAYrxNC:Eq:Thompson',
-            ],
-          },
+          program: state.program,
+          ou: state.orgUnit,
+          filter: [
+            'w75KJ2mc4zz:Eq:Tim',
+            'flGbXLXCrEo:Eq:124-not-a-real-id', // case ID
+            'zDhUuAYrxNC:Eq:Thompson',
+          ],
         })
       )(state);
 
@@ -307,8 +341,13 @@ describe('Integration tests', () => {
     });
 
     it('should get all programs in the organisation unit TSyzvBiovKh', async () => {
+      const state = {
+        ...fixture.initialState,
+        configuration,
+        data: {},
+      };
       const response = await execute(
-        get('programs', { orgUnit: 'TSyzvBiovKh' })
+        get('programs', { orgUnit: state.orgUnit })
       )(state);
 
       expect(response.data.programs.length).to.gte(1);
@@ -320,7 +359,7 @@ describe('Integration tests', () => {
       const state = {
         ...fixture.initialState,
         data: {
-          orgUnit: 'DiszpKrYNg8',
+          orgUnit: fixture.initialState.orgUnit,
           trackedEntityType: 'nEenWmSyUEp',
           attributes: [
             {
@@ -347,8 +386,8 @@ describe('Integration tests', () => {
         upsert(
           'trackedEntityInstances',
           {
-            program: 'IpHINAT79UW',
-            orgUnit: 'DiszpKrYNg8',
+            program: state.program,
+            ou: state.orgUnit,
             filter: ['w75KJ2mc4zz:Eq:John', 'zDhUuAYrxNC:Eq:Thompson'],
           },
           state => state.data
@@ -362,7 +401,7 @@ describe('Integration tests', () => {
       const state = {
         ...fixture.initialState,
         data: {
-          orgUnit: 'TSyzvBiovKh',
+          orgUnit: fixture.initialState.orgUnit,
           trackedEntityType: 'nEenWmSyUEp',
           attributes: [
             {
@@ -376,8 +415,8 @@ describe('Integration tests', () => {
         upsert(
           'trackedEntityInstances',
           {
-            program: 'IpHINAT79UW',
-            orgUnit: 'TSyzvBiovKh',
+            program: state.program,
+            ou: state.orgUnit,
             filter: ['w75KJ2mc4zz:Eq:Qassim'],
           },
           state => state.data
@@ -391,12 +430,12 @@ describe('Integration tests', () => {
       const state = {
         ...fixture.initialState,
         data: {
-          orgUnit: 'TSyzvBiovKh',
+          orgUnit: fixture.initialState.orgUnit,
           trackedEntityType: 'nEenWmSyUEp',
           attributes: [
             {
               attribute: 'w75KJ2mc4zz',
-              value: 'Qassim',
+              value: 'Mebrahtu',
             },
           ],
         },
@@ -421,13 +460,14 @@ describe('Integration tests', () => {
             upsert(
               'trackedEntityInstances',
               {
-                orgUnit: 'DiszpKrYNg8',
-                filter: ['zDhUuAYrxNC:Eq:Thompson'],
+                program: state.program,
+                ou: state.orgUnit,
+                filter: ['w75KJ2mc4zz:Eq:Luwam'],
               },
               state => state.data
             )
           )(state),
-        'Cannot upsert on Non-unique attribute. The operation found more than one records for your request.'
+        '409: Upsert failed: Multiple records found for a non-unique attribute.'
       );
     });
   });

@@ -128,7 +128,7 @@ export async function request(configuration, requestData) {
     parseAs,
     body: data,
     baseUrl: hostUrl,
-  };
+  };  
 
   return commonRequest(method, path, opts).then(logResponse);
 }

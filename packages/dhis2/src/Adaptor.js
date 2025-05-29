@@ -86,7 +86,7 @@ function configMigrationHelper(state) {
  * @public
  * @function
  * @param {string} path - Path to the resource to be created
- * @magic resourceType $.children.resourceTypes[*]
+ * @magic path $.children.resourceTypes[*]
  * @param {DHIS2Data} data - An object, or array of objects, to create.
  * @param {object} params - Optional object of query parameters to include in the request
  * @state data - The created resource as returned by DHIS2
@@ -637,19 +637,13 @@ function callNewTracker(
 
   return request(configuration, {
     method: 'POST',
-    path: prefixVersionToPath(
-      configuration,
-      {
-        ...options,
-        importStrategy,
-      },
-      'tracker'
-    ),
+    path: prefixVersionToPath(configuration, options, 'tracker'),
     options: {
       ...options,
       query: {
         ...options.query,
         async: false,
+        importStrategy,
       },
     },
     data: ensureArray(data, resourceType),
