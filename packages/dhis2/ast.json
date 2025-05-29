@@ -3,9 +3,9 @@
     {
       "name": "create",
       "params": [
-        "resourceType",
+        "path",
         "data",
-        "options"
+        "params"
       ],
       "docs": {
         "description": "Create a record",
@@ -22,12 +22,12 @@
           },
           {
             "title": "param",
-            "description": "Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ...",
+            "description": "Path to the resource to be created",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "resourceType"
+            "name": "path"
           },
           {
             "title": "magic",
@@ -35,7 +35,7 @@
           },
           {
             "title": "param",
-            "description": "Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.",
+            "description": "An object, or array of objects, to create.",
             "type": {
               "type": "NameExpression",
               "name": "DHIS2Data"
@@ -44,19 +44,16 @@
           },
           {
             "title": "param",
-            "description": "An optional object containing query, parseAs,and headers for the request.",
+            "description": "Optional object of query parameters to include in the request",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "RequestOptions"
-              }
+              "type": "NameExpression",
+              "name": "object"
             },
-            "name": "options"
+            "name": "params"
           },
           {
             "title": "state",
-            "description": "{DHIS2State}"
+            "description": "data - The created resource as returned by DHIS2"
           },
           {
             "title": "returns",
@@ -128,11 +125,11 @@
     {
       "name": "get",
       "params": [
-        "resourceType",
-        "options"
+        "path",
+        "params"
       ],
       "docs": {
-        "description": "Get data. Generic helper method for getting data of any kind from DHIS2.\n- This can be used to get `DataValueSets`,`events`,`trackers`,`etc.`",
+        "description": "Get any resource, as JSON, from DHIS2. Pass in any valid DHIS2 REST path, excluding /api and the version.\nFor the new tracker API, see `tracker.export()`",
         "tags": [
           {
             "title": "public",
@@ -146,28 +143,25 @@
           },
           {
             "title": "param",
-            "description": "The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.",
+            "description": "Path to the resource",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "resourceType"
+            "name": "path"
           },
           {
             "title": "param",
-            "description": "An optional object containing query, parseAs,and headers for the request",
+            "description": "Object of query parameters to include in the request",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "RequestOptions"
-              }
+              "type": "NameExpression",
+              "name": "object"
             },
-            "name": "options"
+            "name": "params"
           },
           {
             "title": "state",
-            "description": "{DHIS2State}"
+            "description": "data - the resource returned by DHIS2"
           },
           {
             "title": "returns",
@@ -179,38 +173,18 @@
           },
           {
             "title": "example",
-            "description": "get('dataValueSets', {\n query:{\n  dataSet: 'pBOMPrpg1QX',\n  orgUnit: 'DiszpKrYNg8',\n  period: '201401',\n  fields: '*',\n}\n});",
+            "description": "get('dataValueSets', {\n  dataSet: 'pBOMPrpg1QX',\n  orgUnit: 'DiszpKrYNg8',\n  period: '201401',\n  fields: '*',\n});",
             "caption": "Get all data values for the 'pBOMPrpg1QX' dataset"
           },
           {
             "title": "example",
-            "description": "get('programs', { query : { orgUnit: 'TSyzvBiovKh', fields: '*' } });",
+            "description": "get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });",
             "caption": "Get all programs for an organization unit"
           },
           {
             "title": "example",
             "description": "get('tracker/trackedEntities/F8yKM85NbxW');",
             "caption": "Get a single tracked entity given the provided ID. See [TrackedEntities docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities)"
-          },
-          {
-            "title": "example",
-            "description": "get('tracker/enrollments/abcd');",
-            "caption": "Get an enrollment given the provided ID. See [Enrollment docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments)"
-          },
-          {
-            "title": "example",
-            "description": "get('tracker/events');",
-            "caption": "Get all events matching given criteria. See [Events docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents)"
-          },
-          {
-            "title": "example",
-            "description": "get('tracker/relationships', {\n  query: { trackedEntity:['F8yKM85NbxW'] }\n});",
-            "caption": "Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See [Relationships docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships)"
-          },
-          {
-            "title": "example",
-            "description": "get('trackedEntityInstances/qHVDKszQmdx/BqaEWTBG3RB/image', {\n  headers:{\n      Accept: 'image/*'\n  },\n  parseAs: 'base64',\n});",
-            "caption": "Get an image from a trackedEntityInstance."
           }
         ]
       },
@@ -278,7 +252,7 @@
           },
           {
             "title": "state",
-            "description": "{DHIS2State}"
+            "description": "data - the resource returned by DHIS2"
           },
           {
             "title": "returns",
