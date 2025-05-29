@@ -27,7 +27,7 @@ const configuration = {
 
 describe('getSubmissions', () => {
   const state = { configuration };
-  const sampleResponse = [
+  const sampleData = [
     { uid: '1', name: 'Ruh' },
     { uid: '2', name: 'Shay' },
   ];
@@ -81,10 +81,10 @@ describe('getSubmissions', () => {
     expect(items.length).to.greaterThan(data.length);
   });
 
-  it('should return 1 submission when limit=1', async () => {
+  it('Only return 1 item if the limit is 1', async () => {
     const limit = 1;
-    const response = sampleResponse.slice(0, limit);
-    const totalRequests = Math.ceil(response.length / DEFAULT_REQUEST_LIMIT);
+    const mockData = sampleData.slice(0, limit);
+    const totalRequests = Math.ceil(mockData.length / DEFAULT_REQUEST_LIMIT);
 
     let requestCount = 0;
     testServer
@@ -98,7 +98,7 @@ describe('getSubmissions', () => {
           requestCount++;
           const { query, origin, path } = req;
           const results = responseWithPagination(
-            sampleResponse,
+            sampleData,
             {
               limit: query.limit,
               start: query.start,
@@ -119,7 +119,7 @@ describe('getSubmissions', () => {
       getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit })
     )(state);
 
-    expect(data).to.eql(response);
+    expect(data).to.eql(mockData);
     expect(requestCount).to.eql(1);
     expect(data.length).to.eql(1);
   });
