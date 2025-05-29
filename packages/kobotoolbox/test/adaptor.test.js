@@ -38,7 +38,7 @@ describe('getSubmissions', () => {
     console.warn = (...args) => consoleOutput.push(...args);
   });
 
-  it('should return paginated submissions using default limit', async () => {
+  it("Don't return more items than maximum page size", async () => {
     let requestCount = 0;
     const items = Array.from({ length: 4e4 }, (_, i) => ({
       uid: String(i),
