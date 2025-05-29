@@ -8,9 +8,9 @@ import {
   getDeploymentInfo,
 } from '../src/Adaptor';
 import { responseWithPagination } from './helper';
-import { DEFAULT_REQUEST_LIMIT, DEFAULT_LIMIT } from '../src/util';
+import { DEFAULT_PAGE_SIZE, DEFAULT_LIMIT } from '../src/util';
 const defaultLimit = DEFAULT_LIMIT;
-const requestLimit = DEFAULT_REQUEST_LIMIT;
+const pageLimit = DEFAULT_PAGE_SIZE;
 
 const testServer = enableMockClient('https://test.kobotoolbox.org');
 const jsonHeaders = {
@@ -43,7 +43,7 @@ describe('getSubmissions', () => {
     const items = Array.from({ length: 4e4 }, (_, i) => ({
       uid: String(i),
     }));
-    const totalRequests = Math.ceil(defaultLimit / requestLimit);
+    const totalRequests = Math.ceil(defaultLimit / pageLimit);
 
     testServer
       .intercept({
@@ -84,7 +84,7 @@ describe('getSubmissions', () => {
   it('Only return 1 item if the limit is 1', async () => {
     const limit = 1;
     const mockData = sampleData.slice(0, limit);
-    const totalRequests = Math.ceil(mockData.length / DEFAULT_REQUEST_LIMIT);
+    const totalRequests = Math.ceil(mockData.length / pageLimit);
 
     let requestCount = 0;
     testServer
@@ -129,7 +129,7 @@ describe('getSubmissions', () => {
       uid: String(i),
     }));
 
-    const totalRequests = Math.ceil(manyObjects.length / requestLimit);
+    const totalRequests = Math.ceil(manyObjects.length / pageLimit);
 
     let requestCount = 0;
     testServer
@@ -219,7 +219,7 @@ describe('getSubmissions', () => {
       uid: String(i),
     }));
 
-    const totalRequests = Math.ceil(mockData.length / requestLimit);
+    const totalRequests = Math.ceil(mockData.length / pageLimit);
     let requestCount = 0;
     testServer
       .intercept({

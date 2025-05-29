@@ -6,7 +6,7 @@ import {
 } from '@openfn/language-common/util';
 
 export const DEFAULT_LIMIT = 3e4;
-export const DEFAULT_REQUEST_LIMIT = 1e4;
+export const DEFAULT_PAGE_SIZE = 1e4;
 
 export function prepareNextState(state, response) {
   const { body, ...responseWithoutBody } = response;
@@ -51,7 +51,7 @@ export async function requestWithPagination(state, path, options = {}) {
   const results = [];
 
   let {
-    pageSize = DEFAULT_REQUEST_LIMIT,
+    pageSize = DEFAULT_PAGE_SIZE,
     start,
     limit,
     ...otherOptions

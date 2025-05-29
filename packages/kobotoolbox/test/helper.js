@@ -1,9 +1,9 @@
-import { DEFAULT_REQUEST_LIMIT, DEFAULT_LIMIT } from '../src/util';
+import { DEFAULT_PAGE_SIZE, DEFAULT_LIMIT } from '../src/util';
 
 export function responseWithPagination(items, query, settings) {
   const {
     url,
-    requestLimit = DEFAULT_REQUEST_LIMIT,
+    pageLimit = DEFAULT_PAGE_SIZE,
     defaultLimit = DEFAULT_LIMIT,
   } = settings;
   const { start = 0, limit } = query;
@@ -19,8 +19,8 @@ export function responseWithPagination(items, query, settings) {
   let startIndex = parseInt(start);
   const hasStartIndex = startIndex > 0;
   let shouldFetchMoreContent = false;
-  let effectiveLimit = limit ?? requestLimit;
-  let isUsingDefaultLimit = !limit && requestLimit === DEFAULT_REQUEST_LIMIT;
+  let effectiveLimit = limit ?? pageLimit;
+  let isUsingDefaultLimit = !limit && pageLimit === DEFAULT_PAGE_SIZE;
 
   let maxResults = defaultLimit;
   const hasNoLimitWithStartIndex = !limit && hasStartIndex;

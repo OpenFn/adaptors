@@ -34,7 +34,7 @@ describe('responseWithPagination', () => {
     const { results } = responseWithPagination(
       items,
       {},
-      { url: 'www', requestLimit: 1 }
+      { url: 'www', pageLimit: 1 }
     );
 
     expect(results).to.eql([1]);
@@ -64,36 +64,36 @@ describe('responseWithPagination', () => {
     expect(previous).to.eql(null);
   });
 
-  it('should return first 100 items when requestLimit=100 for dataset of 1001 items', async () => {
-    const requestLimit = 100;
+  it('should return first 100 items when pageLimit=100 for dataset of 1001 items', async () => {
+    const pageLimit = 100;
     const { results, next, previous } = responseWithPagination(
       Array.from({ length: 1001 }, (_, i) => ({
         uid: String(i),
       })),
       {},
-      { url: 'www', requestLimit }
+      { url: 'www', pageLimit }
     );
-    expect(results.length).to.eql(requestLimit);
+    expect(results.length).to.eql(pageLimit);
     expect(next).to.eql(
-      `www?format=json&start=${requestLimit}&limit=${requestLimit}`
+      `www?format=json&start=${pageLimit}&limit=${pageLimit}`
     );
     expect(previous).to.eql(null);
   });
 
-  it('should return 2 items with start 1 and requestLimit 2', () => {
+  it('should return 2 items with start 1 and pageLimit 2', () => {
     const start = 1;
-    const requestLimit = 2;
+    const pageLimit = 2;
     const { results, next, previous } = responseWithPagination(
       items,
       {
         start,
       },
-      { url: 'www', requestLimit }
+      { url: 'www', pageLimit }
     );
 
     expect(results).to.eql([2, 3]);
     expect(next).to.eql(null);
-    expect(previous).to.eql(`www?format=json&start=1&limit=${requestLimit}`);
+    expect(previous).to.eql(`www?format=json&start=1&limit=${pageLimit}`);
   });
   it('should return all items if items do not exceed default limit', () => {
     const limit = 3;
@@ -107,21 +107,21 @@ describe('responseWithPagination', () => {
     expect(results.length).to.eql(3);
     expect(results.length).to.lessThanOrEqual(limit);
   });
-  it('should return first requestLimit items with next link when exceeding defaultLimit', async () => {
+  it('should return first pageLimit items with next link when exceeding defaultLimit', async () => {
     const defaultLimit = 3;
-    const requestLimit = 1;
+    const pageLimit = 1;
     const { results, next, count } = responseWithPagination(
       Array.from({ length: defaultLimit + 1 }, (_, i) => ({
         uid: String(i),
       })),
       {},
-      { url: 'www', requestLimit, defaultLimit }
+      { url: 'www', pageLimit, defaultLimit }
     );
 
     expect(count).to.eql(4);
     expect(results.length).to.eql(1);
     expect(count).to.greaterThan(defaultLimit);
-    expect(results.length).to.eql(requestLimit);
+    expect(results.length).to.eql(pageLimit);
     expect(next).to.eql(`www?format=json&start=1&limit=1`);
   });
 });
@@ -205,7 +205,7 @@ describe('requestWithPagination', () => {
             { start: req.query.start, limit: req.query.limit },
             {
               url: `${req.origin}${req.path}`,
-              requestLimit: 1,
+              pageLimit: 1,
             }
           );
 
