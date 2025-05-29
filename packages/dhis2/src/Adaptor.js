@@ -637,14 +637,7 @@ function callNewTracker(
 
   return request(configuration, {
     method: 'POST',
-    path: prefixVersionToPath(
-      configuration,
-      {
-        ...options,
-        importStrategy,
-      },
-      'tracker'
-    ),
+    path: prefixVersionToPath(configuration, options, 'tracker'),
     options: {
       ...options,
       query: {
