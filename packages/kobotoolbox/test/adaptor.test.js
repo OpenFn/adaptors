@@ -214,7 +214,7 @@ describe('getSubmissions', () => {
     expect(totalRequests).to.eql(10);
   });
 
-  it('should get ALL items if the item count exceeds the default limit (ie, limit = Infinity)', async () => {
+  it('Return all items if limit is greater than the number of ite (ie, limit = Infinity)', async () => {
     const mockData = Array.from({ length: defaultLimit + 1 }, (_, i) => ({
       uid: String(i),
     }));
