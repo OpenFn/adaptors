@@ -43,7 +43,6 @@ describe('getSubmissions', () => {
     const items = Array.from({ length: 4e4 }, (_, i) => ({
       uid: String(i),
     }));
-    const totalRequests = Math.ceil(defaultLimit / pageLimit);
 
     testServer
       .intercept({
@@ -71,7 +70,7 @@ describe('getSubmissions', () => {
           ...jsonHeaders,
         }
       )
-      .times(totalRequests);
+      .times(3);
     const { data } = await execute(getSubmissions('aXecHjmbATuF6iGFmvBLBX'))(
       state
     );
@@ -84,7 +83,6 @@ describe('getSubmissions', () => {
   it('Only return 1 item if the limit is 1', async () => {
     const limit = 1;
     const mockData = sampleData.slice(0, limit);
-    const totalRequests = Math.ceil(mockData.length / pageLimit);
 
     let requestCount = 0;
     testServer
@@ -113,7 +111,7 @@ describe('getSubmissions', () => {
           ...jsonHeaders,
         }
       )
-      .times(totalRequests);
+      .times(1);
 
     const { data } = await execute(
       getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit })
@@ -128,8 +126,6 @@ describe('getSubmissions', () => {
     const manyObjects = Array.from({ length: defaultLimit + 2 }, (_, i) => ({
       uid: String(i),
     }));
-
-    const totalRequests = Math.ceil(manyObjects.length / pageLimit);
 
     let requestCount = 0;
     testServer
@@ -157,7 +153,7 @@ describe('getSubmissions', () => {
           ...jsonHeaders,
         }
       )
-      .times(totalRequests);
+      .times(4);
 
     const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
       limit: 4e4,
@@ -169,12 +165,10 @@ describe('getSubmissions', () => {
   });
   it('should allow custom pageSize', async () => {
     const state = { configuration };
+    const pageSize = 1;
     const mockData = Array.from({ length: 10 }, (_, i) => ({
       uid: String(i),
     }));
-    const pageSize = 1;
-
-    const totalRequests = Math.ceil(mockData.length / pageSize);
 
     let requestCount = 0;
     testServer
@@ -203,7 +197,7 @@ describe('getSubmissions', () => {
           ...jsonHeaders,
         }
       )
-      .times(totalRequests);
+      .times(10);
 
     const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
       pageSize,
@@ -211,7 +205,6 @@ describe('getSubmissions', () => {
 
     expect(data.length).to.eql(10);
     expect(requestCount).to.eql(10);
-    expect(totalRequests).to.eql(10);
   });
 
   it('Return all items if limit is greater than the number of ite (ie, limit = Infinity)', async () => {
@@ -219,7 +212,6 @@ describe('getSubmissions', () => {
       uid: String(i),
     }));
 
-    const totalRequests = Math.ceil(mockData.length / pageLimit);
     let requestCount = 0;
     testServer
       .intercept({
@@ -246,7 +238,7 @@ describe('getSubmissions', () => {
           ...jsonHeaders,
         }
       )
-      .times(totalRequests);
+      .times(4);
 
     const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
       limit: Infinity,

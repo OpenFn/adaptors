@@ -232,12 +232,10 @@ describe('requestWithPagination', () => {
     let requestCount = 0;
     const defaultLimit = 3;
     const defaulLimit = 1;
-    const manyObjects = Array.from({ length: defaultLimit + 1 }, (_, i) => ({
+    const mockData = Array.from({ length: defaultLimit + 1 }, (_, i) => ({
       uid: String(i),
     }));
 
-    const response = manyObjects.slice(0, defaultLimit);
-    const totalRequests = Math.ceil(response.length / defaulLimit);
     testServer
       .intercept({
         path: /\/api\/v2\/assets\/aDReHdA7UuNBYsiCXQBr33\/data/,
@@ -248,14 +246,14 @@ describe('requestWithPagination', () => {
         req => {
           requestCount++;
           return responseWithPagination(
-            manyObjects,
+            mockData,
             { limit: req.query.limit, start: req.query.start },
             { url: `${req.origin}${req.path}` }
           );
         },
         { ...jsonHeaders }
       )
-      .times(totalRequests);
+      .times(3);
 
     const state = { configuration };
     const data = await util.requestWithPagination(
@@ -269,6 +267,6 @@ describe('requestWithPagination', () => {
 
     expect(data.length).to.eql(3);
     expect(requestCount).to.eql(3);
-    expect(manyObjects.length).to.greaterThan(data.length);
+    expect(mockData.length).to.greaterThan(data.length);
   });
 });
