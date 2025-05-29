@@ -56,6 +56,71 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "sendMessage",
+      "params": [
+        "message"
+      ],
+      "docs": {
+        "description": "Sends a Gmail message using the provided configuration.\nSupports attachments and standard email fields like subject, body, and recipients.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The message configuration object or array of objects.",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "SendMessageOptions"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "SendMessageOptions"
+                    }
+                  ]
+                }
+              ]
+            },
+            "name": "message"
+          },
+          {
+            "title": "state",
+            "description": "{Object} data - The Gmail API response from sending the message."
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "example",
+            "description": "sendMessage({\n  to: 'recipient@example.org',\n  subject: 'Test Message',\n  body: 'Hello from OpenFn!',\n  attachments: [\n    { filename: 'test.txt', content: 'Some text content' }\n  ]\n})"
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],

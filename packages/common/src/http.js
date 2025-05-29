@@ -38,12 +38,12 @@ const helpers = {
  * easily add commonly used options. The return object is chainable so you can set
  * as many options as you want.
  * Pass an object to set your own options.
- * @param {CommonRequestOptions} options - options to pass to the request
+ * @param {OptionsHelpers} opts - options to pass to the request
  * @returns {OptionsHelpers}
  * @function
  * @public
- * @example <caption>Get with a query an oath token</caption>
- * get($.data.url, http.options({ query: $.query }).oath($.configuration.access_token))
+ * @example <caption>Get with a query an oauth token</caption>
+ * http.get($.data.url, http.options({ query: $.query }).oauth($.configuration.access_token))
  */
 export function options(opts = {}) {
   for (let h in helpers) {
@@ -59,7 +59,7 @@ export function options(opts = {}) {
 /**
  * Options provided to the HTTP request
  * @typedef {Object} CommonRequestOptions
- * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors.
+ * @property {object|boolean} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors.
  * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.
@@ -145,16 +145,17 @@ export function get(url, options) {
  * @public
  * @function
  * @example <caption>Post a JSON object (setting the content-type header)</caption>
- *  http.post(
- *    'https://jsonplaceholder.typicode.com/todos',
- *    $.data,
- *    options().json(),
- *  })
+ * http.post(
+ *   "https://jsonplaceholder.typicode.com/todos",
+ *   $.data,
+ *   http.options().json()
+ * );
  * @param {string} url - URL to access
+ * @param {object} data - Body data to append to the request.
  * @param {CommonRequestOptions} options - Request options
  * @state {CommonHttpState}
  * @returns {Operation}
  */
-export function post(path, data, options) {
-  return req('POST', path, { body: data, ...options });
+export function post(url, data, options) {
+  return req('POST', url, { body: data, ...options });
 }

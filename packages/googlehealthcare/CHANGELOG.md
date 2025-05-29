@@ -1,6 +1,6 @@
 # @openfn/language-googlehealthcare
 
-## 1.1.3
+## 1.1.3 - 28 October 2024
 
 ### Patch Changes
 
@@ -8,22 +8,22 @@
 - Updated dependencies
   - @openfn/language-common@2.1.1
 
-## 1.1.2
+## 1.1.2 - 16 August 2024
 
 ### Patch Changes
 
 - 8146c23: Fix typings in package.json
-- Updated dependencies [8146c23]
+- Updated dependencies \[8146c23]
   - @openfn/language-common@2.0.1
 
-## 1.1.1
+## 1.1.1 - 01 August 2024
 
 ### Patch Changes
 
-- Updated dependencies [4fe527c]
+- Updated dependencies \[4fe527c]
   - @openfn/language-common@2.0.0
 
-## 1.1.0
+## 1.1.0 - 13 June 2024
 
 ### Minor Changes
 
@@ -31,10 +31,10 @@
 
 ### Patch Changes
 
-- Updated dependencies [106ecf6d]
+- Updated dependencies \[106ecf6d]
   - @openfn/language-common@1.14.0
 
-## 1.0.1
+## 1.0.1 - 08 May 2024
 
 ### Patch Changes
 
@@ -42,7 +42,7 @@
 - Updated dependencies
   - @openfn/language-common@1.13.2
 
-## 1.0.0
+## 1.0.0 - 21 July 2023
 
 ### Major Changes
 
@@ -55,7 +55,7 @@
   information
   (`{cloudRegion: string, projectId: string, datasetId: string, fhirStoreId: string}`).
 
-## 0.1.0
+## 0.1.0 - 30 June 2023
 
 ### Minor Changes
 
@@ -64,6 +64,6 @@
 ### Patch Changes
 
 - aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access_token" keys can be used for OAuth2-reliant adaptors
-- Updated dependencies [aad9549]
+  "access\_token" keys can be used for OAuth2-reliant adaptors
+- Updated dependencies \[aad9549]
   - @openfn/language-common@1.10.0

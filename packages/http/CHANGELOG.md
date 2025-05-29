@@ -1,6 +1,50 @@
 # @openfn/language-http
 
-## 7.0.0
+## 7.0.6 - 22 April 2025
+
+### Patch Changes
+
+- 99e4b48: - Better handling of HTML content in http requests
+  - When logging HTTP requests, include query parameters
+- 99e4b48: Fix parseAs option in all operations
+- Updated dependencies \[99e4b48]
+- Updated dependencies \[13bf08f]
+  - @openfn/language-common@2.4.0
+
+## 7.0.5 - 16 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[b089c56]
+  - @openfn/language-common@2.3.3
+
+## 7.0.4 - 11 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[d7105c0]
+  - @openfn/language-common@2.3.2
+
+## 7.0.3 - 04 April 2025
+
+### Patch Changes
+
+- 2073994: - Add a `POST` example to the `request()` function
+
+## 7.0.2 - 20 March 2025
+
+### Patch Changes
+
+- 7174293: improve function examples
+
+## 7.0.1 - 14 March 2025
+
+### Patch Changes
+
+- Updated dependencies \[23ccb01]
+  - @openfn/language-common@2.3.1
+
+## 7.0.0 - 05 March 2025
 
 ### Major Changes
 
@@ -73,33 +117,33 @@ post('/patient', $.patient).then(next => {
 });
 ```
 
-## 6.5.4
+## 6.5.4 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [b3d7f59]
-- Updated dependencies [2d709ff]
-- Updated dependencies [41e8cc3]
+- Updated dependencies \[b3d7f59]
+- Updated dependencies \[2d709ff]
+- Updated dependencies \[41e8cc3]
   - @openfn/language-common@2.3.0
 
-## 6.5.3
+## 6.5.3 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [6dffdbd]
+- Updated dependencies \[6dffdbd]
   - @openfn/language-common@2.2.1
 
-## 6.5.2
+## 6.5.2 - 09 January 2025
 
 ### Patch Changes
 
 - 4b9a5b9: - Fix typo in util functions examples
   - Remove export for `addAuth()` helper
-- Updated dependencies [a47d8d5]
-- Updated dependencies [9240428]
+- Updated dependencies \[a47d8d5]
+- Updated dependencies \[9240428]
   - @openfn/language-common@2.2.0
 
-## 6.5.1
+## 6.5.1 - 28 October 2024
 
 ### Patch Changes
 
@@ -107,7 +151,7 @@ post('/patient', $.patient).then(next => {
 - Updated dependencies
   - @openfn/language-common@2.1.1
 
-## 6.5.0
+## 6.5.0 - 18 October 2024
 
 ### Minor Changes
 
@@ -115,17 +159,17 @@ post('/patient', $.patient).then(next => {
 
 ### Patch Changes
 
-- Updated dependencies [03a1a74]
+- Updated dependencies \[03a1a74]
   - @openfn/language-common@2.1.0
 
-## 6.4.6
+## 6.4.6 - 15 October 2024
 
 ### Patch Changes
 
-- Fixed security vulnerability in jsonpath-plus [33973a2]
+- Fixed security vulnerability in jsonpath-plus \[33973a2]
   - @openfn/language-common@2.0.3
 
-## 6.4.5
+## 6.4.5 - 09 October 2024
 
 ### Patch Changes
 
@@ -134,38 +178,38 @@ post('/patient', $.patient).then(next => {
   - better error when `baseUrl` is not set and the passed url is a relative url.
   - better error when `baseUrl` is not set and no url is provided.
 
-## 6.4.4
+## 6.4.4 - 24 September 2024
 
 ### Patch Changes
 
-- Updated dependencies [77a690f]
+- Updated dependencies \[77a690f]
   - @openfn/language-common@2.0.2
 
-## 6.4.3
+## 6.4.3 - 16 August 2024
 
 ### Patch Changes
 
 - 8146c23: Fix typings in package.json
-- Updated dependencies [8146c23]
+- Updated dependencies \[8146c23]
   - @openfn/language-common@2.0.1
 
-## 6.4.2
+## 6.4.2 - 01 August 2024
 
 ### Patch Changes
 
 - c803bab: In all functions, if baseUrl if set, path MUST be relative.
-- Updated dependencies [4fe527c]
+- Updated dependencies \[4fe527c]
   - @openfn/language-common@2.0.0
 
-## 6.4.1
+## 6.4.1 - 25 July 2024
 
 ### Patch Changes
 
-- Updated dependencies [4c08444]
-- Updated dependencies [73d0a02]
+- Updated dependencies \[4c08444]
+- Updated dependencies \[73d0a02]
   - @openfn/language-common@1.15.1
 
-## 6.4.0
+## 6.4.0 - 19 June 2024
 
 ### Minor Changes
 
@@ -173,10 +217,10 @@ post('/patient', $.patient).then(next => {
 
 ### Patch Changes
 
-- Updated dependencies [5fb82f07]
+- Updated dependencies \[5fb82f07]
   - @openfn/language-common@1.15.0
 
-## 6.3.0
+## 6.3.0 - 13 June 2024
 
 ### Minor Changes
 
@@ -184,22 +228,22 @@ post('/patient', $.patient).then(next => {
 
 ### Patch Changes
 
-- Updated dependencies [106ecf6d]
+- Updated dependencies \[106ecf6d]
   - @openfn/language-common@1.14.0
 
-## 6.2.3
+## 6.2.3 - 11 June 2024
 
 ### Patch Changes
 
 - Fix an issue where query parameters in the URL did not get sent to the server
 
-## 6.2.2
+## 6.2.2 - 24 May 2024
 
 ### Patch Changes
 
 - Automatically apply api/oauth tokens from config
 
-## 6.2.1
+## 6.2.1 - 07 May 2024
 
 ### Patch Changes
 
@@ -209,19 +253,19 @@ post('/patient', $.patient).then(next => {
 - Configuration schema: Added `token`. This is not automated and must be
   manually add to the HTTP headers.
 
-## 6.2.0
+## 6.2.0 - 12 April 2024
 
 ### Minor Changes
 
 - Add cursor() function
 
-## 6.1.0
+## 6.1.0 - 19 March 2024
 
 ### Minor Changes
 
 - cfe1ccb: Add callback support for parseXML
 
-## 6.0.0
+## 6.0.0 - 24 January 2024
 
 ### Major Changes
 
@@ -262,51 +306,51 @@ post('/patient', $.patient).then(next => {
 
 ### Patch Changes
 
-- Updated dependencies [7f52699]
+- Updated dependencies \[7f52699]
   - @openfn/language-common@1.12.0
 
-## 5.1.1
+## 5.1.1 - 11 December 2023
 
 ### Patch Changes
 
 - a8d655e: Update `parseXML` to use `expandReferences`
 
-## 5.1.0
+## 5.1.0 - 16 November 2023
 
 ### Minor Changes
 
 - 8e2b79c: Clean up `state.response.request` by returning only
   `{ method, path, host, protocol, _headers }`
 
-## 5.0.4
+## 5.0.4 - 20 September 2023
 
 ### Patch Changes
 
-- Updated dependencies [c19efbe]
+- Updated dependencies \[c19efbe]
   - @openfn/language-common@1.11.1
 
-## 5.0.3
+## 5.0.3 - 08 September 2023
 
 ### Patch Changes
 
-- Updated dependencies [85c35b8]
+- Updated dependencies \[85c35b8]
   - @openfn/language-common@1.11.0
 
-## 5.0.2
+## 5.0.2 - 14 August 2023
 
 ### Patch Changes
 
-- Updated dependencies [df09270]
+- Updated dependencies \[df09270]
   - @openfn/language-common@1.10.3
 
-## 5.0.1
+## 5.0.1 - 14 July 2023
 
 ### Patch Changes
 
-- Updated dependencies [26a303e]
+- Updated dependencies \[26a303e]
   - @openfn/language-common@1.10.2
 
-## 5.0.0
+## 5.0.0 - 14 July 2023
 
 ### Major Changes
 
@@ -314,24 +358,24 @@ post('/patient', $.patient).then(next => {
 
 ### Patch Changes
 
-- Updated dependencies [8c32eb3]
+- Updated dependencies \[8c32eb3]
   - @openfn/language-common@1.10.1
 
-## 4.3.3
+## 4.3.3 - 30 June 2023
 
 ### Patch Changes
 
-- Updated dependencies [aad9549]
+- Updated dependencies \[aad9549]
   - @openfn/language-common@1.10.0
 
-## 4.3.2
+## 4.3.2 - 23 June 2023
 
 ### Patch Changes
 
-- Updated dependencies [111807f]
+- Updated dependencies \[111807f]
   - @openfn/language-common@1.9.0
 
-## 4.3.1
+## 4.3.1 - 19 June 2023
 
 ### Patch Changes
 
@@ -355,51 +399,51 @@ post('/patient', $.patient).then(next => {
 
 ### Patch Changes
 
-- Updated dependencies [2c1d603]
+- Updated dependencies \[2c1d603]
   - @openfn/language-common@1.8.0
 
-## 4.2.8
+## 4.2.8 - 31 March 2023
 
 ### Patch Changes
 
-- Updated dependencies [929bca6]
+- Updated dependencies \[929bca6]
   - @openfn/language-common@1.7.7
 
-## 4.2.7
+## 4.2.7 - 30 March 2023
 
 ### Patch Changes
 
 - 14f481e: mark execute as private
-- Updated dependencies [2b4c61a]
+- Updated dependencies \[2b4c61a]
   - @openfn/language-common@1.7.6
 
-## 4.2.6
+## 4.2.6 - 15 February 2023
 
 ### Patch Changes
 
 - f7ebd3c: remove sample configuration
 
-## 4.2.5
+## 4.2.5 - 15 February 2023
 
 ### Patch Changes
 
 - f2aed32: add examples
 
-## 4.2.4
+## 4.2.4 - 13 January 2023
 
 ### Patch Changes
 
-- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+- 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
 
-## 4.2.3
+## 4.2.3 - 11 November 2022
 
 ### Patch Changes
 
 - f2a91a4: Update package exports
-- Updated dependencies [f2a91a4]
+- Updated dependencies \[f2a91a4]
   - @openfn/language-common@1.7.5
 
-## 4.2.2
+## 4.2.2 - 04 November 2022
 
 ### Patch Changes
 
@@ -407,31 +451,31 @@ post('/patient', $.patient).then(next => {
 - 8566b26: Fix typings
 - b3d45ff: Fix CJS export of npm package.
 - ecf5d30: remove sinon since it was not being used
-- Updated dependencies [8566b26]
-- Updated dependencies [b3d45ff]
-- Updated dependencies [b5eb665]
-- Updated dependencies [ecf5d30]
+- Updated dependencies \[8566b26]
+- Updated dependencies \[b3d45ff]
+- Updated dependencies \[b5eb665]
+- Updated dependencies \[ecf5d30]
   - @openfn/language-common@1.7.4
 
-## 4.2.1
+## 4.2.1 - 21 October 2022
 
 ### Patch Changes
 
 - e04aa28: Rename credential-schema to configuration-schema, update descriptions
 
-## 4.2.0
+## 4.2.0 - 19 October 2022
 
 ### Minor Changes
 
 - f670bf8: Added credential schema to enable new ui
 
-## 4.1.0
+## 4.1.0 - 18 October 2022
 
 ### Minor Changes
 
 - 8e1b86d: update http to new format
 
-## 4.0.1
+## 4.0.1 - 13 October 2022
 
 ### Patch Changes
 

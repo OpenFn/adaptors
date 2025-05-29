@@ -1,0 +1,24 @@
+{
+  "name": "@openfn/changelog",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "update-latest-versions": "src/update-latest-versions.js"
+  },
+  "scripts": {
+    "update-latest-versions": "node src/update-latest-versions.js",
+    "update-historical-versions": "node src/update-version-histories.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^2.25.0",
+    "remark": "^15.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
+    "yargs": "17.6.0"
+  }
+}

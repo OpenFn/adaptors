@@ -1,0 +1,20 @@
+{
+    "invoiceBody": {
+        "externalId": "996b82e6-d498-4c7c-87ee-7b0654350a2c",
+        "amount": "100",
+        "currency": "EUR",
+        "validityDuration": "3600",
+        "intendedPayer": {
+            "partyIdType": "MSISDN",
+            "partyId": "46733123450"
+        },
+        "payee": {
+            "partyIdType": "MSISDN",
+            "partyId": "46733123452"
+        },
+        "description": ""
+    },
+    "invoiceResponse": {
+        "message": "successful"
+    }
+}

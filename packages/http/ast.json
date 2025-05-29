@@ -17,7 +17,13 @@
           },
           {
             "title": "example",
-            "description": "request(\n  'GET',\n  '/patient',\n   {\n     query: {foo: 'bar', a: 1},\n     headers: {'content-type': 'application/json'},\n   }\n)"
+            "description": "request('GET', '/patient', {\n  query: { foo: 'bar', a: 1 },\n});",
+            "caption": "Make a GET request"
+          },
+          {
+            "title": "example",
+            "description": "request('POST', '/todos', {\n  body:{\n    \"userId\": 1,\n    \"title\": \"delectus aut autem\",\n    \"completed\": false\n  },\n});",
+            "caption": "Make a POST request with a body"
           },
           {
             "title": "function",
@@ -83,7 +89,8 @@
           },
           {
             "title": "example",
-            "description": "get('/patient', {\n  query: {foo: 'bar', a: 1},\n  headers: {'content-type': 'application/json'},\n})"
+            "description": "get('/patient', {\n  query: { foo: 'bar', a: 1 },\n});",
+            "caption": "GET request with query parameters and custom headers"
           },
           {
             "title": "function",
@@ -141,12 +148,12 @@
           },
           {
             "title": "example",
-            "description": "post('/patient' $.data)",
+            "description": "post('/patient', $.data);",
             "caption": "POST a resource with from state"
           },
           {
             "title": "example",
-            "description": "post('/patient' $.data, {\n  headers: { 'content-type': 'application/fhir+json' },\n})",
+            "description": "post('/patient', $.data, {\n  headers: { 'content-type': 'application/fhir+json' },\n});",
             "caption": "POST a resource with custom headers"
           },
           {
@@ -214,7 +221,7 @@
           },
           {
             "title": "example",
-            "description": "put('/patient', $.data)",
+            "description": "put('/patient', $.data);",
             "caption": "PUT a resource from state"
           },
           {
@@ -287,12 +294,12 @@
           },
           {
             "title": "example",
-            "description": "patch('/patient', $.data)",
+            "description": "patch('/patient', $.data);",
             "caption": "PATCH a resource from state"
           },
           {
             "title": "example",
-            "description": "patch('/patient', $.data, {\n  headers: { 'content-type': 'application/fhir+json' },\n})",
+            "description": "patch('/patient', $.data, {\n  headers: { 'content-type': 'application/fhir+json' },\n});",
             "caption": "PATCH a resource with custom headers"
           },
           {
@@ -359,7 +366,8 @@
           },
           {
             "title": "example",
-            "description": "del(`/myendpoint/${$.data.id}`)"
+            "description": "del(`/myendpoint/${$.data.id}`);",
+            "caption": "DELETE a resource by ID"
           },
           {
             "title": "function",
@@ -416,12 +424,13 @@
           },
           {
             "title": "example",
-            "description": "parseXML(\n  (state) => state.response,\n  ($) => {\n    return $(\"table[class=your_table]\").parsetable(true, true, true);\n  }\n);"
+            "description": "parseXML(\n  (state) => state.response,\n  ($) => {\n    return $(\"table[class=your_table]\").parsetable(true, true, true);\n  }\n);",
+            "caption": "Parse XML from state.response"
           },
           {
             "title": "example",
-            "description": "parseXML(\n  (state) => state.response,\n  ($) => {\n    return $(\"table[class=your_table]\").parsetable(true, true, true);\n  },\n  (next) => ({ ...next, results: next.data.data })\n);",
-            "caption": "Using parseXML with a callback"
+            "description": "parseXML(\n  (state) => state.response,\n  ($) => $(\"table[class=your_table]\").parsetable(true, true, true)\n).then((next) => ({ ...next, results: next.data.data }));",
+            "caption": "Using parseXML with a callback to extract data"
           },
           {
             "title": "function",

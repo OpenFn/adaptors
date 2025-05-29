@@ -1,22 +1,141 @@
 # @openfn/language-salesforce
 
-## 5.0.4
+## 7.0.0 - 01 May 2025
+
+### Major Changes
+
+- 8dd65a1: - Modernize `query()` implementation using jsforce v3
+
+  - Remove `autoFetch` option from `query()` function
+  - Add `limit` option to `query()` function
+  - Change query result structure:
+    - `state.data` now contains only the array of records
+    - Query metadata (`done`, `totalSize`, `nextRecordsUrl`) moved to
+      `state.response`
+
+- 3686988: remove map() function
+
+### Migration Guide
+
+The `autoFetch` option has been removed from the `query()` function. Previously,
+this option would automatically fetch all records when set to `true`.
+
+The query result structure has been updated:
+
+- Previously: `state.data` contained
+  `{ done, totalSize, records: [], nextRecordsUrl }`
+- Now:
+  - `state.data` contains only the array of records
+  - `state.response` contains `{ done, totalSize }` and `nextRecordsUrl` when
+    there are more records to fetch (`done: false`)
+
+**Before**
+
+```js
+// Old way - using autoFetch
+query('select name from account', { autoFetch: true });
+// Result: state.data = { done, totalSize, records: [] }
+```
+
+**After**
+
+To fetch all records now, use the `limit: Infinity` option:
+
+```js
+// New way - using limit: Infinity
+query('select name from account', { limit: Infinity });
+// Result:
+// state.data = [] // Array of records
+// state.response = { done, totalSize }
+```
+
+## 6.0.3 - 24 April 2025
 
 ### Patch Changes
 
-- Updated dependencies [b3d7f59]
-- Updated dependencies [2d709ff]
-- Updated dependencies [41e8cc3]
+- 99e4b48: - Better handling of HTML content in http requests
+  - When logging HTTP requests, include query parameters
+- Updated dependencies \[99e4b48]
+- Updated dependencies \[13bf08f]
+  - @openfn/language-common@2.4.0
+
+## 6.0.2 - 16 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[b089c56]
+  - @openfn/language-common@2.3.3
+
+## 6.0.1 - 11 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[d7105c0]
+  - @openfn/language-common@2.3.2
+
+## 6.0.0 - 02 April 2025
+
+### Major Changes
+
+- 8ce97838: Add `http` function in salesforce (#1070)
+- 1fbfdc18: Update salesforce to use `connection` client (#1063)
+- 38de07ed: update jsforce to v3 (#1060)
+
+### Migration Guide
+
+#### Removed general-purpose HTTP functions
+
+Previously, `http.get()`, `http.post()`, etc. could be used to make HTTP
+requests to any external system. These functions have been removed and replaced
+with Salesforce API endpoints only.
+
+##### Before:
+
+This used to work for any external API
+
+```js
+http.get('https://external-api.com/data');
+http.post('https://another-service.com/endpoint', data);
+```
+
+##### Now:
+
+Only Salesforce API operations are supported
+
+```js
+http.get('Account', { query: { start: '2025-03-03' } });
+http.post('Contact', { Name: 'test' });
+```
+
+##### For non-Salesforce HTTP requests:
+
+- Move these operations to a different adaptor (like `@openfn/language-http`)
+- Or use `@openfn/language-common` for generic HTTP operations
+
+## 5.0.5 - 14 March 2025
+
+### Patch Changes
+
+- Updated dependencies \[23ccb01]
+  - @openfn/language-common@2.3.1
+
+## 5.0.4 - 16 January 2025
+
+### Patch Changes
+
+- Updated dependencies \[b3d7f59]
+- Updated dependencies \[2d709ff]
+- Updated dependencies \[41e8cc3]
   - @openfn/language-common@2.3.0
 
-## 5.0.3
+## 5.0.3 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [6dffdbd]
+- Updated dependencies \[6dffdbd]
   - @openfn/language-common@2.2.1
 
-## 5.0.2
+## 5.0.2 - 14 January 2025
 
 Major modernization of the Salesforce adaptor, focusing on standardized state
 handling (ie,`state.data` over on `state.references`) and a cleaner API.
@@ -133,33 +252,33 @@ changes to be compatible - see the Migration Guide.
 Note: due to a conflict in the npm registry this 5.0.0 build has been released
 with version number 5.0.2.
 
-## 4.8.6
+## 4.8.6 - 15 October 2024
 
 ### Patch Changes
 
 - Security fix: update jsonpath-plus version
 
-## 4.8.5
+## 4.8.5 - 09 October 2024
 
 ### Patch Changes
 
 - 3fd13c2: Update axios to 1.7.7
 
-## 4.8.4
+## 4.8.4 - 09 October 2024
 
 ### Patch Changes
 
 - 8d866e4: Update tough-cookie dependency
 
-## 4.8.3
+## 4.8.3 - 16 August 2024
 
 ### Patch Changes
 
 - 8146c23: Fix typings in package.json
-- Updated dependencies [8146c23]
+- Updated dependencies \[8146c23]
   - @openfn/language-common@2.0.1
 
-## 4.8.2
+## 4.8.2 - 31 July 2024
 
 ### Patch Changes
 
@@ -170,15 +289,15 @@ with version number 5.0.2.
   For jobs which use `references[0][0]` to read query results, this is a
   breaking fix.
 
-## 4.8.1
+## 4.8.1 - 25 July 2024
 
 ### Patch Changes
 
-- Updated dependencies [4c08444]
-- Updated dependencies [73d0a02]
+- Updated dependencies \[4c08444]
+- Updated dependencies \[73d0a02]
   - @openfn/language-common@1.15.1
 
-## 4.8.0
+## 4.8.0 - 19 June 2024
 
 ### Minor Changes
 
@@ -198,10 +317,10 @@ with version number 5.0.2.
 
 ### Patch Changes
 
-- Updated dependencies [5fb82f07]
+- Updated dependencies \[5fb82f07]
   - @openfn/language-common@1.15.0
 
-## 4.7.0
+## 4.7.0 - 13 June 2024
 
 ### Minor Changes
 
@@ -209,37 +328,37 @@ with version number 5.0.2.
 
 ### Patch Changes
 
-- Updated dependencies [106ecf6d]
+- Updated dependencies \[106ecf6d]
   - @openfn/language-common@1.14.0
 
-## 4.6.11
+## 4.6.11 - 11 June 2024
 
 ### Patch Changes
 
 - Updated dependencies
   - @openfn/language-common@1.13.5
 
-## 4.6.10
+## 4.6.10 - 03 June 2024
 
 ### Patch Changes
 
 - 90f44c62: Include the Salesforce query response in the result, even if no
   records are found.
 
-## 4.6.9
+## 4.6.9 - 28 May 2024
 
 ### Patch Changes
 
 - Fix any-ascii load and add more tests
 
-## 4.6.8
+## 4.6.8 - 27 May 2024
 
 ### Patch Changes
 
 - Properly ensure any-ascii is loaded before executing, resolving a critical
   race that we are losing in production
 
-## 4.6.7
+## 4.6.7 - 23 May 2024
 
 ### Patch Changes
 
@@ -247,73 +366,73 @@ with version number 5.0.2.
   - In `bulkQuery` throw errors if API version is less than `47.0`
   - Update `bulkQuery` jsdocs with a link to `Bulk API 2.0 Query`
 
-## 4.6.6
+## 4.6.6 - 21 May 2024
 
 ### Patch Changes
 
-- Updated dependencies [12f02ed5]
+- Updated dependencies \[12f02ed5]
   - @openfn/language-common@1.13.4
 
-## 4.6.5
+## 4.6.5 - 08 May 2024
 
 ### Patch Changes
 
 - b1c915b0: Add documentation about Salesforce API limits to query and bulkQuery
 
-## 4.6.4
+## 4.6.4 - 08 May 2024
 
 ### Patch Changes
 
-- Updated dependencies [88f99a8f]
+- Updated dependencies \[88f99a8f]
   - @openfn/language-common@1.13.3
 
-## 4.6.3
+## 4.6.3 - 08 May 2024
 
 ### Patch Changes
 
 - Updated dependencies
   - @openfn/language-common@1.13.2
 
-## 4.6.2
+## 4.6.2 - 12 April 2024
 
 ### Patch Changes
 
 - Updated dependencies
   - @openfn/language-common@1.13.1
 
-## 4.6.1
+## 4.6.1 - 12 April 2024
 
 ### Patch Changes
 
-- Updated dependencies [1ad86651]
+- Updated dependencies \[1ad86651]
   - @openfn/language-common@1.13.0
 
-## 4.6.0
+## 4.6.0 - 19 March 2024
 
 ### Minor Changes
 
 - cfe1ccb: Add options and callback params in query function
 
-## 4.5.2
+## 4.5.2 - 19 March 2024
 
 ### Patch Changes
 
 - 2006e88: fix an issue with bulk jobs not closing
 
-## 4.5.1
+## 4.5.1 - 05 March 2024
 
 ### Patch Changes
 
 - fa3e28fe: refactor bulk() to use newExpandReferences
 
-## 4.5.0
+## 4.5.0 - 02 February 2024
 
 ### Minor Changes
 
 - 0d2b478: Remove `instance_url` under `other_params` and put it at the root
   level of the configuration schema
 
-## 4.4.0
+## 4.4.0 - 31 January 2024
 
 Deprecated because it does not work with Lightning
 
@@ -322,92 +441,92 @@ Deprecated because it does not work with Lightning
 - 632b585: Add `OAuth` support
 - a12f434: Add `request(path, opts, cb)` function
 
-## 4.3.1
+## 4.3.1 - 16 December 2023
 
 ### Patch Changes
 
 - 1131c34: Remove regex pattern for validation and changed minLength to 1
 
-## 4.3.0
+## 4.3.0 - 01 December 2023
 
 ### Minor Changes
 
 - 1d5b62f: Add `toUTF8` function
 
-## 4.2.2
+## 4.2.2 - 20 September 2023
 
 ### Patch Changes
 
-- Updated dependencies [c19efbe]
+- Updated dependencies \[c19efbe]
   - @openfn/language-common@1.11.1
 
-## 4.2.1
+## 4.2.1 - 18 September 2023
 
 ### Patch Changes
 
 - 07debe9: Update bulkQuery to use bulkv2
 
-## 4.2.0
+## 4.2.0 - 14 September 2023
 
 ### Minor Changes
 
 - fc58f1c: add options in bulkQuery
 
-## 4.1.0
+## 4.1.0 - 13 September 2023
 
 ### Minor Changes
 
 - 1e3a083: add bulkQuery function
 
-## 4.0.8
+## 4.0.8 - 08 September 2023
 
 ### Patch Changes
 
-- Updated dependencies [85c35b8]
+- Updated dependencies \[85c35b8]
   - @openfn/language-common@1.11.0
 
-## 4.0.7
+## 4.0.7 - 14 August 2023
 
 ### Patch Changes
 
-- Updated dependencies [df09270]
+- Updated dependencies \[df09270]
   - @openfn/language-common@1.10.3
 
-## 4.0.6
+## 4.0.6 - 03 August 2023
 
 ### Patch Changes
 
 - aceedd2: update jsforce and remove unused packages
 
-## 4.0.5
+## 4.0.5 - 14 July 2023
 
 ### Patch Changes
 
-- Updated dependencies [26a303e]
+- Updated dependencies \[26a303e]
   - @openfn/language-common@1.10.2
 
-## 4.0.4
+## 4.0.4 - 14 July 2023
 
 ### Patch Changes
 
-- Updated dependencies [8c32eb3]
+- Updated dependencies \[8c32eb3]
   - @openfn/language-common@1.10.1
 
-## 4.0.3
+## 4.0.3 - 30 June 2023
 
 ### Patch Changes
 
-- Updated dependencies [aad9549]
+- Updated dependencies \[aad9549]
   - @openfn/language-common@1.10.0
 
-## 4.0.2
+## 4.0.2 - 23 June 2023
 
 ### Patch Changes
 
-- Updated dependencies [111807f]
+- Updated dependencies \[111807f]
   - @openfn/language-common@1.9.0
 
-## 4.0.1
+## 4.0.1 - 19 June 2023
 
 ### Patch Changes
 
@@ -431,80 +550,80 @@ Deprecated because it does not work with Lightning
 
 ### Patch Changes
 
-- Updated dependencies [2c1d603]
+- Updated dependencies \[2c1d603]
   - @openfn/language-common@1.8.0
 
-## 3.0.7
+## 3.0.7 - 20 April 2023
 
 ### Patch Changes
 
 - 7cc8efc: remove FakeAdaptor references
 
-## 3.0.6
+## 3.0.6 - 31 March 2023
 
 ### Patch Changes
 
 - 705caab: Remove tools as devdependencies
 
-## 3.0.5
+## 3.0.5 - 31 March 2023
 
 ### Patch Changes
 
 - 929bca6: Use metadata helper function from common
-- Updated dependencies [929bca6]
+- Updated dependencies \[929bca6]
   - @openfn/language-common@1.7.7
 
-## 3.0.4
+## 3.0.4 - 30 March 2023
 
 ### Patch Changes
 
 - ef828e7: update old urls in readme
-- Updated dependencies [2b4c61a]
+- Updated dependencies \[2b4c61a]
   - @openfn/language-common@1.7.6
 
-## 3.0.3
+## 3.0.3 - 21 March 2023
 
 ### Patch Changes
 
 - 06aced8: Fix dependencies
 
-## 3.0.2
+## 3.0.2 - 17 March 2023
 
 ### Patch Changes
 
 - aed7e0b: fix required field in configuration schema
 
-## 3.0.1
+## 3.0.1 - 10 March 2023
 
 ### Patch Changes
 
 - c09b821: Add @magic annotations
 
-## 3.0.0
+## 3.0.0 - 03 March 2023
 
 ### Major Changes
 
 - 190f667: Remove curry from salesforce
 
-## 2.12.3
+## 2.12.3 - 15 February 2023
 
 ### Patch Changes
 
 - f7ebd3c: remove sample configuration
 
-## 2.12.2
+## 2.12.2 - 15 February 2023
 
 ### Patch Changes
 
 - f2aed32: add examples
 
-## 2.12.1
+## 2.12.1 - 13 January 2023
 
 ### Patch Changes
 
-- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+- 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
 
-## 2.12.0
+## 2.12.0 - 18 November 2022
 
 ### Minor Changes
 
@@ -513,23 +632,23 @@ Deprecated because it does not work with Lightning
 ### Patch Changes
 
 - f2a91a4: Update package exports
-- Updated dependencies [f2a91a4]
+- Updated dependencies \[f2a91a4]
   - @openfn/language-common@1.7.5
 
-## 2.11.1
+## 2.11.1 - 04 November 2022
 
 ### Patch Changes
 
 - e7bf865: chore(deps): update dependency sinon to v14
 - 8566b26: Fix typings
 - b3d45ff: Fix CJS export of npm package.
-- Updated dependencies [8566b26]
-- Updated dependencies [b3d45ff]
-- Updated dependencies [b5eb665]
-- Updated dependencies [ecf5d30]
+- Updated dependencies \[8566b26]
+- Updated dependencies \[b3d45ff]
+- Updated dependencies \[b5eb665]
+- Updated dependencies \[ecf5d30]
   - @openfn/language-common@1.7.4
 
-## 2.11.0
+## 2.11.0 - 25 October 2022
 
 ### Minor Changes
 

@@ -3,11 +3,9 @@ import {
   composeNextState,
   chunk,
 } from '@openfn/language-common';
-
 import { expandReferences, throwError } from '@openfn/language-common/util';
+import { Connection } from '@jsforce/jsforce-node';
 import * as util from './util';
-
-import flatten from 'lodash/flatten';
 
 /**
  * @typedef {object} State
@@ -27,6 +25,7 @@ import flatten from 'lodash/flatten';
  * @typedef {Object} SalesforceState
  * @property data - API response data. Can be either an object or array of objects
  * @property references - History of all previous states
+ * @private
  **/
 
 /**
@@ -38,24 +37,6 @@ import flatten from 'lodash/flatten';
  * @property data.errors - Array of errors reported by Salesforce
  * @property references - History of all previous states
  **/
-
-/**
- * Options provided to the Salesforce HTTP request
- * @typedef {Object} FullRequestOptions
- * @public
- * @property {string} [method=GET] - HTTP method to use.
- * @property {object} headers - Object of request headers.
- * @property {object} query - Object request query.
- * @property {object} json - Object request body.
- * @property {string} body - A string request body.
- */
-
-/**
- * @typedef {Object} SimpleRequestOptions
- * @public
- * @property {object} headers - Object of request headers.
- * @property {object} query - Object of request query.
- * */
 
 /**
  * Options provided to the Salesforce bulk API request
@@ -76,11 +57,60 @@ import flatten from 'lodash/flatten';
  * @property {integer} [pollInterval=3000] - Polling interval in milliseconds.
  * */
 
+let connection = null;
+
 /**
- * @typedef {Object} QueryOptions
- * @public
- * @property {boolean} [autoFetch=false] - When true, automatically fetches next batch of records if available.
- * */
+ * Creates a connection to Salesforce using Basic Auth or OAuth.
+ * @function connect
+ * @private
+ * @param {State} state - Runtime state.
+ * @returns {State}
+ */
+const connect = async state => {
+  if (connection) {
+    return state;
+  }
+
+  const { configuration } = state;
+  const { apiVersion: version } = configuration;
+
+  if (configuration.access_token) {
+    const { instance_url: instanceUrl, access_token: accessToken } =
+      configuration;
+    connection = new Connection({ instanceUrl, accessToken, version });
+  } else {
+    const { loginUrl, username, password, securityToken } = configuration;
+    connection = new Connection({ loginUrl, version });
+
+    console.info(`Attempting Salesforce connection for user: ${username}`);
+
+    // Simple, direct login without extra Promise wrapping
+    await connection
+      .login(username, securityToken ? password + securityToken : password)
+      .catch(error => {
+        throwError('FAILED_AUTH', {
+          fix: 'Check your username, password, and security token',
+          message: `Failed to connect to salesforce as ${username}`,
+          error,
+        });
+      });
+  }
+
+  if (!connection) {
+    throwError('CONNECTION_ERROR', { message: 'No connection established' });
+  }
+
+  console.info(
+    `Successfully connected to Salesforce with ${connection._sessionType} session type`
+  );
+  console.info(`API Version: ${connection.version}`);
+
+  return state;
+};
+
+export function setMockConnection(mock) {
+  connection = mock;
+}
 
 /**
  * Executes an operation.
@@ -98,11 +128,13 @@ export function execute(...operations) {
 
   return state => {
     return commonExecute(
+      connect,
       util.loadAnyAscii,
-      util.createConnection,
-      ...flatten(operations),
-      util.removeConnection
-    )({ ...initialState, ...state });
+      ...operations
+    )({
+      ...initialState,
+      ...state,
+    });
   };
 }
 
@@ -163,8 +195,6 @@ export function execute(...operations) {
  */
 export function bulk(sObjectName, operation, records, options = {}) {
   return state => {
-    const { connection } = state;
-
     const [
       resolvedSObjectName,
       resolvedOperation,
@@ -278,7 +308,6 @@ export function bulk(sObjectName, operation, records, options = {}) {
  */
 export function bulkQuery(query, options = {}) {
   return async state => {
-    const { connection } = state;
     const [resolvedQuery, resolvedOptions] = expandReferences(
       state,
       query,
@@ -343,7 +372,6 @@ export function bulkQuery(query, options = {}) {
  */
 export function create(sObjectName, records) {
   return state => {
-    let { connection } = state;
     const [resolvedSObjectName, resolvedRecords] = expandReferences(
       state,
       sObjectName,
@@ -351,7 +379,6 @@ export function create(sObjectName, records) {
     );
     util.assertNoNesting(resolvedRecords);
     console.info(`Creating ${resolvedSObjectName}`, resolvedRecords);
-
     return connection
       .create(resolvedSObjectName, resolvedRecords)
       .then(response => {
@@ -382,8 +409,6 @@ export function create(sObjectName, records) {
  */
 export function describe(sObjectName) {
   return state => {
-    const { connection } = state;
-
     const [resolvedSObjectName] = expandReferences(state, sObjectName);
 
     return resolvedSObjectName
@@ -429,7 +454,6 @@ export function describe(sObjectName) {
  */
 export function destroy(sObjectName, ids, options = {}) {
   return state => {
-    const { connection } = state;
     const [resolvedSObjectName, resolvedIds, resolvedOptions] =
       expandReferences(state, sObjectName, ids, options);
 
@@ -462,47 +486,6 @@ export function destroy(sObjectName, ids, options = {}) {
 }
 
 /**
- * Send a GET request on salesforce server configured in `state.configuration`.
- * @public
- * @example <caption>Make a GET request to a custom Salesforce flow</caption>
- * get('/actions/custom/flow/POC_OpenFN_Test_Flow');
- * @example <caption>Make a GET request to a custom Salesforce flow with query parameters</caption>
- * get('/actions/custom/flow/POC_OpenFN_Test_Flow', { query: { Status: 'Active' } });
- * @example <caption>Make a GET request then map the response</caption>
- * get('/jobs/query/v1/jobs/001XXXXXXXXXXXXXXX/results', (state) => {
- *  // Mapping the response
- *  state.mapping = state.data.map(d => ({ name: d.name, id: d.extId }));
- *  return state;
- * });
- * @function
- * @param {string} path - The Salesforce API endpoint.
- * @param {SimpleRequestOptions} [options] - Configure headers and query parameters for the request.
- * @state {SalesforceState}
- * @returns {Operation}
- */
-export function get(path, options = {}) {
-  return async state => {
-    const { connection } = state;
-    const [resolvedPath, resolvedOptions] = expandReferences(
-      state,
-      path,
-      options
-    );
-    const { headers, query } = resolvedOptions;
-    console.log(`GET: ${resolvedPath}`);
-    const requestOptions = {
-      url: resolvedPath,
-      method: 'GET',
-      query,
-      headers: { 'content-type': 'application/json', ...headers },
-    };
-
-    const result = await connection.request(requestOptions);
-
-    return composeNextState(state, result);
-  };
-}
-/**
  * Alias for "create(sObjectName, records)".
  * @public
  * @example <caption> Single record creation</caption>
@@ -526,140 +509,62 @@ export function insert(sObjectName, records) {
 }
 
 /**
- * Send a POST request to salesforce server configured in `state.configuration`.
- * @public
- * @example <caption>Make a POST request to a custom Salesforce flow</caption>
- * post("/actions/custom/flow/POC_OpenFN_Test_Flow", {
- *   body: {
- *     inputs: [
- *       {
- *         CommentCount: 6,
- *         FeedItemId: "0D5D0000000cfMY",
- *       },
- *     ],
- *   },
- * });
- * @function
- * @param {string} path - The Salesforce API endpoint.
- * @param {object} data - A JSON Object request body.
- * @param {SimpleRequestOptions} [options] - Configure headers and query parameters for the request.
- * @state {SalesforceState}
- * @returns {Operation}
- */
-export function post(path, data, options = {}) {
-  return async state => {
-    const { connection } = state;
-    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
-      state,
-      path,
-      data,
-      options
-    );
-    const { query, headers } = resolvedOptions;
-
-    console.log(`POST: ${resolvedPath}`);
-
-    const requestOptions = {
-      url: resolvedPath,
-      method: 'POST',
-      query,
-      headers: { 'content-type': 'application/json', ...headers },
-      body: JSON.stringify(resolvedData),
-    };
-
-    const result = await connection.request(requestOptions);
-
-    return composeNextState(state, result);
-  };
-}
-
-/**
  * Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.
- * This operation uses {@link https://jsforce.github.io/document/#using-soql for querying salesforce records} using SOQL query and handles pagination.
  * Note that in an event of a query error, error logs will be printed but the operation will not throw the error.
  *
  * The Salesforce query API is subject to rate limits, {@link https://sforce.co/3W9zyaQ learn more here}.
- *
  * @public
  * @example <caption>Run a query and download all matching records</caption>
- * query('SELECT Id FROM Patient__c', { autoFetch: true });
+ * query('SELECT Id FROM Patient__c', { limit: Infinity });
+ * @example <caption>Run a query and limit records</caption>
+ * query('SELECT Id From Account Limit 10');
  * @example <caption>Query patients by Health ID</caption>
  * query(state => `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.healthId}'`);
  * @example <caption>Query patients by Health ID using a lazy state reference</caption>
  * query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
  * @function
- * @param {(string|function)} query - A SOQL query string or a function that returns a query string. Must be less than 4000 characters in WHERE clause
- * @param {QueryOptions} [options] - Optional configuration for the query operation
+ * @param {string} query - A SOQL query string. Must be less than 4000 characters in WHERE clause
+ * @param {object} [options] - Query options
+ * @param {number} [options.limit=10000] - Maximum number of records to fetch. If `limit: Infinity` is passed, all records will be fetched.
  * @state {SalesforceState}
- * @property data - Array of result objects of the form <code>\{ done, totalSize, records \}</code>
+ * @state {Array} data - Array of result objects
+ * @state {Object} response - An object of result metadata.
+ *                     <code>{ done, totalSize, nextRecordsUrl?: string }</code>
+ *                     where nextRecordsUrl is only present when done is false
  * @returns {Operation}
  */
-export function query(query, options = {}) {
+
+export function query(query, options) {
   return async state => {
-    const { connection } = state;
-    const [resolvedQuery, resolvedOptions] = expandReferences(
-      state,
-      query,
-      options
-    );
+    const maxRecords = 1e4;
+    const [resolvedQuery, resolvedOptions = { limit: maxRecords }] =
+      expandReferences(state, query, options);
     console.log(`Executing query: ${resolvedQuery}`);
-    const autoFetch = resolvedOptions.autoFetch || resolvedOptions.autofetch;
 
-    if (autoFetch) {
-      console.log('autoFetch is enabled: all records will be downloaded');
+    if (resolvedQuery.includes('LIMIT') || resolvedQuery.includes('limit')) {
+      console.warn(
+        'Warning: Query contains a LIMIT clause. We recommend using the `limit` option instead.'
+      );
     }
 
-    const result = {
-      done: true,
-      totalSize: 0,
-      records: [],
-    };
+    const { limit } = resolvedOptions;
+    const { records, ...response } = await connection.query(resolvedQuery, {
+      autoFetch: true,
+      maxFetch: limit,
+    });
 
-    const processRecords = async res => {
-      const { done, totalSize, records, nextRecordsUrl } = res;
+    const fetchedRecords = records.length;
 
-      result.done = done;
-      result.totalSize = totalSize;
-      result.records.push(...records);
-
-      if (!done && !autoFetch && nextRecordsUrl) {
-        result.nextRecordsUrl = nextRecordsUrl;
-      }
-      if (!done && autoFetch) {
-        console.log('Fetched records so far:', result.records.length);
-        console.log('Fetching next records...');
-
-        try {
-          const newResult = await connection.request({ url: nextRecordsUrl });
-          await processRecords(newResult);
-        } catch (err) {
-          const { message, errorCode } = err;
-          console.error(`Error ${errorCode}: ${message}`);
-          throw err;
-        }
-      }
-    };
-
-    try {
-      const qResult = await connection.query(resolvedQuery);
-      if (qResult.totalSize > 0) {
-        console.log('Total records:', qResult.totalSize);
-        await processRecords(qResult);
-        console.log('Done ✔ retrieved records:', result.records.length);
-      } else {
-        console.log('No records found.');
-      }
-    } catch (err) {
-      const { message, errorCode } = err;
-      console.log(`Error ${errorCode}: ${message}`);
-      throw err;
+    if (!response.done && fetchedRecords === maxRecords) {
+      console.warn(
+        `Warning: The default maximum number of items has been reached (${maxRecords}), but more items are available on the server. 
+         To download all available items, adjust limit to ${response.totalSize} or set limit to false`
+      );
     }
+    console.log('Fetched: ' + fetchedRecords);
+    console.log('Total: ' + response.totalSize);
 
-    console.log(
-      'Results retrieved and pushed to position [0] of the references array.'
-    );
-
-    return composeNextState(state, result);
+    return { ...composeNextState(state, records), response };
   };
 }
 
@@ -692,7 +597,6 @@ export function query(query, options = {}) {
  */
 export function upsert(sObjectName, externalId, records) {
   return state => {
-    const { connection } = state;
     const [resolvedSObjectName, resolvedExternalId, resolvedRecords] =
       expandReferences(state, sObjectName, externalId, records);
 
@@ -742,7 +646,6 @@ export function upsert(sObjectName, externalId, records) {
  */
 export function update(sObjectName, records) {
   return state => {
-    let { connection } = state;
     const [resolvedSObjectName, resolvedRecords] = expandReferences(
       state,
       sObjectName,
@@ -767,46 +670,6 @@ export function update(sObjectName, records) {
 }
 
 /**
- * Send a request to salesforce server configured in `state.configuration`.
- * @public
- * @example <caption>Make a POST request to a custom Salesforce flow</caption>
- * request("/actions/custom/flow/POC_OpenFN_Test_Flow", {
- *   method: "POST",
- *   json: { inputs: [{}] },
- * });
- * @function
- * @param {string} path - The Salesforce API endpoint.
- * @param {FullRequestOptions} [options] - Configure headers, query and body parameters for the request.
- * @state {SalesforceState}
- * @returns {Operation}
- */
-export function request(path, options = {}) {
-  return async state => {
-    const { connection } = state;
-    const [resolvedPath, resolvedOptions] = expandReferences(
-      state,
-      path,
-      options
-    );
-    const { method = 'GET', json, body, headers, query } = resolvedOptions;
-
-    const requestOptions = {
-      url: resolvedPath,
-      method,
-      query,
-      headers: json
-        ? { 'content-type': 'application/json', ...headers }
-        : headers,
-      body: json ? JSON.stringify(json) : body,
-    };
-
-    const result = await connection.request(requestOptions);
-
-    return composeNextState(state, result);
-  };
-}
-
-/**
  * Retrieves a Salesforce sObject(s).
  * @public
  * @example <caption>Retrieve a specific ContentVersion record</caption>
@@ -819,8 +682,6 @@ export function request(path, options = {}) {
  */
 export function retrieve(sObjectName, id) {
   return state => {
-    const { connection } = state;
-
     const [resolvedSObjectName, resolvedId] = expandReferences(
       state,
       sObjectName,
@@ -839,6 +700,11 @@ export function retrieve(sObjectName, id) {
   };
 }
 
+// Privately expose the salesforce request function to utils & tests
+export function sfRequest(httpRequest) {
+  return connection.request(httpRequest);
+}
+
 export {
   alterState,
   arrayToString,
@@ -853,14 +719,12 @@ export {
   fields,
   fn,
   fnIf,
-  http,
   humanProper,
   index,
   join,
   group,
   jsonValue,
   lastReferenceValue,
-  map,
   merge,
   referencePath,
   scrubEmojis,

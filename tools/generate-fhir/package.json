@@ -2,7 +2,7 @@
   "name": "@openfn/generate-fhir",
   "private": true,
   "type": "module",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Helper utility for fhir adaptor generator",
   "main": "src/index.ts",
   "license": "ISC",
@@ -10,16 +10,22 @@
     "generate-fhir": "src/cli.ts"
   },
   "scripts": {
-    "cli": "esno src/cli.ts"
+    "cli": "tsx src/cli.ts",
+    "demo": "tsx demo.ts"
   },
   "dependencies": {
     "@types/node": "18.17.5",
     "ast-types": "^0.14.2",
-    "esno": "0.16.3",
+    "ava": "^5.1.1",
     "gunzip-maybe": "^1.4.2",
     "inquirer": "^9.2.15",
+    "lodash": "^4.17.21",
     "recast": "^0.23.9",
     "rimraf": "^6.0.1",
+    "rollup": "^4.32.1",
+    "rollup-plugin-dts": "^6.1.1",
+    "stream-chain": "^3.3.2",
+    "stream-json": "^1.8.0",
     "ts-node": "10.9.1",
     "tsup": "6.3.0",
     "typescript": "4.8.4",

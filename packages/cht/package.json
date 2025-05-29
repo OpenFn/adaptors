@@ -1,6 +1,7 @@
 {
   "name": "@openfn/language-cht",
-  "version": "1.0.8",
+  "label": "Community Health Toolkit (CHT)",
+  "version": "1.0.12",
   "description": "OpenFn CHT adaptor",
   "type": "module",
   "exports": {
@@ -34,7 +35,6 @@
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
-    "esno": "^0.16.3",
     "rimraf": "3.0.2",
     "undici": "^5.22.1"
   },

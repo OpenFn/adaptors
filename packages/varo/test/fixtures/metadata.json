@@ -1,0 +1,45 @@
+{
+    "appInfo": {
+        "isAutomaticTime": true,
+        "isTrueTime": true,
+        "os": "Android",
+        "osVersion": 31,
+        "phoneModel": "SM-A125U1",
+        "version": "jump.forward.test-SNAPSHOT(1912182193)"
+    },
+    "emailSentTimestamp": 1728502357025,
+    "facility": {
+        "country": "United States",
+        "district": "New York County",
+        "managerName": "Brasky",
+        "managerPhone": "6666666666",
+        "name": "Brasky's House",
+        "state": "New York"
+    },
+    "location": {
+        "gpsCorrectionUsed": false,
+        "initial": {
+            "accuracy": 20.0,
+            "fixUtcTime": 1728414223696,
+            "latitude": 45.8274832,
+            "longitude": -75.2834823
+        },
+        "used": {
+            "accuracy": 20.0,
+            "fixUtcTime": 1728414223696,
+            "latitude": 45.8274832,
+            "longitude": -75.2834823
+        }
+    },
+    "notes": "",
+    "refrigerator": {
+        "barcodeData": [],
+        "deviceId": "160600198264",
+        "deviceManufacturer": "Berlinger",
+        "manufacturer": "Aucma",
+        "model": "CFD-50 AC"
+    },
+    "reportId": "ae747574-1ccf-4439-9deb-8a304b50ab10",
+    "timestamp": 1728414219709,
+    "version": 4
+}

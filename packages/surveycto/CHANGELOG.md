@@ -1,29 +1,39 @@
 # @openfn/language-surveycto
 
-## 2.2.3
+## 2.2.4 - 22 April 2025
+
+### Patch Changes
+
+- 99e4b48: - Better handling of HTML content in http requests
+  - When logging HTTP requests, include query parameters
+- Updated dependencies \[99e4b48]
+- Updated dependencies \[13bf08f]
+  - @openfn/language-common@2.4.0
+
+## 2.2.3 - 16 August 2024
 
 ### Patch Changes
 
 - 8146c23: Fix typings in package.json
-- Updated dependencies [8146c23]
+- Updated dependencies \[8146c23]
   - @openfn/language-common@2.0.1
 
-## 2.2.2
+## 2.2.2 - 06 August 2024
 
 ### Patch Changes
 
 - d54ab59: Fix an issue assembling surveyCTO urls (which manifested as
   `TypeError: Cannot read properties of undefined (reading 'toString'`)
 
-## 2.2.1
+## 2.2.1 - 01 August 2024
 
 ### Patch Changes
 
 - f51c5d0: Enforce that absolute urls must not be passed to HTTP functions
-- Updated dependencies [4fe527c]
+- Updated dependencies \[4fe527c]
   - @openfn/language-common@2.0.0
 
-## 2.2.0
+## 2.2.0 - 13 June 2024
 
 ### Minor Changes
 
@@ -31,16 +41,16 @@
 
 ### Patch Changes
 
-- Updated dependencies [106ecf6d]
+- Updated dependencies \[106ecf6d]
   - @openfn/language-common@1.14.0
 
-## 2.1.1
+## 2.1.1 - 17 May 2024
 
 ### Patch Changes
 
 - 6c588212: Fix `servername` typo in the `configuration-schema`
 
-## 2.1.0
+## 2.1.0 - 08 May 2024
 
 ### Minor Changes
 
@@ -55,10 +65,10 @@
 
 ### Patch Changes
 
-- Updated dependencies [88f99a8f]
+- Updated dependencies \[88f99a8f]
   - @openfn/language-common@1.13.3
 
-## 2.0.0
+## 2.0.0 - 23 April 2024
 
 ### Major Changes
 
@@ -67,7 +77,7 @@
   - Add `apiVersion` in `configuration-schema.json`. Defaults to `v1`
   - Add `request()` function for surveyCTO API requests
 
-## 1.2.1
+## 1.2.1 - 19 June 2023
 
 ### Patch Changes
 
@@ -91,36 +101,36 @@
 
 ### Patch Changes
 
-- Updated dependencies [2c1d603]
+- Updated dependencies \[2c1d603]
   - @openfn/language-common@1.8.0
 
-## 1.1.4
+## 1.1.4 - 30 March 2023
 
 ### Patch Changes
 
 - 14f481e: mark execute as private
-- Updated dependencies [2b4c61a]
+- Updated dependencies \[2b4c61a]
   - @openfn/language-common@1.7.6
 
-## 1.1.3
+## 1.1.3 - 15 February 2023
 
 ### Patch Changes
 
 - f7ebd3c: remove sample configuration
 
-## 1.1.2
+## 1.1.2 - 15 February 2023
 
 ### Patch Changes
 
 - f2aed32: add examples
 
-## 1.1.1
+## 1.1.1 - 13 January 2023
 
 ### Patch Changes
 
-- 6d8de03: change @constructor to @function and remove /\*_ @module Adaptor _/
+- 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
 
-## 1.1.0
+## 1.1.0 - 18 November 2022
 
 ### Minor Changes
 
@@ -128,5 +138,5 @@
 
 ### Patch Changes
 
-- Updated dependencies [f2a91a4]
+- Updated dependencies \[f2a91a4]
   - @openfn/language-common@1.7.5

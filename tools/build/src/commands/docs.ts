@@ -13,7 +13,7 @@ import { Options } from '../pipeline';
 export default async (lang: string, options: Options = {}) => {
   if (options.watch) {
     const root = resolvePath(lang);
-    const glob = `${root}/src/**/*.js`;
+    const glob = `${root}/src/**/*.(js|ts)`;
     const watcher = chokidar.watch(glob, {
       persistent: true,
     });
@@ -36,14 +36,13 @@ const build = async (lang: string) => {
   console.log(`Building docs`);
   console.log();
 
-  const glob = `${root}/src/**/*.js`;
-
   const template = await readFile(
     '../../tools/build/src/util/docs-template.hbs'
   );
 
-  let templateData = jsdoc2md.getTemplateDataSync({
-    files: glob,
+  let templateData = await jsdoc2md.getTemplateData({
+    // this glob seems to support conditional expressions
+    files: `${root}/src/**/*.(js|ts)`,
     configure: [path.resolve('../../tools/build/jsdoc/config.json')],
     'no-cache': true,
   });
@@ -69,8 +68,9 @@ const build = async (lang: string) => {
   });
 
   const fileSet = new FileSet();
-  await fileSet.add([glob]);
-
+  // This glob does not support conditionals
+  // ts files are not supported right now
+  await fileSet.add(`${root}/src/**/*.js`);
   let common: any[] = [];
   if (lang !== 'common') {
     // try and load common's data
@@ -90,7 +90,6 @@ const build = async (lang: string) => {
     // Extract exports from common and add them to the template data as externals
     for (const f of fileSet.files) {
       const src = await fs.readFile(f, 'utf8');
-
       const exports = extractExports(src).map(e => {
         const isNamespace = common.find(data => data.scope === e);
         return {
@@ -114,7 +113,7 @@ const build = async (lang: string) => {
       data.scope = 'global';
     }
     // Set scope to be the file name
-    else if (data.meta?.filename && data.meta.filename !== 'Adaptor.js') {
+    else if (data.meta?.filename && !data.meta.filename.includes('Adaptor.')) {
       data.scope = data.meta.filename.split('.')[0];
     }
   });
@@ -141,7 +140,7 @@ const build = async (lang: string) => {
   };
 
   console.log('rendering jsdocs...');
-  const docs = jsdoc2md.renderSync(renderOpts);
+  const docs = await jsdoc2md.render(renderOpts);
 
   const readme = await fs.readFile(`${root}/README.md`, 'utf8', (err, data) =>
     err ? '### README' : data

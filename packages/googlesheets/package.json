@@ -1,6 +1,7 @@
 {
   "name": "@openfn/language-googlesheets",
-  "version": "3.0.9",
+  "label": "Google Sheets",
+  "version": "3.0.13",
   "description": "A Google Sheets Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -39,7 +40,6 @@
     "assertion-error": "1.1.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
-    "esno": "^0.16.3",
     "nock": "13.2.9",
     "rimraf": "3.0.2"
   },

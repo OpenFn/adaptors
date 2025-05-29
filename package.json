@@ -6,21 +6,23 @@
   "private": true,
   "packageManager": "pnpm@8.15.1",
   "scripts": {
-    "migrate": "cd tools/migrate && pnpm migrate",
-    "setup": "pnpm --filter \"./tools/**\" install",
-    "docs:publish": "pnpm exec scripts/publish-docs.sh",
-    "docs:build": "pnpm exec scripts/build-docs.sh",
-    "docs:watch": "chokidar packages/*/docs/*.md -c 'pnpm docs:build'",
-    "build:tools": "pnpm --filter \"./tools/**\" build",
     "build:adaptors": "pnpm --filter \"./packages/**\" build",
+    "build:tools": "pnpm --filter \"./tools/**\" build",
     "build": "pnpm build:tools && pnpm build:adaptors",
-    "test:imports": "cd tools/import-tests && pnpm test",
-    "test": "pnpm lint && pnpm --filter \"./packages/**\" test && pnpm test:imports",
+    "changelog": "pnpm -C tools/changelog update-latest-versions",
+    "docs:build": "pnpm exec scripts/build-docs.sh",
+    "docs:publish": "pnpm exec scripts/publish-docs.sh",
+    "docs:watch": "chokidar packages/*/docs/*.md -c 'pnpm docs:build'",
+    "generate": "pnpm -C tools/generate cli generate",
     "lint": "pnpm --filter \"./packages/**\" lint",
     "metadata": "pnpm -C tools/metadata cli",
+    "migrate": "cd tools/migrate && pnpm migrate",
+    "prerelease": "node scripts/prerelease.mjs --no-warnings",
+    "setup": "pnpm --filter \"./tools/**\" install",
     "slack:notify": "cd tools/slack && pnpm notify",
-    "generate": "pnpm -C tools/generate cli generate",
-    "prerelease": "node scripts/prerelease.mjs --no-warnings"
+    "test:imports": "cd tools/import-tests && pnpm test",
+    "test": "pnpm lint && pnpm --filter \"./packages/**\" test && pnpm test:imports",
+    "version": "pnpm changeset version && pnpm run changelog"
   },
   "author": "Open Function Group",
   "license": "ISC",
@@ -32,8 +34,9 @@
     "@openfn/parse-jsdoc": "workspace:^1.0.0",
     "chokidar-cli": "^3.0.0",
     "eslint": "8.26.0",
-    "esno": "^4.8.0",
     "lodash": "^4.17.21",
-    "mocha": "^10.7.3"
+    "mocha": "^10.7.3",
+    "tsx": "^4.19.2",
+    "typescript": "4.8.4"
   }
 }

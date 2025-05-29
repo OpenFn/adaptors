@@ -1,30 +1,59 @@
 # @openfn/language-azure-storage
 
-## 2.0.8
+## 2.0.12 - 22 April 2025
 
 ### Patch Changes
 
-- Updated dependencies [b3d7f59]
-- Updated dependencies [2d709ff]
-- Updated dependencies [41e8cc3]
+- Updated dependencies \[99e4b48]
+- Updated dependencies \[13bf08f]
+  - @openfn/language-common@2.4.0
+
+## 2.0.11 - 16 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[b089c56]
+  - @openfn/language-common@2.3.3
+
+## 2.0.10 - 11 April 2025
+
+### Patch Changes
+
+- Updated dependencies \[d7105c0]
+  - @openfn/language-common@2.3.2
+
+## 2.0.9 - 14 March 2025
+
+### Patch Changes
+
+- Updated dependencies \[23ccb01]
+  - @openfn/language-common@2.3.1
+
+## 2.0.8 - 16 January 2025
+
+### Patch Changes
+
+- Updated dependencies \[b3d7f59]
+- Updated dependencies \[2d709ff]
+- Updated dependencies \[41e8cc3]
   - @openfn/language-common@2.3.0
 
-## 2.0.7
+## 2.0.7 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [6dffdbd]
+- Updated dependencies \[6dffdbd]
   - @openfn/language-common@2.2.1
 
-## 2.0.6
+## 2.0.6 - 09 January 2025
 
 ### Patch Changes
 
-- Updated dependencies [a47d8d5]
-- Updated dependencies [9240428]
+- Updated dependencies \[a47d8d5]
+- Updated dependencies \[9240428]
   - @openfn/language-common@2.2.0
 
-## 2.0.5
+## 2.0.5 - 28 October 2024
 
 ### Patch Changes
 
@@ -32,36 +61,36 @@
 - Updated dependencies
   - @openfn/language-common@2.1.1
 
-## 2.0.4
+## 2.0.4 - 18 October 2024
 
 ### Patch Changes
 
-- Updated dependencies [03a1a74]
+- Updated dependencies \[03a1a74]
   - @openfn/language-common@2.1.0
 
-## 2.0.3
+## 2.0.3 - 15 October 2024
 
 ### Patch Changes
 
-- Fixed security vulnerability in jsonpath-plus [33973a2]
+- Fixed security vulnerability in jsonpath-plus \[33973a2]
   - @openfn/language-common@2.0.3
 
-## 2.0.2
+## 2.0.2 - 24 September 2024
 
 ### Patch Changes
 
-- Updated dependencies [77a690f]
+- Updated dependencies \[77a690f]
   - @openfn/language-common@2.0.2
 
-## 2.0.1
+## 2.0.1 - 16 August 2024
 
 ### Patch Changes
 
 - 8146c23: Fix typings in package.json
-- Updated dependencies [8146c23]
+- Updated dependencies \[8146c23]
   - @openfn/language-common@2.0.1
 
-## 2.0.0
+## 2.0.0 - 01 August 2024
 
 ### Major Changes
 
@@ -71,10 +100,10 @@
 
 ### Patch Changes
 
-- Updated dependencies [4fe527c]
+- Updated dependencies \[4fe527c]
   - @openfn/language-common@2.0.0
 
-## 1.1.0
+## 1.1.0 - 13 June 2024
 
 ### Minor Changes
 
@@ -82,10 +111,10 @@
 
 ### Patch Changes
 
-- Updated dependencies [106ecf6d]
+- Updated dependencies \[106ecf6d]
   - @openfn/language-common@1.14.0
 
-## 1.0.2
+## 1.0.2 - 08 May 2024
 
 ### Patch Changes
 
@@ -93,13 +122,13 @@
 - Updated dependencies
   - @openfn/language-common@1.13.2
 
-## 1.0.1
+## 1.0.1 - 24 January 2024
 
 ### Patch Changes
 
 - 6afba70: Add proper variable declaration (linting)
 
-## 1.0.0
+## 1.0.0 - 11 December 2023
 
 ### Major Changes
 

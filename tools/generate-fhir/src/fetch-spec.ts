@@ -13,12 +13,17 @@
  *  - handle tarballs and gzipped stuff
  */
 import path, { dirname } from 'node:path';
-import { createWriteStream } from 'node:fs';
+import { createWriteStream, createReadStream } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { Readable } from 'node:stream';
 import yauzl from 'yauzl';
 import gunzip from 'gunzip-maybe';
-import { MappingSpec, SpecJSON } from './types';
+import parser from 'stream-json';
+import { chain } from 'stream-chain';
+import Pick from 'stream-json/filters/Pick';
+import StreamArray from 'stream-json/streamers/StreamArray';
+
+import { type MappingSpec, SpecJSON } from './types';
 
 const valueSetCache: Record<string, any> = {};
 
@@ -29,68 +34,81 @@ export type Meta = {
   name?: string;
   adaptorGeneratedDate?: string;
   generatorVersion?: string;
+  options?: {
+    simpleBuilders?: boolean;
+  };
 };
 
-// TODO pass mappings into this
+// download and parse the spec file
+// todo: option to use a local spec and just regenerate?
 export default async function (
   baseDir: string,
   specPath: string,
-  mappings: MappingSpec
+  mappings: MappingSpec,
+  download: boolean = true // for now, don't redownload
 ) {
   return new Promise<Meta>(async (resolve, reject) => {
     await mkdir(path.resolve(baseDir, 'spec'), { recursive: true });
-
-    console.log(`Downloading spec from ${specPath}...`);
+    const outputDir = path.resolve(baseDir, 'spec');
+    const specOutputPath = `${outputDir}/spec.zip`;
 
     try {
-      const response = await fetch(specPath);
-
-      const outputDir = path.resolve(baseDir, 'spec');
-      const specOutputPath = `${outputDir}/spec.zip`;
-      const filestream = createWriteStream(specOutputPath);
-
-      const readableStream = Readable.from(response.body);
-      readableStream
-        .pipe(gunzip())
-        .pipe(filestream)
-        .on('close', async () => {
-          let meta;
-          let specs;
-          try {
-            ({ meta, specs } = await parseIGZip(specOutputPath));
-            meta.specUrl = specPath;
-            console.log('... downloaded!');
-          } catch (e) {
-            console.log('Error processing zip stream');
-            console.log(e);
-            reject(e);
-          }
-          try {
-            let valueSets = {};
-            if (mappings.valueSets?.length) {
-              valueSets = await downloadValueSets(specs, mappings);
-            } else {
-              console.log('No valuesets mappings provided!');
-              console.log('Skipping all valueset downloads');
-            }
-
-            await writeFile(
-              `${outputDir}/valuesets.json`,
-              JSON.stringify(valueSets ?? {})
-            );
-          } catch (e) {
-            console.log('Error downloading valuesets');
-            console.log(e);
-            reject(e);
-          }
-
-          resolve(meta);
-        })
-        .on('error', e => {
+      const onDownloadComplete = async () => {
+        let meta;
+        let specs;
+        try {
+          console.log('Parsing spec.zip');
+          ({ meta, specs } = await parseIGZip(specOutputPath));
+          meta.specUrl = specPath;
+        } catch (e) {
           console.log('Error processing zip stream');
           console.log(e);
           reject(e);
-        });
+        }
+        try {
+          let valueSets = {};
+          if (mappings.valueSets?.length) {
+            valueSets = await downloadValueSets(specs, mappings);
+          } else {
+            console.log('No valuesets mappings provided!');
+            console.log('Skipping all valueset downloads');
+          }
+
+          await writeFile(
+            `${outputDir}/valuesets.json`,
+            JSON.stringify(valueSets ?? {})
+          );
+        } catch (e) {
+          console.log('Error downloading valuesets');
+          console.log(e);
+          reject(e);
+        }
+
+        resolve(meta);
+      };
+      const filestream = createWriteStream(specOutputPath);
+      if (download) {
+        console.log(`Downloading spec from ${specPath}...`);
+        const response = await fetch(specPath);
+
+        Readable.from(response.body)
+          .pipe(gunzip())
+          .pipe(filestream)
+          .on('close', async () => {
+            console.log('... downloaded!');
+            onDownloadComplete();
+          })
+          .on('error', e => {
+            console.log('Error processing zip stream');
+            console.log(e);
+            reject(e);
+          });
+      } else {
+        console.log(
+          `Skipping download. Reading spec.json from  ${outputDir}...`
+        );
+        onDownloadComplete();
+      }
     } catch (e) {
       console.log('Error downloading spec:');
       console.log(e);
@@ -208,48 +226,111 @@ async function downloadValueSets(spec, mappings) {
 }
 
 function parseIGZip(inputDir: string) {
+  console.log(inputDir);
   return new Promise<{ meta: Meta; specs: SpecJSON }>((resolve, reject) => {
     yauzl.open(inputDir, { lazyEntries: true }, function (err, zipfile) {
       if (err) {
         reject(err);
       }
-      const result: SpecJSON = {};
+      // these are all the main resources for which we create builders
+      const resources: SpecJSON = {};
+      // These are datatypes for which we'll generate typings
+      const types: SpecJSON = {};
       const meta: Meta = {};
 
       const outputDir = path.resolve(dirname(inputDir));
 
+      // If we're parsing a core fhir bundle,
+      // which are packaged a bit differently, this will be true
+      let coreMode = false;
+
       const onComplete = async () => {
         console.log('\n\nDone!');
-        console.log(Object.keys(result));
+        console.log(Object.keys(resources));
+        console.log('Writing resources to spec.json');
         await writeFile(
           path.resolve(outputDir, 'spec.json'),
-          JSON.stringify(result)
+          JSON.stringify(resources)
         );
+        if (Object.keys(types).length) {
+          console.log('Writing types to spec-types.json');
+          await writeFile(
+            path.resolve(outputDir, 'spec-types.json'),
+            JSON.stringify(types)
+          );
+        }
 
         zipfile.close();
-        resolve({ meta, specs: result });
+        resolve({ meta, specs: resources });
       };
 
       const onEntry = async entry => {
         console.log(`Reading ${entry.fileName}...`);
+        if (entry.fileName.endsWith('definitions.json/')) {
+          zipfile.readEntry(); // this will read the folder
+          coreMode = true;
+        } else if (
+          coreMode &&
+          entry.fileName.endsWith('profiles-resources.json')
+        ) {
+          extractDefinitionsFromBundle(entry);
+        } else if (coreMode && entry.fileName.endsWith('profiles-types.json')) {
+          // TODO this is something else now:
+          // we neeed to extract typedefs into a types.json something
+          extractDefinitionsFromBundle(entry, true);
+        } else if (
+          !coreMode &&
+          entry.fileName.endsWith('.json') &&
+          !entry.fileName.match('MACOSX')
+        ) {
+          extractDefinitionsFromFile(entry);
+        } else {
+          zipfile.readEntry();
+        }
+      };
 
+      /**
+       * This file contains a fhir bundle of definitions
+       * it's probably big - we should really stream it
+       */
+      const extractDefinitionsFromBundle = (entry: any, asTypes = false) => {
+        console.log('Parsing definitions from bundle', entry.fileName);
+        zipfile.openReadStream(entry, function (err, readStream) {
+          // stream the bundle contents
+
+          // @ts-ignore chain typing is wrong?
+          const pipeline = chain([
+            readStream,
+            parser(),
+            new Pick({ filter: 'entry' }),
+            new StreamArray(),
+            ({ value }) => {
+              // console.log(value.fullUrl);
+              const { resource } = value;
+              processResource(resource, `${resource.id}.json`, asTypes);
+            },
+          ]);
+
+          readStream.on('end', async () => {
+            setTimeout(() => {
+              zipfile.readEntry();
+            }, 1);
+          });
+        });
+      };
+
+      /**
+       * Extract a profile definition from a single JSON file
+       * This file contains one object which IS the resource definition
+       */
+      const extractDefinitionsFromFile = (entry: any) => {
         zipfile.openReadStream(entry, function (err, readStream) {
           try {
             if (err) throw err;
             readStream.on('end', async () => {
               const json = JSON.parse(text);
 
-              if (json.resourceType === 'StructureDefinition') {
-                // TODO maybe only do this if a flag is passed
-                await writeFile(
-                  path.resolve(outputDir, entry.fileName),
-                  JSON.stringify(json, null, 2)
-                );
-
-                delete json.text;
-                result[json.id] = json;
-              }
-
+              processResource(json, entry.fileName);
               if (entry.fileName === 'spec.internals') {
                 meta.name = json['npm-name'];
                 meta.igVersion = json['ig-version'];
@@ -268,8 +349,31 @@ function parseIGZip(inputDir: string) {
             });
           } catch (e) {
             console.log(e);
+            zipfile.readEntry();
           }
         });
+      };
+
+      // Process a single JSON object that represents a fhir resource
+      const processResource = async (
+        json: any,
+        fileName: string,
+        asType?: boolean
+      ) => {
+        if (json.resourceType === 'StructureDefinition') {
+          // TODO maybe only do this if a flag is passed
+          await writeFile(
+            path.resolve(outputDir, fileName),
+            JSON.stringify(json, null, 2)
+          );
+
+          delete json.text;
+          if (asType) {
+            types[json.id] = json;
+          } else {
+            resources[json.id] = json;
+          }
+        }
       };
 
       if (err) throw err;

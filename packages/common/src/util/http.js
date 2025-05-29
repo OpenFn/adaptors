@@ -4,6 +4,7 @@ import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
 import path from 'node:path';
 import throwError from './throw-error';
+import { encode } from './base64';
 
 const clients = new Map();
 
@@ -13,10 +14,15 @@ export const makeBasicAuthHeader = (username, password) => {
   return { Authorization: `Basic ${credentials}` };
 };
 
-export const logResponse = response => {
+export const logResponse = (response, query = {}) => {
   const { method, url, statusCode, duration } = response;
+
   if (method && url && duration && statusCode) {
-    const message = `${method} ${url} - ${statusCode} in ${duration}ms`;
+    const urlWithQuery = Object.keys(query || {}).length
+      ? `${url}?${new URLSearchParams(query).toString()}`
+      : url;
+
+    const message = `${method} ${urlWithQuery} - ${statusCode} in ${duration}ms`;
     if (response instanceof Error) {
       console.error(message);
       console.error('response body: ');
@@ -47,6 +53,10 @@ export const enableMockClient = baseUrl => {
 };
 
 const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
+  if (errorMap === false) {
+    return;
+  }
+
   const errMapMessage = errorMap[response.statusCode];
 
   const isError =
@@ -239,9 +249,12 @@ function encodeRequestBody(body) {
 }
 
 async function readResponseBody(response, parseAs) {
+  const contentLength = parseInt(
+    response.headers['content-length'] ?? response.body?.readableLength
+  );
+  const contentType = response.headers['content-type'];
   try {
-    const contentType = response.headers['content-type'];
-    if (+response.headers['content-length'] === 0) {
+    if (Number.isNaN(contentLength) || contentLength === 0) {
       return undefined;
     }
 
@@ -256,6 +269,9 @@ async function readResponseBody(response, parseAs) {
         return response.body.text();
       case 'stream':
         return response.body;
+      case 'base64':
+        const arrayBuffer = await response.body.arrayBuffer();
+        return encode(arrayBuffer, { parseJson: false });
       default:
         return contentType && contentType.includes('application/json')
           ? await response.body.json()
@@ -266,7 +282,7 @@ async function readResponseBody(response, parseAs) {
       description: 'Error parsing the response body',
       parseAs,
       contentType: response.headers['content-type'],
-      bodyLength: +response.headers['content-length'],
+      bodyLength: contentLength,
       error: error.message,
     });
   }
