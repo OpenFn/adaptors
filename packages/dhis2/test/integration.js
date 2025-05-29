@@ -26,24 +26,17 @@ describe('Integration tests', () => {
     };
 
     try {
-      const operation = get('/system/id', {
-        limit: 5,
-      });
-
       const enrollments = get('tracker/enrollments', {
         orgUnit: 'TSyzvBiovKh',
       });
 
       const enrollmentData = await execute(enrollments)(state);
 
-      const finalState = await execute(operation)(state);
-      const codes = finalState.data.codes;
       const enrollment = enrollmentData.data.instances[0];
       fixture.initialState = {
         configuration,
         program: enrollment.program,
         orgUnit: enrollment.orgUnit,
-        trackedEntityInstance: codes.shift(),
         programStage: 'EPEcjy3FWmI', // new!
         enrollment: enrollment.enrollment,
         trackedEntity: enrollment.trackedEntity,
