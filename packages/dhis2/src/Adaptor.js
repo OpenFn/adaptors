@@ -87,7 +87,7 @@ function configMigrationHelper(state) {
  * @function
  * @param {string} path - Path to the resource to be created
  * @magic resourceType $.children.resourceTypes[*]
- * @param {DHIS2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
+ * @param {DHIS2Data} data - An object, or array of objects, to create.
  * @param {object} params - Optional object of query parameters to include in the request
  * @state data - The created resource as returned by DHIS2
  * @returns {Operation}
@@ -235,11 +235,11 @@ export function create(path, data, params = {}) {
 
 /**
  * Get any resource, as JSON, from DHIS2. Pass in any valid DHIS2 REST path, excluding /api and the version.
- * - For the new tracker API, see `tracker.export()`
+ * For the new tracker API, see `tracker.export()`
  * @public
  * @function
  * @param {string} path - Path to the resource
- * @param {object} params - Optional object of query parameters to include in the request
+ * @param {object} params - Object of query parameters to include in the request
  * @state data - the resource returned by DHIS2
  * @returns {Operation}
  * @example <caption>Get all data values for the 'pBOMPrpg1QX' dataset</caption>
