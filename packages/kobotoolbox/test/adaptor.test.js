@@ -76,9 +76,8 @@ describe('getSubmissions', () => {
       state
     );
 
-    expect(totalRequests).to.eql(3);
-    expect(requestCount).to.eql(totalRequests);
-    expect(data.length).to.eql(defaultLimit);
+    expect(requestCount).to.eql(3);
+    expect(data.length).to.eql(3e4);
     expect(items.length).to.greaterThan(data.length);
   });
 
@@ -165,7 +164,6 @@ describe('getSubmissions', () => {
     })(state);
 
     expect(requestCount).to.eql(4);
-    expect(totalRequests).to.eql(4);
     expect(data.length).to.eql(3e4 + 2);
     expect(data.length).to.greaterThan(defaultLimit);
   });
