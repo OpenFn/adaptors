@@ -5,7 +5,7 @@ import {
   logResponse,
 } from '@openfn/language-common/util';
 
-export const DEFAULT_MAX_LIMIT = 3e4;
+export const DEFAULT_LIMIT = 3e4;
 export const DEFAULT_REQUEST_LIMIT = 1e4;
 
 export function prepareNextState(state, response) {
@@ -57,8 +57,7 @@ export async function requestWithPagination(state, path, options = {}) {
     ...otherOptions
   } = options;
 
-  const isUsingDefaultLimit = limit === undefined;
-  const maxResults = limit ?? DEFAULT_MAX_LIMIT;
+  const maxResults = limit ?? DEFAULT_LIMIT;
 
   let isFirstRequest = true;
   let requestOptions = { query: { start, limit: pageSize }, ...otherOptions };
@@ -69,8 +68,8 @@ export async function requestWithPagination(state, path, options = {}) {
     requestOptions.query ??= {};
 
     if (!isNaN(start)) {
-      requestOptions.query.start = start;
     }
+    requestOptions.query.start = start;
 
     if (didUserPassLimit || !isFirstRequest) {
       // If there's an explicit limit or page size,
@@ -100,23 +99,16 @@ export async function requestWithPagination(state, path, options = {}) {
       results.push(response.body);
     }
 
-    if (isFirstRequest)
-      if (!pageSize) {
-        pageSize = results.length;
-      }
+    if (isFirstRequest && !pageSize) {
+      pageSize = results.length;
+    }
 
     isFirstRequest = false;
 
-    const hasMoreContent = response.body.next?.includes('start=')
-      ? true
-      : false;
+    const hasMoreContent = response.body.next?.includes('start=');
 
     // If the user hasn't set a max but we've hit the limit, we should warn them
-    if (
-      hasMoreContent &&
-      isUsingDefaultLimit &&
-      results.length === maxResults
-    ) {
+    if (hasMoreContent && didUserPassLimit && results.length === maxResults) {
       console.warn(
         `Warning: The default maximum number of items has been reached (${maxResults}), but more items are available on the server. To download all available items, make another request with start=${
           maxResults + 1
