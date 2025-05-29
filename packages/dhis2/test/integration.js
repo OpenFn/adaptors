@@ -12,6 +12,7 @@ const getRandomProgramPayload = () => {
 const configuration = {
   username: 'admin',
   password: 'district',
+  // If these tests are failing, check that this URL is correct!
   hostUrl: 'https://play.im.dhis2.org/stable-2-40-7-1',
   apiVersion: '42',
 };
@@ -22,7 +23,6 @@ describe('Integration tests', () => {
   before(async () => {
     const state = {
       configuration,
-      // data: getRandomProgramPayload(),
     };
 
     try {
