@@ -17,6 +17,10 @@ const configuration = {
   apiVersion: '42',
 };
 
+// These values may need to be updated when switching test servers
+const STARTING_ORG_UNIT = 'TSyzvBiovKh';
+const STARTING_PROGRAM_STAGE = 'EPEcjy3FWmI';
+
 describe('Integration tests', () => {
   const fixture = {};
 
@@ -27,7 +31,7 @@ describe('Integration tests', () => {
 
     try {
       const enrollments = get('tracker/enrollments', {
-        orgUnit: 'TSyzvBiovKh',
+        orgUnit: STARTING_ORG_UNIT,
       });
 
       const enrollmentData = await execute(enrollments)(state);
@@ -37,7 +41,7 @@ describe('Integration tests', () => {
         configuration,
         program: enrollment.program,
         orgUnit: enrollment.orgUnit,
-        programStage: 'EPEcjy3FWmI', // new!
+        programStage: STARTING_PROGRAM_STAGE,
         enrollment: enrollment.enrollment,
         trackedEntity: enrollment.trackedEntity,
       };
