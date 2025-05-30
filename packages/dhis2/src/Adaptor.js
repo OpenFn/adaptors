@@ -275,8 +275,7 @@ export function get(path, params = {}) {
 }
 
 /**
- * Update data. A generic helper function to update a resource object of any type.
- * Updating an object requires to send `all required fields` or the `full body`
+ * Update a resource object of any type. Updating an object requires to send `all required fields` or the `full body`
  * @public
  * @function
  * @param {string} resourceType - The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc.
@@ -441,7 +440,7 @@ export function update(resourceType, path, data, options = {}) {
 }
 
 /**
- * Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
+ * Upsert a record. This will atomically update a record if it already exists, or otherwise create it.
  * This function does not work with the absolute tracker path `api/tracker` but rather the new tracker paths and deprecated tracker endpoints.
  * @public
  * @function
@@ -564,7 +563,7 @@ export function upsert(
 }
 
 /**
- * Delete a record. A generic helper function to delete an object
+ * Delete record.
  * @public
  * @function
  * @param {string} resourceType - The type of resource to be deleted. E.g. `trackedEntities`, `organisationUnits`, etc.
