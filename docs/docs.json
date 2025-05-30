@@ -33046,7 +33046,7 @@
     "kind": "external-function"
   }
 ],
-{"name":"gmail","adaptor":"@openfn/language-gmail","version":"1.3.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#getcontentsfrommessages\\\">getContentsFromMessages(options)</a></dt>\\n<dt>\\n    <a href=\\\"#sendmessage\\\">sendMessage(message)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### getContentsFromMessages\\n\\n<p><code>getContentsFromMessages(options) ⇒ Operation</code></p>\\n\\nDownloads contents from messages of a Gmail account.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| options | [<code>Options</code>](#options) | Customized options including desired contents and query. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The returned message objects, of the form `{ messageId, contents } ` |\\n| processedIds | An array of string ids processed by this request |\\n**Example:** Get a message with a specific subject\\n```js\\ngetContentsFromMessages(\\n  {\\n    query: 'subject:my+test+message'\\n  }\\n)\\n```\\n**Example:** Get messages after a specific date, with subject and report.txt attachment\\n```js\\ngetContentsFromMessages(\\n  {\\n    query: 'after:15/01/2025',\\n    contents: [\\n      'subject',\\n      { type: 'file', name: 'metadata', file: 'report.txt'}\\n    ]\\n  }\\n)\\n```\\n\\n* * *\\n\\n### sendMessage\\n\\n<p><code>sendMessage(message) ⇒ Operation</code></p>\\n\\nSends a Gmail message using the provided configuration.\\nSupports attachments and standard email fields like subject, body, and recipients.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| message | [<code>SendMessageOptions</code>](#sendmessageoptions) \\\\| [<code>Array.&lt;SendMessageOptions&gt;</code>](#sendmessageoptions) | The message configuration object or array of objects. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The Gmail API response from sending the message. |\\n**Example**\\n```js\\nsendMessage({\\n  to: 'recipient@example.org',\\n  subject: 'Test Message',\\n  body: 'Hello from OpenFn!',\\n  attachments: [\\n    { filename: 'test.txt', content: 'Some text content' }\\n  ]\\n})\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### MessageContent\\n\\nUsed to isolate the type of content to retrieve from the message.\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| [type] | <code>string</code> | Message content type. Valid types: from, date, subject, body, archive, file. |\\n| [name] | <code>string</code> | A custom description for the content type. |\\n| [archive] | <code>RegExp</code> \\\\| <code>string</code> | Identifier to isolate the desired attachment when type is 'archive'.   Use a regular expression for pattern matching or a string for a literal match. Required if type is 'archive'. |\\n| [file] | <code>RegExp</code> \\\\| <code>string</code> | Identifier to isolate the desired attachment when type is 'file' or 'archive'.   Use a regular expression for pattern matching or a string for a literal match. Required if type is 'file' or 'archive'. |\\n| [maxLength] | <code>number</code> | Maximum number of characters to retrieve from the content. |\\n\\n\\n* * *\\n\\n### Options\\n\\nConfigurable options provided to the Gmail adaptor.\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [query] | <code>string</code> |  | Gmail search query string. |\\n| [contents] | <code>Array.&lt;(string\\\\|MessageContent)&gt;</code> | <code>[&#x27;from&#x27;, &#x27;date&#x27;, &#x27;subject&#x27;, &#x27;body&#x27;]</code> | An array of strings or MessageContent objects used to specify which parts of the message to retrieve. |\\n| [processedIds] | <code>Array.&lt;string&gt;</code> |  | Ignore message ids which have already been processed. |\\n| [email] | <code>string</code> |  | The user account to retrieve messages from. Defaults to the authenticated user. |\\n| [maxResults] | <code>int</code> |  | Maximum number of messages to process per request. Default is 1000. |\\n\\n\\n* * *\\n\\n### SendMessageOptions\\n\\nConfigurable fields for composing an outbound Gmail message.\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| to | <code>string</code> | Recipient email address. |\\n| subject | <code>string</code> | Subject line of the email. |\\n| body | <code>string</code> | Email body content. |\\n| [attachments] | <code>Array.&lt;{filename: string, content: (string\\\\|Buffer)}&gt;</code> | Optional list of files to attach. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# Gmail adaptor\\n\\nSend and receive Gmail messages with file attachments using simple, configurable logic.\\n\\n# `getContentsFromMessages`\\n\\nThis function is used to extract specific content from Gmail messages using custom desired \\\"content\\\" configurations. The sample code specifies how to query Gmail for messages and identify desired attachments and metadata.\\n\\nWithout any parameters, the `getContentsFromMessages()` function will return an array containing every message in the account of the authenticated user including `from`, `date` and `subject`.\\n\\nA number of options are available to isolated the desired messages and to customize the output.\\n\\n## Parameters\\n\\nAn `options` object can configure the results of the function call. Optional parameters include: `contents`, `query`, `email`, `processedIds`, `maxResults`\\n\\n### options.contents\\n\\nUse the `options.contents` array to specify the content to retrieve from each message. Always included are `from`, `date`, and `subject`.\\n\\nEach item can be a simple string (ie, `'body'`, `'subject'`) or an MessageContent object offering advanced configuration.\\n\\n#### Basic metadata\\n\\nThe following types of content can be extracted:\\n\\n- `body`: Extracts the message body.\\n- `subject`: Extracts the email subject.\\n- `date`: Extracts the timestamp of the email.\\n- `from`: Extracts the sender's information.\\n\\nOptionally, each of these content strings can be expanded to include additional specifications:\\n\\n```js\\nconst mySubject = {\\n  type: 'subject',\\n  name: 'email-title',\\n  maxLength: 25,\\n};\\n```\\n\\n- The `type` property instructs the function which content type to extract.\\n- The `name` property allows you to add a custom name to this information.\\n- The `maxLength` property allows you to limit the length of the content returned.\\n\\n#### Attachment: basic file\\n\\nExtract content from a file attachment.\\n\\n`file`: Identify the specific file inside the archive by providing its name as a string or using a regular expression to matching a pattern.\\n\\n```js\\nconst myMetadata = {\\n  type: 'file',\\n  name: 'metadata',\\n  file: /^summary\\\\.txt$/,\\n};\\n```\\n\\n```js\\nconst myMetadata = {\\n  type: 'file',\\n  file: 'summary.txt',\\n  maxLength: 500,\\n};\\n```\\n\\n#### Attachment: archived file\\n\\nExtract content from a file embedded in an archive attachment.\\n\\n- `archive`: Specify the file name of the archive using either a string for an exact match or a regular expression to match a pattern.\\n- `file`: Identify the specific file inside the archive by providing its name as a string or using a regular expression to match a pattern.\\n\\n```js\\nconst myArchivedFile = {\\n  type: 'archive',\\n  name: 'data',\\n  archive: 'devicedata.zip',\\n  file: /_CURRENT_DATA_\\\\w*?\\\\.json$/,\\n  maxLength: 5000,\\n};\\n```\\n\\n```js\\noptions.contents = [mySubject, 'body', myMetadata, myArchivedFile];\\n```\\n\\n### options.query\\n\\nUse a `query` parameter to filter the messages returned.\\n\\nThe query syntax supports the same query format as the Gmail `search` box.\\n\\n```js\\noptions.query = 'from:ple.com rfc822msgid:<somemsgid@example.com> is:unread';\\n```\\n\\nA full list of supported search operations can be found here: [Refine searches in Gmail](https://support.google.com/mail/answer/7190)\\n\\n### options.email\\n\\nOptionally specify the email address used for the Gmail account. This almost always the same email associated with the authenticated user so this parameter is optional.\\n\\n```js\\noptions.email = '<EMAIL>';\\n```\\n\\n### options.processedIds\\n\\nIn some scenarios, it may be necessary to skip certain messages to prevent the retrieval of duplicate data. Passing an array of messageIds will allow the function to skip these messages if any of the ids are encountered in the returned messages.\\n\\n```js\\noptions.processedIds = [\\n  '194e3cf1ca0ccd66',\\n  '283e2df2ca0ecd75',\\n  '572e1af3ca0bcd84',\\n];\\n```\\n\\n### options.maxResults\\n\\nTo prevent inadventant massive retrieval of messages, you can limit the number of results returned. The default value is 1000.\\n\\nThis works in conjuction with the `options.processedIds` parameter. For example:\\n\\n- account contains messages [1, 2, 3]\\n- `options.processedIds = [1];`\\n- `options.maxResults = 1;`\\n- this will skip message #1 and resulting dataset will contain a single message #2\\n\\n## Example jobs\\n\\n```js\\nconst query = 'in:inbox newer_than:2d';\\nconst contents = ['body'];\\nconst maxResults = 200;\\ngetContentsFromMessages({ query, contents, maxResults });\\n```\\n\\n```js\\nconst subject = 'device data summary'.replace(' ', '+');\\nconst query = `in:inbox subject:${subject} newer_than:1m`;\\n\\nconst email = 'special_assigned_delegate@gmail.com';\\n\\nconst metadataFile = {\\n  type: 'file',\\n  name: 'metadata',\\n  file: /summary\\\\.txt$/,\\n  maxLength: 500,\\n};\\n\\nconst dataFile = {\\n  type: 'archive',\\n  name: 'data',\\n  archive: /_device_data\\\\.zip$/,\\n  file: /_CURRENT_DATA_\\\\w*?\\\\.json$/,\\n};\\n\\nconst contents = [metadataFile, dataFile];\\n\\ngetContentsFromMessages({ query, email, contents });\\n```\\n\\n## Sample `state.data` output\\n\\nFor each matched message, the extracted content is returned as a message object of content properties. Here's an example `state.data` for a single matched message:\\n\\n```js\\n[\\n  {\\n    messageId: '1934c017c1752c01',\\n    from: 'Friendly Sender <sender@gmail.com>',\\n    date: '2024-11-20T23:56:08.000Z',\\n    subject: 'Fwd: FW: Facility Anomaly Report (Summary Data)',\\n    metadata: {\\n      filename: 'daily_summary.txt',\\n      content: '{ \\\"appInfo\\\": { \\\"isAutomaticTime\\\": true }',\\n    },\\n    data: {\\n      archiveFilename: '0031_device_data.zip',\\n      filename: '0031_CURRENT_DATA_P100DT9H45M46S_20241115T102926Z.json',\\n      content: '{ \\\"AMOD\\\": \\\"VL45\\\", \\\"AMFR\\\": \\\"ICECO\\\" }',\\n    },\\n  },\\n];\\n```\\n\\nEach property on the message object represents a specific piece of information extracted:\\n\\n- **from**: Sender's email and name.\\n- **date**: The timestamp when the email was sent.\\n- **subject**: Contains the email subject.\\n- **metadata**: Metadata-named file content, with its matched file name.\\n- **data**: Data-named archive file content, with its matched archive name and file name.\\n\\n# `sendMessage`\\n\\nUse `sendMessage()` to send an email with optional file attachments. This function supports plain text messages as well as attachments and archives.\\n\\n## Parameters\\n\\nPass a single `message` object with the following fields:\\n\\n- `to` (string): Required. The recipient's email address.\\n- `subject` (string): Required. The email subject.\\n- `body` (string): Required. The message body as plain text.\\n- `attachments` (array): Optional. List of file attachments or archives.\\n\\nEach item in the `attachments` array must include:\\n\\n- `filename` (string): The name of the file.\\n- Either `content` or `archive`:\\n  - `content` (string): The file content.\\n  - `archive` (array): Use this to send a `.zip` file. Provide an array of `{ filename, content }` objects.\\n\\n## Example jobs\\n\\n```js\\nsendMessage({\\n  to: \\\"recipient@gmail.com\\\",\\n  subject: \\\"Device Summary\\\",\\n  body: \\\"Here is the latest device summary.\\\",\\n  attachments: [\\n    {\\n      filename: \\\"summary.txt\\\",\\n      content: \\\"This is the summary file.\\\",\\n    },\\n    {\\n      filename: \\\"report.json\\\",\\n      content: '{ \\\"status\\\": \\\"OK\\\" }',\\n    },\\n    {\\n      filename: \\\"data.zip\\\",\\n      archive: [\\n        {\\n          filename: \\\"one.json\\\",\\n          content: '{ \\\"value\\\": 1 }',\\n        },\\n        {\\n          filename: \\\"two.json\\\",\\n          content: '{ \\\"value\\\": 2 }',\\n        },\\n      ],\\n    },\\n  ],\\n});\\n```\\n\\nThis will send an email with two plain attachments and one ZIP archive containing two files.\\n\\n# Acquiring an access token\\n\\nThe Gmail adaptor implicitly uses the Gmail account of the Google account that is used to authenticate the application.\\n\\nAllowing the Gmail adaptor to access a Gmail account is a multi-step process.\\n\\n## Create an OAuth 2.0 client ID\\n\\nFollow the instructions are found here:\\nhttps://support.google.com/googleapi/answer/6158849\\n\\n- Go to [Google Cloud Platform Console](https://console.cloud.google.com/)\\n- Go to \\\"APIs & Services\\\"\\n- Click \\\"Credentials\\\"\\n- Click \\\"Create Credentials\\\"\\n- Select \\\"OAuth client ID\\\"\\n- Select \\\"Create OAuth client ID\\\"\\n- Select Application type \\\"Web application\\\"\\n  - Add a uniquely-identifiable name\\n  - Click \\\"Create\\\"\\n- On the resulting popup screen, find and click \\\"DOWNLOAD JSON\\\" and save this file to a secure location.\\n\\n## Use the Postman application to query the OAuth enpoint and retrieve an access token\\n\\nInitially, you'll need to configure an authentication request using Postman's built-in OAuth 2.0 implementation:\\n\\n- Open Postman\\n- Create a new request\\n- Switch to the \\\"Authorization\\\" tab\\n- On the left side, select Type OAuth 2.0\\n- On the right side, scroll down to the \\\"Configure New Token\\\" section\\n- Fill out the form using information from the downloaded json file from the\\n  previous section\\n  - Token Name: Google Oauth\\n  - Grant Type: Authorization Code\\n  - Auth URL: (found in the json file as auth_url)\\n  - Access Token URL: (found in the json file as token_url)\\n  - Client ID: (found in the json file as client_id)\\n  - Client Secret: (found in the json file as client_secret)\\n  - Scope:\\n    https://www.googleapis.com/auth/gmail.readonly\\n    https://www.googleapis.com/auth/gmail.send\\n  - State: (any random string is fine)\\n  - Client Authentication: Send as Basic Auth header\\n\\nOnce the form is filled out, repeat these steps each hour to retrieve a new\\naccess token:\\n\\n- Click on \\\"Get New Access Token\\\"\\n- A browser will open and you'll be asked to authenticate with your Google Account\\n- Accept the request to allow this OAuth session to access your Google Account.\\n- In the MANAGE ACCESS TOKENS popup, find and copy the new Access Token\\n- This access token will be valid for 1 hour.\\n\\n## Configure OpenFn CLI to find the access token\\n\\nThe Gmail adaptor looks for the access token in the configuration section under `access_token`.\\n\\nExample configuration using a workflow:\\n\\n```\\n\\\"workflow\\\": {\\n  \\\"steps\\\": [\\n    {\\n      \\\"id\\\": \\\"getGmailContent\\\",\\n      \\\"adaptors\\\": [\\n        \\\"gmail\\\"\\n      ],\\n      \\\"expression\\\": \\\"path/to/gmail.js\\\",\\n      \\\"configuration\\\": {\\n        \\\"access_token\\\": \\\"(access token acquired from Postman)\\\"\\n      }\\n    }\\n  ]\\n}\\n```\\n\"","changelog":"\"# @openfn/language-gmail\\n\\n## 1.3.0\\n\\n### Minor Changes\\n\\n- 1205796: Enhance `sendMessage()` to accept an array of configuration objects,\\n  allowing multiple messages to be send in a single command.\\n\\n## 1.2.0 - 22 April 2025\\n\\n### Minor Changes\\n\\n- 7d6d513: Added support for sending messages. Upgraded zip library to support\\n  creating archives as well as reading archives.\\n\\n### Patch Changes\\n\\n- 99e4b48: - Better handling of HTML content in http requests\\n  - When logging HTTP requests, include query parameters\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 1.1.4 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 1.1.3 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 1.1.2 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 1.1.1 - 05 February 2025\\n\\n### Patch Changes\\n\\n- 658971a: Fixed bug which prevented multiple content of the same \\\"type\\\" and now\\n  correctly works to prevent multiple of the same \\\"name\\\".\\n\\n## 1.1.0 - 23 January 2025\\n\\n### Minor Changes\\n\\n- 8203e90: Added options.maxResults field to limit excessive data transfer.\\n\\n## 1.0.1 - 18 January 2025\\n\\n### Patch Changes\\n\\n- 01b4aa9: This patch includes breaking changes to the API - but since the\\n  adpator has only been released a couple of days we don't anticipate this\\n  affecting any users.\\n\\n  - Removed the `userId` parameter from `getContentsFromMessages()`. Pass\\n    `options.email` instead.\\n  - Renamed `options.desiredContents` to `options.contents`\\n  - Revised documentation for clarity and accuracy\\n\\n## 1.0.0 - 16 January 2025\\n\\nInitial release.\\n\"","functions":["getContentsFromMessages","sendMessage"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","$comment":"OAuth2","properties":{"access_token":{"title":"Access Token","type":"string","description":"Your Gmail access token","writeOnly":true,"minLength":1,"examples":["eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmhax0rZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"]}},"type":"object","additionalProperties":true,"required":["access_token"]}},
+{"name":"gmail","adaptor":"@openfn/language-gmail","version":"1.3.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#getcontentsfrommessages\\\">getContentsFromMessages(options)</a></dt>\\n<dt>\\n    <a href=\\\"#sendmessage\\\">sendMessage(message)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### getContentsFromMessages\\n\\n<p><code>getContentsFromMessages(options) ⇒ Operation</code></p>\\n\\nDownloads contents from messages of a Gmail account.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| options | [<code>Options</code>](#options) | Customized options including desired contents and query. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The returned message objects, of the form `{ messageId, contents } ` |\\n| processedIds | An array of string ids processed by this request |\\n**Example:** Get a message with a specific subject\\n```js\\ngetContentsFromMessages(\\n  {\\n    query: 'subject:my+test+message'\\n  }\\n)\\n```\\n**Example:** Get messages after a specific date, with subject and report.txt attachment\\n```js\\ngetContentsFromMessages(\\n  {\\n    query: 'after:15/01/2025',\\n    contents: [\\n      'subject',\\n      { type: 'file', name: 'metadata', file: 'report.txt'}\\n    ]\\n  }\\n)\\n```\\n\\n* * *\\n\\n### sendMessage\\n\\n<p><code>sendMessage(message) ⇒ Operation</code></p>\\n\\nSends a Gmail message using the provided configuration.\\nSupports attachments and standard email fields like subject, body, and recipients.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| message | [<code>SendMessageOptions</code>](#sendmessageoptions) \\\\| [<code>Array.&lt;SendMessageOptions&gt;</code>](#sendmessageoptions) | The message configuration object or array of objects. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The Gmail API response from sending the message. |\\n**Example**\\n```js\\nsendMessage({\\n  to: 'recipient@example.org',\\n  subject: 'Test Message',\\n  body: 'Hello from OpenFn!',\\n  attachments: [\\n    { filename: 'test.txt', content: 'Some text content' }\\n  ]\\n})\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### MessageContent\\n\\nUsed to isolate the type of content to retrieve from the message.\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| [type] | <code>string</code> | Message content type. Valid types: from, date, subject, body, archive, file. |\\n| [name] | <code>string</code> | A custom description for the content type. |\\n| [archive] | <code>RegExp</code> \\\\| <code>string</code> | Identifier to isolate the desired attachment when type is 'archive'.   Use a regular expression for pattern matching or a string for a literal match. Required if type is 'archive'. |\\n| [file] | <code>RegExp</code> \\\\| <code>string</code> | Identifier to isolate the desired attachment when type is 'file' or 'archive'.   Use a regular expression for pattern matching or a string for a literal match. Required if type is 'file' or 'archive'. |\\n| [maxLength] | <code>number</code> | Maximum number of characters to retrieve from the content. |\\n\\n\\n* * *\\n\\n### Options\\n\\nConfigurable options provided to the Gmail adaptor.\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [query] | <code>string</code> |  | Gmail search query string. |\\n| [contents] | <code>Array.&lt;(string\\\\|MessageContent)&gt;</code> | <code>[&#x27;from&#x27;, &#x27;date&#x27;, &#x27;subject&#x27;, &#x27;body&#x27;]</code> | An array of strings or MessageContent objects used to specify which parts of the message to retrieve. |\\n| [processedIds] | <code>Array.&lt;string&gt;</code> |  | Ignore message ids which have already been processed. |\\n| [email] | <code>string</code> |  | The user account to retrieve messages from. Defaults to the authenticated user. |\\n| [maxResults] | <code>int</code> |  | Maximum number of messages to process per request. Default is 1000. |\\n\\n\\n* * *\\n\\n### SendMessageOptions\\n\\nConfigurable fields for composing an outbound Gmail message.\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| to | <code>string</code> | Recipient email address. |\\n| subject | <code>string</code> | Subject line of the email. |\\n| body | <code>string</code> | Email body content. |\\n| [attachments] | <code>Array.&lt;{filename: string, content: (string\\\\|Buffer)}&gt;</code> | Optional list of files to attach. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# Gmail adaptor\\n\\nSend and receive Gmail messages with file attachments using simple, configurable logic.\\n\\n# `getContentsFromMessages`\\n\\nThis function is used to extract specific content from Gmail messages using custom desired \\\"content\\\" configurations. The sample code specifies how to query Gmail for messages and identify desired attachments and metadata.\\n\\nWithout any parameters, the `getContentsFromMessages()` function will return an array containing every message in the account of the authenticated user including `from`, `date` and `subject`.\\n\\nA number of options are available to isolated the desired messages and to customize the output.\\n\\n## Parameters\\n\\nAn `options` object can configure the results of the function call. Optional parameters include: `contents`, `query`, `email`, `processedIds`, `maxResults`\\n\\n### options.contents\\n\\nUse the `options.contents` array to specify the content to retrieve from each message. Always included are `from`, `date`, and `subject`.\\n\\nEach item can be a simple string (ie, `'body'`, `'subject'`) or an MessageContent object offering advanced configuration.\\n\\n#### Basic metadata\\n\\nThe following types of content can be extracted:\\n\\n- `body`: Extracts the message body.\\n- `subject`: Extracts the email subject.\\n- `date`: Extracts the timestamp of the email.\\n- `from`: Extracts the sender's information.\\n\\nOptionally, each of these content strings can be expanded to include additional specifications:\\n\\n```js\\nconst mySubject = {\\n  type: 'subject',\\n  name: 'email-title',\\n  maxLength: 25,\\n};\\n```\\n\\n- The `type` property instructs the function which content type to extract.\\n- The `name` property allows you to add a custom name to this information.\\n- The `maxLength` property allows you to limit the length of the content returned.\\n\\n#### Attachment: basic file\\n\\nExtract content from a file attachment.\\n\\n`file`: Identify the specific file inside the archive by providing its name as a string or using a regular expression to matching a pattern.\\n\\n```js\\nconst myMetadata = {\\n  type: 'file',\\n  name: 'metadata',\\n  file: /^summary\\\\.txt$/,\\n};\\n```\\n\\n```js\\nconst myMetadata = {\\n  type: 'file',\\n  file: 'summary.txt',\\n  maxLength: 500,\\n};\\n```\\n\\n#### Attachment: archived file\\n\\nExtract content from a file embedded in an archive attachment.\\n\\n- `archive`: Specify the file name of the archive using either a string for an exact match or a regular expression to match a pattern.\\n- `file`: Identify the specific file inside the archive by providing its name as a string or using a regular expression to match a pattern.\\n\\n```js\\nconst myArchivedFile = {\\n  type: 'archive',\\n  name: 'data',\\n  archive: 'devicedata.zip',\\n  file: /_CURRENT_DATA_\\\\w*?\\\\.json$/,\\n  maxLength: 5000,\\n};\\n```\\n\\n```js\\noptions.contents = [mySubject, 'body', myMetadata, myArchivedFile];\\n```\\n\\n### options.query\\n\\nUse a `query` parameter to filter the messages returned.\\n\\nThe query syntax supports the same query format as the Gmail `search` box.\\n\\n```js\\noptions.query = 'from:ple.com rfc822msgid:<somemsgid@example.com> is:unread';\\n```\\n\\nA full list of supported search operations can be found here: [Refine searches in Gmail](https://support.google.com/mail/answer/7190)\\n\\n### options.email\\n\\nOptionally specify the email address used for the Gmail account. This almost always the same email associated with the authenticated user so this parameter is optional.\\n\\n```js\\noptions.email = '<EMAIL>';\\n```\\n\\n### options.processedIds\\n\\nIn some scenarios, it may be necessary to skip certain messages to prevent the retrieval of duplicate data. Passing an array of messageIds will allow the function to skip these messages if any of the ids are encountered in the returned messages.\\n\\n```js\\noptions.processedIds = [\\n  '194e3cf1ca0ccd66',\\n  '283e2df2ca0ecd75',\\n  '572e1af3ca0bcd84',\\n];\\n```\\n\\n### options.maxResults\\n\\nTo prevent inadventant massive retrieval of messages, you can limit the number of results returned. The default value is 1000.\\n\\nThis works in conjuction with the `options.processedIds` parameter. For example:\\n\\n- account contains messages [1, 2, 3]\\n- `options.processedIds = [1];`\\n- `options.maxResults = 1;`\\n- this will skip message #1 and resulting dataset will contain a single message #2\\n\\n## Example jobs\\n\\n```js\\nconst query = 'in:inbox newer_than:2d';\\nconst contents = ['body'];\\nconst maxResults = 200;\\ngetContentsFromMessages({ query, contents, maxResults });\\n```\\n\\n```js\\nconst subject = 'device data summary'.replace(' ', '+');\\nconst query = `in:inbox subject:${subject} newer_than:1m`;\\n\\nconst email = 'special_assigned_delegate@gmail.com';\\n\\nconst metadataFile = {\\n  type: 'file',\\n  name: 'metadata',\\n  file: /summary\\\\.txt$/,\\n  maxLength: 500,\\n};\\n\\nconst dataFile = {\\n  type: 'archive',\\n  name: 'data',\\n  archive: /_device_data\\\\.zip$/,\\n  file: /_CURRENT_DATA_\\\\w*?\\\\.json$/,\\n};\\n\\nconst contents = [metadataFile, dataFile];\\n\\ngetContentsFromMessages({ query, email, contents });\\n```\\n\\n## Sample `state.data` output\\n\\nFor each matched message, the extracted content is returned as a message object of content properties. Here's an example `state.data` for a single matched message:\\n\\n```js\\n[\\n  {\\n    messageId: '1934c017c1752c01',\\n    from: 'Friendly Sender <sender@gmail.com>',\\n    date: '2024-11-20T23:56:08.000Z',\\n    subject: 'Fwd: FW: Facility Anomaly Report (Summary Data)',\\n    metadata: {\\n      filename: 'daily_summary.txt',\\n      content: '{ \\\"appInfo\\\": { \\\"isAutomaticTime\\\": true }',\\n    },\\n    data: {\\n      archiveFilename: '0031_device_data.zip',\\n      filename: '0031_CURRENT_DATA_P100DT9H45M46S_20241115T102926Z.json',\\n      content: '{ \\\"AMOD\\\": \\\"VL45\\\", \\\"AMFR\\\": \\\"ICECO\\\" }',\\n    },\\n  },\\n];\\n```\\n\\nEach property on the message object represents a specific piece of information extracted:\\n\\n- **from**: Sender's email and name.\\n- **date**: The timestamp when the email was sent.\\n- **subject**: Contains the email subject.\\n- **metadata**: Metadata-named file content, with its matched file name.\\n- **data**: Data-named archive file content, with its matched archive name and file name.\\n\\n# `sendMessage`\\n\\nUse `sendMessage()` to send an email with optional file attachments. This function supports plain text messages as well as attachments and archives.\\n\\n## Parameters\\n\\nPass a single `message` object with the following fields:\\n\\n- `to` (string): Required. The recipient's email address.\\n- `subject` (string): Required. The email subject.\\n- `body` (string): Required. The message body as plain text.\\n- `attachments` (array): Optional. List of file attachments or archives.\\n\\nEach item in the `attachments` array must include:\\n\\n- `filename` (string): The name of the file.\\n- Either `content` or `archive`:\\n  - `content` (string): The file content.\\n  - `archive` (array): Use this to send a `.zip` file. Provide an array of `{ filename, content }` objects.\\n\\n## Example jobs\\n\\n```js\\nsendMessage({\\n  to: \\\"recipient@gmail.com\\\",\\n  subject: \\\"Device Summary\\\",\\n  body: \\\"Here is the latest device summary.\\\",\\n  attachments: [\\n    {\\n      filename: \\\"summary.txt\\\",\\n      content: \\\"This is the summary file.\\\",\\n    },\\n    {\\n      filename: \\\"report.json\\\",\\n      content: '{ \\\"status\\\": \\\"OK\\\" }',\\n    },\\n    {\\n      filename: \\\"data.zip\\\",\\n      archive: [\\n        {\\n          filename: \\\"one.json\\\",\\n          content: '{ \\\"value\\\": 1 }',\\n        },\\n        {\\n          filename: \\\"two.json\\\",\\n          content: '{ \\\"value\\\": 2 }',\\n        },\\n      ],\\n    },\\n  ],\\n});\\n```\\n\\nThis will send an email with two plain attachments and one ZIP archive containing two files.\\n\\n# Acquiring an access token\\n\\nThe Gmail adaptor implicitly uses the Gmail account of the Google account that is used to authenticate the application.\\n\\nAllowing the Gmail adaptor to access a Gmail account is a multi-step process.\\n\\n## Create an OAuth 2.0 client ID\\n\\nFollow the instructions are found here:\\nhttps://support.google.com/googleapi/answer/6158849\\n\\n- Go to [Google Cloud Platform Console](https://console.cloud.google.com/)\\n- Go to \\\"APIs & Services\\\"\\n- Click \\\"Credentials\\\"\\n- Click \\\"Create Credentials\\\"\\n- Select \\\"OAuth client ID\\\"\\n- Select \\\"Create OAuth client ID\\\"\\n- Select Application type \\\"Web application\\\"\\n  - Add a uniquely-identifiable name\\n  - Click \\\"Create\\\"\\n- On the resulting popup screen, find and click \\\"DOWNLOAD JSON\\\" and save this file to a secure location.\\n\\n## Use the Postman application to query the OAuth enpoint and retrieve an access token\\n\\nInitially, you'll need to configure an authentication request using Postman's built-in OAuth 2.0 implementation:\\n\\n- Open Postman\\n- Create a new request\\n- Switch to the \\\"Authorization\\\" tab\\n- On the left side, select Type OAuth 2.0\\n- On the right side, scroll down to the \\\"Configure New Token\\\" section\\n- Fill out the form using information from the downloaded json file from the\\n  previous section\\n  - Token Name: Google Oauth\\n  - Grant Type: Authorization Code\\n  - Auth URL: (found in the json file as auth_url)\\n  - Access Token URL: (found in the json file as token_url)\\n  - Client ID: (found in the json file as client_id)\\n  - Client Secret: (found in the json file as client_secret)\\n  - Scope:\\n    https://www.googleapis.com/auth/gmail.readonly\\n    https://www.googleapis.com/auth/gmail.send\\n  - State: (any random string is fine)\\n  - Client Authentication: Send as Basic Auth header\\n\\nOnce the form is filled out, repeat these steps each hour to retrieve a new\\naccess token:\\n\\n- Click on \\\"Get New Access Token\\\"\\n- A browser will open and you'll be asked to authenticate with your Google Account\\n- Accept the request to allow this OAuth session to access your Google Account.\\n- In the MANAGE ACCESS TOKENS popup, find and copy the new Access Token\\n- This access token will be valid for 1 hour.\\n\\n## Configure OpenFn CLI to find the access token\\n\\nThe Gmail adaptor looks for the access token in the configuration section under `access_token`.\\n\\nExample configuration using a workflow:\\n\\n```\\n\\\"workflow\\\": {\\n  \\\"steps\\\": [\\n    {\\n      \\\"id\\\": \\\"getGmailContent\\\",\\n      \\\"adaptors\\\": [\\n        \\\"gmail\\\"\\n      ],\\n      \\\"expression\\\": \\\"path/to/gmail.js\\\",\\n      \\\"configuration\\\": {\\n        \\\"access_token\\\": \\\"(access token acquired from Postman)\\\"\\n      }\\n    }\\n  ]\\n}\\n```\\n\"","changelog":"\"# @openfn/language-gmail\\n\\n## 1.3.0 - 30 May 2025\\n\\n### Minor Changes\\n\\n- 1205796: Enhance `sendMessage()` to accept an array of configuration objects,\\n  allowing multiple messages to be send in a single command.\\n\\n## 1.2.0 - 22 April 2025\\n\\n### Minor Changes\\n\\n- 7d6d513: Added support for sending messages. Upgraded zip library to support\\n  creating archives as well as reading archives.\\n\\n### Patch Changes\\n\\n- 99e4b48: - Better handling of HTML content in http requests\\n  - When logging HTTP requests, include query parameters\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 1.1.4 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 1.1.3 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 1.1.2 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 1.1.1 - 05 February 2025\\n\\n### Patch Changes\\n\\n- 658971a: Fixed bug which prevented multiple content of the same \\\"type\\\" and now\\n  correctly works to prevent multiple of the same \\\"name\\\".\\n\\n## 1.1.0 - 23 January 2025\\n\\n### Minor Changes\\n\\n- 8203e90: Added options.maxResults field to limit excessive data transfer.\\n\\n## 1.0.1 - 18 January 2025\\n\\n### Patch Changes\\n\\n- 01b4aa9: This patch includes breaking changes to the API - but since the\\n  adpator has only been released a couple of days we don't anticipate this\\n  affecting any users.\\n\\n  - Removed the `userId` parameter from `getContentsFromMessages()`. Pass\\n    `options.email` instead.\\n  - Renamed `options.desiredContents` to `options.contents`\\n  - Revised documentation for clarity and accuracy\\n\\n## 1.0.0 - 16 January 2025\\n\\nInitial release.\\n\"","functions":["getContentsFromMessages","sendMessage"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","$comment":"OAuth2","properties":{"access_token":{"title":"Access Token","type":"string","description":"Your Gmail access token","writeOnly":true,"minLength":1,"examples":["eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmhax0rZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"]}},"type":"object","additionalProperties":true,"required":["access_token"]}},
 [
   {
     "id": "getContentsFromMessages",
@@ -37560,7 +37560,7 @@
     "kind": "external-function"
   }
 ],
-{"name":"kobotoolbox","adaptor":"@openfn/language-kobotoolbox","version":"3.0.5","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#getdeploymentinfo\\\">getDeploymentInfo(formId)</a></dt>\\n<dt>\\n    <a href=\\\"#getforms\\\">getForms()</a></dt>\\n<dt>\\n    <a href=\\\"#getsubmissions\\\">getSubmissions(formId, [options])</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#http_get\\\">http.get(path, [options])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_post\\\">http.post(path, data, [options])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_put\\\">http.put(path, data, [options])</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### getDeploymentInfo\\n\\n<p><code>getDeploymentInfo(formId) ⇒ Operation</code></p>\\n\\nGet deployment information for a specific form. Calls `/api/v2/assets/<id>/deployment/`.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| formId | <code>string</code> | Form Id to get the deployment information |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | an object containing deployment information |\\n**Example**\\n```js\\ngetDeploymentInfo('aXecHjmbATuF6iGFmvBLBX');\\n```\\n\\n* * *\\n\\n### getForms\\n\\n<p><code>getForms() ⇒ Operation</code></p>\\n\\nMake a request to fetch all survey forms accessible to the authorized user. Calls `/api/v2/assets/?asset_type=survey`.\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | an array of form objects |\\n**Example**\\n```js\\ngetForms();\\n```\\n\\n* * *\\n\\n### getSubmissions\\n\\n<p><code>getSubmissions(formId, [options]) ⇒ Operation</code></p>\\n\\nGet submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| formId | <code>string</code> |  | Form Id to get the specific submissions |\\n| [options] | <code>object</code> | <code>{}</code> | Optional query params for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | an array of submission objects |\\n**Example:** Get all submissions for a specific form\\n```js\\ngetSubmissions('aXecHjmbATuF6iGFmvBLBX');\\n```\\n**Example:** Get form submissions with a query\\n```js\\ngetSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \\\"2022-06-12T21:54:20\\\" } } });\\n```\\n\\n* * *\\n\\n\\n## http\\n\\nThese functions belong to the http namespace.\\n### http.get {#http_get}\\n\\n<p><code>get(path, [options]) ⇒ operation</code></p>\\n\\nMake a GET request to any KoboToolbox endpoint.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | path to resource |\\n| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the KoboToolbox server (excluding the body). Responses will be returned in JSON format |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** GET assets resource\\n```js\\nhttp.get(\\n \\\"/assets/\\\",\\n )\\n```\\n\\n* * *\\n\\n\\n### http.post {#http_post}\\n\\n<p><code>post(path, data, [options]) ⇒ operation</code></p>\\n\\nMake a POST request to a KoboToolbox endpoint\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | path to resource |\\n| data | <code>any</code> |  | the body data in JSON format |\\n| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the KoboToolbox server (excluding the body). Responses will be returned in JSON format |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** Create an asset resource\\n```js\\nhttp.post(\\n '/assets/',\\n {\\n  name: 'Feedback Survey Test',\\n  asset_type: 'survey',\\n },\\n );\\n```\\n\\n* * *\\n\\n\\n### http.put {#http_put}\\n\\n<p><code>put(path, data, [options]) ⇒ operation</code></p>\\n\\nMake a PUT request to a KoboToolbox endpoint\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | path to resource |\\n| data | <code>any</code> |  | the body data in JSON format |\\n| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the KoboToolbox server (excluding the body). Responses will be returned in JSON format |\\n| references | An array of all previous data objects used in the Job |\\n**Example:** Update an asset resource\\n```js\\nhttp.put(\\n 'assets/a4jAWzoa8SZWzZGhx84sB5/deployment/',\\n {\\n  name: 'Feedback Survey Test',\\n  asset_type: 'survey',\\n },\\n );\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### KoboToolboxHttpState\\n\\nState object\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the KoboToolbox server (excluding the body). Responses will be returned in JSON format |\\n| references | An array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions object\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| query | <code>object</code> |  | An object of query parameters to be encoded into the URL |\\n| headers | <code>object</code> |  | An object of all request headers |\\n| [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions object\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| query | <code>object</code> |  | An object of query parameters to be encoded into the URL |\\n| headers | <code>object</code> |  | An object of all request headers |\\n| [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |\\n\\n\\n* * *\\n\\n\"","readme":"\"# Language KoboToolbox\\n\\nLanguage Pack for building expressions and operations to interact with the\\n[TEMPLATE] API.\\n\\n## Documentation\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/kobotoolbox-configuration-schema/)\\ndefinition.\\n\\n#### Get the list of forms\\n\\n```js\\ngetForms({}, state => {\\n  console.log(state.data);\\n  return state;\\n});\\n```\\n\\n### Get submissions for a specific form\\n\\nA query can be used to filter results.\\n\\n```js\\ngetSubmissions(\\n  { formId: 'aXecHjmbATuF6iGFmvBLBX', query: { end: { $gte: '2020-11-20' } } },\\n  state => {\\n    console.log(state.data);\\n    return state;\\n  }\\n);\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-kobotoolbox\\n\\n## 3.0.5 - 22 April 2025\\n\\n### Patch Changes\\n\\n- 99e4b48: - Better handling of HTML content in http requests\\n  - When logging HTTP requests, include query parameters\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 3.0.4 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 3.0.3 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 3.0.2 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 3.0.1 - 16 February 2025\\n\\n### Patch Changes\\n\\n- a8b91d2: Fix results handling for getSubmissions\\n\\n## 3.0.0 - 13 February 2025\\n\\n### Major Changes\\n\\n- b01d4f0: Update all functions in the main API (remove callbacks and clean up\\n  signatures, see the Migration Guide)\\n- 882ce29: Rewrite onto common http helpers (using undici)\\n\\n### Minor Changes\\n\\n- 6d536b2: Renaming `baseURL` to `baseUrl` to match all other adaptors, and\\n  logging a warning if `baseURL` is used\\n- 311d3b2: Add http namespace with `get()`, `post()`, `put()`\\n\\n## Migration guide\\n\\n- callbacks have removed from all functions. You can use `.then()` or `fn()` to\\n  access the data returned by a function, ie, `getForms().then(state => state)`\\n- `getForms(params, callback)` is now `getForms()`, and will now only download\\n  assets of type survey. Use `http.get('assets/')` to retrieve other assets (and\\n  add query parameters)\\n- `getSubmissions(params, callback)` is now `getSubmissions(formId, { query })`.\\n- `getDeploymentInfo(params, callback)` is now `getDeploymentInfo(formId)`\\n\\n## 2.4.3 - 15 October 2024\\n\\n### Patch Changes\\n\\n- Security fix: update jsonpath-plus version\\n\\n## 2.4.2 - 16 August 2024\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n\\n## 2.4.1 - 25 July 2024\\n\\n### Patch Changes\\n\\n- 73d0a02: Make documentation public\\n- Updated dependencies \\\\[4c08444]\\n- Updated dependencies \\\\[73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 2.4.0 - 19 June 2024\\n\\n### Minor Changes\\n\\n- 5fb82f07: Export `group` operation from common\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 2.3.0 - 13 June 2024\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 2.2.0 - 12 April 2024\\n\\n### Minor Changes\\n\\n- bae5d3b6: Add the cursor() function from common. See the job writing guide for\\n  more information.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 2.1.0 - 13 September 2023\\n\\n### Minor Changes\\n\\n- c85abf3: Removed the API version enum values in the credential configuration\\n  json schema and added a placeholder\\n\\n## 2.0.1 - 19 June 2023\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 2.0.0\\n\\n### Major Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 1.3.3 - 30 March 2023\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies \\\\[2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 1.3.2 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 1.3.1 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 1.3.0 - 13 January 2023\\n\\n### Minor Changes\\n\\n- e48c30c: add getDeploymentInfo function\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*\\\\_ @module Adaptor \\\\_/\\n\\n## 1.2.0 - 18 November 2022\\n\\n### Minor Changes\\n\\n- 7b5ca3e: add fn and fix adaptors export\\n\\n### Patch Changes\\n\\n- 4067c28: build ast file\\n- f2a91a4: Update package exports\\n- Updated dependencies \\\\[f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\\n## 1.1.0 - 04 November 2022\\n\\n### Minor Changes\\n\\n- 7fc47d8: Migrate kobotoolbox\\n\\n### Patch Changes\\n\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- ecf5d30: remove sinon since it was not being used\\n- Updated dependencies \\\\[8566b26]\\n- Updated dependencies \\\\[b3d45ff]\\n- Updated dependencies \\\\[b5eb665]\\n- Updated dependencies \\\\[ecf5d30]\\n  - @openfn/language-common@1.7.4\\n\"","functions":["getDeploymentInfo","getForms","getSubmissions"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base Url","type":"string","default":"https://kf.kobotoolbox.org","description":"Kobotoolbox URL","format":"uri","minLength":1,"examples":["https://kf.kobotoolbox.org"]},"username":{"title":"Username","type":"string","description":"Kobotoolbox username","minLength":1,"examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Kobotoolbox password","writeOnly":true,"minLength":1,"examples":["@some(!)Strongpassword"]},"apiVersion":{"title":"API Version","type":"string","placeholder":"v2","description":"Kobotoolbox API version to use","minLength":1,"examples":["v2"]}},"type":"object","additionalProperties":true,"required":["username","baseUrl","password","apiVersion"]}},
+{"name":"kobotoolbox","adaptor":"@openfn/language-kobotoolbox","version":"4.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#getdeploymentinfo\\\">getDeploymentInfo(formId)</a></dt>\\n<dt>\\n    <a href=\\\"#getforms\\\">getForms()</a></dt>\\n<dt>\\n    <a href=\\\"#getsubmissions\\\">getSubmissions(formId, [options])</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#http_get\\\">http.get(path, [options])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_post\\\">http.post(path, data, [options])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_put\\\">http.put(path, data, [options])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_request\\\">http.request(method, path, [options])</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### getDeploymentInfo\\n\\n<p><code>getDeploymentInfo(formId) ⇒ Operation</code></p>\\n\\nGet deployment information for a specific form. Calls `/api/v2/assets/<id>/deployment/`.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| formId | <code>string</code> | Form Id to get the deployment information |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | an object containing deployment information |\\n**Example**\\n```js\\ngetDeploymentInfo('aXecHjmbATuF6iGFmvBLBX');\\n```\\n\\n* * *\\n\\n### getForms\\n\\n<p><code>getForms() ⇒ Operation</code></p>\\n\\nMake a request to fetch all survey forms accessible to the authorized user. Calls `/api/v2/assets/?asset_type=survey`.\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | an array of form objects |\\n**Example**\\n```js\\ngetForms();\\n```\\n\\n* * *\\n\\n### getSubmissions\\n\\n<p><code>getSubmissions(formId, [options]) ⇒ Operation</code></p>\\n\\nGet submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| formId | <code>string</code> |  | Form Id to get the specific submissions |\\n| [options] | <code>object</code> | <code>{}</code> | Options to control the request |\\n| [options.query] | <code>object</code> |  | Query options to filter the submissions. See query operators [http://docs.mongodb.org/manual/reference/operator/query/.](http://docs.mongodb.org/manual/reference/operator/query/.) |\\n| [options.limit] | <code>number</code> | <code>30000</code> | Maximum number of submissions to fetch. Pass Infinity to disable the limit and download all submissions |\\n| [options.pageSize] | <code>number</code> | <code>10000</code> | Limits the size of each page of submissions. Maximum value is 30000. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | an array of submission objects |\\n**Example:** Get submissions for a specific form\\n```js\\ngetSubmissions('aXecHjmbATuF6iGFmvBLBX');.\\n```\\n**Example:** Get all submissions for a specific form\\n```js\\ngetSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit: Infinity });\\n```\\n**Example:** Get form submissions with a query\\n```js\\ngetSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \\\"2025-03-12T21:54:20\\\" } } });\\n```\\n\\n* * *\\n\\n\\n## http\\n\\nThese functions belong to the http namespace.\\n### http.get {#http_get}\\n\\n<p><code>get(path, [options]) ⇒ operation</code></p>\\n\\nMake a GET request to any KoboToolbox endpoint.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | path to resource |\\n| [options] | [<code>HTTPRequestOptions</code>](#httprequestoptions) | <code>{}</code> | An object containing query params and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the KoboToolbox server (excluding the body) |\\n| references | An array containing all previous data objects |\\n**Example:** GET assets resource\\n```js\\nhttp.get('assets')\\n```\\n\\n* * *\\n\\n\\n### http.post {#http_post}\\n\\n<p><code>post(path, data, [options]) ⇒ operation</code></p>\\n\\nMake a POST request to a KoboToolbox endpoint\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | path to resource |\\n| data | <code>any</code> |  | the body data in JSON format |\\n| [options] | [<code>HTTPRequestOptions</code>](#httprequestoptions) | <code>{}</code> | An object containing query params and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the KoboToolbox server (excluding the body) |\\n| references | An array containing all previous data objects |\\n**Example:** Create an asset resource\\n```js\\nhttp.post(\\n '/assets/',\\n {\\n  name: 'Feedback Survey Test',\\n  asset_type: 'survey',\\n },\\n );\\n```\\n\\n* * *\\n\\n\\n### http.put {#http_put}\\n\\n<p><code>put(path, data, [options]) ⇒ operation</code></p>\\n\\nMake a PUT request to a KoboToolbox endpoint\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | path to resource |\\n| data | <code>any</code> |  | the body data in JSON format |\\n| [options] | [<code>HTTPRequestOptions</code>](#httprequestoptions) | <code>{}</code> | An object containing query params and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the KoboToolbox server (excluding the body) |\\n| references | An array containing all previous data objects |\\n**Example:** Update an asset resource\\n```js\\nhttp.put(\\n 'assets/a4jAWzoa8SZWzZGhx84sB5/deployment/',\\n {\\n  name: 'Feedback Survey Test',\\n  asset_type: 'survey',\\n },\\n );\\n```\\n\\n* * *\\n\\n\\n### http.request {#http_request}\\n\\n<p><code>request(method, path, [options]) ⇒ Operation</code></p>\\n\\nMake a HTTP request to any KoboToolbox endpoint\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| method | <code>string</code> |  | HTTP method to use |\\n| path | <code>string</code> |  | Path to resource |\\n| [options] | [<code>HTTPRequestOptions</code>](#httprequestoptions) | <code>{}</code> | An object containing query, headers, and body for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the KoboToolbox server (excluding the body) |\\n| references | An array containing all previous data objects |\\n**Example:** Bulk updating of submissions\\n```js\\nhttp.request(\\\"PATCH\\\", `assets/${$.form_uid}/data/bulk/`, {\\n  body: {\\n    submission_ids: [$.data.submission_id],\\n    data: {\\n      Transaction_status: \\\"success\\\",\\n    },\\n  },\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### HTTPRequestOptions\\n\\nOptions object\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| query | <code>object</code> |  | An object of query parameters to be encoded into the URL |\\n| headers | <code>object</code> |  | An object of all request headers |\\n| body | <code>object</code> |  | The request body (as JSON) |\\n| maxRedirections | <code>number</code> |  | The maximum number of redirects to follow |\\n| [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |\\n\\n\\n* * *\\n\\n\"","readme":"\"# Language KoboToolbox\\n\\nLanguage Pack for building expressions and operations to interact with the\\n[TEMPLATE] API.\\n\\n## Documentation\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/kobotoolbox-configuration-schema/)\\ndefinition.\\n\\n#### Get the list of forms\\n\\n```js\\ngetForms({}, state => {\\n  console.log(state.data);\\n  return state;\\n});\\n```\\n\\n### Get submissions for a specific form\\n\\nA query can be used to filter results.\\n\\n```js\\ngetSubmissions(\\n  { formId: 'aXecHjmbATuF6iGFmvBLBX', query: { end: { $gte: '2020-11-20' } } },\\n  state => {\\n    console.log(state.data);\\n    return state;\\n  }\\n);\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-kobotoolbox\\n\\n## 4.0.0 - 30 May 2025\\n\\n### Major Changes\\n\\n- fe5b899: Add automatic pagination to `getSubmissions()`.\\n\\n  `getSubmissions()` will now download all submissions, up to the requested\\n  limit, over multiple requests. Note that by default, a maximum of 30,000 items\\n  will be downloaded (pass a higher number of `Infinity` to download more).\\n\\n  ### Changes\\n\\n  - Updated `getSubmission` pagination behavior:\\n\\n    - Removed `paginate` option\\n    - Added new pagination options:\\n      - `limit`: Controls number of results returned\\n      - `pageSize`: Number of items per page\\n\\n  - Remove export of `http` methods from `@openfn/language-common`\\n\\n  - Add support for `maxRedirections` option in `HTTPRequestOptions`\\n\\n  ### Migration Guide\\n\\n  1. Pagination Changes:\\n\\n     - Replace `paginate: true/false` with `limit` and `pageSize` options\\n     - Default limit is `30000` unless otherwise specified\\n\\n     ```js\\n     // Fetch submissions with default limit (30000)\\n     getSubmission('form-id');\\n\\n     // Fetch all submissions (no limit)\\n     getSubmission('form-id', { limit: Infinity });\\n\\n     // Fetch submissions with max results\\n     getSubmission('form-id', { limit: 500 }); // Returns up to 500 submissions\\n     ```\\n\\n  2. HTTP Changes:\\n\\n  - Support for `maxRedirections` option in `HTTPRequestOptions`\\n    ```js\\n    // Auto follow redirects\\n    http.get('assets/aXecHjmbATuF6iGFmvBLBX/data', { maxRedirections: 5 });\\n    ```\\n\\n## 3.0.5 - 22 April 2025\\n\\n### Patch Changes\\n\\n- 99e4b48: - Better handling of HTML content in http requests\\n  - When logging HTTP requests, include query parameters\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 3.0.4 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 3.0.3 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 3.0.2 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 3.0.1 - 16 February 2025\\n\\n### Patch Changes\\n\\n- a8b91d2: Fix results handling for getSubmissions\\n\\n## 3.0.0 - 13 February 2025\\n\\n### Major Changes\\n\\n- b01d4f0: Update all functions in the main API (remove callbacks and clean up\\n  signatures, see the Migration Guide)\\n- 882ce29: Rewrite onto common http helpers (using undici)\\n\\n### Minor Changes\\n\\n- 6d536b2: Renaming `baseURL` to `baseUrl` to match all other adaptors, and\\n  logging a warning if `baseURL` is used\\n- 311d3b2: Add http namespace with `get()`, `post()`, `put()`\\n\\n## Migration guide\\n\\n- callbacks have removed from all functions. You can use `.then()` or `fn()` to\\n  access the data returned by a function, ie, `getForms().then(state => state)`\\n- `getForms(params, callback)` is now `getForms()`, and will now only download\\n  assets of type survey. Use `http.get('assets/')` to retrieve other assets (and\\n  add query parameters)\\n- `getSubmissions(params, callback)` is now `getSubmissions(formId, { query })`.\\n- `getDeploymentInfo(params, callback)` is now `getDeploymentInfo(formId)`\\n\\n## 2.4.3 - 15 October 2024\\n\\n### Patch Changes\\n\\n- Security fix: update jsonpath-plus version\\n\\n## 2.4.2 - 16 August 2024\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n\\n## 2.4.1 - 25 July 2024\\n\\n### Patch Changes\\n\\n- 73d0a02: Make documentation public\\n- Updated dependencies \\\\[4c08444]\\n- Updated dependencies \\\\[73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 2.4.0 - 19 June 2024\\n\\n### Minor Changes\\n\\n- 5fb82f07: Export `group` operation from common\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 2.3.0 - 13 June 2024\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 2.2.0 - 12 April 2024\\n\\n### Minor Changes\\n\\n- bae5d3b6: Add the cursor() function from common. See the job writing guide for\\n  more information.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 2.1.0 - 13 September 2023\\n\\n### Minor Changes\\n\\n- c85abf3: Removed the API version enum values in the credential configuration\\n  json schema and added a placeholder\\n\\n## 2.0.1 - 19 June 2023\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 2.0.0\\n\\n### Major Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 1.3.3 - 30 March 2023\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies \\\\[2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 1.3.2 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 1.3.1 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 1.3.0 - 13 January 2023\\n\\n### Minor Changes\\n\\n- e48c30c: add getDeploymentInfo function\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*\\\\_ @module Adaptor \\\\_/\\n\\n## 1.2.0 - 18 November 2022\\n\\n### Minor Changes\\n\\n- 7b5ca3e: add fn and fix adaptors export\\n\\n### Patch Changes\\n\\n- 4067c28: build ast file\\n- f2a91a4: Update package exports\\n- Updated dependencies \\\\[f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\\n## 1.1.0 - 04 November 2022\\n\\n### Minor Changes\\n\\n- 7fc47d8: Migrate kobotoolbox\\n\\n### Patch Changes\\n\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- ecf5d30: remove sinon since it was not being used\\n- Updated dependencies \\\\[8566b26]\\n- Updated dependencies \\\\[b3d45ff]\\n- Updated dependencies \\\\[b5eb665]\\n- Updated dependencies \\\\[ecf5d30]\\n  - @openfn/language-common@1.7.4\\n\"","functions":["getDeploymentInfo","getForms","getSubmissions"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base Url","type":"string","default":"https://kf.kobotoolbox.org","description":"Kobotoolbox URL","format":"uri","minLength":1,"examples":["https://kf.kobotoolbox.org"]},"username":{"title":"Username","type":"string","description":"Kobotoolbox username","minLength":1,"examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Kobotoolbox password","writeOnly":true,"minLength":1,"examples":["@some(!)Strongpassword"]},"apiVersion":{"title":"API Version","type":"string","placeholder":"v2","description":"Kobotoolbox API version to use","minLength":1,"examples":["v2"]}},"type":"object","additionalProperties":true,"required":["username","baseUrl","password","apiVersion"]}},
 [
   {
     "id": "get",
@@ -37582,7 +37582,7 @@
       {
         "type": {
           "names": [
-            "RequestOptions"
+            "HTTPRequestOptions"
           ]
         },
         "optional": true,
@@ -37592,7 +37592,7 @@
       }
     ],
     "examples": [
-      "<caption>GET assets resource</caption>\nhttp.get(\n \"/assets/\",\n )"
+      "<caption>GET assets resource</caption>\nhttp.get('assets')"
     ],
     "returns": [
       {
@@ -37605,7 +37605,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 33,
+      "lineno": 68,
       "filename": "http.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/kobotoolbox/src"
     },
@@ -37613,7 +37613,7 @@
       {
         "name": null,
         "description": "No description",
-        "type": "KoboToolboxHttpState"
+        "type": "HttpState"
       }
     ],
     "order": 7,
@@ -37652,7 +37652,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 114,
+      "lineno": 118,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/kobotoolbox/src"
     },
@@ -37663,7 +37663,7 @@
         "type": null
       }
     ],
-    "order": 4,
+    "order": 3,
     "newscope": true,
     "level": 0
   },
@@ -37688,7 +37688,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 52,
+      "lineno": 44,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/kobotoolbox/src"
     },
@@ -37699,7 +37699,7 @@
         "type": null
       }
     ],
-    "order": 2,
+    "order": 1,
     "level": 0
   },
   {
@@ -37708,7 +37708,7 @@
     "name": "getSubmissions",
     "kind": "function",
     "scope": "global",
-    "description": "Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`.",
+    "description": "Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`",
     "params": [
       {
         "type": {
@@ -37727,13 +37727,46 @@
         },
         "optional": true,
         "defaultvalue": "{}",
-        "description": "Optional query params for the request",
+        "description": "Options to control the request",
         "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "Query options to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}",
+        "name": "options.query"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": 30000,
+        "description": "Maximum number of submissions to fetch. Pass Infinity to disable the limit and download all submissions",
+        "name": "options.limit"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": 10000,
+        "description": "Limits the size of each page of submissions. Maximum value is 30000.",
+        "name": "options.pageSize"
       }
     ],
     "examples": [
-      "<caption>Get all submissions for a specific form</caption>\ngetSubmissions('aXecHjmbATuF6iGFmvBLBX');",
-      "<caption>Get form submissions with a query</caption>\ngetSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \"2022-06-12T21:54:20\" } } });"
+      "<caption>Get submissions for a specific form</caption>\ngetSubmissions('aXecHjmbATuF6iGFmvBLBX');.",
+      "<caption>Get all submissions for a specific form</caption>\ngetSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit: Infinity });",
+      "<caption>Get form submissions with a query</caption>\ngetSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \"2025-03-12T21:54:20\" } } });"
     ],
     "returns": [
       {
@@ -37746,7 +37779,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 76,
+      "lineno": 74,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/kobotoolbox/src"
     },
@@ -37757,13 +37790,82 @@
         "type": null
       }
     ],
-    "order": 3,
+    "order": 2,
     "level": 0
   },
   {
-    "id": "KoboToolboxHttpState",
-    "longname": "KoboToolboxHttpState",
-    "name": "KoboToolboxHttpState",
+    "id": "HTTPRequestOptions",
+    "longname": "HTTPRequestOptions",
+    "name": "HTTPRequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of all request headers",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "The request body (as JSON)",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "The maximum number of redirects to follow",
+        "name": "maxRedirections"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "'json'",
+        "description": "The response format to parse (e.g., 'json', 'text', or 'stream')",
+        "name": "parseAs"
+      }
+    ],
+    "meta": {
+      "lineno": 13,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/kobotoolbox/src"
+    },
+    "order": 5,
+    "level": 0
+  },
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
     "kind": "typedef",
     "scope": "global",
     "description": "State object",
@@ -37778,21 +37880,21 @@
         "name": "data"
       },
       {
-        "description": "The HTTP response from the KoboToolbox server (excluding the body). Responses will be returned in JSON format",
+        "description": "The HTTP response from the KoboToolbox server (excluding the body)",
         "name": "response"
       },
       {
-        "description": "An array of all previous data objects used in the Job",
+        "description": "An array containing all previous data objects",
         "name": "references"
       }
     ],
+    "access": "private",
     "meta": {
       "lineno": 4,
       "filename": "http.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/kobotoolbox/src"
     },
-    "order": 5,
-    "level": 0
+    "order": 4
   },
   {
     "id": "post",
@@ -37823,7 +37925,7 @@
       {
         "type": {
           "names": [
-            "RequestOptions"
+            "HTTPRequestOptions"
           ]
         },
         "optional": true,
@@ -37846,7 +37948,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 70,
+      "lineno": 105,
       "filename": "http.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/kobotoolbox/src"
     },
@@ -37854,7 +37956,7 @@
       {
         "name": null,
         "description": "No description",
-        "type": "KoboToolboxHttpState"
+        "type": "HttpState"
       }
     ],
     "order": 8,
@@ -37889,7 +37991,7 @@
       {
         "type": {
           "names": [
-            "RequestOptions"
+            "HTTPRequestOptions"
           ]
         },
         "optional": true,
@@ -37912,7 +38014,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 112,
+      "lineno": 147,
       "filename": "http.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/kobotoolbox/src"
     },
@@ -37920,42 +38022,28 @@
       {
         "name": null,
         "description": "No description",
-        "type": "KoboToolboxHttpState"
+        "type": "HttpState"
       }
     ],
     "order": 9,
     "level": 0
   },
   {
-    "id": "RequestOptions",
-    "longname": "RequestOptions",
-    "name": "RequestOptions",
-    "kind": "typedef",
-    "scope": "global",
-    "description": "Options object",
-    "type": {
-      "names": [
-        "Object"
-      ]
-    },
-    "properties": [
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a HTTP request to any KoboToolbox endpoint",
+    "params": [
       {
         "type": {
           "names": [
-            "object"
+            "string"
           ]
         },
-        "description": "An object of query parameters to be encoded into the URL",
-        "name": "query"
-      },
-      {
-        "type": {
-          "names": [
-            "object"
-          ]
-        },
-        "description": "An object of all request headers",
-        "name": "headers"
+        "description": "HTTP method to use",
+        "name": "method"
       },
       {
         "type": {
@@ -37963,68 +38051,46 @@
             "string"
           ]
         },
-        "optional": true,
-        "defaultvalue": "'json'",
-        "description": "The response format to parse (e.g., 'json', 'text', or 'stream')",
-        "name": "parseAs"
-      }
-    ],
-    "meta": {
-      "lineno": 9,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/kobotoolbox/src"
-    },
-    "order": 0,
-    "level": 0
-  },
-  {
-    "id": "RequestOptions",
-    "longname": "RequestOptions",
-    "name": "RequestOptions",
-    "kind": "typedef",
-    "scope": "global",
-    "description": "Options object",
-    "type": {
-      "names": [
-        "Object"
-      ]
-    },
-    "properties": [
-      {
-        "type": {
-          "names": [
-            "object"
-          ]
-        },
-        "description": "An object of query parameters to be encoded into the URL",
-        "name": "query"
+        "description": "Path to resource",
+        "name": "path"
       },
       {
         "type": {
           "names": [
-            "object"
-          ]
-        },
-        "description": "An object of all request headers",
-        "name": "headers"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
+            "HTTPRequestOptions"
           ]
         },
         "optional": true,
-        "defaultvalue": "'json'",
-        "description": "The response format to parse (e.g., 'json', 'text', or 'stream')",
-        "name": "parseAs"
+        "defaultvalue": "{}",
+        "description": "An object containing query, headers, and body for the request",
+        "name": "options"
       }
     ],
+    "examples": [
+      "<caption>Bulk updating of submissions</caption>\nhttp.request(\"PATCH\", `assets/${$.form_uid}/data/bulk/`, {\n  body: {\n    submission_ids: [$.data.submission_id],\n    data: {\n      Transaction_status: \"success\",\n    },\n  },\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
     "meta": {
-      "lineno": 12,
+      "lineno": 42,
       "filename": "http.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/kobotoolbox/src"
     },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
     "order": 6,
     "level": 0
   },
@@ -38097,13 +38163,6 @@
     "name": "group",
     "scope": "global",
     "kind": "external-function"
-  },
-  {
-    "id": "http",
-    "common": true,
-    "name": "http",
-    "scope": "global",
-    "kind": "external"
   },
   {
     "id": "lastReferenceValue",

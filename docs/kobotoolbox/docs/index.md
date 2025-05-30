@@ -21,6 +21,10 @@ This adaptor exports the following namespaced functions:
 <dt>
     <a href="#http_put">http.put(path, data, [options])</a>
 </dt>
+
+<dt>
+    <a href="#http_request">http.request(method, path, [options])</a>
+</dt>
 </dl>
 
 
@@ -55,9 +59,6 @@ This adaptor exports the following from common:
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#group">group()</a>
-</dt>
-<dt>
-    <a href="/adaptors/packages/common-docs#http">http</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
@@ -115,26 +116,33 @@ getForms();
 
 <p><code>getSubmissions(formId, [options]) ⇒ Operation</code></p>
 
-Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`.
+Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | formId | <code>string</code> |  | Form Id to get the specific submissions |
-| [options] | <code>object</code> | <code>{}</code> | Optional query params for the request |
+| [options] | <code>object</code> | <code>{}</code> | Options to control the request |
+| [options.query] | <code>object</code> |  | Query options to filter the submissions. See query operators [http://docs.mongodb.org/manual/reference/operator/query/.](http://docs.mongodb.org/manual/reference/operator/query/.) |
+| [options.limit] | <code>number</code> | <code>30000</code> | Maximum number of submissions to fetch. Pass Infinity to disable the limit and download all submissions |
+| [options.pageSize] | <code>number</code> | <code>10000</code> | Limits the size of each page of submissions. Maximum value is 30000. |
 
 This operation writes the following keys to state:
 
 | State Key | Description |
 | --- | --- |
 | data | an array of submission objects |
+**Example:** Get submissions for a specific form
+```js
+getSubmissions('aXecHjmbATuF6iGFmvBLBX');.
+```
 **Example:** Get all submissions for a specific form
 ```js
-getSubmissions('aXecHjmbATuF6iGFmvBLBX');
+getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit: Infinity });
 ```
 **Example:** Get form submissions with a query
 ```js
-getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: "2022-06-12T21:54:20" } } });
+getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: "2025-03-12T21:54:20" } } });
 ```
 
 * * *
@@ -153,20 +161,18 @@ Make a GET request to any KoboToolbox endpoint.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | path | <code>string</code> |  | path to resource |
-| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+| [options] | [<code>HTTPRequestOptions</code>](#httprequestoptions) | <code>{}</code> | An object containing query params and headers for the request |
 
 This operation writes the following keys to state:
 
 | State Key | Description |
 | --- | --- |
 | data | The response body (as JSON) |
-| response | The HTTP response from the KoboToolbox server (excluding the body). Responses will be returned in JSON format |
-| references | An array of all previous data objects used in the Job |
+| response | The HTTP response from the KoboToolbox server (excluding the body) |
+| references | An array containing all previous data objects |
 **Example:** GET assets resource
 ```js
-http.get(
- "/assets/",
- )
+http.get('assets')
 ```
 
 * * *
@@ -183,15 +189,15 @@ Make a POST request to a KoboToolbox endpoint
 | --- | --- | --- | --- |
 | path | <code>string</code> |  | path to resource |
 | data | <code>any</code> |  | the body data in JSON format |
-| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+| [options] | [<code>HTTPRequestOptions</code>](#httprequestoptions) | <code>{}</code> | An object containing query params and headers for the request |
 
 This operation writes the following keys to state:
 
 | State Key | Description |
 | --- | --- |
 | data | The response body (as JSON) |
-| response | The HTTP response from the KoboToolbox server (excluding the body). Responses will be returned in JSON format |
-| references | An array of all previous data objects used in the Job |
+| response | The HTTP response from the KoboToolbox server (excluding the body) |
+| references | An array containing all previous data objects |
 **Example:** Create an asset resource
 ```js
 http.post(
@@ -217,15 +223,15 @@ Make a PUT request to a KoboToolbox endpoint
 | --- | --- | --- | --- |
 | path | <code>string</code> |  | path to resource |
 | data | <code>any</code> |  | the body data in JSON format |
-| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+| [options] | [<code>HTTPRequestOptions</code>](#httprequestoptions) | <code>{}</code> | An object containing query params and headers for the request |
 
 This operation writes the following keys to state:
 
 | State Key | Description |
 | --- | --- |
 | data | The response body (as JSON) |
-| response | The HTTP response from the KoboToolbox server (excluding the body). Responses will be returned in JSON format |
-| references | An array of all previous data objects used in the Job |
+| response | The HTTP response from the KoboToolbox server (excluding the body) |
+| references | An array containing all previous data objects |
 **Example:** Update an asset resource
 ```js
 http.put(
@@ -240,24 +246,44 @@ http.put(
 * * *
 
 
-##  Interfaces
+### http.request {#http_request}
 
-### KoboToolboxHttpState
+<p><code>request(method, path, [options]) ⇒ Operation</code></p>
 
-State object
+Make a HTTP request to any KoboToolbox endpoint
 
-**Properties**
 
-| Name | Description |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| method | <code>string</code> |  | HTTP method to use |
+| path | <code>string</code> |  | Path to resource |
+| [options] | [<code>HTTPRequestOptions</code>](#httprequestoptions) | <code>{}</code> | An object containing query, headers, and body for the request |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
 | --- | --- |
 | data | The response body (as JSON) |
-| response | The HTTP response from the KoboToolbox server (excluding the body). Responses will be returned in JSON format |
-| references | An array of all previous data objects used in the Job |
-
+| response | The HTTP response from the KoboToolbox server (excluding the body) |
+| references | An array containing all previous data objects |
+**Example:** Bulk updating of submissions
+```js
+http.request("PATCH", `assets/${$.form_uid}/data/bulk/`, {
+  body: {
+    submission_ids: [$.data.submission_id],
+    data: {
+      Transaction_status: "success",
+    },
+  },
+});
+```
 
 * * *
 
-### RequestOptions
+
+##  Interfaces
+
+### HTTPRequestOptions
 
 Options object
 
@@ -267,21 +293,8 @@ Options object
 | --- | --- | --- | --- |
 | query | <code>object</code> |  | An object of query parameters to be encoded into the URL |
 | headers | <code>object</code> |  | An object of all request headers |
-| [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |
-
-
-* * *
-
-### RequestOptions
-
-Options object
-
-**Properties**
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| query | <code>object</code> |  | An object of query parameters to be encoded into the URL |
-| headers | <code>object</code> |  | An object of all request headers |
+| body | <code>object</code> |  | The request body (as JSON) |
+| maxRedirections | <code>number</code> |  | The maximum number of redirects to follow |
 | [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |
 
 
