@@ -143,7 +143,7 @@ describe('logResponse', () => {
     response.duration = 2;
     let originalLog;
     let consoleOutput = [];
-    
+
     // Setup: Override console.log
     originalLog = console.log;
     console.log = (...args) => consoleOutput.push(args);
@@ -271,22 +271,6 @@ describe('request function', () => {
 
     expect(response.statusCode).to.eql(200);
     expect(response.body).to.eql(undefined);
-  });
-
-  it('should return an empty string if response status code is 204', async () => {
-    client
-      .intercept({
-        path: '/api',
-        method: 'PATCH',
-      })
-      .reply(204, '');
-
-    const response = await request('PATCH', 'https://www.example.com/api', {
-      body: { id: 2 },
-    });
-
-    expect(response.statusCode).to.eql(204);
-    expect(response.body).to.eql('');
   });
 
   it('should throw an error if there is no content-length header and an empty response body', async () => {

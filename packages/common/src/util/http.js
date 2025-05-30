@@ -221,7 +221,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
   };
 }
 
-function encodeRequestBody(body) {  
+function encodeRequestBody(body) {
   if (!body) {
     return undefined;
   }
@@ -256,10 +256,6 @@ async function readResponseBody(response, parseAs) {
   try {
     if (Number.isNaN(contentLength) || contentLength === 0) {
       return undefined;
-    }
-
-    if (response.statusCode === 204) {
-      return '';
     }
 
     switch (parseAs) {
