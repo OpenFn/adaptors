@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-twilio",
+  "label": "Twilio",
   "version": "0.5.2",
   "description": "An Language Package for twilio",
   "main": "dist/index.cjs",
@@ -27,7 +28,6 @@
     "assertion-error": "^1.1.0",
     "chai": "^3.5.0",
     "deep-eql": "^0.1.3",
-    "esno": "^0.16.3",
     "nock": "^12.0.3",
     "rimraf": "3.0.2"
   },

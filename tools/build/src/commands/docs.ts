@@ -36,13 +36,13 @@ const build = async (lang: string) => {
   console.log(`Building docs`);
   console.log();
 
-  const glob = `${root}/src/**/*.(js|ts)`;
   const template = await readFile(
     '../../tools/build/src/util/docs-template.hbs'
   );
 
   let templateData = await jsdoc2md.getTemplateData({
-    files: glob,
+    // this glob seems to support conditional expressions
+    files: `${root}/src/**/*.(js|ts)`,
     configure: [path.resolve('../../tools/build/jsdoc/config.json')],
     'no-cache': true,
   });
@@ -68,8 +68,9 @@ const build = async (lang: string) => {
   });
 
   const fileSet = new FileSet();
-  await fileSet.add([glob]);
-
+  // This glob does not support conditionals
+  // ts files are not supported right now
+  await fileSet.add(`${root}/src/**/*.js`);
   let common: any[] = [];
   if (lang !== 'common') {
     // try and load common's data
@@ -89,7 +90,6 @@ const build = async (lang: string) => {
     // Extract exports from common and add them to the template data as externals
     for (const f of fileSet.files) {
       const src = await fs.readFile(f, 'utf8');
-
       const exports = extractExports(src).map(e => {
         const isNamespace = common.find(data => data.scope === e);
         return {

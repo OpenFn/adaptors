@@ -1,6 +1,7 @@
 {
   "name": "@openfn/language-asana",
   "version": "4.0.12",
+  "label": "Asana",
   "description": "An adaptor to access objects in Asana",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -38,7 +39,6 @@
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
-    "esno": "^0.16.3",
     "nock": "13.2.9",
     "rimraf": "3.0.2"
   },

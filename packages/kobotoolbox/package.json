@@ -1,7 +1,8 @@
 {
   "name": "@openfn/language-kobotoolbox",
+  "label": "KoboToolbox",
   "version": "3.0.5",
-  "description": "A Kobo Toolbox Language Pack for OpenFn",
+  "description": "A KoboToolbox Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
     "type": "git",
@@ -32,7 +33,6 @@
     "assertion-error": "^1.0.1",
     "chai": "^5.2.0",
     "deep-eql": "^0.1.3",
-    "esno": "^0.16.3",
     "rimraf": "^3.0.2"
   },
   "type": "module",

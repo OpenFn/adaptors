@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-mssql",
+  "label": "MSSQL",
   "version": "5.0.14",
   "description": "A Microsoft SQL language pack for OpenFn",
   "exports": {
@@ -39,7 +40,6 @@
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
-    "esno": "^0.16.3",
     "rimraf": "3.0.2"
   },
   "type": "module",

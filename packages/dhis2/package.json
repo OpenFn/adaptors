@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-dhis2",
+  "label": "DHIS2",
   "version": "6.3.4",
   "description": "DHIS2 Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
@@ -44,7 +45,6 @@
     "chai": "4.3.6",
     "chai-http": "4.3.0",
     "deep-eql": "4.1.1",
-    "esno": "^0.16.3",
     "jsonpath": "^1.1.1",
     "nock": "13.2.9",
     "rimraf": "3.0.2"

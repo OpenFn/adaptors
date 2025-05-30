@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-khanacademy",
+  "label": "Khan Academy",
   "version": "0.5.14",
   "description": "A Khan Academy Language Pack for OpenFn",
   "main": "dist/index.cjs",
@@ -28,7 +29,6 @@
     "assertion-error": "^2.0.0",
     "chai": "^4.3.7",
     "deep-eql": "^4.1.2",
-    "esno": "^0.16.3",
     "nock": "^13.2.9",
     "rimraf": "^3.0.2"
   },

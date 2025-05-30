@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-sftp",
+  "label": "SFTP",
   "version": "2.0.12",
   "description": "An SFTP language package for use with Open Function",
   "homepage": "https://docs.openfn.org",
@@ -44,7 +45,6 @@
     "eslint": "8.26.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.26.0",
-    "esno": "^0.16.3",
     "nock": "12.0.3",
     "rimraf": "^3.0.2"
   },
