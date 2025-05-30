@@ -58,6 +58,11 @@ if (file) {
       ...message,
       channel: DEVS,
     });
+    // temporary duplication
+    slack.chat.postMessage({
+      ...message,
+      channel: IMPLEMENTATION,
+    });
     slack.chat.postMessage({
       ...message,
       channel: ADAPTORS_AND_TEMPLATES,
