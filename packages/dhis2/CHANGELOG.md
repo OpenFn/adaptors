@@ -1,5 +1,89 @@
 # @openfn/language-dhis2
 
+## 7.0.0
+
+This release of DHSI2 contains major breaking changes.
+
+This release includes a major re-think of the main adaptor API, introducing new
+namespaces (tracker, http, util) to help organize functionality. Note that the
+main namespace contains `get()` and `create()`, which do not surface HTTP
+semantics, and `http.get()` and `http.post()`.
+
+The intention is that most users can use the `get()`, `create()` and `tracker.*`
+APIs, with a HTTP abstraction as a fallback.
+
+It also removes a dependency on the axios library (preferring undici, as used by
+other adaptors).
+
+### Major Changes
+
+- Remove axios.
+- Re-worked signatures for `get()`, `create()`, `update()` and `upsert()`.
+- The `discover()` function has been removed.
+- Many non-operation functions have moved to the `util.` namespace, including.
+  `attr`, `dv`, `findAttributeValue`, and `findAttributeValueById`.
+- HTTP helper functions (like `post()`, `patch()`) have been moved into a clean
+  new http namespace.
+
+### Minor Changes
+
+- dfe53ef: - Implement a new `tracker` namespace for `tracker.import()` and
+  `tracker.export()` functions.
+
+  - Throw an error when `create('tracker')` is called.
+
+- 5b73844: - Add importStrategy to query params for `create` and `update`
+
+### Migration Guide
+
+#### get ()
+
+The `get` function has a new signature of `get(path, params)`. Note that the old
+options object and callback have been removed. If you need to set headers on
+your request, use `http.get()` instead.
+
+For `path`, you can pass a resource type, like `"enrollments"`, or a path to a
+specific resource, like `tracker/trackedEntities/F8yKM85NbxW`.
+
+If using the new tracker API, we recommend using the new tracker namespace.
+
+#### create
+
+The `create` function has a new signature of `create(path, data, params)`. Note
+that the old options object and callback have been removed. If you need to set
+headers on your request, use `http.post()` instead.
+
+#### update
+
+Callbacks have been removed from the update signature.
+
+#### upsert
+
+Callbacks have been removed from the upsert signature.
+
+#### Utils
+
+Some helper functions, which are not operations and cannot be called at the top
+level, have been moved to a `util` namespace.
+
+Instead of this:
+
+```
+fn((state) => {
+  const value = findAttributeValue(state.data, 'first name')
+  return state;
+})
+```
+
+Do this:
+
+```
+fn((state) => {
+  const value = util.findAttributeValue(state.data, 'first name')
+  return state;
+})
+```
+
 ## 6.3.4 - 22 April 2025
 
 ### Patch Changes
