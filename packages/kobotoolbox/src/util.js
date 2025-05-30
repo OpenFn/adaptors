@@ -50,12 +50,7 @@ export async function request(state, method, path, opts = {}) {
 export async function requestWithPagination(state, path, options = {}) {
   const results = [];
 
-  let {
-    pageSize = DEFAULT_PAGE_SIZE,
-    start,
-    limit,
-    ...otherOptions
-  } = options;
+  let { pageSize = DEFAULT_PAGE_SIZE, start, limit, ...otherOptions } = options;
 
   const maxResults = limit ?? DEFAULT_LIMIT;
 
@@ -66,7 +61,9 @@ export async function requestWithPagination(state, path, options = {}) {
 
   do {
     requestOptions.query ??= {};
-    requestOptions.query.start = start;
+    if (start) {
+      requestOptions.query.start = start;
+    }
 
     if (didUserPassLimit || !isFirstRequest) {
       // If there's an explicit limit or page size,
