@@ -1,8 +1,8 @@
 import {
   execute as commonExecute,
-  expandReferences,
   composeNextState,
 } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 import Mailgun from 'mailgun.js';
 import formData from 'form-data';
 // NOTE: We can use sync-request because the Node sandbox the client uses will
@@ -71,7 +71,7 @@ export function send(params) {
     const { client } = state;
     const { domain } = state.configuration;
 
-    const body = expandReferences(params)(state);
+    const [body] = expandReferences(state, params);
 
     if (body.attachment) {
       const response = request('GET', body.attachment.url);
