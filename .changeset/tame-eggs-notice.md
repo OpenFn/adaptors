@@ -2,6 +2,12 @@
 '@openfn/language-kobotoolbox': major
 ---
 
+Add automatic pagination to `getSubmissions()`.
+
+`getSubmissions()` will now download all submissions, up to the requested limit,
+over multiple requests. Note that by default, a maximum of 30,000 items will be
+downloaded (pass a higher number of `Infinity` to download more).
+
 ### Changes
 
 - Updated `getSubmission` pagination behavior:
@@ -19,10 +25,10 @@
 1. Pagination Changes:
 
    - Replace `paginate: true/false` with `limit` and `pageSize` options
-   - Default limit is `10000` if not specified
+   - Default limit is `30000` unless otherwise specified
 
    ```js
-   // Fetch submissions with default limit (10000)
+   // Fetch submissions with default limit (30000)
    getSubmission('form-id');
 
    // Fetch all submissions (no limit)
