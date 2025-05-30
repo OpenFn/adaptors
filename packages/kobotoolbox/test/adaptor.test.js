@@ -38,7 +38,7 @@ describe('getSubmissions', () => {
     console.warn = (...args) => consoleOutput.push(...args);
   });
 
-  it("Don't return more items than maximum page size", async () => {
+  it('should not return more items than maximum page size', async () => {
     let requestCount = 0;
     const items = Array.from({ length: 4e4 }, (_, i) => ({
       uid: String(i),
@@ -80,7 +80,7 @@ describe('getSubmissions', () => {
     expect(items.length).to.greaterThan(data.length);
   });
 
-  it('Only return 1 item if the limit is 1', async () => {
+  it('should only return 1 item if the limit is 1', async () => {
     const limit = 1;
     const mockData = sampleData.slice(0, limit);
 
@@ -207,7 +207,7 @@ describe('getSubmissions', () => {
     expect(requestCount).to.eql(10);
   });
 
-  it('Return all items if limit is greater than the number of ite (ie, limit = Infinity)', async () => {
+  it('should return all items if limit is greater than the number of items (ie, limit = Infinity)', async () => {
     const mockData = Array.from({ length: defaultLimit + 1 }, (_, i) => ({
       uid: String(i),
     }));
