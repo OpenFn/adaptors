@@ -38,7 +38,7 @@ describe('getSubmissions', () => {
     console.warn = (...args) => consoleOutput.push(...args);
   });
 
-  it('should not return more items than maximum page size', async () => {
+  it('should not return more items than the default limit', async () => {
     let requestCount = 0;
     const items = Array.from({ length: 4e4 }, (_, i) => ({
       uid: String(i),
@@ -71,6 +71,7 @@ describe('getSubmissions', () => {
         }
       )
       .times(3);
+
     const { data } = await execute(getSubmissions('aXecHjmbATuF6iGFmvBLBX'))(
       state
     );
