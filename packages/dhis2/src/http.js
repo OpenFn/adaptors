@@ -1,4 +1,4 @@
-import { expandReferences, encode } from '@openfn/language-common/util';
+import { expandReferences } from '@openfn/language-common/util';
 import * as util from './util';
 
 /**
@@ -66,9 +66,6 @@ export function get(path, options = {}) {
       options: resolvedOptions,
     });
 
-    if (parseAs === 'base64') {
-      response.body = encode(response.body);
-    }
     return util.handleHttpResponse(response, state);
   };
 }

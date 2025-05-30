@@ -199,7 +199,7 @@
         "options"
       ],
       "docs": {
-        "description": "Update data. A generic helper function to update a resource object of any type.\nUpdating an object requires to send `all required fields` or the `full body`",
+        "description": "Update a resource object of any type. Updating an object requires to send `all required fields` or the `full body`",
         "tags": [
           {
             "title": "public",
@@ -330,7 +330,7 @@
         "options"
       ],
       "docs": {
-        "description": "Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.\nThis function does not work with the absolute tracker path `api/tracker` but rather the new tracker paths and deprecated tracker endpoints.",
+        "description": "Upsert a record. This will atomically update a record if it already exists, or otherwise create it.\nThis function does not work with the absolute tracker path `api/tracker` but rather the new tracker paths and deprecated tracker endpoints.",
         "tags": [
           {
             "title": "public",
@@ -424,7 +424,7 @@
         "options"
       ],
       "docs": {
-        "description": "Delete a record. A generic helper function to delete an object",
+        "description": "Delete record.",
         "tags": [
           {
             "title": "public",

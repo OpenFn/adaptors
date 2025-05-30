@@ -304,7 +304,7 @@ describe('patch', () => {
       }))
     )(state);
 
-    expect(finalState.data).to.eql('');
+    expect(finalState.data).to.eql(undefined);
   });
 
   it('should recursively expand refs', async () => {
@@ -323,6 +323,6 @@ describe('patch', () => {
       })
     )(state);
 
-    expect(finalState.data).to.eql('');
+    expect(finalState.data).to.eql(undefined);
   });
 });
