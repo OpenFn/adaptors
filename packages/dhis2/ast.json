@@ -31,7 +31,7 @@
           },
           {
             "title": "magic",
-            "description": "resourceType $.children.resourceTypes[*]"
+            "description": "path $.children.resourceTypes[*]"
           },
           {
             "title": "param",
