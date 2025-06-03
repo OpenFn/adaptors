@@ -77,6 +77,7 @@ export async function requestWithPagination(state, path, options = {}) {
       requestOptions.query.limit = pageSize;
     }
 
+    console.log({ requestOptions });
     const response = await request(state, 'GET', path, requestOptions);
 
     if (response.body?.results) {
@@ -112,4 +113,8 @@ export async function requestWithPagination(state, path, options = {}) {
   } while (shouldFetchMoreContent);
 
   return results;
+}
+
+export function queryStringify(query) {
+  return typeof query === 'string' ? query : JSON.stringify(query);
 }

@@ -65,7 +65,9 @@ export function getForms() {
  * @public
  * @param {string} formId - Form Id to get the specific submissions
  * @param {object} [options={}] - Options to control the request
+ * @param {object} [options.sort] - Field and direction to sort submissions by. Specify 1 for ascending or -1 for descending order (e.g. {"field_name": 1} or {"field_name": -1})
  * @param {object} [options.query] - Query options to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}
+ * @param {number} [options.start=0] - The index of the first submission to return. Used for pagination.
  * @param {number} [options.limit=30000] - Maximum number of submissions to fetch. Pass Infinity to disable the limit and download all submissions
  * @param {number} [options.pageSize=10000] - Limits the size of each page of submissions. Maximum value is 30000.
  * @state data - an array of submission objects
@@ -79,18 +81,17 @@ export function getSubmissions(formId, options) {
       options
     );
 
-    const { query, limit, pageSize } = resolvedOptions;
+    const { query, limit, pageSize, sort, start } = resolvedOptions;
     const path = `/assets/${resolvedFormId}/data/`;
     const qs = {};
     if (query) {
-      if (typeof query === 'string') {
-        qs.query = query;
-      } else {
-        qs.query = JSON.stringify(query);
-      }
+      qs.query = util.queryStringify(query);
+    }
+    if (sort) {
+      qs.sort = util.queryStringify(sort);
     }
     const requestOptions = {
-      query: { ...qs },
+      query: { ...qs, start },
       limit,
       pageSize,
     };

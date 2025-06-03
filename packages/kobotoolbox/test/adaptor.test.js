@@ -38,6 +38,39 @@ describe('getSubmissions', () => {
     console.warn = (...args) => consoleOutput.push(...args);
   });
 
+  it.only('should sort items by uid in descending order', async () => {
+    testServer
+      .intercept({
+        path: /\/api\/v2\/assets\/aXecHjmbATuF6iGFmvBLBX\/data/,
+        method: 'GET',
+      })
+      .reply(
+        200,
+        req => {
+          const { query, origin, path } = req;
+          const results = responseWithPagination(
+            sampleData,
+            {
+              limit: query.limit,
+              start: query.start,
+            },
+            {
+              url: `${origin}${path}`,
+            }
+          );
+          return results;
+        },
+        {
+          ...jsonHeaders,
+        }
+      );
+
+    const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
+      sort: { uid: -1 },
+    })(state);
+    console.log({ data });
+    expect(data[0].uid).to.eql('2');
+  });
   it('should not return more items than the default limit', async () => {
     let requestCount = 0;
     const items = Array.from({ length: 4e4 }, (_, i) => ({
