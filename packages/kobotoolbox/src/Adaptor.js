@@ -61,13 +61,17 @@ export function getForms() {
  * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit: Infinity });
  * @example <caption>Get form submissions with a query</caption>
  * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: "2025-03-12T21:54:20" } } });
+ * @example <caption>Get form submissions with sorting</caption>
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { sort: { _submission_time: -1 } });
+ * @example <caption>Get form submissions with specific start index</caption>
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { start: 10 });
  * @function
  * @public
  * @param {string} formId - Form Id to get the specific submissions
  * @param {object} [options={}] - Options to control the request
- * @param {object} [options.sort] - Field and direction to sort submissions by. Specify 1 for ascending or -1 for descending order (e.g. {"field_name": 1} or {"field_name": -1})
+ * @param {object} [options.sort] - Field and direction to sort submissions by.
  * @param {object} [options.query] - Query options to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}
- * @param {number} [options.start=0] - The index of the first submission to return. Used for pagination.
+ * @param {number} [options.start=0] - The index of the first submission to return.
  * @param {number} [options.limit=30000] - Maximum number of submissions to fetch. Pass Infinity to disable the limit and download all submissions
  * @param {number} [options.pageSize=10000] - Limits the size of each page of submissions. Maximum value is 30000.
  * @state data - an array of submission objects
