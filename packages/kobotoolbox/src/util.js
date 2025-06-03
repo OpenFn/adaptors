@@ -77,7 +77,6 @@ export async function requestWithPagination(state, path, options = {}) {
       requestOptions.query.limit = pageSize;
     }
 
-    console.log({ requestOptions });
     const response = await request(state, 'GET', path, requestOptions);
 
     if (response.body?.results) {
