@@ -28,9 +28,11 @@ const configuration = {
 describe('getSubmissions', () => {
   const state = { configuration };
   const sampleData = [
-    { uid: '1', name: 'Ruh' },
-    { uid: '2', name: 'Shay' },
+    { uid: '1', name: 'Bob' },
+    { uid: '4', name: 'Anuh' },
+    { uid: '3', name: 'Charlie' },
   ];
+
   let originalLog;
   let consoleOutput = [];
   beforeEach(() => {
@@ -38,7 +40,41 @@ describe('getSubmissions', () => {
     console.warn = (...args) => consoleOutput.push(...args);
   });
 
-  it.only('should sort items by uid in descending order', async () => {
+  it('should sort items by uid in descending order', async () => {
+    testServer
+      .intercept({
+        path: /\/api\/v2\/assets\/aXecHjmbATuF6iGFmvBLBX\/data/,
+        method: 'GET',
+      })
+      .reply(
+        200,
+        req => {
+          const { query, origin, path } = req;
+          const results = responseWithPagination(
+            sampleData,
+            {
+              limit: query.limit,
+              start: query.start,
+              sort: query.sort,
+            },
+            {
+              url: `${origin}${path}`,
+            }
+          );
+          return results;
+        },
+        {
+          ...jsonHeaders,
+        }
+      );
+
+    const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
+      sort: { uid: -1 },
+    })(state);
+
+    expect(data[0].uid).to.eql('4');
+  });
+  it('should start from the specified index', async () => {
     testServer
       .intercept({
         path: /\/api\/v2\/assets\/aXecHjmbATuF6iGFmvBLBX\/data/,
@@ -64,12 +100,10 @@ describe('getSubmissions', () => {
           ...jsonHeaders,
         }
       );
-
     const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
-      sort: { uid: -1 },
+      start: 2,
     })(state);
-    console.log({ data });
-    expect(data[0].uid).to.eql('2');
+    expect(data[0].uid).to.eql('3');
   });
   it('should not return more items than the default limit', async () => {
     let requestCount = 0;
