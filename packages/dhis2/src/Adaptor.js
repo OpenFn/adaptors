@@ -275,12 +275,12 @@ export function get(path, params = {}) {
 }
 
 /**
- * Update a resource object of any type. Updating an object requires to send `all required fields` or the `full body`
+ * Update a resource object of any type. Updating an object requires all fields of the object you are updating, even if they have not been modified
  * @public
  * @function
  * @param {string} resourceType - The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc.
  * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`
- * @param {Object} data - Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.
+ * @param {Object} data - Data to update. It requires to send the full body. If you want partial updates, use patch operation.
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
  * @state data - the resource returned by DHIS2
  * @returns {Operation}
