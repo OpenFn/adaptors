@@ -61,6 +61,16 @@
             "caption": "Get form submissions with a query"
           },
           {
+            "title": "example",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { sort: { _submission_time: -1 } });",
+            "caption": "Get form submissions with sorting"
+          },
+          {
+            "title": "example",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { start: 10 });",
+            "caption": "Get form submissions with specific start index"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -94,7 +104,7 @@
           },
           {
             "title": "param",
-            "description": "Field and direction to sort submissions by. Specify 1 for ascending or -1 for descending order (e.g. {\"field_name\": 1} or {\"field_name\": -1})",
+            "description": "Field and direction to sort submissions by.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -118,7 +128,7 @@
           },
           {
             "title": "param",
-            "description": "The index of the first submission to return. Used for pagination.",
+            "description": "The index of the first submission to return.",
             "type": {
               "type": "OptionalType",
               "expression": {
