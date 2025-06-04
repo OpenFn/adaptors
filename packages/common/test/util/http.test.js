@@ -143,7 +143,7 @@ describe('logResponse', () => {
     response.duration = 2;
     let originalLog;
     let consoleOutput = [];
-    
+
     // Setup: Override console.log
     originalLog = console.log;
     console.log = (...args) => consoleOutput.push(args);
