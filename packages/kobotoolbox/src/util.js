@@ -114,6 +114,6 @@ export async function requestWithPagination(state, path, options = {}) {
   return results;
 }
 
-export function queryStringify(query) {
+export function maybeStringify(query) {
   return typeof query === 'string' ? query : JSON.stringify(query);
 }

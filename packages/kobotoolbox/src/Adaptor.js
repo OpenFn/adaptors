@@ -89,10 +89,10 @@ export function getSubmissions(formId, options) {
     const path = `/assets/${resolvedFormId}/data/`;
     const qs = {};
     if (query) {
-      qs.query = util.queryStringify(query);
+      qs.query = util.maybeStringify(query);
     }
     if (sort) {
-      qs.sort = util.queryStringify(sort);
+      qs.sort = util.maybeStringify(sort);
     }
     const requestOptions = {
       query: { ...qs, start },
