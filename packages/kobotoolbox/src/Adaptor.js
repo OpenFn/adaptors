@@ -95,7 +95,8 @@ export function getSubmissions(formId, options) {
       qs.sort = util.maybeStringify(sort);
     }
     const requestOptions = {
-      query: { ...qs, start },
+      query: { ...qs },
+      start,
       limit,
       pageSize,
     };
