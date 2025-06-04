@@ -199,7 +199,7 @@
         "options"
       ],
       "docs": {
-        "description": "Update a resource object of any type. Updating an object requires to send `all required fields` or the `full body`",
+        "description": "Update a resource object of any type. Updating an object requires all fields of the object you are updating, even if they have not been modified",
         "tags": [
           {
             "title": "public",
@@ -231,7 +231,7 @@
           },
           {
             "title": "param",
-            "description": "Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.",
+            "description": "Data to update. It requires to send the full body. If you want partial updates, use patch operation.",
             "type": {
               "type": "NameExpression",
               "name": "Object"
