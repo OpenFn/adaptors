@@ -200,36 +200,47 @@ export function lastReferenceValue(path) {
  * Scopes an array of data based on a JSONPath.
  * Useful when the source data has `n` items you would like to map to
  * an operation.
- * The operation will receive a slice of the data based of each item
- * of the JSONPath provided.
+ * The operation will receive a single item during each iteration based off of the JSONPath provided.
+ * The output will be an array of results mapped into `state.data`
  * @public
  * @function
  * @example
- * map("$.[*]",
- *   create("SObject",
- *     field("FirstName", sourceValue("$.firstName"))
- *   )
- * )
+ * map('$.data[*]', (data, index, state) => {
+ *   return {
+ *     id: index + 1,
+ *     name: data.name,
+ *     createdAt: state.cursor,
+ *   };
+ * });
  * @param {string} path - JSONPath referencing a point in `state.data`.
- * @param {function} operation - The operation needed to be repeated.
- * @param {State} state - Runtime state.
+ * @param {function} callback - The operation needed to be repeated.
  * @returns {State}
  */
-export const map = curry(function (path, operation, state) {
-  switch (typeof path) {
-    case 'string':
-      source(path)(state).map(function (data) {
-        return operation({ data, references: state.references });
-      });
-      return state;
+export const map = function (path, callback) {
+  const results = [];
+  return state => {
+    switch (typeof path) {
+      case 'string':
+        source(path)(state).map(function (data, index) {
+          const value = callback(data, index, state);
 
-    case 'object':
-      path.map(function (data) {
-        return operation({ data, references: state.references });
-      });
-      return state;
-  }
-});
+          results.push(value);
+
+          return results;
+        });
+        return { ...state, data: results };
+
+      case 'object':
+        path.map(function (data, index) {
+          const value = callback(data, index, state);
+
+          results.push(value);
+          return results;
+        });
+        return { ...state, data: results };
+    }
+  };
+};
 
 /**
  * Simple switcher allowing other expressions to use either a JSONPath or
