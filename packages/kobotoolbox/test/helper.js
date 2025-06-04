@@ -65,7 +65,6 @@ export function responseWithPagination(items, query, settings) {
     const sortParse = JSON.parse(sort);
     const key = Object.keys(sortParse)[0];
     const order = sortParse[key];
-    console.log({ key, order });
     response.results = sortBy(response.results, key, order);
   }
   return response;
