@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { encode, decode, uuid } from '../../src/util';
+import { encode, decode, uuid, _ } from '../../src/util';
 
 describe('uuid', () => {
   it('should generate a uuid', () => {
@@ -23,7 +23,9 @@ describe('encode', () => {
     expect(encode('Hello World')).to.eql('SGVsbG8gV29ybGQ=');
   });
   it('should encode a string to Base64 while skipping the JSON stringification step', () => {
-    expect(encode('Hello World', {parseJson: false})).to.eql('SGVsbG8gV29ybGQ=');
+    expect(encode('Hello World', { parseJson: false })).to.eql(
+      'SGVsbG8gV29ybGQ='
+    );
   });
 
   it('should encode an empty string to Base64', () => {
@@ -36,8 +38,8 @@ describe('encode', () => {
     expect(() => encode(() => {})).to.throw(errorMsg);
   });
   it('should encode a javascript object', () => {
-    const obj = {"name": "Jane Doe"}
-    expect(encode(obj)).to.eql("eyJuYW1lIjoiSmFuZSBEb2UifQ==");
+    const obj = { name: 'Jane Doe' };
+    expect(encode(obj)).to.eql('eyJuYW1lIjoiSmFuZSBEb2UifQ==');
   });
 });
 
@@ -56,14 +58,28 @@ describe('decode', () => {
     expect(decode('SGVsbG8gV29ybGQ=')).to.eql('Hello World');
   });
   it('should decode a Base64 string back to its original string without needing to JSON parse', () => {
-    expect(decode('SGVsbG8gV29ybGQ=', {parseJson: false})).to.eql('Hello World');
+    expect(decode('SGVsbG8gV29ybGQ=', { parseJson: false })).to.eql(
+      'Hello World'
+    );
   });
 
   it('should decode an empty Base64 string', () => {
     expect(decode('')).to.eql('');
   });
   it('should decode a JSON object into a standard javascript object', () => {
-    const obj = {name: "Jane Doe"}
+    const obj = { name: 'Jane Doe' };
     expect(decode('eyJuYW1lIjoiSmFuZSBEb2UifQ==')).to.eql(obj);
+  });
+});
+describe('_', () => {
+  it('should map values', () => {
+    const mappedValues = _.map([1, 2, 3], n => n * 2);
+
+    expect(mappedValues).to.eql([2, 4, 6]);
+  });
+  it('should filter values', () => {
+    const filteredValues = _.filter([1, 2, 3, 4, 5], n => n % 2 === 0);
+
+    expect(filteredValues).to.eql([2, 4]);
   });
 });
