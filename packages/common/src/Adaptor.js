@@ -197,11 +197,15 @@ export function lastReferenceValue(path) {
 }
 
 /**
- * Scopes an array of data based on a JSONPath.
- * Useful when the source data has `n` items you would like to map to
- * an operation.
- * The operation will receive a single item during each iteration based off of the JSONPath provided.
- * The output will be an array of results mapped into `state.data`
+ * Maps over a collection of items to produce a new `state.data` array.
+ *
+ * This utility is useful when the source data contains multiple items and you want
+ * to perform an operation for each one, generating an array of transformed results.
+ *
+ * The provided `callback` will be invoked once per item in the array, and each result
+ * will be collected into `state.data` as an array. The `path` argument determines where the array
+ * is sourced from, either via a JSONPath string or directly as a static array.
+ *
  * @public
  * @function
  * @example
@@ -212,8 +216,8 @@ export function lastReferenceValue(path) {
  *     createdAt: state.cursor,
  *   };
  * });
- * @param {string} path - JSONPath referencing a point in `state.data`.
- * @param {function} callback - The operation needed to be repeated.
+ * @param {string|Array} path - A JSONPath string to or an array of items to map directly.
+ * @param {function} callback - The function invoked with `(data, index, state)` for each item in the array.
  * @returns {State}
  */
 export const map = function (path, callback) {
