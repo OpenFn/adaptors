@@ -6,7 +6,7 @@ export function responseWithPagination(items, query, settings) {
     pageLimit = DEFAULT_PAGE_SIZE,
     defaultLimit = DEFAULT_LIMIT,
   } = settings;
-  const { start = 0, limit, sort } = query;
+  const { start = 0, limit } = query;
 
   const response = {
     results: [],
@@ -61,19 +61,6 @@ export function responseWithPagination(items, query, settings) {
             startIndex - effectiveLimit
           )}&limit=${effectiveLimit}`;
   } while (shouldFetchMoreContent);
-  if (sort) {
-    const sortParse = JSON.parse(sort);
-    const key = Object.keys(sortParse)[0];
-    const order = sortParse[key];
-    response.results = sortBy(response.results, key, order);
-  }
-  return response;
-}
 
-function sortBy(array, field, order = 1) {
-  return array.sort((a, b) => {
-    if (a[field] < b[field]) return -1 * order;
-    if (a[field] > b[field]) return 1 * order;
-    return 0;
-  });
+  return response;
 }

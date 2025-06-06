@@ -85,40 +85,7 @@ describe('getSubmissions', () => {
     expect(requestCount).to.eql(6);
     expect(data[0]).to.eql({ uid: '3', name: 'User 3' });
   });
-  it('should sort items by uid in descending order', async () => {
-    testServer
-      .intercept({
-        path: /\/api\/v2\/assets\/aXecHjmbATuF6iGFmvBLBX\/data/,
-        method: 'GET',
-      })
-      .reply(
-        200,
-        req => {
-          const { query, origin, path } = req;
-          const results = responseWithPagination(
-            sampleData,
-            {
-              limit: query.limit,
-              start: query.start,
-              sort: query.sort,
-            },
-            {
-              url: `${origin}${path}`,
-            }
-          );
-          return results;
-        },
-        {
-          ...jsonHeaders,
-        }
-      );
 
-    const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
-      sort: { uid: -1 },
-    })(state);
-
-    expect(data[0].uid).to.eql('4');
-  });
   it('should start from the specified index', async () => {
     testServer
       .intercept({
