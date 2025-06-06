@@ -12,14 +12,12 @@ import {
   dataValue,
   each,
   execute,
-  expandReferences,
   field,
   fields,
   index,
   join,
   jsonValue,
   lastReferenceValue,
-  map,
   merge,
   group,
   parseCsv,
@@ -100,28 +98,6 @@ describe('source', () => {
   });
 });
 
-describe('map', () => {
-  xit('[DEPRECATED] can produce a one to one from an array', () => {
-    let items = [];
-
-    let state = { data: testData, references: [] };
-    let results = map(
-      '$.data.store.book[*]',
-      function (state) {
-        return { references: [1, ...state.references], ...state };
-      },
-      state
-    );
-
-    expect(results.references).to.eql([
-      { title: 'Sayings of the Century' },
-      { title: 'Sword of Honour' },
-      { title: 'Moby Dick' },
-      { title: 'The Lord of the Rings' },
-    ]);
-  });
-});
-
 describe('combine', () => {
   let state = {};
   let operations = [
@@ -154,44 +130,6 @@ describe('join', () => {
       price: 8.95,
       title: 'Sayings of the Century',
     });
-  });
-});
-
-describe('expandReferences', () => {
-  it('resolves function values on objects', () => {
-    let result = expandReferences({
-      a: s => s,
-      // function nested inside an object inside and array
-      b: [2, { c: s => s + 2 }, 3],
-      c: 4,
-      // function that returns a function
-      d: s => s => s + 4,
-    })(1);
-
-    expect(result).to.eql({
-      a: 1,
-      b: [2, { c: 3 }, 3],
-      c: 4,
-      d: 5,
-    });
-  });
-
-  it("doesn't affect empty objects", () => {
-    let result = expandReferences({})(1);
-
-    expect(result).to.eql({});
-    result = expandReferences([])(1);
-    expect(result).to.eql([]);
-    result = expandReferences(null)(1);
-    expect(result).to.eql(null);
-    result = expandReferences(undefined)(1);
-    expect(result).to.eql(undefined);
-  });
-
-  it('resolves function values on arrays', () => {
-    let result = expandReferences([2, { c: s => s + 2 }, 3])(1);
-
-    expect(result).to.eql([2, { c: 3 }, 3]);
   });
 });
 
