@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { encode, decode, uuid, _ } from '../../src/util';
+import { encode, decode, uuid } from '../../src/util';
 
 describe('uuid', () => {
   it('should generate a uuid', () => {
@@ -71,15 +71,4 @@ describe('decode', () => {
     expect(decode('eyJuYW1lIjoiSmFuZSBEb2UifQ==')).to.eql(obj);
   });
 });
-describe('_', () => {
-  it('should map values', () => {
-    const mappedValues = _.map([1, 2, 3], n => n * 2);
 
-    expect(mappedValues).to.eql([2, 4, 6]);
-  });
-  it('should filter values', () => {
-    const filteredValues = _.filter([1, 2, 3, 4, 5], n => n % 2 === 0);
-
-    expect(filteredValues).to.eql([2, 4]);
-  });
-});
