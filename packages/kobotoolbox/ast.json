@@ -61,6 +61,16 @@
             "caption": "Get form submissions with a query"
           },
           {
+            "title": "example",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { sort: { _submission_time: -1 } });",
+            "caption": "Get form submissions with sorting"
+          },
+          {
+            "title": "example",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { start: 10 });",
+            "caption": "Get form submissions with specific start index"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -94,6 +104,18 @@
           },
           {
             "title": "param",
+            "description": "Field and direction to sort submissions by.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options.sort"
+          },
+          {
+            "title": "param",
             "description": "Query options to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}",
             "type": {
               "type": "OptionalType",
@@ -103,6 +125,19 @@
               }
             },
             "name": "options.query"
+          },
+          {
+            "title": "param",
+            "description": "The index of the first submission to return.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.start",
+            "default": "0"
           },
           {
             "title": "param",

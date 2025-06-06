@@ -28,9 +28,11 @@ const configuration = {
 describe('getSubmissions', () => {
   const state = { configuration };
   const sampleData = [
-    { uid: '1', name: 'Ruh' },
-    { uid: '2', name: 'Shay' },
+    { uid: '1', name: 'Bob' },
+    { uid: '4', name: 'Anuh' },
+    { uid: '3', name: 'Charlie' },
   ];
+
   let originalLog;
   let consoleOutput = [];
   beforeEach(() => {
@@ -38,6 +40,83 @@ describe('getSubmissions', () => {
     console.warn = (...args) => consoleOutput.push(...args);
   });
 
+  it('should auto page to the correct limit when start is passed', async () => {
+    const mockData = Array.from({ length: 20 }, (_, i) => ({
+      uid: `${i + 1}`,
+      name: `User ${i + 1}`,
+    }));
+
+    let requestCount = 0;
+    testServer
+      .intercept({
+        path: /\/api\/v2\/assets\/aXecHjmbATuF6iGFmvBLBX\/data/,
+        method: 'GET',
+      })
+      .reply(
+        200,
+        req => {
+          requestCount++;
+          const { query, origin, path } = req;
+          const results = responseWithPagination(
+            mockData,
+            {
+              limit: query.limit,
+              start: query.start,
+            },
+            {
+              url: `${origin}${path}`,
+            }
+          );
+          return results;
+        },
+        {
+          ...jsonHeaders,
+        }
+      )
+      .times(6);
+
+    const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
+      start: 2,
+      limit: 12,
+      pageSize: 2,
+    })(state);
+
+    expect(data.length).to.eql(12);
+    expect(requestCount).to.eql(6);
+    expect(data[0]).to.eql({ uid: '3', name: 'User 3' });
+  });
+
+  it('should start from the specified index', async () => {
+    testServer
+      .intercept({
+        path: /\/api\/v2\/assets\/aXecHjmbATuF6iGFmvBLBX\/data/,
+        method: 'GET',
+      })
+      .reply(
+        200,
+        req => {
+          const { query, origin, path } = req;
+          const results = responseWithPagination(
+            sampleData,
+            {
+              limit: query.limit,
+              start: query.start,
+            },
+            {
+              url: `${origin}${path}`,
+            }
+          );
+          return results;
+        },
+        {
+          ...jsonHeaders,
+        }
+      );
+    const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
+      start: 2,
+    })(state);
+    expect(data[0].uid).to.eql('3');
+  });
   it('should not return more items than the default limit', async () => {
     let requestCount = 0;
     const items = Array.from({ length: 4e4 }, (_, i) => ({
