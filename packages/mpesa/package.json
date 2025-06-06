@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-mpesa",
+  "label": "Mpesa",
   "version": "1.0.3",
   "description": "OpenFn mpesa adaptor",
   "type": "module",

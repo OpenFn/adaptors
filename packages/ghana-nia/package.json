@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-ghana-nia",
+  "label": "Ghana NIA",
   "version": "0.1.7",
   "description": "OpenFn ghana-nia adaptor",
   "type": "module",

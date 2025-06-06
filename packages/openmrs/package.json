@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-openmrs",
+  "label": "OpenMRS",
   "version": "5.0.2",
   "description": "OpenMRS Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",

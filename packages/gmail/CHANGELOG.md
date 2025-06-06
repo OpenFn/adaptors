@@ -1,5 +1,12 @@
 # @openfn/language-gmail
 
+## 1.3.0 - 30 May 2025
+
+### Minor Changes
+
+- 1205796: Enhance `sendMessage()` to accept an array of configuration objects,
+  allowing multiple messages to be send in a single command.
+
 ## 1.2.0 - 22 April 2025
 
 ### Minor Changes

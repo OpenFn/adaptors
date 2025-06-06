@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-resourcemap",
+  "label": "Resourcemap",
   "version": "0.4.15",
   "description": "Resourcemap Language Pack for OpenFn",
   "main": "dist/index.cjs",

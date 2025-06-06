@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-beyonic",
+  "label": "Beyonic",
   "version": "0.3.14",
   "description": "beyonic Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",

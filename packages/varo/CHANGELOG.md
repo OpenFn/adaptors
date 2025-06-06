@@ -1,5 +1,11 @@
 # @openfn/language-varo
 
+## 1.1.0 - 12 May 2025
+
+### Minor Changes
+
+- c9453ed: Added streaming RTMD data support.
+
 ## 1.0.3 - 22 April 2025
 
 ### Patch Changes

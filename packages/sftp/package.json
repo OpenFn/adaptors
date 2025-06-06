@@ -1,6 +1,7 @@
 {
   "name": "@openfn/language-sftp",
-  "version": "2.0.12",
+  "label": "SFTP",
+  "version": "2.0.13",
   "description": "An SFTP language package for use with Open Function",
   "homepage": "https://docs.openfn.org",
   "repository": {

@@ -1,6 +1,7 @@
 {
   "name": "@openfn/language-gmail",
-  "version": "1.2.0",
+  "label": "Gmail",
+  "version": "1.3.0",
   "description": "OpenFn gmail adaptor",
   "type": "module",
   "exports": {

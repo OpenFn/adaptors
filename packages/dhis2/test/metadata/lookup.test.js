@@ -18,7 +18,7 @@ describe('DHIS2 lookup tests', async () => {
   // Unit tests of each query against a sample model
   describe('create', () => {
     it('resourceType: should list resourceTypes', () => {
-      const results = jp.query(data, queries.create.resourceType);
+      const results = jp.query(data, queries.create.path);
       expect(results).to.have.lengthOf(13);
       expect(results).to.include('trackedEntityInstances');
       expect(results).to.include('events');

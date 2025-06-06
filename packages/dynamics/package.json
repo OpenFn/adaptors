@@ -1,5 +1,6 @@
 {
   "name": "@openfn/language-dynamics",
+  "label": "Dynamics",
   "version": "0.5.16",
   "description": "A Microsoft Dynamics Language Pack for OpenFn",
   "main": "dist/index.cjs",
