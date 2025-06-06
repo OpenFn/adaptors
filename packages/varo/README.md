@@ -329,3 +329,87 @@ cd openfn/adaptors/adaptors
 git checkout nhgh-varo
 ```
 
+# FridgeTag `records` vs. `zReports`
+
+## Purpose
+
+The FridgeTag parser (`parseFridgeTagToReport`) reads structured device output and emits two parallel data structures: `records` and `zReports`. This dual design allows strict compliance with EMS standards, while also preserving valuable out-of-spec information from the original FridgeTag device logs.
+
+## `records`: EMS-compliant daily extremes
+
+FridgeTag source data provides daily minimum and maximum temperatures, including the exact timestamp each was observed. These data points are directly compatible with EMS requirements, which demand time-stamped records representing sensor readings.
+
+For each day in the log, the parser generates:
+
+- One EMS record for the minimum temperature, and
+- One EMS record for the maximum temperature.
+
+Each record includes:
+- `ABST`: Absolute ISO-8601 timestamp (e.g., `"2024-10-08T08:15:00.000Z"`).
+- `TVC`: Temperature value in °C (e.g., `18.5`).
+- `ALRM`: Optional alarm flag (e.g., `"HEAT"` or `"FRZE"`), derived from alarm conditions.
+- `zdescription`: A label for context (e.g., `"2024-10-08 Min T"`).
+
+Example:
+```json
+{
+  "ABST": "2024-10-08T08:15:00.000Z",
+  "TVC": 18.5,
+  "ALRM": null,
+  "zdescription": "2024-10-08 Min T"
+}
+```
+
+These entries fully conform to EMS specifications and can be directly integrated into compliant pipelines or summaries.
+
+## `zReports`: Out-of-spec aggregates & alarm summaries
+
+In addition to min/max values, FridgeTag records include:
+
+- A daily average temperature,
+- Detailed alarm metadata: including duration of condition (`t Acc`), first alarm timestamp (`TS A`), and alarm count (`C A`).
+
+This information is not compatible with EMS formats, which don't align with aggregated statistics and rich alarm metadata. However, this data remains operationally meaningful, especially for:
+
+- 60-day summary reports,
+- Country-level immunization program dashboards,
+- Quick on-site reviews by technicians.
+
+To retain this data without violating EMS constraints, the parser generates a `zReports` array. Each entry summarizes one day:
+
+```json
+{
+  "date": "2024-10-08T00:00:00.000Z",
+  "duration": "1D",
+  "alarms": [
+    {
+      "condition": "HEAT",
+      "conditionMinutes": 840,
+      "alarmTime": "2024-10-08T00:00:00.000Z"
+    }
+  ],
+  "aggregates": [
+    {
+      "id": "TVC",
+      "min": 18.5,
+      "max": 21.2,
+      "average": 19.2
+    }
+  ]
+}
+```
+
+This structure is deliberately out-of-spec (hence the `z` prefix) and is ignored by EMS consumers. It is retained only for dashboards, exports, and enriched user-facing analytics.
+
+## Design philosophy
+
+This split structure reflects a disciplined compromise between compliance and pragmatism:
+
+- `records`: strictly EMS-compliant atomic data points.
+- `zReports`: high-value extras that don't align with EMS, but still provide value.
+
+This ensures that:
+
+- Nothing is lost from the original FridgeTag data.
+- Downstream EMS systems remain unaffected.
+- Local insights and user-friendly summaries remain rich and actionable.

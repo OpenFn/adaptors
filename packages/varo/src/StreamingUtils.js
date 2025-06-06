@@ -97,7 +97,7 @@ function mergeRecords(records, groupKey) {
 
     if (tambAlrm != null) {
       mergedRecord['zTambAlrm'] = tambAlrm;
-      mergedRecord['ALRM'] = tambAlrm;
+      // mergedRecord['ALRM'] = tambAlrm; // tambAlrm is unused in this workflow.
     }
 
     if (tvcAlrm != null) {
