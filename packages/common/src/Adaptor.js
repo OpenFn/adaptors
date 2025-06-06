@@ -197,39 +197,54 @@ export function lastReferenceValue(path) {
 }
 
 /**
- * Scopes an array of data based on a JSONPath.
- * Useful when the source data has `n` items you would like to map to
- * an operation.
- * The operation will receive a slice of the data based of each item
- * of the JSONPath provided.
+ * Maps over a collection of items to produce a new `state.data` array.
+ *
+ * This utility is useful when the source data contains multiple items and you want
+ * to perform an operation for each one, generating an array of transformed results.
+ *
+ * The provided `callback` will be invoked once per item in the array, and each result
+ * will be collected into `state.data` as an array. The `path` argument determines where the array
+ * is sourced from, either via a JSONPath string or directly as a static array.
+ *
  * @public
  * @function
  * @example
- * map("$.[*]",
- *   create("SObject",
- *     field("FirstName", sourceValue("$.firstName"))
- *   )
- * )
- * @param {string} path - JSONPath referencing a point in `state.data`.
- * @param {function} operation - The operation needed to be repeated.
- * @param {State} state - Runtime state.
+ * map('$.data[*]', (data, index, state) => {
+ *   return {
+ *     id: index + 1,
+ *     name: data.name,
+ *     createdAt: state.cursor,
+ *   };
+ * });
+ * @param {string|Array} path - A JSONPath string to or an array of items to map directly.
+ * @param {function} callback - The function invoked with `(data, index, state)` for each item in the array.
  * @returns {State}
  */
-export const map = curry(function (path, operation, state) {
-  switch (typeof path) {
-    case 'string':
-      source(path)(state).map(function (data) {
-        return operation({ data, references: state.references });
-      });
-      return state;
+export const map = function (path, callback) {
+  const results = [];
+  return state => {
+    switch (typeof path) {
+      case 'string':
+        source(path)(state).map(function (data, index) {
+          const value = callback(data, index, state);
 
-    case 'object':
-      path.map(function (data) {
-        return operation({ data, references: state.references });
-      });
-      return state;
-  }
-});
+          results.push(value);
+
+          return results;
+        });
+        return { ...state, data: results };
+
+      case 'object':
+        path.map(function (data, index) {
+          const value = callback(data, index, state);
+
+          results.push(value);
+          return results;
+        });
+        return { ...state, data: results };
+    }
+  };
+};
 
 /**
  * Simple switcher allowing other expressions to use either a JSONPath or

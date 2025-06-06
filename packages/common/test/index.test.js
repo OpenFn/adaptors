@@ -101,23 +101,59 @@ describe('source', () => {
 });
 
 describe('map', () => {
-  xit('[DEPRECATED] can produce a one to one from an array', () => {
-    let items = [];
-
+  it('can map a single item from an array', () => {
     let state = { data: testData, references: [] };
-    let results = map(
-      '$.data.store.book[*]',
-      function (state) {
-        return { references: [1, ...state.references], ...state };
-      },
-      state
-    );
+    let results = map('$.data.store.book[*]', function (data) {
+      return { label: data.title };
+    })(state);
+    expect(results.data).to.eql([
+      { label: 'Sayings of the Century' },
+      { label: 'Sword of Honour' },
+      { label: 'Moby Dick' },
+      { label: 'The Lord of the Rings' },
+    ]);
+  });
+  it('can map items from an array and add values', () => {
+    let state = { data: testData, references: [] };
+    let results = map(state.data.store.book, function (data, index) {
+      return {
+        id: index + 1,
+        title: data.title,
+        price: data.price,
+        expensive: data.price > 10,
+      };
+    })(state);
 
-    expect(results.references).to.eql([
-      { title: 'Sayings of the Century' },
-      { title: 'Sword of Honour' },
-      { title: 'Moby Dick' },
-      { title: 'The Lord of the Rings' },
+    expect(results.data).to.eql([
+      {
+        id: 1,
+        title: 'Sayings of the Century',
+        price: 8.95,
+        expensive: false,
+      },
+      { id: 2, title: 'Sword of Honour', price: 12.99, expensive: true },
+      { id: 3, title: 'Moby Dick', price: 8.99, expensive: false },
+      {
+        id: 4,
+        title: 'The Lord of the Rings',
+        price: 22.99,
+        expensive: true,
+      },
+    ]);
+  });
+  it('can use state to map items', () => {
+    let state = { data: testData, references: [] };
+    state.baseId = 'book-';
+    let results = map('$.data.store.book[*]', function (data, index, state) {
+      return {
+        id: state.baseId + index,
+      };
+    })(state);
+    expect(results.data).to.eql([
+      { id: 'book-0' },
+      { id: 'book-1' },
+      { id: 'book-2' },
+      { id: 'book-3' },
     ]);
   });
 });
