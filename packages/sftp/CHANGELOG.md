@@ -1,5 +1,11 @@
 # @openfn/language-sftp
 
+## 2.0.13 - 03 June 2025
+
+### Patch Changes
+
+- remove `format:uri` from configuration-schema
+
 ## 2.0.12 - 22 April 2025
 
 ### Patch Changes
