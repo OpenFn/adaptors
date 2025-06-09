@@ -3,8 +3,6 @@ export default Adaptor;
 
 export * from './Adaptor';
 
-export * from './lodash';
-
 export * as beta from './beta';
 export * as http from './http';
 export * as util from './util/index.js';
