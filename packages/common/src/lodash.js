@@ -1,13 +1,15 @@
-import lodash  from 'lodash';
+import lodash from 'lodash';
 
 /**
  * Lodash utility library.
- *
- * This module re-exports the full Lodash object.
- * Use named utilities like `_.map`, `_.cloneDeep`, etc.
+ * All lodash v4.17 functions are available on the `_` namespace, eg,
+ * `_.map`, `_.cloneDeep`, etc.
  *
  * @see https://lodash.com/docs/
- * @module lodash
+ * @public
+ * @function
+ * @namespace _
+ * @alias *
  * @example <caption>Split an array into chunks of 2 items each</caption>
  * fn(state => {
  *   const items = [1, 2, 3, 4, 5];
