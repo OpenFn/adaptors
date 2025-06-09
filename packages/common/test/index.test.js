@@ -101,11 +101,12 @@ describe('source', () => {
 });
 
 describe('map', () => {
-  it('can map a single item from an array', () => {
+  it('can map a single item from an array', async () => {
     let state = { data: testData, references: [] };
-    let results = map('$.data.store.book[*]', function (data) {
+    let results = await map('$.data.store.book[*]', function (data) {
       return { label: data.title };
     })(state);
+
     expect(results.data).to.eql([
       { label: 'Sayings of the Century' },
       { label: 'Sword of Honour' },
@@ -113,9 +114,9 @@ describe('map', () => {
       { label: 'The Lord of the Rings' },
     ]);
   });
-  it('can map items from an array and add values', () => {
+  it('can map items from an array and add values', async () => {
     let state = { data: testData, references: [] };
-    let results = map(state.data.store.book, function (data, index) {
+    let results = await map(state.data.store.book, function (data, index) {
       return {
         id: index + 1,
         title: data.title,
@@ -141,19 +142,42 @@ describe('map', () => {
       },
     ]);
   });
-  it('can use state to map items', () => {
+  it('can use state to map items', async () => {
     let state = { data: testData, references: [] };
     state.baseId = 'book-';
-    let results = map('$.data.store.book[*]', function (data, index, state) {
-      return {
-        id: state.baseId + index,
-      };
-    })(state);
+    let results = await map(
+      '$.data.store.book[*]',
+      function (data, index, state) {
+        return {
+          id: state.baseId + index,
+        };
+      }
+    )(state);
     expect(results.data).to.eql([
       { id: 'book-0' },
       { id: 'book-1' },
       { id: 'book-2' },
       { id: 'book-3' },
+    ]);
+  });
+  it('can use async callback to map items with state', async () => {
+    let state = { data: testData, references: [] };
+    state.baseId = 'book-';
+    let results = await map(
+      '$.data.store.book[*]',
+      async function (data, index, state) {
+        await new Promise(resolve => setTimeout(resolve, 10));
+        return {
+          id: state.baseId + index,
+          label: data.title,
+        };
+      }
+    )(state);
+    expect(results.data).to.eql([
+      { id: 'book-0', label: 'Sayings of the Century' },
+      { id: 'book-1', label: 'Sword of Honour' },
+      { id: 'book-2', label: 'Moby Dick' },
+      { id: 'book-3', label: 'The Lord of the Rings' },
     ]);
   });
 });

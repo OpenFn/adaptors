@@ -469,59 +469,6 @@
       "valid": true
     },
     {
-      "name": "map",
-      "params": [
-        "path",
-        "callback"
-      ],
-      "docs": {
-        "description": "Scopes an array of data based on a JSONPath.\nUseful when the source data has `n` items you would like to map to\nan operation.\nThe operation will receive a single item during each iteration based off of the JSONPath provided.\nThe output will be an array of results mapped into `state.data`",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "map('$.data[*]', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});"
-          },
-          {
-            "title": "param",
-            "description": "JSONPath referencing a point in `state.data`.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "The operation needed to be repeated.",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "asData",
       "params": [
         "data",
@@ -1747,6 +1694,65 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "map",
+      "params": {},
+      "docs": {
+        "description": "Maps over a collection of items to produce a new `state.data` array.\n\nThis utility is useful when the source data contains multiple items and you want\nto perform an operation for each one, generating an array of transformed results.\n\nThe provided `callback` will be invoked once per item in the array, and each result\nwill be collected into `state.data` as an array. The `path` argument determines where the array\nis sourced from, either via a JSONPath string or directly as a static array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "map('$.data[*]', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});"
+          },
+          {
+            "title": "param",
+            "description": "A JSONPath string to or an array of items to map directly.",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Array"
+                }
+              ]
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "The function invoked with `(data, index, state)` for each item in the array.",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "State"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ],
   "exports": [],

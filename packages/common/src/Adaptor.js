@@ -208,7 +208,7 @@ export function lastReferenceValue(path) {
  *
  * @public
  * @function
- * @example
+ * @example <caption> Transform an array of items in state</caption>
  * map('$.data[*]', (data, index, state) => {
  *   return {
  *     id: index + 1,
@@ -216,33 +216,32 @@ export function lastReferenceValue(path) {
  *     createdAt: state.cursor,
  *   };
  * });
+ * @example <caption>Map items asynchronously (e.g. fetch extra info)</caption>
+ * map('$.data[*]', async (data, index, state) => {
+ *   const userInfo = await fetchUserInfo(data.userId);
+ *   return {
+ *     id: index + 1,
+ *     name: data.name,
+ *     extra: userInfo,
+ *   };
+ * });
  * @param {string|Array} path - A JSONPath string to or an array of items to map directly.
  * @param {function} callback - The function invoked with `(data, index, state)` for each item in the array.
  * @returns {State}
  */
 export const map = function (path, callback) {
-  const results = [];
-  return state => {
-    switch (typeof path) {
-      case 'string':
-        source(path)(state).map(function (data, index) {
-          const value = callback(data, index, state);
+  return async state => {
+    const results = [];
+    const values = typeof path === 'string' ? source(path)(state) : path;
 
-          results.push(value);
-
-          return results;
-        });
-        return { ...state, data: results };
-
-      case 'object':
-        path.map(function (data, index) {
-          const value = callback(data, index, state);
-
-          results.push(value);
-          return results;
-        });
-        return { ...state, data: results };
+    let index = 0;
+    for (const item of values) {
+      const value = await callback(item, index, state);
+      results.push(value);
+      index++;
     }
+
+    return { ...state, data: results };
   };
 };
 
