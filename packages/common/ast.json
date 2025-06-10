@@ -1713,7 +1713,13 @@
           },
           {
             "title": "example",
-            "description": "map('$.data[*]', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});"
+            "description": "map('$.data[*]', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
+            "caption": "Transform an array of items in state"
+          },
+          {
+            "title": "example",
+            "description": "map('$.data[*]', async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});",
+            "caption": "Map items asynchronously (e.g. fetch extra info)"
           },
           {
             "title": "param",

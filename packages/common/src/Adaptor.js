@@ -236,9 +236,9 @@ export const map = function (path, callback) {
 
     let index = 0;
     for (const item of values) {
-      const value = await callback(item, index, state);
+      const value = await callback(item, index++, state);
       results.push(value);
-      index++;
+  
     }
 
     return { ...state, data: results };

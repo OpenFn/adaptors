@@ -180,6 +180,14 @@ describe('map', () => {
       { id: 'book-3', label: 'The Lord of the Rings' },
     ]);
   });
+  it('ensures the index value is correct', async () => {
+    let state = { data: testData, references: [] };
+    let results = await map('$.data.store.book[*]', function (data, index) {
+      return index;
+    })(state);
+
+    expect(results.data).to.eql([0, 1, 2, 3]);
+  });
 });
 
 describe('combine', () => {
