@@ -1,9 +1,7 @@
-import {
-  execute as commonExecute,
-  expandReferences,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
 import { post } from './Client';
 import { resolve as resolveUrl } from 'url';
+import { expandReferences } from '@openfn/language-common/util';
 
 /**
  * Execute a sequence of operations.
@@ -34,7 +32,7 @@ export function execute(...operations) {
  */
 export function createPayment(data) {
   return state => {
-    const body = expandReferences(data)(state);
+    const [body] = expandReferences(state, data);
 
     const { apiUrl, apiToken } = state.configuration;
 
@@ -61,7 +59,7 @@ export function createPayment(data) {
  */
 export function createContact(data) {
   return state => {
-    const body = expandReferences(data)(state);
+    const [body] = expandReferences(state, data);
 
     const { apiUrl, apiToken } = state.configuration;
 
@@ -88,7 +86,7 @@ export function createContact(data) {
  */
 export function createCollectionRequest(data) {
   return state => {
-    const body = expandReferences(data)(state);
+    const [body] = expandReferences(state, data);
 
     const { apiUrl, apiToken } = state.configuration;
 

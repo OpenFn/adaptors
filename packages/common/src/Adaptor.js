@@ -1,6 +1,5 @@
 import get from 'lodash/get.js';
 import omit from 'lodash/omit.js';
-import curry from 'lodash/fp/curry.js';
 import groupBy from 'lodash/groupBy.js';
 import fromPairs from 'lodash/fp/fromPairs.js';
 
@@ -11,7 +10,7 @@ import { Readable } from 'node:stream';
 import { request } from 'undici';
 import dateFns from 'date-fns';
 
-import { expandReferences as newExpandReferences, parseDate } from './util';
+import { expandReferences, parseDate } from './util';
 
 const schemaCache = {};
 
@@ -78,7 +77,7 @@ export function fn(func) {
  */
 export function fnIf(condition, operation) {
   return state => {
-    const [resolvedCondition] = newExpandReferences(state, condition);
+    const [resolvedCondition] = expandReferences(state, condition);
 
     return resolvedCondition ? operation(state) : state;
   };
@@ -371,35 +370,6 @@ export function join(targetPath, sourcePath, targetKey) {
 }
 
 /**
- * Recursively resolves objects that have resolvable values (functions).
- * @public
- * @function
- * @param {object} value - data
- * @param {Function} [skipFilter] - a function which returns true if a value should be skipped
- * @returns {Operation}
- */
-export function expandReferences(value, skipFilter) {
-  return state => {
-    if (skipFilter && skipFilter(value)) return value;
-
-    if (Array.isArray(value)) {
-      return value.map(v => expandReferences(v)(state));
-    }
-
-    if (typeof value == 'object' && !!value) {
-      return Object.keys(value).reduce((acc, key) => {
-        return { ...acc, [key]: expandReferences(value[key])(state) };
-      }, {});
-    }
-
-    if (typeof value == 'function') {
-      return expandReferences(value(state))(state);
-    }
-    return value;
-  };
-}
-
-/**
  * Returns a key, value pair in an array.
  * @public
  * @function
@@ -445,7 +415,7 @@ export function fields(...fields) {
 export function merge(dataSource, fields) {
   return state => {
     const initialData = source(dataSource)(state);
-    const additionalData = expandReferences(fields)(state);
+    const [additionalData] = expandReferences(state, fields);
 
     return initialData.reduce((acc, dataItem) => {
       return [...acc, { ...dataItem, ...additionalData }];
@@ -474,7 +444,7 @@ export function merge(dataSource, fields) {
  */
 export function group(arrayOfObjects, keyPath, callback = s => s) {
   return state => {
-    const [resolvedArray, resolvedKeyPath] = newExpandReferences(
+    const [resolvedArray, resolvedKeyPath] = expandReferences(
       state,
       arrayOfObjects,
       keyPath
@@ -691,7 +661,7 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
   };
 
   return async state => {
-    const [resolvedCsvData, resolvedParsingOptions] = newExpandReferences(
+    const [resolvedCsvData, resolvedParsingOptions] = expandReferences(
       state,
       csvData,
       parsingOptions
@@ -812,7 +782,7 @@ export function validate(schema = 'schema', data = 'data') {
     // Schema can be a url, jsonpath or object; or a function resolving to any of these
     async function resolveSchema() {
       // TODO hmm, I don't really want to expand schema if it's an object
-      const [schemaOrUrl] = newExpandReferences(state, schema);
+      const [schemaOrUrl] = expandReferences(state, schema);
 
       if (typeof schemaOrUrl === 'string') {
         try {
@@ -837,7 +807,7 @@ export function validate(schema = 'schema', data = 'data') {
 
     // data can be a jsonpath or object; or function resolving to any of these
     function resolveData() {
-      const [d] = newExpandReferences(state, data);
+      const [d] = expandReferences(state, data);
 
       if (typeof d === 'string') {
         return JSONPath({ path: d, json: state })[0];
@@ -874,7 +844,7 @@ let cursorKey = 'cursor';
 export function cursor(value, options = {}) {
   return state => {
     const { format, ...optionsWithoutFormat } = options;
-    const [resolvedValue, resolvedOptions] = newExpandReferences(
+    const [resolvedValue, resolvedOptions] = expandReferences(
       state,
       value,
       optionsWithoutFormat
@@ -930,7 +900,7 @@ export function cursor(value, options = {}) {
  */
 export function assert(expression, errorMessage) {
   return state => {
-    const [resolvedValue, resolvedErrorMessage] = newExpandReferences(
+    const [resolvedValue, resolvedErrorMessage] = expandReferences(
       state,
       expression,
       errorMessage
@@ -963,7 +933,7 @@ export function assert(expression, errorMessage) {
  */
 export function log(...args) {
   return state => {
-    const [resolvedArgs] = newExpandReferences(state, args);
+    const [resolvedArgs] = expandReferences(state, args);
     console.log(...resolvedArgs);
     return state;
   };
@@ -986,7 +956,7 @@ export function log(...args) {
  */
 export function debug(...args) {
   return state => {
-    const [resolvedArgs] = newExpandReferences(state, args);
+    const [resolvedArgs] = expandReferences(state, args);
     console.debug(...resolvedArgs);
     return state;
   };
