@@ -705,58 +705,6 @@
       "valid": true
     },
     {
-      "name": "expandReferences",
-      "params": [
-        "value",
-        "skipFilter"
-      ],
-      "docs": {
-        "description": "Recursively resolves objects that have resolvable values (functions).",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "data",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "value"
-          },
-          {
-            "title": "param",
-            "description": "a function which returns true if a value should be skipped",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Function"
-              }
-            },
-            "name": "skipFilter"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "field",
       "params": [
         "key",

@@ -31,6 +31,7 @@ import {
   assert as assertCommon,
   log,
   debug,
+  map
 } from '../src/Adaptor';
 import { startOfToday } from 'date-fns';
 
