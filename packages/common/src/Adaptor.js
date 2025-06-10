@@ -196,6 +196,55 @@ export function lastReferenceValue(path) {
 }
 
 /**
+ * Maps over a collection of items to produce a new `state.data` array.
+ *
+ * This utility is useful when the source data contains multiple items and you want
+ * to perform an operation for each one, generating an array of transformed results.
+ *
+ * The provided `callback` will be invoked once per item in the array, and each result
+ * will be collected into `state.data` as an array. The `path` argument determines where the array
+ * is sourced from, either via a JSONPath string or directly as a static array.
+ *
+ * @public
+ * @function
+ * @example <caption> Transform an array of items in state</caption>
+ * map('$.data[*]', (data, index, state) => {
+ *   return {
+ *     id: index + 1,
+ *     name: data.name,
+ *     createdAt: state.cursor,
+ *   };
+ * });
+ * @example <caption>Map items asynchronously (e.g. fetch extra info)</caption>
+ * map('$.data[*]', async (data, index, state) => {
+ *   const userInfo = await fetchUserInfo(data.userId);
+ *   return {
+ *     id: index + 1,
+ *     name: data.name,
+ *     extra: userInfo,
+ *   };
+ * });
+ * @param {string|Array} path - A JSONPath string to or an array of items to map directly.
+ * @param {function} callback - The function invoked with `(data, index, state)` for each item in the array.
+ * @returns {State}
+ */
+export const map = function (path, callback) {
+  return async state => {
+    const results = [];
+    const values = typeof path === 'string' ? source(path)(state) : path;
+
+    let index = 0;
+    for (const item of values) {
+      const value = await callback(item, index++, state);
+      results.push(value);
+  
+    }
+
+    return { ...state, data: results };
+  };
+};
+
+/**
  * Simple switcher allowing other expressions to use either a JSONPath or
  * object literals as a data source.
  * - JSONPath referencing a point in `state`

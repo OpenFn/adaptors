@@ -31,6 +31,7 @@ import {
   assert as assertCommon,
   log,
   debug,
+  map
 } from '../src/Adaptor';
 import { startOfToday } from 'date-fns';
 
@@ -95,6 +96,96 @@ describe('source', () => {
   it('references a given path', () => {
     let value = source('$.store.bicycle.color')(testData);
     expect(value).to.eql(['red']);
+  });
+});
+
+describe('map', () => {
+  it('can map a single item from an array', async () => {
+    let state = { data: testData, references: [] };
+    let results = await map('$.data.store.book[*]', function (data) {
+      return { label: data.title };
+    })(state);
+
+    expect(results.data).to.eql([
+      { label: 'Sayings of the Century' },
+      { label: 'Sword of Honour' },
+      { label: 'Moby Dick' },
+      { label: 'The Lord of the Rings' },
+    ]);
+  });
+  it('can map items from an array and add values', async () => {
+    let state = { data: testData, references: [] };
+    let results = await map(state.data.store.book, function (data, index) {
+      return {
+        id: index + 1,
+        title: data.title,
+        price: data.price,
+        expensive: data.price > 10,
+      };
+    })(state);
+
+    expect(results.data).to.eql([
+      {
+        id: 1,
+        title: 'Sayings of the Century',
+        price: 8.95,
+        expensive: false,
+      },
+      { id: 2, title: 'Sword of Honour', price: 12.99, expensive: true },
+      { id: 3, title: 'Moby Dick', price: 8.99, expensive: false },
+      {
+        id: 4,
+        title: 'The Lord of the Rings',
+        price: 22.99,
+        expensive: true,
+      },
+    ]);
+  });
+  it('can use state to map items', async () => {
+    let state = { data: testData, references: [] };
+    state.baseId = 'book-';
+    let results = await map(
+      '$.data.store.book[*]',
+      function (data, index, state) {
+        return {
+          id: state.baseId + index,
+        };
+      }
+    )(state);
+    expect(results.data).to.eql([
+      { id: 'book-0' },
+      { id: 'book-1' },
+      { id: 'book-2' },
+      { id: 'book-3' },
+    ]);
+  });
+  it('can use async callback to map items with state', async () => {
+    let state = { data: testData, references: [] };
+    state.baseId = 'book-';
+    let results = await map(
+      '$.data.store.book[*]',
+      async function (data, index, state) {
+        await new Promise(resolve => setTimeout(resolve, 10));
+        return {
+          id: state.baseId + index,
+          label: data.title,
+        };
+      }
+    )(state);
+    expect(results.data).to.eql([
+      { id: 'book-0', label: 'Sayings of the Century' },
+      { id: 'book-1', label: 'Sword of Honour' },
+      { id: 'book-2', label: 'Moby Dick' },
+      { id: 'book-3', label: 'The Lord of the Rings' },
+    ]);
+  });
+  it('ensures the index value is correct', async () => {
+    let state = { data: testData, references: [] };
+    let results = await map('$.data.store.book[*]', function (data, index) {
+      return index;
+    })(state);
+
+    expect(results.data).to.eql([0, 1, 2, 3]);
   });
 });
 
