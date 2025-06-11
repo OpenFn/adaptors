@@ -43,3 +43,32 @@ export function request(state, path, params, callback = s => s) {
       throw err;
     });
 }
+
+export async function requestWithPagination(state, path, params) {
+  let { body, headers = {}, method = 'GET', ...rest } = params;
+
+  const options = {
+    ...rest,
+    headers,
+    baseUrl,
+    body,
+  };
+  const results = [];
+  let shouldFetchMoreContent = false;
+
+  do {
+    const response = await request(state, path, options);
+
+    const hasMoreContent = response.body?.data?.next_page;
+
+    results.push(...result(response.body, 'data', []));
+    if (hasMoreContent) {
+      options.query = options.query || {};
+      options.query.offset = response.body.data.next_page.offset;
+      options.query.limit = response.body.data.next_page.limit;
+    }
+    shouldFetchMoreContent = !limit && hasMoreContent;
+  } while (shouldFetchMoreContent);
+
+  return results;
+}
