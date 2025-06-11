@@ -1,6 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { request as requestHelper } from './Utils';
+import * as util from './util';
 
 /**
  * Execute a sequence of operations.
@@ -48,7 +48,7 @@ export function getTask(taskGid, params, callback) {
       taskGid,
       params
     );
-    return requestHelper(
+    return util.request(
       state,
       `tasks/${resolvedTaskGid}`,
       { query: resolvedParams },
@@ -78,7 +78,7 @@ export function getTasks(projectGid, params, callback) {
       params
     );
 
-    return requestHelper(
+    return util.request(
       state,
       `projects/${resolvedProjectGid}/tasks`,
       { query: resolvedParams },
@@ -110,7 +110,7 @@ export function updateTask(taskGid, params, callback) {
       params
     );
 
-    return requestHelper(
+    return util.request(
       state,
       `tasks/${resolvedTaskGid}`,
       { body: { data: resolvedParams }, method: 'PUT' },
@@ -138,7 +138,7 @@ export function createTask(params, callback) {
   return state => {
     const [resolvedParams] = expandReferences(state, params);
 
-    return requestHelper(
+    return util.request(
       state,
       'tasks',
       { body: { data: resolvedParams }, method: 'POST' },
@@ -174,7 +174,7 @@ export function upsertTask(projectGid, params, callback) {
       params
     );
 
-    return requestHelper(
+    return util.request(
       state,
       `projects/${resolvedProjectGid}/tasks`,
       { query: { opt_fields: `${externalId}` } },
@@ -241,7 +241,7 @@ export function createTaskStory(taskGid, params, callback) {
     ] = expandReferences(state, taskGid, params);
 
     const story = { text, html_text, is_pinned, sticker_name };
-    return requestHelper(
+    return util.request(
       state,
       `tasks/${resolvedTaskGid}/stories`,
       {
@@ -293,12 +293,7 @@ export function request(path, params = {}, callback) {
 
     const { body = {}, query = {}, method = 'GET' } = resolvedParams;
 
-    return requestHelper(
-      state,
-      resolvedPath,
-      { method, body, query },
-      callback
-    );
+    return util.request(state, resolvedPath, { method, body, query }, callback);
   };
 }
 
