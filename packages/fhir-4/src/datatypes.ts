@@ -196,9 +196,9 @@ export const value = (value, system, ...extra) =>
  * @function
  * @param {string} value - the value
  * @param {object} extra - Extra properties to write to the coding
- * @example <caption><Create a codeableConcept</caption>
+ * @example <caption>Create a codeableConcept</caption>
  * const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
- * @example <caption><Create a codeableConcept with text</caption>
+ * @example <caption>Create a codeableConcept with text</caption>
  * const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  */
 type ConceptCoding =
