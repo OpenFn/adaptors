@@ -165,7 +165,7 @@ These functions belong to the utils namespace.
 <p><code>addExtension(resource, url, value)</code></p>
 
 Add an extension to a resource (or object).
-An object will be created and added to an `extension` array on the provided resource. 
+An object will be created and added to an `extension` array on the provided resource.
 The extension array will be set if it does not exist on the resource.
 The value will be smartly written to the object, ie, valueDateTime or valueReference or valueString
 
@@ -236,13 +236,13 @@ Create a codeableConcept. Codings can be coding objects or
 if the first argument is a string, it will be set as the text.
 Systems will be mapped with the system map
 
-**Example:** <Create a codeableConcept
+**Example:** Create a codeableConcept
 ```js
-const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])  
+const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
 ```
-**Example:** <Create a codeableConcept with text
+**Example:** Create a codeableConcept with text
 ```js
-const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])  
+const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
 ```
 
 * * *

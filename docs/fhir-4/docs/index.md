@@ -4410,11 +4410,11 @@ Systems will be mapped with the system map
 | value | <code>string</code> | the value |
 | extra | <code>object</code> | Extra properties to write to the coding |
 
-**Example:** <Create a codeableConcept
+**Example:** Create a codeableConcept
 ```js
 const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
 ```
-**Example:** <Create a codeableConcept with text
+**Example:** Create a codeableConcept with text
 ```js
 const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
 ```

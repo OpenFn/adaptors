@@ -232,11 +232,11 @@ Create a codeableConcept. Codings can be coding objects or
 if the first argument is a string, it will be set as the text.
 Systems will be mapped with the system map
 
-**Example:** <Create a codeableConcept
+**Example:** Create a codeableConcept
 ```js
 const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
 ```
-**Example:** <Create a codeableConcept with text
+**Example:** Create a codeableConcept with text
 ```js
 const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
 ```
