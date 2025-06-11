@@ -1,6 +1,23 @@
 import { expect } from 'chai';
+import { enableMockClient } from '@openfn/language-common/util';
+import {
+  execute,
+  request,
+  getTask,
+  getTasks,
+  updateTask,
+  createTask,
+  upsertTask,
+} from '../src';
+import { responseWithData } from './helper';
 
-import { execute, request } from '../src';
+const baseUrl = 'https://app.asana.com';
+const testServer = enableMockClient(baseUrl);
+const configuration = {
+  apiVersion: 'v1',
+  token: 'fake-token',
+};
+const state = { configuration };
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -49,12 +66,123 @@ describe('request', () => {
   });
 });
 
-describe.skip('getTask', () => {});
+describe.only('getTask', () => {
+  it('should fetch a task by GID', async () => {
+    const taskGid = '12345';
+    const params = { opt_fields: 'name,notes' };
+    const mockData = { gid: taskGid, name: 'Test Task', notes: 'Some notes' };
+    testServer
+      .intercept({
+        path: `/api/v1/tasks/${taskGid}`,
+        query: params,
+        method: 'GET',
+      })
+      .reply(200, responseWithData(mockData));
+    const result = await execute(getTask(taskGid, params))(state);
+    console.log({ result });
+    expect(result.data).to.eql(mockData);
+  });
+});
 
-describe.skip('getTasks', () => {});
+describe.skip('getTasks', () => {
+  it('should fetch tasks for a project', async () => {
+    const projectGid = 'proj123';
+    const params = { opt_fields: 'name' };
+    const mockData = [
+      { gid: '1', name: 'Task 1' },
+      { gid: '2', name: 'Task 2' },
+    ];
+    testServer
+      .intercept({
+        path: `/api/v1/projects/${projectGid}/tasks`,
+        method: 'GET',
+      })
+      .reply(200, responseWithData(mockData));
+    const result = await execute(getTasks(projectGid, params))(state);
+    expect(result.data).to.eql(mockData);
+  });
+});
 
-describe.skip('updateTask', () => {});
+describe.skip('updateTask', () => {
+  it('should update a task by GID', async () => {
+    const taskGid = '12345';
+    const params = { name: 'Updated Task' };
+    const mockData = { gid: taskGid, name: 'Updated Task' };
+    testServer
+      .intercept({
+        path: `/api/v1/tasks/${taskGid}`,
+        method: 'PUT',
+      })
+      .reply(200, responseWithData(mockData));
+    const result = await execute(updateTask(taskGid, params))(state);
+    expect(result.data).to.eql(mockData);
+  });
+});
 
-describe.skip('createTask', () => {});
+describe('createTask', () => {
+  it('should create a new task', async () => {
+    const params = { name: 'New Task', projects: ['proj123'] };
+    const mockData = { gid: 'new123', name: 'New Task' };
+    testServer
+      .intercept({
+        path: `/api/v1/tasks`,
+        method: 'POST',
+      })
+      .reply(200, responseWithData(mockData));
+    const result = await execute(createTask(params))(state);
+    expect(result.data).to.eql(mockData);
+  });
+});
 
-describe.skip('upsertTask', () => {});
+describe('upsertTask', () => {
+  it('should update if matching task exists', async () => {
+    const projectGid = 'proj123';
+    const params = {
+      externalId: 'name',
+      data: { name: 'Existing Task', projects: [projectGid] },
+    };
+    const existingTask = { gid: 'task1', name: 'Existing Task' };
+    const updatedTask = { gid: 'task1', name: 'Existing Task', updated: true };
+    // First call: search for existing task
+    testServer
+      .intercept({
+        path: `/api/v1/projects/${projectGid}/tasks`,
+        method: 'GET',
+      })
+      .reply(200, responseWithData([existingTask]));
+    // Second call: update the task
+    testServer
+      .intercept({
+        path: `/api/v1/tasks/${existingTask.gid}`,
+        method: 'PUT',
+      })
+      .reply(200, responseWithData(updatedTask));
+    const result = await execute(upsertTask(projectGid, params))(state);
+    expect(result.data).to.eql(updatedTask);
+  });
+
+  it('should create if no matching task exists', async () => {
+    const projectGid = 'proj123';
+    const params = {
+      externalId: 'name',
+      data: { name: 'New Task', projects: [projectGid] },
+    };
+    const newTask = { gid: 'new123', name: 'New Task' };
+    // First call: search for existing task (none found)
+    testServer
+      .intercept({
+        path: `/api/v1/projects/${projectGid}/tasks`,
+        method: 'GET',
+      })
+      .reply(200, responseWithData([]));
+    // Second call: create the task
+    testServer
+      .intercept({
+        path: `/api/v1/tasks`,
+        method: 'POST',
+      })
+      .reply(200, responseWithData(newTask));
+    const result = await execute(upsertTask(projectGid, params))(state);
+    expect(result.data).to.eql(newTask);
+  });
+});
