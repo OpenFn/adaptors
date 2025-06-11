@@ -5250,7 +5250,7 @@ declare const value: (value: any, system: any, ...extra: any[]) => any;
  * @param {object} extra - Extra properties to write to the coding
  * @example <caption><Create a codeableConcept</caption>
  * const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
- * * @example <caption><Create a codeableConcept with text</caption>
+ * @example <caption><Create a codeableConcept with text</caption>
  * const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  */
 declare type ConceptCoding = Coding | [string, string, Omit<Coding, 'code' | 'system'>?];

@@ -188,7 +188,7 @@ export const value = (value, system, ...extra) =>
  * @function
  * @example <caption><Create a codeableConcept</caption>
  * const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
- * * @example <caption><Create a codeableConcept with text</caption>
+ * @example <caption><Create a codeableConcept with text</caption>
  * const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  */
 export const concept = (text, ...codings) => {
