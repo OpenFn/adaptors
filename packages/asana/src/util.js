@@ -1,36 +1,40 @@
-import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   logResponse,
+  assertRelativeUrl,
 } from '@openfn/language-common/util';
+import { join } from 'node:path';
+import { composeNextState } from '@openfn/language-common';
 
-export function addAuth(headers, configuration = {}) {
-  const { token } = configuration;
+const baseUrl = 'https://app.asana.com';
+
+export function addAuth(headers, token) {
   if (token) {
     Object.assign(headers, { Authorization: `Bearer ${token}` });
   }
 }
 
 export function request(state, path, params = {}, callback = s => s) {
-  let {
-    headers = { accept: 'application/json' },
+  assertRelativeUrl(path);
+  const { token, apiVersion = '1.0' } = state.configuration ?? {};
+  const currentPath = join('/api', apiVersion, path);
+
+  const {
     method = 'GET',
+    headers = { accept: 'application/json' },
     ...rest
   } = params;
 
-  const apiVersion = state.configuration?.apiVersion ?? '1.0';
-  const baseUrl = `https://app.asana.com/api/${apiVersion}`;
-
-  addAuth(headers, state.configuration);
+  addAuth(headers, token);
 
   const options = {
     ...rest,
     headers,
-    baseUrl,
+    baseUrl, // https://app.asana.com
     parseAs: 'json',
   };
 
-  return commonRequest(method, path, options)
+  return commonRequest(method, currentPath, options)
     .then(logResponse)
     .then(callback)
     .catch(err => {
@@ -43,8 +47,8 @@ export function request(state, path, params = {}, callback = s => s) {
 }
 
 export const DEFAULT_PAGE_LIMIT = 1e2; // Asana API has a maximum limit of 100
-export async function requestWithPagination(state, path, params) {
-  let { body, headers = {}, query, ...rest } = params;
+export async function requestWithPagination(state, path, params = {}) {
+  let { body, headers, query = {}, ...rest } = params;
   const { limit, ...restQuery } = query;
 
   const options = {
@@ -76,8 +80,9 @@ export async function requestWithPagination(state, path, params) {
 
 export function prepareNextState(state, response) {
   const { body, ...responseWithoutBody } = response;
+  const { data, next_page } = body ?? {};
   return {
-    ...composeNextState(state, body?.data),
-    response: responseWithoutBody,
+    ...composeNextState(state, data),
+    response: { next_page, ...responseWithoutBody },
   };
 }
