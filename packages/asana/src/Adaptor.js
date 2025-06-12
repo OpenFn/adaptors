@@ -97,9 +97,7 @@ export function getTasks(projectGid, params, callback) {
       callback
     );
     console.log(`Fetched ${results.length} tasks`);
-    return {
-      ...composeNextState(state, results),
-    };
+    return composeNextState(state, results);
   };
 }
 
