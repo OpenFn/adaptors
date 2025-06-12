@@ -11,10 +11,15 @@ export function addAuth(headers, configuration = {}) {
   }
 }
 
-export function request(state, path, params, callback = s => s) {
-  let { body, headers = {}, method = 'GET', ...rest } = params;
+export function request(state, path, params = {}, callback = s => s) {
+  let {
+    headers = { accept: 'application/json' },
+    method = 'GET',
+    ...rest
+  } = params;
 
-  const baseUrl = `https://app.asana.com/api/${state.configuration?.apiVersion}`;
+  const apiVersion = state.configuration?.apiVersion ?? '1.0';
+  const baseUrl = `https://app.asana.com/api/${apiVersion}`;
 
   addAuth(headers, state.configuration);
 
@@ -22,18 +27,11 @@ export function request(state, path, params, callback = s => s) {
     ...rest,
     headers,
     baseUrl,
-    body,
+    parseAs: 'json',
   };
 
   return commonRequest(method, path, options)
-    .then(response => {
-      logResponse(response);
-      const { body, ...responseWithoutBody } = response;
-      return {
-        ...composeNextState(state, body?.data),
-        response: responseWithoutBody,
-      };
-    })
+    .then(logResponse)
     .then(callback)
     .catch(err => {
       if (err.code !== 'BASE_URL_MISMATCH') {
@@ -44,31 +42,42 @@ export function request(state, path, params, callback = s => s) {
     });
 }
 
+export const DEFAULT_PAGE_LIMIT = 1e2; // Asana API has a maximum limit of 100
 export async function requestWithPagination(state, path, params) {
-  let { body, headers = {}, method = 'GET', ...rest } = params;
+  let { body, headers = {}, query, ...rest } = params;
+  const { limit, ...restQuery } = query;
 
   const options = {
     ...rest,
     headers,
-    baseUrl,
     body,
+    query: { limit: limit ?? DEFAULT_PAGE_LIMIT, ...restQuery },
   };
   const results = [];
-  let shouldFetchMoreContent = false;
+  const didUserPassLimit = Boolean(limit);
+  let shouldFetchNextPage = false;
+  let currentPath = path;
 
   do {
-    const response = await request(state, path, options);
+    const response = await request(state, currentPath, options);
+    results.push(...response?.body?.data);
 
-    const hasMoreContent = response.body?.data?.next_page;
+    const nextPage = response?.body?.next_page;
+    const hasNextPage = nextPage?.path && nextPage?.offset !== undefined;
 
-    results.push(...result(response.body, 'data', []));
-    if (hasMoreContent) {
-      options.query = options.query || {};
-      options.query.offset = response.body.data.next_page.offset;
-      options.query.limit = response.body.data.next_page.limit;
+    shouldFetchNextPage = !didUserPassLimit && hasNextPage;
+    if (shouldFetchNextPage) {
+      currentPath = nextPage.path;
     }
-    shouldFetchMoreContent = !limit && hasMoreContent;
-  } while (shouldFetchMoreContent);
+  } while (shouldFetchNextPage);
 
   return results;
+}
+
+export function prepareNextState(state, response) {
+  const { body, ...responseWithoutBody } = response;
+  return {
+    ...composeNextState(state, body?.data),
+    response: responseWithoutBody,
+  };
 }
