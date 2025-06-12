@@ -24,6 +24,22 @@ describe('Integration tests', () => {
       expect(data).to.be.an('array');
       expect(response.statusCode).to.equal(200);
     });
+    it('should have next_page if there are more pages', async () => {
+      const { data, response } = await request(
+        `projects/${testProjectGid}/tasks`,
+        {
+          query: {
+            limit: 10,
+          },
+        }
+      )(state);
+
+      expect(data.length).to.be.eq(10);
+      expect(response.next_page).to.exist;
+      expect(response.next_page).to.have.property('path');
+      expect(response.next_page).to.have.property('offset');
+      expect(response.next_page).to.have.property('uri');
+    });
   });
   describe('createTask', () => {
     it('should create a new task', async () => {
@@ -53,7 +69,6 @@ describe('Integration tests', () => {
         })
       )(state);
 
-      console.log({ data });
       expect(data).to.have.property('gid', createdTaskGid);
       expect(data).to.have.property('name');
       expect(data).to.have.property('notes');
@@ -84,7 +99,7 @@ describe('Integration tests', () => {
       expect(data.length).to.greaterThan(1e3);
       expect(data[0]).to.have.property('gid');
       expect(data[0]).to.have.property('name');
-    }).timeout(1e4);
+    }).timeout(2e4);
   });
 
   describe('upsertTask', () => {
@@ -101,7 +116,7 @@ describe('Integration tests', () => {
       )(state);
 
       expect(data.name).to.equal('Test-Upsert');
-    }).timeout(1e4);
+    }).timeout(2e4);
   });
   describe('updateTask', () => {
     it('should update an existing task', async () => {
@@ -114,7 +129,6 @@ describe('Integration tests', () => {
         state
       );
 
-      console.log({ data });
       expect(data).to.have.property('gid', createdTaskGid);
       expect(data.name).to.equal('Updated Test Task');
       expect(data.notes).to.equal(

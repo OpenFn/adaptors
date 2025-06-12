@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { enableMockClient } from '@openfn/language-common/util';
+
 import {
   execute,
   request,
@@ -10,9 +10,8 @@ import {
   upsertTask,
 } from '../src';
 import { DEFAULT_PAGE_LIMIT } from '../src/util';
+import { mockServer } from './helper';
 
-const baseUrl = 'https://app.asana.com';
-const testServer = enableMockClient(baseUrl);
 const configuration = {
   token: 'fake-token',
 };
@@ -62,7 +61,8 @@ describe('Adaptor Test', () => {
       } catch (e) {
         err = e;
       }
-      expect(err.code).to.equal('BASE_URL_MISMATCH');
+
+      expect(err.code).to.equal('UNEXPECTED_ABSOLUTE_URL');
     });
   });
 
@@ -71,7 +71,7 @@ describe('Adaptor Test', () => {
       const taskGid = '12345';
       const params = { opt_fields: 'name,notes' };
       const mockData = { gid: taskGid, name: 'Test Task', notes: 'Some notes' };
-      testServer
+      mockServer
         .intercept({
           path: `/api/1.0/tasks/${taskGid}`,
           query: params,
@@ -94,7 +94,7 @@ describe('Adaptor Test', () => {
         { gid: '1', name: 'Task 1' },
         { gid: '2', name: 'Task 2' },
       ];
-      testServer
+      mockServer
         .intercept({
           path: `/api/1.0/projects/${projectGid}/tasks`,
           query: { limit: DEFAULT_PAGE_LIMIT, ...params },
@@ -112,7 +112,7 @@ describe('Adaptor Test', () => {
       const taskGid = '12345';
       const taskData = { name: 'Updated Task' };
       const mockData = { gid: taskGid, name: 'Updated Task' };
-      testServer
+      mockServer
         .intercept({
           path: `/api/1.0/tasks/${taskGid}`,
           method: 'PUT',
@@ -130,7 +130,7 @@ describe('Adaptor Test', () => {
     it('should create a new task', async () => {
       const newTaskData = { name: 'New Task', projects: ['proj123'] };
       const mockData = { gid: 'new123', name: 'New Task' };
-      testServer
+      mockServer
         .intercept({
           path: `/api/1.0/tasks`,
           body: JSON.stringify({ data: newTaskData }),
@@ -157,7 +157,7 @@ describe('Adaptor Test', () => {
         updated: true,
       };
       // First call: search for existing task
-      testServer
+      mockServer
         .intercept({
           path: `/api/1.0/projects/${projectGid}/tasks`,
           query: { opt_fields: 'name', limit: DEFAULT_PAGE_LIMIT },
@@ -165,7 +165,7 @@ describe('Adaptor Test', () => {
         })
         .reply(200, { data: [existingTask] });
       // Second call: update the task
-      testServer
+      mockServer
         .intercept({
           path: `/api/1.0/tasks/${existingTask.gid}`,
           method: 'PUT',
@@ -184,7 +184,7 @@ describe('Adaptor Test', () => {
       };
       const newTask = { gid: 'new123', name: 'New Task' };
       // First call: search for existing task (none found)
-      testServer
+      mockServer
         .intercept({
           path: `/api/1.0/projects/${projectGid}/tasks`,
           query: { opt_fields: 'name', limit: DEFAULT_PAGE_LIMIT },
@@ -192,7 +192,7 @@ describe('Adaptor Test', () => {
         })
         .reply(200, { data: [] });
       // Second call: create the task
-      testServer
+      mockServer
         .intercept({
           path: `/api/1.0/tasks`,
           method: 'POST',
