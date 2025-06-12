@@ -40,7 +40,6 @@
     "assertion-error": "2.0.0",
     "chai": "^5.2.0",
     "deep-eql": "4.1.1",
-    "nock": "13.2.9",
     "rimraf": "3.0.2"
   },
   "type": "module",
