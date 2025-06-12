@@ -5,7 +5,9 @@ import {
   getTasks,
   createTask,
   updateTask,
+  upsertTask,
   createTaskStory,
+  request,
   execute,
 } from '../dist/index.js';
 
@@ -13,8 +15,16 @@ const state = { configuration };
 
 describe('Integration tests', () => {
   let createdTaskGid;
-  const testProjectGid = '1206930238111330'; // Replace with a valid project GID from your Asana workspace
+  const testProjectGid = configuration.projectId; //'1206930238111330'; // Replace with a valid project GID from your Asana workspace
 
+  describe('request', () => {
+    it('should make a GET request with proper authorization', async () => {
+      const { data, response } = await execute(request('workspaces'))(state);
+
+      expect(data).to.be.an('array');
+      expect(response.statusCode).to.equal(200);
+    });
+  });
   describe('createTask', () => {
     it('should create a new task', async () => {
       const taskData = {
@@ -43,6 +53,7 @@ describe('Integration tests', () => {
         })
       )(state);
 
+      console.log({ data });
       expect(data).to.have.property('gid', createdTaskGid);
       expect(data).to.have.property('name');
       expect(data).to.have.property('notes');
@@ -50,7 +61,7 @@ describe('Integration tests', () => {
   });
 
   describe('getTasks', () => {
-    it('should get tasks from a project', async () => {
+    it('should get 5 tasks from a project', async () => {
       const { data } = await execute(
         getTasks(testProjectGid, {
           opt_fields: 'name,notes,assignee',
@@ -62,9 +73,36 @@ describe('Integration tests', () => {
       expect(data.length).to.be.at.most(5);
       expect(data[0]).to.have.property('gid');
       expect(data[0]).to.have.property('name');
-    }).timeout(5000);
+    });
+    it('should get all tasks from a project', async () => {
+      const { data } = await execute(
+        getTasks(testProjectGid, {
+          opt_fields: 'name,notes,assignee',
+        })
+      )(state);
+      expect(data).to.be.an('array');
+      expect(data.length).to.greaterThan(1e3);
+      expect(data[0]).to.have.property('gid');
+      expect(data[0]).to.have.property('name');
+    }).timeout(1e4);
   });
 
+  describe('upsertTask', () => {
+    it('should upsert a task', async () => {
+      const { data } = await execute(
+        upsertTask(testProjectGid, {
+          externalId: 'name',
+          data: {
+            name: 'Test-Upsert',
+            notes: 'This is a test task',
+            projects: [testProjectGid],
+          },
+        })
+      )(state);
+
+      expect(data.name).to.equal('Test-Upsert');
+    }).timeout(1e4);
+  });
   describe('updateTask', () => {
     it('should update an existing task', async () => {
       const updateData = {
@@ -76,6 +114,7 @@ describe('Integration tests', () => {
         state
       );
 
+      console.log({ data });
       expect(data).to.have.property('gid', createdTaskGid);
       expect(data.name).to.equal('Updated Test Task');
       expect(data.notes).to.equal(
