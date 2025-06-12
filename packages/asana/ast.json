@@ -36,6 +36,15 @@
           },
           {
             "title": "param",
+            "description": "Query params to include.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
             "description": "The fields to return.",
             "type": {
               "type": "NameExpression",
