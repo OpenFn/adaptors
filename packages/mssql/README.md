@@ -16,21 +16,18 @@ definition.
 ## sql query
 
 ```js
-sql({
-  query: `
+query(`
     SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
     WHERE TABLE_TYPE = 'BASE TABLE'
     AND TABLE_CATALOG='my-demo'
-  `,
-});
+  `);
 
-sql({
-  query: `SELECT * FROM Household`,
+query(`SELECT * FROM Household`,
   options: {
     writeSql: true, // Keep to true to log query (otherwise make it false).
     execute: true, // keep to false to not alter DB
   },
-});
+);
 ```
 
 ## Find a single value for a table
@@ -239,3 +236,11 @@ Run tests using `pnpm run test` or `pnpm run test:watch`
 Build the project using `pnpm build`.
 
 To just build the docs run `pnpm build docs`
+
+## For Local Integration Tests
+
+#### Setup Microsfot SQL Server - Ubuntu based images
+
+```bash
+docker pull mcr.microsoft.com/mssql/server
+```
