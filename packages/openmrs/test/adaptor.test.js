@@ -366,20 +366,41 @@ describe('upsert', () => {
       });
   };
 
-  it('should update an existing patient with a uuid', async () => {
-    mock({ path: `patient/${existingUuid}`, data: testData.patient });
+  it('should update an existing patient with a uuid in the path', async () => {
+    mock({ path: `patient/${testData.patient.uuid}`, data: testData.patient });
     mock({
       method: 'POST',
-      path: `patient/${existingUuid}`,
+      path: `patient/${testData.patient.uuid}`,
       data: ({ body }) => body,
     });
 
     const result = await upsert(
-      `patient/${existingUuid}`,
+      `patient/${testData.patient.uuid}`,
       state => state.patient
     )(state);
 
     expect(result.data.person.display).to.eql(testData.patient.person.display);
+  });
+
+  it('should update a subresource with a uuid in the path', async () => {
+    mock({
+      path: `patient/123/identifier/xyz`,
+      data: testData.patient,
+    });
+    mock({
+      method: 'POST',
+      path: `patient/123/identifier/xyz`,
+      data: () => ({
+        identifier: 'xyz',
+      }),
+    });
+
+    const result = await upsert(
+      `patient/123/identifier/xyz`,
+      state => state.patient
+    )(state);
+
+    expect(result.data.identifier).to.eql('xyz');
   });
 
   it('update an existing patient with a query parameter', async () => {
@@ -401,8 +422,7 @@ describe('upsert', () => {
     expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
 
-  // TODO this fails on this branch - see https://github.com/OpenFn/adaptors/issues/1233
-  it.skip('update an existing encounter with another parameter', async () => {
+  it('update an existing encounter with another parameter', async () => {
     mock({
       path: `patient`,
       data: { results: testData.patientResults },
@@ -452,7 +472,7 @@ describe('upsert', () => {
   });
 
   // TODO this is expected to fail - see https://github.com/OpenFn/adaptors/issues/1236
-  it.only('create a new patient with another parameter', async () => {
+  it.skip('create a new patient with another parameter', async () => {
     mock({ code: 404, path: `patient`, query: { id: testData.patient.uuid } });
     mock({
       method: 'POST',

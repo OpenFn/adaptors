@@ -345,16 +345,23 @@ export function upsert(path, data, params = {}) {
         : resolvedPath.split('/').slice(0, -1).join('/'); // remove the ID
       return create(path, resolvedData)(state);
     } else {
-      // try to find the target uuid in the result
-      let uuid = res.body.uuid;
-      if (res.body.results) {
-        uuid = res.body.results[0].uuid;
+      let finalPath = resolvedPath;
+
+      // If there are no query params and there are multiple resources in the path
+      // Then the path probably includes a UUID and we can just re-use it
+      const parts = path.split('/').length;
+      if (parts % 2 > 0 && Object.keys(resolvedParams).length > 0) {
+        // Otherwise, if there doesn't seem to be a UUID in the URL,
+        // find one from th original GET
+        let uuid = res.body.uuid;
+        if (res.body.results) {
+          uuid = res.body.results[0].uuid;
+        }
+        finalPath = `${resolvedPath}/${uuid}`;
       }
-      const path = uuid
-        ? `${resolvedPath}/${uuid}` // append the ID
-        : resolvedPath;
-      console.log(`${path} found: updating existing resource`);
-      return update(path, resolvedData)(state);
+
+      console.log(`${finalPath} found: updating existing resource`);
+      return update(finalPath, resolvedData)(state);
     }
   };
 }
