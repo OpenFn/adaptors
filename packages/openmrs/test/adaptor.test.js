@@ -382,7 +382,7 @@ describe('upsert', () => {
     expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
 
-  it('update an existing patient with a query', async () => {
+  it('update an existing patient with a query parameter', async () => {
     mock({
       path: `patient`,
       data: { results: testData.patientResults },
@@ -397,7 +397,26 @@ describe('upsert', () => {
     const result = await upsert('patient', state => state.patient, {
       q: 'batman',
     })(state);
-    console.log(result.data);
+
+    expect(result.data.person.display).to.eql(testData.patient.person.display);
+  });
+
+  // TODO this fails on this branch - see https://github.com/OpenFn/adaptors/issues/1233
+  it.skip('update an existing encounter with another parameter', async () => {
+    mock({
+      path: `patient`,
+      data: { results: testData.patientResults },
+      query: { id: testData.patient.uuid },
+    });
+    mock({
+      method: 'POST',
+      path: `patient/${testData.patient.uuid}`,
+      data: testData.patient,
+    });
+
+    const result = await upsert('patient', state => state.patient, {
+      id: testData.patient.uuid,
+    })(state);
 
     expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
@@ -418,7 +437,7 @@ describe('upsert', () => {
     expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
 
-  it('create a new patient with a query', async () => {
+  it('create a new patient with a query parameter', async () => {
     mock({ code: 404, path: `patient`, query: { q: 'spiderman' } });
     mock({
       method: 'POST',
@@ -427,6 +446,21 @@ describe('upsert', () => {
     });
     const result = await upsert('patient', state => state.patient, {
       q: 'spiderman',
+    })(state);
+
+    expect(result.data.person.display).to.eql(testData.patient.person.display);
+  });
+
+  // TODO this is expected to fail - see https://github.com/OpenFn/adaptors/issues/1236
+  it.only('create a new patient with another parameter', async () => {
+    mock({ code: 404, path: `patient`, query: { id: testData.patient.uuid } });
+    mock({
+      method: 'POST',
+      path: `patient`,
+      data: ({ body }) => body,
+    });
+    const result = await upsert('patient', state => state.patient, {
+      id: testData.patient.uuid,
     })(state);
 
     expect(result.data.person.display).to.eql(testData.patient.person.display);
