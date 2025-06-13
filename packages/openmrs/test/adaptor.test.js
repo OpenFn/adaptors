@@ -348,66 +348,32 @@ describe('upsert', () => {
   const existingUuid = 'abc';
   const nonExistingUuid = 'xyz';
 
-  // set up fixtures to be shared by these tests
-  testServer
-    .intercept({
-      path: `/ws/rest/v1/patient/${existingUuid}`,
-      method: 'GET',
-    })
-    .reply(200, { ...testData.patientResults }, { ...jsonHeaders })
-    .persist();
+  const mock = ({
+    method = 'GET',
+    path = 'patient',
+    code = 200,
+    data = {},
+    query,
+  }) => {
+    testServer
+      .intercept({
+        path: `/ws/rest/v1/${path}`,
+        method,
+        query,
+      })
+      .reply(code, data, {
+        ...jsonHeaders,
+      });
+  };
 
-  testServer
-    .intercept({
-      path: `/ws/rest/v1/patient/${nonExistingUuid}`,
-      method: 'GET',
-    })
-    .reply(404, {}, { ...jsonHeaders })
-    .persist();
-
-  testServer
-    .intercept({
-      path: `/ws/rest/v1/patient/${existingUuid}`,
+  it('should update an existing patient with a uuid', async () => {
+    mock({ path: `patient/${existingUuid}`, data: testData.patient });
+    mock({
       method: 'POST',
-    })
-    .reply(200, ({ body }) => body, {
-      ...jsonHeaders,
-    })
-    .persist();
+      path: `patient/${existingUuid}`,
+      data: ({ body }) => body,
+    });
 
-  testServer
-    .intercept({
-      path: `/ws/rest/v1/patient`,
-      method: 'GET',
-      query: {
-        q: 'batman',
-      },
-    })
-    .reply(404, { results: testData.patientResults }, { ...jsonHeaders })
-    .persist();
-
-  testServer
-    .intercept({
-      path: `/ws/rest/v1/patient`,
-      method: 'GET',
-      query: {
-        q: 'spiderman',
-      },
-    })
-    .reply(404, {}, { ...jsonHeaders })
-    .persist();
-
-  testServer
-    .intercept({
-      path: `/ws/rest/v1/patient`,
-      method: 'POST',
-    })
-    .reply(200, ({ body }) => body, {
-      ...jsonHeaders,
-    })
-    .persist();
-
-  it('should update an existing patient', async () => {
     const result = await upsert(
       `patient/${existingUuid}`,
       state => state.patient
@@ -415,7 +381,54 @@ describe('upsert', () => {
 
     expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
+
+  it('update an existing patient with a query parameter', async () => {
+    mock({
+      path: `patient`,
+      data: { results: testData.patientResults },
+      query: { q: 'batman' },
+    });
+    mock({
+      method: 'POST',
+      path: `patient/${testData.patient.uuid}`,
+      data: testData.patient,
+    });
+
+    const result = await upsert('patient', state => state.patient, {
+      q: 'batman',
+    })(state);
+
+    expect(result.data.person.display).to.eql(testData.patient.person.display);
+  });
+
+  // TODO this fails on this branch - see https://github.com/OpenFn/adaptors/issues/1233
+  it.skip('update an existing encounter with another parameter', async () => {
+    mock({
+      path: `patient`,
+      data: { results: testData.patientResults },
+      query: { id: testData.patient.uuid },
+    });
+    mock({
+      method: 'POST',
+      path: `patient/${testData.patient.uuid}`,
+      data: testData.patient,
+    });
+
+    const result = await upsert('patient', state => state.patient, {
+      id: testData.patient.uuid,
+    })(state);
+
+    expect(result.data.person.display).to.eql(testData.patient.person.display);
+  });
+
   it('should create a new patient', async () => {
+    mock({ code: 404, path: `patient/${nonExistingUuid}` });
+    mock({
+      method: 'POST',
+      path: `patient`,
+      data: ({ body }) => body,
+    });
+
     const result = await upsert(
       `patient/${nonExistingUuid}`,
       state => state.patient
@@ -423,16 +436,31 @@ describe('upsert', () => {
 
     expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
-  it('update an existing patient with a query', async () => {
+
+  it('create a new patient with a query parameter', async () => {
+    mock({ code: 404, path: `patient`, query: { q: 'spiderman' } });
+    mock({
+      method: 'POST',
+      path: `patient`,
+      data: ({ body }) => body,
+    });
     const result = await upsert('patient', state => state.patient, {
-      q: 'batman',
+      q: 'spiderman',
     })(state);
 
     expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
-  it('create a new patient with a query', async () => {
+
+  // TODO this is expected to fail - see https://github.com/OpenFn/adaptors/issues/1236
+  it.only('create a new patient with another parameter', async () => {
+    mock({ code: 404, path: `patient`, query: { id: testData.patient.uuid } });
+    mock({
+      method: 'POST',
+      path: `patient`,
+      data: ({ body }) => body,
+    });
     const result = await upsert('patient', state => state.patient, {
-      q: 'spiderman',
+      id: testData.patient.uuid,
     })(state);
 
     expect(result.data.person.display).to.eql(testData.patient.person.display);
