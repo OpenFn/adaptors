@@ -98,7 +98,6 @@ export async function requestWithPagination(state, path, options = {}) {
 
     // Fetch a page of data
     const response = await request(state, 'GET', path, requestOptions);
-
     // If a search, the data will be in the form { results }
     // otherwise just return the data verbatim (in an array)
     if (response.body.results) {
