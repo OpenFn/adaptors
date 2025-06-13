@@ -1,64 +1,17 @@
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
+import sql from 'mssql';
 import {
-  execute as commonExecute,
-  expandReferences,
-} from '@openfn/language-common';
-import { Connection, Request } from 'tedious';
-
-/**
- * Creates a connection.
- * @example
- *  createConnection(state)
- * @function
- * @param {State} state - Runtime state.
- * @returns {State}
- */
-function createConnection(state) {
-  const {
-    server,
-    userName,
-    password,
-    database,
-    port = 1433,
-    encrypt = true,
-    rowCollectionOnRequestCompletion = true,
-    trustServerCertificate = true,
-  } = state.configuration;
-
-  if (!server) {
-    throw new Error('server missing from configuration.');
-  }
-
-  const config = {
-    authentication: {
-      options: { userName, password },
-      type: 'default',
-    },
-    server,
-    options: {
-      port,
-      database,
-      encrypt,
-      rowCollectionOnRequestCompletion,
-      trustServerCertificate,
-    },
-  };
-
-  const connection = new Connection(config);
-
-  // Attempt to connect and execute queries if connection goes through
-  return new Promise((resolve, reject) => {
-    connection.on('connect', err => {
-      if (err) {
-        console.error(err.message);
-        reject(err);
-      } else {
-        resolve({ ...state, connection });
-      }
-    });
-    // Initialize connection
-    connection.connect();
-  });
-}
+  createConnection,
+  cleanupState,
+  addRowsToRefs,
+  flattenRows,
+  composeNextState,
+  queryHandler,
+  escapeQuote,
+  handleOptions,
+  handleValues,
+} from './util';
 
 /**
  * Execute a sequence of operations.
@@ -89,155 +42,38 @@ export function execute(...operations) {
 }
 
 /**
- * Removes unserializable keys from the state.
- * @example
- *  cleanupState(state)
- * @function
- * @param {State} state
- * @returns {State}
- */
-function cleanupState(state) {
-  if (state.connection) {
-    state.connection.close();
-  }
-  delete state.connection;
-  return state;
-}
-
-/**
- * Sets the returned rows from a query as the first item in the state.references
- * array, leaving state.data unchanged between operations.
- * @function
- * @param {State} state
- * @param {array} rows - the array of rows returned from the sql query
- * @returns {State}
- */
-function addRowsToRefs(state, rows) {
-  return {
-    ...state,
-    references: [rows, ...state.references],
-  };
-}
-
-/**
- * Returns a flatten object of the rows (array of arrays) with rowCount.
- * @function
- * @param {State} state
- * @param {array} rows - the array of rows returned from the sql query
- * @returns {State}
- */
-function flattenRows(state, rows) {
-  const obj = [];
-  rows.forEach(row => obj.push({ column_name: row[0].value }));
-  const data = { rowCount: rows.length, rows: obj };
-  return { ...state, response: { body: data } };
-}
-
-function composeNextState(state, rows) {
-  let rowObj = {};
-  const flattenedRows = [];
-  rows.forEach(row => {
-    rowObj = row.reduce(
-      (o, col) => Object.assign(o, { [col.metadata.colName]: col.value }),
-      {}
-    );
-    flattenedRows.push(rowObj);
-  });
-  return { ...state, response: { rowCount: rows.length, rows: flattenedRows } };
-}
-
-function queryHandler(state, query, callback, options) {
-  const { connection } = state;
-
-  return new Promise((resolve, reject) => {
-    if (options) {
-      if (options.writeSql) {
-        console.log('Adding prepared SQL to state.queries array.');
-        state.queries.push(query);
-      }
-
-      if (options.execute === false) {
-        console.log('Not executing query; options.execute === false');
-        resolve(state);
-        return state;
-      }
-    }
-
-    const request = new Request(query, (err, rowCount, rows) => {
-      if (err) {
-        console.error(err);
-        reject(err);
-      } else {
-        console.log(`Finished: ${rowCount} row(s).`);
-        resolve(callback(state, rows));
-      }
-    });
-
-    connection.execSql(request);
-  });
-}
-
-/**
  * Execute an SQL statement
  * @public
  * @example
- * sql({ query, options })
+ * query('SELECT * FROM users', { logValues: true })
  * @function
- * @param {object} params - Payload data for the message
+ * @param {string} query - The SQL query to execute
+ * @param {object} options - Optional options argument
  * @returns {Operation}
  */
-export function sql(params) {
+export function query(query, options) {
   return state => {
     const { connection } = state;
 
     try {
-      const { query, options } = expandReferences(params)(state);
+      const [resolvedQuery, resolvedOptions] = expandReferences(
+        state,
+        query,
+        options
+      );
 
-      console.log(`Preparing to execute sql statement: ${query}`);
-      return queryHandler(state, query, composeNextState, options);
+      console.log(`Preparing to execute sql statement: ${resolvedQuery}`);
+      return queryHandler(
+        state,
+        resolvedQuery,
+        composeNextState,
+        resolvedOptions
+      );
     } catch (e) {
-      connection.close();
+      // Don't try to close the connection here as it's a pool
       throw e;
     }
   };
-}
-
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-}
-
-function handleValues(sqlString, nullString) {
-  let sql = sqlString;
-  if (nullString == false) {
-    return sqlString;
-  } else if (Array.isArray(nullString)) {
-    nullString.forEach(ns => {
-      const re = new RegExp(escapeRegExp(ns), 'g');
-      sql = sql.replace(re, 'NULL');
-    });
-    return sql;
-  } else if (typeof nullString === 'object') {
-    throw 'setNull must be a string or an array of strings.';
-  }
-  const re = new RegExp(escapeRegExp(nullString), 'g');
-  return sqlString.replace(re, 'NULL');
-}
-
-function handleOptions(options) {
-  if (options && options.setNull === false) {
-    return false;
-  }
-  return (options && options.setNull) || "'undefined'";
-}
-
-function escapeQuote(stringExp) {
-  if (typeof stringExp === 'object' && stringExp !== null) {
-    return Object.values(stringExp).map(x => escapeQuote(x));
-  } else if (typeof stringExp !== 'string') {
-    return stringExp;
-  }
-
-  return stringExp.replace(/\'/g, "''");
 }
 
 /**
@@ -259,45 +95,40 @@ export function findValue(filter) {
     const { connection } = state;
 
     const { uuid, relation, where, operator } = filter;
-    const whereData = expandReferences(where)(state);
-    const operatorData = expandReferences(operator)(state);
-
-    let conditionsArray = [];
-    for (let key in whereData)
-      conditionsArray.push(
-        `${key} ${operatorData ? operatorData[key] : '='} '${whereData[key]}'`
-      );
-
-    const condition =
-      conditionsArray.length > 0
-        ? `where ${conditionsArray.join(' and ')}`
-        : ''; // In a near future the 'and' can live in the filter.
+    const [whereData, operatorData] = expandReferences(state, where, operator);
 
     try {
-      const body = `select ${uuid} from ${relation} ${condition}`;
+      const request = connection.request();
+      let conditionsArray = [];
+      let params = {};
+
+      for (let key in whereData) {
+        const paramName = `@${key}`;
+        conditionsArray.push(
+          `${key} ${operatorData ? operatorData[key] : '='} ${paramName}`
+        );
+        params[paramName] = whereData[key];
+      }
+
+      const condition =
+        conditionsArray.length > 0
+          ? `WHERE ${conditionsArray.join(' AND ')}`
+          : '';
+
+      const query = sql`
+        SELECT ${uuid} 
+        FROM ${relation} 
+        ${condition}
+      `;
 
       console.log('Preparing to execute sql statement');
-      let returnValue = null;
-
-      return new Promise((resolve, reject) => {
-        console.log(`Executing query: ${body}`);
-
-        const request = new Request(body, (err, rowCount, rows) => {
-          if (err) {
-            console.error(err.message);
-            throw err;
-          } else {
-            if (rows.length > 0) {
-              returnValue = rows[0][0].value;
-            }
-            if (returnValue === null) resolve(undefined);
-            resolve(returnValue);
-          }
-        });
-        connection.execSql(request);
+      return request.query(query).then(result => {
+        if (result.recordset.length > 0) {
+          return result.recordset[0][uuid];
+        }
+        return undefined;
       });
     } catch (e) {
-      connection.close();
       throw e;
     }
   };
@@ -319,21 +150,18 @@ export function insert(table, record, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(record)(state);
+      const [resolvedRecord] = expandReferences(state, record);
+      const columns = Object.keys(resolvedRecord).sort();
+      const values = columns.map(key => resolvedRecord[key]);
 
-      const columns = Object.keys(recordData).sort();
-      const values = columns
-        .map(key => escapeQuote(recordData[key]))
-        .join("', '");
-
-      const query = handleValues(
-        `INSERT INTO ${table} (${columns.join(', ')}) VALUES ('${values}');`,
-        handleOptions(options)
-      );
+      const query = sql`
+        INSERT INTO ${table} (${columns.join(', ')})
+        VALUES (${values})
+      `;
 
       const safeQuery = `INSERT INTO ${table} (${columns.join(
         ', '
-      )}) VALUES [--REDACTED--]];`;
+      )}) VALUES [--REDACTED--]`;
 
       return new Promise((resolve, reject) => {
         const queryToLog = options && options.logValues ? query : safeQuery;
@@ -342,7 +170,6 @@ export function insert(table, record, options) {
         resolve(queryHandler(state, query, addRowsToRefs, options));
       });
     } catch (e) {
-      connection.close();
       throw e;
     }
   };
@@ -364,24 +191,20 @@ export function insertMany(table, records, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(records)(state);
-
-      // Note: we select the keys of the FIRST object as the canonical template.
-      const columns = Object.keys(recordData[0]);
-
-      const valueSets = recordData.map(
-        x => `('${escapeQuote(Object.values(x)).join("', '")}')`
+      const [resolvedRecords] = expandReferences(state, records);
+      const columns = Object.keys(resolvedRecords[0]);
+      const values = resolvedRecords.map(record =>
+        columns.map(col => record[col])
       );
-      const query = handleValues(
-        `INSERT INTO ${table} (${columns.join(', ')}) VALUES ${valueSets.join(
-          ', '
-        )};`,
-        handleOptions(options)
-      );
+
+      const query = sql`
+        INSERT INTO ${table} (${columns.join(', ')})
+        VALUES ${values}
+      `;
 
       const safeQuery = `INSERT INTO ${table} (${columns.join(
         ', '
-      )}) VALUES [--REDACTED--]];`;
+      )}) VALUES [--REDACTED--]`;
 
       return new Promise((resolve, reject) => {
         const queryToLog = options && options.logValues ? query : safeQuery;
@@ -390,7 +213,6 @@ export function insertMany(table, records, options) {
         resolve(queryHandler(state, query, addRowsToRefs, options));
       });
     } catch (e) {
-      connection.close();
       throw e;
     }
   };
@@ -414,47 +236,32 @@ export function upsert(table, uuid, record, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(record)(state);
-      const columns = Object.keys(recordData).sort();
+      const [resolvedRecord] = expandReferences(state, record);
+      const columns = Object.keys(resolvedRecord).sort();
+      const values = columns.map(key => resolvedRecord[key]);
 
-      const selectValues = columns
-        .map(key => `'${escapeQuote(recordData[key])}' AS ${key}`)
+      const sourceColumns = columns.map(col => `[Source].${col}`).join(', ');
+      const updateSet = columns
+        .map(col => `[Target].${col} = [Source].${col}`)
         .join(', ');
 
-      const updateValues = columns
-        .map(key => `[Target].${key}='${escapeQuote(recordData[key])}'`)
-        .join(', ');
+      const constraint = Array.isArray(uuid)
+        ? uuid.map(key => `[Target].${key} = [Source].${key}`).join(' AND ')
+        : `[Target].${uuid} = [Source].${uuid}`;
 
-      const insertColumns = columns.join(', ');
-      const insertValues = columns.map(key => `[Source].${key}`).join(', ');
-
-      const constraint = [];
-      if (Array.isArray(uuid)) {
-        uuid.forEach(key => {
-          constraint.push(`[Target].${key} = [Source].${key}`);
-        });
-      } else {
-        constraint.push(`[Target].${uuid} = [Source].${uuid}`);
-      }
-
-      const query = handleValues(
-        `MERGE ${table} AS [Target]
-        USING (SELECT ${selectValues}) AS [Source] 
-        ON ${constraint.join(' AND ')}
+      const query = sql`
+        MERGE ${table} AS [Target]
+        USING (SELECT ${values} AS ${columns.join(', ')}) AS [Source]
+        ON ${constraint}
         WHEN MATCHED THEN
-          UPDATE SET ${updateValues} 
+          UPDATE SET ${updateSet}
         WHEN NOT MATCHED THEN
-          INSERT (${insertColumns}) VALUES (${insertValues});`,
-        handleOptions(options)
-      );
+          INSERT (${columns.join(', ')}) VALUES (${sourceColumns})
+      `;
 
-      const safeQuery = `MERGE ${table} AS [Target]
-        USING (SELECT [--REDACTED--]) 
-        ON [Target].[--VALUE--] = [Source].[--VALUE--]
-        WHEN MATCHED THEN
-          UPDATE SET [--REDACTED--] 
-        WHEN NOT MATCHED THEN
-          INSERT (${insertColumns}) VALUES [--REDACTED--];`;
+      const safeQuery = `MERGE ${table} AS [Target] USING (SELECT [--REDACTED--]) AS [Source] ON [Target].[--VALUE--] = [Source].[--VALUE--] WHEN MATCHED THEN UPDATE SET [--REDACTED--] WHEN NOT MATCHED THEN INSERT (${columns.join(
+        ', '
+      )}) VALUES [--REDACTED--]`;
 
       return new Promise((resolve, reject) => {
         const queryToLog = options && options.logValues ? query : safeQuery;
@@ -463,7 +270,6 @@ export function upsert(table, uuid, record, options) {
         resolve(queryHandler(state, query, addRowsToRefs, options));
       });
     } catch (e) {
-      connection.close();
       throw e;
     }
   };
@@ -493,54 +299,44 @@ export function upsertIf(logical, table, uuid, record, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(record)(state);
-      const columns = Object.keys(recordData).sort();
-      const logicalData = expandReferences(logical)(state);
+      const [resolvedRecord, resolvedLogical] = expandReferences(
+        state,
+        record,
+        logical
+      );
 
       return new Promise((resolve, reject) => {
-        if (!logicalData) {
+        if (!resolvedLogical) {
           console.log(`Skipping upsert for ${uuid}.`);
           resolve(state);
           return state;
         }
-        const selectValues = columns
-          .map(key => `'${escapeQuote(recordData[key])}' AS ${key}`)
+
+        const columns = Object.keys(resolvedRecord).sort();
+        const values = columns.map(key => resolvedRecord[key]);
+
+        const sourceColumns = columns.map(col => `[Source].${col}`).join(', ');
+        const updateSet = columns
+          .map(col => `[Target].${col} = [Source].${col}`)
           .join(', ');
 
-        const updateValues = columns
-          .map(key => `[Target].${key}='${escapeQuote(recordData[key])}'`)
-          .join(', ');
+        const constraint = Array.isArray(uuid)
+          ? uuid.map(key => `[Target].${key} = [Source].${key}`).join(' AND ')
+          : `[Target].${uuid} = [Source].${uuid}`;
 
-        const insertColumns = columns.join(', ');
-        const insertValues = columns.map(key => `[Source].${key}`).join(', ');
-
-        const constraint = [];
-        if (Array.isArray(uuid)) {
-          uuid.forEach(key => {
-            constraint.push(`[Target].${key} = [Source].${key}`);
-          });
-        } else {
-          constraint.push(`[Target].${uuid} = [Source].${uuid}`);
-        }
-
-        const query = handleValues(
-          `MERGE ${table} AS [Target]
-          USING (SELECT ${selectValues}) AS [Source] 
-          ON ${constraint.join(' AND ')}
+        const query = sql`
+          MERGE ${table} AS [Target]
+          USING (SELECT ${values} AS ${columns.join(', ')}) AS [Source]
+          ON ${constraint}
           WHEN MATCHED THEN
-            UPDATE SET ${updateValues} 
+            UPDATE SET ${updateSet}
           WHEN NOT MATCHED THEN
-            INSERT (${insertColumns}) VALUES (${insertValues});`,
-          handleOptions(options)
-        );
+            INSERT (${columns.join(', ')}) VALUES (${sourceColumns})
+        `;
 
-        const safeQuery = `MERGE ${table} AS [Target]
-          USING (SELECT [--REDACTED--]) 
-          ON [Target].[--VALUE--] = [Source].[--VALUE--]
-          WHEN MATCHED THEN
-            UPDATE SET [--REDACTED--] 
-          WHEN NOT MATCHED THEN
-            INSERT (${insertColumns}) VALUES [--REDACTED--];`;
+        const safeQuery = `MERGE ${table} AS [Target] USING (SELECT [--REDACTED--]) AS [Source] ON [Target].[--VALUE--] = [Source].[--VALUE--] WHEN MATCHED THEN UPDATE SET [--REDACTED--] WHEN NOT MATCHED THEN INSERT (${columns.join(
+          ', '
+        )}) VALUES [--REDACTED--]`;
 
         const queryToLog = options && options.logValues ? query : safeQuery;
         console.log(`Executing upsertIf via: ${queryToLog}`);
@@ -548,7 +344,6 @@ export function upsertIf(logical, table, uuid, record, options) {
         resolve(queryHandler(state, query, addRowsToRefs, options));
       });
     } catch (e) {
-      connection.close();
       throw e;
     }
   };
@@ -576,54 +371,43 @@ export function upsertMany(table, uuid, records, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(records)(state);
+      const [resolvedRecords] = expandReferences(state, records);
 
       return new Promise((resolve, reject) => {
-        if (!recordData || recordData.length === 0) {
+        if (!resolvedRecords || resolvedRecords.length === 0) {
           console.log('No records provided; skipping upsert.');
           resolve(state);
         }
 
-        // Note: we select the keys of the FIRST object as the canonical template.
-        const columns = Object.keys(recordData[0]);
-
-        const valueSets = recordData.map(
-          x => `('${escapeQuote(Object.values(x)).join("', '")}')`
+        const columns = Object.keys(resolvedRecords[0]);
+        const values = resolvedRecords.map(record =>
+          columns.map(col => record[col])
         );
-        const insertColumns = columns.join(', ');
-        const insertValues = columns.map(key => `[Source].${key}`).join(', ');
 
-        const updateValues = columns
-          .map(key => `[Target].${key}=[Source].${key}`)
+        const sourceColumns = columns.map(col => `[Source].${col}`).join(', ');
+        const updateSet = columns
+          .map(col => `[Target].${col} = [Source].${col}`)
           .join(', ');
 
-        const constraint = [];
-        if (Array.isArray(uuid)) {
-          uuid.forEach(key => {
-            constraint.push(`[Target].${key} = [Source].${key}`);
-          });
-        } else {
-          constraint.push(`[Target].${uuid} = [Source].${uuid}`);
-        }
+        const constraint = Array.isArray(uuid)
+          ? uuid.map(key => `[Target].${key} = [Source].${key}`).join(' AND ')
+          : `[Target].${uuid} = [Source].${uuid}`;
 
-        const query = handleValues(
-          `MERGE ${table} AS [Target]
-        USING (VALUES ${valueSets.join(', ')}) AS [Source] (${insertColumns})
-        ON ${constraint.join(' AND ')}
-        WHEN MATCHED THEN
-          UPDATE SET ${updateValues}
-        WHEN NOT MATCHED THEN
-          INSERT (${insertColumns}) VALUES (${insertValues});`,
-          handleOptions(options)
-        );
+        const query = sql`
+          MERGE ${table} AS [Target]
+          USING (VALUES ${values}) AS [Source] (${columns.join(', ')})
+          ON ${constraint}
+          WHEN MATCHED THEN
+            UPDATE SET ${updateSet}
+          WHEN NOT MATCHED THEN
+            INSERT (${columns.join(', ')}) VALUES (${sourceColumns})
+        `;
 
-        const safeQuery = `MERGE ${table} AS [Target]
-        USING (VALUES [--REDACTED--]) AS [SOURCE] (${insertColumns})
-        ON [Target].[--VALUE--] = [Source].[--VALUE--]
-        WHEN MATCHED THEN
-          UPDATE SET [--REDACTED--] 
-        WHEN NOT MATCHED THEN
-          INSERT (${insertColumns}) VALUES [--REDACTED--];`;
+        const safeQuery = `MERGE ${table} AS [Target] USING (VALUES [--REDACTED--]) AS [Source] (${columns.join(
+          ', '
+        )}) ON [Target].[--VALUE--] = [Source].[--VALUE--] WHEN MATCHED THEN UPDATE SET [--REDACTED--] WHEN NOT MATCHED THEN INSERT (${columns.join(
+          ', '
+        )}) VALUES [--REDACTED--]`;
 
         const queryToLog = options && options.logValues ? query : safeQuery;
         console.log(`Executing upsertMany via: ${queryToLog}`);
@@ -631,7 +415,6 @@ export function upsertMany(table, uuid, records, options) {
         resolve(queryHandler(state, query, addRowsToRefs, options));
       });
     } catch (e) {
-      connection.close();
       throw e;
     }
   };
@@ -650,18 +433,19 @@ export function upsertMany(table, uuid, records, options) {
 export function describeTable(tableName, options) {
   return state => {
     const { connection } = state;
-    const name = expandReferences(tableName)(state);
+    const [resolvedTableName] = expandReferences(state, tableName);
 
     try {
-      const query = `SELECT column_name
-          FROM information_schema.columns 
-          WHERE table_name = '${name}'
-          ORDER BY ordinal_position`;
+      const query = sql`
+        SELECT column_name
+        FROM information_schema.columns 
+        WHERE table_name = ${resolvedTableName}
+        ORDER BY ordinal_position
+      `;
 
       console.log('Preparing to describe table via:', query);
       return queryHandler(state, query, flattenRows, options);
     } catch (e) {
-      connection.close();
       throw e;
     }
   };
@@ -689,7 +473,7 @@ export function insertTable(tableName, columns, options) {
   return state => {
     const { connection } = state;
     try {
-      const data = expandReferences(columns)(state);
+      const [data] = expandReferences(state, columns);
 
       return new Promise((resolve, reject) => {
         if (!data || data.length === 0) {
@@ -697,30 +481,37 @@ export function insertTable(tableName, columns, options) {
           resolve(state);
           return state;
         }
+
         const structureData = data
-          .map(
-            x =>
-              `${x.name} ${x.type} ${
-                x.hasOwnProperty('default')
-                  ? x.type.includes('varchar') || x.type.includes('text')
-                    ? `DEFAULT '${x.default}'`
-                    : `DEFAULT ${x.default}`
-                  : ''
-              } ${x.unique ? 'UNIQUE' : ''} ${
-                x.identity ? 'PRIMARY KEY IDENTITY (1,1)' : ''
-              } ${x.required ? 'NOT NULL' : ''}`
-          )
+          .map(x => {
+            const columnDef = [
+              x.name,
+              x.type,
+              x.hasOwnProperty('default')
+                ? x.type.includes('varchar') || x.type.includes('text')
+                  ? `DEFAULT '${x.default}'`
+                  : `DEFAULT ${x.default}`
+                : '',
+              x.unique ? 'UNIQUE' : '',
+              x.identity ? 'PRIMARY KEY IDENTITY (1,1)' : '',
+              x.required ? 'NOT NULL' : '',
+            ]
+              .filter(Boolean)
+              .join(' ');
+            return columnDef;
+          })
           .join(', ');
 
-        const query = `CREATE TABLE ${tableName} (
-        ${structureData}
-      );`;
+        const query = sql`
+          CREATE TABLE ${tableName} (
+            ${structureData}
+          )
+        `;
 
         console.log('Preparing to create table via:', query);
         resolve(queryHandler(state, query, flattenRows, options));
       });
     } catch (e) {
-      connection.close();
       throw e;
     }
   };
@@ -749,7 +540,7 @@ export function modifyTable(tableName, columns, options) {
     const { connection } = state;
 
     try {
-      const data = expandReferences(columns)(state);
+      const [data] = expandReferences(state, columns);
 
       return new Promise((resolve, reject) => {
         if (!data || data.length === 0) {
@@ -757,28 +548,35 @@ export function modifyTable(tableName, columns, options) {
           resolve(state);
           return state;
         }
+
         const structureData = data
-          .map(
-            x =>
-              `${x.name} ${x.type} ${
-                x.hasOwnProperty('default')
-                  ? x.type.includes('varchar') || x.type.includes('text')
-                    ? `DEFAULT '${x.default}'`
-                    : `DEFAULT ${x.default}`
-                  : ''
-              } ${x.unique ? 'UNIQUE' : ''} ${
-                x.identity ? 'IDENTITY (1,1)' : ''
-              } ${x.required ? 'NOT NULL' : ''}`
-          )
+          .map(x => {
+            const columnDef = [
+              x.name,
+              x.type,
+              x.hasOwnProperty('default')
+                ? x.type.includes('varchar') || x.type.includes('text')
+                  ? `DEFAULT '${x.default}'`
+                  : `DEFAULT ${x.default}`
+                : '',
+              x.unique ? 'UNIQUE' : '',
+              x.identity ? 'IDENTITY (1,1)' : '',
+              x.required ? 'NOT NULL' : '',
+            ]
+              .filter(Boolean)
+              .join(' ');
+            return columnDef;
+          })
           .join(', ');
 
-        const query = `ALTER TABLE ${tableName} ADD ${structureData};`;
+        const query = sql`
+          ALTER TABLE ${tableName} ADD ${structureData}
+        `;
 
         console.log('Preparing to modify table via:', query);
         resolve(queryHandler(state, query, flattenRows, options));
       });
     } catch (e) {
-      connection.close();
       throw e;
     }
   };
