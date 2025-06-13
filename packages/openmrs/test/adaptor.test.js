@@ -441,7 +441,7 @@ describe('upsert', () => {
     expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
 
-  it('should create a new patient', async () => {
+  it('should create a new patient with a UUID in the URL', async () => {
     mock({ code: 404, path: `patient/${nonExistingUuid}` });
     mock({
       method: 'POST',
@@ -471,8 +471,7 @@ describe('upsert', () => {
     expect(result.data.person.display).to.eql(testData.patient.person.display);
   });
 
-  // TODO this is expected to fail - see https://github.com/OpenFn/adaptors/issues/1236
-  it.skip('create a new patient with another parameter', async () => {
+  it('create a new patient with another parameter', async () => {
     mock({ code: 404, path: `patient`, query: { id: testData.patient.uuid } });
     mock({
       method: 'POST',

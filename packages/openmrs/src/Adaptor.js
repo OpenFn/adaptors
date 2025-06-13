@@ -340,10 +340,17 @@ export function upsert(path, data, params = {}) {
     } else if (!found || count === 0) {
       console.log(`${resolvedPath} not found: creating new resource`);
 
-      const path = resolvedParams.q
+      // How many resources are in the url?
+      // If an even number, the UUID is in the URL
+      // resource/uuid
+      // resource/uuid/subresource
+      // resource/uuid/subresource/uuid
+      const parts = path.split('/').length;
+      const dropUuid = parts % 2 > 0 && Object.keys(resolvedParams).length;
+      const finalPath = dropUuid
         ? resolvedPath
         : resolvedPath.split('/').slice(0, -1).join('/'); // remove the ID
-      return create(path, resolvedData)(state);
+      return create(finalPath, resolvedData)(state);
     } else {
       let finalPath = resolvedPath;
 
