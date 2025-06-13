@@ -1,9 +1,10 @@
 {
   "operations": [
     {
-      "name": "sql",
+      "name": "query",
       "params": [
-        "params"
+        "query",
+        "options"
       ],
       "docs": {
         "description": "Execute an SQL statement",
@@ -15,7 +16,7 @@
           },
           {
             "title": "example",
-            "description": "sql({ query, options })"
+            "description": "query('SELECT * FROM users', { logValues: true })"
           },
           {
             "title": "function",
@@ -24,12 +25,21 @@
           },
           {
             "title": "param",
-            "description": "Payload data for the message",
+            "description": "The SQL query to execute",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "Optional options argument",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "params"
+            "name": "options"
           },
           {
             "title": "returns",
