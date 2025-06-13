@@ -345,8 +345,13 @@ export function upsert(path, data, params = {}) {
         : resolvedPath.split('/').slice(0, -1).join('/'); // remove the ID
       return create(path, resolvedData)(state);
     } else {
-      const path = resolvedParams.q
-        ? `${resolvedPath}/${res.body.results[0].uuid}` // append the ID
+      // try to find the target uuid in the result
+      let uuid = res.body.uuid;
+      if (res.body.results) {
+        uuid = res.body.results[0].uuid;
+      }
+      const path = uuid
+        ? `${resolvedPath}/${uuid}` // append the ID
         : resolvedPath;
       console.log(`${path} found: updating existing resource`);
       return update(path, resolvedData)(state);
