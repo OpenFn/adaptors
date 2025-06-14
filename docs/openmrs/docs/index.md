@@ -307,6 +307,9 @@ Update a resource if it already exists, or otherwise create a new one.
 Upsert will first make a request for the target item (using the `path` and `params`) to see if it exists, and then issue a second create or update request.
 If the query request returns multiple items, the upsert will throw an error.
 
+Params will be appended as query parameters to the request URL,
+refer to [OpenMRS Docs](https://rest.openmrs.org/) for details.
+
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -345,7 +348,7 @@ upsert("patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a", {
 ```
 **Example:** Upsert a patient using a query to identify the record
 ```js
-upsert("patient", $.data, { q: "Lamine Yamal" })
+upsert("patient", $.data, { q: "Lamine Yamal", limit: 1 })
 ```
 
 * * *
