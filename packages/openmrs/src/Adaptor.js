@@ -274,6 +274,10 @@ export function update(path, data) {
  *
  * Upsert will first make a request for the target item (using the `path` and `params`) to see if it exists, and then issue a second create or update request.
  * If the query request returns multiple items, the upsert will throw an error.
+ * 
+ * Params will be appended as query parameters to the request URL,
+ * refer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.
+ 
  * @public
  * @function
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
@@ -304,7 +308,7 @@ export function update(path, data) {
  *   },
  * })
  * @example <caption>Upsert a patient using a query to identify the record</caption>
- * upsert("patient", $.data, { q: "Lamine Yamal" })
+ * upsert("patient", $.data, { q: "Lamine Yamal", limit: 1 })
  */
 export function upsert(path, data, params = {}) {
   return async state => {
