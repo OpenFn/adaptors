@@ -1,5 +1,14 @@
 # @openfn/language-openmrs
 
+## 5.0.3
+
+### Patch Changes
+
+- be854ec: Fix an issue where upsert will wrongly trigger creation of an
+  existing item
+- 59251d5: Fix an issue where upsert will create to the wrong URL if there is no
+  UUID in the path
+
 ## 5.0.2 - 22 April 2025
 
 ### Patch Changes
