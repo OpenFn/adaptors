@@ -2,6 +2,7 @@ import {
   execute as commonExecute,
   expandReferences,
 } from '@openfn/language-common';
+import { escape } from './utils.js';
 import { Connection, Request } from 'tedious';
 
 /**
@@ -265,7 +266,9 @@ export function findValue(filter) {
     let conditionsArray = [];
     for (let key in whereData)
       conditionsArray.push(
-        `${key} ${operatorData ? operatorData[key] : '='} '${whereData[key]}'`
+        `${key} ${operatorData ? operatorData[key] : '='} ${escape(
+          whereData[key]
+        )}`
       );
 
     const condition =
