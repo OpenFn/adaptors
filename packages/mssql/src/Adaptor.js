@@ -2,7 +2,7 @@ import {
   execute as commonExecute,
   expandReferences,
 } from '@openfn/language-common';
-import { escape } from './utils.js';
+import { escape } from './util';
 import { Connection, Request } from 'tedious';
 
 /**
@@ -98,6 +98,9 @@ export function execute(...operations) {
  * @returns {State}
  */
 function cleanupState(state) {
+  if (!state.connection) {
+    console.log({ state });
+  }
   if (state.connection) {
     state.connection.close();
   }
