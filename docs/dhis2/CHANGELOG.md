@@ -1,6 +1,6 @@
 # @openfn/language-dhis2
 
-## 7.0.0
+## 7.0.0 - 04 June 2025
 
 This release of DHSI2 contains major breaking changes.
 

@@ -10,7 +10,7 @@
 <dt>
     <a href="#request">request(path, params, callback)</a></dt>
 <dt>
-    <a href="#updatetask">updateTask(taskGid, params, callback)</a></dt>
+    <a href="#updatetask">updateTask(taskGid, data, callback)</a></dt>
 <dt>
     <a href="#upserttask">upsertTask(projectGid, params, callback)</a></dt>
 </dl>
@@ -125,9 +125,10 @@ Get a single task of a given project.
 | --- | --- | --- |
 | taskGid | <code>string</code> | Globally unique identifier for the task |
 | params | <code>object</code> | Query params to include. |
+| params.opt_fields | <code>string</code> | The fields to return. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**
+**Example:** Get a task
 ```js
 getTask("1206933955023739", {
   opt_fields: "name,notes,assignee",
@@ -147,12 +148,21 @@ Get the list of tasks for a given project.
 | --- | --- | --- |
 | projectGid | <code>string</code> | Globally unique identifier for the project |
 | params | <code>object</code> | Query params to include. |
+| params.limit | <code>number</code> | The maximum number of tasks to return. |
+| params.opt_fields | <code>string</code> | The fields to return. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**
+**Example:** Get all tasks
 ```js
 getTasks("1206933955023739", {
   opt_fields: "name,notes,assignee",
+});
+```
+**Example:** Limit the number of tasks returned
+```js
+getTasks("1206933955023739", {
+  opt_fields: "name,notes,assignee",
+  limit: 100,
 });
 ```
 
@@ -196,7 +206,7 @@ request("/tasks", {
 
 ### updateTask
 
-<p><code>updateTask(taskGid, params, callback) ⇒ Operation</code></p>
+<p><code>updateTask(taskGid, data, callback) ⇒ Operation</code></p>
 
 Update a specific task.
 
@@ -204,10 +214,10 @@ Update a specific task.
 | Param | Type | Description |
 | --- | --- | --- |
 | taskGid | <code>string</code> | Globally unique identifier for the task |
-| params | <code>object</code> | Body parameters |
+| data | <code>object</code> | Body data to update the task with |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**
+**Example:** Update a task
 ```js
 updateTask("1206933955023739", {
   name: "test",
@@ -229,9 +239,11 @@ Update or create a task.
 | --- | --- | --- |
 | projectGid | <code>string</code> | Globally unique identifier for the project |
 | params | <code>object</code> | an object with an externalId and some task data. |
+| params.externalId | <code>string</code> | The external id field name |
+| params.data | <code>object</code> | The data to upsert. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**
+**Example:** Upsert a task
 ```js
 upsertTask("1201382240880", {
   externalId: "name",
