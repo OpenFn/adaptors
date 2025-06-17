@@ -1,6 +1,6 @@
 # @openfn/language-openmrs
 
-## 5.0.3
+## 5.0.3 - 14 June 2025
 
 ### Patch Changes
 
