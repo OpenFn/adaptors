@@ -241,6 +241,10 @@ function handleOptions(options) {
  *  })
  * @function
  * @param {object} filter - A filter object with the lookup table, a uuid and the condition
+ * @param {string} filter.uuid - The uuid column to determine a matching/existing record
+ * @param {string} filter.relation - The table to lookup the value in
+ * @param {object} filter.where - The condition to use for the lookup. Values are automatically escaped.
+ * @param {object} filter.operator - The operator to use for the lookup
  * @returns {Operation}
  */
 export function findValue(filter) {
@@ -252,12 +256,12 @@ export function findValue(filter) {
     const operatorData = expandReferences(operator)(state);
 
     let conditionsArray = [];
-    for (let key in whereData)
+    for (let key in whereData) {
+      const escapedValue = escape(whereData[key]);
       conditionsArray.push(
-        `${key} ${operatorData ? operatorData[key] : '='} '${escape(
-          whereData[key]
-        )}'`
+        `${key} ${operatorData ? operatorData[key] : '='} '${escapedValue}'`
       );
+    }
 
     const condition =
       conditionsArray.length > 0
