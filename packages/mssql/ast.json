@@ -75,6 +75,42 @@
             "name": "filter"
           },
           {
+            "title": "param",
+            "description": "The uuid column to determine a matching/existing record",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "filter.uuid"
+          },
+          {
+            "title": "param",
+            "description": "The table to lookup the value in",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "filter.relation"
+          },
+          {
+            "title": "param",
+            "description": "The condition to use for the lookup. Values are automatically escaped.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "filter.where"
+          },
+          {
+            "title": "param",
+            "description": "The operator to use for the lookup",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "filter.operator"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -84,7 +120,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "insert",
