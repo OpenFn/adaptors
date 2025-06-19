@@ -32,7 +32,6 @@ export const logResponse = response => {
     }
   }
 
-  console.log(Object.keys(response));
   return response;
 };
 
