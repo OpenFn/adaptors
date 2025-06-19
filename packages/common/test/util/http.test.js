@@ -124,6 +124,21 @@ describe('parseUrl', () => {
 });
 
 describe('logResponse', () => {
+  let originalLog;
+  let consoleOutput = [];
+
+  beforeEach(() => {
+    // Setup: Override console.log
+    originalLog = console.log;
+    consoleOutput = [];
+    console.log = (...args) => consoleOutput.push(args);
+  });
+
+  afterEach(() => {
+    // Teardown: Restore console.log
+    console.log = originalLog;
+  });
+
   it('should include query parameters in the url', async () => {
     client
       .intercept({
@@ -141,22 +156,111 @@ describe('logResponse', () => {
       },
     });
     response.duration = 2;
-    let originalLog;
-    let consoleOutput = [];
-
-    // Setup: Override console.log
-    originalLog = console.log;
-    console.log = (...args) => consoleOutput.push(args);
-
-    logResponse(response, {
+    response.query = {
       name: 'homelander',
-    });
-    expect(consoleOutput?.[0]).to.deep.eql([
+    };
+
+    logResponse(response);
+
+    expect(consoleOutput[0]).to.deep.eql([
       'GET https://www.example.com/api?name=homelander - 200 in 2ms',
     ]);
+  });
 
-    // Teardown: Restore console.log
-    console.log = originalLog;
+  it('should not include query parameters when query object is empty', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api');
+    response.duration = 5;
+    response.query = {};
+
+    logResponse(response);
+
+    expect(consoleOutput[0]).to.deep.eql([
+      'GET https://www.example.com/api - 200 in 5ms',
+    ]);
+  });
+
+  it('should handle multiple query parameters', async () => {
+    const query = {
+      name: 'homelander',
+      age: '25',
+      city: 'new york',
+    };
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+        query,
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api', {
+      query,
+    });
+    response.duration = 10;
+    response.query = query;
+
+    logResponse(response);
+
+    expect(consoleOutput[0]).to.deep.eql([
+      'GET https://www.example.com/api?name=homelander&age=25&city=new+york - 200 in 10ms',
+    ]);
+  });
+
+  it('should handle special characters in query parameters', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+        query: {
+          search: 'hello world',
+          filter: 'active=true',
+        },
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api', {
+      query: {
+        search: 'hello world',
+        filter: 'active=true',
+      },
+    });
+    response.duration = 3;
+    response.query = {
+      search: 'hello world',
+      filter: 'active=true',
+    };
+
+    logResponse(response);
+
+    expect(consoleOutput[0]).to.deep.eql([
+      'GET https://www.example.com/api?search=hello+world&filter=active%3Dtrue - 200 in 3ms',
+    ]);
+  });
+
+  it('should handle null or undefined query parameters', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api');
+    response.duration = 1;
+    response.query = null;
+
+    logResponse(response);
+
+    expect(consoleOutput[0]).to.deep.eql([
+      'GET https://www.example.com/api - 200 in 1ms',
+    ]);
   });
 });
 
