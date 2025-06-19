@@ -358,6 +358,40 @@ describe('request function', () => {
     expect(response.url).to.eql('https://www.example.com/api');
   });
 
+  it('should include response.query when request has query parameters', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+        query: {
+          name: 'homelander',
+          age: '25',
+        },
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api', {
+      query: { name: 'homelander', age: '25' },
+    });
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.query).to.eql({ name: 'homelander', age: '25' });
+  });
+
+  it('should not include response.query when request has no query parameters', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api');
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.query).to.be.undefined;
+  });
+
   it('should return undefined if response body is empty and parseAs is json', async () => {
     client
       .intercept({
