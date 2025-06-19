@@ -48,7 +48,5 @@ export const request = (configuration = {}, method, path, options = {}) => {
 
   const safePath = nodepath.join(path);
 
-  return commonRequest(method, safePath, opts).then(response =>
-    logResponse(response, query)
-  );
+  return commonRequest(method, safePath, opts).then(logResponse);
 };
