@@ -100,6 +100,10 @@ Fetch a uuid key given a condition
 | Param | Type | Description |
 | --- | --- | --- |
 | filter | <code>object</code> | A filter object with the lookup table, a uuid and the condition |
+| filter.uuid | <code>string</code> | The uuid column to determine a matching/existing record |
+| filter.relation | <code>string</code> | The table to lookup the value in |
+| filter.where | <code>object</code> | The condition to use for the lookup. Values are automatically escaped for security. |
+| filter.operator | <code>object</code> | The operator to use for the lookup |
 
 **Example**
 ```js

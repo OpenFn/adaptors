@@ -1,5 +1,12 @@
 # @openfn/language-gmail
 
+## 1.3.1 - 20 June 2025
+
+### Patch Changes
+
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
+
 ## 1.3.0 - 30 May 2025
 
 ### Minor Changes
