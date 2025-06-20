@@ -1,13 +1,10 @@
 {
   "operations": [
     {
-      "name": "request",
-      "params": [
-        "options",
-        "callback"
-      ],
+      "name": "login",
+      "params": [],
       "docs": {
-        "description": "Make a POST request",
+        "description": "Authenticate with OpenFn API and store JWT token in configuration",
         "tags": [
           {
             "title": "public",
@@ -16,7 +13,7 @@
           },
           {
             "title": "example",
-            "description": "request({method: 'get', path: '/jobs/});"
+            "description": "execute(\n  login(),\n  get('/jobs')\n)(state)"
           },
           {
             "title": "function",
@@ -25,21 +22,12 @@
           },
           {
             "title": "param",
-            "description": "Body, Query, Headers and Authentication parameters",
+            "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "OpenFnState"
             },
-            "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
+            "name": "state"
           },
           {
             "title": "returns",
@@ -47,6 +35,210 @@
             "type": {
               "type": "NameExpression",
               "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "request",
+      "params": [
+        "method",
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Make a HTTP request to OpenFn API. Requires authentication first.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "request('GET', 'jobs', {\n  query: { limit: 10 },\n});",
+            "caption": "Make a GET request"
+          },
+          {
+            "title": "example",
+            "description": "request('POST', 'jobs', {\n  body: {\n    name: 'test job',\n    body: 'fn(state => state)'\n  },\n});",
+            "caption": "Make a POST request with a body"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The HTTP method to use.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "method"
+          },
+          {
+            "title": "param",
+            "description": "Path to resource (relative to /api/).",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Body, Query, Headers and Authentication parameters",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{OpenFnState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "get",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Make a GET request to OpenFn API. Requires authentication first.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "get('jobs', {\n  query: { limit: 10, offset: 0 },\n});",
+            "caption": "GET request with query parameters"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource (relative to /api/).",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Query, Headers and Authentication parameters",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{OpenFnState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "post",
+      "params": [
+        "path",
+        "data",
+        "options"
+      ],
+      "docs": {
+        "description": "Make a POST request to OpenFn API. Requires authentication first.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "post('jobs', {\n  name: 'test job',\n  body: 'fn(state => state)'\n});",
+            "caption": "POST a new job"
+          },
+          {
+            "title": "example",
+            "description": "post('jobs', {\n  name: 'test job',\n  body: 'fn(state => state)'\n}, {\n  headers: { 'x-custom': 'value' },\n});",
+            "caption": "POST with custom headers"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource (relative to /api/).",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Body data to append to the request. JSON will be converted to a string.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Query, Headers and Authentication parameters",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{OpenFnState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "operation"
             }
           }
         ]
