@@ -94,7 +94,7 @@
           },
           {
             "title": "param",
-            "description": "The condition to use for the lookup. Values are automatically escaped.",
+            "description": "The condition to use for the lookup. Values are automatically escaped for security.",
             "type": {
               "type": "NameExpression",
               "name": "object"
