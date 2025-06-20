@@ -243,7 +243,7 @@ function handleOptions(options) {
  * @param {object} filter - A filter object with the lookup table, a uuid and the condition
  * @param {string} filter.uuid - The uuid column to determine a matching/existing record
  * @param {string} filter.relation - The table to lookup the value in
- * @param {object} filter.where - The condition to use for the lookup. Values are automatically escaped.
+ * @param {object} filter.where - The condition to use for the lookup. Values are automatically escaped for security.
  * @param {object} filter.operator - The operator to use for the lookup
  * @returns {Operation}
  */
