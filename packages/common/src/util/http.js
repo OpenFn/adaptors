@@ -14,8 +14,8 @@ export const makeBasicAuthHeader = (username, password) => {
   return { Authorization: `Basic ${credentials}` };
 };
 
-export const logResponse = (response, query = {}) => {
-  const { method, url, statusCode, duration } = response;
+export const logResponse = response => {
+  const { method, url, statusCode, duration, query } = response;
 
   if (method && url && duration && statusCode) {
     const urlWithQuery = Object.keys(query || {}).length
@@ -31,6 +31,7 @@ export const logResponse = (response, query = {}) => {
       console.log(message);
     }
   }
+
   return response;
 };
 
@@ -185,12 +186,14 @@ export async function request(method, fullUrlOrPath, options = {}) {
 
   const client = getClient(baseUrl, { tls });
 
+  const queryParams = {
+    ...optionQuery,
+    ...urlQuery,
+  };
+
   const response = await client.request({
     path,
-    query: {
-      ...optionQuery,
-      ...urlQuery,
-    },
+    query: queryParams,
     method,
     headers,
     body: encodeRequestBody(body),
@@ -210,7 +213,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
   const endTime = Date.now();
   const duration = endTime - startTime;
 
-  return {
+  const requestResponse = {
     url,
     method,
     statusCode: response.statusCode,
@@ -219,6 +222,10 @@ export async function request(method, fullUrlOrPath, options = {}) {
     body: responseBody,
     duration,
   };
+  if (Object.keys(queryParams).length > 0) {
+    requestResponse.query = queryParams;
+  }
+  return requestResponse;
 }
 
 function encodeRequestBody(body) {
