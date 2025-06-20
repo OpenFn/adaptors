@@ -1,5 +1,12 @@
 ## 2.4.0 - 22 April 2025
 
+## 2.5.0 - 20 June 2025
+
+### Minor Changes
+
+- 28c2e8b: - Updated internal `logResponse` API
+  - Update request to response to include `query` parameters
+
 ### Minor Changes
 
 - 13bf08f: Add `log()` and `debug()` functions

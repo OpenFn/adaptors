@@ -1,5 +1,13 @@
 # @openfn/language-fhir-4
 
+## 0.1.6 - 20 June 2025
+
+### Patch Changes
+
+- 28c2e8b: Remove query option from `logResponse` function
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
+
 ## 0.1.5 - 22 April 2025
 
 ### Patch Changes
