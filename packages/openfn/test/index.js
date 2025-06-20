@@ -1,6 +1,6 @@
-import { execute, request, get, post, fn } from '../src';
+import { execute, request, get, post, put, patch, del } from '../src';
 import { enableMockClient } from '@openfn/language-common/util';
-import { expect, assert } from 'chai';
+import { expect } from 'chai';
 
 const jsonHeaders = { 'Content-Type': 'application/json' };
 
@@ -49,7 +49,7 @@ describe('request()', () => {
 
     const state = {
       configuration: {
-        host: 'https://test.openfn.org',
+        baseUrl: 'https://test.openfn.org',
         access_token: 'test-jwt-token',
       },
     };
@@ -74,7 +74,7 @@ describe('request()', () => {
 
     const state = {
       configuration: {
-        host: 'https://test.openfn.org',
+        baseUrl: 'https://test.openfn.org',
         access_token: 'test-jwt-token',
       },
     };
@@ -96,7 +96,7 @@ describe('request()', () => {
   it('should throw error if no JWT token', async () => {
     const state = {
       configuration: {
-        host: 'https://test.openfn.org',
+        baseUrl: 'https://test.openfn.org',
         // No JWT token
       },
     };
@@ -109,26 +109,8 @@ describe('request()', () => {
     }
 
     expect(error.message).to.include(
-      'Missing JWT token. Please authenticate first.'
+      'Missing authentication. Please provide access_token.'
     );
-  });
-
-  it('should throw error if no host configuration', async () => {
-    const state = {
-      configuration: {
-        access_token: 'test-jwt-token',
-        // No host
-      },
-    };
-
-    let error;
-    try {
-      await execute(request('GET', 'jobs'))(state);
-    } catch (e) {
-      error = e;
-    }
-
-    expect(error.message).to.include('Missing required configuration: host');
   });
 
   it('should include Authorization header', async () => {
@@ -144,7 +126,7 @@ describe('request()', () => {
 
     const state = {
       configuration: {
-        host: 'https://test.openfn.org',
+        baseUrl: 'https://test.openfn.org',
         access_token: 'test-jwt-token',
       },
     };
@@ -167,7 +149,7 @@ describe('request()', () => {
 
     const state = {
       configuration: {
-        host: 'https://test.openfn.org',
+        baseUrl: 'https://test.openfn.org',
         access_token: 'test-jwt-token',
       },
     };
@@ -190,7 +172,7 @@ describe('get()', () => {
 
     const state = {
       configuration: {
-        host: 'https://test.openfn.org',
+        baseUrl: 'https://test.openfn.org',
         access_token: 'test-jwt-token',
       },
     };
@@ -208,7 +190,7 @@ describe('get()', () => {
 
     const state = {
       configuration: {
-        host: 'https://test.openfn.org',
+        baseUrl: 'https://test.openfn.org',
         access_token: 'test-jwt-token',
       },
     };
@@ -235,7 +217,7 @@ describe('get()', () => {
 
     const state = {
       configuration: {
-        host: 'https://test.openfn.org',
+        baseUrl: 'https://test.openfn.org',
         access_token: 'test-jwt-token',
       },
     };
@@ -265,7 +247,7 @@ describe('post()', () => {
 
     const state = {
       configuration: {
-        host: 'https://test.openfn.org',
+        baseUrl: 'https://test.openfn.org',
         access_token: 'test-jwt-token',
       },
     };
@@ -300,7 +282,7 @@ describe('post()', () => {
 
     const state = {
       configuration: {
-        host: 'https://test.openfn.org',
+        baseUrl: 'https://test.openfn.org',
         access_token: 'test-jwt-token',
       },
     };
@@ -320,64 +302,192 @@ describe('post()', () => {
   });
 });
 
-describe('integration', () => {
-  it('should authenticate and then make requests', async () => {
-    testServer
-      .intercept({ path: '/api/login', method: 'POST' })
-      .reply(200, { access_token: 'test-jwt-token' });
-
-    testServer
-      .intercept({ path: '/api/jobs', method: 'GET' })
-      .reply(200, [{ id: 1, name: 'test job' }], { headers: jsonHeaders });
+describe('put()', () => {
+  it('should make a PUT request with data', async () => {
+    let requestBody;
+    testServer.intercept({ path: '/api/jobs/123', method: 'PUT' }).reply(
+      200,
+      req => {
+        requestBody = req.body;
+        return { id: 123, name: 'updated job' };
+      },
+      { headers: jsonHeaders }
+    );
 
     const state = {
       configuration: {
-        host: 'https://test.openfn.org',
-        username: 'test@example.com',
-        password: 'password123',
+        baseUrl: 'https://test.openfn.org',
+        access_token: 'test-jwt-token',
       },
     };
 
-    const result = await execute(get('jobs'))(state);
+    const updateData = {
+      name: 'updated job',
+      body: 'fn(state => ({ ...state, updated: true }))',
+    };
 
-    expect(result.configuration.jwt).to.eql('test-jwt-token');
-    expect(result.data).to.eql([{ id: 1, name: 'test job' }]);
+    const result = await execute(put('jobs/123', updateData))(state);
+
+    expect(result.data).to.eql({ id: 123, name: 'updated job' });
+    expect(result.response.statusCode).to.eql(200);
+    expect(JSON.parse(requestBody)).to.eql(updateData);
   });
 
-  it('should preserve state and references', async () => {
+  it('should include query parameters and headers', async () => {
+    let requestData;
     testServer
-      .intercept({ path: '/api/login', method: 'POST' })
-      .reply(200, { access_token: 'test-jwt-token' });
-
-    testServer
-      .intercept({ path: '/api/jobs', method: 'GET' })
-      .reply(200, [{ id: 1 }], { headers: jsonHeaders });
+      .intercept({ path: '/api/jobs/123?project=456', method: 'PUT' })
+      .reply(
+        200,
+        req => {
+          requestData = {
+            body: req.body,
+            headers: req.headers,
+          };
+          return { id: 123 };
+        },
+        { headers: jsonHeaders }
+      );
 
     const state = {
-      counter: 0,
       configuration: {
-        host: 'https://test.openfn.org',
-        username: 'test@example.com',
-        password: 'password123',
+        baseUrl: 'https://test.openfn.org',
+        access_token: 'test-jwt-token',
       },
-      data: { triggering: 'event' },
     };
 
-    const result = await execute(
-      fn(state => {
-        state.counter += 1;
-        return state;
-      }),
-      get('jobs'),
-      fn(state => {
-        state.counter += 1;
-        return state;
+    const updateData = { name: 'updated job' };
+
+    await execute(
+      put('jobs/123', updateData, {
+        query: { project: 456 },
+        headers: { 'x-custom': 'value' },
       })
     )(state);
 
-    expect(result.counter).to.eql(2);
-    expect(result.configuration.jwt).to.eql('test-jwt-token');
-    expect(result.data).to.eql([{ id: 1 }]);
-    expect(result.references).to.eql([{ triggering: 'event' }]);
+    expect(JSON.parse(requestData.body)).to.eql(updateData);
+    expect(requestData.headers['x-custom']).to.eql('value');
+    expect(requestData.headers['Content-Type']).to.eql('application/json');
+  });
+});
+
+describe('patch()', () => {
+  it('should make a PATCH request with data', async () => {
+    let requestBody;
+    testServer.intercept({ path: '/api/jobs/123', method: 'PATCH' }).reply(
+      200,
+      req => {
+        requestBody = req.body;
+        return { id: 123, name: 'partially updated job' };
+      },
+      { headers: jsonHeaders }
+    );
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://test.openfn.org',
+        access_token: 'test-jwt-token',
+      },
+    };
+
+    const patchData = {
+      name: 'partially updated job',
+    };
+
+    const result = await execute(patch('jobs/123', patchData))(state);
+
+    expect(result.data).to.eql({ id: 123, name: 'partially updated job' });
+    expect(result.response.statusCode).to.eql(200);
+    expect(JSON.parse(requestBody)).to.eql(patchData);
+  });
+
+  it('should include query parameters and headers', async () => {
+    let requestData;
+    testServer
+      .intercept({ path: '/api/jobs/123?project=456', method: 'PATCH' })
+      .reply(
+        200,
+        req => {
+          requestData = {
+            body: req.body,
+            headers: req.headers,
+          };
+          return { id: 123 };
+        },
+        { headers: jsonHeaders }
+      );
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://test.openfn.org',
+        access_token: 'test-jwt-token',
+      },
+    };
+
+    const patchData = { name: 'partially updated job' };
+
+    await execute(
+      patch('jobs/123', patchData, {
+        query: { project: 456 },
+        headers: { 'x-custom': 'value' },
+      })
+    )(state);
+
+    expect(JSON.parse(requestData.body)).to.eql(patchData);
+    expect(requestData.headers['x-custom']).to.eql('value');
+    expect(requestData.headers['Content-Type']).to.eql('application/json');
+  });
+});
+
+describe('del()', () => {
+  it('should make a DELETE request', async () => {
+    testServer
+      .intercept({ path: '/api/jobs/123', method: 'DELETE' })
+      .reply(204, null, { headers: jsonHeaders });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://test.openfn.org',
+        access_token: 'test-jwt-token',
+      },
+    };
+
+    const result = await execute(del('jobs/123'))(state);
+
+    expect(result.response.statusCode).to.eql(204);
+    expect(result.response.method).to.eql('DELETE');
+  });
+
+  it('should include query parameters and headers', async () => {
+    let requestData;
+    testServer
+      .intercept({ path: '/api/jobs/123?project=456', method: 'DELETE' })
+      .reply(
+        204,
+        req => {
+          requestData = {
+            headers: req.headers,
+          };
+          return null;
+        },
+        { headers: jsonHeaders }
+      );
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://test.openfn.org',
+        access_token: 'test-jwt-token',
+      },
+    };
+
+    await execute(
+      del('jobs/123', {
+        query: { project: 456 },
+        headers: { 'x-custom': 'value' },
+      })
+    )(state);
+
+    expect(requestData.headers['x-custom']).to.eql('value');
+    expect(requestData.headers['Content-Type']).to.eql('application/json');
   });
 });
