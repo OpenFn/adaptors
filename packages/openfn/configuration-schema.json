@@ -1,15 +1,15 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
-    "host": {
+    "baseUrl": {
       "title": "Host",
       "type": "string",
-      "description": "The OpenFn host url",
+      "description": "The OpenFn Base URL",
       "format": "uri",
-      "default": "https://www.openfn.org",
+      "default": "https://app.openfn.org",
       "minLength": 1,
       "examples": [
-        "https://www.openfn.org"
+        "https://app.openfn.org"
       ]
     },
     "projectId": {
@@ -21,27 +21,16 @@
         "some-id"
       ]
     },
-    "username": {
-      "title": "Username",
+    "access_token": {
+      "title": "Access Token",
       "type": "string",
-      "description": "The username to log in to OpenFn",
-      "minLength": 1,
-      "examples": [
-        "test@openfn.org"
-      ]
-    },
-    "password": {
-      "title": "Password",
-      "type": "string",
-      "description": "The password to log in to OpenFn",
-      "writeOnly": true,
-      "minLength": 1,
-      "examples": [
-        "@super(!)Secretpass"
-      ]
+      "description": "Your OpenFn access token",
+      "minLength": 1
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["host", "username", "password"]
+  "required": [
+    "access_token"
+  ]
 }
