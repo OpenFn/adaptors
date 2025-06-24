@@ -11,6 +11,13 @@ rm -rf tmp/*
 # rsync -av --progress packages/* docs/ --exclude node_modules --exclude src --exclude ast.json --exclude CHANGELOG.md --exclude test --exclude LICENSE --exclude LICENSE.LESSER --exclude package.json --exclude configuration-schema.json
 rsync -zvr packages/ tmp/ --include="*.md" --include="*/" --exclude="*" --prune-empty-dirs
 
+# lint markdown files using MDX compiler
+echo "Linting .md files..."
+node scripts/lint-docs.js tmp || {
+  echo "❌ MDX linting failed."
+  exit 1
+}
+
 # move index.md to root directory
 find tmp/*/docs -name '*.md' -type f -execdir mv -n '{}' ../ \;
 find tmp/*/* -type d -empty -delete
