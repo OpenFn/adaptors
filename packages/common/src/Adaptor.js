@@ -977,3 +977,25 @@ export function debug(...args) {
     return state;
   };
 }
+
+/**
+ * Run an operation and save the result to a custom key in state instead of overwriting state.data.
+ * @public
+ * @function
+ * @example <caption>Fetch comments and store them under state.comments</caption>
+ * as('comments', get('comments'))
+ * @param {string} key - The state key to assign the result of the operation to.
+ * @param {function} operation -  An operation that returns a new state object with a `data` property
+ * @returns {Operation}
+ */
+export function as(key, operation) {
+  return async state => {
+    const prevState = state.data;
+    const result = await operation(state);
+    const { data, ...rest } = result;
+
+    state[key] = data;
+    state.data = prevState;
+    return { ...state, ...rest };
+  };
+}
