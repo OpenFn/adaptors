@@ -33,6 +33,7 @@ import {
   debug,
   _ as lodash,
   map,
+  as,
 } from '../src/Adaptor';
 import { startOfToday } from 'date-fns';
 
@@ -1252,5 +1253,15 @@ describe('debug', () => {
   afterEach(() => {
     consoleOutput = [];
     console.debug = originalDebug;
+  });
+});
+
+describe('as', () => {
+  it('saves data into a custom key in state', async () => {
+    let state = { data: {}, references: [] };
+    let results = await as('comments', function (state) {
+      return { ...state, data: testData };
+    })(state);
+    expect(results.comments).to.eql(testData);
   });
 });
