@@ -1647,7 +1647,7 @@
       "name": "map",
       "params": {},
       "docs": {
-        "description": "Maps over a collection of items to produce a new `state.data` array.\n\nThis utility is useful when the source data contains multiple items and you want\nto perform an operation for each one, generating an array of transformed results.\n\nThe provided `callback` will be invoked once per item in the array, and each result\nwill be collected into `state.data` as an array. The `path` argument determines where the array\nis sourced from, either via a JSONPath string or directly as a static array.",
+        "description": "Iterates over a collection of items and returns a new array of mapped values,\nlike Javascript's `Array.map()` function.\n\nEach item in the source array will be passed into the callback function. The returned value\nwill be added to the new array. The callback is passed the original item, the current index\nin the source array (ie, the nth item number), and the state object.\n\nWrites a new array to `state.data` with transformed values.c array.",
         "tags": [
           {
             "title": "public",
@@ -1661,17 +1661,17 @@
           },
           {
             "title": "example",
-            "description": "map('$.data[*]', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
+            "description": "map($.items', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
             "caption": "Transform an array of items in state"
           },
           {
             "title": "example",
-            "description": "map('$.data[*]', async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});",
+            "description": "map($.items, async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});",
             "caption": "Map items asynchronously (e.g. fetch extra info)"
           },
           {
             "title": "param",
-            "description": "A JSONPath string to or an array of items to map directly.",
+            "description": "An array of items or a a JSONPath string which points to an array of items.",
             "type": {
               "type": "UnionType",
               "elements": [
@@ -1689,7 +1689,7 @@
           },
           {
             "title": "param",
-            "description": "The function invoked with `(data, index, state)` for each item in the array.",
+            "description": "The mapping function, invoked with `(data, index, state)` for each item in the array.",
             "type": {
               "type": "NameExpression",
               "name": "function"
