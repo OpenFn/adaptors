@@ -988,11 +988,12 @@ export function debug(...args) {
  */
 export function as(key, operation) {
   return async state => {
+    const [resolvedKey] = newExpandReferences(state, key);
     const prevState = state.data;
     const result = await operation(state);
     const { data, ...rest } = result;
 
-    state[key] = data;
+    state[resolvedKey] = data;
     state.data = prevState;
     return { ...state, ...rest };
   };
