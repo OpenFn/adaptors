@@ -980,8 +980,8 @@ export function debug(...args) {
  * Run an operation and save the result to a custom key in state instead of overwriting state.data.
  * @public
  * @function
- * @example <caption>Fetch comments and store them under state.comments</caption>
- * as('comments', get('comments'))
+ * @example <caption>Fetch cce-data from collections and store them under state.cceData</caption>
+ * as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));
  * @param {string} key - The state key to assign the result of the operation to.
  * @param {function} operation -  An operation that returns a new state object with a `data` property
  * @returns {Operation}
