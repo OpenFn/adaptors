@@ -22,11 +22,6 @@ import * as util from './util';
 /**
  * Make a GET request to any DHIS2 endpoint.
  * @public
- * @function
- * @param {string} path - Path to resource.
- * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request
- * @state {DHIS2HttpState}
- * @returns {Operation}
  * @example <caption>Get with query parameters</caption>
  * http.get('dataValueSets', {
  *  query:{
@@ -43,6 +38,11 @@ import * as util from './util';
  *   },
  *   parseAs: 'base64',
  * });
+ * @function
+ * @param {string} path - Path to resource.
+ * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request
+ * @state {DHIS2HttpState}
+ * @returns {Operation}
  */
 export function get(path, options = {}) {
   return async state => {
@@ -73,13 +73,6 @@ export function get(path, options = {}) {
 /**
  * Make a POST request to any DHIS2 endpoint.
  * @public
- * @function
- * @param {string} path - Path to resource.
- * @magic path $.children.resourceTypes[*]
- * @param {DHIS2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
- * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
- * @state {DHIS2HttpState}
- * @returns {Operation}
  * @example <caption>Call the tracker endpoint with a JSON payload</caption>
  * http.post("tracker", {
  *   events: [
@@ -90,6 +83,13 @@ export function get(path, options = {}) {
  *     },
  *   ],
  * });
+ * @function
+ * @param {string} path - Path to resource.
+ * @magic path $.children.resourceTypes[*]
+ * @param {DHIS2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
+ * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
+ * @state {DHIS2HttpState}
+ * @returns {Operation}
  */
 export function post(path, data, options = {}) {
   return async state => {
@@ -123,6 +123,8 @@ export function post(path, data, options = {}) {
 /**
  * Make a PATCH request to any DHIS2 endpoint.
  * @public
+ * @example <caption>Update a resource</caption>
+ * patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
  * @function
  * @param {string} resourceType - The type of resource to be updated.
  * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`
@@ -130,8 +132,6 @@ export function post(path, data, options = {}) {
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
  * @state {DHIS2HttpState}
  * @returns {Operation}
- * @example <caption>Update a resource</caption>
- * patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
  */
 
 export function patch(resourceType, path, data, options = {}) {
@@ -161,6 +161,7 @@ export function patch(resourceType, path, data, options = {}) {
 
 /**
  * Make a HTTP request to any DHIS2 endpoint
+ * @public
  * @example <caption>GET request with a URL params</caption>
  * http.request("GET",
  *   "tracker/relationships", {
@@ -185,7 +186,6 @@ export function patch(resourceType, path, data, options = {}) {
  *    }
  *  });
  * @function
- * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
  * @param {RequestOptions}  [options] - An optional object containing query, requestConfig, and data for the request
