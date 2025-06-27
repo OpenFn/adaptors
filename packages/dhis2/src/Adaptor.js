@@ -222,13 +222,6 @@ export function create(path, data, params = {}) {
       });
     }
 
-    const details = `with response ${JSON.stringify(
-      response.body?.message || response.body,
-      null,
-      2
-    )}`;
-    console.log(`Created ${resolvedPath} ${details}`);
-
     const { location } = response.headers;
     if (location) console.log(`Record available @ ${location}`);
 
