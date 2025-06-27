@@ -16,6 +16,61 @@
             "type": null
           },
           {
+            "title": "example",
+            "description": "create('programs', {\n  name: 'name 20',\n  shortName: 'n20',\n  programType: 'WITHOUT_REGISTRATION',\n});",
+            "caption": "Create a program"
+          },
+          {
+            "title": "example",
+            "description": "create('events', {\n  program: 'eBAyeGv0exc',\n  orgUnit: 'DiszpKrYNg8',\n  occurredAt: '2025-06-19',\n  status: 'COMPLETED',\n});",
+            "caption": "Create a single event"
+          },
+          {
+            "title": "example",
+            "description": "create('trackedEntities', {\n  orgUnit: 'TSyzvBiovKh',\n  trackedEntityType: 'nEenWmSyUEp',\n  attributes: [\n    {\n      attribute: 'w75KJ2mc4zz',\n      value: 'Gigiwe',\n    },\n  ]\n});",
+            "caption": "Create a single tracker entity. See [Create tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)"
+          },
+          {
+            "title": "example",
+            "description": "create('dataSets', { name: 'OpenFn Data Set', periodType: 'Monthly', shortName: 'ODS' });",
+            "caption": "Create a dataSet"
+          },
+          {
+            "title": "example",
+            "description": "create('dataSetNotificationTemplates', {\n  dataSetNotificationTrigger: 'DATA_SET_COMPLETION',\n  notificationRecipient: 'ORGANISATION_UNIT_CONTACT',\n  name: 'Notification',\n  messageTemplate: 'Hello',\n  deliveryChannels: ['SMS'],\n  dataSets: [],\n});",
+            "caption": "a dataSetNotification"
+          },
+          {
+            "title": "example",
+            "description": "create('dataElements', {\n  aggregationType: 'SUM',\n  domainType: 'AGGREGATE',\n  valueType: 'NUMBER',\n  name: 'Paracetamol',\n  shortName: 'Para',\n});",
+            "caption": "Create a dataElement"
+          },
+          {
+            "title": "example",
+            "description": "create('dataElementGroups', {\n  name: 'Data Element Group 1',\n  shortName: 'DEG1',\n  dataElements: [],\n});",
+            "caption": "Create a dataElementGroup"
+          },
+          {
+            "title": "example",
+            "description": "create('dataElementGroupSets', {\n  name: 'Data Element Group Set 4',\n  dataDimension: true,\n  shortName: 'DEGS4',\n  dataElementGroups: [],\n});",
+            "caption": "Create a dataElementGroupSet"
+          },
+          {
+            "title": "example",
+            "description": "create('dataValueSets', {\n  dataElement: 'f7n9E0hX8qk',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  value: '12',\n});",
+            "caption": "Create a dataValueSet"
+          },
+          {
+            "title": "example",
+            "description": "create('dataValueSets', {\n  dataSet: 'pBOMPrpg1QX',\n  completeDate: '2014-02-03',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  dataValues: [\n    {\n      dataElement: 'f7n9E0hX8qk',\n      value: '1',\n    },\n    {\n      dataElement: 'Ix2HsbDMLea',\n      value: '2',\n    },\n    {\n      dataElement: 'eY5ehpbEsB7',\n      value: '3',\n    },\n  ],\n});",
+            "caption": "Create a dataValueSet with related dataValues"
+          },
+          {
+            "title": "example",
+            "description": "create('enrollments', {\n  trackedEntity: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'ur1Edk5Oe2n',\n  enrolledAt: '2013-09-17',\n  enrollmentDate: '2013-09-17',\n  incidentDate: '2013-09-17',\n});",
+            "caption": "Create an enrollment"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -62,61 +117,6 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "example",
-            "description": "create('programs', {\n  name: 'name 20',\n  shortName: 'n20',\n  programType: 'WITHOUT_REGISTRATION',\n});",
-            "caption": "Create a program"
-          },
-          {
-            "title": "example",
-            "description": "create('events', {\n  program: 'eBAyeGv0exc',\n  orgUnit: 'DiszpKrYNg8',\n  status: 'COMPLETED',\n});",
-            "caption": "Create a single event"
-          },
-          {
-            "title": "example",
-            "description": "create('trackedEntities', {\n  orgUnit: 'TSyzvBiovKh',\n  trackedEntityType: 'nEenWmSyUEp',\n  attributes: [\n    {\n      attribute: 'w75KJ2mc4zz',\n      value: 'Gigiwe',\n    },\n  ]\n});",
-            "caption": "Create a single tracker entity. See [Create tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)"
-          },
-          {
-            "title": "example",
-            "description": "create('dataSets', { name: 'OpenFn Data Set', periodType: 'Monthly' });",
-            "caption": "Create a dataSet"
-          },
-          {
-            "title": "example",
-            "description": "create('dataSetNotificationTemplates', {\n  dataSetNotificationTrigger: 'DATA_SET_COMPLETION',\n  notificationRecipient: 'ORGANISATION_UNIT_CONTACT',\n  name: 'Notification',\n  messageTemplate: 'Hello',\n  deliveryChannels: ['SMS'],\n  dataSets: [],\n});",
-            "caption": "a dataSetNotification"
-          },
-          {
-            "title": "example",
-            "description": "create('dataElements', {\n  aggregationType: 'SUM',\n  domainType: 'AGGREGATE',\n  valueType: 'NUMBER',\n  name: 'Paracetamol',\n  shortName: 'Para',\n});",
-            "caption": "Create a dataElement"
-          },
-          {
-            "title": "example",
-            "description": "create('dataElementGroups', {\n  name: 'Data Element Group 1',\n  dataElements: [],\n});",
-            "caption": "Create a dataElementGroup"
-          },
-          {
-            "title": "example",
-            "description": "create('dataElementGroupSets', {\n  name: 'Data Element Group Set 4',\n  dataDimension: true,\n  shortName: 'DEGS4',\n  dataElementGroups: [],\n});",
-            "caption": "Create a dataElementGroupSet"
-          },
-          {
-            "title": "example",
-            "description": "create('dataValueSets', {\n  dataElement: 'f7n9E0hX8qk',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  value: '12',\n});",
-            "caption": "Create a dataValueSet"
-          },
-          {
-            "title": "example",
-            "description": "create('dataValueSets', {\n  dataSet: 'pBOMPrpg1QX',\n  completeDate: '2014-02-03',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  dataValues: [\n    {\n      dataElement: 'f7n9E0hX8qk',\n      value: '1',\n    },\n    {\n      dataElement: 'Ix2HsbDMLea',\n      value: '2',\n    },\n    {\n      dataElement: 'eY5ehpbEsB7',\n      value: '3',\n    },\n  ],\n});",
-            "caption": "Create a dataValueSet with related dataValues"
-          },
-          {
-            "title": "example",
-            "description": "create('enrollments', {\n  trackedEntity: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-09-17',\n  incidentDate: '2013-09-17',\n});",
-            "caption": "Create an enrollment"
           }
         ]
       },
@@ -135,6 +135,21 @@
             "title": "public",
             "description": null,
             "type": null
+          },
+          {
+            "title": "example",
+            "description": "get('dataValueSets', {\n  dataSet: 'pBOMPrpg1QX',\n  orgUnit: 'DiszpKrYNg8',\n  period: '201401',\n  fields: '*',\n});",
+            "caption": "Get all data values for the 'pBOMPrpg1QX' dataset"
+          },
+          {
+            "title": "example",
+            "description": "get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });",
+            "caption": "Get all programs for an organization unit"
+          },
+          {
+            "title": "example",
+            "description": "get('tracker/trackedEntities/F8yKM85NbxW');",
+            "caption": "Get a single tracked entity given the provided ID. See [TrackedEntities docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities)"
           },
           {
             "title": "function",
@@ -170,21 +185,6 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "example",
-            "description": "get('dataValueSets', {\n  dataSet: 'pBOMPrpg1QX',\n  orgUnit: 'DiszpKrYNg8',\n  period: '201401',\n  fields: '*',\n});",
-            "caption": "Get all data values for the 'pBOMPrpg1QX' dataset"
-          },
-          {
-            "title": "example",
-            "description": "get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });",
-            "caption": "Get all programs for an organization unit"
-          },
-          {
-            "title": "example",
-            "description": "get('tracker/trackedEntities/F8yKM85NbxW');",
-            "caption": "Get a single tracked entity given the provided ID. See [TrackedEntities docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities)"
           }
         ]
       },
@@ -205,6 +205,61 @@
             "title": "public",
             "description": null,
             "type": null
+          },
+          {
+            "title": "example",
+            "description": "update('programs', 'qAZJCrNJK8H', {\n  name: '14e1aa02c3f0a31618e096f2c6d03bed',\n  shortName: '14e1aa02',\n  programType: 'WITHOUT_REGISTRATION',\n});",
+            "caption": "a program"
+          },
+          {
+            "title": "example",
+            "description": "update('events', 'PVqUD2hvU4E', {\n  program: 'eBAyeGv0exc',\n  orgUnit: 'Ngelehun CHC',\n  status: 'COMPLETED',\n  storedBy: 'admin',\n  dataValues: [],\n});",
+            "caption": "an event"
+          },
+          {
+            "title": "example",
+            "description": "update('trackedEntities', '', {\n  createdAt: '2015-08-06T21:12:37.256',\n  orgUnit: 'TSyzvBiovKh',\n  createdAtClient: '2015-08-06T21:12:37.256',\n  trackedEntity: 'IeQfgUtGPq2',\n  trackedEntityType: 'nEenWmSyUEp',\n  inactive: false,\n  deleted: false,\n  featureType: 'NONE',\n  programOwners: [\n    {\n      ownerOrgUnit: 'TSyzvBiovKh',\n      program: 'IpHINAT79UW',\n      trackedEntity: 'IeQfgUtGPq2',\n    },\n  ],\n  attributes: [\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      displayName: 'Last name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'zDhUuAYrxNC',\n      value: 'Russell',\n    },\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      code: 'MMD_PER_NAM',\n      displayName: 'First name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'w75KJ2mc4zz',\n      value: 'Catherine',\n    },\n  ],\n});",
+            "caption": "Update a tracker entity. See [Update tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)"
+          },
+          {
+            "title": "example",
+            "description": "update('dataSets', 'lyLU2wR22tC', { name: 'OpenFN Data Set', periodType: 'Weekly' });",
+            "caption": "Update a dataSet"
+          },
+          {
+            "title": "example",
+            "description": "update('dataSetNotificationTemplates', 'VbQBwdm1wVP', {\n  dataSetNotificationTrigger: 'DATA_SET_COMPLETION',\n  notificationRecipient: 'ORGANISATION_UNIT_CONTACT',\n  name: 'Notification',\n  messageTemplate: 'Hello Updated',\n  deliveryChannels: ['SMS'],\n  dataSets: [],\n});",
+            "caption": "a dataSetNotification"
+          },
+          {
+            "title": "example",
+            "description": "update('dataElements', 'FTRrcoaog83', {\n  aggregationType: 'SUM',\n  domainType: 'AGGREGATE',\n  valueType: 'NUMBER',\n  name: 'Paracetamol',\n  shortName: 'Para',\n});",
+            "caption": "Update a dataElement"
+          },
+          {
+            "title": "example",
+            "description": "update('dataElementGroups', 'QrprHT61XFk', {\n  name: 'Data Element Group 1',\n  dataElements: [],\n});",
+            "caption": "Update a dataElementGroup"
+          },
+          {
+            "title": "example",
+            "description": "update('dataElementGroupSets', 'VxWloRvAze8', {\n  name: 'Data Element Group Set 4',\n  dataDimension: true,\n  shortName: 'DEGS4',\n  dataElementGroups: [],\n});",
+            "caption": "Update a dataElementGroupSet"
+          },
+          {
+            "title": "example",
+            "description": "update('dataValueSets', 'AsQj6cDsUq4', {\n  dataElement: 'f7n9E0hX8qk',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  value: '12',\n});",
+            "caption": "Update a dataValueSet"
+          },
+          {
+            "title": "example",
+            "description": "update('dataValueSets', 'Ix2HsbDMLea', {\n  dataSet: 'pBOMPrpg1QX',\n  completeDate: '2014-02-03',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  dataValues: [\n    {\n      dataElement: 'f7n9E0hX8qk',\n      value: '1',\n    },\n    {\n      dataElement: 'Ix2HsbDMLea',\n      value: '2',\n    },\n    {\n      dataElement: 'eY5ehpbEsB7',\n      value: '3',\n    },\n  ],\n});",
+            "caption": "Update a dataValueSet with related dataValues"
+          },
+          {
+            "title": "example",
+            "description": "update('enrollments', 'CmsHzercTBa' {\n  trackedEntity: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-10-17',\n  incidentDate: '2013-10-17',\n});",
+            "caption": "Update an enrollment given the provided ID"
           },
           {
             "title": "function",
@@ -261,61 +316,6 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "example",
-            "description": "update('programs', 'qAZJCrNJK8H', {\n  name: '14e1aa02c3f0a31618e096f2c6d03bed',\n  shortName: '14e1aa02',\n  programType: 'WITHOUT_REGISTRATION',\n});",
-            "caption": "a program"
-          },
-          {
-            "title": "example",
-            "description": "update('events', 'PVqUD2hvU4E', {\n  program: 'eBAyeGv0exc',\n  orgUnit: 'Ngelehun CHC',\n  status: 'COMPLETED',\n  storedBy: 'admin',\n  dataValues: [],\n});",
-            "caption": "an event"
-          },
-          {
-            "title": "example",
-            "description": "update('trackedEntities', '', {\n  createdAt: '2015-08-06T21:12:37.256',\n  orgUnit: 'TSyzvBiovKh',\n  createdAtClient: '2015-08-06T21:12:37.256',\n  trackedEntity: 'IeQfgUtGPq2',\n  trackedEntityType: 'nEenWmSyUEp',\n  inactive: false,\n  deleted: false,\n  featureType: 'NONE',\n  programOwners: [\n    {\n      ownerOrgUnit: 'TSyzvBiovKh',\n      program: 'IpHINAT79UW',\n      trackedEntity: 'IeQfgUtGPq2',\n    },\n  ],\n  attributes: [\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      displayName: 'Last name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'zDhUuAYrxNC',\n      value: 'Russell',\n    },\n    {\n      lastUpdated: '2016-01-12T00:00:00.000',\n      code: 'MMD_PER_NAM',\n      displayName: 'First name',\n      created: '2016-01-12T00:00:00.000',\n      valueType: 'TEXT',\n      attribute: 'w75KJ2mc4zz',\n      value: 'Catherine',\n    },\n  ],\n});",
-            "caption": "Update a tracker entity. See [Update tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)"
-          },
-          {
-            "title": "example",
-            "description": "update('dataSets', 'lyLU2wR22tC', { name: 'OpenFN Data Set', periodType: 'Weekly' });",
-            "caption": "Update a dataSet"
-          },
-          {
-            "title": "example",
-            "description": "update('dataSetNotificationTemplates', 'VbQBwdm1wVP', {\n  dataSetNotificationTrigger: 'DATA_SET_COMPLETION',\n  notificationRecipient: 'ORGANISATION_UNIT_CONTACT',\n  name: 'Notification',\n  messageTemplate: 'Hello Updated',\n  deliveryChannels: ['SMS'],\n  dataSets: [],\n});",
-            "caption": "a dataSetNotification"
-          },
-          {
-            "title": "example",
-            "description": "update('dataElements', 'FTRrcoaog83', {\n  aggregationType: 'SUM',\n  domainType: 'AGGREGATE',\n  valueType: 'NUMBER',\n  name: 'Paracetamol',\n  shortName: 'Para',\n});",
-            "caption": "Update a dataElement"
-          },
-          {
-            "title": "example",
-            "description": "update('dataElementGroups', 'QrprHT61XFk', {\n  name: 'Data Element Group 1',\n  dataElements: [],\n});",
-            "caption": "Update a dataElementGroup"
-          },
-          {
-            "title": "example",
-            "description": "update('dataElementGroupSets', 'VxWloRvAze8', {\n  name: 'Data Element Group Set 4',\n  dataDimension: true,\n  shortName: 'DEGS4',\n  dataElementGroups: [],\n});",
-            "caption": "Update a dataElementGroupSet"
-          },
-          {
-            "title": "example",
-            "description": "update('dataValueSets', 'AsQj6cDsUq4', {\n  dataElement: 'f7n9E0hX8qk',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  value: '12',\n});",
-            "caption": "Update a dataValueSet"
-          },
-          {
-            "title": "example",
-            "description": "update('dataValueSets', 'Ix2HsbDMLea', {\n  dataSet: 'pBOMPrpg1QX',\n  completeDate: '2014-02-03',\n  period: '201401',\n  orgUnit: 'DiszpKrYNg8',\n  dataValues: [\n    {\n      dataElement: 'f7n9E0hX8qk',\n      value: '1',\n    },\n    {\n      dataElement: 'Ix2HsbDMLea',\n      value: '2',\n    },\n    {\n      dataElement: 'eY5ehpbEsB7',\n      value: '3',\n    },\n  ],\n});",
-            "caption": "Update a dataValueSet with related dataValues"
-          },
-          {
-            "title": "example",
-            "description": "update('enrollments', 'CmsHzercTBa' {\n  trackedEntity: 'bmshzEacgxa',\n  orgUnit: 'TSyzvBiovKh',\n  program: 'gZBxv9Ujxg0',\n  enrollmentDate: '2013-10-17',\n  incidentDate: '2013-10-17',\n});",
-            "caption": "Update an enrollment given the provided ID"
           }
         ]
       },
@@ -336,6 +336,16 @@
             "title": "public",
             "description": null,
             "type": null
+          },
+          {
+            "title": "example",
+            "description": "upsert('trackedEntities', {}, {\n orgUnit: 'TSyzvBiovKh',\n trackedEntityType: 'nEenWmSyUEp',\n attributes: [\n   {\n     attribute: 'w75KJ2mc4zz',\n     value: 'Qassim',\n   },\n ],\n});",
+            "caption": "Upsert a trackedEntity"
+          },
+          {
+            "title": "example",
+            "description": "upsert(\n  'dataElements',\n  { filter: 'id:eq:P3jJH5Tu5VC' },\n  {\n    op: 'add',\n    path: '/domainType',\n    name: 'Acute',\n    shortName: 'AFP follow-up',\n    dimensionItemType: 'DATA_ELEMENT',\n    legendSets: [],\n    aggregationType: 'SUM',\n    valueType: 'NUMBER',\n    domainType: 'AGGREGATE',\n    code: 'DE_359049',\n    name: 'Acute Flaccid Paralysis (AFP) follow-up',\n   }\n );",
+            "caption": "Upsert a dataElement"
           },
           {
             "title": "function",
@@ -400,16 +410,6 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "example",
-            "description": "upsert('trackedEntities', {}, {\n orgUnit: 'TSyzvBiovKh',\n trackedEntityType: 'nEenWmSyUEp',\n attributes: [\n   {\n     attribute: 'w75KJ2mc4zz',\n     value: 'Qassim',\n   },\n ],\n});",
-            "caption": "Upsert a trackedEntity"
-          },
-          {
-            "title": "example",
-            "description": "upsert(\n  'dataElements',\n  { filter: 'id:eq:P3jJH5Tu5VC' },\n  {\n    op: 'add',\n    path: '/domainType',\n    name: 'Acute',\n    shortName: 'AFP follow-up',\n    dimensionItemType: 'DATA_ELEMENT',\n    legendSets: [],\n    aggregationType: 'SUM',\n    valueType: 'NUMBER',\n    domainType: 'AGGREGATE',\n    code: 'DE_359049',\n    name: 'Acute Flaccid Paralysis (AFP) follow-up',\n   }\n );",
-            "caption": "Upsert a dataElement"
           }
         ]
       },
@@ -435,6 +435,11 @@
             "title": "function",
             "description": null,
             "name": null
+          },
+          {
+            "title": "example",
+            "description": "destroy('trackedEntities', 'LcRd6Nyaq7T');",
+            "caption": "a tracked entity instance. See [Delete tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)"
           },
           {
             "title": "param",
@@ -489,11 +494,6 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "example",
-            "description": "destroy('trackedEntities', 'LcRd6Nyaq7T');",
-            "caption": "a tracked entity instance. See [Delete tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)"
           }
         ]
       },

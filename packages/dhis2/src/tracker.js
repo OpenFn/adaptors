@@ -20,12 +20,6 @@ import * as util from './util';
  * Import data into DHIS2 using the tracker endpoint.
  * @alias import
  * @public
- * @function
- * @param {string} strategy - The effect the import should have. Can either be CREATE, UPDATE, CREATE_AND_UPDATE and DELETE.
- * @param {object} payload - The data to be imported.
- * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion, and queries for the request
- * @state {DHIS2State}
- * @returns {Operation}
  * @example <caption>Import some data and pass the `atomicMode` parameter</caption>
  * tracker.import('CREATE', $.trackerData, { atomicMode: 'ALL' })
  * @example <caption>Import a trackedEntity resource</caption>
@@ -49,6 +43,12 @@ import * as util from './util';
  *     atomicMode: 'ALL',
  *   }
  * );
+ * @function
+ * @param {string} strategy - The effect the import should have. Can either be CREATE, UPDATE, CREATE_AND_UPDATE and DELETE.
+ * @param {object} payload - The data to be imported.
+ * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion, and queries for the request
+ * @state {DHIS2State}
+ * @returns {Operation}
  */
 function _import(strategy, payload, options = {}) {
   return async state => {
@@ -90,18 +90,18 @@ export { _import as import };
  * Export data from DHIS2.
  * @alias export
  * @public
- * @function
- * @param {string} path - Path to the resource, relative to the /tracker endpoint
- * @param {object} query - An object of query parameters to be encoded into the URL
- * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion for the request
- * @state {DHIS2State}
- * @returns {Operation}
  * @example <caption>Export a trackedEntity resource using the id</caption>
  * tracker.export('trackedEntities/Gu5UKnIFnJf')
  * @example <caption>Export all enrollment resources</caption>
  * tracker.export('enrollments', {orgUnit: 'TSyzvBiovKh'});
  * @example <caption>Export all events</caption>
  * tracker.export('events')
+ * @function
+ * @param {string} path - Path to the resource, relative to the /tracker endpoint
+ * @param {object} query - An object of query parameters to be encoded into the URL
+ * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion for the request
+ * @state {DHIS2State}
+ * @returns {Operation}
  */
 function _export(path, query, options = {}) {
   return async state => {
