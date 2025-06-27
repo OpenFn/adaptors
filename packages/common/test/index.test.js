@@ -1215,10 +1215,46 @@ describe('debug', () => {
 
 describe('as', () => {
   it('saves data into a custom key in state', async () => {
-    let state = { data: {}, references: [] };
-    let results = await as('comments', function (state) {
+    const state = { data: {}, references: [] };
+    const results = await as('comments', state => {
       return { ...state, data: testData };
     })(state);
+    expect(results.comments).to.eql(testData);
+  });
+
+  it('ensures state.data to be the same after  operation is complete', async () => {
+    const state = { data: {}, references: [] };
+    const results = await as('comments', state => {
+      return { ...state, data: testData };
+    })(state);
+    expect(results.data).to.eql({});
+  });
+
+  it('state object before the as is the same as after the as (excluding the new key)', async () => {
+    const data = [{ x: 'a' }, { x: 'b' }, { x: 'b' }];
+
+    const state = { data: {}, references: [] };
+    const { grouped, ...rest } = await as('grouped', group(data, 'x'))(state);
+
+    expect(rest).to.eql({ data: {}, references: [] });
+  });
+
+  it('preserves extra data added to state', async () => {
+    const state = { data: {}, references: [] };
+    const results = await as('comments', state => {
+      return { ...state, data: testData, responses: { status: 200 } };
+    })(state);
+    expect(results.responses).to.eql({ status: 200 });
+  });
+
+  it('can expand references on key', async () => {
+    const state = { data: {}, references: [], key: 'comments' };
+    const results = await as(
+      state => state.key,
+      state => {
+        return { ...state, data: testData, responses: { status: 200 } };
+      }
+    )(state);
     expect(results.comments).to.eql(testData);
   });
 });
