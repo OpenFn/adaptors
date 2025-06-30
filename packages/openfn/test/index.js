@@ -1,4 +1,4 @@
-import { execute, request, get, post, put, patch, del } from '../src';
+import { execute, request, get, post } from '../src';
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect } from 'chai';
 
@@ -302,7 +302,7 @@ describe('post()', () => {
   });
 });
 
-describe('put()', () => {
+describe('Put operations', () => {
   it('should make a PUT request with data', async () => {
     let requestBody;
     testServer.intercept({ path: '/api/jobs/123', method: 'PUT' }).reply(
@@ -326,7 +326,9 @@ describe('put()', () => {
       body: 'fn(state => ({ ...state, updated: true }))',
     };
 
-    const result = await execute(put('jobs/123', updateData))(state);
+    const result = await execute(
+      request('PUT', 'jobs/123', { body: updateData })
+    )(state);
 
     expect(result.data).to.eql({ id: 123, name: 'updated job' });
     expect(result.response.statusCode).to.eql(200);
@@ -359,7 +361,8 @@ describe('put()', () => {
     const updateData = { name: 'updated job' };
 
     await execute(
-      put('jobs/123', updateData, {
+      request('PUT', 'jobs/123', {
+        body: updateData,
         query: { project: 456 },
         headers: { 'x-custom': 'value' },
       })
@@ -371,7 +374,7 @@ describe('put()', () => {
   });
 });
 
-describe('patch()', () => {
+describe('Patch operations', () => {
   it('should make a PATCH request with data', async () => {
     let requestBody;
     testServer.intercept({ path: '/api/jobs/123', method: 'PATCH' }).reply(
@@ -394,7 +397,9 @@ describe('patch()', () => {
       name: 'partially updated job',
     };
 
-    const result = await execute(patch('jobs/123', patchData))(state);
+    const result = await execute(
+      request('PATCH', 'jobs/123', { body: patchData })
+    )(state);
 
     expect(result.data).to.eql({ id: 123, name: 'partially updated job' });
     expect(result.response.statusCode).to.eql(200);
@@ -427,7 +432,8 @@ describe('patch()', () => {
     const patchData = { name: 'partially updated job' };
 
     await execute(
-      patch('jobs/123', patchData, {
+      request('PATCH', 'jobs/123', {
+        body: patchData,
         query: { project: 456 },
         headers: { 'x-custom': 'value' },
       })
@@ -439,7 +445,7 @@ describe('patch()', () => {
   });
 });
 
-describe('del()', () => {
+describe('Delete operations', () => {
   it('should make a DELETE request', async () => {
     testServer
       .intercept({ path: '/api/jobs/123', method: 'DELETE' })
@@ -452,7 +458,7 @@ describe('del()', () => {
       },
     };
 
-    const result = await execute(del('jobs/123'))(state);
+    const result = await execute(request('DELETE', 'jobs/123'))(state);
 
     expect(result.response.statusCode).to.eql(204);
     expect(result.response.method).to.eql('DELETE');
@@ -481,7 +487,7 @@ describe('del()', () => {
     };
 
     await execute(
-      del('jobs/123', {
+      request('DELETE', 'jobs/123', {
         query: { project: 456 },
         headers: { 'x-custom': 'value' },
       })
