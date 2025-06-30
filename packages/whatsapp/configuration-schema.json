@@ -15,6 +15,12 @@
       "description": "The whatsapp API version from Meta",
       "examples": ["v22.0"]
     },
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "The whatsapp server base URL",
+      "examples": ["https://graph.facebook.com"]
+    },
     "phoneNumberId": {
       "title": "Phone Number ID",
       "type": "string",
@@ -24,5 +30,5 @@
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["password", "username"]
+  "required": ["password", "username", "baseUrl", "phoneNumberId", "apiToken", "apiVersion"]
 }
