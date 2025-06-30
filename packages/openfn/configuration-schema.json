@@ -12,15 +12,6 @@
         "https://app.openfn.org"
       ]
     },
-    "projectId": {
-      "title": "Project ID",
-      "type": "string",
-      "description": "Your OpenFn project ID",
-      "minLength": 1,
-      "examples": [
-        "some-id"
-      ]
-    },
     "access_token": {
       "title": "Access Token",
       "type": "string",
