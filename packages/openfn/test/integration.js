@@ -1,11 +1,11 @@
 import { expect } from 'chai';
-import { get, post, request, execute, fn } from '../dist/index.js';
+import { get, request, execute, fn } from '../dist/index.js';
 import configuration from '../tmp/creds.json' assert { type: 'json' };
 
 const state = { configuration };
 
 it('should get projects info', async () => {
-  const { data } = await get('projects')(state);
+  const { data } = await request('GET', 'projects')(state);
 
   expect(data.data).to.exist;
   expect(data.links).to.exist;
