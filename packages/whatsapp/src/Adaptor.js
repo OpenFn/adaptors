@@ -25,7 +25,7 @@ import * as util from './Utils';
 
 
 /**
- * Make a general HTTP request
+ * Make a HTTP request
  * @example
  * <caption>Send a whatsapp message</caption>
  * request('POST', 'messages',{ to: '254712345678', body: 'Hello, world!', type: 'template', template: { name: 'hello_world', language: { code: 'en_US' } }, messaging_product: 'whatsapp' });
