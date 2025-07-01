@@ -1,5 +1,12 @@
 # @openfn/language-dhis2
 
+## 7.0.2 - 01 July 2025
+
+### Patch Changes
+
+- aa2f46b: - Adjust logging in create to not include item details.
+  - Fix issues in docs.
+
 ## 7.0.1 - 20 June 2025
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-dhis2",
   "label": "DHIS2",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "DHIS2 Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
