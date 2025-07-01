@@ -221,9 +221,12 @@ export function create(path, data, params = {}) {
         data: resolvedData,
       });
     }
+    console.log(`Created ${resolvedPath}`);
 
     const { location } = response.headers;
-    if (location) console.log(`Record available @ ${location}`);
+    if (location) {
+      console.log(`Record available @ ${location}`);
+    }
 
     return handleResponse(response, state);
   };
