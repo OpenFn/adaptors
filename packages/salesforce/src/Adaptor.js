@@ -714,7 +714,6 @@ export {
   dataValue,
   dateFns,
   each,
-  expandReferences,
   field,
   fields,
   fn,
