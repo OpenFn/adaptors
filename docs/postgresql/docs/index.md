@@ -89,6 +89,7 @@ List the columns of a table in a database.
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example**
 ```js
 describeTable('clinic_visits')
@@ -110,6 +111,7 @@ Fetch a uuid key given a condition
 | [filter.relation] | <code>string</code> | The name of the relation to search for the uuid value. |
 | [filter.where] | <code>object</code> | An object that contains key-value pairs to filter the search results. |
 | [filter.operator] | <code>object</code> | An object that contains key-value pairs to specify the type of comparison to perform on the where clause. |
+
 
 **Example**
 ```js
@@ -141,6 +143,7 @@ Insert a record
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example**
 ```js
 insert('users', { name: 'Elodie', id: 7 }, { setNull: "'NaN'", logValues: true });
@@ -166,6 +169,7 @@ Insert many records, using the keys of the first as the column template
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example**
 ```js
 insertMany('users', state => state.data.recordArray, { setNull: "'undefined'", logValues: true });
@@ -188,6 +192,7 @@ Create a table in database when given an array of columns and a table_name.
 | [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
+
 
 **Example**
 ```js
@@ -219,6 +224,7 @@ Alter an existing table in the database.
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example**
 ```js
 modifyTable('table_name', state => state.data.map(
@@ -248,6 +254,7 @@ Execute an SQL statement
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example**
 ```js
 sql(state => `select(*) from ${state.data.tableName};`, { writeSql: true })
@@ -273,6 +280,7 @@ Insert or update a record using ON CONFLICT UPDATE
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
+
 
 **Example**
 ```js
@@ -306,6 +314,7 @@ Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 | [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example**
 ```js
 upsertIf(
@@ -337,6 +346,7 @@ Insert or update multiple records using ON CONFLICT UPDATE and excluded
 | [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
 | [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |
 | callback | <code>function</code> | (Optional) callback function |
+
 
 **Example**
 ```js

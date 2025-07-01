@@ -123,6 +123,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | The created resource as returned by DHIS2 |
+
 **Example:** Create a program
 ```js
 create('programs', {
@@ -136,6 +137,7 @@ create('programs', {
 create('events', {
   program: 'eBAyeGv0exc',
   orgUnit: 'DiszpKrYNg8',
+  occurredAt: '2025-06-19',
   status: 'COMPLETED',
 });
 ```
@@ -154,7 +156,7 @@ create('trackedEntities', {
 ```
 **Example:** Create a dataSet
 ```js
-create('dataSets', { name: 'OpenFn Data Set', periodType: 'Monthly' });
+create('dataSets', { name: 'OpenFn Data Set', periodType: 'Monthly', shortName: 'ODS' });
 ```
 **Example:** a dataSetNotification
 ```js
@@ -181,6 +183,7 @@ create('dataElements', {
 ```js
 create('dataElementGroups', {
   name: 'Data Element Group 1',
+  shortName: 'DEG1',
   dataElements: [],
 });
 ```
@@ -230,7 +233,8 @@ create('dataValueSets', {
 create('enrollments', {
   trackedEntity: 'bmshzEacgxa',
   orgUnit: 'TSyzvBiovKh',
-  program: 'gZBxv9Ujxg0',
+  program: 'ur1Edk5Oe2n',
+  enrolledAt: '2013-09-17',
   enrollmentDate: '2013-09-17',
   incidentDate: '2013-09-17',
 });
@@ -258,6 +262,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | The response body (as JSON) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** a tracked entity instance. See [Delete tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)
 ```js
 destroy('trackedEntities', 'LcRd6Nyaq7T');
@@ -283,6 +288,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | the resource returned by DHIS2 |
+
 **Example:** Get all data values for the 'pBOMPrpg1QX' dataset
 ```js
 get('dataValueSets', {
@@ -322,6 +328,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | the resource returned by DHIS2 |
+
 **Example:** a program
 ```js
 update('programs', 'qAZJCrNJK8H', {
@@ -490,6 +497,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | The response body (as JSON) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Upsert a trackedEntity
 ```js
 upsert('trackedEntities', {}, {
@@ -542,6 +550,7 @@ Converts an attribute ID and value into a DHIS2 attribute object
 | attribute | <code>string</code> | A tracked entity instance (TEI) attribute ID. |
 | value | <code>string</code> | The value for that attribute. |
 
+
 **Example**
 ```js
 fn(state => {
@@ -565,6 +574,7 @@ Converts a dataElement and value into a DHIS2 dataValue object
 | --- | --- | --- |
 | dataElement | <code>string</code> | A data element ID. |
 | value | <code>string</code> | The value for that data element. |
+
 
 **Example**
 ```js
@@ -590,6 +600,7 @@ Gets an attribute value by its case-insensitive display name
 | trackedEntity | <code>Object</code> | A tracked entity instance (TEI) object |
 | attributeDisplayName | <code>string</code> | The 'displayName' to search for in the TEI's attributes |
 
+
 **Example**
 ```js
 fn(state => {
@@ -613,6 +624,7 @@ Gets an attribute value by its uid
 | --- | --- | --- |
 | trackedEntity | <code>Object</code> | A tracked entity instance (TEI) object |
 | attributeUid | <code>string</code> | The uid to search for in the TEI's attributes |
+
 
 **Example**
 ```js
@@ -648,6 +660,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | The response body (as JSON) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Export a trackedEntity resource using the id
 ```js
 tracker.export('trackedEntities/Gu5UKnIFnJf')
@@ -683,6 +696,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | The response body (as JSON) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Import some data and pass the `atomicMode` parameter
 ```js
 tracker.import('CREATE', $.trackerData, { atomicMode: 'ALL' })
@@ -736,6 +750,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the DHIS2 server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Get with query parameters
 ```js
 http.get('dataValueSets', {
@@ -781,6 +796,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the DHIS2 server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Update a resource
 ```js
 patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
@@ -809,6 +825,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the DHIS2 server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Call the tracker endpoint with a JSON payload
 ```js
 http.post("tracker", {
@@ -845,6 +862,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the DHIS2 server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** GET request with a URL params
 ```js
 http.request("GET",
@@ -882,6 +900,7 @@ http.request('POST', 'tracker', {
 
 Options object
 
+
 **Properties**
 
 | Name | Type | Default | Description |
@@ -898,6 +917,7 @@ Options object
 
 Options object
 
+
 **Properties**
 
 | Name | Type | Default | Description |
@@ -913,6 +933,7 @@ Options object
 ### TrackerOptions
 
 All options, apart from those listed here, will be appended as query parameters to the URL
+
 
 **Properties**
 

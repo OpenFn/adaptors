@@ -74,6 +74,7 @@ Create a task.
 | params | <code>object</code> | Body parameters |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example**
 ```js
 createTask({
@@ -98,6 +99,7 @@ Create a story to a specific task.
 | taskGid | <code>string</code> | Globally unique identifier for the task |
 | params | [<code>StoryOptions</code>](#storyoptions) | Story parameters |
 | callback | <code>function</code> | (Optional) callback function |
+
 
 **Example:** Create a plain text comment
 ```js
@@ -128,6 +130,7 @@ Get a single task of a given project.
 | params.opt_fields | <code>string</code> | The fields to return. |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example:** Get a task
 ```js
 getTask("1206933955023739", {
@@ -151,6 +154,7 @@ Get the list of tasks for a given project.
 | params.limit | <code>number</code> | The maximum number of tasks to return. |
 | params.opt_fields | <code>string</code> | The fields to return. |
 | callback | <code>function</code> | (Optional) callback function |
+
 
 **Example:** Get all tasks
 ```js
@@ -180,6 +184,7 @@ Make a HTTP request against the Asana API.
 | path | <code>string</code> | Path to resource (excluding api/version) |
 | params | [<code>RequestOptions</code>](#requestoptions) | (Optional) Query, body and method parameters |
 | callback | <code>function</code> | (Optional) Callback function |
+
 
 **Example**
 ```js
@@ -217,6 +222,7 @@ Update a specific task.
 | data | <code>object</code> | Body data to update the task with |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example:** Update a task
 ```js
 updateTask("1206933955023739", {
@@ -243,6 +249,7 @@ Update or create a task.
 | params.data | <code>object</code> | The data to upsert. |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example:** Upsert a task
 ```js
 upsertTask("1201382240880", {
@@ -265,6 +272,7 @@ upsertTask("1201382240880", {
 
 Options provided to the Asana API request
 
+
 **Properties**
 
 | Name | Type | Description |
@@ -279,6 +287,7 @@ Options provided to the Asana API request
 ### StoryOptions
 
 Options provided to the createTaskStory request
+
 
 **Properties**
 

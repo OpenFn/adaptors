@@ -55,6 +55,7 @@ Create an event
 | --- | --- | --- |
 | params | <code>object</code> | Params for sending an email |
 
+
 **Example**
 ```js
 send({

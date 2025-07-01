@@ -83,6 +83,7 @@ List the columns of a table in a database.
 | tableName | <code>string</code> | The name of the table to describe |
 | options | <code>object</code> | Optional options argument |
 
+
 **Example**
 ```js
 describeTable('clinic_visits')
@@ -104,6 +105,7 @@ Fetch a uuid key given a condition
 | filter.relation | <code>string</code> | The table to lookup the value in |
 | filter.where | <code>object</code> | The condition to use for the lookup. Values are automatically escaped for security. |
 | filter.operator | <code>object</code> | The operator to use for the lookup |
+
 
 **Example**
 ```js
@@ -130,6 +132,7 @@ Insert a record
 | record | <code>object</code> | Payload data for the record as a JS object |
 | options | <code>object</code> | Optional options argument |
 
+
 **Example**
 ```js
 insert(table, record, {setNull: ["'undefined'", "''"], logValues: false})
@@ -150,6 +153,7 @@ Insert many records, using the keys of the first as the column template
 | records | <code>function</code> | A function that takes state and returns an array of records |
 | options | <code>object</code> | Optional options argument |
 
+
 **Example**
 ```js
 insertMany(table, records, { setNull: false, writeSql: true, logValues: false })
@@ -169,6 +173,7 @@ Create a table in database when given an array of columns and a table_name.
 | tableName | <code>string</code> | The name of the table to create |
 | columns | <code>array</code> | An array of form columns |
 | options | <code>object</code> | Optional options argument |
+
 
 **Example**
 ```js
@@ -197,6 +202,7 @@ Alter an existing table in the database.
 | columns | <code>array</code> | An array of form columns |
 | options | <code>object</code> | Optional options argument |
 
+
 **Example**
 ```js
 modifyTable('table_name', state => state.data.map(
@@ -222,6 +228,7 @@ Execute an SQL statement
 | --- | --- | --- |
 | params | <code>object</code> | Payload data for the message |
 
+
 **Example**
 ```js
 sql({ query, options })
@@ -242,6 +249,7 @@ Insert or update a record using SQL MERGE
 | uuid | <code>string</code> | The uuid column to determine a matching/existing record |
 | record | <code>object</code> | Payload data for the record as a JS object |
 | options | <code>object</code> | Optional options argument |
+
 
 **Example**
 ```js
@@ -265,6 +273,7 @@ Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 | uuid | <code>string</code> | The uuid column to determine a matching/existing record |
 | record | <code>object</code> | Payload data for the record as a JS object or function |
 | options | <code>object</code> | Optional options argument |
+
 
 **Example**
 ```js
@@ -292,6 +301,7 @@ Insert or update multiple records using ON CONFLICT UPDATE and excluded
 | uuid | <code>string</code> | The uuid column to determine a matching/existing record |
 | records | <code>function</code> | A function that takes state and returns an array of records |
 | options | <code>object</code> | Optional options argument |
+
 
 **Example**
 ```js

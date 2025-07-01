@@ -141,6 +141,7 @@ This operation writes the following keys to state:
 
 | State Key | Description |
 | --- | --- |
+
 **Example:** Create a new patient
 ```js
 create('Patient', {
@@ -177,6 +178,7 @@ The value will be smartly written to the object, ie, valueDateTime or valueRefer
 | value |  | the value that the extension should contain |
 
 
+
 * * *
 
 
@@ -185,6 +187,7 @@ The value will be smartly written to the object, ie, valueDateTime or valueRefer
 <p><code>cc()</code></p>
 
 Alias for util.concept()
+
 
 
 * * *
@@ -201,6 +204,7 @@ Create a coding object { code, system }. Systems will be mapped using the system
 | --- | --- | --- |
 | code | <code>string</code> | the code value |
 | system | <code>string</code> | URL to the system. Well be mapped using the system map. |
+
 
 
 * * *
@@ -224,6 +228,7 @@ This function is poorly named.
 | value |  | some value to write to the object |
 
 
+
 * * *
 
 
@@ -235,6 +240,7 @@ Create a codeableConcept. Codings can be coding objects or
 [code, system] tuples
 if the first argument is a string, it will be set as the text.
 Systems will be mapped with the system map
+
 
 **Example:** Create a codeableConcept
 ```js
@@ -262,6 +268,7 @@ Find an extension with a given url in some array
 | [path] | <code>string</code> | a path to extract from the resource. Optional. |
 
 
+
 * * *
 
 
@@ -270,6 +277,7 @@ Find an extension with a given url in some array
 <p><code>id()</code></p>
 
 Alias for util.identifier()
+
 
 
 * * *
@@ -290,6 +298,7 @@ If input is an array of identifiers, an array of mapped/parsed values will be re
 | [system] | <code>string</code> | the string system to use by default if |
 
 
+
 * * *
 
 
@@ -298,6 +307,7 @@ If input is an array of identifiers, an array of mapped/parsed values will be re
 <p><code>ref()</code></p>
 
 Alias for util.reference()
+
 
 
 * * *
@@ -319,6 +329,7 @@ If ref is a valid FHIR reference, it'll just be returned.
 | ref | the thing to generate a reference from |
 
 
+
 * * *
 
 
@@ -329,6 +340,7 @@ If ref is a valid FHIR reference, it'll just be returned.
 Define a set of mapped system values.
 
 Builder functions will use this mappings when they encounter them in system keys. Useful for setting shortcuts.
+
 
 **Example:** Set shortcut sustem mappings
 ```js
@@ -358,6 +370,7 @@ Create a FHIR CarePlan resource.
 | props |  | Properties to apply to the resource |
 
 
+
 * * *
 
 
@@ -372,6 +385,7 @@ Create a FHIR Encounter resource.
 | --- | --- | --- |
 | type | <code>string</code> | The profile id for the resource variant |
 | props |  | Properties to apply to the resource |
+
 
 
 * * *
@@ -390,6 +404,7 @@ Create a FHIR Medication resource.
 | props |  | Properties to apply to the resource |
 
 
+
 * * *
 
 
@@ -404,6 +419,7 @@ Create a FHIR MedicationAdministration resource.
 | --- | --- | --- |
 | type | <code>string</code> | The profile id for the resource variant |
 | props |  | Properties to apply to the resource |
+
 
 
 * * *
@@ -422,6 +438,7 @@ Create a FHIR MedicationDispense resource.
 | props |  | Properties to apply to the resource |
 
 
+
 * * *
 
 
@@ -436,6 +453,7 @@ Create a FHIR MedicationRequest resource.
 | --- | --- | --- |
 | type | <code>string</code> | The profile id for the resource variant |
 | props |  | Properties to apply to the resource |
+
 
 
 * * *
@@ -454,6 +472,7 @@ Create a FHIR Observation resource.
 | props |  | Properties to apply to the resource |
 
 
+
 * * *
 
 
@@ -470,6 +489,7 @@ Create a FHIR Patient resource.
 | props |  | Properties to apply to the resource |
 
 
+
 * * *
 
 
@@ -484,6 +504,7 @@ Create a FHIR RelatedPerson resource.
 | --- | --- | --- |
 | type | <code>string</code> | The profile id for the resource variant |
 | props |  | Properties to apply to the resource |
+
 
 
 * * *

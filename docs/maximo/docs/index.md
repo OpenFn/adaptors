@@ -56,6 +56,7 @@ Make a GET request and POST it somewhere else
 | --- | --- | --- |
 | params | <code>object</code> | data to make the fetch |
 
+
 **Example**
 ```js
 fetch({
@@ -81,6 +82,7 @@ Make an update in Maximo 7.6 and beyond
 | --- | --- | --- |
 | params | <code>object</code> | data to make the update |
 
+
 **Example:** Update a workorder
 ```js
 update({
@@ -101,6 +103,7 @@ Make an upadte in Maximo 7.5
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | data to make the update |
+
 
 **Example:** Update an inventory balance
 ```js

@@ -69,6 +69,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Odoo server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:**  Create a partner record with an external Id 
 ```js
 create('res.partner', { name: 'Kool Keith' }, { externalId: 23 });
@@ -99,6 +100,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Odoo server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example**
 ```js
 deleteRecord("res.partner", 54 );
@@ -126,6 +128,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Odoo server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Download records with select fields
 ```js
 read("res.partner", [1] , ['name']);
@@ -157,6 +160,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Odoo server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example**
 ```js
 update("res.partner", 54 , {name: 'Jane Doe'});
@@ -170,6 +174,7 @@ update("res.partner", 54 , {name: 'Jane Doe'});
 ### CreateOptions
 
 Options object
+
 
 **Properties**
 

@@ -69,6 +69,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | The returned message objects, of the form `{ messageId, contents } ` |
 | processedIds | An array of string ids processed by this request |
+
 **Example:** Get a message with a specific subject
 ```js
 getContentsFromMessages(
@@ -109,6 +110,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | The Gmail API response from sending the message. |
+
 **Example**
 ```js
 sendMessage({
@@ -130,6 +132,7 @@ sendMessage({
 
 Used to isolate the type of content to retrieve from the message.
 
+
 **Properties**
 
 | Name | Type | Description |
@@ -147,6 +150,7 @@ Used to isolate the type of content to retrieve from the message.
 
 Configurable options provided to the Gmail adaptor.
 
+
 **Properties**
 
 | Name | Type | Default | Description |
@@ -163,6 +167,7 @@ Configurable options provided to the Gmail adaptor.
 ### SendMessageOptions
 
 Configurable fields for composing an outbound Gmail message.
+
 
 **Properties**
 

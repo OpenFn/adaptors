@@ -56,6 +56,7 @@ Find documents in a mongoDb collection
 | --- | --- | --- |
 | params | <code>object</code> | Configuration for mongo |
 
+
 **Example**
 ```js
 findDocuments({
@@ -78,6 +79,7 @@ Inserts documents into a mongoDb collection
 | --- | --- | --- |
 | params | <code>object</code> | Configuration for mongo |
 
+
 **Example**
 ```js
 insertDocuments({
@@ -99,6 +101,7 @@ Updates document (optionally upserting) into a mongoDb collection
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | Configuration for mongo |
+
 
 **Example**
 ```js

@@ -56,6 +56,7 @@ Get a resource in OCL
 | query | <code>object</code> | A query object that will limit what resources are retrieved when converted into request params. |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example**
 ```js
 get(
@@ -90,6 +91,7 @@ Get a source repository in OCL
 | repositoryId | <code>string</code> | An OCL collection id or source id |
 | [options] | <code>Object</code> | Optional. `options`  which can be passed to  See more [on OCL swagger docs](https://api.openconceptlab.org/swagger/) |
 | callback | <code>function</code> | (Optional) callback function |
+
 
 **Example**
 ```js

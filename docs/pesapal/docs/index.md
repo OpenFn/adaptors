@@ -64,6 +64,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the Pesapal server, including headers, statusCode, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get all registered IPN URLs for a merchant
 ```js
 get('URLSetup/GetIpnList')
@@ -91,6 +92,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the Pesapal server, including headers, statusCode, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Send an order request 
 ```js
 post('Transactions/SubmitOrderRequest', 
@@ -141,6 +143,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the Pesapal server, including headers, statusCode, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Register IPN URL
 ```js
 request("POST", "URLSetup/RegisterIPN", {
@@ -163,6 +166,7 @@ request('GET', 'GetTransactionStatus', {}, {query:{
 ### RequestOptions
 
 Options provided to the Pesapal request
+
 
 **Properties**
 

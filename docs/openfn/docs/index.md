@@ -62,6 +62,7 @@ Make a POST request
 | options | <code>object</code> | Body, Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
+
 **Example**
 ```js
 request({method: 'get', path: '/jobs/});

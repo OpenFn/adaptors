@@ -60,6 +60,7 @@ Download a blob from Azure Blob Storage.
 | blobName | <code>string</code> |  | Name of the blob to download. |
 | [options] | <code>Object</code> | <code>{}</code> | Additional options for the download process. |
 
+
 **Example**
 ```js
 downloadBlob('mycontainer', 'myblob.txt', { downloadAs: 'string' })
@@ -78,6 +79,7 @@ Get properties of a blob in Azure Blob Storage.
 | --- | --- | --- |
 | blobName | <code>string</code> | Name of the blob to get properties for. |
 | options | <code>string</code> | Additional options for the getBlobProperties process. |
+
 
 **Example**
 ```js
@@ -102,6 +104,7 @@ Upload content to Azure Blob Storage.
 | [options.createContainer] | <code>boolean</code> | <code>false</code> | Whether to create the container if it doesn't exist. |
 | [options.overwrite] | <code>boolean</code> | <code>false</code> | Whether to overwrite an existing blob with the same name. |
 | [options.containerName] | <code>string</code> |  | Container name. Overrides state.configuration. |
+
 
 **Example**
 ```js

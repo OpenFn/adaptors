@@ -52,6 +52,7 @@ Post a message
 | --- | --- | --- |
 | params | <code>object</code> | data to make the fetch |
 
+
 **Example**
 ```js
 postMessage({

@@ -76,6 +76,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example**
 ```js
 request("GET", "catalogs");
@@ -89,6 +90,7 @@ request("GET", "catalogs");
 ### RequestOptions
 
 Options provided to the HTTP request
+
 
 **Properties**
 

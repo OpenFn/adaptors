@@ -87,6 +87,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | an object containing deployment information |
+
 **Example**
 ```js
 getDeploymentInfo('aXecHjmbATuF6iGFmvBLBX');
@@ -105,6 +106,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | an array of form objects |
+
 **Example**
 ```js
 getForms();
@@ -134,6 +136,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | an array of submission objects |
+
 **Example:** Get submissions for a specific form
 ```js
 getSubmissions('aXecHjmbATuF6iGFmvBLBX');.
@@ -180,6 +183,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the KoboToolbox server (excluding the body) |
 | references | An array containing all previous data objects |
+
 **Example:** GET assets resource
 ```js
 http.get('assets')
@@ -208,6 +212,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the KoboToolbox server (excluding the body) |
 | references | An array containing all previous data objects |
+
 **Example:** Create an asset resource
 ```js
 http.post(
@@ -242,6 +247,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the KoboToolbox server (excluding the body) |
 | references | An array containing all previous data objects |
+
 **Example:** Update an asset resource
 ```js
 http.put(
@@ -276,6 +282,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the KoboToolbox server (excluding the body) |
 | references | An array containing all previous data objects |
+
 **Example:** Bulk updating of submissions
 ```js
 http.request("PATCH", `assets/${$.form_uid}/data/bulk/`, {
@@ -296,6 +303,7 @@ http.request("PATCH", `assets/${$.form_uid}/data/bulk/`, {
 ### HTTPRequestOptions
 
 Options object
+
 
 **Properties**
 

@@ -54,6 +54,7 @@ Sends an SMS message to a specific phone number
 | toNumber | <code>String</code> | Destination phone number. |
 | message | <code>String</code> | Text message |
 
+
 **Example**
 ```js
 sendSMS("OpenFn", "phoneNumber", "Hello World!")

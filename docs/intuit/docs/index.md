@@ -71,6 +71,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Quickbook(intuit) server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Get intuit user company information.
 ```js
 http.get("/v3/company/9341453908059456/companyinfo/9341453908059456");
@@ -99,6 +100,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Quickbook(intuit) server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Create an account on intuit.
 ```js
 http.post("/v3/company/9341453908059456/account",
@@ -121,6 +123,7 @@ http.post("/v3/company/9341453908059456/account",
 ### IntuitOptions
 
 Options object
+
 
 **Properties**
 

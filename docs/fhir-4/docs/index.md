@@ -521,6 +521,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | bundle | the updated bundle |
+
 **Example:** Add a new patient resource to the default bundle
 ```js
 addToBundle(b.patient($.patientDetails))
@@ -547,6 +548,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the newly created resource. |
 | response | the HTTP response returned by the server. |
+
 **Example:** Create a Patient with a builder function
 ```js
 create(b.patient({
@@ -573,6 +575,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | response | the HTTP response returned by the server. |
+
 **Example:** Delete a single Patient resource
 ```js
 delete('Patient/12345')
@@ -598,6 +601,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the newly updated resource, as returned by the server |
 | response | the HTTP response returned by the server. |
+
 **Example:** Read a single Patient resource
 ```js
 read('Patient/12345')
@@ -626,6 +630,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the newly updated resource, as returned by the server |
 | response | the HTTP response returned by the server. |
+
 **Example:** Search with parameter and query term
 ```js
 search('Patient', {
@@ -664,6 +669,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the newly updated resource, as returned by the server |
 | response | the HTTP response returned by the server. |
+
 **Example:** Update a Patient with a builder function
 ```js
 update('Patient/123', b.patient({
@@ -685,6 +691,7 @@ Upload a bundle from state (created by addToBundle) as a transaction.
 | Param | Type | Description |
 | --- | --- | --- |
 | bundle | <code>string/object</code> | A bundle object or name of a bundle on state |
+
 
 **Example:** Upload the default bundle
 ```js
@@ -728,6 +735,7 @@ Create a FHIR Account resource.
 | [props.description] | <code>string</code> | Explanation of purpose/use |
 | [props.guarantor] | <code>BackboneElement</code> | The parties ultimately responsible for balancing the Account |
 | [props.partOf] | <code>Reference</code> | Reference to a parent Account |
+
 
 
 * * *
@@ -792,6 +800,7 @@ Create a FHIR ActivityDefinition resource.
 | [props.dynamicValue] | <code>BackboneElement</code> | Dynamic aspects of the definition |
 
 
+
 * * *
 
 
@@ -816,6 +825,7 @@ Create a FHIR AdministrableProductDefinition resource.
 | [props.device] | <code>Reference</code> | A device that is integral to the medicinal product, in effect being considered as an "ingredient" of the medicinal product |
 | [props.property] | <code>BackboneElement</code> | Characteristics e.g. a product's onset of action |
 | [props.routeOfAdministration] | <code>BackboneElement</code> | The path by which the product is taken into or makes contact with the body |
+
 
 
 * * *
@@ -854,6 +864,7 @@ Create a FHIR AdverseEvent resource.
 | [props.study] | <code>Reference</code> | AdverseEvent.study |
 
 
+
 * * *
 
 
@@ -884,6 +895,7 @@ Create a FHIR AllergyIntolerance resource.
 | [props.lastOccurrence] | <code>dateTime</code> | Date(/time) of last known occurrence of a reaction |
 | [props.note] | <code>Annotation</code> | Additional text not captured in other fields |
 | [props.reaction] | <code>BackboneElement</code> | Adverse Reaction Events linked to exposure to substance |
+
 
 
 * * *
@@ -924,6 +936,7 @@ Create a FHIR Appointment resource.
 | [props.requestedPeriod] | <code>Period</code> | Potential date/time interval(s) requested to allocate the appointment within |
 
 
+
 * * *
 
 
@@ -946,6 +959,7 @@ Create a FHIR AppointmentResponse resource.
 | [props.actor] | <code>Reference</code> | Person, Location, HealthcareService, or Device |
 | [props.participantStatus] | <code>string</code> | accepted | declined | tentative | needs-action |
 | [props.comment] | <code>string</code> | Additional comments |
+
 
 
 * * *
@@ -975,6 +989,7 @@ Create a FHIR BiologicallyDerivedProduct resource.
 | [props.storage] | <code>BackboneElement</code> | Product storage |
 
 
+
 * * *
 
 
@@ -997,6 +1012,7 @@ Create a FHIR BodyStructure resource.
 | [props.description] | <code>string</code> | Text description |
 | [props.image] | <code>Attachment</code> | Attached images |
 | [props.patient] | <code>Reference</code> | Who this is about |
+
 
 
 * * *
@@ -1038,6 +1054,7 @@ Create a FHIR CarePlan resource.
 | [props.note] | <code>Annotation</code> | Comments about the plan |
 
 
+
 * * *
 
 
@@ -1065,6 +1082,7 @@ Create a FHIR CareTeam resource.
 | [props.managingOrganization] | <code>Reference</code> | Organization responsible for the care team |
 | [props.telecom] | <code>ContactPoint</code> | A contact detail for the care team (that applies to all members) |
 | [props.note] | <code>Annotation</code> | Comments made about the CareTeam |
+
 
 
 * * *
@@ -1109,6 +1127,7 @@ Create a FHIR ChargeItem resource.
 | [props.supportingInformation] | <code>Reference</code> | Further information supporting this charge |
 
 
+
 * * *
 
 
@@ -1146,6 +1165,7 @@ Create a FHIR ChargeItemDefinition resource.
 | [props.instance] | <code>Reference</code> | Instances this definition applies to |
 | [props.applicability] | <code>BackboneElement</code> | Whether or not the billing code is applicable |
 | [props.propertyGroup] | <code>BackboneElement</code> | Group of properties which are applicable under the same conditions |
+
 
 
 * * *
@@ -1193,6 +1213,7 @@ Create a FHIR Citation resource.
 | [props.citedArtifact] | <code>BackboneElement</code> | The article or artifact being described |
 
 
+
 * * *
 
 
@@ -1234,6 +1255,7 @@ Create a FHIR Claim resource.
 | [props.accident] | <code>BackboneElement</code> | Details of the event |
 | [props.item] | <code>BackboneElement</code> | Product or service provided |
 | [props.total] | <code>Money</code> | Total claim cost |
+
 
 
 * * *
@@ -1279,6 +1301,7 @@ Create a FHIR ClaimResponse resource.
 | [props.error] | <code>BackboneElement</code> | Processing errors |
 
 
+
 * * *
 
 
@@ -1315,6 +1338,7 @@ Create a FHIR ClinicalImpression resource.
 | [props.note] | <code>Annotation</code> | Comments made about the ClinicalImpression |
 
 
+
 * * *
 
 
@@ -1340,6 +1364,7 @@ Create a FHIR ClinicalUseDefinition resource.
 | [props.population] | <code>Reference</code> | The population group to which this applies |
 | [props.undesirableEffect] | <code>BackboneElement</code> | A possible negative outcome from the use of this treatment |
 | [props.warning] | <code>BackboneElement</code> | Critical environmental, health or physical risks or hazards. For example 'Do not operate heavy machinery', 'May cause drowsiness' |
+
 
 
 * * *
@@ -1381,6 +1406,7 @@ Create a FHIR Communication resource.
 | [props.note] | <code>Annotation</code> | Comments made about the communication |
 
 
+
 * * *
 
 
@@ -1417,6 +1443,7 @@ Create a FHIR CommunicationRequest resource.
 | [props.reasonCode] | <code>CodeableConcept</code> | Why is communication needed? |
 | [props.reasonReference] | <code>Reference</code> | Why is communication needed? |
 | [props.note] | <code>Annotation</code> | Comments made about communication request |
+
 
 
 * * *
@@ -1468,6 +1495,7 @@ Create a FHIR Contract resource.
 | [props.legallyBinding] | <code>Attachment</code> \| <code>Reference</code> | Binding Contract |
 
 
+
 * * *
 
 
@@ -1501,6 +1529,7 @@ Create a FHIR Coverage resource.
 | [props.contract] | <code>Reference</code> | Contract details |
 
 
+
 * * *
 
 
@@ -1529,6 +1558,7 @@ Create a FHIR CoverageEligibilityRequest resource.
 | [props.supportingInfo] | <code>BackboneElement</code> | Supporting information |
 | [props.insurance] | <code>BackboneElement</code> | Patient insurance information |
 | [props.item] | <code>BackboneElement</code> | Item to be evaluated for eligibiity |
+
 
 
 * * *
@@ -1562,6 +1592,7 @@ Create a FHIR CoverageEligibilityResponse resource.
 | [props.error] | <code>BackboneElement</code> | Processing errors |
 
 
+
 * * *
 
 
@@ -1588,6 +1619,7 @@ Create a FHIR DetectedIssue resource.
 | [props.detail] | <code>string</code> | Description and context |
 | [props.reference] | <code>string</code> | Authority for issue |
 | [props.mitigation] | <code>BackboneElement</code> | Step taken to address |
+
 
 
 * * *
@@ -1632,6 +1664,7 @@ Create a FHIR Device resource.
 | [props.parent] | <code>Reference</code> | The device that this device is attached to or is part of |
 
 
+
 * * *
 
 
@@ -1670,6 +1703,7 @@ Create a FHIR DeviceDefinition resource.
 | [props.material] | <code>BackboneElement</code> | A substance used to create the material(s) of which the device is made |
 
 
+
 * * *
 
 
@@ -1694,6 +1728,7 @@ Create a FHIR DeviceMetric resource.
 | [props.category] | <code>string</code> | measurement | setting | calculation | unspecified |
 | [props.measurementPeriod] | <code>Timing</code> | Describes the measurement repetition time |
 | [props.calibration] | <code>BackboneElement</code> | Describes the calibrations that have been performed or that are required to be performed |
+
 
 
 * * *
@@ -1736,6 +1771,7 @@ Create a FHIR DeviceRequest resource.
 | [props.relevantHistory] | <code>Reference</code> | Request provenance |
 
 
+
 * * *
 
 
@@ -1763,6 +1799,7 @@ Create a FHIR DeviceUseStatement resource.
 | [props.reasonReference] | <code>Reference</code> | Why was DeviceUseStatement performed? |
 | [props.bodySite] | <code>CodeableConcept</code> | Target body site |
 | [props.note] | <code>Annotation</code> | Addition details (comments, instructions) |
+
 
 
 * * *
@@ -1799,6 +1836,7 @@ Create a FHIR DiagnosticReport resource.
 | [props.presentedForm] | <code>Attachment</code> | Entire report as issued |
 
 
+
 * * *
 
 
@@ -1813,6 +1851,7 @@ Create a FHIR DomainResource resource.
 | --- | --- | --- |
 | type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
+
 
 
 * * *
@@ -1854,6 +1893,7 @@ Create a FHIR Encounter resource.
 | [props.partOf] | <code>Reference</code> | Another Encounter this encounter is part of |
 
 
+
 * * *
 
 
@@ -1875,6 +1915,7 @@ Create a FHIR EnrollmentRequest resource.
 | [props.provider] | <code>Reference</code> | Responsible practitioner |
 | [props.candidate] | <code>Reference</code> | The subject to be enrolled |
 | [props.coverage] | <code>Reference</code> | Insurance information |
+
 
 
 * * *
@@ -1899,6 +1940,7 @@ Create a FHIR EnrollmentResponse resource.
 | [props.created] | <code>dateTime</code> | Creation date |
 | [props.organization] | <code>Reference</code> | Insurer |
 | [props.requestProvider] | <code>Reference</code> | Responsible practitioner |
+
 
 
 * * *
@@ -1927,6 +1969,7 @@ Create a FHIR EpisodeOfCare resource.
 | [props.careManager] | <code>Reference</code> | Care manager/care coordinator for the patient |
 | [props.team] | <code>Reference</code> | Other practitioners facilitating this episode of care |
 | [props.account] | <code>Reference</code> | The set of accounts that may be used for billing for this EpisodeOfCare |
+
 
 
 * * *
@@ -1973,6 +2016,7 @@ Create a FHIR EventDefinition resource.
 | [props.trigger] | <code>TriggerDefinition</code> | "when" the event occurs (multiple = 'or') |
 
 
+
 * * *
 
 
@@ -2014,6 +2058,7 @@ Create a FHIR Evidence resource.
 | [props.certainty] | <code>BackboneElement</code> | Certainty or quality of the evidence |
 
 
+
 * * *
 
 
@@ -2046,6 +2091,7 @@ Create a FHIR EvidenceReport resource.
 | [props.endorser] | <code>ContactDetail</code> | Who endorsed the content |
 | [props.relatesTo] | <code>BackboneElement</code> | Relationships to other compositions/documents |
 | [props.section] | <code>BackboneElement</code> | Composition is broken into sections |
+
 
 
 * * *
@@ -2086,6 +2132,7 @@ Create a FHIR EvidenceVariable resource.
 | [props.characteristic] | <code>BackboneElement</code> | What defines the members of the evidence element |
 | [props.handling] | <code>string</code> | continuous | dichotomous | ordinal | polychotomous |
 | [props.category] | <code>BackboneElement</code> | A grouping for ordinal or polychotomous variables |
+
 
 
 * * *
@@ -2147,6 +2194,7 @@ Create a FHIR ExplanationOfBenefit resource.
 | [props.benefitBalance] | <code>BackboneElement</code> | Balance by Benefit Category |
 
 
+
 * * *
 
 
@@ -2181,6 +2229,7 @@ Create a FHIR FamilyMemberHistory resource.
 | [props.condition] | <code>BackboneElement</code> | Condition that the related person had |
 
 
+
 * * *
 
 
@@ -2203,6 +2252,7 @@ Create a FHIR Flag resource.
 | [props.period] | <code>Period</code> | Time period when flag is active |
 | [props.encounter] | <code>Reference</code> | Alert relevant during encounter |
 | [props.author] | <code>Reference</code> | Flag creator |
+
 
 
 * * *
@@ -2237,6 +2287,7 @@ Create a FHIR Goal resource.
 | [props.outcomeReference] | <code>Reference</code> | Observation that resulted from goal |
 
 
+
 * * *
 
 
@@ -2261,6 +2312,7 @@ Create a FHIR Group resource.
 | [props.managingEntity] | <code>Reference</code> | Entity that is the custodian of the Group's definition |
 | [props.characteristic] | <code>BackboneElement</code> | Include / Exclude group members by Trait |
 | [props.member] | <code>BackboneElement</code> | Who or what is in group |
+
 
 
 * * *
@@ -2292,6 +2344,7 @@ Create a FHIR GuidanceResponse resource.
 | [props.outputParameters] | <code>Reference</code> | The output parameters of the evaluation, if any |
 | [props.result] | <code>Reference</code> | Proposed actions, if any |
 | [props.dataRequirement] | <code>DataRequirement</code> | Additional required data |
+
 
 
 * * *
@@ -2334,6 +2387,7 @@ Create a FHIR HealthcareService resource.
 | [props.endpoint] | <code>Reference</code> | Technical endpoints providing access to electronic services operated for the healthcare service |
 
 
+
 * * *
 
 
@@ -2368,6 +2422,7 @@ Create a FHIR ImagingStudy resource.
 | [props.note] | <code>Annotation</code> | User-defined comments |
 | [props.description] | <code>string</code> | Institution-generated description |
 | [props.series] | <code>BackboneElement</code> | Each study has one or more series of instances |
+
 
 
 * * *
@@ -2414,6 +2469,7 @@ Create a FHIR Immunization resource.
 | [props.protocolApplied] | <code>BackboneElement</code> | Protocol followed by the provider |
 
 
+
 * * *
 
 
@@ -2443,6 +2499,7 @@ Create a FHIR ImmunizationEvaluation resource.
 | [props.seriesDoses] | <code>number</code> \| <code>string</code> | Recommended number of doses for immunity |
 
 
+
 * * *
 
 
@@ -2462,6 +2519,7 @@ Create a FHIR ImmunizationRecommendation resource.
 | [props.date] | <code>dateTime</code> | Date recommendation(s) created |
 | [props.authority] | <code>Reference</code> | Who is responsible for protocol |
 | [props.recommendation] | <code>BackboneElement</code> | Vaccine administration recommendations |
+
 
 
 * * *
@@ -2486,6 +2544,7 @@ Create a FHIR Ingredient resource.
 | [props.allergenicIndicator] | <code>boolean</code> | If the ingredient is a known or suspected allergen |
 | [props.manufacturer] | <code>BackboneElement</code> | An organization that manufactures this ingredient |
 | [props.substance] | <code>BackboneElement</code> | The substance that comprises this ingredient |
+
 
 
 * * *
@@ -2518,6 +2577,7 @@ Create a FHIR InsurancePlan resource.
 | [props.plan] | <code>BackboneElement</code> | Plan details |
 
 
+
 * * *
 
 
@@ -2548,6 +2608,7 @@ Create a FHIR Invoice resource.
 | [props.totalGross] | <code>Money</code> | Gross total of this Invoice |
 | [props.paymentTerms] | <code>markdown</code> | Payment details |
 | [props.note] | <code>Annotation</code> | Comments made about the invoice |
+
 
 
 * * *
@@ -2597,6 +2658,7 @@ Create a FHIR Library resource.
 | [props.content] | <code>Attachment</code> | Contents of the library, either embedded or referenced |
 
 
+
 * * *
 
 
@@ -2624,6 +2686,7 @@ Create a FHIR List resource.
 | [props.note] | <code>Annotation</code> | Comments about the list |
 | [props.entry] | <code>BackboneElement</code> | Entries in the list |
 | [props.emptyReason] | <code>CodeableConcept</code> | Why list is empty |
+
 
 
 * * *
@@ -2659,6 +2722,7 @@ Create a FHIR Location resource.
 | [props.endpoint] | <code>Reference</code> | Technical endpoints providing access to services operated for the location |
 
 
+
 * * *
 
 
@@ -2680,6 +2744,7 @@ Create a FHIR ManufacturedItemDefinition resource.
 | [props.manufacturer] | <code>Reference</code> | Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues) |
 | [props.ingredient] | <code>CodeableConcept</code> | The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource |
 | [props.property] | <code>BackboneElement</code> | General characteristics of this item |
+
 
 
 * * *
@@ -2739,6 +2804,7 @@ Create a FHIR Measure resource.
 | [props.supplementalData] | <code>BackboneElement</code> | What other data should be reported with the measure |
 
 
+
 * * *
 
 
@@ -2764,6 +2830,7 @@ Create a FHIR MeasureReport resource.
 | [props.improvementNotation] | <code>CodeableConcept</code> | increase | decrease |
 | [props.group] | <code>BackboneElement</code> | Measure results for each group |
 | [props.evaluatedResource] | <code>Reference</code> | What data was used to calculate the measure score |
+
 
 
 * * *
@@ -2804,6 +2871,7 @@ Create a FHIR Media resource.
 | [props.note] | <code>Annotation</code> | Comments made about the media |
 
 
+
 * * *
 
 
@@ -2826,6 +2894,7 @@ Create a FHIR Medication resource.
 | [props.amount] | <code>Ratio</code> | Amount of drug in package |
 | [props.ingredient] | <code>BackboneElement</code> | Active or inactive ingredient |
 | [props.batch] | <code>BackboneElement</code> | Details about packaged medications |
+
 
 
 * * *
@@ -2861,6 +2930,7 @@ Create a FHIR MedicationAdministration resource.
 | [props.note] | <code>Annotation</code> | Information about the administration |
 | [props.dosage] | <code>BackboneElement</code> | Details of how medication was taken |
 | [props.eventHistory] | <code>Reference</code> | A list of events of interest in the lifecycle |
+
 
 
 * * *
@@ -2903,6 +2973,7 @@ Create a FHIR MedicationDispense resource.
 | [props.eventHistory] | <code>Reference</code> | A list of relevant lifecycle events |
 
 
+
 * * *
 
 
@@ -2939,6 +3010,7 @@ Create a FHIR MedicationKnowledge resource.
 | [props.contraindication] | <code>Reference</code> | Potential clinical issue with or between medication(s) |
 | [props.regulatory] | <code>BackboneElement</code> | Regulatory information about a medication |
 | [props.kinetics] | <code>BackboneElement</code> | The time course of drug absorption, distribution, metabolism and excretion of a medication from the body |
+
 
 
 * * *
@@ -2989,6 +3061,7 @@ Create a FHIR MedicationRequest resource.
 | [props.eventHistory] | <code>Reference</code> | A list of events of interest in the lifecycle |
 
 
+
 * * *
 
 
@@ -3020,6 +3093,7 @@ Create a FHIR MedicationStatement resource.
 | [props.reasonReference] | <code>Reference</code> | Condition or observation that supports why the medication is being/was taken |
 | [props.note] | <code>Annotation</code> | Further information about the statement |
 | [props.dosage] | <code>Dosage</code> | Details of how medication is/was taken or should be taken |
+
 
 
 * * *
@@ -3066,6 +3140,7 @@ Create a FHIR MedicinalProductDefinition resource.
 | [props.characteristic] | <code>BackboneElement</code> | Key product features such as "sugar free", "modified release" |
 
 
+
 * * *
 
 
@@ -3096,6 +3171,7 @@ Create a FHIR MolecularSequence resource.
 | [props.repository] | <code>BackboneElement</code> | External repository which contains detailed report related with observedSeq in this resource |
 | [props.pointer] | <code>Reference</code> | Pointer to next atomic sequence |
 | [props.structureVariant] | <code>BackboneElement</code> | Structural variant |
+
 
 
 * * *
@@ -3131,6 +3207,7 @@ Create a FHIR NutritionOrder resource.
 | [props.note] | <code>Annotation</code> | Comments |
 
 
+
 * * *
 
 
@@ -3155,6 +3232,7 @@ Create a FHIR NutritionProduct resource.
 | [props.productCharacteristic] | <code>BackboneElement</code> | Specifies descriptive properties of the nutrition product |
 | [props.instance] | <code>BackboneElement</code> | One or several physical instances or occurrences of the nutrition product |
 | [props.note] | <code>Annotation</code> | Comments made about the product |
+
 
 
 * * *
@@ -3197,6 +3275,7 @@ Create a FHIR Observation resource.
 | [props.component] | <code>BackboneElement</code> | Component results |
 
 
+
 * * *
 
 
@@ -3226,6 +3305,7 @@ Create a FHIR ObservationDefinition resource.
 | [props.criticalCodedValueSet] | <code>Reference</code> | Value set of critical coded values for the observations conforming to this ObservationDefinition |
 
 
+
 * * *
 
 
@@ -3250,6 +3330,7 @@ Create a FHIR Organization resource.
 | [props.partOf] | <code>Reference</code> | The organization of which this organization forms a part |
 | [props.contact] | <code>BackboneElement</code> | Contact for the organization for a certain purpose |
 | [props.endpoint] | <code>Reference</code> | Technical endpoints providing access to services operated for the organization |
+
 
 
 * * *
@@ -3280,6 +3361,7 @@ Create a FHIR OrganizationAffiliation resource.
 | [props.endpoint] | <code>Reference</code> | Technical endpoints providing access to services operated for this role |
 
 
+
 * * *
 
 
@@ -3308,6 +3390,7 @@ Create a FHIR PackagedProductDefinition resource.
 | [props.copackagedIndicator] | <code>boolean</code> | If the drug product is supplied with another item such as a diluent or adjuvant |
 | [props.manufacturer] | <code>Reference</code> | Manufacturer of this package type (multiple means these are all possible manufacturers) |
 | [props.package] | <code>BackboneElement</code> | A packaging item, as a container for medically related items, possibly with other packaging items within, or a packaging component, such as bottle cap |
+
 
 
 * * *
@@ -3342,6 +3425,7 @@ Create a FHIR Patient resource.
 | [props.link] | <code>BackboneElement</code> | Link to another patient resource that concerns the same actual person |
 
 
+
 * * *
 
 
@@ -3368,6 +3452,7 @@ Create a FHIR PaymentNotice resource.
 | [props.recipient] | <code>Reference</code> | Party being notified |
 | [props.amount] | <code>Money</code> | Monetary amount of the payment |
 | [props.paymentStatus] | <code>CodeableConcept</code> | Issued or cleared Status of the payment |
+
 
 
 * * *
@@ -3401,6 +3486,7 @@ Create a FHIR PaymentReconciliation resource.
 | [props.processNote] | <code>BackboneElement</code> | Note concerning processing |
 
 
+
 * * *
 
 
@@ -3425,6 +3511,7 @@ Create a FHIR Person resource.
 | [props.managingOrganization] | <code>Reference</code> | The organization that is the custodian of the person record |
 | [props.active] | <code>boolean</code> | This person's record is in active use |
 | [props.link] | <code>BackboneElement</code> | Link to a resource that concerns the same actual person |
+
 
 
 * * *
@@ -3474,6 +3561,7 @@ Create a FHIR PlanDefinition resource.
 | [props.action] | <code>BackboneElement</code> | Action defined by the plan |
 
 
+
 * * *
 
 
@@ -3498,6 +3586,7 @@ Create a FHIR Practitioner resource.
 | [props.photo] | <code>Attachment</code> | Image of the person |
 | [props.qualification] | <code>BackboneElement</code> | Certification, licenses, or training pertaining to the provision of care |
 | [props.communication] | <code>CodeableConcept</code> | A language the practitioner can use in patient communication |
+
 
 
 * * *
@@ -3528,6 +3617,7 @@ Create a FHIR PractitionerRole resource.
 | [props.notAvailable] | <code>BackboneElement</code> | Not available during this time due to provided reason |
 | [props.availabilityExceptions] | <code>string</code> | Description of availability exceptions |
 | [props.endpoint] | <code>Reference</code> | Technical endpoints providing access to services operated for the practitioner with this role |
+
 
 
 * * *
@@ -3574,6 +3664,7 @@ Create a FHIR Procedure resource.
 | [props.usedCode] | <code>CodeableConcept</code> | Coded items used during the procedure |
 
 
+
 * * *
 
 
@@ -3612,6 +3703,7 @@ Create a FHIR Questionnaire resource.
 | [props.item] | <code>BackboneElement</code> | Questions and sections within the Questionnaire |
 
 
+
 * * *
 
 
@@ -3637,6 +3729,7 @@ Create a FHIR QuestionnaireResponse resource.
 | [props.author] | <code>Reference</code> | Person who received and recorded the answers |
 | [props.source] | <code>Reference</code> | The person who answered the questions |
 | [props.item] | <code>BackboneElement</code> | Groups and questions |
+
 
 
 * * *
@@ -3669,6 +3762,7 @@ Create a FHIR RegulatedAuthorization resource.
 | [props.case] | <code>BackboneElement</code> | The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page) |
 
 
+
 * * *
 
 
@@ -3695,6 +3789,7 @@ Create a FHIR RelatedPerson resource.
 | [props.photo] | <code>Attachment</code> | Image of the person |
 | [props.period] | <code>Period</code> | Period of time that this relationship is considered valid |
 | [props.communication] | <code>BackboneElement</code> | A language which may be used to communicate with about the patient's health |
+
 
 
 * * *
@@ -3729,6 +3824,7 @@ Create a FHIR RequestGroup resource.
 | [props.reasonReference] | <code>Reference</code> | Why the request group is needed |
 | [props.note] | <code>Annotation</code> | Additional notes about the response |
 | [props.action] | <code>BackboneElement</code> | Proposed actions, if any |
+
 
 
 * * *
@@ -3781,6 +3877,7 @@ Create a FHIR ResearchDefinition resource.
 | [props.outcome] | <code>Reference</code> | What outcome? |
 
 
+
 * * *
 
 
@@ -3830,6 +3927,7 @@ Create a FHIR ResearchElementDefinition resource.
 | [props.characteristic] | <code>BackboneElement</code> | What defines the members of the research element |
 
 
+
 * * *
 
 
@@ -3870,6 +3968,7 @@ Create a FHIR ResearchStudy resource.
 | [props.objective] | <code>BackboneElement</code> | A goal for the study |
 
 
+
 * * *
 
 
@@ -3892,6 +3991,7 @@ Create a FHIR ResearchSubject resource.
 | [props.assignedArm] | <code>string</code> | What path should be followed |
 | [props.actualArm] | <code>string</code> | What path was followed |
 | [props.consent] | <code>Reference</code> | Agreement to participate in study |
+
 
 
 * * *
@@ -3927,6 +4027,7 @@ Create a FHIR RiskAssessment resource.
 | [props.note] | <code>Annotation</code> | Comments on the risk assessment |
 
 
+
 * * *
 
 
@@ -3949,6 +4050,7 @@ Create a FHIR Schedule resource.
 | [props.actor] | <code>Reference</code> | Resource(s) that availability information is being provided for |
 | [props.planningHorizon] | <code>Period</code> | Period of time covered by schedule |
 | [props.comment] | <code>string</code> | Comments on availability |
+
 
 
 * * *
@@ -4000,6 +4102,7 @@ Create a FHIR ServiceRequest resource.
 | [props.relevantHistory] | <code>Reference</code> | Request provenance |
 
 
+
 * * *
 
 
@@ -4025,6 +4128,7 @@ Create a FHIR Slot resource.
 | [props.end] | <code>instant</code> | Date/Time that the slot is to conclude |
 | [props.overbooked] | <code>boolean</code> | This slot has already been overbooked, appointments are unlikely to be accepted for this time |
 | [props.comment] | <code>string</code> | Comments on the slot to describe any extended information. Such as custom constraints on the slot |
+
 
 
 * * *
@@ -4056,6 +4160,7 @@ Create a FHIR Specimen resource.
 | [props.note] | <code>Annotation</code> | Comments |
 
 
+
 * * *
 
 
@@ -4076,6 +4181,7 @@ Create a FHIR SpecimenDefinition resource.
 | [props.timeAspect] | <code>string</code> | Time aspect for collection |
 | [props.collection] | <code>CodeableConcept</code> | Specimen collection procedure |
 | [props.typeTested] | <code>BackboneElement</code> | Specimen in container intended for testing by lab |
+
 
 
 * * *
@@ -4099,6 +4205,7 @@ Create a FHIR Substance resource.
 | [props.description] | <code>string</code> | Textual description of the substance, comments |
 | [props.instance] | <code>BackboneElement</code> | If this describes a specific package/container of the substance |
 | [props.ingredient] | <code>BackboneElement</code> | Composition information about the substance |
+
 
 
 * * *
@@ -4136,6 +4243,7 @@ Create a FHIR SubstanceDefinition resource.
 | [props.sourceMaterial] | <code>BackboneElement</code> | Material or taxonomic/anatomical source |
 
 
+
 * * *
 
 
@@ -4161,6 +4269,7 @@ Create a FHIR SupplyDelivery resource.
 | [props.supplier] | <code>Reference</code> | Dispenser |
 | [props.destination] | <code>Reference</code> | Where the Supply was sent |
 | [props.receiver] | <code>Reference</code> | Who collected the Supply |
+
 
 
 * * *
@@ -4192,6 +4301,7 @@ Create a FHIR SupplyRequest resource.
 | [props.reasonReference] | <code>Reference</code> | The reason why the supply item was requested |
 | [props.deliverFrom] | <code>Reference</code> | The origin of the supply |
 | [props.deliverTo] | <code>Reference</code> | The destination of the supply |
+
 
 
 * * *
@@ -4241,6 +4351,7 @@ Create a FHIR Task resource.
 | [props.output] | <code>BackboneElement</code> | Information produced as part of task |
 
 
+
 * * *
 
 
@@ -4267,6 +4378,7 @@ Create a FHIR TestReport resource.
 | [props.setup] | <code>BackboneElement</code> | The results of the series of required setup operations before the tests were executed |
 | [props.test] | <code>BackboneElement</code> | A test executed from the test script |
 | [props.teardown] | <code>BackboneElement</code> | The results of running the series of required clean up steps |
+
 
 
 * * *
@@ -4299,6 +4411,7 @@ Create a FHIR VerificationResult resource.
 | [props.validator] | <code>BackboneElement</code> | Information about the entity validating information |
 
 
+
 * * *
 
 
@@ -4321,6 +4434,7 @@ Create a FHIR VisionPrescription resource.
 | [props.dateWritten] | <code>dateTime</code> | When prescription was authorized |
 | [props.prescriber] | <code>Reference</code> | Who authorized the vision prescription |
 | [props.lensSpecification] | <code>BackboneElement</code> | Vision lens authorization |
+
 
 
 * * *
@@ -4346,6 +4460,7 @@ The value will be smartly written to the object, ie, valueDateTime or valueRefer
 | value |  | the value that the extension should contain |
 
 
+
 * * *
 
 
@@ -4354,6 +4469,7 @@ The value will be smartly written to the object, ie, valueDateTime or valueRefer
 <p><code>cc()</code></p>
 
 Alias for b.concept()
+
 
 
 * * *
@@ -4370,6 +4486,7 @@ Create a coding object { code, system }. Systems will be mapped using the system
 | --- | --- | --- |
 | code | <code>string</code> | the code value |
 | system | <code>string</code> | URL to the system. Will be mapped using the system map. |
+
 
 
 * * *
@@ -4393,6 +4510,7 @@ This function is poorly named.
 | value |  | some value to write to the object |
 
 
+
 * * *
 
 
@@ -4409,6 +4527,7 @@ Systems will be mapped with the system map
 | --- | --- | --- |
 | value | <code>string</code> | the value |
 | extra | <code>object</code> | Extra properties to write to the coding |
+
 
 **Example:** Create a codeableConcept
 ```js
@@ -4427,6 +4546,7 @@ const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/
 <p><code>ext()</code></p>
 
 Alias for b.extension()
+
 
 
 * * *
@@ -4448,6 +4568,7 @@ Optionally pass extra keys on the third argument
 | props |  | extra props to add to the extension |
 
 
+
 * * *
 
 
@@ -4465,6 +4586,7 @@ Find an extension with a given url in some array
 | [path] | <code>string</code> | a path to extract from the resource. Optional. |
 
 
+
 * * *
 
 
@@ -4473,6 +4595,7 @@ Find an extension with a given url in some array
 <p><code>id()</code></p>
 
 Alias for b.identifier()
+
 
 
 * * *
@@ -4492,6 +4615,7 @@ Create an Identifier. Systems will be mapped against the system map. Pass extens
 | [system] | <code>string</code> | the string system to use by default if |
 
 
+
 * * *
 
 
@@ -4500,6 +4624,7 @@ Create an Identifier. Systems will be mapped against the system map. Pass extens
 <p><code>ref()</code></p>
 
 Alias for b.reference()
+
 
 
 * * *
@@ -4521,6 +4646,7 @@ If ref is a valid FHIR reference, it'll just be returned.
 | ref | the thing to generate a reference from |
 
 
+
 * * *
 
 
@@ -4531,6 +4657,7 @@ If ref is a valid FHIR reference, it'll just be returned.
 Define a set of mapped system values.
 
 Builder functions will use this mappings when they encounter them in system keys. Useful for setting shortcuts.
+
 
 **Example:** Set shortcut system mappings
 ```js

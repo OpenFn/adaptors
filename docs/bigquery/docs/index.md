@@ -66,6 +66,7 @@ Load files to BigQuery
 | loadOptions | <code>object</code> | options to pass to the bigquery.load() API |
 | callback | <code>function</code> | and optional callback |
 
+
 **Example**
 ```js
 load(

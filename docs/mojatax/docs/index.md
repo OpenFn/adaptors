@@ -64,6 +64,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Mojatax server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Make a POST request to create an invoice
 ```js
 post("CreateInvoice", {
@@ -97,6 +98,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Mojatax server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Make a POST request to create an invoice
 ```js
 request("POST", "/client/CreateInvoice", {
@@ -114,6 +116,7 @@ items: [],
 ### MojataxRequestOptions
 
 Options provided to Mojatax HTTP request
+
 
 **Properties**
 

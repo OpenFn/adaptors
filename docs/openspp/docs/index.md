@@ -95,6 +95,7 @@ add individual to group in OpenSPP
 | individual_id | <code>string</code> | individual registrant id |
 | role | <code>string</code> | individual role in group |
 
+
 **Example:** create a new head for group
 ```js
 addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "Head")
@@ -122,6 +123,7 @@ create new group for OpenSPP
 | data | <code>object</code> | registrant create data |
 | callback | <code>function</code> | An optional callback function |
 
+
 **Example**
 ```js
 createGroup({ name: "Group 1" })
@@ -140,6 +142,7 @@ create new individual for OpenSPP
 | --- | --- | --- |
 | data | <code>object</code> | registrant create data |
 | callback | <code>function</code> | An optional callback function |
+
 
 **Example**
 ```js
@@ -160,6 +163,7 @@ enroll registrant to program in OpenSPP
 | spp_id | <code>string</code> | spp_id of group / individual wanted to enroll |
 | program_id | <code>string</code> | program_id of program |
 
+
 **Example**
 ```js
 enroll("IND_Q4VGGZPF", "PROG_2023_00000001")
@@ -178,6 +182,7 @@ get area by id in OpenSPP
 | --- | --- | --- |
 | spp_id | <code>string</code> | spp_id of area |
 | callback | <code>function</code> | An optional callback function |
+
 
 **Example**
 ```js
@@ -198,6 +203,7 @@ get programs list for specific registrant from OpenSPP
 | spp_id | <code>string</code> | spp_id of group / individual wanted to search |
 | callback | <code>function</code> | An optional callback function |
 
+
 **Example**
 ```js
 getEnrolledPrograms("IND_Q4VGGZPF")
@@ -216,6 +222,7 @@ get group information from OpenSPP
 | --- | --- | --- |
 | spp_id | <code>string</code> | The spp_id of the group |
 | callback | <code>function</code> | An optional callback function |
+
 
 **Example**
 ```js
@@ -237,6 +244,7 @@ get group members information from OpenSPP
 | [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
 | callback | <code>function</code> |  | An optional callback function |
 
+
 **Example**
 ```js
 getGroupMembers("GRP_Q4VGGZPF")
@@ -255,6 +263,7 @@ get individual information from OpenSPP
 | --- | --- | --- |
 | spp_id | <code>string</code> | The spp_id of the individual |
 | callback | <code>function</code> | An optional callback function |
+
 
 **Example**
 ```js
@@ -275,6 +284,7 @@ get program information from OpenSPP
 | program_id | <code>string</code> | searching domain |
 | callback | <code>function</code> | An optional callback function |
 
+
 **Example**
 ```js
 getProgram("PROG_2023_00000001")
@@ -293,6 +303,7 @@ get programs list from OpenSPP
 | --- | --- | --- | --- |
 | [options] | <code>number</code> | <code>{}</code> | offset from start |
 | callback | <code>function</code> |  | An optional callback function |
+
 
 **Example**
 ```js
@@ -313,6 +324,7 @@ get service points information from OpenSPP
 | spp_id | <code>string</code> | The spp_id of the agent |
 | callback | <code>function</code> | An optional callback function |
 
+
 **Example**
 ```js
 getServicePoint("SVP_8P4KP4RT")
@@ -331,6 +343,7 @@ remove individual from group in OpenSPP
 | --- | --- | --- |
 | group_id | <code>string</code> | group registrant id |
 | individual_id | <code>string</code> | individual registrant id |
+
 
 **Example**
 ```js
@@ -351,6 +364,7 @@ searching for service point in OpenSPP
 | domain | <code>Array</code> |  | searching domain |
 | [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
 | callback | <code>function</code> |  | An optional callback function |
+
 
 **Example:** search without offset
 ```js
@@ -375,6 +389,7 @@ get groups from OpenSPP
 | domain | <code>Array</code> |  | searching domain |
 | [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for ordering search, offset for skipping records |
 | callback | <code>function</code> |  | An optional callback function |
+
 
 **Example:** search group by domain
 ```js
@@ -404,6 +419,7 @@ get individuals from OpenSPP
 | [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
 | callback | <code>function</code> |  | An optional callback function |
 
+
 **Example:** search individual by domain
 ```js
 searchIndividual([["spp_id", "=", "IND_Q4VGGZPF"]])
@@ -432,6 +448,7 @@ searching for service point in OpenSPP
 | [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
 | callback | <code>function</code> |  | An optional callback function |
 
+
 **Example:** search without offset
 ```js
 searchServicePoint([["name", "ilike", "agent 1"]])
@@ -455,6 +472,7 @@ unenroll registrant from program in OpenSPP
 | spp_id | <code>string</code> | spp_id of group / individual wanted to unenroll |
 | program_id | <code>string</code> | program_id of program |
 
+
 **Example**
 ```js
 unenroll("IND_Q4VGGZPF", "PROG_2023_00000001")
@@ -474,6 +492,7 @@ update group for OpenSPP
 | group_id | <code>string</code> | group registrant id |
 | data | <code>object</code> | registrant update data |
 
+
 **Example**
 ```js
 updateGroup("GRP_B2BRHJN2", { name: "Group 1" })
@@ -492,6 +511,7 @@ update individual for OpenSPP
 | --- | --- | --- |
 | individual_id | <code>string</code> | individual registrant id |
 | data | <code>object</code> | registrant update data |
+
 
 **Example**
 ```js

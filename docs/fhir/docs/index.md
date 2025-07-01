@@ -74,6 +74,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the FHIR HTTP server (with the body removed) |
 | references | an array of all the previous data values |
+
 **Example:** Create a new patient
 ```js
 create('Patient', {
@@ -108,6 +109,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the FHIR HTTP server (with the body removed) |
 | references | an array of all the previous data values |
+
 **Example**
 ```js
 createTransactionBundle([
@@ -149,6 +151,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the FHIR HTTP server (with the body removed) |
 | references | an array of all the previous data values |
+
 **Example:** Get a Patient resource by id
 ```js
 get('Patient/0bd0038b-8aad-4719-8d55-ff94bd3de5d0');
@@ -180,6 +183,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the FHIR HTTP server (with the body removed) |
 | references | an array of all the previous data values |
+
 **Example**
 ```js
 getClaim('',{ _include: "Claim:patient", _sort: "-_lastUpdated", _count: 200 });
@@ -208,6 +212,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the FHIR HTTP server (with the body removed) |
 | references | an array of all the previous data values |
+
 **Example:** Create bundle
 ```js
 post("Bundle",{
@@ -224,6 +229,7 @@ post("Bundle",{
 
 Options provided to a GET HTTP request
 
+
 **Properties**
 
 | Name | Type | Description |
@@ -237,6 +243,7 @@ Options provided to a GET HTTP request
 ### RequestOptions
 
 Options provided to a HTTP request
+
 
 **Properties**
 

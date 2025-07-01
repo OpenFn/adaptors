@@ -81,6 +81,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Satusehat server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Get a resource by Id. Equivalent to GET `<baseUrl>/Organization/abcde`
 ```js
 get("Organization/abcde")
@@ -117,6 +118,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Satusehat server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Update a property of a resource. Equivalent to PATCH `<baseurl>/Organization/abcde`
 ```js
 patch('Organization/abcde', [
@@ -152,6 +154,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Satusehat server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Create an encounter resource. Equivalent to POST `<baseUrl>/Encounter`
 ```js
 post('Encounter', { resourceType: 'Encounter', ...state.data });
@@ -182,6 +185,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Satusehat server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Update a resource. Equivalent to PUT `<baseurl>/Organization/abcde`
 ```js
 put('Organization/abcde', { resourceType: 'Organization', active: false });

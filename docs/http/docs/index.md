@@ -121,6 +121,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** DELETE a resource by ID
 ```js
 del(`/myendpoint/${$.data.id}`);
@@ -147,6 +148,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** GET request with query parameters and custom headers
 ```js
 get('/patient', {
@@ -174,6 +176,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the parsed XML as a JSON object |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Parse XML from state.response
 ```js
  parseXML(
@@ -213,6 +216,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** PATCH a resource from state
 ```js
 patch('/patient', $.data);
@@ -246,6 +250,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** POST a resource with from state
 ```js
 post('/patient', $.data);
@@ -279,6 +284,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** PUT a resource from state
 ```js
 put('/patient', $.data);
@@ -312,6 +318,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Make a GET request
 ```js
 request('GET', '/patient', {
@@ -347,6 +354,7 @@ Decodes a Base64 encoded string back to its original format.
 | --- | --- | --- |
 | base64Data | <code>string</code> | The Base64 encoded string. |
 
+
 **Example:** Decode a Base64 string
 ```js
 const decoded = util.decode('SGVsbG8gV29ybGQ=');
@@ -368,6 +376,7 @@ Encodes a given string into Base64 format.
 | --- | --- | --- |
 | data | <code>string</code> | The string to be encoded. |
 
+
 **Example:** Encode a string
 ```js
 const encoded = util.encode('Hello World');
@@ -384,6 +393,7 @@ console.log(encoded); // Output: SGVsbG8gV29ybGQ=
 Generates a UUID (Universally Unique Identifier).
 
 **Returns**: <code>string</code> - - A newly generated UUID.  
+
 **Example:** Generate a UUID
 ```js
 const id = util.uuid();
@@ -398,6 +408,7 @@ console.log(id); // Output:'3f4e254e-8f6f-4f8b-9651-1c1c262cc83f'
 ### RequestOptions
 
 Options provided to the HTTP request
+
 
 **Properties**
 

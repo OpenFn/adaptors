@@ -85,6 +85,7 @@ addMember to a list
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
 
+
 * * *
 
 ### archiveMember
@@ -98,6 +99,7 @@ archiveMember in a list
 | --- | --- | --- |
 | params | <code>object</code> | a listId, and options |
 | [callback] | <code>function</code> | Optional callback to handle the response |
+
 
 
 * * *
@@ -115,6 +117,7 @@ Permanently delete a member from a list
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
 
+
 * * *
 
 ### get
@@ -129,6 +132,7 @@ The get function is used to make a GET request to the Mailchimp API.
 | path | <code>string</code> | The endpoint of the api to which the request should be made |
 | query | <code>object</code> | An object containing query parameters to be included in the request |
 | [callback] | <code>function</code> | (Optional) callback to handle the response |
+
 
 **Example:** Get a list of account exports for a given account
 ```js
@@ -151,6 +155,7 @@ Results include list members who have signed up but haven't confirmed their subs
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
 
+
 * * *
 
 ### listAudiences
@@ -164,6 +169,7 @@ Get information about all lists in the account.
 | --- | --- | --- |
 | query | <code>object</code> | Query parameters |
 | [callback] | <code>function</code> | Optional callback to handle the response |
+
 
 
 * * *
@@ -181,6 +187,7 @@ listBatches
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
 
+
 * * *
 
 ### listMembers
@@ -194,6 +201,7 @@ listMembers
 | --- | --- | --- |
 | params | <code>object</code> | a listId, and options |
 | [callback] | <code>function</code> | Optional callback to handle the response |
+
 
 
 * * *
@@ -211,6 +219,7 @@ The post function is used to make a POST request to the Mailchimp API.
 | body | <code>object</code> | The data to be sent in the body of the request |
 | query | <code>object</code> | An object containing query parameters to be included in the request |
 | [callback] | <code>function</code> | (Optional) callback to handle the response |
+
 
 **Example:** Create a new account export in your Mailchimp account
 ```js
@@ -232,6 +241,7 @@ Make an HTTP request to Mailchimp API
 | path | <code>string</code> | The endpoint of the api to which the request should be made. |
 | options | <code>Object</code> | Additional options for the request (query, body only). |
 | [callback] | <code>function</code> | (Optional) callback function to handle the response. |
+
 
 **Example:** Get list to all other resources available in the API
 ```js
@@ -256,6 +266,7 @@ Start a batch with a list of operations.
 | params | <code>object</code> | operations batch job |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
+
 **Example**
 ```js
 startBatch(params)
@@ -274,6 +285,7 @@ Tag members with a particular tag
 | --- | --- | --- |
 | params | <code>object</code> | a tagId, members, and a list |
 | [callback] | <code>function</code> | Optional callback to handle the response |
+
 
 **Example**
 ```js
@@ -309,6 +321,7 @@ updateMember
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
 
+
 * * *
 
 ### updateMemberTags
@@ -324,6 +337,7 @@ updateMemberTags
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
 
+
 * * *
 
 ### upsertMembers
@@ -337,6 +351,7 @@ Add or update a list members
 | --- | --- | --- |
 | params | <code>object</code> | a listId, users, and options |
 | [callback] | <code>function</code> | Optional callback to handle the response |
+
 
 **Example**
 ```js

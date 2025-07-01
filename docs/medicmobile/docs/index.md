@@ -57,6 +57,7 @@ Access the CouchDB Changes API
 | params | <code>object</code> | Query parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
+
 **Example**
 ```js
 changesApi(params, callback)
@@ -76,6 +77,7 @@ Access form submissions and post them as JSON.
 | formId | <code>string</code> | Query parameters |
 | params | <code>object</code> | Starting sequence id |
 | postUrl | <code>string</code> | Inbox to post form data |
+
 
 **Example**
 ```js
@@ -98,6 +100,7 @@ Select submissions for a specific form
 | Param | Type | Description |
 | --- | --- | --- |
 | formId | <code>string</code> | The form ID. |
+
 
 **Example**
 ```js

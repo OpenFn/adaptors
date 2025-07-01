@@ -89,6 +89,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Upload a single row of a case-data resource
 ```js
 bulk('case-data', [{ name: 'Mamadou', phone: '000000' }], {
@@ -147,6 +148,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Get 10 records from a report and post them to example.com. Equivalent to `<baseUrl>/configurablereportdata/abcde?limit=10`
 ```js
 fetchReportData(
@@ -182,6 +184,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Get a resource by Id. Equivalent to GET `<baseUrl>/case/12345`
 ```js
 get("/case/12345")
@@ -222,6 +225,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Create a user resource.Equivalent to `<baseUrl>/user`
 ```js
 post("/user", { "username":"test", "password":"somepassword" })
@@ -250,6 +254,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Get a resource. Equivalent to `<baseUrl>/a/asri/api/v0.5/case`
 ```js
 request("GET", "/a/asri/api/v0.5/case");
@@ -280,6 +285,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Submit a form resource.
 ```js
 submit(
@@ -315,6 +321,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Upload a single row of data for a resource.
 ```js
 submitXls([{ name: 'Mamadou', phone: '000000' }], {

@@ -92,6 +92,7 @@ Adds a lookup or 'dome insert' to a record.
 | externalID | <code>string</code> | Salesforce ExternalID field. |
 | path | <code>string</code> | JSONPath to data source. |
 
+
 **Example:** Example
 ```js
 lookup("relationship_name__r", "externalID on related object", "$.path")
@@ -112,6 +113,7 @@ Adds a lookup or 'dome insert' to a record.
 | relationshipName | <code>string</code> | `__r` relationship field on the record. |
 | externalID | <code>string</code> | Salesforce ExternalID field. |
 | dataSource | <code>string</code> | resolvable source. |
+
 
 **Example:** Data Sourced Value
 ```js

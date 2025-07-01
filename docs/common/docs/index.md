@@ -123,6 +123,7 @@ Turns an array into a string, separated by X.
 | arr | <code>array</code> | Array of toString'able primatives. |
 | separator | <code>string</code> | Separator string. |
 
+
 **Example**
 ```js
 field("destination_string__c", function(state) {
@@ -148,6 +149,7 @@ object literals as a data source.
 | data | <code>String</code> \| <code>object</code> \| <code>function</code> |  |
 | state | <code>object</code> | The current state. |
 
+
 **Example**
 ```js
 asData('$.key'| key | callback)
@@ -166,6 +168,7 @@ Asserts the given expression or function resolves to `true`, or else throws an e
 | --- | --- | --- |
 | expression | <code>any</code> | The expression or function to be evaluated. |
 | errorMessage | <code>string</code> | The error message thrown in case of a failed state. |
+
 
 **Example**
 ```js
@@ -186,6 +189,7 @@ Chunks an array into an array of arrays, each with no more than a certain size.
 | array | <code>Object</code> | Array to be chunked |
 | chunkSize | <code>Integer</code> | The maxiumum size of each chunks |
 
+
 **Example**
 ```js
 chunk([1,2,3,4,5], 2)
@@ -203,6 +207,7 @@ Combines two operations into one
 | Param | Type | Description |
 | --- | --- | --- |
 | operations | <code>Operations</code> | Operations to be performed. |
+
 
 **Example**
 ```js
@@ -225,6 +230,7 @@ Prepares next state
 | --- | --- | --- |
 | state | <code>State</code> | state |
 | response | <code>Object</code> | Response to be added |
+
 
 **Example**
 ```js
@@ -254,6 +260,7 @@ See the usage guide at [https://docs.openfn.org/documentation/jobs/job-writing-g
 | options.defaultValue | <code>any</code> | the value to use if value is falsy |
 | options.format | <code>function</code> | custom formatter for the final cursor value |
 
+
 **Example:** Use a cursor from state if present, or else use the default value
 ```js
 cursor($.cursor, { defaultValue: 'today' })
@@ -276,6 +283,7 @@ Ensures a path points at the data.
 | --- | --- | --- |
 | path | <code>string</code> | JSONPath referencing a point in `data`. |
 
+
 **Example**
 ```js
 dataPath('key')
@@ -296,6 +304,7 @@ item will be returned.
 | --- | --- | --- |
 | path | <code>String</code> | JSONPath referencing a point in `data`. |
 
+
 **Example**
 ```js
 dataValue('key')
@@ -313,6 +322,7 @@ Outputs a message to the console with the debug log level. This is usually filte
 | Param | Type | Description |
 | --- | --- | --- |
 | args | <code>any</code> | A value or message to display in the logs |
+
 
 **Example:** Log values from state
 ```js
@@ -343,6 +353,7 @@ reference a slice of state.
 | --- | --- | --- |
 | dataSource | <code>DataSource</code> | JSONPath referencing a point in `state`. |
 | operation | <code>Operation</code> | The operation needed to be repeated. |
+
 
 **Example:** Using lazy state ($) to iterate over items in state.data and pass each into an "insert" operation
 ```js
@@ -391,6 +402,7 @@ Recursively resolves objects that have resolvable values (functions).
 | [skipFilter] | <code>function</code> | a function which returns true if a value should be skipped |
 
 
+
 * * *
 
 ### field
@@ -404,6 +416,7 @@ Returns a key, value pair in an array.
 | --- | --- | --- |
 | key | <code>string</code> | Name of the field |
 | value | <code>Value</code> | The value itself or a sourceable operation. |
+
 
 **Example**
 ```js
@@ -423,6 +436,7 @@ Zips key value pairs into an object.
 | --- | --- | --- |
 | fields | <code>Fields</code> | a list of fields |
 
+
 **Example**
 ```js
 fields(list_of_fields)
@@ -440,6 +454,7 @@ Creates a custom step (or operation) for more flexible job writing.
 | Param | Type | Description |
 | --- | --- | --- |
 | func | <code>function</code> | is the function |
+
 
 **Example**
 ```js
@@ -463,6 +478,7 @@ A custom operation that will only execute the function if the condition returns 
 | condition | <code>Boolean</code> | The condition that returns true |
 | operation | <code>Operation</code> | The operation needed to be executed. |
 
+
 **Example**
 ```js
 fnIf((state) => state?.data?.name, get("https://example.com"));
@@ -482,6 +498,7 @@ Groups an array of objects by a specified key path.
 | arrayOfObjects | <code>Array.&lt;Object&gt;</code> | The array of objects to be grouped. |
 | keyPath | <code>string</code> | The key path to group by. |
 | callback | <code>function</code> | (Optional) Callback function |
+
 
 **Example**
 ```js
@@ -508,6 +525,7 @@ Substitutes underscores for spaces and proper-cases a string
 | --- | --- | --- |
 | str | <code>string</code> | String that needs converting |
 
+
 **Example**
 ```js
 field("destination_string__c", humanProper(state.data.path_to_string))
@@ -521,6 +539,7 @@ field("destination_string__c", humanProper(state.data.path_to_string))
 
 Returns the index of the current array being iterated.
 To be used with `each` as a data source.
+
 
 **Example**
 ```js
@@ -541,6 +560,7 @@ Adds data from a target object
 | targetPath | <code>String</code> | Target path |
 | sourcePath | <code>String</code> | Source path |
 | targetKey | <code>String</code> | Target Key |
+
 
 **Example**
 ```js
@@ -563,6 +583,7 @@ item will be returned.
 | obj | <code>object</code> | A valid JSON object. |
 | path | <code>String</code> | JSONPath referencing a point in given JSON object. |
 
+
 **Example**
 ```js
 jsonValue({ a:1 }, 'a')
@@ -581,6 +602,7 @@ Picks out the last reference value from source data.
 | --- | --- | --- |
 | path | <code>String</code> | JSONPath referencing a point in `references`. |
 
+
 **Example**
 ```js
 lastReferenceValue('key')
@@ -598,6 +620,7 @@ Outputs a message, like calling `console.log`. Use this at the top level of your
 | Param | Type | Description |
 | --- | --- | --- |
 | args | <code>any</code> | A value or message to display in the logs |
+
 
 **Example:** Log values from state
 ```js
@@ -630,6 +653,7 @@ of the JSONPath provided.
 | operation | <code>function</code> | The operation needed to be repeated. |
 | state | <code>State</code> | Runtime state. |
 
+
 **Example**
 ```js
 map("$.[*]",
@@ -652,6 +676,7 @@ Merges fields into each item in an array.
 | --- | --- | --- |
 | dataSource | <code>DataSource</code> |  |
 | fields | <code>Object</code> | Group of fields to merge in. |
+
 
 **Example**
 ```js
@@ -692,6 +717,7 @@ Options for `parsingOptions` include:
 | [callback] | <code>function</code> | (Optional) callback function. If used it will be called state and an array of rows. |
 
 
+
 * * *
 
 ### referencePath
@@ -704,6 +730,7 @@ Ensures a path points at references.
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | JSONPath referencing a point in `references`. |
+
 
 **Example**
 ```js
@@ -723,6 +750,7 @@ Replaces emojis in a string.
 | --- | --- | --- |
 | text | <code>string</code> | String that needs to be cleaned |
 | replacementChars | <code>string</code> | Characters that replace the emojis |
+
 
 **Example**
 ```js
@@ -744,6 +772,7 @@ If you need a single value use `sourceValue` instead.
 | --- | --- | --- |
 | path | <code>String</code> | JSONPath referencing a point in `state`. |
 
+
 **Example**
 ```js
 source('$.key')
@@ -763,6 +792,7 @@ item will be returned.
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>String</code> | JSONPath referencing a point in `state`. |
+
 
 **Example**
 ```js
@@ -787,6 +817,7 @@ and the second contains the keys that are.
 | keys | <code>Array.&lt;string&gt;</code> | List of keys to split on. |
 
 
+
 * * *
 
 ### toArray
@@ -800,6 +831,7 @@ Does not affect array objects.
 | Param | Type | Description |
 | --- | --- | --- |
 | arg | <code>any</code> | Data required to be in an array |
+
 
 **Example**
 ```js
@@ -827,6 +859,7 @@ Decodes a Base64 encoded string back to its original format.
 | base64Data | <code>string</code> |  | The Base64 encoded string. |
 | options | <code>object</code> |  | Options. |
 | [options.parseJson] | <code>boolean</code> | <code>true</code> | If false, no attempt will be made to parse the decoded data into a JSON object. |
+
 
 **Example:** Decode a Base64 string
 ```js
@@ -859,6 +892,7 @@ Encodes a given string or Javascript object into Base64 format.
 | options | <code>object</code> |  | Options |
 | [options.parseJson] | <code>boolean</code> | <code>true</code> | If false, no attempt will be made to stringiy the data before encoding it. |
 
+
 **Example:** Encode a string
 ```js
 const encodedString = util.encode('Hello World');
@@ -884,6 +918,7 @@ const encodedObject = util.encode('Hello World', { parseJson: false })
 Generates a UUID (Universally Unique Identifier)
 
 **Returns**: <code>string</code> - - A newly generated UUID  
+
 **Example:** Generate a UUID
 ```js
 const id = util.uuid();
@@ -915,6 +950,7 @@ the state's references.
 | dataSource | <code>DataSource</code> | JSONPath referencing a point in `state`. |
 | operation | <code>Operation</code> | The operation needed to be repeated. |
 
+
 **Example**
 ```js
 each("$.[*]",
@@ -936,6 +972,7 @@ These functions belong to the dateFns namespace.
 The format function from the date-fns library. See [https://date-fns.org/v3.6.0/docs/parse](https://date-fns.org/v3.6.0/docs/parse)
 
 
+
 * * *
 
 
@@ -944,6 +981,7 @@ The format function from the date-fns library. See [https://date-fns.org/v3.6.0/
 <p><code>parse()</code></p>
 
 The parse function from the date-fns library. See [https://date-fns.org/v3.6.0/docs/parse](https://date-fns.org/v3.6.0/docs/parse)
+
 
 
 * * *
@@ -971,6 +1009,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Request a resource
 ```js
 http.get('https://jsonplaceholder.typicode.com/todos')
@@ -1007,6 +1046,7 @@ Pass an object to set your own options.
 | --- | --- | --- |
 | opts | [<code>OptionsHelpers</code>](#optionshelpers) | options to pass to the request |
 
+
 **Example:** Get with a query an oauth token
 ```js
 http.get($.data.url, http.options({ query: $.query }).oauth($.configuration.access_token))
@@ -1035,6 +1075,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Post a JSON object (setting the content-type header)
 ```js
 http.post(
@@ -1067,6 +1108,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example**
 ```js
 http.request(
@@ -1083,6 +1125,7 @@ http.request(
 ### CommonRequestOptions
 
 Options provided to the HTTP request
+
 
 **Properties**
 
@@ -1102,6 +1145,7 @@ Options provided to the HTTP request
 ### OptionsHelpers
 
 Helper functions provided by `http.options`.
+
 
 **Properties**
 

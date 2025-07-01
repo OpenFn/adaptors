@@ -70,6 +70,7 @@ Get a CSV and return a JSON array of strings for each item separated by the deli
 | filePath | <code>string</code> | Path to resource |
 | [parsingOptions] | <code>Object</code> | Optional. `parsingOptions` Parsing options which can be passed to convert csv to json See more [on csvtojson docs](https://github.com/Keyang/node-csvtojson#parameters) |
 
+
 **Example**
 ```js
 getCSV(
@@ -91,6 +92,7 @@ Fetch a json file from an FTP server
 | --- | --- | --- |
 | filePath | <code>string</code> | Path to resource |
 | encoding | <code>string</code> | Character encoding for the json |
+
 
 **Example**
 ```js
@@ -114,6 +116,7 @@ List files present in a directory
 | dirPath | <code>string</code> | Path to remote directory |
 | filter | <code>function</code> | a filter function used to select return entries |
 | [callback] | <code>function</code> | Optional callback to handle the response |
+
 
 **Example:** basic files listing
 ```js
@@ -153,6 +156,7 @@ Convert JSON array of strings into a normalized object
 | options | <code>options</code> | Options passed to csvtojson parser |
 | callback | <code>callback</code> | Options passed to csvtojson parser |
 
+
 **Example**
 ```js
 normalizeCSVarray({ delimiter: ';', noheader: true });
@@ -172,6 +176,7 @@ Convert JSON to CSV and upload to an FTP server
 | localFilePath | <code>string</code> | Data source for data to copy to the remote server. |
 | remoteFilePath | <code>string</code> | Path to the remote file to be created on the server. |
 | parsingOptions | <code>object</code> | Options which can be passed to adjust the read and write stream used in sending the data to the remote server |
+
 
 **Example**
 ```js

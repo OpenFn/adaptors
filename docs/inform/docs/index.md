@@ -144,6 +144,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the parsed response body |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Download an attachment
 ```js
 downloadAttachment('622038', {
@@ -179,6 +180,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the parsed response body |
 | references | an array of all previous data objects used in the Job |
+
 **Example**
 ```js
 getAttachmentMetadata('621985');
@@ -205,6 +207,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the parsed response body |
 | references | an array of all previous data objects used in the Job |
+
 **Example:**  Get a single form 
 ```js
 getForm('6225');
@@ -235,6 +238,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the parsed response body |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get all forms without filter options
 ```js
 getForms();
@@ -268,6 +272,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the parsed response body |
 | references | an array of all previous data objects used in the Job |
+
 **Example**
 ```js
 getSubmission('6225', '7783155');
@@ -293,6 +298,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the parsed response body |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get submissions without filter options
 ```js
 getSubmissions('6225');
@@ -329,6 +335,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the parsed response body |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get all forms
 ```js
 http.get('forms')
@@ -356,6 +363,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the parsed response body |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get all forms with a query
 ```js
 http.request('GET', 'forms', {
@@ -375,6 +383,7 @@ http.request('GET', 'forms', {
 ### RequestOptions
 
 Options provided to the Inform request
+
 
 **Properties**
 

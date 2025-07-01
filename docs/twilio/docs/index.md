@@ -55,6 +55,7 @@ Sends an SMS message to a specific phone number
 | --- | --- | --- |
 | params | <code>Object</code> | an object containing 'body', 'from', and 'to' keys. |
 
+
 **Example**
 ```js
 sendSMS({

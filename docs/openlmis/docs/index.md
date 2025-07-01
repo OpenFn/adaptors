@@ -70,6 +70,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get all supplyLines
 ```js
 get("/supplyLines");
@@ -97,6 +98,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Creates new program
 ```js
 post("/programs", { name: "Bukayo", code: "abc" });
@@ -124,6 +126,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Update existing program
 ```js
 put("/programs/123", { name: "DigTalent", code: "123" });
@@ -153,6 +156,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example**
 ```js
 request("POST", "/programs", { name: "WSH", code: "123" });
@@ -166,6 +170,7 @@ request("POST", "/programs", { name: "WSH", code: "123" });
 ### RequestOptions
 
 Options provided to the HTTP request
+
 
 **Properties**
 

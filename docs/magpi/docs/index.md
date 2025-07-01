@@ -54,6 +54,7 @@ Make a POST request to fetch Magpi data and POST it somewhere else
 | --- | --- | --- |
 | params | <code>object</code> | data to make the fetch |
 
+
 **Example**
 ```js
 fetchSurveyData({
@@ -75,6 +76,7 @@ Submit a record for a form/survey which already exists in a Magpi user account
 | Param | Type | Description |
 | --- | --- | --- |
 | jsonData | <code>object</code> | Payload data for the record |
+
 
 **Example**
 ```js

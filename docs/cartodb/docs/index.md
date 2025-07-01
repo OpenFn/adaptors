@@ -52,6 +52,7 @@ Add rows to a table
 | table | <code>String</code> | Table name |
 | rowData | <code>object</code> | data to add in the row |
 
+
 **Example:** Add rows to a table
 ```js
 addRow('users', { name: 'Alice', age: 25, city: 'New York' })
@@ -69,6 +70,7 @@ Execute an SQL statement
 | Param | Type | Description |
 | --- | --- | --- |
 | sqlQuery | <code>object</code> | Payload data for the message |
+
 
 **Example:** A basic radius search query
 ```js

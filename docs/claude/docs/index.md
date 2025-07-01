@@ -53,6 +53,7 @@ Prompt the Claude chat interface to respond
 | message | <code>string</code> | The prompt |
 | opts | [<code>PromptOptions</code>](#promptoptions) | Model, Max Tokens, Temperature, and other options. |
 
+
 **Example**
 ```js
 prompt(`Filter these emails and pick out the most urgent: ${JSON.stringify($.data)}`);
@@ -66,6 +67,7 @@ prompt(`Filter these emails and pick out the most urgent: ${JSON.stringify($.dat
 ### PromptOptions
 
 Options provided to Chat Completions Create (https://docs.anthropic.com/en/api/messages)
+
 
 **Properties**
 

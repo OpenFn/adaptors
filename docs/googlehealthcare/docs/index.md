@@ -54,6 +54,7 @@ Create some resource in Google Cloud Healthcare
 | resource | <code>object</code> | The FHIR resource data to be created |
 | callback | <code>function</code> | An optional callback function |
 
+
 **Example**
 ```js
 createFhirResource(

@@ -101,6 +101,7 @@ Use this function to create a new case in Primero based on a set of Data.
 | params | <code>object</code> | an object with some case data. |
 | callback | <code>function</code> | (Optional) Callback function |
 
+
 **Example:** Create a new case in Primero based on a set of Data
 ```js
 createCase({
@@ -127,6 +128,7 @@ Use this function to bulk refer to one or multiple cases from Primero to a singl
 | --- | --- | --- |
 | params | <code>object</code> | an object with referral data. |
 | callback | <code>function</code> | (Optional) Callback function |
+
 
 **Example:** Create referrals for multiple cases in Primero
 ```js
@@ -159,6 +161,7 @@ Set `case_id` on the query object to fetch a specific case.
 | options | <code>object</code> | (Optional) Additional options |
 | options.withReferrals | <code>boolean</code> | Set to true to include referrals with each case. This will generate an extra request for each case and may take some time to process. |
 | callback | <code>function</code> | (Optional) Callback function |
+
 
 **Example:** Fetch all cases
 ```js
@@ -204,6 +207,7 @@ The user can filter the form list by record type and module.
 | query | <code>object</code> | an object with a query param at minimum |
 | callback | <code>function</code> | (Optional) Callback function |
 
+
 **Example:** Get the list of all forms
 ```js
 getForms();
@@ -234,6 +238,7 @@ Another parameter is `hierarchy: true` (Defaults to false)
 | query | <code>object</code> | an object with a query param at minimum |
 | callback | <code>function</code> | (Optional) Callback function |
 
+
 **Example:** Get loocations from Primero with query parameters
 ```js
 getLocations({
@@ -260,6 +265,7 @@ Also you can specify `page` value to fetch pagination (Defaults to 1)
 | query | <code>object</code> | an object with a query param at minimum |
 | callback | <code>function</code> | (Optional) Callback function |
 
+
 **Example:** Get lookups from Primero with query parameters
 ```js
 getLookups({
@@ -284,6 +290,7 @@ The search can be done using either `record id` or `case id`.
 | --- | --- | --- |
 | params | <code>object</code> | an object with an externalId field to select the attribute to use for matching on case and an externalId value for that case. |
 | callback | <code>function</code> | (Optional) Callback function |
+
 
 **Example:** Get referrals for a case in Primero by record id
 ```js
@@ -321,6 +328,7 @@ keeping both the existing values and appending the new
 | params | <code>object</code> | an object with some case data. |
 | callback | <code>function</code> | (Optional) Callback function |
 
+
 **Example:** Update case for a specific case id
 ```js
 updateCase("6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz", {
@@ -345,6 +353,7 @@ Update a single referral for a specific case in Primero
 | --- | --- | --- |
 | params | <code>object</code> | an object with an caseExternalId value to use, the id and the referral id to update. |
 | callback | <code>function</code> | (Optional) Callback function |
+
 
 **Example:** Update referral by record id
 ```js
@@ -373,6 +382,7 @@ then we check if the case exist before choosing the right operation to do.
 | --- | --- | --- |
 | params | <code>object</code> | an object with an externalIds and some case data. |
 | callback | <code>function</code> | (Optional) Callback function |
+
 
 **Example:** Upsert case for a specific case id
 ```js
@@ -413,6 +423,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** GET all cases
 ```js
 http.get('/cases');
@@ -441,6 +452,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** Update a single case resource 
 ```js
 http.patch('cases/344f3c08-affc-4d8a-b4d3-925b9f4d2867', {
@@ -473,6 +485,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |
 | references | An array of all previous data objects used in the Job |
+
 **Example:** POST a case to Primero
 ```js
 http.post('cases',{
@@ -490,6 +503,7 @@ http.post('cases',{
 ### RequestOptions
 
 Options object
+
 
 **Properties**
 

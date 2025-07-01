@@ -64,6 +64,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get products
 ```js
 get("products", { query: { max: 10 }});
@@ -91,6 +92,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example**
 ```js
 post("products", 
@@ -130,6 +132,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Update stock movement
 ```js
 request("POST", "/stockMovements/ff808181642fc9c101642fcccc420004", 
@@ -158,6 +161,7 @@ request('POST', '/products/ff808181812576850182aee36930040b', { body: { name: 'C
 ### RequestOptions
 
 Options provided to the HTTP request
+
 
 **Properties**
 

@@ -70,6 +70,7 @@ https://developers.google.com/sheets/api/samples/writing#append_values
 | [params.values] | <code>array</code> | A 2d array of values to update. |
 | callback | <code>function</code> | (Optional) Callback function |
 
+
 **Example**
 ```js
 appendValues({
@@ -101,6 +102,7 @@ Batch update values in a Spreadsheet.
 | [params.values] | <code>array</code> | A 2d array of values to update. |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example**
 ```js
 batchUpdateValues({
@@ -128,6 +130,7 @@ Gets cell values from a Spreadsheet.
 | spreadsheetId | <code>string</code> | The spreadsheet ID. |
 | range | <code>string</code> | The sheet range. |
 | callback | <code>function</code> | (Optional) callback function |
+
 
 **Example**
 ```js

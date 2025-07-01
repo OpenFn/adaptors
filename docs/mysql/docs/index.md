@@ -76,6 +76,7 @@ Insert a record
 | table | <code>string</code> | The target table |
 | fields | <code>object</code> | A fields object |
 
+
 **Example:** Insert a record into the `users` table
 ```js
 insert("users", { name: (state) => state.data.name });
@@ -94,6 +95,7 @@ Execute a SQL statement
 | --- | --- | --- |
 | options | <code>object</code> | Payload data for the message |
 
+
 **Example:** Execute a SQL statement
 ```js
 query({ sql: 'select * from users;' })
@@ -111,6 +113,7 @@ Execute a SQL statement
 | Param | Type | Description |
 | --- | --- | --- |
 | queryString | <code>String</code> | A query string (or function which takes state and returns a string) |
+
 
 **Example:** Execute a SQL statement
 ```js
@@ -131,6 +134,7 @@ Insert or Update a record if matched
 | table | <code>string</code> | The target table |
 | fields | <code>object</code> | A fields object |
 
+
 **Example:** Upsert a record
 ```js
 upsert("table", { name: (state) => state.data.name });
@@ -149,6 +153,7 @@ Insert or update multiple records using ON DUPLICATE KEY
 | --- | --- | --- |
 | table | <code>string</code> | The target table |
 | data | <code>array</code> | An array of objects or a function that returns an array |
+
 
 **Example:** Upsert multiple records
 ```js

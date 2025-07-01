@@ -48,6 +48,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data.cursor | if values are still left on the server, a cursor string will be written to state.data |
+
 **Example:** Iterate over a range of values with wildcards
 ```js
 collections.each('my-collection', 'record-2024*-appointment-*', (state, value, key) => {
@@ -85,6 +86,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | the downloaded values as an array unless a specific key was specified, in which case state.data is the value |
+
 **Example:** Get a specific value from a collection
 ```js
 collections.get('my-collection', '556e0a62')
@@ -114,6 +116,7 @@ with a key-pattern or a date filter.
 | --- | --- | --- |
 | name | <code>string</code> | The name of the collection to remove from |
 | query | <code>string</code> \| [<code>QueryOptions</code>](#queryoptions) | A string key or key pattern (with wildcards '*') to remove, or a query object |
+
 
 **Example:** Remove a specific value from a collection
 ```js
@@ -148,6 +151,7 @@ a string key.
 | keygen |  | a function which generates a key for each value: (value, index) => key. Pass a string to set a static key for a single item. |
 | values |  | an array of values to set, or a single value. |
 
+
 **Example:** Set a number of values using each value's id property as a key
 ```js
 collections.set('my-collection', (item) => item.id, $.data)
@@ -169,6 +173,7 @@ collections.set('my-collection', 'city-codes', { NY: 'New York', LDN: 'London' }
 ### QueryOptions
 
 Query options. All dates should be parseable as ISO 8601 strings, see https://simple.wikipedia.org/wiki/ISO_8601
+
 
 **Properties**
 

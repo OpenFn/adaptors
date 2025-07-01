@@ -62,6 +62,7 @@ Adds a new contact to RapidPro
 | params | <code>object</code> | data to create the new resource |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example**
 ```js
 addContact({
@@ -84,6 +85,7 @@ Sends a message to a list of contacts and/or URNs
 | --- | --- | --- |
 | params | <code>object</code> | data to create the new resource |
 | callback | <code>function</code> | (Optional) callback function |
+
 
 **Example**
 ```js
@@ -108,6 +110,7 @@ Start a RapidPro flow for a number of contacts
 | params | <code>object</code> | data to create the new resource |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example**
 ```js
 startFlow({
@@ -130,6 +133,7 @@ Upserts a contact to RapidPro by URN
 | --- | --- | --- |
 | params | <code>object</code> | data to upsert a contact |
 | callback | <code>function</code> | (Optional) callback function |
+
 
 **Example**
 ```js

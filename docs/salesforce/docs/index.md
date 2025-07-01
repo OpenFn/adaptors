@@ -146,6 +146,7 @@ This operation writes the following keys to state:
 | data.completed | Array of ids for every successful completion |
 | data.errors | Array of errors reported by Salesforce |
 | references | History of all previous states |
+
 **Example:** Bulk insert
 ```js
 bulk(
@@ -219,6 +220,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | API response data. Can be either an object or array of objects |
 | references | History of all previous states |
+
 **Example:** Bulk query patient records where "Health_ID__c" is equal to the value in "state.data.healthId"
 ```js
 bulkQuery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
@@ -255,6 +257,7 @@ This operation writes the following keys to state:
 | data.completed | Array of ids for every successful completion |
 | data.errors | Array of errors reported by Salesforce |
 | references | History of all previous states |
+
 **Example:**  Single record creation
 ```js
 create("Account", { Name: "My Account #1" });
@@ -301,6 +304,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | API response data. Can be either an object or array of objects |
 | references | History of all previous states |
+
 **Example:** Fetch metadata for all available sObjects
 ```js
 describe()
@@ -335,6 +339,7 @@ This operation writes the following keys to state:
 | data.completed | Array of ids for every successful completion |
 | data.errors | Array of errors reported by Salesforce |
 | references | History of all previous states |
+
 **Example:** Delete a single record
 ```js
 destroy("Account", "001XXXXXXXXXXXXXXX");
@@ -374,6 +379,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | API response data. Can be either an object or array of objects |
 | references | History of all previous states |
+
 **Example:**  Single record creation
 ```js
 insert("Account", { Name: "My Account #1" });
@@ -416,6 +422,7 @@ This operation writes the following keys to state:
 | data | Array of result objects |
 | references | History of all previous states |
 | response | An object of result metadata.                     <code>{ done, totalSize, nextRecordsUrl?: string }</code>                     where nextRecordsUrl is only present when done is false |
+
 **Example:** Run a query and download all matching records
 ```js
 query('SELECT Id FROM Patient__c', { limit: Infinity });
@@ -453,6 +460,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | API response data. Can be either an object or array of objects |
 | references | History of all previous states |
+
 **Example:** Retrieve a specific ContentVersion record
 ```js
 retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
@@ -481,6 +489,7 @@ This operation writes the following keys to state:
 | data.completed | Array of ids for every successful completion |
 | data.errors | Array of errors reported by Salesforce |
 | references | History of all previous states |
+
 **Example:**  Single record update
 ```js
 update("Account", {
@@ -526,6 +535,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | API response data. Can be either an object or array of objects |
 | references | History of all previous states |
+
 **Example:**  Single record upsert 
 ```js
 upsert("UpsertTable__c", "ExtId__c", { Name: "Record #1", ExtId__c : 'ID-0000001' });
@@ -571,6 +581,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | API response data. Can be either an object or array of objects |
 | references | History of all previous states |
+
 **Example:** Make a GET request to a custom Salesforce flow
 ```js
 http.get('/actions/custom/flow/POC_OpenFN_Test_Flow');
@@ -609,6 +620,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | API response data. Can be either an object or array of objects |
 | references | History of all previous states |
+
 **Example:** POST request to Salesforce
 ```js
 http.post("/jobs/query", {
@@ -638,6 +650,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | API response data. Can be either an object or array of objects |
 | references | History of all previous states |
+
 **Example:** Make a POST request to a custom Salesforce flow
 ```js
 http.request("/actions/custom/flow/POC_OpenFN_Test_Flow", {
@@ -664,6 +677,7 @@ Transliterates unicode characters to their best ASCII representation
 | --- | --- | --- |
 | input | <code>string</code> | A string with unicode characters |
 
+
 **Example:** Transliterate `άνθρωποι` to `anthropoi`
 ```js
 fn((state) => {
@@ -682,6 +696,7 @@ fn((state) => {
 
 Options provided to the Salesforce bulk API request
 
+
 **Properties**
 
 | Name | Type | Default | Description |
@@ -699,6 +714,7 @@ Options provided to the Salesforce bulk API request
 
 Options provided to the Salesforce bulk query API request
 
+
 **Properties**
 
 | Name | Type | Default | Description |
@@ -712,6 +728,7 @@ Options provided to the Salesforce bulk query API request
 ### FullRequestOptions
 
 Options provided to the Salesforce HTTP request
+
 
 **Properties**
 
@@ -729,6 +746,7 @@ Options provided to the Salesforce HTTP request
 
 State object
 
+
 **Properties**
 
 | Name | Description |
@@ -743,6 +761,7 @@ State object
 * * *
 
 ### SimpleRequestOptions
+
 **Properties**
 
 | Name | Type | Description |

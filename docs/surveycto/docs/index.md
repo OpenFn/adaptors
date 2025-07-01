@@ -69,6 +69,7 @@ See the usage guide at [https://docs.openfn.org/documentation/jobs/job-writing-g
 | options.defaultValue | <code>any</code> | the value to use if value is falsy |
 | options.format | <code>function</code> | custom formatter for the final cursor value |
 
+
 **Example:** Use a cursor from state if present, or else use the default value
 ```js
 cursor('today')
@@ -91,6 +92,7 @@ If a date filter is provided, it will be  converted internally to the surveyCTO 
 | formId | <code>string</code> | Form id |
 | options | [<code>FetchSubmissionOptions</code>](#fetchsubmissionoptions) | Form submission date, format, status parameters |
 | callback | <code>function</code> | (Optional) Callback function |
+
 
 **Example:** Fetch all form submissions
 ```js
@@ -143,6 +145,7 @@ Make a request in SurveyCTO API
 | params | [<code>RequestOptions</code>](#requestoptions) | Query, body and method parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
+
 **Example**
 ```js
 request("/anEndpoint", {
@@ -160,6 +163,7 @@ request("/anEndpoint", {
 
 Options provided to `fetchSubmissions()`
 
+
 **Properties**
 
 | Name | Type | Default | Description |
@@ -174,6 +178,7 @@ Options provided to `fetchSubmissions()`
 ### RequestOptions
 
 Options provided to request()
+
 
 **Properties**
 

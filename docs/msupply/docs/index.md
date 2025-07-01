@@ -80,6 +80,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get items in the catalogue
 ```js
 getItemsWithStats({
@@ -108,6 +109,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Create an outbound shipment
 ```js
 insertOutboundShipment({
@@ -137,6 +139,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example**
 ```js
 query(`
@@ -166,6 +169,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Update outbound shipment status to 'PICKED'
 ```js
 upsertOutboundShipment({
@@ -187,6 +191,7 @@ upsertOutboundShipment({
 ##  Interfaces
 
 ### GetItemsVariables
+
 **Properties**
 
 | Name | Type | Description |
@@ -198,6 +203,7 @@ upsertOutboundShipment({
 * * *
 
 ### InsertOutboundShipmentvariables
+
 **Properties**
 
 | Name | Type | Description |
@@ -209,6 +215,7 @@ upsertOutboundShipment({
 * * *
 
 ### RequestBody
+
 **Properties**
 
 | Name | Type | Description |
@@ -220,6 +227,7 @@ upsertOutboundShipment({
 * * *
 
 ### UpsertOutboundShipmentvariables
+
 **Properties**
 
 | Name | Type | Description |

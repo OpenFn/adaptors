@@ -50,6 +50,7 @@ Create a collection request
 | --- | --- | --- |
 | data | <code>object</code> | Payload data for the collection request |
 
+
 **Example:** Create a collection request
 ```js
 createCollectionRequest(data)
@@ -68,6 +69,7 @@ Create a contact
 | --- | --- | --- |
 | data | <code>object</code> | Payload data for the contact |
 
+
 **Example:** Create a contact
 ```js
 createContact(data)
@@ -85,6 +87,7 @@ Create a payment
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>object</code> | Payload data for the payment |
+
 
 **Example:** Create a payment with a reference to a customer
 ```js

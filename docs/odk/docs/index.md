@@ -71,6 +71,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the ODK HTTP server (with the body removed) |
 | references | an array of all the previous data values |
+
 **Example:** Get a list of available projects
 ```js
 get("v1/projects");
@@ -102,6 +103,7 @@ This operation writes the following keys to state:
 | data | array of form data objects |
 | response | the response from the ODK HTTP server (with the body removed) |
 | references | an array of all the previous data values |
+
 **Example:** Fetch all forms for project with id 22
 ```js
 getForms(22);
@@ -129,6 +131,7 @@ This operation writes the following keys to state:
 | data | array of form submission objects |
 | response | the response from the ODK HTTP server (with the body removed) |
 | references | an array of all the previous data values |
+
 **Example:** Get all submissions to a form called 'patient-follow-up'
 ```js
 getSubmissions(22, 'patient-follow-up');
@@ -160,6 +163,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the ODK HTTP server (with the body removed) |
 | references | an array of all the previous data values |
+
 **Example:** Create a new project
 ```js
 post('v1/projects', { name: 'Project Name' });
@@ -188,6 +192,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the ODK HTTP server (with the body removed) |
 | references | an array of all the previous data values |
+
 **Example:** Make a POST request to create a new project
 ```js
 request("POST", 'v1/projects', { name: 'Project Name' });
@@ -201,6 +206,7 @@ request("POST", 'v1/projects', { name: 'Project Name' });
 ### RequestOptions
 
 Options provided to the HTTP request
+
 
 **Properties**
 

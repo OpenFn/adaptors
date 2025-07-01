@@ -60,6 +60,7 @@ Get FHIR resources from OpenIMIS
 | params | <code>object</code> | data to create the new resource |
 | callback | <code>function</code> | (Optional) callback function |
 
+
 **Example**
 ```js
 getFHIR("Patient")

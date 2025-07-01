@@ -70,6 +70,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the DARAJA API server (excluding the body) |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Pay for goods
 ```js
 buyGoods({
@@ -107,6 +108,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the DARAJA API server (excluding the body) |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Check status of a transaction
 ```js
 checkTransactionStatus({
@@ -143,6 +145,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the DARAJA API server (excluding the body) |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Register a URL to receive payment notifications
 ```js
 registerUrl({
@@ -174,6 +177,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the DARAJA API server (excluding the body) |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Pay tax to KRA
 ```js
 remitTax({
@@ -211,6 +215,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the DARAJA API server (excluding the body) |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Register a URL to receive payment notifications
 ```js
 request("POST", "/mpesa/c2b/v1/registerurl", 
@@ -243,6 +248,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the DARAJA API server (excluding the body) |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Initiate STK Push
 ```js
 stkPush({
@@ -265,6 +271,7 @@ stkPush({
 
 Buy goods parameter definition
 
+
 **Properties**
 
 | Name | Type | Description |
@@ -285,6 +292,7 @@ Buy goods parameter definition
 
 Register URL parameter definition
 
+
 **Properties**
 
 | Name | Type | Description |
@@ -300,6 +308,7 @@ Register URL parameter definition
 ### RemitTaxObject
 
 Remit tax parameter definition
+
 
 **Properties**
 
@@ -321,6 +330,7 @@ Remit tax parameter definition
 
 Options provided to the HTTP request
 
+
 **Properties**
 
 | Name | Type | Description |
@@ -335,6 +345,7 @@ Options provided to the HTTP request
 ### STKPushObject
 
 STKPush request data object
+
 
 **Properties**
 
@@ -354,6 +365,7 @@ STKPush request data object
 ### TransactionStatusObject
 
 Check transaction status data object.
+
 
 **Properties**
 

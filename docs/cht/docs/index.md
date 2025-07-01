@@ -67,6 +67,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the CHT HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get a list of contacts
 ```js
 get("/api/v2/export/contacts");
@@ -103,6 +104,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the CHT HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Create a new person
 ```js
 post("/api/v1/people", {  
@@ -134,6 +136,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the CHT HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Update settings
 ```js
 put("/api/v1/settings",{query:{overwrite:true}});
@@ -163,6 +166,7 @@ This operation writes the following keys to state:
 | data | the parsed response body |
 | response | the response from the CHT HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
+
 **Example**
 ```js
 request("POST","/api/v1/people", {  
@@ -180,6 +184,7 @@ request("POST","/api/v1/people", {
 ### RequestOptions
 
 Options provided to the HTTP request
+
 
 **Properties**
 

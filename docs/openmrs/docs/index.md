@@ -102,6 +102,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | The newly created resource, as returned by OpenMRS |
+
 **Example:** Create a person (<a href="https://rest.openmrs.org/#create-a-person">see OpenMRS API</a>)
 ```js
 create("person", {
@@ -196,6 +197,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | The response from OpenMRS |
+
 **Example:** Void a patient
 ```js
 destroy("patient/12346");
@@ -234,6 +236,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | An array of result objects |
+
 **Example:** List all concepts (up to a maximum of 10k items, with pagination)
 ```js
 get("concept")
@@ -288,6 +291,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | The full updated resource, as returned by OpenMRS |
+
 **Example:** Update a person (<a href="https://rest.openmrs.org/#create-a-person">see OpenMRS API</a>)
 ```js
 update('person/3cad37ad-984d-4c65-a019-3eb120c9c373', {
@@ -322,6 +326,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | The created/updated resource, as returned by OpenMRS |
+
 **Example:** Upsert a patient (<a href="https://rest.openmrs.org/#patients-overview">see OpenMRS API</a>)
 ```js
 upsert("patient/a5d38e09-efcb-4d91-a526-50ce1ba5011a", {
@@ -376,6 +381,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the OpenMRS server (excluding the body) |
 | references | An array containing all previous data objects |
+
 **Example:** Delete a resource
 ```js
 http.delete(
@@ -406,6 +412,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the OpenMRS server (excluding the body) |
 | references | An array containing all previous data objects |
+
 **Example:** GET a resource with a query
 ```js
 http.get(
@@ -450,6 +457,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the OpenMRS server (excluding the body) |
 | references | An array containing all previous data objects |
+
 **Example:** Post with a JSON payload
 ```js
 http.post(
@@ -493,6 +501,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the OpenMRS server (excluding the body) |
 | references | An array containing all previous data objects |
+
 **Example:** GET request with a query parameters
 ```js
 http.request("GET",
@@ -530,6 +539,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the OpenMRS server (excluding the body) |
 | references | An array containing all previous data objects |
+
 **Example:** Get encounters based on lastUpdated field
 ```js
 fhir.get('Encounter', { count: 100, lastUpdated: 'ge2024-01-01T00:00:00Z' })
@@ -544,6 +554,7 @@ fhir.get('Encounter', { count: 100, lastUpdated: 'ge2024-01-01T00:00:00Z' })
 
 OpenMRS FHIR requests parameters options.
 This combines [ FHIR search parameters](https://fhir.openmrs.org/artifacts.html), [resource-specific parameters](https://www.hl7.org/fhir/R4/search.html), and pagination options.
+
 
 **Properties**
 
@@ -577,6 +588,7 @@ This combines [ FHIR search parameters](https://fhir.openmrs.org/artifacts.html)
 
 Options to append to the request. Unless otherwise specified, options are appended to the URL as query parameters - see the [OpenMRS Docs](https://rest.openmrs.org/) for all supported parameters.
 
+
 **Properties**
 
 | Name | Type | Default | Description |
@@ -592,6 +604,7 @@ Options to append to the request. Unless otherwise specified, options are append
 ### HTTPRequestOptions
 
 Options object
+
 
 **Properties**
 

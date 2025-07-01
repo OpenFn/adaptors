@@ -59,6 +59,7 @@ This operation writes the following keys to state:
 | data | The response body (as JSON) |
 | response | The HTTP response from the DIVOC server (excluding the body) |
 | references | An array of the previous data object used in the job |
+
 **Example:** Certify a vaccination object
 ```js
 certifyVaccination({

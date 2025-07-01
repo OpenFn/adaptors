@@ -81,6 +81,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the result returned from Redis |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get the value of the patient key
 ```js
 get("patient");
@@ -106,6 +107,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the result returned from Redis |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get the value of the name field under the patient key
 ```js
 hget("patient", "name");
@@ -130,6 +132,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | The hash as an object |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get the hash obejct at the noderedis:animals:1 key
 ```js
 hGetAll("noderedis:animals:1");
@@ -156,6 +159,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Set a field and value for the `patient` key
 ```js
 hset('patient', { name: 'mtuchi' });
@@ -184,6 +188,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the result returned from Redis |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get JSON document value of the patient key
 ```js
 jGet("patient");
@@ -209,6 +214,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Set a JSON object for the key `patient`
 ```js
 jSet('patient', { name: 'victor', ihs_number: 12345  });
@@ -233,6 +239,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | the result returned from Redis |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Get JSON document values of the patient and doctor keys
 ```js
 mGet(["patient", "doctor"]);
@@ -258,6 +265,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Set multiple JSON objects
 ```js
 mSet([{ key: 'patient', value: { name: 'victor', ihs_number: 12345 } },
@@ -285,6 +293,7 @@ This operation writes the following keys to state:
 | --- | --- |
 | data | an array of keys which match the pattern |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Scan for matching keys
 ```js
 scan('*:20240524T172736Z*');
@@ -319,6 +328,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | references | an array of all previous data objects used in the Job |
+
 **Example:** Set the "patient" key to value "mtuchi"
 ```js
 set("patient", "mtuchi");
@@ -332,6 +342,7 @@ set("patient", "mtuchi");
 ### ScanOptions
 
 Options provided to the scan function
+
 
 **Properties**
 

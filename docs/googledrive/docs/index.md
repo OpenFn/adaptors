@@ -72,6 +72,7 @@ Uploads a file to Google Drive.
 | options | <code>Object</code> | File upload parameters. |
 | options.folderId | <code>string</code> | ID of the parent folder. |
 
+
 **Example:** Upload a file to a root folder
 ```js
 create("SGVsbG8gV29ybGQ=", "hello-world.txt");
@@ -97,6 +98,7 @@ Downloads a file from Google Drive.
 | --- | --- | --- |
 | fileId | <code>string</code> | ID of the file to download. |
 
+
 **Example:** Download a file
 ```js
 get('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL')
@@ -117,6 +119,7 @@ Updates an existing file in Google Drive.
 | fileId | <code>string</code> | ID of the file to update. |
 | content | <code>string</code> | Base64 encoded new content. |
 | options | <code>Object</code> | File update options. |
+
 
 **Example:** Update a file
 ```js

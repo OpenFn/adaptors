@@ -53,6 +53,7 @@ Prompt the GPT chat interface to respond
 | message | <code>string</code> | The prompt |
 | options | [<code>PromptOptions</code>](#promptoptions) | Model, Reasoning Effort, Response Form and other parameters (https://platform.openai.com/docs/api-reference/chat/create) |
 
+
 **Example**
 ```js
 prompt(`Filter these emails and pick out the most urgent: ${JSON.stringify($.data)}`);
@@ -66,6 +67,7 @@ prompt(`Filter these emails and pick out the most urgent: ${JSON.stringify($.dat
 ### PromptOptions
 
 Options provided to Chat Completions Create (https://platform.openai.com/docs/api-reference/chat/create)
+
 
 **Properties**
 

@@ -72,6 +72,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | The converted, EMS-compliant report with records. |
+
 **Example:** Convert data to EMS-compliant data.
 ```js
 convertItemsToReport(
@@ -106,6 +107,7 @@ Converts an EMS-compliant report into Varo-compatible message components.
 | reports | <code>Object</code> |  | EMS-compliant report objects. |
 | [reportType] | <code>string</code> | <code>&quot;&#x27;unknown&#x27;&quot;</code> | Optional. Source of the report, e.g., "ems" or "rtmd". |
 
+
 **Example**
 ```js
 // Convert EMS-compliant reports to Varo message components.
@@ -130,6 +132,7 @@ This operation writes the following keys to state:
 | State Key | Description |
 | --- | --- |
 | data | The converted, EMS-compliant version of each message contents. |
+
 **Example:** Convert data to EMS-compliant data.
 ```js
 convertToEms(

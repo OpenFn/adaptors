@@ -78,6 +78,7 @@ Create some resource in msgraph
 | data | <code>object</code> | The data to create the new resource |
 | callback | <code>function</code> | An optional callback function |
 
+
 **Example**
 ```js
 create("applications", {"displayName": "My App"})
@@ -97,6 +98,7 @@ Make a GET request to msgraph resource
 | path | <code>string</code> | Path to resource |
 | query | <code>object</code> | Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function |
+
 
 **Example**
 ```js
@@ -120,6 +122,7 @@ some parent resource, like a group
 | specifier | <code>Object</code> |  | A definition of the drive to retrieve    - id {string} - The ID of the resource or owner.    - owner {string} - The type of drive owner (e.g. sites, groups). |
 | name | <code>string</code> |  | The local name of the drive used to write to state.drives, ie, state.drives[name] |
 | [callback] | <code>function</code> | <code>s &#x3D;&gt; s</code> | (Optional) Callback function |
+
 
 **Example:** Get a drive by ID
 ```js
@@ -145,6 +148,7 @@ Get file metadata or file content.
 | options | <code>object</code> |  | (Optional) Query parameters |
 | [callback] | <code>function</code> | <code>s &#x3D;&gt; s</code> | (Optional) Callback function |
 
+
 **Example:** Get a file by ID
 ```js
 getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW')
@@ -168,6 +172,7 @@ Get the contents or metadata of a folder.
 | pathOrId | <code>string</code> |  | A path to a folder or folder id |
 | options | <code>object</code> |  | (Optional) Query parameters |
 | [callback] | <code>function</code> | <code>s &#x3D;&gt; s</code> | (Optional) Callback function |
+
 
 **Example:** Get a folder by ID
 ```js
@@ -197,6 +202,7 @@ Upload a file to a drive
 | [resource.onConflict] | <code>String</code> | Specify conflict behavior if file with the same name exists. Can be "rename | fail | replace" |
 | data | <code>Object</code> | A buffer containing the file. |
 | callback | <code>function</code> | Optional callback function |
+
 
 **Example:** Upload Excel file to a drive using `driveId` and `parantItemId`
 ```js
@@ -243,6 +249,7 @@ buffer.
 | options |  | The `options` parameter is an object that contains additional configuration options |
 | [options.wsName] | <code>String</code> | Worksheet name i.e 32 Characters |
 | [options.bookType] | <code>String</code> | File format of the exported file, Default is 'xlsx'. See [here](https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats) for the function. It can have the following properties: |
+
 
 **Example:** Create a buffer containing excel file with `xlsx` output format  
 ```js
