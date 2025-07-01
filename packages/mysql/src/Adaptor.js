@@ -311,4 +311,5 @@ export {
   sourceValue,
   arrayToString,
   lastReferenceValue,
+  as
 } from '@openfn/language-common';

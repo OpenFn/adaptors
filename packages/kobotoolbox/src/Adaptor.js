@@ -135,6 +135,7 @@ export function getDeploymentInfo(formId) {
 
 export {
   alterState,
+  as,
   cursor,
   dataPath,
   dataValue,
@@ -145,7 +146,7 @@ export {
   fnIf,
   group,
   lastReferenceValue,
+  map,
   merge,
   sourceValue,
-  map
 } from '@openfn/language-common';

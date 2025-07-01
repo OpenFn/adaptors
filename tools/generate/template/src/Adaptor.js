@@ -87,6 +87,7 @@ export function request(method, path, body, options = {}) {
 }
 
 export {
+  as,
   combine,
   cursor,
   dataPath,
@@ -99,9 +100,9 @@ export {
   fnIf,
   group,
   lastReferenceValue,
+  map,
   merge,
   scrubEmojis,
   sourceValue,
   util,
-  map
 } from '@openfn/language-common';
