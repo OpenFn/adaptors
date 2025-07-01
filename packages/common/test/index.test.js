@@ -1280,6 +1280,12 @@ describe('as', () => {
     const { grouped, ...rest } = await as('grouped', group(data, 'x'))(state);
 
     expect(rest).to.eql({ data: {}, references: [] });
+    expect(grouped.a).to.eql([{ x: 'a' }]);
+    expect(grouped.b).to.eql([{ x: 'b' }, { x: 'b' }]);
+    expect(grouped).to.eql({
+      a: [{ x: 'a' }],
+      b: [{ x: 'b' }, { x: 'b' }],
+    });
   });
 
   it('preserves extra data added to state', async () => {
