@@ -730,4 +730,5 @@ export {
   source,
   sourceValue,
   toArray,
+  as
 } from '@openfn/language-common';

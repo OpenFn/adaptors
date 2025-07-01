@@ -214,4 +214,5 @@ export {
   splitKeys,
   toArray,
   parseCsv,
+  as
 } from '@openfn/language-common';

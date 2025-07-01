@@ -433,4 +433,5 @@ export {
   merge,
   sourceValue,
   util,
+  as
 } from '@openfn/language-common';
