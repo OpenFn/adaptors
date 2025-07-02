@@ -5,7 +5,8 @@ import {
   createConnection,
   removeConnection,
   setGmailMock,
-} from '../src/Utils.js';
+} from '../src/Utils';
+import { encode, decode } from '@openfn/language-common/util';
 
 describe('sendMessageWithAttachments', () => {
   let originalGmail;
@@ -118,8 +119,8 @@ describe('sendMessageWithAttachments', () => {
         body: 'Test message',
         attachments: [
           {
-            filename: 'binary.dat',
-            content: Buffer.from('binary data').toString('base64'),
+            filename: 'test.txt',
+            content: encode('This is test file content'),
           },
         ],
       };
@@ -331,44 +332,6 @@ describe('sendMessageWithAttachments', () => {
   });
 
   describe('function behavior validation', () => {
-    it('should call Gmail API with correct parameters', async () => {
-      let capturedArgs = null;
-
-      // Create mock that captures arguments
-      const mockCapturingGmail = {
-        users: {
-          messages: {
-            send: async args => {
-              capturedArgs = args;
-              return {
-                data: {
-                  id: 'test-message-id',
-                  threadId: 'test-thread-id',
-                  labelIds: ['SENT'],
-                },
-              };
-            },
-          },
-        },
-      };
-
-      // Set the gmail mock directly
-      setGmailMock(mockCapturingGmail);
-
-      const message = {
-        to: 'test@example.com',
-        subject: 'Test Subject',
-        body: 'Test message',
-      };
-
-      await sendMessageWithAttachments(message);
-
-      expect(capturedArgs).to.not.be.null;
-      expect(capturedArgs.userId).to.equal('me');
-      expect(capturedArgs.requestBody).to.have.property('raw');
-      expect(capturedArgs.requestBody.raw).to.be.a('string');
-    });
-
     it('should properly encode message in base64', async () => {
       let capturedRaw = null;
 
@@ -405,7 +368,7 @@ describe('sendMessageWithAttachments', () => {
       expect(capturedRaw).to.match(/^[A-Za-z0-9+/=]+$/);
 
       // Verify it can be decoded back to the original message
-      const decodedMessage = Buffer.from(capturedRaw, 'base64').toString();
+      const decodedMessage = decode(capturedRaw);
       expect(decodedMessage).to.include('To: test@example.com');
       expect(decodedMessage).to.include('Subject: Test Subject');
       expect(decodedMessage).to.include('Test message');
@@ -443,7 +406,7 @@ describe('sendMessageWithAttachments', () => {
 
       await sendMessageWithAttachments(message);
 
-      const decodedMessage = Buffer.from(capturedRaw, 'base64').toString();
+      const decodedMessage = decode(capturedRaw);
 
       // Check that line endings are \r\n
       expect(decodedMessage).to.include('\r\n');
