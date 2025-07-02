@@ -104,32 +104,48 @@ export async function getMessageContent(message, desiredContent) {
 export async function sendMessageWithAttachments(message) {
   const attachments = await parseAttachments(message.attachments);
 
-  const lines = [
-    `To: ${message.to}`,
-    `Subject: ${message.subject}`,
-    'MIME-Version: 1.0',
-    `Content-Type: multipart/mixed; boundary="${SEND_MESSAGE_BOUNDARY}"`,
-    '',
-    `--${SEND_MESSAGE_BOUNDARY}`,
-    'Content-Type: text/plain; charset="UTF-8"',
-    'Content-Transfer-Encoding: 7bit',
-    '',
-    message.body,
-  ];
+  let lines;
 
-  for (const attachment of attachments) {
-    const file = attachment.filename;
-    lines.push(
-      `--${SEND_MESSAGE_BOUNDARY}`,
-      `Content-Type: application/octet-stream; name="${file}"`,
-      'Content-Transfer-Encoding: base64',
-      `Content-Disposition: attachment; filename="${file}"`,
+  if (!attachments || attachments.length === 0) {
+    // Simple text message without attachments
+    lines = [
+      `To: ${message.to}`,
+      `Subject: ${message.subject}`,
+      'MIME-Version: 1.0',
+      'Content-Type: text/plain; charset="UTF-8"',
+      'Content-Transfer-Encoding: 7bit',
       '',
-      attachment.content
-    );
-  }
+      message.body,
+    ];
+  } else {
+    // Multipart message with attachments
+    lines = [
+      `To: ${message.to}`,
+      `Subject: ${message.subject}`,
+      'MIME-Version: 1.0',
+      `Content-Type: multipart/mixed; boundary="${SEND_MESSAGE_BOUNDARY}"`,
+      '',
+      `--${SEND_MESSAGE_BOUNDARY}`,
+      'Content-Type: text/plain; charset="UTF-8"',
+      'Content-Transfer-Encoding: 7bit',
+      '',
+      message.body,
+    ];
 
-  lines.push(`--${SEND_MESSAGE_BOUNDARY}--`, '');
+    for (const attachment of attachments) {
+      const file = attachment.filename;
+      lines.push(
+        `--${SEND_MESSAGE_BOUNDARY}`,
+        `Content-Type: application/octet-stream; name="${file}"`,
+        'Content-Transfer-Encoding: base64',
+        `Content-Disposition: attachment; filename="${file}"`,
+        '',
+        attachment.content
+      );
+    }
+
+    lines.push(`--${SEND_MESSAGE_BOUNDARY}--`, '');
+  }
 
   const rawMessage = lines.join('\r\n');
   const encodedMessage = Buffer.from(rawMessage).toString('base64');
@@ -142,7 +158,7 @@ export async function sendMessageWithAttachments(message) {
 
     return result.data;
   } catch (error) {
-    throw new Error('Error fetching messages: ' + error.message);
+    throw new Error('Error sending message: ' + error.message);
   }
 }
 
@@ -190,6 +206,11 @@ export function createConnection(state) {
   gmail = google.gmail({ version: 'v1', auth });
 
   return state;
+}
+
+// For testing purposes - allows setting the gmail mock
+export function setGmailMock(mockGmail) {
+  gmail = mockGmail;
 }
 
 export function removeConnection(state) {
