@@ -141,7 +141,7 @@
           },
           {
             "title": "param",
-            "description": "Maximum number of submissions to fetch. Pass Infinity to disable the limit and download all submissions",
+            "description": "Maximum number of submissions to fetch. Pass `Infinity` to disable the limit and download all submissions",
             "type": {
               "type": "OptionalType",
               "expression": {

@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-ghana-bdr",
   "label": "Ghana BDR",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "OpenFn ghana-bdr adaptor",
   "type": "module",
   "exports": {

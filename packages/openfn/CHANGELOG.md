@@ -10,10 +10,17 @@
   - Add `post()` and `get()` functions
   - Remove unused dependencies
 
-  ## Breaking Changes
+## Breaking Changes
 
-  - Drop support for v1 API
-  - Update `request()` function signature to `request(method, path, options)`
+- Drop support for v1 API
+- Update `request()` function signature to `request(method, path, options)`
+
+## 2.0.14 - 20 June 2025
+
+### Patch Changes
+
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
 
 ## 2.0.13 - 22 April 2025
 
