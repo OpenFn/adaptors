@@ -90,7 +90,7 @@ const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
   }
 };
 
-export const ERROR_ABSOLUTE_URL = 'Absolute URLs not suppored';
+export const ERROR_ABSOLUTE_URL = 'Absolute URLs not supported';
 
 // throws if a path is absolute
 export const assertRelativeUrl = path => {
@@ -256,15 +256,19 @@ function encodeRequestBody(body) {
 }
 
 async function readResponseBody(response, parseAs) {
+  if (!response.body) {
+    return;
+  }
+
   const contentLength = parseInt(
-    response.headers['content-length'] ?? response.body?.readableLength
+    response.headers['content-length'] ?? response.body.readableLength ?? 0
   );
   const contentType = response.headers['content-type'];
-  try {
-    if (Number.isNaN(contentLength) || contentLength === 0) {
-      return undefined;
-    }
+  if (contentLength === 0) {
+    return;
+  }
 
+  try {
     switch (parseAs) {
       case 'json':
         return await response.body.json();
@@ -284,7 +288,7 @@ async function readResponseBody(response, parseAs) {
     throwError(response.statusCode, {
       description: 'Error parsing the response body',
       parseAs,
-      contentType: response.headers['content-type'],
+      contentType,
       bodyLength: contentLength,
       error: error.message,
     });
