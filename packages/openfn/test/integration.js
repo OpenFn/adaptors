@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { get, request, execute, fn } from '../dist/index.js';
+import { get, request, execute, fn } from '../src';
 import configuration from '../tmp/creds.json' assert { type: 'json' };
 
 const state = { configuration };
