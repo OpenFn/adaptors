@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-openfn",
   "label": "OpenFn",
-  "version": "2.0.14",
+  "version": "3.0.0",
   "description": "An (experimental) adaptor for accessing the OpenFn web API",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -11,8 +11,9 @@
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor openfn",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings --exclude test/integration.js --recursive",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --exclude test/integration.js --recursive",
+    "test:integration": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.js",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
     "lint": "eslint src"
@@ -26,16 +27,13 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:*",
-    "axios": "^1.7.7"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "assertion-error": "^1.0.1",
-    "chai": "^3.4.0",
+    "chai": "^5.2.0",
     "deep-eql": "^0.1.3",
-    "nock": "^12.0.3",
-    "rimraf": "^3.0.2",
-    "sinon": "^1.17.2"
+    "rimraf": "^3.0.2"
   },
   "type": "module",
   "exports": {
