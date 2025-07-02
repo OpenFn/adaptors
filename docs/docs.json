@@ -46044,37 +46044,37 @@
     "kind": "external-function"
   }
 ],
-{"name":"openfn","adaptor":"@openfn/language-openfn","version":"2.0.14","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#request\\\">request(options, callback)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#beta\\\">beta</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### request\\n\\n<p><code>request(options, callback) ⇒ Operation</code></p>\\n\\nMake a POST request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| options | <code>object</code> | Body, Query, Headers and Authentication parameters |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n\\n**Example**\\n```js\\nrequest({method: 'get', path: '/jobs/});\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# Language OpenFn\\n\\nAdaptor for building expressions and operations to interact with the OpenFn v1\\nAPI.\\n\\n## Documentation\\n\\n## request\\n\\n```js\\nrequest({\\n  method: 'get',\\n  path: 'jobs',\\n  params: {\\n    project_id: 490,\\n  },\\n});\\nrequest(\\n  {\\n    method: 'post',\\n    path: 'jobs',\\n    data: {\\n      trigger_id: 1,\\n      expression: 'steps()',\\n    },\\n  },\\n  state => {\\n    console.log('cool callback!');\\n    return state;\\n  }\\n);\\n```\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/openfn-configuration-schema/)\\ndefinition.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-openfn\\n\\n## 2.0.14 - 20 June 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[28c2e8b]\\n  - @openfn/language-common@2.5.0\\n\\n## 2.0.13 - 22 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 2.0.12 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 2.0.11 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 2.0.10 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 2.0.9 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b3d7f59]\\n- Updated dependencies \\\\[2d709ff]\\n- Updated dependencies \\\\[41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 2.0.8 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 2.0.7 - 09 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[a47d8d5]\\n- Updated dependencies \\\\[9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 2.0.6 - 28 October 2024\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 2.0.5 - 18 October 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 2.0.4 - 15 October 2024\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus \\\\[33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 2.0.3 - 09 October 2024\\n\\n### Patch Changes\\n\\n- 3fd13c2: Update axios to 1.7.7\\n\\n## 2.0.2 - 24 September 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 2.0.1 - 16 August 2024\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies \\\\[8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 2.0.0 - 01 August 2024\\n\\n### Major Changes\\n\\n- Export new common http helpers (http namespace)\\n\\n## 1.4.3\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 1.4.2 - 25 July 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4c08444]\\n- Updated dependencies \\\\[73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 1.4.1 - 19 June 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 1.4.0 - 13 June 2024\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 1.3.14 - 11 June 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 1.3.13 - 21 May 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[12f02ed5]\\n  - @openfn/language-common@1.13.4\\n\\n## 1.3.12 - 08 May 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 1.3.11 - 08 May 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 1.3.10 - 12 April 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.1\\n\\n## 1.3.9 - 12 April 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 1.3.8 - 20 September 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[c19efbe]\\n  - @openfn/language-common@1.11.1\\n\\n## 1.3.7 - 08 September 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[85c35b8]\\n  - @openfn/language-common@1.11.0\\n\\n## 1.3.6 - 14 August 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[df09270]\\n  - @openfn/language-common@1.10.3\\n\\n## 1.3.5 - 14 July 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[26a303e]\\n  - @openfn/language-common@1.10.2\\n\\n## 1.3.4 - 14 July 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[8c32eb3]\\n  - @openfn/language-common@1.10.1\\n\\n## 1.3.3 - 30 June 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[aad9549]\\n  - @openfn/language-common@1.10.0\\n\\n## 1.3.2 - 23 June 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[111807f]\\n  - @openfn/language-common@1.9.0\\n\\n## 1.3.1 - 19 June 2023\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 1.3.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 1.2.6 - 10 June 2023\\n\\n### Patch Changes\\n\\n- 779596f: Use native fetch (undici) in template and add icons in openfn\\n\\n## 1.2.5 - 31 March 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[929bca6]\\n  - @openfn/language-common@1.7.7\\n\\n## 1.2.4 - 30 March 2023\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies \\\\[2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 1.2.3 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 1.2.2 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 1.2.1 - 13 January 2023\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*\\\\_ @module Adaptor \\\\_/\\n\\n## 1.2.0 - 25 November 2022\\n\\n### Minor Changes\\n\\n- be9d3c6: Migrate OpenFn\\n\"","functions":["request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"host":{"title":"Host","type":"string","description":"The OpenFn host url","format":"uri","default":"https://www.openfn.org","minLength":1,"examples":["https://www.openfn.org"]},"projectId":{"title":"Project ID","type":"string","description":"Your OpenFn project ID","minLength":1,"examples":["some-id"]},"username":{"title":"Username","type":"string","description":"The username to log in to OpenFn","minLength":1,"examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"The password to log in to OpenFn","writeOnly":true,"minLength":1,"examples":["@super(!)Secretpass"]}},"type":"object","additionalProperties":true,"required":["host","username","password"]}},
+{"name":"openfn","adaptor":"@openfn/language-openfn","version":"3.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, options)</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, options)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#beta\\\">beta</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### get\\n\\n<p><code>get(path, options) ⇒ Operation</code></p>\\n\\nMake a GET request to OpenFn API. Requires authentication first.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource (relative to /api/). |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Authentication parameters |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the OpenFn API, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** GET request with query parameters\\n```js\\nget('jobs', {\\n  query: { limit: 10, offset: 0 },\\n});\\n```\\n\\n* * *\\n\\n### post\\n\\n<p><code>post(path, data, options) ⇒ operation</code></p>\\n\\nMake a POST request to OpenFn API. Requires authentication first.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource (relative to /api/). |\\n| data | <code>object</code> | Body data to append to the request. JSON will be converted to a string. |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Authentication parameters |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the OpenFn API, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** POST a new job\\n```js\\npost('jobs', {\\n  name: 'test job',\\n  body: 'fn(state => state)'\\n});\\n```\\n**Example:** POST with custom headers\\n```js\\npost('jobs', {\\n  name: 'test job',\\n  body: 'fn(state => state)'\\n}, {\\n  headers: { 'x-custom': 'value' },\\n});\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(method, path, options) ⇒ Operation</code></p>\\n\\nMake a HTTP request to OpenFn API. Requires authentication first.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | The HTTP method to use. |\\n| path | <code>string</code> | Path to resource (relative to /api/). |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Authentication parameters |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the OpenFn API, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Make a GET request\\n```js\\nrequest('GET', 'jobs', {\\n  query: { limit: 10 },\\n});\\n```\\n**Example:** Make a POST request with a body\\n```js\\nrequest('POST', 'jobs', {\\n  body: {\\n    name: 'test job',\\n    expression: 'fn(state => state)'\\n  },\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### RequestOptions\\n\\nOptions provided to the OpenFn API request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# Language OpenFn\\n\\nAdaptor for building expressions and operations to interact with the OpenFn v1\\nAPI.\\n\\n## Documentation\\n\\n## request\\n\\n```js\\nrequest({\\n  method: 'get',\\n  path: 'jobs',\\n  params: {\\n    project_id: 490,\\n  },\\n});\\nrequest(\\n  {\\n    method: 'post',\\n    path: 'jobs',\\n    data: {\\n      trigger_id: 1,\\n      expression: 'steps()',\\n    },\\n  },\\n  state => {\\n    console.log('cool callback!');\\n    return state;\\n  }\\n);\\n```\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/openfn-configuration-schema/)\\ndefinition.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-openfn\\n\\n## 3.0.0 - 02 July 2025\\n\\n### Major Changes\\n\\n- 6bf20c4: ## Major Changes\\n\\n  - Add support for v2 API\\n  - Add `post()` and `get()` functions\\n  - Remove unused dependencies\\n\\n## Breaking Changes\\n\\n- Drop support for v1 API\\n- Update `request()` function signature to `request(method, path, options)`\\n\\n## 2.0.14 - 20 June 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[28c2e8b]\\n  - @openfn/language-common@2.5.0\\n\\n## 2.0.13 - 22 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 2.0.12 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 2.0.11 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 2.0.10 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 2.0.9 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b3d7f59]\\n- Updated dependencies \\\\[2d709ff]\\n- Updated dependencies \\\\[41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 2.0.8 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 2.0.7 - 09 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[a47d8d5]\\n- Updated dependencies \\\\[9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 2.0.6 - 28 October 2024\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 2.0.5 - 18 October 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 2.0.4 - 15 October 2024\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus \\\\[33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 2.0.3 - 09 October 2024\\n\\n### Patch Changes\\n\\n- 3fd13c2: Update axios to 1.7.7\\n\\n## 2.0.2 - 24 September 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 2.0.1 - 16 August 2024\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies \\\\[8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 2.0.0 - 01 August 2024\\n\\n### Major Changes\\n\\n- Export new common http helpers (http namespace)\\n\\n## 1.4.3\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 1.4.2 - 25 July 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4c08444]\\n- Updated dependencies \\\\[73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 1.4.1 - 19 June 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 1.4.0 - 13 June 2024\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 1.3.14 - 11 June 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 1.3.13 - 21 May 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[12f02ed5]\\n  - @openfn/language-common@1.13.4\\n\\n## 1.3.12 - 08 May 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 1.3.11 - 08 May 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 1.3.10 - 12 April 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.1\\n\\n## 1.3.9 - 12 April 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 1.3.8 - 20 September 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[c19efbe]\\n  - @openfn/language-common@1.11.1\\n\\n## 1.3.7 - 08 September 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[85c35b8]\\n  - @openfn/language-common@1.11.0\\n\\n## 1.3.6 - 14 August 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[df09270]\\n  - @openfn/language-common@1.10.3\\n\\n## 1.3.5 - 14 July 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[26a303e]\\n  - @openfn/language-common@1.10.2\\n\\n## 1.3.4 - 14 July 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[8c32eb3]\\n  - @openfn/language-common@1.10.1\\n\\n## 1.3.3 - 30 June 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[aad9549]\\n  - @openfn/language-common@1.10.0\\n\\n## 1.3.2 - 23 June 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[111807f]\\n  - @openfn/language-common@1.9.0\\n\\n## 1.3.1 - 19 June 2023\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 1.3.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 1.2.6 - 10 June 2023\\n\\n### Patch Changes\\n\\n- 779596f: Use native fetch (undici) in template and add icons in openfn\\n\\n## 1.2.5 - 31 March 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[929bca6]\\n  - @openfn/language-common@1.7.7\\n\\n## 1.2.4 - 30 March 2023\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies \\\\[2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 1.2.3 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 1.2.2 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 1.2.1 - 13 January 2023\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*\\\\_ @module Adaptor \\\\_/\\n\\n## 1.2.0 - 25 November 2022\\n\\n### Minor Changes\\n\\n- be9d3c6: Migrate OpenFn\\n\"","functions":["get","post","request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Host","type":"string","description":"The OpenFn Base URL","format":"uri","default":"https://app.openfn.org","minLength":1,"examples":["https://app.openfn.org"]},"access_token":{"title":"API Token","type":"string","description":"Your OpenFn API Token","minLength":1}},"type":"object","additionalProperties":true,"required":["access_token"]}},
 [
   {
-    "id": "request",
-    "longname": "request",
-    "name": "request",
+    "id": "get",
+    "longname": "get",
+    "name": "get",
     "kind": "function",
     "scope": "global",
-    "description": "Make a POST request",
+    "description": "Make a GET request to OpenFn API. Requires authentication first.",
     "params": [
       {
         "type": {
           "names": [
-            "object"
+            "string"
           ]
         },
-        "description": "Body, Query, Headers and Authentication parameters",
-        "name": "options"
+        "description": "Path to resource (relative to /api/).",
+        "name": "path"
       },
       {
         "type": {
           "names": [
-            "function"
+            "RequestOptions"
           ]
         },
-        "description": "(Optional) Callback function",
-        "name": "callback"
+        "description": "Query, Headers and Authentication parameters",
+        "name": "options"
       }
     ],
     "examples": [
-      "request({method: 'get', path: '/jobs/});"
+      "<caption>GET request with query parameters</caption>\nget('jobs', {\n  query: { limit: 10, offset: 0 },\n});"
     ],
     "returns": [
       {
@@ -46087,12 +46087,261 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 96,
+      "lineno": 85,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/openfn/src"
     },
-    "order": 1,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenFnState"
+      }
+    ],
+    "order": 4,
     "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "OpenFnState",
+    "longname": "OpenFnState",
+    "name": "OpenFnState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the OpenFn API, including headers, statusCode, body, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "access": "private",
+    "meta": {
+      "lineno": 16,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openfn/src"
+    },
+    "order": 1
+  },
+  {
+    "id": "post",
+    "longname": "post",
+    "name": "post",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a POST request to OpenFn API. Requires authentication first.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource (relative to /api/).",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Body data to append to the request. JSON will be converted to a string.",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Query, Headers and Authentication parameters",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>POST a new job</caption>\npost('jobs', {\n  name: 'test job',\n  body: 'fn(state => state)'\n});",
+      "<caption>POST with custom headers</caption>\npost('jobs', {\n  name: 'test job',\n  body: 'fn(state => state)'\n}, {\n  headers: { 'x-custom': 'value' },\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 111,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openfn/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenFnState"
+      }
+    ],
+    "order": 5,
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a HTTP request to OpenFn API. Requires authentication first.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The HTTP method to use.",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource (relative to /api/).",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Body, Query, Headers and Authentication parameters",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Make a GET request</caption>\nrequest('GET', 'jobs', {\n  query: { limit: 10 },\n});",
+      "<caption>Make a POST request with a body</caption>\nrequest('POST', 'jobs', {\n  body: {\n    name: 'test job',\n    expression: 'fn(state => state)'\n  },\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 68,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openfn/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenFnState"
+      }
+    ],
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to the OpenFn API request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
+        "name": "errors"
+      },
+      {
+        "type": {
+          "names": [
+            "object",
+            "string"
+          ]
+        },
+        "description": "body data to append to the request. JSON will be converted to a string.",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of headers to append to the request.",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Parse the response body as json, text or stream. By default will use the response headers.",
+        "name": "parseAs"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Request timeout in ms. Default: 300 seconds.",
+        "name": "timeout"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 4,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openfn/src"
+    },
+    "order": 0,
     "level": 0
   },
   {
@@ -46117,6 +46366,13 @@
     "kind": "external-function"
   },
   {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
     "id": "dataPath",
     "common": true,
     "name": "dataPath",
@@ -46129,6 +46385,13 @@
     "name": "dataValue",
     "scope": "global",
     "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
   },
   {
     "id": "each",
@@ -46164,13 +46427,6 @@
     "name": "fnIf",
     "scope": "global",
     "kind": "external-function"
-  },
-  {
-    "id": "http",
-    "common": true,
-    "name": "http",
-    "scope": "global",
-    "kind": "external"
   },
   {
     "id": "lastReferenceValue",
