@@ -41,23 +41,24 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{OpenCRVSState}"
           }
         ]
       },
       "valid": true
     },
     {
-      "name": "searchRecord",
+      "name": "queryEvents",
       "params": [
-        "body"
+        "variables",
+        "options"
       ],
       "docs": {
-        "description": "Search for a record",
+        "description": "Make an events search query against the OpenCRVS GraphQL API.",
         "tags": [
           {
             "title": "example",
-            "description": "searchRecord($.data)"
+            "description": "query(\n{\nevent: 'birth',\nregistrationStatuses: ['REGISTERED'],\nchildGender: 'male',\ndateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',\ndateOfRegistrationStart: '2021-11-01T00:00:00.000Z',\ndeclarationJurisdictionId: '',\neventLocationId: '704b9706-d729-4834-8656-05b562065deb',\nfatherFirstNames: 'Dad',\nmotherFirstNames: 'Mom',\n},\n{ count: 10, skip: 0 }\n);"
           },
           {
             "title": "function",
@@ -71,12 +72,21 @@
           },
           {
             "title": "param",
-            "description": "Birth Notification object to be created in FHIR bundle format",
+            "description": "GraphQl query variables",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "Object"
             },
-            "name": "body"
+            "name": "variables"
+          },
+          {
+            "title": "param",
+            "description": "Options to control the request, such as `count` and `skip`",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "options"
           },
           {
             "title": "returns",
@@ -88,7 +98,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{OpenCRVSState}"
           }
         ]
       },
@@ -106,7 +116,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "post(\"patient\", { \"name\": \"Bukayo\" });"
+            "description": "post(\"/location\", {\n\"statisticalID\": \"TEST_LOCATION\",\n\"name\": \"My name\",\n\"alias\": \"My alias\",\n\"partOf\": \"Location/0\",\n\"code\": \"ADMIN_STRUCTURE\",\n\"jurisdictionType\": \"STATE\",\n\"statistics\": [\n{\n\"year\": 0,\n\"male_population\": 0,\n\"female_population\": 0,\n\"population\": 0,\n\"crude_birth_rate\": 0\n}\n]\n});"
           },
           {
             "title": "function",
@@ -155,7 +165,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{OpenCRVSState}"
           }
         ]
       },
@@ -174,7 +184,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", \"patient\", { \"name\": \"Bukayo\" });"
+            "description": "request(\"POST\", \"/location\", {\n\"statisticalID\": \"TEST_LOCATION\",\n\"name\": \"My name\",\n\"alias\": \"My alias\",\n\"partOf\": \"Location/0\",\n\"code\": \"ADMIN_STRUCTURE\",\n\"jurisdictionType\": \"STATE\",\n\"statistics\": [\n{\n\"year\": 0,\n\"male_population\": 0,\n\"female_population\": 0,\n\"population\": 0,\n\"crude_birth_rate\": 0\n}\n]\n});",
+            "caption": "Create a new administrative location"
           },
           {
             "title": "function",
@@ -232,7 +243,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{OpenCRVSState}"
           }
         ]
       },

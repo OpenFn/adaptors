@@ -1,6 +1,7 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
 import { execute as commonExecute } from '@openfn/language-common';
+import { searchEventsQuery } from './query';
 
 /**
  * State object
@@ -62,36 +63,52 @@ export function createBirthNotification(body) {
 }
 
 /**
- * Search for a record
+ * Make an events search query against the OpenCRVS GraphQL API.
  * @example
- * searchRecord({
-  operationName: 'searchEvents',
-  query:
-    'query searchEvents($advancedSearchParameters: AdvancedSearchParametersInput!, $sort: String, $count: Int, $skip: Int) {\nsearchEvents(\n  advancedSearchParameters: $advancedSearchParameters\n  sort: $sort\n  count: $count\n  skip: $skip\n) {\n  totalItems\n  results {\n    id\n    type\n    registration {\n      status\n      contactNumber\n      trackingId\n      registrationNumber\n      registeredLocationId\n      duplicates\n      assignment {\n        practitionerId\n        firstName\n        lastName\n        officeName\n        __typename\n      }\n      createdAt\n      modifiedAt\n      __typename\n    }\n    operationHistories {\n      operationType\n      operatedOn\n      operatorRole\n      operatorName {\n        firstNames\n        familyName\n        use\n        __typename\n      }\n      operatorOfficeName\n      operatorOfficeAlias\n      notificationFacilityName\n      notificationFacilityAlias\n      rejectReason\n      rejectComment\n      __typename\n    }\n    ... on BirthEventSearchSet {\n      dateOfBirth\n      childName {\n        firstNames\n        familyName\n        use\n        __typename\n      }\n      __typename\n    }\n    ... on DeathEventSearchSet {\n      dateOfDeath\n      deceasedName {\n        firstNames\n        familyName\n        use\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  __typename\n}}',
-  variables: {
-    advancedSearchParameters: {
-      event: 'birth',
-      registrationStatuses: ['REGISTERED'],
-      childGender: 'male',
-      dateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',
-      dateOfRegistrationStart: '2021-11-01T00:00:00.000Z',
-      declarationJurisdictionId: '',
-      eventLocationId: '704b9706-d729-4834-8656-05b562065deb',
-      fatherFirstNames: 'Dad',
-      motherFirstNames: 'Mom',
-    },
-    count: 10,
-    skip: 0,
+ * query(
+  {
+    event: 'birth',
+    registrationStatuses: ['REGISTERED'],
+    childGender: 'male',
+    dateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',
+    dateOfRegistrationStart: '2021-11-01T00:00:00.000Z',
+    declarationJurisdictionId: '',
+    eventLocationId: '704b9706-d729-4834-8656-05b562065deb',
+    fatherFirstNames: 'Dad',
+    motherFirstNames: 'Mom',
   },
-});
+  { count: 10, skip: 0 }
+);
  * @function
  * @public
- * @param {object} body - GraphQL query object to search for records
+ * @param {Object} variables - GraphQl query variables 
+ * @param {Object} options - Options to control the request, such as `count` and `skip`
  * @returns {Operation}
  * @state {OpenCRVSState}
  */
-export function searchRecord(body) {
-  return request('POST', '/graphql', body);
+export function queryEvents( variables = {}, options = {}) {
+  return async state => {
+    const [resolvedVariables, resolvedOptions] =
+      expandReferences(state, variables, options);      
+
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      '/graphql',
+      {
+        body: {
+          operationName: 'searchEvents',
+          query: searchEventsQuery,
+          variables: {advancedSearchParameters:resolvedVariables},
+          count: resolvedOptions.count || 10,
+          skip: resolvedOptions.skip || 0,
+          ...resolvedOptions
+        },
+      }
+    );
+
+    return util.prepareNextState(state, response);
+  };
 }
 
 /**

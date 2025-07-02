@@ -25,16 +25,10 @@ export const authorize = async state => {
   if (clientId && clientSecret) {
    
 
-    const body = new URLSearchParams();
-    body.append('client_id', clientId);
-    body.append('client_secret', clientSecret);
-    body.append('grant_type', 'client_credentials');
-
     const options = {
-      // body: body.toString(),
       headers,
-      // method: 'POST',
-      parseAs: 'text',
+      method: 'POST',
+      parseAs: 'json',
       baseUrl: `https://auth.${auth.domain}`,
       query: {
         grant_type: 'client_credentials',
@@ -42,39 +36,19 @@ export const authorize = async state => {
         'client_id': clientId
       },
     };
-return await fetch(options.baseUrl + '/token?' + body.toString(), {
-      method: 'POST',
-      headers: options.headers,
-     
-    }).then(async response => {
 
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const result = await response.json();
-      return {
-        ...state,
-        configuration: {
-          ...state.configuration,
-          access_token: result.access_token,
-        },
-      }
-    })
 
-    // return commonRequest('POST', '/token', options).then(
-    //   response => {
-    //     // console.log({ response });
-        
-    //     return {
-    //       ...state,
-    //       configuration: {
-    //         ...state.configuration,
-    //         access_token: response.body.access_token,
-    //       },
-    //     };
-    //   }
-    // );
+    return commonRequest('POST', '/token', options).then(
+      response => {        
+        return {
+          ...state,
+          configuration: {
+            ...state.configuration,
+            access_token: response.body.access_token,
+          },
+        };
+      }
+    );
   } else {
     throw new Error(
       'Invalid authorization credentials. Include clientId and clientSecret in state.configuration'
@@ -82,12 +56,10 @@ return await fetch(options.baseUrl + '/token?' + body.toString(), {
   }
 };
 
-export const prepareNextState = (state, response, callback = s => s) => {
-  console.log({response});
-  
+export const prepareNextState = (state, response, callback = s => s) => {  
   const { body, ...responseWithoutBody } = response;
   const nextState = {
-    ...composeNextState(state, response.body),
+    ...composeNextState(state, body),
     response: responseWithoutBody,
   };
 
@@ -96,7 +68,6 @@ export const prepareNextState = (state, response, callback = s => s) => {
 
 export async function request(configuration, method, path, opts) {
   const { domain, access_token } = configuration;
-  console.log({access_token});
   
   const {
     body = {},
