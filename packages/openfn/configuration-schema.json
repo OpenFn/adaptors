@@ -13,9 +13,9 @@
       ]
     },
     "access_token": {
-      "title": "Access Token",
+      "title": "API Token",
       "type": "string",
-      "description": "Your OpenFn access token",
+      "description": "Your OpenFn API Token",
       "minLength": 1
     }
   },
