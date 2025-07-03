@@ -194,11 +194,6 @@ export function createConnection(state) {
   return state;
 }
 
-// For testing purposes - allows setting the gmail mock
-export function setGmailMock(mockGmail) {
-  gmail = mockGmail;
-}
-
 export function removeConnection(state) {
   gmail = undefined;
   return state;
