@@ -1,5 +1,12 @@
 # @openfn/language-gmail
 
+## 1.3.2 - 03 July 2025
+
+### Patch Changes
+
+- ead4e42: Added support for sending emails with or without attachments in the
+  `sendMessage` function
+
 ## 1.3.1 - 20 June 2025
 
 ### Patch Changes

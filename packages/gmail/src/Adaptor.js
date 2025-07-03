@@ -13,7 +13,7 @@ import {
   getMessageResult,
   getContentIndicators,
   getMessageContent,
-  sendMessageWithAttachments,
+  buildAndSendMessage,
   createConnection,
   removeConnection,
 } from './Utils';
@@ -192,7 +192,7 @@ export function sendMessage(message) {
 
     const results = [];
     for (const msg of messages) {
-      const result = await sendMessageWithAttachments(msg);
+      const result = await buildAndSendMessage(msg);
       results.push(result);
     }
 
