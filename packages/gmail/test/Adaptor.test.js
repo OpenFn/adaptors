@@ -14,10 +14,8 @@ describe('sendMessage', () => {
   let sendStub;
 
   beforeEach(() => {
-    // Store original google.gmail function
     originalGmail = google.gmail;
 
-    // Create mock Gmail API response
     const mockResponse = {
       data: {
         id: 'test-message-id',
@@ -26,10 +24,8 @@ describe('sendMessage', () => {
       },
     };
 
-    // Create mock send function
     sendStub = async () => mockResponse;
 
-    // Create mock Gmail object
     mockGmail = {
       users: {
         messages: {
@@ -38,10 +34,8 @@ describe('sendMessage', () => {
       },
     };
 
-    // Replace google.gmail with mock
     google.gmail = () => mockGmail;
 
-    // Initialize the connection with mock data
     createConnection({
       configuration: {
         access_token: 'mock-access-token',
@@ -50,7 +44,6 @@ describe('sendMessage', () => {
   });
 
   afterEach(() => {
-    // Restore original google.gmail function
     google.gmail = originalGmail;
     removeConnection();
   });
@@ -74,7 +67,6 @@ describe('sendMessage', () => {
   });
 
   it('should throw an error if required params are missing', async () => {
-    // Mock Gmail API to simulate an error
     mockGmail.users.messages.send = async () => {
       throw new Error('Required parameter: recipient');
     };
