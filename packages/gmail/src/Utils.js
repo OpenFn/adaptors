@@ -101,37 +101,24 @@ export async function getMessageContent(message, desiredContent) {
   }
 }
 
-export async function sendMessageWithAttachments(message) {
+export async function buildAndSendMessage(message) {
   const attachments = await parseAttachments(message.attachments);
+  const hasAttachments = attachments && attachments.length > 0;
 
-  let lines;
+  const lines = [
+    `To: ${message.to}`,
+    `Subject: ${message.subject}`,
+    'MIME-Version: 1.0',
+    `Content-Type: multipart/mixed; boundary="${SEND_MESSAGE_BOUNDARY}"`,
+    '',
+    `--${SEND_MESSAGE_BOUNDARY}`,
+    'Content-Type: text/plain; charset="UTF-8"',
+    'Content-Transfer-Encoding: 7bit',
+    '',
+    message.body,
+  ];
 
-  if (!attachments || attachments.length === 0) {
-    // Simple text message without attachments
-    lines = [
-      `To: ${message.to}`,
-      `Subject: ${message.subject}`,
-      'MIME-Version: 1.0',
-      'Content-Type: text/plain; charset="UTF-8"',
-      'Content-Transfer-Encoding: 7bit',
-      '',
-      message.body,
-    ];
-  } else {
-    // Multipart message with attachments
-    lines = [
-      `To: ${message.to}`,
-      `Subject: ${message.subject}`,
-      'MIME-Version: 1.0',
-      `Content-Type: multipart/mixed; boundary="${SEND_MESSAGE_BOUNDARY}"`,
-      '',
-      `--${SEND_MESSAGE_BOUNDARY}`,
-      'Content-Type: text/plain; charset="UTF-8"',
-      'Content-Transfer-Encoding: 7bit',
-      '',
-      message.body,
-    ];
-
+  if (hasAttachments) {
     for (const attachment of attachments) {
       const file = attachment.filename;
       lines.push(
@@ -146,7 +133,6 @@ export async function sendMessageWithAttachments(message) {
 
     lines.push(`--${SEND_MESSAGE_BOUNDARY}--`, '');
   }
-
   const rawMessage = lines.join('\r\n');
   const encodedMessage = Buffer.from(rawMessage).toString('base64');
 
