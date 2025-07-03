@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "domain": {
+      "title": "Your Domain",
+      "type": "string",
+      "description": "OpenCRVS domain",
+      "format": "uri",
+      "minLength": 1,
+      "examples": [
+        "openfn.opencrvs.dev"
+      ]
+    },
+    "clientId": {
+      "title": "Client Id",
+      "type": "string",
+      "minLength": 1,
+      "description": "Your OpenCRVS client id",
+      "examples": [
+        "the-long-uuid-provided-by-opencrvs"
+      ]
+    },
+    "clientSecret": {
+      "title": "Client Secret",
+      "type": "string",
+      "description": "Client Secret",
+      "minLength": 1,
+      "examples": [
+        "the-long-secret-key-provided-by-opencrvs"
+      ]
+    },
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Your OpenCRVS access token",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": [
+        "the-long-access-token-from-your-auth"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "domain",
+    "clientId",
+    "clientSecret"
+  ]
+}
