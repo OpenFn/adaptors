@@ -2,4 +2,4 @@
 
 ## 1.0.0
 
-Initial release.
+Implement `queryEvents()` and `createBirthRecord()` functions from `OpenCRVS`
