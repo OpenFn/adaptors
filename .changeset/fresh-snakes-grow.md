@@ -20,6 +20,7 @@
 '@openfn/language-mysql': minor
 '@openfn/language-http': minor
 '@openfn/language-cht': minor
+'@openfn/language-common': minor
 ---
 
 Exported `as()` function from common.
