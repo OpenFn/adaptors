@@ -1,14 +1,14 @@
 import { expect } from 'chai';
 import { google } from 'googleapis';
 import {
-  sendMessageWithAttachments,
+  buildAndSendMessage,
   createConnection,
   removeConnection,
   setGmailMock,
 } from '../src/Utils';
 import { encode, decode } from '@openfn/language-common/util';
 
-describe('sendMessageWithAttachments', () => {
+describe('buildAndSendMessage', () => {
   let originalGmail;
   let mockGmail;
   let sendStub;
@@ -63,7 +63,7 @@ describe('sendMessageWithAttachments', () => {
         body: 'Test message body',
       };
 
-      const result = await sendMessageWithAttachments(message);
+      const result = await buildAndSendMessage(message);
 
       expect(result).to.deep.equal({
         id: 'test-message-id',
@@ -79,7 +79,7 @@ describe('sendMessageWithAttachments', () => {
         body: '',
       };
 
-      const result = await sendMessageWithAttachments(message);
+      const result = await buildAndSendMessage(message);
 
       expect(result).to.have.property('id');
       expect(result).to.have.property('threadId');
@@ -105,7 +105,7 @@ describe('sendMessageWithAttachments', () => {
         ],
       };
 
-      const result = await sendMessageWithAttachments(message);
+      const result = await buildAndSendMessage(message);
 
       expect(result).to.have.property('id');
       expect(result).to.have.property('threadId');
@@ -125,7 +125,7 @@ describe('sendMessageWithAttachments', () => {
         ],
       };
 
-      const result = await sendMessageWithAttachments(message);
+      const result = await buildAndSendMessage(message);
 
       expect(result).to.have.property('id');
       expect(result).to.have.property('threadId');
@@ -156,7 +156,7 @@ describe('sendMessageWithAttachments', () => {
         ],
       };
 
-      const result = await sendMessageWithAttachments(message);
+      const result = await buildAndSendMessage(message);
 
       expect(result).to.have.property('id');
       expect(result).to.have.property('threadId');
@@ -180,7 +180,7 @@ describe('sendMessageWithAttachments', () => {
         ],
       };
 
-      const result = await sendMessageWithAttachments(message);
+      const result = await buildAndSendMessage(message);
 
       expect(result).to.have.property('id');
       expect(result).to.have.property('threadId');
@@ -206,7 +206,7 @@ describe('sendMessageWithAttachments', () => {
         ],
       };
 
-      const result = await sendMessageWithAttachments(message);
+      const result = await buildAndSendMessage(message);
 
       expect(result).to.have.property('id');
       expect(result).to.have.property('threadId');
@@ -223,7 +223,7 @@ describe('sendMessageWithAttachments', () => {
         attachments: null,
       };
 
-      const result = await sendMessageWithAttachments(message);
+      const result = await buildAndSendMessage(message);
 
       expect(result).to.have.property('id');
       expect(result).to.have.property('threadId');
@@ -238,7 +238,7 @@ describe('sendMessageWithAttachments', () => {
         attachments: [],
       };
 
-      const result = await sendMessageWithAttachments(message);
+      const result = await buildAndSendMessage(message);
 
       expect(result).to.have.property('id');
       expect(result).to.have.property('threadId');
@@ -253,7 +253,7 @@ describe('sendMessageWithAttachments', () => {
         attachments: undefined,
       };
 
-      const result = await sendMessageWithAttachments(message);
+      const result = await buildAndSendMessage(message);
 
       expect(result).to.have.property('id');
       expect(result).to.have.property('threadId');
@@ -284,7 +284,7 @@ describe('sendMessageWithAttachments', () => {
       };
 
       try {
-        await sendMessageWithAttachments(message);
+        await buildAndSendMessage(message);
         expect.fail('Should have thrown an error');
       } catch (error) {
         expect(error.message).to.equal(
@@ -321,7 +321,7 @@ describe('sendMessageWithAttachments', () => {
       };
 
       try {
-        await sendMessageWithAttachments(message);
+        await buildAndSendMessage(message);
         expect.fail('Should have thrown an error');
       } catch (error) {
         expect(error.message).to.equal(
@@ -362,7 +362,7 @@ describe('sendMessageWithAttachments', () => {
         body: 'Test message',
       };
 
-      await sendMessageWithAttachments(message);
+      await buildAndSendMessage(message);
 
       // Verify it's valid base64
       expect(capturedRaw).to.match(/^[A-Za-z0-9+/=]+$/);
@@ -404,7 +404,7 @@ describe('sendMessageWithAttachments', () => {
         body: 'Test message',
       };
 
-      await sendMessageWithAttachments(message);
+      await buildAndSendMessage(message);
 
       const decodedMessage = decode(capturedRaw);
 
