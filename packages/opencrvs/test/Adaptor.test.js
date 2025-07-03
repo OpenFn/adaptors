@@ -1,75 +1,196 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { request, dataValue } from '../src/Adaptor.js';
+import {
+  execute,
+  request,
+  post,
+  createBirthNotification,
+  queryEvents,
+} from '../src/Adaptor.js';
+import { birthRecordData } from './testData.js';
 
-// This creates a mock client which acts like a fake server.
-// It enables pattern-matching on the request object and custom responses
-// For the full mock API see
-// https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
-const testServer = enableMockClient('https://fake.server.com');
+const authUrl = enableMockClient('https://auth.fake.opencrvs.server.com');
+const baseUrl = 'https://gateway.fake.opencrvs.server.com';
+const testServer = enableMockClient(baseUrl);
+
+const state = {
+  configuration: {
+    domain: 'gateway.fake.opencrvs.server.com',
+    clientId: 'someclientid',
+    clientSecret: 'someclientsecret',
+  },
+};
+
+before(() => {
+  state.configuration.domain = 'fake.opencrvs.server.com';
+  authUrl
+    .intercept({
+      path: '/token',
+      method: 'POST',
+      query: {
+        client_id: state.configuration.clientId,
+        client_secret: state.configuration.clientSecret,
+        grant_type: 'client_credentials',
+      },
+    })
+    .reply(200, {
+      access_token: 'fake-token',
+    })
+    .persist();
+});
 
 describe('request', () => {
-  it('makes a post request to the right endpoint', async () => {
-    // Setup a mock endpoint
+  it('makes a post request to create a birth notification', async () => {
     testServer
       .intercept({
-        path: '/api/patients',
+        path: '/notification',
         method: 'POST',
         headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
+          Authorization: 'Bearer fake-token',
+          'Content-type': 'application/json',
         },
       })
-      // Set the reply from this endpoint
-      // The body will be returned to state.data
-      .reply(200, { id: 7, fullName: 'Mamadou', gender: 'M' });
 
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
-      },
-    };
+      .reply(200, {
+        resourceType: 'Bundle',
+        type: 'document',
+        entry: birthRecordData,
+      });
+    state.data = birthRecordData;
 
-    const finalState = await request('POST', 'patients', {
-      name: state.data.fullName,
-      gender: state.data.gender,
-    })(state);
+    const finalState = await execute(
+      request('POST', '/notification', {
+        resourceType: 'Bundle',
+        type: 'document',
+        meta: {
+          lastUpdated: new Date().toISOString(),
+        },
+        entry: birthRecordData,
+      })
+    )(state);
 
     expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-      id: 7,
+      resourceType: 'Bundle',
+      type: 'document',
+      entry: birthRecordData,
     });
   });
+});
 
-  it('throws an error if the service returns 403', async () => {
+describe('post', () => {
+  it('makes a post request to create a birth notification', async () => {
     testServer
       .intercept({
-        path: '/api/noAccess',
+        path: '/notification',
         method: 'POST',
+        headers: {
+          Authorization: 'Bearer fake-token',
+          'Content-type': 'application/json',
+        },
       })
-      .reply(403);
 
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-    };
+      .reply(200, {
+        resourceType: 'Bundle',
+        type: 'document',
+        entry: birthRecordData,
+      });
+    state.data = birthRecordData;
 
-    const error = await request('POST', 'noAccess', { name: 'taylor' })(
-      state
-    ).catch(error => {
-      return error;
+    const finalState = await execute(
+      post('/notification', {
+        resourceType: 'Bundle',
+        type: 'document',
+        meta: {
+          lastUpdated: new Date().toISOString(),
+        },
+        entry: birthRecordData,
+      })
+    )(state);
+
+    expect(finalState.data).to.eql({
+      resourceType: 'Bundle',
+      type: 'document',
+      entry: birthRecordData,
     });
+  });
+});
 
-    expect(error.statusMessage).to.eql('Forbidden');
+describe('createBirthRecord', () => {
+  it('successfully creates a birth record', async () => {
+    testServer
+      .intercept({
+        path: '/notification',
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer fake-token',
+          'Content-type': 'application/json',
+        },
+      })
+
+      .reply(200, {
+        resourceType: 'Bundle',
+        type: 'document',
+        entry: birthRecordData,
+      });
+    state.data = birthRecordData;
+
+    const finalState = await execute(
+      createBirthNotification(state => state.data)
+    )(state);
+
+    expect(finalState.data).to.eql({
+      resourceType: 'Bundle',
+      type: 'document',
+      entry: birthRecordData,
+    });
+  });
+});
+
+describe('queryEvents', () => {
+  it('successfully searches for an event', async () => {
+    testServer
+      .intercept({
+        path: '/graphql',
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer fake-token',
+          'Content-type': 'application/json',
+        },
+      })
+
+      .reply(200, {
+        data: {
+          searchEvents: {
+            totalItems: 0,
+            results: [],
+            __typename: 'EventSearchResultSet',
+          },
+        },
+      });
+
+    const finalState = await execute(
+      queryEvents({
+        event: 'birth',
+        registrationStatuses: ['REGISTERED'],
+        childGender: 'male',
+        dateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',
+        dateOfRegistrationStart: '2021-11-01T00:00:00.000Z',
+        declarationJurisdictionId: '',
+        eventLocationId: '704b9706-d729-4834-8656-05b562065deb',
+        fatherFirstNames: 'Dad',
+        motherFirstNames: 'Mom',
+      })
+    )(state);
+
+    expect(finalState.data).to.eql({
+      data: {
+        searchEvents: {
+          totalItems: 0,
+          results: [],
+          __typename: 'EventSearchResultSet',
+        },
+      },
+    });
   });
 });

@@ -1548,6 +1548,9 @@ importers:
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
+      '@openfn/language-fhir-4':
+        specifier: workspace:*
+        version: link:../fhir-4
     devDependencies:
       assertion-error:
         specifier: 2.0.0

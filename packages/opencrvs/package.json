@@ -28,7 +28,8 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:*"
+    "@openfn/language-common": "workspace:*",
+    "@openfn/language-fhir-4": "workspace:*"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",

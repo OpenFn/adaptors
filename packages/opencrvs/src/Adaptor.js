@@ -51,15 +51,99 @@ export function execute(...operations) {
 /**
  * Create a Birth Notification
  * @example
- * createBirthNotification($.data)
+ * createBirthNotification([
+  {
+    fullUrl: 'urn:uuid:706905cf-7e5d-4d9f-866a-a3795780a990',
+    resource: {
+      resourceType: 'Observation',
+      status: 'final',
+      context: {
+        reference: 'urn:uuid:7cb1d9cc-ea4b-4046-bea0-38bdf3082f56',
+      },
+      category: [
+        {
+          coding: [
+            {
+              system: 'http://hl7.org/fhir/observation-category',
+              code: 'procedure',
+              display: 'Procedure',
+            },
+          ],
+        },
+      ],
+      code: {
+        coding: [
+          {
+            system: 'http://loinc.org',
+            code: '73764-3',
+            display: 'Birth attendant title',
+          },
+        ],
+      },
+      valueString: 'PHYSICIAN',
+    },
+  },
+  {
+    fullUrl: 'urn:uuid:eee21c26-67a2-40af-8cf7-5f4bc969153f',
+    resource: {
+      resourceType: 'QuestionnaireResponse',
+      extension: [],
+      status: 'completed',
+      subject: {
+        reference: 'urn:uuid:7cb1d9cc-ea4b-4046-bea0-38bdf3082f56',
+      },
+      item: [
+        {
+          text: 'birth.mother.mother-view-group.motherIdType',
+          linkId: '',
+          answer: [
+            {
+              valueString: 'NATIONAL_ID',
+            },
+          ],
+        },
+        {
+          text: 'birth.father.father-view-group.fatherIdType',
+          linkId: '',
+          answer: [
+            {
+              valueString: 'NATIONAL_ID',
+            },
+          ],
+        },
+      ],
+    },
+  },
+]);
+
  * @function
  * @public
- * @param {object} body - Birth Notification object to be created in FHIR bundle format
+ * @param {Array} body - Birth Notification object resources to be created in FHIR bundle format
  * @returns {Operation}
  * @state {OpenCRVSState}
  */
 export function createBirthNotification(body) {
-  return request('POST', '/notification', body);
+  return async state => {
+    const [resolvedBody] = expandReferences(state, body);
+
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      '/notification',
+      {
+        body: {
+          resourceType: 'Bundle',
+          type: 'document',
+          meta: {
+            lastUpdated: new Date().toISOString(),
+          },
+          entry: resolvedBody,
+        },
+      }
+    );
+
+    return util.prepareNextState(state, response);
+  };
 }
 
 /**
@@ -86,10 +170,13 @@ export function createBirthNotification(body) {
  * @returns {Operation}
  * @state {OpenCRVSState}
  */
-export function queryEvents( variables = {}, options = {}) {
+export function queryEvents(variables = {}, options = {}) {
   return async state => {
-    const [resolvedVariables, resolvedOptions] =
-      expandReferences(state, variables, options);      
+    const [resolvedVariables, resolvedOptions] = expandReferences(
+      state,
+      variables,
+      options
+    );
 
     const response = await util.request(
       state.configuration,
@@ -99,10 +186,10 @@ export function queryEvents( variables = {}, options = {}) {
         body: {
           operationName: 'searchEvents',
           query: searchEventsQuery,
-          variables: {advancedSearchParameters:resolvedVariables},
+          variables: { advancedSearchParameters: resolvedVariables },
           count: resolvedOptions.count || 10,
           skip: resolvedOptions.skip || 0,
-          ...resolvedOptions
+          ...resolvedOptions,
         },
       }
     );
@@ -175,7 +262,7 @@ export function post(path, body, options) {
 export function request(method, path, body, options = {}) {
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
-      expandReferences(state, method, path, body, options);      
+      expandReferences(state, method, path, body, options);
 
     const response = await util.request(
       state.configuration,
@@ -209,3 +296,5 @@ export {
   sourceValue,
   util,
 } from '@openfn/language-common';
+
+export { builders } from '@openfn/language-fhir-4';
