@@ -1,5 +1,12 @@
 v0.1.6
 
+## 0.5.16 - 20 June 2025
+
+### Patch Changes
+
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
+
 ## 0.5.15 - 22 April 2025
 
 ### Patch Changes

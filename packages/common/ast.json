@@ -1644,6 +1644,65 @@
       "valid": true
     },
     {
+      "name": "as",
+      "params": [
+        "key",
+        "operation"
+      ],
+      "docs": {
+        "description": "Run an operation and save the result back to state on a key other than state.data",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "debug('Patient List::', $.patients);",
+            "caption": "Log values from state"
+          },
+          {
+            "title": "example",
+            "description": "fn((state) => {\n  console.debug(state.data);\n  return state;\n})",
+            "caption": "Use console.debug inside a callback or fn block"
+          },
+          {
+            "title": "param",
+            "description": "A key to push the state.data result into",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": "The operation to run",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "map",
       "params": {},
       "docs": {

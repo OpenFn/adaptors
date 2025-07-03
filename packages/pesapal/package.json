@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-pesapal",
   "label": "Pesapal",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "OpenFn pesapal adaptor",
   "type": "module",
   "exports": {

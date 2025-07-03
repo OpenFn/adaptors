@@ -387,4 +387,5 @@ export {
   merge,
   sourceValue,
   parseCsv,
+  as
 } from '@openfn/language-common';

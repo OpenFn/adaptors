@@ -236,7 +236,7 @@
         "params"
       ],
       "docs": {
-        "description": "Update a resource if it already exists, or otherwise create a new one.\n\nUpsert will first make a request for the target item (using the `path` and `params`) to see if it exists, and then issue a second create or update request.\nIf the query request returns multiple items, the upsert will throw an error.",
+        "description": "Update a resource if it already exists, or otherwise create a new one.\n\nUpsert will first make a request for the target item (using the `path` and `params`) to see if it exists, and then issue a second create or update request.\nIf the query request returns multiple items, the upsert will throw an error.\n\nParams will be appended as query parameters to the request URL,\nrefer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.",
         "tags": [
           {
             "title": "public",
@@ -294,7 +294,7 @@
           },
           {
             "title": "example",
-            "description": "upsert(\"patient\", $.data, { q: \"Lamine Yamal\" })",
+            "description": "upsert(\"patient\", $.data, { q: \"Lamine Yamal\", limit: 1 })",
             "caption": "Upsert a patient using a query to identify the record"
           }
         ]

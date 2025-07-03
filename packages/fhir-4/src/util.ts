@@ -93,7 +93,7 @@ export const request = (method, path, options: RequestOptions) => {
 
   // TODO add common error handlers for 404, 401
   return commonRequest(method, fullPath, opts)
-    .then(response => logResponse(response, opts.query))
+    .then(logResponse)
     .catch(async e => {
       if (
         e.headers &&

@@ -1,5 +1,18 @@
 # @openfn/language-mssql
 
+## 5.1.0 - 20 June 2025
+
+### Minor Changes
+
+- 49cd197: - Automatically excape incoming query parameters to protect against
+  SQL attacks
+  - Add `escape()` util function
+
+### Patch Changes
+
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
+
 ## 5.0.14 - 22 April 2025
 
 ### Patch Changes
