@@ -465,4 +465,5 @@ export {
   lastReferenceValue,
   merge,
   sourceValue,
+  map
 } from '@openfn/language-common';
