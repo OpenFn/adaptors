@@ -92,7 +92,7 @@ export function get(path, options = {}) {
         delete resolvedOptions.pageSize;
       }
     }
-    let { max, singleton, limit, pageSize, query, ...queryParams } =
+    let { max, singleton, limit, pageSize, query, language, ...queryParams } =
       resolvedOptions;
 
     if (singleton) {
@@ -110,6 +110,7 @@ export function get(path, options = {}) {
       max,
       limit,
       pageSize,
+      language,
     };
 
     try {
