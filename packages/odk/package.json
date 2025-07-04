@@ -2,7 +2,7 @@
   "name": "@openfn/language-odk",
   "label": "ODK",
   "version": "3.0.18",
-  "description": "OpenFn odk adaptor",
+  "description": "OpenFn odk adaptor for Open Data Kit data collection platform",
   "type": "module",
   "exports": {
     ".": {
