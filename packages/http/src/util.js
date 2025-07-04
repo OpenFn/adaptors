@@ -89,8 +89,10 @@ export function request(method, path, params) {
         'Content-Type': CONTENT_TYPES[contentType] || 'application/json',
       };
     }
+    const fullConfig = state.configuration ?? {};
 
-    const baseUrl = state.configuration?.baseUrl;
+    const { username, password, access_token, baseUrl, ...tlsConfig } =
+      fullConfig;
 
     assertUrl(resolvedPath, baseUrl);
 
@@ -102,11 +104,11 @@ export function request(method, path, params) {
       resolvedParams.maxRedirections ??
       (resolvedParams.followAllRedirects === false ? 0 : 5);
 
-    const tls = resolvedParams.tls ?? resolvedParams.agentOptions;
+    const tls = tlsConfig ?? resolvedParams.agentOptions;
 
     if (resolvedParams.agentOptions) {
       console.warn(
-        'WARNING: The `agentOptions` option has been deprecated. Use `tls` instead'
+        'WARNING: The `agentOptions` option has been deprecated. Add `tls` to state.configuration instead.'
       );
     }
 
