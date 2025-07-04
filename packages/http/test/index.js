@@ -743,22 +743,16 @@ describe('tls', () => {
       configuration: {
         label: 'my custom SSL cert',
         publicKey: 'something@mamadou.org',
-        privateKey: 'abc123',
+        ca: 'abc123',
       },
       data: { a: 1 },
     };
 
     const finalState = await execute(
-      fn(state => {
-        state.httpsOptions = { ca: state.configuration.privateKey };
-        return state;
-      }),
+
       post(
         'https://www.example.com/api/sslCertCheck',
         state => state.data,
-        state => ({
-          agentOptions: state.httpsOptions,
-        })
       )
     )(state);
     expect(finalState.data).to.eql({ a: 1 });
@@ -769,15 +763,13 @@ describe('tls', () => {
       configuration: {
         label: 'my custom SSL cert',
         publicKey: 'something@mamadou.org',
-        privateKey: 'abc123',
+        ca: 'abc123',
       },
       data: { a: 1 },
     };
 
     const finalState = await execute(
-      post('https://www.example.com/api/sslCertCheck', state => state.data, {
-        tls: { ca: state.configuration.privateKey },
-      })
+      post('https://www.example.com/api/sslCertCheck', state => state.data)
     )(state);
     expect(finalState.data).to.eql({ a: 1 });
   });
@@ -787,19 +779,13 @@ describe('tls', () => {
       configuration: {
         label: 'my custom SSL cert',
         publicKey: 'something@mamadou.org',
-        privateKey: 'abc123',
+        ca: 'abc123',
       },
       data: { a: 2 },
     };
 
     const finalState = await execute(
-      fn(state => {
-        state.httpsOptions = { ca: state.configuration.privateKey };
-        return state;
-      }),
-      post('https://www.example.com/api/sslCertCheck', state => state.data, {
-        tls: state => state.httpsOptions,
-      })
+      post('https://www.example.com/api/sslCertCheck', state => state.data)
     )(state);
 
     expect(finalState.data).to.eql({ a: 2 });
