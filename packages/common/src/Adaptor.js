@@ -10,6 +10,7 @@ import { Readable } from 'node:stream';
 
 import { request } from 'undici';
 import dateFns from 'date-fns';
+import _ from 'lodash';
 
 import { expandReferences as newExpandReferences, parseDate } from './util';
 
@@ -31,7 +32,7 @@ const schemaCache = {};
  *   return { ...state, chunks };
  * });
  */
-export * as _ from 'lodash';
+export { _ };
 
 /**
  * Execute a sequence of operations.

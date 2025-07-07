@@ -74,7 +74,7 @@ describe('execute', () => {
 });
 
 describe('lodash', () => {
-  it('should map values', () => {    
+  it('should map values', () => {
     const mappedValues = lodash.map([1, 2, 3], n => n * 2);
 
     expect(mappedValues).to.eql([2, 4, 6]);
