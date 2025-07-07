@@ -9,12 +9,12 @@
         "options"
       ],
       "docs": {
-        "description": "Make a general HTTP request",
+        "description": "Make a HTTP request",
         "tags": [
           {
             "title": "example",
-            "description": "request('POST', 'messages',{ to: '254757240608', body: 'Hello, world!', type: 'template', template: { name: 'hello_world', language: { code: 'en_US' } }, messaging_product: 'whatsapp' });",
-            "caption": "Send a message"
+            "description": "request(\n 'POST', \n 'messages', \n  { to: '254712345678', body: 'Hello, world!', type: 'template', template: { name: 'hello_world', language: { code: 'en_US' } }, messaging_product: 'whatsapp' });",
+            "caption": "Send a whatsapp message"
           },
           {
             "title": "function",
