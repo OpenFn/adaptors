@@ -91,7 +91,7 @@ export function request(method, path, params) {
     }
     const fullConfig = state.configuration ?? {};
 
-    const { username, password, access_token, baseUrl, ...tlsConfig } =
+    const { ca, tls:tlsConfig, baseUrl } =
       fullConfig;
 
     assertUrl(resolvedPath, baseUrl);
@@ -104,7 +104,10 @@ export function request(method, path, params) {
       resolvedParams.maxRedirections ??
       (resolvedParams.followAllRedirects === false ? 0 : 5);
 
-    const tls = tlsConfig ?? resolvedParams.agentOptions;
+    const tls = resolvedParams.tls ?? resolvedParams.agentOptions ?? {
+      ca: ca || tlsConfig?.ca,
+      ...tlsConfig 
+    };
 
     if (resolvedParams.agentOptions) {
       console.warn(

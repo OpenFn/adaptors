@@ -12,6 +12,7 @@ import { request as sendRequest, xmlParser } from './util';
  * @property {object} headers - An object of headers to append to the request.
  * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
  * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
+ * @property {object} tls - TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
  */
 
 /**
