@@ -1650,7 +1650,7 @@
         "operation"
       ],
       "docs": {
-        "description": "Run an operation and save the result back to state on a key other than state.data",
+        "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
         "tags": [
           {
             "title": "public",
@@ -1664,17 +1664,12 @@
           },
           {
             "title": "example",
-            "description": "debug('Patient List::', $.patients);",
-            "caption": "Log values from state"
-          },
-          {
-            "title": "example",
-            "description": "fn((state) => {\n  console.debug(state.data);\n  return state;\n})",
-            "caption": "Use console.debug inside a callback or fn block"
+            "description": "as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));",
+            "caption": "Fetch cce-data from collections and store them under state.cceData"
           },
           {
             "title": "param",
-            "description": "A key to push the state.data result into",
+            "description": "The state key to assign the result of the operation to.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -1683,7 +1678,7 @@
           },
           {
             "title": "param",
-            "description": "The operation to run",
+            "description": " An operation that returns a new state object with a `data` property",
             "type": {
               "type": "NameExpression",
               "name": "function"
