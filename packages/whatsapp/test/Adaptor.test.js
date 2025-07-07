@@ -1,13 +1,9 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { request, dataValue } from '../src/Adaptor.js';
+import { request } from '../src/Adaptor.js';
 
 const testServer = enableMockClient('https://fake.server.com');
-
-
-
-
 
 describe('whatsapp request', () => {
   it('makes a POST request to the correct WhatsApp endpoint with Bearer token', async () => {
