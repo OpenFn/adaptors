@@ -25,16 +25,28 @@ import * as util from './Utils';
 
 
 /**
- * Make a HTTP request
+ * Make a HTTP request to the WHatsapp baseURL
  * @example
  * <caption>Send a whatsapp message</caption>
- * request('POST', 'messages',{ to: '254712345678', body: 'Hello, world!', type: 'template', template: { name: 'hello_world', language: { code: 'en_US' } }, messaging_product: 'whatsapp' });
+ * request(
+ *  'POST', 
+ *  'messages', 
+ *   { 
+ *    to: '254712345678', 
+ *    body: 'Hello, world!', 
+ *    type: 'template', 
+ *    template: { 
+ *      name: 'hello_world', 
+ *      language: { code: 'en_US' } 
+ *    }, 
+ *    messaging_product: 'whatsapp' 
+ * });
  * @function
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to therequest body
- * @param {RequestOptions} options - Optional request options
+ * @param {object} body - Object which will be attached to the request body
+ * @param {RequestOptions} options - Additional request options
  * @returns {Operation}
  * @state {HttpState}
  */
