@@ -10,4 +10,3 @@ export * as util from './util';
 
 import * as metadata from './metadata';
 export { metadata };
-export { _ } from './lodash';
