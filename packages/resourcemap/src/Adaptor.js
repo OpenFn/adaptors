@@ -1,5 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 import request from 'request';
 
 /**
@@ -38,7 +40,7 @@ export function submitSite(collection_id, submissionData) {
   }
 
   return state => {
-    const [body] = expandReferences(state, submissionData);
+    const body = expandReferences(submissionData)(state);
     console.log(
       'Submitting site to collection ' +
         collection_id +

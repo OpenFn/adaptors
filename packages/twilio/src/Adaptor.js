@@ -1,5 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 
 /**
  * Execute a sequence of operations.
@@ -43,8 +45,7 @@ export function execute(...operations) {
 export function sendSMS(params) {
   return state => {
     const { accountSid, authToken } = state.configuration;
-    const [resolvedParams] = expandReferences(state, params);
-    const {body, from, to} = resolvedParams;
+    const { body, from, to } = expandReferences(params)(state);
 
     const client = require('twilio')(accountSid, authToken);
 

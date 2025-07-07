@@ -1,5 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 import mysql from 'mysql';
 import squel from 'squel';
 
@@ -66,7 +68,7 @@ export function insert(table, fields) {
   return state => {
     let { connection } = state;
 
-    const [valuesObj] = expandReferences(state, fields);
+    const valuesObj = expandReferences(fields)(state);
 
     const squelMysql = squel.useFlavour('mysql');
 
@@ -123,7 +125,7 @@ export function upsert(table, fields) {
   return state => {
     let { connection } = state;
 
-    const [valuesObj] = expandReferences(state, fields);
+    const valuesObj = expandReferences(fields)(state);
 
     const squelMysql = squel.useFlavour('mysql');
 
@@ -201,7 +203,7 @@ export function upsert(table, fields) {
 export function upsertMany(table, data) {
   return function (state) {
     return new Promise(function (resolve, reject) {
-      const [rows] = expandReferences(state, data);
+      const rows = expandReferences(data)(state);
 
       if (!rows || rows.length === 0) {
         console.log('No records provided; skipping upsert.');
@@ -252,7 +254,7 @@ export function query(options) {
   return state => {
     let { connection } = state;
 
-    const [opts] = expandReferences(state, options);
+    const opts = expandReferences(options)(state);
 
     console.log(
       'Executing MySQL statement with options: ' + JSON.stringify(opts, 2, null)

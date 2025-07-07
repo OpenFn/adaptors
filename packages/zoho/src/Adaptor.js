@@ -1,5 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 import { post } from './Client';
 
 /**
@@ -42,7 +44,7 @@ export function execute(...operations) {
 export function addRow(db, table, rowData) {
   return state => {
     const action = 'ADDROW';
-    const [body] = expandReferences(state, rowData);
+    const body = expandReferences(rowData)(state);
 
     const { account, authToken, apiVersion } = state.configuration;
 

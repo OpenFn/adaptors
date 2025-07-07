@@ -1,5 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 import { post } from './Client';
 import jsonSqlPkg from 'json-sql';
 
@@ -63,7 +65,7 @@ export function sql(sqlQuery) {
  */
 export function addRow(table, rowData) {
   return state => {
-    const [dataObject] = expandReferences(state, rowData);
+    const dataObject = expandReferences(rowData)(state);
 
     const sql = jsonSql.build({
       type: 'insert',

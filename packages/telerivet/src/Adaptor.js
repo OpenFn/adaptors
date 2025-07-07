@@ -1,5 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 import { post } from './Client';
 
 /**
@@ -34,7 +36,7 @@ export function execute(...operations) {
  */
 export function send(sendData) {
   return state => {
-    const [body] = expandReferences(state, sendData);
+    const body = expandReferences(sendData)(state);
 
     const { projectId, apiKey } = state.configuration;
 

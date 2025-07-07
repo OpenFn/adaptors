@@ -1,5 +1,8 @@
 import chai from 'chai';
 const { expect } = chai;
+import nock from 'nock';
+const { back } = nock;
+import ClientFixtures, { fixtures } from './ClientFixtures';
 
 import Adaptor from '../src';
 const { execute } = Adaptor;

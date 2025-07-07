@@ -1,5 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 import { assembleError, scrubResponse, tryJson } from './Utils';
 import request from 'request';
 
@@ -192,8 +194,8 @@ export function getCases(query, options, callback) {
     const { auth } = state;
     const { url } = state.configuration;
 
-    const [expandedQuery] = expandReferences(state, query);
-    const [expandedOptions] = expandReferences(state, options);
+    const expandedQuery = expandReferences(query)(state);
+    const expandedOptions = expandReferences(options)(state);
 
     const params = {
       method: 'GET',
@@ -282,7 +284,7 @@ export function createCase(params, callback) {
     const { auth } = state;
     const { url } = state.configuration;
 
-    const [data] = expandReferences(state, params);
+    const { data } = expandReferences(params)(state);
 
     const requestParams = {
       method: 'POST',
@@ -345,7 +347,7 @@ export function updateCase(id, params, callback) {
   return state => {
     const { auth } = state;
     const { url } = state.configuration;
-    const [data] = expandReferences(state, params);
+    const { data } = expandReferences(params)(state);
 
     const requestParams = {
       method: 'PATCH',
@@ -404,8 +406,7 @@ export function upsertCase(params, callback) {
   return state => {
     const { auth } = state;
     const { url } = state.configuration;
-    const [resolvedParams] = expandReferences(state, params);
-    const { data, externalIds } = resolvedParams;
+    const { data, externalIds } = expandReferences(params)(state);
 
     const qs = {
       remote: true,
@@ -482,8 +483,7 @@ export function getReferrals(params, callback) {
     const { auth } = state;
     const { url } = state.configuration;
 
-    const [resolvedParams] = expandReferences(state, params);
-    const { externalId, id } = resolvedParams;
+    const { externalId, id } = expandReferences(params)(state);
 
     let requestParams = {};
 
@@ -573,7 +573,7 @@ export function createReferrals(params, callback) {
     const { auth } = state;
     const { url } = state.configuration;
 
-    const [data] = expandReferences(state, params);
+    const { data } = expandReferences(params)(state);
 
     const requestParams = {
       method: 'POST',
@@ -638,8 +638,8 @@ export function updateReferral(params, callback) {
     const { auth } = state;
     const { url } = state.configuration;
 
-    const [resolvedParams] = expandReferences(state, params);
-    const { caseExternalId, caseId, id, data } = resolvedParams;
+    const { caseExternalId, caseId, id, data } =
+      expandReferences(params)(state);
 
     let requestParams = {};
 
@@ -731,7 +731,7 @@ export function getForms(query, callback) {
     const { auth } = state;
     const { url } = state.configuration;
 
-    const [expandedQuery] = expandReferences(state, query);
+    const expandedQuery = expandReferences(query)(state);
 
     const params = {
       method: 'GET',
@@ -794,7 +794,7 @@ export function getLookups(query, callback) {
     const { auth } = state;
     const { url } = state.configuration;
 
-    const [expandedQuery] = expandReferences(state, query);
+    const expandedQuery = expandReferences(query)(state);
 
     const params = {
       method: 'GET',
@@ -858,7 +858,7 @@ export function getLocations(query, callback) {
     const { auth } = state;
     const { url } = state.configuration;
 
-    const [expandedQuery] = expandReferences(state, query);
+    const expandedQuery = expandReferences(query)(state);
 
     const params = {
       method: 'GET',

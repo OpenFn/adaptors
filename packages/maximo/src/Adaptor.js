@@ -1,5 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
 import request from 'request';
 import { resolve as resolveUrl } from 'url';
 import base64 from 'base-64';
@@ -48,8 +50,7 @@ export function fetch(params) {
       return new Error(`Server responded with ${response.statusCode}`);
     }
 
-    const [resolvedParam] = expandReferences(state, params);
-    const { endpoint, query, postUrl } = resolvedParam;
+    const { endpoint, query, postUrl } = expandReferences(params)(state);
 
     const { username, password, baseUrl } = state.configuration;
 
@@ -129,8 +130,7 @@ export function create(params) {
       return new Error(`Server responded with ${response.statusCode}`);
     }
 
-    const [resolvedParams] = expandReferences(state, params);
-    const { endpoint, body } = resolvedParams;
+    const { endpoint, body } = expandReferences(params)(state);
 
     const { username, password, baseUrl } = state.configuration;
 
@@ -198,8 +198,7 @@ export function update(params) {
       return new Error(`Server responded with ${response.statusCode}`);
     }
 
-    const [resolvedParams] = expandReferences(state, params);
-    const { endpoint, body } = resolvedParams;
+    const { endpoint, body } = expandReferences(params)(state);
 
     const { username, password, baseUrl } = state.configuration;
 
@@ -266,8 +265,7 @@ export function update75(params) {
       return new Error(`Server responded with ${response.statusCode}`);
     }
 
-    const [resolvedParams] = expandReferences(state, params);
-    const { endpoint, body } = resolvedParams;
+    const { endpoint, body } = expandReferences(params)(state);
 
     const { username, password, baseUrl } = state.configuration;
 

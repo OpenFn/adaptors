@@ -1,9 +1,10 @@
 import { expect } from 'chai';
-import { enableMockClient } from '@openfn/language-common/util';
-import Adaptor from '../src';
 
+import nock from 'nock';
+import ClientFixtures, { fixtures } from './ClientFixtures';
+
+import Adaptor from '../src';
 const { execute, postData } = Adaptor;
-const testServer = enableMockClient('https://fake.server.com');
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {
@@ -40,8 +41,11 @@ describe('execute', () => {
 });
 
 describe('post', () => {
+  before(() => {
+    nock('https://fake.server.com').post('/api').reply(200, { foo: 'bar' });
+  });
 
-  it('calls the callback', async () => {
+  it('calls the callback', () => {
     let state = {
       configuration: {
         username: 'hello',
@@ -49,24 +53,18 @@ describe('post', () => {
       },
     };
 
-    testServer
-      .intercept({
-        method: 'POST',
-        path: '/api',
-      })
-      .reply(200, { foo: 'bar' });
-
-    await execute(
+    return execute(
       postData({
         url: 'https://fake.server.com/api',
         headers: null,
         body: { a: 1 },
       })
     )(state).then(state => {
-      let status = state.response.statusCode;
-      let responseBody = state.data;
+      let status = state.data.status;
+      let responseBody = state.data.data;
+      // Check that the post made it's way to the request as a string.
       expect(status).to.eq(200);
-      expect(JSON.parse(responseBody)).to.eql({ foo: 'bar' });
+      expect(responseBody).to.eql({ foo: 'bar' });
     });
   });
 });

@@ -1,8 +1,9 @@
 import {
   execute as commonExecute,
   composeNextState,
+  expandReferences,
+  http, // Important: this is the OLD axios-based http
 } from '@openfn/language-common';
-import { expandReferences, request } from '@openfn/language-common/util';
 
 /**
  * Execute a sequence of operations.
@@ -11,7 +12,7 @@ import { expandReferences, request } from '@openfn/language-common/util';
  * execute(
  *   create('foo'),
  *   delete('bar')
- * )
+ * )(state)
  * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
@@ -44,33 +45,40 @@ export function execute(...operations) {
  *    key,
  *    cert,
  *  },
- * }, callback)
+ * }, callback)(state)
  * @function
  * @param {object} params - Url, Headers and Body parameters
  * @param {function} callback - (Optional) A callback function
  * @returns {Operation}
  */
-export function postData(params, callback = s => s) {
-  return async state => {
-    const [resolvedParams] = expandReferences(state, params);
-    const { url, body, headers, agentOptions } = resolvedParams;
+export function postData(params, callback) {
+  return state => {
+    const { url, body, headers, agentOptions } =
+      expandReferences(params)(state);
 
-    const result = await request('POST', url, {
-      body,
-      headers,
-      agentOptions,
-    });
-    console.log('POST succeeded.');
+    return http
+      .post({
+        method: 'post',
+        url,
+        data: body,
+        headers,
+        agentOptions,
+      })(state)
+      .then(response => {
+        console.log('POST succeeded.');
 
-    const { body: responseBody, ...responseWithoutBody } = result;
-
-    return callback({
-      ...composeNextState(state, responseBody),
-      response: responseWithoutBody,
-    });
+        const nextState = composeNextState(state, response);
+        if (callback) return callback(nextState);
+        return nextState;
+      })
+      .catch(error => {
+        console.log(error);
+        return error;
+      });
   };
 }
 
+// What functions do you want from the common adaptor?
 export {
   fn,
   fnIf,
@@ -80,6 +88,7 @@ export {
   each,
   field,
   fields,
+  http, // Important: this is the OLD axios-based http. Public docs will be incorrect.
   lastReferenceValue,
   merge,
   sourceValue,

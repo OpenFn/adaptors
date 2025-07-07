@@ -1,8 +1,8 @@
 import {
   execute as commonExecute,
   composeNextState,
+  expandReferences,
 } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
 import axios from 'axios';
 
 /**
@@ -168,7 +168,7 @@ export function upsertContact(id, externalId, goDataContact, callback) {
   return state => {
     const { apiUrl, access_token } = state.configuration;
 
-    const [data] = expandReferences(state, goDataContact);
+    const data = expandReferences(goDataContact)(state);
 
     const query = { where: {} };
     query.where[externalId] = data[externalId];
@@ -323,8 +323,7 @@ export function upsertOutbreak(outbreak, callback) {
   return state => {
     const { apiUrl, access_token } = state.configuration;
 
-    const [resolvedOutbreak] = expandReferences(state, outbreak);
-    const {externalId, data} =  resolvedOutbreak;
+    const { externalId, data } = expandReferences(outbreak)(state);
 
     const filter = JSON.stringify({ where: { id: externalId } });
 
@@ -491,7 +490,7 @@ export function upsertCase(id, externalId, goDataCase, callback) {
   return state => {
     const { apiUrl, access_token } = state.configuration;
 
-    const [data] = expandReferences(state, goDataCase);
+    const data = expandReferences(goDataCase)(state);
 
     const query = { where: {} };
     query.where[externalId] = data[externalId];
@@ -648,7 +647,7 @@ export function upsertLocation(externalId, goDataLocation, callback) {
   return state => {
     const { apiUrl, access_token } = state.configuration;
 
-    const [data] = expandReferences(state, goDataLocation);
+    const data = expandReferences(goDataLocation)(state);
 
     const query = { where: {} };
     query.where[externalId] = data[externalId];
@@ -807,7 +806,7 @@ export function upsertReferenceData(externalId, goDataReferenceData, callback) {
   return state => {
     const { apiUrl, access_token } = state.configuration;
 
-    const [data] = expandReferences(state, goDataReferenceData);
+    const data = expandReferences(goDataReferenceData)(state);
 
     const query = { where: {} };
     query.where[externalId] = data[externalId];

@@ -1,5 +1,8 @@
-import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import {
+  execute as commonExecute,
+  expandReferences,
+} from '@openfn/language-common';
+import { escape } from './util';
 import { Connection, Request } from 'tedious';
 
 /**
@@ -187,8 +190,7 @@ export function sql(params) {
     const { connection } = state;
 
     try {
-      const [resolvedParams] = expandReferences(state, params);
-      const { query, options } = resolvedParams;
+      const { query, options } = expandReferences(params)(state);
 
       console.log(`Preparing to execute sql statement: ${query}`);
       return queryHandler(state, query, composeNextState, options);
@@ -250,8 +252,8 @@ export function findValue(filter) {
     const { connection } = state;
 
     const { uuid, relation, where, operator } = filter;
-    const [whereData] = expandReferences(state, where);
-    const [operatorData] = expandReferences(state, operator);
+    const whereData = expandReferences(where)(state);
+    const operatorData = expandReferences(operator)(state);
 
     let conditionsArray = [];
     for (let key in whereData) {
@@ -316,7 +318,7 @@ export function insert(table, record, options) {
     const { connection } = state;
 
     try {
-      const [recordData] = expandReferences(state, record);
+      const recordData = expandReferences(record)(state);
 
       const columns = Object.keys(recordData).sort();
       const values = columns.map(key => escape(recordData[key])).join("', '");
@@ -359,7 +361,7 @@ export function insertMany(table, records, options) {
     const { connection } = state;
 
     try {
-      const [recordData] = expandReferences(state, records);
+      const recordData = expandReferences(records)(state);
 
       // Note: we select the keys of the FIRST object as the canonical template.
       const columns = Object.keys(recordData[0]);
@@ -409,7 +411,7 @@ export function upsert(table, uuid, record, options) {
     const { connection } = state;
 
     try {
-      const [recordData] = expandReferences(state, record);
+      const recordData = expandReferences(record)(state);
       const columns = Object.keys(recordData).sort();
 
       const selectValues = columns
@@ -488,9 +490,9 @@ export function upsertIf(logical, table, uuid, record, options) {
     const { connection } = state;
 
     try {
-      const [recordData] = expandReferences(state, record);
+      const recordData = expandReferences(record)(state);
       const columns = Object.keys(recordData).sort();
-      const [logicalData] = expandReferences(state, logical);
+      const logicalData = expandReferences(logical)(state);
 
       return new Promise((resolve, reject) => {
         if (!logicalData) {
@@ -571,7 +573,7 @@ export function upsertMany(table, uuid, records, options) {
     const { connection } = state;
 
     try {
-      const [recordData] = expandReferences(state, records);
+      const recordData = expandReferences(records)(state);
 
       return new Promise((resolve, reject) => {
         if (!recordData || recordData.length === 0) {
@@ -645,7 +647,7 @@ export function upsertMany(table, uuid, records, options) {
 export function describeTable(tableName, options) {
   return state => {
     const { connection } = state;
-    const [name] = expandReferences(state, tableName);
+    const name = expandReferences(tableName)(state);
 
     try {
       const query = `SELECT column_name
@@ -684,7 +686,7 @@ export function insertTable(tableName, columns, options) {
   return state => {
     const { connection } = state;
     try {
-      const [data] = expandReferences(state, columns);
+      const data = expandReferences(columns)(state);
 
       return new Promise((resolve, reject) => {
         if (!data || data.length === 0) {
@@ -744,7 +746,7 @@ export function modifyTable(tableName, columns, options) {
     const { connection } = state;
 
     try {
-      const [data] = expandReferences(state, columns);
+      const data = expandReferences(columns)(state);
 
       return new Promise((resolve, reject) => {
         if (!data || data.length === 0) {
