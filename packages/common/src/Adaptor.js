@@ -1,18 +1,32 @@
-import get from 'lodash/get.js';
-import omit from 'lodash/omit.js';
-import groupBy from 'lodash/groupBy.js';
-import fromPairs from 'lodash/fp/fromPairs.js';
-
 import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
 import { Readable } from 'node:stream';
 
 import { request } from 'undici';
 import dateFns from 'date-fns';
+import _ from 'lodash';
 
 import { expandReferences, parseDate } from './util';
 
 const schemaCache = {};
+
+/**
+ * Lodash utility library.
+ * All lodash v4.17 functions are available on the `_` namespace, eg,
+ * `_.map`, `_.cloneDeep`, etc.
+ *
+ * @see https://lodash.com/docs/
+ * @public
+ * @function
+ * @alias lodash
+ * @example <caption>Split an array into chunks of 2 items each</caption>
+ * fn(state => {
+ *   const items = [1, 2, 3, 4, 5];
+ *   const chunks = lodash.chunk(items, 2);
+ *   return { ...state, chunks };
+ * });
+ */
+export { _ };
 
 /**
  * Execute a sequence of operations.
@@ -391,7 +405,7 @@ export function field(key, value) {
  * @returns {Object}
  */
 export function fields(...fields) {
-  return fromPairs(fields);
+  return _.fromPairs(fields);
 }
 
 /**
@@ -447,8 +461,10 @@ export function group(arrayOfObjects, keyPath, callback = s => s) {
       arrayOfObjects,
       keyPath
     );
-    const results = groupBy(resolvedArray, item => get(item, resolvedKeyPath));
-    return callback({ ...state, data: omit(results, [undefined]) });
+    const results = _.groupBy(resolvedArray, item =>
+      _.get(item, resolvedKeyPath)
+    );
+    return callback({ ...state, data: _.omit(results, [undefined]) });
   };
 }
 
