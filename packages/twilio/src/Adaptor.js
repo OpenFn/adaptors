@@ -81,5 +81,4 @@ export {
   dataPath,
   dataValue,
   lastReferenceValue,
-  as
 } from '@openfn/language-common';

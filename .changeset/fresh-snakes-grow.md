@@ -12,7 +12,6 @@
 '@openfn/language-pesapal': minor
 '@openfn/language-primero': minor
 '@openfn/language-inform': minor
-'@openfn/language-twilio': minor
 '@openfn/language-asana': minor
 '@openfn/language-dhis2': minor
 '@openfn/language-mpesa': minor
