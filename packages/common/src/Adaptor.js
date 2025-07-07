@@ -27,7 +27,7 @@ const schemaCache = {};
  * @example <caption>Split an array into chunks of 2 items each</caption>
  * fn(state => {
  *   const items = [1, 2, 3, 4, 5];
- *   const chunks = _.chunk(items, 2);
+ *   const chunks = lodash.chunk(items, 2);
  *   return { ...state, chunks };
  * });
  */

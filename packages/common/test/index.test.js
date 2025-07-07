@@ -33,6 +33,7 @@ import {
   assert as assertCommon,
   log,
   debug,
+  _ as lodash,
 } from '../src/Adaptor';
 import { startOfToday } from 'date-fns';
 
@@ -69,6 +70,19 @@ describe('execute', () => {
     let finalState = await execute()(state);
 
     expect(finalState).to.eql(state);
+  });
+});
+
+describe('lodash', () => {
+  it('should map values', () => {    
+    const mappedValues = lodash.map([1, 2, 3], n => n * 2);
+
+    expect(mappedValues).to.eql([2, 4, 6]);
+  });
+  it('should filter values', () => {
+    const filteredValues = lodash.filter([1, 2, 3, 4, 5], n => n % 2 === 0);
+
+    expect(filteredValues).to.eql([2, 4]);
   });
 });
 
