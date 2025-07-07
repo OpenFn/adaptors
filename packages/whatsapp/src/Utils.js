@@ -20,8 +20,8 @@ export const prepareNextState = (state, response) => {
 
 export const request = (configuration = {}, method, path, options) => {
 
-  const { phoneNumberId, apiToken, baseUrl, apiVersion } = configuration;
-  const {headers = {}} = options;
+  const { phoneNumberId, apiToken, baseUrl = 'https://graph.facebook.com', apiVersion = '' } = configuration;
+  const { headers = {} } = options;
 
   const errors = {
     404: 'Page not found',

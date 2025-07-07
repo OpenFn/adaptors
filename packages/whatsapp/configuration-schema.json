@@ -30,5 +30,5 @@
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["password", "username", "baseUrl", "phoneNumberId", "apiToken", "apiVersion"]
+  "required": ["phoneNumberId", "apiToken"]
 }

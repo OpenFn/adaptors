@@ -9,11 +9,11 @@
         "options"
       ],
       "docs": {
-        "description": "Make a HTTP request",
+        "description": "Make a HTTP request to the WHatsapp baseURL",
         "tags": [
           {
             "title": "example",
-            "description": "request(\n 'POST', \n 'messages', \n  { to: '254712345678', body: 'Hello, world!', type: 'template', template: { name: 'hello_world', language: { code: 'en_US' } }, messaging_product: 'whatsapp' });",
+            "description": "request(\n 'POST', \n 'messages', \n  { \n   to: '254712345678', \n   body: 'Hello, world!', \n   type: 'template', \n   template: { \n     name: 'hello_world', \n     language: { code: 'en_US' } \n   }, \n   messaging_product: 'whatsapp' \n});",
             "caption": "Send a whatsapp message"
           },
           {
@@ -46,7 +46,7 @@
           },
           {
             "title": "param",
-            "description": "Object which will be attached to therequest body",
+            "description": "Object which will be attached to the request body",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -55,7 +55,7 @@
           },
           {
             "title": "param",
-            "description": "Optional request options",
+            "description": "Additional request options",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
