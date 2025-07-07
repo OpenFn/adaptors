@@ -705,58 +705,6 @@
       "valid": true
     },
     {
-      "name": "expandReferences",
-      "params": [
-        "value",
-        "skipFilter"
-      ],
-      "docs": {
-        "description": "Recursively resolves objects that have resolvable values (functions).",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "data",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "value"
-          },
-          {
-            "title": "param",
-            "description": "a function which returns true if a value should be skipped",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Function"
-              }
-            },
-            "name": "skipFilter"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "field",
       "params": [
         "key",
@@ -1697,13 +1645,9 @@
     },
     {
       "name": "map",
-      "params": [
-        "path",
-        "operation",
-        "state"
-      ],
+      "params": {},
       "docs": {
-        "description": "Scopes an array of data based on a JSONPath.\nUseful when the source data has `n` items you would like to map to\nan operation.\nThe operation will receive a slice of the data based of each item\nof the JSONPath provided.",
+        "description": "Iterates over a collection of items and returns a new array of mapped values,\nlike Javascript's `Array.map()` function.\n\nEach item in the source array will be passed into the callback function. The returned value\nwill be added to the new array. The callback is passed the original item, the current index\nin the source array (ie, the nth item number), and the state object.\n\nWrites a new array to `state.data` with transformed values.c array.",
         "tags": [
           {
             "title": "public",
@@ -1717,34 +1661,40 @@
           },
           {
             "title": "example",
-            "description": "map(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
+            "description": "map($.items', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
+            "caption": "Transform an array of items in state"
+          },
+          {
+            "title": "example",
+            "description": "map($.items, async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});",
+            "caption": "Map items asynchronously (e.g. fetch extra info)"
           },
           {
             "title": "param",
-            "description": "JSONPath referencing a point in `state.data`.",
+            "description": "An array of items or a a JSONPath string which points to an array of items.",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Array"
+                }
+              ]
             },
             "name": "path"
           },
           {
             "title": "param",
-            "description": "The operation needed to be repeated.",
+            "description": "The mapping function, invoked with `(data, index, state)` for each item in the array.",
             "type": {
               "type": "NameExpression",
               "name": "function"
             },
-            "name": "operation"
-          },
-          {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
+            "name": "callback"
           },
           {
             "title": "returns",
@@ -1756,7 +1706,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     }
   ],
   "exports": [],
