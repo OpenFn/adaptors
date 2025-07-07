@@ -16,6 +16,24 @@ import { expandReferences as newExpandReferences, parseDate } from './util';
 const schemaCache = {};
 
 /**
+ * Lodash utility library.
+ * All lodash v4.17 functions are available on the `_` namespace, eg,
+ * `_.map`, `_.cloneDeep`, etc.
+ *
+ * @see https://lodash.com/docs/
+ * @public
+ * @function
+ * @alias lodash
+ * @example <caption>Split an array into chunks of 2 items each</caption>
+ * fn(state => {
+ *   const items = [1, 2, 3, 4, 5];
+ *   const chunks = _.chunk(items, 2);
+ *   return { ...state, chunks };
+ * });
+ */
+export * as _ from 'lodash';
+
+/**
  * Execute a sequence of operations.
  * Main outer API for executing expressions.
  * @public
