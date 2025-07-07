@@ -74,13 +74,16 @@ describe('execute', () => {
 });
 
 describe('lodash', () => {
-  it('should map values', () => {    
-    const mappedValues = lodash.map([1, 2, 3], n => n * 2);
+  it('should map values', () => {
+    const mappedValues = lodash.default.map([1, 2, 3], n => n * 2);
 
     expect(mappedValues).to.eql([2, 4, 6]);
   });
   it('should filter values', () => {
-    const filteredValues = lodash.filter([1, 2, 3, 4, 5], n => n % 2 === 0);
+    const filteredValues = lodash.default.filter(
+      [1, 2, 3, 4, 5],
+      n => n % 2 === 0
+    );
 
     expect(filteredValues).to.eql([2, 4]);
   });
