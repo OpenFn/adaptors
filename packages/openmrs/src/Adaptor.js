@@ -410,4 +410,5 @@ export {
   merge,
   sourceValue,
   util,
+  map
 } from '@openfn/language-common';

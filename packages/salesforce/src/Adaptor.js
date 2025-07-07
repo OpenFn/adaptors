@@ -714,7 +714,6 @@ export {
   dataValue,
   dateFns,
   each,
-  expandReferences,
   field,
   fields,
   fn,
@@ -731,4 +730,5 @@ export {
   source,
   sourceValue,
   toArray,
+  map
 } from '@openfn/language-common';
