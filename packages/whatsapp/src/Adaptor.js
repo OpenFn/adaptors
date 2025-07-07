@@ -25,7 +25,7 @@ import * as util from './Utils';
 
 
 /**
- * Make a HTTP request to the WHatsapp baseURL
+ * Make a HTTP request to the WhatsApp base URL, guided by the configuration
  * @example
  * <caption>Send a whatsapp message</caption>
  * request(
