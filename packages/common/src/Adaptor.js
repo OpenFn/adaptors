@@ -1,8 +1,3 @@
-import get from 'lodash/get.js';
-import omit from 'lodash/omit.js';
-import groupBy from 'lodash/groupBy.js';
-import fromPairs from 'lodash/fp/fromPairs.js';
-
 import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
 import { Readable } from 'node:stream';
@@ -410,7 +405,7 @@ export function field(key, value) {
  * @returns {Object}
  */
 export function fields(...fields) {
-  return fromPairs(fields);
+  return _.fromPairs(fields);
 }
 
 /**
@@ -466,8 +461,10 @@ export function group(arrayOfObjects, keyPath, callback = s => s) {
       arrayOfObjects,
       keyPath
     );
-    const results = groupBy(resolvedArray, item => get(item, resolvedKeyPath));
-    return callback({ ...state, data: omit(results, [undefined]) });
+    const results = _.groupBy(resolvedArray, item =>
+      _.get(item, resolvedKeyPath)
+    );
+    return callback({ ...state, data: _.omit(results, [undefined]) });
   };
 }
 
