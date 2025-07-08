@@ -9,7 +9,7 @@
         "options"
       ],
       "docs": {
-        "description": "Make a HTTP request to the WHatsapp baseURL",
+        "description": "Make a HTTP request to the WhatsApp base URL, guided by the configuration",
         "tags": [
           {
             "title": "example",
