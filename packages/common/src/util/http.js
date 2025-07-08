@@ -6,7 +6,7 @@ import path from 'node:path';
 import throwError from './throw-error';
 import { encode } from './base64';
 
-export const clients = new Map();
+const clients = new Map();
 
 export const makeBasicAuthHeader = (username, password) => {
   const buff = Buffer.from(`${username}:${password}`);
@@ -38,9 +38,7 @@ export const logResponse = response => {
 const getClient = (baseUrl, options) => {
   const { tls } = options;
   if (!clients.has(baseUrl)) {
-    const client = new Client(baseUrl, { connect: tls });
-    client.__tlsOptions = tls;
-    clients.set(baseUrl, client);
+    clients.set(baseUrl, new Client(baseUrl, { connect: tls }));
   }
   return clients.get(baseUrl);
 };
