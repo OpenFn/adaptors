@@ -152,10 +152,10 @@ export async function request(state, method, path, options = {}) {
     data = {},
     headers = { 'content-type': 'application/json' },
     parseAs = 'json',
-    _onrequest,
     errors,
     language,
-  } = options; // secret option for debug & test
+    _onrequest, // secret option for debug & test
+  } = options;
 
   if (baseUrl.length <= 0) {
     throw new Error(
@@ -172,7 +172,6 @@ export async function request(state, method, path, options = {}) {
 
   const authHeaders = makeBasicAuthHeader(username, password);
 
-  // Add Accept-Language header if language is specified
   const finalHeaders = {
     ...authHeaders,
     ...headers,
