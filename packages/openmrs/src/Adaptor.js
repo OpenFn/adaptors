@@ -274,6 +274,10 @@ export function update(path, data) {
  *
  * Upsert will first make a request for the target item (using the `path` and `params`) to see if it exists, and then issue a second create or update request.
  * If the query request returns multiple items, the upsert will throw an error.
+ * 
+ * Params will be appended as query parameters to the request URL,
+ * refer to {@link https://rest.openmrs.org/ OpenMRS Docs} for details.
+ 
  * @public
  * @function
  * @param {string} path - Path to resource (excluding `/ws/rest/v1/`)
@@ -304,7 +308,7 @@ export function update(path, data) {
  *   },
  * })
  * @example <caption>Upsert a patient using a query to identify the record</caption>
- * upsert("patient", $.data, { q: "Lamine Yamal" })
+ * upsert("patient", $.data, { q: "Lamine Yamal", limit: 1 })
  */
 export function upsert(path, data, params = {}) {
   return async state => {
@@ -340,16 +344,35 @@ export function upsert(path, data, params = {}) {
     } else if (!found || count === 0) {
       console.log(`${resolvedPath} not found: creating new resource`);
 
-      const path = resolvedParams.q
+      // How many resources are in the url?
+      // If an even number, the UUID is in the URL
+      // resource/uuid
+      // resource/uuid/subresource
+      // resource/uuid/subresource/uuid
+      const parts = path.split('/').length;
+      const dropUuid = parts % 2 > 0 && Object.keys(resolvedParams).length;
+      const finalPath = dropUuid
         ? resolvedPath
         : resolvedPath.split('/').slice(0, -1).join('/'); // remove the ID
-      return create(path, resolvedData)(state);
+      return create(finalPath, resolvedData)(state);
     } else {
-      const path = resolvedParams.q
-        ? `${resolvedPath}/${res.body.results[0].uuid}` // append the ID
-        : resolvedPath;
-      console.log(`${path} found: updating existing resource`);
-      return update(path, resolvedData)(state);
+      let finalPath = resolvedPath;
+
+      // If there are no query params and there are multiple resources in the path
+      // Then the path probably includes a UUID and we can just re-use it
+      const parts = path.split('/').length;
+      if (parts % 2 > 0 && Object.keys(resolvedParams).length > 0) {
+        // Otherwise, if there doesn't seem to be a UUID in the URL,
+        // find one from th original GET
+        let uuid = res.body.uuid;
+        if (res.body.results) {
+          uuid = res.body.results[0].uuid;
+        }
+        finalPath = `${resolvedPath}/${uuid}`;
+      }
+
+      console.log(`${finalPath} found: updating existing resource`);
+      return update(finalPath, resolvedData)(state);
     }
   };
 }

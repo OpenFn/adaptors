@@ -16,7 +16,7 @@
           },
           {
             "title": "example",
-            "description": "postData({\n url: urlDTP,\n body: obj,\n headers: {\n   'Ocp-Apim-Subscription-Key': configuration['Ocp-Apim-Subscription-Key'],\n },\n agentOptions: {\n   key,\n   cert,\n },\n}, callback)(state)"
+            "description": "postData({\n url: urlDTP,\n body: obj,\n headers: {\n   'Ocp-Apim-Subscription-Key': configuration['Ocp-Apim-Subscription-Key'],\n },\n agentOptions: {\n   key,\n   cert,\n },\n}, callback)"
           },
           {
             "title": "function",

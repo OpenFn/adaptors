@@ -113,3 +113,7 @@ export async function requestWithPagination(state, path, options = {}) {
 
   return results;
 }
+
+export function maybeStringify(query) {
+  return typeof query === 'string' ? query : JSON.stringify(query);
+}
