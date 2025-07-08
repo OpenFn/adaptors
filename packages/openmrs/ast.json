@@ -50,6 +50,11 @@
             "caption": "Get allergy subresource by its UUID and parent patient UUID"
           },
           {
+            "title": "example",
+            "description": "get(\"patient/abc\", { language: \"fr\" })",
+            "caption": "Get patient by UUID and set the language to French"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
