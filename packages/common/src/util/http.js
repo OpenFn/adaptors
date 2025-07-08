@@ -35,7 +35,7 @@ export const logResponse = response => {
   return response;
 };
 
-export const getClient = (baseUrl, options) => {
+const getClient = (baseUrl, options) => {
   const { tls } = options;
   if (!clients.has(baseUrl)) {
     const client = new Client(baseUrl, { connect: tls });
