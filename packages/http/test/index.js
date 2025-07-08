@@ -1,10 +1,8 @@
 import { execute, request, get, post, put, patch, del, fn } from '../src';
 import { each, parseCsv } from '@openfn/language-common';
-import {
-  enableMockClient,
-} from '@openfn/language-common/util';
+import { enableMockClient } from '@openfn/language-common/util';
 import { expect, assert } from 'chai';
-
+import { getTLSOptions } from '../src/util';
 
 const jsonHeaders = { 'Content-Type': 'application/json' };
 
@@ -726,3 +724,85 @@ describe('delete', () => {
   });
 });
 
+describe('getTLSOptions', () => {
+
+
+  it('returns requestOptions.tls if provided', () => {
+    const state = {
+      configuration: {
+        ca: 'config-ca',
+        tls: { ca: 'tls-ca', cert: 'tls-cert' },
+      },
+    };
+
+    const requestOptions = {
+      tls: { ca: 'tls-from-request', cert: 'req-cert' },
+    };
+
+    const result = getTLSOptions(state, requestOptions);
+    expect(result).to.deep.equal(requestOptions.tls);
+  });
+
+  it('falls back to requestOptions.agentOptions if tls is not provided', () => {
+    const state = {
+      configuration: {
+        ca: 'config-ca',
+        tls: { ca: 'tls-ca', cert: 'tls-cert' },
+      },
+    };
+
+    const requestOptions = {
+      agentOptions: { ca: 'agent-ca', key: 'agent-key' },
+    };
+
+    const result = getTLSOptions(state, requestOptions);
+    expect(result).to.deep.equal(requestOptions.agentOptions);
+  });
+
+  it('falls back to configuration.ca and configuration.tls if neither tls nor agentOptions provided', () => {
+    const state = {
+      configuration: {
+        ca: 'config-ca',
+        tls: { cert: 'tls-cert', key: 'tls-key' },
+      },
+    };
+
+    const requestOptions = {};
+
+    const result = getTLSOptions(state, requestOptions);
+    expect(result).to.deep.equal({
+      ca: 'config-ca',
+      cert: 'tls-cert',
+      key: 'tls-key',
+    });
+  });
+
+  it('falls back to tlsConfig.ca if ca not in configuration', () => {
+    const state = {
+      configuration: {
+        tls: { ca: 'tls-ca', cert: 'tls-cert' },
+      },
+    };
+
+    const requestOptions = {};
+
+    const result = getTLSOptions(state, requestOptions);
+    expect(result).to.deep.equal({
+      ca: 'tls-ca',
+      cert: 'tls-cert',
+    });
+  });
+
+  it('returns undefined if no TLS config is found', () => {
+    const state = {
+      configuration: {},
+    };
+
+    const requestOptions = {};
+    const result = getTLSOptions(state, requestOptions);
+
+    expect(result).to.deep.equal({
+      ca: undefined,
+    });
+  });
+});
