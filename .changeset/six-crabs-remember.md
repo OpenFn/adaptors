@@ -3,6 +3,5 @@
 ---
 
 - Update `rapidPro` to not use deprecated `common-http`.
-- Remove support and export of `axios` 
-- Remove export of `http` namesepace from `common`
-
+- Remove support and export of `axios`
+- Remove export of `http` namespace from `common`

@@ -2,4 +2,4 @@
 '@openfn/language-common': minor
 ---
 
-Implement an export for lodash
+Export the lodash library as `_`

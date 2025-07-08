@@ -2,4 +2,5 @@
 '@openfn/language-common': major
 ---
 
-- Delete deprecated `expandReferences` from common and use `expandReferences` from `common.util`
+- Delete deprecated `expandReferences` from common and use `expandReferences`
+  from `common.util`. This should not affect job code.

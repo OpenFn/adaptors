@@ -2,4 +2,4 @@
 '@openfn/language-mogli': minor
 ---
 
-Removed map() function, exported from common
+Removed old map() function, exported from common
