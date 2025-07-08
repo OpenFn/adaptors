@@ -1,5 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
+import { escape } from './util';
 import { Connection, Request } from 'tedious';
 
 /**
@@ -95,10 +96,8 @@ export function execute(...operations) {
  * @returns {State}
  */
 function cleanupState(state) {
-  if (state.connection) {
-    state.connection.close();
-  }
-  delete state.connection;
+  state?.connection?.close();
+  delete state?.connection;
   return state;
 }
 
@@ -229,16 +228,6 @@ function handleOptions(options) {
   return (options && options.setNull) || "'undefined'";
 }
 
-function escapeQuote(stringExp) {
-  if (typeof stringExp === 'object' && stringExp !== null) {
-    return Object.values(stringExp).map(x => escapeQuote(x));
-  } else if (typeof stringExp !== 'string') {
-    return stringExp;
-  }
-
-  return stringExp.replace(/\'/g, "''");
-}
-
 /**
  * Fetch a uuid key given a condition
  * @public
@@ -251,6 +240,10 @@ function escapeQuote(stringExp) {
  *  })
  * @function
  * @param {object} filter - A filter object with the lookup table, a uuid and the condition
+ * @param {string} filter.uuid - The uuid column to determine a matching/existing record
+ * @param {string} filter.relation - The table to lookup the value in
+ * @param {object} filter.where - The condition to use for the lookup. Values are automatically escaped for security.
+ * @param {object} filter.operator - The operator to use for the lookup
  * @returns {Operation}
  */
 export function findValue(filter) {
@@ -262,10 +255,12 @@ export function findValue(filter) {
     const [operatorData] = expandReferences(state, operator);
 
     let conditionsArray = [];
-    for (let key in whereData)
+    for (let key in whereData) {
+      const escapedValue = escape(whereData[key]);
       conditionsArray.push(
-        `${key} ${operatorData ? operatorData[key] : '='} '${whereData[key]}'`
+        `${key} ${operatorData ? operatorData[key] : '='} '${escapedValue}'`
       );
+    }
 
     const condition =
       conditionsArray.length > 0
@@ -284,15 +279,19 @@ export function findValue(filter) {
         const request = new Request(body, (err, rowCount, rows) => {
           if (err) {
             console.error(err.message);
-            throw err;
+            reject(err);
           } else {
             if (rows.length > 0) {
               returnValue = rows[0][0].value;
             }
-            if (returnValue === null) resolve(undefined);
+            if (returnValue === null) {
+              console.log('No value found');
+              resolve(undefined);
+            }
             resolve(returnValue);
           }
         });
+
         connection.execSql(request);
       });
     } catch (e) {
@@ -321,9 +320,7 @@ export function insert(table, record, options) {
       const [recordData] = expandReferences(state, record);
 
       const columns = Object.keys(recordData).sort();
-      const values = columns
-        .map(key => escapeQuote(recordData[key]))
-        .join("', '");
+      const values = columns.map(key => escape(recordData[key])).join("', '");
 
       const query = handleValues(
         `INSERT INTO ${table} (${columns.join(', ')}) VALUES ('${values}');`,
@@ -369,7 +366,7 @@ export function insertMany(table, records, options) {
       const columns = Object.keys(recordData[0]);
 
       const valueSets = recordData.map(
-        x => `('${escapeQuote(Object.values(x)).join("', '")}')`
+        x => `('${escape(Object.values(x)).join("', '")}')`
       );
       const query = handleValues(
         `INSERT INTO ${table} (${columns.join(', ')}) VALUES ${valueSets.join(
@@ -417,11 +414,11 @@ export function upsert(table, uuid, record, options) {
       const columns = Object.keys(recordData).sort();
 
       const selectValues = columns
-        .map(key => `'${escapeQuote(recordData[key])}' AS ${key}`)
+        .map(key => `'${escape(recordData[key])}' AS ${key}`)
         .join(', ');
 
       const updateValues = columns
-        .map(key => `[Target].${key}='${escapeQuote(recordData[key])}'`)
+        .map(key => `[Target].${key}='${escape(recordData[key])}'`)
         .join(', ');
 
       const insertColumns = columns.join(', ');
@@ -503,11 +500,11 @@ export function upsertIf(logical, table, uuid, record, options) {
           return state;
         }
         const selectValues = columns
-          .map(key => `'${escapeQuote(recordData[key])}' AS ${key}`)
+          .map(key => `'${escape(recordData[key])}' AS ${key}`)
           .join(', ');
 
         const updateValues = columns
-          .map(key => `[Target].${key}='${escapeQuote(recordData[key])}'`)
+          .map(key => `[Target].${key}='${escape(recordData[key])}'`)
           .join(', ');
 
         const insertColumns = columns.join(', ');
@@ -587,7 +584,7 @@ export function upsertMany(table, uuid, records, options) {
         const columns = Object.keys(recordData[0]);
 
         const valueSets = recordData.map(
-          x => `('${escapeQuote(Object.values(x)).join("', '")}')`
+          x => `('${escape(Object.values(x)).join("', '")}')`
         );
         const insertColumns = columns.join(', ');
         const insertValues = columns.map(key => `[Source].${key}`).join(', ');

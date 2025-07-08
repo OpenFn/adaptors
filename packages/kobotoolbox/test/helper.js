@@ -61,5 +61,6 @@ export function responseWithPagination(items, query, settings) {
             startIndex - effectiveLimit
           )}&limit=${effectiveLimit}`;
   } while (shouldFetchMoreContent);
+
   return response;
 }

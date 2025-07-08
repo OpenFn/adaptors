@@ -1,6 +1,20 @@
 # @openfn/language-dhis2
 
-## 7.0.0
+## 7.0.2 - 01 July 2025
+
+### Patch Changes
+
+- aa2f46b: - Adjust logging in create to not include item details.
+  - Fix issues in docs.
+
+## 7.0.1 - 20 June 2025
+
+### Patch Changes
+
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
+
+## 7.0.0 - 04 June 2025
 
 This release of DHSI2 contains major breaking changes.
 

@@ -1,7 +1,5 @@
-
-import { updateChangelog } from './updateChangelog';
-import getAdaptorsFromDir from './utils';
-
+import { updateChangelog } from './updateChangelog.js';
+import getAdaptorsFromDir from './utils.js';
 
 async function fetchVersions(adaptor) {
   try {
@@ -27,9 +25,8 @@ async function getVersionHistory() {
     const adaptorName = `@openfn/language-${adaptor}`;
     const data = await fetchVersions(adaptorName);
     console.log(`Fetching ${adaptor}`);
-    
 
-    if (!data.error) {      
+    if (!data.error) {
       await updateChangelog(adaptor, data);
     }
   }

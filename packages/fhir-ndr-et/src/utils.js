@@ -9,7 +9,8 @@ const systemMap = {
 };
 
 // https://hl7.org/fhir/R4/datatypes.html#dateTime
-const datetimeregex = /([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?/
+const datetimeregex =
+  /([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?/;
 
 export const mapSystems = obj => {
   if (Array.isArray(obj)) {
@@ -27,7 +28,7 @@ export const mapSystems = obj => {
 
 /**
  * Define a set of mapped system values.
- * 
+ *
  * Builder functions will use this mappings when they encounter them in system keys. Useful for setting shortcuts.
  * @public
  * @function
@@ -77,16 +78,16 @@ export const identifier = (input, system) => {
   }
 };
 
-/** 
+/**
  * Alias for util.identifier()
  * @public
  * @function
  */
-export const id = identifier
+export const id = identifier;
 
 /**
  * Add an extension to a resource (or object).
- * An object will be created and added to an `extension` array on the provided resource. 
+ * An object will be created and added to an `extension` array on the provided resource.
  * The extension array will be set if it does not exist on the resource.
  * The value will be smartly written to the object, ie, valueDateTime or valueReference or valueString
  * @public
@@ -100,7 +101,7 @@ export const addExtension = (resource, url, value) => {
     url: url,
   };
 
-  composite(obj, 'value', value)
+  composite(obj, 'value', value);
 
   resource.extension ??= [];
   resource.extension.push(obj);
@@ -140,10 +141,10 @@ export const coding = (code, system) => ({ code, system: mapSystems(system) });
  * Systems will be mapped with the system map
  * @public
  * @function
- * @example <caption><Create a codeableConcept</caption>
- * const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])  
- * * @example <caption><Create a codeableConcept with text</caption>
- * const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])  
+ * @example <caption>Create a codeableConcept</caption>
+ * const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
+ * @example <caption>Create a codeableConcept with text</caption>
+ * const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  */
 export const concept = (text, ...codings) => {
   const result = {};
@@ -167,14 +168,14 @@ export const concept = (text, ...codings) => {
   return result;
 };
 
-/** 
+/**
  * Alias for util.concept()
  * @public
  * @function
  */
 export const cc = concept;
 
-/** 
+/**
  * Create a reference object of the form { reference }
  * If ref is an array, each item will be mapped and an array returned.
  * If ref is a FHIR resource, a reference to it will be generated
@@ -186,12 +187,12 @@ export const cc = concept;
  */
 export const reference = (ref, opts) => {
   if (Array.isArray(ref)) {
-    return ref.map(reference, opts)
+    return ref.map(reference, opts);
   }
   // If passed a resource, generate a reference to this resource
   if (ref.resourceType && ref.id) {
     // TODO is this right? Or just the id?
-    return { reference: `${ref.resourceType}/${ref.id}` }
+    return { reference: `${ref.resourceType}/${ref.id}` };
   }
   // if passed an existing reference object, just return it
   if (ref.reference) {
@@ -211,18 +212,18 @@ export const reference = (ref, opts) => {
   return result;
 };
 
-/** 
+/**
  * Alias for util.reference()
  * @public
  * @function
  */
 export const ref = reference;
 
-/** 
+/**
  * Write a value to the target object using a typed key
  * Ie, if key is `value` and the value is a date time string,
  * this function will write `valueDateTime` to the object.
- * 
+ *
  * This function is poorly named.
  * @public
  * @function
@@ -238,41 +239,40 @@ export const composite = (object, key, value) => {
   // like how would we tell date time from a string?
 
   if (value.coding) {
-    k.push('CodeableConcept')
-  }
-  else if (value.reference) {
-    k.push('Reference')
+    k.push('CodeableConcept');
+  } else if (value.reference) {
+    k.push('Reference');
   }
   // if the incoming value is a reference or another resource, make it a reference
   // TODO Is this a bit cheeky? A bit presumptuous?
-  else if ((value.id && value.meta && value.resourceType)) {
-    k.push('Reference')
+  else if (value.id && value.meta && value.resourceType) {
+    k.push('Reference');
     // eslint-disable-next-line no-param-reassign
-    value = reference(value)
+    value = reference(value);
   } else if (value.start || value.end) {
     // TODO maybe we should test that start/end are datetimes using that fancy regex?
-    k.push('Period')
+    k.push('Period');
   } else if (value.dateTime) {
-    k.push('DateTime')
+    k.push('DateTime');
   } else if (typeof value === 'string') {
     if (datetimeregex.test(value)) {
-      k.push('DateTime')
+      k.push('DateTime');
     } else {
-      k.push('String')
+      k.push('String');
     }
   } else if (typeof value === 'boolean') {
-    k.push('Boolean')
+    k.push('Boolean');
   } else if (typeof value === 'number') {
-    k.push('Integer')
+    k.push('Integer');
   }
   // TODO: other data types need mapping
 
   if (k.length === 2) {
-    const finalKey = k.join('')
+    const finalKey = k.join('');
     object[finalKey] = value;
   } else {
-    console.warn(`WARNING: Failed to map ${key}: unrecognised data type (see utils.composite)`);
+    console.warn(
+      `WARNING: Failed to map ${key}: unrecognised data type (see utils.composite)`
+    );
   }
-
-}
-
+};

@@ -71,6 +71,15 @@ describe('Integration tests', () => {
   });
 
   describe('getSubmissions', () => {
+    it('should return the first submission', async () => {
+      const firstSubmissionUid = '7054126b-2b4e-4c8e-a48d-8c0f47c706e9';
+      const { data } = await execute(
+        getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', { start: 0, limit: 1 })
+      )(state);
+
+      expect(data[0]._uuid).to.eq(firstSubmissionUid);
+      expect(data.length).to.eq(1);
+    });
     it('should get a list of submissions', async () => {
       const { data } = await execute(
         getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', { pageSize: 3 })

@@ -17,7 +17,8 @@
           },
           {
             "title": "example",
-            "description": "getTask(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n});"
+            "description": "getTask(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n});",
+            "caption": "Get a task"
           },
           {
             "title": "function",
@@ -44,6 +45,15 @@
           },
           {
             "title": "param",
+            "description": "The fields to return.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "params.opt_fields"
+          },
+          {
+            "title": "param",
             "description": "(Optional) callback function",
             "type": {
               "type": "NameExpression",
@@ -61,7 +71,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "getTasks",
@@ -80,7 +90,13 @@
           },
           {
             "title": "example",
-            "description": "getTasks(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n});"
+            "description": "getTasks(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n});",
+            "caption": "Get all tasks"
+          },
+          {
+            "title": "example",
+            "description": "getTasks(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n  limit: 100,\n});",
+            "caption": "Limit the number of tasks returned"
           },
           {
             "title": "function",
@@ -107,6 +123,24 @@
           },
           {
             "title": "param",
+            "description": "The maximum number of tasks to return.",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "params.limit"
+          },
+          {
+            "title": "param",
+            "description": "The fields to return.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "params.opt_fields"
+          },
+          {
+            "title": "param",
             "description": "(Optional) callback function",
             "type": {
               "type": "NameExpression",
@@ -124,13 +158,13 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "updateTask",
       "params": [
         "taskGid",
-        "params",
+        "data",
         "callback"
       ],
       "docs": {
@@ -143,7 +177,8 @@
           },
           {
             "title": "example",
-            "description": "updateTask(\"1206933955023739\", {\n  name: \"test\",\n  approval_status: \"pending\",\n  assignee: \"12345\",\n});"
+            "description": "updateTask(\"1206933955023739\", {\n  name: \"test\",\n  approval_status: \"pending\",\n  assignee: \"12345\",\n});",
+            "caption": "Update a task"
           },
           {
             "title": "function",
@@ -161,12 +196,12 @@
           },
           {
             "title": "param",
-            "description": "Body parameters",
+            "description": "Body data to update the task with",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "params"
+            "name": "data"
           },
           {
             "title": "param",
@@ -259,7 +294,8 @@
           },
           {
             "title": "example",
-            "description": "upsertTask(\"1201382240880\", {\n  externalId: \"name\",\n  data: {\n    name: \"test\",\n    approval_status: \"pending\",\n    projects: [\"1201382240880\"],\n    assignee: \"12345\",\n  },\n});"
+            "description": "upsertTask(\"1201382240880\", {\n  externalId: \"name\",\n  data: {\n    name: \"test\",\n    approval_status: \"pending\",\n    projects: [\"1201382240880\"],\n    assignee: \"12345\",\n  },\n});",
+            "caption": "Upsert a task"
           },
           {
             "title": "function",
@@ -286,6 +322,24 @@
           },
           {
             "title": "param",
+            "description": "The external id field name",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "params.externalId"
+          },
+          {
+            "title": "param",
+            "description": "The data to upsert.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params.data"
+          },
+          {
+            "title": "param",
             "description": "(Optional) callback function",
             "type": {
               "type": "NameExpression",
@@ -303,7 +357,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "createTaskStory",
