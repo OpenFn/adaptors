@@ -1,5 +1,11 @@
 # @openfn/language-openmrs
 
+## 5.1.0
+
+### Minor Changes
+
+- 3a97556: Add support for `langauge` option
+
 ## 5.0.4 - 20 June 2025
 
 ### Patch Changes

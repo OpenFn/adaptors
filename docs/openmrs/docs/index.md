@@ -269,6 +269,10 @@ get("patient/abc/allergy")
 ```js
 get("patient/abc/allergy/xyz")
 ```
+**Example:** Get patient by UUID and set the language to French
+```js
+get("patient/abc", { language: "fr" })
+```
 
 * * *
 
@@ -594,6 +598,7 @@ Options to append to the request. Unless otherwise specified, options are append
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | [query] | <code>string</code> |  | (OpenFn only) Query string. Maps to `q` in OpenMRS. |
+| [language] | <code>string</code> |  | (OpenFn only) Language code. Maps to `Accept-Language` in OpenMRS. |
 | [max] | <code>number</code> | <code>10000</code> | (OpenFn only) Restrict the maximum number of retrieved records. May be fetched in several pages. Not used if `limit` is set. |
 | [pageSize] | <code>number</code> | <code>1000</code> | (OpenFn only) Limits the size of each page of data. Not used if limit is set. |
 | [singleton] | <code>boolean</code> |  | (OpenFn only) If set to true, only the first result will be returned. Useful for "get by id" APIs. |
