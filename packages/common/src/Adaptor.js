@@ -975,3 +975,26 @@ export function debug(...args) {
     return state;
   };
 }
+
+/**
+ * Run an operation and save the result to a custom key in state instead of overwriting state.data.
+ * @public
+ * @function
+ * @example <caption>Fetch cce-data from collections and store them under state.cceData</caption>
+ * as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));
+ * @param {string} key - The state key to assign the result of the operation to.
+ * @param {function} operation -  An operation that returns a new state object with a `data` property
+ * @returns {Operation}
+ */
+export function as(key, operation) {
+  return async state => {
+    const [resolvedKey] = expandReferences(state, key);
+    const prevState = state.data;
+    const result = await operation(state);
+    const { data, ...rest } = result;
+
+    state[resolvedKey] = data;
+    state.data = prevState;
+    return { ...state, ...rest };
+  };
+}

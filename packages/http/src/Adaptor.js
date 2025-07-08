@@ -194,6 +194,8 @@ export function parseXML(data, script) {
 export {
   alterState,
   arrayToString,
+  as,
+  chunk,
   combine,
   cursor,
   dataPath,
@@ -204,15 +206,14 @@ export {
   fields,
   fn,
   fnIf,
-  chunk,
   group,
   humanProper,
   lastReferenceValue,
+  map,
   merge,
+  parseCsv,
   scrubEmojis,
   sourceValue,
   splitKeys,
   toArray,
-  parseCsv,
-  map
 } from '@openfn/language-common';

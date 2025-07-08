@@ -796,4 +796,5 @@ export {
   cursor,
   merge,
   sourceValue,
+  as
 } from '@openfn/language-common';

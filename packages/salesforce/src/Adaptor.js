@@ -708,6 +708,7 @@ export function sfRequest(httpRequest) {
 export {
   alterState,
   arrayToString,
+  as,
   chunk,
   combine,
   dataPath,
@@ -718,17 +719,17 @@ export {
   fields,
   fn,
   fnIf,
+  group,
   humanProper,
   index,
   join,
-  group,
   jsonValue,
   lastReferenceValue,
+  map,
   merge,
   referencePath,
   scrubEmojis,
   source,
   sourceValue,
   toArray,
-  map
 } from '@openfn/language-common';

@@ -129,4 +129,5 @@ export {
   merge,
   sourceValue,
   lastReferenceValue,
+  as
 } from '@openfn/language-common';
