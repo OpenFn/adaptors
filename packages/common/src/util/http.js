@@ -1,4 +1,4 @@
-import { Client, MockAgent } from 'undici';
+import { Client, MockAgent, setGlobalDispatcher } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
@@ -6,7 +6,7 @@ import path from 'node:path';
 import throwError from './throw-error';
 import { encode } from './base64';
 
-const clients = new Map();
+export const clients = new Map();
 
 export const makeBasicAuthHeader = (username, password) => {
   const buff = Buffer.from(`${username}:${password}`);
@@ -35,13 +35,16 @@ export const logResponse = response => {
   return response;
 };
 
-const getClient = (baseUrl, options) => {
+export const getClient = (baseUrl, options) => {
   const { tls } = options;
   if (!clients.has(baseUrl)) {
-    clients.set(baseUrl, new Client(baseUrl, { connect: tls }));
+    const client = new Client(baseUrl, { connect: tls });
+    client.__tlsOptions = tls;
+    clients.set(baseUrl, client);
   }
   return clients.get(baseUrl);
 };
+
 
 export const enableMockClient = baseUrl => {
   const mockAgent = new MockAgent({ connections: 1 });
