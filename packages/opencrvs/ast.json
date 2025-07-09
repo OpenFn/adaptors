@@ -10,7 +10,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "createBirthNotification([\n{\nfullUrl: 'urn:uuid:706905cf-7e5d-4d9f-866a-a3795780a990',\nresource: {\nresourceType: 'Observation',\nstatus: 'final',\ncontext: {\nreference: 'urn:uuid:7cb1d9cc-ea4b-4046-bea0-38bdf3082f56',\n},\ncategory: [\n{\ncoding: [\n{\nsystem: 'http://hl7.org/fhir/observation-category',\ncode: 'procedure',\ndisplay: 'Procedure',\n},\n],\n},\n],\ncode: {\ncoding: [\n{\nsystem: 'http://loinc.org',\ncode: '73764-3',\ndisplay: 'Birth attendant title',\n},\n],\n},\nvalueString: 'PHYSICIAN',\n},\n},\n{\nfullUrl: 'urn:uuid:eee21c26-67a2-40af-8cf7-5f4bc969153f',\nresource: {\nresourceType: 'QuestionnaireResponse',\nextension: [],\nstatus: 'completed',\nsubject: {\nreference: 'urn:uuid:7cb1d9cc-ea4b-4046-bea0-38bdf3082f56',\n},\nitem: [\n{\ntext: 'birth.mother.mother-view-group.motherIdType',\nlinkId: '',\nanswer: [\n{\nvalueString: 'NATIONAL_ID',\n},\n],\n},\n{\ntext: 'birth.father.father-view-group.fatherIdType',\nlinkId: '',\nanswer: [\n{\nvalueString: 'NATIONAL_ID',\n},\n],\n},\n],\n},\n},\n]);"
+            "description": "createBirthNotification([\n{\nfullUrl: 'urn:uuid:eee21c26-67a2-40af-8cf7-5f4bc969153f',\nresource: {\nresourceType: 'QuestionnaireResponse',\nextension: [],\nstatus: 'completed',\nsubject: {\nreference: 'urn:uuid:7cb1d9cc-ea4b-4046-bea0-38bdf3082f56',\n},\nitem: [\n{\ntext: 'birth.mother.mother-view-group.motherIdType',\nlinkId: '',\nanswer: [\n{\nvalueString: 'NATIONAL_ID',\n},\n],\n},\n{\ntext: 'birth.father.father-view-group.fatherIdType',\nlinkId: '',\nanswer: [\n{\nvalueString: 'NATIONAL_ID',\n},\n],\n},\n],\n},\n},\n]);"
           },
           {
             "title": "function",
@@ -24,7 +24,7 @@
           },
           {
             "title": "param",
-            "description": "Birth Notification object resources to be created in FHIR bundle format",
+            "description": "An array of Birth Notification FHIR resources",
             "type": {
               "type": "NameExpression",
               "name": "Array"
@@ -58,7 +58,13 @@
         "tags": [
           {
             "title": "example",
-            "description": "query(\n{\nevent: 'birth',\nregistrationStatuses: ['REGISTERED'],\nchildGender: 'male',\ndateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',\ndateOfRegistrationStart: '2021-11-01T00:00:00.000Z',\ndeclarationJurisdictionId: '',\neventLocationId: '704b9706-d729-4834-8656-05b562065deb',\nfatherFirstNames: 'Dad',\nmotherFirstNames: 'Mom',\n},\n{ count: 10, skip: 0 }\n);"
+            "description": "query(\n{\nevent: 'birth',\nregistrationStatuses: ['REGISTERED'],\nchildGender: 'male',\ndateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',\ndateOfRegistrationStart: '2021-11-01T00:00:00.000Z',\ndeclarationJurisdictionId: '',\neventLocationId: '704b9706-d729-4834-8656-05b562065deb',\nfatherFirstNames: 'Dad',\nmotherFirstNames: 'Mom',\n},\n);",
+            "caption": "Search for events with specific parameters"
+          },
+          {
+            "title": "example",
+            "description": "query(\n{\nevent: 'birth',\nregistrationStatuses: ['REGISTERED'],\nchildGender: 'male',\ndateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',\ndateOfRegistrationStart: '2021-11-01T00:00:00.000Z',\ndeclarationJurisdictionId: '',\neventLocationId: '704b9706-d729-4834-8656-05b562065deb',\nfatherFirstNames: 'Dad',\nmotherFirstNames: 'Mom',\n},\n{ count: 10, skip: 0 }\n);",
+            "caption": "Search for events with options"
           },
           {
             "title": "function",
@@ -72,7 +78,7 @@
           },
           {
             "title": "param",
-            "description": "GraphQl query variables",
+            "description": "GraphQl advanced search parameters",
             "type": {
               "type": "NameExpression",
               "name": "Object"
@@ -81,155 +87,10 @@
           },
           {
             "title": "param",
-            "description": "Options to control the request, such as `count` and `skip`",
+            "description": "Options to control the request, such as `count` and `skip`. Count defaults to 10.",
             "type": {
               "type": "NameExpression",
               "name": "Object"
-            },
-            "name": "options"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{OpenCRVSState}"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "post",
-      "params": [
-        "path",
-        "body",
-        "options"
-      ],
-      "docs": {
-        "description": "Make a POST request",
-        "tags": [
-          {
-            "title": "example",
-            "description": "post(\"/location\", {\n\"statisticalID\": \"TEST_LOCATION\",\n\"name\": \"My name\",\n\"alias\": \"My alias\",\n\"partOf\": \"Location/0\",\n\"code\": \"ADMIN_STRUCTURE\",\n\"jurisdictionType\": \"STATE\",\n\"statistics\": [\n{\n\"year\": 0,\n\"male_population\": 0,\n\"female_population\": 0,\n\"population\": 0,\n\"crude_birth_rate\": 0\n}\n]\n});"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Path to resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Object which will be attached to the POST body",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
-            },
-            "name": "options"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{OpenCRVSState}"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "request",
-      "params": [
-        "method",
-        "path",
-        "body",
-        "options"
-      ],
-      "docs": {
-        "description": "Make a general HTTP request",
-        "tags": [
-          {
-            "title": "example",
-            "description": "request(\"POST\", \"/location\", {\n\"statisticalID\": \"TEST_LOCATION\",\n\"name\": \"My name\",\n\"alias\": \"My alias\",\n\"partOf\": \"Location/0\",\n\"code\": \"ADMIN_STRUCTURE\",\n\"jurisdictionType\": \"STATE\",\n\"statistics\": [\n{\n\"year\": 0,\n\"male_population\": 0,\n\"female_population\": 0,\n\"population\": 0,\n\"crude_birth_rate\": 0\n}\n]\n});",
-            "caption": "Create a new administrative location"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "HTTP method to use",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "method"
-          },
-          {
-            "title": "param",
-            "description": "Path to resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Object which will be attached to the POST body",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
             },
             "name": "options"
           },

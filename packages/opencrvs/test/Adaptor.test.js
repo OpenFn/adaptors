@@ -3,8 +3,6 @@ import { enableMockClient } from '@openfn/language-common/util';
 
 import {
   execute,
-  request,
-  post,
   createBirthNotification,
   queryEvents,
 } from '../src/Adaptor.js';
@@ -39,57 +37,7 @@ before(() => {
     .persist();
 });
 
-describe('request', () => {
-  it('sends a POST request and sets response and data on state', async () => {
-    const payload = { foo: 'bar' };
-    const expectedResponse = { status: 'ok', received: true };
 
-    testServer
-      .intercept({
-        path: '/test',
-        method: 'POST',
-        headers: {
-          Authorization: 'Bearer fake-token',
-          'Content-Type': 'application/json',
-        },
-      })
-      .reply(200, expectedResponse);
-
-    state.data = payload;
-
-    const finalState = await execute(request('POST', '/test', payload))(state);
-
-    expect(finalState.response).to.be.an('object');
-    expect(finalState.response.statusCode).to.equal(200);
-
-    expect(finalState.data).to.deep.equal(expectedResponse);
-  });
-});
-
-describe('post', () => {
-  it('sends a POST request with body and returns parsed response in state', async () => {
-    const payload = { foo: 'bar' };
-    const responseBody = { success: true, received: payload };
-
-    testServer
-      .intercept({
-        path: '/test',
-        method: 'POST',
-        headers: {
-          Authorization: 'Bearer fake-token',
-          'Content-Type': 'application/json',
-        },
-      })
-      .reply(200, responseBody);
-
-    state.data = payload;
-
-    const finalState = await execute(post('/test', state => state.data))(state);
-
-    expect(finalState.response.statusCode).to.equal(200);
-    expect(finalState.data).to.deep.equal(responseBody);
-  });
-});
 
 describe('createBirthRecord', () => {
   it('successfully creates a birth record', async () => {
