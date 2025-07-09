@@ -118,7 +118,7 @@ export function execute(...operations) {
 
  * @function
  * @public
- * @param {Array} body - Birth Notification object resources to be created in FHIR bundle format
+ * @param {Array} body - An array of Birth Notification FHIR resources
  * @returns {Operation}
  * @state {OpenCRVSState}
  */
