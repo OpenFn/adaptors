@@ -10,7 +10,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "createBirthNotification($.data)"
+            "description": "createBirthNotification([\n{\nfullUrl: 'urn:uuid:706905cf-7e5d-4d9f-866a-a3795780a990',\nresource: {\nresourceType: 'Observation',\nstatus: 'final',\ncontext: {\nreference: 'urn:uuid:7cb1d9cc-ea4b-4046-bea0-38bdf3082f56',\n},\ncategory: [\n{\ncoding: [\n{\nsystem: 'http://hl7.org/fhir/observation-category',\ncode: 'procedure',\ndisplay: 'Procedure',\n},\n],\n},\n],\ncode: {\ncoding: [\n{\nsystem: 'http://loinc.org',\ncode: '73764-3',\ndisplay: 'Birth attendant title',\n},\n],\n},\nvalueString: 'PHYSICIAN',\n},\n},\n{\nfullUrl: 'urn:uuid:eee21c26-67a2-40af-8cf7-5f4bc969153f',\nresource: {\nresourceType: 'QuestionnaireResponse',\nextension: [],\nstatus: 'completed',\nsubject: {\nreference: 'urn:uuid:7cb1d9cc-ea4b-4046-bea0-38bdf3082f56',\n},\nitem: [\n{\ntext: 'birth.mother.mother-view-group.motherIdType',\nlinkId: '',\nanswer: [\n{\nvalueString: 'NATIONAL_ID',\n},\n],\n},\n{\ntext: 'birth.father.father-view-group.fatherIdType',\nlinkId: '',\nanswer: [\n{\nvalueString: 'NATIONAL_ID',\n},\n],\n},\n],\n},\n},\n]);"
           },
           {
             "title": "function",
@@ -24,10 +24,10 @@
           },
           {
             "title": "param",
-            "description": "Birth Notification object to be created in FHIR bundle format",
+            "description": "Birth Notification object resources to be created in FHIR bundle format",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "Array"
             },
             "name": "body"
           },

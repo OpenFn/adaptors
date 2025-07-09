@@ -53,37 +53,6 @@ export function execute(...operations) {
  * @example
  * createBirthNotification([
   {
-    fullUrl: 'urn:uuid:706905cf-7e5d-4d9f-866a-a3795780a990',
-    resource: {
-      resourceType: 'Observation',
-      status: 'final',
-      context: {
-        reference: 'urn:uuid:7cb1d9cc-ea4b-4046-bea0-38bdf3082f56',
-      },
-      category: [
-        {
-          coding: [
-            {
-              system: 'http://hl7.org/fhir/observation-category',
-              code: 'procedure',
-              display: 'Procedure',
-            },
-          ],
-        },
-      ],
-      code: {
-        coding: [
-          {
-            system: 'http://loinc.org',
-            code: '73764-3',
-            display: 'Birth attendant title',
-          },
-        ],
-      },
-      valueString: 'PHYSICIAN',
-    },
-  },
-  {
     fullUrl: 'urn:uuid:eee21c26-67a2-40af-8cf7-5f4bc969153f',
     resource: {
       resourceType: 'QuestionnaireResponse',
@@ -148,7 +117,21 @@ export function createBirthNotification(body) {
 
 /**
  * Make an events search query against the OpenCRVS GraphQL API.
- * @example
+ * @example <caption>Search for events with specific parameters</caption>
+ * query(
+  {
+    event: 'birth',
+    registrationStatuses: ['REGISTERED'],
+    childGender: 'male',
+    dateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',
+    dateOfRegistrationStart: '2021-11-01T00:00:00.000Z',
+    declarationJurisdictionId: '',
+    eventLocationId: '704b9706-d729-4834-8656-05b562065deb',
+    fatherFirstNames: 'Dad',
+    motherFirstNames: 'Mom',
+  },
+);
+ * @example <caption>Search for events with options</caption>
  * query(
   {
     event: 'birth',
@@ -165,12 +148,12 @@ export function createBirthNotification(body) {
 );
  * @function
  * @public
- * @param {Object} variables - GraphQl query variables 
- * @param {Object} options - Options to control the request, such as `count` and `skip`
+ * @param {Object} variables - GraphQl advanced search parameters
+ * @param {Object} options - Options to control the request, such as `count` and `skip`. Count defaults to 10.
  * @returns {Operation}
  * @state {OpenCRVSState}
  */
-export function queryEvents(variables = {}, options = {}) {
+export function queryEvents(variables, options = {}) {
   return async state => {
     const [resolvedVariables, resolvedOptions] = expandReferences(
       state,
@@ -188,13 +171,18 @@ export function queryEvents(variables = {}, options = {}) {
           query: searchEventsQuery,
           variables: { advancedSearchParameters: resolvedVariables },
           count: resolvedOptions.count || 10,
-          skip: resolvedOptions.skip || 0,
+          skip: resolvedOptions.skip,
           ...resolvedOptions,
         },
       }
     );
 
-    return util.prepareNextState(state, response);
+    const body = response.body.data.searchEvents.results;
+
+    return util.prepareNextState(state, {
+      ...response,
+      body,
+    });
   };
 }
 

@@ -1,2 +1,79 @@
-export const searchEventsQuery =
-  'query searchEvents($advancedSearchParameters: AdvancedSearchParametersInput!, $sort: String, $count: Int, $skip: Int) {\nsearchEvents(\n  advancedSearchParameters: $advancedSearchParameters\n  sort: $sort\n  count: $count\n  skip: $skip\n) {\n  totalItems\n  results {\n    id\n    type\n    registration {\n      status\n      contactNumber\n      trackingId\n      registrationNumber\n      registeredLocationId\n      duplicates\n      assignment {\n        practitionerId\n        firstName\n        lastName\n        officeName\n        __typename\n      }\n      createdAt\n      modifiedAt\n      __typename\n    }\n    operationHistories {\n      operationType\n      operatedOn\n      operatorRole\n      operatorName {\n        firstNames\n        familyName\n        use\n        __typename\n      }\n      operatorOfficeName\n      operatorOfficeAlias\n      notificationFacilityName\n      notificationFacilityAlias\n      rejectReason\n      rejectComment\n      __typename\n    }\n    ... on BirthEventSearchSet {\n      dateOfBirth\n      childName {\n        firstNames\n        familyName\n        use\n        __typename\n      }\n      __typename\n    }\n    ... on DeathEventSearchSet {\n      dateOfDeath\n      deceasedName {\n        firstNames\n        familyName\n        use\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  __typename\n}}';
+export const searchEventsQuery = `
+  query searchEvents(
+    $advancedSearchParameters: AdvancedSearchParametersInput!
+    $sort: String
+    $count: Int
+    $skip: Int
+  ) {
+    searchEvents(
+      advancedSearchParameters: $advancedSearchParameters
+      sort: $sort
+      count: $count
+      skip: $skip
+    ) {
+      totalItems
+      results {
+        id
+        type
+        registration {
+          status
+          contactNumber
+          trackingId
+          registrationNumber
+          registeredLocationId
+          duplicates
+          assignment {
+            practitionerId
+            firstName
+            lastName
+            officeName
+            __typename
+          }
+          createdAt
+          modifiedAt
+          __typename
+        }
+        operationHistories {
+          operationType
+          operatedOn
+          operatorRole
+          operatorName {
+            firstNames
+            familyName
+            use
+            __typename
+          }
+          operatorOfficeName
+          operatorOfficeAlias
+          notificationFacilityName
+          notificationFacilityAlias
+          rejectReason
+          rejectComment
+          __typename
+        }
+        ... on BirthEventSearchSet {
+          dateOfBirth
+          childName {
+            firstNames
+            familyName
+            use
+            __typename
+          }
+          __typename
+        }
+        ... on DeathEventSearchSet {
+          dateOfDeath
+          deceasedName {
+            firstNames
+            familyName
+            use
+            __typename
+          }
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+  }
+`;
