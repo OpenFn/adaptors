@@ -1,5 +1,11 @@
 # @openfn/language-pesapal
 
+## 1.1.1 - 10 July 2025
+
+### Patch Changes
+
+- f182cfc: Add required fields in configuration-schema
+
 ## 1.1.0 - 10 July 2025
 
 ### Minor Changes

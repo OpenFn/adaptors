@@ -70,7 +70,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "post('Transactions/SubmitOrderRequest', \n{\n\"id\": \"TEST-05\",\n\"currency\": \"KES\",\n\"amount\": \"1\",\n\"description\": \"Testing\",\n\"callback_url\": \"https://www.myapplication.com/response-page\",\n\"notification_id\": \"fe078e53-78da-4a83-aa89-e7ded5c456e6\",\n\"billing_address\": {\n\"email_address\": \"john.doe@example.com\",\n\"phone_number\": \"0712xxxxxx\",\n\"country_code\": \"\",\n\"first_name\": \"Doe\",\n\"middle_name\": \"\",\n\"last_name\": \"John\",\n\"line_1\": \"\",\n\"line_2\": \"\",\n\"city\": \"\",\n\"state\": \"\",\n\"postal_code\": \"\",\n\"zip_code\": \"\"\n}\n})",
+            "description": "post(\"Transactions/SubmitOrderRequest\", {\n  id: \"TEST-05\",\n  currency: \"KES\",\n  amount: \"1\",\n  description: \"Testing\",\n  callback_url: \"https://www.myapplication.com/response-page\",\n  notification_id: \"fe078e53-78da-4a83-aa89-e7ded5c456e6\",\n  billing_address: {\n    email_address: \"john.doe@example.com\",\n    phone_number: \"0712xxxxxx\",\n    country_code: \"\",\n    first_name: \"Doe\",\n    middle_name: \"\",\n    last_name: \"John\",\n    line_1: \"\",\n    line_2: \"\",\n    city: \"\",\n    state: \"\",\n    postal_code: \"\",\n    zip_code: \"\",\n  },\n});",
             "caption": "Send an order request"
           },
           {
