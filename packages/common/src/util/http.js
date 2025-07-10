@@ -257,11 +257,11 @@ function encodeRequestBody(body) {
 
 async function readResponseBody(response, parseAs) {
   let contentLength = -1;
-  if (`content-length` in response.headers) {
+  if ('content-length' in response.headers) {
     contentLength = parseInt(response.headers['content-length']);
   }
 
-  if (contentLength < 0 || response.statusCode === 204) {
+  if (contentLength == 0 || response.statusCode === 204) {
     return;
   }
 
