@@ -140,7 +140,7 @@ export function createBirthNotification(body) {
 );
  * @function
  * @public
- * @param {Object} variables - GraphQl advanced search parameters
+ * @param {Object} variables - GraphQL search parameters. For a full list of options, see [variables.advancedSearchParameters in OpenCRVS Docs](https://documentation.opencrvs.org/technology/interoperability/record-search-clients#record-search-requests)
  * @param {Object} options - Options to control the request, such as `count` and `skip`. Count defaults to 10.
  * @returns {Operation}
  * @state {OpenCRVSState}

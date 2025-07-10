@@ -78,7 +78,7 @@
           },
           {
             "title": "param",
-            "description": "GraphQl advanced search parameters",
+            "description": "GraphQL search parameters. For a full list of options, see [variables.advancedSearchParameters in OpenCRVS Docs](https://documentation.opencrvs.org/technology/interoperability/record-search-clients#record-search-requests)",
             "type": {
               "type": "NameExpression",
               "name": "Object"
