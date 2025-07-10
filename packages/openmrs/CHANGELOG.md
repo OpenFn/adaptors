@@ -1,10 +1,10 @@
 # @openfn/language-openmrs
 
-## 5.1.0 - 10 July 2025
+## 5.2.0 - 10 July 2025
 
 ### Minor Changes
 
-- 19f2d7e: Exported `as()` function from common.
+- 19f2d7e: Exported `as()` function from common
 - 8d78db4: Export `map()` function from common
 
 ### Patch Changes
@@ -15,6 +15,12 @@
 - Updated dependencies \[f26bd2b]
 - Updated dependencies \[19f2d7e]
   - @openfn/language-common@3.0.0
+
+## 5.1.0
+
+### Minor Changes
+
+- 3a97556: Add support for `language` option
 
 ## 5.0.4 - 20 June 2025
 
