@@ -2,6 +2,18 @@ import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import { post } from './Client';
 import { resolve as resolveUrl } from 'url';
+import * as util from './Util';
+
+/**
+ * State object
+ * @typedef {Object} HttpState
+ * @private
+ * @property data - the parsed response body
+ * @property response - the response from the OpenHIM server, including headers, statusCode, etc
+ * @property references - an array of all previous data objects used in the Job
+ **/
+
+
 
 /**
  * Execute a sequence of operations.
@@ -52,14 +64,66 @@ export function encounter(encounterData) {
   };
 }
 
+/**
+ * Get transactions query options
+ * @typedef {Object} OpenHIMGetTransactionsOptions
+ * @public
+ * @property {string} transactionId - The ID of the transaction to retrieve. If provided, only this transaction will be returned.
+ * @property {number} filterLimit - The maximum number of transactions to return. Defaults to 100.
+ * @property {number} filterPage - The page to return (used in conjunction with filterLimit).
+ * @property {object} filterRepresentation - Determines how much information for a transaction to return.
+ * @property {object} filters - Advanced filters to apply to the transactions. This is a JSON object that can include properties like `response.status` or `properties.prop`.
+ */
+
+
+/**
+ * Make a request to OpenHIM to get transactions
+ * @example <caption>Create a client</caption>
+ * @example <caption>Get all transactions</caption>
+ * http.request('GET','/transactions')
+ * @function
+ * @public
+ * @param {OpenHIMGetTransactionsOptions} options - Optional request options
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function getTransaction(options = {}) {
+  return async state => {
+    const [ resolvedoptions] =
+      expandReferences(state,options);
+
+    const {transactionId} = resolvedoptions;
+
+    const response = await util.request(
+      state.configuration,
+      'GET',
+      transactionId ? `/transactions/${transactionId}` : '/transactions',
+      {
+        query:{
+          ...resolvedoptions,
+        }
+      }
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+
+
 export {
-  fn,
   fnIf,
-  field,
-  fields,
-  sourceValue,
-  merge,
   dataPath,
   dataValue,
+  dateFns,
+  cursor,
+  each,
+  field,
+  fields,
+  fn,
   lastReferenceValue,
+  merge,
+  sourceValue,
+  as,
+  map,
 } from '@openfn/language-common';
