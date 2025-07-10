@@ -1,7 +1,5 @@
-import {
-  execute as commonExecute,
-  expandReferences,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 import { escape } from './util';
 import { Connection, Request } from 'tedious';
 
@@ -190,7 +188,8 @@ export function sql(params) {
     const { connection } = state;
 
     try {
-      const { query, options } = expandReferences(params)(state);
+      const [resolvedParams] = expandReferences(state, params);
+      const { query, options } = resolvedParams;
 
       console.log(`Preparing to execute sql statement: ${query}`);
       return queryHandler(state, query, composeNextState, options);
@@ -252,8 +251,8 @@ export function findValue(filter) {
     const { connection } = state;
 
     const { uuid, relation, where, operator } = filter;
-    const whereData = expandReferences(where)(state);
-    const operatorData = expandReferences(operator)(state);
+    const [whereData] = expandReferences(state, where);
+    const [operatorData] = expandReferences(state, operator);
 
     let conditionsArray = [];
     for (let key in whereData) {
@@ -318,7 +317,7 @@ export function insert(table, record, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(record)(state);
+      const [recordData] = expandReferences(state, record);
 
       const columns = Object.keys(recordData).sort();
       const values = columns.map(key => escape(recordData[key])).join("', '");
@@ -361,7 +360,7 @@ export function insertMany(table, records, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(records)(state);
+      const [recordData] = expandReferences(state, records);
 
       // Note: we select the keys of the FIRST object as the canonical template.
       const columns = Object.keys(recordData[0]);
@@ -411,7 +410,7 @@ export function upsert(table, uuid, record, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(record)(state);
+      const [recordData] = expandReferences(state, record);
       const columns = Object.keys(recordData).sort();
 
       const selectValues = columns
@@ -490,9 +489,9 @@ export function upsertIf(logical, table, uuid, record, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(record)(state);
+      const [recordData] = expandReferences(state, record);
       const columns = Object.keys(recordData).sort();
-      const logicalData = expandReferences(logical)(state);
+      const [logicalData] = expandReferences(state, logical);
 
       return new Promise((resolve, reject) => {
         if (!logicalData) {
@@ -573,7 +572,7 @@ export function upsertMany(table, uuid, records, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(records)(state);
+      const [recordData] = expandReferences(state, records);
 
       return new Promise((resolve, reject) => {
         if (!recordData || recordData.length === 0) {
@@ -647,7 +646,7 @@ export function upsertMany(table, uuid, records, options) {
 export function describeTable(tableName, options) {
   return state => {
     const { connection } = state;
-    const name = expandReferences(tableName)(state);
+    const [name] = expandReferences(state, tableName);
 
     try {
       const query = `SELECT column_name
@@ -686,7 +685,7 @@ export function insertTable(tableName, columns, options) {
   return state => {
     const { connection } = state;
     try {
-      const data = expandReferences(columns)(state);
+      const [data] = expandReferences(state, columns);
 
       return new Promise((resolve, reject) => {
         if (!data || data.length === 0) {
@@ -746,7 +745,7 @@ export function modifyTable(tableName, columns, options) {
     const { connection } = state;
 
     try {
-      const data = expandReferences(columns)(state);
+      const [data] = expandReferences(state, columns);
 
       return new Promise((resolve, reject) => {
         if (!data || data.length === 0) {
@@ -797,4 +796,5 @@ export {
   cursor,
   merge,
   sourceValue,
+  as
 } from '@openfn/language-common';

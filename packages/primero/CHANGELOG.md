@@ -1,5 +1,20 @@
 # @openfn/language-primero
 
+## 3.2.0 - 10 July 2025
+
+### Minor Changes
+
+- 19f2d7e: Exported `as()` function from common.
+
+### Patch Changes
+
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
 ## 3.1.4 - 20 June 2025
 
 ### Patch Changes

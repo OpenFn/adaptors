@@ -424,6 +424,7 @@ export function destroy(path, options) {
 export {
   alterState,
   arrayToString,
+  as,
   cursor,
   dataPath,
   dataValue,
@@ -434,6 +435,7 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
+  map,
   merge,
   sourceValue,
   util,

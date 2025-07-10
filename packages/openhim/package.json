@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-openhim",
   "label": "OpenHIM",
-  "version": "0.3.14",
+  "version": "0.3.15",
   "description": "openhim Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
