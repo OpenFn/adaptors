@@ -3,11 +3,11 @@ import { enableMockClient } from '@openfn/language-common/util';
 
 import { request, get, post } from '../src/Adaptor.js';
 
-const testServer = enableMockClient('https://pesapal.server.com');
+const testServer = enableMockClient('https://cybaq.pesapal.com');
 
 const configuration = {
   apiVersion: 'pesapalv3',
-  baseUrl: 'https://pesapal.server.com',
+  baseUrl: 'https://cybaq.pesapal.com',
   access_token: 'someaccesstoken',
 };
 
