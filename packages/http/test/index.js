@@ -725,9 +725,7 @@ describe('delete', () => {
 });
 
 describe('getTLSOptions', () => {
-
-
-  it('returns requestOptions.tls if provided', () => {
+  it('prefers requestOptions.tls over and agent options configuration.tls', () => {
     const state = {
       configuration: {
         ca: 'config-ca',
@@ -736,6 +734,7 @@ describe('getTLSOptions', () => {
     };
 
     const requestOptions = {
+      agentOptions: { ca: 'agent-ca', key: 'agent-key' },
       tls: { ca: 'tls-from-request', cert: 'req-cert' },
     };
 
@@ -743,7 +742,7 @@ describe('getTLSOptions', () => {
     expect(result).to.deep.equal(requestOptions.tls);
   });
 
-  it('falls back to requestOptions.agentOptions if tls is not provided', () => {
+  it('prefers requestOptions.agentOptions over configuration.tls if requestOptions.tls is not provided', () => {
     const state = {
       configuration: {
         ca: 'config-ca',
@@ -777,7 +776,7 @@ describe('getTLSOptions', () => {
     });
   });
 
-  it('falls back to tlsConfig.ca if ca not in configuration', () => {
+  it('uses state.configuration.tls if no other options are provided', () => {
     const state = {
       configuration: {
         tls: { ca: 'tls-ca', cert: 'tls-cert' },
