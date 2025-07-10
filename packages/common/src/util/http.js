@@ -1,4 +1,4 @@
-import { Client, MockAgent } from 'undici';
+import { Client, MockAgent, setGlobalDispatcher } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
@@ -42,6 +42,7 @@ const getClient = (baseUrl, options) => {
   }
   return clients.get(baseUrl);
 };
+
 
 export const enableMockClient = baseUrl => {
   const mockAgent = new MockAgent({ connections: 1 });

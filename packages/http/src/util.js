@@ -33,6 +33,17 @@ function encodeFormBody(data) {
   return form;
 }
 
+export function getTLSOptions(state, requestOptions) {
+  const { ca, tls: tlsConfig } = state.configuration || {};
+
+  const tls = requestOptions.tls ??
+    requestOptions.agentOptions ?? {
+      ca: ca || tlsConfig?.ca,
+      ...tlsConfig,
+    };
+  return tls;
+}
+
 const assertUrl = (pathOrUrl, baseUrl) => {
   if (!baseUrl && pathOrUrl && !/^https?:\/\//.test(pathOrUrl)) {
     const e = new Error('UNEXPECTED_RELATIVE_URL');
@@ -102,11 +113,12 @@ export function request(method, path, params) {
       resolvedParams.maxRedirections ??
       (resolvedParams.followAllRedirects === false ? 0 : 5);
 
-    const tls = resolvedParams.tls ?? resolvedParams.agentOptions;
+    const tls = getTLSOptions(state, resolvedParams);
+    console.log({ tls });
 
     if (resolvedParams.agentOptions) {
       console.warn(
-        'WARNING: The `agentOptions` option has been deprecated. Use `tls` instead'
+        'WARNING: The `agentOptions` option has been deprecated. Add `tls` to state.configuration instead.'
       );
     }
 
