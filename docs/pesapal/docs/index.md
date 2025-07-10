@@ -98,29 +98,28 @@ This operation writes the following keys to state:
 
 **Example:** Send an order request 
 ```js
-post('Transactions/SubmitOrderRequest', 
-    {
-        "id": "TEST-05",
-        "currency": "KES",
-        "amount": "1",
-        "description": "Testing",
-        "callback_url": "https://www.myapplication.com/response-page",
-        "notification_id": "fe078e53-78da-4a83-aa89-e7ded5c456e6",
-        "billing_address": {
-            "email_address": "john.doe@example.com",
-            "phone_number": "0712xxxxxx",
-            "country_code": "",
-            "first_name": "Doe",
-            "middle_name": "",
-            "last_name": "John",
-            "line_1": "",
-            "line_2": "",
-            "city": "",
-            "state": "",
-            "postal_code": "",
-            "zip_code": ""
-        }
-})
+post("Transactions/SubmitOrderRequest", {
+  id: "TEST-05",
+  currency: "KES",
+  amount: "1",
+  description: "Testing",
+  callback_url: "https://www.myapplication.com/response-page",
+  notification_id: "fe078e53-78da-4a83-aa89-e7ded5c456e6",
+  billing_address: {
+    email_address: "john.doe@example.com",
+    phone_number: "0712xxxxxx",
+    country_code: "",
+    first_name: "Doe",
+    middle_name: "",
+    last_name: "John",
+    line_1: "",
+    line_2: "",
+    city: "",
+    state: "",
+    postal_code: "",
+    zip_code: "",
+  },
+});
 ```
 
 * * *
