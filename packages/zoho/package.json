@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-zoho",
   "label": "Zoho",
-  "version": "0.4.15",
+  "version": "0.4.16",
   "description": "zoho Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {

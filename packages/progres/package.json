@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-progres",
   "label": "ProGres",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "An OpenFn adaptor to work with UNHCR's ProGres case management system",
   "homepage": "https://docs.openfn.org",
   "repository": {

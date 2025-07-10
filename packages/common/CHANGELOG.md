@@ -1,5 +1,12 @@
 ## 3.0.0 - 10 July 2025
 
+## 3.0.1 - 10 July 2025
+
+### Patch Changes
+
+- cf9c09f: Fix an issue where JSON responses without a content-type header could
+  return undefined
+
 The 3.0 release of the common adaptor restructures some key internal
 functionality and re-writes the `map()` function to feel more modern.
 
@@ -20,16 +27,13 @@ convenience function.
 
 The behaviour of the `map()` function has changed subtly but significantly.
 
-Existing workflows should replace `map()` with `each()`, which has the
-same functionality.
+Existing workflows should replace `map()` with `each()`, which has the same
+functionality.
 
 So if you used to do this:
 
 ```js
-map(
-  '$.[*]',
-  create('SObject', field('FirstName', sourceValue('$.firstName')))
-);
+map('$.[*]', create('SObject', field('FirstName', sourceValue('$.firstName'))));
 ```
 
 You must do this instead:
@@ -306,7 +310,7 @@ content type to JSON.
 ### Minor Changes
 
 - aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access_token" keys can be used for OAuth2-reliant adaptors
+  "access\_token" keys can be used for OAuth2-reliant adaptors
 
 ## 1.9.0 - 23 June 2023
 
