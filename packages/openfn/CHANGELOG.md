@@ -1,5 +1,16 @@
 # @openfn/language-openfn
 
+## 3.0.1 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
 ## 3.0.0 - 02 July 2025
 
 ### Major Changes

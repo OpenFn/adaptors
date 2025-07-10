@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-medicmobile",
   "label": "Medic Mobile",
-  "version": "0.5.15",
+  "version": "0.5.16",
   "description": "A Medic Mobile language pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
