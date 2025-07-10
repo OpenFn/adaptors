@@ -28,6 +28,9 @@ This adaptor exports the following from common:
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
 </dt>
 <dt>
+    <a href="/adaptors/packages/common-docs#as">as()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#combine">combine()</a>
 </dt>
 <dt>

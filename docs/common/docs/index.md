@@ -2,6 +2,8 @@
 <dt>
     <a href="#arraytostring">arrayToString(arr, separator)</a></dt>
 <dt>
+    <a href="#as">as(key, operation)</a></dt>
+<dt>
     <a href="#asdata">asData(data, state)</a></dt>
 <dt>
     <a href="#assert">assert(expression, errorMessage)</a></dt>
@@ -21,8 +23,6 @@
     <a href="#debug">debug(args)</a></dt>
 <dt>
     <a href="#each">each(dataSource, operation)</a></dt>
-<dt>
-    <a href="#expandreferences">expandReferences(value, [skipFilter])</a></dt>
 <dt>
     <a href="#field">field(key, value)</a></dt>
 <dt>
@@ -44,9 +44,11 @@
 <dt>
     <a href="#lastreferencevalue">lastReferenceValue(path)</a></dt>
 <dt>
+    <a href="#lodash">lodash()</a></dt>
+<dt>
     <a href="#log">log(args)</a></dt>
 <dt>
-    <a href="#map">map(path, operation, state)</a></dt>
+    <a href="#map">map(path, callback)</a></dt>
 <dt>
     <a href="#merge">merge(dataSource, fields)</a></dt>
 <dt>
@@ -129,6 +131,26 @@ Turns an array into a string, separated by X.
 field("destination_string__c", function(state) {
   return arrayToString(dataValue("path_of_array")(state), ', ')
 })
+```
+
+* * *
+
+### as
+
+<p><code>as(key, operation) ⇒ Operation</code></p>
+
+Run an operation and save the result to a custom key in state instead of overwriting state.data.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | The state key to assign the result of the operation to. |
+| operation | <code>function</code> | An operation that returns a new state object with a `data` property |
+
+
+**Example:** Fetch cce-data from collections and store them under state.cceData
+```js
+as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));
 ```
 
 * * *
@@ -389,22 +411,6 @@ each(
 
 * * *
 
-### expandReferences
-
-<p><code>expandReferences(value, [skipFilter]) ⇒ Operation</code></p>
-
-Recursively resolves objects that have resolvable values (functions).
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| value | <code>object</code> | data |
-| [skipFilter] | <code>function</code> | a function which returns true if a value should be skipped |
-
-
-
-* * *
-
 ### field
 
 <p><code>field(key, value) ⇒ Field</code></p>
@@ -610,6 +616,27 @@ lastReferenceValue('key')
 
 * * *
 
+### lodash
+
+<p><code>lodash()</code></p>
+
+Lodash utility library.
+All lodash v4.17 functions are available on the `_` namespace, eg,
+`_.map`, `_.cloneDeep`, etc.
+
+**See**: https://lodash.com/docs/  
+
+**Example:** Split an array into chunks of 2 items each
+```js
+fn(state => {
+  const items = [1, 2, 3, 4, 5];
+  const chunks = lodash.chunk(items, 2);
+  return { ...state, chunks };
+});
+```
+
+* * *
+
 ### log
 
 <p><code>log(args) ⇒ Operation</code></p>
@@ -638,29 +665,44 @@ fn((state) => {
 
 ### map
 
-<p><code>map(path, operation, state) ⇒ State</code></p>
+<p><code>map(path, callback) ⇒ State</code></p>
 
-Scopes an array of data based on a JSONPath.
-Useful when the source data has `n` items you would like to map to
-an operation.
-The operation will receive a slice of the data based of each item
-of the JSONPath provided.
+Iterates over a collection of items and returns a new array of mapped values,
+like Javascript's `Array.map()` function.
+
+Each item in the source array will be passed into the callback function. The returned value
+will be added to the new array. The callback is passed the original item, the current index
+in the source array (ie, the nth item number), and the state object.
+
+Writes a new array to `state.data` with transformed values.c array.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | JSONPath referencing a point in `state.data`. |
-| operation | <code>function</code> | The operation needed to be repeated. |
-| state | <code>State</code> | Runtime state. |
+| path | <code>string</code> \| <code>Array</code> | An array of items or a a JSONPath string which points to an array of items. |
+| callback | <code>function</code> | The mapping function, invoked with `(data, index, state)` for each item in the array. |
 
 
-**Example**
+**Example:**  Transform an array of items in state
 ```js
-map("$.[*]",
-  create("SObject",
-    field("FirstName", sourceValue("$.firstName"))
-  )
-)
+map($.items', (data, index, state) => {
+  return {
+    id: index + 1,
+    name: data.name,
+    createdAt: state.cursor,
+  };
+});
+```
+**Example:** Map items asynchronously (e.g. fetch extra info)
+```js
+map($.items, async (data, index, state) => {
+  const userInfo = await fetchUserInfo(data.userId);
+  return {
+    id: index + 1,
+    name: data.name,
+    extra: userInfo,
+  };
+});
 ```
 
 * * *

@@ -7,6 +7,9 @@
 This adaptor exports the following from common:
 <dl>
 <dt>
+    <a href="/adaptors/packages/common-docs#as">as()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#combine">combine()</a>
 </dt>
 <dt>

@@ -11,6 +11,9 @@
 This adaptor exports the following from common:
 <dl>
 <dt>
+    <a href="/adaptors/packages/common-docs#as">as()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#cursor">cursor()</a>
 </dt>
 <dt>

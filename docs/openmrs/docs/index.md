@@ -45,6 +45,9 @@ This adaptor exports the following from common:
     <a href="/adaptors/packages/common-docs#arraytostring">arrayToString()</a>
 </dt>
 <dt>
+    <a href="/adaptors/packages/common-docs#as">as()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#cursor">cursor()</a>
 </dt>
 <dt>
@@ -73,6 +76,9 @@ This adaptor exports the following from common:
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#map">map()</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#merge">merge()</a>
