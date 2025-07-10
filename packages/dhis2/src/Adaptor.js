@@ -650,18 +650,20 @@ function callNewTracker(
 
 export {
   alterState,
+  as,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
-  cursor,
   each,
   field,
   fields,
   fn,
   fnIf,
-  http,
   group,
+  http,
   lastReferenceValue,
+  map,
   merge,
   sourceValue,
 } from '@openfn/language-common';

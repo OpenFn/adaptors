@@ -12,14 +12,12 @@ import {
   dataValue,
   each,
   execute,
-  expandReferences,
   field,
   fields,
   index,
   join,
   jsonValue,
   lastReferenceValue,
-  map,
   merge,
   group,
   parseCsv,
@@ -33,6 +31,9 @@ import {
   assert as assertCommon,
   log,
   debug,
+  _ as lodash,
+  map,
+  as,
 } from '../src/Adaptor';
 import { startOfToday } from 'date-fns';
 
@@ -72,6 +73,19 @@ describe('execute', () => {
   });
 });
 
+describe('lodash', () => {
+  it('should map values', () => {
+    const mappedValues = lodash.map([1, 2, 3], n => n * 2);
+
+    expect(mappedValues).to.eql([2, 4, 6]);
+  });
+  it('should filter values', () => {
+    const filteredValues = lodash.filter([1, 2, 3, 4, 5], n => n % 2 === 0);
+
+    expect(filteredValues).to.eql([2, 4]);
+  });
+});
+
 describe('jsonValue', function () {
   it('should return the first value at a JSON path if it exists, or undefined', function () {
     const input = { a: { b: { c: 1, e: '' } } };
@@ -101,24 +115,92 @@ describe('source', () => {
 });
 
 describe('map', () => {
-  xit('[DEPRECATED] can produce a one to one from an array', () => {
-    let items = [];
-
+  it('can map a single item from an array', async () => {
     let state = { data: testData, references: [] };
-    let results = map(
-      '$.data.store.book[*]',
-      function (state) {
-        return { references: [1, ...state.references], ...state };
-      },
-      state
-    );
+    let results = await map('$.data.store.book[*]', function (data) {
+      return { label: data.title };
+    })(state);
 
-    expect(results.references).to.eql([
-      { title: 'Sayings of the Century' },
-      { title: 'Sword of Honour' },
-      { title: 'Moby Dick' },
-      { title: 'The Lord of the Rings' },
+    expect(results.data).to.eql([
+      { label: 'Sayings of the Century' },
+      { label: 'Sword of Honour' },
+      { label: 'Moby Dick' },
+      { label: 'The Lord of the Rings' },
     ]);
+  });
+  it('can map items from an array and add values', async () => {
+    let state = { data: testData, references: [] };
+    let results = await map(state.data.store.book, function (data, index) {
+      return {
+        id: index + 1,
+        title: data.title,
+        price: data.price,
+        expensive: data.price > 10,
+      };
+    })(state);
+
+    expect(results.data).to.eql([
+      {
+        id: 1,
+        title: 'Sayings of the Century',
+        price: 8.95,
+        expensive: false,
+      },
+      { id: 2, title: 'Sword of Honour', price: 12.99, expensive: true },
+      { id: 3, title: 'Moby Dick', price: 8.99, expensive: false },
+      {
+        id: 4,
+        title: 'The Lord of the Rings',
+        price: 22.99,
+        expensive: true,
+      },
+    ]);
+  });
+  it('can use state to map items', async () => {
+    let state = { data: testData, references: [] };
+    state.baseId = 'book-';
+    let results = await map(
+      '$.data.store.book[*]',
+      function (data, index, state) {
+        return {
+          id: state.baseId + index,
+        };
+      }
+    )(state);
+    expect(results.data).to.eql([
+      { id: 'book-0' },
+      { id: 'book-1' },
+      { id: 'book-2' },
+      { id: 'book-3' },
+    ]);
+  });
+  it('can use async callback to map items with state', async () => {
+    let state = { data: testData, references: [] };
+    state.baseId = 'book-';
+    let results = await map(
+      '$.data.store.book[*]',
+      async function (data, index, state) {
+        await new Promise(resolve => setTimeout(resolve, 10));
+        return {
+          id: state.baseId + index,
+          label: data.title,
+        };
+      }
+    )(state);
+    expect(results.data).to.eql([
+      { id: 'book-0', label: 'Sayings of the Century' },
+      { id: 'book-1', label: 'Sword of Honour' },
+      { id: 'book-2', label: 'Moby Dick' },
+      { id: 'book-3', label: 'The Lord of the Rings' },
+    ]);
+  });
+  it('ensures the index value is correct', async () => {
+    let state = { data: testData, references: [] };
+    let results = await map('$.data.store.book[*]', function (data, index) {
+      return index;
+    })(state);
+
+    expect(results.data).to.eql([0, 1, 2, 3]);
   });
 });
 
@@ -154,44 +236,6 @@ describe('join', () => {
       price: 8.95,
       title: 'Sayings of the Century',
     });
-  });
-});
-
-describe('expandReferences', () => {
-  it('resolves function values on objects', () => {
-    let result = expandReferences({
-      a: s => s,
-      // function nested inside an object inside and array
-      b: [2, { c: s => s + 2 }, 3],
-      c: 4,
-      // function that returns a function
-      d: s => s => s + 4,
-    })(1);
-
-    expect(result).to.eql({
-      a: 1,
-      b: [2, { c: 3 }, 3],
-      c: 4,
-      d: 5,
-    });
-  });
-
-  it("doesn't affect empty objects", () => {
-    let result = expandReferences({})(1);
-
-    expect(result).to.eql({});
-    result = expandReferences([])(1);
-    expect(result).to.eql([]);
-    result = expandReferences(null)(1);
-    expect(result).to.eql(null);
-    result = expandReferences(undefined)(1);
-    expect(result).to.eql(undefined);
-  });
-
-  it('resolves function values on arrays', () => {
-    let result = expandReferences([2, { c: s => s + 2 }, 3])(1);
-
-    expect(result).to.eql([2, { c: 3 }, 3]);
   });
 });
 
@@ -1209,5 +1253,57 @@ describe('debug', () => {
   afterEach(() => {
     consoleOutput = [];
     console.debug = originalDebug;
+  });
+});
+
+describe('as', () => {
+  it('saves data into a custom key in state', async () => {
+    const state = { data: {}, references: [] };
+    const results = await as('comments', state => {
+      return { ...state, data: testData };
+    })(state);
+    expect(results.comments).to.eql(testData);
+  });
+
+  it('ensures state.data to be the same after  operation is complete', async () => {
+    const state = { data: {}, references: [] };
+    const results = await as('comments', state => {
+      return { ...state, data: testData };
+    })(state);
+    expect(results.data).to.eql({});
+  });
+
+  it('state object before the as is the same as after the as (excluding the new key)', async () => {
+    const data = [{ x: 'a' }, { x: 'b' }, { x: 'b' }];
+
+    const state = { data: {}, references: [] };
+    const { grouped, ...rest } = await as('grouped', group(data, 'x'))(state);
+
+    expect(rest).to.eql({ data: {}, references: [] });
+    expect(grouped.a).to.eql([{ x: 'a' }]);
+    expect(grouped.b).to.eql([{ x: 'b' }, { x: 'b' }]);
+    expect(grouped).to.eql({
+      a: [{ x: 'a' }],
+      b: [{ x: 'b' }, { x: 'b' }],
+    });
+  });
+
+  it('preserves extra data added to state', async () => {
+    const state = { data: {}, references: [] };
+    const results = await as('comments', state => {
+      return { ...state, data: testData, responses: { status: 200 } };
+    })(state);
+    expect(results.responses).to.eql({ status: 200 });
+  });
+
+  it('can expand references on key', async () => {
+    const state = { data: {}, references: [], key: 'comments' };
+    const results = await as(
+      state => state.key,
+      state => {
+        return { ...state, data: testData, responses: { status: 200 } };
+      }
+    )(state);
+    expect(results.comments).to.eql(testData);
   });
 });

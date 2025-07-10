@@ -327,6 +327,66 @@ describe('request()', () => {
     // Should not include a next link
     expect(response.body.links.length).to.eql(0);
   });
+
+  it('should include Accept-Language header when language option is provided', async () => {
+    const requests = [];
+    const response = await request(state, 'GET', '/ws/rest/v1/patient', {
+      query: { q: 'bill' },
+      language: 'fr-FR',
+      _onrequest: r => {
+        requests.push(r);
+      },
+    });
+
+    expect(response.statusCode).to.eql(200);
+    expect(requests.length).to.eql(1);
+
+    const requestInfo = requests[0];
+    expect(requestInfo.headers).to.include({
+      'Accept-Language': 'fr-FR',
+    });
+  });
+
+  it('should not include Accept-Language header when language option is not provided', async () => {
+    const requests = [];
+    const response = await request(state, 'GET', '/ws/rest/v1/patient', {
+      query: { q: 'bill' },
+      _onrequest: r => {
+        requests.push(r);
+      },
+    });
+
+    expect(response.statusCode).to.eql(200);
+    expect(requests.length).to.eql(1);
+
+    const requestInfo = requests[0];
+    expect(requestInfo.headers).to.not.have.property('Accept-Language');
+  });
+
+  it('should preserve existing headers when adding Accept-Language', async () => {
+    const requests = [];
+    const response = await request(state, 'GET', '/ws/rest/v1/patient', {
+      query: { q: 'bill' },
+      language: 'de-DE',
+      headers: {
+        'X-Custom-Header': 'custom-value',
+        'content-type': 'application/json',
+      },
+      _onrequest: r => {
+        requests.push(r);
+      },
+    });
+
+    expect(response.statusCode).to.eql(200);
+    expect(requests.length).to.eql(1);
+
+    const requestInfo = requests[0];
+    expect(requestInfo.headers).to.include({
+      'Accept-Language': 'de-DE',
+      'X-Custom-Header': 'custom-value',
+      'content-type': 'application/json',
+    });
+  });
 });
 
 describe('requestWithPagination', () => {

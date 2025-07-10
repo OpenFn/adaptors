@@ -1,28 +1,35 @@
-import {
-  execute as commonExecute,
-  composeNextState,
-  expandReferences,
-} from '@openfn/language-common';
-import axios from 'axios';
-import { fileURLToPath } from 'url';
-import path, { resolve } from 'path';
-import fs from 'fs';
-
-const __dirname = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const filepath = path.join(__dirname, 'package.json');
-const pkg = JSON.parse(fs.readFileSync(filepath));
-const { version } = pkg;
-const defaultHeaders = { 'User-Agent': `language-openfn-v${version}` };
+import { execute as commonExecute } from '@openfn/language-common';
+import { request as sendRequest } from './util';
 
 /**
- * Execute a sequence of operations.
- * Wraps `language-common/execute`, and prepends initial state for http.
+ * Options provided to the OpenFn API request
+ * @typedef {Object} RequestOptions
+ * @public
+ * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
+ * @property {object|string} body - body data to append to the request. JSON will be converted to a string.
+ * @property {object} query - An object of query parameters to be encoded into the URL.
+ * @property {object} headers - An object of headers to append to the request.
+ * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
+ * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
+ */
+
+/**
+ * State object
+ * @typedef {Object} OpenFnState
+ * @property data - the parsed response body
+ * @property response - the response from the OpenFn API, including headers, statusCode, body, etc
+ * @property references - an array of all previous data objects used in the Job
+ * @private
+ **/
+
+/**
+ * Execute a sequence of operations
+ * Wraps `language-common/execute`, and prepends initial state for OpenFn.
  * @example
  * execute(
- *   create('foo'),
- *   delete('bar')
+ *   get('/jobs'),
+ *   post('/jobs', { name: 'test' })
  * )(state)
- * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
@@ -33,93 +40,82 @@ export function execute(...operations) {
   };
 
   return state => {
-    return commonExecute(
-      login,
-      ...operations
-      // logout
-    )({ ...initialState, ...state });
-    // .catch(e => {
-    //   console.error(e);
-    //   logout;
-    //   process.exit(1);
-    // });
+    return commonExecute(...operations)({ ...initialState, ...state });
   };
-}
-
-function login(state) {
-  const { configuration } = state;
-  const { host, password, username } = configuration;
-
-  return axios({
-    method: 'post',
-    url: `${host}/api/login`,
-    headers: { ...defaultHeaders },
-    data: {
-      session: {
-        email: username,
-        password: password,
-      },
-    },
-  }).then(response => {
-    console.log('Authentication succeeded.');
-    const { jwt } = response.data;
-    return { ...state, configuration: { ...configuration, host, jwt } };
-  });
-}
-
-function logout(state) {
-  const { jwt } = state;
-  const { host } = state.configuration;
-  return axios({
-    method: 'post',
-    url: `${host}/api/logout`,
-    headers: {
-      ...defaultHeaders,
-      Authorization: `Bearer ${jwt}`,
-    },
-  }).then(() => {
-    delete state.configuration;
-    resolve(state);
-  });
 }
 
 /**
- * Make a POST request
+ * Make a HTTP request to OpenFn API. Requires authentication first.
  * @public
- * @example
- *  request({method: 'get', path: '/jobs/});
+ * @example <caption>Make a GET request</caption>
+ * request('GET', 'jobs', {
+ *   query: { limit: 10 },
+ * });
+ * @example <caption>Make a POST request with a body</caption>
+ * request('POST', 'jobs', {
+ *   body: {
+ *     name: 'test job',
+ *     expression: 'fn(state => state)'
+ *   },
+ * });
  * @function
- * @param {object} options - Body, Query, Headers and Authentication parameters
- * @param {function} callback - (Optional) Callback function
+ * @param {string} method - The HTTP method to use.
+ * @param {string} path - Path to resource (relative to /api/).
+ * @param {RequestOptions} options - Body, Query, Headers and Authentication parameters
+ * @state {OpenFnState}
  * @returns {Operation}
  */
-export function request(options, callback) {
-  return state => {
-    const { host, jwt } = state.configuration;
-    const { method, path, params, data } = expandReferences(options)(state);
+export function request(method, path, options) {
+  return sendRequest(method, path, options);
+}
 
-    return axios({
-      method,
-      headers: {
-        ...defaultHeaders,
-        Authorization: `Bearer ${jwt}`,
-      },
-      url: `${host}/api/${path}`,
-      params,
-      data,
-    }).then(response => {
-      const { data } = response;
-      const nextState = composeNextState(state, data);
-      if (callback) {
-        return callback(nextState);
-      }
-      return nextState;
-    });
-  };
+/**
+ * Make a GET request to OpenFn API. Requires authentication first.
+ * @public
+ * @example <caption>GET request with query parameters</caption>
+ * get('jobs', {
+ *   query: { limit: 10, offset: 0 },
+ * });
+ * @function
+ * @param {string} path - Path to resource (relative to /api/).
+ * @param {RequestOptions} options - Query, Headers and Authentication parameters
+ * @state {OpenFnState}
+ * @returns {Operation}
+ */
+export function get(path, options) {
+  return sendRequest('GET', path, options);
+}
+
+/**
+ * Make a POST request to OpenFn API. Requires authentication first.
+ * @public
+ * @example <caption>POST a new job</caption>
+ * post('jobs', {
+ *   name: 'test job',
+ *   body: 'fn(state => state)'
+ * });
+ * @example <caption>POST with custom headers</caption>
+ * post('jobs', {
+ *   name: 'test job',
+ *   body: 'fn(state => state)'
+ * }, {
+ *   headers: { 'x-custom': 'value' },
+ * });
+ * @function
+ * @param {string} path - Path to resource (relative to /api/).
+ * @param {object} data - Body data to append to the request. JSON will be converted to a string.
+ * @param {RequestOptions} options - Query, Headers and Authentication parameters
+ * @state {OpenFnState}
+ * @returns {operation}
+ */
+export function post(path, data, options) {
+  return sendRequest('POST', path, { body: data, ...options });
 }
 
 export {
   alterState,
+  cursor,
+  dateFns,
   beta,
   combine,
   dataPath,
@@ -129,7 +125,6 @@ export {
   fn,
   fnIf,
   fields,
-  http,
   lastReferenceValue,
   merge,
   sourceValue,

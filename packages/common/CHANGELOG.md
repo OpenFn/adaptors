@@ -1,11 +1,54 @@
-## 2.4.0 - 22 April 2025
+## 3.0.0 - 10 July 2025
+
+The 3.0 release of the common adaptor restructures some key internal
+functionality and re-writes the `map()` function to feel more modern.
+
+It also and adds exports for the lodash utility library (`_`) an a new `as()`
+convenience function.
+
+### Major Changes
+
+- 3fce58f: - Re-write `map()` to work more like JavaScript's `Array.map()`.
+
+### Minor Changes
+
+- f26bd2b: Export for lodash
+- 19f2d7e: Implement `as()` function for saving the result of an operation to a
+  custom key in state instead of overwriting state.data.
+
+### Migration Guide
+
+The behaviour of the `map()` function has changed subtly but significantly.
+
+Existing workflows should replace `map()` with `each()`, which has the
+same functionality.
+
+So if you used to do this:
+
+```js
+map(
+  '$.[*]',
+  create('SObject', field('FirstName', sourceValue('$.firstName')))
+);
+```
+
+You must do this instead:
+
+```js
+each(
+  '$.[*]',
+  create('SObject', field('FirstName', sourceValue('$.firstName')))
+);
+```
 
 ## 2.5.0 - 20 June 2025
 
 ### Minor Changes
 
 - 28c2e8b: - Updated internal `logResponse` API
-  - Update request to response to include `query` parameters
+- Update request to response to include `query` parameters
+
+## 2.4.0 - 22 April 2025
 
 ### Minor Changes
 
@@ -263,7 +306,7 @@ content type to JSON.
 ### Minor Changes
 
 - aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access\_token" keys can be used for OAuth2-reliant adaptors
+  "access_token" keys can be used for OAuth2-reliant adaptors
 
 ## 1.9.0 - 23 June 2023
 
