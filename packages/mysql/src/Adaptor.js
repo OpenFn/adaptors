@@ -12,6 +12,40 @@ import squel from 'squel';
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
+export function sql(sqlQuery, options, callback) {
+
+  return state => {
+    const { connection } = state;
+    const [resolvedSqlQuery, resolvedOptions] = expandReferences(state, sqlQuery, options);
+
+    if (resolvedOptions && resolvedOptions.writeSql) {
+      console.log('Prepared SQL:', resolvedSqlQuery);
+    }
+
+    if (resolvedOptions && resolvedOptions.execute === false) {
+      return Promise.resolve({ ...state, queries: [...(state.queries || []), resolvedSqlQuery] });
+    }
+
+    return new Promise((resolve, reject) => {
+      connection.query(resolvedSqlQuery, function (err, results, fields) {
+        if (err) {
+          reject(err);
+          console.log('Error executing query. Disconnecting from database.');
+          connection.end();
+        } else {
+          resolve({ results, fields });
+        }
+      });
+    }).then(({ results, fields }) => {
+      const nextState = { ...state, response: { body: results, fields } };
+      if (callback) return callback(nextState);
+      return nextState;
+    });
+  };
+
+  
+}
+
 export function execute(...operations) {
   const initialState = {
     references: [],
