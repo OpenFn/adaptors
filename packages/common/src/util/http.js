@@ -267,10 +267,6 @@ async function readResponseBody(response, parseAs) {
 
   const contentType = response.headers['content-type'];
   try {
-    if (Number.isNaN(contentLength) || contentLength === 0) {
-      return undefined;
-    }
-
     switch (parseAs) {
       case 'json':
         return await response.body.json();
