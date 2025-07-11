@@ -1573,9 +1573,6 @@ importers:
       lodash-fp:
         specifier: ^0.10.4
         version: 0.10.4
-      superagent:
-        specifier: ^3.8.3
-        version: 3.8.3
     devDependencies:
       assertion-error:
         specifier: ^1.1.0
@@ -1607,9 +1604,6 @@ importers:
       sinon:
         specifier: ^1.17.7
         version: 1.17.7
-      superagent-mock:
-        specifier: ^1.12.0
-        version: 1.12.0
 
   packages/openimis:
     dependencies:
