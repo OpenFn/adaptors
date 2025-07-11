@@ -1,3 +1,10 @@
+## 3.0.1 - 11 July 2025
+
+### Patch Changes
+
+- cf9c09f: Fix an issue where JSON responses without a content-type header could
+  return undefined
+
 ## 3.0.0 - 10 July 2025
 
 The 3.0 release of the common adaptor restructures some key internal
@@ -20,16 +27,13 @@ convenience function.
 
 The behaviour of the `map()` function has changed subtly but significantly.
 
-Existing workflows should replace `map()` with `each()`, which has the
-same functionality.
+Existing workflows should replace `map()` with `each()`, which has the same
+functionality.
 
 So if you used to do this:
 
 ```js
-map(
-  '$.[*]',
-  create('SObject', field('FirstName', sourceValue('$.firstName')))
-);
+map('$.[*]', create('SObject', field('FirstName', sourceValue('$.firstName'))));
 ```
 
 You must do this instead:

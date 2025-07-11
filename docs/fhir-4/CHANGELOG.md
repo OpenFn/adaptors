@@ -1,5 +1,12 @@
 # @openfn/language-fhir-4
 
+## 0.1.8 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
 ## 0.1.7 - 10 July 2025
 
 ### Patch Changes
