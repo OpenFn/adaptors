@@ -261,7 +261,14 @@ async function readResponseBody(response, parseAs) {
     contentLength = parseInt(response.headers['content-length']);
   }
 
-  if (contentLength == 0 || response.statusCode === 204) {
+  // Try to work out if the response is empty
+  // If so, we should just return without trying to parse it
+  // (turns out that this isn't easy to do!)
+  if (
+    contentLength == 0 ||
+    response.statusCode === 204 ||
+    (response.statusCode >= 300 && response.statusCode < 400)
+  ) {
     return;
   }
 
