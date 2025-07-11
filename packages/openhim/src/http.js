@@ -163,19 +163,3 @@ export function request(method, path, body, options = {}) {
     return util.prepareNextState(state, response);
   };
 }
-
-export {
-  dataPath,
-  dataValue,
-  dateFns,
-  cursor,
-  each,
-  field,
-  fields,
-  fn,
-  lastReferenceValue,
-  merge,
-  sourceValue,
-  as,
-  map,
-} from '@openfn/language-common';

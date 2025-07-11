@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 import { post, get, put, _delete, request } from '../src/http';
 
-const testServer = enableMockClient('https://platform-tests.openhim.org');
+const testServer = enableMockClient('https://platform-http-tests.openhim.org');
 const jsonHeaders = {
   headers: {
     'Content-Type': 'application/json',
@@ -11,7 +11,7 @@ const jsonHeaders = {
 const configuration = {
   username: 'test',
   password: 'strongpassword',
-  apiUrl: 'https://platform-tests.openhim.org',
+  apiUrl: 'https://platform-http-tests.openhim.org',
 };
 
 const state = {

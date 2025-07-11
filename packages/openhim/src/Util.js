@@ -23,6 +23,8 @@ export const request = async (configuration = {}, method, path, options) => {
   const { query = {}, body = {}, headers = {}, parseAs = 'json' } = options;
   const authHeaders = makeBasicAuthHeader(username, password);
 
+  
+
   const opts = {
     parseAs,
     baseUrl: `${apiUrl}`,
@@ -35,6 +37,8 @@ export const request = async (configuration = {}, method, path, options) => {
     },
     ...options,
   };
+
+  
 
   return commonRequest(method, path, opts).then(logResponse);
 };
