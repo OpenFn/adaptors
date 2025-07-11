@@ -2,7 +2,7 @@
   "name": "@openfn/language-ocl",
   "label": "OCL",
   "version": "1.2.18",
-  "description": "An OCL language package for use with Open Function",
+  "description": "OpenFn adaptor for Open Concept Lab (ORL) terminology services",
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor ocl",

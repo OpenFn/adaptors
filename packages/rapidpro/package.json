@@ -2,7 +2,7 @@
   "name": "@openfn/language-rapidpro",
   "label": "RapidPro",
   "version": "2.0.1",
-  "description": "A RapidPro adaptor for OpenFn",
+  "description": "OpenFn adaptor for RapidPro",
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor rapidpro",

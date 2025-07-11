@@ -2,7 +2,7 @@
   "name": "@openfn/language-medicmobile",
   "label": "Medic Mobile",
   "version": "0.5.17",
-  "description": "A Medic Mobile language pack for OpenFn",
+  "description": "OpenFn adaptor for Medic Mobile",
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor medicmobile",

@@ -2,7 +2,7 @@
   "name": "@openfn/language-openhim",
   "label": "OpenHIM",
   "version": "0.3.16",
-  "description": "openhim Language Pack for OpenFn",
+  "description": "OpenFn adaptor for OpenHIM",
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor openhim",
