@@ -430,27 +430,6 @@ describe('request function', () => {
     expect(response.body).to.eql(undefined);
   });
 
-  // TODO OK we can remove this
-  // This leniency is super useful in unit tests
-  it.skip('should return undefined if no response body and but content-type header is present', async () => {
-    client
-      .intercept({
-        path: '/api',
-        method: 'PUT',
-      })
-      .reply(200, undefined, {
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-    const response = await request('PUT', 'https://www.example.com/api', {
-      parseAs: 'json',
-      body: { id: 2 },
-    });
-
-    expect(response.statusCode).to.eql(200);
-    expect(response.body).to.eql(undefined);
-  });
-
   it('should accept a JSON response with content-length', async () => {
     const body = { jam: 'jar ' };
     client
