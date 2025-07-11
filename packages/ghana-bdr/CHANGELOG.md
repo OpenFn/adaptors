@@ -1,5 +1,12 @@
 # @openfn/language-ghana-bdr
 
+## 0.1.10 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
 ## 0.1.9 - 10 July 2025
 
 ### Patch Changes

@@ -40,7 +40,6 @@ describe('execute', () => {
 });
 
 describe('post', () => {
-
   it('calls the callback', async () => {
     let state = {
       configuration: {
@@ -56,17 +55,17 @@ describe('post', () => {
       })
       .reply(200, { foo: 'bar' });
 
-    await execute(
+    const result = await execute(
       postData({
         url: 'https://fake.server.com/api',
         headers: null,
         body: { a: 1 },
       })
-    )(state).then(state => {
-      let status = state.response.statusCode;
-      let responseBody = state.data;
-      expect(status).to.eq(200);
-      expect(JSON.parse(responseBody)).to.eql({ foo: 'bar' });
-    });
+    )(state);
+
+    const status = result.response.statusCode;
+    const responseBody = result.data;
+    expect(status).to.eq(200);
+    expect(responseBody).to.eql({ foo: 'bar' });
   });
 });

@@ -1,5 +1,12 @@
 # @openfn/language-mailchimp
 
+## 1.0.18 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
 ## 1.0.17 - 10 July 2025
 
 ### Patch Changes
