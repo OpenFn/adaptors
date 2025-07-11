@@ -2,7 +2,7 @@
   "name": "@openfn/language-commcare",
   "label": "CommCare",
   "version": "3.3.1",
-  "description": "Commcare Language Pack for OpenFn",
+  "description": "OpenFn adaptor for CommCare",
   "homepage": "https://docs.openfn.org",
   "repository": {
     "type": "git",

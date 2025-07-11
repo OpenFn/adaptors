@@ -2,7 +2,7 @@
   "name": "@openfn/language-msupply",
   "label": "mSupply",
   "version": "1.0.5",
-  "description": "OpenFn msupply adaptor",
+  "description": "OpenFn adaptor for mSupply",
   "type": "module",
   "exports": {
     ".": {

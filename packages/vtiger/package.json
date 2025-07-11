@@ -2,7 +2,7 @@
   "name": "@openfn/language-vtiger",
   "label": "Vtiger",
   "version": "1.3.17",
-  "description": "A Vtiger Language Pack for OpenFn",
+  "description": "OpenFn adaptor for Vtiger",
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor vtiger",

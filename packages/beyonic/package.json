@@ -2,7 +2,7 @@
   "name": "@openfn/language-beyonic",
   "label": "Beyonic",
   "version": "0.3.17",
-  "description": "beyonic Language Pack for OpenFn",
+  "description": "OpenFn adaptor for Beyonic",
   "homepage": "https://docs.openfn.org",
   "repository": {
     "type": "git",

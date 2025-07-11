@@ -2,7 +2,7 @@
   "name": "@openfn/language-mogli",
   "label": "Mogli",
   "version": "0.6.1",
-  "description": "A Mogli SMS Language Pack for OpenFn",
+  "description": "OpenFn adaptor for Mogli SMS",
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor mogli",

@@ -2,7 +2,7 @@
   "name": "@openfn/language-maximo",
   "label": "Maximo",
   "version": "0.5.19",
-  "description": "An IBM Maximo EAM Language Pack for OpenFn",
+  "description": "OpenFn adaptor for IBM Maximo EAM",
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor maximo",
