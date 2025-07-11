@@ -43,13 +43,60 @@ const getClient = (baseUrl, options) => {
   return clients.get(baseUrl);
 };
 
-export const enableMockClient = baseUrl => {
+export const enableMockClient = (baseUrl, options = {}) => {
+  const { defaultContentType = 'application/json' } = options;
+
   const mockAgent = new MockAgent({ connections: 1 });
   mockAgent.disableNetConnect();
   const client = mockAgent.get(baseUrl);
   if (!clients.has(baseUrl)) {
+    if (defaultContentType) {
+      const _intercept = client.intercept;
+      // because so many unit test use mock json,
+      // force the content-type header if a body is specified
+      client.intercept = (...args) => {
+        const interceptor = _intercept.apply(client, args);
+
+        const _reply = interceptor.reply;
+
+        const ensureJsonHeader = (headers = {}) => {
+          const hasJsonHeader = Object.keys(headers).find(k =>
+            /content-type/i.test(k)
+          );
+          if (!hasJsonHeader) {
+            headers['content-type'] = defaultContentType;
+          }
+        };
+
+        const reply = (...args) => {
+          if (typeof args[0] === 'function') {
+            // call the function
+            // in the resulting object, set the headers
+            const response = _reply.apply(interceptor, args);
+            if (response.body) {
+              response.headers ??= {};
+              ensureJsonHeader(response.headers);
+            }
+            return response;
+          } else {
+            const [code, data, options = {}] = args;
+            if (data) {
+              options.headers ??= {};
+              ensureJsonHeader(options.headers);
+            }
+            return _reply.call(interceptor, code, data, options);
+          }
+        };
+
+        interceptor.reply = reply;
+
+        return interceptor;
+      };
+    }
+
     clients.set(baseUrl, client);
   }
+
   return client;
 };
 
@@ -260,19 +307,14 @@ async function readResponseBody(response, parseAs) {
   if ('content-length' in response.headers) {
     contentLength = parseInt(response.headers['content-length']);
   }
+  const contentType = response.headers['content-type'];
 
   // Try to work out if the response is empty
-  // If so, we should just return without trying to parse it
-  // (turns out that this isn't easy to do!)
-  if (
-    contentLength == 0 ||
-    response.statusCode === 204 ||
-    (response.statusCode >= 300 && response.statusCode < 400)
-  ) {
+  // HTTP spec says content type must be defined if there's a body
+  if (contentLength === 0 || !contentType || response.statusCode === 204) {
     return;
   }
 
-  const contentType = response.headers['content-type'];
   try {
     switch (parseAs) {
       case 'json':

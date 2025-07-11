@@ -479,7 +479,11 @@ describe('HTTP wrappers', () => {
         path: '/v1/projects',
         method: 'POST',
       })
-      .reply(403, 'Forbidden');
+      .reply(403, 'Forbidden', {
+        headers: {
+          'content-type': 'text',
+        },
+      });
 
     const state = {
       configuration,

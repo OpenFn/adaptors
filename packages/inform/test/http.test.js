@@ -11,6 +11,12 @@ const configuration = {
   access_token: 'someaccesstoken',
 };
 
+const jsonHeaders = {
+  headers: {
+    'content-type': 'application/json',
+  },
+};
+
 describe('request', () => {
   it('should get forms with a query', async () => {
     testServer
@@ -24,10 +30,14 @@ describe('request', () => {
         },
       })
 
-      .reply(200, {
-        public: true,
-        formid: 2,
-      });
+      .reply(
+        200,
+        {
+          public: true,
+          formid: 2,
+        },
+        jsonHeaders
+      );
 
     const state = {
       configuration,
@@ -53,10 +63,14 @@ describe('get', () => {
         method: 'GET',
       })
 
-      .reply(200, {
-        public: true,
-        formid: 2,
-      });
+      .reply(
+        200,
+        {
+          public: true,
+          formid: 2,
+        },
+        jsonHeaders
+      );
 
     const state = {
       configuration,

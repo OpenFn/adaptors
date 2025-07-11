@@ -224,7 +224,11 @@ describe('HTTP wrappers', () => {
         path: '/api/programs',
         method: 'POST',
       })
-      .reply(400, 'Bad Request');
+      .reply(400, 'Bad Request', {
+        headers: {
+          'content-type': 'text',
+        },
+      });
 
     const state = {
       configuration,
