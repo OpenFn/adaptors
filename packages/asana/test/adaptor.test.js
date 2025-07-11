@@ -67,7 +67,7 @@ describe('Adaptor Test', () => {
   });
 
   describe('getTask', () => {
-    it.only('should fetch a task by GID', async () => {
+    it('should fetch a task by GID', async () => {
       const taskGid = '12345';
       const params = { opt_fields: 'name,notes' };
       const mockData = { gid: taskGid, name: 'Test Task', notes: 'Some notes' };
