@@ -2,7 +2,9 @@ import { expect, assert } from 'chai';
 import { request, get, post, options } from '../src/http';
 import { assertRelativeUrl, enableMockClient } from '../src/util/http';
 
-const client = enableMockClient('https://a.com');
+const client = enableMockClient('https://a.com', {
+  defaultContentType: 'text',
+});
 
 describe('options', () => {
   it('should return an object', () => {

@@ -1,8 +1,8 @@
 {
   "name": "@openfn/language-telerivet",
   "label": "Telerivet",
-  "version": "0.3.15",
-  "description": "telerivet Language Pack for OpenFn",
+  "version": "0.3.16",
+  "description": "OpenFn adaptor for Telerivet",
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor telerivet",

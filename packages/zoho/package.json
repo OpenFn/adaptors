@@ -1,8 +1,8 @@
 {
   "name": "@openfn/language-zoho",
   "label": "Zoho",
-  "version": "0.4.15",
-  "description": "zoho Language Pack for OpenFn",
+  "version": "0.4.16",
+  "description": "OpenFn adaptor for Zoho",
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor zoho",
