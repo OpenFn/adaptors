@@ -35,6 +35,16 @@
       "format": "uri",
       "minLength": 1,
       "examples": ["https://instance_name.surveycto.com"]
+    },
+    "tls":{
+      "title": "TLS Options",
+      "type": "object",
+      "description": "TLS options to use for HTTPS requests. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions",
+      "writeOnly": true,
+      "examples": [
+        {
+          "cert": "-----BEGIN CERTIFICATE-----\nMIIDXTCCAkWgAwIBAgIJAL5z1k3f4b2wMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNV\nBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdTYW4gSm9zZTET\n-----END CERTIFICATE-----"
+        }]
     }
   },
   "type": "object",
