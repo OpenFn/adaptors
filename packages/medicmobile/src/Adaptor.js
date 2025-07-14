@@ -1,8 +1,8 @@
 import {
   execute as commonExecute,
-  expandReferences,
   composeNextState,
 } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 import request from 'request';
 import queryString from 'query-string';
 import _ from 'lodash';
@@ -99,7 +99,7 @@ export function changesApi(params, callback) {
 
   return state => {
     const { server, db, username, password } = state.configuration;
-    const query = expandReferences(params)(state);
+    const [query] = expandReferences(state, params);
     const doc_ids = query.doc_ids;
     const scrubbedQuery = _.omit(query, [
       // Ignore last-event-id if state has a cursor...

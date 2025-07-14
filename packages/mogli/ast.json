@@ -825,69 +825,6 @@
         ]
       },
       "valid": true
-    },
-    {
-      "name": "map",
-      "params": [
-        "path",
-        "operation",
-        "state"
-      ],
-      "docs": {
-        "description": "Scopes an array of data based on a JSONPath.\nUseful when the source data has `n` items you would like to map to\nan operation.\nThe operation will receive a slice of the data based of each item\nof the JSONPath provided.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "map(\"$.[*]\",\n  create(\"SObject\",\n    field(\"FirstName\", sourceValue(\"$.firstName\"))\n  )\n)"
-          },
-          {
-            "title": "param",
-            "description": "JSONPath referencing a point in `state.data`.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "The operation needed to be repeated.",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "operation"
-          },
-          {
-            "title": "param",
-            "description": "Runtime state.",
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            },
-            "name": "state"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "State"
-            }
-          }
-        ]
-      },
-      "valid": true
     }
   ]
 }

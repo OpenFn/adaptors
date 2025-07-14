@@ -1,5 +1,23 @@
 # @openfn/language-magpi
 
+## 1.2.6 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
+## 1.2.5 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
 ## 1.2.4 - 28 October 2024
 
 ### Patch Changes

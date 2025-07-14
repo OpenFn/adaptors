@@ -1,8 +1,8 @@
 {
   "name": "@openfn/language-odoo",
   "label": "Odoo",
-  "version": "1.0.7",
-  "description": "OpenFn odoo adaptor",
+  "version": "1.0.9",
+  "description": "OpenFn adaptor for Odoo",
   "type": "module",
   "exports": {
     ".": {
@@ -37,7 +37,7 @@
     "deep-eql": "4.1.1",
     "mocha": "9.2.2",
     "rimraf": "3.0.2",
-    "undici": "^5.22.1"
+    "undici": "^5.29.0"
   },
   "repository": {
     "type": "git",

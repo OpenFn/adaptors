@@ -252,4 +252,5 @@ export {
   scrubEmojis,
   sourceValue,
   util,
+  as
 } from '@openfn/language-common';

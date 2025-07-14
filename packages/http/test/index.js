@@ -1,11 +1,13 @@
 import { execute, request, get, post, put, patch, del, fn } from '../src';
-import { each, parseCsv } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect, assert } from 'chai';
+import { getTLSOptions } from '../src/util';
 
 const jsonHeaders = { 'Content-Type': 'application/json' };
 
-const testServer = enableMockClient('https://www.example.com');
+const testServer = enableMockClient('https://www.example.com', {
+  defaultContentType: 'text',
+});
 
 describe('execute()', () => {
   it('executes each operation in sequence', () => {
@@ -723,112 +725,79 @@ describe('delete', () => {
   });
 });
 
-describe('tls', () => {
-  before(() => {
-    testServer
-      .intercept({
-        path: '/api/sslCertCheck',
-        method: 'POST',
-      })
-      .reply(200, ({ body }) => body, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .persist();
-  });
-
-  it('gets expanded and still works', async () => {
+describe('getTLSOptions', () => {
+  it('prefers requestOptions.tls over and agent options configuration.tls', () => {
     const state = {
       configuration: {
-        label: 'my custom SSL cert',
-        publicKey: 'something@mamadou.org',
-        privateKey: 'abc123',
+        tls: { ca: 'tls-ca', cert: 'tls-cert' },
       },
-      data: { a: 1 },
     };
 
-    const finalState = await execute(
-      fn(state => {
-        state.httpsOptions = { ca: state.configuration.privateKey };
-        return state;
-      }),
-      post(
-        'https://www.example.com/api/sslCertCheck',
-        state => state.data,
-        state => ({
-          agentOptions: state.httpsOptions,
-        })
-      )
-    )(state);
-    expect(finalState.data).to.eql({ a: 1 });
+    const requestOptions = {
+      agentOptions: { ca: 'agent-ca', key: 'agent-key' },
+      tls: { ca: 'tls-from-request', cert: 'req-cert' },
+    };
+
+    const result = getTLSOptions(state, requestOptions);
+    expect(result).to.deep.equal(requestOptions.tls);
   });
 
-  it('lets the user create an https agent with a cert', async () => {
+  it('prefers requestOptions.agentOptions over configuration.tls if requestOptions.tls is not provided', () => {
     const state = {
       configuration: {
-        label: 'my custom SSL cert',
-        publicKey: 'something@mamadou.org',
-        privateKey: 'abc123',
+        tls: { ca: 'tls-ca', cert: 'tls-cert' },
       },
-      data: { a: 1 },
     };
 
-    const finalState = await execute(
-      post('https://www.example.com/api/sslCertCheck', state => state.data, {
-        tls: { ca: state.configuration.privateKey },
-      })
-    )(state);
-    expect(finalState.data).to.eql({ a: 1 });
+    const requestOptions = {
+      agentOptions: { ca: 'agent-ca', key: 'agent-key' },
+    };
+
+    const result = getTLSOptions(state, requestOptions);
+    expect(result).to.deep.equal(requestOptions.agentOptions);
   });
 
-  it('lets the user define a cert earlier and use it later', async () => {
+  it('falls back to configuration.tls if neither tls nor agentOptions provided', () => {
     const state = {
       configuration: {
-        label: 'my custom SSL cert',
-        publicKey: 'something@mamadou.org',
-        privateKey: 'abc123',
+        tls: { ca: 'config-ca', cert: 'tls-cert', key: 'tls-key' },
       },
-      data: { a: 2 },
     };
 
-    const finalState = await execute(
-      fn(state => {
-        state.httpsOptions = { ca: state.configuration.privateKey };
-        return state;
-      }),
-      post('https://www.example.com/api/sslCertCheck', state => state.data, {
-        tls: state => state.httpsOptions,
-      })
-    )(state);
+    const requestOptions = {};
 
-    expect(finalState.data).to.eql({ a: 2 });
-  });
-});
-
-describe('reject unauthorized allows for bad certs', () => {
-  before(() => {
-    testServer
-      .intercept({
-        path: '/api/insecureStuff',
-        method: 'GET',
-      })
-      .reply(200, 'all my secrets!');
+    const result = getTLSOptions(state, requestOptions);
+    expect(result).to.deep.equal({
+      ca: 'config-ca',
+      cert: 'tls-cert',
+      key: 'tls-key',
+    });
   });
 
-  it('lets the user send requests while ignoring SSL', async () => {
+  it('uses state.configuration.tls if no other options are provided', () => {
+    const state = {
+      configuration: {
+        tls: { ca: 'tls-ca', cert: 'tls-cert' },
+      },
+    };
+
+    const requestOptions = {};
+
+    const result = getTLSOptions(state, requestOptions);
+    expect(result).to.deep.equal({
+      ca: 'tls-ca',
+      cert: 'tls-cert',
+    });
+  });
+
+  it('returns undefined if no TLS config is found', () => {
     const state = {
       configuration: {},
-      data: { a: 1 },
     };
 
-    const finalState = await execute(
-      get('https://www.example.com/api/insecureStuff', {
-        agentOptions: { rejectUnauthorized: false },
-        body: state => state.data,
-      })
-    )(state);
+    const requestOptions = {};
+    const result = getTLSOptions(state, requestOptions);
 
-    expect(finalState.data).to.eql('all my secrets!');
+    expect(result).to.deep.equal(undefined);
   });
 });

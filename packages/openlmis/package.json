@@ -1,8 +1,8 @@
 {
   "name": "@openfn/language-openlmis",
   "label": "OpenLMIS",
-  "version": "1.0.15",
-  "description": "OpenFn openlmis adaptor",
+  "version": "1.1.1",
+  "description": "OpenFn adaptor for OpenLMIS",
   "type": "module",
   "exports": {
     ".": {
@@ -36,7 +36,7 @@
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "rimraf": "3.0.2",
-    "undici": "^5.22.1"
+    "undici": "^5.29.0"
   },
   "repository": {
     "type": "git",

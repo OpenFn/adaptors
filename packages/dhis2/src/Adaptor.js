@@ -84,13 +84,6 @@ function configMigrationHelper(state) {
 /**
  * Create a record
  * @public
- * @function
- * @param {string} path - Path to the resource to be created
- * @magic path $.children.resourceTypes[*]
- * @param {DHIS2Data} data - An object, or array of objects, to create.
- * @param {object} params - Optional object of query parameters to include in the request
- * @state data - The created resource as returned by DHIS2
- * @returns {Operation}
  * @example <caption>Create a program</caption>
  * create('programs', {
  *   name: 'name 20',
@@ -101,6 +94,7 @@ function configMigrationHelper(state) {
  * create('events', {
  *   program: 'eBAyeGv0exc',
  *   orgUnit: 'DiszpKrYNg8',
+ *   occurredAt: '2025-06-19',
  *   status: 'COMPLETED',
  * });
  * @example <caption>Create a single tracker entity. See [Create tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)</caption>
@@ -115,7 +109,7 @@ function configMigrationHelper(state) {
  *   ]
  * });
  * @example <caption>Create a dataSet</caption>
- * create('dataSets', { name: 'OpenFn Data Set', periodType: 'Monthly' });
+ * create('dataSets', { name: 'OpenFn Data Set', periodType: 'Monthly', shortName: 'ODS' });
  * @example <caption>a dataSetNotification</caption>
  * create('dataSetNotificationTemplates', {
  *   dataSetNotificationTrigger: 'DATA_SET_COMPLETION',
@@ -136,6 +130,7 @@ function configMigrationHelper(state) {
  * @example <caption>Create a dataElementGroup</caption>
  * create('dataElementGroups', {
  *   name: 'Data Element Group 1',
+ *   shortName: 'DEG1',
  *   dataElements: [],
  * });
  * @example <caption>Create a dataElementGroupSet</caption>
@@ -177,10 +172,18 @@ function configMigrationHelper(state) {
  * create('enrollments', {
  *   trackedEntity: 'bmshzEacgxa',
  *   orgUnit: 'TSyzvBiovKh',
- *   program: 'gZBxv9Ujxg0',
+ *   program: 'ur1Edk5Oe2n',
+ *   enrolledAt: '2013-09-17',
  *   enrollmentDate: '2013-09-17',
  *   incidentDate: '2013-09-17',
  * });
+ * @function
+ * @param {string} path - Path to the resource to be created
+ * @magic path $.children.resourceTypes[*]
+ * @param {DHIS2Data} data - An object, or array of objects, to create.
+ * @param {object} params - Optional object of query parameters to include in the request
+ * @state data - The created resource as returned by DHIS2
+ * @returns {Operation}
  */
 export function create(path, data, params = {}) {
   return async state => {
@@ -218,16 +221,12 @@ export function create(path, data, params = {}) {
         data: resolvedData,
       });
     }
-
-    const details = `with response ${JSON.stringify(
-      response.body?.message,
-      null,
-      2
-    )}`;
-    console.log(`Created ${resolvedPath} ${details}`);
+    console.log(`Created ${resolvedPath}`);
 
     const { location } = response.headers;
-    if (location) console.log(`Record available @ ${location}`);
+    if (location) {
+      console.log(`Record available @ ${location}`);
+    }
 
     return handleResponse(response, state);
   };
@@ -237,11 +236,6 @@ export function create(path, data, params = {}) {
  * Get any resource, as JSON, from DHIS2. Pass in any valid DHIS2 REST path, excluding /api and the version.
  * For the new tracker API, see `tracker.export()`
  * @public
- * @function
- * @param {string} path - Path to the resource
- * @param {object} params - Object of query parameters to include in the request
- * @state data - the resource returned by DHIS2
- * @returns {Operation}
  * @example <caption>Get all data values for the 'pBOMPrpg1QX' dataset</caption>
  * get('dataValueSets', {
  *   dataSet: 'pBOMPrpg1QX',
@@ -253,6 +247,11 @@ export function create(path, data, params = {}) {
  * get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
  * @example <caption>Get a single tracked entity given the provided ID. See [TrackedEntities docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities)</caption>
  * get('tracker/trackedEntities/F8yKM85NbxW');
+ * @function
+ * @param {string} path - Path to the resource
+ * @param {object} params - Object of query parameters to include in the request
+ * @state data - the resource returned by DHIS2
+ * @returns {Operation}
  */
 export function get(path, params = {}) {
   return async state => {
@@ -277,13 +276,6 @@ export function get(path, params = {}) {
 /**
  * Update a resource object of any type. Updating an object requires all fields of the object you are updating, even if they have not been modified
  * @public
- * @function
- * @param {string} resourceType - The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc.
- * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`
- * @param {Object} data - Data to update. It requires to send the full body. If you want partial updates, use patch operation.
- * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
- * @state data - the resource returned by DHIS2
- * @returns {Operation}
  * @example <caption>a program</caption>
  * update('programs', 'qAZJCrNJK8H', {
  *   name: '14e1aa02c3f0a31618e096f2c6d03bed',
@@ -402,6 +394,13 @@ export function get(path, params = {}) {
  *   enrollmentDate: '2013-10-17',
  *   incidentDate: '2013-10-17',
  * });
+ * @function
+ * @param {string} resourceType - The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc.
+ * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`
+ * @param {Object} data - Data to update. It requires to send the full body. If you want partial updates, use patch operation.
+ * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
+ * @state data - the resource returned by DHIS2
+ * @returns {Operation}
  */
 export function update(resourceType, path, data, options = {}) {
   return async state => {
@@ -443,14 +442,6 @@ export function update(resourceType, path, data, options = {}) {
  * Upsert a record. This will atomically update a record if it already exists, or otherwise create it.
  * This function does not work with the absolute tracker path `api/tracker` but rather the new tracker paths and deprecated tracker endpoints.
  * @public
- * @function
- * @param {string} resourceType - The type of a resource to `upsert`. E.g. `trackedEntities`.
- * @param {Object} query - A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.
- * @param {Object} data - The data to use for update or create depending on the result of the query.
- * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request
- * @throws {RangeError} - Throws range error
- * @state {DHIS2State}
- * @returns {Operation}
  * @example <caption>Upsert a trackedEntity</caption>
  * upsert('trackedEntities', {}, {
  *  orgUnit: 'TSyzvBiovKh',
@@ -480,6 +471,14 @@ export function update(resourceType, path, data, options = {}) {
  *     name: 'Acute Flaccid Paralysis (AFP) follow-up',
  *    }
  *  );
+ * @function
+ * @param {string} resourceType - The type of a resource to `upsert`. E.g. `trackedEntities`.
+ * @param {Object} query - A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.
+ * @param {Object} data - The data to use for update or create depending on the result of the query.
+ * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request
+ * @throws {RangeError} - Throws range error
+ * @state {DHIS2State}
+ * @returns {Operation}
  */
 export function upsert(
   resourceType, // resourceType supplied to both the `get` and the `create/update`
@@ -566,14 +565,14 @@ export function upsert(
  * Delete record.
  * @public
  * @function
+ * @example <caption>a tracked entity instance. See [Delete tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)</caption>
+ * destroy('trackedEntities', 'LcRd6Nyaq7T');
  * @param {string} resourceType - The type of resource to be deleted. E.g. `trackedEntities`, `organisationUnits`, etc.
  * @param {string} path - Can be an `id` of an `object` or `path` to the `nested object` to `delete`.
  * @param {Object} [data] - Optional. This is useful when you want to remove multiple objects from a collection in one request. You can send `data` as, for example, `{"identifiableObjects": [{"id": "IDA"}, {"id": "IDB"}, {"id": "IDC"}]}`. See more {@link https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#deleting-objects on DHIS2 API docs}
  * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
  * @state {DHIS2State}
  * @returns {Operation}
- * @example <caption>a tracked entity instance. See [Delete tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)</caption>
- * destroy('trackedEntities', 'LcRd6Nyaq7T');
  */
 export function destroy(resourceType, path, data = null, options = {}) {
   return async state => {
@@ -651,18 +650,20 @@ function callNewTracker(
 
 export {
   alterState,
+  as,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
-  cursor,
   each,
   field,
   fields,
   fn,
   fnIf,
-  http,
   group,
+  http,
   lastReferenceValue,
+  map,
   merge,
   sourceValue,
 } from '@openfn/language-common';

@@ -449,20 +449,22 @@ export function bulk(type, data, params) {
   };
 }
 export {
-  fn,
-  fnIf,
-  cursor,
   alterState,
   arrayToString,
-  dateFns,
+  as,
   combine,
+  cursor,
   dataPath,
   dataValue,
+  dateFns,
   each,
   field,
   fields,
+  fn,
+  fnIf,
   http,
   lastReferenceValue,
+  map,
   merge,
   sourceValue,
 } from '@openfn/language-common';

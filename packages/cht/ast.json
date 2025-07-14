@@ -839,6 +839,60 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "as",
+      "params": [
+        "key",
+        "operation"
+      ],
+      "docs": {
+        "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));",
+            "caption": "Fetch cce-data from collections and store them under state.cceData"
+          },
+          {
+            "title": "param",
+            "description": "The state key to assign the result of the operation to.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": " An operation that returns a new state object with a `data` property",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ]
 }

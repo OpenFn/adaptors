@@ -101,8 +101,9 @@ export async function getMessageContent(message, desiredContent) {
   }
 }
 
-export async function sendMessageWithAttachments(message) {
+export async function buildAndSendMessage(message) {
   const attachments = await parseAttachments(message.attachments);
+  const hasAttachments = attachments && attachments.length > 0;
 
   const lines = [
     `To: ${message.to}`,
@@ -117,20 +118,21 @@ export async function sendMessageWithAttachments(message) {
     message.body,
   ];
 
-  for (const attachment of attachments) {
-    const file = attachment.filename;
-    lines.push(
-      `--${SEND_MESSAGE_BOUNDARY}`,
-      `Content-Type: application/octet-stream; name="${file}"`,
-      'Content-Transfer-Encoding: base64',
-      `Content-Disposition: attachment; filename="${file}"`,
-      '',
-      attachment.content
-    );
+  if (hasAttachments) {
+    for (const attachment of attachments) {
+      const file = attachment.filename;
+      lines.push(
+        `--${SEND_MESSAGE_BOUNDARY}`,
+        `Content-Type: application/octet-stream; name="${file}"`,
+        'Content-Transfer-Encoding: base64',
+        `Content-Disposition: attachment; filename="${file}"`,
+        '',
+        attachment.content
+      );
+    }
+
+    lines.push(`--${SEND_MESSAGE_BOUNDARY}--`, '');
   }
-
-  lines.push(`--${SEND_MESSAGE_BOUNDARY}--`, '');
-
   const rawMessage = lines.join('\r\n');
   const encodedMessage = Buffer.from(rawMessage).toString('base64');
 
@@ -142,7 +144,7 @@ export async function sendMessageWithAttachments(message) {
 
     return result.data;
   } catch (error) {
-    throw new Error('Error fetching messages: ' + error.message);
+    throw new Error('Error sending message: ' + error.message);
   }
 }
 

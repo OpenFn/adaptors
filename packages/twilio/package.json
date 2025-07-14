@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-twilio",
   "label": "Twilio",
-  "version": "0.5.2",
+  "version": "0.5.4",
   "description": "An Language Package for twilio",
   "main": "dist/index.cjs",
   "scripts": {
@@ -21,7 +21,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "1.15.2",
+    "@openfn/language-common": "workspace:*",
     "twilio": "^3.83.2"
   },
   "devDependencies": {
