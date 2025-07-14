@@ -1,8 +1,8 @@
 {
   "name": "@openfn/language-openfn",
   "label": "OpenFn",
-  "version": "3.0.0",
-  "description": "An (experimental) adaptor for accessing the OpenFn web API",
+  "version": "3.0.2",
+  "description": "OpenFn adaptor for accessing the OpenFn web API",
   "homepage": "https://docs.openfn.org",
   "repository": {
     "type": "git",

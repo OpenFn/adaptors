@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-salesforce",
   "label": "Salesforce",
-  "version": "7.0.1",
+  "version": "7.1.1",
   "description": "OpenFn Salesforce adaptor",
   "homepage": "https://docs.openfn.org",
   "exports": {

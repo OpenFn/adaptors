@@ -1,12 +1,13 @@
 import { execute, request, get, post, put, patch, del, fn } from '../src';
-import { each, parseCsv } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect, assert } from 'chai';
 import { getTLSOptions } from '../src/util';
 
 const jsonHeaders = { 'Content-Type': 'application/json' };
 
-const testServer = enableMockClient('https://www.example.com');
+const testServer = enableMockClient('https://www.example.com', {
+  defaultContentType: 'text',
+});
 
 describe('execute()', () => {
   it('executes each operation in sequence', () => {

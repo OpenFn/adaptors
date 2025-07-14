@@ -6,8 +6,10 @@
       "description": "The base URL (https://pay.pesapal.com)",
       "format": "uri",
       "minLength": 1,
+      "default": "https://pay.pesapal.com",
       "examples": [
-        "https://pay.pesapal.com"
+        "https://pay.pesapal.com",
+        "https://cybaq.pesapal.com"
       ]
     },
     "consumer_key": {
@@ -29,9 +31,11 @@
     "apiVersion": {
       "title": "Api Version",
       "type": "string",
-      "placeholder": "pesapalv3",
+      "placeholder": "v3",
       "description": "Pesapal api version",
+      "default": "v3",
       "examples": [
+        "v3",
         "pesapalv3"
       ]
     },
@@ -46,5 +50,8 @@
   },
   "type": "object",
   "additionalProperties": true,
-  "required": []
+  "required": [
+    "consumer_key",
+    "consumer_secret"
+  ]
 }

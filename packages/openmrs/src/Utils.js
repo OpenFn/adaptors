@@ -34,6 +34,7 @@ export async function fetchAndLog(method, url, opts = {}) {
       url: urlWithQuery,
       query: opts.query,
       method,
+      headers: opts.headers,
     });
 
     return response;
@@ -151,9 +152,10 @@ export async function request(state, method, path, options = {}) {
     data = {},
     headers = { 'content-type': 'application/json' },
     parseAs = 'json',
-    _onrequest,
     errors,
-  } = options; // secret option for debug & test
+    language,
+    _onrequest, // secret option for debug & test
+  } = options;
 
   if (baseUrl.length <= 0) {
     throw new Error(
@@ -170,12 +172,18 @@ export async function request(state, method, path, options = {}) {
 
   const authHeaders = makeBasicAuthHeader(username, password);
 
+  const finalHeaders = {
+    ...authHeaders,
+    ...headers,
+  };
+
+  if (language) {
+    finalHeaders['Accept-Language'] = language;
+  }
+
   const requestOptions = {
     body: data,
-    headers: {
-      ...authHeaders,
-      ...headers,
-    },
+    headers: finalHeaders,
     query,
     parseAs,
     baseUrl,

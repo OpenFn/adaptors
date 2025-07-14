@@ -21,6 +21,12 @@ const configuration = {
   access_token: 'someaccesstoken',
 };
 
+const jsonHeaders = {
+  headers: {
+    'content-type': 'application/json',
+  },
+};
+
 describe('getForms', () => {
   const result = [
     {
@@ -31,16 +37,15 @@ describe('getForms', () => {
       public: true,
       formid: 3,
     },
-];
+  ];
   it('should get all forms', async () => {
-
     testServer
       .intercept({
         path: `/api/${configuration.apiVersion}/forms`,
         method: 'GET',
       })
 
-      .reply(200,  result);
+      .reply(200, result, jsonHeaders);
 
     const state = {
       configuration,
@@ -63,7 +68,7 @@ describe('getForms', () => {
         },
       })
 
-      .reply(200, result);
+      .reply(200, result, jsonHeaders);
 
     const state = {
       configuration,
@@ -84,14 +89,14 @@ describe('getForm', () => {
     const result = {
       public: true,
       formid: 1234,
-    }
+    };
     testServer
       .intercept({
         path: `/api/${configuration.apiVersion}/forms/1234`,
         method: 'GET',
       })
 
-      .reply(200,result );
+      .reply(200, result, jsonHeaders);
 
     const state = {
       configuration,
@@ -105,14 +110,14 @@ describe('getForm', () => {
     const result = {
       name: 'data',
       type: 'survey',
-    }
+    };
     testServer
       .intercept({
         path: `/api/${configuration.apiVersion}/forms/1234/form.json`,
         method: 'GET',
       })
 
-      .reply(200,result);
+      .reply(200, result, jsonHeaders);
 
     const state = {
       configuration,
@@ -132,7 +137,7 @@ describe('getSubmissions', () => {
     {
       _id: 7783158,
     },
-  ]
+  ];
   it("should get a single form's submission", async () => {
     testServer
       .intercept({
@@ -140,7 +145,7 @@ describe('getSubmissions', () => {
         method: 'GET',
       })
 
-      .reply(200, result);
+      .reply(200, result, jsonHeaders);
 
     const state = {
       configuration,
@@ -162,7 +167,7 @@ describe('getSubmissions', () => {
         },
       })
 
-      .reply(200, result);
+      .reply(200, result, jsonHeaders);
 
     const state = {
       configuration,
@@ -185,9 +190,13 @@ describe('getSubmission', () => {
         method: 'GET',
       })
 
-      .reply(200, {
-        _id: 7783155,
-      });
+      .reply(
+        200,
+        {
+          _id: 7783155,
+        },
+        jsonHeaders
+      );
 
     const state = {
       configuration,
@@ -206,10 +215,14 @@ describe('getAttachmentMetadata', () => {
         method: 'GET',
       })
 
-      .reply(200, {
-        id: 621985,
-        xform: 7205,
-      });
+      .reply(
+        200,
+        {
+          id: 621985,
+          xform: 7205,
+        },
+        jsonHeaders
+      );
 
     const state = {
       configuration,
@@ -232,11 +245,15 @@ describe('downloadAttachment', () => {
         },
       })
 
-      .reply(200, {
-        _readableState: {},
-        _events: {},
-        _eventsCount: 0,
-      });
+      .reply(
+        200,
+        {
+          _readableState: {},
+          _events: {},
+          _eventsCount: 0,
+        },
+        jsonHeaders
+      );
 
     const state = {
       configuration,

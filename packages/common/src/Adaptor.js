@@ -1,19 +1,32 @@
-import get from 'lodash/get.js';
-import omit from 'lodash/omit.js';
-import curry from 'lodash/fp/curry.js';
-import groupBy from 'lodash/groupBy.js';
-import fromPairs from 'lodash/fp/fromPairs.js';
-
 import { JSONPath } from 'jsonpath-plus';
 import { parse } from 'csv-parse';
 import { Readable } from 'node:stream';
 
 import { request } from 'undici';
 import dateFns from 'date-fns';
+import _ from 'lodash';
 
-import { expandReferences as newExpandReferences, parseDate } from './util';
+import { expandReferences, parseDate } from './util';
 
 const schemaCache = {};
+
+/**
+ * Lodash utility library.
+ * All lodash v4.17 functions are available on the `_` namespace, eg,
+ * `_.map`, `_.cloneDeep`, etc.
+ *
+ * @see https://lodash.com/docs/
+ * @public
+ * @function
+ * @alias lodash
+ * @example <caption>Split an array into chunks of 2 items each</caption>
+ * fn(state => {
+ *   const items = [1, 2, 3, 4, 5];
+ *   const chunks = lodash.chunk(items, 2);
+ *   return { ...state, chunks };
+ * });
+ */
+export { _ };
 
 /**
  * Execute a sequence of operations.
@@ -78,7 +91,7 @@ export function fn(func) {
  */
 export function fnIf(condition, operation) {
   return state => {
-    const [resolvedCondition] = newExpandReferences(state, condition);
+    const [resolvedCondition] = expandReferences(state, condition);
 
     return resolvedCondition ? operation(state) : state;
   };
@@ -197,39 +210,51 @@ export function lastReferenceValue(path) {
 }
 
 /**
- * Scopes an array of data based on a JSONPath.
- * Useful when the source data has `n` items you would like to map to
- * an operation.
- * The operation will receive a slice of the data based of each item
- * of the JSONPath provided.
+ * Iterates over a collection of items and returns a new array of mapped values,
+ * like Javascript's `Array.map()` function.
+ *
+ * Each item in the source array will be passed into the callback function. The returned value
+ * will be added to the new array. The callback is passed the original item, the current index
+ * in the source array (ie, the nth item number), and the state object.
+ *
+ * Writes a new array to `state.data` with transformed values.c array.
  * @public
  * @function
- * @example
- * map("$.[*]",
- *   create("SObject",
- *     field("FirstName", sourceValue("$.firstName"))
- *   )
- * )
- * @param {string} path - JSONPath referencing a point in `state.data`.
- * @param {function} operation - The operation needed to be repeated.
- * @param {State} state - Runtime state.
+ * @example <caption> Transform an array of items in state</caption>
+ * map($.items', (data, index, state) => {
+ *   return {
+ *     id: index + 1,
+ *     name: data.name,
+ *     createdAt: state.cursor,
+ *   };
+ * });
+ * @example <caption>Map items asynchronously (e.g. fetch extra info)</caption>
+ * map($.items, async (data, index, state) => {
+ *   const userInfo = await fetchUserInfo(data.userId);
+ *   return {
+ *     id: index + 1,
+ *     name: data.name,
+ *     extra: userInfo,
+ *   };
+ * });
+ * @param {string|Array} path - An array of items or a a JSONPath string which points to an array of items.
+ * @param {function} callback - The mapping function, invoked with `(data, index, state)` for each item in the array.
  * @returns {State}
  */
-export const map = curry(function (path, operation, state) {
-  switch (typeof path) {
-    case 'string':
-      source(path)(state).map(function (data) {
-        return operation({ data, references: state.references });
-      });
-      return state;
+export const map = function (path, callback) {
+  return async state => {
+    const results = [];
+    const values = typeof path === 'string' ? source(path)(state) : path;
 
-    case 'object':
-      path.map(function (data) {
-        return operation({ data, references: state.references });
-      });
-      return state;
-  }
-});
+    let index = 0;
+    for (const item of values) {
+      const value = await callback(item, index++, state);
+      results.push(value);
+    }
+
+    return { ...state, data: results };
+  };
+};
 
 /**
  * Simple switcher allowing other expressions to use either a JSONPath or
@@ -357,35 +382,6 @@ export function join(targetPath, sourcePath, targetKey) {
 }
 
 /**
- * Recursively resolves objects that have resolvable values (functions).
- * @public
- * @function
- * @param {object} value - data
- * @param {Function} [skipFilter] - a function which returns true if a value should be skipped
- * @returns {Operation}
- */
-export function expandReferences(value, skipFilter) {
-  return state => {
-    if (skipFilter && skipFilter(value)) return value;
-
-    if (Array.isArray(value)) {
-      return value.map(v => expandReferences(v)(state));
-    }
-
-    if (typeof value == 'object' && !!value) {
-      return Object.keys(value).reduce((acc, key) => {
-        return { ...acc, [key]: expandReferences(value[key])(state) };
-      }, {});
-    }
-
-    if (typeof value == 'function') {
-      return expandReferences(value(state))(state);
-    }
-    return value;
-  };
-}
-
-/**
  * Returns a key, value pair in an array.
  * @public
  * @function
@@ -409,7 +405,7 @@ export function field(key, value) {
  * @returns {Object}
  */
 export function fields(...fields) {
-  return fromPairs(fields);
+  return _.fromPairs(fields);
 }
 
 /**
@@ -431,7 +427,7 @@ export function fields(...fields) {
 export function merge(dataSource, fields) {
   return state => {
     const initialData = source(dataSource)(state);
-    const additionalData = expandReferences(fields)(state);
+    const [additionalData] = expandReferences(state, fields);
 
     return initialData.reduce((acc, dataItem) => {
       return [...acc, { ...dataItem, ...additionalData }];
@@ -460,13 +456,15 @@ export function merge(dataSource, fields) {
  */
 export function group(arrayOfObjects, keyPath, callback = s => s) {
   return state => {
-    const [resolvedArray, resolvedKeyPath] = newExpandReferences(
+    const [resolvedArray, resolvedKeyPath] = expandReferences(
       state,
       arrayOfObjects,
       keyPath
     );
-    const results = groupBy(resolvedArray, item => get(item, resolvedKeyPath));
-    return callback({ ...state, data: omit(results, [undefined]) });
+    const results = _.groupBy(resolvedArray, item =>
+      _.get(item, resolvedKeyPath)
+    );
+    return callback({ ...state, data: _.omit(results, [undefined]) });
   };
 }
 
@@ -677,7 +675,7 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
   };
 
   return async state => {
-    const [resolvedCsvData, resolvedParsingOptions] = newExpandReferences(
+    const [resolvedCsvData, resolvedParsingOptions] = expandReferences(
       state,
       csvData,
       parsingOptions
@@ -798,7 +796,7 @@ export function validate(schema = 'schema', data = 'data') {
     // Schema can be a url, jsonpath or object; or a function resolving to any of these
     async function resolveSchema() {
       // TODO hmm, I don't really want to expand schema if it's an object
-      const [schemaOrUrl] = newExpandReferences(state, schema);
+      const [schemaOrUrl] = expandReferences(state, schema);
 
       if (typeof schemaOrUrl === 'string') {
         try {
@@ -823,7 +821,7 @@ export function validate(schema = 'schema', data = 'data') {
 
     // data can be a jsonpath or object; or function resolving to any of these
     function resolveData() {
-      const [d] = newExpandReferences(state, data);
+      const [d] = expandReferences(state, data);
 
       if (typeof d === 'string') {
         return JSONPath({ path: d, json: state })[0];
@@ -860,7 +858,7 @@ let cursorKey = 'cursor';
 export function cursor(value, options = {}) {
   return state => {
     const { format, ...optionsWithoutFormat } = options;
-    const [resolvedValue, resolvedOptions] = newExpandReferences(
+    const [resolvedValue, resolvedOptions] = expandReferences(
       state,
       value,
       optionsWithoutFormat
@@ -916,7 +914,7 @@ export function cursor(value, options = {}) {
  */
 export function assert(expression, errorMessage) {
   return state => {
-    const [resolvedValue, resolvedErrorMessage] = newExpandReferences(
+    const [resolvedValue, resolvedErrorMessage] = expandReferences(
       state,
       expression,
       errorMessage
@@ -949,7 +947,7 @@ export function assert(expression, errorMessage) {
  */
 export function log(...args) {
   return state => {
-    const [resolvedArgs] = newExpandReferences(state, args);
+    const [resolvedArgs] = expandReferences(state, args);
     console.log(...resolvedArgs);
     return state;
   };
@@ -972,8 +970,31 @@ export function log(...args) {
  */
 export function debug(...args) {
   return state => {
-    const [resolvedArgs] = newExpandReferences(state, args);
+    const [resolvedArgs] = expandReferences(state, args);
     console.debug(...resolvedArgs);
     return state;
+  };
+}
+
+/**
+ * Run an operation and save the result to a custom key in state instead of overwriting state.data.
+ * @public
+ * @function
+ * @example <caption>Fetch cce-data from collections and store them under state.cceData</caption>
+ * as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));
+ * @param {string} key - The state key to assign the result of the operation to.
+ * @param {function} operation -  An operation that returns a new state object with a `data` property
+ * @returns {Operation}
+ */
+export function as(key, operation) {
+  return async state => {
+    const [resolvedKey] = expandReferences(state, key);
+    const prevState = state.data;
+    const result = await operation(state);
+    const { data, ...rest } = result;
+
+    state[resolvedKey] = data;
+    state.data = prevState;
+    return { ...state, ...rest };
   };
 }

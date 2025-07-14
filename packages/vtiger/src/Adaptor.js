@@ -1,7 +1,5 @@
-import {
-  execute as commonExecute,
-  expandReferences,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 import request from 'request';
 import md5 from 'md5';
 
@@ -133,7 +131,8 @@ export function postElement(params) {
     const { hostUrl } = state.configuration;
     const { sessionName } = state.session.result;
 
-    const { elementType, element, operation } = expandReferences(params)(state);
+    const [resolvedParams] = expandReferences(state, params);
+    const {elementType, element, operation} = resolvedParams;
 
     const url = `${hostUrl}/webservice.php`;
     // const url = 'https://requestb.in/1irtrgz1';
