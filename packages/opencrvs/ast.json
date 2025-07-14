@@ -6,11 +6,17 @@
         "body"
       ],
       "docs": {
-        "description": "Create a Birth Notification",
+        "description": "Create a Birth Notification. Pass an array of FHIR resources wrapped in entry\nobjects like `{ fullUrl, resource }`. References must use the full URL\nof the corresponding resources. See [OpenCRVS Event Notification Postman documentation](https://github.com/opencrvs/opencrvs-countryconfig/blob/master/postman/Event%20Notification.postman_collection.json)",
         "tags": [
           {
             "title": "example",
-            "description": "createBirthNotification([\n{\nfullUrl: 'urn:uuid:eee21c26-67a2-40af-8cf7-5f4bc969153f',\nresource: {\nresourceType: 'QuestionnaireResponse',\nextension: [],\nstatus: 'completed',\nsubject: {\nreference: 'urn:uuid:7cb1d9cc-ea4b-4046-bea0-38bdf3082f56',\n},\nitem: [\n{\ntext: 'birth.mother.mother-view-group.motherIdType',\nlinkId: '',\nanswer: [\n{\nvalueString: 'NATIONAL_ID',\n},\n],\n},\n{\ntext: 'birth.father.father-view-group.fatherIdType',\nlinkId: '',\nanswer: [\n{\nvalueString: 'NATIONAL_ID',\n},\n],\n},\n],\n},\n},\n]);"
+            "description": "createBirthNotification($.bundleData)",
+            "caption": "Create a birth notification"
+          },
+          {
+            "title": "example",
+            "description": "createBirthNotification([\n{\nfullUrl: 'urn:uuid:abcde',\nresource: {\nresourceType: 'Composition',\nsection:[\n{\ntitle: \"Mother's details\",\ncode: {\ncoding: [\n{\nsystem: 'http://opencrvs.org/specs/sections',\ncode: 'mother-details',\n},\n],\ntext: \"Mother's details\",\n},\nentry: [\n{\nreference: 'urn:uuid:wxyz',\n},\n],\n}\n// ... other section details  \n]\n\n// ... other resource details\n},\n},\n{\nfullUrl: 'urn:uuid:wxyz',\nresource: {\nresourceType: 'Patient',\n// ... other resource details\n},\n},\n]);",
+            "caption": "Cross-reference two bundle resources"
           },
           {
             "title": "function",
@@ -24,7 +30,7 @@
           },
           {
             "title": "param",
-            "description": "An array of Birth Notification FHIR resources",
+            "description": "An array of Birth Notification bundle entries.",
             "type": {
               "type": "NameExpression",
               "name": "Array"

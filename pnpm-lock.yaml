@@ -588,7 +588,7 @@ importers:
         specifier: workspace:*
         version: link:../common
       '@openfn/language-fhir':
-        specifier: ^5.0.6
+        specifier: ^5.0.7
         version: link:../fhir
       '@types/fhir':
         specifier: ^0.0.41

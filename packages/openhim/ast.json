@@ -270,7 +270,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "createChannel({\n  type: 'http',\n  authType: 'public',\n  status: 'enabled',\n  routes: [\n    {\n      name: 'FHIR Server Testing',\n      secured: false,\n      host: 'localhost',\n      port: '3447',\n      path: '',\n      pathTransform: '',\n      primary: true,\n      username: '',\n      password: '',\n      type: 'http',\n      status: 'enabled',\n      forwardAuthHeader: false,\n    },\n  ],\n  requestBody: true,\n  responseBody: true,\n  rewriteUrlsConfig: [],\n  rewriteUrls: false,\n  addAutoRewriteRules: true,\n  name: 'FHIR Server Testing',\n  urlPattern: '^/fhir/.*$',\n  methods: [\n    'GET',\n    'POST',\n    'DELETE',\n    'PUT',\n    'OPTIONS',\n    'HEAD',\n    'TRACE',\n    'CONNECT',\n    'PATCH',\n  ],\n});",
+            "description": "createChannel({\n  type: 'http',\n  authType: 'public',\n  status: 'enabled',\n  routes: [\n    {\n      name: 'FHIR Server Testing',\n      secured: false,\n      host: 'localhost',\n      port: '3447',\n      primary: true,\n    },\n  ],\n  requestBody: true,\n  responseBody: true,\n  name: 'FHIR Server Testing',\n  urlPattern: '^/fhir/.*$',\n  methods: [\n    'GET',\n    'POST',\n  ],\n});",
             "caption": "Create a channel"
           },
           {

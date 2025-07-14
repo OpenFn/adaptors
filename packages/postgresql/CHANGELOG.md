@@ -1,5 +1,12 @@
 # @openfn/language-postgresql
 
+## 6.1.2 - 14 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
 ## 6.1.1 - 10 July 2025
 
 ### Patch Changes
