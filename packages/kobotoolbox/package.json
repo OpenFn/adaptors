@@ -1,8 +1,8 @@
 {
   "name": "@openfn/language-kobotoolbox",
   "label": "KoboToolbox",
-  "version": "4.2.0",
-  "description": "A KoboToolbox Language Pack for OpenFn",
+  "version": "4.2.1",
+  "description": "OpenFn adaptor for KoboToolbox",
   "homepage": "https://docs.openfn.org",
   "repository": {
     "type": "git",

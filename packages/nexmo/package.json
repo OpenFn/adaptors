@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-nexmo",
   "label": "Nexmo",
-  "version": "0.5.18",
+  "version": "0.5.19",
   "description": "An Language Package for Nexmo",
   "main": "dist/index.cjs",
   "scripts": {

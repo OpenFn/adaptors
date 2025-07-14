@@ -411,6 +411,80 @@ describe('request function', () => {
     expect(response.body).to.eql(undefined);
   });
 
+  it('should return undefined if no response body and no headers', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'PUT',
+      })
+      .reply(200, undefined, {
+        headers: {},
+      });
+
+    const response = await request('PUT', 'https://www.example.com/api', {
+      parseAs: 'json',
+      body: { id: 2 },
+    });
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.body).to.eql(undefined);
+  });
+
+  it('should accept a JSON response with content-length', async () => {
+    const body = { jam: 'jar ' };
+    client
+      .intercept({
+        path: '/api/json',
+        method: 'GET',
+      })
+      .reply(200, body, {
+        headers: { 'Content-Length': JSON.stringify(body).length },
+      });
+
+    const response = await request('GET', 'https://www.example.com/api/json');
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.body).to.eql(body);
+  });
+
+  it('should accept a JSON response without content-length', async () => {
+    const body = { jam: 'jar ' };
+    client
+      .intercept({
+        path: '/api/json',
+        method: 'GET',
+      })
+      .reply(200, body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+    const response = await request('GET', 'https://www.example.com/api/json');
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.body).to.eql(body);
+  });
+
+  it('should accept a JSON response with content-length', async () => {
+    const body = { jam: 'jar ' };
+    client
+      .intercept({
+        path: '/api/json',
+        method: 'GET',
+      })
+      .reply(200, body, {
+        headers: { 'Content-Length': JSON.stringify(body).length },
+      });
+
+    const response = await request('GET', 'https://www.example.com/api/json', {
+      parseAs: 'json',
+    });
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.body).to.eql(body);
+  });
+
   it('should throw an error if there is no content-length header and an empty response body', async () => {
     client
       .intercept({
@@ -871,19 +945,21 @@ describe('helpers', () => {
       expect(result.body).to.eql({ name: 'mutchi' });
     });
 
-    it('should auto parse as text by default (no content type)', async () => {
+    it('should auto parse as text by default (unknown content type)', async () => {
       client
         .intercept({
           path: '/api',
           method: 'GET',
         })
-        .reply(200, {
-          name: 'joe',
+        .reply(200, 'joe', {
+          headers: {
+            'content-type': 'application/xml',
+          },
         });
 
       const result = await request('GET', 'https://www.example.com/api');
 
-      expect(result.body).to.eql(JSON.stringify({ name: 'joe' }));
+      expect(result.body).to.eql('joe');
     });
 
     it('should auto parse as text in any other case', async () => {
@@ -909,9 +985,17 @@ describe('helpers', () => {
           path: '/api',
           method: 'GET',
         })
-        .reply(200, {
-          name: 'aissa',
-        });
+        .reply(
+          200,
+          {
+            name: 'aissa',
+          },
+          {
+            headers: {
+              'content-type': 'application/json',
+            },
+          }
+        );
 
       const result = await request('GET', 'https://www.example.com/api', {
         parseAs: 'json',
@@ -951,9 +1035,17 @@ describe('helpers', () => {
           path: '/api',
           method: 'GET',
         })
-        .reply(200, {
-          name: 'iam stream',
-        });
+        .reply(
+          200,
+          {
+            name: 'iam stream',
+          },
+          {
+            headers: {
+              'content-type': 'application/text',
+            },
+          }
+        );
 
       const result = await request('GET', 'https://www.example.com/api', {
         parseAs: 'stream',
@@ -995,7 +1087,11 @@ describe('helpers', () => {
           path: '/api',
           method: 'GET',
         })
-        .reply(200, binaryData);
+        .reply(200, binaryData, {
+          headers: {
+            'content-type': 'application/octet-stream',
+          },
+        });
 
       const result = await request('GET', 'https://www.example.com/api', {
         parseAs: 'base64',

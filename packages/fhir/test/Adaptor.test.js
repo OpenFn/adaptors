@@ -217,7 +217,11 @@ describe('post', () => {
         path: 'baseR4/noAccess',
         method: 'POST',
       })
-      .reply(404, fixtures.noAccessResponse);
+      .reply(404, fixtures.noAccessResponse, {
+        headers: {
+          'content-type': 'application/text',
+        },
+      });
 
     const state = {
       configuration,
