@@ -169,7 +169,9 @@ export function queryEvents(variables, options = {}) {
       }
     );
 
-    const body = response.body.data.searchEvents.results;
+    const body = response.body?.errors
+      ? response.body
+      : response.body?.data?.searchEvents?.results;
 
     return util.prepareNextState(state, {
       ...response,
