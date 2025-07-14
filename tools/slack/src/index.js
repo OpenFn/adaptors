@@ -56,10 +56,6 @@ if (file) {
 
     slack.chat.postMessage({
       ...message,
-      channel: DEVS,
-    });
-    slack.chat.postMessage({
-      ...message,
       channel: ADAPTORS_AND_TEMPLATES,
     });
 
