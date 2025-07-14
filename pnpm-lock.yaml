@@ -1543,6 +1543,34 @@ importers:
         specifier: ^5.29.0
         version: 5.29.0
 
+  packages/opencrvs:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+      '@openfn/language-fhir-4':
+        specifier: workspace:*
+        version: link:../fhir-4
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      mocha:
+        specifier: ^10.7.3
+        version: 10.7.3
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      undici:
+        specifier: ^5.22.1
+        version: 5.29.0
+
   packages/openfn:
     dependencies:
       '@openfn/language-common':
