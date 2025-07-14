@@ -5,7 +5,7 @@ import { enableMockClient } from '@openfn/language-common/util';
 import Adaptor from '../src';
 const {
   execute,
-  encounter,
+  createEncounter,
   getChannels,
   getClients,
   getTasks,
@@ -76,9 +76,9 @@ describe('encounter', () => {
         path: '/chw/encounter',
         method: 'POST',
       })
-      .reply(201, 'User Authenticated Successfully', { ...jsonHeaders });
+      .reply(201, 'User Authenticated Successfully');
 
-    const { data } = await encounter({
+    const { data } = await createEncounter({
       resourceType: 'Patient',
       id: 'example',
       identifier: [
@@ -124,10 +124,11 @@ describe('getTransactions', () => {
         path: '/transactions',
         method: 'GET',
       })
-      .reply(200, [{ _id: '001', clientID: '1234' }], { ...jsonHeaders });
+      .reply(200, [{ _id: '001', clientID: '1234' }]);
 
     const { data } = await getTransactions()(state);
     expect(data[0].clientID).to.eql('1234');
+    expect(data.length).to.eql(1);
   });
 
   it('should GET a single transaction', async () => {
@@ -141,8 +142,7 @@ describe('getTransactions', () => {
         {
           _id: '001',
           clientID: '1234',
-        },
-        { ...jsonHeaders }
+        }
       );
 
     const { data } = await getTransactions({ transactionId: '001' })(state);
@@ -162,7 +162,7 @@ describe('getTransactions', () => {
           filters: '{"response.status":"200"}',
         },
       })
-      .reply(200, [{ _id: '001', clientID: '1234' }], { ...jsonHeaders });
+      .reply(200, [{ _id: '001', clientID: '1234' }]);
 
     const { data } = await getTransactions({
       filterLimit: 1,
@@ -171,6 +171,46 @@ describe('getTransactions', () => {
       filters: '{"response.status":"200"}',
     })(state);
     expect(data[0].clientID).to.eql('1234');
+  });
+  it('should append undocumented query options to the url', async () => {
+    let fullUrl;
+    testServer
+      .intercept({
+        path: '/transactions',
+        method: 'GET',
+        query: {
+          filterLimit: 1,
+          filterPage: 0,
+          filterRepresentation: 'full',
+          filters: '{"response.status":"200"}',
+          foo: 'bar',
+        },
+      })
+      .reply(
+        200,
+        req => {
+          fullUrl = `${req.origin}${req.path}?${new URLSearchParams(
+            req.query
+          ).toString()}`;
+          return [{ _id: '001', clientID: '1234' }];
+        }
+      );
+
+    const { data } = await getTransactions({
+      filterLimit: 1,
+      filterPage: 0,
+      filterRepresentation: 'full',
+      filters: '{"response.status":"200"}',
+      foo: 'bar',
+    })(state);
+    const urlParams = new URL(fullUrl).searchParams;
+
+    expect(data[0].clientID).to.eql('1234');
+    expect(urlParams.get('filterLimit')).to.equal('1');
+    expect(urlParams.get('filterPage')).to.equal('0');
+    expect(urlParams.get('filterRepresentation')).to.equal('full');
+    expect(urlParams.get('filters')).to.equal('{"response.status":"200"}');
+    expect(urlParams.get('foo')).to.equal('bar');
   });
 });
 
@@ -181,10 +221,11 @@ describe('getChannels', () => {
         path: '/channels',
         method: 'GET',
       })
-      .reply(200, [{ _id: '0123', name: 'Channel Test' }], { ...jsonHeaders });
+      .reply(200, [{ _id: '0123', name: 'Channel Test' }]);
 
     const { data } = await getChannels()(state);
     expect(data[0].name).to.eql('Channel Test');
+    expect(data.length).to.eql(1);
   });
 
   it('should GET a single channel', async () => {
@@ -198,8 +239,7 @@ describe('getChannels', () => {
         {
           _id: '0123',
           name: 'Channel Test',
-        },
-        { ...jsonHeaders }
+        }
       );
 
     const { data } = await getChannels('0123')(state);
@@ -215,7 +255,7 @@ describe('createChannel', () => {
         path: '/channels',
         method: 'POST',
       })
-      .reply(201, 'Channel successfully created', { ...jsonHeaders });
+      .reply(201, 'Channel successfully created');
 
     const { data } = await createChannel({
       requestBody: true,
@@ -248,10 +288,11 @@ describe('getClients', () => {
         path: '/clients',
         method: 'GET',
       })
-      .reply(200, [{ _id: '0123', name: 'Client Test' }], { ...jsonHeaders });
+      .reply(200, [{ _id: '0123', name: 'Client Test' }]);
 
     const { data } = await getClients()(state);
     expect(data[0].name).to.eql('Client Test');
+    expect(data.length).to.eql(1);
   });
 
   it('should GET  a single client', async () => {
@@ -265,8 +306,7 @@ describe('getClients', () => {
         {
           _id: '0123',
           name: 'Client Test',
-        },
-        { ...jsonHeaders }
+        }
       );
 
     const { data } = await getClients('0123')(state);
@@ -282,7 +322,7 @@ describe('updateClient', () => {
         path: '/clients/6870c19870b851d7a22b8d27',
         method: 'PUT',
       })
-      .reply(200, 'Successfully updated client.', { ...jsonHeaders });
+      .reply(200, 'Successfully updated client.');
 
     const { data } = await updateClient({
       _id: '6870c19870b851d7a22b8d27',
@@ -304,7 +344,7 @@ describe('registerClient', () => {
         path: '/clients',
         method: 'POST',
       })
-      .reply(201, 'Client successfully created', { ...jsonHeaders });
+      .reply(201, 'Client successfully created');
 
     const { data } = await registerClient({
       roles: ['fhir'],
@@ -330,7 +370,7 @@ describe('getTasks', () => {
           filters: '{}',
         },
       })
-      .reply(200, [{ _id: '001', status: 'Completed' }], { ...jsonHeaders });
+      .reply(200, [{ _id: '001', status: 'Completed' }]);
 
     const { data } = await getTasks({
       filterLimit: 10,
@@ -338,6 +378,7 @@ describe('getTasks', () => {
       filters: '{}',
     })(state);
     expect(data[0].status).to.eql('Completed');
+    expect(data.length).to.eql(1);
   });
 
   it('should GET  a single task', async () => {
@@ -356,8 +397,7 @@ describe('getTasks', () => {
         {
           _id: '001',
           status: 'Completed',
-        },
-        { ...jsonHeaders }
+        }
       );
 
     const { data } = await getTasks({
@@ -378,7 +418,7 @@ describe('createTask', () => {
         path: '/tasks',
         method: 'POST',
       })
-      .reply(201, 'User created task with id 0123', { ...jsonHeaders });
+      .reply(201, 'User created task with id 0123');
 
     const { data } = await createTask({
       tids: [

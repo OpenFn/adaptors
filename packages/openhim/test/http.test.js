@@ -25,7 +25,7 @@ describe('get', () => {
         path: '/transactions',
         method: 'GET',
       })
-      .reply(200, [{ _id: '001', clientID: '1234' }], { ...jsonHeaders });
+      .reply(200, [{ _id: '001', clientID: '1234' }]);
 
     const { data } = await get('/transactions')(state);
     expect(data[0].clientID).to.eql('1234');
@@ -42,8 +42,7 @@ describe('get', () => {
         {
           _id: '001',
           clientID: '1234',
-        },
-        { ...jsonHeaders }
+        }
       );
 
     const { data } = await get('/transactions/001')(state);
@@ -59,7 +58,7 @@ describe('post', () => {
         path: '/clients',
         method: 'POST',
       })
-      .reply(200, 'Client created successfully', { ...jsonHeaders });
+      .reply(200, 'Client created successfully');
 
     const { data } = await post(
       '/clients',
@@ -83,7 +82,7 @@ describe('put', () => {
         path: '/clients/someId',
         method: 'PUT',
       })
-      .reply(200, 'Successfully updated client.', { ...jsonHeaders });
+      .reply(200, 'Successfully updated client.');
 
     const { data } = await put(
       '/clients/someId',
@@ -108,9 +107,7 @@ describe('delete', () => {
         path: '/clients/someId',
         method: 'DELETE',
       })
-      .reply(200, 'Successfully removed client with ID someId', {
-        ...jsonHeaders,
-      });
+      .reply(200, 'Successfully removed client with ID someId');
 
     const { data } = await _delete('/clients/someId', {
       parseAs: 'text',
@@ -126,7 +123,7 @@ describe('request', () => {
         path: '/clients',
         method: 'POST',
       })
-      .reply(200, 'Client created successfully', { ...jsonHeaders });
+      .reply(200, 'Client created successfully');
 
     const { data } = await request(
       'POST',
@@ -149,7 +146,7 @@ describe('request', () => {
         path: '/transactions',
         method: 'GET',
       })
-      .reply(200, [{ _id: '001', clientID: '1234' }], { ...jsonHeaders });
+      .reply(200, [{ _id: '001', clientID: '1234' }]);
 
     const { data } = await request('GET', '/transactions')(state);
     expect(data[0].clientID).to.eql('1234');

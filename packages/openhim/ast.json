@@ -266,7 +266,7 @@
         "body"
       ],
       "docs": {
-        "description": "Make a request to OpenHIM to create a new channel",
+        "description": "Make a request to OpenHIM to create a new channel. See [OpenHIM Channels docs](https://openhim.org/docs/api/channels/create#create-channel)",
         "tags": [
           {
             "title": "example",
@@ -323,7 +323,7 @@
           },
           {
             "title": "example",
-            "description": "getTasks('67dac5fd70b851d7a26d1274');",
+            "description": "getTasks({\n  taskId: '6870fbf470b851d7a22e9f05',\n  filterLimit: 10,\n  filterPage: 0,\n  filters: '{}',\n});",
             "caption": "Get a specific task"
           },
           {
@@ -338,7 +338,7 @@
           },
           {
             "title": "param",
-            "description": "Request options. See [OpenHIM Tasks docs](https://openhim.org/docs/api/tasks/read/#read-all-tasks)",
+            "description": "Required request options for each request. See [OpenHIM Tasks docs](https://openhim.org/docs/api/tasks/read/#read-all-tasks)",
             "type": {
               "type": "NameExpression",
               "name": "OpenHIMGetTasksOptions"

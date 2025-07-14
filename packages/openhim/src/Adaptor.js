@@ -37,12 +37,12 @@ export function execute(...operations) {
 /**
  * Create an encounter
  * @example <caption>Create an encounter</caption>
- * encounter(encounterData)
+ * createEncounter(encounterData)
  * @function
  * @param {object} encounterData - Payload data for the encounter
  * @returns {Operation}
  */
-export function encounter(encounterData) {
+export function createEncounter(encounterData) {
   return async state => {
     const [body] = expandReferences(state, encounterData);
 
@@ -241,7 +241,7 @@ export function getChannels(channelId) {
 }
 
 /**
- * Make a request to OpenHIM to create a new channel
+ * Make a request to OpenHIM to create a new channel. See [OpenHIM Channels docs](https://openhim.org/docs/api/channels/create#create-channel)
  * @example <caption>Create a channel</caption>
  * createChannel({
  *   type: 'http',
@@ -350,9 +350,7 @@ export function getTasks(options) {
       'GET',
       taskId ? `/tasks/${taskId}` : '/tasks',
       {
-        query: {
-          ...resolvedoptions,
-        },
+        query: resolvedoptions,
       }
     );
 
