@@ -137,7 +137,7 @@ const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
   }
 };
 
-export const ERROR_ABSOLUTE_URL = 'Absolute URLs not suppored';
+export const ERROR_ABSOLUTE_URL = 'Absolute URLs not supported';
 
 // throws if a path is absolute
 export const assertRelativeUrl = path => {
@@ -335,7 +335,7 @@ async function readResponseBody(response, parseAs) {
     throwError(response.statusCode, {
       description: 'Error parsing the response body',
       parseAs,
-      contentType: response.headers['content-type'],
+      contentType,
       bodyLength: contentLength,
       error: error.message,
     });

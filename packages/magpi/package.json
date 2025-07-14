@@ -1,7 +1,6 @@
 {
   "name": "@openfn/language-magpi",
   "label": "Magpi",
-  "description": "A Magpi Language Pack for OpenFn",
   "description": "OpenFn adaptor for Magpi",
   "main": "dist/index.cjs",
   "scripts": {
