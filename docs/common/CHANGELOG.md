@@ -1,5 +1,11 @@
 ## 3.0.1 - 11 July 2025
 
+## 3.0.2 - 14 July 2025
+
+### Patch Changes
+
+- 9b5a4f8: More robust handling of empty response bodies in http helpers
+
 ### Patch Changes
 
 - cf9c09f: Fix an issue where JSON responses without a content-type header could
@@ -310,7 +316,7 @@ content type to JSON.
 ### Minor Changes
 
 - aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access_token" keys can be used for OAuth2-reliant adaptors
+  "access\_token" keys can be used for OAuth2-reliant adaptors
 
 ## 1.9.0 - 23 June 2023
 

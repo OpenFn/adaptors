@@ -1,5 +1,12 @@
 # @openfn/language-openspp
 
+## 2.0.16 - 14 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
 ## 2.0.15 - 10 July 2025
 
 ### Patch Changes

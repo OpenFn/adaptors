@@ -1,5 +1,13 @@
 # @openfn/language-fhir-ndr-et
 
+## 0.1.18 - 14 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+  - @openfn/language-fhir@5.0.7
+
 ## 0.1.17 - 10 July 2025
 
 ### Patch Changes

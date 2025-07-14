@@ -1,5 +1,16 @@
 # @openfn/language-http
 
+## 7.2.0 - 14 July 2025
+
+### Minor Changes
+
+- c381879: Add support for `tls` object options in state.configuration
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
 ## 7.1.1 - 10 July 2025
 
 ### Patch Changes
