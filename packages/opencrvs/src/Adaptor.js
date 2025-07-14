@@ -41,52 +41,58 @@ export function execute(...operations) {
 }
 
 /**
- * Create a Birth Notification
- * @example
+ * Create a Birth Notification. Pass an array of FHIR resources wrapped in entry
+ * objects like `{ fullUrl, resource }`. References must use the full URL
+ * of the corresponding resources. See [OpenCRVS Event Notification Postman documentation](https://github.com/opencrvs/opencrvs-countryconfig/blob/master/postman/Event%20Notification.postman_collection.json)
+ * @example <caption>Create a birth notification</caption>
+ * createBirthNotification($.bundleData)
+ * @example <caption>Cross-reference two bundle resources</caption>
  * createBirthNotification([
   {
-    fullUrl: 'urn:uuid:eee21c26-67a2-40af-8cf7-5f4bc969153f',
+    fullUrl: 'urn:uuid:abcde',
     resource: {
-      resourceType: 'QuestionnaireResponse',
-      extension: [],
-      status: 'completed',
-      subject: {
-        reference: 'urn:uuid:7cb1d9cc-ea4b-4046-bea0-38bdf3082f56',
-      },
-      item: [
-        {
-          text: 'birth.mother.mother-view-group.motherIdType',
-          linkId: '',
-          answer: [
+      resourceType: 'Composition',
+     section:[
+           {
+          title: "Mother's details",
+          code: {
+            coding: [
+              {
+                system: 'http://opencrvs.org/specs/sections',
+                code: 'mother-details',
+              },
+            ],
+            text: "Mother's details",
+          },
+          entry: [
             {
-              valueString: 'NATIONAL_ID',
+              reference: 'urn:uuid:wxyz',
             },
           ],
-        },
-        {
-          text: 'birth.father.father-view-group.fatherIdType',
-          linkId: '',
-          answer: [
-            {
-              valueString: 'NATIONAL_ID',
-            },
-          ],
-        },
-      ],
+        }
+         // ... other section details  
+        ]
+      
+      // ... other resource details
+    },
+  },
+  {
+    fullUrl: 'urn:uuid:wxyz',
+    resource: {
+      resourceType: 'Patient',
+      // ... other resource details
     },
   },
 ]);
-
  * @function
  * @public
- * @param {Array} body - An array of Birth Notification FHIR resources
+ * @param {Array} body - An array of Birth Notification bundle entries.
  * @returns {Operation}
  * @state {OpenCRVSState}
  */
 export function createBirthNotification(body) {
   return async state => {
     const [resolvedBody] = expandReferences(state, body);
-
     const response = await util.request(
       state.configuration,
       'POST',
