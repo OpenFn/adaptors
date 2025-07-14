@@ -34,13 +34,9 @@ function encodeFormBody(data) {
 }
 
 export function getTLSOptions(state, requestOptions) {
-  const { ca, tls: tlsConfig } = state.configuration || {};
+  const { tls: tlsConfig } = state.configuration || {};
 
-  const tls = requestOptions.tls ??
-    requestOptions.agentOptions ?? {
-      ca: ca || tlsConfig?.ca,
-      ...tlsConfig,
-    };
+  const tls = requestOptions.tls ?? requestOptions.agentOptions ?? tlsConfig;
   return tls;
 }
 
@@ -114,7 +110,6 @@ export function request(method, path, params) {
       (resolvedParams.followAllRedirects === false ? 0 : 5);
 
     const tls = getTLSOptions(state, resolvedParams);
-    console.log({ tls });
 
     if (resolvedParams.agentOptions) {
       console.warn(

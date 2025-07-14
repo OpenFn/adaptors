@@ -1,4 +1,4 @@
-import { Client, MockAgent, setGlobalDispatcher } from 'undici';
+import { Client, MockAgent } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
