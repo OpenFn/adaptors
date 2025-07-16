@@ -12,7 +12,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "post('/pdf',$.data)",
+            "description": "post('/9be7ffcc-919a-477b-8385-4c0cb2f996a2', state => ({ data: state.data }), {\n  parseAs: 'text',\n});",
             "caption": "Send pdf data"
           },
           {
@@ -81,7 +81,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", \"patient\", { \"name\": \"Bukayo\" });"
+            "description": "request('POST', '/9be7ffcc-919a-477b-8385-4c0cb2f996a2', state => ({ data: state.data }))",
+            "caption": "Send a pdf data result to a request"
           },
           {
             "title": "function",

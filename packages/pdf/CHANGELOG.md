@@ -2,4 +2,4 @@
 
 ## 1.0.0
 
-Initial release.
+Implement a `pdf` generator from a `html` string and `data`.

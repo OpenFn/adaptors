@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 import { Readable } from 'stream';
 
-import { request, generatePDF } from '../src/Adaptor.js';
+import { request, generatePDF, post } from '../src/Adaptor.js';
 
 const testServer = enableMockClient('https://fake.server.com');
 
@@ -124,23 +124,53 @@ describe('generatePDF', () => {
       { parseAs: 'stream' }
     )(state);
 
-
-
     expect(pdfStream).to.be.instanceOf(Readable);
 
     const chunks = [];
     for await (const chunk of pdfStream) {
-      chunks.push(chunk); 
+      chunks.push(chunk);
     }
-  
+
     const finalBuffer = Buffer.concat(chunks);
 
-    console.log({finalBuffer});
-    
-    // expect(data).to.be.a('string');
-    // expect(data.length).to.be.greaterThan(100);
+    expect(finalBuffer).to.be.instanceOf(Buffer);
+    expect(finalBuffer.length).to.be.greaterThan(100);
+  });
+});
 
-  //   expect(buffer).to.be.instanceOf(Buffer);
-  // expect(buffer.length).to.be.greaterThan(100);
+describe('post', () => {
+  it('makes a post request to the right endpoint', async () => {
+    testServer
+      .intercept({
+        path: '/patients',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, { id: 7, fullName: 'Mamadou', gender: 'M' });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://fake.server.com',
+        username: 'hello',
+        password: 'there',
+      },
+      data: {
+        fullName: 'Mamadou',
+        gender: 'M',
+      },
+    };
+
+    const finalState = await post('/patients', {
+      name: state.data.fullName,
+      gender: state.data.gender,
+    })(state);
+
+    expect(finalState.data).to.eql({
+      fullName: 'Mamadou',
+      gender: 'M',
+      id: 7,
+    });
   });
 });

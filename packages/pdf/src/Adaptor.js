@@ -1,7 +1,6 @@
-import { expandReferences } from '@openfn/language-common/util';
+import { expandReferences, encode } from '@openfn/language-common/util';
 import * as util from './Utils';
 import puppeteer from 'puppeteer';
-import fs from 'fs';
 import { Readable } from 'stream';
 
 /**
@@ -69,22 +68,23 @@ export function generatePDF(
       margin: { top: '15mm', bottom: '15mm', left: '15mm', right: '15mm' },
     });
 
-    await browser.close();
-    await fs.promises.writeFile('daily-sales-report.pdf', pdfBuffer);
+    await browser.close();;
     console.log('PDF generated successfully!');
-    
+
     if (resolvedOptions.parseAs === 'stream') {
-      const stream = Readable.from(pdfBuffer);
+      const stream = Readable.from([pdfBuffer]);
       return { ...state, data: stream };
     }
 
-    return { ...state, data: pdfBuffer.toString('base64') };
+    const base64 = encode(pdfBuffer, { parseJson: false });
+
+    return { ...state, data: base64 };
   };
 }
 
 /**
  * Make a POST request
- * @example <caption>Send pdf data</caption>
+ * @example
  * post('/9be7ffcc-919a-477b-8385-4c0cb2f996a2', state => ({ data: state.data }), {
  *   parseAs: 'text',
  * });
@@ -102,7 +102,7 @@ export function post(path, body, options) {
 
 /**
  * Make a general HTTP request
- * @example <caption>Send a pdf data result to a request</caption>
+ * @example <caption>Make a request</caption>
  * request('POST', '/9be7ffcc-919a-477b-8385-4c0cb2f996a2', state => ({ data: state.data }))
  * @function
  * @public
