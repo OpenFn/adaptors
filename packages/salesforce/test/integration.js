@@ -11,7 +11,8 @@ import {
   bulk,
   http,
   fn,
-} from '../dist/index.js';
+  bulk1,
+} from '../src';
 
 const state = { configuration };
 
@@ -286,5 +287,21 @@ describe('Integration tests', () => {
         );
       }
     }).timeout(5000);
+  });
+  describe('bulk1', () => {
+    it('should query', async () => {
+      const { data } = await execute(
+        bulk1.query('SELECT Id, Name FROM Account')
+      )(state);
+      expect(data.length).to.greaterThan(1e1);
+    }).timeout(5e5);
+    it.only('should insert a single sobject', async () => {
+      state.data = { name: 'Coco', vera__Active__c: 'No' };
+      const { data } = await execute(
+        bulk1.insert('Account', state => state.data)
+      )(state);
+      console.log({ data });
+      expect(data.success).to.eq(true);
+    }).timeout(5e5);
   });
 });
