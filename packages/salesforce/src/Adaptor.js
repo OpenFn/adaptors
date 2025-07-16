@@ -704,7 +704,7 @@ export function retrieve(sObjectName, id) {
 export function sfRequest(httpRequest) {
   return connection.request(httpRequest);
 }
-
+export { connection };
 export {
   alterState,
   arrayToString,
