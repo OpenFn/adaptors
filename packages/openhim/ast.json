@@ -1,5 +1,415 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "getTransactions",
+      "params": [
+        "options"
+      ],
+      "docs": {
+        "description": "Make a request to OpenHIM to get transactions",
+        "tags": [
+          {
+            "title": "example",
+            "description": "getTransactions()",
+            "caption": "Get all transactions"
+          },
+          {
+            "title": "example",
+            "description": "getTransactions({transactionId:\"686f56e070b851d7a21898f5\"})",
+            "caption": "Get a specific transaction"
+          },
+          {
+            "title": "example",
+            "description": "getTransactions({\n  filterLimit: 5,\n  filterPage: 0,\n  filterRepresentation: 'full',\n  filters: '{\"response.status\":\"200\"}',\n});",
+            "caption": "Get transactions with filters"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Optional request options. See [OpenHIM Transactions docs](https://openhim.org/docs/api/transactions/read/#read-all-transactions)",
+            "type": {
+              "type": "NameExpression",
+              "name": "OpenHIMGetTransactionsOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getClients",
+      "params": [
+        "clientId"
+      ],
+      "docs": {
+        "description": "Make a request to OpenHIM to get all registered client records",
+        "tags": [
+          {
+            "title": "example",
+            "description": "getClients()",
+            "caption": "Get all clients"
+          },
+          {
+            "title": "example",
+            "description": "getClients('6823172670b851d7a222075a');",
+            "caption": "Get a specific client"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Optional clientID to return a specific client.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "clientId"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "registerClient",
+      "params": [
+        "body"
+      ],
+      "docs": {
+        "description": "Make a request to OpenHIM to create a new client record",
+        "tags": [
+          {
+            "title": "example",
+            "description": "registerClient({\n roles: ['fhir'],\n clientID: 'fhir-server-7',\n name: 'FHIR Server',\n passwordAlgorithm: 'sha512',\n passwordSalt: '3e74a280c568f27241e48e938edf21bf',\n passwordHash:\n   '9a5158dc87a25da9d8822d48ed831a88bb4ba7fa636ddb6d6a725f73688546052cb7f2c355758e4839f9416e6cc0e37e1e3070f597af2836d39768a5ecc050db',\n});",
+            "caption": "Create a client record"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The client data to register.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "body"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "updateClient",
+      "params": [
+        "body"
+      ],
+      "docs": {
+        "description": "Make a request to OpenHIM to update a client record",
+        "tags": [
+          {
+            "title": "example",
+            "description": "updateClient({\n _id:'6870c19870b851d7a22b8d27',\n roles: ['fhir', 'testing'],\n clientID: 'fhir-server-7',\n name: 'FHIR Server Testing',\n passwordAlgorithm: 'sha512',\n passwordSalt: '3e74a280c568f27241e48e938edf21bf',\n passwordHash:\n   '9a5158dc87a25da9d8822d48ed831a88bb4ba7fa636ddb6d6a725f73688546052cb7f2c355758e4839f9416e6cc0e37e1e3070f597af2836d39768a5ecc050db',\n});",
+            "caption": "Update a client record"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The client data to update.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "body"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getChannels",
+      "params": [
+        "channelId"
+      ],
+      "docs": {
+        "description": "Make a request to OpenHIM to get all channel records",
+        "tags": [
+          {
+            "title": "example",
+            "description": "getChannels()",
+            "caption": "Get all channels"
+          },
+          {
+            "title": "example",
+            "description": "getChannels('67dac5fd70b851d7a26d1274');",
+            "caption": "Get a specific channel"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Optional channelId to return a specific channel.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "channelId"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "createChannel",
+      "params": [
+        "body"
+      ],
+      "docs": {
+        "description": "Make a request to OpenHIM to create a new channel. See [OpenHIM Channels docs](https://openhim.org/docs/api/channels/create#create-channel)",
+        "tags": [
+          {
+            "title": "example",
+            "description": "createChannel({\n  type: 'http',\n  authType: 'public',\n  status: 'enabled',\n  routes: [\n    {\n      name: 'FHIR Server Testing',\n      secured: false,\n      host: 'localhost',\n      port: '3447',\n      primary: true,\n    },\n  ],\n  requestBody: true,\n  responseBody: true,\n  name: 'FHIR Server Testing',\n  urlPattern: '^/fhir/.*$',\n  methods: [\n    'GET',\n    'POST',\n  ],\n});",
+            "caption": "Create a channel"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The channel data to create.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "body"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getTasks",
+      "params": [
+        "options"
+      ],
+      "docs": {
+        "description": "Make a request to OpenHIM to get all tasks",
+        "tags": [
+          {
+            "title": "example",
+            "description": "getTasks({\n  filterLimit: 10,\n  filterPage: 0,\n  filters: '{}',\n});",
+            "caption": "Get all tasks"
+          },
+          {
+            "title": "example",
+            "description": "getTasks({\n  taskId: '6870fbf470b851d7a22e9f05',\n  filterLimit: 10,\n  filterPage: 0,\n  filters: '{}',\n});",
+            "caption": "Get a specific task"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Required request options for each request. See [OpenHIM Tasks docs](https://openhim.org/docs/api/tasks/read/#read-all-tasks)",
+            "type": {
+              "type": "NameExpression",
+              "name": "OpenHIMGetTasksOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "createTask",
+      "params": [
+        "body"
+      ],
+      "docs": {
+        "description": "Make a request to OpenHIM to create a new task",
+        "tags": [
+          {
+            "title": "example",
+            "description": "createTask({\n  tids: [\n    '5bb777777bbb66cc5d4444ee',\n    '5ceec0bb3ca344f9a30df633',\n    '5af732d1cbf94ba88b8f0bc0',\n  ],\n  batchSize: 2,\n  paused: true,\n});",
+            "caption": "Create a task record"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The task data to create.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "body"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
   "exports": [],
   "common": [
     {
@@ -271,6 +681,70 @@
       "valid": true
     },
     {
+      "name": "each",
+      "params": [
+        "dataSource",
+        "operation"
+      ],
+      "docs": {
+        "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+            "caption": "Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+            "caption": "Iterate over items in state.data and pass each one into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);",
+            "caption": "Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            },
+            "name": "dataSource"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be repeated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "field",
       "params": [
         "key",
@@ -423,6 +897,211 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "cursor",
+      "params": [
+        "value",
+        "options"
+      ],
+      "docs": {
+        "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "cursor($.cursor, { defaultValue: 'today' })",
+            "caption": "Use a cursor from state if present, or else use the default value"
+          },
+          {
+            "title": "example",
+            "description": "cursor(22)",
+            "caption": "Use a pagination cursor"
+          },
+          {
+            "title": "param",
+            "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "value"
+          },
+          {
+            "title": "param",
+            "description": "options to control the cursor.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "set the cursor key. Will persist through the whole run.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "options.key"
+          },
+          {
+            "title": "param",
+            "description": "the value to use if value is falsy",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "options.defaultValue"
+          },
+          {
+            "title": "param",
+            "description": "custom formatter for the final cursor value",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "options.format"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "as",
+      "params": [
+        "key",
+        "operation"
+      ],
+      "docs": {
+        "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));",
+            "caption": "Fetch cce-data from collections and store them under state.cceData"
+          },
+          {
+            "title": "param",
+            "description": "The state key to assign the result of the operation to.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": " An operation that returns a new state object with a `data` property",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "map",
+      "params": {},
+      "docs": {
+        "description": "Iterates over a collection of items and returns a new array of mapped values,\nlike Javascript's `Array.map()` function.\n\nEach item in the source array will be passed into the callback function. The returned value\nwill be added to the new array. The callback is passed the original item, the current index\nin the source array (ie, the nth item number), and the state object.\n\nWrites a new array to `state.data` with transformed values.c array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "map($.items', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
+            "caption": "Transform an array of items in state"
+          },
+          {
+            "title": "example",
+            "description": "map($.items, async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});",
+            "caption": "Map items asynchronously (e.g. fetch extra info)"
+          },
+          {
+            "title": "param",
+            "description": "An array of items or a a JSONPath string which points to an array of items.",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Array"
+                }
+              ]
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "The mapping function, invoked with `(data, index, state)` for each item in the array.",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "State"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ]
 }
