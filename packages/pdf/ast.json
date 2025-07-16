@@ -12,8 +12,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "post('/9be7ffcc-919a-477b-8385-4c0cb2f996a2', state => ({ data: state.data }), {\n  parseAs: 'text',\n});",
-            "caption": "Send pdf data"
+            "description": "post('/9be7ffcc-919a-477b-8385-4c0cb2f996a2', state => ({ data: state.data }), {\n  parseAs: 'text',\n});"
           },
           {
             "title": "function",
@@ -82,7 +81,7 @@
           {
             "title": "example",
             "description": "request('POST', '/9be7ffcc-919a-477b-8385-4c0cb2f996a2', state => ({ data: state.data }))",
-            "caption": "Send a pdf data result to a request"
+            "caption": "Make a request"
           },
           {
             "title": "function",
