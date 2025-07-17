@@ -215,6 +215,54 @@ export function upsertTask(projectGid, params, callback) {
 }
 
 /**
+ * Create a task or ignore.
+ * @public
+ * @example <caption>Create a task once</caption>
+ * createTaskOnce("1201382240880", {
+ *   externalId: "name",
+ *   data: {
+ *     name: "test",
+ *     approval_status: "pending",
+ *     projects: ["1201382240880"],
+ *     assignee: "12345",
+ *   },
+ * });
+ * @function
+ * @param {string} projectGid - Globally unique identifier for the project
+ * @param {object} params - an object with an externalId and some task data.
+ * @param {string} params.externalId - The external id field name
+ * @param {object} params.data - The data to create.
+ * @returns {Operation}
+ */
+export function createTaskOnce(projectGid, params = {}) {
+  return state => {
+    const [resolvedProjectGid, resolvedParams] = expandReferences(
+      state,
+      projectGid,
+      params
+    );
+    const { externalId, data } = resolvedParams;
+
+    return util
+      .requestWithPagination(state, `projects/${resolvedProjectGid}/tasks`, {
+        query: { opt_fields: `${externalId}` },
+      })
+      .then(next => {
+        const matchingTask = next.find(
+          task => task[externalId] === data[externalId]
+        );
+        if (matchingTask) {
+          console.log('Matching task found. Ingoring task update.');
+          return state;
+        } else {
+          console.log('No matching task found. Creating new task.');
+          return createTask(data)(state);
+        }
+      });
+  };
+}
+
+/**
  * Options provided to the createTaskStory request
  * @typedef {Object} StoryOptions
  * @public
@@ -337,5 +385,5 @@ export {
   lastReferenceValue,
   merge,
   sourceValue,
-  as
+  as,
 } from '@openfn/language-common';

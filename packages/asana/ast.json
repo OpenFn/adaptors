@@ -360,6 +360,78 @@
       "valid": false
     },
     {
+      "name": "createOnce",
+      "params": [
+        "projectGid",
+        "params"
+      ],
+      "docs": {
+        "description": "Create a task or ignore.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "upsertTask(\"1201382240880\", {\n  externalId: \"name\",\n  data: {\n    name: \"test\",\n    approval_status: \"pending\",\n    projects: [\"1201382240880\"],\n    assignee: \"12345\",\n  },\n});",
+            "caption": "Create a task"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Globally unique identifier for the project",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "projectGid"
+          },
+          {
+            "title": "param",
+            "description": "an object with an externalId and some task data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "The external id field name",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "params.externalId"
+          },
+          {
+            "title": "param",
+            "description": "The data to create.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params.data"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
       "name": "createTaskStory",
       "params": [
         "taskGid",
