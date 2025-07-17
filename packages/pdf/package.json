@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-pdf",
   "version": "1.0.0",
-  "description": "OpenFn pdf adaptor",
+  "description": "OpenFn adaptor for generating PDF documents",
   "type": "module",
   "exports": {
     ".": {
