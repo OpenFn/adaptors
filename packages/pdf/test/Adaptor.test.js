@@ -121,7 +121,7 @@ describe('generatePDF', () => {
         </body>
       </html>
     `,
-      { parseAs: 'stream' }
+      { format: 'stream' }
     )(state);
 
     expect(pdfStream).to.be.instanceOf(Readable);

@@ -30,23 +30,25 @@ import { Readable } from 'stream';
  * @param {Object} data - Data to be used in the PDF generation
  * @param {Function} htmlTemplateFn - A function that takes `data` and returns an HTML string
  * @param {Object} [options] - Optional configuration for PDF generation
- * @param {string} [options.parseAs] - The format to parse the pdf result, allows `base64` and `stream`. Defaults to `base64`.
+ * @param {string} [options.format] - The format to parse the pdf result, allows `base64` and `stream`. Defaults to `base64`.
  * @example <caption>Generate a PDF from data</caption>
- * generatePDF($.data, data => `
-  <html>
-    <body>
-      <h1>Sales Report</h1>
-      <p>Date: ${data.date}</p>
-      <p>Total Sales: $${data.total}</p>
-    </body>
-  </html>
-`);
+ * generatePDF($.data, data => {
+ *   return `
+ * <html>
+ *   <body>
+ *     <h1>Sales Report</h1>
+ *     <p>Date: ${data.date}</p>
+ *     <p>Total Sales: $${data.total}</p>
+ *   </body>
+ * </html>
+ * `;
+ * });
  * @returns {Operation}
  */
 export function generatePDF(
   data,
   htmlTemplateFn,
-  options = { parseAs: 'base64' }
+  options = { format: 'base64' }
 ) {
   return async state => {
     const [resolvedData, resolvedOptions] = expandReferences(
@@ -72,9 +74,10 @@ export function generatePDF(
     });
 
     await browser.close();
+
     console.log('PDF generated successfully!');
 
-    if (resolvedOptions.parseAs === 'stream') {
+    if (resolvedOptions.format === 'stream') {
       const stream = Readable.from([pdfBuffer]);
       return { ...state, data: stream };
     }
@@ -88,7 +91,7 @@ export function generatePDF(
 /**
  * Make a POST request
  * @example
- * post('/9be7ffcc-919a-477b-8385-4c0cb2f996a2', state => ({ data: state.data }), {
+ * post('/9be7ffcc-919a-477b-8385-4c0cb2f996a2', $.data, {
  *   parseAs: 'text',
  * });
  * @function
@@ -106,7 +109,7 @@ export function post(path, body, options) {
 /**
  * Make a general HTTP request
  * @example <caption>Make a request</caption>
- * request('POST', '/9be7ffcc-919a-477b-8385-4c0cb2f996a2', state => ({ data: state.data }))
+ * request('POST', '/9be7ffcc-919a-477b-8385-4c0cb2f996a2', $.data)
  * @function
  * @public
  * @param {string} method - HTTP method to use
