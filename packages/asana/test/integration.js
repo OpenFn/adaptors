@@ -6,10 +6,11 @@ import {
   createTask,
   updateTask,
   upsertTask,
+  createTaskOnce,
   createTaskStory,
   request,
   execute,
-} from '../dist/index.js';
+} from '../src';
 
 const state = { configuration };
 
@@ -102,6 +103,52 @@ describe('Integration tests', () => {
     }).timeout(2e4);
   });
 
+  describe('createTaskOnce', () => {
+    before(async () => {
+      const { data: tasks } = await execute(
+        request(`workspaces/${configuration.workspaceId}/tasks/search`, {
+          query: {
+            resource_subtype: 'default_task',
+            text: 'Test-CreateOnce',
+          },
+          method: 'GET',
+        })
+      )(state);
+
+      const testTask = tasks.find(task => task.name === 'Test-CreateOnce');
+      if (testTask) {
+        // Delete the test task using direct request
+        await execute(request(`tasks/${testTask.gid}`, { method: 'DELETE' }))(
+          state
+        );
+        console.log('Cleaned up test task');
+      }
+    });
+    it('should create a task only if it does not exist', async () => {
+      const taskData = {
+        externalId: 'name',
+        data: {
+          name: 'Test-CreateOnce',
+          notes: 'This is a test task',
+          projects: [testProjectGid],
+        },
+      };
+
+      // First creation should succeed
+      const { data: firstData } = await execute(
+        createTaskOnce(testProjectGid, taskData)
+      )(state);
+
+      expect(firstData.name).to.equal('Test-CreateOnce');
+
+      // Second attempt should return original state
+      const { data: secondData } = await execute(
+        createTaskOnce(testProjectGid, taskData)
+      )(state);
+
+      expect(secondData).to.be.null;
+    }).timeout(2e4);
+  });
   describe('upsertTask', () => {
     it('should upsert a task', async () => {
       const { data } = await execute(
