@@ -278,6 +278,154 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "searchRecord",
+      "params": [
+        "model",
+        "domain"
+      ],
+      "docs": {
+        "description": "Search a record from Odoo",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "searchRecord('res.partner', {\n  country_id: 'United States',\n});"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The specific record model i.e. \"res.partner\"",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "model"
+          },
+          {
+            "title": "param",
+            "description": "Optional search domain to filter records.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "domain"
+          },
+          {
+            "title": "state",
+            "description": "{OdooState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "searchReadRecord",
+      "params": [
+        "model",
+        "domain",
+        "fields",
+        "options"
+      ],
+      "docs": {
+        "description": "Search and a read record from Odoo",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "searchReadRecord('res.partner', {\n  country_id: 'United States',\n});"
+          },
+          {
+            "title": "example",
+            "description": "searchReadRecord(\n  'res.partner',\n  {\n    is_company: true,\n  },\n  ['name'],\n  {\n    limit: 2,\n    offset: 0,\n  }\n);",
+            "caption": "Search and read a record with specific fields"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The specific record model i.e. \"res.partner\"",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "model"
+          },
+          {
+            "title": "param",
+            "description": "Optional search domain to filter records.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "domain"
+          },
+          {
+            "title": "param",
+            "description": "An optional array of field strings to read from the record.",
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              ]
+            },
+            "name": "fields"
+          },
+          {
+            "title": "param",
+            "description": "Optional options like limit, offset, order, or context.",
+            "type": {
+              "type": "NameExpression",
+              "name": "SearchOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{OdooState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],
