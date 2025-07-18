@@ -215,50 +215,37 @@ export function upsertTask(projectGid, params, callback) {
 }
 
 /**
- * Create a task or ignore.
+ * Search for tasks in a workspace by task name.
  * @public
- * @example <caption>Create a task once</caption>
- * createTaskOnce("1201382240880", {
- *   externalId: "name",
- *   data: {
- *     name: "test",
- *     approval_status: "pending",
- *     projects: ["1201382240880"],
- *     assignee: "12345",
- *   },
+ * @example <caption>Search for a task by name</caption>
+ * searchTask("Test Search Task", {
+ *   resource_subtype: "default_task",
+ *   sort_by: "modified_at"
  * });
  * @function
- * @param {string} projectGid - Globally unique identifier for the project
- * @param {object} params - an object with an externalId and some task data.
- * @param {string} params.externalId - The external id field name
- * @param {object} params.data - The data to create.
- * @returns {Operation}
+ * @param {string} task - The text or name of the task to search for.
+ * @param {object} [query] - Query params. See {@link https://developers.asana.com/reference/searchtasksforworkspace Docs} for a list of valid parameters.
+ * @returns {Operation} An operation that, when executed, returns the search results in state.data.
  */
-export function createTaskOnce(projectGid, params = {}) {
-  return state => {
-    const [resolvedProjectGid, resolvedParams] = expandReferences(
-      state,
-      projectGid,
-      params
-    );
-    const { externalId, data } = resolvedParams;
+export function searchTask(task, query = {}) {
+  return async state => {
+    const [resolvedTask, resolvedQuery] = expandReferences(state, task, query);
+    const { workspaceGid } = state.configuration;
 
-    return util
-      .requestWithPagination(state, `projects/${resolvedProjectGid}/tasks`, {
-        query: { opt_fields: `${externalId}` },
-      })
-      .then(next => {
-        const matchingTask = next.find(
-          task => task[externalId] === data[externalId]
-        );
-        if (matchingTask) {
-          console.log('Matching task found. Ingoring task update.');
-          return state;
-        } else {
-          console.log('No matching task found. Creating new task.');
-          return createTask(data)(state);
-        }
-      });
+    if (!workspaceGid) throw new Error('You need to specify Workspace GID');
+
+    const response = await util.request(
+      state,
+      `workspaces/${workspaceGid}/tasks/search`,
+      {
+        query: {
+          text: resolvedTask,
+          ...resolvedQuery,
+        },
+      }
+    );
+
+    return util.prepareNextState(state, response);
   };
 }
 

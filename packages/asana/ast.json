@@ -360,13 +360,13 @@
       "valid": false
     },
     {
-      "name": "createOnce",
+      "name": "searchTask",
       "params": [
-        "projectGid",
-        "params"
+        "task",
+        "query"
       ],
       "docs": {
-        "description": "Create a task or ignore.",
+        "description": "Search for tasks in a workspace by task name.",
         "tags": [
           {
             "title": "public",
@@ -375,8 +375,8 @@
           },
           {
             "title": "example",
-            "description": "upsertTask(\"1201382240880\", {\n  externalId: \"name\",\n  data: {\n    name: \"test\",\n    approval_status: \"pending\",\n    projects: [\"1201382240880\"],\n    assignee: \"12345\",\n  },\n});",
-            "caption": "Create a task"
+            "description": "searchTask(\"Test Search Task\", {\n  resource_subtype: \"default_task\",\n  sort_by: \"modified_at\"\n});",
+            "caption": "Search for a task by name"
           },
           {
             "title": "function",
@@ -385,43 +385,28 @@
           },
           {
             "title": "param",
-            "description": "Globally unique identifier for the project",
+            "description": "The text or name of the task to search for.",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "projectGid"
+            "name": "task"
           },
           {
             "title": "param",
-            "description": "an object with an externalId and some task data.",
+            "description": "Query params. See {@link https://developers.asana.com/reference/searchtasksforworkspace Docs} for a list of valid parameters.",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "The external id field name",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "params.externalId"
-          },
-          {
-            "title": "param",
-            "description": "The data to create.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "params.data"
+            "name": "query"
           },
           {
             "title": "returns",
-            "description": null,
+            "description": "An operation that, when executed, returns the search results in state.data.",
             "type": {
               "type": "NameExpression",
               "name": "Operation"
@@ -429,7 +414,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "createTaskStory",

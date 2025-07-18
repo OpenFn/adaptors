@@ -17,11 +17,20 @@
       "examples": [
         "sample-tokenyWSJdXBACMLLWMNGgADFA"
       ]
+    },
+    "workspaceGid": {
+      "title": "Workspace GID",
+      "type": "string",
+      "description": "Globally unique identifier for the workspace or organization.",
+      "examples": [
+        "12345"
+      ]
     }
   },
   "type": "object",
   "additionalProperties": true,
   "required": [
-    "token"
+    "token",
+    "workspaceGid"
   ]
 }

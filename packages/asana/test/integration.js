@@ -1,22 +1,20 @@
 import { expect } from 'chai';
-import configuration from '../tmp/creds.json' assert { type: 'json' };
+import state from '../tmp/state.json' assert { type: 'json' };
 import {
   getTask,
   getTasks,
   createTask,
   updateTask,
   upsertTask,
-  createTaskOnce,
   createTaskStory,
+  searchTask,
   request,
   execute,
 } from '../src';
 
-const state = { configuration };
-
 describe('Integration tests', () => {
   let createdTaskGid;
-  const testProjectGid = configuration.projectId; //'1206930238111330'; // Replace with a valid project GID from your Asana workspace
+  const testProjectGid = state.projectId; //'1206930238111330'; // Replace with a valid project GID from your Asana workspace
 
   describe('request', () => {
     it('should make a GET request with proper authorization', async () => {
@@ -103,52 +101,6 @@ describe('Integration tests', () => {
     }).timeout(2e4);
   });
 
-  describe('createTaskOnce', () => {
-    before(async () => {
-      const { data: tasks } = await execute(
-        request(`workspaces/${configuration.workspaceId}/tasks/search`, {
-          query: {
-            resource_subtype: 'default_task',
-            text: 'Test-CreateOnce',
-          },
-          method: 'GET',
-        })
-      )(state);
-
-      const testTask = tasks.find(task => task.name === 'Test-CreateOnce');
-      if (testTask) {
-        // Delete the test task using direct request
-        await execute(request(`tasks/${testTask.gid}`, { method: 'DELETE' }))(
-          state
-        );
-        console.log('Cleaned up test task');
-      }
-    });
-    it('should create a task only if it does not exist', async () => {
-      const taskData = {
-        externalId: 'name',
-        data: {
-          name: 'Test-CreateOnce',
-          notes: 'This is a test task',
-          projects: [testProjectGid],
-        },
-      };
-
-      // First creation should succeed
-      const { data: firstData } = await execute(
-        createTaskOnce(testProjectGid, taskData)
-      )(state);
-
-      expect(firstData.name).to.equal('Test-CreateOnce');
-
-      // Second attempt should return original state
-      const { data: secondData } = await execute(
-        createTaskOnce(testProjectGid, taskData)
-      )(state);
-
-      expect(secondData).to.be.null;
-    }).timeout(2e4);
-  });
   describe('upsertTask', () => {
     it('should upsert a task', async () => {
       const { data } = await execute(
@@ -215,5 +167,41 @@ describe('Integration tests', () => {
       );
       expect(data).to.have.property('type', 'comment');
     }).timeout(5000);
+  });
+  describe('searchTask', () => {
+    it('should throw an error if workspaceGid is not specified', async () => {
+      let error;
+      try {
+        await execute(searchTask('Test Task'))(state);
+      } catch (err) {
+        error = err;
+      }
+
+      expect(error).to.be.an('Error');
+      expect(error.message).to.equal('You need to specify Workspace GID');
+    });
+    it('should search a task', async () => {
+      const searchQuery = 'Updated Test Task';
+
+      const configuration = {
+        ...state.configuration,
+        workspaceGid: state.workspaceId,
+      };
+      const { data } = await execute(
+        searchTask(searchQuery, state => ({
+          workspaceGid: state.workspaceId,
+          opt_fields: ['name', 'notes'],
+        }))
+      )({ configuration });
+
+      expect(data).to.be.an('array');
+      expect(data.length).to.greaterThan(1);
+
+      const foundTask = data.find(task => task.name === 'Updated Test Task');
+      expect(foundTask).to.exist;
+      expect(foundTask.notes).to.equal(
+        'This task has been updated by integration tests'
+      );
+    });
   });
 });
