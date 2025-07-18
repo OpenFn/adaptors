@@ -19,17 +19,17 @@ import squel from 'squel';
  * @returns {Operation}
  */
 
-export function sql(sqlQuery, options) {
+export function sql(sqlQuery, options = { writeSql: false, execute: true }) {
   return state => {
     const { connection } = state;
     const [resolvedSqlQuery, resolvedOptions] = expandReferences(state, sqlQuery, options);
 
-    if (resolvedOptions && resolvedOptions.writeSql) {
+    if (resolvedOptions.writeSql) {
       console.log('Prepared SQL:', resolvedSqlQuery);
     }
 
-    if (resolvedOptions && resolvedOptions.execute === false) {
-      return Promise.resolve({ ...state, queries: [...(state.queries || []), resolvedSqlQuery] });
+    if (resolvedOptions.execute === false) { 
+      return { ...state, queries: [...(state.queries || []), resolvedSqlQuery] };
     }
 
     return new Promise((resolve, reject) => {
