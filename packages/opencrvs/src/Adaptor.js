@@ -116,7 +116,7 @@ export function createBirthNotification(body) {
 /**
  * Make an events search query against the OpenCRVS GraphQL API.
  * @example <caption>Search for events with specific parameters</caption>
- * query(
+ * queryEvents(
   {
     event: 'birth',
     registrationStatuses: ['REGISTERED'],
@@ -130,7 +130,7 @@ export function createBirthNotification(body) {
   },
 );
  * @example <caption>Search for events with options</caption>
- * query(
+ * queryEvents(
   {
     event: 'birth',
     registrationStatuses: ['REGISTERED'],
