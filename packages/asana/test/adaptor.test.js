@@ -8,6 +8,7 @@ import {
   updateTask,
   createTask,
   upsertTask,
+  searchTask,
 } from '../src';
 import { DEFAULT_PAGE_LIMIT } from '../src/util';
 import { mockServer } from './helper';
@@ -201,6 +202,44 @@ describe('Adaptor Test', () => {
         .reply(200, { data: newTask });
       const { data } = await upsertTask(projectGid, upsertTaskData)(state);
       expect(data).to.eql(newTask);
+    });
+  });
+
+  describe('searchTask', () => {
+    it('should query a task', async () => {
+      const workspaceGid = 'ws123';
+      const taskName = 'Test Search Task';
+      const mockData = [
+        { gid: '1', name: 'Test Search Task', notes: 'A note' },
+      ];
+      const stateWithWorkspace = {
+        configuration: { ...configuration, workspaceGid },
+      };
+      mockServer
+        .intercept({
+          path: `/api/1.0/workspaces/${workspaceGid}/tasks/search`,
+          query: {
+            text: taskName,
+          },
+          method: 'GET',
+        })
+        .reply(200, { data: mockData });
+      const { data } = await searchTask(taskName)(stateWithWorkspace);
+      expect(data).to.eql(mockData);
+      expect(data.length).to.eql(1);
+      expect(data[0].name).to.eql('Test Search Task');
+    });
+    it('should throw an error if workspaceGid is missing', async () => {
+      let error;
+      try {
+        await searchTask('Some Task')({
+          configuration: { token: 'fake-token' },
+        });
+      } catch (err) {
+        error = err;
+      }
+      expect(error).to.be.an('Error');
+      expect(error.message).to.equal('You need to specify Workspace GID');
     });
   });
 });

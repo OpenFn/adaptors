@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import configuration from '../tmp/creds.json' assert { type: 'json' };
+import state from '../tmp/state.json' assert { type: 'json' };
 import {
   getTask,
   getTasks,
@@ -7,15 +7,14 @@ import {
   updateTask,
   upsertTask,
   createTaskStory,
+  searchTask,
   request,
   execute,
-} from '../dist/index.js';
-
-const state = { configuration };
+} from '../src';
 
 describe('Integration tests', () => {
   let createdTaskGid;
-  const testProjectGid = configuration.projectId; //'1206930238111330'; // Replace with a valid project GID from your Asana workspace
+  const testProjectGid = state.projectId; //'1206930238111330'; // Replace with a valid project GID from your Asana workspace
 
   describe('request', () => {
     it('should make a GET request with proper authorization', async () => {
@@ -168,5 +167,41 @@ describe('Integration tests', () => {
       );
       expect(data).to.have.property('type', 'comment');
     }).timeout(5000);
+  });
+  describe('searchTask', () => {
+    it('should throw an error if workspaceGid is not specified', async () => {
+      let error;
+      try {
+        await execute(searchTask('Test Task'))(state);
+      } catch (err) {
+        error = err;
+      }
+
+      expect(error).to.be.an('Error');
+      expect(error.message).to.equal('You need to specify Workspace GID');
+    });
+    it('should search a task', async () => {
+      const searchQuery = 'Updated Test Task';
+
+      const configuration = {
+        ...state.configuration,
+        workspaceGid: state.workspaceId,
+      };
+      const { data } = await execute(
+        searchTask(searchQuery, state => ({
+          workspaceGid: state.workspaceId,
+          opt_fields: ['name', 'notes'],
+        }))
+      )({ configuration });
+
+      expect(data).to.be.an('array');
+      expect(data.length).to.greaterThan(1);
+
+      const foundTask = data.find(task => task.name === 'Updated Test Task');
+      expect(foundTask).to.exist;
+      expect(foundTask.notes).to.equal(
+        'This task has been updated by integration tests'
+      );
+    });
   });
 });
