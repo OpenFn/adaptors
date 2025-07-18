@@ -3,6 +3,47 @@ import { expandReferences } from '@openfn/language-common/util';
 import mysql from 'mysql';
 import squel from 'squel';
 
+
+/**
+ * Execute a SQL statement.
+ * @example
+ * sql(state => `select * from ${state.data.tableName};`, { writeSql: true })
+ * @function
+ * @public
+ * @param {string|function} sqlQuery - The SQL query as a string or a function that returns a string using state.
+ * @param {object} [options] - Optional options argument.
+ * @param {boolean} [options.writeSql] - If true, logs the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.execute] - If false, does not execute the SQL, just logs it and adds to state.queries. Defaults to true.
+ * @returns {Operation}
+ */
+
+export function sql(sqlQuery, options = { writeSql: false, execute: true }) {
+  return state => {
+    const { connection } = state;
+    const [resolvedSqlQuery, resolvedOptions] = expandReferences(state, sqlQuery, options);
+
+    if (resolvedOptions.writeSql) {
+      console.log('Prepared SQL:', resolvedSqlQuery);
+    }
+
+    if (resolvedOptions.execute === false) { 
+      return { ...state, queries: [...(state.queries || []), resolvedSqlQuery] };
+    }
+
+    return new Promise((resolve, reject) => {
+      connection.query(resolvedSqlQuery, (err, results, fields) => {
+        if (err) {
+          console.log('Error executing query. Disconnecting from database.');
+          connection.end();
+          return reject(err);
+        }
+        resolve({ ...state, response: { body: results, fields } });
+      });
+    });
+  };
+}
+
+
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for mysql.
@@ -10,6 +51,7 @@ import squel from 'squel';
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
+
 export function execute(...operations) {
   const initialState = {
     references: [],
