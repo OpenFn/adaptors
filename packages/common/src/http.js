@@ -1,6 +1,7 @@
-import set from 'lodash/set';
+import pkg from 'lodash';
 import { request, expandReferences } from './util';
 
+const { set } = pkg;
 /**
  * Helper functions provided by `http.options`.
  * @typedef OptionsHelpers
