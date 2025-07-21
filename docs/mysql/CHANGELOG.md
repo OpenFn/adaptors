@@ -1,5 +1,34 @@
 # @openfn/language-mysql
 
+## 3.0.0 - 21 July 2025
+
+### Major Changes
+
+- 62d0fd3: - Removed `query(options) ⇒ Operation` function
+
+  - Removed `sqlString(queryString) ⇒ Operation` function
+  - Remove `http` function from `common` exports
+  - Add `sql(query, options) ⇒ Operation` function
+
+  ### Migration Guide
+
+  If you were using `query()` or `sqlString()` functions, you can replace it
+  with `sql()` function.
+
+  Before:
+
+  ```js
+  query({ sql: 'select * from users;' });
+  //or
+  sqlString('select * from users;');
+  ```
+
+  Now:
+
+  ```js
+  sql('select * from users;');
+  ```
+
 ## 2.2.2 - 14 July 2025
 
 ### Patch Changes

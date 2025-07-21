@@ -2,9 +2,7 @@
 <dt>
     <a href="#insert">insert(table, fields)</a></dt>
 <dt>
-    <a href="#query">query(options)</a></dt>
-<dt>
-    <a href="#sqlstring">sqlString(queryString)</a></dt>
+    <a href="#sql">sql(sqlQuery, [options])</a></dt>
 <dt>
     <a href="#upsert">upsert(table, fields)</a></dt>
 <dt>
@@ -54,9 +52,6 @@ This adaptor exports the following from common:
     <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
 </dt>
 <dt>
-    <a href="/adaptors/packages/common-docs#http">http</a>
-</dt>
-<dt>
     <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
 </dt>
 <dt>
@@ -87,40 +82,26 @@ insert("users", { name: (state) => state.data.name });
 
 * * *
 
-### query
+### sql
 
-<p><code>query(options) ⇒ Operation</code></p>
+<p><code>sql(sqlQuery, [options]) ⇒ Operation</code></p>
 
-Execute a SQL statement
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Payload data for the message |
+Execute a SQL statement. Take care when inserting values from state directly into a query,
+as this can be a vector for injection attacks. See [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
+for guidelines
 
 
-**Example:** Execute a SQL statement
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| sqlQuery | <code>string</code> \| <code>function</code> |  | The SQL query as a string or a function that returns a string using state. |
+| [options] | <code>object</code> |  | Optional options argument. |
+| [options.writeSql] | <code>boolean</code> | <code>false</code> | If true, logs the generated SQL statement. Defaults to false. |
+| [options.execute] | <code>boolean</code> | <code>true</code> | If false, does not execute the SQL, just logs it and adds to state.queries. Defaults to true. |
+
+
+**Example**
 ```js
-query({ sql: 'select * from users;' })
-```
-
-* * *
-
-### sqlString
-
-<p><code>sqlString(queryString) ⇒ Operation</code></p>
-
-Execute a SQL statement
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| queryString | <code>String</code> | A query string (or function which takes state and returns a string) |
-
-
-**Example:** Execute a SQL statement
-```js
-sqlString(state => "select * from items;")
+sql(state => `select * from ${state.data.tableName};`, { writeSql: true })
 ```
 
 * * *
