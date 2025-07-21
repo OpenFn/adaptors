@@ -1,7 +1,8 @@
 import { expandReferences, encode } from '@openfn/language-common/util';
 import * as util from './Utils';
-import puppeteer from 'puppeteer';
 import { Readable } from 'stream';
+import fs from 'fs';
+import htmlToPdf from 'html-pdf-node';
 
 /**
  * State object
@@ -45,37 +46,23 @@ import { Readable } from 'stream';
  * });
  * @returns {Operation}
  */
-export function generatePDF(
-  data,
-  htmlTemplateFn,
+export function generatePDFFile(
+  htmlTemplateString,
   options = { format: 'base64' }
 ) {
   return async state => {
-    const [resolvedData, resolvedOptions] = expandReferences(
+    const [resolvedhtmlTemplateString, resolvedOptions] = expandReferences(
       state,
-      data,
+      htmlTemplateString,
       options
     );
 
-    const html = htmlTemplateFn(resolvedData);
+  const  pdfBuffer = await htmlToPdf.generatePdf({ content: resolvedhtmlTemplateString }, { format: 'A4', printBackground: true })
 
-    const browser = await puppeteer.launch({
-      headless: 'new',
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
-    const page = await browser.newPage();
+      fs.writeFileSync('invoice.pdf', pdfBuffer);
+      console.log('PDF generated successfully from HTML!');
 
-    await page.setContent(html, { waitUntil: 'networkidle0' });
 
-    const pdfBuffer = await page.pdf({
-      format: 'A4',
-      printBackground: true,
-      margin: { top: '15mm', bottom: '15mm', left: '15mm', right: '15mm' },
-    });
-
-    await browser.close();
-
-    console.log('PDF generated successfully!');
 
     if (resolvedOptions.format === 'stream') {
       const stream = Readable.from([pdfBuffer]);
