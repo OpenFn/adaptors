@@ -160,7 +160,7 @@ This operation writes the following keys to state:
 
 **Example:** Search for events with specific parameters
 ```js
-query(
+queryEvents(
   {
     event: 'birth',
     registrationStatuses: ['REGISTERED'],
@@ -176,7 +176,7 @@ query(
 ```
 **Example:** Search for events with options
 ```js
-query(
+queryEvents(
   {
     event: 'birth',
     registrationStatuses: ['REGISTERED'],
