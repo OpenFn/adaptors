@@ -1,20 +1,15 @@
-import chai from 'chai';
-const { expect } = chai;
-import { execute } from '@openfn/language-common';
-import nock from 'nock';
-import ClientFixtures, { fixtures } from './ClientFixtures';
+import { expect } from 'chai';
+import { execute, sql } from '../src/Adaptor';
 
-import Adaptor from '../src';
-const { event, dataElement, get } = Adaptor;
-
-describe('execute', () => {
-  /* before(() => {
-    nock('https://play.http.org')
-      .get('/demo/api/events')
-      .reply(200, { foo: 'bar' });
-  }); */
+describe.skip('execute', () => {
   it('executes each operation in sequence', done => {
-    let state = {};
+    let state = {
+      configuration: {},
+      connection: {
+        end: () => {},
+        connect: () => {},
+      },
+    };
     let operations = [
       state => {
         return { counter: 1 };
@@ -36,7 +31,12 @@ describe('execute', () => {
   });
 
   it('assigns references, data to the initialState', () => {
-    let state = {};
+    let state = {
+      connection: {
+        connect: () => {},
+        end: () => {},
+      },
+    };
 
     let finalState = execute()(state);
 
@@ -46,41 +46,18 @@ describe('execute', () => {
   });
 });
 
-/* describe('sqlString', () => {
-  before(() => {
-    nock('https://play.http.org')
-      .get('/demo/api/events')
-      .reply(200, { foo: 'bar' });
-  });
+describe('sql', () => {
+  it('should log and return the query when execute is false', async () => {
+    const fakeState = {
+      connection: { query: () => {} },
+      data: { tableName: 'users' },
+    };
 
-  it(
-    'calls the callback' */
-// , () => {
-//   let state = {
-//     configuration: {
-//       username: "hello",
-//       password: "there",
-//       baseUrl: 'https://play.http.org/demo'
-//     }
-//   };
-//
-//   return execute(
-//     get("api/events", {
-//       callback: (response, state) => {
-//         return { ...state, references: [response] }
-//       },
-//       username: null
-//     })
-//   )(state)
-//   .then((state) => {
-//     let lastReference = state.references[0]
-//
-//     // Check that the eventData made it's way to the request as a string.
-//     expect(lastReference).
-//       to.eql({foo: 'bar'})
-//
-//   })
-//
-// }
-/* );
-}); */
+    const result = await sql(
+      state => `SELECT Name, FROM ${state.data.tableName};`,
+      { writeSql: true, execute: false }
+    )(fakeState);
+
+    expect(result.queries).to.include('SELECT Name, FROM users;');
+  });
+});

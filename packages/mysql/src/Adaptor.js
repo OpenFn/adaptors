@@ -4,12 +4,62 @@ import mysql from 'mysql';
 import squel from 'squel';
 
 /**
+ * Execute a SQL statement. Take care when inserting values from state directly into a query,
+ * as this can be a vector for injection attacks. See [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
+ * for guidelines
+ * @example
+ * sql(state => `select * from ${state.data.tableName};`, { writeSql: true })
+ * @function
+ * @public
+ * @param {string|function} sqlQuery - The SQL query as a string or a function that returns a string using state.
+ * @param {object} [options] - Optional options argument.
+ * @param {boolean} [options.writeSql = false] - If true, logs the generated SQL statement. Defaults to false.
+ * @param {boolean} [options.execute = true] - If false, does not execute the SQL, just logs it and adds to state.queries. Defaults to true.
+ * @returns {Operation}
+ */
+
+export function sql(sqlQuery, options = {}) {
+  return state => {
+    const { connection } = state;
+    const [resolvedSqlQuery, resolvedOptions] = expandReferences(
+      state,
+      sqlQuery,
+      options
+    );
+
+    const { writeSql = false, execute = true } = resolvedOptions;
+    if (writeSql) {
+      console.log('Prepared SQL:', resolvedSqlQuery);
+    }
+
+    if (!execute) {
+      return {
+        ...state,
+        queries: [...(state.queries || []), resolvedSqlQuery],
+      };
+    }
+
+    return new Promise((resolve, reject) => {
+      connection.query(resolvedSqlQuery, (err, results, fields) => {
+        if (err) {
+          console.log('Error executing query. Disconnecting from database.');
+          connection.end();
+          return reject(err);
+        }
+        resolve({ ...state, response: { body: results, fields } });
+      });
+    });
+  };
+}
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for mysql.
  * @private
  * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
  */
+
 export function execute(...operations) {
   const initialState = {
     references: [],
@@ -78,9 +128,9 @@ export function insert(table, fields) {
       .setFields(valuesObj)
       .toParam();
 
-    var sql = sqlParams.text;
-    var inserts = sqlParams.values;
-    sqlString = mysql.format(sql, inserts);
+    const sql = sqlParams.text;
+    const inserts = sqlParams.values;
+    const sqlString = mysql.format(sql, inserts);
 
     console.log(`Executing MySQL query: ${sqlString}`);
 
@@ -239,66 +289,10 @@ export function upsertMany(table, data) {
   };
 }
 
-/**
- * Execute a SQL statement
- * @example <caption>Execute a SQL statement</caption>
- * query({ sql: 'select * from users;' })
- * @function
- * @public
- * @param {object} options - Payload data for the message
- * @returns {Operation}
- */
-export function query(options) {
-  return state => {
-    let { connection } = state;
-
-    const [opts] = expandReferences(state, options);
-
-    console.log(
-      'Executing MySQL statement with options: ' + JSON.stringify(opts, 2, null)
-    );
-
-    return new Promise((resolve, reject) => {
-      // execute a query on our database
-      connection.query(opts, function (err, results, fields) {
-        if (err) {
-          reject(err);
-          // Disconnect if there's an error.
-          console.log("That's an error. Disconnecting from database.");
-          connection.end();
-        } else {
-          console.log('Success...');
-          resolve(JSON.parse(JSON.stringify(results)));
-        }
-      });
-    }).then(data => {
-      console.log(data);
-      const nextState = { ...state, response: { body: data } };
-      return nextState;
-    });
-  };
-}
-
-/**
- * Execute a SQL statement
- * @example <caption>Execute a SQL statement</caption>
- * sqlString(state => "select * from items;")
- * @function
- * @public
- * @param {String} queryString - A query string (or function which takes state and returns a string)
- * @returns {Operation}
- */
-export function sqlString(queryString) {
-  return state => {
-    return query({ sql: queryString })(state);
-  };
-}
-
 export {
   fn,
   fnIf,
   each,
-  http,
   merge,
   field,
   fields,
@@ -311,5 +305,5 @@ export {
   sourceValue,
   arrayToString,
   lastReferenceValue,
-  as
+  as,
 } from '@openfn/language-common';
