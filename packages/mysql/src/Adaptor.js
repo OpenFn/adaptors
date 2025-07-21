@@ -289,66 +289,10 @@ export function upsertMany(table, data) {
   };
 }
 
-/**
- * Execute a SQL statement
- * @example <caption>Execute a SQL statement</caption>
- * query({ sql: 'select * from users;' })
- * @function
- * @public
- * @param {object} options - Payload data for the message
- * @returns {Operation}
- */
-export function query(options) {
-  return state => {
-    let { connection } = state;
-
-    const [opts] = expandReferences(state, options);
-
-    console.log(
-      'Executing MySQL statement with options: ' + JSON.stringify(opts, 2, null)
-    );
-
-    return new Promise((resolve, reject) => {
-      // execute a query on our database
-      connection.query(opts, function (err, results, fields) {
-        if (err) {
-          reject(err);
-          // Disconnect if there's an error.
-          console.log("That's an error. Disconnecting from database.");
-          connection.end();
-        } else {
-          console.log('Success...');
-          resolve(JSON.parse(JSON.stringify(results)));
-        }
-      });
-    }).then(data => {
-      console.log(data);
-      const nextState = { ...state, response: { body: data } };
-      return nextState;
-    });
-  };
-}
-
-/**
- * Execute a SQL statement
- * @example <caption>Execute a SQL statement</caption>
- * sqlString(state => "select * from items;")
- * @function
- * @public
- * @param {String} queryString - A query string (or function which takes state and returns a string)
- * @returns {Operation}
- */
-export function sqlString(queryString) {
-  return state => {
-    return query({ sql: queryString })(state);
-  };
-}
-
 export {
   fn,
   fnIf,
   each,
-  http,
   merge,
   field,
   fields,
