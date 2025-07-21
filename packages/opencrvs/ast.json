@@ -64,12 +64,12 @@
         "tags": [
           {
             "title": "example",
-            "description": "query(\n{\nevent: 'birth',\nregistrationStatuses: ['REGISTERED'],\nchildGender: 'male',\ndateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',\ndateOfRegistrationStart: '2021-11-01T00:00:00.000Z',\ndeclarationJurisdictionId: '',\neventLocationId: '704b9706-d729-4834-8656-05b562065deb',\nfatherFirstNames: 'Dad',\nmotherFirstNames: 'Mom',\n},\n);",
+            "description": "queryEvents(\n{\nevent: 'birth',\nregistrationStatuses: ['REGISTERED'],\nchildGender: 'male',\ndateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',\ndateOfRegistrationStart: '2021-11-01T00:00:00.000Z',\ndeclarationJurisdictionId: '',\neventLocationId: '704b9706-d729-4834-8656-05b562065deb',\nfatherFirstNames: 'Dad',\nmotherFirstNames: 'Mom',\n},\n);",
             "caption": "Search for events with specific parameters"
           },
           {
             "title": "example",
-            "description": "query(\n{\nevent: 'birth',\nregistrationStatuses: ['REGISTERED'],\nchildGender: 'male',\ndateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',\ndateOfRegistrationStart: '2021-11-01T00:00:00.000Z',\ndeclarationJurisdictionId: '',\neventLocationId: '704b9706-d729-4834-8656-05b562065deb',\nfatherFirstNames: 'Dad',\nmotherFirstNames: 'Mom',\n},\n{ count: 10, skip: 0 }\n);",
+            "description": "queryEvents(\n{\nevent: 'birth',\nregistrationStatuses: ['REGISTERED'],\nchildGender: 'male',\ndateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',\ndateOfRegistrationStart: '2021-11-01T00:00:00.000Z',\ndeclarationJurisdictionId: '',\neventLocationId: '704b9706-d729-4834-8656-05b562065deb',\nfatherFirstNames: 'Dad',\nmotherFirstNames: 'Mom',\n},\n{ count: 10, skip: 0 }\n);",
             "caption": "Search for events with options"
           },
           {
