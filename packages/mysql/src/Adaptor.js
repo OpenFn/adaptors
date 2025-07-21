@@ -128,9 +128,9 @@ export function insert(table, fields) {
       .setFields(valuesObj)
       .toParam();
 
-    var sql = sqlParams.text;
-    var inserts = sqlParams.values;
-    sqlString = mysql.format(sql, inserts);
+    const sql = sqlParams.text;
+    const inserts = sqlParams.values;
+    const sqlString = mysql.format(sql, inserts);
 
     console.log(`Executing MySQL query: ${sqlString}`);
 
