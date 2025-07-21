@@ -12,8 +12,8 @@
 
   ### Migration Guide
 
-  So if you were using `query()` function, you can replace it with `sql()`
-  function.
+  If you were using `query()` or `sqlString()` functions, you can replace it
+  with `sql()` function.
 
   Before:
 
