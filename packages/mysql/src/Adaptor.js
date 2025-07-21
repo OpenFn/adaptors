@@ -4,7 +4,9 @@ import mysql from 'mysql';
 import squel from 'squel';
 
 /**
- * Execute a SQL statement.
+ * Execute a SQL statement. Take care when inserting values from state directly into a query,
+ * as this can be a vector for injection attacks. See [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
+ * for guidelines
  * @example
  * sql(state => `select * from ${state.data.tableName};`, { writeSql: true })
  * @function
