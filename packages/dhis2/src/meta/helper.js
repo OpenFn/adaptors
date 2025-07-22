@@ -2,7 +2,7 @@ import axios from 'axios';
 import { prefixVersionToPath } from '../util.js';
 
 const createHelper = (configuration = {}) => {
-  const { username, password } = configuration;
+  const { username, password, hostUrl } = configuration;
 
   const get = url =>
     axios({
@@ -36,7 +36,8 @@ const createHelper = (configuration = {}) => {
   const getOrgUnits = async () => {
     // so. this gives me some stuff, but I don't really know what it is or what to do with it
     const url = prefixVersionToPath(configuration, {}, 'organisationUnits');
-    const response = await get(url);
+
+    const response = await get(`${hostUrl}${url}`);
 
     return response.data;
   };
@@ -48,7 +49,7 @@ const createHelper = (configuration = {}) => {
   const getTrackedEntityTypes = async () => {
     const url = prefixVersionToPath(configuration, {}, 'trackedEntityTypes');
 
-    const response = await get(url);
+    const response = await get(`${hostUrl}${url}`);
 
     return response.data;
   };
@@ -60,7 +61,7 @@ const createHelper = (configuration = {}) => {
       'trackedEntityAttributes'
     );
 
-    const response = await get(url);
+    const response = await get(`${hostUrl}${url}`);
 
     return response.data;
   };
