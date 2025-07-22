@@ -2,9 +2,9 @@
 <dt>
     <a href="#create">create(content, fileName, options)</a></dt>
 <dt>
-    <a href="#get">get(fileId)</a></dt>
+    <a href="#get">get(fileIdOrName)</a></dt>
 <dt>
-    <a href="#update">update(fileId, content, options)</a></dt>
+    <a href="#update">update(fileId, content)</a></dt>
 </dl>
 
 
@@ -12,6 +12,15 @@ This adaptor exports the following from common:
 <dl>
 <dt>
     <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#arraytostring">arrayToString()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#as">as()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#chunk">chunk()</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#combine">combine()</a>
@@ -24,6 +33,9 @@ This adaptor exports the following from common:
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#each">each()</a>
@@ -50,6 +62,9 @@ This adaptor exports the following from common:
     <a href="/adaptors/packages/common-docs#merge">merge()</a>
 </dt>
 <dt>
+    <a href="/adaptors/packages/common-docs#parsecsv">parseCsv()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
 </dt>
 <dt>
@@ -59,19 +74,24 @@ This adaptor exports the following from common:
 ## Functions
 ### create
 
-<p><code>create(content, fileName, options) ⇒ function</code></p>
+<p><code>create(content, fileName, options) ⇒ Operation</code></p>
 
 Uploads a file to Google Drive.
 
-**Returns**: <code>function</code> - An operation that uploads the file.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | content | <code>string</code> | Base64 encoded file content. |
 | fileName | <code>string</code> | Name for the uploaded file. |
 | options | <code>Object</code> | File upload parameters. |
-| options.folderId | <code>string</code> | ID of the parent folder. |
+| [options.folderId] | <code>string</code> | ID of the parent folder. |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| references | an array of all previous data objects used in the Job |
 
 **Example:** Upload a file to a root folder
 ```js
@@ -88,38 +108,52 @@ create("SGVsbG8gV29ybGQ=", "hello-world.txt", {
 
 ### get
 
-<p><code>get(fileId) ⇒ function</code></p>
+<p><code>get(fileIdOrName) ⇒ Operation</code></p>
 
 Downloads a file from Google Drive.
 
-**Returns**: <code>function</code> - An operation that retrieves the file as a base64 string.  
+**Returns**: <code>Operation</code> - An operation that retrieves the file as a base64 string.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| fileId | <code>string</code> | ID of the file to download. |
+| fileIdOrName | <code>string</code> | ID of the file or its name to download. |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| references | an array of all previous data objects used in the Job |
 
 **Example:** Download a file
 ```js
 get('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL')
+```
+**Example:** Download a file by name
+```js
+get('hello-world.txt')
 ```
 
 * * *
 
 ### update
 
-<p><code>update(fileId, content, options) ⇒ function</code></p>
+<p><code>update(fileId, content) ⇒ Operation</code></p>
 
 Updates an existing file in Google Drive.
 
-**Returns**: <code>function</code> - An operation that updates the file.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | fileId | <code>string</code> | ID of the file to update. |
 | content | <code>string</code> | Base64 encoded new content. |
-| options | <code>Object</code> | File update options. |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| references | an array of all previous data objects used in the Job |
 
 **Example:** Update a file
 ```js
