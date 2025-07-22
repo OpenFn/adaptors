@@ -1,5 +1,12 @@
 # @openfn/language-googledrive
 
+## 1.1.0 - 22 July 2025
+
+### Minor Changes
+
+- bfcfab9: - Update `get()` to fetch file using fileId or fileName
+  - Export `dateFns`,`as`, `chunk`, `arrayToString` and `parseCsv` from `common`
+
 ## 1.0.5 - 14 July 2025
 
 ### Patch Changes

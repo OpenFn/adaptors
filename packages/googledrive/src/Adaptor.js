@@ -8,9 +8,17 @@ import {
 } from '@openfn/language-common/util';
 import { google } from 'googleapis';
 import { Readable } from 'stream';
+import { getFileById, getFileByName } from './util';
 
 let client;
 
+/**
+ * State object
+ * @typedef {Object} DriveState
+ * @property data - the parsed response body
+ * @property references - an array of all previous data objects used in the Job
+ * @private
+ **/
 /**
  * @private
  * Creates a connection to Google Drive using OAuth2 authentication.
@@ -79,8 +87,9 @@ export function execute(...operations) {
  * @param {string} content - Base64 encoded file content.
  * @param {string} fileName - Name for the uploaded file.
  * @param {Object} options - File upload parameters.
- * @param {string} options.folderId - ID of the parent folder.
- * @returns {Function} An operation that uploads the file.
+ * @param {string} [options.folderId] - ID of the parent folder.
+ * @state {DriveState}
+ * @returns {Operation}
  */
 export function create(content, fileName, options = {}) {
   return state => {
@@ -107,9 +116,6 @@ export function create(content, fileName, options = {}) {
       })
       .then(response => {
         return composeNextState(state, response.data);
-      })
-      .catch(err => {
-        throw err;
       });
   };
 }
@@ -119,25 +125,21 @@ export function create(content, fileName, options = {}) {
  * @public
  * @example <caption>Download a file</caption>
  * get('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL')
- * @param {string} fileId - ID of the file to download.
- * @returns {Function} An operation that retrieves the file as a base64 string.
+ * @example <caption>Download a file by name</caption>
+ * get('hello-world.txt')
+ * @param {string} fileIdOrName - ID of the file or its name to download.
+ * @state {DriveState}
+ * @returns {Operation} An operation that retrieves the file as a base64 string.
  */
-export function get(fileId) {
-  return state => {
-    const [resolvedFileId] = expandReferences(state, fileId);
+export function get(fileIdOrName) {
+  return async state => {
+    const [resolvedFileIdOrName] = expandReferences(state, fileIdOrName);
 
-    return client.files
-      .get(
-        { fileId: resolvedFileId, alt: 'media' },
-        { responseType: 'arraybuffer' }
-      )
-      .then(response => {
-        const content = Buffer.from(response.data).toString('base64');
-        return composeNextState(state, { fileId: resolvedFileId, content });
-      })
-      .catch(err => {
-        throw err;
-      });
+    const fileData = resolvedFileIdOrName.match(/^[a-zA-Z0-9_-]+$/)
+      ? await getFileById(resolvedFileIdOrName, client)
+      : await getFileByName(resolvedFileIdOrName, client);
+
+    return composeNextState(state, fileData);
   };
 }
 
@@ -148,8 +150,8 @@ export function get(fileId) {
  * update('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL', 'SGVsbG8gTWlrZQ==');
  * @param {string} fileId - ID of the file to update.
  * @param {string} content - Base64 encoded new content.
- * @param {Object} options - File update options.
- * @returns {Function} An operation that updates the file.
+ * @state {DriveState}
+ * @returns {Operation}
  */
 export function update(fileId, content) {
   return state => {
@@ -174,27 +176,29 @@ export function update(fileId, content) {
       })
       .then(response => {
         return composeNextState(state, response.data);
-      })
-      .catch(err => {
-        throw err;
       });
   };
 }
 
 export {
-  alterState,
-  combine,
-  cursor,
-  dataPath,
-  dataValue,
-  each,
-  field,
-  fields,
+  as,
   fn,
   fnIf,
   http,
-  lastReferenceValue,
-  merge,
-  sourceValue,
   util,
+  each,
+  field,
+  merge,
+  chunk,
+  fields,
+  cursor,
+  combine,
+  dateFns,
+  parseCsv,
+  dataPath,
+  dataValue,
+  alterState,
+  sourceValue,
+  arrayToString,
+  lastReferenceValue,
 } from '@openfn/language-common';
