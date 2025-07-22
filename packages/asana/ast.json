@@ -363,7 +363,8 @@
       "name": "searchTask",
       "params": [
         "task",
-        "query"
+        "query",
+        "options"
       ],
       "docs": {
         "description": "Search for tasks in a workspace by task name.",
@@ -405,6 +406,30 @@
             "name": "query"
           },
           {
+            "title": "param",
+            "description": "(Optional) options argument.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "The workspace to search in. Defaults to the workspace specified in the configuration.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "options.workspaceGid"
+          },
+          {
             "title": "returns",
             "description": "An operation that, when executed, returns the search results in state.data.",
             "type": {
@@ -414,7 +439,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "createTaskStory",
