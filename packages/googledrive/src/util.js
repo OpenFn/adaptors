@@ -3,6 +3,8 @@ export const getFileById = async (fileId, client) => {
     throw new Error('Invalid file ID format');
   }
 
+  console.log(`Fetching file with ID: ${fileId}`);
+
   const [metadataResponse, contentResponse] = await Promise.all([
     client.files.get({
       fileId: fileId,
@@ -28,6 +30,7 @@ export const getFileById = async (fileId, client) => {
 };
 
 export const getFileByName = async (fileName, client) => {
+  console.log(`Searching for file with name: ${fileName}`);
   const files = await searchFile(fileName, client);
   if (files.length > 1) {
     console.warn(`Multiple files found matching: ${fileName}`);
