@@ -26,46 +26,41 @@ import { Readable } from 'stream';
  */
 
 /**
- * Generate a PDF from an HTML string and data.
- * @param {Object} data - Data to be used in the PDF generation
- * @param {Function} htmlTemplateFn - A function that takes `data` and returns an HTML string
+ * Generate a PDF from an HTML string.
+ * @param {Function} htmlTemplateString - A HTML string to convert to PDF
  * @param {Object} [options] - Optional configuration for PDF generation
  * @param {string} [options.format] - The format to parse the pdf result, allows `base64` and `stream`. Defaults to `base64`.
- * @example <caption>Generate a PDF from data</caption>
- * generatePDF($.data, data => {
- *   return `
- * <html>
+ * @example <caption>Generate a PDF from a HTML string</caption>
+ * generatePDF(
+ * `<html>
  *   <body>
  *     <h1>Sales Report</h1>
- *     <p>Date: ${data.date}</p>
- *     <p>Total Sales: $${data.total}</p>
+ *     <p>Date: 2025-02-01</p>
+ *     <p>Total Sales: $42</p>
  *   </body>
  * </html>
- * `;
- * });
+ * `);
  * @returns {Operation}
  */
 export function generatePDF(
-  data,
-  htmlTemplateFn,
+  htmlTemplateString,
   options = { format: 'base64' }
 ) {
   return async state => {
-    const [resolvedData, resolvedOptions] = expandReferences(
+    const [resolvedhtmlTemplateString, resolvedOptions] = expandReferences(
       state,
-      data,
+      htmlTemplateString,
       options
     );
 
-    const html = htmlTemplateFn(resolvedData);
-
     const browser = await puppeteer.launch({
-      headless: 'new',
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      headless: true,
     });
     const page = await browser.newPage();
 
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+    await page.setContent(resolvedhtmlTemplateString, {
+      waitUntil: 'networkidle0',
+    });
 
     const pdfBuffer = await page.pdf({
       format: 'A4',
