@@ -1,0 +1,27 @@
+{
+    "test": {
+        "body": {
+            "message": "Zata Point Global Service API",
+            "status": "Connected",
+            "time": "2021-09-29T14:48:00.000000Z"
+        }
+    },
+    "createProduct": {
+        "body": {
+            "name": "Product Name",
+            "packagingUnitID": 1,
+            "quantityUnitID": 1,
+            "countryID": 1,
+            "taxID": 1,
+            "branchProductCategoryID": 1
+          },
+          "response": {
+            "name": "Product Name",
+            "packagingUnitID": 1,
+            "quantityUnitID": 1,
+            "countryID": 1,
+            "taxID": 1,
+            "branchProductCategoryID": 1
+          }
+    }
+}
