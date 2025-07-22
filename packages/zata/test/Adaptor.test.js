@@ -3,7 +3,14 @@ import { enableMockClient } from '@openfn/language-common/util';
 import { request, get, post, put } from '../src/Adaptor.js';
 import testData from './fixtures.json' assert { type: 'json' };
 
-const testServer = enableMockClient('https://fake.server.com');
+const baseUrl = 'https://ebm.zata.rw'
+const testServer = enableMockClient(baseUrl);
+
+const configuration = {
+  baseUrl,
+  apiToken: 'test-token',
+  apiVersion: 'v1'
+}
 
 describe('request', () => {
   it('makes a GET request to the correct Zata endpoint with Bearer token', async () => {
@@ -17,12 +24,6 @@ describe('request', () => {
         },
       })
       .reply(200, testData.test.body);
-
-    const configuration = {
-      baseUrl: 'https://ebm.zata.rw/api',
-      apiToken: 'test-token',
-      apiVersion: 'v1',
-    };
 
 
     const operation = request('GET', 'test');
@@ -45,13 +46,6 @@ describe('get', () => {
       })
       .reply(200, testData.test.body);
 
-    const configuration = {
-      baseUrl: 'https://fake.server.com',
-      apiToken: 'test-token',
-      apiVersion: 'v1',
-    };
-
-
     const operation = get('test');
     const result = await operation({ configuration });
     expect(result.data).to.eql(testData.test.body);
@@ -72,13 +66,6 @@ describe('post', () => {
       })
       .reply(200, testData.createProduct.response);
 
-    const configuration = {
-      baseUrl: 'https://fake.server.com',
-      apiToken: 'test-token',
-      apiVersion: 'v1',
-    };
-
-
     const operation = post('product', { body: testData.createProduct.body });
     const result = await operation({ configuration });
     expect(result.data).to.eql(testData.createProduct.response);
@@ -97,12 +84,6 @@ describe('put', () => {
         },
       })
       .reply(200, testData.createProduct.response);
-
-    const configuration = {
-      baseUrl: 'https://fake.server.com',
-      apiToken: 'test-token',
-      apiVersion: 'v1',
-    };
 
 
     const operation = put('product', { body: testData.createProduct.body });
