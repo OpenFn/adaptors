@@ -2,6 +2,11 @@ import { connection } from './Adaptor';
 import { composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
+/**
+ * Executes a bulk query using Salesforce Bulk API 1.0
+ * @param {string} query - SOQL query string to execute
+ * @returns {Function} - State modifier function that returns a Promise
+ */
 export function query(query) {
   return async state => {
     const [resolvedQuery] = expandReferences(state, query);
@@ -17,6 +22,13 @@ export function query(query) {
   };
 }
 
+/**
+ * Bulk inserts records using Salesforce Bulk API 1.0
+ * @param {string} sObject - The Salesforce object type
+ * @param {Array} records - Array of records to insert
+ * @param {Object} options - Additional options for the bulk operation
+ * @returns {Function} - State modifier function
+ */
 export function insert(sObject, records, options) {
   return async state => {
     const [resolvedSObject, resolvedRecords, resolvedOptions] =
@@ -32,6 +44,13 @@ export function insert(sObject, records, options) {
   };
 }
 
+/**
+ * Bulk updates records using Salesforce Bulk API 1.0
+ * @param {string} sObject - The Salesforce object type
+ * @param {Array} records - Array of records to update
+ * @param {Object} options - Additional options for the bulk operation
+ * @returns {Function} - State modifier function
+ */
 export function update(sObject, records, options) {
   return state => {
     const [resolvedSObject, resolvedRecords, resolvedOptions] =
@@ -45,6 +64,14 @@ export function update(sObject, records, options) {
   };
 }
 
+/**
+ * Bulk upserts records using Salesforce Bulk API 1.0
+ * @param {string} sObject - The Salesforce object type
+ * @param {Array} records - Array of records to upsert
+ * @param {string} extIdField - External ID field for upsert matching
+ * @param {Object} options - Additional options for the bulk operation
+ * @returns {Function} - State modifier function
+ */
 export function upsert(sObject, records, extIdField, options) {
   // jsforce expects extIdField as an option for upsert
   return state => {
@@ -62,6 +89,13 @@ export function upsert(sObject, records, extIdField, options) {
   };
 }
 
+/**
+ * Bulk deletes records using Salesforce Bulk API 1.0
+ * @param {string} sObject - The Salesforce object type
+ * @param {Array} records - Array of records to delete
+ * @param {Object} options - Additional options for the bulk operation
+ * @returns {Function} - State modifier function
+ */
 export function destroy(sObject, records, options) {
   return state => {
     const [resolvedSObject, resolvedRecords, resolvedOptions] =
