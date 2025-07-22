@@ -207,6 +207,7 @@ export function request(method, path, options = {}) {
 }
 
 export {
+  as,
   combine,
   cursor,
   dataPath,
