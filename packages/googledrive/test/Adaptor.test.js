@@ -47,13 +47,14 @@ describe('Google Drive Adapter', () => {
   });
 
   describe('get()', () => {
-    it.skip('should download a file successfully', async () => {
+    it('should download a file successfully', async () => {
       const state = { configuration: { access_token: 'mockToken' } };
       const fileId = 'file123';
 
       const result = await execute(get(fileId))(state);
-      console.log(mockFiles.get);
-      expect(mockFiles.get.calledOnce).to.be.true;
+
+      //Expected 2 calls: one for metadata and one for content
+      expect(mockFiles.get.calledTwice).to.be.true;
       expect(result.data.content).to.equal(
         Buffer.from('file content').toString('base64')
       );
