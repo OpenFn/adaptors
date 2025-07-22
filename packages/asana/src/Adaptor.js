@@ -215,6 +215,48 @@ export function upsertTask(projectGid, params, callback) {
 }
 
 /**
+ * Search for tasks in a workspace by task name.
+ * @public
+ * @example <caption>Search for a task by name</caption>
+ * searchTask("Test Search Task", {
+ *   resource_subtype: "default_task",
+ *   sort_by: "modified_at"
+ * });
+ * @function
+ * @param {string} task - The text or name of the task to search for.
+ * @param {object} [query] - Query params. See {@link https://developers.asana.com/reference/searchtasksforworkspace Docs} for a list of valid parameters.
+ * @param {object} [options] - (Optional) options argument.
+ * @param {string} [options.workspaceGid] - The workspace to search in. Defaults to the workspace specified in the configuration.
+ * @returns {Operation} An operation that, when executed, returns the search results in state.data.
+ */
+export function searchTask(task, query = {}, options = {}) {
+  return async state => {
+    const [resolvedTask, resolvedQuery, resolvedOptions] = expandReferences(
+      state,
+      task,
+      query,
+      options
+    );
+    const { workspaceGid = state.configuration.workspaceGid } = resolvedOptions;
+
+    if (!workspaceGid) throw new Error('You need to specify Workspace GID');
+
+    const response = await util.request(
+      state,
+      `workspaces/${workspaceGid}/tasks/search`,
+      {
+        query: {
+          text: resolvedTask,
+          ...resolvedQuery,
+        },
+      }
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
  * Options provided to the createTaskStory request
  * @typedef {Object} StoryOptions
  * @public
@@ -337,5 +379,5 @@ export {
   lastReferenceValue,
   merge,
   sourceValue,
-  as
+  as,
 } from '@openfn/language-common';

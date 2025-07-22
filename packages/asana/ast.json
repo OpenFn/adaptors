@@ -360,6 +360,88 @@
       "valid": false
     },
     {
+      "name": "searchTask",
+      "params": [
+        "task",
+        "query",
+        "options"
+      ],
+      "docs": {
+        "description": "Search for tasks in a workspace by task name.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "searchTask(\"Test Search Task\", {\n  resource_subtype: \"default_task\",\n  sort_by: \"modified_at\"\n});",
+            "caption": "Search for a task by name"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The text or name of the task to search for.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "task"
+          },
+          {
+            "title": "param",
+            "description": "Query params. See {@link https://developers.asana.com/reference/searchtasksforworkspace Docs} for a list of valid parameters.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) options argument.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "The workspace to search in. Defaults to the workspace specified in the configuration.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "options.workspaceGid"
+          },
+          {
+            "title": "returns",
+            "description": "An operation that, when executed, returns the search results in state.data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
       "name": "createTaskStory",
       "params": [
         "taskGid",

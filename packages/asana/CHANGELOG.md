@@ -1,5 +1,11 @@
 # @openfn/language-asana
 
+## 4.3.0 - 22 July 2025
+
+### Minor Changes
+
+- 3fae9d2: Add `searchTask` function
+
 ## 4.2.2 - 14 July 2025
 
 ### Patch Changes
