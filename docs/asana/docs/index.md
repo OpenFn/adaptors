@@ -10,6 +10,8 @@
 <dt>
     <a href="#request">request(path, params, callback)</a></dt>
 <dt>
+    <a href="#searchtask">searchTask(task, [query], [options])</a></dt>
+<dt>
     <a href="#updatetask">updateTask(taskGid, data, callback)</a></dt>
 <dt>
     <a href="#upserttask">upsertTask(projectGid, params, callback)</a></dt>
@@ -207,6 +209,32 @@ Create a new task
 request("/tasks", {
   method: "POST",
   body: { data: { name: "do the thing", completed: false } },
+});
+```
+
+* * *
+
+### searchTask
+
+<p><code>searchTask(task, [query], [options]) ⇒ Operation</code></p>
+
+Search for tasks in a workspace by task name.
+
+**Returns**: <code>Operation</code> - An operation that, when executed, returns the search results in state.data.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| task | <code>string</code> | The text or name of the task to search for. |
+| [query] | <code>object</code> | Query params. See [Docs](https://developers.asana.com/reference/searchtasksforworkspace) for a list of valid parameters. |
+| [options] | <code>object</code> | (Optional) options argument. |
+| [options.workspaceGid] | <code>string</code> | The workspace to search in. Defaults to the workspace specified in the configuration. |
+
+
+**Example:** Search for a task by name
+```js
+searchTask("Test Search Task", {
+  resource_subtype: "default_task",
+  sort_by: "modified_at"
 });
 ```
 
