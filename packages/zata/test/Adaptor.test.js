@@ -19,7 +19,7 @@ describe('request', () => {
       .reply(200, testData.test.body);
 
     const configuration = {
-      baseUrl: 'https://fake.server.com',
+      baseUrl: 'https://ebm.zata.rw/api',
       apiToken: 'test-token',
       apiVersion: 'v1',
     };
