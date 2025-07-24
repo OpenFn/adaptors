@@ -100,15 +100,15 @@ export function prompt(message, opts) {
  * Prompt GPT deep research interface
  * @example
  * deepResearch(
- *   `Verify if this healthcare facility is legitimate:
- *    INPUT: ${JSON.stringify($.data)}
- *
+ *   `Evaluate if the following company qualifies as a sustainable fashion brand:
+ *   
+ *   INPUT: ${JSON.stringify($.data)}
  *   Return JSON only with:
- *   - siteVerificationStatus: "Pre-Approved" or "Declined"
- *   - orgType: "government", "private", etc.
- *   - fundingStatus
+ *   - sustainabilityStatus: "Certified", "Likely", or "Unverified"
+ *   - materialsUsed
+ *   - certifications
  *   - confidenceLevel (0–5)
- *   - siteVerificationNotes`,
+ *   - researchNotes`,
  *   {
  *     model: 'o3-deep-research',
  *     max_tool_calls: 1
