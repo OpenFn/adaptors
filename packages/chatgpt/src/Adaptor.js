@@ -10,7 +10,6 @@ import OpenAI from 'openai';
  * @typedef {Object} PromptOptions
  * @public
  * @property {string} model - Which mode to use, i.e., `o3-mini-2025-01-31`.
- * @property {string} reasoning_effort - Use `low`, `medium`, or `high` to constrain effort on reasoning for some models.
  */
 
 /**
@@ -87,12 +86,12 @@ export function prompt(message, opts) {
 
     const payload = {
       model: 'o3-mini-2025-01-31',
-      reasoning_effort: 'low',
       messages: [{ role: 'user', content: resolvedMessage }],
       ...resolvedOpts,
     };
 
     const msg = await client.chat.completions.create(payload);
+    console.log('√ Prompt operation completed');
     return composeNextState(state, msg);
   };
 }
