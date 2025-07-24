@@ -1,5 +1,12 @@
 # @openfn/language-chatgpt
 
+## 2.0.0 - 24 July 2025
+
+### Major Changes
+
+- 87c7586: Add a `deepResearch()` function that calls to GPT's deep research
+  models Remove defaulted `reasoning_effort` from `prompt()`
+
 ## 1.0.10 - 14 July 2025
 
 ### Patch Changes
