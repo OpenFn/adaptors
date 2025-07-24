@@ -18,7 +18,6 @@ import OpenAI from 'openai';
  * @public
  * @property {string} model - Which mode to use, i.e., `o3-deep-research`.
  * @property {string} tools - An array of tools to use for the search. Default [{"type": "web_search_preview"}] See (https://platform.openai.com/docs/guides/deep-research#tools)
- * @property {number} max_tool_calls - The maximum number of tool calls to make. Default: 1
  */
 
 let client;
@@ -132,7 +131,6 @@ export function deepResearch(message, opts) {
       model: 'o3-deep-research',
       input: resolvedMessage,
       tools: resolvedOpts?.tools || [{ type: 'web_search_preview' }],
-      max_tool_calls: resolvedOpts?.max_tool_calls || 1,
       ...resolvedOpts,
     };
 
