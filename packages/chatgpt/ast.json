@@ -64,7 +64,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "prompt(`Filter these emails and pick out the most urgent: ${JSON.stringify($.data)}`);"
+            "description": "deepResearch(\n  `Evaluate if the following company qualifies as a sustainable fashion brand:\n\n  INPUT: ${JSON.stringify($.data)}\n  Return JSON only with:\n  - sustainabilityStatus: \"Certified\", \"Likely\", or \"Unverified\"\n  - materialsUsed\n  - certifications\n  - confidenceLevel (0–5)\n  - researchNotes`,\n  {\n    model: 'o3-deep-research',\n    max_tool_calls: 1\n  }\n)"
           },
           {
             "title": "public",
@@ -87,7 +87,7 @@
           },
           {
             "title": "param",
-            "description": "Model, Response Form and other parameters (https://platform.openai.com/docs/guides/deep-research)",
+            "description": "Model, tools and other parameters (https://platform.openai.com/docs/guides/deep-research)",
             "type": {
               "type": "NameExpression",
               "name": "DeepResearchOptions"

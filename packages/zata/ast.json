@@ -74,7 +74,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "post('transaction/sale', {\n body: {\n    \"purchaseCode\": \"43034\",\n    \"paymentMethodID\": 1,\n    \"customerID\": 1,\n    \"transactionDate\": \"2024-01-01\",\n    \"note\": \"string\",\n    \"customerTIN\": \"123456789\",\n    \"customerName\": \"John Doe\",\n    \"customerPhone\": \"123456789\",\n    \"items\": [\n      {\n        \"productID\": 1,\n        \"units\": 12.5,\n        \"unitPrice\": 1000,\n        \"discountRate\": 100,\n        \"batchNumber\": \"string\"\n      }\n    ]\n   }\n})",
+            "description": "post('transaction/sale', {\n body: {\n    \"purchaseCode\": \"43034\",\n    \"paymentMethodID\": 1,\n    \"customerID\": 1,\n    \"transactionDate\": \"2024-01-01\",\n    \"note\": \"string\",\n    \"customerTIN\": \"123456789\",\n    \"customerName\": \"John Doe\",\n    \"customerPhone\": \"123456789\",\n    \"items\": [\n      {\n        \"productID\": 1,\n        \"units\": 12.5,\n        \"unitPrice\": 1000,\n        \"discountRate\": 100,\n        \"batchNumber\": \"string\"\n      }\n    ]\n   },\n header: {\n   companyId: 1,\n   branchId: 1\n }\n})",
             "caption": "Create a sale transaction"
           },
           {
@@ -127,11 +127,68 @@
       "valid": true
     },
     {
+      "name": "put",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Make a PUT request to the Zata API",
+        "tags": [
+          {
+            "title": "example",
+            "description": "put('product/reduce-quantity/{productId}', {\n body: {\n   quantity: 10,\n   description: 'reason for reducing quantity',\n   batchNumber: 'Batch Number'\n },\n header: {\n   companyId: 1,\n   branchId: 1\n }\n})",
+            "caption": "Reduce product quantity"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "request",
       "params": [
         "method",
         "path",
-        "body",
         "options"
       ],
       "docs": {
@@ -139,7 +196,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", \"transaction/sale\", \n {\n   \"purchaseCode\": \"43034\",\n   \"paymentMethodID\": 1,\n   \"customerID\": 1,\n   \"transactionDate\": \"2024-01-01\",\n   \"note\": \"string\",\n   \"customerTIN\": \"123456789\",\n   \"customerName\": \"John Doe\",\n   \"customerPhone\": \"123456789\",\n   \"items\": [\n     {\n       \"productID\": 1,\n       \"units\": 12.5,\n       \"unitPrice\": 1000,\n       \"discountRate\": 100,\n       \"batchNumber\": \"string\"\n     }\n   ]\n});",
+            "description": "request(\"POST\", \"transaction/sale\",\n {\n     body: {\n         \"purchaseCode\": \"43034\",\n         \"paymentMethodID\": 1,\n         \"customerID\": 1,\n         \"transactionDate\": \"2024-01-01\",\n         \"note\": \"string\",\n         \"customerTIN\": \"123456789\",\n         \"customerName\": \"John Doe\",\n         \"customerPhone\": \"12345678910\",\n         \"items\": [\n             {\n                 \"productID\": 1,\n                 \"units\": 12.5,\n                 \"unitPrice\": 1000,\n                 \"discountRate\": 100,\n                 \"batchNumber\": \"string\"\n             }\n         ]\n     },\n     headers: {\n         companyId: 1,\n         branchId: 1\n     }\n });",
             "caption": "Create a new sale transaction"
           },
           {
@@ -169,15 +226,6 @@
               "name": "string"
             },
             "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Object which will be attached to the POST body",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
           },
           {
             "title": "param",
@@ -951,6 +999,60 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "as",
+      "params": [
+        "key",
+        "operation"
+      ],
+      "docs": {
+        "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));",
+            "caption": "Fetch cce-data from collections and store them under state.cceData"
+          },
+          {
+            "title": "param",
+            "description": "The state key to assign the result of the operation to.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": " An operation that returns a new state object with a `data` property",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     },
     {
       "name": "map",
