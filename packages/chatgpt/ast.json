@@ -52,6 +52,59 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "deepResearch",
+      "params": [
+        "message",
+        "opts"
+      ],
+      "docs": {
+        "description": "Prompt GPT deep research interface",
+        "tags": [
+          {
+            "title": "example",
+            "description": "prompt(`Filter these emails and pick out the most urgent: ${JSON.stringify($.data)}`);"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The prompt",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "message"
+          },
+          {
+            "title": "param",
+            "description": "Model, Response Form and other parameters (https://platform.openai.com/docs/guides/deep-research)",
+            "type": {
+              "type": "NameExpression",
+              "name": "DeepResearchOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ],
   "exports": [],
