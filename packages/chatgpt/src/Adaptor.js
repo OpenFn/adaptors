@@ -10,7 +10,14 @@ import OpenAI from 'openai';
  * @typedef {Object} PromptOptions
  * @public
  * @property {string} model - Which mode to use, i.e., `o3-mini-2025-01-31`.
- * @property {string} reasoning_effort - Use `low`, `medium`, or `high` to constrain effort on reasoning for some models.
+ */
+
+/**
+ * Options provided to Chat Responses Create (https://platform.openai.com/docs/guides/deep-research)
+ * @typedef {Object} DeepResearchOptions
+ * @public
+ * @property {string} model - Which mode to use, i.e., `o3-deep-research`.
+ * @property {string} tools - An array of tools to use for the search. Default [{"type": "web_search_preview"}] See (https://platform.openai.com/docs/guides/deep-research#tools)
  */
 
 let client;
@@ -78,12 +85,59 @@ export function prompt(message, opts) {
 
     const payload = {
       model: 'o3-mini-2025-01-31',
-      reasoning_effort: 'low',
       messages: [{ role: 'user', content: resolvedMessage }],
       ...resolvedOpts,
     };
 
     const msg = await client.chat.completions.create(payload);
+    console.log('√ Prompt operation completed');
+    return composeNextState(state, msg);
+  };
+}
+
+/**
+ * Prompt GPT deep research interface
+ * @example
+ * deepResearch(
+ *   `Evaluate if the following company qualifies as a sustainable fashion brand:
+ *
+ *   INPUT: ${JSON.stringify($.data)}
+ *   Return JSON only with:
+ *   - sustainabilityStatus: "Certified", "Likely", or "Unverified"
+ *   - materialsUsed
+ *   - certifications
+ *   - confidenceLevel (0–5)
+ *   - researchNotes`,
+ *   {
+ *     model: 'o3-deep-research',
+ *     max_tool_calls: 1
+ *   }
+ * )
+ * @public
+ * @function
+ * @param {string} message - The prompt
+ * @param {DeepResearchOptions} options - Model, tools and other parameters (https://platform.openai.com/docs/guides/deep-research)
+ * @returns {operation}
+ */
+export function deepResearch(message, opts) {
+  return async state => {
+    const [resolvedMessage, resolvedOpts] = expandReferences(
+      state,
+      message,
+      opts
+    );
+
+    const payload = {
+      model: 'o3-deep-research',
+      input: resolvedMessage,
+      tools: resolvedOpts?.tools || [{ type: 'web_search_preview' }],
+      ...resolvedOpts,
+    };
+
+    console.log('Preparing deep search operation...');
+    const msg = await client.responses.create(payload);
+    console.log('√ Deep search operation completed');
+
     return composeNextState(state, msg);
   };
 }
