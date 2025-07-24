@@ -101,7 +101,7 @@ export function prompt(message, opts) {
  * @example
  * deepResearch(
  *   `Evaluate if the following company qualifies as a sustainable fashion brand:
- *   
+ *
  *   INPUT: ${JSON.stringify($.data)}
  *   Return JSON only with:
  *   - sustainabilityStatus: "Certified", "Likely", or "Unverified"
@@ -131,7 +131,7 @@ export function deepResearch(message, opts) {
     const payload = {
       model: 'o3-deep-research',
       input: resolvedMessage,
-      tools: [{ type: 'web_search_preview' }, ...(resolvedOpts?.tools || [])],
+      tools: resolvedOpts?.tools || [{ type: 'web_search_preview' }],
       max_tool_calls: resolvedOpts?.max_tool_calls || 1,
       ...resolvedOpts,
     };
