@@ -27,6 +27,10 @@ This adaptor exports the following namespaced functions:
 </dt>
 
 <dt>
+    <a href="#http_put">http.put(path, data, [options])</a>
+</dt>
+
+<dt>
     <a href="#http_request">http.request(method, path, [options])</a>
 </dt>
 
@@ -491,6 +495,50 @@ http.post(
 * * *
 
 
+### http.put {#http_put}
+
+<p><code>put(path, data, [options]) ⇒ operation</code></p>
+
+Make a PUT request to an OpenMRS endpoint
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| path | <code>string</code> |  | path to resource |
+| data | <code>any</code> |  | the payload |
+| [options] | [<code>HTTPRequestOptions</code>](#httprequestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the OpenMRS server (excluding the body) |
+| references | An array containing all previous data objects |
+
+**Example:** Put with a JSON payload
+```js
+http.put(
+ "/ws/rest/v1/patient",
+ {
+     "person": {
+     "gender":"M",
+     "age":47,
+     "birthdate":"1970-01-01T00:00:00.000+0100",
+     "names":[
+       {
+         "givenName":"Jon",
+         "familyName":"Snow"
+       }
+     ],
+   }
+   }
+)
+```
+
+* * *
+
+
 ### http.request {#http_request}
 
 <p><code>request(method, path, [options]) ⇒ Operation</code></p>
@@ -521,6 +569,13 @@ http.request("GET",
       startIndex: 20
    },
 });
+```
+**Example:** PUT request with a payload
+```js
+http.request("PUT",
+  "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8",
+  { data: $.resource },
+);
 ```
 
 * * *
@@ -623,7 +678,7 @@ Options object
 | --- | --- | --- | --- |
 | query | <code>object</code> |  | An object of query parameters to be encoded into the URL |
 | headers | <code>object</code> |  | An object of all request headers |
-| body | <code>object</code> |  | The request body (as JSON) |
+| data | <code>object</code> |  | The request body (as JSON) |
 | errors | <code>object</code> \| <code>boolean</code> |  | Pass `false` to not throw on errors. Pass a map of errorCodes: error messages, ie, `{ 404: 'Resource not found' }`, or `false` to suppress errors for a specific code. |
 | [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |
 
