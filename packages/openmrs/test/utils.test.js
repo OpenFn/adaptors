@@ -506,7 +506,7 @@ describe('requestWithPagination', () => {
     console.warn = warn;
   });
 
-  it('should nod warn if the a custom max limit is hit', async () => {
+  it('should not warn if the a custom max limit is hit', async () => {
     const oldDb = db;
     const warn = console.warn;
 

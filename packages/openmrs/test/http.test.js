@@ -172,6 +172,27 @@ describe('http.post', () => {
   });
 });
 
+describe('http.put', () => {
+  beforeEach(() => {
+    testServer
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        method: 'PUT',
+        data: testData.newPatient,
+      })
+      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
+  });
+
+  it('should make http request with the PUT verb', async () => {
+    const response = await http.put(
+      '/ws/rest/v1/patient',
+      testData.newPatient
+    )(state);
+    expect(response.response.statusCode).to.eql(200);
+    expect(response.response.method).to.eql('PUT');
+  });
+});
+
 describe('http.delete', () => {
   beforeEach(() => {
     // Basic patient query interceptor

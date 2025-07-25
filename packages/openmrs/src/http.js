@@ -156,6 +156,57 @@ export function post(path, data, options = {}) {
 }
 
 /**
+ * Make a PUT request to an OpenMRS endpoint
+ * @public
+ * @function
+ * @example <caption>Put with a JSON payload</caption>
+ * http.put(
+ *  "/ws/rest/v1/patient",
+ *  {
+ *      "person": {
+ *      "gender":"M",
+ *      "age":47,
+ *      "birthdate":"1970-01-01T00:00:00.000+0100",
+ *      "names":[
+ *        {
+ *          "givenName":"Jon",
+ *          "familyName":"Snow"
+ *        }
+ *      ],
+ *    }
+ *    }
+ * )
+ * @param {string} path - path to resource
+ * @param {any} data - the payload
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
+ * @returns {operation}
+ */
+export function put(path, data, options = {}) {
+  return async state => {
+    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
+      state,
+      path,
+      data,
+      options
+    );
+
+    const optionsObject = {
+      data: resolvedData,
+      ...resolvedOptions,
+    };
+    const response = await util.request(
+      state,
+      'PUT',
+      resolvedPath,
+      optionsObject
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
  * Make a DELETE request to an OpenMRS endpoint
  * @alias delete
  * @public
