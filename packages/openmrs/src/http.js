@@ -15,7 +15,7 @@ import * as util from './Utils';
  * @typedef {Object} HTTPRequestOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
  * @property {object} headers - An object of all request headers
- * @property {object} body - The request body (as JSON)
+ * @property {object} data - The request body (as JSON)
  * @property {object|boolean} errors - Pass `false` to not throw on errors. Pass a map of errorCodes: error messages, ie, `{ 404: 'Resource not found' }`, or `false` to suppress errors for a specific code.
  * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
  */
@@ -30,6 +30,11 @@ import * as util from './Utils';
  *       startIndex: 20
  *    },
  * });
+ * @example <caption>PUT request with a payload</caption>
+ * http.request("PUT",
+ *   "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8",
+ *   { data: $.resource },
+ * );
  * @function
  * @public
  * @param {string} method - HTTP method to use
@@ -142,6 +147,57 @@ export function post(path, data, options = {}) {
     const response = await util.request(
       state,
       'POST',
+      resolvedPath,
+      optionsObject
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
+ * Make a PUT request to an OpenMRS endpoint
+ * @public
+ * @function
+ * @example <caption>Put with a JSON payload</caption>
+ * http.put(
+ *  "/ws/rest/v1/patient",
+ *  {
+ *      "person": {
+ *      "gender":"M",
+ *      "age":47,
+ *      "birthdate":"1970-01-01T00:00:00.000+0100",
+ *      "names":[
+ *        {
+ *          "givenName":"Jon",
+ *          "familyName":"Snow"
+ *        }
+ *      ],
+ *    }
+ *    }
+ * )
+ * @param {string} path - path to resource
+ * @param {any} data - the payload
+ * @param {HTTPRequestOptions} [options={}] - An object containing query params and headers for the request
+ * @state {HttpState}
+ * @returns {operation}
+ */
+export function put(path, data, options = {}) {
+  return async state => {
+    const [resolvedPath, resolvedData, resolvedOptions] = expandReferences(
+      state,
+      path,
+      data,
+      options
+    );
+
+    const optionsObject = {
+      data: resolvedData,
+      ...resolvedOptions,
+    };
+    const response = await util.request(
+      state,
+      'PUT',
       resolvedPath,
       optionsObject
     );
