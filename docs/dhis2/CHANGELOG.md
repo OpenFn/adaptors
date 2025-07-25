@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 7.1.3 - 23 July 2025
+
+### Patch Changes
+
+- aeb09c4: Fix an issue in metadata generation
+
 ## 7.1.2 - 14 July 2025
 
 ### Patch Changes
