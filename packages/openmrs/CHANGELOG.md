@@ -1,5 +1,12 @@
 # @openfn/language-openmrs
 
+## 5.3.0 - 25 July 2025
+
+### Minor Changes
+
+- 5c12ab4: - Add `http.put()` helper function
+  - Fix docs on `http.request()`
+
 ## 5.2.2 - 14 July 2025
 
 ### Patch Changes
