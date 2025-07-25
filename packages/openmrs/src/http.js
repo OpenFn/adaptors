@@ -15,7 +15,7 @@ import * as util from './Utils';
  * @typedef {Object} HTTPRequestOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
  * @property {object} headers - An object of all request headers
- * @property {object} body - The request body (as JSON)
+ * @property {object} data - The request body (as JSON)
  * @property {object|boolean} errors - Pass `false` to not throw on errors. Pass a map of errorCodes: error messages, ie, `{ 404: 'Resource not found' }`, or `false` to suppress errors for a specific code.
  * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
  */
@@ -30,6 +30,11 @@ import * as util from './Utils';
  *       startIndex: 20
  *    },
  * });
+ * @example <caption>PUT request with a payload</caption>
+ * http.request("PUT",
+ *   "/ws/rest/v1/patient/d3f7e1a8-0114-4de6-914b-41a11fc8a1a8",
+ *   { data: $.resource },
+ * );
  * @function
  * @public
  * @param {string} method - HTTP method to use
