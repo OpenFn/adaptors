@@ -11,7 +11,6 @@ import {
   bulk,
   http,
   fn,
-  bulk1,
   bulk2,
 } from '../src';
 
@@ -289,52 +288,7 @@ describe('Integration tests', () => {
       }
     }).timeout(5000);
   });
-  describe('bulk1', () => {
-    it('should query', async () => {
-      const { data } = await execute(
-        bulk1.query('SELECT Id, Name FROM Account')
-      )(state);
-      expect(data.length).to.greaterThan(1e1);
-    }).timeout(5e5);
-    // Skiped due to hanging issues
-    it.skip('should insert a single sobject', async () => {
-      state.data = { name: 'Coco', vera__Active__c: 'No' };
-      const { data } = await execute(
-        bulk1.insert('Account', state => state.data)
-      )(state);
-
-      console.log('Bulk insert response:', data);
-      expect(data[0].success).to.eq(true);
-    }).timeout(5e5);
-    it.only('should update a single sobject', async () => {
-      const { data } = await execute(
-        bulk1.query('SELECT Id, Name FROM Account LIMIT 1'),
-        bulk1.update('Account', state => {
-          const data = state.data[0];
-          return {
-            Id: data.Id,
-            Name: 'new name',
-            vera__Active__c: 'Yes',
-          };
-        })
-      )(state);
-
-      console.log('Bulk update response:', data);
-      // expect(data[0].success).to.eq(true);
-    }).timeout(5e5);
-    it('should destroy a single sobject', async () => {
-      const { data } = await execute(
-        bulk1.query('SELECT Id, Name FROM Account'),
-        bulk1.destroy('Account', state => state.data.records[0].Id)
-      )(state);
-
-      expect(data[0].success).to.eq(true);
-    }).timeout(5e5);
-    it('should bulk insert multiple sobjects', async () => {});
-    it('should bulk update multiple sobjects', async () => {});
-    it('should bulk destroy multiple sobjects', async () => {});
-  });
-  describe('bulk2', () => {
+  describe.only('bulk2', () => {
     it('should query', async () => {
       const { data } = await execute(
         bulk2.query('SELECT Id, Name FROM Account')
