@@ -25,9 +25,7 @@ describe('bulk2', () => {
       setMockConnection(fakeConnection);
       const state = {};
       bulk2
-        .query('SELECT Id, Name FROM Account', {
-          responseTarget: 'SingleRecord',
-        })(state)
+        .query('SELECT Id, Name FROM Account')(state)
         .then(state => {
           expect(state.data).to.eql([
             {
