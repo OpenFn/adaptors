@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "form-data": "^4.0.0",
+    "form-data": "^4.0.4",
     "mailgun.js": "^9.2.0",
     "sync-request": "^6.0.0"
   },
