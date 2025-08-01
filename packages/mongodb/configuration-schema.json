@@ -1,14 +1,28 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "properties": {
+        "connectionType": {
+            "title": "Connection Type",
+            "type": "string",
+            "description": "The type of connection to your MongoDB instance. For MongoDB Atlas, use 'mongodb+srv'. For self-hosted MongoDB instances, use 'mongodb'.",
+            "enum": [
+                "mongodb",
+                "mongodb+srv"
+            ],
+            "default": "mongodb+srv",
+            "examples": [
+                "mongodb+srv"
+            ]
+        },
         "clusterHostname": {
             "title": "Cluster Hostname",
             "type": "string",
-            "description": "Your MongoDB cluster hostname",
+            "description": "Your MongoDB cluster hostname(s).",
             "format": "string",
             "minLength": 1,
             "examples": [
-                "yourCluster-xxxyzzz.mongodb.net"
+                "yourCluster-xxxyzzz.mongodb.net",
+                "localhost:27017,localhost:27018,localhost:27019"
             ]
         },
         "username": {
@@ -28,6 +42,17 @@
             "minLength": 1,
             "examples": [
                 "@secret(!)Pass"
+            ]
+        },
+        "options": {
+            "title": "Connection Options",
+            "type": "string",
+            "description": "Additional connection options for MongoDB. If you are not sure and use MongoDB Atlas, you can leave this as is.",
+            "format": "string",
+            "default": "?retryWrites=true&w=majority",
+            "examples": [
+                "?retryWrites=true&w=majority",
+                "?ssl=true&replicaSet=rs0&authSource=admin"
             ]
         }
     },
