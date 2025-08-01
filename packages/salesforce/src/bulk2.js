@@ -3,6 +3,24 @@ import { composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
 /**
+ * State object for Salesforce Bulk API 2.0 operations
+ * @typedef {Object} Bulk2QueryState
+ * @property {Array} data - The processed records or query results from the Bulk API operation
+ * @property {Array} references - Array of previous state data objects used in the job
+ * @private
+ */
+
+/**
+ * @typedef {Object} Bulk2LoadState - State object for bulk insert operations
+ * @property {Object} data - The processed records or results from the bulk insert operation
+ * @property {Object} data.successfulResults - Array of successful results
+ * @property {Object} data.failedResults - Array of failed results
+ * @property {Object} data.unprocessedRecords - Array of unprocessed records
+ * @property {Array} references - Array of previous state data objects used in the job
+ * @private
+ */
+
+/**
  * Options for configuring Salesforce Bulk API 2.0 queries
  * @typedef {Object} QueryOptions
  * @public
@@ -12,11 +30,10 @@ import { expandReferences } from '@openfn/language-common/util';
  */
 
 /**
- * State object for Salesforce Bulk API 2.0 operations
- * @typedef {Object} Bulk2QueryState
- * @property {Array} data - The processed records or query results from the Bulk API operation
- * @property {Array} references - Array of previous state data objects used in the job
- * @private
+ * @typedef {Object} Bulk2LoadOptions - Bulk insert options
+ * @property {number} [pollInterval=1000] - Polling interval in milliseconds. Default: 1000 (1 second)
+ * @property {number} [pollTimeout=30000] - Polling timeout in milliseconds. Default: 30000 (30 seconds)
+ * @public
  */
 
 /**
@@ -57,22 +74,7 @@ export function query(query, options) {
     return composeNextState(state, records);
   };
 }
-/**
- * @typedef {Object} Bulk2LoadOptions - Bulk insert options
- * @property {number} [pollInterval=1000] - Polling interval in milliseconds. Default: 1000 (1 second)
- * @property {number} [pollTimeout=30000] - Polling timeout in milliseconds. Default: 30000 (30 seconds)
- * @public
- */
 
-/**
- * @typedef {Object} Bulk2LoadState - State object for bulk insert operations
- * @property {Object} data - The processed records or results from the bulk insert operation
- * @property {Object} data.successfulResults - Array of successful results
- * @property {Object} data.failedResults - Array of failed results
- * @property {Object} data.unprocessedRecords - Array of unprocessed records
- * @property {Array} references - Array of previous state data objects used in the job
- * @private
- */
 /**
  * Bulk inserts records using Salesforce Bulk API 2.0
  * @public
@@ -86,7 +88,6 @@ export function query(query, options) {
  * @function
  * @param {string} sObject - The Salesforce object type
  * @param {Array} records - Array of records to insert
- * @param {Object} options - Options including pollInterval and pollTimeout
  * @param {Bulk2LoadOptions} [options] - Bulk insert options
  * @state {Bulk2LoadState}
  * @returns {Operation}
