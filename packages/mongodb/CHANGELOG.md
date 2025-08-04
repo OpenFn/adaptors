@@ -1,5 +1,11 @@
 # @openfn/language-mongodb
 
+## 2.1.19 - 04 August 2025
+
+### Patch Changes
+
+- Update configuration to include `protocol` and `options`
+
 ## 2.1.18 - 14 July 2025
 
 ### Patch Changes
