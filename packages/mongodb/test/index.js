@@ -11,11 +11,11 @@ describe('execute', () => {
   it.skip('executes each operation in sequence', done => {
     let state = {
       configuration: {
-        connectionType: 'mongodb+srv',
         username: 'hello',
         password: 'there',
         clusterHostname: 'demo.mongodb.net',
-        options: '?retryWrites=true&w=majority',
+        protocol: 'mongodb+srv',
+        options: { 'retryWrites': true, 'w': 'majority' }
       },
     };
     let operations = [
