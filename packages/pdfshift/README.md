@@ -1,18 +1,18 @@
 # language-pdf <img src='./assets/square.png' width="30" height="30"/>
 
 An OpenFn **_adaptor_** for building integration jobs for use with the
-pdf API.
+pdfshift API.
 
 ## Documentation
 
 View the
-[docs site](https://docs.openfn.org/adaptors/packages/pdf-docs) for
+[docs site](https://docs.openfn.org/adaptors/packages/pdfshift-docs) for
 full technical documentation.
 
 ### Configuration
 
 View the
-[configuration-schema](https://docs.openfn.org/adaptors/packages/pdf-configuration-schema/)
+[configuration-schema](https://docs.openfn.org/adaptors/packages/pdfshift-configuration-schema/)
 for required and optional `configuration` properties.
 
 ## Development

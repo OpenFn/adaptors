@@ -1,7 +1,6 @@
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
-  makeBasicAuthHeader,
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 
@@ -19,19 +18,19 @@ export const prepareNextState = (state, response) => {
 };
 
 export const request = (configuration = {}, method, path, options) => {
-  const { baseUrl, username, password } = configuration;
+  const { baseUrl, apiKey, apiVersion = 'v3' } = configuration;
 
   const { query = {}, body = {}, headers = {}, parseAs = 'json' } = options;
-  const authHeaders = makeBasicAuthHeader(username, password);
+
 
   const opts = {
     parseAs,
-    baseUrl,
+    baseUrl: `${baseUrl}/${apiVersion}`,
     body,
     query,
     headers: {
       'content-type': 'application/json',
-      ...authHeaders,
+      'X-API-Key': apiKey,
       ...headers,
     },
   };

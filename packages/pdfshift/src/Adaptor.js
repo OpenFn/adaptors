@@ -1,7 +1,6 @@
 import { expandReferences, encode } from '@openfn/language-common/util';
 import * as util from './Utils';
-import puppeteer from 'puppeteer';
-import { Readable } from 'stream';
+import fs from 'fs';
 
 /**
  * State object
@@ -26,10 +25,16 @@ import { Readable } from 'stream';
  */
 
 /**
+ * PDF Body Options object. See [PDFShift documentation](https://docs.pdfshift.io/#convert) for more details.
+ * @typedef {Object} PDFBodyOptions
+ * @property {boolean} sandbox - Generates PDF documents in dev mode that doesn't count in the credits.
+ * @property {boolean} encode - Return the generated PDF in Base64 encoded format, instead of raw.
+ */
+
+/**
  * Generate a PDF from an HTML string.
  * @param {Function} htmlTemplateString - A HTML string to convert to PDF
- * @param {Object} [options] - Optional configuration for PDF generation
- * @param {string} [options.format] - The format to parse the pdf result, allows `base64` and `stream`. Defaults to `base64`.
+ * @param {PDFBodyOptions} [options] - Optional configuration for PDF generation
  * @example <caption>Generate a PDF from a HTML string</caption>
  * generatePDF(
  * `<html>
@@ -40,12 +45,21 @@ import { Readable } from 'stream';
  *   </body>
  * </html>
  * `);
+ * @example <caption>Generate a PDF with options</caption>
+ * generatePDF(
+ * `<html>
+ *   <body>
+ *     <h1>Sales Report</h1>
+ *     <p>Date: 2025-02-01</p>
+ *     <p>Total Sales: $42</p>
+ *   </body>
+ * </html>
+ * `, {
+ *   sandbox: true,
+ *   encode: true);
  * @returns {Operation}
  */
-export function generatePDF(
-  htmlTemplateString,
-  options = { format: 'base64' }
-) {
+export function generatePDF(htmlTemplateString, options) {
   return async state => {
     const [resolvedhtmlTemplateString, resolvedOptions] = expandReferences(
       state,
@@ -53,63 +67,90 @@ export function generatePDF(
       options
     );
 
-    const browser = await puppeteer.launch({
-      headless: true,
-    });
-    const page = await browser.newPage();
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      '/convert/pdf',
+      {
+        body: {
+          source: resolvedhtmlTemplateString,
+          ...resolvedOptions,
+        },
+        parseAs: 'text',
+      }
+    );
 
-    await page.setContent(resolvedhtmlTemplateString, {
-      waitUntil: 'networkidle0',
-    });
-
-    const pdfBuffer = await page.pdf({
-      format: 'A4',
-      printBackground: true,
-      margin: { top: '15mm', bottom: '15mm', left: '15mm', right: '15mm' },
-    });
-
-    await browser.close();
-
-    console.log('PDF generated successfully!');
-
-    if (resolvedOptions.format === 'stream') {
-      const stream = Readable.from([pdfBuffer]);
-      return { ...state, data: stream };
-    }
-
-    const base64 = encode(pdfBuffer, { parseJson: false });
-
-    return { ...state, data: base64 };
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
- * Make a POST request
- * @example
- * post('/9be7ffcc-919a-477b-8385-4c0cb2f996a2', $.data, {
- *   parseAs: 'text',
- * });
+ * PDF Body Options object. See [PDFShift documentation](https://docs.pdfshift.io/#convert) for more details.
+ * @typedef {Object} BodyOptions
+ * @property {string} source - The HTML string to convert to PDF.
+ * @property {boolean} sandbox - Generates PDF documents in dev mode that doesn't count in the credits.
+ * @property {boolean} encode - Return the generated PDF in Base64 encoded format, instead of raw.
+ */
+
+/**
+ * Make a POST request to PDFShift
+ * @example <caption> Convert a HTML string to PDF</caption>
+ * post(
+ *   '/convert/pdf',
+ *   {
+ *     source: `<html>
+ *     <body style="font-family: Arial, sans-serif; font-size: 14px;">
+ *       <h1>Sales Report</h1>
+ *       <p>Date: 2025-02-01</p>
+ *       <p>Total Sales: $42</p>
+ *     </body>
+ *   </html>`,
+ *     sandbox: true,
+ *     encode: true,
+ *   },
+ *   {
+ *     parseAs: 'text',
+ *   }
+ * );
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
+ * @param {BodyOptions} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
  * @state {HttpState}
  */
 export function post(path, body, options) {
+  console.log('Preparing a POST request to PDFShift');
   return request('POST', path, body, options);
 }
 
 /**
- * Make a general HTTP request
- * @example <caption>Make a request</caption>
- * request('POST', '/9be7ffcc-919a-477b-8385-4c0cb2f996a2', $.data)
+ * Make a general HTTP request to PDFShift
+ * @example <caption>Make a request to convert a HTML string to PDF</caption>
+ * request(
+ *   'POST',
+ *   '/convert/pdf',
+ *   {
+ *     source: `<html>
+ *       <body style="font-family: Arial, sans-serif; font-size: 14px;">
+ *         <h1>Sales Report</h1>
+ *         <p>Date: 2025-02-01</p>
+ *         <p>Total Sales: $42</p>
+ *       </body>
+ *     </html>`,
+ *     sandbox: true,
+ *     encode: true,
+ *   },
+ *   {
+ *     parseAs: 'text',
+ *   }
+ * );
  * @function
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
+ * @param {BodyOptions} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
  * @state {HttpState}
@@ -118,6 +159,7 @@ export function request(method, path, body, options = {}) {
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
       expandReferences(state, method, path, body, options);
+    console.log(`Preparing a ${resolvedMethod} request to PDFShift`);
     const response = await util.request(
       state.configuration,
       resolvedMethod,

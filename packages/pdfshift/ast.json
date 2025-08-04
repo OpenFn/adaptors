@@ -8,11 +8,12 @@
         "options"
       ],
       "docs": {
-        "description": "Make a POST request",
+        "description": "Make a POST request to PDFShift",
         "tags": [
           {
             "title": "example",
-            "description": "post('/9be7ffcc-919a-477b-8385-4c0cb2f996a2', $.data, {\n  parseAs: 'text',\n});"
+            "description": "post(\n  '/convert/pdf',\n  {\n    source: `<html>\n    <body style=\"font-family: Arial, sans-serif; font-size: 14px;\">\n      <h1>Sales Report</h1>\n      <p>Date: 2025-02-01</p>\n      <p>Total Sales: $42</p>\n    </body>\n  </html>`,\n    sandbox: true,\n    encode: true,\n  },\n  {\n    parseAs: 'text',\n  }\n);",
+            "caption": "Convert a HTML string to pdf"
           },
           {
             "title": "function",
@@ -38,7 +39,7 @@
             "description": "Object which will be attached to the POST body",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "BodyOptions"
             },
             "name": "body"
           },
@@ -76,7 +77,7 @@
         "options"
       ],
       "docs": {
-        "description": "Make a general HTTP request",
+        "description": "Make a general HTTP request to PDFShift",
         "tags": [
           {
             "title": "example",
@@ -116,7 +117,7 @@
             "description": "Object which will be attached to the POST body",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "BodyOptions"
             },
             "name": "body"
           },
