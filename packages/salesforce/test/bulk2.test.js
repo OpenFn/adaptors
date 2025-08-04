@@ -49,9 +49,7 @@ describe('bulk2', () => {
       setMockConnection(fakeConnection);
       const state = {};
       bulk2
-        .query('INVALID QUERY', {
-          responseTarget: 'SingleRecord',
-        })(state)
+        .query('INVALID QUERY')(state)
         .then(() => {
           done(new Error('Should have thrown an error'));
         })
