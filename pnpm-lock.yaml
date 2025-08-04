@@ -1914,8 +1914,8 @@ importers:
   packages/salesforce:
     dependencies:
       '@jsforce/jsforce-node':
-        specifier: ^3.6.6
-        version: 3.6.6
+        specifier: ^3.9.3
+        version: 3.9.3
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
@@ -4935,8 +4935,8 @@ packages:
       jsep: 1.4.0
     dev: false
 
-  /@jsforce/jsforce-node@3.6.6:
-    resolution: {integrity: sha512-WdIo2lLbrz6nkfiaz2UynyaNiM8o+fEjaRev7zA4KKSaQYB1MJ66xHubeI5Iheq8WgkY9XGwWKAwPDhuV+GROQ==}
+  /@jsforce/jsforce-node@3.9.3:
+    resolution: {integrity: sha512-99l1y1E4YtJMnXflnBMBZitx9MlSD+Qnf8fWL+hju8nxV+FYob+mV/9DV3pW2i9jfsfUH9nRf0hf3lYtsqpyRg==}
     engines: {node: '>=18'}
     dependencies:
       '@sindresorhus/is': 4.6.0
@@ -15726,7 +15726,7 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       psl: 1.9.0
-      punycode: 2.3.0
+      punycode: 2.3.1
       universalify: 0.2.0
       url-parse: 1.5.10
     dev: false

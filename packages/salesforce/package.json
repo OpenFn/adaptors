@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-salesforce",
   "label": "Salesforce",
-  "version": "7.1.2",
+  "version": "7.2.0",
   "description": "OpenFn Salesforce adaptor",
   "homepage": "https://docs.openfn.org",
   "exports": {
@@ -34,7 +34,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@jsforce/jsforce-node": "^3.6.6",
+    "@jsforce/jsforce-node": "^3.9.3",
     "@openfn/language-common": "workspace:*",
     "any-ascii": "^0.3.2"
   },
