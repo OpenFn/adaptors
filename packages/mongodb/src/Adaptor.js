@@ -50,7 +50,7 @@ function connect(state) {
   )}:${encodeURIComponent(
     password
   )}@${clusterHostname}/test${
-    options ? "?" : ""
+    Object.keys(options).length ? "?" : ""
   }${
     encodeURIComponent(new URLSearchParams(options).toString())
   }`;
