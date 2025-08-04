@@ -4,11 +4,12 @@
         "clusterHostname": {
             "title": "Cluster Hostname",
             "type": "string",
-            "description": "Your MongoDB cluster hostname",
+            "description": "Your MongoDB cluster hostname(s).",
             "format": "string",
             "minLength": 1,
             "examples": [
-                "yourCluster-xxxyzzz.mongodb.net"
+                "yourCluster-xxxyzzz.mongodb.net",
+                "localhost:27017,localhost:27018,localhost:27019"
             ]
         },
         "username": {
@@ -28,6 +29,36 @@
             "minLength": 1,
             "examples": [
                 "@secret(!)Pass"
+            ]
+        },
+        "protocol": {
+            "title": "Protocol",
+            "type": "string",
+            "description": "The protocol to use for the MongoDB connection. Default is 'mongodb+srv'.",
+            "enum": [
+                "mongodb",
+                "mongodb+srv"
+            ],
+            "default": "mongodb+srv",
+            "examples": [
+                "mongodb+srv"
+            ]
+        },
+        "options": {
+            "title": "Options",
+            "type": "object",
+            "description": "Additional options for the MongoDB connection.",
+            "additionalProperties": true,
+            "default": {
+                "retryWrites": true,
+                "w": "majority"
+            },
+            "examples": [
+                {
+                    "retryWrites": true,
+                    "w": "majority",
+                    "rs": "replicaSet"
+                }
             ]
         }
     },

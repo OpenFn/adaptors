@@ -14,6 +14,8 @@ describe('execute', () => {
         username: 'hello',
         password: 'there',
         clusterHostname: 'demo.mongodb.net',
+        protocol: 'mongodb+srv',
+        options: { 'retryWrites': true, 'w': 'majority' }
       },
     };
     let operations = [

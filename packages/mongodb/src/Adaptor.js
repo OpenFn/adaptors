@@ -43,13 +43,17 @@ export function execute(...operations) {
  * @returns {State}
  */
 function connect(state) {
-  const { clusterHostname, username, password } = state.configuration;
-
-  const uri = `mongodb+srv://${encodeURIComponent(
+  const { clusterHostname, username, password, protocol = "mongodb+srv", options = { "retryWrites": true, "w": "majority" } } = state.configuration;
+  
+  const uri = `${protocol}://${encodeURIComponent(
     username
   )}:${encodeURIComponent(
     password
-  )}@${clusterHostname}/test?retryWrites=true&w=majority`;
+  )}@${clusterHostname}/test${
+    Object.keys(options).length ? "?" : ""
+  }${
+    encodeURIComponent(new URLSearchParams(options).toString())
+  }`;
 
   const client = new MongoClient(uri, { useNewUrlParser: true });
 
