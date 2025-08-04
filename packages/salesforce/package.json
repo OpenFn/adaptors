@@ -34,7 +34,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@jsforce/jsforce-node": "^3.6.6",
+    "@jsforce/jsforce-node": "^3.9.3",
     "@openfn/language-common": "workspace:*",
     "any-ascii": "^0.3.2"
   },
