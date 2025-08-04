@@ -5,7 +5,6 @@
       "title": "Your Domain",
       "type": "string",
       "description": "OpenCRVS domain",
-      "format": "uri",
       "minLength": 1,
       "examples": [
         "openfn.opencrvs.dev"
