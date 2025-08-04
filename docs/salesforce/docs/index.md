@@ -25,6 +25,26 @@ This adaptor exports the following namespaced functions:
 
 <dl>
 <dt>
+    <a href="#bulk2_destroy">bulk2.destroy(sObject, records, [options])</a>
+</dt>
+
+<dt>
+    <a href="#bulk2_insert">bulk2.insert(sObject, records, [options])</a>
+</dt>
+
+<dt>
+    <a href="#bulk2_query">bulk2.query(query, options)</a>
+</dt>
+
+<dt>
+    <a href="#bulk2_update">bulk2.update(sObject, records, [options])</a>
+</dt>
+
+<dt>
+    <a href="#bulk2_upsert">bulk2.upsert(sObject, externalIdFieldName, records, [options])</a>
+</dt>
+
+<dt>
     <a href="#http_get">http.get(path, [options])</a>
 </dt>
 
@@ -563,6 +583,235 @@ upsert("UpsertTable__c", {
 * * *
 
 
+## bulk2
+
+These functions belong to the bulk2 namespace.
+### bulk2.destroy {#bulk2_destroy}
+
+<p><code>destroy(sObject, records, [options]) ⇒ Operation</code></p>
+
+Bulk deletes records using Salesforce Bulk API 2.0
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>string</code> | The Salesforce object type |
+| records | <code>Array</code> | Array of records to delete |
+| [options] | [<code>Bulk2LoadOptions</code>](#bulk2loadoptions) | Bulk delete options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The processed records or results from the bulk insert operation |
+| data.successfulResults | Array of successful results |
+| data.failedResults | Array of failed results |
+| data.unprocessedRecords | Array of unprocessed records |
+| references | Array of previous state data objects used in the job |
+
+**Example:** Delete records
+```js
+bulk2.destroy("Account", [
+  "0010500000fxbcuAAA",
+  "0010500000fxbcvAAA",
+]);
+```
+**Example:** Delete records with custom options
+```js
+bulk2.destroy(
+  "Account",
+  [
+    "0010500000fxbcuAAA",
+    "0010500000fxbcvAAA",
+  ],
+  {
+    pollInterval: 1000,
+    pollTimeout: 3000,
+  }
+);
+```
+
+* * *
+
+
+### bulk2.insert {#bulk2_insert}
+
+<p><code>insert(sObject, records, [options]) ⇒ Operation</code></p>
+
+Bulk inserts records using Salesforce Bulk API 2.0
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>string</code> | The Salesforce object type |
+| records | <code>Array</code> | Array of records to insert |
+| [options] | [<code>Bulk2LoadOptions</code>](#bulk2loadoptions) | Bulk insert options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The processed records or results from the bulk insert operation |
+| data.successfulResults | Array of successful results |
+| data.failedResults | Array of failed results |
+| data.unprocessedRecords | Array of unprocessed records |
+| references | Array of previous state data objects used in the job |
+
+**Example:** Insert multiple records
+```js
+bulk2.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }]);
+```
+**Example:** Insert with custom options
+```js
+bulk2.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }], {
+  pollInterval: 1000,
+  pollTimeout: 3000,
+});
+```
+
+* * *
+
+
+### bulk2.query {#bulk2_query}
+
+<p><code>query(query, options) ⇒ Operation</code></p>
+
+Executes a bulk query using Salesforce Bulk API 2.0
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| query | <code>string</code> | SOQL query string to execute |
+| options | [<code>QueryOptions</code>](#queryoptions) | Query options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The processed records or query results from the Bulk API operation |
+| references | Array of previous state data objects used in the job |
+
+**Example:** Query records
+```js
+bulk2.query('SELECT Id, Name FROM Account');
+```
+**Example:** Query with `scanAll` enabled
+```js
+bulk2.query('SELECT Id, Name FROM Account', { scanAll: true });
+```
+**Example:** Query with custom options
+```js
+bulk2.query(
+  'SELECT Id, Name FROM Account',
+  {
+    scanAll: true,
+    pollInterval: 1000,
+    pollTimeout: 3000,
+  }
+);
+```
+
+* * *
+
+
+### bulk2.update {#bulk2_update}
+
+<p><code>update(sObject, records, [options]) ⇒ Operation</code></p>
+
+Bulk updates records using Salesforce Bulk API 2.0
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>string</code> | The Salesforce object type |
+| records | <code>Array</code> | Array of records to update |
+| [options] | [<code>Bulk2LoadOptions</code>](#bulk2loadoptions) | Bulk update options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The processed records or results from the bulk insert operation |
+| data.successfulResults | Array of successful results |
+| data.failedResults | Array of failed results |
+| data.unprocessedRecords | Array of unprocessed records |
+| references | Array of previous state data objects used in the job |
+
+**Example:** Update records
+```js
+bulk2.update("Account", [
+  { Id: "0010500000fxbcuAAA", Name: "Updated Account #1" },
+  { Id: "0010500000fxbcvAAA", Name: "Updated Account #2" },
+]);
+```
+**Example:** Update records with custom options
+```js
+bulk2.update(
+  "Account",
+  [
+    { Id: "0010500000fxbcuAAA", Name: "Updated Account #1" },
+    { Id: "0010500000fxbcvAAA", Name: "Updated Account #2" },
+  ],
+  {
+    pollInterval: 1000,
+    pollTimeout: 3000,
+  }
+);
+```
+
+* * *
+
+
+### bulk2.upsert {#bulk2_upsert}
+
+<p><code>upsert(sObject, externalIdFieldName, records, [options]) ⇒ Operation</code></p>
+
+Bulk upserts records using Salesforce Bulk API 2.0
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>string</code> | The Salesforce object type |
+| externalIdFieldName | <code>string</code> | External ID field name for upsert matching |
+| records | <code>Array</code> | Array of records to upsert |
+| [options] | [<code>Bulk2LoadOptions</code>](#bulk2loadoptions) | Bulk upsert options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The processed records or results from the bulk insert operation |
+| data.successfulResults | Array of successful results |
+| data.failedResults | Array of failed results |
+| data.unprocessedRecords | Array of unprocessed records |
+| references | Array of previous state data objects used in the job |
+
+**Example:** Upsert records
+```js
+bulk2.upsert("UpsertTable__c", "ExtId__c", [
+  { Name: "Record #1", ExtId__c : 'ID-0000001' },
+  { Name: "Record #2", ExtId__c : 'ID-0000002' },
+]);
+```
+**Example:** Upsert records with custom options
+```js
+bulk2.upsert(
+  "UpsertTable__c",
+  "ExtId__c",
+  [
+    { Name: "Record #1", ExtId__c : 'ID-0000001' },
+    { Name: "Record #2", ExtId__c : 'ID-0000002' },
+  ],
+  {
+    pollInterval: 1000,
+    pollTimeout: 3000,
+  }
+);
+```
+
+* * *
+
+
 ## http
 
 These functions belong to the http namespace.
@@ -695,6 +944,21 @@ fn((state) => {
 
 ##  Interfaces
 
+### Bulk2LoadOptions
+
+Bulk insert options
+
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [pollInterval] | <code>number</code> | <code>1000</code> | Polling interval in milliseconds. Default: 1000 (1 second) |
+| [pollTimeout] | <code>number</code> | <code>30000</code> | Polling timeout in milliseconds. Default: 30000 (30 seconds) |
+
+
+* * *
+
 ### BulkOptions
 
 Options provided to the Salesforce bulk API request
@@ -741,6 +1005,22 @@ Options provided to the Salesforce HTTP request
 | headers | <code>object</code> |  | Object of request headers. |
 | query | <code>object</code> |  | Object request query. |
 | body | <code>object</code> |  | Object request body. |
+
+
+* * *
+
+### QueryOptions
+
+Options for configuring Salesforce Bulk API 2.0 queries
+
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [scanAll] | <code>boolean</code> | <code>false</code> | Whether to scan through all records including deleted and archived ones |
+| [pollInterval] | <code>number</code> | <code>1000</code> | Polling interval in milliseconds. Default: 1000 (1 second) |
+| [pollTimeout] | <code>number</code> | <code>30000</code> | Polling timeout in milliseconds. Default: 30000 (30 seconds) |
 
 
 * * *

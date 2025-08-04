@@ -1,5 +1,19 @@
 # @openfn/language-salesforce
 
+## 7.2.0 - 04 August 2025
+
+### Minor Changes
+
+- dc89780: ## Added Salesforce Bulk API 2.0 Operations
+
+  - Added `bulk2.query()` - Execute SOQL queries using Bulk API 2.0
+  - Added `bulk2.insert()` - Bulk insert records
+  - Added `bulk2.update()` - Bulk update records
+  - Added `bulk2.upsert()` - Bulk `upsert` records with external ID matching
+  - Added `bulk2.destroy()` - Bulk delete records
+
+  All operations support custom options for polling interval and timeout.
+
 ## 7.1.2 - 14 July 2025
 
 ### Patch Changes
