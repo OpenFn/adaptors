@@ -264,6 +264,8 @@ export function createChannel(body) {
 /**
  * Make a request to OpenHIM to get all tasks
  * @example <caption>Get all tasks</caption>
+ * getTasks()
+ * @example <caption>Get all tasks with pagination options</caption>
  * getTasks({
  *   filterLimit: 10,
  *   filterPage: 0,
