@@ -1,6 +1,5 @@
 import { expandReferences, encode } from '@openfn/language-common/util';
 import * as util from './Utils';
-import fs from 'fs';
 
 /**
  * State object
