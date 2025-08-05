@@ -24,7 +24,7 @@ import * as util from './Utils';
  */
 
 /**
- * PDF Body Options object. See [PDFShift documentation](https://docs.pdfshift.io/#convert) for more details.
+ * PDF Body Options object. {@link https://docs.pdfshift.io/#convert|See PDFShift documentation} for more details.
  * @typedef {Object} PDFBodyOptions
  * @property {boolean} sandbox - Generates PDF documents in dev mode that doesn't count in the credits.
  * @property {boolean} encode - Return the generated PDF in Base64 encoded format, instead of raw.
@@ -32,7 +32,7 @@ import * as util from './Utils';
 
 /**
  * Generate a PDF from an HTML string.
- * @param {Function} htmlTemplateString - A HTML string to convert to PDF
+ * @param {string} htmlTemplateString - A HTML string or url to convert to PDF
  * @param {PDFBodyOptions} [options] - Optional configuration for PDF generation
  * @example <caption>Generate a PDF from a HTML string</caption>
  * generatePDF(
@@ -55,8 +55,14 @@ import * as util from './Utils';
  * </html>
  * `, {
  *   sandbox: true,
- *   encode: true);
+ *   encode: true});
+ * @example <caption>Generate a PDF from a url</caption>
+ * generatePDF('https://www.example.com/', {
+ *   sandbox: true,
+ *   encode: true,
+ * });
  * @returns {Operation}
+ * @state {HttpState}
  */
 export function generatePDF(htmlTemplateString, options) {
   return async state => {
@@ -65,6 +71,7 @@ export function generatePDF(htmlTemplateString, options) {
       htmlTemplateString,
       options
     );
+    console.log('Preparing a PDF generation request to PDFShift');
 
     const response = await util.request(
       state.configuration,
@@ -73,6 +80,7 @@ export function generatePDF(htmlTemplateString, options) {
       {
         body: {
           source: resolvedhtmlTemplateString,
+          encode: true,
           ...resolvedOptions,
         },
         parseAs: 'text',
@@ -84,9 +92,9 @@ export function generatePDF(htmlTemplateString, options) {
 }
 
 /**
- * PDF Body Options object. See [PDFShift documentation](https://docs.pdfshift.io/#convert) for more details.
+ * PDF Body Options object. {@link https://docs.pdfshift.io/#convert|See PDFShift documentation} for more details.
  * @typedef {Object} BodyOptions
- * @property {string} source - The HTML string to convert to PDF.
+ * @property {string} source - The HTML string or url to convert to PDF.
  * @property {boolean} sandbox - Generates PDF documents in dev mode that doesn't count in the credits.
  * @property {boolean} encode - Return the generated PDF in Base64 encoded format, instead of raw.
  */
@@ -175,6 +183,7 @@ export function request(method, path, body, options = {}) {
 
 export {
   as,
+  assert,
   combine,
   cursor,
   dataPath,

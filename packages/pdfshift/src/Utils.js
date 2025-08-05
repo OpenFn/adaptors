@@ -18,7 +18,7 @@ export const prepareNextState = (state, response) => {
 };
 
 export const request = (configuration = {}, method, path, options) => {
-  const { baseUrl, apiKey, apiVersion = 'v3' } = configuration;
+  const { baseUrl= 'https://api.pdfshift.io', apiKey, apiVersion = 'v3' } = configuration;
 
   const { query = {}, body = {}, headers = {}, parseAs = 'json' } = options;
 

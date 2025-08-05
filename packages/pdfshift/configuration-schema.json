@@ -5,6 +5,7 @@
       "title": "Base URL",
        "type": "string",
       "description": "The base PDFShift URL",
+      "default":"https://api.pdfshift.io",
       "format": "uri",
       "minLength": 1,
       "examples": ["https://api.pdfshift.io"]
@@ -20,6 +21,7 @@
         }
       ],
       "placeholder": "v3",
+      "default": "v3",
       "description": "PDFShift api version",
       "minLength": 1,
       "examples": [
@@ -36,5 +38,5 @@
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["baseUrl", "apiKey"]
+  "required": ["apiKey"]
 }

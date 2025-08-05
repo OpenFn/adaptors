@@ -111,6 +111,27 @@ describe('generatePDF', () => {
     expect(data).to.eql('%PDF-1.4\n%����\n1 0 obj\n<<');
     expect(data).to.includes('%PDF-1.4');
   });
+  it('generates pdf as a base64 string from a url', async () => {
+    const state = {
+      configuration,
+    };
+    testServer
+      .intercept({
+        path: '/v3/convert/pdf',
+        method: 'POST',
+        headers: {
+          'x-api-key': 'some-api-key',
+        },
+      })
+      .reply(200, 'JVBERi0xLjQKJeLjz9MKMSAwIG9');
+
+    const { data } = await generatePDF('https://www.example.com/', {
+      encode: true,
+    })(state);
+    expect(data).to.be.a('string');
+    expect(data).to.eql('JVBERi0xLjQKJeLjz9MKMSAwIG9');
+    expect(data).to.includes('JVBERi0x');
+  });
 });
 
 describe('post', () => {
