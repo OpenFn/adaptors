@@ -142,7 +142,7 @@ export function getClients(clientId) {
 /**
  * Make a request to OpenHIM to create a new client record
  * @example <caption>Create a client record</caption>
- * registerClient({
+ * createClient({
  *  roles: ['fhir'],
  *  clientID: 'fhir-server-7',
  *  name: 'FHIR Server',
@@ -158,7 +158,7 @@ export function getClients(clientId) {
  * @state {HttpState}
  */
 
-export function registerClient(body) {
+export function createClient(body) {
   return async state => {
     const [resolvedBody] = expandReferences(state, body);
     const response = await util.request(

@@ -13,7 +13,7 @@ const {
   createChannel,
   createTask,
   updateClient,
-  registerClient,
+  createClient,
 } = Adaptor;
 
 const testServer = enableMockClient('https://platform-tests.openhim.org');
@@ -337,7 +337,7 @@ describe('updateClient', () => {
   });
 });
 
-describe('registerClient', () => {
+describe('createClient', () => {
   it('should create a single client', async () => {
     testServer
       .intercept({
@@ -346,7 +346,7 @@ describe('registerClient', () => {
       })
       .reply(201, 'Client successfully created');
 
-    const { data } = await registerClient({
+    const { data } = await createClient({
       roles: ['fhir'],
       clientID: 'fhir-server-8',
       name: 'FHIR Server',
