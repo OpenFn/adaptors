@@ -238,6 +238,12 @@ export function searchTask(task, query = {}, options = {}) {
       options
     );
     const { workspaceGid = state.configuration.workspaceGid } = resolvedOptions;
+    const {
+      custom_fields,
+      resource_subtype = 'default_task',
+      ...restQuery
+    } = resolvedQuery;
+    const customFields = util.convertCustomFields(custom_fields);
 
     if (!workspaceGid) throw new Error('You need to specify Workspace GID');
 
@@ -246,8 +252,10 @@ export function searchTask(task, query = {}, options = {}) {
       `workspaces/${workspaceGid}/tasks/search`,
       {
         query: {
+          resource_subtype,
           text: resolvedTask,
-          ...resolvedQuery,
+          ...customFields,
+          ...restQuery,
         },
       }
     );
