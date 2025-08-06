@@ -1,214 +1,182 @@
 # OpenFn Adaptors ![Build & Test](https://github.com/openfn/adaptors/actions/workflows/ci.yaml/badge.svg?branch=main) ![Build & Test](https://github.com/openfn/adaptors/actions/workflows/docs.yaml/badge.svg?branch=main)
 
-The new home for all @openfn
-[language adaptors](https://docs.openfn.org/adaptors) - open-source Javascript
-or Typescript modules that provide helper functions to communicate with a
-specific external system.
+Open-source JavaScript/TypeScript modules that provide helper functions to
+communicate with external systems. These adaptors are used by
+[OpenFn Lightning](https://github.com/OpenFn/lightning) and the
+[OpenFn CLI](https://github.com/openfn/cli) for workflow automation.
 
-For a fully open source workflow automation platform that leverages these
-adaptors, see [OpenFn Lightning](https://github.com/OpenFn/lightning).
+## Quick Start
 
-## Getting Started
+### Prerequisites
 
-_Note: [asdf](https://github.com/asdf-vm/asdf) to be installed globally on your
-machine. Add the nodejs and pnpm plugin once asdf is installed globally._
+- [asdf](https://github.com/asdf-vm/asdf) installed globally
+- `Node.js` and `pnpm` managed via asdf
 
-A few first time repo steps:
+### Setup
 
-```
+```bash
+# Install asdf plugins
 asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 asdf plugin-add pnpm
-```
 
-Then:
-
-```
-asdf install # Install tool versions
+# Install dependencies and build
+asdf install
 pnpm install
 pnpm build
 pnpm run setup
 ```
 
-## Running scripts
+## Using Adaptors
 
-Every repo provides a common set of npm scripts:
+### With OpenFn CLI
 
-To run them for all scripts in `packages`, call
-`pnpm --filter "./packages/** <script>`.
+1. Install the CLI globally:
 
-For example:
+   ```bash
+   npm install -g @openfn/cli
+   ```
 
-```
+2. Create a job file (e.g., `job.js`):
+
+   ```javascript
+   // Example: Send data to Salesforce
+   create('Account', {
+     Name: $.data.company_name,
+     Industry: $.data.industry,
+   });
+   ```
+
+3. Run the job:
+   ```bash
+   openfn job.js -a salesforce -s tmp/state.json -o tmp/output.json
+   ```
+
+### With OpenFn Lightning
+
+Lightning is our open-source workflow automation platform that uses these
+adaptors. See the
+[Lightning documentation](https://github.com/OpenFn/lightning?tab=readme-ov-file#getting-started)
+for setup and usage instructions.
+
+## Development
+
+### Running Scripts
+
+Run commands across all packages:
+
+```bash
 pnpm --filter "./packages/**" build
 pnpm --filter "./packages/**" test
 ```
 
+### Creating a New Adaptor
+
+#### Prerequisites
+
+1. Set up the Repository Directory
+
+   The CLI needs a designated folder to save and load adaptors. Configure this
+   by setting the `OPENFN_REPO_DIR` environment variable.
+
+   Add to your shell configuration file (e.g., `~/.bashrc`, `~/.zshrc`):
+
+   ```bash
+   # Directory for CLI adaptor storage
+   export OPENFN_REPO_DIR=~/repo/openfn/cli-repo
+
+   # Optional: For development with adaptors monorepo
+   export OPENFN_ADAPTORS_REPO=~/repo/openfn/adaptors
+
+   ```
+
+#### Development Steps
+
+1. Generate the adaptor structure:
+
+   ```bash
+   pnpm generate <adaptor-name>
+   ```
+
+2. Add your logo images to `packages/<adaptor-name>/assets/`:
+
+   - `rectangle.png` (512x190px)
+   - `square.png` (256x256px)
+
+3. Implement your adaptor in `packages/<adaptor-name>/src/Adaptor.js`
+
+4. Test your adaptor:
+
+   ```bash
+   cd packages/<adaptor-name>
+   pnpm install
+   pnpm build --watch
+   ```
+
+5. Create a test job in `tmp/expression.js` and run:
+
+   ```bash
+   openfn tmp/expression.js -ma <adaptor-name> -o tmp/output.json -s tmp/state.json
+   ```
+
+   > `openfn help` will show you the full list of options.
+
 ## Contributing
 
-### Assign yourself to an issue
+1. **Find an issue**: Browse
+   [open issues](https://github.com/OpenFn/adaptors/issues) and assign yourself
+   to one, or create a new issue for your feature.
 
-Read through the existing [issues](https://github.com/OpenFn/adaptors/issues)
-and assign yourself to the issue you have chosen. If anything needs
-clarification, don't hesitate to leave a comment on the issue and we will get
-back to you as soon as possible.
+2. **Fork and clone**: Fork the repository and clone your fork locally.
 
-If there isn't already an issue for the feature you would like to contribute,
-please make one and assign yourself.
+3. **Make changes**: Follow the
+   [development workflow above](#development-steps).
 
-### Open a pull request
+4. **Submit PR**: Create a draft PR, fill out the template, self-review, then
+   mark as ready for review and assign @mtuchi or @josephjclark.
 
-1. Clone the adaptors repository, then
-   [fork it](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+### Best Practices
 
-2. Make your changes by following the
-   [working with adaptors](#working-with-adaptors) section.
+- Update the adaptor's README
+- Include comprehensive [JSDoc](https://jsdoc.app/) comments for all functions
+- [Write unit tests for your adaptor functions](https://github.com/OpenFn/adaptors/wiki/Unit-Testing-Guide)
+- [Follow the existing code style and patterns](https://github.com/OpenFn/adaptors/wiki/Adaptor-Writing-Best-Practice-&-Common-Patterns)
 
-3. Open a draft PR, fill out the pull request template (this will be added
-   automatically for you) then make sure to self-review your code and go through
-   the 'Review checklist'. Leave any notes for the reviewer in the 'Details'
-   section.
+## Documentation & Resources
 
-4. Mark the pull request as ready for review, and assign @stuartc or
-   @taylordowns2000.
-
-### Working with adaptors
-
-#### Requirements
-
-- Create a fork of this repo on your local machine
-- Iinstall the OpenFn CLI `npm install -g @openfn/cli`
-- Ensure the OPENFN_REPO_DIR env var is set to to the root of this repo, ie,
-  `export OPENFN_REPO_DIR=~/repo/openfn/cli-repo`
-- Ensure you have the logo images of the adaptor you need to create: a rectangle
-  512x190px and a square-256x256px
-
-#### 1. Setup
-
-Generating a new adaptor. Run this from the repo root:
-
-```
-pnpm generate <adaptor-name>
-```
-
-- Add the logo images in the assets folder inside the generated adaptor folder.
-  Ps: Ensure both images are named rectangle.png and square.png respectively and
-  adhere to the size specifications mentioned in the requirements section.
-- Ensure the mages have a transparent background. Navigate to
-  configuration-schema.json, and change any configs that do not align with the
-  adaptor
-- Go to `/src/Adaptor.js` and create the adaptor’s Operations - the functions
-  used in job code. You may want to set up `POST, GET,` to fit the current
-  adaptor’s requirements
-
-They should look something like this:
-
-```js
-export function yourFunctionName(arguments) {
-  return state => {
-    // logic
-    return state;
-  };
-}
-```
-
-- Go to `src/Utils.js` and change the code in the file to match your desired
-  implementation. Any internal functions used by your adaptor, but not by job
-  code, should go here in Utils.js
-- Update the readme with correct examples that match your new implementation
-- Write and update the tests within the `/tests` folder
-- Edit the CHANGELOG.md file with comments about the initial release.
-- You should set your credentials in the “configuration” property inside
-  `state.json`
-- Write some unit tests to ensure your code works
-
-#### 2. Test it manually
-
-To run a test job and exercise your
-
-- Create a new /tmp folder and create two new files: state.json and
-  expression.js.
-- - Note that the /tmp folder is already gitignored and will not be sent to
-    gitHub when you push your code.
-- Write a test job inside `expression.js`
-- Navigate to the adaptor folder:
-
-```
-cd packages/<adaptor name>
-```
-
-- Install adaptor dependencies
-
-```
-pnpm install
-```
-
-- Build the adaptor
-
-```
-pnpm build --watch
-```
-
-- Run the test job through the CLI
-
-```
-openfn tmp/expression.js -ma <adaptor name> -o tmp/output.json -s tmp/state.json
-
-```
-
-`-o` will output to your console
-
-`-m` will run the job from the monorepo (see the setup notes in 1.)
-
-`-a` this will specify the adaptor to run your job with
-
-The different output from you running the jobs will be temporarily stored in
-`output.json`
-
-#### 3. Add docs and write the tests
-
-- Include [JSDoc](https://jsdoc.app/) comments to provide a clear and
-  comprehensive explanation of the adaptor function's purpose, parameters,
-  return values, and usage examples
-- Update the adaptor's `README.md` to include a sample operation
+- **Wiki**: [OpenFn Adaptors Wiki](https://github.com/OpenFn/adaptors/wiki) -
+  Detailed guides and best practices
+- **Documentation**: [docs.openfn.org](https://docs.openfn.org) - Official
+  documentation
+- **Lightning**: [OpenFn Lightning](https://github.com/OpenFn/lightning) -
+  Workflow automation platform
+- **CLI**: [OpenFn CLI](https://github.com/openfn/kit) - Command-line interface
 
 ## Changesets
 
-Any submitted PRs should have an accompanying
-[`changeset`](https://github.com/changesets/changesets).
+- Create a new changeset with `pnpm changeset`. This will prompt you for the
+  changes:
 
-A changeset is a text file with a list of what you've changed and a short
-summary. Changesets are stored in a temporary folder until a release, at which
-point they are merged into the changelogs of the affected packges.
-
-Adding a changeset is really easy thanks to a very friendly CLI.
-
-To create a changeset, run this from the repo root:
-
-```
+```bash
 pnpm changeset
 ```
 
-Look in the `.changesets` folder to see your change.
+> Follow the prompts to describe your changes. This will create a new changeset
+> file in the `.changesets` folder.
 
-Commit the changeset to the repo when you're ready.
+- Commit the changeset to the repo when you're ready.
 
-Note that the newly generated adaptor should ideally never have its version
-increased - it should be locked at `1.0.0`.
+## Versioning
+
+> If you're PR is approved, you can bump the version and add release dates.
+
+- Run `pnpm run version` to bump the version and add release dates.
+- Commit your changes. And push to your PR branch.
 
 ## Releases
 
-New releases will be published to npm automatically when merging into the `main`
-branch`.
+Releases are automated via GitHub Actions when merging to `main`.
 
-Version numbers should be bumped with `changeset` and git tags should be pushed
-to the release branch BEFORE merging.
-
-1. Run `pnpm run version` from root to bump versions and add release dates
-1. Run `pnpm install`
-1. Commit the new version numbers
-1. Push the branch
-
-When the branch is merged to main, Github Actions will:
+Github Actions will:
 
 - Build and test (just in case)
 - Publish any new version numbers to npm
@@ -243,33 +211,7 @@ Note that the Worker and CLI will both always download the latest versions of
 the adaptor with the `@next` tag - it's a rolling tag and should always be up to
 date.
 
-## Build tooling
-
-The `build` command accepts a list of build steps as arguments: `ast`, `src`,
-`docs` and `dts`. Calling build on an adaptor with no arguments will build
-everything.
-
-Add `--watch` to watch the `src` for changes and rebuild this dist. This is
-useful when developing with the CLI.
-
-You can also watch with `build docs`, ie:
-
-```
-pnpm -C adaptors/http build docs --watch
-```
-
-Each adaptor's build command should simply call `build-adaptor` with the package
-name.
-
-You can run `build --help` for more information.
-
-Examples:
-
-```
-pnpm -C packages/salesforce build --watch
-```
-
-### Docs
+## Docs
 
 Docs are generated from the JSDoc annotations in adaptors. They are output as
 markdown files in the `./docs` directly and not checked in to source control.
