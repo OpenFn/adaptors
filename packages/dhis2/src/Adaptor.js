@@ -661,7 +661,6 @@ export {
   fn,
   fnIf,
   group,
-  http,
   lastReferenceValue,
   map,
   merge,

@@ -462,7 +462,6 @@ export {
   fields,
   fn,
   fnIf,
-  http,
   lastReferenceValue,
   map,
   merge,
