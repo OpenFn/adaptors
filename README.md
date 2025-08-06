@@ -5,6 +5,28 @@ communicate with external systems. These adaptors are used by
 [OpenFn Lightning](https://github.com/OpenFn/lightning) and the
 [OpenFn CLI](https://github.com/openfn/cli) for workflow automation.
 
+# Table of Contents
+
+- [Quick Start](#quick-start)
+  - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+- [Using Adaptors](#using-adaptors)
+  - [With OpenFn CLI](#with-openfn-cli)
+  - [With OpenFn Lightning](#with-openfn-lightning)
+- [Contributing](#contributing)
+- [Development](#development)
+  - [Creating a New Adaptor](#creating-a-new-adaptor)
+    - [Prerequisites](#prerequisites-1)
+    - [Development Steps](#development-steps)
+    - [Testing Documentation Changes](#testing-documentation-changes)
+    - [Best Practices](#best-practices)
+- [Changesets](#changesets)
+- [Versioning](#versioning)
+- [Releases](#releases)
+- [Pre-releases](#pre-releases)
+- [Metadata](#metadata)
+- [Useful Resources](#useful-resources)
+
 ## Quick Start
 
 ### Prerequisites
@@ -55,19 +77,24 @@ pnpm run setup
 
 Lightning is our open-source workflow automation platform that uses these
 adaptors. See the
-[Lightning documentation](https://github.com/OpenFn/lightning?tab=readme-ov-file#getting-started)
+[Lightning documentation](https://github.com/OpenFn/lightning/blob/main/RUNNINGLOCAL.md#using-local-adaptors)
 for setup and usage instructions.
 
+## Contributing
+
+1. **Find an issue**: Browse
+   [open issues](https://github.com/OpenFn/adaptors/issues) and assign yourself
+   to one, or create a new issue for your feature.
+
+2. **Fork and clone**: Fork the repository and clone your fork locally.
+
+3. **Make changes**: Follow the
+   [development workflow above](#development-steps).
+
+4. **Submit PR**: Create a draft PR, fill out the template, self-review, then
+   mark as ready for review and assign @mtuchi or @josephjclark.
+
 ## Development
-
-### Running Scripts
-
-Run commands across all packages:
-
-```bash
-pnpm --filter "./packages/**" build
-pnpm --filter "./packages/**" test
-```
 
 ### Creating a New Adaptor
 
@@ -120,19 +147,18 @@ pnpm --filter "./packages/**" test
 
    > `openfn help` will show you the full list of options.
 
-## Contributing
+#### Testing Documentation Changes
 
-1. **Find an issue**: Browse
-   [open issues](https://github.com/OpenFn/adaptors/issues) and assign yourself
-   to one, or create a new issue for your feature.
+You'll need two repositories:
 
-2. **Fork and clone**: Fork the repository and clone your fork locally.
+1. [OpenFn/adaptors](https://github.com/OpenFn/adaptors) - Contains adaptor
+   source code
+2. [OpenFn/docs](https://github.com/OpenFn/docs) - Contains documentation
 
-3. **Make changes**: Follow the
-   [development workflow above](#development-steps).
-
-4. **Submit PR**: Create a draft PR, fill out the template, self-review, then
-   mark as ready for review and assign @mtuchi or @josephjclark.
+For detailed instructions on testing documentation changes locally, please refer
+to our
+[Testing Documentation Guide](https://github.com/OpenFn/adaptors/wiki/How-to-test-docs-changes)
+in the wiki.
 
 ### Best Practices
 
@@ -141,17 +167,10 @@ pnpm --filter "./packages/**" test
 - [Write unit tests for your adaptor functions](https://github.com/OpenFn/adaptors/wiki/Unit-Testing-Guide)
 - [Follow the existing code style and patterns](https://github.com/OpenFn/adaptors/wiki/Adaptor-Writing-Best-Practice-&-Common-Patterns)
 
-## Documentation & Resources
-
-- **Wiki**: [OpenFn Adaptors Wiki](https://github.com/OpenFn/adaptors/wiki) -
-  Detailed guides and best practices
-- **Documentation**: [docs.openfn.org](https://docs.openfn.org) - Official
-  documentation
-- **Lightning**: [OpenFn Lightning](https://github.com/OpenFn/lightning) -
-  Workflow automation platform
-- **CLI**: [OpenFn CLI](https://github.com/openfn/kit) - Command-line interface
-
 ## Changesets
+
+Any submitted PRs should have an accompanying
+[changeset](https://github.com/changesets/changesets).
 
 - Create a new changeset with `pnpm changeset`. This will prompt you for the
   changes:
@@ -211,51 +230,18 @@ Note that the Worker and CLI will both always download the latest versions of
 the adaptor with the `@next` tag - it's a rolling tag and should always be up to
 date.
 
-## Docs
-
-Docs are generated from the JSDoc annotations in adaptors. They are output as
-markdown files in the `./docs` directly and not checked in to source control.
-
-The markdown output can be customized by overriding the built-in handlebars
-templates in jsoc2md.
-
-- Find the template you want to customise in [j2sdoc2md source()
-  https://github.com/jsdoc2md/dmd/tree/master/partials) (this can be tricky)
-- Copy the template contents
-- Paste into a file with the same name (this is important) in
-  `tools/build/src/partials`
-- Edit `tools/build/src/commands/docs.ts` and add the path to your new template
-  to jsdoc2md's `renderOpts` (see how the other .hbs files are loaded in)
-- Make your changes
-- Run `pnpm build docs` from root (or just one adaptor folder) and inspect the
-  generated `docs/index/md` file.
-
-Once built, the docs need to be compiled into a JSON file to be published to the
-docs site. This is run automatically through github actions.
-
-For local dev against the docsite, you can run `pnpm docs:build` to rebuild your
-local `docs.json` file. Use `pnpm docs:watch` to watch for md changes in
-packages/\* and rebuild automatically.
-
 ## Metadata
 
 Check the Wiki for the metadata creation guide:
 [https://github.com/OpenFn/adaptors/wiki/Magic-Metadata](https://github.com/OpenFn/adaptors/wiki/Magic-Metadata)
 
-There are two CLI utils you can run to generate metadata and populate mock data.
+## Useful Resources
 
-Use `generate` to create a metadata.json based on the provided config. This will
-be saved to `packages/<adaptorName>/src/meta/metadata.json`.
-
-Use `populate-mock` to execute the `populate-mock-data.js` file and save the
-results into the meta/data dir. Unit tests will use this mock data.
-
-```
-pnpm metadata generate <adaptorName> <path/to/config> pnpm metadata
-populate-mock <adaptorName> <path/to/config>
-```
-
-Config paths can point to JSON or JS files with a default export. They are
-always specified relative to the adaptor directory.
-
-You can run these from the repo root or from the adaptor folder.
+- **Wiki**: [OpenFn Adaptors Wiki](https://github.com/OpenFn/adaptors/wiki) -
+  Detailed guides and best practices
+- **Documentation**: [docs.openfn.org](https://docs.openfn.org) - Official
+  documentation
+- **Lightning**: [OpenFn Lightning](https://github.com/OpenFn/lightning) -
+  Workflow automation platform
+- **CLI**: [OpenFn CLI](https://github.com/openfn/kit) - For running and
+  deploying OpenFn jobs.
