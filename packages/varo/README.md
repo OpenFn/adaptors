@@ -239,9 +239,9 @@ openfn workflow.json -m --only convertToEms
 
 Some workflows required authorization to access the resources.
 
-## Gmail token
+## Gmail access token
 
-Use Postman to retrieve an access token. This is a short-lived token will last 60 minutes and will have to be manually retrieved. See the documentation in the [Gmail adaptor readme](https://docs.openfn.org/adaptors/packages/gmail-readme#use-the-postman-application-to-query-the-oauth-enpoint-and-retrieve-an-access-token) for a guide on how to configure Postman to retrieve the access token.
+An access token is required to access the Gmail API. This short-lived token will last 60 minutes and will have to be manually refreshed. See the documentation in the [Gmail adaptor readme](https://docs.openfn.org/adaptors/packages/gmail-readme#retrieve-an-access-token) for a guide on how to use Google Developers OAuth 2.0 Playground to retrieve and refresh the access token.
 
 ## OpenFn collections token
 

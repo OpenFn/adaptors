@@ -1,4 +1,6 @@
-export function parseVaroEmsToReport(metadata, data, dataPath) {
+import { removeNullProps } from './Utils';
+
+export function parseVaroEmsToReport(metadata, data, rtcwMaps) {
   const report = {
     CID: null,
     LAT: metadata.location.used.latitude,
@@ -23,11 +25,17 @@ export function parseVaroEmsToReport(metadata, data, dataPath) {
     records: [],
   };
 
-  const deviceDate = parseRelativeDateFromUsbPluggedInfo(dataPath);
+  removeNullProps(report);
 
   for (const item of data.records) {
-    const durations = [item.RELT]; // ignore RTCW?
-    const absoluteDate = parseAdjustedDate(deviceDate, durations);
+    // For this record, verify the RTCW timeline has been identified.
+    const deviceDate = rtcwMaps.get(item.RTCW);
+    if (!deviceDate) {
+      report.zHasUnreconciledRtcw = true;
+      continue;
+    }
+
+    const absoluteDate = applyDurationToDate(deviceDate, item.RELT);
     const abst = parseIsoToAbbreviatedIso(absoluteDate);
 
     const record = {
@@ -46,87 +54,58 @@ export function parseVaroEmsToReport(metadata, data, dataPath) {
       TVC: item.TVC, // vaccine chamber temperature
     };
 
+    removeNullProps(record);
+
     report.records.push(record);
   }
 
   return report;
 }
 
-function parseRelativeDateFromUsbPluggedInfo(path) {
-  const regex = /_CURRENT_DATA_(?<duration>\w+?)_(?<date>\w+?)\.json$/;
-  const match = path.match(regex);
+export function applyDurationToDate(incomingDate, duration, subtract = false) {
+  const date = normalizeIncomingDate(incomingDate);
+  const parsedDuration = parseDuration(duration, subtract);
+  if (!parsedDuration) return date;
 
-  if (!match) {
-    throw new Error(`Path format is incorrect: ${path}`);
-  }
+  date.setUTCDate(date.getUTCDate() + parsedDuration.days);
+  date.setUTCHours(date.getUTCHours() + parsedDuration.hours);
+  date.setUTCMinutes(date.getUTCMinutes() + parsedDuration.minutes);
+  date.setUTCSeconds(date.getUTCSeconds() + parsedDuration.seconds);
 
-  const usbPluggedInfo = {
-    date: match.groups.date,
-    duration: match.groups.duration,
-  };
-
-  const isoDate = parseAbbreviatedIsoToIso(usbPluggedInfo.date);
-
-  // The relative date is: from when the USB drive was plugged in, the date, minus the relative duration.
-  return parseAdjustedDate(isoDate, [usbPluggedInfo.duration], true);
+  return date;
 }
 
-function parseAdjustedDate(incomingDate, durations, subtract = false) {
-  // Parse duration in the format PnDTnHnMnS.
-  function parseDuration(duration) {
-    const regex =
-      /^P((?<days>\d+)D)?(T((?<hours>\d+)H)?((?<minutes>\d+)M)?((?<seconds>\d+)S)?)?$/;
-    const match = duration.match(regex);
+function parseDuration(duration, subtract) {
+  const regex =
+    /^P(?:(?<days>\d+)D)?(?:T(?:(?<hours>\d+)H)?(?:(?<minutes>\d+)M)?(?:(?<seconds>\d+)S)?)?$/;
+  const match = duration.match(regex);
+  if (!match) throw new Error(`Invalid duration format: ${duration}`);
 
-    if (!match) {
-      throw new Error(`Invalid duration format: ${duration}`);
-    }
+  const m = subtract ? -1 : 1;
+  const days = +(match.groups.days || 0) * m;
+  const hours = +(match.groups.hours || 0) * m;
+  const minutes = +(match.groups.minutes || 0) * m;
+  const seconds = +(match.groups.seconds || 0) * m;
 
-    const multiplier = subtract ? -1 : 1;
-    const days = parseInt(match.groups.days || 0, 10) * multiplier;
-    const hours = parseInt(match.groups.hours || 0, 10) * multiplier;
-    const minutes = parseInt(match.groups.minutes || 0, 10) * multiplier;
-    const seconds = parseInt(match.groups.seconds || 0, 10) * multiplier;
-
-    if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
-      return null;
-    }
-
-    return { days, hours, minutes, seconds };
-  }
-
-  function applyDuration(date, duration) {
-    date.setDate(date.getDate() + duration.days);
-    date.setHours(date.getHours() + duration.hours);
-    date.setMinutes(date.getMinutes() + duration.minutes);
-    date.setSeconds(date.getSeconds() + duration.seconds);
-  }
-
-  const adjustedDate = new Date(incomingDate);
-
-  for (const duration of durations) {
-    if (!duration) continue;
-
-    const parsedDuration = parseDuration(duration);
-    if (!parsedDuration) continue;
-
-    applyDuration(adjustedDate, parsedDuration);
-  }
-
-  return adjustedDate;
+  return days || hours || minutes || seconds
+    ? { days, hours, minutes, seconds }
+    : null;
 }
 
-function parseAbbreviatedIsoToIso(abbreviatedIso) {
-  // Incoming format is abbreviated ISO 8601: 20240913T171251Z
-  const regex = /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z$/;
-  const match = abbreviatedIso.match(regex);
-
-  if (!match) {
-    throw new Error(`Invalid abbreviated ISO date format: ${abbreviatedIso}`);
+function normalizeIncomingDate(date) {
+  // If it's an abbreviated ISO string, convert to regular ISO string.
+  if (typeof date === 'string' && /^\d{8}T\d{6}Z$/.test(date)) {
+    date = parseAbbreviatedIsoToIso(date);
   }
 
-  // Reformat to ISO 8601: YYYY-MM-DDTHH:MM:SSZ
-  return `${match[1]}-${match[2]}-${match[3]}T${match[4]}:${match[5]}:${match[6]}Z`;
+  // Always return a new Date object (clones existing Date if already a Date).
+  return new Date(date);
+}
+
+function parseAbbreviatedIsoToIso(abbrIso) {
+  const m = abbrIso.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z$/);
+  if (!m) throw new Error(`Invalid abbreviated ISO date format: ${abbrIso}`);
+  return `${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:${m[6]}Z`;
 }
 
 function parseIsoToAbbreviatedIso(iso) {
