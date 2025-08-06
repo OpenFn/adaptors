@@ -285,6 +285,7 @@ export function findValue(filter) {
             reject(err);
           } else {
             if (rows.length > 0) {
+              console.log('Found value');
               resolve(rows[0][0].value);
             } else {
               console.log('No value found');
