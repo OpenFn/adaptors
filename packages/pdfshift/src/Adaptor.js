@@ -27,7 +27,7 @@ import * as util from './Utils';
  * PDF Body Options object. {@link https://docs.pdfshift.io/#convert|See PDFShift documentation} for more details.
  * @typedef {Object} PDFBodyOptions
  * @property {boolean} sandbox - Generates PDF documents in dev mode that doesn't count in the credits.
- * @property {boolean} encode - Return the generated PDF in Base64 encoded format, instead of raw.
+ * @property {boolean} encode - Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`.
  */
 
 /**
@@ -54,12 +54,11 @@ import * as util from './Utils';
  *   </body>
  * </html>
  * `, {
- *   sandbox: true,
- *   encode: true});
+ *   sandbox: true});
  * @example <caption>Generate a PDF from a url</caption>
  * generatePDF('https://www.example.com/', {
  *   sandbox: true,
- *   encode: true,
+ *   encode: false,
  * });
  * @returns {Operation}
  * @state {HttpState}
@@ -96,7 +95,7 @@ export function generatePDF(htmlTemplateString, options) {
  * @typedef {Object} BodyOptions
  * @property {string} source - The HTML string or url to convert to PDF.
  * @property {boolean} sandbox - Generates PDF documents in dev mode that doesn't count in the credits.
- * @property {boolean} encode - Return the generated PDF in Base64 encoded format, instead of raw.
+ * @property {boolean} encode - Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`
  */
 
 /**
@@ -112,8 +111,7 @@ export function generatePDF(htmlTemplateString, options) {
  *       <p>Total Sales: $42</p>
  *     </body>
  *   </html>`,
- *     sandbox: true,
- *     encode: true,
+ *     sandbox: true
  *   },
  *   {
  *     parseAs: 'text',
@@ -146,8 +144,7 @@ export function post(path, body, options) {
  *         <p>Total Sales: $42</p>
  *       </body>
  *     </html>`,
- *     sandbox: true,
- *     encode: true,
+ *     sandbox: true
  *   },
  *   {
  *     parseAs: 'text',
