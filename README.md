@@ -124,35 +124,24 @@ for setup and usage instructions.
 
 ## Contributing
 
-1. **Choose your path**:
+1. **I want to contribute**: Choose your path:
 
    - To fix an existing issue: Browse
      [open issues](https://github.com/OpenFn/adaptors/issues)
-   - To build a new adaptor: See the
-     [developer guide](https://github.com/OpenFn/adaptors/wiki/Build-a-new-Adaptor)
+   - To build a new adaptor: See [Build your adaptor](#build-your-adaptor)
    - To fix something specific:
      [Create an issue to track your changes](https://github.com/OpenFn/adaptors/issues/new)
 
-2. **Fork and clone**: Fork the repository and clone your fork locally.
-
-3. **Make changes**: Follow the
-   [development workflow above](#development-steps).
-
-   - For new adaptors: Use our adaptor template as a starting point
-   - For fixes: Focus on minimal, targeted changes
-
-4. **Submit PR**: Create a draft PR, fill out the template, self-review, then
+2. **Submit PR**: Create a draft PR, fill out the template, self-review, then
    mark as ready for review and assign @mtuchi or @josephjclark.
 
-## Development
-
-### Build your adaptor
+## Build your adaptor
 
 We have a comprehensive
 [developer guide](https://github.com/OpenFn/adaptors/wiki/Build-a-new-Adaptor)
 to help you build your own adaptor.
 
-#### Development Steps
+#### Quick Start
 
 1. Generate and run the new adaptor:
 
@@ -185,25 +174,25 @@ to help you build your own adaptor.
    openfn tmp/job.js -ma <adaptor-name> -s tmp/state.json -o tmp/output.json
    ```
 
-#### Testing Documentation Changes
-
-You'll need two repositories:
-
-1. [OpenFn/adaptors](https://github.com/OpenFn/adaptors) - Contains adaptor
-   source code
-2. [OpenFn/docs](https://github.com/OpenFn/docs) - Contains documentation
-
-For detailed instructions on testing documentation changes locally, please refer
-to our
-[Testing Documentation Guide](https://github.com/OpenFn/adaptors/wiki/How-to-test-docs-changes)
-in the wiki.
-
-### Best Practices
+#### Best Practices
 
 - Update the adaptor's README
 - Include comprehensive [JSDoc](https://jsdoc.app/) comments for all functions
 - [Write unit tests for your adaptor functions](https://github.com/OpenFn/adaptors/wiki/Unit-Testing-Guide)
 - [Follow the existing code style and patterns](https://github.com/OpenFn/adaptors/wiki/Adaptor-Writing-Best-Practice-&-Common-Patterns)
+
+#### Testing Documentation Changes
+
+The JSDoc comments in your adaptor code will be automatically converted to HTML
+and uploaded to [docs.openfn.org](https://docs.openfn.org). To test your
+documentation changes locally, you'll need to clone the
+[OpenFn/docs](https://github.com/OpenFn/docs) repository and run the docs site
+locally.
+
+For detailed instructions on testing documentation changes locally, please refer
+to our
+[Testing Documentation Guide](https://github.com/OpenFn/adaptors/wiki/How-to-test-docs-changes)
+in the wiki.
 
 ## Changesets
 
