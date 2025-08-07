@@ -79,10 +79,41 @@ export OPENFN_ADAPTORS_REPO=~/repo/openfn/adaptors
    });
    ```
 
-2. Run the job:
-   ```bash
-   openfn job.js -a salesforce -s tmp/state.json -o tmp/output.json
+2. Create your initial state file in a git ignored folder called `tmp` . This
+   will be used to store the output of your job. The file should be called
+   `state.json` and should look like this:
+
+   ```json
+   {
+     "configuration": { //Your salesforce credentials},
+     "data": {
+       "company_name": "Example Inc.",
+       "industry": "Software"
+     }
+   }
    ```
+
+3. Run the job:
+
+   Using `-m` and `-a` flags:
+
+   ```bash
+   openfn job.js -ma salesforce -s tmp/state.json -o tmp/output.json
+   ```
+
+   - `-o` will add the output to the output file.
+   - `-m` will run the job from the `adaptors monorepo`
+   - `-a` this will specify the adaptor to run your job with
+
+   You can also run the job using only the `-a` flag:
+
+   ```bash
+   openfn -a salesforce job.js -s tmp/state.json -o tmp/output.json
+   ```
+
+   This will auto install the `salesforce` adaptor and run the job.
+
+   > Run: `openfn help` to see all available options.
 
 ### With OpenFn Lightning
 
@@ -153,12 +184,6 @@ to help you build your own adaptor.
    ```bash
    openfn tmp/job.js -ma <adaptor-name> -s tmp/state.json -o tmp/output.json
    ```
-
-   > `-o` will add the output to the output file `-m` will run the job from the
-   > monorepo
-   > ([see the setup notes](https://github.com/OpenFn/adaptors/wiki/Setting-Up-Your-Development-Environment))
-   > `-a` this will specify the adaptor to run your job with `openfn help` will
-   > show you the full list of options.
 
 #### Testing Documentation Changes
 
@@ -237,7 +262,7 @@ The pre-release build will be updated when:
 
 Pre-releases will be given the correct next version number (the number that
 `pnpm changeset version` will generated), plus the suffix `-next-<sha>`, where
-sha is teh short github SHA for the commit.
+`sha` is the short GitHub SHA for the commit.
 
 Note that the Worker and CLI will both always download the latest versions of
 the adaptor with the `@next` tag - it's a rolling tag and should always be up to
