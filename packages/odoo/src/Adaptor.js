@@ -25,6 +25,16 @@ let odooConn = null;
  */
 
 /**
+ * Options object
+ * @typedef {Object} SearchOptions
+ * @property {number} limit - An optional limit to the number of records to return
+ * @property {number} offset - An optional offset to the number of records to skip
+ * @property {string} order - An optional order to sort the records by. i.e "name, desc"
+ * @property {object} context - An optional context to be used in the request. i.e `{lang: 'en_US', timezone: 'UTC'}`.
+ *
+ */
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute` to make working with this API easier.
  * @example
@@ -212,6 +222,119 @@ export function deleteRecord(model, recordId) {
 
     const response = await odooConn.delete(resolvedModel, resolvedRecordId);
     return composeNextState(state, response);
+  };
+}
+
+/**
+ * Search a record from Odoo
+ * @public
+ * @example
+ * searchRecord('res.partner', {
+ *   country_id: 'United States',
+ * });
+ * @function
+ * @param {string} model - The specific record model i.e. "res.partner"
+ * @param {object} domain - Optional search domain to filter records.
+ * @state {OdooState}
+ * @returns {Operation}
+ */
+export function searchRecord(model, domain = {}) {
+  return async state => {
+    const [resolvedModel, resolvedDomain] = expandReferences(
+      state,
+      model,
+      domain
+    );
+
+    console.log(`Searching a ${resolvedModel} resource...`);
+
+    const response = await odooConn.search(resolvedModel, resolvedDomain);
+    return composeNextState(state, response);
+  };
+}
+
+/**
+ * Search and a read record from Odoo
+ * @public
+ * @example <caption>Search and read a record with a domain filter</caption>
+ * searchReadRecord('res.partner', {
+ *   country_id: 'United States',
+ * });
+ * @example <caption>Search and read a record with specific fields</caption>
+ * searchReadRecord(
+ *   'res.partner',
+ *   {
+ *     is_company: true,
+ *   },
+ *   ['name'],
+ *   {
+ *     limit: 2,
+ *     offset: 0,
+ *   }
+ * );
+ * @example <caption> Fetch all records with a limit</caption>
+ * searchReadRecord('res.partner', {}, [], {
+ *   limit: 200,
+ * });
+ * @function
+ * @param {string} model - The specific record model i.e. "res.partner"
+ * @param {object} domain - Optional search domain to filter records.
+ * @param {string[]} fields - An optional array of field strings to read from the record. i.e  ['name', 'state_id']
+ * @param {SearchOptions} [options = {}] - Optional options like limit, offset, order, or context.
+ * @param {number} [options.limit=10] - Maximum number of records to fetch. If undefined, defaults to 10, and all records available will be fetched.
+ * @param {number} [options.offset=0] - The index of the first record to return.
+ * @state {OdooState}
+ * @returns {Operation}
+ */
+export function searchReadRecord(
+  model,
+  domain = {},
+  fields = [],
+  options = {}
+) {
+  return async state => {
+    const results = [];
+    const [resolvedModel, resolvedDomain, resolvedFields, resolvedOptions] =
+      expandReferences(state, model, domain, fields, options);
+
+    const DEFAULT_LIMIT = 10;
+    let { limit, offset = 0, ...otherOptions } = resolvedOptions;
+
+    // Get all record IDs to calculate the total count
+    const totalRecordIds = await odooConn.search(resolvedModel, resolvedDomain);
+    const totalCount = totalRecordIds.length;
+
+    const maxResults = limit ?? totalCount;
+
+    let fetched = 0;
+
+    while (fetched < totalCount && fetched < maxResults) {
+      const pageSize = Math.min(maxResults - fetched, DEFAULT_LIMIT);
+
+      console.log(`Searching and reading a ${resolvedModel} resource...`);
+      console.log(
+        `Fetching records from offset ${offset} with limit ${pageSize}...`
+      );
+
+      const response = await odooConn.searchRead(
+        resolvedModel,
+        resolvedDomain,
+        resolvedFields,
+        {
+          limit: pageSize,
+          offset,
+          ...otherOptions,
+        }
+      );
+
+      if (!response.length) break;
+
+      results.push(...response);
+      fetched += response.length;
+      offset += pageSize;
+    }
+
+    return composeNextState(state, results);
   };
 }
 
