@@ -53,14 +53,23 @@ pnpm run setup
 ### With OpenFn CLI
 
 #### Prerequisites
-- 
-1. Install the CLI globally:
 
-   ```bash
-   npm install -g @openfn/cli
-   ```
+- Install the CLI globally:
 
-2. Create a job file (e.g., `job.js`):
+  ```bash
+  npm install -g @openfn/cli
+  ```
+
+- Set Repo Directory: Set the environment variable `OPENFN_ADAPTORS_REPO` to the
+  path of the adaptors repo. For example:
+
+```bash
+export OPENFN_ADAPTORS_REPO=~/repo/openfn/adaptors
+```
+
+#### Steps
+
+1. Create a job file (e.g., `job.js`):
 
    ```javascript
    // Example: Send data to Salesforce
@@ -70,7 +79,7 @@ pnpm run setup
    });
    ```
 
-3. Run the job:
+2. Run the job:
    ```bash
    openfn job.js -a salesforce -s tmp/state.json -o tmp/output.json
    ```
