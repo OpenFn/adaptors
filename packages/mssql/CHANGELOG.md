@@ -1,5 +1,11 @@
 # @openfn/language-mssql
 
+## 5.2.3 - 07 August 2025
+
+### Patch Changes
+
+- 5e97559: Fix `findValue` and `queryHandler` to return rows
+
 ## 5.2.2 - 14 July 2025
 
 ### Patch Changes

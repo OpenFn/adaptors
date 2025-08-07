@@ -160,14 +160,19 @@ function queryHandler(state, query, callback, options) {
       }
     }
 
-    const request = new Request(query, (err, rowCount, rows) => {
+    const rows = [];
+    const request = new Request(query, err => {
       if (err) {
         console.error(err);
         reject(err);
       } else {
-        console.log(`Finished: ${rowCount} row(s).`);
+        console.log(`Finished: ${rows.length} row(s).`);
         resolve(callback(state, rows));
       }
+    });
+
+    request.on('row', columns => {
+      rows.push(columns);
     });
 
     connection.execSql(request);
@@ -251,8 +256,7 @@ export function findValue(filter) {
     const { connection } = state;
 
     const { uuid, relation, where, operator } = filter;
-    const [whereData] = expandReferences(state, where);
-    const [operatorData] = expandReferences(state, operator);
+    const [whereData, operatorData] = expandReferences(state, where, operator);
 
     let conditionsArray = [];
     for (let key in whereData) {
@@ -269,27 +273,28 @@ export function findValue(filter) {
 
     try {
       const body = `select ${uuid} from ${relation} ${condition}`;
-
       console.log('Preparing to execute sql statement');
-      let returnValue = null;
 
       return new Promise((resolve, reject) => {
         console.log(`Executing query: ${body}`);
 
-        const request = new Request(body, (err, rowCount, rows) => {
+        const rows = [];
+        const request = new Request(body, err => {
           if (err) {
             console.error(err.message);
             reject(err);
           } else {
             if (rows.length > 0) {
-              returnValue = rows[0][0].value;
-            }
-            if (returnValue === null) {
+              resolve(rows[0][0].value);
+            } else {
               console.log('No value found');
               resolve(undefined);
             }
-            resolve(returnValue);
           }
+        });
+
+        request.on('row', columns => {
+          rows.push(columns);
         });
 
         connection.execSql(request);
@@ -796,5 +801,5 @@ export {
   cursor,
   merge,
   sourceValue,
-  as
+  as,
 } from '@openfn/language-common';
