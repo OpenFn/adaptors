@@ -142,7 +142,7 @@ export function getClients(clientId) {
 /**
  * Make a request to OpenHIM to create a new client record
  * @example <caption>Create a client record</caption>
- * registerClient({
+ * createClient({
  *  roles: ['fhir'],
  *  clientID: 'fhir-server-7',
  *  name: 'FHIR Server',
@@ -158,51 +158,13 @@ export function getClients(clientId) {
  * @state {HttpState}
  */
 
-export function registerClient(body) {
+export function createClient(body) {
   return async state => {
     const [resolvedBody] = expandReferences(state, body);
     const response = await util.request(
       state.configuration,
       'POST',
       '/clients',
-      {
-        body: resolvedBody,
-        parseAs: 'text',
-      }
-    );
-
-    return util.prepareNextState(state, response);
-  };
-}
-
-/**
- * Make a request to OpenHIM to update a client record
- * @example <caption>Update a client record</caption>
- * updateClient({
- *  _id:'6870c19870b851d7a22b8d27',
- *  roles: ['fhir', 'testing'],
- *  clientID: 'fhir-server-7',
- *  name: 'FHIR Server Testing',
- *  passwordAlgorithm: 'sha512',
- *  passwordSalt: '3e74a280c568f27241e48e938edf21bf',
- *  passwordHash:
- *    '9a5158dc87a25da9d8822d48ed831a88bb4ba7fa636ddb6d6a725f73688546052cb7f2c355758e4839f9416e6cc0e37e1e3070f597af2836d39768a5ecc050db',
- * });
- * @function
- * @public
- * @param {object} body - The client data to update.
- * @returns {Operation}
- * @state {HttpState}
- */
-
-export function updateClient(body) {
-  return async state => {
-    const [resolvedBody] = expandReferences(state, body);
-    const { _id } = resolvedBody;
-    const response = await util.request(
-      state.configuration,
-      'PUT',
-      `/clients/${_id}`,
       {
         body: resolvedBody,
         parseAs: 'text',
@@ -302,6 +264,8 @@ export function createChannel(body) {
 /**
  * Make a request to OpenHIM to get all tasks
  * @example <caption>Get all tasks</caption>
+ * getTasks()
+ * @example <caption>Get all tasks with pagination options</caption>
  * getTasks({
  *   filterLimit: 10,
  *   filterPage: 0,

@@ -112,7 +112,7 @@
       "valid": true
     },
     {
-      "name": "registerClient",
+      "name": "createClient",
       "params": [
         "body"
       ],
@@ -121,7 +121,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "registerClient({\n roles: ['fhir'],\n clientID: 'fhir-server-7',\n name: 'FHIR Server',\n passwordAlgorithm: 'sha512',\n passwordSalt: '3e74a280c568f27241e48e938edf21bf',\n passwordHash:\n   '9a5158dc87a25da9d8822d48ed831a88bb4ba7fa636ddb6d6a725f73688546052cb7f2c355758e4839f9416e6cc0e37e1e3070f597af2836d39768a5ecc050db',\n});",
+            "description": "createClient({\n roles: ['fhir'],\n clientID: 'fhir-server-7',\n name: 'FHIR Server',\n passwordAlgorithm: 'sha512',\n passwordSalt: '3e74a280c568f27241e48e938edf21bf',\n passwordHash:\n   '9a5158dc87a25da9d8822d48ed831a88bb4ba7fa636ddb6d6a725f73688546052cb7f2c355758e4839f9416e6cc0e37e1e3070f597af2836d39768a5ecc050db',\n});",
             "caption": "Create a client record"
           },
           {
@@ -137,54 +137,6 @@
           {
             "title": "param",
             "description": "The client data to register.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{HttpState}"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "updateClient",
-      "params": [
-        "body"
-      ],
-      "docs": {
-        "description": "Make a request to OpenHIM to update a client record",
-        "tags": [
-          {
-            "title": "example",
-            "description": "updateClient({\n _id:'6870c19870b851d7a22b8d27',\n roles: ['fhir', 'testing'],\n clientID: 'fhir-server-7',\n name: 'FHIR Server Testing',\n passwordAlgorithm: 'sha512',\n passwordSalt: '3e74a280c568f27241e48e938edf21bf',\n passwordHash:\n   '9a5158dc87a25da9d8822d48ed831a88bb4ba7fa636ddb6d6a725f73688546052cb7f2c355758e4839f9416e6cc0e37e1e3070f597af2836d39768a5ecc050db',\n});",
-            "caption": "Update a client record"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "The client data to update.",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -318,8 +270,13 @@
         "tags": [
           {
             "title": "example",
-            "description": "getTasks({\n  filterLimit: 10,\n  filterPage: 0,\n  filters: '{}',\n});",
+            "description": "getTasks()",
             "caption": "Get all tasks"
+          },
+          {
+            "title": "example",
+            "description": "getTasks({\n  filterLimit: 10,\n  filterPage: 0,\n  filters: '{}',\n});",
+            "caption": "Get all tasks with pagination options"
           },
           {
             "title": "example",

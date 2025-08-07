@@ -244,7 +244,6 @@ export {
   fields,
   fn,
   fnIf,
-  http,
   lastReferenceValue,
   merge,
   sourceValue,

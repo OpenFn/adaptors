@@ -273,7 +273,6 @@ export {
   each,
   field,
   fields,
-  http,
   lastReferenceValue,
   merge,
   sourceValue,
