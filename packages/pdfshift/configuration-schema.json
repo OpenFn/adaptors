@@ -1,15 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
-    "baseUrl": {
-      "title": "Base URL",
-       "type": "string",
-      "description": "The base PDFShift URL",
-      "default":"https://api.pdfshift.io",
-      "format": "uri",
-      "minLength": 1,
-      "examples": ["https://api.pdfshift.io"]
-    },
     "apiVersion": {
       "title": "API Version",
       "anyOf": [
