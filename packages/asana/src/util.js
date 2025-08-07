@@ -86,12 +86,3 @@ export function prepareNextState(state, response) {
     response: { next_page, ...responseWithoutBody },
   };
 }
-
-export function convertCustomFields(customFields) {
-  const result = {};
-  for (const key in customFields) {
-    result[`custom_fields.${key}.value`] = customFields[key];
-  }
-
-  return result;
-}
