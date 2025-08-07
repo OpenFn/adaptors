@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { request, generatePDF, post } from '../src/Adaptor.js';
+import { request, generatePDF } from '../src/Adaptor.js';
 
 const testServer = enableMockClient('https://fake.server.com');
 const configuration = {
@@ -131,42 +131,5 @@ describe('generatePDF', () => {
     expect(data).to.be.a('string');
     expect(data).to.eql('JVBERi0xLjQKJeLjz9MKMSAwIG9');
     expect(data).to.includes('JVBERi0x');
-  });
-});
-
-describe('post', () => {
-  it('makes a post request to convert HTML string to pdf', async () => {
-    const state = {
-      configuration,
-    };
-    testServer
-      .intercept({
-        path: '/v3/convert/pdf',
-        method: 'POST',
-        headers: {
-          'x-api-key': 'some-api-key',
-        },
-      })
-      .reply(200, 'JVBERi0xLjQKJeLjz9MKMSAwIG9');
-
-    const finalState = await post(
-      '/convert/pdf',
-      {
-        source: `<html>
-        <body style="font-family: Arial, sans-serif; font-size: 14px;">
-          <h1>Sales Report</h1>
-          <p>Date: 2025-02-01</p>
-          <p>Total Sales: $42</p>
-        </body>
-      </html>`,
-        sandbox: true,
-        encode: true,
-      },
-      {
-        parseAs: 'text',
-      }
-    )(state);
-
-    expect(finalState.data).to.eql('JVBERi0xLjQKJeLjz9MKMSAwIG9');
   });
 });

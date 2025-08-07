@@ -99,35 +99,6 @@ export function generatePDF(htmlTemplateString, options) {
  */
 
 /**
- * Make a POST request to PDFShift
- * @example <caption> Convert a HTML string to PDF</caption>
- * post(
- *   '/convert/pdf',
- *   {
- *     source: `<html>
- *     <body style="font-family: Arial, sans-serif; font-size: 14px;">
- *       <h1>Sales Report</h1>
- *       <p>Date: 2025-02-01</p>
- *       <p>Total Sales: $42</p>
- *     </body>
- *   </html>`,
- *     sandbox: true
- *   },
- * );
- * @function
- * @public
- * @param {string} path - Path to resource
- * @param {BodyOptions} body - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
- * @returns {Operation}
- * @state {HttpState}
- */
-export function post(path, body, options) {
-  console.log('Preparing a POST request to PDFShift');
-  return request('POST', path, body, options);
-}
-
-/**
  * Make a general HTTP request to PDFShift
  * @example <caption>Make a request to convert a HTML string to PDF</caption>
  * request(
