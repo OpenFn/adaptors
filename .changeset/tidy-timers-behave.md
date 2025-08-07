@@ -25,24 +25,27 @@ removed `http` export from `@openfn/language-common`
 
 The `http` export has been removed from `@openfn/language-common`. If you were
 using it, you should remove it from your code and create a new step that uses
-`http` adaptor
-
-For example:
+`http` adaptor. See example below.
 
 **Before**
 
+**Step 1: Fetch and post data using postgresql adaptor**
+
 ```js
-// Using postgresql adaptor
 sql('select * from foo');
 http.post('/example', { body: $.data }),
 ```
 
 **Now**
 
-```js
-// 1. Fetch data using postgresql adaptor
-sql('select * from foo');
+**Step 1: Fetch data using postgresql adaptor**
 
-//2. Post data using http adaptor
+```js
+sql('select * from foo');
+```
+
+**Step 2: Post data using http adaptor**
+
+```js
 post('/example', { body: $.data });
 ```
