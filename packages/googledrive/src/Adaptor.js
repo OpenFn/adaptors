@@ -184,7 +184,6 @@ export {
   as,
   fn,
   fnIf,
-  http,
   util,
   each,
   field,
