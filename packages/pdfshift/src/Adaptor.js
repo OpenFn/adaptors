@@ -113,9 +113,6 @@ export function generatePDF(htmlTemplateString, options) {
  *   </html>`,
  *     sandbox: true
  *   },
- *   {
- *     parseAs: 'text',
- *   }
  * );
  * @function
  * @public
@@ -136,19 +133,7 @@ export function post(path, body, options) {
  * request(
  *   'POST',
  *   '/convert/pdf',
- *   {
- *     source: `<html>
- *       <body style="font-family: Arial, sans-serif; font-size: 14px;">
- *         <h1>Sales Report</h1>
- *         <p>Date: 2025-02-01</p>
- *         <p>Total Sales: $42</p>
- *       </body>
- *     </html>`,
- *     sandbox: true
- *   },
- *   {
- *     parseAs: 'text',
- *   }
+ *    { source: $.html }
  * );
  * @function
  * @public
@@ -170,6 +155,7 @@ export function request(method, path, body, options = {}) {
       resolvedPath,
       {
         body: resolvedBody,
+        parseAs: 'text',
         ...resolvedoptions,
       }
     );

@@ -12,8 +12,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "post(\n  '/convert/pdf',\n  {\n    source: `<html>\n    <body style=\"font-family: Arial, sans-serif; font-size: 14px;\">\n      <h1>Sales Report</h1>\n      <p>Date: 2025-02-01</p>\n      <p>Total Sales: $42</p>\n    </body>\n  </html>`,\n    sandbox: true,\n    encode: true,\n  },\n  {\n    parseAs: 'text',\n  }\n);",
-            "caption": "Convert a HTML string to pdf"
+            "description": "post(\n  '/convert/pdf',\n  {\n    source: `<html>\n    <body style=\"font-family: Arial, sans-serif; font-size: 14px;\">\n      <h1>Sales Report</h1>\n      <p>Date: 2025-02-01</p>\n      <p>Total Sales: $42</p>\n    </body>\n  </html>`,\n    sandbox: true\n  },\n);",
+            "caption": "Convert a HTML string to PDF"
           },
           {
             "title": "function",
@@ -81,8 +81,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "request('POST', '/9be7ffcc-919a-477b-8385-4c0cb2f996a2', $.data)",
-            "caption": "Make a request"
+            "description": "request(\n  'POST',\n  '/convert/pdf',\n   { source: $.html }\n);",
+            "caption": "Make a request to convert a HTML string to PDF"
           },
           {
             "title": "function",
@@ -893,6 +893,59 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "assert",
+      "params": [
+        "expression",
+        "errorMessage"
+      ],
+      "docs": {
+        "description": "Asserts the given expression or function resolves to `true`, or else throws an exception. Optionally accepts and error message.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "assert('a' === 'b', '\"a\" is not equal to \"b\"')"
+          },
+          {
+            "title": "param",
+            "description": "The expression or function to be evaluated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "expression"
+          },
+          {
+            "title": "param",
+            "description": "The error message thrown in case of a failed state.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "errorMessage"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     },
     {
       "name": "as",

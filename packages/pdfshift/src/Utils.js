@@ -1,7 +1,5 @@
 import { composeNextState } from '@openfn/language-common';
-import {
-  request as commonRequest,
-} from '@openfn/language-common/util';
+import { request as commonRequest } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 
 export const prepareNextState = (state, response) => {
@@ -18,10 +16,13 @@ export const prepareNextState = (state, response) => {
 };
 
 export const request = (configuration = {}, method, path, options) => {
-  const { baseUrl= 'https://api.pdfshift.io', apiKey, apiVersion = 'v3' } = configuration;
+  const {
+    baseUrl = 'https://api.pdfshift.io',
+    apiKey,
+    apiVersion = 'v3',
+  } = configuration;
 
   const { query = {}, body = {}, headers = {}, parseAs = 'json' } = options;
-
 
   const opts = {
     parseAs,
