@@ -12,20 +12,24 @@ communicate with external systems. These adaptors are used by
   - [Setup](#setup)
 - [Using Adaptors](#using-adaptors)
   - [With OpenFn CLI](#with-openfn-cli)
+    - [CLI Prerequisites](#cli-prerequisites)
+    - [Steps](#steps)
   - [With OpenFn Lightning](#with-openfn-lightning)
 - [Contributing](#contributing)
-- [Development](#development)
-  - [Build your adaptor](#build-your-adaptor)
-    - [Prerequisites](#prerequisites-1)
-    - [Development Steps](#development-steps)
-    - [Testing Documentation Changes](#testing-documentation-changes)
-    - [Best Practices](#best-practices)
+- [Build Your Adaptor](#build-your-adaptor)
+  - [Quick Start](#quick-start-1)
+  - [Best Practices](#best-practices)
+  - [Testing Documentation Changes](#testing-documentation-changes)
 - [Changesets](#changesets)
 - [Versioning](#versioning)
 - [Releases](#releases)
 - [Pre-releases](#pre-releases)
 - [Metadata](#metadata)
 - [Useful Resources](#useful-resources)
+  - [Wiki](https://github.com/OpenFn/adaptors/wiki)
+  - [Documentation](https://docs.openfn.org)
+  - [Lightning](https://github.com/OpenFn/lightning)
+  - [CLI](https://github.com/openfn/kit)
 
 ## Quick Start
 
@@ -52,7 +56,7 @@ pnpm run setup
 
 ### With OpenFn CLI
 
-#### Prerequisites
+#### CLI Prerequisites
 
 - Install the CLI globally:
 
@@ -135,13 +139,13 @@ for setup and usage instructions.
 2. **Submit PR**: Create a draft PR, fill out the template, self-review, then
    mark as ready for review and assign @mtuchi or @josephjclark.
 
-## Build your adaptor
+## Build Your Adaptor
 
 We have a comprehensive
 [developer guide](https://github.com/OpenFn/adaptors/wiki/Build-a-new-Adaptor)
 to help you build your own adaptor.
 
-#### Quick Start
+### Quick Start
 
 1. Generate and run the new adaptor:
 
@@ -174,14 +178,14 @@ to help you build your own adaptor.
    openfn tmp/job.js -ma <adaptor-name> -s tmp/state.json -o tmp/output.json
    ```
 
-#### Best Practices
+### Best Practices
 
 - Update the adaptor's README
 - Include comprehensive [JSDoc](https://jsdoc.app/) comments for all functions
 - [Write unit tests for your adaptor functions](https://github.com/OpenFn/adaptors/wiki/Unit-Testing-Guide)
 - [Follow the existing code style and patterns](https://github.com/OpenFn/adaptors/wiki/Adaptor-Writing-Best-Practice-&-Common-Patterns)
 
-#### Testing Documentation Changes
+### Testing Documentation Changes
 
 The JSDoc comments in your adaptor code will be automatically converted to HTML
 and uploaded to [docs.openfn.org](https://docs.openfn.org). To test your
