@@ -4,7 +4,6 @@ import {
   request,
   DEFAULT_PAGE_LIMIT,
   requestWithPagination,
-  convertCustomFields,
 } from '../src/util';
 
 const configuration = {
@@ -126,25 +125,6 @@ describe('Util Test', () => {
       const results = await requestWithPagination(state, '/tasks');
 
       expect(results).to.be.an('array').that.is.empty;
-    });
-  });
-  describe('convertCustomFields', () => {
-    it('should convert custom fields to expected format', () => {
-      const customFields = {
-        field1: 'value1',
-        field2: 'value2',
-      };
-      const result = convertCustomFields(customFields);
-      expect(result).to.deep.equal({
-        'custom_fields.field1.value': 'value1',
-        'custom_fields.field2.value': 'value2',
-      });
-    });
-
-    it('should handle empty custom fields', () => {
-      const customFields = {};
-      const result = convertCustomFields(customFields);
-      expect(result).to.deep.equal({});
     });
   });
 });
