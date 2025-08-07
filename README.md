@@ -15,7 +15,7 @@ communicate with external systems. These adaptors are used by
   - [With OpenFn Lightning](#with-openfn-lightning)
 - [Contributing](#contributing)
 - [Development](#development)
-  - [Creating a New Adaptor](#creating-a-new-adaptor)
+  - [Build your adaptor](#build-your-adaptor)
     - [Prerequisites](#prerequisites-1)
     - [Development Steps](#development-steps)
     - [Testing Documentation Changes](#testing-documentation-changes)
@@ -52,6 +52,8 @@ pnpm run setup
 
 ### With OpenFn CLI
 
+#### Prerequisites
+- 
 1. Install the CLI globally:
 
    ```bash
@@ -82,46 +84,43 @@ for setup and usage instructions.
 
 ## Contributing
 
-1. **Find an issue**: Browse
-   [open issues](https://github.com/OpenFn/adaptors/issues) and assign yourself
-   to one, or create a new issue for your feature.
+1. **Choose your path**:
+
+   - To fix an existing issue: Browse
+     [open issues](https://github.com/OpenFn/adaptors/issues)
+   - To build a new adaptor: See the
+     [developer guide](https://github.com/OpenFn/adaptors/wiki/Build-a-new-Adaptor)
+   - To fix something specific:
+     [Create an issue to track your changes](https://github.com/OpenFn/adaptors/issues/new)
 
 2. **Fork and clone**: Fork the repository and clone your fork locally.
 
 3. **Make changes**: Follow the
    [development workflow above](#development-steps).
 
+   - For new adaptors: Use our adaptor template as a starting point
+   - For fixes: Focus on minimal, targeted changes
+
 4. **Submit PR**: Create a draft PR, fill out the template, self-review, then
    mark as ready for review and assign @mtuchi or @josephjclark.
 
 ## Development
 
-### Creating a New Adaptor
+### Build your adaptor
 
-#### Prerequisites
-
-1. Set up the Repository Directory
-
-   The CLI needs a designated folder to save and load adaptors. Configure this
-   by setting the `OPENFN_REPO_DIR` environment variable.
-
-   Add to your shell configuration file (e.g., `~/.bashrc`, `~/.zshrc`):
-
-   ```bash
-   # Directory for CLI adaptor storage
-   export OPENFN_REPO_DIR=~/repo/openfn/cli-repo
-
-   # Optional: For development with adaptors monorepo
-   export OPENFN_ADAPTORS_REPO=~/repo/openfn/adaptors
-
-   ```
+We have a comprehensive
+[developer guide](https://github.com/OpenFn/adaptors/wiki/Build-a-new-Adaptor)
+to help you build your own adaptor.
 
 #### Development Steps
 
-1. Generate the adaptor structure:
+1. Generate and run the new adaptor:
 
    ```bash
    pnpm generate <adaptor-name>
+   cd packages/<adaptor-name>
+   pnpm install
+   pnpm build --watch
    ```
 
 2. Add your logo images to `packages/<adaptor-name>/assets/`:
@@ -129,23 +128,28 @@ for setup and usage instructions.
    - `rectangle.png` (512x190px)
    - `square.png` (256x256px)
 
-3. Implement your adaptor in `packages/<adaptor-name>/src/Adaptor.js`
+3. [Implement your adaptor](https://github.com/OpenFn/adaptors/wiki/Adaptor-Writing-Best-Practice-&-Common-Patterns)
+   in `packages/<adaptor-name>/src/Adaptor.js`
 
 4. Test your adaptor:
+   [See unit test guideline](https://github.com/OpenFn/adaptors/wiki/Unit-Testing-Guide)
 
    ```bash
-   cd packages/<adaptor-name>
-   pnpm install
-   pnpm build --watch
+   pnpm test
    ```
 
-5. Create a test job in `tmp/expression.js` and run:
+5. Create a test job in `tmp/job.js` and initial state in `tmp/state.json` then
+   run:
 
    ```bash
-   openfn tmp/expression.js -ma <adaptor-name> -o tmp/output.json -s tmp/state.json
+   openfn tmp/job.js -ma <adaptor-name> -s tmp/state.json -o tmp/output.json
    ```
 
-   > `openfn help` will show you the full list of options.
+   > `-o` will add the output to the output file `-m` will run the job from the
+   > monorepo
+   > ([see the setup notes](https://github.com/OpenFn/adaptors/wiki/Setting-Up-Your-Development-Environment))
+   > `-a` this will specify the adaptor to run your job with `openfn help` will
+   > show you the full list of options.
 
 #### Testing Documentation Changes
 
