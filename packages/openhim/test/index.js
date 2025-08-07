@@ -12,8 +12,7 @@ const {
   getTransactions,
   createChannel,
   createTask,
-  updateClient,
-  registerClient,
+  createClient,
 } = Adaptor;
 
 const testServer = enableMockClient('https://platform-tests.openhim.org');
@@ -137,13 +136,10 @@ describe('getTransactions', () => {
         path: '/transactions/001',
         method: 'GET',
       })
-      .reply(
-        200,
-        {
-          _id: '001',
-          clientID: '1234',
-        }
-      );
+      .reply(200, {
+        _id: '001',
+        clientID: '1234',
+      });
 
     const { data } = await getTransactions({ transactionId: '001' })(state);
     expect(data.clientID).to.eql('1234');
@@ -186,15 +182,12 @@ describe('getTransactions', () => {
           foo: 'bar',
         },
       })
-      .reply(
-        200,
-        req => {
-          fullUrl = `${req.origin}${req.path}?${new URLSearchParams(
-            req.query
-          ).toString()}`;
-          return [{ _id: '001', clientID: '1234' }];
-        }
-      );
+      .reply(200, req => {
+        fullUrl = `${req.origin}${req.path}?${new URLSearchParams(
+          req.query
+        ).toString()}`;
+        return [{ _id: '001', clientID: '1234' }];
+      });
 
     const { data } = await getTransactions({
       filterLimit: 1,
@@ -234,13 +227,10 @@ describe('getChannels', () => {
         path: '/channels/0123',
         method: 'GET',
       })
-      .reply(
-        200,
-        {
-          _id: '0123',
-          name: 'Channel Test',
-        }
-      );
+      .reply(200, {
+        _id: '0123',
+        name: 'Channel Test',
+      });
 
     const { data } = await getChannels('0123')(state);
     expect(data.name).to.eql('Channel Test');
@@ -301,13 +291,10 @@ describe('getClients', () => {
         path: '/clients/0123',
         method: 'GET',
       })
-      .reply(
-        200,
-        {
-          _id: '0123',
-          name: 'Client Test',
-        }
-      );
+      .reply(200, {
+        _id: '0123',
+        name: 'Client Test',
+      });
 
     const { data } = await getClients('0123')(state);
     expect(data.name).to.eql('Client Test');
@@ -315,29 +302,7 @@ describe('getClients', () => {
   });
 });
 
-describe('updateClient', () => {
-  it('should update a single client', async () => {
-    testServer
-      .intercept({
-        path: '/clients/6870c19870b851d7a22b8d27',
-        method: 'PUT',
-      })
-      .reply(200, 'Successfully updated client.');
-
-    const { data } = await updateClient({
-      _id: '6870c19870b851d7a22b8d27',
-      roles: ['fhir', 'testing'],
-      clientID: 'fhir-server-7',
-      name: 'FHIR Server Testing',
-      passwordAlgorithm: 'sha512',
-      passwordSalt: '3e74a280c568f27241e48e938edf21bf',
-      passwordHash: '9a5158dc87a25b',
-    })(state);
-    expect(data).to.eql('Successfully updated client.');
-  });
-});
-
-describe('registerClient', () => {
+describe('createClient', () => {
   it('should create a single client', async () => {
     testServer
       .intercept({
@@ -346,7 +311,7 @@ describe('registerClient', () => {
       })
       .reply(201, 'Client successfully created');
 
-    const { data } = await registerClient({
+    const { data } = await createClient({
       roles: ['fhir'],
       clientID: 'fhir-server-8',
       name: 'FHIR Server',
@@ -392,13 +357,10 @@ describe('getTasks', () => {
           filters: '{}',
         },
       })
-      .reply(
-        200,
-        {
-          _id: '001',
-          status: 'Completed',
-        }
-      );
+      .reply(200, {
+        _id: '001',
+        status: 'Completed',
+      });
 
     const { data } = await getTasks({
       taskId: '001',
