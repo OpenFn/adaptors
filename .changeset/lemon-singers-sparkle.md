@@ -1,5 +1,5 @@
 ---
-'@openfn/language-openhim': minor
+'@openfn/language-openhim': major
 ---
 
 Change `registerClient()` to `createClient()`.
