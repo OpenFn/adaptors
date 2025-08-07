@@ -219,12 +219,24 @@ export function upsertTask(projectGid, params, callback) {
  * @public
  * @example <caption>Search for a task by name</caption>
  * searchTask("Test Search Task", {
- *   resource_subtype: "default_task",
  *   sort_by: "modified_at"
+ * });
+ * @example <caption>Search for a task by custom field only</caption>
+ * searchTask("", {
+ *   "custom_fields.12345.value": $.data.custom_field_value,
+ * });
+ * @example <caption>Search for a task by name and custom field</caption>
+ * searchTask("Test Search Task", {
+ *   "custom_fields.12345.is_set": true,
+ * });
+ * @example <caption>Search for a milestone by name</caption>
+ * searchTask("Test Search Task", {
+ *   resource_subtype: "milestone",
  * });
  * @function
  * @param {string} task - The text or name of the task to search for.
  * @param {object} [query] - Query params. See {@link https://developers.asana.com/reference/searchtasksforworkspace Docs} for a list of valid parameters.
+ * @param {string} [query.resource_subtype = "default_task"] - The resource subtype to search for. Defaults to `default_task`.
  * @param {object} [options] - (Optional) options argument.
  * @param {string} [options.workspaceGid] - The workspace to search in. Defaults to the workspace specified in the configuration.
  * @returns {Operation} An operation that, when executed, returns the search results in state.data.
@@ -238,12 +250,7 @@ export function searchTask(task, query = {}, options = {}) {
       options
     );
     const { workspaceGid = state.configuration.workspaceGid } = resolvedOptions;
-    const {
-      custom_fields,
-      resource_subtype = 'default_task',
-      ...restQuery
-    } = resolvedQuery;
-    const customFields = util.convertCustomFields(custom_fields);
+    const { resource_subtype = 'default_task', ...restQuery } = resolvedQuery;
 
     if (!workspaceGid) throw new Error('You need to specify Workspace GID');
 
@@ -254,7 +261,6 @@ export function searchTask(task, query = {}, options = {}) {
         query: {
           resource_subtype,
           text: resolvedTask,
-          ...customFields,
           ...restQuery,
         },
       }
