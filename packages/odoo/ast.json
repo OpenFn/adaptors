@@ -354,12 +354,18 @@
           },
           {
             "title": "example",
-            "description": "searchReadRecord('res.partner', {\n  country_id: 'United States',\n});"
+            "description": "searchReadRecord('res.partner', {\n  country_id: 'United States',\n});",
+            "caption": "Search and read a record with a domain filter"
           },
           {
             "title": "example",
             "description": "searchReadRecord(\n  'res.partner',\n  {\n    is_company: true,\n  },\n  ['name'],\n  {\n    limit: 2,\n    offset: 0,\n  }\n);",
             "caption": "Search and read a record with specific fields"
+          },
+          {
+            "title": "example",
+            "description": "searchReadRecord('res.partner', {}, [], {\n  limit: 200,\n});",
+            "caption": "Fetch all records with a limit"
           },
           {
             "title": "function",
@@ -386,7 +392,7 @@
           },
           {
             "title": "param",
-            "description": "An optional array of field strings to read from the record.",
+            "description": "An optional array of field strings to read from the record. i.e  ['name', 'state_id']",
             "type": {
               "type": "TypeApplication",
               "expression": {
@@ -406,10 +412,40 @@
             "title": "param",
             "description": "Optional options like limit, offset, order, or context.",
             "type": {
-              "type": "NameExpression",
-              "name": "SearchOptions"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "SearchOptions"
+              }
             },
-            "name": "options"
+            "name": "options",
+            "default": "{}"
+          },
+          {
+            "title": "param",
+            "description": "Maximum number of records to fetch. If undefined, defaults to 10, and all records available will be fetched.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.limit",
+            "default": "10"
+          },
+          {
+            "title": "param",
+            "description": "The index of the first record to return.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.offset",
+            "default": "0"
           },
           {
             "title": "state",
@@ -425,7 +461,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     }
   ],
   "exports": [],
