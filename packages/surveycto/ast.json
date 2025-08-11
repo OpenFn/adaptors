@@ -109,6 +109,11 @@
             "description": "request(\"/anEndpoint\", {\n  method: \"POST\",\n  query: { foo: \"bar\", a: 1 },\n});"
           },
           {
+            "title": "example",
+            "description": "request('datasets/library/records/upload', {\n    method: 'POST',\n    headers: {\n      'Content-Type': 'form'\n    },\n    body: {\n      file: {\n        blob: $.data, \n        type: 'text/csv',\n        filename: 'library.csv'\n      }\n    },\n  });",
+            "caption": "Upload a CSV blob to a dataset"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -232,6 +237,43 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "jsonToCSVBuffer",
+      "params": [
+        "rows"
+      ],
+      "docs": {
+        "description": "The function `jsonToCSVBuffer` takes in an array of objects and creates a CSV as a Buffer",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "jsonToCSVBuffer([\n {\n    lastName: 'Rothfuss', \n    firstName: 'Patrick', \n    book: 'The Name of the Wind'\n  },\n {\n    lastName: 'Sanderson',\n    firstName: 'Brandon', \n    book: 'The Way of Kings'\n  },\n {\n    lastName: 'Martin',\n    firstName: 'George', \n    book: 'A Game of Thrones'\n  },\n])"
+          },
+          {
+            "title": "param",
+            "description": "An array of arrays. The first array being the header.",
+            "type": {
+              "type": "AllLiteral"
+            },
+            "name": "rows"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],

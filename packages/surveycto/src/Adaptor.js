@@ -1,9 +1,11 @@
 import {
   execute as commonExecute,
   cursor as commonCursor,
+  composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import { convertDate, requestHelper } from './Utils';
+import xlsx from 'xlsx';
 
 /**
  * Execute a sequence of operations.
@@ -131,6 +133,20 @@ export function fetchSubmissions(formId, options = {}, callback = s => s) {
  *   method: "POST",
  *   query: { foo: "bar", a: 1 },
  * });
+ * @example <caption>Upload a CSV blob to a dataset</caption>
+ *   request('datasets/library/records/upload', {
+ *     method: 'POST',
+ *     headers: {
+ *       'Content-Type': 'form'
+ *     },
+ *     body: {
+ *       file: {
+ *         blob: $.data, 
+ *         type: 'text/csv',
+ *         filename: 'library.csv'
+ *       }
+ *     },
+ *   });
  * @function
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Query, body and method parameters
@@ -172,6 +188,47 @@ export function cursor(value, options) {
     ...options,
   };
   return commonCursor(value, opts);
+}
+
+/**
+ * The function `jsonToCSVBuffer` takes in an array of objects and creates a CSV Buffer
+ * @public
+ * @example
+ * jsonToCSVBuffer([
+ *  {
+ *     lastName: 'Rothfuss', 
+ *     firstName: 'Patrick', 
+ *     book: 'The Name of the Wind'
+ *   },
+ *  {
+ *     lastName: 'Sanderson',
+ *     firstName: 'Brandon', 
+ *     book: 'The Way of Kings'
+ *   },
+ *  {
+ *     lastName: 'Martin',
+ *     firstName: 'George', 
+ *     book: 'A Game of Thrones'
+ *   },
+ * ])
+ * @param {*} rows An array of JSON objects.
+ * @returns {Operation}
+ */
+export function jsonToCSVBuffer(rows) {
+  return state => {
+    const [resolvedRows] = expandReferences(state, rows);
+
+    const worksheet = xlsx.utils.json_to_sheet(resolvedRows);
+
+    const workbook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(workbook, worksheet, 'sheet1');
+
+    console.log('Creating a csv file')
+
+    const csvBuffer = xlsx.write(workbook, { type: 'buffer', bookType: 'csv' })
+
+    return composeNextState(state, csvBuffer)
+  }
 }
 
 export {

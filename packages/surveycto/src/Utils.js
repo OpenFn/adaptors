@@ -37,6 +37,15 @@ export const prepareNextState = (state, response, callback) => {
   return callback(nextState);
 };
 
+function encodeFormBody(data) {
+  const form = new FormData();
+  for (const [key, value] of Object.entries(data)) {
+    form.append(key, new Blob([value.blob], { type: value.type}), value.filename);
+  }
+
+  return form;
+}
+
 export const requestHelper = (state, path, params, callback = s => s) => {
   assertRelativeUrl(path);
 
@@ -44,6 +53,14 @@ export const requestHelper = (state, path, params, callback = s => s) => {
 
   addBasicAuth(state.configuration, headers);
   const url = buildUrl(state.configuration, path);
+
+
+  if (headers && headers['Content-Type'] && headers['Content-Type'] === 'form') {    
+    // let undici configure in the content type header 
+    delete headers['Content-Type'];
+    headers = {...headers}
+    body = encodeFormBody(body)
+  }
 
   const options = {
     body,
