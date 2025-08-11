@@ -796,7 +796,6 @@ export {
   fields,
   fn,
   fnIf,
-  http,
   lastReferenceValue,
   cursor,
   merge,
