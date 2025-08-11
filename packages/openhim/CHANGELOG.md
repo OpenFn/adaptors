@@ -1,5 +1,12 @@
 # @openfn/language-openhim
 
+## 2.0.0 - 11 August 2025
+
+### Major Changes
+
+- abfce90: Change `registerClient()` to `createClient()`. Remove
+  `updateClient()`
+
 ## 1.0.0 - 14 July 2025
 
 ### Major Changes
