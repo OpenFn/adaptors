@@ -1,5 +1,40 @@
 # @openfn/language-gmail
 
+## 2.0.0 - 11 August 2025
+
+### Major Changes
+
+- a5cea4e: removed `http` export from `@openfn/language-common`
+
+  ### Migration Guide
+
+  The `http` export has been removed from `@openfn/language-common`. If you were
+  using it, you should remove it from your code and create a new step that uses
+  `http` adaptor. See example below.
+
+  **Before**
+
+  **Step 1: Fetch and post data using postgresql adaptor**
+
+  ```js
+  sql('select * from foo');
+  http.post('/example', { body: $.data }),
+  ```
+
+  **Now**
+
+  **Step 1: Fetch data using postgresql adaptor**
+
+  ```js
+  sql('select * from foo');
+  ```
+
+  **Step 2: Post data using http adaptor**
+
+  ```js
+  post('/example', { body: $.data });
+  ```
+
 ## 1.3.5 - 14 July 2025
 
 ### Patch Changes

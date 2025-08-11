@@ -2,6 +2,8 @@
 <dt>
     <a href="#createchannel">createChannel(body)</a></dt>
 <dt>
+    <a href="#createclient">createClient(body)</a></dt>
+<dt>
     <a href="#createtask">createTask(body)</a></dt>
 <dt>
     <a href="#getchannels">getChannels(channelId)</a></dt>
@@ -11,10 +13,6 @@
     <a href="#gettasks">getTasks(options)</a></dt>
 <dt>
     <a href="#gettransactions">getTransactions(options)</a></dt>
-<dt>
-    <a href="#registerclient">registerClient(body)</a></dt>
-<dt>
-    <a href="#updateclient">updateClient(body)</a></dt>
 </dl>
 
 This adaptor exports the following namespaced functions:
@@ -135,6 +133,40 @@ createChannel({
 
 * * *
 
+### createClient
+
+<p><code>createClient(body) ⇒ Operation</code></p>
+
+Make a request to OpenHIM to create a new client record
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| body | <code>object</code> | The client data to register. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the OpenHIM server, including headers, statusCode, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Create a client record
+```js
+createClient({
+ roles: ['fhir'],
+ clientID: 'fhir-server-7',
+ name: 'FHIR Server',
+ passwordAlgorithm: 'sha512',
+ passwordSalt: '3e74a280c568f27241e48e938edf21bf',
+ passwordHash:
+   '9a5158dc87a25da9d8822d48ed831a88bb4ba7fa636ddb6d6a725f73688546052cb7f2c355758e4839f9416e6cc0e37e1e3070f597af2836d39768a5ecc050db',
+});
+```
+
+* * *
+
 ### createTask
 
 <p><code>createTask(body) ⇒ Operation</code></p>
@@ -250,6 +282,10 @@ This operation writes the following keys to state:
 
 **Example:** Get all tasks
 ```js
+getTasks()
+```
+**Example:** Get all tasks with pagination options
+```js
 getTasks({
   filterLimit: 10,
   filterPage: 0,
@@ -302,75 +338,6 @@ getTransactions({
   filterPage: 0,
   filterRepresentation: 'full',
   filters: '{"response.status":"200"}',
-});
-```
-
-* * *
-
-### registerClient
-
-<p><code>registerClient(body) ⇒ Operation</code></p>
-
-Make a request to OpenHIM to create a new client record
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| body | <code>object</code> | The client data to register. |
-
-This operation writes the following keys to state:
-
-| State Key | Description |
-| --- | --- |
-| data | the parsed response body |
-| response | the response from the OpenHIM server, including headers, statusCode, etc |
-| references | an array of all previous data objects used in the Job |
-
-**Example:** Create a client record
-```js
-registerClient({
- roles: ['fhir'],
- clientID: 'fhir-server-7',
- name: 'FHIR Server',
- passwordAlgorithm: 'sha512',
- passwordSalt: '3e74a280c568f27241e48e938edf21bf',
- passwordHash:
-   '9a5158dc87a25da9d8822d48ed831a88bb4ba7fa636ddb6d6a725f73688546052cb7f2c355758e4839f9416e6cc0e37e1e3070f597af2836d39768a5ecc050db',
-});
-```
-
-* * *
-
-### updateClient
-
-<p><code>updateClient(body) ⇒ Operation</code></p>
-
-Make a request to OpenHIM to update a client record
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| body | <code>object</code> | The client data to update. |
-
-This operation writes the following keys to state:
-
-| State Key | Description |
-| --- | --- |
-| data | the parsed response body |
-| response | the response from the OpenHIM server, including headers, statusCode, etc |
-| references | an array of all previous data objects used in the Job |
-
-**Example:** Update a client record
-```js
-updateClient({
- _id:'6870c19870b851d7a22b8d27',
- roles: ['fhir', 'testing'],
- clientID: 'fhir-server-7',
- name: 'FHIR Server Testing',
- passwordAlgorithm: 'sha512',
- passwordSalt: '3e74a280c568f27241e48e938edf21bf',
- passwordHash:
-   '9a5158dc87a25da9d8822d48ed831a88bb4ba7fa636ddb6d6a725f73688546052cb7f2c355758e4839f9416e6cc0e37e1e3070f597af2836d39768a5ecc050db',
 });
 ```
 
