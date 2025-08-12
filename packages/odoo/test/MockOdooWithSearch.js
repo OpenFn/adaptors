@@ -30,4 +30,55 @@ const mock = new MockOdooWithSearch(testData);
 const result = mock.searchRead('partner', { is_company: true }, ['name'], {
   limit: 10,
 });
-console.log({ result });
+
+export const searchReadRecord = async (
+  model,
+  domain,
+  fields = [],
+  { offset = 0, limit = 1000, pageSize = 200 }
+) => {
+  const results = [];
+  if (limit <= 0 || pageSize <= 0) {
+    return { rows: results, nextOffset: null };
+  }
+
+  let totalFetched = 0;
+  let nextOffset = offset;
+
+  while (totalFetched < limit) {
+    const remainingItems = limit - totalFetched;
+    const fetchSize = Math.min(pageSize, remainingItems);
+
+    const rows = mock.searchRead(model, domain, fields, {
+      offset: nextOffset,
+      limit: fetchSize,
+    });
+
+    // nothing more to fetch if no results returned
+    if (!rows || rows.length === 0) {
+      nextOffset = null;
+      break;
+    }
+
+    results.push(...rows);
+    totalFetched += rows.length;
+
+    // If we get fewer than requested, we have reached the end
+    if (rows.length < fetchSize) {
+      nextOffset = null;
+      break;
+    }
+
+    // Update the next offset for the next iteration
+    nextOffset += rows.length;
+  }
+
+  console.log({ rows: results, nextOffset });
+
+  return { rows: results, nextOffset };
+};
+
+searchReadRecord('partner', { is_company: true }, ['name'], {
+  offset: 0,
+  pageSize: 1,
+});
