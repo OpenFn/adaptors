@@ -423,7 +423,7 @@
           },
           {
             "title": "param",
-            "description": "Maximum number of records to fetch. If undefined, defaults to 10, and all records available will be fetched.",
+            "description": "Maximum number of records to fetch. If undefined, defaults to 1000, and all records available will be fetched.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -432,7 +432,7 @@
               }
             },
             "name": "options.limit",
-            "default": "10"
+            "default": "1000"
           },
           {
             "title": "param",
@@ -446,6 +446,19 @@
             },
             "name": "options.offset",
             "default": "0"
+          },
+          {
+            "title": "param",
+            "description": "The number of records to fetch in each request. Defaults to 200.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.pageSize",
+            "default": "200"
           },
           {
             "title": "state",

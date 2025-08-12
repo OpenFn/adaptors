@@ -268,8 +268,8 @@ export function searchRecord(model, domain = {}) {
  *   },
  *   ['name'],
  *   {
- *     limit: 2,
- *     offset: 0,
+ *     limit: 200,
+ *     pageSize: 50,
  *   }
  * );
  * @example <caption> Fetch all records with a limit</caption>
@@ -280,9 +280,10 @@ export function searchRecord(model, domain = {}) {
  * @param {string} model - The specific record model i.e. "res.partner"
  * @param {object} domain - Optional search domain to filter records.
  * @param {string[]} fields - An optional array of field strings to read from the record. i.e  ['name', 'state_id']
- * @param {SearchOptions} [options = {}] - Optional options like limit, offset, order, or context.
- * @param {number} [options.limit=10] - Maximum number of records to fetch. If undefined, defaults to 10, and all records available will be fetched.
+ * @param {object} [options = {}] - Optional options like limit, offset, or pageSize.
+ * @param {number} [options.limit=1000] - Maximum number of records to fetch. If undefined, defaults to 1000, and all records available will be fetched.
  * @param {number} [options.offset=0] - The index of the first record to return.
+ * @param {number} [options.pageSize=200] - The number of records to fetch in each request. Defaults to 200.
  * @state {OdooState}
  * @returns {Operation}
  */
@@ -297,44 +298,64 @@ export function searchReadRecord(
     const [resolvedModel, resolvedDomain, resolvedFields, resolvedOptions] =
       expandReferences(state, model, domain, fields, options);
 
-    const DEFAULT_LIMIT = 10;
-    let { limit, offset = 0, ...otherOptions } = resolvedOptions;
+    const { limit = 1000, offset = 0, pageSize = 200 } = resolvedOptions;
 
-    // Get all record IDs to calculate the total count
-    const totalRecordIds = await odooConn.search(resolvedModel, resolvedDomain);
-    const totalCount = totalRecordIds.length;
+    let totalFetched = 0;
+    let nextOffset = offset;
 
-    const maxResults = limit ?? totalCount;
+    if (limit <= 0 || pageSize <= 0) {
+      return composeNextState(state, {
+        rows: results,
+        nextOffset: null,
+        totalFetched,
+      });
+    }
 
-    let fetched = 0;
-
-    while (fetched < totalCount && fetched < maxResults) {
-      const pageSize = Math.min(maxResults - fetched, DEFAULT_LIMIT);
+    while (totalFetched < limit) {
+      const remainingItems = limit - totalFetched;
+      const fetchSize = Math.min(pageSize, remainingItems);
 
       console.log(`Searching and reading a ${resolvedModel} resource...`);
       console.log(
-        `Fetching records from offset ${offset} with limit ${pageSize}...`
+        `Fetching records from offset ${nextOffset} with limit ${fetchSize}...`
       );
 
-      const response = await odooConn.searchRead(
+      const rows = await odooConn.searchRead(
         resolvedModel,
         resolvedDomain,
         resolvedFields,
         {
-          limit: pageSize,
-          offset,
-          ...otherOptions,
+          offset: nextOffset,
+          limit: fetchSize,
         }
       );
 
-      if (!response.length) break;
+      // Nothing more to fetch if no results returned
+      if (!rows || rows.length === 0) {
+        nextOffset = null;
+        break;
+      }
 
-      results.push(...response);
-      fetched += response.length;
-      offset += pageSize;
+      results.push(...rows);
+      totalFetched += rows.length;
+
+      // If we get fewer than requested, we have reached the end
+      if (rows.length < fetchSize) {
+        nextOffset = null;
+        break;
+      }
+
+      // Update the next offset for the next iteration
+      nextOffset += rows.length;
+
+      // If we have reached the limit, stop fetching
+      if (totalFetched >= limit) {
+        nextOffset = null;
+        break;
+      }
     }
 
-    return composeNextState(state, results);
+    return composeNextState(state, { rows: results, nextOffset, totalFetched });
   };
 }
 
