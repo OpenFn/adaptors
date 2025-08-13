@@ -207,7 +207,7 @@ describe('searchReadRecord', () => {
     return rows;
   };
 
-  it('fetches up to the limit using multiple pages and returns nextOffset=null at the end', async () => {
+  it('fetches all items using multiple pages and returns nextOffset=null at the end', async () => {
     const mockData = makeData(200);
     const client = new MockOdooWithSearch(mockData);
 
@@ -228,7 +228,7 @@ describe('searchReadRecord', () => {
     expect(data.rows[199]).to.deep.equal({ name: 'P200' });
   });
 
-  it('stops early when data ends before the limit', async () => {
+  it('only fetches items as per the set limit', async () => {
     const mockData = makeData(120);
     const client = new MockOdooWithSearch(mockData);
 
@@ -237,11 +237,11 @@ describe('searchReadRecord', () => {
       'res.partner',
       { is_company: true },
       ['name'],
-      { limit: 200, pageSize: 50 }
+      { limit: 100, pageSize: 50 }
     )(state);
 
-    expect(data.totalFetched).to.equal(120);
-    expect(data.rows).to.have.length(120);
+    expect(data.totalFetched).to.equal(100);
+    expect(data.rows).to.have.length(100);
     expect(data.nextOffset).to.equal(null);
   });
 

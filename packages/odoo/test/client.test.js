@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { MockOdooWithSearch } from './client';
+import { MockOdooWithSearch } from './mock/client';
 
 const mockData = () => [
   {
@@ -30,13 +30,13 @@ const mockData = () => [
 describe('MockOdooWithSearch.searchRead', () => {
   let data, mock;
 
-  beforeEach(() => {
+  before(() => {
     data = mockData();
     mock = new MockOdooWithSearch(data);
   });
 
   it('filters by model (im_status includes) and is_company', () => {
-    const rows = mock.searchRead('partner', { is_company: true }, ['name'], {
+    const rows = mock.searchRead('res.partner', { is_company: true }, ['name'], {
       limit: 10,
     });
     expect(rows).to.deep.equal([
@@ -48,7 +48,7 @@ describe('MockOdooWithSearch.searchRead', () => {
 
   it('projects only requested fields', () => {
     const rows = mock.searchRead(
-      'partner',
+      'res.partner',
       { is_company: true },
       ['name', 'email'],
       { limit: 10 }
@@ -59,15 +59,15 @@ describe('MockOdooWithSearch.searchRead', () => {
   });
 
   it('applies pagination: offset & limit', () => {
-    const page1 = mock.searchRead('partner', { is_company: true }, ['name'], {
+    const page1 = mock.searchRead('res.partner', { is_company: true }, ['name'], {
       limit: 1,
       offset: 0,
     });
-    const page2 = mock.searchRead('partner', { is_company: true }, ['name'], {
+    const page2 = mock.searchRead('res.partner', { is_company: true }, ['name'], {
       limit: 1,
       offset: 1,
     });
-    const page3 = mock.searchRead('partner', { is_company: true }, ['name'], {
+    const page3 = mock.searchRead('res.partner', { is_company: true }, ['name'], {
       limit: 1,
       offset: 2,
     });
@@ -77,10 +77,10 @@ describe('MockOdooWithSearch.searchRead', () => {
     expect(page3).to.deep.equal([{ name: 'E Corp' }]);
   });
   it('returns empty array when no records match', () => {
-    const rows = mock.searchRead('partner', { is_company: true }, ['name'], {
+    const rows = mock.searchRead('res.partner', { is_company: true }, ['name'], {
       limit: 10,
     });
-    const none = mock.searchRead('customer', { is_company: true }, ['name'], {
+    const none = mock.searchRead('res.customer', { is_company: true }, ['name'], {
       limit: 10,
     });
     expect(rows.length).to.be.greaterThan(0);

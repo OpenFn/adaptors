@@ -226,7 +226,7 @@ export function deleteRecord(model, recordId) {
 }
 
 /**
- * Search a record from Odoo
+ * Search a record from Odoo. Only returns the IDs of the records that match the search criteria.
  * @public
  * @example
  * searchRecord('res.partner', {
@@ -246,7 +246,7 @@ export function searchRecord(model, domain = {}) {
       domain
     );
 
-    console.log(`Searching a ${resolvedModel} resource...`);
+    console.log(`Searching ${resolvedModel} resource...`);
 
     const response = await odooConn.search(resolvedModel, resolvedDomain);
     return composeNextState(state, response);
@@ -254,7 +254,7 @@ export function searchRecord(model, domain = {}) {
 }
 
 /**
- * Search and a read record from Odoo
+ * Search and a read record from Odoo. It returns the records that match the search criteria, with the specified fields or full records if no fields are given.
  * @public
  * @example <caption>Search and read a record with a domain filter</caption>
  * searchReadRecord('res.partner', {
@@ -272,7 +272,7 @@ export function searchRecord(model, domain = {}) {
  *     pageSize: 50,
  *   }
  * );
- * @example <caption> Fetch all records with a limit</caption>
+ * @example <caption> Fetch records with a limit</caption>
  * searchReadRecord('res.partner', {}, [], {
  *   limit: 200,
  * });
