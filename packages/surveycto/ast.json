@@ -97,7 +97,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a request in SurveyCTO API",
+        "description": "Make a HTTP request to the SurveyCTO API",
         "tags": [
           {
             "title": "public",
@@ -106,7 +106,13 @@
           },
           {
             "title": "example",
-            "description": "request(\"/anEndpoint\", {\n  method: \"POST\",\n  query: { foo: \"bar\", a: 1 },\n});"
+            "description": "request(\"/anEndpoint\", {\n  method: \"POST\",\n   contentType: \"json\",\n  body: { foo: \"bar\", a: 1 },\n});",
+            "caption": "Post JSON data to SurveyCTO"
+          },
+          {
+            "title": "example",
+            "description": "request('datasets/library/records/upload', {\n    method: 'POST',\n    contentType: 'form',\n    body: {\n      file: {\n        blob: $.data,\n        type: 'text/csv',\n        filename: 'library.csv'\n      }\n    },\n  });",
+            "caption": "Upload a CSV blob to a dataset"
           },
           {
             "title": "function",
@@ -232,6 +238,43 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "jsonToCSVBuffer",
+      "params": [
+        "rows"
+      ],
+      "docs": {
+        "description": "Converts an array of objects to a CSV buffer.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "jsonToCSVBuffer([\n {\n    lastName: 'Rothfuss',\n    firstName: 'Patrick',\n    book: 'The Name of the Wind'\n  },\n {\n    lastName: 'Martin',\n    firstName: 'George',\n    book: 'A Game of Thrones'\n  },\n])"
+          },
+          {
+            "title": "param",
+            "description": "An array of JSON objects.",
+            "type": {
+              "type": "AllLiteral"
+            },
+            "name": "rows"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],

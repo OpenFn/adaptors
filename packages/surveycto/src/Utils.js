@@ -1,3 +1,4 @@
+import { Blob } from 'node:buffer';
 import { composeNextState } from '@openfn/language-common';
 import {
   assertRelativeUrl,
@@ -30,20 +31,42 @@ const buildUrl = (configuration = {}, path) => {
 export const prepareNextState = (state, response, callback) => {
   const { body, ...responseWithoutBody } = response;
   const nextState = {
-    ...composeNextState(state, response.body),
+    ...composeNextState(state, body),
     response: responseWithoutBody,
   };
 
   return callback(nextState);
 };
 
+function encodeFormBody(data) {
+  const form = new FormData();
+  for (const [key, value] of Object.entries(data)) {
+    form.append(
+      key,
+      new Blob([value.blob], { type: value.type }),
+      value.filename
+    );
+  }
+
+  return form;
+}
+
 export const requestHelper = (state, path, params, callback = s => s) => {
   assertRelativeUrl(path);
 
-  let { body = {}, headers, method = 'GET', query } = params;
+  let { body = {}, headers = {}, method = 'GET', query, contentType } = params;
 
   addBasicAuth(state.configuration, headers);
   const url = buildUrl(state.configuration, path);
+
+  if (contentType === 'form') {
+    body = encodeFormBody(body);
+  } else if (
+    contentType === 'json' &&
+    Object.keys(headers).find(h => /content-type/.exec(h))
+  ) {
+    headers.contentType = 'application/json';
+  }
 
   const options = {
     body,

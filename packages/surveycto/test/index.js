@@ -1,52 +1,11 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import ClientFixtures, { fixtures } from './ClientFixtures';
-
-import Adaptor from '../src';
+import { execute, request, fetchSubmissions, jsonToCSVBuffer } from '../src';
 import { convertDate, dateRegex } from '../src/Utils';
-
-const { execute, request, fetchSubmissions } = Adaptor;
 
 const baseUrl = 'https://test.surveycto.com';
 const mock = enableMockClient(baseUrl);
-
-describe('execute', () => {
-  it.skip('executes each operation in sequence', done => {
-    let state = {};
-    let operations = [
-      state => {
-        return { counter: 1 };
-      },
-      state => {
-        return { counter: 2 };
-      },
-      state => {
-        return { counter: 3 };
-      },
-    ];
-
-    execute(...operations)(state)
-      .then(finalState => {
-        expect(finalState).to.eql({ counter: 3 });
-      })
-      .then(done)
-      .catch(done);
-  });
-
-  it.skip('assigns references, data to the initialState', () => {
-    let state = {};
-
-    let finalState = execute()(state);
-
-    execute()(state).then(finalState => {
-      expect(finalState).to.eql({
-        references: [],
-        data: null,
-      });
-    });
-  });
-});
 
 describe('request', () => {
   it('throws if an absolute URL is passed', async () => {
@@ -83,6 +42,28 @@ describe('fetchSubmissions', () => {
     const result = await fetchSubmissions('my-form')(state);
     expect(result.data).to.eql([]);
     expect(result.response.statusCode).to.eql(200);
+  });
+});
+
+describe('jsonToCSVBuffer', () => {
+  it('should convert plain JSON into a buffer', async () => {
+    const state = {};
+    const rows = [
+      {
+        lastName: 'Rothfuss',
+        firstName: 'Patrick',
+        book: 'The Name of the Wind',
+      },
+      {
+        lastName: 'Martin',
+        firstName: 'George',
+        book: 'A Game of Thrones',
+      },
+    ];
+
+    const result = await jsonToCSVBuffer(rows)(state);
+    expect(result.data).to.be.instanceOf(Buffer);
+    expect(result.data.length).to.equal(96);
   });
 });
 
