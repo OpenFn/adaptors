@@ -1,3 +1,4 @@
+import { Blob } from 'node:buffer';
 import { composeNextState } from '@openfn/language-common';
 import {
   assertRelativeUrl,
@@ -30,7 +31,7 @@ const buildUrl = (configuration = {}, path) => {
 export const prepareNextState = (state, response, callback) => {
   const { body, ...responseWithoutBody } = response;
   const nextState = {
-    ...composeNextState(state, response.body),
+    ...composeNextState(state, body),
     response: responseWithoutBody,
   };
 
