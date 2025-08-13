@@ -4,6 +4,8 @@
 <dt>
     <a href="#fetchsubmissions">fetchSubmissions(formId, options, callback)</a></dt>
 <dt>
+    <a href="#jsontocsvbuffer">jsonToCSVBuffer(rows)</a></dt>
+<dt>
     <a href="#request">request(path, params, callback)</a></dt>
 </dl>
 
@@ -132,11 +134,41 @@ fetchSubmissions(
 
 * * *
 
+### jsonToCSVBuffer
+
+<p><code>jsonToCSVBuffer(rows) ⇒ Operation</code></p>
+
+Converts an array of objects to a CSV buffer.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| rows | <code>\*</code> | An array of JSON objects. |
+
+
+**Example**
+```js
+jsonToCSVBuffer([
+ {
+    lastName: 'Rothfuss',
+    firstName: 'Patrick',
+    book: 'The Name of the Wind'
+  },
+ {
+    lastName: 'Martin',
+    firstName: 'George',
+    book: 'A Game of Thrones'
+  },
+])
+```
+
+* * *
+
 ### request
 
 <p><code>request(path, params, callback) ⇒ Operation</code></p>
 
-Make a request in SurveyCTO API
+Make a HTTP request to the SurveyCTO API
 
 
 | Param | Type | Description |
@@ -146,12 +178,27 @@ Make a request in SurveyCTO API
 | callback | <code>function</code> | (Optional) Callback function |
 
 
-**Example**
+**Example:** Post JSON data to SurveyCTO
 ```js
 request("/anEndpoint", {
   method: "POST",
-  query: { foo: "bar", a: 1 },
+   contentType: "json",
+  body: { foo: "bar", a: 1 },
 });
+```
+**Example:** Upload a CSV blob to a dataset
+```js
+  request('datasets/library/records/upload', {
+    method: 'POST',
+    contentType: 'form',
+    body: {
+      file: {
+        blob: $.data,
+        type: 'text/csv',
+        filename: 'library.csv'
+      }
+    },
+  });
 ```
 
 * * *
@@ -187,6 +234,7 @@ Options provided to request()
 | [headers] | <code>object</code> |  | An object of headers parameters. |
 | [body] | <code>object</code> |  | Body data to append to the request. |
 | [query] | <code>object</code> |  | An object of query parameters to be encoded into the URL. |
+| [contentType] | <code>object</code> |  | Set the content-type header to the appropriate format. Supported values: `json` and `form` |
 | [method] | <code>string</code> | <code>&quot;GET&quot;</code> | The HTTP method to use. |
 
 
