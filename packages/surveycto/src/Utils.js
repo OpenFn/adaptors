@@ -40,7 +40,11 @@ export const prepareNextState = (state, response, callback) => {
 function encodeFormBody(data) {
   const form = new FormData();
   for (const [key, value] of Object.entries(data)) {
-    form.append(key, new Blob([value.blob], { type: value.type}), value.filename);
+    form.append(
+      key,
+      new Blob([value.blob], { type: value.type }),
+      value.filename
+    );
   }
 
   return form;
@@ -49,17 +53,18 @@ function encodeFormBody(data) {
 export const requestHelper = (state, path, params, callback = s => s) => {
   assertRelativeUrl(path);
 
-  let { body = {}, headers, method = 'GET', query } = params;
+  let { body = {}, headers = {}, method = 'GET', query, contentType } = params;
 
   addBasicAuth(state.configuration, headers);
   const url = buildUrl(state.configuration, path);
 
-
-  if (headers && headers['Content-Type'] && headers['Content-Type'] === 'form') {    
-    // let undici configure in the content type header 
-    delete headers['Content-Type'];
-    headers = {...headers}
-    body = encodeFormBody(body)
+  if (contentType === 'form') {
+    body = encodeFormBody(body);
+  } else if (
+    contentType === 'json' &&
+    Object.keys(headers).find(h => /content-type/.exec(h))
+  ) {
+    headers.contentType = 'application/json';
   }
 
   const options = {

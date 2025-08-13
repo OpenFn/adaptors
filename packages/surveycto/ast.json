@@ -244,7 +244,7 @@
         "rows"
       ],
       "docs": {
-        "description": "The function `jsonToCSVBuffer` takes in an array of objects and creates a CSV as a Buffer",
+        "description": "The function `jsonToCSVBuffer` takes in an array of objects and creates a CSV Buffer",
         "tags": [
           {
             "title": "public",
@@ -257,7 +257,7 @@
           },
           {
             "title": "param",
-            "description": "An array of arrays. The first array being the header.",
+            "description": "An array of JSON objects.",
             "type": {
               "type": "AllLiteral"
             },
