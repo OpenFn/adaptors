@@ -1,4 +1,4 @@
-import testData from './odooFixtures.json' assert { type: 'json' };
+import testData from '../odooFixtures.json' assert { type: 'json' };
 
 export class MockOdooWithSearch {
   constructor(data = []) {

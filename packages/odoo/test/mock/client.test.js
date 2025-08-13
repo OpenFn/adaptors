@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { MockOdooWithSearch } from './MockOdooWithSearch';
+import { MockOdooWithSearch } from './client';
 
 const mockData = () => [
   {
