@@ -1,5 +1,12 @@
 # @openfn/language-surveycto
 
+## 2.3.0
+
+### Minor Changes
+
+- af530fd: - Added `contentType` to `request()`
+  - Added `jsonToCSVBuffer`
+
 ## 2.2.7 - 14 July 2025
 
 ### Patch Changes
