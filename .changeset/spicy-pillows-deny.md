@@ -1,5 +1,5 @@
 ---
-'@openfn/language-odoo': major
+'@openfn/language-odoo': minor
 ---
 
 Add `search()` and `searchReadRecord()` functions.
