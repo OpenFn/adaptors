@@ -278,6 +278,207 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "searchRecord",
+      "params": [
+        "model",
+        "domain"
+      ],
+      "docs": {
+        "description": "Search a record from Odoo. Only returns record IDs. Use `searchReadRecord` to download full\nrecords which match the criteria.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "searchRecord('res.partner', {\n  country_id: 'United States',\n});"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The specific record model i.e. \"res.partner\"",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "model"
+          },
+          {
+            "title": "param",
+            "description": "Optional search domain to filter records.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "domain"
+          },
+          {
+            "title": "state",
+            "description": "{OdooState}"
+          },
+          {
+            "title": "state",
+            "description": "data - An array of matching record IDs"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "searchReadRecord",
+      "params": [
+        "model",
+        "domain",
+        "fields",
+        "options"
+      ],
+      "docs": {
+        "description": "Search and a read record from Odoo. It returns the records that match the search criteria, with the specified fields or full records if no fields are given.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "searchReadRecord('res.partner', {\n  country_id: 'United States',\n});",
+            "caption": "Search and read a record with a domain filter"
+          },
+          {
+            "title": "example",
+            "description": "searchReadRecord(\n  'res.partner',\n  {\n    is_company: true,\n  },\n  ['name']\n);",
+            "caption": "Search and read a record with specific fields"
+          },
+          {
+            "title": "example",
+            "description": "searchReadRecord('res.partner', {}, [], {\n  limit: 200,\n});",
+            "caption": "Fetch records with a limit"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The specific record model i.e. \"res.partner\"",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "model"
+          },
+          {
+            "title": "param",
+            "description": "Optional search domain to filter records.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "domain"
+          },
+          {
+            "title": "param",
+            "description": "An optional array of field strings to read from the record. i.e  ['name', 'state_id']",
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              ]
+            },
+            "name": "fields"
+          },
+          {
+            "title": "param",
+            "description": "Additional options to configure the search.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options",
+            "default": "{}"
+          },
+          {
+            "title": "param",
+            "description": "Maximum number of records to fetch. If undefined, defaults to 1000, and all records available will be fetched.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.limit",
+            "default": "1000"
+          },
+          {
+            "title": "param",
+            "description": "The index of the first record to return.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.offset",
+            "default": "0"
+          },
+          {
+            "title": "param",
+            "description": "The number of records to fetch in each request. Defaults to 200.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.pageSize",
+            "default": "200"
+          },
+          {
+            "title": "state",
+            "description": "{OdooState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ],
   "exports": [],

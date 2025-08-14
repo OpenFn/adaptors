@@ -1,5 +1,14 @@
 # @openfn/language-odoo
 
+## 2.1.0 - 14 August 2025
+
+### Minor Changes
+
+- 282f9f3: Add `search()` and `searchReadRecord()` functions.
+  - `search()` Only returns the record IDs.
+  - `searchReadRecord()` returns the records with the specified criteria or the
+    full record if none is given.
+
 ## 2.0.0 - 11 August 2025
 
 ### Major Changes
