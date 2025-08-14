@@ -363,7 +363,7 @@
           },
           {
             "title": "example",
-            "description": "searchReadRecord(\n  'res.partner',\n  {\n    is_company: true,\n  },\n  ['name'],\n  {\n    limit: 200,\n    pageSize: 50,\n  }\n);",
+            "description": "searchReadRecord(\n  'res.partner',\n  {\n    is_company: true,\n  },\n  ['name']\n);",
             "caption": "Search and read a record with specific fields"
           },
           {
@@ -414,7 +414,7 @@
           },
           {
             "title": "param",
-            "description": "Optional options like limit, offset, or pageSize.",
+            "description": "Additional options to configure the search.",
             "type": {
               "type": "OptionalType",
               "expression": {
