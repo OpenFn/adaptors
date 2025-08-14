@@ -1,6 +1,6 @@
 # @openfn/language-surveycto
 
-## 2.3.0
+## 2.3.0 - 14 August 2025
 
 ### Minor Changes
 
