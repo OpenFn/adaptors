@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "database": {
+      "title": "Database Path",
+      "type": "string",
+      "description": "Path to local DuckDB file or ':memory:' for in-memory database",
+      "examples": [":memory:", "./data/analytics.db", "/path/to/database.db"]
+    },
+    "connectionString": {
+      "title": "Connection String",
+      "type": "string",
+      "description": "Full DuckDB connection string (overrides database path)",
+      "examples": ["md:my_database", "md:analytics_db?session_hint=readonly"]
+    },
+    "motherDuckDatabase": {
+      "title": "MotherDuck Database",
+      "type": "string",
+      "description": "MotherDuck database name (will be prefixed with 'md:')",
+      "examples": ["my_database", "analytics_warehouse"]
+    },
+    "motherDuckToken": {
+      "title": "MotherDuck Token",
+      "type": "string",
+      "description": "MotherDuck authentication token",
+      "writeOnly": true,
+      "examples": ["token_abc123..."]
+    },
+    "sessionHint": {
+      "title": "Session Hint",
+      "type": "string",
+      "description": "Optional session hint for MotherDuck read scaling",
+      "examples": ["readonly", "analytics", "etl_process"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "oneOf": [
+    {
+      "description": "Local database configuration",
+      "properties": {
+        "database": { "type": "string" }
+      }
+    },
+    {
+      "description": "Full connection string configuration",
+      "properties": {
+        "connectionString": { "type": "string" }
+      },
+      "required": ["connectionString"]
+    },
+    {
+      "description": "MotherDuck configuration",
+      "properties": {
+        "motherDuckDatabase": { "type": "string" },
+        "motherDuckToken": { "type": "string" }
+      },
+      "required": ["motherDuckDatabase", "motherDuckToken"]
+    }
+  ]
+}

@@ -120,4 +120,7 @@ dist
 .vscode/
 .idea
 
+# Claude Code configuration
+.claude/
+
 /pnpm-publish-summary.json
