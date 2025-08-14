@@ -313,9 +313,8 @@ export function searchReadRecord(
       const remainingItems = limit - totalFetched;
       const fetchSize = Math.min(pageSize, remainingItems);
 
-      console.log(`Searching and reading ${resolvedModel} resources...`);
       console.log(
-        `Fetching records from offset ${nextOffset} with limit ${fetchSize}...`
+        `Searching and reading ${resolvedModel} resources. From offset ${nextOffset} with limit ${fetchSize}...`
       );
 
       const rows = await odooConn.searchRead(
