@@ -27,10 +27,10 @@ let odooConn = null;
 /**
  * Options object
  * @typedef {Object} SearchOptions
- * @property {number} limit - An optional limit to the number of records to return
- * @property {number} offset - An optional offset to the number of records to skip
- * @property {string} order - An optional order to sort the records by. i.e "name, desc"
- * @property {object} context - An optional context to be used in the request. i.e `{lang: 'en_US', timezone: 'UTC'}`.
+ * @property {number} limit - Limit the number of records to return
+ * @property {number} offset - Set to the number of records to skip
+ * @property {string} order - Order to sort the records by. i.e "name, desc"
+ * @property {object} context - Context to be used in the request. i.e `{lang: 'en_US', timezone: 'UTC'}`.
  *
  */
 
@@ -226,7 +226,8 @@ export function deleteRecord(model, recordId) {
 }
 
 /**
- * Search a record from Odoo. Only returns the IDs of the records that match the search criteria.
+ * Search a record from Odoo. Only returns record IDs. Use `searchReadRecord` to download full
+ * records which match the criteria.
  * @public
  * @example
  * searchRecord('res.partner', {
@@ -236,6 +237,7 @@ export function deleteRecord(model, recordId) {
  * @param {string} model - The specific record model i.e. "res.partner"
  * @param {object} domain - Optional search domain to filter records.
  * @state {OdooState}
+ * @state data - An array of matching record IDs
  * @returns {Operation}
  */
 export function searchRecord(model, domain = {}) {
@@ -266,11 +268,7 @@ export function searchRecord(model, domain = {}) {
  *   {
  *     is_company: true,
  *   },
- *   ['name'],
- *   {
- *     limit: 200,
- *     pageSize: 50,
- *   }
+ *   ['name']
  * );
  * @example <caption> Fetch records with a limit</caption>
  * searchReadRecord('res.partner', {}, [], {
@@ -280,7 +278,7 @@ export function searchRecord(model, domain = {}) {
  * @param {string} model - The specific record model i.e. "res.partner"
  * @param {object} domain - Optional search domain to filter records.
  * @param {string[]} fields - An optional array of field strings to read from the record. i.e  ['name', 'state_id']
- * @param {object} [options = {}] - Optional options like limit, offset, or pageSize.
+ * @param {object} [options = {}] - Additional options to configure the search.
  * @param {number} [options.limit=1000] - Maximum number of records to fetch. If undefined, defaults to 1000, and all records available will be fetched.
  * @param {number} [options.offset=0] - The index of the first record to return.
  * @param {number} [options.pageSize=200] - The number of records to fetch in each request. Defaults to 200.
@@ -315,7 +313,7 @@ export function searchReadRecord(
       const remainingItems = limit - totalFetched;
       const fetchSize = Math.min(pageSize, remainingItems);
 
-      console.log(`Searching and reading a ${resolvedModel} resource...`);
+      console.log(`Searching and reading ${resolvedModel} resources...`);
       console.log(
         `Fetching records from offset ${nextOffset} with limit ${fetchSize}...`
       );

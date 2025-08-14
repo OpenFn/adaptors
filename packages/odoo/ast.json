@@ -286,7 +286,7 @@
         "domain"
       ],
       "docs": {
-        "description": "Search a record from Odoo",
+        "description": "Search a record from Odoo. Only returns record IDs. Use `searchReadRecord` to download full\nrecords which match the criteria.",
         "tags": [
           {
             "title": "public",
@@ -325,6 +325,10 @@
             "description": "{OdooState}"
           },
           {
+            "title": "state",
+            "description": "data - An array of matching record IDs"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -345,7 +349,7 @@
         "options"
       ],
       "docs": {
-        "description": "Search and a read record from Odoo",
+        "description": "Search and a read record from Odoo. It returns the records that match the search criteria, with the specified fields or full records if no fields are given.",
         "tags": [
           {
             "title": "public",
@@ -359,13 +363,13 @@
           },
           {
             "title": "example",
-            "description": "searchReadRecord(\n  'res.partner',\n  {\n    is_company: true,\n  },\n  ['name'],\n  {\n    limit: 2,\n    offset: 0,\n  }\n);",
+            "description": "searchReadRecord(\n  'res.partner',\n  {\n    is_company: true,\n  },\n  ['name'],\n  {\n    limit: 200,\n    pageSize: 50,\n  }\n);",
             "caption": "Search and read a record with specific fields"
           },
           {
             "title": "example",
             "description": "searchReadRecord('res.partner', {}, [], {\n  limit: 200,\n});",
-            "caption": "Fetch all records with a limit"
+            "caption": "Fetch records with a limit"
           },
           {
             "title": "function",
@@ -410,12 +414,12 @@
           },
           {
             "title": "param",
-            "description": "Optional options like limit, offset, order, or context.",
+            "description": "Optional options like limit, offset, or pageSize.",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "SearchOptions"
+                "name": "object"
               }
             },
             "name": "options",
