@@ -327,26 +327,21 @@ export function searchReadRecord(
         }
       );
 
-      // Nothing more to fetch if no results returned
-      if (!rows || rows.length === 0) {
-        nextOffset = null;
-        break;
-      }
-
       results.push(...rows);
       totalFetched += rows.length;
-
-      // If we get fewer than requested, we have reached the end
-      if (rows.length < fetchSize) {
-        nextOffset = null;
-        break;
-      }
 
       // Update the next offset for the next iteration
       nextOffset += rows.length;
 
-      // If we have reached the limit, stop fetching
-      if (totalFetched >= limit) {
+      // Check if we should exit the loop
+      if (
+        // Nothing more to fetch if no results returned
+        rows.length === 0 ||
+        // If we get fewer than requested, we have reached the end
+        rows.length < fetchSize ||
+        // If we have reached the limit, stop fetching
+        totalFetched >= limit
+      ) {
         nextOffset = null;
         break;
       }
