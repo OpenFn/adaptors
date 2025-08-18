@@ -160,13 +160,12 @@ function queryHandler(state, query, callback, options) {
       }
     }
 
-    const rows = [];
-    const request = new Request(query, err => {
+    const request = new Request(query, (err, rowCount, rows) => {
       if (err) {
         console.error(err);
         reject(err);
       } else {
-        console.log(`Finished: ${rows.length} row(s).`);
+        console.log(`Finished: ${rowCount} row(s).`);
         resolve(callback(state, rows));
       }
     });
