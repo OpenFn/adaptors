@@ -132,4 +132,31 @@ describe('generatePDF', () => {
     expect(data).to.eql('JVBERi0xLjQKJeLjz9MKMSAwIG9');
     expect(data).to.includes('JVBERi0x');
   });
+  it('generates pdf as a hosted url', async () => {
+    const state = {
+      configuration,
+    };
+    testServer
+      .intercept({
+        path: '/v3/convert/pdf',
+        method: 'POST',
+        headers: {
+          'x-api-key': 'some-api-key',
+        },
+      })
+      .reply(200, {
+        success: true,
+        url: 'https://pdfshift.s3.amazonaws.com/d/2/2025-08/c304bea9a791446896d39e287234c345/example.pdf',
+        filesize: 50023,
+        duration: 2248,
+      });
+
+    const { data } = await generatePDF('https://www.example.com/', {
+      filename: 'example.pdf',
+    })(state);
+    expect(data.url).to.eql(
+      'https://pdfshift.s3.amazonaws.com/d/2/2025-08/c304bea9a791446896d39e287234c345/example.pdf'
+    );
+    expect(data.filesize).to.eql(50023);
+  });
 });

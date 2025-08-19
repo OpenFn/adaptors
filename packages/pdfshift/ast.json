@@ -1,6 +1,82 @@
 {
   "operations": [
     {
+      "name": "generatePDF",
+      "params": [
+        "htmlTemplateString",
+        "options"
+      ],
+      "docs": {
+        "description": "Generate a PDF from an HTML string.",
+        "tags": [
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "A HTML string or url to convert to PDF",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "htmlTemplateString"
+          },
+          {
+            "title": "param",
+            "description": "Optional configuration for PDF generation",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "PDFBodyOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "example",
+            "description": "generatePDF(\n`<html>\n  <body>\n    <h1>Sales Report</h1>\n    <p>Date: 2025-02-01</p>\n    <p>Total Sales: $42</p>\n  </body>\n</html>\n`);",
+            "caption": "Generate a PDF from a HTML string"
+          },
+          {
+            "title": "example",
+            "description": "generatePDF(\n`<html>\n  <body>\n    <h1>Sales Report</h1>\n    <p>Date: 2025-02-01</p>\n    <p>Total Sales: $42</p>\n  </body>\n</html>\n`, {\n  sandbox: true});",
+            "caption": "Generate a PDF with options"
+          },
+          {
+            "title": "example",
+            "description": "generatePDF('https://www.example.com/', {\n  sandbox: true,\n  encode: false,\n});",
+            "caption": "Generate a PDF from a url"
+          },
+          {
+            "title": "example",
+            "description": "generatePDF('https://www.example.com/', {\n sandbox: true,\n filename: 'example.pdf',\n});",
+            "caption": "Generate a PDF with a filename"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "request",
       "params": [
         "method",
@@ -13,7 +89,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "request(\n  'POST',\n  '/convert/pdf',\n   { source: $.html }\n);",
+            "description": "request(\n  'POST',\n  '/convert/pdf',\n   { source: $.html,\n     encode: true \n   },\n);",
             "caption": "Make a request to convert a HTML string to PDF"
           },
           {
