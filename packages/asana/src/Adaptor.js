@@ -236,7 +236,7 @@ export function upsertTask(projectGid, params, callback) {
  * @function
  * @param {string} task - The text or name of the task to search for.
  * @param {object} [query] - Query params. See {@link https://developers.asana.com/reference/searchtasksforworkspace Docs} for a list of valid parameters.
- * @param {string} [query.resource_subtype = "default_task"] - The resource subtype to search for. Defaults to `default_task`.
+ * @param {string} [query.resource_subtype = default_task] - The resource subtype to search for. Must be either `"default_task"` or `"milestone"`. Defaults to `"default_task"`.
  * @param {object} [options] - (Optional) options argument.
  * @param {string} [options.workspaceGid] - The workspace to search in. Defaults to the workspace specified in the configuration.
  * @returns {Operation} An operation that, when executed, returns the search results in state.data.

@@ -422,7 +422,7 @@
           },
           {
             "title": "param",
-            "description": "The resource subtype to search for. Defaults to `default_task`.",
+            "description": "The resource subtype to search for. Must be either `\"default_task\"` or `\"milestone\"`. Defaults to `\"default_task\"`.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -431,7 +431,7 @@
               }
             },
             "name": "query.resource_subtype",
-            "default": "\"default_task\""
+            "default": "default_task"
           },
           {
             "title": "param",
