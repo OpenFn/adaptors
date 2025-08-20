@@ -10,24 +10,10 @@ import * as util from './Utils';
  **/
 
 /**
- * Options provided to the HTTP request
- * @typedef {Object} RequestOptions
- * @public
- * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
- * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
- * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
- * @property {object} query - An object of query parameters to be encoded into the URL.
- * @property {object} headers - An object of headers to append to the request.
- * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
- * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
- * @property {object} tls - TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
- */
-
-/**
  * Payment Intents Options object. See {@link https://docs.stripe.com/api/payment_intents/list|Stripe Payment Intents API documentation} for more details.
  * @typedef {Object} PaymentIntentsOptions
  * @public
- * @param {string} paymentId - Id of a specific payment intent to retrieve. If provided, only this payment intent will be returned
+ * @param {string} paymentIntentId - Id of a specific payment intent to retrieve. If provided, only this payment intent will be returned
  * @property {object} created - An object of created fields for filtering the data.
  * @property {string} ending_before - Object string ID that defines your place in the list. Example: `obj_bar` in order to fetch the previous page of the list.
  * @property {string} starting_after - Object string ID that defines your place in the list. Example: `obj_foo` in order to fetch the next page of the list.
@@ -37,11 +23,11 @@ import * as util from './Utils';
 /**
  * Get payments from Stripe
  * @example <caption>List all payment intents</caption>
- * listPaymentIntents()
+ * listPaymentIntents();
  * @example <caption>List payment intents with options</caption>
- * listPaymentIntents({limit:3})
+ * listPaymentIntents({limit:3});
  * @example <caption>List a specific payment intent</caption>
- * listPaymentIntents({ paymentId: 'pi_3RxS5EEAUr6ipfDB0aKo3moC' });
+ * listPaymentIntents({ paymentIntentId: 'pi_3RxS5EEAUr6ipfDB0aKo3moC' });
  * @function
  * @public
  * @param {PaymentIntentsOptions} options - Optional payment intent request options
@@ -52,13 +38,15 @@ export function listPaymentIntents(options = {}) {
   return async state => {
     const [resolvedoptions] = expandReferences(state, options);
 
-    const { paymentId } = resolvedoptions;
-    delete resolvedoptions.paymentId;
+    const { paymentIntentId } = resolvedoptions;
+    delete resolvedoptions.paymentIntentId;
 
     const response = await util.request(
       state.configuration,
       'GET',
-      paymentId ? `payment_intents/${paymentId}` : 'payment_intents',
+      paymentIntentId
+        ? `/payment_intents/${paymentIntentId}`
+        : '/payment_intents',
       {
         query: {
           ...resolvedoptions,
@@ -86,9 +74,9 @@ export function listPaymentIntents(options = {}) {
 /**
  * Get customers from Stripe
  * @example <caption>List all customers</caption>
- * listCustomers()
+ * listCustomers();
  * @example <caption>List customers with options</caption>
- * listCustomers({limit:3})
+ * listCustomers({limit:3});
  * @example <caption>List a specific customer</caption>
  * listCustomers({ customerId: 'cus_SthTl85l20LRJj' });
  * @function
@@ -107,7 +95,7 @@ export function listCustomers(options = {}) {
     const response = await util.request(
       state.configuration,
       'GET',
-      customerId ? `customers/${customerId}` : 'customers',
+      customerId ? `/customers/${customerId}` : '/customers',
       {
         query: {
           ...resolvedoptions,
@@ -136,9 +124,9 @@ export function listCustomers(options = {}) {
 /**
  * List Stripe subscriptions
  * @example <caption>List all subscriptions</caption>
- * listSubscriptions()
+ * listSubscriptions();
  * @example <caption>List subscriptions with options</caption>
- * listSubscriptions({limit:3})
+ * listSubscriptions({limit:3});
  * @example <caption>List a specific subscription</caption>
  * listSubscriptions({ subscriptionId: 'sub_1MowQVLkdIwHu7ixeRlqHVzs' });
  * @function
@@ -157,7 +145,7 @@ export function listSubscriptions(options = {}) {
     const response = await util.request(
       state.configuration,
       'GET',
-      subscriptionId ? `subscriptions/${subscriptionId}` : 'subscriptions',
+      subscriptionId ? `/subscriptions/${subscriptionId}` : '/subscriptions',
       {
         query: {
           ...resolvedoptions,
@@ -170,61 +158,46 @@ export function listSubscriptions(options = {}) {
 }
 
 /**
- * Make a GET request to Stripe
- * @example
- * get("patients");
- * @function
+ * Invoices Options object. See {@link https://docs.stripe.com/api/invoices/list|Stripe invoices API documentation} for more details.
+ * @typedef {Object} InvoicesOptions
  * @public
- * @param {string} path - Path to resource
- * @param {RequestOptions} options - Optional request options
- * @returns {Operation}
- * @state {HttpState}
+ * @param {string} invoiceId - Id of a specific invoice to retrieve. If provided, only this invoice will be returned.
+ * @property {object} created - An object of created fields for filtering the data.
+ * @property {string} ending_before - Object string ID that defines your place in the list. Example: `obj_bar` in order to fetch the previous page of the list.
+ * @property {string} starting_after - Object string ID that defines your place in the list. Example: `obj_foo` in order to fetch the next page of the list.
+ * @property {number} limit - A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+ * @property {string} collection_method - The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
  */
-export function get(path, options) {
-  return request('GET', path, null, { query: { ...options } });
-}
 
 /**
- * Make a POST request to Stripe
- * @example
- * post("patient", { "name": "Bukayo" });
+ * List Stripe invoices
+ * @example <caption>List all invoices</caption>
+ * listInvoices();
+ * @example <caption>List invoices with options</caption>
+ * listInvoices({limit:3});
+ * @example <caption>List a specific invoice</caption>
+ * listInvoices({ invoiceId: 'in_1RyAGAEAUr6ipfDBTDSAgpj0' });
  * @function
  * @public
- * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
+ * @param {InvoicesOptions} options - Optional invoice request options
  * @returns {Operation}
  * @state {HttpState}
  */
-export function post(path, body, options) {
-  return request('POST', path, body, options);
-}
-
-/**
- * Make a general HTTP request to Stripe
- * @example
- * request("POST", "patient", { "name": "Bukayo" });
- * @function
- * @public
- * @param {string} method - HTTP method to use
- * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
- * @returns {Operation}
- * @state {HttpState}
- */
-export function request(method, path, body, options = {}) {
+export function listInvoices(options = {}) {
   return async state => {
-    const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
-      expandReferences(state, method, path, body, options);
+    const [resolvedoptions] = expandReferences(state, options);
+
+    const { invoiceId } = resolvedoptions;
+    delete resolvedoptions.invoiceId;
 
     const response = await util.request(
       state.configuration,
-      resolvedMethod,
-      resolvedPath,
+      'GET',
+      invoiceId ? `/invoices/${invoiceId}` : '/invoices',
       {
-        body: resolvedBody,
-        ...resolvedoptions,
+        query: {
+          ...resolvedoptions,
+        },
       }
     );
 

@@ -2,4 +2,5 @@
 
 ## 1.0.0
 
-Initial release.
+- Implement `listInvoices()`, `listCustomers()`, `listPaymentIntents()`, `listSubscriptions()` functions for `stripe`.
+- Implement `http.get()`, `http.post()`, and `http.request()`  namespaced functions.

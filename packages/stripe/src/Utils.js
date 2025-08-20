@@ -3,7 +3,7 @@ import {
   request as commonRequest,
   makeBasicAuthHeader,
   assertRelativeUrl,
-  logResponse
+  logResponse,
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 
@@ -20,15 +20,13 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-
 export const request = (configuration = {}, method, path, options) => {
-
   const { baseUrl, apiKey, apiVersion = 'v1' } = configuration;
   const headers = {
     Authorization: `Bearer ${apiKey}`,
   };
 
-    const { query = {}, body = {} } = options;
+  const { query = {}, body = {} } = options;
   const opts = {
     parseAs: 'json',
     baseUrl: `${baseUrl}/${apiVersion}`,

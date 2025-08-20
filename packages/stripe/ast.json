@@ -136,7 +136,7 @@
           },
           {
             "title": "example",
-            "description": "listSubscriptions({ subscriptionId: 'cus_SthTl85l20LRJj' });",
+            "description": "listSubscriptions({ subscriptionId: 'sub_1MowQVLkdIwHu7ixeRlqHVzs' });",
             "caption": "List a specific subscription"
           },
           {
@@ -151,7 +151,7 @@
           },
           {
             "title": "param",
-            "description": "Optional customer request options",
+            "description": "Optional subscription request options",
             "type": {
               "type": "NameExpression",
               "name": "SubscriptionsOptions"
@@ -175,17 +175,27 @@
       "valid": true
     },
     {
-      "name": "get",
+      "name": "listInvoices",
       "params": [
-        "path",
         "options"
       ],
       "docs": {
-        "description": "Make a GET request to Stripe",
+        "description": "List Stripe invoices",
         "tags": [
           {
             "title": "example",
-            "description": "get(\"patients\");"
+            "description": "listInvoices()",
+            "caption": "List all invoices"
+          },
+          {
+            "title": "example",
+            "description": "listInvoices({limit:3})",
+            "caption": "List invoices with options"
+          },
+          {
+            "title": "example",
+            "description": "listInvoices({ invoiceId: 'in_1RyAGAEAUr6ipfDBTDSAgpj0' });",
+            "caption": "List a specific invoice"
           },
           {
             "title": "function",
@@ -199,163 +209,10 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Optional invoice request options",
             "type": {
               "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
-            },
-            "name": "options"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{HttpState}"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "post",
-      "params": [
-        "path",
-        "body",
-        "options"
-      ],
-      "docs": {
-        "description": "Make a POST request to Stripe",
-        "tags": [
-          {
-            "title": "example",
-            "description": "post(\"patient\", { \"name\": \"Bukayo\" });"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Path to resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Object which will be attached to the POST body",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
-            },
-            "name": "options"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{HttpState}"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "request",
-      "params": [
-        "method",
-        "path",
-        "body",
-        "options"
-      ],
-      "docs": {
-        "description": "Make a general HTTP request to Stripe",
-        "tags": [
-          {
-            "title": "example",
-            "description": "request(\"POST\", \"patient\", { \"name\": \"Bukayo\" });"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "HTTP method to use",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "method"
-          },
-          {
-            "title": "param",
-            "description": "Path to resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Object which will be attached to the POST body",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
+              "name": "InvoicesOptions"
             },
             "name": "options"
           },
