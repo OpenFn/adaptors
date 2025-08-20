@@ -1,5 +1,7 @@
 <dl>
 <dt>
+    <a href="#generatepdf">generatePDF(htmlTemplateString, [options])</a></dt>
+<dt>
     <a href="#request">request(method, path, body, options)</a></dt>
 </dl>
 
@@ -65,6 +67,68 @@ This adaptor exports the following from common:
 </dt></dl>
 
 ## Functions
+### generatePDF
+
+<p><code>generatePDF(htmlTemplateString, [options]) ⇒ Operation</code></p>
+
+Generate a PDF from an HTML string.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| htmlTemplateString | <code>string</code> | A HTML string or url to convert to PDF |
+| [options] | [<code>PDFBodyOptions</code>](#pdfbodyoptions) | Optional configuration for PDF generation |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Generate a PDF from a HTML string
+```js
+generatePDF(
+`<html>
+  <body>
+    <h1>Sales Report</h1>
+    <p>Date: 2025-02-01</p>
+    <p>Total Sales: $42</p>
+  </body>
+</html>
+`);
+```
+**Example:** Generate a PDF with options
+```js
+generatePDF(
+`<html>
+  <body>
+    <h1>Sales Report</h1>
+    <p>Date: 2025-02-01</p>
+    <p>Total Sales: $42</p>
+  </body>
+</html>
+`, {
+  sandbox: true});
+```
+**Example:** Generate a PDF from a url
+```js
+generatePDF('https://www.example.com/', {
+  sandbox: true,
+  encode: false,
+});
+```
+**Example:** Generate a PDF with a filename
+```js
+generatePDF('https://www.example.com/', {
+ sandbox: true,
+ filename: 'example.pdf',
+});
+```
+
+* * *
+
 ### request
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
@@ -92,7 +156,7 @@ This operation writes the following keys to state:
 request(
   'POST',
   '/convert/pdf',
-   { source: $.html }
+   { source: $.html },
 );
 ```
 
@@ -112,7 +176,8 @@ PDF Body Options object. [See PDFShift documentation](https://docs.pdfshift.io/#
 | --- | --- | --- |
 | source | <code>string</code> | The HTML string or url to convert to PDF. |
 | sandbox | <code>boolean</code> | Generates PDF documents in dev mode that doesn't count in the credits. |
-| encode | <code>boolean</code> | Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true` |
+| encode | <code>boolean</code> | Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`. |
+| filename | <code>string</code> | Optional. Must be 7+ characters (letters, numbers, "-" or "_").   If set, the API returns a temporary S3 URL (file kept 2 days); otherwise, it returns a Base64 PDF. |
 
 
 * * *
@@ -144,6 +209,7 @@ PDF Body Options object. [See PDFShift documentation](https://docs.pdfshift.io/#
 | --- | --- | --- |
 | sandbox | <code>boolean</code> | Generates PDF documents in dev mode that doesn't count in the credits. |
 | encode | <code>boolean</code> | Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`. |
+| filename | <code>string</code> | Optional. Must be 7+ characters (letters, numbers, "-" or "_").   If set, the API returns a temporary S3 URL (file kept 2 days); otherwise, it returns a Base64 PDF. |
 
 
 * * *

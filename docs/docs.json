@@ -51322,7 +51322,7 @@
     "kind": "external-function"
   }
 ],
-{"name":"pdfshift","adaptor":"@openfn/language-pdfshift","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, options)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#assert\\\">assert()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### request\\n\\n<p><code>request(method, path, body, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request to PDFShift\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| body | [<code>BodyOptions</code>](#bodyoptions) | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Make a request to convert a HTML string to PDF\\n```js\\nrequest(\\n  'POST',\\n  '/convert/pdf',\\n   { source: $.html }\\n);\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### BodyOptions\\n\\nPDF Body Options object. [See PDFShift documentation](https://docs.pdfshift.io/#convert) for more details.\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| source | <code>string</code> | The HTML string or url to convert to PDF. |\\n| sandbox | <code>boolean</code> | Generates PDF documents in dev mode that doesn't count in the credits. |\\n| encode | <code>boolean</code> | Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true` |\\n\\n\\n* * *\\n\\n### HttpState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### PDFBodyOptions\\n\\nPDF Body Options object. [See PDFShift documentation](https://docs.pdfshift.io/#convert) for more details.\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| sandbox | <code>boolean</code> | Generates PDF documents in dev mode that doesn't count in the credits. |\\n| encode | <code>boolean</code> | Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`. |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-pdf <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\npdfshift API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/pdfshift-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/pdfshift-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-pdfshift\\n\\n## 1.0.0 - 14 August 2025\\n\\nImplement a `pdf` generator from a `html` string using pdfShift API.\\n\"","functions":["request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"apiVersion":{"title":"API Version","anyOf":[{"type":"string"},{"type":"null"}],"placeholder":"v3","default":"v3","description":"PDFShift api version","minLength":1,"examples":["v3"]},"apiKey":{"title":"API Key","type":"string","description":"Your PDFShift API key","writeOnly":true,"examples":["your-pdfshift-api-key"]}},"type":"object","additionalProperties":true,"required":["apiKey"]}},
+{"name":"pdfshift","adaptor":"@openfn/language-pdfshift","version":"1.0.1","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#generatepdf\\\">generatePDF(htmlTemplateString, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, options)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#assert\\\">assert()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### generatePDF\\n\\n<p><code>generatePDF(htmlTemplateString, [options]) ⇒ Operation</code></p>\\n\\nGenerate a PDF from an HTML string.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| htmlTemplateString | <code>string</code> | A HTML string or url to convert to PDF |\\n| [options] | [<code>PDFBodyOptions</code>](#pdfbodyoptions) | Optional configuration for PDF generation |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Generate a PDF from a HTML string\\n```js\\ngeneratePDF(\\n`<html>\\n  <body>\\n    <h1>Sales Report</h1>\\n    <p>Date: 2025-02-01</p>\\n    <p>Total Sales: $42</p>\\n  </body>\\n</html>\\n`);\\n```\\n**Example:** Generate a PDF with options\\n```js\\ngeneratePDF(\\n`<html>\\n  <body>\\n    <h1>Sales Report</h1>\\n    <p>Date: 2025-02-01</p>\\n    <p>Total Sales: $42</p>\\n  </body>\\n</html>\\n`, {\\n  sandbox: true});\\n```\\n**Example:** Generate a PDF from a url\\n```js\\ngeneratePDF('https://www.example.com/', {\\n  sandbox: true,\\n  encode: false,\\n});\\n```\\n**Example:** Generate a PDF with a filename\\n```js\\ngeneratePDF('https://www.example.com/', {\\n sandbox: true,\\n filename: 'example.pdf',\\n});\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(method, path, body, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request to PDFShift\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| body | [<code>BodyOptions</code>](#bodyoptions) | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Make a request to convert a HTML string to PDF\\n```js\\nrequest(\\n  'POST',\\n  '/convert/pdf',\\n   { source: $.html },\\n);\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### BodyOptions\\n\\nPDF Body Options object. [See PDFShift documentation](https://docs.pdfshift.io/#convert) for more details.\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| source | <code>string</code> | The HTML string or url to convert to PDF. |\\n| sandbox | <code>boolean</code> | Generates PDF documents in dev mode that doesn't count in the credits. |\\n| encode | <code>boolean</code> | Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`. |\\n| filename | <code>string</code> | Optional. Must be 7+ characters (letters, numbers, \\\"-\\\" or \\\"_\\\").   If set, the API returns a temporary S3 URL (file kept 2 days); otherwise, it returns a Base64 PDF. |\\n\\n\\n* * *\\n\\n### HttpState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### PDFBodyOptions\\n\\nPDF Body Options object. [See PDFShift documentation](https://docs.pdfshift.io/#convert) for more details.\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| sandbox | <code>boolean</code> | Generates PDF documents in dev mode that doesn't count in the credits. |\\n| encode | <code>boolean</code> | Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`. |\\n| filename | <code>string</code> | Optional. Must be 7+ characters (letters, numbers, \\\"-\\\" or \\\"_\\\").   If set, the API returns a temporary S3 URL (file kept 2 days); otherwise, it returns a Base64 PDF. |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-pdf <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\npdfshift API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/pdfshift-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/pdfshift-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-pdfshift\\n\\n## 1.0.1 - 20 August 2025\\n\\n### Patch Changes\\n\\n- 7c606ef: - Format response to `json` when `filename` option is passed.\\n  - Make `generatePDF()` function public\\n\\n## 1.0.0 - 14 August 2025\\n\\nImplement a `pdf` generator from a `html` string using pdfShift API.\\n\"","functions":["generatePDF","request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"apiVersion":{"title":"API Version","anyOf":[{"type":"string"},{"type":"null"}],"placeholder":"v3","default":"v3","description":"PDFShift api version","minLength":1,"examples":["v3"]},"apiKey":{"title":"API Key","type":"string","description":"Your PDFShift API key","writeOnly":true,"examples":["your-pdfshift-api-key"]}},"type":"object","additionalProperties":true,"required":["apiKey"]}},
 [
   {
     "id": "BodyOptions",
@@ -51361,17 +51361,85 @@
             "boolean"
           ]
         },
-        "description": "Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`",
+        "description": "Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`.",
         "name": "encode"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Optional. Must be 7+ characters (letters, numbers, \"-\" or \"_\").\n  If set, the API returns a temporary S3 URL (file kept 2 days); otherwise, it returns a Base64 PDF.",
+        "name": "filename"
       }
     ],
     "meta": {
-      "lineno": 93,
+      "lineno": 102,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/pdfshift/src"
     },
     "order": 4,
     "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "generatePDF",
+    "longname": "generatePDF",
+    "name": "generatePDF",
+    "kind": "function",
+    "scope": "global",
+    "description": "Generate a PDF from an HTML string.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "A HTML string or url to convert to PDF",
+        "name": "htmlTemplateString"
+      },
+      {
+        "type": {
+          "names": [
+            "PDFBodyOptions"
+          ]
+        },
+        "optional": true,
+        "description": "Optional configuration for PDF generation",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Generate a PDF from a HTML string</caption>\ngeneratePDF(\n`<html>\n  <body>\n    <h1>Sales Report</h1>\n    <p>Date: 2025-02-01</p>\n    <p>Total Sales: $42</p>\n  </body>\n</html>\n`);",
+      "<caption>Generate a PDF with options</caption>\ngeneratePDF(\n`<html>\n  <body>\n    <h1>Sales Report</h1>\n    <p>Date: 2025-02-01</p>\n    <p>Total Sales: $42</p>\n  </body>\n</html>\n`, {\n  sandbox: true});",
+      "<caption>Generate a PDF from a url</caption>\ngeneratePDF('https://www.example.com/', {\n  sandbox: true,\n  encode: false,\n});",
+      "<caption>Generate a PDF with a filename</caption>\ngeneratePDF('https://www.example.com/', {\n sandbox: true,\n filename: 'example.pdf',\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 75,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/pdfshift/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 3,
     "level": 0
   },
   {
@@ -51438,6 +51506,15 @@
         },
         "description": "Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`.",
         "name": "encode"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Optional. Must be 7+ characters (letters, numbers, \"-\" or \"_\").\n  If set, the API returns a temporary S3 URL (file kept 2 days); otherwise, it returns a Base64 PDF.",
+        "name": "filename"
       }
     ],
     "meta": {
@@ -51494,7 +51571,7 @@
       }
     ],
     "examples": [
-      "<caption>Make a request to convert a HTML string to PDF</caption>\nrequest(\n  'POST',\n  '/convert/pdf',\n   { source: $.html }\n);"
+      "<caption>Make a request to convert a HTML string to PDF</caption>\nrequest(\n  'POST',\n  '/convert/pdf',\n   { source: $.html },\n);"
     ],
     "returns": [
       {
@@ -51507,7 +51584,7 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 118,
+      "lineno": 129,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/pdfshift/src"
     },
