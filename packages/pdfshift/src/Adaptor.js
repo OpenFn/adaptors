@@ -28,10 +28,14 @@ import * as util from './Utils';
  * @typedef {Object} PDFBodyOptions
  * @property {boolean} sandbox - Generates PDF documents in dev mode that doesn't count in the credits.
  * @property {boolean} encode - Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`.
+ * @property {string} filename - Optional. Must be 7+ characters (letters, numbers, "-" or "_").
+ *   If set, the API returns a temporary S3 URL (file kept 2 days); otherwise, it returns a Base64 PDF.
  */
 
 /**
  * Generate a PDF from an HTML string.
+ * @function
+ * @public
  * @param {string} htmlTemplateString - A HTML string or url to convert to PDF
  * @param {PDFBodyOptions} [options] - Optional configuration for PDF generation
  * @example <caption>Generate a PDF from a HTML string</caption>
@@ -60,6 +64,11 @@ import * as util from './Utils';
  *   sandbox: true,
  *   encode: false,
  * });
+ * @example <caption>Generate a PDF with a filename</caption>
+ * generatePDF('https://www.example.com/', {
+ *  sandbox: true,
+ *  filename: 'example.pdf',
+ * });
  * @returns {Operation}
  * @state {HttpState}
  */
@@ -82,7 +91,7 @@ export function generatePDF(htmlTemplateString, options) {
           encode: true,
           ...resolvedOptions,
         },
-        parseAs: 'text',
+        parseAs: resolvedOptions?.filename ? 'json' : 'text',
       }
     );
 
@@ -95,7 +104,9 @@ export function generatePDF(htmlTemplateString, options) {
  * @typedef {Object} BodyOptions
  * @property {string} source - The HTML string or url to convert to PDF.
  * @property {boolean} sandbox - Generates PDF documents in dev mode that doesn't count in the credits.
- * @property {boolean} encode - Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`
+ * @property {boolean} encode - Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`.
+ * @property {string} filename - Optional. Must be 7+ characters (letters, numbers, "-" or "_").
+ *   If set, the API returns a temporary S3 URL (file kept 2 days); otherwise, it returns a Base64 PDF.
  */
 
 /**
@@ -104,7 +115,7 @@ export function generatePDF(htmlTemplateString, options) {
  * request(
  *   'POST',
  *   '/convert/pdf',
- *    { source: $.html }
+ *    { source: $.html },
  * );
  * @function
  * @public
@@ -125,8 +136,11 @@ export function request(method, path, body, options = {}) {
       resolvedMethod,
       resolvedPath,
       {
-        body: resolvedBody,
-        parseAs: 'text',
+        body: {
+          ...resolvedBody,
+          encode: resolvedoptions?.encode ?? true,
+        },
+        parseAs: resolvedoptions?.filename ? 'json' : 'text',
         ...resolvedoptions,
       }
     );
