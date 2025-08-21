@@ -13,7 +13,7 @@ import * as util from './Utils';
  * Payment Intents Options object. See {@link https://docs.stripe.com/api/payment_intents/list|Stripe Payment Intents API documentation} for more details.
  * @typedef {Object} PaymentIntentsOptions
  * @public
- * @param {string} paymentIntentId - Id of a specific payment intent to retrieve. If provided, only this payment intent will be returned
+ * @property {string} paymentIntentId - Id of a specific payment intent to retrieve. If provided, only this payment intent will be returned
  * @property {object} created - An object of created fields for filtering the data.
  * @property {string} ending_before - Object string ID that defines your place in the list. Example: `obj_bar` in order to fetch the previous page of the list.
  * @property {string} starting_after - Object string ID that defines your place in the list. Example: `obj_foo` in order to fetch the next page of the list.
@@ -62,7 +62,7 @@ export function listPaymentIntents(options = {}) {
  * Customers Options object. See {@link https://docs.stripe.com/api/customers/list|Stripe Customers API documentation} for more details.
  * @typedef {Object} CustomersOptions
  * @public
- * @param {string} customerId - Id of a specific customer to retrieve. If provided, only this customer will be returned
+ * @property {string} customerId - Id of a specific customer to retrieve. If provided, only this customer will be returned
  * @property {object} created - An object of created fields for filtering the data.
  * @property {string} ending_before - Object string ID that defines your place in the list. Example: `obj_bar` in order to fetch the previous page of the list.
  * @property {string} starting_after - Object string ID that defines your place in the list. Example: `obj_foo` in order to fetch the next page of the list.
@@ -79,6 +79,8 @@ export function listPaymentIntents(options = {}) {
  * listCustomers({limit:3});
  * @example <caption>List a specific customer</caption>
  * listCustomers({ customerId: 'cus_SthTl85l20LRJj' });
+ * @example <caption>List customers with email option</caption>
+ * listCustomers({ email: 'cs002@example.com' });
  * @function
  * @public
  * @param {CustomersOptions} options - Optional customer request options
@@ -111,7 +113,7 @@ export function listCustomers(options = {}) {
  * Subscriptions Options object. See {@link https://docs.stripe.com/api/subscriptions/list|Stripe Subscriptions API documentation} for more details.
  * @typedef {Object} SubscriptionsOptions
  * @public
- * @param {string} subscriptionId - Id of a specific subscription to retrieve. If provided, only this subscription will be returned
+ * @property {string} subscriptionId - Id of a specific subscription to retrieve. If provided, only this subscription will be returned
  * @property {object} created - An object of created fields for filtering the data.
  * @property {string} ending_before - Object string ID that defines your place in the list. Example: `obj_bar` in order to fetch the previous page of the list.
  * @property {string} starting_after - Object string ID that defines your place in the list. Example: `obj_foo` in order to fetch the next page of the list.
@@ -161,7 +163,7 @@ export function listSubscriptions(options = {}) {
  * Invoices Options object. See {@link https://docs.stripe.com/api/invoices/list|Stripe invoices API documentation} for more details.
  * @typedef {Object} InvoicesOptions
  * @public
- * @param {string} invoiceId - Id of a specific invoice to retrieve. If provided, only this invoice will be returned.
+ * @property {string} invoiceId - Id of a specific invoice to retrieve. If provided, only this invoice will be returned.
  * @property {object} created - An object of created fields for filtering the data.
  * @property {string} ending_before - Object string ID that defines your place in the list. Example: `obj_bar` in order to fetch the previous page of the list.
  * @property {string} starting_after - Object string ID that defines your place in the list. Example: `obj_foo` in order to fetch the next page of the list.
@@ -207,6 +209,7 @@ export function listInvoices(options = {}) {
 
 export {
   as,
+  assert,
   combine,
   cursor,
   dataPath,
