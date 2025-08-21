@@ -19,7 +19,6 @@ function createConnection(state) {
     database,
     port = 1433,
     encrypt = true,
-    rowCollectionOnRequestCompletion = true,
     trustServerCertificate = true,
   } = state.configuration;
 
@@ -37,7 +36,7 @@ function createConnection(state) {
       port,
       database,
       encrypt,
-      rowCollectionOnRequestCompletion,
+      rowCollectionOnRequestCompletion: true,
       trustServerCertificate,
     },
   };
@@ -170,10 +169,6 @@ function queryHandler(state, query, callback, options) {
       }
     });
 
-    request.on('row', columns => {
-      rows.push(columns);
-    });
-
     connection.execSql(request);
   });
 }
@@ -277,25 +272,21 @@ export function findValue(filter) {
       return new Promise((resolve, reject) => {
         console.log(`Executing query: ${body}`);
 
-        const rows = [];
-        const request = new Request(body, err => {
+        const request = new Request(body, (err, rowCount, rows) => {
           if (err) {
             console.error(err.message);
             reject(err);
           } else {
             if (rows.length > 0) {
-              resolve(rows[0][0].value);
-            } else {
+              returnValue = rows[0][0].value;
+            }
+            if (returnValue === null) {
               console.log('No value found');
               resolve(undefined);
             }
+            resolve(returnValue);
           }
         });
-
-        request.on('row', columns => {
-          rows.push(columns);
-        });
-
         connection.execSql(request);
       });
     } catch (e) {
