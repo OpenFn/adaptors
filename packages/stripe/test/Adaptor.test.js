@@ -246,7 +246,7 @@ describe('listPaymentIntents', () => {
     expect(finalState.data.id).to.eq('pi_001');
   });
 
-  it('filters payment intents  with limit option', async () => {
+  it('filters payment intents with limit option', async () => {
     testServer
       .intercept({
         path: '/v1/payment_intents',
