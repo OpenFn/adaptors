@@ -12,6 +12,7 @@ import {
   http,
   fn,
   bulk2,
+  bulk1,
 } from '../src';
 
 const state = { configuration };
@@ -392,6 +393,52 @@ describe('Integration tests', () => {
 
         expect(data.successfulResults.length).to.eq(2);
         expect(data.failedResults.length).to.eq(0);
+      }).timeout(5e4);
+    });
+  });
+  describe('bulk1', () => {
+    describe('query', () => {
+      it('should query all records', async () => {
+        const { data } = await execute(
+          bulk1.query('SELECT Id, Name FROM Account')
+        )(state);
+        expect(data.length).to.greaterThan(8e3);
+      }).timeout(5e5);
+    });
+    describe('insert', () => {
+      it('should insert multiple records', async () => {
+        state.data = [
+          { Name: 'Bulk1 Test 1', vera__Active__c: 'No' },
+          { Name: 'Bulk1 Test 2', vera__Active__c: 'Yes' },
+        ];
+        const { data } = await execute(
+          bulk1.insert('Account', state => state.data)
+        )(state);
+      }).timeout(5e4);
+    });
+    describe('update', () => {
+      it.only('should update multiple records', async () => {
+        state.data = [
+          { Id: '001Ke00000cTqRvIAK', Name: 'Bulk1 Update Test 1', vera__Active__c: 'No' },
+          { Id: '001Ke00000cTqRvIAK', Name: 'Bulk1 Update Test 2', vera__Active__c: 'No' },
+        ];
+        const { data } = await execute(
+          bulk1.update('Account', state => state.data)
+        )(state);
+      }).timeout(5e4);
+    });
+    describe('upsert', () => {
+      it('should upsert multiple records', async () => {
+        const { data } = await execute(
+          bulk1.upsert('Account', state => state.data)
+        )(state);
+      }).timeout(5e4);
+    });
+    describe('destroy', () => {
+      it('should destroy multiple records', async () => {
+        const { data } = await execute(
+          bulk1.destroy('Account', state => state.data)
+        )(state);
       }).timeout(5e4);
     });
   });
