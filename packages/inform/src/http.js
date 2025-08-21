@@ -71,23 +71,4 @@ export function request(method, path, options = {}) {
 
     return util.prepareHttpNextState(state, response);
   };
-}
-
-export {
-  combine,
-  cursor,
-  dataPath,
-  dataValue,
-  dateFns,
-  each,
-  field,
-  fields,
-  fn,
-  fnIf,
-  group,
-  lastReferenceValue,
-  merge,
-  scrubEmojis,
-  sourceValue,
-  util,
-} from '@openfn/language-common';
+};
