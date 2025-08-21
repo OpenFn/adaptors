@@ -10,17 +10,17 @@
         "tags": [
           {
             "title": "example",
-            "description": "listPaymentIntents()",
+            "description": "listPaymentIntents();",
             "caption": "List all payment intents"
           },
           {
             "title": "example",
-            "description": "listPaymentIntents({limit:3})",
+            "description": "listPaymentIntents({limit:3});",
             "caption": "List payment intents with options"
           },
           {
             "title": "example",
-            "description": "listPaymentIntents({ paymentId: 'pi_3RxS5EEAUr6ipfDB0aKo3moC' });",
+            "description": "listPaymentIntents({ paymentIntentId: 'pi_3RxS5EEAUr6ipfDB0aKo3moC' });",
             "caption": "List a specific payment intent"
           },
           {
@@ -68,18 +68,23 @@
         "tags": [
           {
             "title": "example",
-            "description": "listCustomers()",
+            "description": "listCustomers();",
             "caption": "List all customers"
           },
           {
             "title": "example",
-            "description": "listCustomers({limit:3})",
+            "description": "listCustomers({limit:3});",
             "caption": "List customers with options"
           },
           {
             "title": "example",
             "description": "listCustomers({ customerId: 'cus_SthTl85l20LRJj' });",
             "caption": "List a specific customer"
+          },
+          {
+            "title": "example",
+            "description": "listCustomers({ email: 'cs002@example.com' });",
+            "caption": "List customers with email option"
           },
           {
             "title": "function",
@@ -126,12 +131,12 @@
         "tags": [
           {
             "title": "example",
-            "description": "listSubscriptions()",
+            "description": "listSubscriptions();",
             "caption": "List all subscriptions"
           },
           {
             "title": "example",
-            "description": "listSubscriptions({limit:3})",
+            "description": "listSubscriptions({limit:3});",
             "caption": "List subscriptions with options"
           },
           {
@@ -184,12 +189,12 @@
         "tags": [
           {
             "title": "example",
-            "description": "listInvoices()",
+            "description": "listInvoices();",
             "caption": "List all invoices"
           },
           {
             "title": "example",
-            "description": "listInvoices({limit:3})",
+            "description": "listInvoices({limit:3});",
             "caption": "List invoices with options"
           },
           {
@@ -979,6 +984,59 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "assert",
+      "params": [
+        "expression",
+        "errorMessage"
+      ],
+      "docs": {
+        "description": "Asserts the given expression or function resolves to `true`, or else throws an exception. Optionally accepts and error message.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "assert('a' === 'b', '\"a\" is not equal to \"b\"')"
+          },
+          {
+            "title": "param",
+            "description": "The expression or function to be evaluated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "expression"
+          },
+          {
+            "title": "param",
+            "description": "The error message thrown in case of a failed state.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "errorMessage"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     },
     {
       "name": "as",
