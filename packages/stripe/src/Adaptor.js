@@ -13,7 +13,6 @@ import * as util from './Utils';
  * Payment Intents Options object. See {@link https://docs.stripe.com/api/payment_intents/list|Stripe Payment Intents API documentation} for more details.
  * @typedef {Object} PaymentIntentsOptions
  * @public
- * @param {string} paymentIntentId - Id of a specific payment intent to retrieve. If provided, only this payment intent will be returned
  * @property {object} created - An object of created fields for filtering the data.
  * @property {string} ending_before - Object string ID that defines your place in the list. Example: `obj_bar` in order to fetch the previous page of the list.
  * @property {string} starting_after - Object string ID that defines your place in the list. Example: `obj_foo` in order to fetch the next page of the list.
@@ -26,8 +25,6 @@ import * as util from './Utils';
  * listPaymentIntents();
  * @example <caption>List payment intents with options</caption>
  * listPaymentIntents({limit:3});
- * @example <caption>List a specific payment intent</caption>
- * listPaymentIntents({ paymentIntentId: 'pi_3RxS5EEAUr6ipfDB0aKo3moC' });
  * @function
  * @public
  * @param {PaymentIntentsOptions} options - Optional payment intent request options
@@ -38,15 +35,10 @@ export function listPaymentIntents(options = {}) {
   return async state => {
     const [resolvedoptions] = expandReferences(state, options);
 
-    const { paymentIntentId } = resolvedoptions;
-    delete resolvedoptions.paymentIntentId;
-
     const response = await util.request(
       state.configuration,
       'GET',
-      paymentIntentId
-        ? `/payment_intents/${paymentIntentId}`
-        : '/payment_intents',
+      '/payment_intents',
       {
         query: {
           ...resolvedoptions,
@@ -59,10 +51,34 @@ export function listPaymentIntents(options = {}) {
 }
 
 /**
+ * Get a Stripe payment intent
+ * @example
+ * getPaymentIntent('pi_3RxS5EEAUr6ipfDB0aKo3moC');
+ * @function
+ * @public
+ * @param {string} paymentIntentId - The ID of the payment intent to retrieve.
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function getPaymentIntent(paymentIntentId) {
+  return async state => {
+    const [resolvedPaymentIntentId] = expandReferences(state, paymentIntentId);
+
+    const response = await util.request(
+      state.configuration,
+      'GET',
+      `/payment_intents/${resolvedPaymentIntentId}`,
+      {}
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
  * Customers Options object. See {@link https://docs.stripe.com/api/customers/list|Stripe Customers API documentation} for more details.
  * @typedef {Object} CustomersOptions
  * @public
- * @param {string} customerId - Id of a specific customer to retrieve. If provided, only this customer will be returned
  * @property {object} created - An object of created fields for filtering the data.
  * @property {string} ending_before - Object string ID that defines your place in the list. Example: `obj_bar` in order to fetch the previous page of the list.
  * @property {string} starting_after - Object string ID that defines your place in the list. Example: `obj_foo` in order to fetch the next page of the list.
@@ -77,8 +93,6 @@ export function listPaymentIntents(options = {}) {
  * listCustomers();
  * @example <caption>List customers with options</caption>
  * listCustomers({limit:3});
- * @example <caption>List a specific customer</caption>
- * listCustomers({ customerId: 'cus_SthTl85l20LRJj' });
  * @function
  * @public
  * @param {CustomersOptions} options - Optional customer request options
@@ -108,10 +122,34 @@ export function listCustomers(options = {}) {
 }
 
 /**
+ * Get a Stripe customer
+ * @example
+ * getCustomer('cus_SthTl85l20LRJj');
+ * @function
+ * @public
+ * @param {string} customerId - The ID of the customer to retrieve.
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function getCustomer(customerId) {
+  return async state => {
+    const [resolvedCustomerId] = expandReferences(state, customerId);
+
+    const response = await util.request(
+      state.configuration,
+      'GET',
+      `/customers/${resolvedCustomerId}`,
+      {}
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
  * Subscriptions Options object. See {@link https://docs.stripe.com/api/subscriptions/list|Stripe Subscriptions API documentation} for more details.
  * @typedef {Object} SubscriptionsOptions
  * @public
- * @param {string} subscriptionId - Id of a specific subscription to retrieve. If provided, only this subscription will be returned
  * @property {object} created - An object of created fields for filtering the data.
  * @property {string} ending_before - Object string ID that defines your place in the list. Example: `obj_bar` in order to fetch the previous page of the list.
  * @property {string} starting_after - Object string ID that defines your place in the list. Example: `obj_foo` in order to fetch the next page of the list.
@@ -127,8 +165,6 @@ export function listCustomers(options = {}) {
  * listSubscriptions();
  * @example <caption>List subscriptions with options</caption>
  * listSubscriptions({limit:3});
- * @example <caption>List a specific subscription</caption>
- * listSubscriptions({ subscriptionId: 'sub_1MowQVLkdIwHu7ixeRlqHVzs' });
  * @function
  * @public
  * @param {SubscriptionsOptions} options - Optional subscription request options
@@ -139,18 +175,40 @@ export function listSubscriptions(options = {}) {
   return async state => {
     const [resolvedoptions] = expandReferences(state, options);
 
-    const { subscriptionId } = resolvedoptions;
-    delete resolvedoptions.subscriptionId;
-
     const response = await util.request(
       state.configuration,
       'GET',
-      subscriptionId ? `/subscriptions/${subscriptionId}` : '/subscriptions',
+      '/subscriptions',
       {
         query: {
           ...resolvedoptions,
         },
       }
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
+ * Get a Stripe subscription
+ * @example
+ * getSubscription('sub_1MowQVLkdIwHu7ixeRlqHVzs');
+ * @function
+ * @public
+ * @param {string} subscriptionId - The ID of the subscription to retrieve.
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function getSubscription(subscriptionId) {
+  return async state => {
+    const [resolvedSsubscriptionId] = expandReferences(state, subscriptionId);
+
+    const response = await util.request(
+      state.configuration,
+      'GET',
+      `/subscriptions/${resolvedSsubscriptionId}`,
+      {}
     );
 
     return util.prepareNextState(state, response);
@@ -199,6 +257,31 @@ export function listInvoices(options = {}) {
           ...resolvedoptions,
         },
       }
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
+ * Get a Stripe invoice
+ * @example
+ * getInvoice('in_1RyAGAEAUr6ipfDBTDSAgpj0');
+ * @function
+ * @public
+ * @param {string} invoiceId - The ID of the invoice to retrieve.
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function getInvoice(invoiceId) {
+  return async state => {
+    const [resolvedInvoiceId] = expandReferences(state, invoiceId);
+
+    const response = await util.request(
+      state.configuration,
+      'GET',
+      `/invoices/${resolvedInvoiceId}`,
+      {}
     );
 
     return util.prepareNextState(state, response);

@@ -6,6 +6,10 @@ import {
   listInvoices,
   listPaymentIntents,
   listSubscriptions,
+  getCustomer,
+  getInvoice,
+  getPaymentIntent,
+  getSubscription,
 } from '../src/Adaptor.js';
 
 const testServer = enableMockClient('https://stripe.test.com');
@@ -50,28 +54,6 @@ describe('listCustomers', () => {
     });
   });
 
-  it('lists a single customer', async () => {
-    testServer
-      .intercept({
-        path: '/v1/customers/cus_001',
-        method: 'GET',
-      })
-
-      .reply(200, { email: 'cs001@example.com', id: 'cus_001' });
-
-    const state = {
-      configuration,
-    };
-
-    const finalState = await listCustomers({ customerId: 'cus_001' })(state);
-
-    expect(finalState.data).to.eql({
-      email: 'cs001@example.com',
-      id: 'cus_001',
-    });
-    expect(finalState.data.email).to.eq('cs001@example.com');
-  });
-
   it('filters customers with email option', async () => {
     testServer
       .intercept({
@@ -100,6 +82,30 @@ describe('listCustomers', () => {
     expect(finalState.data.data).to.eql([
       { email: 'cs002@example.com', id: 'cus_002' },
     ]);
+  });
+});
+
+describe('get a single customer', () => {
+  it('get a customer', async () => {
+    testServer
+      .intercept({
+        path: '/v1/customers/cus_001',
+        method: 'GET',
+      })
+
+      .reply(200, { email: 'cs001@example.com', id: 'cus_001' });
+
+    const state = {
+      configuration,
+    };
+
+    const finalState = await getCustomer('cus_001')(state);
+
+    expect(finalState.data).to.eql({
+      email: 'cs001@example.com',
+      id: 'cus_001',
+    });
+    expect(finalState.data.email).to.eq('cs001@example.com');
   });
 });
 
@@ -138,28 +144,6 @@ describe('listInvoices', () => {
     });
   });
 
-  it('lists a single invoice', async () => {
-    testServer
-      .intercept({
-        path: '/v1/invoices/in_001',
-        method: 'GET',
-      })
-
-      .reply(200, { account_name: 'New business sandbox', id: 'in_001' });
-
-    const state = {
-      configuration,
-    };
-
-    const finalState = await listInvoices({ invoiceId: 'in_001' })(state);
-
-    expect(finalState.data).to.eql({
-      account_name: 'New business sandbox',
-      id: 'in_001',
-    });
-    expect(finalState.data.id).to.eq('in_001');
-  });
-
   it('filters invoices with limit option', async () => {
     testServer
       .intercept({
@@ -187,6 +171,30 @@ describe('listInvoices', () => {
       { account_name: 'New business sandbox', id: 'in_001' },
     ]);
     expect(finalState.data.has_more).to.be.true;
+  });
+});
+
+describe('get an invoice', () => {
+  it('get an invoice', async () => {
+    testServer
+      .intercept({
+        path: '/v1/invoices/in_001',
+        method: 'GET',
+      })
+
+      .reply(200, { account_name: 'New business sandbox', id: 'in_001' });
+
+    const state = {
+      configuration,
+    };
+
+    const finalState = await getInvoice('in_001')(state);
+
+    expect(finalState.data).to.eql({
+      account_name: 'New business sandbox',
+      id: 'in_001',
+    });
+    expect(finalState.data.id).to.eq('in_001');
   });
 });
 
@@ -225,27 +233,6 @@ describe('listPaymentIntents', () => {
     });
   });
 
-  it('lists a single payment intent', async () => {
-    testServer
-      .intercept({
-        path: '/v1/payment_intents/pi_001',
-        method: 'GET',
-      })
-
-      .reply(200, { currency: 'eur', id: 'pi_001' });
-
-    const state = {
-      configuration,
-    };
-
-    const finalState = await listPaymentIntents({ paymentIntentId: 'pi_001' })(
-      state
-    );
-
-    expect(finalState.data).to.eql({ currency: 'eur', id: 'pi_001' });
-    expect(finalState.data.id).to.eq('pi_001');
-  });
-
   it('filters payment intents  with limit option', async () => {
     testServer
       .intercept({
@@ -271,6 +258,27 @@ describe('listPaymentIntents', () => {
 
     expect(finalState.data.data).to.eql([{ currency: 'usd', id: 'pi_002' }]);
     expect(finalState.data.has_more).to.be.true;
+  });
+});
+
+describe('get a payment intent', () => {
+  it('get a payment intent', async () => {
+    testServer
+      .intercept({
+        path: '/v1/payment_intents/pi_001',
+        method: 'GET',
+      })
+
+      .reply(200, { currency: 'eur', id: 'pi_001' });
+
+    const state = {
+      configuration,
+    };
+
+    const finalState = await getPaymentIntent('pi_001')(state);
+
+    expect(finalState.data).to.eql({ currency: 'eur', id: 'pi_001' });
+    expect(finalState.data.id).to.eq('pi_001');
   });
 });
 
@@ -309,30 +317,6 @@ describe('listSubscriptions', () => {
     });
   });
 
-  it('lists a single subscription', async () => {
-    testServer
-      .intercept({
-        path: '/v1/subscriptions/sub_002',
-        method: 'GET',
-      })
-
-      .reply(200, { collection_method: 'send_invoice', id: 'sub_002' });
-
-    const state = {
-      configuration,
-    };
-
-    const finalState = await listSubscriptions({ subscriptionId: 'sub_002' })(
-      state
-    );
-
-    expect(finalState.data).to.eql({
-      collection_method: 'send_invoice',
-      id: 'sub_002',
-    });
-    expect(finalState.data.id).to.eq('sub_002');
-  });
-
   it('filters subscriptions with limit option', async () => {
     testServer
       .intercept({
@@ -360,5 +344,29 @@ describe('listSubscriptions', () => {
       { collection_method: 'charge_automatically', id: 'sub_001' },
     ]);
     expect(finalState.data.has_more).to.be.true;
+  });
+});
+
+describe('get subscription', () => {
+  it('lists a single subscription', async () => {
+    testServer
+      .intercept({
+        path: '/v1/subscriptions/sub_002',
+        method: 'GET',
+      })
+
+      .reply(200, { collection_method: 'send_invoice', id: 'sub_002' });
+
+    const state = {
+      configuration,
+    };
+
+    const finalState = await getSubscription('sub_002')(state);
+
+    expect(finalState.data).to.eql({
+      collection_method: 'send_invoice',
+      id: 'sub_002',
+    });
+    expect(finalState.data.id).to.eq('sub_002');
   });
 });

@@ -10,18 +10,13 @@
         "tags": [
           {
             "title": "example",
-            "description": "listPaymentIntents()",
+            "description": "listPaymentIntents();",
             "caption": "List all payment intents"
           },
           {
             "title": "example",
-            "description": "listPaymentIntents({limit:3})",
+            "description": "listPaymentIntents({limit:3});",
             "caption": "List payment intents with options"
-          },
-          {
-            "title": "example",
-            "description": "listPaymentIntents({ paymentId: 'pi_3RxS5EEAUr6ipfDB0aKo3moC' });",
-            "caption": "List a specific payment intent"
           },
           {
             "title": "function",
@@ -59,6 +54,53 @@
       "valid": true
     },
     {
+      "name": "getPaymentIntent",
+      "params": [
+        "paymentIntentId"
+      ],
+      "docs": {
+        "description": "Get a Stripe payment intent",
+        "tags": [
+          {
+            "title": "example",
+            "description": "getPaymentIntent('pi_3RxS5EEAUr6ipfDB0aKo3moC');"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The ID of the payment intent to retrieve.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "paymentIntentId"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "listCustomers",
       "params": [
         "options"
@@ -68,18 +110,13 @@
         "tags": [
           {
             "title": "example",
-            "description": "listCustomers()",
+            "description": "listCustomers();",
             "caption": "List all customers"
           },
           {
             "title": "example",
-            "description": "listCustomers({limit:3})",
+            "description": "listCustomers({limit:3});",
             "caption": "List customers with options"
-          },
-          {
-            "title": "example",
-            "description": "listCustomers({ customerId: 'cus_SthTl85l20LRJj' });",
-            "caption": "List a specific customer"
           },
           {
             "title": "function",
@@ -117,6 +154,53 @@
       "valid": true
     },
     {
+      "name": "getCustomer",
+      "params": [
+        "customerId"
+      ],
+      "docs": {
+        "description": "Get a Stripe customer",
+        "tags": [
+          {
+            "title": "example",
+            "description": "getCustomer('cus_SthTl85l20LRJj');"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The ID of the customer to retrieve.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "customerId"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "listSubscriptions",
       "params": [
         "options"
@@ -126,18 +210,13 @@
         "tags": [
           {
             "title": "example",
-            "description": "listSubscriptions()",
+            "description": "listSubscriptions();",
             "caption": "List all subscriptions"
           },
           {
             "title": "example",
-            "description": "listSubscriptions({limit:3})",
+            "description": "listSubscriptions({limit:3});",
             "caption": "List subscriptions with options"
-          },
-          {
-            "title": "example",
-            "description": "listSubscriptions({ subscriptionId: 'sub_1MowQVLkdIwHu7ixeRlqHVzs' });",
-            "caption": "List a specific subscription"
           },
           {
             "title": "function",
@@ -175,6 +254,53 @@
       "valid": true
     },
     {
+      "name": "getSubscription",
+      "params": [
+        "subscriptionId"
+      ],
+      "docs": {
+        "description": "Get a Stripe subscription",
+        "tags": [
+          {
+            "title": "example",
+            "description": "getSubscription('sub_1MowQVLkdIwHu7ixeRlqHVzs');"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The ID of the subscription to retrieve.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "subscriptionId"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "listInvoices",
       "params": [
         "options"
@@ -184,12 +310,12 @@
         "tags": [
           {
             "title": "example",
-            "description": "listInvoices()",
+            "description": "listInvoices();",
             "caption": "List all invoices"
           },
           {
             "title": "example",
-            "description": "listInvoices({limit:3})",
+            "description": "listInvoices({limit:3});",
             "caption": "List invoices with options"
           },
           {
@@ -215,6 +341,53 @@
               "name": "InvoicesOptions"
             },
             "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getInvoice",
+      "params": [
+        "invoiceId"
+      ],
+      "docs": {
+        "description": "Get a Stripe invoice",
+        "tags": [
+          {
+            "title": "example",
+            "description": "getInvoice('in_1RyAGAEAUr6ipfDBTDSAgpj0');"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The ID of the invoice to retrieve.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "invoiceId"
           },
           {
             "title": "returns",
