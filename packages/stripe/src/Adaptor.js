@@ -10,16 +10,6 @@ import * as util from './Utils';
  **/
 
 /**
- * Payment Intents Options object. See {@link https://docs.stripe.com/api/payment_intents/list|Stripe Payment Intents API documentation} for more details.
- * @typedef {Object} PaymentIntentsOptions
- * @public
- * @property {object} created - An object of created fields for filtering the data.
- * @property {string} ending_before - Object string ID that defines your place in the list. Example: `obj_bar` in order to fetch the previous page of the list.
- * @property {string} starting_after - Object string ID that defines your place in the list. Example: `obj_foo` in order to fetch the next page of the list.
- * @property {number} limit - A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
- */
-
-/**
  * Get payments from Stripe
  * @example <caption>List all payment intents</caption>
  * listPaymentIntents();
@@ -27,7 +17,7 @@ import * as util from './Utils';
  * listPaymentIntents({limit:3});
  * @function
  * @public
- * @param {PaymentIntentsOptions} options - Optional payment intent request options
+ * @param {object} options -  Payment Intents options object. See {@link https://docs.stripe.com/api/payment_intents/list|Stripe Payment Intents API documentation} for more details.
  * @returns {Operation}
  * @state {HttpState}
  */
@@ -76,18 +66,6 @@ export function getPaymentIntent(paymentIntentId) {
 }
 
 /**
- * Customers Options object. See {@link https://docs.stripe.com/api/customers/list|Stripe Customers API documentation} for more details.
- * @typedef {Object} CustomersOptions
- * @public
- * @property {object} created - An object of created fields for filtering the data.
- * @property {string} ending_before - Object string ID that defines your place in the list. Example: `obj_bar` in order to fetch the previous page of the list.
- * @property {string} starting_after - Object string ID that defines your place in the list. Example: `obj_foo` in order to fetch the next page of the list.
- * @property {number} limit - A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
- * @property {string} test_clock - Provides a list of customers that are associated with the specified test clock.
- * @property {string} email - Filter customers by email address.
- */
-
-/**
  * Get customers from Stripe
  * @example <caption>List all customers</caption>
  * listCustomers();
@@ -97,7 +75,7 @@ export function getPaymentIntent(paymentIntentId) {
  * listCustomers({ email: 'cs002@example.com' });
  * @function
  * @public
- * @param {CustomersOptions} options - Optional customer request options
+ * @param {object} options - Customers optional options object. See {@link https://docs.stripe.com/api/customers/list|Stripe Customers API documentation} for more details.
  * @returns {Operation}
  * @state {HttpState}
  */
@@ -146,19 +124,6 @@ export function getCustomer(customerId) {
 }
 
 /**
- * Subscriptions Options object. See {@link https://docs.stripe.com/api/subscriptions/list|Stripe Subscriptions API documentation} for more details.
- * @typedef {Object} SubscriptionsOptions
- * @public
- * @property {object} created - An object of created fields for filtering the data.
- * @property {string} ending_before - Object string ID that defines your place in the list. Example: `obj_bar` in order to fetch the previous page of the list.
- * @property {string} starting_after - Object string ID that defines your place in the list. Example: `obj_foo` in order to fetch the next page of the list.
- * @property {number} limit - A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
- * @property {string} test_clock - Provides a list of subscriptions that are associated with the specified test clock.
- * @property {string} price - Filter for subscriptions that contain this recurring price ID.
- * @property {string} customer - The ID of the customer whose subscriptions will be retrieved.
- */
-
-/**
  * List Stripe subscriptions
  * @example <caption>List all subscriptions</caption>
  * listSubscriptions();
@@ -166,7 +131,7 @@ export function getCustomer(customerId) {
  * listSubscriptions({limit:3});
  * @function
  * @public
- * @param {SubscriptionsOptions} options - Optional subscription request options
+ * @param {object} options - Subscriptions optional options object. See {@link https://docs.stripe.com/api/subscriptions/list|Stripe Subscriptions API documentation} for more details.
  * @returns {Operation}
  * @state {HttpState}
  */
