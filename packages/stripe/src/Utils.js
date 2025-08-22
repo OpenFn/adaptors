@@ -1,8 +1,6 @@
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
-  makeBasicAuthHeader,
-  assertRelativeUrl,
   logResponse,
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
@@ -15,7 +13,7 @@ export const prepareNextState = (state, response) => {
   }
 
   return {
-    ...composeNextState(state, response.body),
+    ...composeNextState(state, body),
     response: responseWithoutBody,
   };
 };

@@ -93,6 +93,8 @@ export function getPaymentIntent(paymentIntentId) {
  * listCustomers();
  * @example <caption>List customers with options</caption>
  * listCustomers({limit:3});
+ * @example <caption>List customers with email option</caption>
+ * listCustomers({ email: 'cs002@example.com' });
  * @function
  * @public
  * @param {CustomersOptions} options - Optional customer request options
@@ -219,7 +221,7 @@ export function getSubscription(subscriptionId) {
  * Invoices Options object. See {@link https://docs.stripe.com/api/invoices/list|Stripe invoices API documentation} for more details.
  * @typedef {Object} InvoicesOptions
  * @public
- * @param {string} invoiceId - Id of a specific invoice to retrieve. If provided, only this invoice will be returned.
+ * @property {string} invoiceId - Id of a specific invoice to retrieve. If provided, only this invoice will be returned.
  * @property {object} created - An object of created fields for filtering the data.
  * @property {string} ending_before - Object string ID that defines your place in the list. Example: `obj_bar` in order to fetch the previous page of the list.
  * @property {string} starting_after - Object string ID that defines your place in the list. Example: `obj_foo` in order to fetch the next page of the list.
@@ -290,6 +292,7 @@ export function getInvoice(invoiceId) {
 
 export {
   as,
+  assert,
   combine,
   cursor,
   dataPath,
