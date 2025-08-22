@@ -105,13 +105,10 @@ export function listCustomers(options = {}) {
   return async state => {
     const [resolvedoptions] = expandReferences(state, options);
 
-    const { customerId } = resolvedoptions;
-    delete resolvedoptions.customerId;
-
     const response = await util.request(
       state.configuration,
       'GET',
-      customerId ? `/customers/${customerId}` : '/customers',
+      '/customers',
       {
         query: {
           ...resolvedoptions,
@@ -247,13 +244,10 @@ export function listInvoices(options = {}) {
   return async state => {
     const [resolvedoptions] = expandReferences(state, options);
 
-    const { invoiceId } = resolvedoptions;
-    delete resolvedoptions.invoiceId;
-
     const response = await util.request(
       state.configuration,
       'GET',
-      invoiceId ? `/invoices/${invoiceId}` : '/invoices',
+      '/invoices',
       {
         query: {
           ...resolvedoptions,
