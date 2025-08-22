@@ -19,7 +19,11 @@ export const prepareNextState = (state, response) => {
 };
 
 export const request = (configuration = {}, method, path, options) => {
-  const { baseUrl, apiKey, apiVersion = 'v1' } = configuration;
+  const {
+    baseUrl = 'https://api.stripe.com',
+    apiKey,
+    apiVersion = 'v1',
+  } = configuration;
   const headers = {
     Authorization: `Bearer ${apiKey}`,
   };

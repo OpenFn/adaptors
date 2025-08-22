@@ -14,6 +14,7 @@
       "description": "The stripe base URL ",
       "format": "uri",
       "minLength": 1,
+      "default":"https://api.stripe.com",
       "examples": [
         "https://api.stripe.com"
       ]
