@@ -1,6 +1,5 @@
 import { expandReferences, encode } from '@openfn/language-common/util';
 import * as util from './Utils';
-import { fetch } from 'undici';
 
 /**
  * State object
