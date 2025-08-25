@@ -10,6 +10,65 @@ import * as util from './Utils';
  **/
 
 /**
+ * List items from Stripe
+ * @example <caption>List all payment intents</caption>
+ * list('/payment_intents');
+ * @example <caption>List customers with options</caption>
+ * list('/customers', {limit:3});
+ * @function
+ * @public
+ * @param {string} path - The API path to list items from.
+ * @param {object} options -  Optional options object. See {@link https://docs.stripe.com/api/payment_intents/list|Stripe API documentation} for more details.
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function list(path,options = {}) {
+  return async state => {
+    const [resolvedPath, resolvedoptions] = expandReferences(state, path, options);
+
+    const response = await util.request(
+      state.configuration,
+      'GET',
+      resolvedPath,
+      {
+        query: {
+          ...resolvedoptions,
+        },
+      }
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
+ * Get an item from Stripe
+ * @example <caption>Get a payment intent</caption>
+ * get('/payment_intents/pi_3RxS5EEAUr6ipfDB0aKo3moC');
+ * @example <caption>Get a customer</caption>
+ * get('/customers/cus_SthTl85l20LRJj');
+ * @function
+ * @public
+ * @param {string} path - The API path to retrieve.
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function get(path) {
+  return async state => {
+    const [resolvedPath] = expandReferences(state, path);
+
+    const response = await util.request(
+      state.configuration,
+      'GET',
+      resolvedPath,
+      {}
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
  * Get payments from Stripe
  * @example <caption>List all payment intents</caption>
  * listPaymentIntents();

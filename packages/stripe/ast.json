@@ -1,6 +1,122 @@
 {
   "operations": [
     {
+      "name": "list",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "List items from Stripe",
+        "tags": [
+          {
+            "title": "example",
+            "description": "list('/payment_intents');",
+            "caption": "List all payment intents"
+          },
+          {
+            "title": "example",
+            "description": "list('/customers', {limit:3});",
+            "caption": "List customers with options"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The API path to list items from.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": " Optional options object. See {@link https://docs.stripe.com/api/payment_intents/list|Stripe API documentation} for more details.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "get",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Get an item from Stripe",
+        "tags": [
+          {
+            "title": "example",
+            "description": "get('/payment_intents/pi_3RxS5EEAUr6ipfDB0aKo3moC');",
+            "caption": "Get a payment intent"
+          },
+          {
+            "title": "example",
+            "description": "get('/customers/cus_SthTl85l20LRJj');",
+            "caption": "Get a customer"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The API path to retrieve.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "listPaymentIntents",
       "params": [
         "options"
@@ -30,10 +146,10 @@
           },
           {
             "title": "param",
-            "description": "Optional payment intent request options",
+            "description": " Payment Intents options object. See {@link https://docs.stripe.com/api/payment_intents/list|Stripe Payment Intents API documentation} for more details.",
             "type": {
               "type": "NameExpression",
-              "name": "PaymentIntentsOptions"
+              "name": "object"
             },
             "name": "options"
           },
@@ -135,10 +251,10 @@
           },
           {
             "title": "param",
-            "description": "Optional customer request options",
+            "description": "Customers optional options object. See {@link https://docs.stripe.com/api/customers/list|Stripe Customers API documentation} for more details.",
             "type": {
               "type": "NameExpression",
-              "name": "CustomersOptions"
+              "name": "object"
             },
             "name": "options"
           },
@@ -235,10 +351,10 @@
           },
           {
             "title": "param",
-            "description": "Optional subscription request options",
+            "description": "Subscriptions optional options object. See {@link https://docs.stripe.com/api/subscriptions/list|Stripe Subscriptions API documentation} for more details.",
             "type": {
               "type": "NameExpression",
-              "name": "SubscriptionsOptions"
+              "name": "object"
             },
             "name": "options"
           },
