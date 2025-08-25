@@ -54,15 +54,16 @@ export function query(query) {
     console.log(`Executing bulk query: ${resolvedQuery}`);
 
     try {
-      // Get the stream from bulk query
       const stream = await connection.bulk.query(resolvedQuery);
+      const records = await new Promise((resolve, reject) => {
+        const recs = [];
+        stream
+          .on('record', rec => recs.push(rec))
+          .on('error', reject)
+          .on('finish', () => resolve(recs));
+      });
 
-      // Convert stream to array of records
-      const results = [];
-      for await (const record of stream) {
-        results.push(record);
-      }
-      return composeNextState(state, results);
+      return composeNextState(state, records);
     } catch (error) {
       console.error('Bulk query error:', error);
       throw error;
@@ -85,7 +86,16 @@ function bulk1Load(operation, sObject, records, options = {}) {
   return async state => {
     const [resolvedSObject, resolvedRecords, resolvedOptions] =
       expandReferences(state, sObject, records, options);
+    const {
+      extIdField,
+      failOnError = false,
+      concurrencyMode = 'Parallel',
+      pollInterval = DEFAULT_POLL_INTERVAL,
+      pollTimeout = DEFAULT_POLL_TIMEOUT,
+    } = resolvedOptions;
 
+    connection.bulk.pollTimeout = pollTimeout;
+    connection.bulk.pollInterval = pollInterval;
     if (!resolvedRecords || resolvedRecords.length === 0) {
       if (resolvedOptions.allowNoOp) {
         console.log(
@@ -101,22 +111,18 @@ function bulk1Load(operation, sObject, records, options = {}) {
     );
 
     try {
-      // Use jsforce's bulk.load method which handles job creation, batching, and polling automatically
+      const opts = {
+        concurrencyMode,
+        ...(operation === 'upsert' && { extIdField }),
+      };
+
       const results = await connection.bulk.load(
         resolvedSObject,
         operation,
-        resolvedRecords,
-        {
-          concurrencyMode: resolvedOptions.concurrencyMode || 'Parallel',
-          ...(operation === 'upsert' && {
-            extIdField: resolvedOptions.extIdField,
-          }),
-          pollInterval: resolvedOptions.pollInterval || DEFAULT_POLL_INTERVAL,
-          pollTimeout: resolvedOptions.pollTimeout || DEFAULT_POLL_TIMEOUT,
-        }
+        opts,
+        resolvedRecords
       );
 
-      // Process results
       const successfulResults = results.filter(r => r.success);
       const failedResults = results.filter(r => !r.success);
       const unprocessedRecords = failedResults.map((r, i) => ({
@@ -133,7 +139,7 @@ function bulk1Load(operation, sObject, records, options = {}) {
         failureCount: failedResults.length,
       };
 
-      if (resolvedOptions.failOnError && failedResults.length > 0) {
+      if (failOnError && failedResults.length > 0) {
         throw new Error(
           `Bulk ${operation} failed with ${
             failedResults.length
