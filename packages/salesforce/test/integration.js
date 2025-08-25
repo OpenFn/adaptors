@@ -396,7 +396,7 @@ describe('Integration tests', () => {
       }).timeout(5e4);
     });
   });
-  describe('bulk1', () => {
+  describe.only('bulk1', () => {
     describe('query', () => {
       it('should query all records', async () => {
         const { data } = await execute(
@@ -417,28 +417,61 @@ describe('Integration tests', () => {
       }).timeout(5e4);
     });
     describe('update', () => {
-      it.only('should update multiple records', async () => {
+      it('should update multiple records', async () => {
         state.data = [
-          { Id: '001Ke00000cTqRvIAK', Name: 'Bulk1 Update Test 1', vera__Active__c: 'No' },
-          { Id: '001Ke00000cTqRvIAK', Name: 'Bulk1 Update Test 2', vera__Active__c: 'No' },
+          {
+            Id: '001Ke00000cTqRvIAK',
+            Name: 'Bulk1 Update Test 1',
+            vera__Active__c: 'No',
+          },
+          {
+            Id: '001Ke00000cTqRvIAK',
+            Name: 'Bulk1 Update Test 2',
+            vera__Active__c: 'No',
+          },
         ];
         const { data } = await execute(
           bulk1.update('Account', state => state.data)
         )(state);
+        expect(data.successfulResults.length).to.eq(2);
+        expect(data.failedResults.length).to.eq(0);
       }).timeout(5e4);
     });
     describe('upsert', () => {
       it('should upsert multiple records', async () => {
-        const { data } = await execute(
-          bulk1.upsert('Account', state => state.data)
+        const { data: testRecords } = await execute(
+          query(
+            'SELECT Id, vera__External_ID__c FROM Account WHERE vera__External_ID__c != null'
+          )
         )(state);
+
+        const { data } = await execute(
+          bulk1.upsert(
+            'Account',
+            testRecords.map(record => ({
+              Id: record.Id,
+              Name: 'Bulk1 Upsert Test 1',
+              vera__Active__c: 'No',
+              vera__External_ID__c: record.vera__External_ID__c,
+            })),
+            { extIdField: 'vera__External_ID__c' }
+          )
+        )(state);
+        expect(data.successfulResults.length).to.eq(testRecords.length);
+        expect(data.failedResults.length).to.eq(0);
       }).timeout(5e4);
     });
     describe('destroy', () => {
       it('should destroy multiple records', async () => {
-        const { data } = await execute(
-          bulk1.destroy('Account', state => state.data)
+        const { data: recordIdsToDelete } = await execute(
+          query('SELECT Id FROM Account WHERE Id != null LIMIT 2')
         )(state);
+
+        const { data } = await execute(
+          bulk1.destroy('Account', recordIdsToDelete)
+        )(state);
+        expect(data.successfulResults.length).to.eq(recordIdsToDelete.length);
+        expect(data.failedResults.length).to.eq(0);
       }).timeout(5e4);
     });
   });
