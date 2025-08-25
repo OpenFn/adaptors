@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The stripe base URL ",
+      "format": "uri",
+      "minLength": 1,
+      "default":"https://api.stripe.com",
+      "examples": [
+        "https://api.stripe.com"
+      ]
+    },
+    "apiVersion": {
+      "title": "ApiVersion",
+      "type": "string",
+      "description": "Stripe API version to use",
+      "default": "v1",
+      "examples": [
+        "v1"
+      ]
+    },
+    "apiKey": {
+      "title": "ApiKey",
+      "type": "string",
+      "description": "The API key for authenticating requests to Stripe",
+      "writeOnly": true,
+      "examples": [
+        "sk_test_53iburgn5yb3u4nfufg477365gbvrnv348r475gf4bf485845gbrf"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "baseUrl",
+    "apiKey"
+  ]
+}
