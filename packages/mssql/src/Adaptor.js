@@ -273,7 +273,7 @@ export function findValue(filter) {
     try {
       const body = `select ${uuid} from ${relation} ${condition}`;
       console.log('Preparing to execute sql statement');
-
+      let returnValue = null;
       return new Promise((resolve, reject) => {
         console.log(`Executing query: ${body}`);
 
@@ -331,7 +331,7 @@ export function insert(table, record, options) {
         ', '
       )}) VALUES [--REDACTED--]];`;
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         const queryToLog = options && options.logValues ? query : safeQuery;
         console.log(`Executing insert via: ${queryToLog}`);
 
@@ -379,7 +379,7 @@ export function insertMany(table, records, options) {
         ', '
       )}) VALUES [--REDACTED--]];`;
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         const queryToLog = options && options.logValues ? query : safeQuery;
         console.log(`Executing insertMany via: ${queryToLog}`);
 
@@ -452,7 +452,7 @@ export function upsert(table, uuid, record, options) {
         WHEN NOT MATCHED THEN
           INSERT (${insertColumns}) VALUES [--REDACTED--];`;
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         const queryToLog = options && options.logValues ? query : safeQuery;
         console.log(`Executing upsert via: ${queryToLog}`);
 
@@ -493,7 +493,7 @@ export function upsertIf(logical, table, uuid, record, options) {
       const columns = Object.keys(recordData).sort();
       const [logicalData] = expandReferences(state, logical);
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         if (!logicalData) {
           console.log(`Skipping upsert for ${uuid}.`);
           resolve(state);
@@ -574,7 +574,7 @@ export function upsertMany(table, uuid, records, options) {
     try {
       const [recordData] = expandReferences(state, records);
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         if (!recordData || recordData.length === 0) {
           console.log('No records provided; skipping upsert.');
           resolve(state);
@@ -687,7 +687,7 @@ export function insertTable(tableName, columns, options) {
     try {
       const [data] = expandReferences(state, columns);
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         if (!data || data.length === 0) {
           console.log('No columns provided; skipping table creation.');
           resolve(state);
@@ -747,7 +747,7 @@ export function modifyTable(tableName, columns, options) {
     try {
       const [data] = expandReferences(state, columns);
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         if (!data || data.length === 0) {
           console.log('No columns provided; skipping table modification.');
           resolve(state);
