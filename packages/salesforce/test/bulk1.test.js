@@ -1,32 +1,59 @@
 import { expect, assert } from 'chai';
 import { bulk1, setMockConnection } from '../src/index';
 
-describe('bulk1', () => {
+// Essential helper functions to reduce repetition
+const createMockConnection = (overrides = {}) => ({
+  bulk: {
+    query: args => Promise.resolve(createMockStream()),
+    load: (sObject, operation, options, records) =>
+      Promise.resolve([createSuccessResult()]),
+    ...overrides,
+  },
+});
+
+const createMockStream = (overrides = {}) => {
+  const stream = {
+    on: (event, handler) => {
+      if (event === 'record') {
+        // Simulate receiving records
+        handler({ Id: '0015g00000LJ2wGAAT', Name: 'test' });
+        handler({ Id: '0015g00000LJ2wGBBT', Name: 'test2' });
+      } else if (event === 'finish') {
+        // Simulate stream completion
+        handler();
+      } else if (event === 'error' && overrides.errorMessage) {
+        // Simulate error if specified
+        handler(assert.fail(overrides.errorMessage));
+      }
+      return stream; // Allow method chaining
+    },
+  };
+  return stream;
+};
+
+const createSuccessResult = (overrides = {}) => ({
+  id: '0015g00000LJ2wGAAT',
+  success: true,
+  errors: [],
+  ...overrides,
+});
+
+const createFailureResult = (overrides = {}) => ({
+  success: false,
+  errors: ['Default error message'],
+  ...overrides,
+});
+
+describe.only('bulk1', () => {
   beforeEach(() => {
     setMockConnection(null);
   });
 
   describe('query', () => {
     it('should query successfully', done => {
-      const fakeConnection = {
-        bulk: {
-          query: args => {
-            const stream = {
-              on: (event, handler) => {
-                if (event === 'record') {
-                  handler({ Id: '0015g00000LJ2wGAAT', Name: 'test' });
-                  handler({ Id: '0015g00000LJ2wGBBT', Name: 'test2' });
-                } else if (event === 'finish') {
-                  handler();
-                }
-                return stream;
-              },
-            };
-            return Promise.resolve(stream);
-          },
-        },
-      };
+      const fakeConnection = createMockConnection();
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .query('SELECT Id, Name FROM Account')(state)
@@ -41,22 +68,14 @@ describe('bulk1', () => {
     });
 
     it('should handle query errors', done => {
-      const fakeConnection = {
-        bulk: {
-          query: args => {
-            const stream = {
-              on: (event, handler) => {
-                if (event === 'error') {
-                  handler(assert.fail('Invalid SOQL query'));
-                }
-                return stream;
-              },
-            };
-            return Promise.resolve(stream);
-          },
-        },
-      };
+      const fakeConnection = createMockConnection({
+        query: args =>
+          Promise.resolve(
+            createMockStream({ errorMessage: 'Invalid SOQL query' })
+          ),
+      });
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .query('INVALID QUERY')(state)
@@ -70,14 +89,11 @@ describe('bulk1', () => {
     });
 
     it('should handle connection errors', done => {
-      const fakeConnection = {
-        bulk: {
-          query: args => {
-            return Promise.reject(assert.fail('Connection failed'));
-          },
-        },
-      };
+      const fakeConnection = createMockConnection({
+        query: args => Promise.reject(assert.fail('Connection failed')),
+      });
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .query('SELECT Id FROM Account')(state)
@@ -93,40 +109,22 @@ describe('bulk1', () => {
 
   describe('insert', () => {
     it('should insert successfully', done => {
-      const fakeConnection = {
-        bulk: {
-          load: (sObject, operation, options, records) => {
-            return Promise.resolve([
-              {
-                id: '0015g00000LJ2wGAAT',
-                success: true,
-                errors: [],
-              },
-              {
-                id: '0015g00000LJ2wGBBT',
-                success: true,
-                errors: [],
-              },
-            ]);
-          },
-        },
-      };
+      const fakeConnection = createMockConnection({
+        load: (sObject, operation, options, records) =>
+          Promise.resolve([
+            createSuccessResult({ id: '0015g00000LJ2wGAAT' }),
+            createSuccessResult({ id: '0015g00000LJ2wGBBT' }),
+          ]),
+      });
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }])(state)
         .then(state => {
           expect(state.data.successfulResults).to.eql([
-            {
-              id: '0015g00000LJ2wGAAT',
-              success: true,
-              errors: [],
-            },
-            {
-              id: '0015g00000LJ2wGBBT',
-              success: true,
-              errors: [],
-            },
+            { id: '0015g00000LJ2wGAAT', success: true, errors: [] },
+            { id: '0015g00000LJ2wGBBT', success: true, errors: [] },
           ]);
           expect(state.data.failedResults).to.be.empty;
           expect(state.data.totalProcessed).to.equal(2);
@@ -138,24 +136,17 @@ describe('bulk1', () => {
     });
 
     it('should handle partial failures during insert', done => {
-      const fakeConnection = {
-        bulk: {
-          load: (sObject, operation, options, records) => {
-            return Promise.resolve([
-              {
-                id: '0015g00000LJ2wGAAT',
-                success: true,
-                errors: [],
-              },
-              {
-                success: false,
-                errors: ['Required fields are missing: [Name]'],
-              },
-            ]);
-          },
-        },
-      };
+      const fakeConnection = createMockConnection({
+        load: (sObject, operation, options, records) =>
+          Promise.resolve([
+            createSuccessResult(),
+            createFailureResult({
+              errors: ['Required fields are missing: [Name]'],
+            }),
+          ]),
+      });
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .insert('Account', [{ Name: 'Valid' }, {}])(state)
@@ -174,10 +165,9 @@ describe('bulk1', () => {
     });
 
     it('should handle no records with allowNoOp option', done => {
-      const fakeConnection = {
-        bulk: {},
-      };
+      const fakeConnection = createMockConnection({});
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .insert('Account', [], { allowNoOp: true })(state)
@@ -189,10 +179,9 @@ describe('bulk1', () => {
     });
 
     it('should throw error when no records provided', done => {
-      const fakeConnection = {
-        bulk: {},
-      };
+      const fakeConnection = createMockConnection({});
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .insert(
@@ -211,19 +200,14 @@ describe('bulk1', () => {
     });
 
     it('should fail on error when failOnError is true', done => {
-      const fakeConnection = {
-        bulk: {
-          load: (sObject, operation, options, records) => {
-            return Promise.resolve([
-              {
-                success: false,
-                errors: ['Field validation error'],
-              },
-            ]);
-          },
-        },
-      };
+      const fakeConnection = createMockConnection({
+        load: (sObject, operation, options, records) =>
+          Promise.resolve([
+            createFailureResult({ errors: ['Field validation error'] }),
+          ]),
+      });
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .insert('Account', [{ Name: 'Test' }], { failOnError: true })(state)
@@ -240,20 +224,9 @@ describe('bulk1', () => {
 
   describe('update', () => {
     it('should update records successfully', done => {
-      const fakeConnection = {
-        bulk: {
-          load: (sObject, operation, options, records) => {
-            return Promise.resolve([
-              {
-                id: '0015g00000LJ2wGAAT',
-                success: true,
-                errors: [],
-              },
-            ]);
-          },
-        },
-      };
+      const fakeConnection = createMockConnection();
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .update('Account', [
@@ -261,11 +234,7 @@ describe('bulk1', () => {
         ])(state)
         .then(state => {
           expect(state.data.successfulResults).to.eql([
-            {
-              id: '0015g00000LJ2wGAAT',
-              success: true,
-              errors: [],
-            },
+            { id: '0015g00000LJ2wGAAT', success: true, errors: [] },
           ]);
           expect(state.data.totalProcessed).to.equal(1);
           expect(state.data.successCount).to.equal(1);
@@ -276,19 +245,14 @@ describe('bulk1', () => {
     });
 
     it('should handle update errors', done => {
-      const fakeConnection = {
-        bulk: {
-          load: (sObject, operation, options, records) => {
-            return Promise.resolve([
-              {
-                success: false,
-                errors: ['Invalid ID: 123'],
-              },
-            ]);
-          },
-        },
-      };
+      const fakeConnection = createMockConnection({
+        load: (sObject, operation, options, records) =>
+          Promise.resolve([
+            createFailureResult({ errors: ['Invalid ID: 123'] }),
+          ]),
+      });
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .update('Account', [{ Id: '123', Name: 'test' }])(state)
@@ -306,20 +270,9 @@ describe('bulk1', () => {
     });
 
     it('should use custom polling options', done => {
-      const fakeConnection = {
-        bulk: {
-          load: (sObject, operation, options, records) => {
-            return Promise.resolve([
-              {
-                id: '0015g00000LJ2wGAAT',
-                success: true,
-                errors: [],
-              },
-            ]);
-          },
-        },
-      };
+      const fakeConnection = createMockConnection();
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .update('Account', [{ Id: '0015g00000LJ2wGAAT', Name: 'test' }], {
@@ -336,20 +289,9 @@ describe('bulk1', () => {
 
   describe('upsert', () => {
     it('should upsert records successfully', done => {
-      const fakeConnection = {
-        bulk: {
-          load: (sObject, operation, options, records) => {
-            return Promise.resolve([
-              {
-                id: '0015g00000LJ2wGAAT',
-                success: true,
-                errors: [],
-              },
-            ]);
-          },
-        },
-      };
+      const fakeConnection = createMockConnection();
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .upsert(
@@ -361,11 +303,7 @@ describe('bulk1', () => {
         )(state)
         .then(state => {
           expect(state.data.successfulResults).to.eql([
-            {
-              id: '0015g00000LJ2wGAAT',
-              success: true,
-              errors: [],
-            },
+            { id: '0015g00000LJ2wGAAT', success: true, errors: [] },
           ]);
           expect(state.data.totalProcessed).to.equal(1);
         })
@@ -374,14 +312,12 @@ describe('bulk1', () => {
     });
 
     it('should throw error when extIdField is missing', done => {
-      const fakeConnection = {
-        bulk: {},
-      };
+      const fakeConnection = createMockConnection({});
       setMockConnection(fakeConnection);
-      const state = {};
+
       try {
         bulk1.upsert('Account', [{ External_Id__c: 'EXT001', Name: 'test' }])(
-          state
+          {}
         );
         assert.fail('should have thrown an error');
       } catch (error) {
@@ -393,21 +329,14 @@ describe('bulk1', () => {
     });
 
     it('should handle upsert with concurrency mode', done => {
-      const fakeConnection = {
-        bulk: {
-          load: (sObject, operation, options, records) => {
-            expect(options.concurrencyMode).to.equal('Serial');
-            return Promise.resolve([
-              {
-                id: '0015g00000LJ2wGAAT',
-                success: true,
-                errors: [],
-              },
-            ]);
-          },
+      const fakeConnection = createMockConnection({
+        load: (sObject, operation, options, records) => {
+          expect(options.concurrencyMode).to.equal('Serial');
+          return Promise.resolve([createSuccessResult()]);
         },
-      };
+      });
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .upsert('Account', [{ External_Id__c: 'EXT001', Name: 'test' }], {
@@ -424,30 +353,15 @@ describe('bulk1', () => {
 
   describe('destroy', () => {
     it('should delete records successfully', done => {
-      const fakeConnection = {
-        bulk: {
-          load: (sObject, operation, options, records) => {
-            return Promise.resolve([
-              {
-                id: '0015g00000LJ2wGAAT',
-                success: true,
-                errors: [],
-              },
-            ]);
-          },
-        },
-      };
+      const fakeConnection = createMockConnection();
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .destroy('Account', [{ Id: '0015g00000LJ2wGAAT' }])(state)
         .then(state => {
           expect(state.data.successfulResults).to.eql([
-            {
-              id: '0015g00000LJ2wGAAT',
-              success: true,
-              errors: [],
-            },
+            { id: '0015g00000LJ2wGAAT', success: true, errors: [] },
           ]);
           expect(state.data.totalProcessed).to.equal(1);
           expect(state.data.successCount).to.equal(1);
@@ -458,19 +372,14 @@ describe('bulk1', () => {
     });
 
     it('should handle delete errors', done => {
-      const fakeConnection = {
-        bulk: {
-          load: (sObject, operation, options, records) => {
-            return Promise.resolve([
-              {
-                success: false,
-                errors: ['Record not found'],
-              },
-            ]);
-          },
-        },
-      };
+      const fakeConnection = createMockConnection({
+        load: (sObject, operation, options, records) =>
+          Promise.resolve([
+            createFailureResult({ errors: ['Record not found'] }),
+          ]),
+      });
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .destroy('Account', [{ Id: 'invalid-id' }])(state)
@@ -488,14 +397,12 @@ describe('bulk1', () => {
     });
 
     it('should handle connection errors during delete', done => {
-      const fakeConnection = {
-        bulk: {
-          load: (sObject, operation, options, records) => {
-            return Promise.reject(assert.fail('Connection timeout'));
-          },
-        },
-      };
+      const fakeConnection = createMockConnection({
+        load: (sObject, operation, options, records) =>
+          Promise.reject(assert.fail('Connection timeout')),
+      });
       setMockConnection(fakeConnection);
+
       const state = {};
       bulk1
         .destroy('Account', [{ Id: '0015g00000LJ2wGAAT' }])(state)
@@ -512,25 +419,18 @@ describe('bulk1', () => {
   describe('options handling', () => {
     it('should pass correct parameters to bulk.load', done => {
       let capturedParams = {};
-      const fakeConnection = {
-        bulk: {
-          load: (sObject, operation, options, records) => {
-            capturedParams = { sObject, operation, options, records };
-            return Promise.resolve([
-              {
-                id: '0015g00000LJ2wGAAT',
-                success: true,
-                errors: [],
-              },
-            ]);
-          },
+      const fakeConnection = createMockConnection({
+        load: (sObject, operation, options, records) => {
+          capturedParams = { sObject, operation, options, records };
+          return Promise.resolve([createSuccessResult()]);
         },
-      };
+      });
       setMockConnection(fakeConnection);
-      const state = {};
+
       const testRecords = [{ Name: 'Test Account' }];
       const testOptions = { concurrencyMode: 'Serial' };
 
+      const state = {};
       bulk1
         .insert(
           'Account',
@@ -538,7 +438,6 @@ describe('bulk1', () => {
           testOptions
         )(state)
         .then(state => {
-          // Assert the correct parameters were passed to bulk.load
           expect(capturedParams.sObject).to.equal('Account');
           expect(capturedParams.operation).to.equal('insert');
           expect(capturedParams.options).to.deep.equal({
@@ -553,28 +452,21 @@ describe('bulk1', () => {
 
     it('should pass correct parameters to bulk.load for upsert with extIdField', done => {
       let capturedParams = {};
-      const fakeConnection = {
-        bulk: {
-          load: (sObject, operation, options, records) => {
-            capturedParams = { sObject, operation, options, records };
-            return Promise.resolve([
-              {
-                id: '0015g00000LJ2wGAAT',
-                success: true,
-                errors: [],
-              },
-            ]);
-          },
+      const fakeConnection = createMockConnection({
+        load: (sObject, operation, options, records) => {
+          capturedParams = { sObject, operation, options, records };
+          return Promise.resolve([createSuccessResult()]);
         },
-      };
+      });
       setMockConnection(fakeConnection);
-      const state = {};
+
       const testRecords = [{ External_Id__c: 'EXT001', Name: 'Test Account' }];
       const testOptions = {
         extIdField: 'External_Id__c',
         concurrencyMode: 'Parallel',
       };
 
+      const state = {};
       bulk1
         .upsert(
           'Account',
@@ -582,7 +474,6 @@ describe('bulk1', () => {
           testOptions
         )(state)
         .then(state => {
-          // Assert the correct parameters were passed to bulk.load
           expect(capturedParams.sObject).to.equal('Account');
           expect(capturedParams.operation).to.equal('upsert');
           expect(capturedParams.options).to.deep.equal({
