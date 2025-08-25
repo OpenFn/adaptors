@@ -2,7 +2,7 @@
   "name": "@openfn/language-hubtel",
   "label": "Hubtel",
   "version": "1.0.9",
-  "description": "OpenFn hubtel adaptor",
+  "description": "OpenFn adaptor for Hubtel",
   "type": "module",
   "exports": {
     ".": {
