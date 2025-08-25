@@ -161,8 +161,9 @@ function queryHandler(state, query, callback, options) {
 
     const request = new Request(query, (err, rowCount, rows) => {
       if (err) {
-        console.error(err);
+        err.errors.map(error => console.error('Error: ', error.message));
         reject(err);
+        return;
       } else {
         console.log(`Finished: ${rowCount} row(s).`);
         resolve(callback(state, rows));
