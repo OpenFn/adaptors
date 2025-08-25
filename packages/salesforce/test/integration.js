@@ -396,7 +396,7 @@ describe('Integration tests', () => {
       }).timeout(5e4);
     });
   });
-  describe.only('bulk1', () => {
+  describe('bulk1', () => {
     describe('query', () => {
       it('should query all records', async () => {
         const { data } = await execute(
