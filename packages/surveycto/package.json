@@ -2,7 +2,7 @@
   "name": "@openfn/language-surveycto",
   "label": "SurveyCTO",
   "version": "2.3.0",
-  "description": "A SurveyCTO Language Pack for OpenFn",
+  "description": "OpenFn adaptor for SurveyCTO",
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor surveycto",

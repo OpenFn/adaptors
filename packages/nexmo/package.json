@@ -2,7 +2,7 @@
   "name": "@openfn/language-nexmo",
   "label": "Nexmo",
   "version": "0.5.20",
-  "description": "An Language Package for Nexmo",
+  "description": "OpenFn adaptor for Nexmo",
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor nexmo",

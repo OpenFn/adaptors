@@ -2,7 +2,7 @@
   "name": "@openfn/language-divoc",
   "label": "Divoc",
   "version": "0.1.7",
-  "description": "OpenFn divoc adaptor",
+  "description": "OpenFn adaptor for DIVOC",
   "type": "module",
   "exports": {
     ".": {
