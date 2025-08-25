@@ -89,7 +89,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "request(\n  'POST',\n  '/convert/pdf',\n   { source: $.html,\n     encode: true \n   },\n);",
+            "description": "request(\n  'POST',\n  '/convert/pdf',\n   { source: $.html },\n);",
             "caption": "Make a request to convert a HTML string to PDF"
           },
           {
