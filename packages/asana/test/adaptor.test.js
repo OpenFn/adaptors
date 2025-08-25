@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, assert } from 'chai';
 
 import {
   execute,
@@ -207,21 +207,8 @@ describe('Adaptor Test', () => {
 
   describe('searchTask', () => {
     const WORKSPACE_GID = 'ws123';
-
-    // Helper function to create mock interceptor and get dispatch
-    const setupMockAndGetDispatch = (path, query, mockData) => {
-      const mockInterceptor = mockServer
-        .intercept({
-          path,
-          query,
-          method: 'GET',
-        })
-        .reply(200, { data: mockData });
-
-      // Get the mock dispatch to verify query parameters
-      const mockDispatch =
-        mockInterceptor[Object.getOwnPropertySymbols(mockInterceptor)[0]];
-      return { mockInterceptor, mockDispatch };
+    const stateWithWorkspace = {
+      configuration: { ...configuration, workspaceGid: WORKSPACE_GID },
     };
 
     it('should query a task', async () => {
@@ -231,19 +218,22 @@ describe('Adaptor Test', () => {
         text: taskName,
         resource_subtype: 'default_task',
       };
-      const stateWithWorkspace = {
-        configuration: { ...configuration, workspaceGid: WORKSPACE_GID },
-      };
 
-      const { mockDispatch } = setupMockAndGetDispatch(
-        `/api/1.0/workspaces/${WORKSPACE_GID}/tasks/search`,
-        expectedQuery,
-        mockData
-      );
+      let capturedQuery = null;
+      mockServer
+        .intercept({
+          path: `/api/1.0/workspaces/${WORKSPACE_GID}/tasks/search`,
+          query: expectedQuery,
+          method: 'GET',
+        })
+        .reply(200, req => {
+          capturedQuery = req.query;
+          return { data: mockData };
+        });
 
       const { data } = await searchTask(taskName)(stateWithWorkspace);
 
-      expect(mockDispatch.query).to.eql(expectedQuery);
+      expect(capturedQuery).to.eql(expectedQuery);
       expect(data).to.eql(mockData);
       expect(data.length).to.eql(1);
       expect(data[0].name).to.eql(taskName);
@@ -254,19 +244,15 @@ describe('Adaptor Test', () => {
         await searchTask('Some Task')({
           configuration: { token: 'fake-token' },
         });
-        throw new Error('Expected error to be thrown');
+        assert.fail('search failed for missing workspaceGid');
       } catch (error) {
-        expect(error).to.be.an('Error');
-        expect(error.message).to.equal('You need to specify Workspace GID');
+        assert.equal(error.message, 'You need to specify Workspace GID');
       }
     });
 
     it('should query a task with custom fields', async () => {
       const taskName = 'Test Search Task with Custom Fields';
       const mockData = [{ gid: '1', name: taskName, notes: 'A note' }];
-      const stateWithWorkspace = {
-        configuration: { ...configuration, workspaceGid: WORKSPACE_GID },
-      };
 
       const customFieldParams = {
         'custom_fields.12345.is_set': true,
@@ -278,18 +264,24 @@ describe('Adaptor Test', () => {
         ...customFieldParams,
       };
 
-      const { mockDispatch } = setupMockAndGetDispatch(
-        `/api/1.0/workspaces/${WORKSPACE_GID}/tasks/search`,
-        expectedQuery,
-        mockData
-      );
+      let capturedQuery = null;
+      mockServer
+        .intercept({
+          path: `/api/1.0/workspaces/${WORKSPACE_GID}/tasks/search`,
+          query: expectedQuery,
+          method: 'GET',
+        })
+        .reply(200, req => {
+          capturedQuery = req.query;
+          return { data: mockData };
+        });
 
       const { data } = await searchTask(
         taskName,
         customFieldParams
       )(stateWithWorkspace);
 
-      expect(mockDispatch.query).to.eql(expectedQuery);
+      expect(capturedQuery).to.eql(expectedQuery);
       expect(data).to.eql(mockData);
       expect(data.length).to.eql(1);
       expect(data[0].name).to.eql(taskName);
@@ -306,15 +298,21 @@ describe('Adaptor Test', () => {
         resource_subtype: 'default_task',
       };
 
-      const { mockDispatch } = setupMockAndGetDispatch(
-        `/api/1.0/workspaces/${WORKSPACE_GID}/tasks/search`,
-        expectedQuery,
-        mockData
-      );
+      let capturedQuery = null;
+      mockServer
+        .intercept({
+          path: `/api/1.0/workspaces/${WORKSPACE_GID}/tasks/search`,
+          query: expectedQuery,
+          method: 'GET',
+        })
+        .reply(200, req => {
+          capturedQuery = req.query;
+          return { data: mockData };
+        });
 
       const { data } = await searchTask(taskName)(stateWithWorkspace);
 
-      expect(mockDispatch.query).to.eql(expectedQuery);
+      expect(capturedQuery).to.eql(expectedQuery);
       expect(data).to.eql(mockData);
       expect(data.length).to.eql(1);
       expect(data[0].name).to.eql(taskName);
@@ -335,18 +333,25 @@ describe('Adaptor Test', () => {
         resource_subtype: 'milestone',
       };
 
-      const { mockDispatch } = setupMockAndGetDispatch(
-        `/api/1.0/workspaces/${WORKSPACE_GID}/tasks/search`,
-        expectedQuery,
-        mockData
-      );
+      let capturedQuery = null;
+
+      mockServer
+        .intercept({
+          path: `/api/1.0/workspaces/${WORKSPACE_GID}/tasks/search`,
+          query: expectedQuery,
+          method: 'GET',
+        })
+        .reply(200, req => {
+          capturedQuery = req.query;
+          return { data: mockData };
+        });
 
       const { data } = await searchTask(
         taskName,
         milestoneParams
       )(stateWithWorkspace);
 
-      expect(mockDispatch.query).to.eql(expectedQuery);
+      expect(capturedQuery).to.eql(expectedQuery);
       expect(data).to.eql(mockData);
       expect(data.length).to.eql(1);
       expect(data[0].name).to.eql(taskName);
