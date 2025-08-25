@@ -161,7 +161,11 @@ function queryHandler(state, query, callback, options) {
 
     const request = new Request(query, (err, rowCount, rows) => {
       if (err) {
-        err.errors.map(error => console.error('Error: ', error.message));
+        if (err.name === 'AggregateError' && err.errors) {
+          err.errors.map(error => console.error('Error: ', error.message));
+        } else {
+          console.error(err);
+        }
         reject(err);
         return;
       } else {
