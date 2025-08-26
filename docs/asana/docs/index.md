@@ -219,19 +219,37 @@ Search for tasks in a workspace by task name.
 
 **Returns**: <code>Operation</code> - An operation that, when executed, returns the search results in state.data.  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| task | <code>string</code> | The text or name of the task to search for. |
-| [query] | <code>object</code> | Query params. See [Docs](https://developers.asana.com/reference/searchtasksforworkspace) for a list of valid parameters. |
-| [options] | <code>object</code> | (Optional) options argument. |
-| [options.workspaceGid] | <code>string</code> | The workspace to search in. Defaults to the workspace specified in the configuration. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| task | <code>string</code> |  | The text or name of the task to search for. |
+| [query] | <code>object</code> |  | Query params. See [Docs](https://developers.asana.com/reference/searchtasksforworkspace) for a list of valid parameters. |
+| [query.resource_subtype] | <code>string</code> | <code>&quot;default_task&quot;</code> | The resource subtype to search for. Must be either `"default_task"` or `"milestone"`. Defaults to `"default_task"`. |
+| [options] | <code>object</code> |  | (Optional) options argument. |
+| [options.workspaceGid] | <code>string</code> |  | The workspace to search in. Defaults to the workspace specified in the configuration. |
 
 
 **Example:** Search for a task by name
 ```js
 searchTask("Test Search Task", {
-  resource_subtype: "default_task",
   sort_by: "modified_at"
+});
+```
+**Example:** Search for a task by custom field only
+```js
+searchTask("", {
+  "custom_fields.12345.value": $.data.custom_field_value,
+});
+```
+**Example:** Search for a task by name and custom field
+```js
+searchTask("Test Search Task", {
+  "custom_fields.12345.is_set": true,
+});
+```
+**Example:** Search for a milestone by name
+```js
+searchTask("Test Search Task", {
+  resource_subtype: "milestone",
 });
 ```
 
