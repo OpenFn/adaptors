@@ -1,5 +1,15 @@
 # @openfn/language-mssql
 
+## 6.0.1 - 26 August 2025
+
+### Patch Changes
+
+- d737f89: Optimize query handling by:
+
+  - Revert to using `tedious.Request's callback` signature
+  - Remove `rowCollectionOnRequestCompletion` option from configuration
+  - Improve error messaging for `AggregateError` errors
+
 ## 6.0.0 - 11 August 2025
 
 ### Major Changes
