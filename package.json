@@ -22,6 +22,7 @@
     "slack:notify": "cd tools/slack && pnpm notify",
     "test:imports": "cd tools/import-tests && pnpm test",
     "test": "pnpm lint && pnpm --filter \"./packages/**\" test && pnpm test:imports",
+    "test:git": "pnpm exec scripts/status-check.sh",
     "version": "pnpm changeset version && pnpm run changelog"
   },
   "author": "Open Function Group",
