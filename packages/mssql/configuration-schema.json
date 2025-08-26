@@ -55,13 +55,6 @@
         false
       ]
     },
-    "rowCollectionOnRequestCompletion": {
-      "type": "boolean",
-      "default": true,
-      "examples": [
-        false
-      ]
-    },
     "trustServerCertificate": {
       "type": "boolean",
       "default": true,

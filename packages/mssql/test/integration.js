@@ -11,7 +11,7 @@
 //            --name sqledge \
 //            -d mcr.microsoft.com/azure-sql-edge
 
-import { execute, sql, findValue } from '../src/Adaptor';
+import { execute, sql, findValue, insert, insertMany } from '../src/Adaptor';
 import { expect } from 'chai';
 
 describe('MSSQL Integration Tests', () => {
@@ -177,6 +177,21 @@ describe('MSSQL Integration Tests', () => {
       }
       throw error;
     }
+  });
+  it('should insert a record', async () => {
+    const result = await execute(
+      insert('test_users', { name: 'John Doe', email: 'john@example.com' })
+    )(state);
+    expect(result).to.equal(1);
+  });
+  it('should insert multiple records', async () => {
+    const result = await execute(
+      insertMany('test_users', [
+        { name: 'John Doe', email: 'john@example.com' },
+        { name: 'Jane Smith', email: 'jane@example.com' },
+      ])
+    )(state);
+    expect(result).to.equal(2);
   });
 
   after(async () => {
