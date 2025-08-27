@@ -31,7 +31,7 @@ export const request = (configuration = {}, method, path, options) => {
   const { query = {}, body = {} } = options;
   const opts = {
     parseAs: 'json',
-    baseUrl: `${baseUrl}/${apiVersion}`,
+    baseUrl: `${baseUrl}/${apiVersion}/`,
     headers: {
       'content-type': 'application/json',
       ...headers,

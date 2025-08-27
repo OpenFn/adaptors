@@ -43,7 +43,7 @@ describe('list', () => {
       configuration,
     };
 
-    const finalState = await list('/customers')(state);
+    const finalState = await list('customers')(state);
 
     expect(finalState.data).to.eql({
       has_more: false,
@@ -71,7 +71,7 @@ describe('get', () => {
       configuration,
     };
 
-    const finalState = await get('/customers/cus_001')(state);
+    const finalState = await get('customers', 'cus_001')(state);
 
     expect(finalState.data).to.eql({
       email: 'cs001@example.com',

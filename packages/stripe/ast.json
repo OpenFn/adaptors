@@ -3,7 +3,7 @@
     {
       "name": "list",
       "params": [
-        "path",
+        "resource",
         "options"
       ],
       "docs": {
@@ -11,12 +11,12 @@
         "tags": [
           {
             "title": "example",
-            "description": "list('/payment_intents');",
+            "description": "list('payment_intents');",
             "caption": "List all payment intents"
           },
           {
             "title": "example",
-            "description": "list('/customers', {limit:3});",
+            "description": "list('customers', {limit:3});",
             "caption": "List customers with options"
           },
           {
@@ -31,12 +31,12 @@
           },
           {
             "title": "param",
-            "description": "The API path to list items from.",
+            "description": "The API resource to list items from.",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "path"
+            "name": "resource"
           },
           {
             "title": "param",
@@ -66,19 +66,20 @@
     {
       "name": "get",
       "params": [
-        "path"
+        "resource",
+        "id"
       ],
       "docs": {
         "description": "Get an item from Stripe",
         "tags": [
           {
             "title": "example",
-            "description": "get('/payment_intents/pi_3RxS5EEAUr6ipfDB0aKo3moC');",
+            "description": "get('payment_intents','pi_3RxS5EEAUr6ipfDB0aKo3moC');",
             "caption": "Get a payment intent"
           },
           {
             "title": "example",
-            "description": "get('/customers/cus_SthTl85l20LRJj');",
+            "description": "get('customers','cus_SthTl85l20LRJj');",
             "caption": "Get a customer"
           },
           {
@@ -98,7 +99,16 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "path"
+            "name": "resource"
+          },
+          {
+            "title": "param",
+            "description": "The ID of the resource to retrieve.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "id"
           },
           {
             "title": "returns",
@@ -110,7 +120,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "The requested resource"
           }
         ]
       },

@@ -12,24 +12,28 @@ import * as util from './Utils';
 /**
  * List items from Stripe
  * @example <caption>List all payment intents</caption>
- * list('/payment_intents');
+ * list('payment_intents');
  * @example <caption>List customers with options</caption>
- * list('/customers', {limit:3});
+ * list('customers', {limit:3});
  * @function
  * @public
- * @param {string} path - The API path to list items from.
+ * @param {string} resource - The API resource to list items from.
  * @param {object} options -  Optional options object. See {@link https://docs.stripe.com/api/payment_intents/list|Stripe API documentation} for more details.
  * @returns {Operation}
  * @state {HttpState}
  */
-export function list(path,options = {}) {
+export function list(resource, options = {}) {
   return async state => {
-    const [resolvedPath, resolvedoptions] = expandReferences(state, path, options);
+    const [resolvedResource, resolvedoptions] = expandReferences(
+      state,
+      resource,
+      options
+    );
 
     const response = await util.request(
       state.configuration,
       'GET',
-      resolvedPath,
+      resolvedResource,
       {
         query: {
           ...resolvedoptions,
@@ -42,25 +46,30 @@ export function list(path,options = {}) {
 }
 
 /**
- * Get an item from Stripe
+ * Get one thing by ID
  * @example <caption>Get a payment intent</caption>
- * get('/payment_intents/pi_3RxS5EEAUr6ipfDB0aKo3moC');
+ * get('payment_intents','pi_3RxS5EEAUr6ipfDB0aKo3moC');
  * @example <caption>Get a customer</caption>
- * get('/customers/cus_SthTl85l20LRJj');
+ * get('customers','cus_SthTl85l20LRJj');
  * @function
  * @public
- * @param {string} path - The API path to retrieve.
+ * @param {string} resource - The API path to retrieve.
+ * @param {string} id - The ID of the resource to retrieve.
  * @returns {Operation}
- * @state {HttpState}
+ * @state - The requested resource
  */
-export function get(path) {
+export function get(resource, id) {
   return async state => {
-    const [resolvedPath] = expandReferences(state, path);
+    const [resolvedResource, resolvedId] = expandReferences(
+      state,
+      resource,
+      id
+    );
 
     const response = await util.request(
       state.configuration,
       'GET',
-      resolvedPath,
+      `${resolvedResource}/${resolvedId}`,
       {}
     );
 
