@@ -2,4 +2,4 @@
 '@openfn/language-kobotoolbox': patch
 ---
 
-Update `http.request` to use `data` instead of `body` in requests
+Update `http.request` option docs to use `data` instead of `body` in requests
