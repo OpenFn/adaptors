@@ -34,7 +34,7 @@ export function execute(...operations) {
 /**
  * Get a single task of a given project.
  * @public
- * @example <caption>Get a task</caption>
+ * @example <caption>Get a task.</caption>
  * getTask("1206933955023739", {
  *   opt_fields: "name,notes,assignee",
  * });
