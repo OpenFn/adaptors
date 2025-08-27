@@ -27,7 +27,7 @@ import { expandReferences } from '@openfn/language-common/util';
  * @property {string} [extIdField] - External id field. Required for upsert operations
  * @property {boolean} [allowNoOp=false] - Skipping bulk operation if no records
  * @property {boolean} [failOnError=false] - Fail the operation on error
- * @property {number} [pollTimeout=240000] - Polling timeout in milliseconds. Default: 240000 (4 minutes)
+ * @property {number} [pollTimeout=300000] - Polling timeout in milliseconds. Default: 300000 (30 seconds)
  * @property {number} [pollInterval=6000] - Polling interval in milliseconds. Default: 6000 (6 seconds)
  * @property {boolean} [concurrencyMode='Parallel'] - Concurrency mode: 'Parallel' or 'Serial'
  */
@@ -40,7 +40,7 @@ import { expandReferences } from '@openfn/language-common/util';
  * @example <caption>Query with custom options</caption>
  * bulk1.query('SELECT Id, Name FROM Account', {
  *   pollInterval: 1000,
- *   pollTimeout: 30000
+ *   pollTimeout: 24000
  * });
  * @function
  * @param {string} query - SOQL query string to execute
@@ -163,7 +163,6 @@ function bulk1Load(operation, sObject, records, options = {}) {
  * @example <caption>Insert with custom options</caption>
  * bulk1.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }], {
  *   pollInterval: 1000,
- *   pollTimeout: 30000,
  *   failOnError: true
  * });
  * @function
@@ -185,7 +184,6 @@ export function insert(sObject, records, options = {}) {
  * @example <caption>Update with custom options</caption>
  * bulk1.update('Account', [{ Id: '001xx', Name: 'Updated Name' }], {
  *   pollInterval: 1000,
- *   pollTimeout: 30000,
  *   failOnError: true
  * });
  * @function
@@ -207,8 +205,7 @@ export function update(sObject, records, options = {}) {
  * @example <caption>Upsert with custom options</caption>
  * bulk1.upsert('Account', [{ External_Id__c: 'EXT001', Name: 'Upserted Name' }], {
  *   extIdField: 'External_Id__c',
- *   pollInterval: 1000,
- *   pollTimeout: 30000,
+ *   pollInterval: 3000,
  *   failOnError: true
  * });
  * @function
@@ -232,8 +229,7 @@ export function upsert(sObject, records, options = {}) {
  * bulk1.delete('Account', [{ Id: '001xx' }]);
  * @example <caption>Delete with custom options</caption>
  * bulk1.delete('Account', [{ Id: '001xx' }], {
- *   pollInterval: 1000,
- *   pollTimeout: 30000,
+ *   pollInterval: 3000,
  *   failOnError: true
  * });
  * @function
