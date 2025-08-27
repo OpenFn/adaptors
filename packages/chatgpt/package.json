@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-chatgpt",
   "label": "ChatGPT",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "OpenFn chatgpt adaptor",
   "type": "module",
   "exports": {
@@ -30,15 +30,15 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "openai": "^4.86.2"
+    "openai": "^4.104.0"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
-    "mocha": "^10.7.3",
+    "mocha": "^10.8.2",
     "rimraf": "3.0.2",
-    "undici": "^5.22.1"
+    "undici": "^5.29.0"
   },
   "repository": {
     "type": "git",

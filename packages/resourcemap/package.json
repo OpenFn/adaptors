@@ -1,8 +1,8 @@
 {
   "name": "@openfn/language-resourcemap",
   "label": "Resourcemap",
-  "version": "0.4.15",
-  "description": "Resourcemap Language Pack for OpenFn",
+  "version": "0.4.19",
+  "description": "OpenFn Resourcemap adaptor for geospatial platform operations",
   "main": "dist/index.cjs",
   "scripts": {
     "build": "pnpm clean && build-adaptor resourcemap",

@@ -4,6 +4,7 @@ const { WebClient } = require('@slack/web-api');
 const SLACK_DEV = 'C06DV9P91T6';
 const DEVS = 'C05KZNPEJFN';
 const IMPLEMENTATION = 'C017ELVRSM8';
+const ADAPTORS_AND_TEMPLATES = 'C08MA92GMT5';
 
 const token = process.env.SLACK_TOKEN;
 const slack = new WebClient(token);
@@ -55,11 +56,7 @@ if (file) {
 
     slack.chat.postMessage({
       ...message,
-      channel: DEVS,
-    });
-    slack.chat.postMessage({
-      ...message,
-      channel: IMPLEMENTATION,
+      channel: ADAPTORS_AND_TEMPLATES,
     });
 
     console.log();

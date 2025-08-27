@@ -704,27 +704,28 @@ export function retrieve(sObjectName, id) {
 export function sfRequest(httpRequest) {
   return connection.request(httpRequest);
 }
-
+export { connection };
 export {
   alterState,
   arrayToString,
+  as,
   chunk,
   combine,
   dataPath,
   dataValue,
   dateFns,
   each,
-  expandReferences,
   field,
   fields,
   fn,
   fnIf,
+  group,
   humanProper,
   index,
   join,
-  group,
   jsonValue,
   lastReferenceValue,
+  map,
   merge,
   referencePath,
   scrubEmojis,

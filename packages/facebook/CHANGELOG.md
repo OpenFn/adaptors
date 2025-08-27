@@ -1,5 +1,40 @@
 # @openfn/language-facebook
 
+## 0.4.18 - 14 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
+## 0.4.17 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
+## 0.4.16 - 10 July 2025
+
+### Patch Changes
+
+- c4625fa: - Migrate from the deprecated `expandReferences` in `common` to the
+  new `expandReferences` from common.util
+  - Use `workspace:*` common version.
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
+## 0.4.15 - 20 June 2025
+
+### Patch Changes
+
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
+
 ## 0.4.14 - 22 April 2025
 
 ### Patch Changes

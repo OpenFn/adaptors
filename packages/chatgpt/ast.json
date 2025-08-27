@@ -52,6 +52,59 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "deepResearch",
+      "params": [
+        "message",
+        "opts"
+      ],
+      "docs": {
+        "description": "Prompt GPT deep research interface",
+        "tags": [
+          {
+            "title": "example",
+            "description": "deepResearch(\n  `Evaluate if the following company qualifies as a sustainable fashion brand:\n\n  INPUT: ${JSON.stringify($.data)}\n  Return JSON only with:\n  - sustainabilityStatus: \"Certified\", \"Likely\", or \"Unverified\"\n  - materialsUsed\n  - certifications\n  - confidenceLevel (0–5)\n  - researchNotes`,\n  {\n    model: 'o3-deep-research',\n    max_tool_calls: 1\n  }\n)"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The prompt",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "message"
+          },
+          {
+            "title": "param",
+            "description": "Model, tools and other parameters (https://platform.openai.com/docs/guides/deep-research)",
+            "type": {
+              "type": "NameExpression",
+              "name": "DeepResearchOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     }
   ],
   "exports": [],

@@ -25,5 +25,40 @@
         "index": 0
       }
     ]
+  },
+  "deep_research_response": {
+    "id": "res_testid1",
+    "object": "response",
+    "created_at": 1753344791,
+    "status": "completed",
+    "max_tool_calls": 1,
+    "model": "o3-deep-research-2025-06-26",
+    "reasoning": {
+      "effort": "medium",
+      "summary": null
+    },
+    "safety_identifier": null,
+    "service_tier": "default",
+    "store": true,
+    "temperature": 1,
+    "text": {
+      "format": {
+        "type": "text"
+      }
+    },
+    "tool_choice": "auto",
+    "tools": [
+      {
+        "type": "web_search_preview",
+        "search_context_size": "medium",
+        "user_location": null
+      }
+    ],
+    "top_logprobs": 0,
+    "top_p": 1,
+    "truncation": "disabled",
+    "user": null,
+    "metadata": {},
+    "output_text": "\n\nThis is a deep research test!"
   }
 }

@@ -17,7 +17,8 @@
           },
           {
             "title": "example",
-            "description": "getTask(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n});"
+            "description": "getTask(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n});",
+            "caption": "Get a task"
           },
           {
             "title": "function",
@@ -44,6 +45,15 @@
           },
           {
             "title": "param",
+            "description": "The fields to return.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "params.opt_fields"
+          },
+          {
+            "title": "param",
             "description": "(Optional) callback function",
             "type": {
               "type": "NameExpression",
@@ -61,7 +71,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "getTasks",
@@ -80,7 +90,13 @@
           },
           {
             "title": "example",
-            "description": "getTasks(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n});"
+            "description": "getTasks(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n});",
+            "caption": "Get all tasks"
+          },
+          {
+            "title": "example",
+            "description": "getTasks(\"1206933955023739\", {\n  opt_fields: \"name,notes,assignee\",\n  limit: 100,\n});",
+            "caption": "Limit the number of tasks returned"
           },
           {
             "title": "function",
@@ -107,6 +123,24 @@
           },
           {
             "title": "param",
+            "description": "The maximum number of tasks to return.",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "params.limit"
+          },
+          {
+            "title": "param",
+            "description": "The fields to return.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "params.opt_fields"
+          },
+          {
+            "title": "param",
             "description": "(Optional) callback function",
             "type": {
               "type": "NameExpression",
@@ -124,13 +158,13 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "updateTask",
       "params": [
         "taskGid",
-        "params",
+        "data",
         "callback"
       ],
       "docs": {
@@ -143,7 +177,8 @@
           },
           {
             "title": "example",
-            "description": "updateTask(\"1206933955023739\", {\n  name: \"test\",\n  approval_status: \"pending\",\n  assignee: \"12345\",\n});"
+            "description": "updateTask(\"1206933955023739\", {\n  name: \"test\",\n  approval_status: \"pending\",\n  assignee: \"12345\",\n});",
+            "caption": "Update a task"
           },
           {
             "title": "function",
@@ -161,12 +196,12 @@
           },
           {
             "title": "param",
-            "description": "Body parameters",
+            "description": "Body data to update the task with",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "params"
+            "name": "data"
           },
           {
             "title": "param",
@@ -259,7 +294,8 @@
           },
           {
             "title": "example",
-            "description": "upsertTask(\"1201382240880\", {\n  externalId: \"name\",\n  data: {\n    name: \"test\",\n    approval_status: \"pending\",\n    projects: [\"1201382240880\"],\n    assignee: \"12345\",\n  },\n});"
+            "description": "upsertTask(\"1201382240880\", {\n  externalId: \"name\",\n  data: {\n    name: \"test\",\n    approval_status: \"pending\",\n    projects: [\"1201382240880\"],\n    assignee: \"12345\",\n  },\n});",
+            "caption": "Upsert a task"
           },
           {
             "title": "function",
@@ -286,6 +322,24 @@
           },
           {
             "title": "param",
+            "description": "The external id field name",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "params.externalId"
+          },
+          {
+            "title": "param",
+            "description": "The data to upsert.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params.data"
+          },
+          {
+            "title": "param",
             "description": "(Optional) callback function",
             "type": {
               "type": "NameExpression",
@@ -303,7 +357,117 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
+    },
+    {
+      "name": "searchTask",
+      "params": [
+        "task",
+        "query",
+        "options"
+      ],
+      "docs": {
+        "description": "Search for tasks in a workspace by task name.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "searchTask(\"Test Search Task\", {\n  sort_by: \"modified_at\"\n});",
+            "caption": "Search for a task by name"
+          },
+          {
+            "title": "example",
+            "description": "searchTask(\"\", {\n  \"custom_fields.12345.value\": $.data.custom_field_value,\n});",
+            "caption": "Search for a task by custom field only"
+          },
+          {
+            "title": "example",
+            "description": "searchTask(\"Test Search Task\", {\n  \"custom_fields.12345.is_set\": true,\n});",
+            "caption": "Search for a task by name and custom field"
+          },
+          {
+            "title": "example",
+            "description": "searchTask(\"Test Search Task\", {\n  resource_subtype: \"milestone\",\n});",
+            "caption": "Search for a milestone by name"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The text or name of the task to search for.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "task"
+          },
+          {
+            "title": "param",
+            "description": "Query params. See {@link https://developers.asana.com/reference/searchtasksforworkspace Docs} for a list of valid parameters.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "The resource subtype to search for. Must be either `\"default_task\"` or `\"milestone\"`. Defaults to `\"default_task\"`.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "query.resource_subtype",
+            "default": "default_task"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) options argument.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "The workspace to search in. Defaults to the workspace specified in the configuration.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "options.workspaceGid"
+          },
+          {
+            "title": "returns",
+            "description": "An operation that, when executed, returns the search results in state.data.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
     },
     {
       "name": "createTaskStory",
@@ -1019,6 +1183,60 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "as",
+      "params": [
+        "key",
+        "operation"
+      ],
+      "docs": {
+        "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));",
+            "caption": "Fetch cce-data from collections and store them under state.cceData"
+          },
+          {
+            "title": "param",
+            "description": "The state key to assign the result of the operation to.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": " An operation that returns a new state object with a `data` property",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ]
 }

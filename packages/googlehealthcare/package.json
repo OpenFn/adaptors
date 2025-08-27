@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-googlehealthcare",
   "label": "Google Health Care",
-  "version": "1.1.3",
+  "version": "1.1.6",
   "description": "A Google Health Care language package for use with Open Function",
   "type": "module",
   "exports": {
@@ -29,14 +29,14 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^2.1.1"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "rimraf": "3.0.2",
-    "undici": "^5.28.5"
+    "undici": "^5.29.0"
   },
   "repository": {
     "type": "git",

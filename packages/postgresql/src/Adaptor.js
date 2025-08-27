@@ -765,9 +765,9 @@ export {
   fields,
   fn,
   fnIf,
-  http,
   group,
   lastReferenceValue,
   merge,
   sourceValue,
+  as,
 } from '@openfn/language-common';

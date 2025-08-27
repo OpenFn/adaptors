@@ -1,6 +1,97 @@
 {
   "operations": [
     {
+      "name": "sql",
+      "params": [
+        "sqlQuery",
+        "options"
+      ],
+      "docs": {
+        "description": "Execute a SQL statement. Take care when inserting values from state directly into a query,\nas this can be a vector for injection attacks. See [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)\nfor guidelines",
+        "tags": [
+          {
+            "title": "example",
+            "description": "sql(state => `select * from ${state.data.tableName};`, { writeSql: true })"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The SQL query as a string or a function that returns a string using state.",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "function"
+                }
+              ]
+            },
+            "name": "sqlQuery"
+          },
+          {
+            "title": "param",
+            "description": "Optional options argument.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "If true, logs the generated SQL statement. Defaults to false.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.writeSql",
+            "default": "false"
+          },
+          {
+            "title": "param",
+            "description": "If false, does not execute the SQL, just logs it and adds to state.queries. Defaults to true.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.execute",
+            "default": "true"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
       "name": "insert",
       "params": [
         "table",
@@ -154,94 +245,6 @@
               "name": "array"
             },
             "name": "data"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "query",
-      "params": [
-        "options"
-      ],
-      "docs": {
-        "description": "Execute a SQL statement",
-        "tags": [
-          {
-            "title": "example",
-            "description": "query({ sql: 'select * from users;' })",
-            "caption": "Execute a SQL statement"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Payload data for the message",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "options"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "sqlString",
-      "params": [
-        "queryString"
-      ],
-      "docs": {
-        "description": "Execute a SQL statement",
-        "tags": [
-          {
-            "title": "example",
-            "description": "sqlString(state => \"select * from items;\")",
-            "caption": "Execute a SQL statement"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "A query string (or function which takes state and returns a string)",
-            "type": {
-              "type": "NameExpression",
-              "name": "String"
-            },
-            "name": "queryString"
           },
           {
             "title": "returns",
@@ -925,6 +928,60 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "as",
+      "params": [
+        "key",
+        "operation"
+      ],
+      "docs": {
+        "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));",
+            "caption": "Fetch cce-data from collections and store them under state.cceData"
+          },
+          {
+            "title": "param",
+            "description": "The state key to assign the result of the operation to.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": " An operation that returns a new state object with a `data` property",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ]
 }

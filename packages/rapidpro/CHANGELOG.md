@@ -1,5 +1,39 @@
 # @openfn/language-rapidpro
 
+## 2.0.2 - 14 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
+## 2.0.1 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
+## 2.0.0 - 10 July 2025
+
+### Major Changes
+
+- bc409de: - Update `rapidPro` to not use deprecated `common-http`.
+  - Remove support and export of `axios`
+  - Remove export of `http` namespace from `common`
+
+### Patch Changes
+
+- c4625fa: - Migrate from the deprecated `expandReferences` in `common` to the
+  new `expandReferences` from common.util
+  - Use `workspace:*` common version.
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
 ## 1.1.5 - 15 October 2024
 
 ### Patch Changes

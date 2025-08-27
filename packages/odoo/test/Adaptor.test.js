@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { MockOdooWithSearch } from './mock/client.js';
 
 import {
   create,
@@ -6,6 +7,7 @@ import {
   read,
   deleteRecord,
   setMockClient,
+  searchReadRecord,
 } from '../src/Adaptor.js';
 
 const configuration = {
@@ -176,5 +178,116 @@ describe('delete', () => {
 
     const { data } = await deleteRecord('product.product', 4)(state);
     expect(data).to.eql(true);
+  });
+});
+
+describe('searchReadRecord', () => {
+  const makeData = n => {
+    const rows = [];
+    for (let i = 0; i < n; i++) {
+      rows.push({
+        id: i + 1,
+        name: `P${i + 1}`,
+        is_company: true,
+        im_status: 'im_partner',
+      });
+    }
+    rows.push({
+      id: 10001,
+      name: 'NonMatch',
+      is_company: false,
+      im_status: 'im_partner',
+    });
+    rows.push({
+      id: 10002,
+      name: 'VendorOnly',
+      is_company: true,
+      im_status: 'im_vendor',
+    });
+    return rows;
+  };
+
+  it('fetches all items using multiple pages and returns nextOffset=null at the end', async () => {
+    const mockData = makeData(200);
+    const client = new MockOdooWithSearch(mockData);
+
+    setMockClient(client);
+
+    const { data } = await searchReadRecord(
+      'res.partner',
+      { is_company: true },
+      ['name'],
+      {
+        pageSize: 50,
+      }
+    )(state);
+
+    expect(data.totalFetched).to.equal(200);
+    expect(data.rows).to.have.length(200);
+    expect(data.nextOffset).to.equal(null);
+    expect(data.rows[199]).to.deep.equal({ name: 'P200' });
+  });
+
+  it('only fetches items as per the set limit', async () => {
+    const mockData = makeData(120);
+    const client = new MockOdooWithSearch(mockData);
+
+    setMockClient(client);
+    const { data } = await searchReadRecord(
+      'res.partner',
+      { is_company: true },
+      ['name'],
+      { limit: 100, pageSize: 50 }
+    )(state);
+
+    expect(data.totalFetched).to.equal(100);
+    expect(data.rows).to.have.length(100);
+    expect(data.nextOffset).to.equal(null);
+  });
+
+  it('respects offset', async () => {
+    const mockData = makeData(60);
+    const client = new MockOdooWithSearch(mockData);
+
+    setMockClient(client);
+    const { data } = await searchReadRecord(
+      'res.partner',
+      { is_company: true },
+      ['name'],
+      { limit: 20, pageSize: 10, offset: 30 }
+    )(state);
+
+    expect(data.rows).to.have.length(20);
+    expect(data.rows[0]).to.deep.equal({ name: 'P31' });
+    expect(data.rows[19]).to.deep.equal({ name: 'P50' });
+    expect(data.nextOffset).to.equal(null);
+  });
+
+  it('returns empty when limit <= 0', async () => {
+    const mockData = makeData(60);
+    const client = new MockOdooWithSearch(mockData);
+    setMockClient(client);
+    const { data } = await searchReadRecord(
+      'res.partner',
+      { is_company: true },
+      ['name'],
+      { limit: 0, pageSize: 10 }
+    )(state);
+    expect(data.rows).to.deep.equal([]);
+    expect(data.nextOffset).to.equal(null);
+  });
+
+  it('returns empty when pageSize <= 0', async () => {
+    const mockData = makeData(60);
+    const client = new MockOdooWithSearch(mockData);
+    setMockClient(client);
+    const { data } = await searchReadRecord(
+      'res.partner',
+      { is_company: true },
+      ['name'],
+      { limit: 10, pageSize: 0 }
+    )(state);
+    expect(data.rows).to.deep.equal([]);
+    expect(data.nextOffset).to.equal(null);
   });
 });

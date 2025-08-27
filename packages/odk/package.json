@@ -1,8 +1,8 @@
 {
   "name": "@openfn/language-odk",
   "label": "ODK",
-  "version": "3.0.15",
-  "description": "OpenFn odk adaptor",
+  "version": "3.0.19",
+  "description": "OpenFn adaptor for Open Data Kit (ODK) data collection platform",
   "type": "module",
   "exports": {
     ".": {
@@ -36,7 +36,7 @@
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "rimraf": "3.0.2",
-    "undici": "^5.22.1"
+    "undici": "^5.29.0"
   },
   "repository": {
     "type": "git",

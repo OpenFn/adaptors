@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-msgraph",
   "label": "Microsoft Graph",
-  "version": "0.7.14",
+  "version": "0.8.2",
   "description": "Microsoft Graph Language Pack for OpenFn",
   "type": "module",
   "exports": {
@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "undici": "^5.28.5",
+    "undici": "^5.29.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
   },
   "devDependencies": {

@@ -1,8 +1,8 @@
 import {
   execute as commonExecute,
-  expandReferences,
   composeNextState,
 } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
 
 import pkg from 'mongodb';
 const { MongoClient } = pkg;
@@ -43,13 +43,17 @@ export function execute(...operations) {
  * @returns {State}
  */
 function connect(state) {
-  const { clusterHostname, username, password } = state.configuration;
-
-  const uri = `mongodb+srv://${encodeURIComponent(
+  const { clusterHostname, username, password, protocol = "mongodb+srv", options = { "retryWrites": true, "w": "majority" } } = state.configuration;
+  
+  const uri = `${protocol}://${encodeURIComponent(
     username
   )}:${encodeURIComponent(
     password
-  )}@${clusterHostname}/test?retryWrites=true&w=majority`;
+  )}@${clusterHostname}/test${
+    Object.keys(options).length ? "?" : ""
+  }${
+    encodeURIComponent(new URLSearchParams(options).toString())
+  }`;
 
   const client = new MongoClient(uri, { useNewUrlParser: true });
 
@@ -97,8 +101,8 @@ export function insertDocuments(params) {
     const { client } = state;
 
     try {
-      const { database, collection, documents, callback } =
-        expandReferences(params)(state);
+      const [resolvedParams] = expandReferences(state, params);
+      const { database, collection, documents, callback } = resolvedParams;
 
       const db = client.db(database);
       const mCollection = db.collection(collection);
@@ -144,8 +148,8 @@ export function findDocuments(params) {
     const { client } = state;
 
     try {
-      const { database, collection, query, callback } =
-        expandReferences(params)(state);
+      const [resolvedParams] = expandReferences(state, params);
+      const { database, collection, query, callback } = resolvedParams;
 
       const db = client.db(database);
       const mCollection = db.collection(collection);
@@ -190,8 +194,9 @@ export function updateDocument(params) {
   return state => {
     const { client } = state;
     try {
+      const [resolvedParams] = expandReferences(state, params);
       const { database, collection, filter, changes, options, callback } =
-        expandReferences(params)(state);
+        resolvedParams;
 
       const db = client.db(database);
       const mCollection = db.collection(collection);

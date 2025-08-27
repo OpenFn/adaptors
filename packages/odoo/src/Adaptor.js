@@ -25,6 +25,16 @@ let odooConn = null;
  */
 
 /**
+ * Options object
+ * @typedef {Object} SearchOptions
+ * @property {number} limit - Limit the number of records to return
+ * @property {number} offset - Set to the number of records to skip
+ * @property {string} order - Order to sort the records by. i.e "name, desc"
+ * @property {object} context - Context to be used in the request. i.e `{lang: 'en_US', timezone: 'UTC'}`.
+ *
+ */
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute` to make working with this API easier.
  * @example
@@ -215,6 +225,132 @@ export function deleteRecord(model, recordId) {
   };
 }
 
+/**
+ * Search a record from Odoo. Only returns record IDs. Use `searchReadRecord` to download full
+ * records which match the criteria.
+ * @public
+ * @example
+ * searchRecord('res.partner', {
+ *   country_id: 'United States',
+ * });
+ * @function
+ * @param {string} model - The specific record model i.e. "res.partner"
+ * @param {object} domain - Optional search domain to filter records.
+ * @state {OdooState}
+ * @state data - An array of matching record IDs
+ * @returns {Operation}
+ */
+export function searchRecord(model, domain = {}) {
+  return async state => {
+    const [resolvedModel, resolvedDomain] = expandReferences(
+      state,
+      model,
+      domain
+    );
+
+    console.log(`Searching ${resolvedModel} resource...`);
+
+    const response = await odooConn.search(resolvedModel, resolvedDomain);
+    return composeNextState(state, response);
+  };
+}
+
+/**
+ * Search and a read record from Odoo. It returns the records that match the search criteria, with the specified fields or full records if no fields are given.
+ * @public
+ * @example <caption>Search and read a record with a domain filter</caption>
+ * searchReadRecord('res.partner', {
+ *   country_id: 'United States',
+ * });
+ * @example <caption>Search and read a record with specific fields</caption>
+ * searchReadRecord(
+ *   'res.partner',
+ *   {
+ *     is_company: true,
+ *   },
+ *   ['name']
+ * );
+ * @example <caption> Fetch records with a limit</caption>
+ * searchReadRecord('res.partner', {}, [], {
+ *   limit: 200,
+ * });
+ * @function
+ * @param {string} model - The specific record model i.e. "res.partner"
+ * @param {object} domain - Optional search domain to filter records.
+ * @param {string[]} fields - An optional array of field strings to read from the record. i.e  ['name', 'state_id']
+ * @param {object} [options = {}] - Additional options to configure the search.
+ * @param {number} [options.limit=1000] - Maximum number of records to fetch. If undefined, defaults to 1000, and all records available will be fetched.
+ * @param {number} [options.offset=0] - The index of the first record to return.
+ * @param {number} [options.pageSize=200] - The number of records to fetch in each request. Defaults to 200.
+ * @state {OdooState}
+ * @returns {Operation}
+ */
+export function searchReadRecord(
+  model,
+  domain = {},
+  fields = [],
+  options = {}
+) {
+  return async state => {
+    const results = [];
+    const [resolvedModel, resolvedDomain, resolvedFields, resolvedOptions] =
+      expandReferences(state, model, domain, fields, options);
+
+    const { limit = 1000, offset = 0, pageSize = 200 } = resolvedOptions;
+
+    let totalFetched = 0;
+    let nextOffset = offset;
+
+    if (limit <= 0 || pageSize <= 0) {
+      return composeNextState(state, {
+        rows: results,
+        nextOffset: null,
+        totalFetched,
+      });
+    }
+
+    while (totalFetched < limit) {
+      const remainingItems = limit - totalFetched;
+      const fetchSize = Math.min(pageSize, remainingItems);
+
+      console.log(
+        `Searching and reading ${resolvedModel} resources. From offset ${nextOffset} with limit ${fetchSize}...`
+      );
+
+      const rows = await odooConn.searchRead(
+        resolvedModel,
+        resolvedDomain,
+        resolvedFields,
+        {
+          offset: nextOffset,
+          limit: fetchSize,
+        }
+      );
+
+      results.push(...rows);
+      totalFetched += rows.length;
+
+      // Update the next offset for the next iteration
+      nextOffset += rows.length;
+
+      // Check if we should exit the loop
+      if (
+        // Nothing more to fetch if no results returned
+        rows.length === 0 ||
+        // If we get fewer than requested, we have reached the end
+        rows.length < fetchSize ||
+        // If we have reached the limit, stop fetching
+        totalFetched >= limit
+      ) {
+        nextOffset = null;
+        break;
+      }
+    }
+
+    return composeNextState(state, { rows: results, nextOffset, totalFetched });
+  };
+}
+
 export {
   dataPath,
   dataValue,
@@ -223,7 +359,6 @@ export {
   field,
   fields,
   fn,
-  http,
   lastReferenceValue,
   merge,
   sourceValue,

@@ -14,8 +14,8 @@ export const makeBasicAuthHeader = (username, password) => {
   return { Authorization: `Basic ${credentials}` };
 };
 
-export const logResponse = (response, query = {}) => {
-  const { method, url, statusCode, duration } = response;
+export const logResponse = response => {
+  const { method, url, statusCode, duration, query } = response;
 
   if (method && url && duration && statusCode) {
     const urlWithQuery = Object.keys(query || {}).length
@@ -31,6 +31,7 @@ export const logResponse = (response, query = {}) => {
       console.log(message);
     }
   }
+
   return response;
 };
 
@@ -42,13 +43,60 @@ const getClient = (baseUrl, options) => {
   return clients.get(baseUrl);
 };
 
-export const enableMockClient = baseUrl => {
+export const enableMockClient = (baseUrl, options = {}) => {
+  const { defaultContentType = 'application/json' } = options;
+
   const mockAgent = new MockAgent({ connections: 1 });
   mockAgent.disableNetConnect();
   const client = mockAgent.get(baseUrl);
   if (!clients.has(baseUrl)) {
+    if (defaultContentType) {
+      const _intercept = client.intercept;
+      // because so many unit test use mock json,
+      // force the content-type header if a body is specified
+      client.intercept = (...args) => {
+        const interceptor = _intercept.apply(client, args);
+
+        const _reply = interceptor.reply;
+
+        const ensureJsonHeader = (headers = {}) => {
+          const hasJsonHeader = Object.keys(headers).find(k =>
+            /content-type/i.test(k)
+          );
+          if (!hasJsonHeader) {
+            headers['content-type'] = defaultContentType;
+          }
+        };
+
+        const reply = (...args) => {
+          if (typeof args[0] === 'function') {
+            // call the function
+            // in the resulting object, set the headers
+            const response = _reply.apply(interceptor, args);
+            if (response.body) {
+              response.headers ??= {};
+              ensureJsonHeader(response.headers);
+            }
+            return response;
+          } else {
+            const [code, data, options = {}] = args;
+            if (data) {
+              options.headers ??= {};
+              ensureJsonHeader(options.headers);
+            }
+            return _reply.call(interceptor, code, data, options);
+          }
+        };
+
+        interceptor.reply = reply;
+
+        return interceptor;
+      };
+    }
+
     clients.set(baseUrl, client);
   }
+
   return client;
 };
 
@@ -89,7 +137,7 @@ const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
   }
 };
 
-export const ERROR_ABSOLUTE_URL = 'Absolute URLs not suppored';
+export const ERROR_ABSOLUTE_URL = 'Absolute URLs not supported';
 
 // throws if a path is absolute
 export const assertRelativeUrl = path => {
@@ -185,12 +233,14 @@ export async function request(method, fullUrlOrPath, options = {}) {
 
   const client = getClient(baseUrl, { tls });
 
+  const queryParams = {
+    ...optionQuery,
+    ...urlQuery,
+  };
+
   const response = await client.request({
     path,
-    query: {
-      ...optionQuery,
-      ...urlQuery,
-    },
+    query: queryParams,
     method,
     headers,
     body: encodeRequestBody(body),
@@ -210,7 +260,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
   const endTime = Date.now();
   const duration = endTime - startTime;
 
-  return {
+  const requestResponse = {
     url,
     method,
     statusCode: response.statusCode,
@@ -219,6 +269,10 @@ export async function request(method, fullUrlOrPath, options = {}) {
     body: responseBody,
     duration,
   };
+  if (Object.keys(queryParams).length > 0) {
+    requestResponse.query = queryParams;
+  }
+  return requestResponse;
 }
 
 function encodeRequestBody(body) {
@@ -249,15 +303,19 @@ function encodeRequestBody(body) {
 }
 
 async function readResponseBody(response, parseAs) {
-  const contentLength = parseInt(
-    response.headers['content-length'] ?? response.body?.readableLength
-  );
+  let contentLength = -1;
+  if ('content-length' in response.headers) {
+    contentLength = parseInt(response.headers['content-length']);
+  }
   const contentType = response.headers['content-type'];
-  try {
-    if (Number.isNaN(contentLength) || contentLength === 0) {
-      return undefined;
-    }
 
+  // Try to work out if the response is empty
+  // HTTP spec says content type must be defined if there's a body
+  if (contentLength === 0 || !contentType || response.statusCode === 204) {
+    return;
+  }
+
+  try {
     switch (parseAs) {
       case 'json':
         return await response.body.json();
@@ -277,7 +335,7 @@ async function readResponseBody(response, parseAs) {
     throwError(response.statusCode, {
       description: 'Error parsing the response body',
       parseAs,
-      contentType: response.headers['content-type'],
+      contentType,
       bodyLength: contentLength,
       error: error.message,
     });

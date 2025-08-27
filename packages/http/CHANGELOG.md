@@ -1,5 +1,46 @@
 # @openfn/language-http
 
+## 7.2.0 - 14 July 2025
+
+### Minor Changes
+
+- c381879: Add support for `tls` object options in state.configuration
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
+## 7.1.1 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
+## 7.1.0 - 10 July 2025
+
+### Minor Changes
+
+- 19f2d7e: Exported `as()` function from common.
+- 8d78db4: Export `map()` function from common
+
+### Patch Changes
+
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
+## 7.0.7 - 20 June 2025
+
+### Patch Changes
+
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
+
 ## 7.0.6 - 22 April 2025
 
 ### Patch Changes

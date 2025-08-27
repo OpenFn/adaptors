@@ -1,5 +1,30 @@
 # @openfn/language-fhir
 
+## 5.0.7 - 14 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
+## 5.0.6 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
+## 5.0.5 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
 ## 5.0.4 - 22 April 2025
 
 ### Patch Changes
@@ -120,8 +145,8 @@
 - a42ffeb9: - All HTTP methods now write `{ data, response }` to state, where
   data is the response body and response is the raw response
   - All HTTP methods now support a `throwOnError` param, which defaults to true.
-    If false, the adaptor will not throw if the HTTP status is <=400
-  - request: return { data, response } directly
+    If false, the adaptor will not throw if the HTTP status is an error code
+  - request: return `{ data, response }` directly
   - request: fix an issue where default headers would override user headers
   - request: if the body contains application/json content, parse it as JSON
 

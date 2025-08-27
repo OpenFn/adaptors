@@ -1,3 +1,63 @@
+## 3.0.1 - 11 July 2025
+
+## 3.0.2 - 14 July 2025
+
+### Patch Changes
+
+- 9b5a4f8: More robust handling of empty response bodies in http helpers
+
+### Patch Changes
+
+- cf9c09f: Fix an issue where JSON responses without a content-type header could
+  return undefined
+
+## 3.0.0 - 10 July 2025
+
+The 3.0 release of the common adaptor restructures some key internal
+functionality and re-writes the `map()` function to feel more modern.
+
+It also and adds exports for the lodash utility library (`_`) an a new `as()`
+convenience function.
+
+### Major Changes
+
+- 3fce58f: - Re-write `map()` to work more like JavaScript's `Array.map()`.
+
+### Minor Changes
+
+- f26bd2b: Export for lodash
+- 19f2d7e: Implement `as()` function for saving the result of an operation to a
+  custom key in state instead of overwriting state.data.
+
+### Migration Guide
+
+The behaviour of the `map()` function has changed subtly but significantly.
+
+Existing workflows should replace `map()` with `each()`, which has the same
+functionality.
+
+So if you used to do this:
+
+```js
+map('$.[*]', create('SObject', field('FirstName', sourceValue('$.firstName'))));
+```
+
+You must do this instead:
+
+```js
+each(
+  '$.[*]',
+  create('SObject', field('FirstName', sourceValue('$.firstName')))
+);
+```
+
+## 2.5.0 - 20 June 2025
+
+### Minor Changes
+
+- 28c2e8b: - Updated internal `logResponse` API
+- Update request to response to include `query` parameters
+
 ## 2.4.0 - 22 April 2025
 
 ### Minor Changes

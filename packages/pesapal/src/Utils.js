@@ -26,7 +26,7 @@ export const getAccessToken = async configuration => {
     consumer_secret,
     access_token,
     baseUrl = defaultBaseUrl,
-    apiVersion = 'pesapalv3',
+    apiVersion = 'v3',
   } = configuration;
 
   if (access_token) {

@@ -75,6 +75,42 @@
             "name": "filter"
           },
           {
+            "title": "param",
+            "description": "The uuid column to determine a matching/existing record",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "filter.uuid"
+          },
+          {
+            "title": "param",
+            "description": "The table to lookup the value in",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "filter.relation"
+          },
+          {
+            "title": "param",
+            "description": "The condition to use for the lookup. Values are automatically escaped for security.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "filter.where"
+          },
+          {
+            "title": "param",
+            "description": "The operator to use for the lookup",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "filter.operator"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -84,7 +120,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "insert",
@@ -1237,6 +1273,60 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "as",
+      "params": [
+        "key",
+        "operation"
+      ],
+      "docs": {
+        "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));",
+            "caption": "Fetch cce-data from collections and store them under state.cceData"
+          },
+          {
+            "title": "param",
+            "description": "The state key to assign the result of the operation to.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": " An operation that returns a new state object with a `data` property",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ]
 }

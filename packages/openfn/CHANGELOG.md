@@ -1,5 +1,52 @@
 # @openfn/language-openfn
 
+## 3.0.3 - 14 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
+## 3.0.2 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
+## 3.0.1 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
+## 3.0.0 - 02 July 2025
+
+### Major Changes
+
+- 6bf20c4: ## Major Changes
+
+  - Add support for v2 API
+  - Add `post()` and `get()` functions
+  - Remove unused dependencies
+
+## Breaking Changes
+
+- Drop support for v1 API
+- Update `request()` function signature to `request(method, path, options)`
+
+## 2.0.14 - 20 June 2025
+
+### Patch Changes
+
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
+
 ## 2.0.13 - 22 April 2025
 
 ### Patch Changes

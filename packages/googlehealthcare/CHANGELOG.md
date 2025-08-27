@@ -1,5 +1,33 @@
 # @openfn/language-googlehealthcare
 
+## 1.1.6 - 14 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
+## 1.1.5 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
+## 1.1.4 - 10 July 2025
+
+### Patch Changes
+
+- c4625fa: - Migrate from the deprecated `expandReferences` in `common` to the
+  new `expandReferences` from common.util
+  - Use `workspace:*` common version.
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
 ## 1.1.3 - 28 October 2024
 
 ### Patch Changes

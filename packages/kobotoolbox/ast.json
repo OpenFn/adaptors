@@ -43,17 +43,32 @@
         "options"
       ],
       "docs": {
-        "description": "Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`.",
+        "description": "Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`",
         "tags": [
           {
             "title": "example",
-            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX');",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX');.",
+            "caption": "Get submissions for a specific form"
+          },
+          {
+            "title": "example",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit: Infinity });",
             "caption": "Get all submissions for a specific form"
           },
           {
             "title": "example",
-            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \"2022-06-12T21:54:20\" } } });",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: \"2025-03-12T21:54:20\" } } });",
             "caption": "Get form submissions with a query"
+          },
+          {
+            "title": "example",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { sort: { _submission_time: -1 } });",
+            "caption": "Get form submissions with sorting"
+          },
+          {
+            "title": "example",
+            "description": "getSubmissions('aXecHjmbATuF6iGFmvBLBX', { start: 10 });",
+            "caption": "Get form submissions with specific start index"
           },
           {
             "title": "function",
@@ -76,7 +91,7 @@
           },
           {
             "title": "param",
-            "description": "Optional query params for the request",
+            "description": "Options to control the request",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -86,6 +101,69 @@
             },
             "name": "options",
             "default": "{}"
+          },
+          {
+            "title": "param",
+            "description": "Field and direction to sort submissions by.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options.sort"
+          },
+          {
+            "title": "param",
+            "description": "Query options to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options.query"
+          },
+          {
+            "title": "param",
+            "description": "The index of the first submission to return.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.start",
+            "default": "0"
+          },
+          {
+            "title": "param",
+            "description": "Maximum number of submissions to fetch. Pass `Infinity` to disable the limit and download all submissions",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.limit",
+            "default": "30000"
+          },
+          {
+            "title": "param",
+            "description": "Limits the size of each page of submissions. Maximum value is 30000.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.pageSize",
+            "default": "10000"
           },
           {
             "title": "state",
@@ -101,7 +179,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "getDeploymentInfo",
@@ -796,6 +874,125 @@
             "type": {
               "type": "NameExpression",
               "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "as",
+      "params": [
+        "key",
+        "operation"
+      ],
+      "docs": {
+        "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));",
+            "caption": "Fetch cce-data from collections and store them under state.cceData"
+          },
+          {
+            "title": "param",
+            "description": "The state key to assign the result of the operation to.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": " An operation that returns a new state object with a `data` property",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "map",
+      "params": {},
+      "docs": {
+        "description": "Iterates over a collection of items and returns a new array of mapped values,\nlike Javascript's `Array.map()` function.\n\nEach item in the source array will be passed into the callback function. The returned value\nwill be added to the new array. The callback is passed the original item, the current index\nin the source array (ie, the nth item number), and the state object.\n\nWrites a new array to `state.data` with transformed values.c array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "map($.items', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
+            "caption": "Transform an array of items in state"
+          },
+          {
+            "title": "example",
+            "description": "map($.items, async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});",
+            "caption": "Map items asynchronously (e.g. fetch extra info)"
+          },
+          {
+            "title": "param",
+            "description": "An array of items or a a JSONPath string which points to an array of items.",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Array"
+                }
+              ]
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "The mapping function, invoked with `(data, index, state)` for each item in the array.",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "State"
             }
           }
         ]

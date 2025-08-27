@@ -124,6 +124,21 @@ describe('parseUrl', () => {
 });
 
 describe('logResponse', () => {
+  let originalLog;
+  let consoleOutput = [];
+
+  beforeEach(() => {
+    // Setup: Override console.log
+    originalLog = console.log;
+    consoleOutput = [];
+    console.log = (...args) => consoleOutput.push(args);
+  });
+
+  afterEach(() => {
+    // Teardown: Restore console.log
+    console.log = originalLog;
+  });
+
   it('should include query parameters in the url', async () => {
     client
       .intercept({
@@ -141,22 +156,111 @@ describe('logResponse', () => {
       },
     });
     response.duration = 2;
-    let originalLog;
-    let consoleOutput = [];
-    
-    // Setup: Override console.log
-    originalLog = console.log;
-    console.log = (...args) => consoleOutput.push(args);
-
-    logResponse(response, {
+    response.query = {
       name: 'homelander',
-    });
-    expect(consoleOutput?.[0]).to.deep.eql([
+    };
+
+    logResponse(response);
+
+    expect(consoleOutput[0]).to.deep.eql([
       'GET https://www.example.com/api?name=homelander - 200 in 2ms',
     ]);
+  });
 
-    // Teardown: Restore console.log
-    console.log = originalLog;
+  it('should not include query parameters when query object is empty', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api');
+    response.duration = 5;
+    response.query = {};
+
+    logResponse(response);
+
+    expect(consoleOutput[0]).to.deep.eql([
+      'GET https://www.example.com/api - 200 in 5ms',
+    ]);
+  });
+
+  it('should handle multiple query parameters', async () => {
+    const query = {
+      name: 'homelander',
+      age: '25',
+      city: 'new york',
+    };
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+        query,
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api', {
+      query,
+    });
+    response.duration = 10;
+    response.query = query;
+
+    logResponse(response);
+
+    expect(consoleOutput[0]).to.deep.eql([
+      'GET https://www.example.com/api?name=homelander&age=25&city=new+york - 200 in 10ms',
+    ]);
+  });
+
+  it('should handle special characters in query parameters', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+        query: {
+          search: 'hello world',
+          filter: 'active=true',
+        },
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api', {
+      query: {
+        search: 'hello world',
+        filter: 'active=true',
+      },
+    });
+    response.duration = 3;
+    response.query = {
+      search: 'hello world',
+      filter: 'active=true',
+    };
+
+    logResponse(response);
+
+    expect(consoleOutput[0]).to.deep.eql([
+      'GET https://www.example.com/api?search=hello+world&filter=active%3Dtrue - 200 in 3ms',
+    ]);
+  });
+
+  it('should handle null or undefined query parameters', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api');
+    response.duration = 1;
+    response.query = null;
+
+    logResponse(response);
+
+    expect(consoleOutput[0]).to.deep.eql([
+      'GET https://www.example.com/api - 200 in 1ms',
+    ]);
   });
 });
 
@@ -254,6 +358,40 @@ describe('request function', () => {
     expect(response.url).to.eql('https://www.example.com/api');
   });
 
+  it('should include response.query when request has query parameters', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+        query: {
+          name: 'homelander',
+          age: '25',
+        },
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api', {
+      query: { name: 'homelander', age: '25' },
+    });
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.query).to.eql({ name: 'homelander', age: '25' });
+  });
+
+  it('should not include response.query when request has no query parameters', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'GET',
+      })
+      .reply(200, {});
+
+    const response = await request('GET', 'https://www.example.com/api');
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.query).to.be.undefined;
+  });
+
   it('should return undefined if response body is empty and parseAs is json', async () => {
     client
       .intercept({
@@ -271,6 +409,80 @@ describe('request function', () => {
 
     expect(response.statusCode).to.eql(200);
     expect(response.body).to.eql(undefined);
+  });
+
+  it('should return undefined if no response body and no headers', async () => {
+    client
+      .intercept({
+        path: '/api',
+        method: 'PUT',
+      })
+      .reply(200, undefined, {
+        headers: {},
+      });
+
+    const response = await request('PUT', 'https://www.example.com/api', {
+      parseAs: 'json',
+      body: { id: 2 },
+    });
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.body).to.eql(undefined);
+  });
+
+  it('should accept a JSON response with content-length', async () => {
+    const body = { jam: 'jar ' };
+    client
+      .intercept({
+        path: '/api/json',
+        method: 'GET',
+      })
+      .reply(200, body, {
+        headers: { 'Content-Length': JSON.stringify(body).length },
+      });
+
+    const response = await request('GET', 'https://www.example.com/api/json');
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.body).to.eql(body);
+  });
+
+  it('should accept a JSON response without content-length', async () => {
+    const body = { jam: 'jar ' };
+    client
+      .intercept({
+        path: '/api/json',
+        method: 'GET',
+      })
+      .reply(200, body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+    const response = await request('GET', 'https://www.example.com/api/json');
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.body).to.eql(body);
+  });
+
+  it('should accept a JSON response with content-length', async () => {
+    const body = { jam: 'jar ' };
+    client
+      .intercept({
+        path: '/api/json',
+        method: 'GET',
+      })
+      .reply(200, body, {
+        headers: { 'Content-Length': JSON.stringify(body).length },
+      });
+
+    const response = await request('GET', 'https://www.example.com/api/json', {
+      parseAs: 'json',
+    });
+
+    expect(response.statusCode).to.eql(200);
+    expect(response.body).to.eql(body);
   });
 
   it('should throw an error if there is no content-length header and an empty response body', async () => {
@@ -733,19 +945,21 @@ describe('helpers', () => {
       expect(result.body).to.eql({ name: 'mutchi' });
     });
 
-    it('should auto parse as text by default (no content type)', async () => {
+    it('should auto parse as text by default (unknown content type)', async () => {
       client
         .intercept({
           path: '/api',
           method: 'GET',
         })
-        .reply(200, {
-          name: 'joe',
+        .reply(200, 'joe', {
+          headers: {
+            'content-type': 'application/xml',
+          },
         });
 
       const result = await request('GET', 'https://www.example.com/api');
 
-      expect(result.body).to.eql(JSON.stringify({ name: 'joe' }));
+      expect(result.body).to.eql('joe');
     });
 
     it('should auto parse as text in any other case', async () => {
@@ -771,9 +985,17 @@ describe('helpers', () => {
           path: '/api',
           method: 'GET',
         })
-        .reply(200, {
-          name: 'aissa',
-        });
+        .reply(
+          200,
+          {
+            name: 'aissa',
+          },
+          {
+            headers: {
+              'content-type': 'application/json',
+            },
+          }
+        );
 
       const result = await request('GET', 'https://www.example.com/api', {
         parseAs: 'json',
@@ -813,9 +1035,17 @@ describe('helpers', () => {
           path: '/api',
           method: 'GET',
         })
-        .reply(200, {
-          name: 'iam stream',
-        });
+        .reply(
+          200,
+          {
+            name: 'iam stream',
+          },
+          {
+            headers: {
+              'content-type': 'application/text',
+            },
+          }
+        );
 
       const result = await request('GET', 'https://www.example.com/api', {
         parseAs: 'stream',
@@ -857,7 +1087,11 @@ describe('helpers', () => {
           path: '/api',
           method: 'GET',
         })
-        .reply(200, binaryData);
+        .reply(200, binaryData, {
+          headers: {
+            'content-type': 'application/octet-stream',
+          },
+        });
 
       const result = await request('GET', 'https://www.example.com/api', {
         parseAs: 'base64',

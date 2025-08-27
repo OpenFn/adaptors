@@ -1,7 +1,6 @@
-import {
-  execute as commonExecute,
-  expandReferences,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
+import { escape } from './util';
 import { Connection, Request } from 'tedious';
 
 /**
@@ -20,7 +19,6 @@ function createConnection(state) {
     database,
     port = 1433,
     encrypt = true,
-    rowCollectionOnRequestCompletion = true,
     trustServerCertificate = true,
   } = state.configuration;
 
@@ -38,7 +36,7 @@ function createConnection(state) {
       port,
       database,
       encrypt,
-      rowCollectionOnRequestCompletion,
+      rowCollectionOnRequestCompletion: true,
       trustServerCertificate,
     },
   };
@@ -97,10 +95,8 @@ export function execute(...operations) {
  * @returns {State}
  */
 function cleanupState(state) {
-  if (state.connection) {
-    state.connection.close();
-  }
-  delete state.connection;
+  state?.connection?.close();
+  delete state?.connection;
   return state;
 }
 
@@ -165,8 +161,13 @@ function queryHandler(state, query, callback, options) {
 
     const request = new Request(query, (err, rowCount, rows) => {
       if (err) {
-        console.error(err);
+        if (err.name === 'AggregateError' && err.errors) {
+          err.errors.map(error => console.error('Error: ', error.message));
+        } else {
+          console.error(err);
+        }
         reject(err);
+        return;
       } else {
         console.log(`Finished: ${rowCount} row(s).`);
         resolve(callback(state, rows));
@@ -191,7 +192,8 @@ export function sql(params) {
     const { connection } = state;
 
     try {
-      const { query, options } = expandReferences(params)(state);
+      const [resolvedParams] = expandReferences(state, params);
+      const { query, options } = resolvedParams;
 
       console.log(`Preparing to execute sql statement: ${query}`);
       return queryHandler(state, query, composeNextState, options);
@@ -230,16 +232,6 @@ function handleOptions(options) {
   return (options && options.setNull) || "'undefined'";
 }
 
-function escapeQuote(stringExp) {
-  if (typeof stringExp === 'object' && stringExp !== null) {
-    return Object.values(stringExp).map(x => escapeQuote(x));
-  } else if (typeof stringExp !== 'string') {
-    return stringExp;
-  }
-
-  return stringExp.replace(/\'/g, "''");
-}
-
 /**
  * Fetch a uuid key given a condition
  * @public
@@ -252,6 +244,10 @@ function escapeQuote(stringExp) {
  *  })
  * @function
  * @param {object} filter - A filter object with the lookup table, a uuid and the condition
+ * @param {string} filter.uuid - The uuid column to determine a matching/existing record
+ * @param {string} filter.relation - The table to lookup the value in
+ * @param {object} filter.where - The condition to use for the lookup. Values are automatically escaped for security.
+ * @param {object} filter.operator - The operator to use for the lookup
  * @returns {Operation}
  */
 export function findValue(filter) {
@@ -259,14 +255,15 @@ export function findValue(filter) {
     const { connection } = state;
 
     const { uuid, relation, where, operator } = filter;
-    const whereData = expandReferences(where)(state);
-    const operatorData = expandReferences(operator)(state);
+    const [whereData, operatorData] = expandReferences(state, where, operator);
 
     let conditionsArray = [];
-    for (let key in whereData)
+    for (let key in whereData) {
+      const escapedValue = escape(whereData[key]);
       conditionsArray.push(
-        `${key} ${operatorData ? operatorData[key] : '='} '${whereData[key]}'`
+        `${key} ${operatorData ? operatorData[key] : '='} '${escapedValue}'`
       );
+    }
 
     const condition =
       conditionsArray.length > 0
@@ -275,22 +272,23 @@ export function findValue(filter) {
 
     try {
       const body = `select ${uuid} from ${relation} ${condition}`;
-
       console.log('Preparing to execute sql statement');
       let returnValue = null;
-
       return new Promise((resolve, reject) => {
         console.log(`Executing query: ${body}`);
 
         const request = new Request(body, (err, rowCount, rows) => {
           if (err) {
             console.error(err.message);
-            throw err;
+            reject(err);
           } else {
             if (rows.length > 0) {
               returnValue = rows[0][0].value;
             }
-            if (returnValue === null) resolve(undefined);
+            if (returnValue === null) {
+              console.log('No value found');
+              resolve(undefined);
+            }
             resolve(returnValue);
           }
         });
@@ -319,12 +317,10 @@ export function insert(table, record, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(record)(state);
+      const [recordData] = expandReferences(state, record);
 
       const columns = Object.keys(recordData).sort();
-      const values = columns
-        .map(key => escapeQuote(recordData[key]))
-        .join("', '");
+      const values = columns.map(key => escape(recordData[key])).join("', '");
 
       const query = handleValues(
         `INSERT INTO ${table} (${columns.join(', ')}) VALUES ('${values}');`,
@@ -335,7 +331,7 @@ export function insert(table, record, options) {
         ', '
       )}) VALUES [--REDACTED--]];`;
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         const queryToLog = options && options.logValues ? query : safeQuery;
         console.log(`Executing insert via: ${queryToLog}`);
 
@@ -364,13 +360,13 @@ export function insertMany(table, records, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(records)(state);
+      const [recordData] = expandReferences(state, records);
 
       // Note: we select the keys of the FIRST object as the canonical template.
       const columns = Object.keys(recordData[0]);
 
       const valueSets = recordData.map(
-        x => `('${escapeQuote(Object.values(x)).join("', '")}')`
+        x => `('${escape(Object.values(x)).join("', '")}')`
       );
       const query = handleValues(
         `INSERT INTO ${table} (${columns.join(', ')}) VALUES ${valueSets.join(
@@ -383,7 +379,7 @@ export function insertMany(table, records, options) {
         ', '
       )}) VALUES [--REDACTED--]];`;
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         const queryToLog = options && options.logValues ? query : safeQuery;
         console.log(`Executing insertMany via: ${queryToLog}`);
 
@@ -414,15 +410,15 @@ export function upsert(table, uuid, record, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(record)(state);
+      const [recordData] = expandReferences(state, record);
       const columns = Object.keys(recordData).sort();
 
       const selectValues = columns
-        .map(key => `'${escapeQuote(recordData[key])}' AS ${key}`)
+        .map(key => `'${escape(recordData[key])}' AS ${key}`)
         .join(', ');
 
       const updateValues = columns
-        .map(key => `[Target].${key}='${escapeQuote(recordData[key])}'`)
+        .map(key => `[Target].${key}='${escape(recordData[key])}'`)
         .join(', ');
 
       const insertColumns = columns.join(', ');
@@ -456,7 +452,7 @@ export function upsert(table, uuid, record, options) {
         WHEN NOT MATCHED THEN
           INSERT (${insertColumns}) VALUES [--REDACTED--];`;
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         const queryToLog = options && options.logValues ? query : safeQuery;
         console.log(`Executing upsert via: ${queryToLog}`);
 
@@ -493,22 +489,22 @@ export function upsertIf(logical, table, uuid, record, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(record)(state);
+      const [recordData] = expandReferences(state, record);
       const columns = Object.keys(recordData).sort();
-      const logicalData = expandReferences(logical)(state);
+      const [logicalData] = expandReferences(state, logical);
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         if (!logicalData) {
           console.log(`Skipping upsert for ${uuid}.`);
           resolve(state);
           return state;
         }
         const selectValues = columns
-          .map(key => `'${escapeQuote(recordData[key])}' AS ${key}`)
+          .map(key => `'${escape(recordData[key])}' AS ${key}`)
           .join(', ');
 
         const updateValues = columns
-          .map(key => `[Target].${key}='${escapeQuote(recordData[key])}'`)
+          .map(key => `[Target].${key}='${escape(recordData[key])}'`)
           .join(', ');
 
         const insertColumns = columns.join(', ');
@@ -576,9 +572,9 @@ export function upsertMany(table, uuid, records, options) {
     const { connection } = state;
 
     try {
-      const recordData = expandReferences(records)(state);
+      const [recordData] = expandReferences(state, records);
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         if (!recordData || recordData.length === 0) {
           console.log('No records provided; skipping upsert.');
           resolve(state);
@@ -588,7 +584,7 @@ export function upsertMany(table, uuid, records, options) {
         const columns = Object.keys(recordData[0]);
 
         const valueSets = recordData.map(
-          x => `('${escapeQuote(Object.values(x)).join("', '")}')`
+          x => `('${escape(Object.values(x)).join("', '")}')`
         );
         const insertColumns = columns.join(', ');
         const insertValues = columns.map(key => `[Source].${key}`).join(', ');
@@ -650,7 +646,7 @@ export function upsertMany(table, uuid, records, options) {
 export function describeTable(tableName, options) {
   return state => {
     const { connection } = state;
-    const name = expandReferences(tableName)(state);
+    const [name] = expandReferences(state, tableName);
 
     try {
       const query = `SELECT column_name
@@ -689,9 +685,9 @@ export function insertTable(tableName, columns, options) {
   return state => {
     const { connection } = state;
     try {
-      const data = expandReferences(columns)(state);
+      const [data] = expandReferences(state, columns);
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         if (!data || data.length === 0) {
           console.log('No columns provided; skipping table creation.');
           resolve(state);
@@ -749,9 +745,9 @@ export function modifyTable(tableName, columns, options) {
     const { connection } = state;
 
     try {
-      const data = expandReferences(columns)(state);
+      const [data] = expandReferences(state, columns);
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         if (!data || data.length === 0) {
           console.log('No columns provided; skipping table modification.');
           resolve(state);
@@ -795,9 +791,9 @@ export {
   fields,
   fn,
   fnIf,
-  http,
   lastReferenceValue,
   cursor,
   merge,
   sourceValue,
+  as,
 } from '@openfn/language-common';

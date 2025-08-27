@@ -1,0 +1,868 @@
+{
+  "operations": [
+    {
+      "name": "createBirthNotification",
+      "params": [
+        "body"
+      ],
+      "docs": {
+        "description": "Create a Birth Notification. Pass an array of FHIR resources wrapped in entry\nobjects like `{ fullUrl, resource }`. References must use the full URL\nof the corresponding resources. See [OpenCRVS Event Notification Postman documentation](https://github.com/opencrvs/opencrvs-countryconfig/blob/master/postman/Event%20Notification.postman_collection.json)",
+        "tags": [
+          {
+            "title": "example",
+            "description": "createBirthNotification($.bundleData)",
+            "caption": "Create a birth notification"
+          },
+          {
+            "title": "example",
+            "description": "createBirthNotification([\n{\nfullUrl: 'urn:uuid:abcde',\nresource: {\nresourceType: 'Composition',\nsection:[\n{\ntitle: \"Mother's details\",\ncode: {\ncoding: [\n{\nsystem: 'http://opencrvs.org/specs/sections',\ncode: 'mother-details',\n},\n],\ntext: \"Mother's details\",\n},\nentry: [\n{\nreference: 'urn:uuid:wxyz',\n},\n],\n}\n// ... other section details  \n]\n\n// ... other resource details\n},\n},\n{\nfullUrl: 'urn:uuid:wxyz',\nresource: {\nresourceType: 'Patient',\n// ... other resource details\n},\n},\n]);",
+            "caption": "Cross-reference two bundle resources"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "An array of Birth Notification bundle entries.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Array"
+            },
+            "name": "body"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenCRVSState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "queryEvents",
+      "params": [
+        "variables",
+        "options"
+      ],
+      "docs": {
+        "description": "Make an events search query against the OpenCRVS GraphQL API.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "queryEvents(\n{\nevent: 'birth',\nregistrationStatuses: ['REGISTERED'],\nchildGender: 'male',\ndateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',\ndateOfRegistrationStart: '2021-11-01T00:00:00.000Z',\ndeclarationJurisdictionId: '',\neventLocationId: '704b9706-d729-4834-8656-05b562065deb',\nfatherFirstNames: 'Dad',\nmotherFirstNames: 'Mom',\n},\n);",
+            "caption": "Search for events with specific parameters"
+          },
+          {
+            "title": "example",
+            "description": "queryEvents(\n{\nevent: 'birth',\nregistrationStatuses: ['REGISTERED'],\nchildGender: 'male',\ndateOfRegistrationEnd: '2022-12-31T23:59:59.999Z',\ndateOfRegistrationStart: '2021-11-01T00:00:00.000Z',\ndeclarationJurisdictionId: '',\neventLocationId: '704b9706-d729-4834-8656-05b562065deb',\nfatherFirstNames: 'Dad',\nmotherFirstNames: 'Mom',\n},\n{ count: 10, skip: 0 }\n);",
+            "caption": "Search for events with options"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "GraphQL search parameters. For a full list of options, see [variables.advancedSearchParameters in OpenCRVS Docs](https://documentation.opencrvs.org/technology/interoperability/record-search-clients#record-search-requests)",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "variables"
+          },
+          {
+            "title": "param",
+            "description": "Options to control the request, such as `count` and `skip`. Count defaults to 10.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenCRVSState}"
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
+  "exports": [],
+  "common": [
+    {
+      "name": "fn",
+      "params": [
+        "func"
+      ],
+      "docs": {
+        "description": "Creates a custom step (or operation) for more flexible job writing.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
+          },
+          {
+            "title": "param",
+            "description": "is the function",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "func"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fnIf",
+      "params": [
+        "condition",
+        "operation"
+      ],
+      "docs": {
+        "description": "A custom operation that will only execute the function if the condition returns true",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+          },
+          {
+            "title": "param",
+            "description": "The condition that returns true",
+            "type": {
+              "type": "NameExpression",
+              "name": "Boolean"
+            },
+            "name": "condition"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be executed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "sourceValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "dataPath",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Ensures a path points at the data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `data`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "dataValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `data`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "lastReferenceValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out the last reference value from source data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `references`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "each",
+      "params": [
+        "dataSource",
+        "operation"
+      ],
+      "docs": {
+        "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+            "caption": "Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+            "caption": "Iterate over items in state.data and pass each one into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);",
+            "caption": "Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            },
+            "name": "dataSource"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be repeated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "combine",
+      "params": [
+        "operations"
+      ],
+      "docs": {
+        "description": "Combines two operations into one",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
+          },
+          {
+            "title": "param",
+            "description": "Operations to be performed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operations"
+            },
+            "name": "operations"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "field",
+      "params": [
+        "key",
+        "value"
+      ],
+      "docs": {
+        "description": "Returns a key, value pair in an array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
+          },
+          {
+            "title": "param",
+            "description": "Name of the field",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": "The value itself or a sourceable operation.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Value"
+            },
+            "name": "value"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Field"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fields",
+      "params": [
+        "fields"
+      ],
+      "docs": {
+        "description": "Zips key value pairs into an object.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
+          },
+          {
+            "title": "param",
+            "description": "a list of fields",
+            "type": {
+              "type": "NameExpression",
+              "name": "Fields"
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "merge",
+      "params": [
+        "dataSource",
+        "fields"
+      ],
+      "docs": {
+        "description": "Merges fields into each item in an array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "merge(\n  \"$.books[*]\",\n  fields(\n    field( \"publisher\", sourceValue(\"$.publisher\") )\n  )\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            },
+            "name": "dataSource"
+          },
+          {
+            "title": "param",
+            "description": "Group of fields to merge in.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "group",
+      "params": [
+        "arrayOfObjects",
+        "keyPath",
+        "callback"
+      ],
+      "docs": {
+        "description": "Groups an array of objects by a specified key path.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "const users = [\n  { name: 'Alice', age: 25, city: 'New York' },\n  { name: 'Bob', age: 30, city: 'San Francisco' },\n  { name: 'Charlie', age: 25, city: 'New York' },\n  { name: 'David', age: 30, city: 'San Francisco' }\n];\ngroup(users, 'city');\n// state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The array of objects to be grouped.",
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "Object"
+                }
+              ]
+            },
+            "name": "arrayOfObjects"
+          },
+          {
+            "title": "param",
+            "description": "The key path to group by.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "keyPath"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "scrubEmojis",
+      "params": [
+        "text",
+        "replacementChars"
+      ],
+      "docs": {
+        "description": "Replaces emojis in a string.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "scrubEmojis('Dove🕊️⭐ 29')"
+          },
+          {
+            "title": "param",
+            "description": "String that needs to be cleaned",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "text"
+          },
+          {
+            "title": "param",
+            "description": "Characters that replace the emojis",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "replacementChars"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "cursor",
+      "params": [
+        "value",
+        "options"
+      ],
+      "docs": {
+        "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "cursor($.cursor, { defaultValue: 'today' })",
+            "caption": "Use a cursor from state if present, or else use the default value"
+          },
+          {
+            "title": "example",
+            "description": "cursor(22)",
+            "caption": "Use a pagination cursor"
+          },
+          {
+            "title": "param",
+            "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "value"
+          },
+          {
+            "title": "param",
+            "description": "options to control the cursor.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "set the cursor key. Will persist through the whole run.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "options.key"
+          },
+          {
+            "title": "param",
+            "description": "the value to use if value is falsy",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "options.defaultValue"
+          },
+          {
+            "title": "param",
+            "description": "custom formatter for the final cursor value",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "options.format"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    }
+  ]
+}

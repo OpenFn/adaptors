@@ -5,10 +5,10 @@
       "title": "Host URL",
       "type": "string",
       "description": "The SFTP server host url or ip address",
-      "format": "uri",
       "minLength": 1,
       "examples": [
-        "191.173.128.88"
+        "191.173.128.88",
+        "sftp.example.com"
       ]
     },
     "port": {
@@ -20,7 +20,6 @@
       "examples": [
         22
       ]
-
     },
     "username": {
       "title": "Username",
@@ -44,5 +43,7 @@
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["host"]
+  "required": [
+    "host"
+  ]
 }

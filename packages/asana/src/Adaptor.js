@@ -1,6 +1,9 @@
-import { execute as commonExecute } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { request as requestHelper } from './Utils';
+import * as util from './util';
 
 /**
  * Execute a sequence of operations.
@@ -31,66 +34,77 @@ export function execute(...operations) {
 /**
  * Get a single task of a given project.
  * @public
- * @example
+ * @example <caption>Get a task</caption>
  * getTask("1206933955023739", {
  *   opt_fields: "name,notes,assignee",
  * });
  * @function
  * @param {string} taskGid - Globally unique identifier for the task
  * @param {object} params - Query params to include.
+ * @param {string} params.opt_fields - The fields to return.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
 export function getTask(taskGid, params, callback) {
-  return state => {
+  return async state => {
     const [resolvedTaskGid, resolvedParams] = expandReferences(
       state,
       taskGid,
       params
     );
-    return requestHelper(
+    const response = await util.request(
       state,
       `tasks/${resolvedTaskGid}`,
       { query: resolvedParams },
       callback
     );
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
  * Get the list of tasks for a given project.
  * @public
- * @example
+ * @example <caption>Get all tasks</caption>
  * getTasks("1206933955023739", {
  *   opt_fields: "name,notes,assignee",
+ * });
+ * @example <caption>Limit the number of tasks returned</caption>
+ * getTasks("1206933955023739", {
+ *   opt_fields: "name,notes,assignee",
+ *   limit: 100,
  * });
  * @function
  * @param {string} projectGid - Globally unique identifier for the project
  * @param {object} params - Query params to include.
+ * @param {number} params.limit - The maximum number of tasks to return.
+ * @param {string} params.opt_fields - The fields to return.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
 export function getTasks(projectGid, params, callback) {
-  return state => {
+  return async state => {
     const [resolvedProjectGid, resolvedParams] = expandReferences(
       state,
       projectGid,
       params
     );
 
-    return requestHelper(
+    const results = await util.requestWithPagination(
       state,
       `projects/${resolvedProjectGid}/tasks`,
       { query: resolvedParams },
       callback
     );
+    console.log(`Fetched ${results.length} tasks`);
+    return composeNextState(state, results);
   };
 }
 
 /**
  * Update a specific task.
  * @public
- * @example
+ * @example <caption>Update a task</caption>
  * updateTask("1206933955023739", {
  *   name: "test",
  *   approval_status: "pending",
@@ -98,24 +112,25 @@ export function getTasks(projectGid, params, callback) {
  * });
  * @function
  * @param {string} taskGid - Globally unique identifier for the task
- * @param {object} params - Body parameters
+ * @param {object} data - Body data to update the task with
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function updateTask(taskGid, params, callback) {
-  return state => {
-    const [resolvedTaskGid, resolvedParams] = expandReferences(
+export function updateTask(taskGid, data, callback) {
+  return async state => {
+    const [resolvedTaskGid, resolvedData] = expandReferences(
       state,
       taskGid,
-      params
+      data
     );
 
-    return requestHelper(
+    const response = await util.request(
       state,
       `tasks/${resolvedTaskGid}`,
-      { body: { data: resolvedParams }, method: 'PUT' },
+      { body: { data: resolvedData }, method: 'PUT' },
       callback
     );
+    return util.prepareNextState(state, response);
   };
 }
 
@@ -135,22 +150,23 @@ export function updateTask(taskGid, params, callback) {
  * @returns {Operation}
  */
 export function createTask(params, callback) {
-  return state => {
+  return async state => {
     const [resolvedParams] = expandReferences(state, params);
 
-    return requestHelper(
+    const response = await util.request(
       state,
       'tasks',
       { body: { data: resolvedParams }, method: 'POST' },
       callback
     );
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
  * Update or create a task.
  * @public
- * @example
+ * @example <caption>Upsert a task</caption>
  * upsertTask("1201382240880", {
  *   externalId: "name",
  *   data: {
@@ -163,6 +179,8 @@ export function createTask(params, callback) {
  * @function
  * @param {string} projectGid - Globally unique identifier for the project
  * @param {object} params - an object with an externalId and some task data.
+ * @param {string} params.externalId - The external id field name
+ * @param {object} params.data - The data to upsert.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
@@ -174,12 +192,12 @@ export function upsertTask(projectGid, params, callback) {
       params
     );
 
-    return requestHelper(
-      state,
-      `projects/${resolvedProjectGid}/tasks`,
-      { query: { opt_fields: `${externalId}` } },
-      next => {
-        const matchingTask = next.data.find(
+    return util
+      .requestWithPagination(state, `projects/${resolvedProjectGid}/tasks`, {
+        query: { opt_fields: `${externalId}` },
+      })
+      .then(next => {
+        const matchingTask = next.find(
           task => task[externalId] === data[externalId]
         );
         if (matchingTask) {
@@ -192,8 +210,63 @@ export function upsertTask(projectGid, params, callback) {
           console.log('No matching task found. Performing create.');
           return createTask(data, callback)(state);
         }
+      });
+  };
+}
+
+/**
+ * Search for tasks in a workspace by task name.
+ * @public
+ * @example <caption>Search for a task by name</caption>
+ * searchTask("Test Search Task", {
+ *   sort_by: "modified_at"
+ * });
+ * @example <caption>Search for a task by custom field only</caption>
+ * searchTask("", {
+ *   "custom_fields.12345.value": $.data.custom_field_value,
+ * });
+ * @example <caption>Search for a task by name and custom field</caption>
+ * searchTask("Test Search Task", {
+ *   "custom_fields.12345.is_set": true,
+ * });
+ * @example <caption>Search for a milestone by name</caption>
+ * searchTask("Test Search Task", {
+ *   resource_subtype: "milestone",
+ * });
+ * @function
+ * @param {string} task - The text or name of the task to search for.
+ * @param {object} [query] - Query params. See {@link https://developers.asana.com/reference/searchtasksforworkspace Docs} for a list of valid parameters.
+ * @param {string} [query.resource_subtype = default_task] - The resource subtype to search for. Must be either `"default_task"` or `"milestone"`. Defaults to `"default_task"`.
+ * @param {object} [options] - (Optional) options argument.
+ * @param {string} [options.workspaceGid] - The workspace to search in. Defaults to the workspace specified in the configuration.
+ * @returns {Operation} An operation that, when executed, returns the search results in state.data.
+ */
+export function searchTask(task, query = {}, options = {}) {
+  return async state => {
+    const [resolvedTask, resolvedQuery, resolvedOptions] = expandReferences(
+      state,
+      task,
+      query,
+      options
+    );
+    const { workspaceGid = state.configuration.workspaceGid } = resolvedOptions;
+    const { resource_subtype = 'default_task', ...restQuery } = resolvedQuery;
+
+    if (!workspaceGid) throw new Error('You need to specify Workspace GID');
+
+    const response = await util.request(
+      state,
+      `workspaces/${workspaceGid}/tasks/search`,
+      {
+        query: {
+          resource_subtype,
+          text: resolvedTask,
+          ...restQuery,
+        },
       }
     );
+
+    return util.prepareNextState(state, response);
   };
 }
 
@@ -227,7 +300,7 @@ export function upsertTask(projectGid, params, callback) {
  * @returns {Operation}
  */
 export function createTaskStory(taskGid, params, callback) {
-  return state => {
+  return async state => {
     const [
       resolvedTaskGid,
       {
@@ -241,7 +314,7 @@ export function createTaskStory(taskGid, params, callback) {
     ] = expandReferences(state, taskGid, params);
 
     const story = { text, html_text, is_pinned, sticker_name };
-    return requestHelper(
+    const response = await util.request(
       state,
       `tasks/${resolvedTaskGid}/stories`,
       {
@@ -251,6 +324,7 @@ export function createTaskStory(taskGid, params, callback) {
       },
       callback
     );
+    return util.prepareNextState(state, response);
   };
 }
 
@@ -284,21 +358,23 @@ export function createTaskStory(taskGid, params, callback) {
  * @returns {Operation}
  */
 export function request(path, params = {}, callback) {
-  return state => {
+  return async state => {
     const [resolvedPath, resolvedParams] = expandReferences(
       state,
       path,
       params
     );
 
-    const { body = {}, query = {}, method = 'GET' } = resolvedParams;
+    const { body, query, method } = resolvedParams;
 
-    return requestHelper(
+    const response = await util.request(
       state,
       resolvedPath,
       { method, body, query },
       callback
     );
+
+    return util.prepareNextState(state, response);
   };
 }
 
@@ -313,8 +389,8 @@ export {
   fields,
   fn,
   fnIf,
-  http,
   lastReferenceValue,
   merge,
   sourceValue,
+  as,
 } from '@openfn/language-common';

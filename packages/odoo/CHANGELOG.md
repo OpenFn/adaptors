@@ -1,5 +1,81 @@
 # @openfn/language-odoo
 
+## 2.1.0 - 14 August 2025
+
+### Minor Changes
+
+- 282f9f3: Add `search()` and `searchReadRecord()` functions.
+  - `search()` Only returns the record IDs.
+  - `searchReadRecord()` returns the records with the specified criteria or the
+    full record if none is given.
+
+## 2.0.0 - 11 August 2025
+
+### Major Changes
+
+- a5cea4e: removed `http` export from `@openfn/language-common`
+
+  ### Migration Guide
+
+  The `http` export has been removed from `@openfn/language-common`. If you were
+  using it, you should remove it from your code and create a new step that uses
+  `http` adaptor. See example below.
+
+  **Before**
+
+  **Step 1: Fetch and post data using postgresql adaptor**
+
+  ```js
+  sql('select * from foo');
+  http.post('/example', { body: $.data }),
+  ```
+
+  **Now**
+
+  **Step 1: Fetch data using postgresql adaptor**
+
+  ```js
+  sql('select * from foo');
+  ```
+
+  **Step 2: Post data using http adaptor**
+
+  ```js
+  post('/example', { body: $.data });
+  ```
+
+## 1.0.10 - 14 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
+## 1.0.9 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
+## 1.0.8 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
+## 1.0.7 - 20 June 2025
+
+### Patch Changes
+
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
+
 ## 1.0.6 - 22 April 2025
 
 ### Patch Changes

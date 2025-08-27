@@ -1,5 +1,173 @@
 # @openfn/language-dhis2
 
+## 8.0.0 - 11 August 2025
+
+### Major Changes
+
+- a5cea4e: removed `http` export from `@openfn/language-common`
+
+  ### Migration Guide
+
+  The `http` export has been removed from `@openfn/language-common`. If you were
+  using it, you should remove it from your code and create a new step that uses
+  `http` adaptor. See example below.
+
+  **Before**
+
+  **Step 1: Fetch and post data using postgresql adaptor**
+
+  ```js
+  sql('select * from foo');
+  http.post('/example', { body: $.data }),
+  ```
+
+  **Now**
+
+  **Step 1: Fetch data using postgresql adaptor**
+
+  ```js
+  sql('select * from foo');
+  ```
+
+  **Step 2: Post data using http adaptor**
+
+  ```js
+  post('/example', { body: $.data });
+  ```
+
+## 7.1.3 - 23 July 2025
+
+### Patch Changes
+
+- aeb09c4: Fix an issue in metadata generation
+
+## 7.1.2 - 14 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
+## 7.1.1 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
+## 7.1.0 - 10 July 2025
+
+### Minor Changes
+
+- 19f2d7e: Exported `as()` function from common.
+
+### Patch Changes
+
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
+## 7.0.2 - 01 July 2025
+
+### Patch Changes
+
+- aa2f46b: - Adjust logging in create to not include item details.
+  - Fix issues in docs.
+
+## 7.0.1 - 20 June 2025
+
+### Patch Changes
+
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
+
+## 7.0.0 - 04 June 2025
+
+This release of DHSI2 contains major breaking changes.
+
+This release includes a major re-think of the main adaptor API, introducing new
+namespaces (tracker, http, util) to help organize functionality. Note that the
+main namespace contains `get()` and `create()`, which do not surface HTTP
+semantics, and `http.get()` and `http.post()`.
+
+The intention is that most users can use the `get()`, `create()` and `tracker.*`
+APIs, with a HTTP abstraction as a fallback.
+
+It also removes a dependency on the axios library (preferring undici, as used by
+other adaptors).
+
+### Major Changes
+
+- Remove axios.
+- Re-worked signatures for `get()`, `create()`, `update()` and `upsert()`.
+- The `discover()` function has been removed.
+- Many non-operation functions have moved to the `util.` namespace, including.
+  `attr`, `dv`, `findAttributeValue`, and `findAttributeValueById`.
+- HTTP helper functions (like `post()`, `patch()`) have been moved into a clean
+  new http namespace.
+
+### Minor Changes
+
+- dfe53ef: - Implement a new `tracker` namespace for `tracker.import()` and
+  `tracker.export()` functions.
+
+  - Throw an error when `create('tracker')` is called.
+
+- 5b73844: - Add importStrategy to query params for `create` and `update`
+
+### Migration Guide
+
+#### get ()
+
+The `get` function has a new signature of `get(path, params)`. Note that the old
+options object and callback have been removed. If you need to set headers on
+your request, use `http.get()` instead.
+
+For `path`, you can pass a resource type, like `"enrollments"`, or a path to a
+specific resource, like `tracker/trackedEntities/F8yKM85NbxW`.
+
+If using the new tracker API, we recommend using the new tracker namespace.
+
+#### create
+
+The `create` function has a new signature of `create(path, data, params)`. Note
+that the old options object and callback have been removed. If you need to set
+headers on your request, use `http.post()` instead.
+
+#### update
+
+Callbacks have been removed from the update signature.
+
+#### upsert
+
+Callbacks have been removed from the upsert signature.
+
+#### Utils
+
+Some helper functions, which are not operations and cannot be called at the top
+level, have been moved to a `util` namespace.
+
+Instead of this:
+
+```
+fn((state) => {
+  const value = findAttributeValue(state.data, 'first name')
+  return state;
+})
+```
+
+Do this:
+
+```
+fn((state) => {
+  const value = util.findAttributeValue(state.data, 'first name')
+  return state;
+})
+```
+
 ## 6.3.4 - 22 April 2025
 
 ### Patch Changes

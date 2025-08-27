@@ -10,7 +10,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "getForms()",
+            "description": "getForms();",
             "caption": "Get all forms without filter options"
           },
           {
@@ -64,7 +64,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "getForm('6225')",
+            "description": "getForm('6225');",
             "caption": "Get a single form"
           },
           {
@@ -93,7 +93,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "Optional filter options.",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -199,7 +199,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "getSubmission('6225', '7783155')"
+            "description": "getSubmission('6225', '7783155');"
           },
           {
             "title": "function",
@@ -255,7 +255,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "getAttachmentMetadata('621985')"
+            "description": "getAttachmentMetadata('621985');"
           },
           {
             "title": "function",
@@ -303,12 +303,12 @@
         "tags": [
           {
             "title": "example",
-            "description": "downloadAttachment('622038', {\n  filename:\n    'unicefbih/attachments/download_1.png',\n});",
+            "description": "downloadAttachment('622038', {\n  filename:\n    'project/attachments/download_1.png',\n});",
             "caption": "Download an attachment"
           },
           {
             "title": "example",
-            "description": "downloadAttachment('622038', {\n  filename:\n    'unicefbih/attachments/download_1.png',\n  parseAs: 'base64',\n});",
+            "description": "downloadAttachment('622038', {\n  filename:\n    'project/attachments/download_1.png',\n  parseAs: 'base64',\n});",
             "caption": "Download an attachment in base64 format"
           },
           {
@@ -332,7 +332,7 @@
           },
           {
             "title": "param",
-            "description": "Optional request options. Supported options are: `filename` for the specific attachment to be downloaded, and `parseAs` for either 'stream` or 'base64`. Defaults to `parseAs: stream`.",
+            "description": "Optional request options. Supported options are: `filename` for the specific attachment to be downloaded, and `parseAs` for either `stream` or `base64`. Defaults to `parseAs: stream`.",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -1102,6 +1102,60 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "as",
+      "params": [
+        "key",
+        "operation"
+      ],
+      "docs": {
+        "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));",
+            "caption": "Fetch cce-data from collections and store them under state.cceData"
+          },
+          {
+            "title": "param",
+            "description": "The state key to assign the result of the operation to.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": " An operation that returns a new state object with a `data` property",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ]
 }

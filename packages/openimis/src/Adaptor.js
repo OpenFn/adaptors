@@ -115,8 +115,8 @@ export {
   fields,
   fn,
   fnIf,
-  http,
   lastReferenceValue,
   merge,
   sourceValue,
+  as,
 } from '@openfn/language-common';

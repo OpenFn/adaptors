@@ -4,15 +4,7 @@ import {
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
-import * as util from './Utils';
-
-/**
- * Options object
- * @typedef {Object} RequestOptions
- * @property {object} query - An object of query parameters to be encoded into the URL
- * @property {object} headers - An object of all request headers
- * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
- */
+import * as util from './util';
 
 /**
  * Execute a sequence of operations.
@@ -51,53 +43,71 @@ export function execute(...operations) {
  */
 export function getForms() {
   return async state => {
-    const url = `/assets/?asset_type=survey`;
+    const response = await util.request(state, 'GET', 'assets', {
+      query: { asset_type: 'survey' },
+    });
 
-    const response = await util.request(state, 'GET', url, {});
+    console.log('✓', response.body.results?.length, 'forms fetched.');
 
-    console.log('✓', response.body.results.length, 'forms fetched.');
     return util.prepareNextState(state, response);
   };
 }
 
 /**
- * Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`.
+ * Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`
+ * @example <caption>Get submissions for a specific form</caption>
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX');.
  * @example <caption>Get all submissions for a specific form</caption>
- * getSubmissions('aXecHjmbATuF6iGFmvBLBX');
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit: Infinity });
  * @example <caption>Get form submissions with a query</caption>
- * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: "2022-06-12T21:54:20" } } });
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { query: { _submission_time:{ $gte: "2025-03-12T21:54:20" } } });
+ * @example <caption>Get form submissions with sorting</caption>
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { sort: { _submission_time: -1 } });
+ * @example <caption>Get form submissions with specific start index</caption>
+ * getSubmissions('aXecHjmbATuF6iGFmvBLBX', { start: 10 });
  * @function
  * @public
  * @param {string} formId - Form Id to get the specific submissions
- * @param {object} [options={}] - Optional query params for the request
+ * @param {object} [options={}] - Options to control the request
+ * @param {object} [options.sort] - Field and direction to sort submissions by.
+ * @param {object} [options.query] - Query options to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}
+ * @param {number} [options.start=0] - The index of the first submission to return.
+ * @param {number} [options.limit=30000] - Maximum number of submissions to fetch. Pass `Infinity` to disable the limit and download all submissions
+ * @param {number} [options.pageSize=10000] - Limits the size of each page of submissions. Maximum value is 30000.
  * @state data - an array of submission objects
  * @returns {Operation}
  */
-export function getSubmissions(formId, options = {}) {
+export function getSubmissions(formId, options) {
   return async state => {
-    const [resolvedFormId, resolvedOptions] = expandReferences(
+    const [resolvedFormId, resolvedOptions = {}] = expandReferences(
       state,
       formId,
       options
     );
 
-    const url = `/assets/${resolvedFormId}/data/`;
-    const query = {};
-    if (resolvedOptions.query) {
-      if (typeof resolvedOptions.query == 'string') {
-        query.query = resolvedOptions.query;
-      } else {
-        query.query = JSON.stringify(resolvedOptions.query);
-      }
+    const { query, limit, pageSize, sort, start } = resolvedOptions;
+    const path = `/assets/${resolvedFormId}/data/`;
+    const qs = {};
+    if (query) {
+      qs.query = util.maybeStringify(query);
     }
+    if (sort) {
+      qs.sort = util.maybeStringify(sort);
+    }
+    const requestOptions = {
+      query: { ...qs },
+      start,
+      limit,
+      pageSize,
+    };
+    const result = await util.requestWithPagination(
+      state,
+      path,
+      requestOptions
+    );
 
-    const { results } = await util.request(state, 'GET', url, {
-      paginate: true,
-      query,
-    });
-
-    console.log('✓', results.length, 'submissions fetched.');
-    return composeNextState(state, results);
+    console.log('✓', result?.length, 'submissions fetched.');
+    return composeNextState(state, result);
   };
 }
 
@@ -125,6 +135,7 @@ export function getDeploymentInfo(formId) {
 
 export {
   alterState,
+  as,
   cursor,
   dataPath,
   dataValue,
@@ -133,9 +144,9 @@ export {
   fields,
   fn,
   fnIf,
-  http,
   group,
   lastReferenceValue,
+  map,
   merge,
   sourceValue,
 } from '@openfn/language-common';

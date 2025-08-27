@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "apiToken": {
+      "title": "API token",
+      "type": "string",
+      "description": "The Zata API token",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": ["EAAZAq6ZBYUd64BO83b46fn2MdraueL5s9I5IRZCtWUpYsfmEZARN2HDmL8BE5UhFf98EuTnpkhZBWTR9xippoN1a9MzY8Giw3pjSp55YMAF1nowqsy9aLODz48dm8TpXk8ZADUt6qX3vnYJzcn4OH9jrOIiW5ivt3By0beSjbX0E32ZCUMQpS9xRirepvc7qgGKurWQKIcPLPVSGjXQlZCSZBmLdCL8IW07qfjISupZA3HIniORAZDZD"]
+    },
+
+    "apiVersion": {
+      "title": "API Version",
+      "type": "string",
+      "description": "The Zata API version",
+      "examples": ["v1"]
+    },
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL (http://www.example.com)",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://example.com"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["apiToken"]
+}

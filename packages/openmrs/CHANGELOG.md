@@ -1,5 +1,64 @@
 # @openfn/language-openmrs
 
+## 5.3.0 - 25 July 2025
+
+### Minor Changes
+
+- 5c12ab4: - Add `http.put()` helper function
+  - Fix docs on `http.request()`
+
+## 5.2.2 - 14 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
+## 5.2.1 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
+## 5.2.0 - 10 July 2025
+
+### Minor Changes
+
+- 19f2d7e: Exported `as()` function from common
+- 8d78db4: Export `map()` function from common
+
+### Patch Changes
+
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
+## 5.1.0
+
+### Minor Changes
+
+- 3a97556: Add support for `language` option
+
+## 5.0.4 - 20 June 2025
+
+### Patch Changes
+
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
+
+## 5.0.3 - 14 June 2025
+
+### Patch Changes
+
+- be854ec: Fix an issue where upsert will wrongly trigger creation of an
+  existing item
+- 59251d5: Fix an issue where upsert will create to the wrong URL if there is no
+  UUID in the path
+
 ## 5.0.2 - 22 April 2025
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-fhir-fr",
   "label": "FHIR-FR",
-  "version": "1.0.11",
+  "version": "1.0.15",
   "description": "OpenFn fhir-fr adaptor",
   "scripts": {
     "build": "pnpm clean && build-adaptor fhir-fr src ast docs",
@@ -35,7 +35,7 @@
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
     "typescript": "4.8.4",
-    "undici": "^5.22.1"
+    "undici": "^5.29.0"
   },
   "repository": {
     "type": "git",

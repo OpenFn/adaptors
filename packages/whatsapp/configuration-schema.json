@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "apiToken": {
+      "title": "API Token",
+      "type": "string",
+      "description": "The whatsapp API token from Meta",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": ["EAAZAq6ZBYUd64BO83b46fn2MdraueL5s9I5IRZCtWUpYsfmEZARN2HDmL8BE5UhFf98EuTnpkhZBWTR9xippoN1a9MzY8Giw3pjSp55YMAF1nowqsy9aLODz48dm8TpXk8ZADUt6qX3vnYJzcn4OH9jrOIiW5ivt3By0beSjbX0E32ZCUMQpS9xRirepvc7qgGKurWQKIcPLPVSGjXQlZCSZBmLdCL8IW07qfjISupZA3HIniORAZDZD"]
+    },
+    "apiVersion": {
+      "title": "API Version",
+      "type": "string",
+      "description": "The whatsapp API version from Meta",
+      "examples": ["v22.0"]
+    },
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "The whatsapp server base URL",
+      "examples": ["https://graph.facebook.com"]
+    },
+    "phoneNumberId": {
+      "title": "Phone Number ID",
+      "type": "string",
+      "description": "The whatsapp phone number ID from Meta",
+      "examples": ["720348101158165"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["phoneNumberId", "apiToken"]
+}

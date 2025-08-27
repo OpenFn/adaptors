@@ -1,5 +1,59 @@
 # @openfn/language-salesforce
 
+## 7.2.0 - 04 August 2025
+
+### Minor Changes
+
+- dc89780: ## Added Salesforce Bulk API 2.0 Operations
+
+  - Added `bulk2.query()` - Execute SOQL queries using Bulk API 2.0
+  - Added `bulk2.insert()` - Bulk insert records
+  - Added `bulk2.update()` - Bulk update records
+  - Added `bulk2.upsert()` - Bulk `upsert` records with external ID matching
+  - Added `bulk2.destroy()` - Bulk delete records
+
+  All operations support custom options for polling interval and timeout.
+
+## 7.1.2 - 14 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
+## 7.1.1 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
+## 7.1.0 - 10 July 2025
+
+### Minor Changes
+
+- 19f2d7e: Exported `as()` function from common.
+- 8d78db4: Export `map()` function from common
+
+### Patch Changes
+
+- c4625fa: - Migrate from the deprecated `expandReferences` in `common` to the
+  new `expandReferences` from common.util
+  - Use `workspace:*` common version.
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
+## 7.0.1 - 20 June 2025
+
+### Patch Changes
+
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
+
 ## 7.0.0 - 01 May 2025
 
 ### Major Changes

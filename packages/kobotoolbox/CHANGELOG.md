@@ -1,5 +1,97 @@
 # @openfn/language-kobotoolbox
 
+## 4.2.2 - 14 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[9b5a4f8]
+  - @openfn/language-common@3.0.2
+
+## 4.2.1 - 10 July 2025
+
+### Patch Changes
+
+- Updated dependencies \[cf9c09f]
+  - @openfn/language-common@3.0.1
+
+## 4.2.0 - 10 July 2025
+
+### Minor Changes
+
+- 19f2d7e: Exported `as()` function from common.
+
+### Patch Changes
+
+- Updated dependencies \[ea85695]
+- Updated dependencies \[3fce58f]
+- Updated dependencies \[19f2d7e]
+- Updated dependencies \[f26bd2b]
+- Updated dependencies \[19f2d7e]
+  - @openfn/language-common@3.0.0
+
+## 4.1.1 - 20 June 2025
+
+### Patch Changes
+
+- Updated dependencies \[28c2e8b]
+  - @openfn/language-common@2.5.0
+
+## 4.1.0 - 06 June 2025
+
+### Minor Changes
+
+- 2123876: Add support for `sort` and `start` option in `getSubmissions`
+  function
+
+## 4.0.0 - 30 May 2025
+
+### Major Changes
+
+- fe5b899: Add automatic pagination to `getSubmissions()`.
+
+  `getSubmissions()` will now download all submissions, up to the requested
+  limit, over multiple requests. Note that by default, a maximum of 30,000 items
+  will be downloaded (pass a higher number of `Infinity` to download more).
+
+  ### Changes
+
+  - Updated `getSubmission` pagination behavior:
+
+    - Removed `paginate` option
+    - Added new pagination options:
+      - `limit`: Controls number of results returned
+      - `pageSize`: Number of items per page
+
+  - Remove export of `http` methods from `@openfn/language-common`
+
+  - Add support for `maxRedirections` option in `HTTPRequestOptions`
+
+  ### Migration Guide
+
+  1. Pagination Changes:
+
+     - Replace `paginate: true/false` with `limit` and `pageSize` options
+     - Default limit is `30000` unless otherwise specified
+
+     ```js
+     // Fetch submissions with default limit (30000)
+     getSubmission('form-id');
+
+     // Fetch all submissions (no limit)
+     getSubmission('form-id', { limit: Infinity });
+
+     // Fetch submissions with max results
+     getSubmission('form-id', { limit: 500 }); // Returns up to 500 submissions
+     ```
+
+  2. HTTP Changes:
+
+  - Support for `maxRedirections` option in `HTTPRequestOptions`
+    ```js
+    // Auto follow redirects
+    http.get('assets/aXecHjmbATuF6iGFmvBLBX/data', { maxRedirections: 5 });
+    ```
+
 ## 3.0.5 - 22 April 2025
 
 ### Patch Changes

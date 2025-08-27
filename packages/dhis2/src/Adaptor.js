@@ -1,18 +1,30 @@
-import axios from 'axios';
 import { execute as commonExecute } from '@openfn/language-common';
-import { expandReferences, encode } from '@openfn/language-common/util';
-import _ from 'lodash';
-const { indexOf } = _;
+import { expandReferences, throwError } from '@openfn/language-common/util';
 import {
-  CONTENT_TYPES,
-  generateUrl,
   handleResponse,
-  prettyJson,
   selectId,
   shouldUseNewTracker,
   ensureArray,
-} from './Utils';
-import { request } from './Client';
+  prefixVersionToPath,
+  request,
+} from './util';
+
+/**
+ * State object
+ * @typedef {Object} DHIS2State
+ * @private
+ * @property data - The response body (as JSON)
+ * @property references - An array of all previous data objects used in the Job
+ */
+
+/**
+ * Options object
+ * @typedef {Object} RequestOptions
+ * @property {object} query - An object of query parameters to be encoded into the URL
+ * @property {object} headers - An object of all request headers
+ * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', 'stream', or 'base64'. Defaults to `json`
+ * @property {string} [apiVersion=42] - The apiVersion of the request. Defaults to 42.
+ */
 
 /**
  * Execute a sequence of operations.
@@ -69,74 +81,9 @@ function configMigrationHelper(state) {
   return state;
 }
 
-// NOTE: In order to prevent unintended exposure of authentication information
-// in the logs, we make use of an axios interceptor.
-axios.interceptors.response.use(
-  function (response) {
-    const contentType = response.headers['content-type']?.split(';')[0];
-
-    const acceptHeaders = response.config.headers['Accept']
-      .split(';')[0]
-      .split(',');
-
-    if (
-      response.config.method === 'get' &&
-      response.config.responseType != 'arraybuffer'
-    ) {
-      if (indexOf(acceptHeaders, contentType) === -1) {
-        const newError = {
-          status: 404,
-          message: 'Unexpected content returned',
-          responseData: response.data,
-        };
-
-        console.error(newError.message);
-
-        return Promise.reject(newError);
-      }
-    }
-
-    if (
-      typeof response?.data === 'string' &&
-      contentType === CONTENT_TYPES?.json
-    ) {
-      try {
-        // eslint-disable-next-line no-param-reassign
-        response = { ...response, data: JSON.parse(response.data) };
-      } catch (error) {
-        console.warn('Non-JSON response detected, unable to parse.');
-      }
-    }
-    return response;
-  },
-  function (error) {
-    if (error.config?.auth) error.config.auth = '--REDACTED--';
-    if (error.config?.data) error.config.data = '--REDACTED--';
-
-    const details = error.response?.data;
-
-    console.error(error.message || "That didn't work.");
-
-    if (details) console.log(JSON.stringify(details, null, 2));
-
-    return Promise.reject({
-      request: error.config,
-      message: error.message,
-      response: error.response?.data,
-    });
-  }
-);
-
 /**
  * Create a record
  * @public
- * @function
- * @param {string} resourceType - Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ...
- * @magic resourceType $.children.resourceTypes[*]
- * @param {Dhis2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
- * @param {Object} [options] - Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.
- * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation}
  * @example <caption>Create a program</caption>
  * create('programs', {
  *   name: 'name 20',
@@ -147,6 +94,7 @@ axios.interceptors.response.use(
  * create('events', {
  *   program: 'eBAyeGv0exc',
  *   orgUnit: 'DiszpKrYNg8',
+ *   occurredAt: '2025-06-19',
  *   status: 'COMPLETED',
  * });
  * @example <caption>Create a single tracker entity. See [Create tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)</caption>
@@ -161,7 +109,7 @@ axios.interceptors.response.use(
  *   ]
  * });
  * @example <caption>Create a dataSet</caption>
- * create('dataSets', { name: 'OpenFn Data Set', periodType: 'Monthly' });
+ * create('dataSets', { name: 'OpenFn Data Set', periodType: 'Monthly', shortName: 'ODS' });
  * @example <caption>a dataSetNotification</caption>
  * create('dataSetNotificationTemplates', {
  *   dataSetNotificationTrigger: 'DATA_SET_COMPLETION',
@@ -182,6 +130,7 @@ axios.interceptors.response.use(
  * @example <caption>Create a dataElementGroup</caption>
  * create('dataElementGroups', {
  *   name: 'Data Element Group 1',
+ *   shortName: 'DEG1',
  *   dataElements: [],
  * });
  * @example <caption>Create a dataElementGroupSet</caption>
@@ -223,87 +172,110 @@ axios.interceptors.response.use(
  * create('enrollments', {
  *   trackedEntity: 'bmshzEacgxa',
  *   orgUnit: 'TSyzvBiovKh',
- *   program: 'gZBxv9Ujxg0',
+ *   program: 'ur1Edk5Oe2n',
+ *   enrolledAt: '2013-09-17',
  *   enrollmentDate: '2013-09-17',
  *   incidentDate: '2013-09-17',
  * });
- * @example <caption>Create an multiple objects with the Tracker API</caption>
- *  create("tracker", {
- *   enrollments: [
- *     {
- *       trackedEntity: "bmshzEacgxa",
- *       orgUnit: "TSyzvBiovKh",
- *       program: "gZBxv9Ujxg0",
- *       enrollmentDate: "2013-09-17",
- *       incidentDate: "2013-09-17",
- *     },
- *   ],
- *   trackedEntities: [
- *     {
- *       orgUnit: "TSyzvBiovKh",
- *       trackedEntityType: "nEenWmSyUEp",
- *       attributes: [
- *         {
- *           attribute: "w75KJ2mc4zz",
- *           value: "Gigiwe",
- *         },
- *       ],
- *     },
- *   ],
- * });
+ * @function
+ * @param {string} path - Path to the resource to be created
+ * @magic path $.children.resourceTypes[*]
+ * @param {DHIS2Data} data - An object, or array of objects, to create.
+ * @param {object} params - Optional object of query parameters to include in the request
+ * @state data - The created resource as returned by DHIS2
+ * @returns {Operation}
  */
-export function create(resourceType, data, options = {}, callback = s => s) {
-  return state => {
-    console.log(`Preparing create operation...`);
+export function create(path, data, params = {}) {
+  return async state => {
+    if (path === 'tracker') {
+      throw new Error('Invalid resourceType. Use `tracker.import()` instead.');
+    }
 
-    const [resolvedResourceType, resolvedData, resolvedOptions] =
-      expandReferences(state, resourceType, data, options);
+    const [resolvedPath, resolvedData, resolvedParams] = expandReferences(
+      state,
+      path,
+      data,
+      params
+    );
 
-    const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
 
-    let promise;
-    if (shouldUseNewTracker(resolvedResourceType)) {
-      promise = callNewTracker(
+    let response;
+    if (shouldUseNewTracker(resolvedPath)) {
+      response = await callNewTracker(
         'create',
         configuration,
-        resolvedOptions,
-        resolvedResourceType,
+        {
+          query: resolvedParams,
+        },
+        resolvedPath,
         resolvedData
       );
     } else {
-      promise = request(configuration, {
-        method: 'post',
-        url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
-        params,
+      response = await request(configuration, {
+        method: 'POST',
+        path: prefixVersionToPath(configuration, {}, resolvedPath),
+        options: {
+          query: resolvedParams,
+        },
         data: resolvedData,
-        ...requestConfig,
       });
     }
+    console.log(`Created ${resolvedPath}`);
 
-    return promise.then(result => {
-      const details = `with response ${JSON.stringify(result.data, null, 2)}`;
-      console.log(`Created ${resolvedResourceType} ${details}`);
+    const { location } = response.headers;
+    if (location) {
+      console.log(`Record available @ ${location}`);
+    }
 
-      const { location } = result.headers;
-      if (location) console.log(`Record available @ ${location}`);
-
-      return handleResponse(result, state, callback);
-    });
+    return handleResponse(response, state);
   };
 }
 
 /**
- * Update data. A generic helper function to update a resource object of any type.
- * Updating an object requires to send `all required fields` or the `full body`
+ * Get any resource, as JSON, from DHIS2. Pass in any valid DHIS2 REST path, excluding /api and the version.
+ * For the new tracker API, see `tracker.export()`
  * @public
+ * @example <caption>Get all data values for the 'pBOMPrpg1QX' dataset</caption>
+ * get('dataValueSets', {
+ *   dataSet: 'pBOMPrpg1QX',
+ *   orgUnit: 'DiszpKrYNg8',
+ *   period: '201401',
+ *   fields: '*',
+ * });
+ * @example <caption>Get all programs for an organization unit</caption>
+ * get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
+ * @example <caption>Get a single tracked entity given the provided ID. See [TrackedEntities docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities)</caption>
+ * get('tracker/trackedEntities/F8yKM85NbxW');
  * @function
- * @param {string} resourceType - The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc.
- * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`
- * @param {Object} data - Data to update. It requires to send `all required fields` or the `full body`. If you want `partial updates`, use `patch` operation.
- * @param {Object} [options] - Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.
- * @param {function} [callback]  - Optional callback to handle the response
+ * @param {string} path - Path to the resource
+ * @param {object} params - Object of query parameters to include in the request
+ * @state data - the resource returned by DHIS2
  * @returns {Operation}
+ */
+export function get(path, params = {}) {
+  return async state => {
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params
+    );
+
+    const response = await request(state.configuration, {
+      method: 'GET',
+      path: prefixVersionToPath(state.configuration, {}, resolvedPath),
+      options: { query: resolvedParams },
+    });
+
+    console.log(`Retrieved ${resolvedPath}`);
+
+    return handleResponse(response, state);
+  };
+}
+
+/**
+ * Update a resource object of any type. Updating an object requires all fields of the object you are updating, even if they have not been modified
+ * @public
  * @example <caption>a program</caption>
  * update('programs', 'qAZJCrNJK8H', {
  *   name: '14e1aa02c3f0a31618e096f2c6d03bed',
@@ -422,26 +394,25 @@ export function create(resourceType, data, options = {}, callback = s => s) {
  *   enrollmentDate: '2013-10-17',
  *   incidentDate: '2013-10-17',
  * });
+ * @function
+ * @param {string} resourceType - The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc.
+ * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`
+ * @param {Object} data - Data to update. It requires to send the full body. If you want partial updates, use patch operation.
+ * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
+ * @state data - the resource returned by DHIS2
+ * @returns {Operation}
  */
-export function update(
-  resourceType,
-  path,
-  data,
-  options = {},
-  callback = s => s
-) {
-  return state => {
+export function update(resourceType, path, data, options = {}) {
+  return async state => {
     console.log(`Preparing update operation...`);
 
     const [resolvedResourceType, resolvedPath, resolvedData, resolvedOptions] =
       expandReferences(state, resourceType, path, data, options);
-
-    const { requestConfig } = resolvedOptions;
     const { configuration } = state;
 
-    let promise;
+    let response;
     if (shouldUseNewTracker(resolvedResourceType)) {
-      promise = callNewTracker(
+      response = await callNewTracker(
         'update',
         configuration,
         resolvedOptions,
@@ -449,155 +420,30 @@ export function update(
         resolvedData
       );
     } else {
-      promise = request(configuration, {
-        method: 'put',
-        url: generateUrl(
+      response = await request(configuration, {
+        method: 'PUT',
+        path: prefixVersionToPath(
           configuration,
           resolvedOptions,
           resolvedResourceType,
           resolvedPath
         ),
-        options,
+        options: resolvedOptions,
         data: resolvedData,
-        ...requestConfig,
       });
     }
 
-    return promise.then(result => {
-      console.log(`Updated ${resolvedResourceType} at ${resolvedPath}`);
-      return handleResponse(result, state, callback);
-    });
+    console.log(`Updated ${resolvedResourceType} at ${resolvedPath}`);
+    return handleResponse(response, state);
   };
 }
 
 /**
- * Get data. Generic helper method for getting data of any kind from DHIS2.
- * - This can be used to get `DataValueSets`,`events`,`trackers`,`etc.`
+ * Upsert a record. This will atomically update a record if it already exists, or otherwise create it.
+ * This function does not work with the absolute tracker path `api/tracker` but rather the new tracker paths and deprecated tracker endpoints.
  * @public
- * @function
- * @param {string} resourceType - The type of resource to get(use its `plural` name). E.g. `dataElements`, `tracker/trackedEntities`,`organisationUnits`, etc.
- * @param {Object} query - A query object that will limit what resources are retrieved when converted into request params.
- * @param {Object} [options] - Optional `options` to define URL parameters via params beyond filters, request configuration (e.g. `auth`) and DHIS2 api version to use.
- * @param {Object} [options.params] - The parameters for the request.
- * @param {Object} [options.requestConfig] - The configuration for the request, including headers, etc.
- * @param {boolean} [options.asBase64=false] - Optional flag to indicate if the response should be returned as a Base64 encoded string.
- * @param {function} [callback]  - Optional callback to handle the response
- * @returns {Operation} state
- * @example <caption>Get all data values for the 'pBOMPrpg1QX' dataset</caption>
- * get('dataValueSets', {
- *   dataSet: 'pBOMPrpg1QX',
- *   orgUnit: 'DiszpKrYNg8',
- *   period: '201401',
- *   fields: '*',
- * });
- * @example <caption>Get all programs for an organization unit</caption>
- * get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
- * @example <caption>Get a single tracked entity given the provided ID. See [TrackedEntities docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities)</caption>
- * get('tracker/trackedEntities/F8yKM85NbxW');
- * @example <caption>Get an enrollment given the provided ID. See [Enrollment docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#enrollments-get-apitrackerenrollments)</caption>
- * get('tracker/enrollments/abcd');
- * @example <caption>Get all events matching given criteria. See [Events docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#events-get-apitrackerevents)</caption>
- * get('tracker/events');
- * @example <caption>Get the relationship between two tracker entities. The only required parameters are 'trackedEntity', 'enrollment' or 'event'. See [Relationships docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#relationships-get-apitrackerrelationships)</caption>
- * get('tracker/relationships', {
- *   trackedEntity:['F8yKM85NbxW'],
- * });
- */
-export function get(resourceType, query, options = {}, callback = s => s) {
-  return state => {
-    console.log('Preparing get operation...');
-
-    const [resolvedResourceType, resolvedQuery, resolvedOptions] =
-      expandReferences(state, resourceType, query, options);
-
-    const { params, requestConfig, asBase64 = false } = resolvedOptions;
-    const { configuration } = state;
-
-    return request(configuration, {
-      method: 'get',
-      url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
-      params: {
-        ...resolvedQuery,
-        ...params,
-      },
-      responseType: asBase64 ? 'arraybuffer' : 'json',
-      ...requestConfig,
-    }).then(result => {
-      console.log(`Retrieved ${resolvedResourceType}`);
-      const response = asBase64 ? { data: encode(result.data) } : result;
-      return handleResponse(response, state, callback);
-    });
-  };
-}
-
-/**
- * Post data. Generic helper method for posting data of any kind to DHIS2.
- * This can be used to create `DataValueSets`,`events`,`trackers`,etc.
- * @public
- * @function
- * @param {string} resourceType - Type of resource to create. E.g. `trackedEntities`, `programs`, `events`, ...
- * @magic resourceType $.children.resourceTypes[*]
- * @param {Dhis2Data} data - Object which defines data that will be used to create a given instance of resource. To create a single instance of a resource, `data` must be a javascript object, and to create multiple instances of a resources, `data` must be an array of javascript objects.
- * @param {Object} [options] - Optional `options` to define URL parameters via params (E.g. `filter`, `dimension` and other import parameters), request config (E.g. `auth`) and the DHIS2 apiVersion.
- * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation} state
- * @example <caption>Create an event</caption>
- * post("tracker", {
- *   events: [
- *     {
- *       program: "eBAyeGv0exc",
- *       orgUnit: "DiszpKrYNg8",
- *       status: "COMPLETED",
- *     },
- *   ],
- * });
- */
-export function post(
-  resourceType,
-  data,
-  query,
-  options = {},
-  callback = s => s
-) {
-  return state => {
-    console.log('Preparing post operation...');
-
-    const [resolvedResourceType, resolvedQuery, resolvedOptions, resolvedData] =
-      expandReferences(state, resourceType, query, options, data);
-
-    const { params, requestConfig } = resolvedOptions;
-    const { configuration } = state;
-
-    return request(configuration, {
-      method: 'post',
-      url: generateUrl(configuration, resolvedOptions, resolvedResourceType),
-      params: { ...resolvedQuery, ...params },
-      responseType: 'json',
-      data: resolvedData,
-      ...requestConfig,
-    }).then(result => {
-      console.log(`Created ${resolvedResourceType}`);
-      return handleResponse(result, state, callback);
-    });
-  };
-}
-
-/**
- * Upsert a record. A generic helper function used to atomically either insert a row, or on the basis of the row already existing, UPDATE that existing row instead.
- * @public
- * @function
- * @param {string} resourceType - The type of a resource to `upsert`. E.g. `trackedEntities`
- * @param {Object} query - A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.
- * @param {Object} data - The data to use for update or create depending on the result of the query.
- * @param {{ apiVersion: object, requestConfig: object, params: object }} [options] - Optional configuration that will be applied to both the `get` and the `create` or `update` operations.
- * @param {function} [callback] - Optional callback to handle the response
- * @throws {RangeError} - Throws range error
- * @returns {Operation}
  * @example <caption>Upsert a trackedEntity</caption>
- * upsert('trackedEntities', {
- *  orgUnit: 'TSyzvBiovKh',
- *  filter: ['w75KJ2mc4zz:Eq:Qassim'],
- * }, {
+ * upsert('trackedEntities', {}, {
  *  orgUnit: 'TSyzvBiovKh',
  *  trackedEntityType: 'nEenWmSyUEp',
  *  attributes: [
@@ -607,23 +453,47 @@ export function post(
  *    },
  *  ],
  * });
+ * @example <caption> Upsert a dataElement </caption>
+ * upsert(
+ *   'dataElements',
+ *   { filter: 'id:eq:P3jJH5Tu5VC' },
+ *   {
+ *     op: 'add',
+ *     path: '/domainType',
+ *     name: 'Acute',
+ *     shortName: 'AFP follow-up',
+ *     dimensionItemType: 'DATA_ELEMENT',
+ *     legendSets: [],
+ *     aggregationType: 'SUM',
+ *     valueType: 'NUMBER',
+ *     domainType: 'AGGREGATE',
+ *     code: 'DE_359049',
+ *     name: 'Acute Flaccid Paralysis (AFP) follow-up',
+ *    }
+ *  );
+ * @function
+ * @param {string} resourceType - The type of a resource to `upsert`. E.g. `trackedEntities`.
+ * @param {Object} query - A query object that allows to uniquely identify the resource to update. If no matches found, then the resource will be created.
+ * @param {Object} data - The data to use for update or create depending on the result of the query.
+ * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request
+ * @throws {RangeError} - Throws range error
+ * @state {DHIS2State}
+ * @returns {Operation}
  */
 export function upsert(
   resourceType, // resourceType supplied to both the `get` and the `create/update`
   query, // query supplied to the `get`
   data, // data supplied to the `create/update`
-  options = {}, // options supplied to both the `get` and the `create/update`
-  callback = s => s // callback for the upsert itself.
+  options = {} // options supplied to both the `get` and the `create/update`
 ) {
-  return state => {
-    const [resolvedResourceType, resolvedOptions, resolvedData] =
-      expandReferences(state, resourceType, options, data);
+  return async state => {
+    const [resolvedResourceType, resolvedOptions, resolvedData, resolvedQuery] =
+      expandReferences(state, resourceType, options, data, query);
 
-    let promise;
-
+    let response;
+    const { configuration } = state;
     if (shouldUseNewTracker(resolvedResourceType)) {
-      const { configuration } = state;
-      promise = callNewTracker(
+      response = await callNewTracker(
         'create_and_update',
         configuration,
         resolvedOptions,
@@ -631,215 +501,91 @@ export function upsert(
         resolvedData
       );
     } else {
-      // NOTE: that these parameters are all expanded by the `get`, `create`, and
-      // `update` functions used inside this composed "upsert" function.
       console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
-      promise = get(
-        resourceType,
-        query,
-        options
-      )(state).then(resp => {
-        const resources = resp.data[resourceType];
-        if (resources.length > 1) {
-          throw new RangeError(
-            `Cannot upsert on Non-unique attribute. The operation found more than one records for your request.`
-          );
-        } else if (resources.length <= 0) {
-          return create(resourceType, data, options)(state);
-        } else {
-          // Pick out the first (and only) resource in the array and grab its
-          // ID to be used in the subsequent `update` by the path determined
-          // by the `selectId(...)` function.
-          const path = resources[0][selectId(resourceType)];
-          return update(resourceType, path, data, options)(state);
-        }
+      response = await request(configuration, {
+        method: 'GET',
+        path: prefixVersionToPath(
+          configuration,
+          resolvedOptions,
+          resolvedResourceType
+        ),
+        options: {
+          ...resolvedOptions,
+          query: {
+            ...resolvedQuery,
+          },
+        },
       });
+      const resources = response.body[resourceType];
+      if (resources.length > 1) {
+        throwError(409, {
+          description:
+            'Upsert failed: Multiple records found for a non-unique attribute.',
+          fix: 'Ensure the attribute is unique or modify the request to target a single record.',
+          error: 'Conflict',
+        });
+      } else if (resources.length <= 0) {
+        console.log(`Preparing create operation...`);
+        response = await request(configuration, {
+          method: 'POST',
+          path: prefixVersionToPath(
+            configuration,
+            resolvedOptions,
+            resolvedResourceType
+          ),
+          options: resolvedOptions,
+          data: resolvedData,
+        });
+      } else {
+        // Pick out the first (and only) resource in the array and grab its
+        // ID to be used in the subsequent `update` by the path determined
+        // by the `selectId(...)` function.
+        const path = resources[0][selectId(resourceType)];
+        console.log(`Preparing update operation...`);
+        response = await request(configuration, {
+          method: 'PUT',
+          path: prefixVersionToPath(
+            configuration,
+            resolvedOptions,
+            resolvedResourceType,
+            path
+          ),
+          options: resolvedOptions,
+          data: resolvedData,
+        });
+      }
     }
 
-    return promise.then(result => {
-      console.log(`Performed a "composed upsert" on ${resourceType}`);
-      return handleResponse(result, state, callback);
-    });
+    console.log(`Performed a "composed upsert" on ${resourceType}`);
+    return handleResponse(response, state);
   };
 }
 
 /**
- * Discover `DHIS2` `api` `endpoint` `query parameters` and allowed `operators` for a given resource's endpoint.
+ * Delete record.
  * @public
  * @function
- * @param {string} httpMethod - The HTTP to inspect parameter usage for a given endpoint, e.g., `get`, `post`,`put`,`patch`,`delete`
- * @param {string} endpoint - The path for a given endpoint. E.g. `/trackedEntities` or `/dataValueSets`
- * @returns {Operation}
- * @example <caption>a list of parameters allowed on a given endpoint for specific http method</caption>
- * discover('post', '/trackedEntities')
- */
-export function discover(httpMethod, endpoint) {
-  return state => {
-    console.log(
-      `Discovering query/import parameters for ${httpMethod} on ${endpoint}`
-    );
-    return axios
-      .get(
-        'https://dhis2.github.io/dhis2-api-specification/spec/metadata_openapi.json',
-        {
-          transformResponse: [
-            data => {
-              let tempData = JSON.parse(data);
-              let filteredData = tempData.paths[endpoint][httpMethod];
-              return {
-                ...filteredData,
-                parameters: filteredData.parameters.reduce(
-                  (acc, currentValue) => {
-                    let index = currentValue['$ref'].lastIndexOf('/') + 1;
-                    let paramRef = currentValue['$ref'].slice(index);
-                    let param = tempData.components.parameters[paramRef];
-
-                    if (param.schema['$ref']) {
-                      let schemaRefIndex =
-                        param.schema['$ref'].lastIndexOf('/') + 1;
-                      let schemaRef =
-                        param.schema['$ref'].slice(schemaRefIndex);
-                      param.schema = tempData.components.schemas[schemaRef];
-                    }
-
-                    param.schema = JSON.stringify(param.schema);
-
-                    let descIndex;
-                    if (
-                      indexOf(param.description, ',') === -1 &&
-                      indexOf(param.description, '.') > -1
-                    )
-                      descIndex = indexOf(param.description, '.');
-                    else if (
-                      indexOf(param.description, ',') > -1 &&
-                      indexOf(param.description, '.') > -1
-                    ) {
-                      descIndex =
-                        indexOf(param.description, '.') <
-                        indexOf(param.description, ',')
-                          ? indexOf(param.description, '.')
-                          : indexOf(param.description, ',');
-                    } else {
-                      descIndex = param.description.length;
-                    }
-
-                    param.description = param.description.slice(0, descIndex);
-
-                    acc[paramRef] = param;
-                    return acc;
-                  },
-                  {}
-                ),
-              };
-            },
-          ],
-        }
-      )
-      .then(result => {
-        console.log(
-          `\t=======================================================================================\n\tQuery Parameters for ${httpMethod} on ${endpoint} [${
-            result.data.description ?? '<description_missing>'
-          }]\n\t=======================================================================================`
-        );
-        console.table(result.data.parameters, [
-          'in',
-          'required',
-          'description',
-        ]);
-        console.table(result.data.parameters, ['schema']);
-        console.log(
-          `=========================================Responses===============================\n${prettyJson(
-            result.data.responses
-          )}\n=======================================================================================`
-        );
-        return { ...state, data: result.data };
-      });
-  };
-}
-
-/**
- * Patch a record. A generic helper function to send partial updates on one or more object properties.
- * - You are not required to send the full body of object properties.
- * - This is useful for cases where you don't want or need to update all properties on a object.
- * @public
- * @function
- * @param {string} resourceType - The type of resource to be updated. E.g. `dataElements`, `organisationUnits`, etc.
- * @param {string} path - The `id` or `path` to the `object` to be updated. E.g. `FTRrcoaog83` or `FTRrcoaog83/{collection-name}/{object-id}`
- * @param {Object} data - Data to update. Include only the fields you want to update. E.g. `{name: "New Name"}`
- * @param {Object} [options] - Optional configuration, including params for the update ({preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}). Defaults to `{operationName: 'patch', apiVersion: state.configuration.apiVersion, responseType: 'json'}`
- * @param {function} [callback] - Optional callback to handle the response
- * @returns {Operation}
- * @example <caption>a dataElement</caption>
- * patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
- */
-// TODO: @Elias, can this be deleted in favor of update? How does DHIS2 handle PATCH vs PUT?
-// I need to investigate on this. But I think DHIS2 forces to send all properties back when we do an update. If that's confirmed then this may be needed.
-export function patch(
-  resourceType,
-  path,
-  data,
-  options = {},
-  callback = s => s
-) {
-  return state => {
-    console.log('Preparing patch operation...');
-
-    const [resolvedResourceType, resolvedPath, resolvedData, resolvedOptions] =
-      expandReferences(state, resourceType, path, data, options);
-
-    const { params, requestConfig } = resolvedOptions;
-    const { configuration } = state;
-
-    return request(configuration, {
-      method: 'patch',
-      url: generateUrl(
-        configuration,
-        resolvedOptions,
-        resolvedResourceType,
-        resolvedPath
-      ),
-      params,
-      data: resolvedData,
-      ...requestConfig,
-    }).then(result => {
-      console.log(`Patched ${resolvedResourceType} at ${resolvedPath}`);
-      return handleResponse(result, state, callback);
-    });
-  };
-}
-
-/**
- * Delete a record. A generic helper function to delete an object
- * @public
- * @function
+ * @example <caption>a tracked entity instance. See [Delete tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)</caption>
+ * destroy('trackedEntities', 'LcRd6Nyaq7T');
  * @param {string} resourceType - The type of resource to be deleted. E.g. `trackedEntities`, `organisationUnits`, etc.
  * @param {string} path - Can be an `id` of an `object` or `path` to the `nested object` to `delete`.
  * @param {Object} [data] - Optional. This is useful when you want to remove multiple objects from a collection in one request. You can send `data` as, for example, `{"identifiableObjects": [{"id": "IDA"}, {"id": "IDB"}, {"id": "IDC"}]}`. See more {@link https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#deleting-objects on DHIS2 API docs}
- * @param {{apiVersion: number,operationName: string,resourceType: string}} [options] - Optional `options` for `del` operation including params e.g. `{preheatCache: true, strategy: 'UPDATE', mergeMode: 'REPLACE'}`. Run `discover` or see {@link https://docs.dhis2.org/2.34/en/dhis2_developer_manual/web-api.html#create-update-parameters DHIS2 documentation}. Defaults to `{operationName: 'delete', apiVersion: state.configuration.apiVersion, responseType: 'json'}`
- * @param {function} [callback] - Optional callback to handle the response
+ * @param {RequestOptions} [options] - An optional object containing query, parseAs,and headers for the request.
+ * @state {DHIS2State}
  * @returns {Operation}
- * @example <caption>a tracked entity instance. See [Delete tracker docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#webapi_nti_import)</caption>
- * destroy('trackedEntities', 'LcRd6Nyaq7T');
  */
-export function destroy(
-  resourceType,
-  path,
-  data = null,
-  options = {},
-  callback = false
-) {
-  return state => {
+export function destroy(resourceType, path, data = null, options = {}) {
+  return async state => {
     console.log('Preparing destroy operation...');
 
     const [resolvedResourceType, resolvedPath, resolvedData, resolvedOptions] =
       expandReferences(state, resourceType, path, data, options);
 
-    const { params, requestConfig } = resolvedOptions;
     const { configuration } = state;
 
-    let promise;
+    let response;
     if (shouldUseNewTracker(resolvedResourceType)) {
-      promise = callNewTracker(
+      response = await callNewTracker(
         'delete',
         configuration,
         resolvedOptions,
@@ -847,84 +593,22 @@ export function destroy(
         resolvedData
       );
     } else {
-      promise = request({
-        method: 'delete',
-        url: generateUrl(
+      response = await request(configuration, {
+        method: 'DELETE',
+        path: prefixVersionToPath(
           configuration,
           resolvedOptions,
           resolvedResourceType,
           resolvedPath
         ),
-        params,
-        resolvedData,
-        ...requestConfig,
+        options: resolvedOptions,
+        data: resolvedData,
       });
     }
 
-    return promise.then(result => {
-      console.log(`Deleted ${resolvedResourceType} at ${resolvedPath}`);
-      return handleResponse(result, state, callback);
-    });
+    console.log(`Deleted ${resolvedResourceType} at ${resolvedPath}`);
+    return handleResponse(response, state);
   };
-}
-
-/**
- * Gets an attribute value by its uid
- * @public
- * @example
- * findAttributeValueById(state.tei, 'y1w2R6leVmh')
- * @function
- * @param {Object} trackedEntity - A tracked entity instance (TEI) object
- * @param {string} attributeUid - The uid to search for in the TEI's attributes
- * @returns {string}
- */
-export function findAttributeValueById(trackedEntity, attributeUid) {
-  return trackedEntity?.attributes?.find(a => a?.attribute == attributeUid)
-    ?.value;
-}
-
-/**
- * Gets an attribute value by its case-insensitive display name
- * @public
- * @example
- * findAttributeValue(state.data.trackedEntities[0], 'first name')
- * @function
- * @param {Object} trackedEntity - A tracked entity instance (TEI) object
- * @param {string} attributeDisplayName - The 'displayName' to search for in the TEI's attributes
- * @returns {string}
- */
-export function findAttributeValue(trackedEntity, attributeDisplayName) {
-  return trackedEntity?.attributes?.find(
-    a => a?.displayName.toLowerCase() == attributeDisplayName.toLowerCase()
-  )?.value;
-}
-
-/**
- * Converts an attribute ID and value into a DHIS2 attribute object
- * @public
- * @example
- * attr('w75KJ2mc4zz', 'Elias')
- * @function
- * @param {string} attribute - A tracked entity instance (TEI) attribute ID.
- * @param {string} value - The value for that attribute.
- * @returns {object}
- */
-export function attr(attribute, value) {
-  return { attribute, value };
-}
-
-/**
- * Converts a dataElement and value into a DHIS2 dataValue object
- * @public
- * @example
- * dv('f7n9E0hX8qk', 12)
- * @function
- * @param {string} dataElement - A data element ID.
- * @param {string} value - The value for that data element.
- * @returns {object}
- */
-export function dv(dataElement, value) {
-  return { dataElement, value };
 }
 
 function callNewTracker(
@@ -934,7 +618,6 @@ function callNewTracker(
   resourceType,
   data = {}
 ) {
-  const { params, requestConfig, ...opts } = options;
   let importStrategy;
   switch (type) {
     case 'create':
@@ -951,35 +634,35 @@ function callNewTracker(
   }
 
   return request(configuration, {
-    method: 'post',
-    url: generateUrl(
-      configuration,
-      {
-        ...opts,
+    method: 'POST',
+    path: prefixVersionToPath(configuration, options, 'tracker'),
+    options: {
+      ...options,
+      query: {
+        ...options.query,
+        async: false,
         importStrategy,
       },
-      'tracker'
-    ),
-    params: { async: false, ...params },
+    },
     data: ensureArray(data, resourceType),
-    ...requestConfig,
   });
 }
 
 export {
   alterState,
+  as,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
-  cursor,
   each,
   field,
   fields,
   fn,
   fnIf,
-  http,
   group,
   lastReferenceValue,
+  map,
   merge,
   sourceValue,
 } from '@openfn/language-common';
