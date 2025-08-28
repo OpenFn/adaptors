@@ -1,9 +1,11 @@
+import nodepath from 'node:path';
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
+  logResponse,
   assertRelativeUrl,
+  expandReferences,
 } from '@openfn/language-common/util';
-import nodepath from 'node:path';
 
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
@@ -19,32 +21,45 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-export const request = (configuration = {}, method, path, options) => {
+/**
+ * Request helper function
+ * @function
+ * @private
+ */
+export function request(state, method, path, params = {}) {
+  assertRelativeUrl(path);
+  let { body = null, query, headers = {}, parseAs, ...restOfOptions } = params;
+
   const {
-    baseUrl = 'https://api.mementodatabase.com',
     token,
     apiVersion = 'v1',
-  } = configuration;
-
-  const errors = {
-    404: 'Page not found',
-  };
-
-  const opts = {
-    parseAs: 'json',
-    errors,
-    baseUrl,
-    query: {
-      token,
-      ...options.query,
-    },
-    headers: {
-      'content-type': 'application/json',
-      ...options.headers,
-    },
-  };
+    baseUrl = 'https://api.mementodatabase.com',
+  } = state.configuration;
 
   const safePath = nodepath.join(apiVersion, path);
 
-  return commonRequest(method, safePath, opts);
-};
+  const options = {
+    ...restOfOptions,
+    headers: {
+      'content-type': 'application/json',
+      ...headers,
+    },
+    query: {
+      token,
+      ...query,
+    },
+    baseUrl,
+    body,
+    parseAs,
+  };
+
+  return commonRequest(method, safePath, options)
+    .then(response => {
+      logResponse(response);
+      return prepareNextState(state, response);
+    })
+    .catch(error => {
+      logResponse(error);
+      throw error;
+    });
+}
