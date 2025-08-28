@@ -1,5 +1,11 @@
 # @openfn/language-asana
 
+## 5.0.1 - 26 August 2025
+
+### Patch Changes
+
+- 05aae5f: Default `resource_subtype` to `default_task` in `searchTask()`
+
 ## 5.0.0 - 11 August 2025
 
 ### Major Changes
