@@ -86,16 +86,17 @@
       "valid": true
     },
     {
-      "name": "listEntries",
+      "name": "getEntries",
       "params": [
-        "libraryId"
+        "libraryId",
+        "options"
       ],
       "docs": {
         "description": "List all entries in a library",
         "tags": [
           {
             "title": "example",
-            "description": "listEntries('HyZV7AYk0');",
+            "description": "getEntries('HyZV7AYk0');",
             "caption": "List all entries in a library"
           },
           {
@@ -131,7 +132,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "getEntry",
@@ -202,7 +203,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "createEntry('libraryId', 'entry');",
+            "description": "createEntry('HyZV7AYk0', {\n  name: 'Bukayo',\n  age: 20,\n});",
             "caption": "Create an entry"
           },
           {
@@ -261,7 +262,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "updateEntry('libraryId', 'entryId', 'entry');",
+            "description": "updateEntry('HyZV7AYk0', 'T0xIYmE-V2QoMmRTWF1sVVJUKnU', {\n  name: 'Bukayo',\n  age: 20,\n});",
             "caption": "Update an entry"
           },
           {
