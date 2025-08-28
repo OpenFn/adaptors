@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL (https://api.mementodatabase.com)",
+      "format": "uri",
+      "minLength": 1,
+      "default": "https://api.mementodatabase.com",
+      "examples": [
+        "https://api.mementodatabase.com"
+      ]
+    },
+    "apiVersion": {
+      "title": "API Version",
+      "type": "string",
+      "description": "API Version",
+      "default": "v1",
+      "examples": [
+        "v1"
+      ]
+    },
+    "token": {
+      "title": "Memento Auth Token",
+      "type": "string",
+      "description": "Memento Auth Token",
+      "writeOnly": true,
+      "examples": [
+        "1234567890"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "token"
+  ]
+}
