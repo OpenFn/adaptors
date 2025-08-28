@@ -1,5 +1,11 @@
 # @openfn/language-redis
 
+## 1.3.8 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 1.3.7 - 14 July 2025
 
 ### Patch Changes

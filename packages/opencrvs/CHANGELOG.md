@@ -1,5 +1,11 @@
 # @openfn/language-opencrvs
 
+## 1.0.3 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 1.0.2 - 04 August 2025
 
 ### Patch Changes

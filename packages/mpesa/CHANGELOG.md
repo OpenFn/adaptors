@@ -1,5 +1,11 @@
 # @openfn/language-mpesa
 
+## 1.1.3 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 1.1.2 - 14 July 2025
 
 ### Patch Changes

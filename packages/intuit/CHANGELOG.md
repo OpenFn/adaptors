@@ -1,5 +1,11 @@
 # @openfn/language-intuit
 
+## 1.0.9 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 1.0.8 - 14 July 2025
 
 ### Patch Changes

@@ -1,8 +1,8 @@
 {
   "name": "@openfn/language-commcare",
   "label": "CommCare",
-  "version": "4.0.0",
-  "description": "OpenFn adaptor for CommCare",
+  "version": "4.0.1",
+  "description": "OpenFn adaptor for CommCare (Dimagi)",
   "homepage": "https://docs.openfn.org",
   "repository": {
     "type": "git",
