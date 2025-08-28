@@ -139,59 +139,6 @@ export function updateEntry(libraryId, entryId, entry) {
   };
 }
 
-/**
- * Delete an entry
- * @example <caption>Delete an entry</caption>
- * deleteEntry('HyZV7AYk0', 'T0xIYmE-V2QoMmRTWF1sVVJUKnU');
- * @function
- * @public
- * @param {string} libraryId - The ID of the library to delete the entry from
- * @param {string} entryId - The ID of the entry to delete
- * @returns {Operation}
- */
-export function deleteEntry(libraryId, entryId) {
-  return state => {
-    const [resolvedLibraryId, resolvedEntryId] = expandReferences(
-      state,
-      libraryId,
-      entryId
-    );
-    console.log('Deleting entry');
-    return request(
-      state,
-      'DELETE',
-      `libraries/${resolvedLibraryId}/entries/${resolvedEntryId}`
-    );
-  };
-}
-
-/**
- * Search entries
- * @example <caption>Search entries</caption>
- * searchEntries('HyZV7AYk0', 'Bukayo');
- * @function
- * @public
- * @param {string} libraryId - The ID of the library to search in
- * @param {string} query - The query to search for
- * @state data.entries - an array of entry objects for a library
- * @returns {Operation}
- */
-export function searchEntries(libraryId, query) {
-  return state => {
-    const [resolvedLibraryId, resolvedQuery] = expandReferences(
-      state,
-      libraryId,
-      query
-    );
-    console.log('Searching entries');
-    return request(state, 'GET', `libraries/${resolvedLibraryId}/search`, {
-      query: {
-        q: resolvedQuery,
-      },
-    });
-  };
-}
-
 export {
   as,
   assert,

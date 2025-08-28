@@ -11,8 +11,6 @@ Initial release of the adaptor
 - `getEntry`: Get single entry by ID
 - `createEntry`: Create new content entries
 - `updateEntry`: Modify existing entries
-- `deleteEntry`: Remove entries from library
-- `searchEntries`: Search and filter entries with custom criteria
 
 ### HTTP Operations
 
