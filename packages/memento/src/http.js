@@ -22,8 +22,10 @@ import { request as sendRequest } from './util';
 
 /**
  * Make a GET request
- * @example
- * get("patients");
+ * @example <caption>List libraries</caption>
+ * get("libraries");
+ * @example <caption>Get a library fields</caption>
+ * get('libraries/HyZV7AYk0');
  * @function
  * @public
  * @param {string} path - Path to resource
@@ -37,8 +39,8 @@ export function get(path, options) {
 
 /**
  * Make a POST request
- * @example
- * post("patient", { "name": "Bukayo" });
+ * @example <caption>Create an entry</caption>
+ * post("libraries/HyZV7AYk0/entries", { "name": "Bukayo" });
  * @function
  * @public
  * @param {string} path - Path to resource
@@ -53,8 +55,10 @@ export function post(path, body, options) {
 
 /**
  * Make a general HTTP request
- * @example
- * request("POST", "patient", { "name": "Bukayo" });
+ * @example <caption>Edit an entry</caption>
+ * request("PUT", "libraries/HyZV7AYk0/entries/T0xIYmE-V2QoMmRTWF1sVVJUKnU", { "name": "Bukayo" });
+ * @example <caption>Delete an entry</caption>
+ * request("DELETE", "libraries/HyZV7AYk0/entries/T0xIYmE-V2QoMmRTWF1sVVJUKnU");
  * @function
  * @public
  * @param {string} method - HTTP method to use
