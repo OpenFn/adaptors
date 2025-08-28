@@ -1,12 +1,12 @@
-import { expandReferences, encode } from '@openfn/language-common/util';
+import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
 
 /**
  * State object
  * @typedef {Object} HttpState
- * @property data - the parsed response body
- * @property response - the response from the HTTP server, including headers, statusCode, body, etc
- * @property references - an array of all previous data objects used in the Job
+ * @property data - The parsed response body when `filename` is provided, otherwise a base64-encoded string.
+ * @property response - The response from the HTTP server, including headers, statusCode, body, etc
+ * @property references - An array of all previous data objects used in the Job
  **/
 
 /**
