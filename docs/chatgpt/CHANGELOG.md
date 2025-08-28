@@ -1,5 +1,11 @@
 # @openfn/language-chatgpt
 
+## 2.0.1 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 2.0.0 - 24 July 2025
 
 ### Major Changes

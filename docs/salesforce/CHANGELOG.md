@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 7.2.1 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 7.2.0 - 04 August 2025
 
 ### Minor Changes

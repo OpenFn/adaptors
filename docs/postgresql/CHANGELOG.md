@@ -1,5 +1,11 @@
 # @openfn/language-postgresql
 
+## 7.0.1 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 7.0.0 - 11 August 2025
 
 ### Major Changes
