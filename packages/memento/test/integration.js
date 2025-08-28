@@ -11,7 +11,7 @@ describe('http', () => {
     expect(data.libraries).to.exist;
     expect(data.libraries.length).to.be.greaterThanOrEqual(1);
   });
-  it.only('throws an error if no token is provided', async () => {
+  it('throws an error if no token is provided', async () => {
     const state = {
       configuration: {
         token: null,
