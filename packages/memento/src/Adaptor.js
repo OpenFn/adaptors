@@ -1,4 +1,4 @@
-import { request } from './util';
+import { sendRequest, requestWithPagination } from './util';
 import { expandReferences } from '@openfn/language-common/util';
 
 /**
@@ -13,7 +13,7 @@ import { expandReferences } from '@openfn/language-common/util';
 export function listLibraries() {
   return state => {
     console.log('Listing libraries');
-    return request(state, 'GET', 'libraries');
+    return sendRequest(state, 'GET', 'libraries');
   };
 }
 
@@ -31,25 +31,50 @@ export function getFields(libraryId) {
   return state => {
     const [resolvedLibraryId] = expandReferences(state, libraryId);
     console.log('Getting library fields');
-    return request(state, 'GET', `libraries/${resolvedLibraryId}`);
+    return sendRequest(state, 'GET', `libraries/${resolvedLibraryId}`);
   };
 }
 
 /**
  * List all entries in a library
  * @example <caption>List all entries in a library</caption>
- * listEntries('HyZV7AYk0');
+ * getEntries('HyZV7AYk0');
  * @function
  * @public
  * @param {string} libraryId - The library ID
  * @state data.entries - an array of entry objects for a library
  * @returns {Operation}
  */
-export function listEntries(libraryId) {
+export function getEntries(libraryId, options = {}) {
   return state => {
-    const [resolvedLibraryId] = expandReferences(state, libraryId);
+    const [resolvedLibraryId, resolvedOptions] = expandReferences(
+      state,
+      libraryId,
+      options
+    );
+    const { pageSize, pageToken, startRevision, fields, ...restOfOptions } =
+      resolvedOptions;
+    const query = {
+      pageSize: pageSize || 100,
+      fields: fields || '*all',
+    };
+    if (pageToken) {
+      query.pageToken = pageToken;
+    }
+    if (startRevision) {
+      query.startRevision = startRevision;
+    }
+
     console.log('Listing entries');
-    return request(state, 'GET', `libraries/${resolvedLibraryId}/entries`);
+    return requestWithPagination(
+      state,
+      'GET',
+      `libraries/${resolvedLibraryId}/entries`,
+      {
+        query,
+        ...restOfOptions,
+      }
+    );
   };
 }
 
@@ -72,7 +97,7 @@ export function getEntry(libraryId, entryId) {
       entryId
     );
     console.log('Getting entry');
-    return request(
+    return sendRequest(
       state,
       'GET',
       `libraries/${resolvedLibraryId}/entries/${resolvedEntryId}`
@@ -102,9 +127,14 @@ export function createEntry(libraryId, entry) {
       entry
     );
     console.log('Creating entry');
-    return request(state, 'POST', `libraries/${resolvedLibraryId}/entries`, {
-      body: resolvedEntry,
-    });
+    return sendRequest(
+      state,
+      'POST',
+      `libraries/${resolvedLibraryId}/entries`,
+      {
+        body: resolvedEntry,
+      }
+    );
   };
 }
 
@@ -128,7 +158,7 @@ export function updateEntry(libraryId, entryId, entry) {
     const [resolvedLibraryId, resolvedEntryId, resolvedEntry] =
       expandReferences(state, libraryId, entryId, entry);
     console.log('Updating entry');
-    return request(
+    return sendRequest(
       state,
       'PUT',
       `libraries/${resolvedLibraryId}/entries/${resolvedEntryId}`,
