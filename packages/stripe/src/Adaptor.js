@@ -20,7 +20,7 @@ import * as util from './Utils';
  * @param {string} resource - The API resource to list items from.
  * @param {object} options -  Optional options object. See {@link https://docs.stripe.com/api/payment_intents/list|Stripe API documentation} for more details.
  * @returns {Operation}
- * @state {HttpState}
+ * @state data - an array of items
  */
 export function list(resource, options = {}) {
   return async state => {
@@ -46,7 +46,7 @@ export function list(resource, options = {}) {
 }
 
 /**
- * Get one thing by ID
+ * Get a single resource using its ID
  * @example <caption>Get a payment intent</caption>
  * get('payment_intents','pi_3RxS5EEAUr6ipfDB0aKo3moC');
  * @example <caption>Get a customer</caption>
@@ -56,7 +56,7 @@ export function list(resource, options = {}) {
  * @param {string} resource - The API path to retrieve.
  * @param {string} id - The ID of the resource to retrieve.
  * @returns {Operation}
- * @state - The requested resource
+ * @state data  - The requested resource object
  */
 export function get(resource, id) {
   return async state => {

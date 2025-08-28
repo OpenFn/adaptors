@@ -1,10 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import {
-  list,
-  get,
-} from '../src/Adaptor.js';
+import { list, get } from '../src/Adaptor.js';
 
 const testServer = enableMockClient('https://stripe.test.com');
 
@@ -46,6 +43,35 @@ describe('list', () => {
         { email: 'cs002@example.com', id: 'cus_002' },
       ],
     });
+  });
+  it('returns an empty data array when no subscriptions exist', async () => {
+    testServer
+      .intercept({
+        path: '/v1/subscriptions',
+        method: 'GET',
+      })
+
+      .reply(200, {
+        object: 'list',
+        data: [],
+        has_more: false,
+        url: '/v1/subscriptions',
+      });
+
+    const state = {
+      configuration,
+    };
+
+    const finalState = await list('subscriptions')(state);
+
+    expect(finalState.data).to.eql({
+      object: 'list',
+      data: [],
+      has_more: false,
+      url: '/v1/subscriptions',
+    });
+
+    expect(finalState.data.data).to.eql([]);
   });
 });
 

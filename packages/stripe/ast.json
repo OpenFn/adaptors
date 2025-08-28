@@ -57,7 +57,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "data - an array of items"
           }
         ]
       },
@@ -70,7 +70,7 @@
         "id"
       ],
       "docs": {
-        "description": "Get one thing by ID",
+        "description": "Get a single resource using its ID",
         "tags": [
           {
             "title": "example",
@@ -120,7 +120,7 @@
           },
           {
             "title": "state",
-            "description": "The requested resource"
+            "description": "data  - The requested resource object"
           }
         ]
       },
