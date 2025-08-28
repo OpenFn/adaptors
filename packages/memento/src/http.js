@@ -1,6 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
 
-import { request as sendRequest } from './util';
+import { sendRequest } from './util';
 
 /**
  * State object
