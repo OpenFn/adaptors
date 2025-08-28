@@ -58323,6 +58323,578 @@
 {"name":"sftp","adaptor":"@openfn/language-sftp","version":"3.0.1","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#getcsv\\\">getCSV(filePath, [parsingOptions])</a></dt>\\n<dt>\\n    <a href=\\\"#getjson\\\">getJSON(filePath, encoding)</a></dt>\\n<dt>\\n    <a href=\\\"#list\\\">list(dirPath, filter, [callback])</a></dt>\\n<dt>\\n    <a href=\\\"#normalizecsvarray\\\">normalizeCSVarray(options, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#putcsv\\\">putCSV(localFilePath, remoteFilePath, parsingOptions)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#chunk\\\">chunk()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#parsecsv\\\">parseCsv()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### getCSV\\n\\n<p><code>getCSV(filePath, [parsingOptions]) ⇒ Operation</code></p>\\n\\nGet a CSV and return a JSON array of strings for each item separated by the delimiter\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| filePath | <code>string</code> | Path to resource |\\n| [parsingOptions] | <code>Object</code> | Optional. `parsingOptions` Parsing options which can be passed to convert csv to json See more [on csvtojson docs](https://github.com/Keyang/node-csvtojson#parameters) |\\n\\n\\n**Example**\\n```js\\ngetCSV(\\n  '/some/path/to_file.csv',\\n  {delimiter: \\\";\\\", flatKeys: true }\\n);\\n```\\n\\n* * *\\n\\n### getJSON\\n\\n<p><code>getJSON(filePath, encoding) ⇒ Operation</code></p>\\n\\nFetch a json file from an FTP server\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| filePath | <code>string</code> | Path to resource |\\n| encoding | <code>string</code> | Character encoding for the json |\\n\\n\\n**Example**\\n```js\\ngetJSON(\\n  '/path/To/File',\\n  'utf8',\\n);\\n```\\n\\n* * *\\n\\n### list\\n\\n<p><code>list(dirPath, filter, [callback]) ⇒ Operation</code></p>\\n\\nList files present in a directory\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| dirPath | <code>string</code> | Path to remote directory |\\n| filter | <code>function</code> | a filter function used to select return entries |\\n| [callback] | <code>function</code> | Optional callback to handle the response |\\n\\n\\n**Example:** basic files listing\\n```js\\nlist('/some/path/')\\n```\\n**Example:** list files with filters\\n```js\\nlist('/some/path/', file=> {\\n return /foo.\\\\.txt/.test(file.name);\\n})\\n```\\n**Example:** list files with filters and use callback\\n```js\\nlist(\\n  \\\"/some/path/\\\",\\n  (file) => /foo.\\\\.txt/.test(file.name),\\n  (state) => {\\n    const latestFile = state.data.filter(\\n      (file) => file.modifyTime <= new Date()\\n    );\\n    return { ...state, latestFile };\\n  }\\n);\\n```\\n\\n* * *\\n\\n### normalizeCSVarray\\n\\n<p><code>normalizeCSVarray(options, callback) ⇒ Operation</code></p>\\n\\nConvert JSON array of strings into a normalized object\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| options | <code>options</code> | Options passed to csvtojson parser |\\n| callback | <code>callback</code> | Options passed to csvtojson parser |\\n\\n\\n**Example**\\n```js\\nnormalizeCSVarray({ delimiter: ';', noheader: true });\\n```\\n\\n* * *\\n\\n### putCSV\\n\\n<p><code>putCSV(localFilePath, remoteFilePath, parsingOptions) ⇒ Operation</code></p>\\n\\nConvert JSON to CSV and upload to an FTP server\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| localFilePath | <code>string</code> | Data source for data to copy to the remote server. |\\n| remoteFilePath | <code>string</code> | Path to the remote file to be created on the server. |\\n| parsingOptions | <code>object</code> | Options which can be passed to adjust the read and write stream used in sending the data to the remote server |\\n\\n\\n**Example**\\n```js\\nputCSV(\\n  '/some/path/to_local_file.csv',\\n  '/some/path/to_remove_file.csv',\\n  { delimiter: ';', noheader: true }\\n);\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# Language SFTP\\n\\nLanguage Pack for building expressions and operations to work with SFTP servers.\\n\\n## Documentation\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/sftp-configuration-schema/)\\ndefinition.\\n\\n## List the content of a directory\\n\\n```js\\nalterState(state => {\\n  return list('/path/To/Directory')(state).then(response => {\\n    console.log(`There are ${response.data.length} files.`);\\n    return response;\\n  });\\n});\\n```\\n\\n## sample getCSV expression\\n\\n```js\\ngetCSV('path/to/file.csv', 'utf8', {\\n  quote: 'off',\\n  delimiter: ';',\\n  noheader: true,\\n  filter: {\\n    type: 'startsWith',\\n    key: 'field1',\\n    value: 'JO',\\n  },\\n});\\n```\\n\\nA more complex example that breaks up the CSV file into multiple payloads for\\nquicker processing.\\n\\n```js\\nfn(state => {\\n  return list('/')(state).then(state => {\\n    const targetNames = [\\n      'exportContacts', //example fileName\\n    ];\\n    console.log(`Fetching files: ${targetNames}`);\\n    const files = state.data\\n      .filter(file => file.name.split('.')[1] === 'csv')\\n      .filter(file =>\\n        targetNames.some(targetName =>\\n          file.name.toLowerCase().includes(targetName)\\n        )\\n      );\\n\\n    if (files.length === 0) console.log('No new CSV files found.');\\n    return { ...state, data: {}, files };\\n  });\\n});\\n\\neach(\\n  '$.files[*]',\\n  fn(state => {\\n    const { configuration, data } = state;\\n\\n    return getCSV(`/${data.name}`)(state).then(async state => {\\n      const headers = state.data\\n        .shift()\\n        .split(';')\\n        .map(h => (h = h.replace(/\\\"/g, '')));\\n\\n      function toObject(item) {\\n        const values = item.split(';');\\n\\n        return Object.fromEntries(\\n          headers.map((k, i) => {\\n            return values[i]\\n              ? [k, values[i].replace(/\\\"/g, '')]\\n              : [k, values[i]];\\n          })\\n        );\\n      }\\n\\n      let countInbox = 0;\\n\\n      //to post CSV data as individual Messages to OpenFn Inbox\\n      const postToInbox = async data => {\\n        countInbox++;\\n\\n        console.log(`Sending request ${countInbox} to inbox`);\\n\\n        await new Promise(resolve => setTimeout(resolve, 200));\\n\\n        await http.post({\\n          url: configuration.openfnInboxUrl,\\n          data: data,\\n          maxContentLength: Infinity,\\n          maxBodyLength: Infinity,\\n        })(state);\\n      };\\n\\n      //To split up into multiple, smaller payloads before send to OpenFn Inbox\\n      const chunkSize = 500;\\n\\n      console.log(\\n        state.data.length,\\n        'rows will be sent in',\\n        Math.ceil(state.data.length / chunkSize),\\n        'requests of',\\n        chunkSize,\\n        'rows each.'\\n      );\\n\\n      while (state.data.length > 0) {\\n        console.log('data.length', state.data.length);\\n        await postToInbox({\\n          fileName: data.name,\\n          fileType: data.name.split('-')[0],\\n          uploadDate: new Date(data.modifyTime).toISOString(),\\n          json: state.data.splice(0, chunkSize).map(toObject),\\n        });\\n      }\\n\\n      return { configuration, references: [], data: {} };\\n    });\\n  })\\n);\\n```\\n\\n## sample putCSV expression\\n\\nThis function converts JSON to CSV and post to a server\\n\\n```js\\nputCSV('/some/path/to_file.csv', 'utf8', { delimiter: ';', noheader: true });\\n```\\n\\n### Get JSON from FTP server\\n\\n```js\\ngetJSON('path/to/file.json', 'utf8');\\n```\\n\\n### Custom request to an http endpoint\\n\\nThis adaptor exports `http` from `language-common`. Here, we outline the usage\\nin order to make custom requests to an endpoint. It returns a promise\\n\\n```js\\nalterState(state => {\\n  return http\\n    .post({ url: 'yourURL', data: { name: 'Mamadou' } })(state)\\n    .then(response => {\\n      // do something with response;\\n      return response;\\n    });\\n});\\n```\\n\\n## Development\\n\\nClone the repo, run `pnpm install`.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build the docs for this repo, `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-sftp\\n\\n## 3.0.1 - 28 August 2025\\n\\n### Patch Changes\\n\\n- b7af59a: - Update `package.json` description to be LLM-readable\\n\\n## 3.0.0 - 11 August 2025\\n\\n### Major Changes\\n\\n- a5cea4e: removed `http` export from `@openfn/language-common`\\n\\n  ### Migration Guide\\n\\n  The `http` export has been removed from `@openfn/language-common`. If you were\\n  using it, you should remove it from your code and create a new step that uses\\n  `http` adaptor. See example below.\\n\\n  **Before**\\n\\n  **Step 1: Fetch and post data using postgresql adaptor**\\n\\n  ```js\\n  sql('select * from foo');\\n  http.post('/example', { body: $.data }),\\n  ```\\n\\n  **Now**\\n\\n  **Step 1: Fetch data using postgresql adaptor**\\n\\n  ```js\\n  sql('select * from foo');\\n  ```\\n\\n  **Step 2: Post data using http adaptor**\\n\\n  ```js\\n  post('/example', { body: $.data });\\n  ```\\n\\n## 2.0.17 - 14 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9b5a4f8]\\n  - @openfn/language-common@3.0.2\\n\\n## 2.0.16 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cf9c09f]\\n  - @openfn/language-common@3.0.1\\n\\n## 2.0.15 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[ea85695]\\n- Updated dependencies \\\\[3fce58f]\\n- Updated dependencies \\\\[19f2d7e]\\n- Updated dependencies \\\\[f26bd2b]\\n- Updated dependencies \\\\[19f2d7e]\\n  - @openfn/language-common@3.0.0\\n\\n## 2.0.14 - 20 June 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[28c2e8b]\\n  - @openfn/language-common@2.5.0\\n\\n## 2.0.13 - 03 June 2025\\n\\n### Patch Changes\\n\\n- remove `format:uri` from configuration-schema\\n\\n## 2.0.12 - 22 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 2.0.11 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 2.0.10 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 2.0.9 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 2.0.8 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b3d7f59]\\n- Updated dependencies \\\\[2d709ff]\\n- Updated dependencies \\\\[41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 2.0.7 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 2.0.6 - 09 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[a47d8d5]\\n- Updated dependencies \\\\[9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 2.0.5 - 28 October 2024\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 2.0.4 - 18 October 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 2.0.3 - 15 October 2024\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus \\\\[33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 2.0.2 - 24 September 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 2.0.1 - 16 August 2024\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies \\\\[8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 2.0.0 - 01 August 2024\\n\\n### Major Changes\\n\\n- Export new common http helpers (http namespace)\\n\\n## 1.1.3\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 1.1.2 - 25 July 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4c08444]\\n- Updated dependencies \\\\[73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 1.1.1 - 19 June 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[5fb82f07]\\n  - @openfn/language-common@1.15.0\\n\\n## 1.1.0 - 13 June 2024\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 1.0.8 - 11 June 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.5\\n\\n## 1.0.7 - 21 May 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[12f02ed5]\\n  - @openfn/language-common@1.13.4\\n\\n## 1.0.6 - 08 May 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 1.0.5 - 08 May 2024\\n\\n### Patch Changes\\n\\n- Security updates (lodash,undici)\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 1.0.4 - 12 April 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@1.13.1\\n\\n## 1.0.3 - 12 April 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 1.0.2 - 27 October 2023\\n\\n### Patch Changes\\n\\n- a666a63: On error disconnect then throw\\n\\n## 1.0.1 - 24 October 2023\\n\\n### Patch Changes\\n\\n- 771c814: - Properly disconnect on error\\n  - Improve operation logs\\n\\n## 1.0.0 - 02 October 2023\\n\\n### Major Changes\\n\\n- e52ba66: add `filter` option in `list()` function\\n\\n## 0.8.8 - 20 September 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[c19efbe]\\n  - @openfn/language-common@1.11.1\\n\\n## 0.8.7 - 08 September 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[85c35b8]\\n  - @openfn/language-common@1.11.0\\n\\n## 0.8.6 - 14 August 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[df09270]\\n  - @openfn/language-common@1.10.3\\n\\n## 0.8.5 - 14 July 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[26a303e]\\n  - @openfn/language-common@1.10.2\\n\\n## 0.8.4 - 14 July 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[8c32eb3]\\n  - @openfn/language-common@1.10.1\\n\\n## 0.8.3 - 30 June 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[aad9549]\\n  - @openfn/language-common@1.10.0\\n\\n## 0.8.2 - 23 June 2023\\n\\n### Patch Changes\\n\\n- d2c980e: Use `parseCsv` from language-common\\n- c5d3ce1: improve connection handling\\n- Updated dependencies \\\\[111807f]\\n  - @openfn/language-common@1.9.0\\n\\n## 0.8.1 - 19 June 2023\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 0.8.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 0.7.3 - 24 May 2023\\n\\n### Patch Changes\\n\\n- 432dd0a: fix sftp connection wqautoclose\\n\\n## 0.7.2 - 23 May 2023\\n\\n### Patch Changes\\n\\n- 205b806: remove asObjects key before parsing\\n\\n## 0.7.1 - 23 May 2023\\n\\n### Patch Changes\\n\\n- 827c627: error handling\\n\\n## 0.7.0 - 22 May 2023\\n\\n### Minor Changes\\n\\n- fa58216: Add csvtojson convertion option\\n\\n## 0.6.9 - 31 March 2023\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[929bca6]\\n  - @openfn/language-common@1.7.7\\n\\n## 0.6.8 - 30 March 2023\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies \\\\[2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 0.6.7 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 0.6.6 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 0.6.5 - 13 January 2023\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*\\\\_ @module Adaptor \\\\_/\\n\\n## 0.6.4 - 11 November 2022\\n\\n### Patch Changes\\n\\n- f2a91a4: Update package exports\\n- Updated dependencies \\\\[f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\\n## 0.6.3 - 04 November 2022\\n\\n### Patch Changes\\n\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- 4126a62: Fix built bundle\\n- ecf5d30: remove sinon since it was not being used\\n- Updated dependencies \\\\[8566b26]\\n- Updated dependencies \\\\[b3d45ff]\\n- Updated dependencies \\\\[b5eb665]\\n- Updated dependencies \\\\[ecf5d30]\\n  - @openfn/language-common@1.7.4\\n\\n## 0.6.2 - 21 October 2022\\n\\n### Patch Changes\\n\\n- e04aa28: Rename credential-schema to configuration-schema, update descriptions\\n\\n## 0.6.1 - 19 October 2022\\n\\n### Patch Changes\\n\\n- 28dfbfa: add todo, fix build pack\\n\\n## 0.6.0 - 19 October 2022\\n\\n### Minor Changes\\n\\n- f294a62: Added credential-schema.json for new ui\\n\\n## 0.5.0 - 18 October 2022\\n\\n### Minor Changes\\n\\n- 2c04894: added sftp package\\n\"","functions":["getCSV","getJSON","list","normalizeCSVarray","putCSV"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"host":{"title":"Host URL","type":"string","description":"The SFTP server host url or ip address","minLength":1,"examples":["191.173.128.88","sftp.example.com"]},"port":{"title":"Port","type":"integer","default":21,"description":"The SFTP server port","minLength":1,"examples":[22]},"username":{"title":"Username","type":"string","description":"Username","minLength":1,"examples":["admin"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"minLength":1,"examples":["@some(!)Strongpassword"]}},"type":"object","additionalProperties":true,"required":["host"]}},
 [
   {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get a single resource using its ID",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The API path to retrieve.",
+        "name": "resource"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The ID of the resource to retrieve.",
+        "name": "id"
+      }
+    ],
+    "examples": [
+      "<caption>Get a payment intent</caption>\nget('payment_intents','pi_3RxS5EEAUr6ipfDB0aKo3moC');",
+      "<caption>Get a customer</caption>\nget('customers','cus_SthTl85l20LRJj');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 53,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/stripe/src"
+    },
+    "state": [
+      {
+        "name": "data",
+        "description": "The requested resource object",
+        "type": null
+      }
+    ],
+    "order": 1,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a GET request to Stripe",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Get all invoices</caption>\nhttp.get('/invoices')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 37,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/stripe/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 4,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the HTTP server, including headers, statusCode, body, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 4,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/stripe/src"
+    },
+    "order": 2,
+    "level": 0
+  },
+  {
+    "id": "list",
+    "longname": "list",
+    "name": "list",
+    "kind": "function",
+    "scope": "global",
+    "description": "List items from Stripe",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The API resource to list items from.",
+        "name": "resource"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Optional options object. See {@link https://docs.stripe.com/api/payment_intents/list|Stripe API documentation} for more details.",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>List all payment intents</caption>\nlist('payment_intents');",
+      "<caption>List customers with options</caption>\nlist('customers', {limit:3});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 17,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/stripe/src"
+    },
+    "state": [
+      {
+        "name": "data",
+        "description": "an array of items",
+        "type": null
+      }
+    ],
+    "order": 0,
+    "level": 0
+  },
+  {
+    "id": "post",
+    "longname": "post",
+    "name": "post",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a POST request to Stripe",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Post a new payment intent</caption>\nhttp.post(\n  '/payment_intents',\n  {},\n  {\n    query: {\n      amount: 10000,\n      currency: 'usd',\n    },\n  }\n);"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 62,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/stripe/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 5,
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a general HTTP request to Stripe",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "HTTP method to use",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Get all customers</caption>\nhttp.request('GET', 'customers');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 79,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/stripe/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 6,
+    "level": 0
+  },
+  {
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to the HTTP request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object",
+            "string"
+          ]
+        },
+        "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
+        "name": "errors"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.",
+        "name": "form"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of headers to append to the request.",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Parse the response body as json, text or stream. By default will use the response headers.",
+        "name": "parseAs"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Request timeout in ms. Default: 300 seconds.",
+        "name": "timeout"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions",
+        "name": "tls"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 12,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/stripe/src"
+    },
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "as",
+    "common": true,
+    "name": "as",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "assert",
+    "common": true,
+    "name": "assert",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "combine",
+    "common": true,
+    "name": "combine",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fnIf",
+    "common": true,
+    "name": "fnIf",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "group",
+    "common": true,
+    "name": "group",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "map",
+    "common": true,
+    "name": "map",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "scrubEmojis",
+    "common": true,
+    "name": "scrubEmojis",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "util",
+    "common": true,
+    "name": "util",
+    "scope": "global",
+    "kind": "external"
+  }
+],
+{"name":"stripe","adaptor":"@openfn/language-stripe","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#get\\\">get(resource, id)</a></dt>\\n<dt>\\n    <a href=\\\"#list\\\">list(resource, options)</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#http_get\\\">http.get(path, options)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_post\\\">http.post(path, body, options)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_request\\\">http.request(method, path, body, options)</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#assert\\\">assert()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### get\\n\\n<p><code>get(resource, id) ⇒ Operation</code></p>\\n\\nGet a single resource using its ID\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| resource | <code>string</code> | The API path to retrieve. |\\n| id | <code>string</code> | The ID of the resource to retrieve. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The requested resource object |\\n\\n**Example:** Get a payment intent\\n```js\\nget('payment_intents','pi_3RxS5EEAUr6ipfDB0aKo3moC');\\n```\\n**Example:** Get a customer\\n```js\\nget('customers','cus_SthTl85l20LRJj');\\n```\\n\\n* * *\\n\\n### list\\n\\n<p><code>list(resource, options) ⇒ Operation</code></p>\\n\\nList items from Stripe\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| resource | <code>string</code> | The API resource to list items from. |\\n| options | <code>object</code> | Optional options object. See [Stripe API documentation](https://docs.stripe.com/api/payment_intents/list) for more details. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | an array of items |\\n\\n**Example:** List all payment intents\\n```js\\nlist('payment_intents');\\n```\\n**Example:** List customers with options\\n```js\\nlist('customers', {limit:3});\\n```\\n\\n* * *\\n\\n\\n## http\\n\\nThese functions belong to the http namespace.\\n### http.get {#http_get}\\n\\n<p><code>get(path, options) ⇒ Operation</code></p>\\n\\nMake a GET request to Stripe\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Get all invoices\\n```js\\nhttp.get('/invoices')\\n```\\n\\n* * *\\n\\n\\n### http.post {#http_post}\\n\\n<p><code>post(path, body, options) ⇒ Operation</code></p>\\n\\nMake a POST request to Stripe\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Post a new payment intent\\n```js\\nhttp.post(\\n  '/payment_intents',\\n  {},\\n  {\\n    query: {\\n      amount: 10000,\\n      currency: 'usd',\\n    },\\n  }\\n);\\n```\\n\\n* * *\\n\\n\\n### http.request {#http_request}\\n\\n<p><code>request(method, path, body, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request to Stripe\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Get all customers\\n```js\\nhttp.request('GET', 'customers');\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### HttpState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-stripe <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\nstripe API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/stripe-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/stripe-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-stripe\\n\\n## 1.0.0\\n\\n- Implement `list()`, and  `get()` functions for `stripe`.\\n- Implement `http.get()`, `http.post()`, and `http.request()`  namespaced functions.\\n\"","functions":["get","list"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The stripe base URL ","format":"uri","minLength":1,"default":"https://api.stripe.com","examples":["https://api.stripe.com"]},"apiVersion":{"title":"ApiVersion","type":"string","description":"Stripe API version to use","default":"v1","examples":["v1"]},"apiKey":{"title":"ApiKey","type":"string","description":"The API key for authenticating requests to Stripe","writeOnly":true,"examples":["sk_test_53iburgn5yb3u4nfufg477365gbvrnv348r475gf4bf485845gbrf"]}},"type":"object","additionalProperties":true,"required":["baseUrl","apiKey"]}},
+[
+  {
     "id": "cursor",
     "longname": "cursor",
     "name": "cursor",
