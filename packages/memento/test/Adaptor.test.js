@@ -1,4 +1,4 @@
-import { expect, assert } from 'chai';
+import { expect } from 'chai';
 import { listLibraries } from '../src/Adaptor.js';
 import { enableMockClient } from '@openfn/language-common/util';
 
