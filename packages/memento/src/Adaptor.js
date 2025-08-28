@@ -1,4 +1,5 @@
-import { request } from './http';
+import { request } from './util';
+import { expandReferences } from '@openfn/language-common/util';
 
 /**
  * List all libraries
@@ -6,76 +7,162 @@ import { request } from './http';
  * listLibraries();
  * @function
  * @public
- * @state data - an array of library objects
+ * @state data.libraries - an array of library objects
  * @returns {Operation}
  */
 export function listLibraries() {
-  console.log('Listing libraries');
-  return request('GET', 'libraries', null, null);
+  return state => {
+    console.log('Listing libraries');
+    return request(state, 'GET', 'libraries');
+  };
 }
 
 /**
- * Get a library
- * @example <caption>Get a library</caption>
- * getLibrary('libraryId');
+ * Get fields for a library
+ * @example <caption>Get library fields</caption>
+ * getFields('HyZV7AYk0');
  * @function
  * @public
- * @param {string} libraryId - The ID of the library to get
- * @param {object} options - Options for the request
- * @state data - a library object
+ * @param {string} libraryId - The library ID
+ * @state data.fields - a list of fields for a library
  * @returns {Operation}
  */
-export function getLibrary(libraryId, options) {
-  console.log('Getting library', libraryId);
-  return request('GET', `libraries/${libraryId}`, null, options);
+export function getFields(libraryId) {
+  return state => {
+    const [resolvedLibraryId] = expandReferences(state, libraryId);
+    console.log('Getting library fields');
+    return request(state, 'GET', `libraries/${resolvedLibraryId}`);
+  };
 }
 
 /**
  * List all entries in a library
  * @example <caption>List all entries in a library</caption>
- * listEntries('libraryId');
+ * listEntries('HyZV7AYk0');
  * @function
  * @public
- * @param {string} libraryId - The ID of the library to list the entries from
- * @param {object} options - Options for the request
- * @state data - an array of entry objects
+ * @param {string} libraryId - The library ID
+ * @state data.entries - an array of entry objects for a library
  * @returns {Operation}
  */
-export function listEntries(libraryId, options) {
-  console.log('Listing entries:', libraryId);
-  return request('GET', `libraries/${libraryId}/entries`, null, options);
+export function listEntries(libraryId) {
+  return state => {
+    const [resolvedLibraryId] = expandReferences(state, libraryId);
+    console.log('Listing entries');
+    return request(state, 'GET', `libraries/${resolvedLibraryId}/entries`);
+  };
 }
 
 /**
  * Get an entry
  * @example <caption>Get an entry</caption>
- * getEntry('libraryId', 'entryId');
+ * getEntry('HyZV7AYk0', 'T0xIYmE-V2QoMmRTWF1sVVJUKnU');
  * @function
  * @public
- * @param {string} libraryId - The ID of the library to get the entry from
- * @param {string} entryId - The ID of the entry to get
- * @param {object} options - Options for the request
+ * @param {string} libraryId - The library ID
+ * @param {string} entryId - The entry ID
  * @state data - an entry object
  * @returns {Operation}
  */
-export function getEntry(libraryId, entryId, options) {
-  return request('GET', `${libraryId}/${entryId}`, null, options);
+export function getEntry(libraryId, entryId) {
+  return state => {
+    const [resolvedLibraryId, resolvedEntryId] = expandReferences(
+      state,
+      libraryId,
+      entryId
+    );
+    console.log('Getting entry');
+    return request(
+      state,
+      'GET',
+      `libraries/${resolvedLibraryId}/entries/${resolvedEntryId}`
+    );
+  };
 }
 
-export function createEntry(libraryId, entry, options) {
-  return request('POST', libraryId, entry, options);
+/**
+ * Create an entry
+ * @example <caption>Create an entry</caption>
+ * createEntry('libraryId', 'entry');
+ * @function
+ * @public
+ * @param {string} libraryId - The library ID
+ * @param {object} entry - The entry to create
+ * @state data - an entry object
+ * @returns {Operation}
+ */
+export function createEntry(libraryId, entry) {
+  return state => {
+    const [resolvedLibraryId, resolvedEntry] = expandReferences(
+      state,
+      libraryId,
+      entry
+    );
+    console.log('Creating entry');
+    return request(state, 'POST', `libraries/${resolvedLibraryId}/entries`, {
+      body: resolvedEntry,
+    });
+  };
 }
 
-export function updateEntry(libraryId, entryId, entry, options) {
-  return request('PUT', `${libraryId}/${entryId}`, entry, options);
+/**
+ * Update an entry
+ * @example <caption>Update an entry</caption>
+ * updateEntry('libraryId', 'entryId', 'entry');
+ * @function
+ * @public
+ * @param {string} libraryId - The ID of the library to update the entry in
+ * @param {string} entryId - The ID of the entry to update
+ * @param {object} entry - The entry to update
+ * @state data - an entry object
+ * @returns {Operation}
+ */
+export function updateEntry(libraryId, entryId, entry) {
+  return state => {
+    const [resolvedLibraryId, resolvedEntryId, resolvedEntry] =
+      expandReferences(state, libraryId, entryId, entry);
+    console.log('Updating entry');
+    return request(
+      state,
+      'PUT',
+      `libraries/${resolvedLibraryId}/entries/${resolvedEntryId}`,
+      {
+        body: resolvedEntry,
+      }
+    );
+  };
 }
 
-export function deleteEntry(libraryId, entryId, options) {
-  return request('DELETE', `${libraryId}/${entryId}`, null, options);
+export function deleteEntry(libraryId, entryId) {
+  return state => {
+    const [resolvedLibraryId, resolvedEntryId] = expandReferences(
+      state,
+      libraryId,
+      entryId
+    );
+    console.log('Deleting entry');
+    return request(
+      state,
+      'DELETE',
+      `libraries/${resolvedLibraryId}/entries/${resolvedEntryId}`
+    );
+  };
 }
 
-export function searchEntries(libraryId, query, options) {
-  return request('GET', `${libraryId}/search`, query, options);
+export function searchEntries(libraryId, query) {
+  return state => {
+    const [resolvedLibraryId, resolvedQuery] = expandReferences(
+      state,
+      libraryId,
+      query
+    );
+    console.log('Searching entries');
+    return request(state, 'GET', `libraries/${resolvedLibraryId}/search`, {
+      query: {
+        q: resolvedQuery,
+      },
+    });
+  };
 }
 
 export {

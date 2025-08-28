@@ -23,7 +23,7 @@
           },
           {
             "title": "state",
-            "description": "data - an array of library objects"
+            "description": "data.libraries - an array of library objects"
           },
           {
             "title": "returns",
@@ -38,18 +38,17 @@
       "valid": true
     },
     {
-      "name": "getLibrary",
+      "name": "getFields",
       "params": [
-        "libraryId",
-        "options"
+        "libraryId"
       ],
       "docs": {
-        "description": "Get a library",
+        "description": "Get fields for a library",
         "tags": [
           {
             "title": "example",
-            "description": "getLibrary('libraryId');",
-            "caption": "Get a library"
+            "description": "getFields('HyZV7AYk0');",
+            "caption": "Get library fields"
           },
           {
             "title": "function",
@@ -63,7 +62,7 @@
           },
           {
             "title": "param",
-            "description": "The ID of the library to get",
+            "description": "The library ID",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -71,17 +70,8 @@
             "name": "libraryId"
           },
           {
-            "title": "param",
-            "description": "Options for the request",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "options"
-          },
-          {
             "title": "state",
-            "description": "data - a library object"
+            "description": "data.fields - a list of fields for a library"
           },
           {
             "title": "returns",
@@ -98,15 +88,14 @@
     {
       "name": "listEntries",
       "params": [
-        "libraryId",
-        "options"
+        "libraryId"
       ],
       "docs": {
         "description": "List all entries in a library",
         "tags": [
           {
             "title": "example",
-            "description": "listEntries('libraryId');",
+            "description": "listEntries('HyZV7AYk0');",
             "caption": "List all entries in a library"
           },
           {
@@ -121,7 +110,7 @@
           },
           {
             "title": "param",
-            "description": "The ID of the library to list the entries from",
+            "description": "The library ID",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -129,17 +118,8 @@
             "name": "libraryId"
           },
           {
-            "title": "param",
-            "description": "Options for the request",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "options"
-          },
-          {
             "title": "state",
-            "description": "data - an array of entry objects"
+            "description": "data.entries - an array of entry objects for a library"
           },
           {
             "title": "returns",
@@ -157,15 +137,14 @@
       "name": "getEntry",
       "params": [
         "libraryId",
-        "entryId",
-        "options"
+        "entryId"
       ],
       "docs": {
         "description": "Get an entry",
         "tags": [
           {
             "title": "example",
-            "description": "getEntry('libraryId', 'entryId');",
+            "description": "getEntry('HyZV7AYk0', 'T0xIYmE-V2QoMmRTWF1sVVJUKnU');",
             "caption": "Get an entry"
           },
           {
@@ -180,7 +159,7 @@
           },
           {
             "title": "param",
-            "description": "The ID of the library to get the entry from",
+            "description": "The library ID",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -189,7 +168,124 @@
           },
           {
             "title": "param",
-            "description": "The ID of the entry to get",
+            "description": "The entry ID",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "entryId"
+          },
+          {
+            "title": "state",
+            "description": "data - an entry object"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "createEntry",
+      "params": [
+        "libraryId",
+        "entry"
+      ],
+      "docs": {
+        "description": "Create an entry",
+        "tags": [
+          {
+            "title": "example",
+            "description": "createEntry('libraryId', 'entry');",
+            "caption": "Create an entry"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The library ID",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "libraryId"
+          },
+          {
+            "title": "param",
+            "description": "The entry to create",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "entry"
+          },
+          {
+            "title": "state",
+            "description": "data - an entry object"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "updateEntry",
+      "params": [
+        "libraryId",
+        "entryId",
+        "entry"
+      ],
+      "docs": {
+        "description": "Update an entry",
+        "tags": [
+          {
+            "title": "example",
+            "description": "updateEntry('libraryId', 'entryId', 'entry');",
+            "caption": "Update an entry"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The ID of the library to update the entry in",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "libraryId"
+          },
+          {
+            "title": "param",
+            "description": "The ID of the entry to update",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -198,12 +294,12 @@
           },
           {
             "title": "param",
-            "description": "Options for the request",
+            "description": "The entry to update",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "options"
+            "name": "entry"
           },
           {
             "title": "state",
