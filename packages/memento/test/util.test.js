@@ -81,50 +81,35 @@ describe('requestWithPagination', () => {
     expect(data.entries.length).to.eql(0);
     expect(data.revision).to.eql(4);
   });
-  const mockPaginationResponse = entries => {
-    for (let i = 1; i <= entries; i++) {
-      if (i === 1) {
-        testServer
-          .intercept({
-            path: '/v1/libraries/HyZV7AYk0/entries',
-            method: 'GET',
-            query: { token: 'user-api-token', pageSize: 1 },
-          })
-          .reply(200, {
-            entries: Array.from({ length: 1 }, (_, j) => ({
-              id: `entry-${i}-${j}`,
-            })),
-            nextPageToken: i + 1,
-            revision: 4,
-          });
-      }
-      if (i === entries) {
-        testServer
-          .intercept({
-            path: '/v1/libraries/HyZV7AYk0/entries',
-            method: 'GET',
-            query: { token: 'user-api-token', pageSize: 1, pageToken: i },
-          })
-          .reply(200, {
-            entries: [],
-            revision: 5,
-          });
-      } else {
-        testServer
-          .intercept({
-            path: '/v1/libraries/HyZV7AYk0/entries',
-            method: 'GET',
-            query: { token: 'user-api-token', pageSize: 1, pageToken: i },
-          })
-          .reply(200, {
-            entries: Array.from({ length: 1 }, (_, j) => ({
-              id: `entry-${i}-${j}`,
-            })),
-            revision: 5,
-            nextPageToken: i + 1,
-          });
-      }
+  const mockPaginationResponse = totalEntries => {
+    // First page response
+    testServer
+      .intercept({
+        path: '/v1/libraries/HyZV7AYk0/entries',
+        method: 'GET',
+        query: { token: 'user-api-token', pageSize: 1 },
+      })
+      .reply(200, createPageResponse(1, totalEntries));
+
+    // Subsequent pages
+    for (let page = 2; page <= totalEntries; page++) {
+      testServer
+        .intercept({
+          path: '/v1/libraries/HyZV7AYk0/entries',
+          method: 'GET',
+          query: { token: 'user-api-token', pageSize: 1, pageToken: page },
+        })
+        .reply(200, createPageResponse(page, totalEntries));
     }
+  };
+
+  const createPageResponse = (currentPage, totalPages) => {
+    const isLastPage = currentPage === totalPages;
+    return {
+      entries: isLastPage ? [] : [{ id: `entry-${currentPage}-0` }],
+      ...(isLastPage ? {} : { nextPageToken: currentPage + 1 }),
+      revision: currentPage === 1 ? 4 : 5,
+    };
   };
 
   it.only(
