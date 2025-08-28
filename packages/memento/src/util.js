@@ -115,7 +115,6 @@ export async function requestWithPagination(state, method, path, params = {}) {
       );
     }
 
-    // console.log({ requestOptions, results, countRequests });
     shouldFetchMoreContent = results.nextPageToken !== undefined;
     requestOptions.query.pageToken = results.nextPageToken;
   } while (shouldFetchMoreContent);
