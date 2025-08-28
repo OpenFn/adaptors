@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-odoo",
   "label": "Odoo",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "OpenFn adaptor for Odoo (ERP)",
   "type": "module",
   "exports": {

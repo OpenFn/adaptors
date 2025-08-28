@@ -1,5 +1,11 @@
 # @openfn/language-collections
 
+## 0.7.13 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 0.7.12 - 14 July 2025
 
 ### Patch Changes

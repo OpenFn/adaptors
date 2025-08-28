@@ -1,5 +1,11 @@
 # @openfn/language-hubtel
 
+## 1.0.10 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 1.0.9 - 14 July 2025
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @openfn/language-odoo
 
+## 2.1.1 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 2.1.0 - 14 August 2025
 
 ### Minor Changes

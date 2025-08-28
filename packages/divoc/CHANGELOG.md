@@ -1,5 +1,11 @@
 # @openfn/language-divoc
 
+## 0.1.8 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 0.1.7 - 14 July 2025
 
 ### Patch Changes

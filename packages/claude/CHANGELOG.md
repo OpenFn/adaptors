@@ -1,5 +1,11 @@
 # @openfn/language-claude
 
+## 1.0.12 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 1.0.11 - 14 July 2025
 
 ### Patch Changes
