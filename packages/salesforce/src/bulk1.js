@@ -24,7 +24,6 @@ import { expandReferences } from '@openfn/language-common/util';
  * Options for configuring Salesforce Bulk API 1.0 operations
  * @typedef {Object} Bulk1Options
  * @public
- * @property {string} [extIdField] - External id field. Required for upsert operations
  * @property {boolean} [allowNoOp=false] - Skipping bulk operation if no records
  * @property {boolean} [failOnError=false] - Fail the operation on error
  * @property {number} [pollTimeout=300000] - Polling timeout in milliseconds. Default: 300000 (30 seconds)
@@ -210,16 +209,17 @@ export function update(sObject, records, options = {}) {
  * });
  * @function
  * @param {string} sObject - The Salesforce object type
+ * @param {string} externalIdFieldName - External ID field name for upsert matching
  * @param {Array} records - Array of records to upsert
- * @param {Bulk1Options} options - Bulk upsert options (extIdField is required)
+ * @param {Bulk1Options} options - Bulk upsert options
  * @state {Bulk1LoadState}
  * @returns {Operation}
  */
-export function upsert(sObject, records, options = {}) {
-  if (!options.extIdField) {
-    throw new Error('extIdField is required for upsert operations');
-  }
-  return bulk1Load('upsert', sObject, records, options);
+export function upsert(sObject, externalIdFieldName, records, options = {}) {
+  return bulk1Load('upsert', sObject, records, {
+    ...options,
+    extIdField: externalIdFieldName,
+  });
 }
 
 /**
