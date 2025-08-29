@@ -4,19 +4,19 @@
 
 ### Patch Changes
 
-- b7af59a: - Update `package.json` description to be LLM-readable
+- [b7af59a](https://github.com/OpenFn/adaptors/commit/b7af59a): - Update `package.json` description to be LLM-readable
 
 ## 1.0.2 - 04 August 2025
 
 ### Patch Changes
 
-- b36f6d8: Remove `format:'uri'` from domain config
+- [b36f6d8](https://github.com/OpenFn/adaptors/commit/b36f6d8): Remove `format:'uri'` from domain config
 
 ## 1.0.1 - 21 July 2025
 
 ### Patch Changes
 
-- ad57dbf: Update `queryEvents()` examples
+- [ad57dbf](https://github.com/OpenFn/adaptors/commit/ad57dbf): Update `queryEvents()` examples
 
 ## 1.0.0
 
