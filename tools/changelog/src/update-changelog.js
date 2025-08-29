@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { format } from 'date-fns';
 import { writeFile } from 'fs/promises';
+import { processCommitHashes } from './utils.js';
 
 const packagesDir = '../../packages';
 const versionOnlyRegex = /^\d+\.\d+\.\d+$/;
@@ -18,10 +19,15 @@ export async function updateChangelog(adaptorName, adaptorVersionList = null) {
   let markdownContent = fs.readFileSync(changelogPath, 'utf8');
 
   const ast = await remark().use(remarkParse).parse(markdownContent);
+
+  // Process commit hashes first
+  const processedAst = processCommitHashes(ast);
+
   const updatedAstChildren = [];
 
-  for (let i = 0; i < ast.children.length; i++) {
-    const item = ast.children[i];
+  for (let i = 0; i < processedAst.children.length; i++) {
+    const item = processedAst.children[i];
+
     if (item.type === 'heading' && item.depth === 2) {
       const astVersion = item.children[0].value;
 
@@ -31,7 +37,7 @@ export async function updateChangelog(adaptorName, adaptorVersionList = null) {
         console.log(`✔ New release date added for ${adaptorName}`);
 
         updatedAstChildren.push(item);
-        updatedAstChildren.push(...ast.children.slice(i + 1));
+        updatedAstChildren.push(...processedAst.children.slice(i + 1));
         break;
       }
 

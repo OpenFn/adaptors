@@ -1,4 +1,4 @@
-import { updateChangelog } from './updateChangelog.js';
+import { updateChangelog } from './update-changelog.js';
 import getAdaptorsFromDir from './utils.js';
 
 export async function updateAllChangelogs() {
