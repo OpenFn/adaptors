@@ -31,7 +31,7 @@
     "token": {
       "title": "Memento Auth Token",
       "type": "string",
-      "description": "Memento Auth Token",
+      "description": "Memento Cloud User Auth Token",
       "writeOnly": true,
       "examples": [
         "1234567890"

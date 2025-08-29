@@ -8,6 +8,7 @@ import nodepath from 'node:path';
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
+  delete responseWithoutBody.query.token;
   if (!state.references) {
     state.references = [];
   }
