@@ -2,15 +2,12 @@
 import { expect } from 'chai';
 import configuration from '../tmp/creds.json' assert { type: 'json' };
 import {
-  bulkQuery,
   execute,
   destroy,
   create,
   update,
   query,
-  bulk,
   http,
-  fn,
   bulk2,
   bulk1,
 } from '../src';
@@ -109,9 +106,9 @@ describe('Integration tests', () => {
       expect(response.totalSize).to.lessThanOrEqual(10000);
     }).timeout(10000);
 
-    it('should return maximum of 2000 records if max is 2000', async () => {
+    it('should return maximum of 2000 records if limit is 2000', async () => {
       const { response } = await execute(
-        query('SELECT Id, Name FROM Account', { max: 2000 })
+        query('SELECT Id, Name FROM Account', { limit: 2000 })
       )(state);
 
       expect(response.done).to.eq(false);
@@ -119,48 +116,6 @@ describe('Integration tests', () => {
       expect(response.totalSize).to.lessThanOrEqual(10000);
       expect(response.nextRecordsUrl);
     }).timeout(10000);
-  });
-
-  describe('bulk', () => {
-    before(async () => {
-      state.data = [{ name: 'Coco', vera__Active__c: 'No' }];
-    });
-    it('should create multiple sobjects', async () => {
-      const { data } = await execute(
-        bulk('Account', 'insert', state => state.data)
-      )(state);
-
-      expect(data.success).to.eq(true);
-    }).timeout(50000);
-
-    it('should update multiple sobjects', async () => {
-      state.data = [
-        { id: '', name: 'Coco', vera__Active__c: 'Yes' },
-        { id: '', name: 'Melon', vera__Active__c: 'No' },
-      ];
-      const { data } = await execute(
-        bulkQuery("SELECT Id, Name FROM Account WHERE Name = 'Coco' LIMIT 2"),
-        fn(state => {
-          state.data = state.data.map(d => ({ Id: d.Id, Name: 'Melon' }));
-          return state;
-        }),
-        bulk('Account', 'update', state => state.data)
-      )(state);
-
-      expect(data.success).to.eq(true);
-      expect(data.completed.length).to.eq(2);
-    }).timeout(50000);
-
-    it('should fail if there is an error', async () => {
-      state.data.push({ name: 'Aleksa', vera__Active__c: undefined });
-      try {
-        await execute(bulk('Account', 'insert', state => state.data))(state);
-      } catch (error) {
-        expect(error.message).to.eql(
-          'REQUIRED_FIELD_MISSING:Required fields are missing: [vera__Active__c]:vera__Active__c --'
-        );
-      }
-    }).timeout(50000);
   });
 
   describe('create', () => {
@@ -220,7 +175,7 @@ describe('Integration tests', () => {
       const { data } = await execute(
         query("Select Id, Name from Account where Name = 'test' limit 1"),
         update('Account', state => {
-          const data = state.data.records[0];
+          const data = state.data[0];
           return {
             Id: data.Id,
             Name: 'new name',
@@ -230,7 +185,7 @@ describe('Integration tests', () => {
       )(state);
 
       expect(data.success).to.eq(true);
-    }).timeout(5000);
+    }).timeout(5e4);
 
     it('should update multiple sobject', async () => {
       const { data } = await execute(
@@ -448,13 +403,13 @@ describe('Integration tests', () => {
         const { data } = await execute(
           bulk1.upsert(
             'Account',
+            'vera__External_ID__c',
             testRecords.map(record => ({
               Id: record.Id,
               Name: 'Bulk1 Upsert Test 1',
               vera__Active__c: 'No',
               vera__External_ID__c: record.vera__External_ID__c,
-            })),
-            { extIdField: 'vera__External_ID__c' }
+            }))
           )
         )(state);
         expect(data.successfulResults.length).to.eq(testRecords.length);
