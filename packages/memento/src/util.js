@@ -63,9 +63,23 @@ export function sendRequest(state, method, path, params = {}) {
 }
 
 export const DEFAULT_THROTTLE_TIME = 6e4;
+/**
+ * Makes paginated API requests to fetch all available data.
+ *
+ * @param {Object} state - The current state object
+ * @param {string} method - The HTTP method to use (GET, POST, etc.)
+ * @param {string} path - The API endpoint path
+ * @param {Object} [params={}] - Optional parameters for the request
+ * @param {number} [params.throttleTime] - Time in ms to wait between throttled requests
+ * @param {Object} [params.query] - Query parameters for the request
+ * @returns {Promise<Object>} A promise that resolves to the new state with:
+ *   - entries: Array of all fetched items
+ *   - nextPageToken: Token for the next page (undefined when complete)
+ *   - revision: Latest revision number
+ * @throws {Error} If the request fails and cannot be recovered with throttling
+ */
 export async function requestWithPagination(state, method, path, params = {}) {
   const {
-    autoThrottle = true,
     throttleTime = DEFAULT_THROTTLE_TIME,
     query = {},
     ...restOfOptions
@@ -75,12 +89,12 @@ export async function requestWithPagination(state, method, path, params = {}) {
   let countRequests = 0;
   let requestOptions = { query, ...restOfOptions };
   let shouldFetchMoreContent = false;
-  let shouldThrottle = autoThrottle;
+  let shouldThrottle = true;
 
   do {
     let response;
     try {
-      shouldThrottle = autoThrottle && countRequests >= 10;
+      shouldThrottle = countRequests >= 10;
       if (shouldThrottle) {
         console.log('Throttling for 1 minute to avoid rate limit');
         await new Promise(resolve => setTimeout(resolve, throttleTime));
