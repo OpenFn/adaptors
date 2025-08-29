@@ -15,7 +15,7 @@ export const prepareNextState = (state, response) => {
   }
 
   return {
-    ...composeNextState(state, response.body),
+    ...composeNextState(state, body),
     response: responseWithoutBody,
   };
 };
