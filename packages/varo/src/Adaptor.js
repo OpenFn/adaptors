@@ -7,7 +7,7 @@ import {
   parseFlatRecordsToReports,
   parseRtmdCollectionToReports,
 } from './StreamingUtils';
-import { parseVaroEmsToReport, applyDurationToDate } from './VaroEmsUtils';
+import { parseVaroEmsToReport, buildDeviceRtcwDateMaps } from './VaroEmsUtils';
 import { parseFridgeTag, parseFridgeTagToReport } from './FridgeTagUtils';
 
 /**
@@ -32,20 +32,20 @@ export function convertToEms(messageContents) {
     const [resolvedMessageContents] = expandReferences(state, messageContents);
     const reports = [];
 
-    console.log('Incoming message contents', resolvedMessageContents.length);
+    console.info('Incoming message contents', resolvedMessageContents.length);
 
     processFridgeTagContents(resolvedMessageContents, reports);
 
     processDataContents(resolvedMessageContents, reports);
 
     // Log any unprocessed content files.
-    for (const content of contents.filter(c => !c.zProcessed)) {
+    for (const content of resolvedMessageContents.filter(c => !c.zProcessed)) {
       console.error(
         `Insufficient content found for MessageID: ${content.messageId}`
       );
     }
 
-    console.log('Converted message contents', reports.length);
+    console.info('Converted message contents', reports.length);
 
     return { ...composeNextState(state, reports) };
   };
@@ -88,54 +88,6 @@ function processDataContents(contents, reports) {
     reports.push(result);
 
     content.zProcessed = true;
-  }
-
-  function buildDeviceRtcwDateMaps(contents) {
-    const dataContents = contents.filter(c => c.data);
-    const deviceRtcwDateMaps = new Map();
-
-    for (const content of dataContents) {
-      // Extract core device info and final RTCW from this data file.
-      const { deviceId, deviceDate, finalRtcw } = extractDeviceData(content);
-
-      // Maintain a mapping of final RTCW to absolute device date.
-      let rtcwDateMap = deviceRtcwDateMaps.get(deviceId);
-      if (!rtcwDateMap) {
-        rtcwDateMap = new Map();
-        deviceRtcwDateMaps.set(deviceId, rtcwDateMap);
-      }
-
-      const existingDate = rtcwDateMap.get(finalRtcw);
-      if (!existingDate || deviceDate < existingDate) {
-        rtcwDateMap.set(finalRtcw, deviceDate);
-      }
-    }
-
-    return deviceRtcwDateMaps;
-  }
-
-  function extractDeviceData(content) {
-    const regex =
-      /^([a-zA-Z0-9]+)_(?:.+)_([A-Z0-9]{4,15})_([0-9]{8}T[0-9]{6}Z)\.json$/;
-
-    // Parse filename for device ID, relative time, and USB plug-in date.
-    const [, deviceId, deviceRelt, abbrUsbDate] =
-      content.data.filename.match(regex);
-
-    // Calculate the deviceDate: [usb mount time] - [device duration] = absolute time device was turned on.
-    const deviceDate = applyDurationToDate(abbrUsbDate, deviceRelt, true);
-
-    // Convert JSON string to object for direct access later.
-    const data = JSON.parse(content.data.content);
-    content.data.content = data; // Store object back for efficiency.
-
-    // Store device ID for later reference.
-    content.zDeviceId = deviceId;
-
-    // Extract final RTCW from the data set.
-    const finalRtcw = data.records[data.records.length - 1].RTCW;
-
-    return { deviceId, deviceDate, finalRtcw };
   }
 }
 

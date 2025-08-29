@@ -322,11 +322,11 @@ pnpm build
 pnpm run setup
 ```
 
-### Switch to the working branch of the varo adaptor
+### Switch to a working branch of the varo adaptor
 
 ```
 cd openfn/adaptors/adaptors
-git checkout nhgh-varo
+git checkout -b varo-enhancements
 ```
 
 # FridgeTag `records` vs. `zReports`

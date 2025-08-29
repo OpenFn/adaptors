@@ -29,7 +29,6 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-collections": "workspace:*",
     "@openfn/language-common": "workspace:*",
     "luxon": "^3.6.1"
   },

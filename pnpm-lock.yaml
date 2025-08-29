@@ -2137,9 +2137,6 @@ importers:
 
   packages/varo:
     dependencies:
-      '@openfn/language-collections':
-        specifier: workspace:*
-        version: link:../collections
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common

@@ -114,3 +114,56 @@ function parseIsoToAbbreviatedIso(iso) {
     .replace(/[\-\:]/g, '')
     .replace('.000Z', 'Z');
 }
+
+export function buildDeviceRtcwDateMaps(contents) {
+  const dataContents = contents.filter(c => c.data);
+  const deviceRtcwDateMaps = new Map();
+
+  for (const content of dataContents) {
+    // Extract core device info and final RTCW from this data file.
+    const { deviceId, deviceDate, finalRtcw } = extractDeviceData(content);
+
+    // Maintain a mapping of final RTCW to absolute device date.
+    let rtcwDateMap = deviceRtcwDateMaps.get(deviceId);
+    if (!rtcwDateMap) {
+      rtcwDateMap = new Map();
+      deviceRtcwDateMaps.set(deviceId, rtcwDateMap);
+    }
+
+    const existingDate = rtcwDateMap.get(finalRtcw);
+    if (!existingDate || deviceDate < existingDate) {
+      rtcwDateMap.set(finalRtcw, deviceDate);
+    }
+  }
+
+  return deviceRtcwDateMaps;
+}
+
+export function extractDeviceData(content) {
+  const regex =
+    /^([a-zA-Z0-9]+)_(?:.+)_([A-Z0-9]{4,15})_([0-9]{8}T[0-9]{6}Z)\.json$/;
+
+  // Parse filename for device ID, relative time, and USB plug-in date.
+  const [, deviceId, deviceRelt, abbrUsbDate] =
+    content.data.filename.match(regex);
+
+  // Calculate the deviceDate: [usb mount time] - [device duration] = absolute time device was turned on.
+  const deviceDate = applyDurationToDate(abbrUsbDate, deviceRelt, true);
+
+  if (typeof content.data.content === 'string') {
+    try {
+      content.data.content = JSON.parse(content.data.content);
+    } catch (e) {
+      console.error('Invalid JSON string in content.data.content:', e);
+    }
+  }
+
+  // Store device ID for later reference.
+  content.zDeviceId = deviceId;
+
+  // Extract final RTCW from the data set.
+  const data = content.data.content;
+  const finalRtcw = data.records[data.records.length - 1].RTCW;
+
+  return { deviceId, deviceDate, finalRtcw };
+}
