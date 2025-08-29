@@ -10,7 +10,6 @@ import { expandReferences } from '@openfn/language-common/util';
  * @property {string} [options.pageToken] - The token for the next page of entries
  * @property {string} [options.startRevision] - The revision to start from
  * @property {string} [options.fields='all'] - The comma-separated list of fields ids to include in the response
- * @property {boolean} [options.autoThrottle=true] - (OpenFn only) Auto Throttle API request.
  */
 /**
  * List all libraries
@@ -47,7 +46,8 @@ export function getFields(libraryId) {
 }
 
 /**
- * List all entries in a library
+ * List all entries in a library.
+ * This function handles rate limits and automatically paginates to fetch all entries.
  * @example <caption>List all entries in a library</caption>
  * getEntries('HyZV7AYk0');
  * @function

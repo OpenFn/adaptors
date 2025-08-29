@@ -92,7 +92,7 @@
         "options"
       ],
       "docs": {
-        "description": "List all entries in a library",
+        "description": "List all entries in a library.\nThis function handles rate limits and automatically paginates to fetch all entries.",
         "tags": [
           {
             "title": "example",
