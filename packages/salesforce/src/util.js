@@ -26,56 +26,6 @@ export function toUTF8(input) {
   return anyAscii(input);
 }
 
-export async function pollJobResult(conn, job, pollInterval, pollTimeout) {
-  let attempt = 0;
-
-  const maxPollingAttempts = Math.floor(pollTimeout / pollInterval);
-
-  while (attempt < maxPollingAttempts) {
-    // Make an HTTP GET request to check the job status
-    const jobInfo = await conn
-      .request({
-        method: 'GET',
-        url: `/services/data/v${conn.version}/jobs/query/${job.id}`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .catch(error => {
-        console.log('Failed to fetch job information', error);
-      });
-
-    if (jobInfo && jobInfo.state === 'JobComplete') {
-      const response = await conn.request({
-        method: 'GET',
-        url: `/services/data/v${conn.version}/jobs/query/${job.id}/results`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      console.log('Job result retrieved', response.length);
-      return response;
-    } else {
-      // Handle maxPollingAttempts
-      if (attempt + 1 === maxPollingAttempts) {
-        console.error(
-          'Maximum polling attempt reached, Please increase pollInterval and pollTimeout'
-        );
-        throw new Error(`Polling time out. Job Id = ${job.id}`);
-      }
-      console.log(
-        `Attempt ${attempt + 1} - Job ${jobInfo.id} is still in ${
-          jobInfo.state
-        }:`
-      );
-    }
-
-    // Wait for the polling interval before the next attempt
-    await new Promise(resolve => setTimeout(resolve, pollInterval));
-    attempt++;
-  }
-}
 export function formatResults(input) {
   const output = {
     success: true,
