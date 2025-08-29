@@ -140,7 +140,7 @@ export function getEntry(libraryId, entryId) {
  * @public
  * @param {string} libraryId - The library ID
  * @param {object} body - The entry body to create
- * @state data - an entry object
+ * @state data - The created entry as returned by Memento
  * @returns {Operation}
  */
 export function createEntry(libraryId, body) {
@@ -182,7 +182,7 @@ export function createEntry(libraryId, body) {
  * @param {string} libraryId - The ID of the library to update the entry in
  * @param {string} entryId - The ID of the entry to update
  * @param {object} body - The entry body to update
- * @state data - an entry object
+ * @state data - The updated entry as returned by Memento
  * @returns {Operation}
  */
 export function updateEntry(libraryId, entryId, body) {
