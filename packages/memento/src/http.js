@@ -52,7 +52,21 @@ export function get(path, options) {
 export function post(path, body, options) {
   return request('POST', path, body, options);
 }
-
+/**
+ * Make a PUT request
+ * @example <caption>Update an entry</caption>
+ * put("libraries/HyZV7AYk0/entries/T0xIYmE-V2QoMmRTWF1sVVJUKnU", { "name": "Bukayo" });
+ * @function
+ * @public
+ * @param {string} path - Path to resource
+ * @param {object} body - Object which will be attached to the PUT body
+ * @param {RequestOptions} options - Optional request options
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function put(path, body, options) {
+  return request('PUT', path, body, options);
+}
 /**
  * Make a general HTTP request
  * @example <caption>Edit an entry</caption>
