@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { requestWithPagination } from '../src/util';
+import { mockEntriesPagination } from './helpers';
 import { enableMockClient } from '@openfn/language-common/util';
 
 const testServer = enableMockClient('https://util.mementodatabase.com');
@@ -81,57 +82,29 @@ describe('requestWithPagination', () => {
     expect(data.entries.length).to.eql(0);
     expect(data.revision).to.eql(4);
   });
-  const mockPaginationResponse = totalEntries => {
-    // First page response
-    testServer
-      .intercept({
-        path: '/v1/libraries/HyZV7AYk0/entries',
-        method: 'GET',
-        query: { token: 'user-api-token', pageSize: 1 },
-      })
-      .reply(200, createPageResponse(1, totalEntries));
 
-    // Subsequent pages
-    for (let page = 2; page <= totalEntries; page++) {
-      testServer
-        .intercept({
-          path: '/v1/libraries/HyZV7AYk0/entries',
-          method: 'GET',
-          query: { token: 'user-api-token', pageSize: 1, pageToken: page },
-        })
-        .reply(200, createPageResponse(page, totalEntries));
-    }
-  };
+  it('should auto throttle for 1 minute when the number of requests >= 10', async () => {
+    const pageSize = 1;
 
-  const createPageResponse = (currentPage, totalPages) => {
-    const isLastPage = currentPage === totalPages;
-    return {
-      entries: isLastPage ? [] : [{ id: `entry-${currentPage}-0` }],
-      ...(isLastPage ? {} : { nextPageToken: currentPage + 1 }),
-      revision: currentPage === 1 ? 4 : 5,
-    };
-  };
+    mockEntriesPagination(testServer, '/v1/libraries/HyZV7AYk0/entries', {
+      pageSize,
+      totalPage: 11,
+      fields: 'all',
+    });
 
-  it.only(
-    'should auto throttle for 1 minute when the number of requests >= 10',
-    async () => {
-      mockPaginationResponse(11);
-
-      const { data } = await requestWithPagination(
-        state,
-        'GET',
-        'libraries/HyZV7AYk0/entries',
-        {
-          query: {
-            pageSize: 1,
-          },
-          throttleTime: 1000,
-        }
-      );
-      // TODO: why entries is 10?
-      // expect(data.entries.length).to.eql(11);
-      expect(data.nextPageToken).to.eql(undefined);
-      expect(data.revision).to.eql(5);
-    }
-  ).timeout(6e4 + 1000);
+    const { data } = await requestWithPagination(
+      state,
+      'GET',
+      'libraries/HyZV7AYk0/entries',
+      {
+        query: {
+          pageSize,
+          fields: 'all',
+        },
+        throttleTime: 1000,
+      }
+    );
+    expect(data.entries.length).to.eql(11);
+    expect(data.nextPageToken).to.eql(undefined);
+  }).timeout(6e4 + 1000);
 });
