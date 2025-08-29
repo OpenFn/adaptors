@@ -4,9 +4,9 @@ import * as util from './Utils';
 /**
  * State object
  * @typedef {Object} HttpState
- * @property data - The parsed response body when `filename` is provided, otherwise a base64-encoded string.
- * @property response - The response from the HTTP server, including headers, statusCode, body, etc
- * @property references - An array of all previous data objects used in the Job
+ * @property data - the parsed response body
+ * @property response - the response from the HTTP server, including headers, statusCode, body, etc
+ * @property references - an array of all previous data objects used in the Job
  **/
 
 /**
@@ -70,7 +70,7 @@ import * as util from './Utils';
  *  filename: 'example.pdf',
  * });
  * @returns {Operation}
- * @state {HttpState}
+ * @state data - The parsed response body when `filename` is provided, otherwise a base64-encoded string.
  */
 export function generatePDF(htmlTemplateString, options) {
   return async state => {

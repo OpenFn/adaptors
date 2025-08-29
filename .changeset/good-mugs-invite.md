@@ -2,4 +2,4 @@
 '@openfn/language-pdfshift': patch
 ---
 
-Update `HttpState` data property docs
+Update `state` data property docs
