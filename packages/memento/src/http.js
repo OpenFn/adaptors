@@ -22,9 +22,9 @@ import { sendRequest } from './util';
 
 /**
  * Make a GET request
- * @example <caption>List libraries</caption>
+ * @example <caption>List all libraries</caption>
  * get("libraries");
- * @example <caption>Get a library fields</caption>
+ * @example <caption>Get a single library fields</caption>
  * get('libraries/HyZV7AYk0');
  * @function
  * @public
