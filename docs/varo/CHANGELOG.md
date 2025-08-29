@@ -1,5 +1,12 @@
 # @openfn/language-varo
 
+## 2.1.0 - 29 August 2025
+
+### Minor Changes
+
+- 5dde114: Enhanced Varo adaptor to have better RTCW resolution when processing
+  multiple Varo packages.
+
 ## 2.0.0 - 11 August 2025
 
 ### Major Changes

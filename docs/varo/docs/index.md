@@ -5,6 +5,10 @@
     <a href="#convertreportstomessagecontents">convertReportsToMessageContents(reports, [reportType])</a></dt>
 <dt>
     <a href="#converttoems">convertToEms(messageContents)</a></dt>
+<dt>
+    <a href="#iskeyinrange">isKeyInRange(key, start, end)</a></dt>
+<dt>
+    <a href="#parseutcfordatarange">parseUtcForDataRange(timeZone, startIso, endIso)</a></dt>
 </dl>
 
 
@@ -144,4 +148,55 @@ convertToEms(
 
 * * *
 
+### isKeyInRange
+
+<p><code>isKeyInRange(key, start, end) ⇒ boolean</code></p>
+
+Checks whether the timestamp embedded in a key falls within a UTC datetime range.
+
+**Returns**: <code>boolean</code> - True if the parsed UTC timestamp is within the range, false otherwise.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | A string key containing a UTC timestamp in the format `YYYYMMDDTHHMMSS`, following a colon (e.g. "prefix:20250624T101530"). |
+| start | <code>Date</code> | The inclusive lower bound of the UTC datetime range. |
+| end | <code>Date</code> | The exclusive upper bound of the UTC datetime range. |
+
+
+
+* * *
+
+### parseUtcForDataRange
+
+<p><code>parseUtcForDataRange(timeZone, startIso, endIso) ⇒ UtcRange</code></p>
+
+Computes the UTC datetime range that corresponds to a given IANA timezone.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| timeZone | <code>string</code> | An IANA time zone identifier (e.g. "America/Los_Angeles"). |
+| startIso | <code>string</code> | Starting date in ISO format. |
+| endIso | <code>string</code> | Ending date range in ISO format. |
+
+
+
+* * *
+
+
+##  Interfaces
+
+### UtcRange
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| wallClock | <code>Date</code> | The current local datetime as it appears on the wall in the specified timezone. |
+| startUtc | <code>Date</code> | UTC start date range (inclusive). |
+| endUtc | <code>Date</code> | UTC end of date range (exclusive). |
+| collectionKeys | <code>Array</code> | Array of wildcard patterns to match UTC dates which correspond with date range (e.g. "*20250624*"). |
+
+
+* * *
 
