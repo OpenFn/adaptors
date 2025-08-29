@@ -92,7 +92,9 @@ function parseDuration(duration, subtract) {
     : null;
 }
 
-function normalizeIncomingDate(date) {
+function normalizeIncomingDate(incomingDate) {
+  let date = incomingDate;
+
   // If it's an abbreviated ISO string, convert to regular ISO string.
   if (typeof date === 'string' && /^\d{8}T\d{6}Z$/.test(date)) {
     date = parseAbbreviatedIsoToIso(date);
