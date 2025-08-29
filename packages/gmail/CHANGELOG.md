@@ -1,5 +1,11 @@
 # @openfn/language-gmail
 
+## 2.0.1 - 29 August 2025
+
+### Patch Changes
+
+- 0d7611c: Enhanced documentation in README.md
+
 ## 2.0.0 - 11 August 2025
 
 ### Major Changes
