@@ -71,7 +71,7 @@
           },
           {
             "title": "state",
-            "description": "data.fields - a list of fields for a library"
+            "description": "data.fields - An array of fields for the library"
           },
           {
             "title": "returns",
@@ -119,8 +119,20 @@
             "name": "libraryId"
           },
           {
+            "title": "param",
+            "description": "List entries request options",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "EntriesRequestOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
             "title": "state",
-            "description": "data.entries - an array of entry objects for a library"
+            "description": "data.entries - An array of entry objects for a library"
           },
           {
             "title": "returns",
@@ -132,7 +144,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "getEntry",
@@ -196,14 +208,14 @@
       "name": "createEntry",
       "params": [
         "libraryId",
-        "entry"
+        "body"
       ],
       "docs": {
         "description": "Create an entry",
         "tags": [
           {
             "title": "example",
-            "description": "createEntry('HyZV7AYk0', {\n  name: 'Bukayo',\n  age: 20,\n});",
+            "description": "createEntry(\"HyZV7AYk0\", {\n  fields: [\n    {\n      value: \"Record 1\",\n      id: 1,\n    },\n    {\n      id: 2,\n      value: 1000,\n    },\n  ],\n});",
             "caption": "Create an entry"
           },
           {
@@ -227,12 +239,12 @@
           },
           {
             "title": "param",
-            "description": "The entry to create",
+            "description": "The entry body to create",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "entry"
+            "name": "body"
           },
           {
             "title": "state",
@@ -255,14 +267,14 @@
       "params": [
         "libraryId",
         "entryId",
-        "entry"
+        "body"
       ],
       "docs": {
         "description": "Update an entry",
         "tags": [
           {
             "title": "example",
-            "description": "updateEntry('HyZV7AYk0', 'T0xIYmE-V2QoMmRTWF1sVVJUKnU', {\n  name: 'Bukayo',\n  age: 20,\n});",
+            "description": "updateEntry('HyZV7AYk0', 'T0xIYmE-V2QoMmRTWF1sVVJUKnU', {\n  fields: [\n    {\n      value: \"Record Updated\",\n      id: 1,\n    },\n    {\n      id: 2,\n      value: 100,\n    },\n  ],\n});",
             "caption": "Update an entry"
           },
           {
@@ -295,12 +307,12 @@
           },
           {
             "title": "param",
-            "description": "The entry to update",
+            "description": "The entry body to update",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
-            "name": "entry"
+            "name": "body"
           },
           {
             "title": "state",
