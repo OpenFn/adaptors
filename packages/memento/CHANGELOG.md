@@ -15,7 +15,7 @@ Initial release of the adaptor
 ### HTTP Operations
 
 - Added low-level HTTP operations for custom implementations:
-  - `http.request`: Generic HTTP request handler
-  - `http.get`: GET request handler
-  - `http.post`: POST request handler
-  - `http.put`: PUT request handler
+  - `http.request`: Generic HTTP request function
+  - `http.get`: GET request function
+  - `http.post`: POST request function
+  - `http.put`: PUT request function
