@@ -2,6 +2,17 @@ import { sendRequest, requestWithPagination } from './util';
 import { expandReferences } from '@openfn/language-common/util';
 
 /**
+ * Fetch Entries RequestionOptions
+ * @typedef {Object} EntriesRequestOptions
+ * See https://mementodatabase.docs.apiary.io/#reference/0/entries/list-entries-on-a-library
+ * @public
+ * @property {number} [options.pageSize=100] - The maximum number of entries to return per page.
+ * @property {string} [options.pageToken] - The token for the next page of entries
+ * @property {string} [options.startRevision] - The revision to start from
+ * @property {string} [options.fields='all'] - The comma-separated list of fields ids to include in the response
+ * @property {boolean} [options.autoThrottle=true] - (OpenFn only) Auto Throttle API request.
+ */
+/**
  * List all libraries
  * @example <caption>List all libraries</caption>
  * listLibraries();
@@ -24,7 +35,7 @@ export function listLibraries() {
  * @function
  * @public
  * @param {string} libraryId - The library ID
- * @state data.fields - a list of fields for a library
+ * @state data.fields - An array of fields for the library
  * @returns {Operation}
  */
 export function getFields(libraryId) {
@@ -42,7 +53,8 @@ export function getFields(libraryId) {
  * @function
  * @public
  * @param {string} libraryId - The library ID
- * @state data.entries - an array of entry objects for a library
+ * @param {EntriesRequestOptions} [options] - List entries request options
+ * @state data.entries - An array of entry objects for a library
  * @returns {Operation}
  */
 export function getEntries(libraryId, options = {}) {
@@ -52,12 +64,16 @@ export function getEntries(libraryId, options = {}) {
       libraryId,
       options
     );
-    const { pageSize, pageToken, startRevision, fields, ...restOfOptions } =
-      resolvedOptions;
-    const query = {
-      pageSize: pageSize || 100,
-      fields: fields || '*all',
-    };
+    const {
+      pageToken,
+      startRevision,
+      fields = 'all',
+      pageSize = 100,
+      ...restOfOptions
+    } = resolvedOptions;
+
+    const query = { pageSize, fields };
+
     if (pageToken) {
       query.pageToken = pageToken;
     }
@@ -108,31 +124,39 @@ export function getEntry(libraryId, entryId) {
 /**
  * Create an entry
  * @example <caption>Create an entry</caption>
- * createEntry('HyZV7AYk0', {
- *   name: 'Bukayo',
- *   age: 20,
+ * createEntry("HyZV7AYk0", {
+ *   fields: [
+ *     {
+ *       value: "Record 1",
+ *       id: 1,
+ *     },
+ *     {
+ *       id: 2,
+ *       value: 1000,
+ *     },
+ *   ],
  * });
  * @function
  * @public
  * @param {string} libraryId - The library ID
- * @param {object} entry - The entry to create
+ * @param {object} body - The entry body to create
  * @state data - an entry object
  * @returns {Operation}
  */
-export function createEntry(libraryId, entry) {
+export function createEntry(libraryId, body) {
   return state => {
-    const [resolvedLibraryId, resolvedEntry] = expandReferences(
+    const [resolvedLibraryId, resolvedBody] = expandReferences(
       state,
       libraryId,
-      entry
+      body
     );
-    console.log('Creating entry');
+    console.log('Creating a new entry');
     return sendRequest(
       state,
       'POST',
       `libraries/${resolvedLibraryId}/entries`,
       {
-        body: resolvedEntry,
+        body: resolvedBody,
       }
     );
   };
@@ -142,28 +166,40 @@ export function createEntry(libraryId, entry) {
  * Update an entry
  * @example <caption>Update an entry</caption>
  * updateEntry('HyZV7AYk0', 'T0xIYmE-V2QoMmRTWF1sVVJUKnU', {
- *   name: 'Bukayo',
- *   age: 20,
+ *   fields: [
+ *     {
+ *       value: "Record Updated",
+ *       id: 1,
+ *     },
+ *     {
+ *       id: 2,
+ *       value: 100,
+ *     },
+ *   ],
  * });
  * @function
  * @public
  * @param {string} libraryId - The ID of the library to update the entry in
  * @param {string} entryId - The ID of the entry to update
- * @param {object} entry - The entry to update
+ * @param {object} body - The entry body to update
  * @state data - an entry object
  * @returns {Operation}
  */
-export function updateEntry(libraryId, entryId, entry) {
+export function updateEntry(libraryId, entryId, body) {
   return state => {
-    const [resolvedLibraryId, resolvedEntryId, resolvedEntry] =
-      expandReferences(state, libraryId, entryId, entry);
+    const [resolvedLibraryId, resolvedEntryId, resolvedBody] = expandReferences(
+      state,
+      libraryId,
+      entryId,
+      body
+    );
     console.log('Updating entry');
     return sendRequest(
       state,
       'PUT',
       `libraries/${resolvedLibraryId}/entries/${resolvedEntryId}`,
       {
-        body: resolvedEntry,
+        body: resolvedBody,
       }
     );
   };
