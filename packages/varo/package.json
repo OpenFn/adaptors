@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-varo",
   "label": "Varo",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "OpenFn varo adaptor for cold chain information",
   "type": "module",
   "exports": {
@@ -29,7 +29,8 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:*"
+    "@openfn/language-common": "workspace:*",
+    "luxon": "^3.6.1"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",

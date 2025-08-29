@@ -69,7 +69,7 @@ export function parseFridgeTagToReport(metadata, nodes) {
         ABST: dateTime,
         TVC: temp,
         ALRM: alarm,
-        zdescription: date + ' ' + tempField,
+        zDescription: date + ' ' + tempField,
       });
 
       function parseAlarm(alarmNode, description) {
