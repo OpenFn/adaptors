@@ -248,7 +248,7 @@
           },
           {
             "title": "state",
-            "description": "data - an entry object"
+            "description": "data - The created entry as returned by Memento"
           },
           {
             "title": "returns",
@@ -316,7 +316,7 @@
           },
           {
             "title": "state",
-            "description": "data - an entry object"
+            "description": "data - The updated entry as returned by Memento"
           },
           {
             "title": "returns",
