@@ -18,11 +18,11 @@ describe('http', () => {
       },
     };
     await get('libraries')(state).catch(error => {
-      expect(error.code).to.eql(401);
-      expect(error.reasonPhrase).to.eql(
+      expect(error.body.code).to.eql(401);
+      expect(error.body.description).to.eql(
         'The request requires user authentication'
       );
-      expect(error.description).to.eql('Unauthorized');
+      expect(error.body.reasonPhrase).to.eql('Unauthorized');
     });
   });
 });
