@@ -83,9 +83,7 @@ This operation writes the following keys to state:
 
 | State Key | Description |
 | --- | --- |
-| data | the parsed response body |
-| response | the response from the HTTP server, including headers, statusCode, body, etc |
-| references | an array of all previous data objects used in the Job |
+| data | The parsed response body when `filename` is provided, otherwise a base64-encoded string. |
 
 **Example:** Generate a PDF from a HTML string
 ```js

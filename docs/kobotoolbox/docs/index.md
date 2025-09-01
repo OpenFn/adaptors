@@ -292,7 +292,7 @@ This operation writes the following keys to state:
 **Example:** Bulk updating of submissions
 ```js
 http.request("PATCH", `assets/${$.form_uid}/data/bulk/`, {
-  body: {
+  data: {
     submission_ids: [$.data.submission_id],
     data: {
       Transaction_status: "success",
@@ -317,7 +317,7 @@ Options object
 | --- | --- | --- | --- |
 | query | <code>object</code> |  | An object of query parameters to be encoded into the URL |
 | headers | <code>object</code> |  | An object of all request headers |
-| body | <code>object</code> |  | The request body (as JSON) |
+| data | <code>object</code> |  | The request body data (as JSON) |
 | maxRedirections | <code>number</code> |  | The maximum number of redirects to follow |
 | [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |
 

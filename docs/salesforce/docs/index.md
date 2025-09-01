@@ -1,9 +1,5 @@
 <dl>
 <dt>
-    <a href="#bulk">bulk(sObjectName, operation, records, [options])</a></dt>
-<dt>
-    <a href="#bulkquery">bulkQuery(query, [options])</a></dt>
-<dt>
     <a href="#create">create(sObjectName, records)</a></dt>
 <dt>
     <a href="#describe">describe(sObjectName)</a></dt>
@@ -24,6 +20,26 @@
 This adaptor exports the following namespaced functions:
 
 <dl>
+<dt>
+    <a href="#bulk1_destroy">bulk1.destroy(sObject, records, [options])</a>
+</dt>
+
+<dt>
+    <a href="#bulk1_insert">bulk1.insert(sObject, records, [options])</a>
+</dt>
+
+<dt>
+    <a href="#bulk1_query">bulk1.query(query)</a>
+</dt>
+
+<dt>
+    <a href="#bulk1_update">bulk1.update(sObject, records, [options])</a>
+</dt>
+
+<dt>
+    <a href="#bulk1_upsert">bulk1.upsert(sObject, externalIdFieldName, records, options)</a>
+</dt>
+
 <dt>
     <a href="#bulk2_destroy">bulk2.destroy(sObject, records, [options])</a>
 </dt>
@@ -144,121 +160,6 @@ This adaptor exports the following from common:
 </dt></dl>
 
 ## Functions
-### bulk
-
-<p><code>bulk(sObjectName, operation, records, [options]) ⇒ Operation</code></p>
-
-Create and execute a bulk job. Nested relationships will be flattened to dot notation automatically.
-This function uses [Bulk API](https://sforce.co/4fDLJnk),
-which is subject to [rate limits](https://sforce.co/4b6kn6z).
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| sObjectName | <code>string</code> | API name of the sObject. |
-| operation | <code>string</code> | The bulk operation to be performed.Eg `insert`, `update` or `upsert` |
-| records | <code>array</code> | an array of records, or a function which returns an array. |
-| [options] | [<code>BulkOptions</code>](#bulkoptions) | Options to configure the request. In addition to these, you can pass any of the options supported by the [jsforce API](https://bit.ly/41tyvVU). |
-
-This operation writes the following keys to state:
-
-| State Key | Description |
-| --- | --- |
-| data | Summary of the response from Salesforce |
-| data.success | `true` if Salesforce reports no errors from the operation |
-| data.completed | Array of ids for every successful completion |
-| data.errors | Array of errors reported by Salesforce |
-| references | History of all previous states |
-
-**Example:** Bulk insert
-```js
-bulk(
-  "Patient__c",
-  "insert",
-  (state) => state.patients.map((x) => ({ Age__c: x.age, Name: x.name })),
-  { failOnError: true }
-);
-```
-**Example:** Bulk upsert
-```js
-bulk(
-  "vera__Beneficiary__c",
-  "upsert",
-  [
-    {
-      vera__Reporting_Period__c: 2023,
-      vera__Geographic_Area__c: "Uganda",
-      "vera__Indicator__r.vera__ExtId__c": 1001,
-      vera__Result_UID__c: "1001_2023_Uganda",
-    },
-  ],
-  { extIdField: "vera__Result_UID__c" }
-);
-```
-**Example:** Bulk upsert with a nested relationship
-```js
-bulk(
-  "vera__Beneficiary__c",
-  "upsert",
-  [
-    {
-      vera__Reporting_Period__c: 2023,
-      "vera_Project": {
-        "Metrics_ID__c": "jfh5LAnxu1i4na"
-      }
-    },
-  ],
-  { extIdField: "vera__Result_UID__c" }
-);
-```
-**Example:** Bulk update Account records using a lazy state reference
-```js
-fn((state) => {
-  state.accounts = state.data.map((a) => ({ Id: a.id, Name: a.name }));
-  return state;
-});
-bulk("Account", "update", $.accounts, { failOnError: true });
-```
-
-* * *
-
-### bulkQuery
-
-<p><code>bulkQuery(query, [options]) ⇒ Operation</code></p>
-
-Execute an SOQL Bulk Query.
-This function query large data sets and reduce the number of API requests.
-`bulkQuery()` uses [Bulk API v2.0 Query](https://sforce.co/4azgczz) which is available in API version 47.0 and later.
-This API is subject to [rate limits](https://sforce.co/4b6kn6z).
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| query | <code>string</code> | A query string. |
-| [options] | [<code>BulkQueryOptions</code>](#bulkqueryoptions) | Options passed to the bulk api. |
-
-This operation writes the following keys to state:
-
-| State Key | Description |
-| --- | --- |
-| data | API response data. Can be either an object or array of objects |
-| references | History of all previous states |
-
-**Example:** Bulk query patient records where "Health_ID__c" is equal to the value in "state.data.healthId"
-```js
-bulkQuery(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
-```
-**Example:** Bulk query with custom polling options
-```js
-bulkQuery(
-  (state) =>
-    `SELECT Id FROM Patient__c WHERE Health_ID__c = '${state.data.field1}'`,
-  { pollTimeout: 10000, pollInterval: 6000 }
-);
-```
-
-* * *
-
 ### create
 
 <p><code>create(sObjectName, records) ⇒ Operation</code></p>
@@ -577,6 +478,196 @@ upsert("UpsertTable__c", {
   "Project__r": {
     "Metrics_ID__c": "jfh5LAnxu1i4na"
   }
+});
+```
+
+* * *
+
+
+## bulk1
+
+These functions belong to the bulk1 namespace.
+### bulk1.destroy {#bulk1_destroy}
+
+<p><code>destroy(sObject, records, [options]) ⇒ Operation</code></p>
+
+Bulk deletes records using Salesforce Bulk API 1.0
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>string</code> | The Salesforce object type |
+| records | <code>Array</code> | Array of records to delete (must include Id field) |
+| [options] | [<code>Bulk1Options</code>](#bulk1options) | Bulk delete options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The processed records or results from the bulk load operation |
+| data.successfulResults | Array of successful results |
+| data.failedResults | Array of failed results |
+| data.unprocessedRecords | Array of unprocessed records |
+| references | Array of previous state data objects used in the job |
+
+**Example:** Delete multiple records
+```js
+bulk1.delete('Account', [{ Id: '001xx' }]);
+```
+**Example:** Delete with custom options
+```js
+bulk1.delete('Account', [{ Id: '001xx' }], {
+  pollInterval: 3000,
+  failOnError: true
+});
+```
+
+* * *
+
+
+### bulk1.insert {#bulk1_insert}
+
+<p><code>insert(sObject, records, [options]) ⇒ Operation</code></p>
+
+Bulk inserts records using Salesforce Bulk API 1.0
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>string</code> | The Salesforce object type |
+| records | <code>Array</code> | Array of records to insert |
+| [options] | [<code>Bulk1Options</code>](#bulk1options) | Bulk insert options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The processed records or results from the bulk load operation |
+| data.successfulResults | Array of successful results |
+| data.failedResults | Array of failed results |
+| data.unprocessedRecords | Array of unprocessed records |
+| references | Array of previous state data objects used in the job |
+
+**Example:** Insert multiple records
+```js
+bulk1.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }]);
+```
+**Example:** Insert with custom options
+```js
+bulk1.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }], {
+  pollInterval: 1000,
+  failOnError: true
+});
+```
+
+* * *
+
+
+### bulk1.query {#bulk1_query}
+
+<p><code>query(query) ⇒ Operation</code></p>
+
+Executes a bulk query using Salesforce Bulk API 1.0
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| query | <code>string</code> | SOQL query string to execute |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The processed records or query results from the Bulk API operation |
+| references | Array of previous state data objects used in the job |
+
+**Example:** Query records
+```js
+bulk1.query('SELECT Id, Name FROM Account');
+```
+**Example:** Query with custom options
+```js
+bulk1.query('SELECT Id, Name FROM Account', {
+  pollInterval: 1000,
+  pollTimeout: 24000
+});
+```
+
+* * *
+
+
+### bulk1.update {#bulk1_update}
+
+<p><code>update(sObject, records, [options]) ⇒ Operation</code></p>
+
+Bulk updates records using Salesforce Bulk API 1.0
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>string</code> | The Salesforce object type |
+| records | <code>Array</code> | Array of records to update |
+| [options] | [<code>Bulk1Options</code>](#bulk1options) | Bulk update options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The processed records or results from the bulk load operation |
+| data.successfulResults | Array of successful results |
+| data.failedResults | Array of failed results |
+| data.unprocessedRecords | Array of unprocessed records |
+| references | Array of previous state data objects used in the job |
+
+**Example:** Update multiple records
+```js
+bulk1.update('Account', [{ Id: '001xx', Name: 'Updated Name' }]);
+```
+**Example:** Update with custom options
+```js
+bulk1.update('Account', [{ Id: '001xx', Name: 'Updated Name' }], {
+  pollInterval: 1000,
+  failOnError: true
+});
+```
+
+* * *
+
+
+### bulk1.upsert {#bulk1_upsert}
+
+<p><code>upsert(sObject, externalIdFieldName, records, options) ⇒ Operation</code></p>
+
+Bulk upserts records using Salesforce Bulk API 1.0
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sObject | <code>string</code> | The Salesforce object type |
+| externalIdFieldName | <code>string</code> | External ID field name for upsert matching |
+| records | <code>Array</code> | Array of records to upsert |
+| options | [<code>Bulk1Options</code>](#bulk1options) | Bulk upsert options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The processed records or results from the bulk load operation |
+| data.successfulResults | Array of successful results |
+| data.failedResults | Array of failed results |
+| data.unprocessedRecords | Array of unprocessed records |
+| references | Array of previous state data objects used in the job |
+
+**Example:** Upsert multiple records
+```js
+bulk1.upsert('Account', [{ External_Id__c: 'EXT001', Name: 'Upserted Name' }], { extIdField: 'External_Id__c' });
+```
+**Example:** Upsert with custom options
+```js
+bulk1.upsert('Account', [{ External_Id__c: 'EXT001', Name: 'Upserted Name' }], {
+  extIdField: 'External_Id__c',
+  pollInterval: 3000,
+  failOnError: true
 });
 ```
 
@@ -943,6 +1034,24 @@ fn((state) => {
 
 
 ##  Interfaces
+
+### Bulk1Options
+
+Options for configuring Salesforce Bulk API 1.0 operations
+
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [allowNoOp] | <code>boolean</code> | <code>false</code> | Skipping bulk operation if no records |
+| [failOnError] | <code>boolean</code> | <code>false</code> | Fail the operation on error |
+| [pollTimeout] | <code>number</code> | <code>300000</code> | Polling timeout in milliseconds. Default: 300000 (30 seconds) |
+| [pollInterval] | <code>number</code> | <code>6000</code> | Polling interval in milliseconds. Default: 6000 (6 seconds) |
+| [concurrencyMode] | <code>boolean</code> | <code>&#x27;Parallel&#x27;</code> | Concurrency mode: 'Parallel' or 'Serial' |
+
+
+* * *
 
 ### Bulk2LoadOptions
 

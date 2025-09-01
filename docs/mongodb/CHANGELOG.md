@@ -1,5 +1,12 @@
 # @openfn/language-mongodb
 
+## 2.1.20 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
 ## 2.1.19 - 04 August 2025
 
 ### Patch Changes

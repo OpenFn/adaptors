@@ -476,7 +476,7 @@ fn(state => {
 
 <p><code>fnIf(condition, operation) ⇒ Operation</code></p>
 
-A custom operation that will only execute the function if the condition returns true
+Execute a function only when the condition returns true
 
 
 | Param | Type | Description |
