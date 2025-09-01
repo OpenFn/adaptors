@@ -8,38 +8,15 @@ export default function getAdaptorsFromDir() {
     .map(dirent => dirent.name);
 }
 
-const commitHashRegex = /\b([a-f0-9]{7,40})\b/g;
+const createNode = (type, props) => ({ type, ...props });
 
-/**
- * Creates a GitHub commit link node for the given hash
- * @param {string} hash - The commit hash to create a link for
- * @returns {Object} - A remark link node
- */
-export function createCommitLinkNode(hash) {
-  return {
-    type: 'link',
+export const createCommitLinkNode = hash =>
+  createNode('link', {
     url: `https://github.com/OpenFn/adaptors/commit/${hash}`,
-    title: null,
-    children: [
-      {
-        type: 'text',
-        value: hash,
-      },
-    ],
-  };
-}
+    children: [createNode('text', { value: hash })],
+  });
 
-/**
- * Creates a text node with the given value
- * @param {string} value - The text content
- * @returns {Object} - A remark text node
- */
-export function createTextNode(value) {
-  return {
-    type: 'text',
-    value,
-  };
-}
+export const createTextNode = value => createNode('text', { value });
 
 /**
  * Splits a text node containing commit hashes into multiple nodes
@@ -47,38 +24,47 @@ export function createTextNode(value) {
  * @returns {Array|Object} - Array of nodes if split, or single node if no changes
  */
 export function splitTextNodeWithCommitHashes(textNode) {
-  const matches = [...textNode.value.matchAll(commitHashRegex)];
+  // Match both plain and bracketed hashes, capturing the hash portion
+  const matches = [...textNode.value.matchAll(/(?:\[)?([a-f0-9]{7,40})]?/g)];
 
-  if (matches.length === 0) {
-    return textNode;
-  }
+  if (matches.length === 0) return textNode;
+
+  // Check for already linked hashes
+  const linkedHashes = new Set(
+    textNode.value
+      .match(/\[[^\]]*(\b[a-f0-9]{7,40}\b)[^\]]*\]\([^)]+\)/g)
+      ?.map(match => match.match(/\b[a-f0-9]{7,40}\b/)[0]) || []
+  );
 
   const parts = [];
-  let lastIndex = 0;
+  let currentIndex = 0;
 
-  for (const match of matches) {
-    const hash = match[1];
+  matches.forEach(match => {
+    const [fullMatch, hash] = match;
     const matchIndex = match.index;
 
-    // Add text before the hash
-    if (matchIndex > lastIndex) {
-      const textBefore = textNode.value.slice(lastIndex, matchIndex);
-      parts.push(createTextNode(textBefore));
+    // Add text before the hash if any
+    if (matchIndex > currentIndex) {
+      parts.push(
+        createTextNode(textNode.value.substring(currentIndex, matchIndex))
+      );
     }
 
-    // Add the commit link node
-    parts.push(createCommitLinkNode(hash));
+    // Add hash as link or text
+    parts.push(
+      linkedHashes.has(hash)
+        ? createTextNode(fullMatch)
+        : createCommitLinkNode(hash)
+    );
 
-    lastIndex = matchIndex + hash.length;
+    currentIndex = matchIndex + fullMatch.length;
+  });
+
+  // Add remaining text after last match
+  if (currentIndex < textNode.value.length) {
+    parts.push(createTextNode(textNode.value.substring(currentIndex)));
   }
 
-  // Add remaining text after the last hash
-  if (lastIndex < textNode.value.length) {
-    const textAfter = textNode.value.slice(lastIndex);
-    parts.push(createTextNode(textAfter));
-  }
-
-  // Return array if multiple parts, single node if only one
   return parts.length > 1 ? parts : parts[0];
 }
 
@@ -88,33 +74,15 @@ export function splitTextNodeWithCommitHashes(textNode) {
  * @returns {Object|Array} - The processed node(s)
  */
 export function processCommitHashes(node) {
-  if (!node || typeof node !== 'object') {
-    return node;
-  }
-
-  // Process text nodes that may contain commit hashes
-  if (node.type === 'text' && node.value) {
+  if (!node || typeof node !== 'object') return node;
+  if (node.type === 'link') return node;
+  if (node.type === 'text' && node.value)
     return splitTextNodeWithCommitHashes(node);
-  }
 
-  // Recursively process child nodes
-  if (node.children && Array.isArray(node.children)) {
-    const processedChildren = [];
-
-    for (const child of node.children) {
-      const processedChild = processCommitHashes(child);
-
-      if (Array.isArray(processedChild)) {
-        // If the child was split into multiple nodes, spread them
-        processedChildren.push(...processedChild);
-      } else {
-        processedChildren.push(processedChild);
-      }
-    }
-
+  if (node.children?.length) {
     return {
       ...node,
-      children: processedChildren,
+      children: node.children.flatMap(child => processCommitHashes(child)),
     };
   }
 
