@@ -589,7 +589,7 @@ importers:
         version: link:../common
       '@openfn/language-fhir':
         specifier: ^5.0.7
-        version: link:../fhir
+        version: 5.0.8
       '@types/fhir':
         specifier: ^0.0.41
         version: 0.0.41
@@ -2396,6 +2396,39 @@ importers:
       remark-stringify:
         specifier: ^11.0.0
         version: 11.0.0
+      yargs:
+        specifier: 17.6.0
+        version: 17.6.0
+
+  tools/docs-label:
+    dependencies:
+      '@types/node':
+        specifier: 18.17.5
+        version: 18.17.5
+      date-fns:
+        specifier: ^2.25.0
+        version: 2.30.0
+      inquirer:
+        specifier: ^9.2.15
+        version: 9.3.7
+      remark:
+        specifier: ^15.0.1
+        version: 15.0.1
+      remark-parse:
+        specifier: ^11.0.0
+        version: 11.0.0
+      remark-stringify:
+        specifier: ^11.0.0
+        version: 11.0.0
+      ts-node:
+        specifier: 10.9.1
+        version: 10.9.1(@swc/core@1.12.7)(@types/node@18.17.5)(typescript@4.8.4)
+      tsup:
+        specifier: 6.3.0
+        version: 6.3.0(ts-node@10.9.1)(typescript@4.8.4)
+      typescript:
+        specifier: 4.8.4
+        version: 4.8.4
       yargs:
         specifier: 17.6.0
         version: 17.6.0
@@ -4813,6 +4846,26 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
+
+  /@openfn/language-common@3.0.3:
+    resolution: {integrity: sha512-oXtSwuOfYJI3DQh9MiDqs/iS26Qmft26gwNKlDBCx+1xSZCNmkxQNoA5yq5qaZU2G1n0Bw6rn75/JqRvAvONEA==}
+    dependencies:
+      ajv: 8.17.1
+      csv-parse: 5.6.0
+      csvtojson: 2.0.10
+      date-fns: 2.30.0
+      http-status-codes: 2.3.0
+      jsonpath-plus: 10.3.0
+      lodash: 4.17.21
+      undici: 5.29.0
+    dev: false
+
+  /@openfn/language-fhir@5.0.8:
+    resolution: {integrity: sha512-1jIKqBL59rdCDtBTXuYr0IPEPWE7bO6utXHnU0suK2pg4EotXepdlZs3I91FbcR/bljjuBK6rMdIdvC5jQ+0sg==}
+    dependencies:
+      '@openfn/language-common': 3.0.3
+      undici: 5.29.0
+    dev: false
 
   /@paralleldrive/cuid2@2.2.2:
     resolution: {integrity: sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==}
