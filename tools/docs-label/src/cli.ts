@@ -15,7 +15,7 @@ yargs(hideBin(process.argv))
       y
         .positional("name", {
           type: "string",
-          describe: "Adaptor name (folder & json base name)",
+          describe: "Adaptor name",
         })
         .option("tier", {
           alias: "t",
