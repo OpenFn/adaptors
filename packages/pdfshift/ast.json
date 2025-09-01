@@ -70,7 +70,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "data - The parsed response body when `filename` is provided, otherwise a base64-encoded string."
           }
         ]
       },
@@ -207,7 +207,7 @@
         "operation"
       ],
       "docs": {
-        "description": "A custom operation that will only execute the function if the condition returns true",
+        "description": "Execute a function only when the condition returns true",
         "tags": [
           {
             "title": "public",
