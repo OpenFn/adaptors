@@ -1,5 +1,12 @@
 # @openfn/language-mysql
 
+## 3.0.1 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
 ## 3.0.0 - 21 July 2025
 
 ### Major Changes

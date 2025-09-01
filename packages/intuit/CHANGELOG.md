@@ -1,5 +1,12 @@
 # @openfn/language-intuit
 
+## 1.0.10 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
 ## 1.0.9 - 28 August 2025
 
 ### Patch Changes

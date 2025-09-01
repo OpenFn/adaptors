@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-dynamics",
   "label": "Dynamics",
-  "version": "0.5.20",
+  "version": "0.5.21",
   "description": "OpenFn adaptor for Microsoft Dynamics",
   "main": "dist/index.cjs",
   "scripts": {
