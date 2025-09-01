@@ -4,50 +4,50 @@
 
 ### Patch Changes
 
-- b2aec70: - Removed `common` exports in http
+- [b2aec70](https://github.com/OpenFn/adaptors/commit/b2aec70): - Removed `common` exports in http
 
 ## 1.1.2 - 14 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[9b5a4f8]
+- Updated dependencies [9b5a4f8](https://github.com/OpenFn/adaptors/commit/9b5a4f8)
   - @openfn/language-common@3.0.2
 
 ## 1.1.1 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[cf9c09f]
+- Updated dependencies [cf9c09f](https://github.com/OpenFn/adaptors/commit/cf9c09f)
   - @openfn/language-common@3.0.1
 
 ## 1.1.0 - 10 July 2025
 
 ### Minor Changes
 
-- 19f2d7e: Exported `as()` function from common.
+- [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e): Exported `as()` function from common.
 
 ### Patch Changes
 
-- Updated dependencies \[ea85695]
-- Updated dependencies \[3fce58f]
-- Updated dependencies \[19f2d7e]
-- Updated dependencies \[f26bd2b]
-- Updated dependencies \[19f2d7e]
+- Updated dependencies [ea85695](https://github.com/OpenFn/adaptors/commit/ea85695)
+- Updated dependencies [3fce58f](https://github.com/OpenFn/adaptors/commit/3fce58f)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
+- Updated dependencies [f26bd2b](https://github.com/OpenFn/adaptors/commit/f26bd2b)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
   - @openfn/language-common@3.0.0
 
 ## 1.0.2 - 20 June 2025
 
 ### Patch Changes
 
-- 28c2e8b: Remove query option from `logResponse` function
-- Updated dependencies \[28c2e8b]
+- [28c2e8b](https://github.com/OpenFn/adaptors/commit/28c2e8b): Remove query option from `logResponse` function
+- Updated dependencies [28c2e8b](https://github.com/OpenFn/adaptors/commit/28c2e8b)
   - @openfn/language-common@2.5.0
 
 ## 1.0.1 - 28 May 2025
 
 ### Patch Changes
 
-- 62ec0a4: - Update square logo
+- [62ec0a4](https://github.com/OpenFn/adaptors/commit/62ec0a4): - Update square logo
   - Add semi-colon after each example.
   - Add options description to downloadAttachment function
   - Remove sensitive data in examples

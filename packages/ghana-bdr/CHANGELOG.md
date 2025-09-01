@@ -4,82 +4,82 @@
 
 ### Patch Changes
 
-- Updated dependencies \[9b5a4f8]
+- Updated dependencies [9b5a4f8](https://github.com/OpenFn/adaptors/commit/9b5a4f8)
   - @openfn/language-common@3.0.2
 
 ## 0.1.10 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[cf9c09f]
+- Updated dependencies [cf9c09f](https://github.com/OpenFn/adaptors/commit/cf9c09f)
   - @openfn/language-common@3.0.1
 
 ## 0.1.9 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[ea85695]
-- Updated dependencies \[3fce58f]
-- Updated dependencies \[19f2d7e]
-- Updated dependencies \[f26bd2b]
-- Updated dependencies \[19f2d7e]
+- Updated dependencies [ea85695](https://github.com/OpenFn/adaptors/commit/ea85695)
+- Updated dependencies [3fce58f](https://github.com/OpenFn/adaptors/commit/3fce58f)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
+- Updated dependencies [f26bd2b](https://github.com/OpenFn/adaptors/commit/f26bd2b)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
   - @openfn/language-common@3.0.0
 
 ## 0.1.8 - 20 June 2025
 
 ### Patch Changes
 
-- Updated dependencies \[28c2e8b]
+- Updated dependencies [28c2e8b](https://github.com/OpenFn/adaptors/commit/28c2e8b)
   - @openfn/language-common@2.5.0
 
 ## 0.1.7 - 22 April 2025
 
 ### Patch Changes
 
-- 99e4b48: - Better handling of HTML content in http requests
+- [99e4b48](https://github.com/OpenFn/adaptors/commit/99e4b48): - Better handling of HTML content in http requests
   - When logging HTTP requests, include query parameters
-- Updated dependencies \[99e4b48]
-- Updated dependencies \[13bf08f]
+- Updated dependencies [99e4b48](https://github.com/OpenFn/adaptors/commit/99e4b48)
+- Updated dependencies [13bf08f](https://github.com/OpenFn/adaptors/commit/13bf08f)
   - @openfn/language-common@2.4.0
 
 ## 0.1.6 - 16 April 2025
 
 ### Patch Changes
 
-- Updated dependencies \[b089c56]
+- Updated dependencies [b089c56](https://github.com/OpenFn/adaptors/commit/b089c56)
   - @openfn/language-common@2.3.3
 
 ## 0.1.5 - 11 April 2025
 
 ### Patch Changes
 
-- Updated dependencies \[d7105c0]
+- Updated dependencies [d7105c0](https://github.com/OpenFn/adaptors/commit/d7105c0)
   - @openfn/language-common@2.3.2
 
 ## 0.1.4 - 14 March 2025
 
 ### Patch Changes
 
-- Updated dependencies \[23ccb01]
+- Updated dependencies [23ccb01](https://github.com/OpenFn/adaptors/commit/23ccb01)
   - @openfn/language-common@2.3.1
 
 ## 0.1.3 - 31 January 2025
 
 ### Patch Changes
 
-- 7c677a5: Update mock and examples for bdr, add auth to test
+- [7c677a5](https://github.com/OpenFn/adaptors/commit/7c677a5): Update mock and examples for bdr, add auth to test
 
 ## 0.1.2 - 29 January 2025
 
 ### Patch Changes
 
-- 5e3b3cf: Updates to the mock endpoint, these are still moving targets
+- [5e3b3cf](https://github.com/OpenFn/adaptors/commit/5e3b3cf): Updates to the mock endpoint, these are still moving targets
 
 ## 0.1.1 - 28 January 2025
 
 ### Patch Changes
 
-- 8fb854a: Swapped inline example for BDR and NIA
+- [8fb854a](https://github.com/OpenFn/adaptors/commit/8fb854a): Swapped inline example for BDR and NIA
 
 ## 0.1.0 - 28 January 2025
 

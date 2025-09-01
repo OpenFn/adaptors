@@ -4,13 +4,13 @@
 
 ### Patch Changes
 
-- b7af59a: - Update `package.json` description to be LLM-readable
+- [b7af59a](https://github.com/OpenFn/adaptors/commit/b7af59a): - Update `package.json` description to be LLM-readable
 
 ## 1.0.0 - 11 August 2025
 
 ### Major Changes
 
-- a5cea4e: removed `http` export from `@openfn/language-common`
+- [a5cea4e](https://github.com/OpenFn/adaptors/commit/a5cea4e): removed `http` export from `@openfn/language-common`
 
   ### Migration Guide
 
@@ -45,25 +45,25 @@
 
 ### Patch Changes
 
-- Updated dependencies \[9b5a4f8]
+- Updated dependencies [9b5a4f8](https://github.com/OpenFn/adaptors/commit/9b5a4f8)
   - @openfn/language-common@3.0.2
 
 ## 0.5.4 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[cf9c09f]
+- Updated dependencies [cf9c09f](https://github.com/OpenFn/adaptors/commit/cf9c09f)
   - @openfn/language-common@3.0.1
 
 ## 0.5.3 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[ea85695]
-- Updated dependencies \[3fce58f]
-- Updated dependencies \[19f2d7e]
-- Updated dependencies \[f26bd2b]
-- Updated dependencies \[19f2d7e]
+- Updated dependencies [ea85695](https://github.com/OpenFn/adaptors/commit/ea85695)
+- Updated dependencies [3fce58f](https://github.com/OpenFn/adaptors/commit/3fce58f)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
+- Updated dependencies [f26bd2b](https://github.com/OpenFn/adaptors/commit/f26bd2b)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
   - @openfn/language-common@3.0.0
 
 ## 0.5.2 - 15 October 2024
@@ -76,26 +76,26 @@
 
 ### Patch Changes
 
-- 8146c23: Fix typings in package.json
-- Updated dependencies \[8146c23]
+- [8146c23](https://github.com/OpenFn/adaptors/commit/8146c23): Fix typings in package.json
+- Updated dependencies [8146c23](https://github.com/OpenFn/adaptors/commit/8146c23)
   - @openfn/language-common@2.0.1
 
 ## 0.5.0 - 13 June 2024
 
 ### Minor Changes
 
-- 73433c20: Add `fnIf` operation
+- [73433c20](https://github.com/OpenFn/adaptors/commit/73433c20): Add `fnIf` operation
 
 ### Patch Changes
 
-- Updated dependencies \[106ecf6d]
+- Updated dependencies [106ecf6d](https://github.com/OpenFn/adaptors/commit/106ecf6d)
   - @openfn/language-common@1.14.0
 
 ## 0.4.2 - 24 January 2024
 
 ### Patch Changes
 
-- 6afba70: Fix sendSMS
+- [6afba70](https://github.com/OpenFn/adaptors/commit/6afba70): Fix sendSMS
 
 ## 0.4.1 - 19 June 2023
 
@@ -109,7 +109,7 @@
 
 ### Minor Changes
 
-- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+- [2c1d603](https://github.com/OpenFn/adaptors/commit/2c1d603): Remove parameter reassignment to ensure proper functioning inside an
   `each` block; add eslint
 
   The packages receiving a major bump here exposed functions that didn't work as
@@ -121,42 +121,42 @@
 
 ### Patch Changes
 
-- Updated dependencies \[2c1d603]
+- Updated dependencies [2c1d603](https://github.com/OpenFn/adaptors/commit/2c1d603)
   - @openfn/language-common@1.8.0
 
 ## 0.3.4 - 06 April 2023
 
 ### Patch Changes
 
-- a22daa6: rename credential-schema to configuration-schemawq
+- [a22daa6](https://github.com/OpenFn/adaptors/commit/a22daa6): rename credential-schema to configuration-schemawq
 
 ## 0.3.3 - 30 March 2023
 
 ### Patch Changes
 
-- 14f481e: mark execute as private
-- Updated dependencies \[2b4c61a]
+- [14f481e](https://github.com/OpenFn/adaptors/commit/14f481e): mark execute as private
+- Updated dependencies [2b4c61a](https://github.com/OpenFn/adaptors/commit/2b4c61a)
   - @openfn/language-common@1.7.6
 
 ## 0.3.2 - 15 February 2023
 
 ### Patch Changes
 
-- f7ebd3c: remove sample configuration
+- [f7ebd3c](https://github.com/OpenFn/adaptors/commit/f7ebd3c): remove sample configuration
 
 ## 0.3.1 - 15 February 2023
 
 ### Patch Changes
 
-- f2aed32: add examples
+- [f2aed32](https://github.com/OpenFn/adaptors/commit/f2aed32): add examples
 
 ## 0.3.0 - 18 November 2022
 
 ### Minor Changes
 
-- a36a072: ymigrated twilio to monorepo
+- [a36a072](https://github.com/OpenFn/adaptors/commit/a36a072): ymigrated twilio to monorepo
 
 ### Patch Changes
 
-- Updated dependencies \[f2a91a4]
+- Updated dependencies [f2a91a4](https://github.com/OpenFn/adaptors/commit/f2a91a4)
   - @openfn/language-common@1.7.5

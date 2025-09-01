@@ -4,28 +4,28 @@
 
 ### Patch Changes
 
-- Updated dependencies \[9b5a4f8]
+- Updated dependencies [9b5a4f8](https://github.com/OpenFn/adaptors/commit/9b5a4f8)
   - @openfn/language-common@3.0.2
 
 ## 1.1.5 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[cf9c09f]
+- Updated dependencies [cf9c09f](https://github.com/OpenFn/adaptors/commit/cf9c09f)
   - @openfn/language-common@3.0.1
 
 ## 1.1.4 - 10 July 2025
 
 ### Patch Changes
 
-- c4625fa: - Migrate from the deprecated `expandReferences` in `common` to the
+- [c4625fa](https://github.com/OpenFn/adaptors/commit/c4625fa): - Migrate from the deprecated `expandReferences` in `common` to the
   new `expandReferences` from common.util
   - Use `workspace:*` common version.
-- Updated dependencies \[ea85695]
-- Updated dependencies \[3fce58f]
-- Updated dependencies \[19f2d7e]
-- Updated dependencies \[f26bd2b]
-- Updated dependencies \[19f2d7e]
+- Updated dependencies [ea85695](https://github.com/OpenFn/adaptors/commit/ea85695)
+- Updated dependencies [3fce58f](https://github.com/OpenFn/adaptors/commit/3fce58f)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
+- Updated dependencies [f26bd2b](https://github.com/OpenFn/adaptors/commit/f26bd2b)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
   - @openfn/language-common@3.0.0
 
 ## 1.1.3 - 28 October 2024
@@ -40,26 +40,26 @@
 
 ### Patch Changes
 
-- 8146c23: Fix typings in package.json
-- Updated dependencies \[8146c23]
+- [8146c23](https://github.com/OpenFn/adaptors/commit/8146c23): Fix typings in package.json
+- Updated dependencies [8146c23](https://github.com/OpenFn/adaptors/commit/8146c23)
   - @openfn/language-common@2.0.1
 
 ## 1.1.1 - 01 August 2024
 
 ### Patch Changes
 
-- Updated dependencies \[4fe527c]
+- Updated dependencies [4fe527c](https://github.com/OpenFn/adaptors/commit/4fe527c)
   - @openfn/language-common@2.0.0
 
 ## 1.1.0 - 13 June 2024
 
 ### Minor Changes
 
-- 73433c20: Add `fnIf` operation
+- [73433c20](https://github.com/OpenFn/adaptors/commit/73433c20): Add `fnIf` operation
 
 ### Patch Changes
 
-- Updated dependencies \[106ecf6d]
+- Updated dependencies [106ecf6d](https://github.com/OpenFn/adaptors/commit/106ecf6d)
   - @openfn/language-common@1.14.0
 
 ## 1.0.1 - 08 May 2024
@@ -74,7 +74,7 @@
 
 ### Major Changes
 
-- 7df7e20: remove `projectId`, `dataSetId`, `cloudRegion`, and `fhirStoreId` out
+- [7df7e20](https://github.com/OpenFn/adaptors/commit/7df7e20): remove `projectId`, `dataSetId`, `cloudRegion`, and `fhirStoreId` out
   of configuration
 
   The new implementation of `createFhirResource(fhirStore, resource, callback)`
@@ -87,11 +87,11 @@
 
 ### Minor Changes
 
-- 861d774: add createFhirResource function
+- [861d774](https://github.com/OpenFn/adaptors/commit/861d774): add createFhirResource function
 
 ### Patch Changes
 
-- aad9549: Ensure that standard OAuth2 credentials with snake-cased
+- [aad9549](https://github.com/OpenFn/adaptors/commit/aad9549): Ensure that standard OAuth2 credentials with snake-cased
   "access\_token" keys can be used for OAuth2-reliant adaptors
-- Updated dependencies \[aad9549]
+- Updated dependencies [aad9549](https://github.com/OpenFn/adaptors/commit/aad9549)
   - @openfn/language-common@1.10.0

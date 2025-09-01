@@ -4,35 +4,35 @@
 
 ### Patch Changes
 
-- Updated dependencies \[9b5a4f8]
+- Updated dependencies [9b5a4f8](https://github.com/OpenFn/adaptors/commit/9b5a4f8)
   - @openfn/language-common@3.0.2
 
 ## 5.0.6 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[cf9c09f]
+- Updated dependencies [cf9c09f](https://github.com/OpenFn/adaptors/commit/cf9c09f)
   - @openfn/language-common@3.0.1
 
 ## 5.0.5 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[ea85695]
-- Updated dependencies \[3fce58f]
-- Updated dependencies \[19f2d7e]
-- Updated dependencies \[f26bd2b]
-- Updated dependencies \[19f2d7e]
+- Updated dependencies [ea85695](https://github.com/OpenFn/adaptors/commit/ea85695)
+- Updated dependencies [3fce58f](https://github.com/OpenFn/adaptors/commit/3fce58f)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
+- Updated dependencies [f26bd2b](https://github.com/OpenFn/adaptors/commit/f26bd2b)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
   - @openfn/language-common@3.0.0
 
 ## 5.0.4 - 22 April 2025
 
 ### Patch Changes
 
-- 99e4b48: - Better handling of HTML content in http requests
+- [99e4b48](https://github.com/OpenFn/adaptors/commit/99e4b48): - Better handling of HTML content in http requests
   - When logging HTTP requests, include query parameters
-- Updated dependencies \[99e4b48]
-- Updated dependencies \[13bf08f]
+- Updated dependencies [99e4b48](https://github.com/OpenFn/adaptors/commit/99e4b48)
+- Updated dependencies [13bf08f](https://github.com/OpenFn/adaptors/commit/13bf08f)
   - @openfn/language-common@2.4.0
 
 ## 5.0.3 - 28 October 2024
@@ -47,16 +47,16 @@
 
 ### Patch Changes
 
-- 8146c23: Fix typings in package.json
-- Updated dependencies \[8146c23]
+- [8146c23](https://github.com/OpenFn/adaptors/commit/8146c23): Fix typings in package.json
+- Updated dependencies [8146c23](https://github.com/OpenFn/adaptors/commit/8146c23)
   - @openfn/language-common@2.0.1
 
 ## 5.0.1 - 01 August 2024
 
 ### Patch Changes
 
-- 940996b: Use common helper code to handle invalid absolute URLs
-- Updated dependencies \[4fe527c]
+- [940996b](https://github.com/OpenFn/adaptors/commit/940996b): Use common helper code to handle invalid absolute URLs
+- Updated dependencies [4fe527c](https://github.com/OpenFn/adaptors/commit/4fe527c)
   - @openfn/language-common@2.0.0
 
 ## 5.0.0 - 19 July 2024
@@ -142,7 +142,7 @@
 
 ### Major Changes
 
-- a42ffeb9: - All HTTP methods now write `{ data, response }` to state, where
+- [a42ffeb9](https://github.com/OpenFn/adaptors/commit/a42ffeb9): - All HTTP methods now write `{ data, response }` to state, where
   data is the response body and response is the raw response
   - All HTTP methods now support a `throwOnError` param, which defaults to true.
     If false, the adaptor will not throw if the HTTP status is an error code
@@ -154,18 +154,18 @@
 
 ### Minor Changes
 
-- 73433c20: Add `fnIf` operation
+- [73433c20](https://github.com/OpenFn/adaptors/commit/73433c20): Add `fnIf` operation
 
 ### Patch Changes
 
-- Updated dependencies \[106ecf6d]
+- Updated dependencies [106ecf6d](https://github.com/OpenFn/adaptors/commit/106ecf6d)
   - @openfn/language-common@1.14.0
 
 ## 3.1.2 - 17 May 2024
 
 ### Patch Changes
 
-- 2b283549: - Update `create()` example
+- [2b283549](https://github.com/OpenFn/adaptors/commit/2b283549): - Update `create()` example
   - Update required properties in configuration schema
 
 ## 3.1.1 - 08 May 2024
@@ -180,7 +180,7 @@
 
 ### Minor Changes
 
-- d94e9ee: Migrate from axios to using `fetch` from `undici` and add uniti tests
+- [d94e9ee](https://github.com/OpenFn/adaptors/commit/d94e9ee): Migrate from axios to using `fetch` from `undici` and add uniti tests
 
 ## 3.0.1 - 19 June 2023
 
@@ -194,7 +194,7 @@
 
 ### Major Changes
 
-- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+- [2c1d603](https://github.com/OpenFn/adaptors/commit/2c1d603): Remove parameter reassignment to ensure proper functioning inside an
   `each` block; add eslint
 
   The packages receiving a major bump here exposed functions that didn't work as
@@ -206,14 +206,14 @@
 
 ### Patch Changes
 
-- Updated dependencies \[2c1d603]
+- Updated dependencies [2c1d603](https://github.com/OpenFn/adaptors/commit/2c1d603)
   - @openfn/language-common@1.8.0
 
 ## 2.0.0 - 06 June 2023
 
 ### Major Changes
 
-- d4b4094: - Update configuration schema,
+- [d4b4094](https://github.com/OpenFn/adaptors/commit/d4b4094): - Update configuration schema,
   - Add `get()` function
   - Fix `create()` axios config
   - Remove unused code
@@ -224,50 +224,50 @@
 
 ### Patch Changes
 
-- 14f481e: mark execute as private
-- Updated dependencies \[2b4c61a]
+- [14f481e](https://github.com/OpenFn/adaptors/commit/14f481e): mark execute as private
+- Updated dependencies [2b4c61a](https://github.com/OpenFn/adaptors/commit/2b4c61a)
   - @openfn/language-common@1.7.6
 
 ## 1.1.4 - 15 February 2023
 
 ### Patch Changes
 
-- f7ebd3c: remove sample configuration
+- [f7ebd3c](https://github.com/OpenFn/adaptors/commit/f7ebd3c): remove sample configuration
 
 ## 1.1.3 - 15 February 2023
 
 ### Patch Changes
 
-- f2aed32: add examples
+- [f2aed32](https://github.com/OpenFn/adaptors/commit/f2aed32): add examples
 
 ## 1.1.2 - 13 January 2023
 
 ### Patch Changes
 
-- 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
+- [6d8de03](https://github.com/OpenFn/adaptors/commit/6d8de03): change @constructor to @function and remove /\*\_ @module Adaptor \_/
 
 ## 1.1.1 - 11 November 2022
 
 ### Patch Changes
 
-- f2a91a4: Update package exports
-- Updated dependencies \[f2a91a4]
+- [f2a91a4](https://github.com/OpenFn/adaptors/commit/f2a91a4): Update package exports
+- Updated dependencies [f2a91a4](https://github.com/OpenFn/adaptors/commit/f2a91a4)
   - @openfn/language-common@1.7.5
 
 ## 1.1.0 - 04 November 2022
 
 ### Minor Changes
 
-- fee607e: Migrate FHIR, update package export
+- [fee607e](https://github.com/OpenFn/adaptors/commit/fee607e): Migrate FHIR, update package export
 
 ### Patch Changes
 
-- cb5d0ed: Updated to @openfn/simple-ast v0.4.1
-- 8566b26: Fix typings
-- b3d45ff: Fix CJS export of npm package.
-- ecf5d30: remove sinon since it was not being used
-- Updated dependencies \[8566b26]
-- Updated dependencies \[b3d45ff]
-- Updated dependencies \[b5eb665]
-- Updated dependencies \[ecf5d30]
+- [cb5d0ed](https://github.com/OpenFn/adaptors/commit/cb5d0ed): Updated to @openfn/simple-ast v0.4.1
+- [8566b26](https://github.com/OpenFn/adaptors/commit/8566b26): Fix typings
+- [b3d45ff](https://github.com/OpenFn/adaptors/commit/b3d45ff): Fix CJS export of npm package.
+- [ecf5d30](https://github.com/OpenFn/adaptors/commit/ecf5d30): remove sinon since it was not being used
+- Updated dependencies [8566b26](https://github.com/OpenFn/adaptors/commit/8566b26)
+- Updated dependencies [b3d45ff](https://github.com/OpenFn/adaptors/commit/b3d45ff)
+- Updated dependencies [b5eb665](https://github.com/OpenFn/adaptors/commit/b5eb665)
+- Updated dependencies [ecf5d30](https://github.com/OpenFn/adaptors/commit/ecf5d30)
   - @openfn/language-common@1.7.4

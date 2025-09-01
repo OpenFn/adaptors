@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-- a5cea4e: removed `http` export from `@openfn/language-common`
+- [a5cea4e](https://github.com/OpenFn/adaptors/commit/a5cea4e): removed `http` export from `@openfn/language-common`
 
   ### Migration Guide
 
@@ -39,49 +39,49 @@
 
 ### Patch Changes
 
-- aeb09c4: Fix an issue in metadata generation
+- [aeb09c4](https://github.com/OpenFn/adaptors/commit/aeb09c4): Fix an issue in metadata generation
 
 ## 7.1.2 - 14 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[9b5a4f8]
+- Updated dependencies [9b5a4f8](https://github.com/OpenFn/adaptors/commit/9b5a4f8)
   - @openfn/language-common@3.0.2
 
 ## 7.1.1 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[cf9c09f]
+- Updated dependencies [cf9c09f](https://github.com/OpenFn/adaptors/commit/cf9c09f)
   - @openfn/language-common@3.0.1
 
 ## 7.1.0 - 10 July 2025
 
 ### Minor Changes
 
-- 19f2d7e: Exported `as()` function from common.
+- [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e): Exported `as()` function from common.
 
 ### Patch Changes
 
-- Updated dependencies \[ea85695]
-- Updated dependencies \[3fce58f]
-- Updated dependencies \[19f2d7e]
-- Updated dependencies \[f26bd2b]
-- Updated dependencies \[19f2d7e]
+- Updated dependencies [ea85695](https://github.com/OpenFn/adaptors/commit/ea85695)
+- Updated dependencies [3fce58f](https://github.com/OpenFn/adaptors/commit/3fce58f)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
+- Updated dependencies [f26bd2b](https://github.com/OpenFn/adaptors/commit/f26bd2b)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
   - @openfn/language-common@3.0.0
 
 ## 7.0.2 - 01 July 2025
 
 ### Patch Changes
 
-- aa2f46b: - Adjust logging in create to not include item details.
+- [aa2f46b](https://github.com/OpenFn/adaptors/commit/aa2f46b): - Adjust logging in create to not include item details.
   - Fix issues in docs.
 
 ## 7.0.1 - 20 June 2025
 
 ### Patch Changes
 
-- Updated dependencies \[28c2e8b]
+- Updated dependencies [28c2e8b](https://github.com/OpenFn/adaptors/commit/28c2e8b)
   - @openfn/language-common@2.5.0
 
 ## 7.0.0 - 04 June 2025
@@ -111,12 +111,12 @@ other adaptors).
 
 ### Minor Changes
 
-- dfe53ef: - Implement a new `tracker` namespace for `tracker.import()` and
+- [dfe53ef](https://github.com/OpenFn/adaptors/commit/dfe53ef): - Implement a new `tracker` namespace for `tracker.import()` and
   `tracker.export()` functions.
 
   - Throw an error when `create('tracker')` is called.
 
-- 5b73844: - Add importStrategy to query params for `create` and `update`
+- [5b73844](https://github.com/OpenFn/adaptors/commit/5b73844): - Add importStrategy to query params for `create` and `update`
 
 ### Migration Guide
 
@@ -172,29 +172,29 @@ fn((state) => {
 
 ### Patch Changes
 
-- Updated dependencies \[99e4b48]
-- Updated dependencies \[13bf08f]
+- Updated dependencies [99e4b48](https://github.com/OpenFn/adaptors/commit/99e4b48)
+- Updated dependencies [13bf08f](https://github.com/OpenFn/adaptors/commit/13bf08f)
   - @openfn/language-common@2.4.0
 
 ## 6.3.3 - 16 April 2025
 
 ### Patch Changes
 
-- Updated dependencies \[b089c56]
+- Updated dependencies [b089c56](https://github.com/OpenFn/adaptors/commit/b089c56)
   - @openfn/language-common@2.3.3
 
 ## 6.3.2 - 11 April 2025
 
 ### Patch Changes
 
-- Updated dependencies \[d7105c0]
+- Updated dependencies [d7105c0](https://github.com/OpenFn/adaptors/commit/d7105c0)
   - @openfn/language-common@2.3.2
 
 ## 6.3.1 - 14 March 2025
 
 ### Patch Changes
 
-- Updated dependencies \[23ccb01]
+- Updated dependencies [23ccb01](https://github.com/OpenFn/adaptors/commit/23ccb01)
   - @openfn/language-common@2.3.1
 
 ## 6.3.0 - 30 January 2025
@@ -208,47 +208,47 @@ fn((state) => {
 
 ### Minor Changes
 
-- 0156632: Add `asBase64` option in dhis2 `get()` function
+- [0156632](https://github.com/OpenFn/adaptors/commit/0156632): Add `asBase64` option in dhis2 `get()` function
 
 ## 6.1.0 - 16 January 2025
 
 ### Minor Changes
 
-- c19d561: Added support for personal access tokens in dhis2
+- [c19d561](https://github.com/OpenFn/adaptors/commit/c19d561): Added support for personal access tokens in dhis2
 
 ### Patch Changes
 
-- Updated dependencies \[b3d7f59]
-- Updated dependencies \[2d709ff]
-- Updated dependencies \[41e8cc3]
+- Updated dependencies [b3d7f59](https://github.com/OpenFn/adaptors/commit/b3d7f59)
+- Updated dependencies [2d709ff](https://github.com/OpenFn/adaptors/commit/2d709ff)
+- Updated dependencies [41e8cc3](https://github.com/OpenFn/adaptors/commit/41e8cc3)
   - @openfn/language-common@2.3.0
 
 ## 6.0.3 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies \[6dffdbd]
+- Updated dependencies [6dffdbd](https://github.com/OpenFn/adaptors/commit/6dffdbd)
   - @openfn/language-common@2.2.1
 
 ## 6.0.2 - 09 January 2025
 
 ### Patch Changes
 
-- Updated dependencies \[a47d8d5]
-- Updated dependencies \[9240428]
+- Updated dependencies [a47d8d5](https://github.com/OpenFn/adaptors/commit/a47d8d5)
+- Updated dependencies [9240428](https://github.com/OpenFn/adaptors/commit/9240428)
   - @openfn/language-common@2.2.0
 
 ## 6.0.1 - 04 December 2024
 
 ### Patch Changes
 
-- ab94b7c: Fix links in docs examples
+- [ab94b7c](https://github.com/OpenFn/adaptors/commit/ab94b7c): Fix links in docs examples
 
 ## 6.0.0 - 28 November 2024
 
 ### Major Changes
 
-- b44a3b1: Migrates the adaptor to the new Tracker API (v36+) for
+- [b44a3b1](https://github.com/OpenFn/adaptors/commit/b44a3b1): Migrates the adaptor to the new Tracker API (v36+) for
   `trackedEntities`, `enrollments`, `events` and `relationships`. Note that
   `trackedEntities` is no longer used.
 
@@ -307,20 +307,20 @@ fn((state) => {
 
 ### Minor Changes
 
-- d30f39f: Added new post() operation
+- [d30f39f](https://github.com/OpenFn/adaptors/commit/d30f39f): Added new post() operation
 
 ## 5.0.8 - 26 November 2024
 
 ### Patch Changes
 
-- 94be282: Fix an issue where the path argument of update does not accept a
+- [94be282](https://github.com/OpenFn/adaptors/commit/94be282): Fix an issue where the path argument of update does not accept a
   function value
 
 ## 5.0.7 - 08 November 2024
 
 ### Patch Changes
 
-- 6cb5377: Removed support for DHIS2 v42
+- [6cb5377](https://github.com/OpenFn/adaptors/commit/6cb5377): Removed support for DHIS2 v42
 
 ## 5.0.6 - 28 October 2024
 
@@ -334,35 +334,35 @@ fn((state) => {
 
 ### Patch Changes
 
-- Updated dependencies \[03a1a74]
+- Updated dependencies [03a1a74](https://github.com/OpenFn/adaptors/commit/03a1a74)
   - @openfn/language-common@2.1.0
 
 ## 5.0.4 - 15 October 2024
 
 ### Patch Changes
 
-- Fixed security vulnerability in jsonpath-plus \[33973a2]
+- Fixed security vulnerability in jsonpath-plus [33973a2](https://github.com/OpenFn/adaptors/commit/33973a2)
   - @openfn/language-common@2.0.3
 
 ## 5.0.3 - 09 October 2024
 
 ### Patch Changes
 
-- 3fd13c2: Update axios to 1.7.7
+- [3fd13c2](https://github.com/OpenFn/adaptors/commit/3fd13c2): Update axios to 1.7.7
 
 ## 5.0.2 - 24 September 2024
 
 ### Patch Changes
 
-- Updated dependencies \[77a690f]
+- Updated dependencies [77a690f](https://github.com/OpenFn/adaptors/commit/77a690f)
   - @openfn/language-common@2.0.2
 
 ## 5.0.1 - 16 August 2024
 
 ### Patch Changes
 
-- 8146c23: Fix typings in package.json
-- Updated dependencies \[8146c23]
+- [8146c23](https://github.com/OpenFn/adaptors/commit/8146c23): Fix typings in package.json
+- Updated dependencies [8146c23](https://github.com/OpenFn/adaptors/commit/8146c23)
   - @openfn/language-common@2.0.1
 
 ## 5.0.0 - 01 August 2024
@@ -375,29 +375,29 @@ fn((state) => {
 
 ### Patch Changes
 
-- Updated dependencies \[4fe527c]
+- Updated dependencies [4fe527c](https://github.com/OpenFn/adaptors/commit/4fe527c)
   - @openfn/language-common@2.0.0
 
 ## 4.2.0 - 19 June 2024
 
 ### Minor Changes
 
-- 5fb82f07: Export `group` operation from common
+- [5fb82f07](https://github.com/OpenFn/adaptors/commit/5fb82f07): Export `group` operation from common
 
 ### Patch Changes
 
-- Updated dependencies \[5fb82f07]
+- Updated dependencies [5fb82f07](https://github.com/OpenFn/adaptors/commit/5fb82f07)
   - @openfn/language-common@1.15.0
 
 ## 4.1.0 - 13 June 2024
 
 ### Minor Changes
 
-- 73433c20: Add `fnIf` operation
+- [73433c20](https://github.com/OpenFn/adaptors/commit/73433c20): Add `fnIf` operation
 
 ### Patch Changes
 
-- Updated dependencies \[106ecf6d]
+- Updated dependencies [106ecf6d](https://github.com/OpenFn/adaptors/commit/106ecf6d)
   - @openfn/language-common@1.14.0
 
 ## 4.0.5 - 14 May 2024
@@ -418,7 +418,7 @@ fn((state) => {
 
 ### Patch Changes
 
-- 222184d: remove Class Log and replaced
+- [222184d](https://github.com/OpenFn/adaptors/commit/222184d): remove Class Log and replaced
 
   - `Log.success` with `console.log`
   - `Log.warn` with `console.warn`
@@ -428,7 +428,7 @@ fn((state) => {
 
 ### Patch Changes
 
-- 1bd612e: improve error logs response
+- [1bd612e](https://github.com/OpenFn/adaptors/commit/1bd612e): improve error logs response
 
 ## 4.0.1 - 19 June 2023
 
@@ -442,7 +442,7 @@ fn((state) => {
 
 ### Major Changes
 
-- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+- [2c1d603](https://github.com/OpenFn/adaptors/commit/2c1d603): Remove parameter reassignment to ensure proper functioning inside an
   `each` block; add eslint
 
   The packages receiving a major bump here exposed functions that didn't work as
@@ -454,35 +454,35 @@ fn((state) => {
 
 ### Patch Changes
 
-- Updated dependencies \[2c1d603]
+- Updated dependencies [2c1d603](https://github.com/OpenFn/adaptors/commit/2c1d603)
   - @openfn/language-common@1.8.0
 
 ## 3.2.12 - 31 May 2023
 
 ### Patch Changes
 
-- 57742d1: improve logs output
+- [57742d1](https://github.com/OpenFn/adaptors/commit/57742d1): improve logs output
 
 ## 3.2.11 - 31 March 2023
 
 ### Patch Changes
 
-- 705caab: Remove tools as devdependencies
+- [705caab](https://github.com/OpenFn/adaptors/commit/705caab): Remove tools as devdependencies
 
 ## 3.2.10 - 31 March 2023
 
 ### Patch Changes
 
-- 929bca6: Use metadata helper function from common
-- Updated dependencies \[929bca6]
+- [929bca6](https://github.com/OpenFn/adaptors/commit/929bca6): Use metadata helper function from common
+- Updated dependencies [929bca6](https://github.com/OpenFn/adaptors/commit/929bca6)
   - @openfn/language-common@1.7.7
 
 ## 3.2.9 - 30 March 2023
 
 ### Patch Changes
 
-- 14f481e: mark execute as private
-- Updated dependencies \[2b4c61a]
+- [14f481e](https://github.com/OpenFn/adaptors/commit/14f481e): mark execute as private
+- Updated dependencies [2b4c61a](https://github.com/OpenFn/adaptors/commit/2b4c61a)
   - @openfn/language-common@1.7.6
 
 ## 3.2.8 - 24 March 2023
@@ -495,46 +495,46 @@ fn((state) => {
 
 ### Patch Changes
 
-- c09b821: Add @magic annotations
+- [c09b821](https://github.com/OpenFn/adaptors/commit/c09b821): Add @magic annotations
 
 ## 3.2.6 - 16 February 2023
 
 ### Patch Changes
 
-- df6098d: replace sample state with configuration
+- [df6098d](https://github.com/OpenFn/adaptors/commit/df6098d): replace sample state with configuration
 
 ## 3.2.5 - 15 February 2023
 
 ### Patch Changes
 
-- f2aed32: add examples
+- [f2aed32](https://github.com/OpenFn/adaptors/commit/f2aed32): add examples
 
 ## 3.2.4 - 13 January 2023
 
 ### Patch Changes
 
-- 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
+- [6d8de03](https://github.com/OpenFn/adaptors/commit/6d8de03): change @constructor to @function and remove /\*\_ @module Adaptor \_/
 
 ## 3.2.3 - 11 November 2022
 
 ### Patch Changes
 
-- f2a91a4: Update package exports
-- Updated dependencies \[f2a91a4]
+- [f2a91a4](https://github.com/OpenFn/adaptors/commit/f2a91a4): Update package exports
+- Updated dependencies [f2a91a4](https://github.com/OpenFn/adaptors/commit/f2a91a4)
   - @openfn/language-common@1.7.5
 
 ## 3.2.2 - 04 November 2022
 
 ### Patch Changes
 
-- 9a2755e: Update dependency on language-common
-- 8566b26: Fix typings
-- b3d45ff: Fix CJS export of npm package.
-- ecf5d30: remove sinon since it was not being used
-- Updated dependencies \[8566b26]
-- Updated dependencies \[b3d45ff]
-- Updated dependencies \[b5eb665]
-- Updated dependencies \[ecf5d30]
+- [9a2755e](https://github.com/OpenFn/adaptors/commit/9a2755e): Update dependency on language-common
+- [8566b26](https://github.com/OpenFn/adaptors/commit/8566b26): Fix typings
+- [b3d45ff](https://github.com/OpenFn/adaptors/commit/b3d45ff): Fix CJS export of npm package.
+- [ecf5d30](https://github.com/OpenFn/adaptors/commit/ecf5d30): remove sinon since it was not being used
+- Updated dependencies [8566b26](https://github.com/OpenFn/adaptors/commit/8566b26)
+- Updated dependencies [b3d45ff](https://github.com/OpenFn/adaptors/commit/b3d45ff)
+- Updated dependencies [b5eb665](https://github.com/OpenFn/adaptors/commit/b5eb665)
+- Updated dependencies [ecf5d30](https://github.com/OpenFn/adaptors/commit/ecf5d30)
   - @openfn/language-common@1.7.4
   - @openfn/buildtools@1.0.2
 
@@ -542,22 +542,22 @@ fn((state) => {
 
 ### Patch Changes
 
-- e04aa28: Rename credential-schema to configuration-schema, update descriptions
+- [e04aa28](https://github.com/OpenFn/adaptors/commit/e04aa28): Rename credential-schema to configuration-schema, update descriptions
 
 ## 3.2.0 - 19 October 2022
 
 ### Minor Changes
 
-- f670bf8: Added credential schema to enable new ui
+- [f670bf8](https://github.com/OpenFn/adaptors/commit/f670bf8): Added credential schema to enable new ui
 
 ## 3.1.0 - 18 October 2022
 
 ### Minor Changes
 
-- 8d6e8ce: Migrate dhis2 into repo
+- [8d6e8ce](https://github.com/OpenFn/adaptors/commit/8d6e8ce): Migrate dhis2 into repo
 
 ### Patch Changes
 
-- Updated dependencies \[4671e89]
-- Updated dependencies \[8d6e8ce]
+- Updated dependencies [4671e89](https://github.com/OpenFn/adaptors/commit/4671e89)
+- Updated dependencies [8d6e8ce](https://github.com/OpenFn/adaptors/commit/8d6e8ce)
   - @openfn/buildtools@1.0.1

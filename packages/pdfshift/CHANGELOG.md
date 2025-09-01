@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 7c606ef: - Format response to `json` when `filename` option is passed.
+- [7c606ef](https://github.com/OpenFn/adaptors/commit/7c606ef): - Format response to `json` when `filename` option is passed.
   - Make `generatePDF()` function public
 
 ## 1.0.0 - 14 August 2025

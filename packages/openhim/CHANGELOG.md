@@ -4,152 +4,152 @@
 
 ### Major Changes
 
-- abfce90: Change `registerClient()` to `createClient()`. Remove
+- [abfce90](https://github.com/OpenFn/adaptors/commit/abfce90): Change `registerClient()` to `createClient()`. Remove
   `updateClient()`
 
 ## 1.0.0 - 14 July 2025
 
 ### Major Changes
 
-- 08b6f7b: - Implement `http` namespace with `GET`, `POST`, `PUT`, and `DELETE`
+- [08b6f7b](https://github.com/OpenFn/adaptors/commit/08b6f7b): - Implement `http` namespace with `GET`, `POST`, `PUT`, and `DELETE`
   - Add `client, tasks, transactions, and channels` functions
 
 ### Patch Changes
 
-- Updated dependencies \[9b5a4f8]
+- Updated dependencies [9b5a4f8](https://github.com/OpenFn/adaptors/commit/9b5a4f8)
   - @openfn/language-common@3.0.2
 
 ## 0.3.16 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[cf9c09f]
+- Updated dependencies [cf9c09f](https://github.com/OpenFn/adaptors/commit/cf9c09f)
   - @openfn/language-common@3.0.1
 
 ## 0.3.15 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[ea85695]
-- Updated dependencies \[3fce58f]
-- Updated dependencies \[19f2d7e]
-- Updated dependencies \[f26bd2b]
-- Updated dependencies \[19f2d7e]
+- Updated dependencies [ea85695](https://github.com/OpenFn/adaptors/commit/ea85695)
+- Updated dependencies [3fce58f](https://github.com/OpenFn/adaptors/commit/3fce58f)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
+- Updated dependencies [f26bd2b](https://github.com/OpenFn/adaptors/commit/f26bd2b)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
   - @openfn/language-common@3.0.0
 
 ## 0.3.14 - 20 June 2025
 
 ### Patch Changes
 
-- Updated dependencies \[28c2e8b]
+- Updated dependencies [28c2e8b](https://github.com/OpenFn/adaptors/commit/28c2e8b)
   - @openfn/language-common@2.5.0
 
 ## 0.3.13 - 22 April 2025
 
 ### Patch Changes
 
-- Updated dependencies \[99e4b48]
-- Updated dependencies \[13bf08f]
+- Updated dependencies [99e4b48](https://github.com/OpenFn/adaptors/commit/99e4b48)
+- Updated dependencies [13bf08f](https://github.com/OpenFn/adaptors/commit/13bf08f)
   - @openfn/language-common@2.4.0
 
 ## 0.3.12 - 16 April 2025
 
 ### Patch Changes
 
-- Updated dependencies \[b089c56]
+- Updated dependencies [b089c56](https://github.com/OpenFn/adaptors/commit/b089c56)
   - @openfn/language-common@2.3.3
 
 ## 0.3.11 - 11 April 2025
 
 ### Patch Changes
 
-- Updated dependencies \[d7105c0]
+- Updated dependencies [d7105c0](https://github.com/OpenFn/adaptors/commit/d7105c0)
   - @openfn/language-common@2.3.2
 
 ## 0.3.10 - 14 March 2025
 
 ### Patch Changes
 
-- Updated dependencies \[23ccb01]
+- Updated dependencies [23ccb01](https://github.com/OpenFn/adaptors/commit/23ccb01)
   - @openfn/language-common@2.3.1
 
 ## 0.3.9 - 10 March 2025
 
 ### Patch Changes
 
-- 8a8c28d: - cleanup examples wrapped with `execute()` function
+- [8a8c28d](https://github.com/OpenFn/adaptors/commit/8a8c28d): - cleanup examples wrapped with `execute()` function
   - Add example caption and add sample payload
 
 ## 0.3.8 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies \[b3d7f59]
-- Updated dependencies \[2d709ff]
-- Updated dependencies \[41e8cc3]
+- Updated dependencies [b3d7f59](https://github.com/OpenFn/adaptors/commit/b3d7f59)
+- Updated dependencies [2d709ff](https://github.com/OpenFn/adaptors/commit/2d709ff)
+- Updated dependencies [41e8cc3](https://github.com/OpenFn/adaptors/commit/41e8cc3)
   - @openfn/language-common@2.3.0
 
 ## 0.3.7 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies \[6dffdbd]
+- Updated dependencies [6dffdbd](https://github.com/OpenFn/adaptors/commit/6dffdbd)
   - @openfn/language-common@2.2.1
 
 ## 0.3.6 - 09 January 2025
 
 ### Patch Changes
 
-- cb9b3c5: Security update
-- Updated dependencies \[a47d8d5]
-- Updated dependencies \[9240428]
+- [cb9b3c5](https://github.com/OpenFn/adaptors/commit/cb9b3c5): Security update
+- Updated dependencies [a47d8d5](https://github.com/OpenFn/adaptors/commit/a47d8d5)
+- Updated dependencies [9240428](https://github.com/OpenFn/adaptors/commit/9240428)
   - @openfn/language-common@2.2.0
 
 ## 0.3.5 - 18 October 2024
 
 ### Patch Changes
 
-- Updated dependencies \[03a1a74]
+- Updated dependencies [03a1a74](https://github.com/OpenFn/adaptors/commit/03a1a74)
   - @openfn/language-common@2.1.0
 
 ## 0.3.4 - 15 October 2024
 
 ### Patch Changes
 
-- Fixed security vulnerability in jsonpath-plus \[33973a2]
+- Fixed security vulnerability in jsonpath-plus [33973a2](https://github.com/OpenFn/adaptors/commit/33973a2)
   - @openfn/language-common@2.0.3
 
 ## 0.3.3 - 24 September 2024
 
 ### Patch Changes
 
-- Updated dependencies \[77a690f]
+- Updated dependencies [77a690f](https://github.com/OpenFn/adaptors/commit/77a690f)
   - @openfn/language-common@2.0.2
 
 ## 0.3.2 - 16 August 2024
 
 ### Patch Changes
 
-- 8146c23: Fix typings in package.json
-- Updated dependencies \[8146c23]
+- [8146c23](https://github.com/OpenFn/adaptors/commit/8146c23): Fix typings in package.json
+- Updated dependencies [8146c23](https://github.com/OpenFn/adaptors/commit/8146c23)
   - @openfn/language-common@2.0.1
 
 ## 0.3.1 - 01 August 2024
 
 ### Patch Changes
 
-- Updated dependencies \[4fe527c]
+- Updated dependencies [4fe527c](https://github.com/OpenFn/adaptors/commit/4fe527c)
   - @openfn/language-common@2.0.0
 
 ## 0.3.0 - 13 June 2024
 
 ### Minor Changes
 
-- 73433c20: Add `fnIf` operation
+- [73433c20](https://github.com/OpenFn/adaptors/commit/73433c20): Add `fnIf` operation
 
 ### Patch Changes
 
-- Updated dependencies \[106ecf6d]
+- Updated dependencies [106ecf6d](https://github.com/OpenFn/adaptors/commit/106ecf6d)
   - @openfn/language-common@1.14.0
 
 ## 0.2.1 - 19 June 2023
@@ -164,7 +164,7 @@
 
 ### Minor Changes
 
-- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+- [2c1d603](https://github.com/OpenFn/adaptors/commit/2c1d603): Remove parameter reassignment to ensure proper functioning inside an
   `each` block; add eslint
 
   The packages receiving a major bump here exposed functions that didn't work as
@@ -176,42 +176,42 @@
 
 ### Patch Changes
 
-- Updated dependencies \[2c1d603]
+- Updated dependencies [2c1d603](https://github.com/OpenFn/adaptors/commit/2c1d603)
   - @openfn/language-common@1.8.0
 
 ## 0.1.4 - 30 March 2023
 
 ### Patch Changes
 
-- 14f481e: mark execute as private
-- Updated dependencies \[2b4c61a]
+- [14f481e](https://github.com/OpenFn/adaptors/commit/14f481e): mark execute as private
+- Updated dependencies [2b4c61a](https://github.com/OpenFn/adaptors/commit/2b4c61a)
   - @openfn/language-common@1.7.6
 
 ## 0.1.3 - 15 February 2023
 
 ### Patch Changes
 
-- f7ebd3c: remove sample configuration
+- [f7ebd3c](https://github.com/OpenFn/adaptors/commit/f7ebd3c): remove sample configuration
 
 ## 0.1.2 - 15 February 2023
 
 ### Patch Changes
 
-- f2aed32: add examples
+- [f2aed32](https://github.com/OpenFn/adaptors/commit/f2aed32): add examples
 
 ## 0.1.1 - 13 January 2023
 
 ### Patch Changes
 
-- 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
+- [6d8de03](https://github.com/OpenFn/adaptors/commit/6d8de03): change @constructor to @function and remove /\*\_ @module Adaptor \_/
 
 ## 0.1.0 - 25 November 2022
 
 ### Minor Changes
 
-- 1fd9b3b: Migrate OpenHIM
+- [1fd9b3b](https://github.com/OpenFn/adaptors/commit/1fd9b3b): Migrate OpenHIM
 
 ### Patch Changes
 
-- e4ebcb6: Fix Large gzip Denial of Service in superagent
-- e81561f: Updated ast and package.json
+- [e4ebcb6](https://github.com/OpenFn/adaptors/commit/e4ebcb6): Fix Large gzip Denial of Service in superagent
+- [e81561f](https://github.com/OpenFn/adaptors/commit/e81561f): Updated ast and package.json

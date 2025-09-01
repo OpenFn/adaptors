@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-- a5cea4e: removed `http` export from `@openfn/language-common`
+- [a5cea4e](https://github.com/OpenFn/adaptors/commit/a5cea4e): removed `http` export from `@openfn/language-common`
 
   ### Migration Guide
 
@@ -39,102 +39,102 @@
 
 ### Patch Changes
 
-- Updated dependencies \[9b5a4f8]
+- Updated dependencies [9b5a4f8](https://github.com/OpenFn/adaptors/commit/9b5a4f8)
   - @openfn/language-common@3.0.2
 
 ## 1.3.4 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[cf9c09f]
+- Updated dependencies [cf9c09f](https://github.com/OpenFn/adaptors/commit/cf9c09f)
   - @openfn/language-common@3.0.1
 
 ## 1.3.3 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[ea85695]
-- Updated dependencies \[3fce58f]
-- Updated dependencies \[19f2d7e]
-- Updated dependencies \[f26bd2b]
-- Updated dependencies \[19f2d7e]
+- Updated dependencies [ea85695](https://github.com/OpenFn/adaptors/commit/ea85695)
+- Updated dependencies [3fce58f](https://github.com/OpenFn/adaptors/commit/3fce58f)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
+- Updated dependencies [f26bd2b](https://github.com/OpenFn/adaptors/commit/f26bd2b)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
   - @openfn/language-common@3.0.0
 
 ## 1.3.2 - 03 July 2025
 
 ### Patch Changes
 
-- ead4e42: Added support for sending emails with or without attachments in the
+- [ead4e42](https://github.com/OpenFn/adaptors/commit/ead4e42): Added support for sending emails with or without attachments in the
   `sendMessage` function
 
 ## 1.3.1 - 20 June 2025
 
 ### Patch Changes
 
-- Updated dependencies \[28c2e8b]
+- Updated dependencies [28c2e8b](https://github.com/OpenFn/adaptors/commit/28c2e8b)
   - @openfn/language-common@2.5.0
 
 ## 1.3.0 - 30 May 2025
 
 ### Minor Changes
 
-- 1205796: Enhance `sendMessage()` to accept an array of configuration objects,
+- [1205796](https://github.com/OpenFn/adaptors/commit/1205796): Enhance `sendMessage()` to accept an array of configuration objects,
   allowing multiple messages to be send in a single command.
 
 ## 1.2.0 - 22 April 2025
 
 ### Minor Changes
 
-- 7d6d513: Added support for sending messages. Upgraded zip library to support
+- [7d6d513](https://github.com/OpenFn/adaptors/commit/7d6d513): Added support for sending messages. Upgraded zip library to support
   creating archives as well as reading archives.
 
 ### Patch Changes
 
-- 99e4b48: - Better handling of HTML content in http requests
+- [99e4b48](https://github.com/OpenFn/adaptors/commit/99e4b48): - Better handling of HTML content in http requests
   - When logging HTTP requests, include query parameters
-- Updated dependencies \[99e4b48]
-- Updated dependencies \[13bf08f]
+- Updated dependencies [99e4b48](https://github.com/OpenFn/adaptors/commit/99e4b48)
+- Updated dependencies [13bf08f](https://github.com/OpenFn/adaptors/commit/13bf08f)
   - @openfn/language-common@2.4.0
 
 ## 1.1.4 - 16 April 2025
 
 ### Patch Changes
 
-- Updated dependencies \[b089c56]
+- Updated dependencies [b089c56](https://github.com/OpenFn/adaptors/commit/b089c56)
   - @openfn/language-common@2.3.3
 
 ## 1.1.3 - 11 April 2025
 
 ### Patch Changes
 
-- Updated dependencies \[d7105c0]
+- Updated dependencies [d7105c0](https://github.com/OpenFn/adaptors/commit/d7105c0)
   - @openfn/language-common@2.3.2
 
 ## 1.1.2 - 14 March 2025
 
 ### Patch Changes
 
-- Updated dependencies \[23ccb01]
+- Updated dependencies [23ccb01](https://github.com/OpenFn/adaptors/commit/23ccb01)
   - @openfn/language-common@2.3.1
 
 ## 1.1.1 - 05 February 2025
 
 ### Patch Changes
 
-- 658971a: Fixed bug which prevented multiple content of the same "type" and now
+- [658971a](https://github.com/OpenFn/adaptors/commit/658971a): Fixed bug which prevented multiple content of the same "type" and now
   correctly works to prevent multiple of the same "name".
 
 ## 1.1.0 - 23 January 2025
 
 ### Minor Changes
 
-- 8203e90: Added options.maxResults field to limit excessive data transfer.
+- [8203e90](https://github.com/OpenFn/adaptors/commit/8203e90): Added options.maxResults field to limit excessive data transfer.
 
 ## 1.0.1 - 18 January 2025
 
 ### Patch Changes
 
-- 01b4aa9: This patch includes breaking changes to the API - but since the
+- [01b4aa9](https://github.com/OpenFn/adaptors/commit/01b4aa9): This patch includes breaking changes to the API - but since the
   adpator has only been released a couple of days we don't anticipate this
   affecting any users.
 

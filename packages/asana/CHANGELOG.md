@@ -4,13 +4,13 @@
 
 ### Patch Changes
 
-- 05aae5f: Default `resource_subtype` to `default_task` in `searchTask()`
+- [05aae5f](https://github.com/OpenFn/adaptors/commit/05aae5f): Default `resource_subtype` to `default_task` in `searchTask()`
 
 ## 5.0.0 - 11 August 2025
 
 ### Major Changes
 
-- a5cea4e: removed `http` export from `@openfn/language-common`
+- [a5cea4e](https://github.com/OpenFn/adaptors/commit/a5cea4e): removed `http` export from `@openfn/language-common`
 
   ### Migration Guide
 
@@ -45,49 +45,49 @@
 
 ### Minor Changes
 
-- 3fae9d2: Add `searchTask` function
+- [3fae9d2](https://github.com/OpenFn/adaptors/commit/3fae9d2): Add `searchTask` function
 
 ## 4.2.2 - 14 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[9b5a4f8]
+- Updated dependencies [9b5a4f8](https://github.com/OpenFn/adaptors/commit/9b5a4f8)
   - @openfn/language-common@3.0.2
 
 ## 4.2.1 - 10 July 2025
 
 ### Patch Changes
 
-- Updated dependencies \[cf9c09f]
+- Updated dependencies [cf9c09f](https://github.com/OpenFn/adaptors/commit/cf9c09f)
   - @openfn/language-common@3.0.1
 
 ## 4.2.0 - 10 July 2025
 
 ### Minor Changes
 
-- 19f2d7e: Exported `as()` function from common.
+- [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e): Exported `as()` function from common.
 
 ### Patch Changes
 
-- Updated dependencies \[ea85695]
-- Updated dependencies \[3fce58f]
-- Updated dependencies \[19f2d7e]
-- Updated dependencies \[f26bd2b]
-- Updated dependencies \[19f2d7e]
+- Updated dependencies [ea85695](https://github.com/OpenFn/adaptors/commit/ea85695)
+- Updated dependencies [3fce58f](https://github.com/OpenFn/adaptors/commit/3fce58f)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
+- Updated dependencies [f26bd2b](https://github.com/OpenFn/adaptors/commit/f26bd2b)
+- Updated dependencies [19f2d7e](https://github.com/OpenFn/adaptors/commit/19f2d7e)
   - @openfn/language-common@3.0.0
 
 ## 4.1.1 - 20 June 2025
 
 ### Patch Changes
 
-- Updated dependencies \[28c2e8b]
+- Updated dependencies [28c2e8b](https://github.com/OpenFn/adaptors/commit/28c2e8b)
   - @openfn/language-common@2.5.0
 
 ## 4.1.0 - 17 June 2025
 
 ### Minor Changes
 
-- d1edd7c: #### Add Auto Pagination to `getTasks` and `upsertTask` Functions
+- [d1edd7c](https://github.com/OpenFn/adaptors/commit/d1edd7c): #### Add Auto Pagination to `getTasks` and `upsertTask` Functions
 
   ##### `getTasks` Function:
 
@@ -117,55 +117,55 @@
 
 ### Patch Changes
 
-- 99e4b48: - Better handling of HTML content in http requests
+- [99e4b48](https://github.com/OpenFn/adaptors/commit/99e4b48): - Better handling of HTML content in http requests
   - When logging HTTP requests, include query parameters
-- Updated dependencies \[99e4b48]
-- Updated dependencies \[13bf08f]
+- Updated dependencies [99e4b48](https://github.com/OpenFn/adaptors/commit/99e4b48)
+- Updated dependencies [13bf08f](https://github.com/OpenFn/adaptors/commit/13bf08f)
   - @openfn/language-common@2.4.0
 
 ## 4.0.11 - 16 April 2025
 
 ### Patch Changes
 
-- Updated dependencies \[b089c56]
+- Updated dependencies [b089c56](https://github.com/OpenFn/adaptors/commit/b089c56)
   - @openfn/language-common@2.3.3
 
 ## 4.0.10 - 11 April 2025
 
 ### Patch Changes
 
-- Updated dependencies \[d7105c0]
+- Updated dependencies [d7105c0](https://github.com/OpenFn/adaptors/commit/d7105c0)
   - @openfn/language-common@2.3.2
 
 ## 4.0.9 - 14 March 2025
 
 ### Patch Changes
 
-- Updated dependencies \[23ccb01]
+- Updated dependencies [23ccb01](https://github.com/OpenFn/adaptors/commit/23ccb01)
   - @openfn/language-common@2.3.1
 
 ## 4.0.8 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies \[b3d7f59]
-- Updated dependencies \[2d709ff]
-- Updated dependencies \[41e8cc3]
+- Updated dependencies [b3d7f59](https://github.com/OpenFn/adaptors/commit/b3d7f59)
+- Updated dependencies [2d709ff](https://github.com/OpenFn/adaptors/commit/2d709ff)
+- Updated dependencies [41e8cc3](https://github.com/OpenFn/adaptors/commit/41e8cc3)
   - @openfn/language-common@2.3.0
 
 ## 4.0.7 - 16 January 2025
 
 ### Patch Changes
 
-- Updated dependencies \[6dffdbd]
+- Updated dependencies [6dffdbd](https://github.com/OpenFn/adaptors/commit/6dffdbd)
   - @openfn/language-common@2.2.1
 
 ## 4.0.6 - 09 January 2025
 
 ### Patch Changes
 
-- Updated dependencies \[a47d8d5]
-- Updated dependencies \[9240428]
+- Updated dependencies [a47d8d5](https://github.com/OpenFn/adaptors/commit/a47d8d5)
+- Updated dependencies [9240428](https://github.com/OpenFn/adaptors/commit/9240428)
   - @openfn/language-common@2.2.0
 
 ## 4.0.5 - 28 October 2024
@@ -180,29 +180,29 @@
 
 ### Patch Changes
 
-- Updated dependencies \[03a1a74]
+- Updated dependencies [03a1a74](https://github.com/OpenFn/adaptors/commit/03a1a74)
   - @openfn/language-common@2.1.0
 
 ## 4.0.3 - 15 October 2024
 
 ### Patch Changes
 
-- Fixed security vulnerability in jsonpath-plus \[33973a2]
+- Fixed security vulnerability in jsonpath-plus [33973a2](https://github.com/OpenFn/adaptors/commit/33973a2)
   - @openfn/language-common@2.0.3
 
 ## 4.0.2 - 24 September 2024
 
 ### Patch Changes
 
-- Updated dependencies \[77a690f]
+- Updated dependencies [77a690f](https://github.com/OpenFn/adaptors/commit/77a690f)
   - @openfn/language-common@2.0.2
 
 ## 4.0.1 - 16 August 2024
 
 ### Patch Changes
 
-- 8146c23: Fix typings in package.json
-- Updated dependencies \[8146c23]
+- [8146c23](https://github.com/OpenFn/adaptors/commit/8146c23): Fix typings in package.json
+- Updated dependencies [8146c23](https://github.com/OpenFn/adaptors/commit/8146c23)
   - @openfn/language-common@2.0.1
 
 ## 4.0.0 - 01 August 2024
@@ -215,42 +215,42 @@
 
 ### Patch Changes
 
-- 510354a: Don't allow HTTP helpers to call out to different domains. This can
+- [510354a](https://github.com/OpenFn/adaptors/commit/510354a): Don't allow HTTP helpers to call out to different domains. This can
   cause a security violation where credentials are sent to external servers. Use
   generic HTTP helpers like `http.get` or `fetch` instead.
-- 510354a: Fix an issue where not passing a params argument would trigger an
+- [510354a](https://github.com/OpenFn/adaptors/commit/510354a): Fix an issue where not passing a params argument would trigger an
   exception
-- Updated dependencies \[4fe527c]
+- Updated dependencies [4fe527c](https://github.com/OpenFn/adaptors/commit/4fe527c)
   - @openfn/language-common@2.0.0
 
 ## 3.3.0 - 13 June 2024
 
 ### Minor Changes
 
-- 73433c20: Add `fnIf` operation
+- [73433c20](https://github.com/OpenFn/adaptors/commit/73433c20): Add `fnIf` operation
 
 ### Patch Changes
 
-- Updated dependencies \[106ecf6d]
+- Updated dependencies [106ecf6d](https://github.com/OpenFn/adaptors/commit/106ecf6d)
   - @openfn/language-common@1.14.0
 
 ## 3.2.0 - 12 April 2024
 
 ### Minor Changes
 
-- bae5d3b6: Add the cursor() function from common. See the job writing guide for
+- [bae5d3b6](https://github.com/OpenFn/adaptors/commit/bae5d3b6): Add the cursor() function from common. See the job writing guide for
   more information.
 
 ### Patch Changes
 
-- Updated dependencies \[1ad86651]
+- Updated dependencies [1ad86651](https://github.com/OpenFn/adaptors/commit/1ad86651)
   - @openfn/language-common@1.13.0
 
 ## 3.1.0 - 03 April 2024
 
 ### Minor Changes
 
-- 673e41e8: - Add `createTaskStory()` function
+- [673e41e8](https://github.com/OpenFn/adaptors/commit/673e41e8): - Add `createTaskStory()` function
   - Replaced common `http` with a more efficient implementation from
     `common/util` http
 
@@ -266,7 +266,7 @@
 
 ### Major Changes
 
-- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an
+- [2c1d603](https://github.com/OpenFn/adaptors/commit/2c1d603): Remove parameter reassignment to ensure proper functioning inside an
   `each` block; add eslint
 
   The packages receiving a major bump here exposed functions that didn't work as
@@ -278,62 +278,62 @@
 
 ### Patch Changes
 
-- Updated dependencies \[2c1d603]
+- Updated dependencies [2c1d603](https://github.com/OpenFn/adaptors/commit/2c1d603)
   - @openfn/language-common@1.8.0
 
 ## 2.1.6 - 30 March 2023
 
 ### Patch Changes
 
-- 14f481e: mark execute as private
-- Updated dependencies \[2b4c61a]
+- [14f481e](https://github.com/OpenFn/adaptors/commit/14f481e): mark execute as private
+- Updated dependencies [2b4c61a](https://github.com/OpenFn/adaptors/commit/2b4c61a)
   - @openfn/language-common@1.7.6
 
 ## 2.1.5 - 15 February 2023
 
 ### Patch Changes
 
-- f7ebd3c: remove sample configuration
+- [f7ebd3c](https://github.com/OpenFn/adaptors/commit/f7ebd3c): remove sample configuration
 
 ## 2.1.4 - 15 February 2023
 
 ### Patch Changes
 
-- f2aed32: add examples
+- [f2aed32](https://github.com/OpenFn/adaptors/commit/f2aed32): add examples
 
 ## 2.1.3 - 13 January 2023
 
 ### Patch Changes
 
-- 6d8de03: change @constructor to @function and remove /\*\_ @module Adaptor \_/
+- [6d8de03](https://github.com/OpenFn/adaptors/commit/6d8de03): change @constructor to @function and remove /\*\_ @module Adaptor \_/
 
 ## 2.1.2 - 11 November 2022
 
 ### Patch Changes
 
-- f2a91a4: Update package exports
-- Updated dependencies \[f2a91a4]
+- [f2a91a4](https://github.com/OpenFn/adaptors/commit/f2a91a4): Update package exports
+- Updated dependencies [f2a91a4](https://github.com/OpenFn/adaptors/commit/f2a91a4)
   - @openfn/language-common@1.7.5
 
 ## 2.1.1 - 04 November 2022
 
 ### Patch Changes
 
-- 8566b26: Fix typings
-- b3d45ff: Fix CJS export of npm package.
-- ecf5d30: remove sinon since it was not being used
-- Updated dependencies \[8566b26]
-- Updated dependencies \[b3d45ff]
-- Updated dependencies \[b5eb665]
-- Updated dependencies \[ecf5d30]
+- [8566b26](https://github.com/OpenFn/adaptors/commit/8566b26): Fix typings
+- [b3d45ff](https://github.com/OpenFn/adaptors/commit/b3d45ff): Fix CJS export of npm package.
+- [ecf5d30](https://github.com/OpenFn/adaptors/commit/ecf5d30): remove sinon since it was not being used
+- Updated dependencies [8566b26](https://github.com/OpenFn/adaptors/commit/8566b26)
+- Updated dependencies [b3d45ff](https://github.com/OpenFn/adaptors/commit/b3d45ff)
+- Updated dependencies [b5eb665](https://github.com/OpenFn/adaptors/commit/b5eb665)
+- Updated dependencies [ecf5d30](https://github.com/OpenFn/adaptors/commit/ecf5d30)
   - @openfn/language-common@1.7.4
 
 ## 2.1.0 - 21 October 2022
 
 ### Minor Changes
 
-- 5f40dcf: Migrated language-asana
+- [5f40dcf](https://github.com/OpenFn/adaptors/commit/5f40dcf): Migrated language-asana
 
 ### Patch Changes
 
-- e04aa28: Rename credential-schema to configuration-schema, update descriptions
+- [e04aa28](https://github.com/OpenFn/adaptors/commit/e04aa28): Rename credential-schema to configuration-schema, update descriptions
