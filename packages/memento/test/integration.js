@@ -27,7 +27,7 @@ describe('http', () => {
         expect(error.body.reasonPhrase).to.eql('Unauthorized');
       });
   });
-  it.only('should auto throttle when api rate limit exceeded', async () => {
+  it('should auto throttle when api rate limit exceeded', async () => {
     const { data } = await getEntries('6AJPFZhgy', {
       pageSize: 10,
       snoozeTime: 100, //this will force rate limit exceeded
