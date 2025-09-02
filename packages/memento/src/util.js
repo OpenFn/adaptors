@@ -161,6 +161,7 @@ export async function requestWithPagination(state, method, path, params = {}) {
       requestTimes.push(Date.now());
       response = await request(state, method, path, requestOptions);
     } catch (error) {
+      console.log('Error:', error.body);
       if (
         error.body?.description === 'API rate limit exceeded' &&
         error.body?.code === 403
