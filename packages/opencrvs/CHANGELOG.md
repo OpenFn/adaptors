@@ -1,5 +1,13 @@
 # @openfn/language-opencrvs
 
+## 1.0.4 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+  - @openfn/language-fhir-4@0.1.10
+
 ## 1.0.3 - 28 August 2025
 
 ### Patch Changes

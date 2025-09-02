@@ -1,5 +1,11 @@
 ## 3.0.1 - 11 July 2025
 
+## 3.0.3 - 01 September 2025
+
+### Patch Changes
+
+- 1d60531: Update `fnIf` function docs
+
 ## 3.0.2 - 14 July 2025
 
 ### Patch Changes

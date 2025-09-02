@@ -1,5 +1,14 @@
 # @openfn/language-kobotoolbox
 
+## 4.2.3 - 01 September 2025
+
+### Patch Changes
+
+- df258c5: Update `http.request` option docs to use `data` instead of `body` in
+  requests
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
 ## 4.2.2 - 14 July 2025
 
 ### Patch Changes

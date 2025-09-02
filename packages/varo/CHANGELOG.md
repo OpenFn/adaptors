@@ -1,5 +1,12 @@
 # @openfn/language-varo
 
+## 2.1.1 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
 ## 2.1.0 - 29 August 2025
 
 ### Minor Changes
