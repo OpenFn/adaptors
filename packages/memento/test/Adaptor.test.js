@@ -31,7 +31,7 @@ describe('Adaptor', () => {
   });
   describe('getEntries', () => {
     it('should fetch all entries', async () => {
-      const pageSize = 1;
+      const pageSize = 10;
       mockEntriesPagination(testServer, '/v1/libraries/HyZV7AYk0/entries', {
         pageSize,
         totalPage: 11,
@@ -40,7 +40,8 @@ describe('Adaptor', () => {
 
       const { data } = await getEntries('HyZV7AYk0', {
         pageSize,
-        throttleTime: 1000,
+        throttleTime: 10000,
+        maxRequests: 10,
       })(state);
 
       expect(data.entries.length).to.eql(11);
