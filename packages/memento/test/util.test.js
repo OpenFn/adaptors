@@ -53,13 +53,17 @@ describe('requestWithPagination', () => {
     const { data } = await requestWithPagination(
       state,
       'GET',
-      'libraries/HyZV7AYk0/entries'
+      'libraries/HyZV7AYk0/entries',
+      {
+        throttleTime: 1000,
+        maxRequests: 10,
+      }
     );
 
     expect(data.entries.length).to.eql(1);
     expect(data.nextPageToken).to.eql(undefined);
     expect(data.revision).to.eql(5);
-  });
+  }).timeout(6e4);
 
   it('should return the correct revision', async () => {
     testServer
@@ -83,8 +87,8 @@ describe('requestWithPagination', () => {
     expect(data.revision).to.eql(4);
   });
 
-  it('should auto throttle for 1 minute when the number of requests >= 10', async () => {
-    const pageSize = 1;
+  it('should auto throttle when throttleTime and maxRequests are set', async () => {
+    const pageSize = 10;
 
     mockEntriesPagination(testServer, '/v1/libraries/HyZV7AYk0/entries', {
       pageSize,
@@ -102,6 +106,32 @@ describe('requestWithPagination', () => {
           fields: 'all',
         },
         throttleTime: 1000,
+        maxRequests: 10,
+      }
+    );
+    expect(data.entries.length).to.eql(11);
+    expect(data.nextPageToken).to.eql(undefined);
+  }).timeout(6e4 + 1000);
+  it('should auto throttle when requests exceed limit', async () => {
+    const pageSize = 10;
+
+    mockEntriesPagination(testServer, '/v1/libraries/HyZV7AYk0/entries', {
+      pageSize,
+      totalPage: 11,
+      fields: 'all',
+    });
+    const { data } = await requestWithPagination(
+      state,
+      'GET',
+      'libraries/HyZV7AYk0/entries',
+      {
+        throttleTime: 1000,
+        maxRequests: 10,
+        snoozeTime: 100, //this will force rate limit exceeded
+        query: {
+          pageSize,
+          fields: 'all',
+        },
       }
     );
     expect(data.entries.length).to.eql(11);
