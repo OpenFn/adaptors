@@ -33,6 +33,6 @@ const createEntriesResponse = (currentPage, totalPages, pageSize) => {
     ...(isLastPage
       ? { nextPageToken: undefined }
       : { nextPageToken: currentPage + 1 }),
-    revision: currentPage === 1 ? 4 : 5,
+    revision: Math.floor(Math.random() * 100),
   };
 };
