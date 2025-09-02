@@ -1,6 +1,5 @@
 export const mockEntriesPagination = (testServer, path, opts = {}) => {
   const { totalPage = 10, pageSize = 1, fields } = opts;
-  console.log({ totalPage, pageSize, fields });
   // First page response
   testServer
     .intercept({
@@ -35,4 +34,33 @@ const createEntriesResponse = (currentPage, totalPages, pageSize) => {
       : { nextPageToken: currentPage + 1 }),
     revision: Math.floor(Math.random() * 100),
   };
+};
+
+export const mockRateLimitExceeded = (testServer, path, opts = {}) => {
+  const { totalPage = 10, pageSize = 1, fields } = opts;
+  // First page response
+  testServer
+    .intercept({
+      path,
+      method: 'GET',
+      query: { token: 'user-api-token', pageSize, fields },
+    })
+    .reply(200, createEntriesResponse(1, totalPage, pageSize));
+
+  // Subsequent pages
+  testServer
+    .intercept({
+      path,
+      method: 'GET',
+      query: { token: 'user-api-token', pageSize, pageToken: 2, fields },
+    })
+    .reply(403, { description: 'API rate limit exceeded', code: 403 });
+
+  testServer
+    .intercept({
+      path,
+      method: 'GET',
+      query: { token: 'user-api-token', pageSize, pageToken: 2, fields },
+    })
+    .reply(200, createEntriesResponse(2, totalPage, pageSize));
 };

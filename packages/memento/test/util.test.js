@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { requestWithPagination } from '../src/util';
-import { mockEntriesPagination } from './helpers';
+import { mockEntriesPagination, mockRateLimitExceeded } from './helpers';
 import { enableMockClient } from '@openfn/language-common/util';
 
 const testServer = enableMockClient('https://util.mementodatabase.com');
@@ -64,7 +64,7 @@ describe('requestWithPagination', () => {
   it('should auto throttle when requests exceed limit', async () => {
     const pageSize = 10;
 
-    mockEntriesPagination(testServer, '/v1/libraries/HyZV7AYk0/entries', {
+    mockRateLimitExceeded(testServer, '/v1/libraries/HyZV7AYk0/entries', {
       pageSize,
       totalPage: 11,
       fields: 'all',
