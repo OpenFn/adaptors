@@ -63,6 +63,62 @@ export function sendRequest(state, method, path, params = {}) {
 }
 
 export const DEFAULT_THROTTLE_TIME = 6e4;
+export const DEFAULT_MAX_REQUESTS = 10;
+/**
+ * Handles rate limiting by tracking request timestamps and calculating wait times
+ * @private
+ * @param {Array} requestTimes - Array of request timestamps
+ * @param {number} {options.requestCount} - Current request count
+ * @param {number} {options.throttleTime} - Time in ms to wait between throttled requests
+ * @param {number} {options.maxRequests} - Maximum number of requests allowed within throttleTime
+ * @param {number} {options.waitingTime} - Time in ms to wait between requests
+ * @returns {Promise<void>} Promise that resolves after appropriate wait time
+ */
+async function handleRateLimit(requestTimes, options) {
+  const { requestCount, throttleTime, maxRequests, waitingTime } = options;
+  const now = Date.now();
+
+  // Clean up old request times (older than throttleTime)
+  while (requestTimes.length > 0 && now - requestTimes[0] > throttleTime) {
+    requestTimes.shift();
+  }
+
+  // If we have maxRequests requests in the last throttleTime, wait until the oldest expires
+  if (requestTimes.length >= maxRequests) {
+    const timeUntilOldestExpires =
+      throttleTime - (now - requestTimes[0]) + waitingTime; // 1s buffer
+    console.log(`Rate limiting: waiting ${timeUntilOldestExpires / 1000}s`);
+    await new Promise(resolve => setTimeout(resolve, timeUntilOldestExpires));
+  } else if (requestCount > 0) {
+    // Wait waitingTime between requests to be safe
+    console.log(`Waiting ${waitingTime / 1000}s between requests`);
+    await new Promise(resolve => setTimeout(resolve, waitingTime));
+  }
+}
+
+/**
+ * Handles rate limit exceeded error by calculating appropriate wait time
+ * @param {Array} requestTimes - Array of request timestamps
+ * @param {Object} options - Options for the request
+ * @param {number} options.throttleTime - Time in ms to wait between throttled requests
+ * @param {number} options.waitingTime - Time in ms to wait between requests
+ * @private
+ * @returns {Promise<void>} Promise that resolves after appropriate wait time
+ */
+async function handleRateLimitExceeded(requestTimes, options) {
+  const { throttleTime, waitingTime } = options;
+  const now = Date.now();
+  while (requestTimes.length > 0 && now - requestTimes[0] > throttleTime) {
+    requestTimes.shift();
+  }
+  const timeUntilOldestExpires =
+    requestTimes.length > 0
+      ? throttleTime - (now - requestTimes[0]) + waitingTime
+      : throttleTime;
+  console.log(`Rate limit exceeded, waiting ${timeUntilOldestExpires / 1000}s`);
+  await new Promise(resolve => setTimeout(resolve, timeUntilOldestExpires));
+}
+
 /**
  * Makes paginated API requests to fetch all available data.
  *
@@ -70,7 +126,6 @@ export const DEFAULT_THROTTLE_TIME = 6e4;
  * @param {string} method - The HTTP method to use (GET, POST, etc.)
  * @param {string} path - The API endpoint path
  * @param {Object} [params={}] - Optional parameters for the request
- * @param {number} [params.throttleTime] - Time in ms to wait between throttled requests
  * @param {Object} [params.query] - Query parameters for the request
  * @returns {Promise<Object>} A promise that resolves to the new state with:
  *   - entries: Array of all fetched items
@@ -81,34 +136,44 @@ export const DEFAULT_THROTTLE_TIME = 6e4;
 export async function requestWithPagination(state, method, path, params = {}) {
   const {
     throttleTime = DEFAULT_THROTTLE_TIME,
+    maxRequests = DEFAULT_MAX_REQUESTS,
+    snoozeTime,
     query = {},
     ...restOfOptions
   } = params;
-
+  const waitingTime =
+    snoozeTime ?? Math.ceil(throttleTime / maxRequests) + 1000;
   const results = { entries: [], nextPageToken: undefined, revision: 0 };
-  let countRequests = 0;
+  let requestCount = 0;
   let requestOptions = { query, ...restOfOptions };
   let shouldFetchMoreContent = false;
-  let shouldThrottle = true;
+  const requestTimes = [];
 
   do {
     let response;
     try {
-      shouldThrottle = countRequests >= 10;
-      if (shouldThrottle) {
-        console.log('Throttling for 1 minute to avoid rate limit');
-        await new Promise(resolve => setTimeout(resolve, throttleTime));
-      }
+      await handleRateLimit(requestTimes, {
+        requestCount,
+        throttleTime,
+        waitingTime,
+        maxRequests,
+      });
+      requestTimes.push(Date.now());
       response = await request(state, method, path, requestOptions);
     } catch (error) {
+      console.log('Error:', error.body);
       if (
-        shouldThrottle ||
-        error.body?.description === 'API rate limit exceeded'
+        error.body?.description === 'API rate limit exceeded' &&
+        error.body?.code === 403
       ) {
-        console.log('Rate limit exceeded, throttling for 1 minute');
-        await new Promise(resolve => setTimeout(resolve, throttleTime));
+        await handleRateLimitExceeded(requestTimes, {
+          throttleTime,
+          waitingTime,
+        });
+        requestTimes.push(Date.now());
         response = await request(state, method, path, requestOptions);
       } else {
+        console.log('Why here?');
         throw error;
       }
     }
@@ -117,14 +182,14 @@ export async function requestWithPagination(state, method, path, params = {}) {
     results.entries.push(...body?.entries);
     results.nextPageToken = body?.nextPageToken;
     results.revision = body?.revision;
-    countRequests++;
+    requestCount++;
 
     if (requestOptions.query?.pageToken && body?.entries.length !== 0) {
       console.log(
         'Fetched',
         results.entries.length,
         'entries so far in',
-        countRequests,
+        requestCount,
         'requests'
       );
     }
@@ -137,7 +202,7 @@ export async function requestWithPagination(state, method, path, params = {}) {
     'Total entries:',
     results.entries.length,
     'in',
-    countRequests,
+    requestCount,
     'requests'
   );
   return composeNextState(state, results);
