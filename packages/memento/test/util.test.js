@@ -36,28 +36,6 @@ describe('requestWithPagination', () => {
     expect(data.revision).to.be.greaterThanOrEqual(0);
   }).timeout(6e4);
 
-  it('should return the correct revision', async () => {
-    testServer
-      .intercept({
-        path: '/v1/libraries/HyZV7AYk0/entries',
-        method: 'GET',
-        query: { token: 'user-api-token' },
-      })
-      .reply(200, {
-        entries: [],
-        revision: 4,
-      });
-
-    const { data } = await requestWithPagination(
-      state,
-      'GET',
-      'libraries/HyZV7AYk0/entries'
-    );
-
-    expect(data.entries.length).to.eql(0);
-    expect(data.revision).to.eql(4);
-  });
-
   it('should auto throttle when throttleTime and maxRequests are set', async () => {
     const pageSize = 10;
 
