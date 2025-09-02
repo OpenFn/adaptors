@@ -151,7 +151,11 @@ const build = async (lang: string) => {
     : '### CHANGELOG';
 
   // Extract adaptor name and version
-  const { name, version } = JSON.parse(
+  const {
+    name,
+    version,
+    badge = 'No badge',
+  } = JSON.parse(
     await fs.readFile(`${root}/package.json`, 'utf8', data => data)
   );
 
@@ -175,6 +179,7 @@ const build = async (lang: string) => {
 
   const docsJson = {
     name: `${lang}`,
+    badge: `${badge}`,
     adaptor: `${name}`,
     version: `${version}`,
     docs: `${JSON.stringify(docs)}`,
