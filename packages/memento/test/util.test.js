@@ -12,43 +12,13 @@ const state = {
 };
 
 describe('requestWithPagination', () => {
-  it('should return the correct number of entries', async () => {
-    testServer
-      .intercept({
-        path: '/v1/libraries/HyZV7AYk0/entries',
-        method: 'GET',
-        query: { token: 'user-api-token' },
-      })
-      .reply(200, {
-        entries: [
-          {
-            id: 'JTszaWZWYigxOjRSQzxqZkBlJSo',
-            author: 'mtuchi',
-            createdTime: '2025-08-28T13:31:40.339Z',
-            modifiedTime: '2025-08-28T16:59:15.395Z',
-            status: 'active',
-            revision: 4,
-            size: 206,
-            fields: [],
-          },
-        ],
-        nextPageToken: '123',
-        revision: 4,
-      });
-
-    testServer
-      .intercept({
-        path: '/v1/libraries/HyZV7AYk0/entries',
-        method: 'GET',
-        query: {
-          token: 'user-api-token',
-          pageToken: '123',
-        },
-      })
-      .reply(200, {
-        entries: [],
-        revision: 5,
-      });
+  it('should auto fetch all entries', async () => {
+    const pageSize = 10;
+    mockEntriesPagination(testServer, '/v1/libraries/HyZV7AYk0/entries', {
+      pageSize,
+      totalPage: 11,
+      fields: 'all',
+    });
 
     const { data } = await requestWithPagination(
       state,
@@ -57,12 +27,13 @@ describe('requestWithPagination', () => {
       {
         throttleTime: 1000,
         maxRequests: 10,
+        query: { pageSize, fields: 'all' },
       }
     );
 
-    expect(data.entries.length).to.eql(1);
+    expect(data.entries.length).to.eql(11);
     expect(data.nextPageToken).to.eql(undefined);
-    expect(data.revision).to.eql(5);
+    expect(data.revision).to.be.greaterThanOrEqual(0);
   }).timeout(6e4);
 
   it('should return the correct revision', async () => {
