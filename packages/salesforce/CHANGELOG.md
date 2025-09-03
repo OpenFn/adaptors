@@ -10,52 +10,53 @@
   - Removed `bulkQuery()` function in favor of `bulk1.query()` and
     `bulk2.query()`
 
-  # Migration Guide
+#### Migration Guide
 
-  The legacy `bulk()` and `bulkQuery()` functions have been replaced with
-  `bulk1` and `bulk2` APIs that provide better control and clarity:
+The legacy `bulk()` and `bulkQuery()` functions have been replaced with `bulk1`
+and `bulk2` APIs that provide better control and clarity:
 
-  ## Bulk Operations
+##### Bulk Operations
 
-  **Before:**
+**Before:**
 
-  ````javascript
-  bulk('Account', 'insert', records, options);
-  bulk('Account', 'update', records, options);
-  bulk('Account', 'upsert', records, { extIdField: 'Id__c' });
-  bulk('Account', 'delete', records, options);
-  ```
-  **After:**
+```javascript
+bulk('Account', 'insert', records, options);
+bulk('Account', 'update', records, options);
+bulk('Account', 'upsert', records, { extIdField: 'Id__c' });
+bulk('Account', 'delete', records, options);
+```
 
-  ```javascript
-  // Bulk API 1.0 - More reliable, supports failOnError
-  bulk1.insert('Account', records, { failOnError: true });
-  bulk1.update('Account', records, { batchSize: 5000 });
-  bulk1.upsert('Account', 'Id__c', records);
-  bulk1.destroy('Account', records);
+**After:**
 
-  // Bulk API 2.0 - Faster performance, simplified error handling
-  bulk2.insert('Account', records);
-  bulk2.update('Account', records);
-  bulk2.upsert('Account', 'Id__c', records);
-  bulk2.destroy('Account', records);
-  ````
+```javascript
+// Bulk API 1.0 - More reliable, supports failOnError
+bulk1.insert('Account', records, { failOnError: true });
+bulk1.update('Account', records, { batchSize: 5000 });
+bulk1.upsert('Account', 'Id__c', records);
+bulk1.destroy('Account', records);
 
-  ### Bulk Queries
+// Bulk API 2.0 - Faster performance, simplified error handling
+bulk2.insert('Account', records);
+bulk2.update('Account', records);
+bulk2.upsert('Account', 'Id__c', records);
+bulk2.destroy('Account', records);
+```
 
-  **Before**
+##### Bulk Queries
 
-  ```js
-  bulkQuery('select Id, Name from Account');
-  ```
+**Before**
 
-  **After**
+```js
+bulkQuery('select Id, Name from Account');
+```
 
-  ```js
-  bulk1.query('select Id, Name from Account');
-  // or
-  bulk2.query('select Id, Name from Account');
-  ```
+**After**
+
+```js
+bulk1.query('select Id, Name from Account');
+// or
+bulk2.query('select Id, Name from Account');
+```
 
 ### Patch Changes
 
