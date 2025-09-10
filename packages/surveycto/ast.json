@@ -4,8 +4,7 @@
       "name": "fetchSubmissions",
       "params": [
         "formId",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Fetch form submissions.\n\nIf a date filter is provided, it will be  converted internally to the surveyCTO `MMM dd, yyy h:mm:ss` format (in UTC time).",
@@ -36,11 +35,6 @@
             "caption": "With reviewStatus filter"
           },
           {
-            "title": "example",
-            "description": "fetchSubmissions(\n  'test',\n  {\n    date: 'Apr 18, 2024 6:26:21 AM',\n  },\n  state => {\n    console.log('Hello from the callback!');\n    return state;\n  }\n);",
-            "caption": "With a callback function"
-          },
-          {
             "title": "public",
             "description": null,
             "type": null
@@ -69,13 +63,581 @@
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "(Optional) Callback function",
+            "title": "returns",
+            "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "function"
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "listDatasets",
+      "params": [
+        "options"
+      ],
+      "docs": {
+        "description": "List datasets from the SurveyCTO API",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "listDatasets();",
+            "caption": "List all datasets"
+          },
+          {
+            "title": "example",
+            "description": "listDatasets({\n  limit: 2,\n});",
+            "caption": "List datasets with options"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getdatasets-parameters)",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
             },
-            "name": "callback"
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getDataset",
+      "params": [
+        "datasetId",
+        "options"
+      ],
+      "docs": {
+        "description": "Get a single dataset from SurveyCTO API",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getDataset('new_dataset')",
+            "caption": "List a dataset with id"
+          },
+          {
+            "title": "example",
+            "description": "getDataset('new_dataset', {\n     asAttachment: true\n})",
+            "caption": "List a dataset in csv format"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "ID of the dataset to fetch",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "datasetId"
+          },
+          {
+            "title": "param",
+            "description": "Optional request options",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Set to true to download the dataset as a CSV file attachment. Defaults to false.",
+            "type": {
+              "type": "NameExpression",
+              "name": "boolean"
+            },
+            "name": "options.asAttachment"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "upsertDataset",
+      "params": [
+        "datasetId",
+        "data"
+      ],
+      "docs": {
+        "description": "Upsert a record. This will atomically update a record if it already exists, or otherwise create it",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "upsertDataset('enum_dataset', {\n  id: 'enum_dataset',\n  title: 'Enum Dataset',\n  discriminator: 'ENUMERATORS',\n  locationContext: {\n    parentGroupId: 1,\n    siblingAbove: {\n      id: 'new_dataset',\n      itemClass: 'DATASET',\n    },\n  },\n  allowOfflineUpdates: false,\n  idFormatOptions: {\n    prefix: 'enum',\n    suffix: '',\n    numberOfDigits: '8',\n    allowCapitalLetters: true,\n  },\n});",
+            "caption": "Upsert a dataset"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "ID of the dataset supplied to the `get` and the `put` endpoints",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "datasetId"
+          },
+          {
+            "title": "param",
+            "description": "The dataset object to create or update",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "deleteDataset",
+      "params": [
+        "datasetId"
+      ],
+      "docs": {
+        "description": "Delete a dataset from SurveyCTO API",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "deleteDataset('enumeratorses_dataset');",
+            "caption": "Delete a dataset"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "ID of the dataset to delete",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "datasetId"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "purgeDataset",
+      "params": [
+        "datasetId"
+      ],
+      "docs": {
+        "description": "Purge a dataset. This action removes all data from the dataset while keeping the dataset structure intact",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "purgeDataset('new_dataset')",
+            "caption": "Purge a dataset"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "ID of the dataset to purge.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "datasetId"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "listRecords",
+      "params": [
+        "datasetId",
+        "options"
+      ],
+      "docs": {
+        "description": "List dataset records from the SurveyCTO API",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "listRecords('new_dataset');",
+            "caption": "List all records of a dataset"
+          },
+          {
+            "title": "example",
+            "description": "listRecords('new_dataset', {\n  limit: 2,\n});",
+            "caption": "List datasets records with options"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "ID of the dataset to fetch records from",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "datasetId"
+          },
+          {
+            "title": "param",
+            "description": "Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getallrecords-parameters)",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getRecord",
+      "params": [
+        "datasetId",
+        "recordId"
+      ],
+      "docs": {
+        "description": "Get a single dataset record from the SurveyCTO API",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getRecord('enumerators_dataset', 2);",
+            "caption": "Get a dataset record"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "ID of the dataset to fetch records from",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "datasetId"
+          },
+          {
+            "title": "param",
+            "description": "ID of the record to be fetched",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "recordId"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "upsertRecord",
+      "params": [
+        "datasetId",
+        "recordId",
+        "data"
+      ],
+      "docs": {
+        "description": "Upsert a record. This will atomically update a record if it already exists, or otherwise create it",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "upsertRecord('enumerators_dataset', 2, {\n  id: '2',\n  name: 'Trial update',\n  users: 'All users',\n});",
+            "caption": "Upsert a dataset record"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "ID of the dataset",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "datasetId"
+          },
+          {
+            "title": "param",
+            "description": "ID of the record to be updated or created",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "recordId"
+          },
+          {
+            "title": "param",
+            "description": "The record object to create or update",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "deleteRecord",
+      "params": [
+        "datasetId",
+        "recordId"
+      ],
+      "docs": {
+        "description": "Delete a dataset from SurveyCTO API",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "deleteDataset('enumeratorses_dataset');",
+            "caption": "Delete a dataset record"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "ID of the dataset",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "datasetId"
+          },
+          {
+            "title": "param",
+            "description": "ID of the record to be deleted",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "recordId"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "uploadCsvRecords",
+      "params": [
+        "datasetId",
+        "rows",
+        "metadata"
+      ],
+      "docs": {
+        "description": "Upload CSV dataset records",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "uploadRecordsCsv('enumerators_dataset', [\n  {\n    id: '4',\n    name: 'Trial update',\n    users: 'All users',\n  },\n  {\n    id: '5',\n    name: 'Trials',\n    users: 'All users here',\n  },\n]);",
+            "caption": "Upload records"
+          },
+          {
+            "title": "example",
+            "description": "uploadRecordsCsv(\n  'enumerators_dataset',\n  [\n    {\n      id: '4',\n      name: 'Trial update',\n      users: 'All users',\n    },\n    {\n      id: '5',\n      name: 'Trials',\n      users: 'All users here',\n    },\n  ],\n  {\n    uploadMode: 'MERGE',\n    joiningField: 'id',\n  }\n);",
+            "caption": "Upload records with metadata"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "ID of the dataset",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "datasetId"
+          },
+          {
+            "title": "param",
+            "description": "An array of JSON objects to be uploaded as records. The data will be converted to CSV format before upload.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "rows"
+          },
+          {
+            "title": "param",
+            "description": "Optional metadata for configuring how the uploaded data should be processed",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "metadata"
+          },
+          {
+            "title": "property",
+            "description": "Optional field name to use for merging records. Required when uploadMode is MERGE.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "joiningField"
+          },
+          {
+            "title": "property",
+            "description": "Optional upload mode. One of APPEND (default), MERGE and CLEAR.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "uploadMode"
           },
           {
             "title": "returns",
@@ -93,8 +655,7 @@
       "name": "request",
       "params": [
         "path",
-        "params",
-        "callback"
+        "params"
       ],
       "docs": {
         "description": "Make a HTTP request to the SurveyCTO API",
@@ -136,15 +697,6 @@
               "name": "RequestOptions"
             },
             "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",

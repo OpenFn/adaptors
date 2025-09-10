@@ -4,8 +4,7 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { convertDate, requestHelper } from './Utils';
-import xlsx from 'xlsx';
+import { convertDate, requestHelper, convertJSONToCSV } from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -55,25 +54,13 @@ export function execute(...operations) {
  * fetchSubmissions('test', { format: 'csv' });
  * @example <caption> With reviewStatus filter</caption>
  * fetchSubmissions('test', { status: 'approved|rejected' });
- * @example <caption> With a callback function</caption>
- * fetchSubmissions(
- *   'test',
- *   {
- *     date: 'Apr 18, 2024 6:26:21 AM',
- *   },
- *   state => {
- *     console.log('Hello from the callback!');
- *     return state;
- *   }
- * );
  * @public
  * @function
  * @param {string} formId - Form id
  * @param {FetchSubmissionOptions} options - Form submission date, format, status parameters
- * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
-export function fetchSubmissions(formId, options = {}, callback = s => s) {
+export function fetchSubmissions(formId, options = {}) {
   return state => {
     const [resolvedFormId, resolvedOptions] = expandReferences(
       state,
@@ -98,19 +85,393 @@ export function fetchSubmissions(formId, options = {}, callback = s => s) {
 
     console.log(`Fetching '${resolvedFormId}' submissions for: ${date}`);
 
+    return requestHelper(state, path, {
+      headers: {
+        'content-type': contentType,
+      },
+      query: {
+        date,
+        r: status,
+      },
+    });
+  };
+}
+
+/**
+ * List datasets from the SurveyCTO API
+ * @public
+ * @example <caption>List all datasets</caption>
+ * listDatasets();
+ * @example <caption>List datasets with options</caption>
+ * listDatasets({
+ *   limit: 2,
+ * });
+ * @function
+ * @param {object} options - Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getdatasets-parameters)
+ * @returns {Operation}
+ */
+export function listDatasets(options) {
+  return state => {
+    const [resolvedOptions] = expandReferences(state, options);
+
+    return requestHelper(state, '/datasets', {
+      method: 'GET',
+      query: {
+        ...resolvedOptions,
+      },
+    });
+  };
+}
+
+/**
+ *  Get a single dataset from SurveyCTO API
+ * @public
+ * @example <caption>List a dataset with id</caption>
+ * getDataset('new_dataset')
+ * @example <caption>List a dataset in csv format</caption>
+ * getDataset('new_dataset', {
+ *      asAttachment: true
+ * })
+ * @function
+ * @param {string} datasetId - ID of the dataset to fetch
+ * @param {object} options - Optional request options
+ * @param {boolean} options.asAttachment - Set to true to download the dataset as a CSV file attachment. Defaults to false.
+ * @returns {Operation}
+ */
+export function getDataset(datasetId, options = {}) {
+  return state => {
+    const [resolvedDatasetId, resolvedOptions] = expandReferences(
+      state,
+      datasetId,
+      options
+    );
+    const { asAttachment } = resolvedOptions || {};
+    delete resolvedOptions?.asAttachment;
+
     return requestHelper(
       state,
-      path,
+      asAttachment === true
+        ? `/datasets/data/csv/${resolvedDatasetId}`
+        : `/datasets/${resolvedDatasetId}`,
       {
-        headers: {
-          'content-type': contentType,
-        },
-        query: {
-          date,
-          r: status,
-        },
+        method: 'GET',
+        ...(asAttachment && { query: { asAttachment } }),
+        ...(asAttachment
+          ? {
+              headers: {
+                'Contentent-Type': 'text/csv;charset=UTF-8',
+                Accept: 'text/csv',
+              },
+            }
+          : {}),
+        ...resolvedOptions,
+      }
+    );
+  };
+}
+
+/**
+ *  Upsert a dataset. This will atomically update a dataset if it already exists, or otherwise create it
+ * @public
+ * @example <caption>Upsert a dataset</caption>
+ * upsertDataset('enum_dataset', {
+ *   id: 'enum_dataset',
+ *   title: 'Enum Dataset',
+ *   discriminator: 'ENUMERATORS',
+ *   locationContext: {
+ *     parentGroupId: 1,
+ *     siblingAbove: {
+ *       id: 'new_dataset',
+ *       itemClass: 'DATASET',
+ *     },
+ *   },
+ *   allowOfflineUpdates: false,
+ *   idFormatOptions: {
+ *     prefix: 'enum',
+ *     suffix: '',
+ *     numberOfDigits: '8',
+ *     allowCapitalLetters: true,
+ *   },
+ * });
+ * @function
+ * @param {string} datasetId - ID of the dataset supplied to the `get` and the `put` endpoints
+ * @param {object} data - The dataset object to create or update
+ * @returns {Operation}
+ */
+export function upsertDataset(datasetId, data) {
+  return async state => {
+    const [resolvedDatasetId, resolvedData] = expandReferences(
+      state,
+      datasetId,
+      data
+    );
+
+    let exists = false;
+
+    try {
+      const results = await requestHelper(
+        state,
+        `/datasets/${resolvedDatasetId}`,
+        {
+          method: 'GET',
+        }
+      );
+      exists = !!results && !!results.data;
+    } catch (error) {
+      exists = false;
+    }
+
+    const url = exists ? `/datasets/${resolvedDatasetId}` : `/datasets`;
+    const method = exists ? 'PUT' : 'POST';
+
+    const response = await requestHelper(state, url, {
+      method,
+      body: resolvedData,
+      headers: {
+        'content-type': 'application/json',
       },
-      callback
+    });
+
+    return response;
+  };
+}
+
+/**
+ * Delete a dataset from SurveyCTO API
+ * @public
+ * @example <caption>Delete a dataset</caption>
+ * deleteDataset('enumeratorses_dataset');
+ * @function
+ * @param {string} datasetId - ID of the dataset to delete
+ * @returns {Operation}
+ */
+export function deleteDataset(datasetId) {
+  return state => {
+    const [resolvedDatasetId] = expandReferences(state, datasetId);
+
+    return requestHelper(state, `/datasets/${resolvedDatasetId}`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+  };
+}
+
+/**
+ * Purge a dataset. This action removes all data records from the dataset while keeping the dataset structure intact
+ * @public
+ * @example <caption>Purge a dataset</caption>
+ * purgeDataset('new_dataset')
+ * @function
+ * @param {string} datasetId - ID of the dataset to purge.
+ * @returns {Operation}
+ */
+export function purgeDataset(datasetId) {
+  return state => {
+    const [resolvedDatasetId] = expandReferences(state, datasetId);
+
+    return requestHelper(state, `/datasets/${resolvedDatasetId}/purge`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+  };
+}
+
+/**
+ * List dataset records from the SurveyCTO API
+ * @public
+ * @example <caption>List all records of a dataset </caption>
+ * listRecords('new_dataset');
+ * @example <caption>List datasets records with options</caption>
+ * listRecords('new_dataset', {
+ *   limit: 2,
+ * });
+ * @function
+ * @param {string} datasetId - ID of the dataset to fetch records from
+ * @param {object} options - Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getallrecords-parameters)
+ * @returns {Operation}
+ */
+export function listRecords(datasetId, options) {
+  return state => {
+    const [resolvedDatasetId, resolvedOptions] = expandReferences(
+      state,
+      datasetId,
+      options
+    );
+
+    return requestHelper(state, `/datasets/${resolvedDatasetId}/records`, {
+      method: 'GET',
+      query: {
+        ...resolvedOptions,
+      },
+    });
+  };
+}
+
+/**
+ * Get a single dataset record from the SurveyCTO API
+ * @public
+ * @example <caption>Get a dataset record </caption>
+ * getRecord('enumerators_dataset', 2);
+ * @function
+ * @param {string} datasetId - ID of the dataset to fetch records from
+ * @param {string} recordId - ID of the record to be fetched
+ * @returns {Operation}
+ */
+export function getRecord(datasetId, recordId) {
+  return state => {
+    const [resolvedDatasetId, resolvedRecordId] = expandReferences(
+      state,
+      datasetId,
+      recordId
+    );
+
+    return requestHelper(state, `/datasets/${resolvedDatasetId}/record`, {
+      method: 'GET',
+      query: {
+        recordId: resolvedRecordId,
+      },
+    });
+  };
+}
+
+/**
+ *  Upsert a record. This will atomically update a record if it already exists, or otherwise create it
+ * @public
+ * @example <caption>Upsert a dataset record</caption>
+ * upsertRecord('enumerators_dataset', 2, {
+ *   id: '2',
+ *   name: 'Trial update',
+ *   users: 'All users',
+ * });
+ * @function
+ * @param {string} datasetId - ID of the dataset
+ * @param {string} recordId - ID of the record to be updated or created
+ * @param {object} data - The record object to create or update
+ * @returns {Operation}
+ */
+export function upsertRecord(datasetId, recordId, data) {
+  return async state => {
+    const [resolvedDatasetId, resolvedRecordId, resolvedData] =
+      expandReferences(state, datasetId, recordId, data);
+
+    return requestHelper(state, `/datasets/${resolvedDatasetId}/record`, {
+      method: 'PATCH',
+      body: resolvedData,
+      query: {
+        recordId: resolvedRecordId,
+      },
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+  };
+}
+
+/**
+ * Delete a record from a dataset in SurveyCTO API
+ * @public
+ * @example <caption>Delete a dataset record</caption>
+ * deleteRecord('enumerators_dataset', 2);
+ * @function
+ * @param {string} datasetId - ID of the dataset
+ * @param {string} recordId - ID of the record to be deleted
+ * @returns {Operation}
+ */
+export function deleteRecord(datasetId, recordId) {
+  return state => {
+    const [resolvedDatasetId, resolveRecordId] = expandReferences(
+      state,
+      datasetId,
+      recordId
+    );
+
+    return requestHelper(state, `/datasets/${resolvedDatasetId}/record`, {
+      method: 'DELETE',
+      query: {
+        recordId: resolveRecordId,
+      },
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+  };
+}
+
+/**
+ * Upload CSV dataset records
+ * @public
+ * @example <caption>Upload records</caption>
+ * uploadCsvRecords('enumerators_dataset', [
+ *   {
+ *     id: '4',
+ *     name: 'Trial update',
+ *     users: 'All users',
+ *   },
+ *   {
+ *     id: '5',
+ *     name: 'Trials',
+ *     users: 'All users here',
+ *   },
+ * ]);
+ * @example <caption>Upload records with metadata</caption>
+ * uploadCsvRecords(
+ *   'enumerators_dataset',
+ *   [
+ *     {
+ *       id: '4',
+ *       name: 'Trial update',
+ *       users: 'All users',
+ *     },
+ *     {
+ *       id: '5',
+ *       name: 'Trials',
+ *       users: 'All users here',
+ *     },
+ *   ],
+ *   {
+ *     uploadMode: 'MERGE',
+ *     joiningField: 'id',
+ *   }
+ * );
+ * @function
+ * @param {string} datasetId - ID of the dataset
+ * @param {string} rows - An array of JSON objects to be uploaded as records. The data will be converted to CSV format before upload.
+ * @param {object} metadata - Optional metadata for configuring how the uploaded data should be processed
+ * @property {string} joiningField - Optional field name to use for merging records. Required when uploadMode is `MERGE`.
+ * @property {string} uploadMode - Optional upload mode. One of `APPEND` (default), `MERGE` and `CLEAR`.
+ * @returns {Operation}
+ */
+export function uploadCsvRecords(datasetId, rows, metadata = {}) {
+  return state => {
+    const [resolvedDatasetId, resolvedRows, resolvedMetadata] =
+      expandReferences(state, datasetId, rows, metadata);
+
+    const file = convertJSONToCSV(resolvedRows);
+
+    const data = new FormData();
+    data.append('file', new Blob([file], { type: 'text/csv' }), 'data.csv');
+
+    if (Object.keys(resolvedMetadata).length) {
+      data.append(
+        'metadata',
+        new Blob([JSON.stringify(resolvedMetadata)], {
+          type: 'application/json',
+        }),
+        'metadata.json'
+      );
+    }
+
+    return requestHelper(
+      state,
+      `/datasets/${resolvedDatasetId}/records/upload`,
+      {
+        method: 'POST',
+        body: data,
+      }
     );
   };
 }
@@ -150,10 +511,9 @@ export function fetchSubmissions(formId, options = {}, callback = s => s) {
  * @function
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Query, body and method parameters
- * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
  */
-export function request(path, params, callback = s => s) {
+export function request(path, params) {
   return state => {
     const [resolvedPath, resolvedParams] = expandReferences(
       state,
@@ -161,7 +521,7 @@ export function request(path, params, callback = s => s) {
       params
     );
 
-    return requestHelper(state, resolvedPath, resolvedParams, callback);
+    return requestHelper(state, resolvedPath, resolvedParams);
   };
 }
 
@@ -213,12 +573,7 @@ export function jsonToCSVBuffer(rows) {
   return state => {
     const [resolvedRows] = expandReferences(state, rows);
 
-    const worksheet = xlsx.utils.json_to_sheet(resolvedRows);
-
-    const workbook = xlsx.utils.book_new();
-    xlsx.utils.book_append_sheet(workbook, worksheet, 'sheet1');
-
-    const csvBuffer = xlsx.write(workbook, { type: 'buffer', bookType: 'csv' });
+    const csvBuffer = convertJSONToCSV(resolvedRows);
 
     return composeNextState(state, csvBuffer);
   };

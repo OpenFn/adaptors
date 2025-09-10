@@ -8,12 +8,23 @@ import {
 } from '@openfn/language-common/util';
 import { formatInTimeZone } from 'date-fns-tz';
 import nodepath from 'node:path';
+import xlsx from 'xlsx';
 
 const addBasicAuth = (configuration = {}, headers) => {
   const { username, password } = configuration;
   if (username && password) {
     Object.assign(headers, makeBasicAuthHeader(username, password));
   }
+};
+
+export const convertJSONToCSV = rows => {
+  const worksheet = xlsx.utils.json_to_sheet(rows);
+
+  const workbook = xlsx.utils.book_new();
+  xlsx.utils.book_append_sheet(workbook, worksheet, 'sheet1');
+
+  const csvBuffer = xlsx.write(workbook, { type: 'buffer', bookType: 'csv' });
+  return csvBuffer;
 };
 
 const buildUrl = (configuration = {}, path) => {
@@ -28,14 +39,13 @@ const buildUrl = (configuration = {}, path) => {
   );
 };
 
-export const prepareNextState = (state, response, callback) => {
+export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
   const nextState = {
     ...composeNextState(state, body),
     response: responseWithoutBody,
   };
-
-  return callback(nextState);
+  return nextState;
 };
 
 function encodeFormBody(data) {
@@ -51,7 +61,7 @@ function encodeFormBody(data) {
   return form;
 }
 
-export const requestHelper = (state, path, params, callback = s => s) => {
+export const requestHelper = (state, path, params) => {
   assertRelativeUrl(path);
 
   let { body = {}, headers = {}, method = 'GET', query, contentType } = params;
@@ -77,7 +87,7 @@ export const requestHelper = (state, path, params, callback = s => s) => {
   return commonRequest(method, url, options)
     .then(response => {
       logResponse(response);
-      return prepareNextState(state, response, callback);
+      return prepareNextState(state, response);
     })
     .catch(err => {
       logResponse(err);
