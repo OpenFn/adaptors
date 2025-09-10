@@ -2,6 +2,7 @@
   "name": "@openfn/language-zata",
   "version": "1.0.1",
   "description": "An OpenFn adaptor for Zata tax compliance",
+  "badge":"Legacy",
   "type": "module",
   "exports": {
     ".": {
