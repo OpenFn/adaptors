@@ -198,7 +198,7 @@
         "data"
       ],
       "docs": {
-        "description": "Upsert a record. This will atomically update a record if it already exists, or otherwise create it",
+        "description": "Upsert a dataset. This will atomically update a dataset if it already exists, or otherwise create it",
         "tags": [
           {
             "title": "public",
@@ -295,7 +295,7 @@
         "datasetId"
       ],
       "docs": {
-        "description": "Purge a dataset. This action removes all data from the dataset while keeping the dataset structure intact",
+        "description": "Purge a dataset. This action removes all data records from the dataset while keeping the dataset structure intact",
         "tags": [
           {
             "title": "public",
@@ -517,7 +517,7 @@
         "recordId"
       ],
       "docs": {
-        "description": "Delete a dataset from SurveyCTO API",
+        "description": "Delete a record from a dataset in SurveyCTO API",
         "tags": [
           {
             "title": "public",
@@ -526,7 +526,7 @@
           },
           {
             "title": "example",
-            "description": "deleteDataset('enumeratorses_dataset');",
+            "description": "deleteRecord('enumerators_dataset', 2);",
             "caption": "Delete a dataset record"
           },
           {
@@ -581,12 +581,12 @@
           },
           {
             "title": "example",
-            "description": "uploadRecordsCsv('enumerators_dataset', [\n  {\n    id: '4',\n    name: 'Trial update',\n    users: 'All users',\n  },\n  {\n    id: '5',\n    name: 'Trials',\n    users: 'All users here',\n  },\n]);",
+            "description": "uploadCsvRecords('enumerators_dataset', [\n  {\n    id: '4',\n    name: 'Trial update',\n    users: 'All users',\n  },\n  {\n    id: '5',\n    name: 'Trials',\n    users: 'All users here',\n  },\n]);",
             "caption": "Upload records"
           },
           {
             "title": "example",
-            "description": "uploadRecordsCsv(\n  'enumerators_dataset',\n  [\n    {\n      id: '4',\n      name: 'Trial update',\n      users: 'All users',\n    },\n    {\n      id: '5',\n      name: 'Trials',\n      users: 'All users here',\n    },\n  ],\n  {\n    uploadMode: 'MERGE',\n    joiningField: 'id',\n  }\n);",
+            "description": "uploadCsvRecords(\n  'enumerators_dataset',\n  [\n    {\n      id: '4',\n      name: 'Trial update',\n      users: 'All users',\n    },\n    {\n      id: '5',\n      name: 'Trials',\n      users: 'All users here',\n    },\n  ],\n  {\n    uploadMode: 'MERGE',\n    joiningField: 'id',\n  }\n);",
             "caption": "Upload records with metadata"
           },
           {
@@ -623,7 +623,7 @@
           },
           {
             "title": "property",
-            "description": "Optional field name to use for merging records. Required when uploadMode is MERGE.",
+            "description": "Optional field name to use for merging records. Required when uploadMode is `MERGE`.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -632,7 +632,7 @@
           },
           {
             "title": "property",
-            "description": "Optional upload mode. One of APPEND (default), MERGE and CLEAR.",
+            "description": "Optional upload mode. One of `APPEND` (default), `MERGE` and `CLEAR`.",
             "type": {
               "type": "NameExpression",
               "name": "string"

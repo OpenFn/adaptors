@@ -151,17 +151,16 @@ export function getDataset(datasetId, options = {}) {
     return requestHelper(
       state,
       asAttachment === true
-        ? `/datasets/data/csv/${resolvedDatasetId}`
+        ? `datasets/data/csv/${resolvedDatasetId}`
         : `/datasets/${resolvedDatasetId}`,
       {
         method: 'GET',
-        ...(asAttachment && { query: { asAttachment } }),
         ...(asAttachment
           ? {
               headers: {
-                'Contentent-Type': 'text/csv;charset=UTF-8',
                 Accept: 'text/csv',
               },
+              query: { asAttachment },
             }
           : {}),
         ...resolvedOptions,

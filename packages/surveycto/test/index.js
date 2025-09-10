@@ -337,6 +337,42 @@ describe('getDataset', () => {
     });
     expect(result.response.statusCode).to.eql(200);
   });
+  it('should list a single dataset in csv format', async () => {
+    const state = {
+      configuration: {
+        user: 'u',
+        password: 'p',
+        servername: 'test',
+        apiVersion: 'v2',
+      },
+    };
+
+    mock
+      .intercept({
+        path: /\/api\/v2\/datasets\/data\/csv\/new_dataset/,
+        method: 'GET',
+        query: { asAttachment: true },
+      })
+      .reply(
+        200,
+        'id,name,users\n3,Trial,All users here\n4,Trial update,All users\n5,Trials,All users here\n',
+        {
+          headers: {
+            'content-type': 'text/plain;charset=UTF-8',
+            Accept: 'text/csv',
+          },
+        }
+      );
+
+    const result = await getDataset('new_dataset', {
+      asAttachment: true,
+    })(state);
+
+    expect(result.data).to.eql(
+      'id,name,users\n3,Trial,All users here\n4,Trial update,All users\n5,Trials,All users here\n'
+    );
+    expect(result.response.statusCode).to.eql(200);
+  });
 });
 
 describe('upsertDataset', () => {
