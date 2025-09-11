@@ -95,7 +95,7 @@
           {
             "title": "example",
             "description": "listDatasets({\n  limit: 2,\n});",
-            "caption": "List datasets with options"
+            "caption": "List datasets with pagination options"
           },
           {
             "title": "function",
@@ -110,6 +110,24 @@
               "name": "object"
             },
             "name": "options"
+          },
+          {
+            "title": "property",
+            "description": "Maximum number of datasets to return. Defaults to 20. Maximum is 1000.",
+            "type": {
+              "type": "NameExpression",
+              "name": "number"
+            },
+            "name": "options.limit"
+          },
+          {
+            "title": "property",
+            "description": "Optional string to specify the starting point of the next page of results.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "options.cursor"
           },
           {
             "title": "returns",
