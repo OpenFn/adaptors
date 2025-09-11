@@ -4,7 +4,12 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { convertDate, requestHelper, convertJSONToCSV } from './Utils';
+import {
+  convertDate,
+  requestHelper,
+  convertJSONToCSV,
+  prepareNextState,
+} from './Utils';
 
 /**
  * Execute a sequence of operations.
@@ -61,7 +66,7 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export function fetchSubmissions(formId, options = {}) {
-  return state => {
+  return async state => {
     const [resolvedFormId, resolvedOptions] = expandReferences(
       state,
       formId,
@@ -85,7 +90,7 @@ export function fetchSubmissions(formId, options = {}) {
 
     console.log(`Fetching '${resolvedFormId}' submissions for: ${date}`);
 
-    return requestHelper(state, path, {
+    const response = await requestHelper(state, path, {
       headers: {
         'content-type': contentType,
       },
@@ -94,6 +99,8 @@ export function fetchSubmissions(formId, options = {}) {
         r: status,
       },
     });
+
+    return prepareNextState(state, response);
   };
 }
 
@@ -102,23 +109,75 @@ export function fetchSubmissions(formId, options = {}) {
  * @public
  * @example <caption>List all datasets</caption>
  * listDatasets();
- * @example <caption>List datasets with options</caption>
+ * @example <caption>List datasets with pagination options</caption>
  * listDatasets({
  *   limit: 2,
  * });
  * @function
  * @param {object} options - Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getdatasets-parameters)
+ * @property {number} options.limit - Maximum number of datasets to return. Defaults to 20. Maximum is 1000.
+ * @property {string} options.cursor - Optional string to specify the starting point of the next page of results.
  * @returns {Operation}
  */
-export function listDatasets(options) {
-  return state => {
+export function listDatasets(options = {}) {
+  return async state => {
+    const results = [];
     const [resolvedOptions] = expandReferences(state, options);
 
-    return requestHelper(state, '/datasets', {
-      method: 'GET',
-      query: {
-        ...resolvedOptions,
-      },
+    const userLimit = resolvedOptions?.limit
+      ? Number(resolvedOptions.limit)
+      : undefined;
+
+    let cursor = resolvedOptions?.cursor ? resolvedOptions.cursor : null;
+
+    const baseQuery = { ...resolvedOptions };
+    delete baseQuery.limit;
+    delete baseQuery.cursor;
+
+    const pageSize = 20; // when no limit is given get 20 at a time
+    const maxFetchSize = 1000; // server max is 1000 per request
+
+    const desiredFetchTotal = userLimit ?? Infinity;
+
+    if (Number.isFinite(desiredFetchTotal) && desiredFetchTotal <= 0) {
+      return prepareNextState(state, {
+        data: [],
+        total: 0,
+        nextCursor: cursor,
+      });
+    }
+
+    do {
+      const remaining = desiredFetchTotal - results.length;
+      const perPage = Number.isFinite(desiredFetchTotal)
+        ? Math.min(remaining, maxFetchSize)
+        : pageSize;
+
+      const response = await requestHelper(state, '/datasets', {
+        method: 'GET',
+        query: {
+          ...baseQuery,
+          limit: perPage,
+          ...(cursor ? { cursor } : {}),
+        },
+      });
+
+      const body = response.body || {};
+      const page = body.data ?? [];
+      const next = body.nextCursor ?? null;
+
+      results.push(...page);
+      cursor = next;
+    } while (cursor && results.length < desiredFetchTotal);
+
+    const final = Number.isFinite(desiredFetchTotal)
+      ? results.slice(0, desiredFetchTotal)
+      : results;
+
+    return composeNextState(state, {
+      data: final,
+      total: final.length,
+      nextCursor: cursor,
     });
   };
 }
@@ -139,7 +198,7 @@ export function listDatasets(options) {
  * @returns {Operation}
  */
 export function getDataset(datasetId, options = {}) {
-  return state => {
+  return async state => {
     const [resolvedDatasetId, resolvedOptions] = expandReferences(
       state,
       datasetId,
@@ -148,7 +207,7 @@ export function getDataset(datasetId, options = {}) {
     const { asAttachment } = resolvedOptions || {};
     delete resolvedOptions?.asAttachment;
 
-    return requestHelper(
+    const response = await requestHelper(
       state,
       asAttachment === true
         ? `datasets/data/csv/${resolvedDatasetId}`
@@ -166,6 +225,7 @@ export function getDataset(datasetId, options = {}) {
         ...resolvedOptions,
       }
     );
+    return prepareNextState(state, response);
   };
 }
 
@@ -215,7 +275,8 @@ export function upsertDataset(datasetId, data) {
           method: 'GET',
         }
       );
-      exists = !!results && !!results.data;
+
+      exists = !!results && !!results.statusCode && results.statusCode === 200;
     } catch (error) {
       exists = false;
     }
@@ -231,7 +292,7 @@ export function upsertDataset(datasetId, data) {
       },
     });
 
-    return response;
+    return prepareNextState(state, response);
   };
 }
 
@@ -245,15 +306,21 @@ export function upsertDataset(datasetId, data) {
  * @returns {Operation}
  */
 export function deleteDataset(datasetId) {
-  return state => {
+  return async state => {
     const [resolvedDatasetId] = expandReferences(state, datasetId);
 
-    return requestHelper(state, `/datasets/${resolvedDatasetId}`, {
-      method: 'DELETE',
-      headers: {
-        'content-type': 'application/json',
-      },
-    });
+    const response = await requestHelper(
+      state,
+      `/datasets/${resolvedDatasetId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'content-type': 'application/json',
+        },
+      }
+    );
+
+    return prepareNextState(state, response);
   };
 }
 
@@ -267,15 +334,20 @@ export function deleteDataset(datasetId) {
  * @returns {Operation}
  */
 export function purgeDataset(datasetId) {
-  return state => {
+  return async state => {
     const [resolvedDatasetId] = expandReferences(state, datasetId);
 
-    return requestHelper(state, `/datasets/${resolvedDatasetId}/purge`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-    });
+    const response = await requestHelper(
+      state,
+      `/datasets/${resolvedDatasetId}/purge`,
+      {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+      }
+    );
+    return prepareNextState(state, response);
   };
 }
 
@@ -294,19 +366,24 @@ export function purgeDataset(datasetId) {
  * @returns {Operation}
  */
 export function listRecords(datasetId, options) {
-  return state => {
+  return async state => {
     const [resolvedDatasetId, resolvedOptions] = expandReferences(
       state,
       datasetId,
       options
     );
 
-    return requestHelper(state, `/datasets/${resolvedDatasetId}/records`, {
-      method: 'GET',
-      query: {
-        ...resolvedOptions,
-      },
-    });
+    const response = await requestHelper(
+      state,
+      `/datasets/${resolvedDatasetId}/records`,
+      {
+        method: 'GET',
+        query: {
+          ...resolvedOptions,
+        },
+      }
+    );
+    return prepareNextState(state, response);
   };
 }
 
@@ -321,19 +398,24 @@ export function listRecords(datasetId, options) {
  * @returns {Operation}
  */
 export function getRecord(datasetId, recordId) {
-  return state => {
+  return async state => {
     const [resolvedDatasetId, resolvedRecordId] = expandReferences(
       state,
       datasetId,
       recordId
     );
 
-    return requestHelper(state, `/datasets/${resolvedDatasetId}/record`, {
-      method: 'GET',
-      query: {
-        recordId: resolvedRecordId,
-      },
-    });
+    const response = await requestHelper(
+      state,
+      `/datasets/${resolvedDatasetId}/record`,
+      {
+        method: 'GET',
+        query: {
+          recordId: resolvedRecordId,
+        },
+      }
+    );
+    return prepareNextState(state, response);
   };
 }
 
@@ -357,16 +439,21 @@ export function upsertRecord(datasetId, recordId, data) {
     const [resolvedDatasetId, resolvedRecordId, resolvedData] =
       expandReferences(state, datasetId, recordId, data);
 
-    return requestHelper(state, `/datasets/${resolvedDatasetId}/record`, {
-      method: 'PATCH',
-      body: resolvedData,
-      query: {
-        recordId: resolvedRecordId,
-      },
-      headers: {
-        'content-type': 'application/json',
-      },
-    });
+    const response = await requestHelper(
+      state,
+      `/datasets/${resolvedDatasetId}/record`,
+      {
+        method: 'PATCH',
+        body: resolvedData,
+        query: {
+          recordId: resolvedRecordId,
+        },
+        headers: {
+          'content-type': 'application/json',
+        },
+      }
+    );
+    return prepareNextState(state, response);
   };
 }
 
@@ -381,22 +468,28 @@ export function upsertRecord(datasetId, recordId, data) {
  * @returns {Operation}
  */
 export function deleteRecord(datasetId, recordId) {
-  return state => {
+  return async state => {
     const [resolvedDatasetId, resolveRecordId] = expandReferences(
       state,
       datasetId,
       recordId
     );
 
-    return requestHelper(state, `/datasets/${resolvedDatasetId}/record`, {
-      method: 'DELETE',
-      query: {
-        recordId: resolveRecordId,
-      },
-      headers: {
-        'content-type': 'application/json',
-      },
-    });
+    const response = await requestHelper(
+      state,
+      `/datasets/${resolvedDatasetId}/record`,
+      {
+        method: 'DELETE',
+        query: {
+          recordId: resolveRecordId,
+        },
+        headers: {
+          'content-type': 'application/json',
+        },
+      }
+    );
+
+    return prepareNextState(state, response);
   };
 }
 
@@ -445,7 +538,7 @@ export function deleteRecord(datasetId, recordId) {
  * @returns {Operation}
  */
 export function uploadCsvRecords(datasetId, rows, metadata = {}) {
-  return state => {
+  return async state => {
     const [resolvedDatasetId, resolvedRows, resolvedMetadata] =
       expandReferences(state, datasetId, rows, metadata);
 
@@ -464,7 +557,7 @@ export function uploadCsvRecords(datasetId, rows, metadata = {}) {
       );
     }
 
-    return requestHelper(
+    const response = await requestHelper(
       state,
       `/datasets/${resolvedDatasetId}/records/upload`,
       {
@@ -472,6 +565,8 @@ export function uploadCsvRecords(datasetId, rows, metadata = {}) {
         body: data,
       }
     );
+
+    return prepareNextState(state, response);
   };
 }
 
@@ -513,14 +608,15 @@ export function uploadCsvRecords(datasetId, rows, metadata = {}) {
  * @returns {Operation}
  */
 export function request(path, params) {
-  return state => {
+  return async state => {
     const [resolvedPath, resolvedParams] = expandReferences(
       state,
       path,
       params
     );
 
-    return requestHelper(state, resolvedPath, resolvedParams);
+    const response = await requestHelper(state, resolvedPath, resolvedParams);
+    return prepareNextState(state, response);
   };
 }
 

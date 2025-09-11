@@ -103,7 +103,6 @@ describe('listDatasets', () => {
         groupId: 1,
       },
     ]);
-    expect(result.response.statusCode).to.eql(200);
   });
 
   it('should list datasets with options', async () => {
@@ -126,7 +125,6 @@ describe('listDatasets', () => {
         200,
         {
           total: 3,
-          limit: 2,
           data: [
             {
               id: 'new_dataset',
@@ -148,8 +146,9 @@ describe('listDatasets', () => {
       );
 
     const result = await listDatasets()(state);
+
     expect(result.data.data.length).to.eql(2);
-    expect(result.data.limit).to.eql(2);
+    expect(result.data.total).to.eql(2);
   });
 });
 

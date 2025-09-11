@@ -84,15 +84,7 @@ export const requestHelper = (state, path, params) => {
     query,
   };
 
-  return commonRequest(method, url, options)
-    .then(response => {
-      logResponse(response);
-      return prepareNextState(state, response);
-    })
-    .catch(err => {
-      logResponse(err);
-      throw err;
-    });
+  return commonRequest(method, url, options).then(logResponse);
 };
 
 export const dateRegex = /^(\w{3} \d{2}, \d{4} \d{2}:\d{2}(:\d{2})? (PM|AM))$/;
