@@ -1,4 +1,10 @@
-import { Client, MockAgent } from 'undici';
+import {
+  Client,
+  MockAgent,
+  Agent,
+  setGlobalDispatcher,
+  request as undiciRequest,
+} from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
@@ -7,6 +13,7 @@ import throwError from './throw-error';
 import { encode } from './base64';
 
 const clients = new Map();
+const agents = new Map();
 
 export const makeBasicAuthHeader = (username, password) => {
   const buff = Buffer.from(`${username}:${password}`);
@@ -41,6 +48,22 @@ const getClient = (baseUrl, options) => {
     clients.set(baseUrl, new Client(baseUrl, { connect: tls }));
   }
   return clients.get(baseUrl);
+};
+
+const getAgent = options => {
+  const { tls } = options;
+  let agent = agents.get(tls);
+
+  if (!agent) {
+    agent = new Agent({
+      connect: tls,
+    });
+
+    agents.set(tls, agent);
+    setGlobalDispatcher(agent);
+  }
+
+  return agent;
 };
 
 export const enableMockClient = (baseUrl, options = {}) => {
@@ -195,6 +218,45 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
   };
 };
 
+// Build a URL from baseUrl + path + query (arrays, Dates, objects handled)
+export function buildUrl(baseUrl, path = '', query) {
+  if (!baseUrl) throw new Error('buildUrl: baseUrl is required');
+
+  const hasScheme = /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(baseUrl);
+  const normalizedBase = hasScheme ? baseUrl : `https://${baseUrl}`;
+
+  let url;
+  try {
+    url = new URL(normalizedBase);
+  } catch (e) {
+    throw new Error(`buildUrl: invalid baseUrl "${baseUrl}" — ${e.message}`);
+  }
+
+  if (path) {
+    url = new URL(path, url);
+  }
+
+  // Merge query params
+  if (query && typeof query === 'object') {
+    for (const [k, v] of Object.entries(query)) {
+      if (v == null) continue;
+      if (Array.isArray(v)) {
+        for (const item of v) {
+          if (item != null) url.searchParams.append(k, String(item));
+        }
+      } else if (v instanceof Date) {
+        url.searchParams.set(k, v.toISOString());
+      } else if (typeof v === 'object') {
+        url.searchParams.set(k, JSON.stringify(v));
+      } else {
+        url.searchParams.set(k, String(v));
+      }
+    }
+  }
+
+  return url;
+}
+
 /**
  * `request` is a helper function that sends HTTP requests and returns the response
  * body, headers, and status code.
@@ -231,25 +293,39 @@ export async function request(method, fullUrlOrPath, options = {}) {
     maxRedirections,
   } = options;
 
-  const client = getClient(baseUrl, { tls });
+  // const client = getClient(baseUrl, { tls });
+
+  const dispatcher = getAgent({ tls });
 
   const queryParams = {
     ...optionQuery,
     ...urlQuery,
   };
+  const fullUrl = buildUrl(baseUrl, path, queryParams);
 
-  const response = await client.request({
-    path,
-    query: queryParams,
+  // const response = await client.request({
+  //   path,
+  //   query: queryParams,
+  //   method,
+  //   headers,
+  //   body: encodeRequestBody(body),
+  //   throwOnError: false,
+  //   maxRedirections,
+  //   bodyTimeout: timeout,
+  //   headersTimeout: timeout,
+  //   // If the request is redirected, undici requires the origin to be set (this affects commcare)
+  //   origin: baseUrl,
+  // });
+
+  const response = await undiciRequest(fullUrl, {
     method,
     headers,
     body: encodeRequestBody(body),
+    dispatcher,
     throwOnError: false,
     maxRedirections,
     bodyTimeout: timeout,
     headersTimeout: timeout,
-    // If the request is redirected, undici requires the origin to be set (this affects commcare)
-    origin: baseUrl,
   });
 
   const statusText = getReasonPhrase(response.statusCode);
