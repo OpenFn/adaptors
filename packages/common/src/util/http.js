@@ -1,10 +1,4 @@
-import {
-  Client,
-  MockAgent,
-  Agent,
-  setGlobalDispatcher,
-  request as undiciRequest,
-} from 'undici';
+import { MockAgent, Agent, setGlobalDispatcher } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
@@ -12,7 +6,6 @@ import path from 'node:path';
 import throwError from './throw-error';
 import { encode } from './base64';
 
-const clients = new Map();
 const agents = new Map();
 
 export const makeBasicAuthHeader = (username, password) => {
@@ -42,26 +35,22 @@ export const logResponse = response => {
   return response;
 };
 
-const getClient = (baseUrl, options) => {
-  const { tls } = options;
-  if (!clients.has(baseUrl)) {
-    clients.set(baseUrl, new Client(baseUrl, { connect: tls }));
-  }
-  return clients.get(baseUrl);
-};
-
-const getAgent = options => {
-  const { tls } = options;
-  let agent = agents.get(tls);
-
-  if (!agent) {
-    agent = new Agent({
+export function getAgentForOrigin(origin, { tls = {}, ...agentOpts } = {}) {
+  if (!agents.has(origin)) {
+    const agent = new Agent({
       connect: tls,
+      ...agentOpts,
     });
 
-    agents.set(tls, agent);
-    setGlobalDispatcher(agent);
+    agents.set(origin, agent);
   }
+
+  return agents.get(origin);
+}
+
+const getAgent = (origin, options) => {
+  const agent = getAgentForOrigin(origin, options);
+  setGlobalDispatcher(agent);
 
   return agent;
 };
@@ -72,7 +61,7 @@ export const enableMockClient = (baseUrl, options = {}) => {
   const mockAgent = new MockAgent({ connections: 1 });
   mockAgent.disableNetConnect();
   const client = mockAgent.get(baseUrl);
-  if (!clients.has(baseUrl)) {
+  if (!agents.has(baseUrl)) {
     if (defaultContentType) {
       const _intercept = client.intercept;
       // because so many unit test use mock json,
@@ -117,7 +106,7 @@ export const enableMockClient = (baseUrl, options = {}) => {
       };
     }
 
-    clients.set(baseUrl, client);
+    agents.set(baseUrl, client);
   }
 
   return client;
@@ -254,9 +243,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     maxRedirections,
   } = options;
 
-  // const client = getClient(baseUrl, { tls });
-
-  const dispatcher = getAgent({ tls });
+  const dispatcher = getAgent(baseUrl, { tls });
 
   const queryParams = {
     ...optionQuery,
