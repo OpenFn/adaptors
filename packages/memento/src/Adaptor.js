@@ -2,15 +2,16 @@ import { sendRequest, requestWithPagination } from './util';
 import { expandReferences } from '@openfn/language-common/util';
 
 /**
- * Fetch Entries RequestionOptions
+ * Fetch Entries Request Options
  * @typedef {Object} EntriesRequestOptions
  * See https://mementodatabase.docs.apiary.io/#reference/0/entries/list-entries-on-a-library
  * @public
  * @property {number} [options.pageSize=100] - The maximum number of entries to return per page.
- * @property {string} [options.pageToken] - The token for the next page of entries
- * @property {string} [options.startRevision] - The revision to start from
+ * @property {string} [options.pageToken] - Start pagination from this token/cursor.
+ * @property {string} [options.startRevision] - The revision to start from.
  * @property {string} [options.fields='all'] - The comma-separated list of fields ids to include in the response
  */
+
 /**
  * List all libraries
  * @example <caption>List all libraries</caption>
@@ -49,7 +50,7 @@ export function getFields(libraryId) {
  * List all entries in a library.
  * This function handles rate limits and automatically paginates to fetch all entries.
  * @example <caption>List all entries in a library</caption>
- * getEntries('HyZV7AYk0');
+ * listEntries('HyZV7AYk0');
  * @function
  * @public
  * @param {string} libraryId - The library ID
@@ -57,7 +58,7 @@ export function getFields(libraryId) {
  * @state data.entries - An array of entry objects for a library
  * @returns {Operation}
  */
-export function getEntries(libraryId, options = {}) {
+export function listEntries(libraryId, options = {}) {
   return state => {
     const [resolvedLibraryId, resolvedOptions] = expandReferences(
       state,
