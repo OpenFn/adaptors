@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { http, getEntries } from '../src';
+import { http, listEntries } from '../src';
 import configuration from '../tmp/creds.json' assert { type: 'json' };
 
 const state = { configuration };
@@ -28,7 +28,7 @@ describe('http', () => {
       });
   });
   it('should auto throttle when api rate limit exceeded', async () => {
-    const { data } = await getEntries('6AJPFZhgy', {
+    const { data } = await listEntries('6AJPFZhgy', {
       pageSize: 10,
       snoozeTime: 100, //this will force rate limit exceeded
     })(state);

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { mockEntriesPagination } from './helpers';
-import { listLibraries, getEntries } from '../src/Adaptor.js';
+import { listLibraries, listEntries } from '../src/Adaptor.js';
 import { enableMockClient } from '@openfn/language-common/util';
 
 const testServer = enableMockClient('https://api.mementodatabase.com');
@@ -29,7 +29,7 @@ describe('Adaptor', () => {
       });
     });
   });
-  describe('getEntries', () => {
+  describe('listEntries', () => {
     it('should fetch all entries', async () => {
       const pageSize = 10;
       mockEntriesPagination(testServer, '/v1/libraries/HyZV7AYk0/entries', {
@@ -38,7 +38,7 @@ describe('Adaptor', () => {
         fields: 'all',
       });
 
-      const { data } = await getEntries('HyZV7AYk0', {
+      const { data } = await listEntries('HyZV7AYk0', {
         pageSize,
         throttleTime: 10000,
         maxRequests: 10,
