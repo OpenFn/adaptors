@@ -1,4 +1,4 @@
-import { MockAgent, Agent, setGlobalDispatcher } from 'undici';
+import { MockAgent, Agent } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
@@ -35,7 +35,7 @@ export const logResponse = response => {
   return response;
 };
 
-export function getAgentForOrigin(origin, { tls = {}, ...agentOpts } = {}) {
+const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
   if (!agents.has(origin)) {
     const agent = new Agent({
       connect: tls,
@@ -46,13 +46,6 @@ export function getAgentForOrigin(origin, { tls = {}, ...agentOpts } = {}) {
   }
 
   return agents.get(origin);
-}
-
-const getAgent = (origin, options) => {
-  const agent = getAgentForOrigin(origin, options);
-  setGlobalDispatcher(agent);
-
-  return agent;
 };
 
 export const enableMockClient = (baseUrl, options = {}) => {
@@ -108,7 +101,6 @@ export const enableMockClient = (baseUrl, options = {}) => {
 
     agents.set(baseUrl, client);
   }
-
   return client;
 };
 
