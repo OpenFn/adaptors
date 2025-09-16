@@ -218,45 +218,6 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
   };
 };
 
-// Build a URL from baseUrl + path + query (arrays, Dates, objects handled)
-export function buildUrl(baseUrl, path = '', query) {
-  if (!baseUrl) throw new Error('buildUrl: baseUrl is required');
-
-  const hasScheme = /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(baseUrl);
-  const normalizedBase = hasScheme ? baseUrl : `https://${baseUrl}`;
-
-  let url;
-  try {
-    url = new URL(normalizedBase);
-  } catch (e) {
-    throw new Error(`buildUrl: invalid baseUrl "${baseUrl}" — ${e.message}`);
-  }
-
-  if (path) {
-    url = new URL(path, url);
-  }
-
-  // Merge query params
-  if (query && typeof query === 'object') {
-    for (const [k, v] of Object.entries(query)) {
-      if (v == null) continue;
-      if (Array.isArray(v)) {
-        for (const item of v) {
-          if (item != null) url.searchParams.append(k, String(item));
-        }
-      } else if (v instanceof Date) {
-        url.searchParams.set(k, v.toISOString());
-      } else if (typeof v === 'object') {
-        url.searchParams.set(k, JSON.stringify(v));
-      } else {
-        url.searchParams.set(k, String(v));
-      }
-    }
-  }
-
-  return url;
-}
-
 /**
  * `request` is a helper function that sends HTTP requests and returns the response
  * body, headers, and status code.
@@ -301,31 +262,19 @@ export async function request(method, fullUrlOrPath, options = {}) {
     ...optionQuery,
     ...urlQuery,
   };
-  const fullUrl = buildUrl(baseUrl, path, queryParams);
 
-  // const response = await client.request({
-  //   path,
-  //   query: queryParams,
-  //   method,
-  //   headers,
-  //   body: encodeRequestBody(body),
-  //   throwOnError: false,
-  //   maxRedirections,
-  //   bodyTimeout: timeout,
-  //   headersTimeout: timeout,
-  //   // If the request is redirected, undici requires the origin to be set (this affects commcare)
-  //   origin: baseUrl,
-  // });
-
-  const response = await undiciRequest(fullUrl, {
+  const response = await dispatcher.request({
+    path,
+    query: queryParams,
     method,
     headers,
     body: encodeRequestBody(body),
-    dispatcher,
     throwOnError: false,
     maxRedirections,
     bodyTimeout: timeout,
     headersTimeout: timeout,
+    // If the request is redirected, undici requires the origin to be set (this affects commcare)
+    origin: baseUrl,
   });
 
   const statusText = getReasonPhrase(response.statusCode);
