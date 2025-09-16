@@ -86,7 +86,7 @@
       "valid": true
     },
     {
-      "name": "getEntries",
+      "name": "listEntries",
       "params": [
         "libraryId",
         "options"
@@ -96,7 +96,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "getEntries('HyZV7AYk0');",
+            "description": "listEntries('HyZV7AYk0');",
             "caption": "List all entries in a library"
           },
           {
