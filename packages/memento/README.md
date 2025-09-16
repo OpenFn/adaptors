@@ -7,7 +7,7 @@ memento API.
 
 View the
 [docs site](https://docs.openfn.org/adaptors/packages/memento-docs) for
-full technical documentation.
+full technical documentation. View the [Memento Cloud API docs](https://mementodatabase.docs.apiary.io/#introduction)
 
 ### Configuration
 
