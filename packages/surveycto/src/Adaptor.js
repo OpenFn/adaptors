@@ -105,6 +105,55 @@ export function fetchSubmissions(formId, options = {}) {
 }
 
 /**
+ *  Get an item from SurveyCTO API
+ * @public
+ * @example <caption>Get a record with id</caption>
+ * get('/datasets/enumeratorse_dataset/record', {
+ *     recordId: 4
+ * })
+ * @example <caption>Get a dataset with id</caption>
+ * get('/datasets/enumeratorse_dataset')
+ * @example <caption>Get a dataset in csv format</caption>
+ * get('/datasets/data/csv/enumeratorse_dataset', {
+ *     asAttachment: true
+ * })
+ * @function
+ * @param {string} path - Path to resource
+ * @param {object} options - Optional request options
+ * @property {boolean} options.asAttachment - Set to true to download a dataset as a CSV file attachment. Defaults to false.
+ * @property {number} options.recordId - ID of the record to be fetched when getting a single record from a dataset.
+ * @returns {Operation}
+ */
+export function get(path, options = {}) {
+  return async state => {
+    const [resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      path,
+      options
+    );
+    const { asAttachment } = resolvedOptions || {};
+    delete resolvedOptions?.asAttachment;
+
+    const response = await requestHelper(state, resolvedPath, {
+      method: 'GET',
+      ...(asAttachment
+        ? {
+            headers: {
+              Accept: 'text/csv',
+            },
+            query: { asAttachment },
+          }
+        : {
+            query: {
+              ...resolvedOptions,
+            },
+          }),
+    });
+    return prepareNextState(state, response);
+  };
+}
+
+/**
  * List datasets from the SurveyCTO API
  * @public
  * @example <caption>List all datasets</caption>
@@ -182,52 +231,6 @@ export function listDatasets(options = {}) {
   };
 }
 
-/**
- *  Get a single dataset from SurveyCTO API
- * @public
- * @example <caption>List a dataset with id</caption>
- * getDataset('new_dataset')
- * @example <caption>List a dataset in csv format</caption>
- * getDataset('new_dataset', {
- *      asAttachment: true
- * })
- * @function
- * @param {string} datasetId - ID of the dataset to fetch
- * @param {object} options - Optional request options
- * @param {boolean} options.asAttachment - Set to true to download the dataset as a CSV file attachment. Defaults to false.
- * @returns {Operation}
- */
-export function getDataset(datasetId, options = {}) {
-  return async state => {
-    const [resolvedDatasetId, resolvedOptions] = expandReferences(
-      state,
-      datasetId,
-      options
-    );
-    const { asAttachment } = resolvedOptions || {};
-    delete resolvedOptions?.asAttachment;
-
-    const response = await requestHelper(
-      state,
-      asAttachment === true
-        ? `datasets/data/csv/${resolvedDatasetId}`
-        : `/datasets/${resolvedDatasetId}`,
-      {
-        method: 'GET',
-        ...(asAttachment
-          ? {
-              headers: {
-                Accept: 'text/csv',
-              },
-              query: { asAttachment },
-            }
-          : {}),
-        ...resolvedOptions,
-      }
-    );
-    return prepareNextState(state, response);
-  };
-}
 
 /**
  *  Upsert a dataset. This will atomically update a dataset if it already exists, or otherwise create it
@@ -387,37 +390,6 @@ export function listRecords(datasetId, options) {
   };
 }
 
-/**
- * Get a single dataset record from the SurveyCTO API
- * @public
- * @example <caption>Get a dataset record </caption>
- * getRecord('enumerators_dataset', 2);
- * @function
- * @param {string} datasetId - ID of the dataset to fetch records from
- * @param {string} recordId - ID of the record to be fetched
- * @returns {Operation}
- */
-export function getRecord(datasetId, recordId) {
-  return async state => {
-    const [resolvedDatasetId, resolvedRecordId] = expandReferences(
-      state,
-      datasetId,
-      recordId
-    );
-
-    const response = await requestHelper(
-      state,
-      `/datasets/${resolvedDatasetId}/record`,
-      {
-        method: 'GET',
-        query: {
-          recordId: resolvedRecordId,
-        },
-      }
-    );
-    return prepareNextState(state, response);
-  };
-}
 
 /**
  *  Upsert a record. This will atomically update a record if it already exists, or otherwise create it
