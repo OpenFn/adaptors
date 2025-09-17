@@ -12,6 +12,14 @@ import {
 } from './Utils';
 
 /**
+ * State object
+ * @typedef {Object} SurveyCTOState
+ * @property data - the parsed response body
+ * @property response - the response from the SurveyCTO server, including headers, statusCode, body, etc
+ * @property references - an array of all previous data objects used in the Job
+ **/
+
+/**
  * Execute a sequence of operations.
  * Wraps `@openfn/language-common/execute`, and prepends initial state for http.
  * @example
@@ -64,6 +72,7 @@ export function execute(...operations) {
  * @param {string} formId - Form id
  * @param {FetchSubmissionOptions} options - Form submission date, format, status parameters
  * @returns {Operation}
+ * @state {SurveyCTOState}
  */
 export function fetchSubmissions(formId, options = {}) {
   return async state => {
@@ -123,6 +132,7 @@ export function fetchSubmissions(formId, options = {}) {
  * @property {boolean} options.asAttachment - Set to true to download a dataset as a CSV file attachment. Defaults to false.
  * @property {number} options.recordId - ID of the record to be fetched when getting a single record from a dataset.
  * @returns {Operation}
+ * @state {SurveyCTOState}
  */
 export function get(path, options = {}) {
   return async state => {
@@ -167,6 +177,7 @@ export function get(path, options = {}) {
  * @property {number} options.limit - Maximum number of datasets to return. Defaults to 20. Maximum is 1000.
  * @property {string} options.cursor - Optional string to specify the starting point of the next page of results.
  * @returns {Operation}
+ * @state {SurveyCTOState}
  */
 export function listDatasets(options = {}) {
   return async state => {
@@ -259,6 +270,7 @@ export function listDatasets(options = {}) {
  * @param {string} datasetId - ID of the dataset supplied to the `get` and the `put` endpoints
  * @param {object} data - The dataset object to create or update
  * @returns {Operation}
+ * @state {SurveyCTOState}
  */
 export function upsertDataset(datasetId, data) {
   return async state => {
@@ -307,6 +319,7 @@ export function upsertDataset(datasetId, data) {
  * @function
  * @param {string} datasetId - ID of the dataset to delete
  * @returns {Operation}
+ * @state {SurveyCTOState}
  */
 export function deleteDataset(datasetId) {
   return async state => {
@@ -335,6 +348,7 @@ export function deleteDataset(datasetId) {
  * @function
  * @param {string} datasetId - ID of the dataset to purge.
  * @returns {Operation}
+ * @state {SurveyCTOState}
  */
 export function purgeDataset(datasetId) {
   return async state => {
@@ -367,6 +381,7 @@ export function purgeDataset(datasetId) {
  * @param {string} datasetId - ID of the dataset to fetch records from
  * @param {object} options - Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getallrecords-parameters)
  * @returns {Operation}
+ * @state {SurveyCTOState}
  */
 export function listRecords(datasetId, options) {
   return async state => {
@@ -405,6 +420,7 @@ export function listRecords(datasetId, options) {
  * @param {string} recordId - ID of the record to be updated or created
  * @param {object} data - The record object to create or update
  * @returns {Operation}
+ * @state {SurveyCTOState}
  */
 export function upsertRecord(datasetId, recordId, data) {
   return async state => {
@@ -438,6 +454,7 @@ export function upsertRecord(datasetId, recordId, data) {
  * @param {string} datasetId - ID of the dataset
  * @param {string} recordId - ID of the record to be deleted
  * @returns {Operation}
+ * @state {SurveyCTOState}
  */
 export function deleteRecord(datasetId, recordId) {
   return async state => {
@@ -508,6 +525,7 @@ export function deleteRecord(datasetId, recordId) {
  * @property {string} joiningField - Optional field name to use for merging records. Required when uploadMode is `MERGE`.
  * @property {string} uploadMode - Optional upload mode. One of `APPEND` (default), `MERGE` and `CLEAR`.
  * @returns {Operation}
+ * @state {SurveyCTOState}
  */
 export function uploadCsvRecords(datasetId, rows, metadata = {}) {
   return async state => {
@@ -578,6 +596,7 @@ export function uploadCsvRecords(datasetId, rows, metadata = {}) {
  * @param {string} path - Path to resource
  * @param {RequestOptions} params - Query, body and method parameters
  * @returns {Operation}
+ * @state {SurveyCTOState}
  */
 export function request(path, params) {
   return async state => {
