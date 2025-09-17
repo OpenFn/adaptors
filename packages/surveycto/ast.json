@@ -75,6 +75,65 @@
       "valid": true
     },
     {
+      "name": "get",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Get an item from SurveyCTO API",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "get('/datasets/enumeratorse_dataset')",
+            "caption": "Get a dataset with id"
+          },
+          {
+            "title": "example",
+            "description": "get('/datasets/data/csv/enumeratorse_dataset', {\n    asAttachment: true\n})",
+            "caption": "Get a dataset in csv format"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Optional request options",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "listDatasets",
       "params": [
         "options"

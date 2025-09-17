@@ -12,11 +12,12 @@ import {
 } from './Utils';
 
 
+
 /**
  * State object
  * @typedef {Object} SurveyCTOState
  * @property data - the parsed response body
- * @property response - the response from the HTTP server, including headers, statusCode, body, etc
+ * @property response - the response from the SurveyCTO server, including headers, statusCode, body, etc
  * @property references - an array of all previous data objects used in the Job
  **/
 
@@ -110,6 +111,56 @@ export function fetchSubmissions(formId, options = {}) {
       },
     });
 
+    return prepareNextState(state, response);
+  };
+}
+
+/**
+ *  Get an item from SurveyCTO API
+ * @public
+ * @example <caption>Get a record with id</caption>
+ * get('/datasets/enumeratorse_dataset/record', {
+ *     recordId: 4
+ * })
+ * @example <caption>Get a dataset with id</caption>
+ * get('/datasets/enumeratorse_dataset')
+ * @example <caption>Get a dataset in csv format</caption>
+ * get('/datasets/data/csv/enumeratorse_dataset', {
+ *     asAttachment: true
+ * })
+ * @function
+ * @param {string} path - Path to resource
+ * @param {object} options - Optional request options
+ * @property {boolean} options.asAttachment - Set to true to download a dataset as a CSV file attachment. Defaults to false.
+ * @property {number} options.recordId - ID of the record to be fetched when getting a single record from a dataset.
+ * @returns {Operation}
+ * @state {SurveyCTOState}
+ */
+export function get(path, options = {}) {
+  return async state => {
+    const [resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      path,
+      options
+    );
+    const { asAttachment } = resolvedOptions || {};
+    delete resolvedOptions?.asAttachment;
+
+    const response = await requestHelper(state, resolvedPath, {
+      method: 'GET',
+      ...(asAttachment
+        ? {
+            headers: {
+              Accept: 'text/csv',
+            },
+            query: { asAttachment },
+          }
+        : {
+            query: {
+              ...resolvedOptions,
+            },
+          }),
+    });
     return prepareNextState(state, response);
   };
 }

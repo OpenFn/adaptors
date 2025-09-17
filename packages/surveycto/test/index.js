@@ -8,19 +8,27 @@ import {
   jsonToCSVBuffer,
   listDatasets,
   listRecords,
-  getDataset,
-  getRecord,
   uploadCsvRecords,
   upsertDataset,
   upsertRecord,
   deleteDataset,
   deleteRecord,
   purgeDataset,
+  get,
 } from '../src';
 import { convertDate, dateRegex } from '../src/Utils';
 
 const baseUrl = 'https://test.surveycto.com';
 const mock = enableMockClient(baseUrl);
+
+    const state = {
+      configuration: {
+        user: 'u',
+        password: 'p',
+        servername: 'test',
+        apiVersion: 'v2',
+      },
+    };
 
 describe('request', () => {
   it('throws if an absolute URL is passed', async () => {
@@ -62,15 +70,6 @@ describe('fetchSubmissions', () => {
 
 describe('listDatasets', () => {
   it('should list all datasets', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
-
     mock
       .intercept({
         path: /\/api\/v2\/datasets/,
@@ -106,14 +105,7 @@ describe('listDatasets', () => {
   });
 
   it('should list datasets with options', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
+
 
     mock
       .intercept({
@@ -154,15 +146,6 @@ describe('listDatasets', () => {
 
 describe('listRecords', () => {
   it('should list all records', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
-
     mock
       .intercept({
         path: /\/api\/v2\/datasets\/new_dataset\/records/,
@@ -203,14 +186,6 @@ describe('listRecords', () => {
   });
 
   it('should list records with options', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
 
     mock
       .intercept({
@@ -253,16 +228,93 @@ describe('listRecords', () => {
   });
 });
 
-describe('getRecord', () => {
+describe('get', () => {
+  it('should handle non-JSON response', async () => {
+
+    mock
+      .intercept({
+        path: /api\/v2\/datasets\/plain/,
+        method: 'GET',
+      })
+      .reply(200, 'plain text', {
+        headers: { 'content-type': 'text/plain' },
+      });
+    const result = await get('/datasets/plain')(state);
+    expect(result.data).to.equal('plain text');
+    expect(result.response.statusCode).to.equal(200);
+  });
+
+  it('should send query params', async () => {
+    mock
+      .intercept({
+        path: /\/api\/v2\/datasets\/new_dataset/,
+        method: 'GET',
+        query: { foo: 'bar' },
+      })
+      .reply(200, { ok: true });
+    const result = await get('/datasets/new_dataset', { foo: 'bar' })(state);
+    expect(result.data).to.eql({ ok: true });
+    expect(result.response.statusCode).to.equal(200);
+  });
+
+  it('should list a single dataset', async () => {
+
+    mock
+      .intercept({
+        path: /\/api\/v2\/datasets\/new_dataset/,
+        method: 'GET',
+      })
+      .reply(
+        200,
+        {
+          id: 'new_dataset',
+          title: 'New dataset',
+          discriminator: 'DATA',
+          groupId: 1,
+        },
+        {
+          headers: { 'content-type': 'application/json' },
+        }
+      );
+
+    const result = await get('datasets/new_dataset')(state);
+    expect(result.data).to.eql({
+      id: 'new_dataset',
+      title: 'New dataset',
+      discriminator: 'DATA',
+      groupId: 1,
+    });
+    expect(result.response.statusCode).to.eql(200);
+  });
+  it('should list a single dataset in csv format', async () => {
+
+    mock
+      .intercept({
+        path: /\/api\/v2\/datasets\/data\/csv\/new_dataset/,
+        method: 'GET',
+        query: { asAttachment: true },
+      })
+      .reply(
+        200,
+        'id,name,users\n3,Trial,All users here\n4,Trial update,All users\n5,Trials,All users here\n',
+        {
+          headers: {
+            'content-type': 'text/plain;charset=UTF-8',
+            Accept: 'text/csv',
+          },
+        }
+      );
+
+    const result = await get('/datasets/data/csv/new_dataset', {
+      asAttachment: true,
+    })(state);
+
+    expect(result.data).to.eql(
+      'id,name,users\n3,Trial,All users here\n4,Trial update,All users\n5,Trials,All users here\n'
+    );
+    expect(result.response.statusCode).to.eql(200);
+  });
   it('should list a single record', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
 
     mock
       .intercept({
@@ -285,7 +337,7 @@ describe('getRecord', () => {
         }
       );
 
-    const result = await getRecord('new_dataset', 2)(state);
+    const result = await get('/datasets/new_dataset/record', 2)(state);
     expect(result.data).to.eql({
       recordId: '2',
       values: {
@@ -298,92 +350,8 @@ describe('getRecord', () => {
   });
 });
 
-describe('getDataset', () => {
-  it('should list a single dataset', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
-
-    mock
-      .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset/,
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          id: 'new_dataset',
-          title: 'New dataset',
-          discriminator: 'DATA',
-          groupId: 1,
-        },
-        {
-          headers: { 'content-type': 'application/json' },
-        }
-      );
-
-    const result = await getDataset('new_dataset')(state);
-    expect(result.data).to.eql({
-      id: 'new_dataset',
-      title: 'New dataset',
-      discriminator: 'DATA',
-      groupId: 1,
-    });
-    expect(result.response.statusCode).to.eql(200);
-  });
-  it('should list a single dataset in csv format', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
-
-    mock
-      .intercept({
-        path: /\/api\/v2\/datasets\/data\/csv\/new_dataset/,
-        method: 'GET',
-        query: { asAttachment: true },
-      })
-      .reply(
-        200,
-        'id,name,users\n3,Trial,All users here\n4,Trial update,All users\n5,Trials,All users here\n',
-        {
-          headers: {
-            'content-type': 'text/plain;charset=UTF-8',
-            Accept: 'text/csv',
-          },
-        }
-      );
-
-    const result = await getDataset('new_dataset', {
-      asAttachment: true,
-    })(state);
-
-    expect(result.data).to.eql(
-      'id,name,users\n3,Trial,All users here\n4,Trial update,All users\n5,Trials,All users here\n'
-    );
-    expect(result.response.statusCode).to.eql(200);
-  });
-});
-
 describe('upsertDataset', () => {
   it('should make a get then update if an item is found', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
 
     mock
       .intercept({
@@ -436,15 +404,6 @@ describe('upsertDataset', () => {
   });
 
   it('should make a get then a create if nothing is found', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
-
     mock
       .intercept({
         path: /\/api\/v2\/datasets\/enumerator_dataset/,
@@ -493,15 +452,6 @@ describe('upsertDataset', () => {
 
 describe('upsertRecords', () => {
   it('should upsert a dataset records', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
-
     mock
       .intercept({
         path: /\/api\/v2\/datasets\/new_dataset\/record/,
@@ -536,14 +486,6 @@ describe('upsertRecords', () => {
 
 describe('deleteDataset', () => {
   it('should delete a dataset', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
 
     mock
       .intercept({
@@ -570,15 +512,6 @@ describe('deleteDataset', () => {
 
 describe('deleteRecord', () => {
   it('should delete a dataset record', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
-
     mock
       .intercept({
         path: /\/api\/v2\/datasets\/new_dataset\/record/,
@@ -605,15 +538,6 @@ describe('deleteRecord', () => {
 
 describe('uploadCsvRecords', () => {
   it('should upload csv records', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
-
     mock
       .intercept({
         path: /\/api\/v2\/datasets\/new_dataset\/records\/upload/,
@@ -647,15 +571,6 @@ describe('uploadCsvRecords', () => {
   });
 
   it('should upload csv records with uploadMode option', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
-
     mock
       .intercept({
         path: /\/api\/v2\/datasets\/new_dataset\/records\/upload/,
@@ -700,15 +615,6 @@ describe('uploadCsvRecords', () => {
 
 describe('purgeDataset', () => {
   it('should delete a dataset', async () => {
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
-
     mock
       .intercept({
         path: /\/api\/v2\/datasets\/new_dataset\/purge/,
