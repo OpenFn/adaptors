@@ -1,6 +1,5 @@
 export const mockEntriesResponse = (currentPage, totalPages, pageSize) => {
   const isLastPage = currentPage >= totalPages;
-  console.log('isLastPage', isLastPage);
   return {
     entries: isLastPage
       ? [{ id: `entry-${currentPage}-last-page` }]
@@ -26,7 +25,6 @@ export const mockEntriesPagination = (testServer, path, opts = {}) => {
     })
     .reply(200, mockEntriesResponse(1, totalPages, pageSize));
 
-  console.log('totalPages', totalPages);
   // Subsequent pages
   for (let page = 2; page <= totalPages; page++) {
     testServer

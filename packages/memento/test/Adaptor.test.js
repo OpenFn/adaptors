@@ -34,7 +34,7 @@ describe('Adaptor', () => {
       const pageSize = 10;
       mockEntriesPagination(testServer, '/v1/libraries/HyZV7AYk0/entries', {
         pageSize,
-        totalPage: 11,
+        totalRecords: 11,
         fields: 'all',
       });
 

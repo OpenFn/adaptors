@@ -1,6 +1,10 @@
 import { expect } from 'chai';
 import { requestWithPagination, handleRateLimit } from '../src/util';
-import { mockEntriesResponse } from './helpers';
+import {
+  mockEntriesResponse,
+  mockEntriesPagination,
+  mockRateLimitExceeded,
+} from './helpers';
 import { enableMockClient } from '@openfn/language-common/util';
 
 const testServer = enableMockClient('https://util.mementodatabase.com');
@@ -141,194 +145,75 @@ describe('requestWithPagination', () => {
     expect(data.entries).to.be.an('array').that.is.empty;
   });
 
-  it.only('should respect maxRequests limit', async () => {
-    const maxRequests = 2;
-    let requestCount = 0;
+  it('fetches 101 records with pageSize 10', async () => {
+    const pageSize = 10;
+    const totalRecords = 101;
+    const expectedRequests = 11; // Math.ceil(101/10)
+    let actualRequests = 0;
 
-    testServer
-      .intercept({
-        path: '/v1/libraries/test/entries',
-        query: { token: 'user-api-token', pageSize: 10, fields: 'all' },
-        method: 'GET',
-      })
-      .reply(() => {
-        requestCount++;
-        const body = mockEntriesResponse(requestCount, maxRequests, 10);
-        console.log('body', body);
-        return {
-          statusCode: 200,
-          data: JSON.stringify(body),
-          responseOptions: {
-            headers: { 'Content-Type': 'application/json' },
+    // Mock all pagination requests
+    for (let page = 1; page <= expectedRequests; page++) {
+      testServer
+        .intercept({
+          path: '/v1/libraries/test/entries',
+          method: 'GET',
+          query: {
+            token: 'user-api-token',
+            pageSize,
+            fields: 'all',
+            ...(page > 1 && { pageToken: page }),
           },
-        };
-      });
-
-    try {
-      await requestWithPagination(state, 'GET', 'libraries/test/entries', {
-        maxRequests,
-        query: {
-          pageSize: 10,
-          fields: 'all',
-        },
-      });
-      expect.fail('Should have thrown an error');
-    } catch (error) {
-      console.log(error);
-      // expect(error.message).to.equal('Maximum number of requests reached');
-      // expect(requestCount).to.equal(maxRequests);
+        })
+        .reply(() => {
+          actualRequests++;
+          return {
+            statusCode: 200,
+            data: JSON.stringify(
+              mockEntriesResponse(page, expectedRequests, pageSize)
+            ),
+            responseOptions: {
+              headers: { 'Content-Type': 'application/json' },
+            },
+          };
+        });
     }
+
+    const { data } = await requestWithPagination(
+      state,
+      'GET',
+      'libraries/test/entries',
+      {
+        throttleTime: 1000,
+        maxRequests: 10,
+        query: { pageSize, fields: 'all' },
+      }
+    );
+
+    expect(actualRequests).to.equal(expectedRequests);
+    expect(data.entries).to.have.lengthOf(totalRecords);
   }).timeout(6e4);
 
-  // it('should make correct number of requests for 101 records', async () => {
-  //   const pageSize = 10;
-  //   const totalRecords = 101;
-  //   const expectedRequests = Math.ceil(totalRecords / pageSize); // Should be 11 requests
+  it('should handle api rate limit exceeded', async () => {
+    const pageSize = 10;
+    mockRateLimitExceeded(testServer, '/v1/libraries/HyZV7AYk0/entries', {
+      pageSize,
+      totalRecords: 11,
+      fields: 'all',
+    });
 
-  //   let actualRequests = 0;
+    const { data } = await requestWithPagination(
+      state,
+      'GET',
+      'libraries/HyZV7AYk0/entries',
+      {
+        throttleTime: 1000,
+        maxRequests: 10,
+        query: { pageSize, fields: 'all' },
+      }
+    );
 
-  //   // First page response
-  //   testServer
-  //     .intercept({
-  //       path: '/v1/libraries/test/entries',
-  //       method: 'GET',
-  //       query: { token: 'user-api-token', pageSize, fields: 'all' },
-  //     })
-  //     .reply(req => {
-  //       actualRequests++;
-  //       const body = mockEntriesResponse(1, expectedRequests, pageSize);
-  //       return {
-  //         statusCode: 200,
-  //         data: JSON.stringify(body),
-  //         responseOptions: {
-  //           headers: { 'Content-Type': 'application/json' },
-  //         },
-  //       };
-  //     });
-
-  //   // Subsequent pages
-  //   for (let page = 2; page <= expectedRequests; page++) {
-  //     testServer
-  //       .intercept({
-  //         path: '/v1/libraries/test/entries',
-  //         method: 'GET',
-  //         query: {
-  //           token: 'user-api-token',
-  //           pageSize,
-  //           pageToken: page,
-  //           fields: 'all',
-  //         },
-  //       })
-  //       .reply(req => {
-  //         actualRequests++;
-  //         const body = mockEntriesResponse(page, expectedRequests, pageSize);
-  //         return {
-  //           statusCode: 200,
-  //           data: JSON.stringify(body),
-  //           responseOptions: {
-  //             headers: { 'Content-Type': 'application/json' },
-  //           },
-  //         };
-  //       });
-  //   }
-
-  //   const { data } = await requestWithPagination(
-  //     state,
-  //     'GET',
-  //     'libraries/test/entries',
-  //     {
-  //       throttleTime: 1000,
-  //       maxRequests: 10,
-  //       query: {
-  //         pageSize,
-  //         fields: 'all',
-  //       },
-  //     }
-  //   );
-
-  //   // Verify number of requests made
-  //   expect(actualRequests).to.equal(expectedRequests);
-
-  //   // Verify we got all records
-  //   expect(data.entries.length).to.equal(totalRecords);
-
-  //   // Verify the last page was partial (only 1 record)
-  //   // This depends on how your mock implementation works
-  //   const lastPageSize = totalRecords % pageSize || pageSize;
-  //   expect(lastPageSize).to.equal(1);
-  // }).timeout(6e4);
-  // it('should auto fetch all entries', async () => {
-  //   const pageSize = 10;
-  //   mockEntriesPagination(testServer, '/v1/libraries/HyZV7AYk0/entries', {
-  //     pageSize,
-  //     totalPage: 11,
-  //     fields: 'all',
-  //   });
-
-  //   const { data } = await requestWithPagination(
-  //     state,
-  //     'GET',
-  //     'libraries/HyZV7AYk0/entries',
-  //     {
-  //       throttleTime: 10000,
-  //       maxRequests: 10,
-  //       query: { pageSize, fields: 'all' },
-  //     }
-  //   );
-
-  //   expect(data.entries.length).to.eql(11);
-  //   expect(data.nextPageToken).to.eql(undefined);
-  //   expect(data.revision).to.be.greaterThanOrEqual(0);
-  // }).timeout(6e4);
-
-  // it('should auto throttle when throttleTime and maxRequests are set', async () => {
-  //   const pageSize = 10;
-
-  //   mockEntriesPagination(testServer, '/v1/libraries/HyZV7AYk0/entries', {
-  //     pageSize,
-  //     totalPage: 11,
-  //     fields: 'all',
-  //   });
-
-  //   const { data } = await requestWithPagination(
-  //     state,
-  //     'GET',
-  //     'libraries/HyZV7AYk0/entries',
-  //     {
-  //       query: {
-  //         pageSize,
-  //         fields: 'all',
-  //       },
-  //       throttleTime: 1000,
-  //       maxRequests: 10,
-  //     }
-  //   );
-  //   expect(data.entries.length).to.eql(11);
-  //   expect(data.nextPageToken).to.eql(undefined);
-  // }).timeout(6e4 + 1000);
-  // it('should auto throttle when requests exceed limit', async () => {
-  //   const pageSize = 10;
-
-  //   mockRateLimitExceeded(testServer, '/v1/libraries/HyZV7AYk0/entries', {
-  //     pageSize,
-  //     totalPage: 11,
-  //     fields: 'all',
-  //   });
-  //   const { data } = await requestWithPagination(
-  //     state,
-  //     'GET',
-  //     'libraries/HyZV7AYk0/entries',
-  //     {
-  //       throttleTime: 1000,
-  //       maxRequests: 10,
-  //       snoozeTime: 100, //this will force rate limit exceeded
-  //       query: {
-  //         pageSize,
-  //         fields: 'all',
-  //       },
-  //     }
-  //   );
-  //   expect(data.entries.length).to.eql(11);
-  //   expect(data.nextPageToken).to.eql(undefined);
-  // }).timeout(6e4 + 1000);
+    expect(data.entries).to.have.lengthOf(11);
+    expect(data.nextPageToken).to.equal(undefined);
+    expect(data.revision).to.be.greaterThanOrEqual(0);
+  }).timeout(6e4);
 });
