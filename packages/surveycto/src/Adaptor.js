@@ -12,7 +12,6 @@ import {
 } from './Utils';
 
 
-
 /**
  * State object
  * @typedef {Object} SurveyCTOState
@@ -115,80 +114,39 @@ export function fetchSubmissions(formId, options = {}) {
   };
 }
 
-/**
- *  Get an item from SurveyCTO API
- * @public
- * @example <caption>Get a record with id</caption>
- * get('/datasets/enumeratorse_dataset/record', {
- *     recordId: 4
- * })
- * @example <caption>Get a dataset with id</caption>
- * get('/datasets/enumeratorse_dataset')
- * @example <caption>Get a dataset in csv format</caption>
- * get('/datasets/data/csv/enumeratorse_dataset', {
- *     asAttachment: true
- * })
- * @function
- * @param {string} path - Path to resource
- * @param {object} options - Optional request options
- * @property {boolean} options.asAttachment - Set to true to download a dataset as a CSV file attachment. Defaults to false.
- * @property {number} options.recordId - ID of the record to be fetched when getting a single record from a dataset.
- * @returns {Operation}
- * @state {SurveyCTOState}
- */
-export function get(path, options = {}) {
-  return async state => {
-    const [resolvedPath, resolvedOptions] = expandReferences(
-      state,
-      path,
-      options
-    );
-    const { asAttachment } = resolvedOptions || {};
-    delete resolvedOptions?.asAttachment;
-
-    const response = await requestHelper(state, resolvedPath, {
-      method: 'GET',
-      ...(asAttachment
-        ? {
-            headers: {
-              Accept: 'text/csv',
-            },
-            query: { asAttachment },
-          }
-        : {
-            query: {
-              ...resolvedOptions,
-            },
-          }),
-    });
-    return prepareNextState(state, response);
-  };
-}
 
 /**
- * List datasets from the SurveyCTO API
+ * List resources from SurveyCTO API
  * @public
+ * @example <caption>List all dataset records</caption>
+ * list('enumerators_dataset/records')
  * @example <caption>List all datasets</caption>
- * listDatasets();
+ * list()
+ * @example <caption>List dataset records with pagination options</caption>
+ * list('enumerators_dataset/records',{
+ *   limit: 2,
+ * });
  * @example <caption>List datasets with pagination options</caption>
- * listDatasets({
+ * list(null,{
  *   limit: 2,
  * });
  * @function
+ * @param {string} resource - Resource to fetch
  * @param {object} options - Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getdatasets-parameters)
- * @property {number} options.limit - Maximum number of datasets to return. Defaults to 20. Maximum is 1000.
+ * @property {number} options.limit - Maximum number of items to return. Defaults to 20. Maximum is 1000.
  * @property {string} options.cursor - Optional string to specify the starting point of the next page of results.
  * @returns {Operation}
  * @state {SurveyCTOState}
  */
-export function listDatasets(options = {}) {
+export function list(resource, options = {}) {
   return async state => {
     const results = [];
-    const [resolvedOptions] = expandReferences(state, options);
+    const [resolvedResource, resolvedOptions] = expandReferences(state, resource, options);
 
     const userLimit = resolvedOptions?.limit
       ? Number(resolvedOptions.limit)
       : undefined;
+      
 
     let cursor = resolvedOptions?.cursor ? resolvedOptions.cursor : null;
 
@@ -215,7 +173,7 @@ export function listDatasets(options = {}) {
         ? Math.min(remaining, maxFetchSize)
         : pageSize;
 
-      const response = await requestHelper(state, '/datasets', {
+      const response = await requestHelper(state, resolvedResource? `/datasets/${resolvedResource}`: '/datasets', {
         method: 'GET',
         query: {
           ...baseQuery,
@@ -244,53 +202,6 @@ export function listDatasets(options = {}) {
   };
 }
 
-/**
- *  Get a single dataset from SurveyCTO API
- * @public
- * @example <caption>List a dataset with id</caption>
- * getDataset('new_dataset')
- * @example <caption>List a dataset in csv format</caption>
- * getDataset('new_dataset', {
- *      asAttachment: true
- * })
- * @function
- * @param {string} datasetId - ID of the dataset to fetch
- * @param {object} options - Optional request options
- * @param {boolean} options.asAttachment - Set to true to download the dataset as a CSV file attachment. Defaults to false.
- * @returns {Operation}
- * @state {SurveyCTOState}
- */
-export function getDataset(datasetId, options = {}) {
-  return async state => {
-    const [resolvedDatasetId, resolvedOptions] = expandReferences(
-      state,
-      datasetId,
-      options
-    );
-    const { asAttachment } = resolvedOptions || {};
-    delete resolvedOptions?.asAttachment;
-
-    const response = await requestHelper(
-      state,
-      asAttachment === true
-        ? `datasets/data/csv/${resolvedDatasetId}`
-        : `/datasets/${resolvedDatasetId}`,
-      {
-        method: 'GET',
-        ...(asAttachment
-          ? {
-              headers: {
-                Accept: 'text/csv',
-              },
-              query: { asAttachment },
-            }
-          : {}),
-        ...resolvedOptions,
-      }
-    );
-    return prepareNextState(state, response);
-  };
-}
 
 /**
  *  Upsert a dataset. This will atomically update a dataset if it already exists, or otherwise create it
@@ -360,132 +271,6 @@ export function upsertDataset(datasetId, data) {
   };
 }
 
-/**
- * Delete a dataset from SurveyCTO API
- * @public
- * @example <caption>Delete a dataset</caption>
- * deleteDataset('enumeratorses_dataset');
- * @function
- * @param {string} datasetId - ID of the dataset to delete
- * @returns {Operation}
- * @state {SurveyCTOState}
- */
-export function deleteDataset(datasetId) {
-  return async state => {
-    const [resolvedDatasetId] = expandReferences(state, datasetId);
-
-    const response = await requestHelper(
-      state,
-      `/datasets/${resolvedDatasetId}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'content-type': 'application/json',
-        },
-      }
-    );
-
-    return prepareNextState(state, response);
-  };
-}
-
-/**
- * Purge a dataset. This action removes all data records from the dataset while keeping the dataset structure intact
- * @public
- * @example <caption>Purge a dataset</caption>
- * purgeDataset('new_dataset')
- * @function
- * @param {string} datasetId - ID of the dataset to purge.
- * @returns {Operation}
- * @state {SurveyCTOState}
- */
-export function purgeDataset(datasetId) {
-  return async state => {
-    const [resolvedDatasetId] = expandReferences(state, datasetId);
-
-    const response = await requestHelper(
-      state,
-      `/datasets/${resolvedDatasetId}/purge`,
-      {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-      }
-    );
-    return prepareNextState(state, response);
-  };
-}
-
-/**
- * List dataset records from the SurveyCTO API
- * @public
- * @example <caption>List all records of a dataset </caption>
- * listRecords('new_dataset');
- * @example <caption>List datasets records with options</caption>
- * listRecords('new_dataset', {
- *   limit: 2,
- * });
- * @function
- * @param {string} datasetId - ID of the dataset to fetch records from
- * @param {object} options - Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getallrecords-parameters)
- * @returns {Operation}
- * @state {SurveyCTOState}
- */
-export function listRecords(datasetId, options) {
-  return async state => {
-    const [resolvedDatasetId, resolvedOptions] = expandReferences(
-      state,
-      datasetId,
-      options
-    );
-
-    const response = await requestHelper(
-      state,
-      `/datasets/${resolvedDatasetId}/records`,
-      {
-        method: 'GET',
-        query: {
-          ...resolvedOptions,
-        },
-      }
-    );
-    return prepareNextState(state, response);
-  };
-}
-
-/**
- * Get a single dataset record from the SurveyCTO API
- * @public
- * @example <caption>Get a dataset record </caption>
- * getRecord('enumerators_dataset', 2);
- * @function
- * @param {string} datasetId - ID of the dataset to fetch records from
- * @param {string} recordId - ID of the record to be fetched
- * @returns {Operation}
- * @state {SurveyCTOState}
- */
-export function getRecord(datasetId, recordId) {
-  return async state => {
-    const [resolvedDatasetId, resolvedRecordId] = expandReferences(
-      state,
-      datasetId,
-      recordId
-    );
-
-    const response = await requestHelper(
-      state,
-      `/datasets/${resolvedDatasetId}/record`,
-      {
-        method: 'GET',
-        query: {
-          recordId: resolvedRecordId,
-        },
-      }
-    );
-    return prepareNextState(state, response);
-  };
-}
 
 /**
  *  Upsert a record. This will atomically update a record if it already exists, or otherwise create it
@@ -522,43 +307,6 @@ export function upsertRecord(datasetId, recordId, data) {
         },
       }
     );
-    return prepareNextState(state, response);
-  };
-}
-
-/**
- * Delete a record from a dataset in SurveyCTO API
- * @public
- * @example <caption>Delete a dataset record</caption>
- * deleteRecord('enumerators_dataset', 2);
- * @function
- * @param {string} datasetId - ID of the dataset
- * @param {string} recordId - ID of the record to be deleted
- * @returns {Operation}
- * @state {SurveyCTOState}
- */
-export function deleteRecord(datasetId, recordId) {
-  return async state => {
-    const [resolvedDatasetId, resolveRecordId] = expandReferences(
-      state,
-      datasetId,
-      recordId
-    );
-
-    const response = await requestHelper(
-      state,
-      `/datasets/${resolvedDatasetId}/record`,
-      {
-        method: 'DELETE',
-        query: {
-          recordId: resolveRecordId,
-        },
-        headers: {
-          'content-type': 'application/json',
-        },
-      }
-    );
-
     return prepareNextState(state, response);
   };
 }
@@ -641,56 +389,6 @@ export function uploadCsvRecords(datasetId, rows, metadata = {}) {
   };
 }
 
-/**
- * Options provided to request()
- * @typedef {Object} RequestOptions
- * @public
- * @property {object} [headers] - An object of headers parameters.
- * @property {object} [body] - Body data to append to the request.
- * @property {object} [query] - An object of query parameters to be encoded into the URL.
- * @property {object} [contentType] - Set the content-type header to the appropriate format. Supported values: `json` and `form`
- * @property {string} [method = GET] - The HTTP method to use.
- */
-
-/**
- * Make a HTTP request to the SurveyCTO API
- * @public
- * @example <caption>Post JSON data to SurveyCTO</caption>
- * request("/anEndpoint", {
- *   method: "POST",
- *    contentType: "json",
- *   body: { foo: "bar", a: 1 },
- * });
- * @example <caption>Upload a CSV blob to a dataset</caption>
- *   request('datasets/library/records/upload', {
- *     method: 'POST',
- *     contentType: 'form',
- *     body: {
- *       file: {
- *         blob: $.data,
- *         type: 'text/csv',
- *         filename: 'library.csv'
- *       }
- *     },
- *   });
- * @function
- * @param {string} path - Path to resource
- * @param {RequestOptions} params - Query, body and method parameters
- * @returns {Operation}
- * @state {SurveyCTOState}
- */
-export function request(path, params) {
-  return async state => {
-    const [resolvedPath, resolvedParams] = expandReferences(
-      state,
-      path,
-      params
-    );
-
-    const response = await requestHelper(state, resolvedPath, resolvedParams);
-    return prepareNextState(state, response);
-  };
-}
 
 /**
  * Sets `state.cursor` to a SurveyCTO timestamp string (`MMM dd, yyy h:mm:ss a`).

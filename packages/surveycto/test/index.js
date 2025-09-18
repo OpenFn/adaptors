@@ -2,46 +2,26 @@ import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
 import {
-  execute,
-  request,
   fetchSubmissions,
   jsonToCSVBuffer,
-  listDatasets,
-  listRecords,
   uploadCsvRecords,
   upsertDataset,
   upsertRecord,
-  deleteDataset,
-  deleteRecord,
-  purgeDataset,
-  get,
+  list,
 } from '../src';
 import { convertDate, dateRegex } from '../src/Utils';
 
 const baseUrl = 'https://test.surveycto.com';
 const mock = enableMockClient(baseUrl);
 
-    const state = {
-      configuration: {
-        user: 'u',
-        password: 'p',
-        servername: 'test',
-        apiVersion: 'v2',
-      },
-    };
-
-describe('request', () => {
-  it('throws if an absolute URL is passed', async () => {
-    // happily the request won't actually be made, so we don't need to mock anything here
-    let err;
-    try {
-      await execute(request('https://www.blah.com/a/b/c'))({});
-    } catch (e) {
-      err = e;
-    }
-    expect(err.code).to.equal('UNEXPECTED_ABSOLUTE_URL');
-  });
-});
+const state = {
+  configuration: {
+    user: 'u',
+    password: 'p',
+    servername: 'test',
+    apiVersion: 'v2',
+  },
+};
 
 describe('fetchSubmissions', () => {
   it('should not blow up if 0 records returned', async () => {
@@ -68,7 +48,7 @@ describe('fetchSubmissions', () => {
   });
 });
 
-describe('listDatasets', () => {
+describe('list', () => {
   it('should list all datasets', async () => {
     mock
       .intercept({
@@ -93,7 +73,7 @@ describe('listDatasets', () => {
         }
       );
 
-    const result = await listDatasets()(state);
+    const result = await list()(state);
     expect(result.data.data).to.eql([
       {
         id: 'new_dataset',
@@ -105,8 +85,6 @@ describe('listDatasets', () => {
   });
 
   it('should list datasets with options', async () => {
-
-
     mock
       .intercept({
         path: /\/api\/v2\/datasets/,
@@ -137,14 +115,14 @@ describe('listDatasets', () => {
         }
       );
 
-    const result = await listDatasets()(state);
+    const result = await list(null, {
+      limit: 1,
+    })(state);
 
-    expect(result.data.data.length).to.eql(2);
-    expect(result.data.total).to.eql(2);
+    expect(result.data.data.length).to.eql(1);
+    expect(result.data.total).to.eql(1);
   });
-});
-
-describe('listRecords', () => {
+  
   it('should list all records', async () => {
     mock
       .intercept({
@@ -171,7 +149,7 @@ describe('listRecords', () => {
         }
       );
 
-    const result = await listRecords('new_dataset')(state);
+    const result = await list('new_dataset/records')(state);
     expect(result.data.data).to.eql([
       {
         recordId: '2',
@@ -182,11 +160,9 @@ describe('listRecords', () => {
         },
       },
     ]);
-    expect(result.response.statusCode).to.eql(200);
   });
 
   it('should list records with options', async () => {
-
     mock
       .intercept({
         path: /\/api\/v2\/datasets\/new_dataset\/records/,
@@ -196,7 +172,7 @@ describe('listRecords', () => {
       .reply(
         200,
         {
-          total: 3,
+          total: 2,
           limit: 2,
           data: [
             {
@@ -222,137 +198,16 @@ describe('listRecords', () => {
         }
       );
 
-    const result = await listRecords('new_dataset')(state);
-    expect(result.data.data.length).to.eql(2);
-    expect(result.data.limit).to.eql(2);
-  });
-});
-
-describe('get', () => {
-  it('should handle non-JSON response', async () => {
-
-    mock
-      .intercept({
-        path: /api\/v2\/datasets\/plain/,
-        method: 'GET',
-      })
-      .reply(200, 'plain text', {
-        headers: { 'content-type': 'text/plain' },
-      });
-    const result = await get('/datasets/plain')(state);
-    expect(result.data).to.equal('plain text');
-    expect(result.response.statusCode).to.equal(200);
-  });
-
-  it('should send query params', async () => {
-    mock
-      .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset/,
-        method: 'GET',
-        query: { foo: 'bar' },
-      })
-      .reply(200, { ok: true });
-    const result = await get('/datasets/new_dataset', { foo: 'bar' })(state);
-    expect(result.data).to.eql({ ok: true });
-    expect(result.response.statusCode).to.equal(200);
-  });
-
-  it('should list a single dataset', async () => {
-
-    mock
-      .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset/,
-        method: 'GET',
-      })
-      .reply(
-        200,
-        {
-          id: 'new_dataset',
-          title: 'New dataset',
-          discriminator: 'DATA',
-          groupId: 1,
-        },
-        {
-          headers: { 'content-type': 'application/json' },
-        }
-      );
-
-    const result = await get('datasets/new_dataset')(state);
-    expect(result.data).to.eql({
-      id: 'new_dataset',
-      title: 'New dataset',
-      discriminator: 'DATA',
-      groupId: 1,
-    });
-    expect(result.response.statusCode).to.eql(200);
-  });
-  it('should list a single dataset in csv format', async () => {
-
-    mock
-      .intercept({
-        path: /\/api\/v2\/datasets\/data\/csv\/new_dataset/,
-        method: 'GET',
-        query: { asAttachment: true },
-      })
-      .reply(
-        200,
-        'id,name,users\n3,Trial,All users here\n4,Trial update,All users\n5,Trials,All users here\n',
-        {
-          headers: {
-            'content-type': 'text/plain;charset=UTF-8',
-            Accept: 'text/csv',
-          },
-        }
-      );
-
-    const result = await get('/datasets/data/csv/new_dataset', {
-      asAttachment: true,
+    const result = await list('new_dataset/records', {
+      limit: 2,
     })(state);
-
-    expect(result.data).to.eql(
-      'id,name,users\n3,Trial,All users here\n4,Trial update,All users\n5,Trials,All users here\n'
-    );
-    expect(result.response.statusCode).to.eql(200);
-  });
-  it('should list a single record', async () => {
-
-    mock
-      .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset\/record/,
-        method: 'GET',
-        query: { recordId: '2' },
-      })
-      .reply(
-        200,
-        {
-          recordId: '2',
-          values: {
-            name: 'Triayuio8gtvgu7gt',
-            id: '2',
-            users: 'All users',
-          },
-        },
-        {
-          headers: { 'content-type': 'application/json' },
-        }
-      );
-
-    const result = await get('/datasets/new_dataset/record', 2)(state);
-    expect(result.data).to.eql({
-      recordId: '2',
-      values: {
-        name: 'Triayuio8gtvgu7gt',
-        id: '2',
-        users: 'All users',
-      },
-    });
-    expect(result.response.statusCode).to.eql(200);
+    expect(result.data.data.length).to.eql(2);
+    expect(result.data.total).to.eql(2);
   });
 });
 
 describe('upsertDataset', () => {
   it('should make a get then update if an item is found', async () => {
-
     mock
       .intercept({
         path: /\/api\/v2\/datasets\/new_dataset/,
@@ -484,58 +339,6 @@ describe('upsertRecords', () => {
   });
 });
 
-describe('deleteDataset', () => {
-  it('should delete a dataset', async () => {
-
-    mock
-      .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset/,
-        method: 'DELETE',
-      })
-      .reply(
-        200,
-        {
-          success: true,
-        },
-        {
-          headers: { 'content-type': 'application/json' },
-        }
-      );
-
-    const result = await deleteDataset('new_dataset')(state);
-    expect(result.data).to.eql({
-      success: true,
-    });
-    expect(result.response.statusCode).to.eql(200);
-  });
-});
-
-describe('deleteRecord', () => {
-  it('should delete a dataset record', async () => {
-    mock
-      .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset\/record/,
-        method: 'DELETE',
-        query: { recordId: '2' },
-      })
-      .reply(
-        200,
-        {
-          success: true,
-        },
-        {
-          headers: { 'content-type': 'application/json' },
-        }
-      );
-
-    const result = await deleteRecord('new_dataset', 2)(state);
-    expect(result.data).to.eql({
-      success: true,
-    });
-    expect(result.response.statusCode).to.eql(200);
-  });
-});
-
 describe('uploadCsvRecords', () => {
   it('should upload csv records', async () => {
     mock
@@ -609,31 +412,6 @@ describe('uploadCsvRecords', () => {
     )(state);
     expect(result.data.rowsUpdated).to.eql(2);
     expect(result.data.rowsAdded).to.eql(0);
-    expect(result.response.statusCode).to.eql(200);
-  });
-});
-
-describe('purgeDataset', () => {
-  it('should delete a dataset', async () => {
-    mock
-      .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset\/purge/,
-        method: 'POST',
-      })
-      .reply(
-        200,
-        {
-          success: true,
-        },
-        {
-          headers: { 'content-type': 'application/json' },
-        }
-      );
-
-    const result = await purgeDataset('new_dataset')(state);
-    expect(result.data).to.eql({
-      success: true,
-    });
     expect(result.response.statusCode).to.eql(200);
   });
 });
