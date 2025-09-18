@@ -1,5 +1,12 @@
 # @openfn/language-hubtel
 
+## 1.0.12 - 18 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[e2bc436]
+  - @openfn/language-common@3.1.0
+
 ## 1.0.11 - 01 September 2025
 
 ### Patch Changes

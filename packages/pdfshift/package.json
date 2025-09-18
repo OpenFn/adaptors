@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-pdfshift",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "OpenFn adaptor for generating PDF documents",
   "badge": "Core",
   "type": "module",

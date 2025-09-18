@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-ghana-bdr",
   "label": "Ghana BDR",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "OpenFn adaptor for Ghana birth-death registry (BDR)",
   "type": "module",
   "exports": {
