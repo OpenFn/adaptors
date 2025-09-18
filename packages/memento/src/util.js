@@ -62,67 +62,41 @@ export function sendRequest(state, method, path, params = {}) {
     });
 }
 
-/**
- * Handles rate limiting by tracking request timestamps and calculating wait times
- * @private
- * @param {Array} requestTimes - Array of request timestamps
- * @param {number} requestCount - Current request count
- * @param {Object} configs - Request configurations
- * @param {number} {configs.throttleTime} - Time in ms to wait between throttled requests
- * @param {number} {configs.maxRequests} - Maximum number of requests allowed within throttleTime
- * @param {number} {configs.waitingTime} - Time in ms to wait between requests
- * @returns {Promise<void>} Promise that resolves after appropriate wait time
- */
-function handleRateLimit(requestTimes, requestCount, configs) {
-  const { throttleTime, maxRequests, waitingTime } = configs;
+export function handleRateLimit(requestTimes, requestConfig) {
+  const { throttleTime, maxRequests, hasReachedLimit = false } = requestConfig;
+
+  // const bufferTime = 1e3; //1s buffer
+  const safeDelayBetweenRequests = Math.ceil(throttleTime / maxRequests);
+  const delayTime = safeDelayBetweenRequests;
+
+  if (hasReachedLimit) {
+    console.log(`Rate limit exceeded, waiting ${delayTime / 1000}s`);
+    return new Promise(resolve => setTimeout(resolve, delayTime));
+  }
+
   const now = Date.now();
 
-  const hasRequestTimes = requestTimes.length > 0;
-  const oldestRequestAge = now - requestTimes[0];
-  const isRequestExpired = oldestRequestAge > throttleTime;
-
-  while (hasRequestTimes && isRequestExpired) {
+  while (requestTimes.length > 0 && now - requestTimes[0] > throttleTime) {
     requestTimes.shift();
   }
 
-  const hasMaxRequests = requestTimes.length >= maxRequests;
-  const timeUntilOldestExpires = throttleTime - oldestRequestAge + waitingTime; // 1s buffer
+  const oldestRequestAge = now - requestTimes[0];
+  const requestCount = requestTimes.length;
+  const reachedMaxRequest = requestCount >= maxRequests;
+  const timeUntilOldestExpires = throttleTime - oldestRequestAge + delayTime;
 
-  if (hasMaxRequests) {
+  if (reachedMaxRequest) {
     console.log(`Rate limiting: waiting ${timeUntilOldestExpires / 1000}s`);
     return new Promise(resolve => setTimeout(resolve, timeUntilOldestExpires));
   }
 
-  if (requestCount > 0) {
-    console.log(`Waiting ${waitingTime / 1000}s between requests`);
-    return new Promise(resolve => setTimeout(resolve, waitingTime));
+  const hasRequestTimes = requestCount > 0;
+  if (hasRequestTimes) {
+    console.log(`Waiting ${delayTime / 1000}s between requests`);
+    return new Promise(resolve => setTimeout(resolve, delayTime));
   }
 
   return;
-}
-
-/**
- * Handles rate limit exceeded error by calculating appropriate wait time
- * @param {Array} requestTimes - Array of request timestamps
- * @param {Object} configs - Request configurations
- * @param {number} configs.throttleTime - Time in ms to wait between throttled requests
- * @param {number} configs.waitingTime - Time in ms to wait between requests
- * @private
- * @returns {Promise<void>} Promise that resolves after appropriate wait time
- */
-function handleRateLimitExceeded(requestTimes, configs) {
-  const { throttleTime, waitingTime } = configs;
-  const now = Date.now();
-  const hasRequestTimes = requestTimes.length > 0;
-  const oldestRequestAge = now - requestTimes[0];
-  const isRequestExpired = oldestRequestAge > throttleTime;
-
-  while (hasRequestTimes && isRequestExpired) {
-    requestTimes.shift();
-  }
-  const timeUntilOldestExpires = throttleTime - oldestRequestAge + waitingTime;
-  console.log(`Rate limit exceeded, waiting ${timeUntilOldestExpires / 1000}s`);
-  return new Promise(resolve => setTimeout(resolve, timeUntilOldestExpires));
 }
 
 export const DEFAULT_THROTTLE_TIME = 6e4; // 1 minute
@@ -145,15 +119,9 @@ export async function requestWithPagination(state, method, path, params = {}) {
   const {
     throttleTime = DEFAULT_THROTTLE_TIME,
     maxRequests = DEFAULT_MAX_REQUESTS,
-    snoozeTime,
     query = {},
     ...restOfOptions
   } = params;
-
-  const bufferTime = 1000; //1s buffer
-  const minimumTimePerRequest = Math.ceil(throttleTime / maxRequests);
-  const safeDelayBetweenRequests = minimumTimePerRequest + bufferTime;
-  const waitingTime = snoozeTime ?? safeDelayBetweenRequests;
 
   const results = { entries: [], nextPageToken: undefined, revision: 0 };
 
@@ -165,11 +133,11 @@ export async function requestWithPagination(state, method, path, params = {}) {
   do {
     let response;
     try {
-      await handleRateLimit(requestTimes, requestCount, {
+      await handleRateLimit(requestTimes, {
         throttleTime,
-        waitingTime,
         maxRequests,
       });
+
       requestTimes.push(Date.now());
       response = await request(state, method, path, requestOptions);
     } catch (error) {
@@ -178,9 +146,10 @@ export async function requestWithPagination(state, method, path, params = {}) {
         error.body?.description === 'API rate limit exceeded' &&
         error.body?.code === 403
       ) {
-        await handleRateLimitExceeded(requestTimes, {
+        await handleRateLimit(requestTimes, {
           throttleTime,
-          waitingTime,
+          maxRequests,
+          hasReachedLimit: true,
         });
         requestTimes.push(Date.now());
         response = await request(state, method, path, requestOptions);
@@ -197,11 +166,7 @@ export async function requestWithPagination(state, method, path, params = {}) {
 
     if (requestOptions.query?.pageToken && body?.entries.length !== 0) {
       console.log(
-        'Fetched',
-        results.entries.length,
-        'entries so far in',
-        requestCount,
-        'requests'
+        `Fetched ${results.entries.length} entries so far in ${requestCount} requests`
       );
     }
 
@@ -210,11 +175,7 @@ export async function requestWithPagination(state, method, path, params = {}) {
   } while (shouldFetchMoreContent);
 
   console.log(
-    'Total entries:',
-    results.entries.length,
-    'in',
-    requestCount,
-    'requests'
+    `Total entries: ${results.entries.length} in ${requestCount} requests`
   );
   return composeNextState(state, results);
 }
