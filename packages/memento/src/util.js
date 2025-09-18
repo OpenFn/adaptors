@@ -62,63 +62,71 @@ export function sendRequest(state, method, path, params = {}) {
     });
 }
 
-export const DEFAULT_THROTTLE_TIME = 6e4;
-export const DEFAULT_MAX_REQUESTS = 10;
 /**
  * Handles rate limiting by tracking request timestamps and calculating wait times
  * @private
  * @param {Array} requestTimes - Array of request timestamps
- * @param {number} {options.requestCount} - Current request count
- * @param {number} {options.throttleTime} - Time in ms to wait between throttled requests
- * @param {number} {options.maxRequests} - Maximum number of requests allowed within throttleTime
- * @param {number} {options.waitingTime} - Time in ms to wait between requests
+ * @param {number} requestCount - Current request count
+ * @param {Object} configs - Request configurations
+ * @param {number} {configs.throttleTime} - Time in ms to wait between throttled requests
+ * @param {number} {configs.maxRequests} - Maximum number of requests allowed within throttleTime
+ * @param {number} {configs.waitingTime} - Time in ms to wait between requests
  * @returns {Promise<void>} Promise that resolves after appropriate wait time
  */
-async function handleRateLimit(requestTimes, options) {
-  const { requestCount, throttleTime, maxRequests, waitingTime } = options;
+function handleRateLimit(requestTimes, requestCount, configs) {
+  const { throttleTime, maxRequests, waitingTime } = configs;
   const now = Date.now();
 
-  // Clean up old request times (older than throttleTime)
-  while (requestTimes.length > 0 && now - requestTimes[0] > throttleTime) {
+  const hasRequestTimes = requestTimes.length > 0;
+  const oldestRequestAge = now - requestTimes[0];
+  const isRequestExpired = oldestRequestAge > throttleTime;
+
+  while (hasRequestTimes && isRequestExpired) {
     requestTimes.shift();
   }
 
-  // If we have maxRequests requests in the last throttleTime, wait until the oldest expires
-  if (requestTimes.length >= maxRequests) {
-    const timeUntilOldestExpires =
-      throttleTime - (now - requestTimes[0]) + waitingTime; // 1s buffer
+  const hasMaxRequests = requestTimes.length >= maxRequests;
+  const timeUntilOldestExpires = throttleTime - oldestRequestAge + waitingTime; // 1s buffer
+
+  if (hasMaxRequests) {
     console.log(`Rate limiting: waiting ${timeUntilOldestExpires / 1000}s`);
-    await new Promise(resolve => setTimeout(resolve, timeUntilOldestExpires));
-  } else if (requestCount > 0) {
-    // Wait waitingTime between requests to be safe
-    console.log(`Waiting ${waitingTime / 1000}s between requests`);
-    await new Promise(resolve => setTimeout(resolve, waitingTime));
+    return new Promise(resolve => setTimeout(resolve, timeUntilOldestExpires));
   }
+
+  if (requestCount > 0) {
+    console.log(`Waiting ${waitingTime / 1000}s between requests`);
+    return new Promise(resolve => setTimeout(resolve, waitingTime));
+  }
+
+  return;
 }
 
 /**
  * Handles rate limit exceeded error by calculating appropriate wait time
  * @param {Array} requestTimes - Array of request timestamps
- * @param {Object} options - Options for the request
- * @param {number} options.throttleTime - Time in ms to wait between throttled requests
- * @param {number} options.waitingTime - Time in ms to wait between requests
+ * @param {Object} configs - Request configurations
+ * @param {number} configs.throttleTime - Time in ms to wait between throttled requests
+ * @param {number} configs.waitingTime - Time in ms to wait between requests
  * @private
  * @returns {Promise<void>} Promise that resolves after appropriate wait time
  */
-async function handleRateLimitExceeded(requestTimes, options) {
-  const { throttleTime, waitingTime } = options;
+function handleRateLimitExceeded(requestTimes, configs) {
+  const { throttleTime, waitingTime } = configs;
   const now = Date.now();
-  while (requestTimes.length > 0 && now - requestTimes[0] > throttleTime) {
+  const hasRequestTimes = requestTimes.length > 0;
+  const oldestRequestAge = now - requestTimes[0];
+  const isRequestExpired = oldestRequestAge > throttleTime;
+
+  while (hasRequestTimes && isRequestExpired) {
     requestTimes.shift();
   }
-  const timeUntilOldestExpires =
-    requestTimes.length > 0
-      ? throttleTime - (now - requestTimes[0]) + waitingTime
-      : throttleTime;
+  const timeUntilOldestExpires = throttleTime - oldestRequestAge + waitingTime;
   console.log(`Rate limit exceeded, waiting ${timeUntilOldestExpires / 1000}s`);
-  await new Promise(resolve => setTimeout(resolve, timeUntilOldestExpires));
+  return new Promise(resolve => setTimeout(resolve, timeUntilOldestExpires));
 }
 
+export const DEFAULT_THROTTLE_TIME = 6e4; // 1 minute
+export const DEFAULT_MAX_REQUESTS = 10; // 10 requests per minute
 /**
  * Makes paginated API requests to fetch all available data.
  *
@@ -141,19 +149,23 @@ export async function requestWithPagination(state, method, path, params = {}) {
     query = {},
     ...restOfOptions
   } = params;
-  const waitingTime =
-    snoozeTime ?? Math.ceil(throttleTime / maxRequests) + 1000;
+
+  const bufferTime = 1000; //1s buffer
+  const minimumTimePerRequest = Math.ceil(throttleTime / maxRequests);
+  const safeDelayBetweenRequests = minimumTimePerRequest + bufferTime;
+  const waitingTime = snoozeTime ?? safeDelayBetweenRequests;
+
   const results = { entries: [], nextPageToken: undefined, revision: 0 };
+
   let requestCount = 0;
-  let requestOptions = { query, ...restOfOptions };
+  let requestTimes = [];
   let shouldFetchMoreContent = false;
-  const requestTimes = [];
+  let requestOptions = { query, ...restOfOptions };
 
   do {
     let response;
     try {
-      await handleRateLimit(requestTimes, {
-        requestCount,
+      await handleRateLimit(requestTimes, requestCount, {
         throttleTime,
         waitingTime,
         maxRequests,
