@@ -3,11 +3,9 @@
 ---
 
 - Add new helper functions:
-    - `listDatasets()` and `listRecords()` to list datasets and dataset records respectively.
-    - `getDataset()` and `getRecord()` to get a single record or dataset.
+    - `list()`  to list datasets and dataset records .
+    - `http` namespace with `delete()`, `post()`, `get()`, and `request()`.
     - `upsertRecord()` and `upsertDataset()` to create or update a record or a dataset.
-    - `deleteRecord()` and `deleteDataset()` to delete a record and a dataset.
-    - `purgeDataset()` to delete all records of a dataset
     - `uploadCsvRecords()` to upload records to a dataset in `csv` format
 
 - Remove support for `callback` function options in the helper functions.
