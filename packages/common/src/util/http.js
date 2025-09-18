@@ -1,4 +1,4 @@
-import { Client, MockAgent } from 'undici';
+import { MockAgent, Agent } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
@@ -6,7 +6,7 @@ import path from 'node:path';
 import throwError from './throw-error';
 import { encode } from './base64';
 
-const clients = new Map();
+const agents = new Map();
 
 export const makeBasicAuthHeader = (username, password) => {
   const buff = Buffer.from(`${username}:${password}`);
@@ -35,12 +35,17 @@ export const logResponse = response => {
   return response;
 };
 
-const getClient = (baseUrl, options) => {
-  const { tls } = options;
-  if (!clients.has(baseUrl)) {
-    clients.set(baseUrl, new Client(baseUrl, { connect: tls }));
+const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
+  if (!agents.has(origin)) {
+    const agent = new Agent({
+      connect: tls,
+      ...agentOpts,
+    });
+
+    agents.set(origin, agent);
   }
-  return clients.get(baseUrl);
+
+  return agents.get(origin);
 };
 
 export const enableMockClient = (baseUrl, options = {}) => {
@@ -49,7 +54,7 @@ export const enableMockClient = (baseUrl, options = {}) => {
   const mockAgent = new MockAgent({ connections: 1 });
   mockAgent.disableNetConnect();
   const client = mockAgent.get(baseUrl);
-  if (!clients.has(baseUrl)) {
+  if (!agents.has(baseUrl)) {
     if (defaultContentType) {
       const _intercept = client.intercept;
       // because so many unit test use mock json,
@@ -94,9 +99,8 @@ export const enableMockClient = (baseUrl, options = {}) => {
       };
     }
 
-    clients.set(baseUrl, client);
+    agents.set(baseUrl, client);
   }
-
   return client;
 };
 
@@ -231,14 +235,14 @@ export async function request(method, fullUrlOrPath, options = {}) {
     maxRedirections,
   } = options;
 
-  const client = getClient(baseUrl, { tls });
+  const dispatcher = getAgent(baseUrl, { tls });
 
   const queryParams = {
     ...optionQuery,
     ...urlQuery,
   };
 
-  const response = await client.request({
+  const response = await dispatcher.request({
     path,
     query: queryParams,
     method,
