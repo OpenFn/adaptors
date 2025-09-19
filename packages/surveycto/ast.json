@@ -85,7 +85,7 @@
         "options"
       ],
       "docs": {
-        "description": "List resources from the SurveyCTO API",
+        "description": "List resources from SurveyCTO API",
         "tags": [
           {
             "title": "public",
@@ -104,8 +104,13 @@
           },
           {
             "title": "example",
-            "description": "listDatasets('enumerators_dataset/records',{\n  limit: 2,\n});",
+            "description": "list('enumerators_dataset/records',{\n  limit: 2,\n});",
             "caption": "List dataset records with pagination options"
+          },
+          {
+            "title": "example",
+            "description": "list(null,{\n  limit: 2,\n});",
+            "caption": "List datasets with pagination options"
           },
           {
             "title": "function",
@@ -133,77 +138,6 @@
           {
             "title": "property",
             "description": "Maximum number of items to return. Defaults to 20. Maximum is 1000.",
-            "type": {
-              "type": "NameExpression",
-              "name": "number"
-            },
-            "name": "options.limit"
-          },
-          {
-            "title": "property",
-            "description": "Optional string to specify the starting point of the next page of results.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "options.cursor"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{SurveyCTOState}"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "listDatasets",
-      "params": [
-        "options"
-      ],
-      "docs": {
-        "description": "List datasets from the SurveyCTO API",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "listDatasets();",
-            "caption": "List all datasets"
-          },
-          {
-            "title": "example",
-            "description": "listDatasets({\n  limit: 2,\n});",
-            "caption": "List datasets with pagination options"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getdatasets-parameters)",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "options"
-          },
-          {
-            "title": "property",
-            "description": "Maximum number of datasets to return. Defaults to 20. Maximum is 1000.",
             "type": {
               "type": "NameExpression",
               "name": "number"
@@ -276,117 +210,6 @@
               "name": "object"
             },
             "name": "data"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{SurveyCTOState}"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "purgeDataset",
-      "params": [
-        "datasetId"
-      ],
-      "docs": {
-        "description": "Purge a dataset. This action removes all data records from the dataset while keeping the dataset structure intact",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "purgeDataset('new_dataset')",
-            "caption": "Purge a dataset"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "ID of the dataset to purge.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "datasetId"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{SurveyCTOState}"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "listRecords",
-      "params": [
-        "datasetId",
-        "options"
-      ],
-      "docs": {
-        "description": "List dataset records from the SurveyCTO API",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "listRecords('new_dataset');",
-            "caption": "List all records of a dataset"
-          },
-          {
-            "title": "example",
-            "description": "listRecords('new_dataset', {\n  limit: 2,\n});",
-            "caption": "List datasets records with options"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "ID of the dataset to fetch records from",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "datasetId"
-          },
-          {
-            "title": "param",
-            "description": "Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getallrecords-parameters)",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "options"
           },
           {
             "title": "returns",

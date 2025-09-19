@@ -11,7 +11,6 @@ import {
   prepareNextState,
 } from './Utils';
 
-
 /**
  * State object
  * @typedef {Object} SurveyCTOState
@@ -114,7 +113,6 @@ export function fetchSubmissions(formId, options = {}) {
   };
 }
 
-
 /**
  * List resources from SurveyCTO API
  * @public
@@ -141,12 +139,15 @@ export function fetchSubmissions(formId, options = {}) {
 export function list(resource, options = {}) {
   return async state => {
     const results = [];
-    const [resolvedResource, resolvedOptions] = expandReferences(state, resource, options);
+    const [resolvedResource, resolvedOptions] = expandReferences(
+      state,
+      resource,
+      options
+    );
 
     const userLimit = resolvedOptions?.limit
       ? Number(resolvedOptions.limit)
       : undefined;
-      
 
     let cursor = resolvedOptions?.cursor ? resolvedOptions.cursor : null;
 
@@ -173,14 +174,18 @@ export function list(resource, options = {}) {
         ? Math.min(remaining, maxFetchSize)
         : pageSize;
 
-      const response = await requestHelper(state, resolvedResource? `/datasets/${resolvedResource}`: '/datasets', {
-        method: 'GET',
-        query: {
-          ...baseQuery,
-          limit: perPage,
-          ...(cursor ? { cursor } : {}),
-        },
-      });
+      const response = await requestHelper(
+        state,
+        resolvedResource ? `/datasets/${resolvedResource}` : '/datasets',
+        {
+          method: 'GET',
+          query: {
+            ...baseQuery,
+            limit: perPage,
+            ...(cursor ? { cursor } : {}),
+          },
+        }
+      );
 
       const body = response.body || {};
       const page = body.data ?? [];
@@ -201,7 +206,6 @@ export function list(resource, options = {}) {
     });
   };
 }
-
 
 /**
  *  Upsert a dataset. This will atomically update a dataset if it already exists, or otherwise create it
@@ -270,7 +274,6 @@ export function upsertDataset(datasetId, data) {
     return prepareNextState(state, response);
   };
 }
-
 
 /**
  *  Upsert a record. This will atomically update a record if it already exists, or otherwise create it
@@ -388,7 +391,6 @@ export function uploadCsvRecords(datasetId, rows, metadata = {}) {
     return prepareNextState(state, response);
   };
 }
-
 
 /**
  * Sets `state.cursor` to a SurveyCTO timestamp string (`MMM dd, yyy h:mm:ss a`).

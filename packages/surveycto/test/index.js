@@ -122,7 +122,7 @@ describe('list', () => {
     expect(result.data.data.length).to.eql(1);
     expect(result.data.total).to.eql(1);
   });
-  
+
   it('should list all records', async () => {
     mock
       .intercept({
