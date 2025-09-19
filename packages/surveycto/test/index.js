@@ -9,7 +9,7 @@ import {
   upsertRecord,
   list,
 } from '../src';
-import { convertDate, dateRegex } from '../src/Utils';
+import { convertDate, dateRegex, requestWithPagination } from '../src/Utils';
 
 const baseUrl = 'https://test.surveycto.com';
 const mock = enableMockClient(baseUrl);
@@ -54,9 +54,9 @@ describe('list', () => {
       .intercept({
         path: '/api/v2/datasets',
         method: 'GET',
-        query:{
-          limit: 20
-        }
+        query: {
+          limit: 20,
+        },
       })
       .reply(
         200,
@@ -231,7 +231,7 @@ describe('upsertDataset', () => {
       );
     mock
       .intercept({
-        path:'/api/v2/datasets/new_dataset',
+        path: '/api/v2/datasets/new_dataset',
         method: 'PUT',
       })
       .reply(
@@ -347,7 +347,7 @@ describe('uploadCsvRecords', () => {
   it('should upload csv records', async () => {
     mock
       .intercept({
-        path:' /api/v2/datasets/new_dataset/records/upload',
+        path: ' /api/v2/datasets/new_dataset/records/upload',
         method: 'POST',
       })
       .reply(
@@ -507,5 +507,79 @@ describe('date regex', () => {
     it(`should not match ${m}`, () => {
       expect(dateRegex.test(m)).to.eql(false);
     });
+  });
+});
+
+describe('request with pagination', () => {
+  const items = [...Array(40).keys()].map(i => ({ id: i + 1 }));
+
+  it('should fetch all pages and combine results', async () => {
+    // First page
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 20 },
+      })
+      .reply(200, {
+        data: items.slice(0, 20),
+        nextCursor: items[19].id.toString(),
+      });
+
+    // Second page
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 20, cursor: items[19].id.toString() },
+      })
+      .reply(200, {
+        data: items.slice(20, 40),
+        nextCursor: null,
+      });
+
+    const result = await requestWithPagination(state, '/datasets');
+
+    expect(result.data.data).to.eql(items);
+    expect(result.data.total).to.equal(40);
+    expect(result.data.nextCursor).to.be.null;
+  });
+  it('should respect a user limit', async () => {
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 10 },
+      })
+      .reply(200, {
+        data: items.slice(0, 10),
+        nextCursor: items[9].id.toString(),
+      });
+
+    const result = await requestWithPagination(state, '/datasets', {
+      limit: 10,
+    });
+    expect(result.data.data).to.eql(items.slice(0, 10));
+    expect(result.data.total).to.equal(10);
+    expect(result.data.nextCursor).to.eql('10');
+  });
+  it('should return empty array if no data', async () => {
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 2 },
+      })
+      .reply(200, {
+        data: [],
+        nextCursor: null,
+      });
+
+    const result = await requestWithPagination(state, '/datasets', {
+      limit: 2,
+    });
+    expect(result.data.data).to.eql([]);
+    expect(result.data.total).to.equal(0);
+    expect(result.data.nextCursor).to.be.null;
   });
 });

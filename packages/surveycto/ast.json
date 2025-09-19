@@ -85,7 +85,7 @@
         "options"
       ],
       "docs": {
-        "description": "List resources from SurveyCTO API",
+        "description": "List resources from SurveyCTO",
         "tags": [
           {
             "title": "public",
@@ -176,7 +176,7 @@
         "data"
       ],
       "docs": {
-        "description": "Upsert a dataset. This will atomically update a dataset if it already exists, or otherwise create it",
+        "description": "Update (if exist) or create a dataset in SurveyCTO",
         "tags": [
           {
             "title": "public",
@@ -235,7 +235,7 @@
         "data"
       ],
       "docs": {
-        "description": "Upsert a record. This will atomically update a record if it already exists, or otherwise create it",
+        "description": "Update (if exist) or create a dataset record in SurveyCTO",
         "tags": [
           {
             "title": "public",

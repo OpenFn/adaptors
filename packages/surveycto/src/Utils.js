@@ -61,6 +61,64 @@ function encodeFormBody(data) {
   return form;
 }
 
+export const requestWithPagination = async (state, resource, options) => {
+  const results = [];
+
+  const userLimit = options?.limit ? Number(options?.limit) : undefined;
+  
+  let cursor = options?.cursor;
+  
+  const baseQuery = { ...options };
+  delete baseQuery.limit;
+  delete baseQuery.cursor;
+
+  const pageSize = 20; // when no limit is given get 20 at a time
+  const maxFetchSize = 1000; // server max is 1000 per request
+
+  const desiredFetchTotal = userLimit ?? Infinity;
+
+  if (Number.isFinite(desiredFetchTotal) && desiredFetchTotal <= 0) {
+    return prepareNextState(state, {
+      data: [],
+      total: 0,
+      nextCursor: cursor,
+    });
+  }
+
+  do {
+    const remaining = desiredFetchTotal - results.length;
+    const perPage = Number.isFinite(desiredFetchTotal)
+      ? Math.min(remaining, maxFetchSize)
+      : pageSize;
+
+    const response = await requestHelper(state, resource, {
+      method: 'GET',
+      query: {
+        ...baseQuery,
+        limit: perPage,
+        ...(cursor ? { cursor } : {}),
+      },
+    });
+
+    const body = response.body || {};
+    const page = body.data ?? [];
+    const next = body.nextCursor ?? null;
+
+    results.push(...page);
+    cursor = next;
+  } while (cursor && results.length < desiredFetchTotal);
+
+  const final = Number.isFinite(desiredFetchTotal)
+    ? results.slice(0, desiredFetchTotal)
+    : results;
+
+  return composeNextState(state, {
+    data: final,
+    total: final.length,
+    nextCursor: cursor,
+  });
+};
+
 export const requestHelper = (state, path, params) => {
   assertRelativeUrl(path);
 

@@ -9,6 +9,7 @@ import {
   requestHelper,
   convertJSONToCSV,
   prepareNextState,
+  requestWithPagination,
 } from './Utils';
 
 /**
@@ -138,70 +139,18 @@ export function fetchSubmissions(formId, options = {}) {
  */
 export function list(resource, options = {}) {
   return async state => {
-    const results = [];
     const [resolvedResource, resolvedOptions] = expandReferences(
       state,
       resource,
       options
     );
 
-    const userLimit =  Number(resolvedOptions.limit);
+    const path = resolvedResource
+      ? `/datasets/${resolvedResource}`
+      : '/datasets';
 
-    let cursor = resolvedOptions?.cursor;
-
-    const baseQuery = { ...resolvedOptions };
-    delete baseQuery.limit;
-    delete baseQuery.cursor;
-
-    const pageSize = 20; // when no limit is given get 20 at a time
-    const maxFetchSize = 1000; // server max is 1000 per request
-
-    const desiredFetchTotal = userLimit ?? Infinity;
-
-    if (Number.isFinite(desiredFetchTotal) && desiredFetchTotal <= 0) {
-      return prepareNextState(state, {
-        data: [],
-        total: 0,
-        nextCursor: cursor,
-      });
-    }
-
-    do {
-      const remaining = desiredFetchTotal - results.length;
-      const perPage = Number.isFinite(desiredFetchTotal)
-        ? Math.min(remaining, maxFetchSize)
-        : pageSize;
-
-      const response = await requestHelper(
-        state,
-        resolvedResource ? `/datasets/${resolvedResource}` : '/datasets',
-        {
-          method: 'GET',
-          query: {
-            ...baseQuery,
-            limit: perPage,
-            ...(cursor ? { cursor } : {}),
-          },
-        }
-      );
-
-      const body = response.body || {};
-      const page = body.data ?? [];
-      const next = body.nextCursor ?? null;
-
-      results.push(...page);
-      cursor = next;
-    } while (cursor && results.length < desiredFetchTotal);
-
-    const final = Number.isFinite(desiredFetchTotal)
-      ? results.slice(0, desiredFetchTotal)
-      : results;
-
-    return composeNextState(state, {
-      data: final,
-      total: final.length,
-      nextCursor: cursor,
-    });
+    const result = await requestWithPagination(state, path, resolvedOptions);
+    return result;
   };
 }
 
