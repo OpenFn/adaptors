@@ -114,7 +114,7 @@ export function fetchSubmissions(formId, options = {}) {
 }
 
 /**
- * List resources from SurveyCTO API
+ * List resources from SurveyCTO
  * @public
  * @example <caption>List all dataset records</caption>
  * list('enumerators_dataset/records')
@@ -145,11 +145,9 @@ export function list(resource, options = {}) {
       options
     );
 
-    const userLimit = resolvedOptions?.limit
-      ? Number(resolvedOptions.limit)
-      : undefined;
+    const userLimit =  Number(resolvedOptions.limit);
 
-    let cursor = resolvedOptions?.cursor ? resolvedOptions.cursor : null;
+    let cursor = resolvedOptions?.cursor;
 
     const baseQuery = { ...resolvedOptions };
     delete baseQuery.limit;
@@ -208,7 +206,7 @@ export function list(resource, options = {}) {
 }
 
 /**
- *  Upsert a dataset. This will atomically update a dataset if it already exists, or otherwise create it
+ * Update (if exist) or create a dataset in SurveyCTO
  * @public
  * @example <caption>Upsert a dataset</caption>
  * upsertDataset('enum_dataset', {
@@ -276,7 +274,7 @@ export function upsertDataset(datasetId, data) {
 }
 
 /**
- *  Upsert a record. This will atomically update a record if it already exists, or otherwise create it
+ *  Update (if exist) or create a dataset record in SurveyCTO
  * @public
  * @example <caption>Upsert a dataset record</caption>
  * upsertRecord('enumerators_dataset', 2, {

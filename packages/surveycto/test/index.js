@@ -49,11 +49,14 @@ describe('fetchSubmissions', () => {
 });
 
 describe('list', () => {
-  it('should list all datasets', async () => {
+  it('should list all datasets with the default limit', async () => {
     mock
       .intercept({
-        path: /\/api\/v2\/datasets/,
+        path: '/api/v2/datasets',
         method: 'GET',
+        query:{
+          limit: 20
+        }
       })
       .reply(
         200,
@@ -87,9 +90,9 @@ describe('list', () => {
   it('should list datasets with options', async () => {
     mock
       .intercept({
-        path: /\/api\/v2\/datasets/,
+        path: '/api/v2/datasets',
         method: 'GET',
-        query: { limit: '2' },
+        query: { limit: 1 },
       })
       .reply(
         200,
@@ -126,8 +129,9 @@ describe('list', () => {
   it('should list all records', async () => {
     mock
       .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset\/records/,
+        path: '/api/v2/datasets/new_dataset/records',
         method: 'GET',
+        query: { limit: '20' },
       })
       .reply(
         200,
@@ -165,7 +169,7 @@ describe('list', () => {
   it('should list records with options', async () => {
     mock
       .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset\/records/,
+        path: '/api/v2/datasets/new_dataset/records',
         method: 'GET',
         query: { limit: '2' },
       })
@@ -210,7 +214,7 @@ describe('upsertDataset', () => {
   it('should make a get then update if an item is found', async () => {
     mock
       .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset/,
+        path: '/api/v2/datasets/new_dataset',
         method: 'GET',
       })
       .reply(
@@ -227,7 +231,7 @@ describe('upsertDataset', () => {
       );
     mock
       .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset/,
+        path:'/api/v2/datasets/new_dataset',
         method: 'PUT',
       })
       .reply(
@@ -261,7 +265,7 @@ describe('upsertDataset', () => {
   it('should make a get then a create if nothing is found', async () => {
     mock
       .intercept({
-        path: /\/api\/v2\/datasets\/enumerator_dataset/,
+        path: '/api/v2/datasets/enumerator_dataset',
         method: 'GET',
       })
       .reply(
@@ -273,7 +277,7 @@ describe('upsertDataset', () => {
       );
     mock
       .intercept({
-        path: /\/api\/v2\/datasets/,
+        path: '/api/v2/datasets',
         method: 'POST',
       })
       .reply(
@@ -309,7 +313,7 @@ describe('upsertRecords', () => {
   it('should upsert a dataset records', async () => {
     mock
       .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset\/record/,
+        path: '/api/v2/datasets/new_dataset/record',
         method: 'PATCH',
         query: { recordId: '2' },
       })
@@ -343,7 +347,7 @@ describe('uploadCsvRecords', () => {
   it('should upload csv records', async () => {
     mock
       .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset\/records\/upload/,
+        path:' /api/v2/datasets/new_dataset/records/upload',
         method: 'POST',
       })
       .reply(
@@ -376,7 +380,7 @@ describe('uploadCsvRecords', () => {
   it('should upload csv records with uploadMode option', async () => {
     mock
       .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset\/records\/upload/,
+        path: '/api/v2/datasets/new_dataset/records/upload',
         method: 'POST',
       })
       .reply(

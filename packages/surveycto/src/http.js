@@ -21,7 +21,7 @@ import { requestHelper, prepareNextState } from './Utils';
  */
 
 /**
- * Make a HTTP request to the SurveyCTO API
+ * Make a HTTP request to SurveyCTO
  * @public
  * @example <caption>Post JSON data to SurveyCTO</caption>
  * http.request("/anEndpoint", {
@@ -61,7 +61,7 @@ export function request(path, params) {
 }
 
 /**
- *  Get resources from SurveyCTO API
+ * Get resources from SurveyCTO
  * @public
  * @example <caption>Get a record with id</caption>
  * http.get('/datasets/enumerators_dataset/record', {
@@ -88,7 +88,7 @@ export function get(path, params = {}) {
 }
 
 /**
- *  Create resources in SurveyCTO API
+ * Create resources in SurveyCTO
  * @public
  * @example <caption>Purge a dataset</caption>
  * http.post('/datasets/enumeratorse_dataset/purge');
@@ -103,7 +103,7 @@ export function post(path, params = {}) {
 }
 
 /**
- *  Delete resources from SurveyCTO API
+ * Delete resources from SurveyCTO
  * @public
  * @alias delete
  * @example <caption>Delete a dataset</caption>
