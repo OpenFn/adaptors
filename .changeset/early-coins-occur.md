@@ -27,7 +27,10 @@
 
  ```
 
- fetchSubmissions('my-form')
+ fetchSubmissions('my-form').then(state => {
+  state.results = state.data;
+  return state
+ })
 
  ```
 
