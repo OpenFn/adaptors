@@ -1,4 +1,4 @@
-import { asData } from './Adaptor'
+import { asData } from './Adaptor.js'
 /**
  * Scopes an array of data based on a JSONPath.
  * Useful when the source data has `n` items you would like to map to

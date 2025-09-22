@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import testData from './fixtures/data.json' assert { type: 'json' };
-import { each } from '../src/Adaptor';
+import { each } from '../src/Adaptor.js';
 import * as beta from '../src/beta.js';
 
 function shouldBehaveLikeEach(each) {

@@ -3,7 +3,8 @@ import path from 'node:path';
 import { assert, expect } from 'chai';
 import { request, MockAgent, setGlobalDispatcher } from 'undici';
 import testData from './fixtures/data.json' assert { type: 'json' };
-import {
+import * as Adaptor from '../src/Adaptor.js';
+const {
   arrayToString,
   chunk,
   combine,
@@ -28,13 +29,13 @@ import {
   splitKeys,
   toArray,
   validate,
-  assert as assertCommon,
+  assert:assertCommon,
   log,
   debug,
-  _ as lodash,
+  _:lodash,
   map,
   as,
-} from '../src/Adaptor';
+} = Adaptor;
 import { startOfToday } from 'date-fns';
 
 const mockAgent = new MockAgent();

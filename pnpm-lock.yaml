@@ -352,8 +352,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.15.0
+        version: 7.16.0
     devDependencies:
       chai:
         specifier: 4.3.6
@@ -15671,6 +15671,11 @@ packages:
     engines: {node: '>=14.0'}
     dependencies:
       '@fastify/busboy': 2.1.1
+
+  /undici@7.16.0:
+    resolution: {integrity: sha512-QEg3HPMll0o3t2ourKwOeUAZ159Kn9mx5pnzHRQO8+Wixmh88YdZRiIwat0iNzNNXn0yoEtXJqFpyW7eM8BV7g==}
+    engines: {node: '>=20.18.1'}
+    dev: false
 
   /undici@7.8.0:
     resolution: {integrity: sha512-vFv1GA99b7eKO1HG/4RPu2Is3FBTWBrmzqzO0mz+rLxN3yXkE4mqRcb8g8fHxzX4blEysrNZLqg5RbJLqX5buA==}

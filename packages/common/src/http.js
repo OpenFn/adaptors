@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { request, expandReferences } from './util';
+import * as util  from './util/index.js';
+const  { request, expandReferences } = util;
 
 const { set } = _;
 /**
