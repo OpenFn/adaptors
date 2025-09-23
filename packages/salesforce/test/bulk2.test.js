@@ -122,7 +122,7 @@ describe('bulk2', () => {
       setMockConnection(fakeConnection);
       const state = {};
       bulk2
-        .insert('Account', [{ Name: 'Valid' }, {}])(state)
+        .insert('Account', [{ Name: 'Valid' }, {}], { failOnError: false })(state)
         .then(state => {
           expect(state.data.successfulResults.length).to.equal(1);
           expect(state.data.failedResults.length).to.equal(1);
@@ -193,7 +193,7 @@ describe('bulk2', () => {
       setMockConnection(fakeConnection);
       const state = {};
       bulk2
-        .update('Account', [{ Id: '123', Name: 'test' }])(state)
+        .update('Account', [{ Id: '123', Name: 'test' }], { failOnError: false })(state)
         .then(state => {
           expect(state.data.successfulResults).to.be.empty;
           expect(state.data.failedResults[0].error).to.equal('Invalid ID: 123');
@@ -297,7 +297,7 @@ describe('bulk2', () => {
           { External_Id__c: '1', Name: 'success-record' },
           { External_Id__c: '2', Name: 'failed-record' },
           { External_Id__c: '3', Name: 'unprocessed-record' },
-        ])(state)
+        ], { failOnError: false })(state)
         .then(state => {
           expect(state.data.successfulResults.length).to.equal(1);
           expect(state.data.failedResults.length).to.equal(1);

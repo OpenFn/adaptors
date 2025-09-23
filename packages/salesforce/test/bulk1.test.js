@@ -29,7 +29,9 @@ describe('bulk1', () => {
     bulk1
       .insert(
         'Account',
-        records
+        records, {
+        failOnError: false,
+      }
       )(state)
       .then(resultState => {
         const { data } = resultState;
