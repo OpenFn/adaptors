@@ -25,7 +25,7 @@ import { expandReferences } from '@openfn/language-common/util';
  * @typedef {Object} Bulk1Options
  * @public
  * @property {boolean} [allowNoOp=false] - Skipping bulk operation if no records
- * @property {boolean} [failOnError=false] - Fail the operation on error
+ * @property {boolean} [failOnError=true] - Fail the operation on error
  * @property {number} [pollTimeout=300000] - Polling timeout in milliseconds. Default: 300000 (30 seconds)
  * @property {number} [pollInterval=6000] - Polling interval in milliseconds. Default: 6000 (6 seconds)
  * @property {boolean} [concurrencyMode='Parallel'] - Concurrency mode: 'Parallel' or 'Serial'
@@ -87,7 +87,7 @@ function bulk1Load(operation, sObject, records, options = {}) {
       expandReferences(state, sObject, records, options);
     const {
       extIdField,
-      failOnError = false,
+      failOnError = true,
       concurrencyMode = 'Parallel',
       pollInterval = DEFAULT_POLL_INTERVAL,
       pollTimeout = DEFAULT_POLL_TIMEOUT,
@@ -140,8 +140,7 @@ function bulk1Load(operation, sObject, records, options = {}) {
 
       if (failOnError && failedResults.length > 0) {
         throw new Error(
-          `Bulk ${operation} failed with ${
-            failedResults.length
+          `Bulk ${operation} failed with ${failedResults.length
           } errors: ${JSON.stringify(failedResults)}`
         );
       }
@@ -159,10 +158,10 @@ function bulk1Load(operation, sObject, records, options = {}) {
  * @public
  * @example <caption>Insert multiple records</caption>
  * bulk1.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }]);
- * @example <caption>Insert with custom options</caption>
+ * @example <caption>Bulk insert continue on error</caption>
  * bulk1.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }], {
  *   pollInterval: 1000,
- *   failOnError: true
+ *   failOnError: false
  * });
  * @function
  * @param {string} sObject - The Salesforce object type
@@ -180,10 +179,10 @@ export function insert(sObject, records, options = {}) {
  * @public
  * @example <caption>Update multiple records</caption>
  * bulk1.update('Account', [{ Id: '001xx', Name: 'Updated Name' }]);
- * @example <caption>Update with custom options</caption>
+ * @example <caption>Bulk update continue on error</caption>
  * bulk1.update('Account', [{ Id: '001xx', Name: 'Updated Name' }], {
  *   pollInterval: 1000,
- *   failOnError: true
+ *   failOnError: false
  * });
  * @function
  * @param {string} sObject - The Salesforce object type
@@ -201,11 +200,11 @@ export function update(sObject, records, options = {}) {
  * @public
  * @example <caption>Upsert multiple records</caption>
  * bulk1.upsert('Account', [{ External_Id__c: 'EXT001', Name: 'Upserted Name' }], { extIdField: 'External_Id__c' });
- * @example <caption>Upsert with custom options</caption>
+ * @example <caption>Bulk upsert continue on error</caption>
  * bulk1.upsert('Account', [{ External_Id__c: 'EXT001', Name: 'Upserted Name' }], {
  *   extIdField: 'External_Id__c',
  *   pollInterval: 3000,
- *   failOnError: true
+ *   failOnError: false
  * });
  * @function
  * @param {string} sObject - The Salesforce object type
@@ -227,10 +226,10 @@ export function upsert(sObject, externalIdFieldName, records, options = {}) {
  * @public
  * @example <caption>Delete multiple records</caption>
  * bulk1.delete('Account', [{ Id: '001xx' }]);
- * @example <caption>Delete with custom options</caption>
+ * @example <caption>Bulk delete continue on error</caption>
  * bulk1.delete('Account', [{ Id: '001xx' }], {
  *   pollInterval: 3000,
- *   failOnError: true
+ *   failOnError: false
  * });
  * @function
  * @param {string} sObject - The Salesforce object type
