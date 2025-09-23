@@ -2,4 +2,4 @@
 '@openfn/language-dhis2': patch
 ---
 
-export `http` functions
+Export `http` functions. This fixes the "http is not defined" error
