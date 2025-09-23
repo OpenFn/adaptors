@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 8.0.3 - 23 September 2025
+
+### Patch Changes
+
+- 24c5f07: Export `http` functions. This fixes the "http is not defined" error
+
 ## 8.0.2 - 18 September 2025
 
 ### Patch Changes
