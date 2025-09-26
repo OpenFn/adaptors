@@ -1,5 +1,5 @@
 import { execute as commonExecute } from '@openfn/language-common';
-import { request as sendRequest, xmlParser } from './util';
+import { request as sendRequest, xmlParser } from './util.js';
 
 /**
  * Options provided to the HTTP request

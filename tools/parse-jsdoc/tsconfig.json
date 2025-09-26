@@ -7,9 +7,12 @@
   "compilerOptions": {
     "strict": true,
     "outDir": "dist",
-    "module": "es2020",
-    "moduleResolution": "node",
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
   }
 }

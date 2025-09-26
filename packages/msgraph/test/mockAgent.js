@@ -1,5 +1,5 @@
 import { MockAgent } from 'undici';
-import { fixtures } from './fixtures';
+import { fixtures } from './fixtures.js';
 
 const mockAgent = new MockAgent();
 

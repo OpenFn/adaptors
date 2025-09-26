@@ -1,6 +1,6 @@
 import chai from 'chai';
-import { execute } from '../src/Adaptor';
-import * as tracker from '../src/tracker';
+import { execute } from '../src/Adaptor.js';
+import * as tracker from '../src/tracker.js';
 
 import { enableMockClient } from '@openfn/language-common/util';
 

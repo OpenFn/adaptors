@@ -1,4 +1,4 @@
-import { execute, request, get, post } from '../src';
+import { execute, request, get, post } from '../src/index.js';
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect } from 'chai';
 

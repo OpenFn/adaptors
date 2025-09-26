@@ -1,4 +1,4 @@
-import { http } from '../src';
+import { http } from '../src/index.js';
 import { enableMockClient } from '@openfn/language-common/util';
 import pkg from 'chai';
 const { expect } = pkg;

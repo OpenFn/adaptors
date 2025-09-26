@@ -1,6 +1,6 @@
 import { expect, assert } from 'chai';
-import { request, get, post, options } from '../src/http';
-import { assertRelativeUrl, enableMockClient } from '../src/util/http';
+import { request, get, post, options } from '../src/http.js';
+import { assertRelativeUrl, enableMockClient } from '../src/util/http.js';
 
 const client = enableMockClient('https://a.com', {
   defaultContentType: 'text',

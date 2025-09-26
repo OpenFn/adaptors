@@ -1,4 +1,4 @@
-import * as util from './Util';
+import * as util from './Util.js';
 import { expandReferences } from '@openfn/language-common/util';
 
 /**

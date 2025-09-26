@@ -2,9 +2,9 @@ import { expect } from 'chai';
 import http from 'http';
 import https from 'https';
 
-import { execute, get, post } from '../src';
+import { execute, get, post } from '../src/index.js';
 
-import { ca, key, cert } from './helpers/certs';
+import { ca, key, cert } from './helpers/certs.js';
 
 const port = 8080;
 const httpServer = http.createServer((req, res) => {

@@ -6,9 +6,9 @@ import {
   getForms,
   getSubmissions,
   getDeploymentInfo,
-} from '../src/Adaptor';
-import { responseWithPagination } from './helper';
-import { DEFAULT_PAGE_SIZE, DEFAULT_LIMIT } from '../src/util';
+} from '../src/Adaptor.js';
+import { responseWithPagination } from './helper.js';
+import { DEFAULT_PAGE_SIZE, DEFAULT_LIMIT } from '../src/util.js';
 const defaultLimit = DEFAULT_LIMIT;
 const pageLimit = DEFAULT_PAGE_SIZE;
 

@@ -2,13 +2,13 @@ import { composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import { DateTime } from 'luxon';
 
-import { parseMetadata, formatDeviceInfo, abbreviatedIsoToDate } from './Utils';
+import { parseMetadata, formatDeviceInfo, abbreviatedIsoToDate } from './Utils.js';
 import {
   parseFlatRecordsToReports,
   parseRtmdCollectionToReports,
-} from './StreamingUtils';
-import { parseVaroEmsToReport, buildDeviceRtcwDateMaps } from './VaroEmsUtils';
-import { parseFridgeTag, parseFridgeTagToReport } from './FridgeTagUtils';
+} from './StreamingUtils.js';
+import { parseVaroEmsToReport, buildDeviceRtcwDateMaps } from './VaroEmsUtils.js';
+import { parseFridgeTag, parseFridgeTagToReport } from './FridgeTagUtils.js';
 
 /**
  * Processes EMS data from the provided list of message contents.

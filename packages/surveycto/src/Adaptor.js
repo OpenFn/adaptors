@@ -4,7 +4,7 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { convertDate, requestHelper } from './Utils';
+import { convertDate, requestHelper } from './Utils.js';
 import xlsx from 'xlsx';
 
 /**

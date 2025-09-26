@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import testData from './fixtures.json' assert { type: 'json' };
-import { http } from '../src';
+import testData from './fixtures.json' with { type: 'json' };
+import { http } from '../src/index.js';
 
 const testServer = enableMockClient('https://http-tests.openmrs.org');
 const jsonHeaders = {

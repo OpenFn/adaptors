@@ -5,7 +5,7 @@ import {
 } from '@openfn/language-common';
 
 import { createClient } from 'redis';
-import * as util from './util';
+import * as util from './util.js';
 
 let client = null;
 

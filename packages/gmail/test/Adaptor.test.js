@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { google } from 'googleapis';
-import { sendMessage } from '../src/Adaptor';
-import { createConnection, removeConnection } from '../src/Utils';
+import { sendMessage } from '../src/Adaptor.js';
+import { createConnection, removeConnection } from '../src/Utils.js';
 
 const state = {
   configuration: {

@@ -1,3 +1,3 @@
-import programs from './programs.json' assert { type: 'json' };
+import programs from './programs.json' with { type: 'json' };
 
 export { programs };

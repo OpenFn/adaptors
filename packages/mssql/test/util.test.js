@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { escape } from '../src/util';
+import { escape } from '../src/util.js';
 
 describe('util', () => {
   describe('escape', () => {

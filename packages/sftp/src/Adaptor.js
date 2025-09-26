@@ -4,7 +4,7 @@ import {
   parseCsv,
 } from '@openfn/language-common';
 import Client from 'ssh2-sftp-client';
-import { isObjectEmpty, handleResponse } from './Utils';
+import { isObjectEmpty, handleResponse } from './utils.js';
 
 let sftp = null;
 

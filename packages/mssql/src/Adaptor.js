@@ -1,6 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { escape } from './util';
+import { escape } from './util.js';
 import { Connection, Request } from 'tedious';
 
 /**

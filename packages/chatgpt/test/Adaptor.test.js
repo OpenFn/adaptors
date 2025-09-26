@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { prompt, setMockClient, deepResearch } from '../src/Adaptor.js';
-import testData from "./fixtures/fixture.json" assert {type: 'json'};
+import testData from "./fixtures/fixture.json" with {type: 'json'};
 
 
 describe('prompt', () => {

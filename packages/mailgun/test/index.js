@@ -1,6 +1,6 @@
 import chai from 'chai';
 const { expect } = chai
-import Adaptor from '../src';
+import Adaptor from '../src/index.js';
 const { execute, send } = Adaptor;
 import { fields, field } from '@openfn/language-common';
 

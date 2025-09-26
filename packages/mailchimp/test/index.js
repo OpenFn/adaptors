@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 
 import { request } from '../src/Adaptor.js';
-import { enableMockClient } from '../src/Utils';
+import { enableMockClient } from '../src/Utils.js';
 
 const client = enableMockClient('https://us11.api.mailchimp.com');
 
-import Adaptor from '../src';
+import Adaptor from '../src/index.js';
 const { execute, post } = Adaptor;
 
 const apiToken = apiKey =>
