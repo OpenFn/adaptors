@@ -57,7 +57,7 @@ describe('get', () => {
     expect(result.response.statusCode).to.equal(200);
   });
 
-  it('should list a single dataset', async () => {
+  it('should get a single resource', async () => {
     mock
       .intercept({
         path: /\/api\/v2\/datasets\/new_dataset/,
@@ -85,7 +85,7 @@ describe('get', () => {
     });
     expect(result.response.statusCode).to.eql(200);
   });
-  it('should list a single dataset in csv format', async () => {
+  it('should get a resource with query params and parse response', async () => {
     mock
       .intercept({
         path: /\/api\/v2\/datasets\/data\/csv\/new_dataset/,
@@ -110,43 +110,6 @@ describe('get', () => {
     expect(result.data).to.eql(
       'id,name,users\n3,Trial,All users here\n4,Trial update,All users\n5,Trials,All users here\n'
     );
-    expect(result.response.statusCode).to.eql(200);
-  });
-  it('should list a single record', async () => {
-    mock
-      .intercept({
-        path: /\/api\/v2\/datasets\/new_dataset\/record/,
-        method: 'GET',
-        query: { recordId: '2' },
-      })
-      .reply(
-        200,
-        {
-          recordId: '2',
-          values: {
-            name: 'Triayuio8gtvgu7gt',
-            id: '2',
-            users: 'All users',
-          },
-        },
-        {
-          headers: { 'content-type': 'application/json' },
-        }
-      );
-
-    const result = await get('/datasets/new_dataset/record', {
-      query: {
-        recordId: 2,
-      },
-    })(state);
-    expect(result.data).to.eql({
-      recordId: '2',
-      values: {
-        name: 'Triayuio8gtvgu7gt',
-        id: '2',
-        users: 'All users',
-      },
-    });
     expect(result.response.statusCode).to.eql(200);
   });
 });

@@ -27,7 +27,7 @@ import { requestHelper, prepareNextState } from './Utils';
  * http.request("/anEndpoint", {
  *   method: "POST",
  *    contentType: "json",
- *   body: { foo: "bar", a: 1 },
+ *   body: $.data,
  * });
  * @example <caption>Upload a CSV blob to a dataset</caption>
  *   http.request('datasets/library/records/upload', {
@@ -88,7 +88,7 @@ export function get(path, params = {}) {
 }
 
 /**
- * Create resources in SurveyCTO
+ * Send a HTTP POST request to SurveyCTO
  * @public
  * @example <caption>Purge a dataset</caption>
  * http.post('/datasets/enumeratorse_dataset/purge');

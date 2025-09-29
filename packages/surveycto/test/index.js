@@ -49,7 +49,7 @@ describe('fetchSubmissions', () => {
 });
 
 describe('list', () => {
-  it('should list all datasets with the default limit', async () => {
+  it('should list datasets with the default limit', async () => {
     mock
       .intercept({
         path: '/api/v2/datasets',
