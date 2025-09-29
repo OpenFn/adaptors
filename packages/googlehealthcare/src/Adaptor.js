@@ -7,7 +7,7 @@ import {
   normalizeOauthConfig,
 } from '@openfn/language-common/util';
 
-import { buildUrl, request } from './utils.js';
+import { buildUrl, request } from './Utils.js';
 
 /**
  * Execute a sequence of operations.
@@ -145,7 +145,7 @@ export function createFhirResource(fhirStore, resource, callback) {
   };
 }
 
-export { request } from './utils.js';
+export { request } from './Utils.js';
 
 export {
   dataPath,
