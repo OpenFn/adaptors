@@ -1,5 +1,5 @@
 import { expandReferences } from '@openfn/language-common/util';
-import * as util from './utils.js';
+import * as util from './Utils.js';
 import { getItemsQueryString, insertOutboundShipmentQuery, upsertOutboundShipmentQuery } from './queries.js'
 import { v4 as uuidv4 } from 'uuid';
 
