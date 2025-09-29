@@ -9,5 +9,6 @@ export default Adaptor;
 
 export * from './Adaptor.js';
 
+export * as http from './http.js';
 export * as util from './util.js';
 export * as tracker from './tracker.js';

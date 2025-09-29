@@ -262,7 +262,8 @@ export function normalizeCSVarray(options, callback) {
   };
 }
 
-export * from 'lodash/fp';
+export * from 'lodash/fp.js';
+
 
 export {
   alterState,
