@@ -10,7 +10,7 @@ import {
   http,
   bulk2,
   bulk1,
-} from '../src';
+} from '../src/index.js';
 
 const state = { configuration };
 

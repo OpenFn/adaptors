@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 import { request, stkPush, checkTransactionStatus, registerUrl, remitTax, buyGoods } from '../src/Adaptor.js';
-import testData from './fixtures.json' assert {type: 'json'}
+import testData from './fixtures.json' with {type: 'json'}
 
 const testServer = enableMockClient('https://api.safaricom.co.ke');
 

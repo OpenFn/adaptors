@@ -1,4 +1,4 @@
-import { connection } from './Adaptor';
+import { connection } from './Adaptor.js';
 import { composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 

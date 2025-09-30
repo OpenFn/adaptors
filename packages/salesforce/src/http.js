@@ -3,7 +3,7 @@ import {
   expandReferences,
   assertRelativeUrl,
 } from '@openfn/language-common/util';
-import { sfRequest } from './Adaptor';
+import { sfRequest } from './Adaptor.js';
 
 /**
  * @typedef {Object} SimpleRequestOptions

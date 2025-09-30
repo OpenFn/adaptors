@@ -2,7 +2,7 @@ import chai from 'chai';
 const { expect } = chai;
 import { enableMockClient } from '@openfn/language-common/util';
 
-import Adaptor from '../src';
+import Adaptor from '../src/index.js';
 const {
   execute,
   createEncounter,

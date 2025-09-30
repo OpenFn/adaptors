@@ -1,6 +1,6 @@
 import chai from 'chai';
-import { execute } from '../src/Adaptor';
-import * as http from '../src/http';
+import { execute } from '../src/Adaptor.js';
+import * as http from '../src/http.js';
 import { dataValue } from '@openfn/language-common';
 
 import { enableMockClient } from '@openfn/language-common/util';

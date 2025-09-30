@@ -8,7 +8,7 @@ import {
 } from '@openfn/language-common/util';
 import { google } from 'googleapis';
 import { Readable } from 'stream';
-import { getFileById, getFileByName } from './util';
+import { getFileById, getFileByName } from './util.js';
 
 let client;
 

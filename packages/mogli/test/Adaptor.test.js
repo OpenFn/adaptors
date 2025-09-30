@@ -9,9 +9,9 @@ import {
   fields,
   dataValue,
   execute,
-} from '../src/Adaptor';
+} from '../src/Adaptor.js';
 
-import testData from './testData' assert { type: 'json' };
+import testData from './testData.json' with { type: 'json' };
 
 describe('Adaptor', () => {
   describe('reference', () => {

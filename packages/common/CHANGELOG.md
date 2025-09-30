@@ -1,5 +1,12 @@
 ## 3.0.1 - 11 July 2025
 
+## 3.1.0 - 18 September 2025
+
+### Minor Changes
+
+- e2bc436: Switch from `undici` Client to Agent to allow cross-redirection for
+  domains
+
 ## 3.0.3 - 01 September 2025
 
 ### Patch Changes

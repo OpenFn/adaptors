@@ -1,7 +1,7 @@
 import chai from 'chai';
 const { expect } = chai;
 
-import Adaptor from '../src';
+import Adaptor from '../src/index.js';
 const { createEntity, query, updateEntity, deleteEntity } = Adaptor;
 
 describe.skip('CRUD Test', () => {

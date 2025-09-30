@@ -196,7 +196,7 @@ function expandReferences(state, attrs) {
   })(attrs);
 }
 
-export { lookup, relationship } from './sourceHelpers';
+export { lookup, relationship } from './sourceHelpers.js';
 
 export {
   each,

@@ -1,7 +1,7 @@
 import { expect, assert } from 'chai';
 import { builders } from '../../src/index';
 
-import patientExample from '../fixtures/Patient-simple.json' assert { type: 'json' };
+import patientExample from '../fixtures/Patient-simple.json' with { type: 'json' };
 
 import { b } from '../../src/index';
 

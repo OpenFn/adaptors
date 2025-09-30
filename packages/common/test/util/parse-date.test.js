@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import parseDate from '../../src/util/parse-date';
+import parseDate from '../../src/util/parse-date.js';
 import { startOfDay, subDays, subHours } from 'date-fns';
 
 // Check if two date are the same to ms resolution

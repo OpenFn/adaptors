@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
 import { execute, request, post, get } from '../src/Adaptor.js';
-import * as fixtures from './fixtures';
+import * as fixtures from './fixtures/index.js';
 
 const username = 'test';
 const password = 'pass';

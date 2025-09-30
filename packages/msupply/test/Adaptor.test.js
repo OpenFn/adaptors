@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 import { getItemsWithStats, insertOutboundShipment, query, upsertOutboundShipment } from '../src/Adaptor.js';
-import testData from './fixtures.json' assert {type: 'json'}
+import testData from './fixtures.json' with {type: 'json'}
 
 
 

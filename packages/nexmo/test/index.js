@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Adaptor from '../src';
+import Adaptor from '../src/index.js';
 const { execute, sendSMS } = Adaptor;
 
 describe('execute', () => {

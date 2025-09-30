@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { http, setMockConnection } from '../src/index';
+import { http, setMockConnection } from '../src/index.js';
 
 describe('http', () => {
   describe('request', () => {

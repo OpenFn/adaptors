@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { execute, } from '../src';
+import { execute, } from '../src/index.js';
 
 describe('execute', () => {
   // Mock this endpoint...

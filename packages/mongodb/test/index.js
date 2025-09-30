@@ -2,9 +2,9 @@ import pkg from 'chai';
 const { expect } = pkg;
 
 import nock from 'nock';
-import ClientFixtures, { fixtures } from './ClientFixtures';
+import ClientFixtures, { fixtures } from './ClientFixtures.js';
 
-import Adaptor from '../src';
+import Adaptor from '../src/index.js';
 const { execute, event, dataElement } = Adaptor;
 
 describe('execute', () => {

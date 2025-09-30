@@ -16,7 +16,7 @@ import {
   buildAndSendMessage,
   createConnection,
   removeConnection,
-} from './Utils';
+} from './Utils.js';
 
 /**
  * Used to isolate the type of content to retrieve from the message.

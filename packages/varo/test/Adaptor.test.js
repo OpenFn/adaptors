@@ -2,10 +2,10 @@ import path from 'path';
 import fs from 'node:fs/promises';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import { parseFridgeTagToReport, parseFridgeTag } from '../src/FridgeTagUtils';
-import { applyDurationToDate, extractDeviceData } from '../src/VaroEmsUtils';
-import { parseFlatRecordsToReports } from '../src/StreamingUtils';
-import { convertToEms } from '../src';
+import { parseFridgeTagToReport, parseFridgeTag } from '../src/FridgeTagUtils.js';
+import { applyDurationToDate, extractDeviceData } from '../src/VaroEmsUtils.js';
+import { parseFlatRecordsToReports } from '../src/StreamingUtils.js';
+import { convertToEms } from '../src/index.js';
 
 describe('parseFridgeTagToReport', () => {
   it('converts raw fridgetag data into ems report', async () => {

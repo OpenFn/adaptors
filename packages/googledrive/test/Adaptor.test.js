@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { google } from 'googleapis';
-import { execute, create, get, update } from '../src';
+import { execute, create, get, update } from '../src/index.js';
 
 describe('Google Drive Adapter', () => {
   let sandbox;

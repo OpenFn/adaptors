@@ -1,5 +1,5 @@
-import parseOperations from './parse-operations';
-import parseTs from './parse-ts';
+import parseOperations from './parse-operations.js';
+import parseTs from './parse-ts.js';
 
 type magicMap = {
   [operation: string]: {
