@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 
-import * as builders from '../src/builders';
-import * as util from '../src/utils';
+import * as builders from '../src/builders.js';
+import * as util from '../src/utils.js';
 
-import fixtures from './fixtures';
+import fixtures from './fixtures/index.js';
 
 
 describe('Resource Mapping', () => {

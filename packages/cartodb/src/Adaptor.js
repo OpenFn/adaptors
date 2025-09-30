@@ -1,6 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { post } from './Client';
+import { post } from './Client.js';
 import jsonSqlPkg from 'json-sql';
 
 const jsonSql = jsonSqlPkg();

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import testData from './fixtures/data.json' assert { type: 'json' };
+import testData from './fixtures/data.json' with { type: 'json' };
 import { each } from '../src/Adaptor.js';
 import * as beta from '../src/beta.js';
 

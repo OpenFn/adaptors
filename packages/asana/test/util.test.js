@@ -1,10 +1,10 @@
 import { expect } from 'chai';
-import { mockServer } from './helper';
+import { mockServer } from './helper.js';
 import {
   request,
   DEFAULT_PAGE_LIMIT,
   requestWithPagination,
-} from '../src/util';
+} from '../src/util.js';
 
 const configuration = {
   token: 'test-token',

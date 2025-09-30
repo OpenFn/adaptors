@@ -1,7 +1,7 @@
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect } from 'chai';
-import * as util from '../src/util';
-import { responseWithPagination } from './helper';
+import * as util from '../src/util.js';
+import { responseWithPagination } from './helper.js';
 
 const testServer = enableMockClient('https://util-test.kobotoolbox.org');
 const jsonHeaders = {

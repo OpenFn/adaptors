@@ -1,6 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
 import { execute as commonExecute } from '@openfn/language-common';
-import * as util from './Utils';
+import * as util from './Utils.js';
 
 /**
  * State object

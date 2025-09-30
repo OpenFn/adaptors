@@ -3,7 +3,7 @@ import undici from 'undici';
 import { throwError, expandReferences } from '@openfn/language-common/util';
 import parser from 'stream-json';
 
-import { createServer } from './mock';
+import { createServer } from './mock.js';
 
 export { createServer as createMockServer };
 

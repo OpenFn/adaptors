@@ -4,7 +4,7 @@ import {
   buildAndSendMessage,
   createConnection,
   removeConnection,
-} from '../src/Utils';
+} from '../src/Utils.js';
 import { encode } from '@openfn/language-common/util';
 
 describe('buildAndSendMessage', () => {

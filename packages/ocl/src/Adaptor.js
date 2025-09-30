@@ -1,6 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { buildMappingsUrl, handleResponse, request } from './Util';
+import { buildMappingsUrl, handleResponse, request } from './Util.js';
 
 /**
  * Execute a sequence of operations.

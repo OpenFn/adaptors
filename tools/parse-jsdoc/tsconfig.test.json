@@ -2,8 +2,8 @@
   "include": ["test/**/*.ts"],
   "compilerOptions": {
     "strict": false,
-    "module": "es2020",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
   }

@@ -1,10 +1,10 @@
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect } from 'chai';
 
-import testData from './fixtures.json' assert { type: 'json' };
+import testData from './fixtures.json' with { type: 'json' };
 
-import { get, create, update, upsert, execute } from '../src';
-import * as adaptor from '../src';
+import { get, create, update, upsert, execute } from '../src/index.js';
+import * as adaptor from '../src/index.js';
 
 const testServer = enableMockClient('https://index-tests.openmrs.org');
 const jsonHeaders = {

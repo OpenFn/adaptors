@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { execute, sql } from '../src/Adaptor';
+import { execute, sql } from '../src/Adaptor.js';
 
 describe.skip('execute', () => {
   it('executes each operation in sequence', done => {

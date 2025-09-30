@@ -10,7 +10,7 @@ import {
   handleResponse,
   assertDrive,
   assertResources,
-} from './Utils';
+} from './Utils.js';
 
 /**
  * Execute a sequence of operations.
@@ -371,7 +371,7 @@ export function uploadFile(resource, data, callback) {
   };
 }
 
-export { request, sheetToBuffer } from './Utils';
+export { request, sheetToBuffer } from './Utils.js';
 
 export {
   cursor,

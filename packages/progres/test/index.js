@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import Adaptor from '../src';
+import Adaptor from '../src/index.js';
 
 const { execute, postData } = Adaptor;
 const testServer = enableMockClient('https://fake.server.com');

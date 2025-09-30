@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { request, get } from '../src/http';
+import { request, get } from '../src/http.js';
 
 const testServer = enableMockClient('https://inform.server.com');
 

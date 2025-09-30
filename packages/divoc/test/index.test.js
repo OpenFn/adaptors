@@ -1,5 +1,5 @@
-import { certifyVaccination } from '../src'
-import testData from "./fixtures.json" assert { type: 'json' };
+import { certifyVaccination } from '../src/index.js'
+import testData from "./fixtures.json" with { type: 'json' };
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect } from 'chai';
 

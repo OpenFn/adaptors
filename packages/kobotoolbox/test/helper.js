@@ -1,4 +1,4 @@
-import { DEFAULT_PAGE_SIZE, DEFAULT_LIMIT } from '../src/util';
+import { DEFAULT_PAGE_SIZE, DEFAULT_LIMIT } from '../src/util.js';
 
 export function responseWithPagination(items, query, settings) {
   const {

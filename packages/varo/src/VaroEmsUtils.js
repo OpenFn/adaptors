@@ -1,4 +1,4 @@
-import { removeNullProps } from './Utils';
+import { removeNullProps } from './Utils.js';
 
 export function parseVaroEmsToReport(metadata, data, rtcwMaps) {
   const report = {

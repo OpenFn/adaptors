@@ -4,7 +4,7 @@ import client from '@mailchimp/mailchimp_marketing';
 import { expandReferences } from '@openfn/language-common/util';
 import { execute as commonExecute } from '@openfn/language-common';
 
-import { handleResponse, getClient } from './Utils';
+import { handleResponse, getClient } from './Utils.js';
 
 /**
  * Execute a sequence of operations.

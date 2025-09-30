@@ -7,7 +7,7 @@ import {
   ensureArray,
   prefixVersionToPath,
   request,
-} from './util';
+} from './util.js';
 
 /**
  * State object

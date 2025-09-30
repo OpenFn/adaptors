@@ -1,7 +1,7 @@
 import chai from 'chai';
 const { expect } = chai;
 
-import Adaptor from '../src';
+import Adaptor from '../src/index.js';
 const { execute } = Adaptor;
 
 describe('execute', () => {

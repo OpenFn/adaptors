@@ -4,7 +4,7 @@ import {
 } from '@openfn/language-common';
 import { expandReferences, throwError } from '@openfn/language-common/util';
 import { Connection } from '@jsforce/jsforce-node';
-import * as util from './util';
+import * as util from './util.js';
 
 /**
  * @typedef {object} State

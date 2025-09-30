@@ -10,7 +10,7 @@ import {
   uploadBundle,
 } from '../src/Adaptor';
 
-import patient from './fixtures/Patient' assert { type: 'json' };
+import patient from './fixtures/Patient' with { type: 'json' };
 
 const testServer = enableMockClient('https://fhir.example.com');
 
