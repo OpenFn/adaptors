@@ -145,7 +145,11 @@ export function list(resource, options = {}) {
       options
     );
 
-    const result = await requestWithPagination(state, resolvedResource, resolvedOptions);
+    const result = await requestWithPagination(
+      state,
+      resolvedResource,
+      resolvedOptions
+    );
     return result;
   };
 }
@@ -154,7 +158,7 @@ export function list(resource, options = {}) {
  * Update (if exist) or create a dataset in SurveyCTO
  * @public
  * @example <caption>Upsert a dataset</caption>
- * upsertDataset('enum_dataset', {
+ * upsertDataset({
  *   id: 'enum_dataset',
  *   title: 'Enum Dataset',
  *   discriminator: 'ENUMERATORS',
@@ -174,36 +178,29 @@ export function list(resource, options = {}) {
  *   },
  * });
  * @function
- * @param {string} datasetId - ID of the dataset supplied to the `get` and the `put` endpoints
  * @param {object} data - The dataset object to create or update
  * @returns {Operation}
  * @state {SurveyCTOState}
  */
-export function upsertDataset(datasetId, data) {
+export function upsertDataset(data) {
   return async state => {
-    const [resolvedDatasetId, resolvedData] = expandReferences(
-      state,
-      datasetId,
-      data
-    );
+    const [resolvedData] = expandReferences(state, data);
 
     let exists = false;
 
+    const datasetId = resolvedData?.id;
+
     try {
-      const results = await requestHelper(
-        state,
-        `/datasets/${resolvedDatasetId}`,
-        {
-          method: 'GET',
-        }
-      );
+      const results = await requestHelper(state, `/datasets/${datasetId}`, {
+        method: 'GET',
+      });
 
       exists = !!results && !!results.statusCode && results.statusCode === 200;
     } catch (error) {
       exists = false;
     }
 
-    const url = exists ? `/datasets/${resolvedDatasetId}` : `/datasets`;
+    const url = exists ? `/datasets/${datasetId}` : `/datasets`;
     const method = exists ? 'PUT' : 'POST';
 
     const response = await requestHelper(state, url, {
@@ -222,22 +219,26 @@ export function upsertDataset(datasetId, data) {
  *  Update (if exist) or create a dataset record in SurveyCTO
  * @public
  * @example <caption>Upsert a dataset record</caption>
- * upsertRecord('enumerators_dataset', 2, {
+ * upsertRecord('enumerators_dataset', {
  *   id: '2',
  *   name: 'Trial update',
  *   users: 'All users',
  * });
  * @function
  * @param {string} datasetId - ID of the dataset
- * @param {string} recordId - ID of the record to be updated or created
  * @param {object} data - The record object to create or update
  * @returns {Operation}
  * @state {SurveyCTOState}
  */
-export function upsertRecord(datasetId, recordId, data) {
+export function upsertRecord(datasetId, data) {
   return async state => {
-    const [resolvedDatasetId, resolvedRecordId, resolvedData] =
-      expandReferences(state, datasetId, recordId, data);
+    const [resolvedDatasetId, resolvedData] = expandReferences(
+      state,
+      datasetId,
+      data
+    );
+
+    const resultId = resolvedData?.id;
 
     const response = await requestHelper(
       state,
@@ -246,7 +247,7 @@ export function upsertRecord(datasetId, recordId, data) {
         method: 'PATCH',
         body: resolvedData,
         query: {
-          recordId: resolvedRecordId,
+          recordId: resultId,
         },
         headers: {
           'content-type': 'application/json',

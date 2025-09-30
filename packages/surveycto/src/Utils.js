@@ -61,34 +61,32 @@ function encodeFormBody(data) {
   return form;
 }
 
-export const requestWithPagination = async (state, resource, options) => {
+export const requestWithPagination = async (state, resource, options = {}) => {
   const results = [];
 
-  const userLimit = options?.limit ? Number(options?.limit) : undefined;
+  let {
+    limit: userLimit,
+    cursor,
+    defaultLimit = 10000, // undocumented, internal
+    pageSize = 1000,
+    ...baseQuery
+  } = options;
 
-  let cursor = options?.cursor;
+  const desiredFetchTotal = userLimit ?? defaultLimit;
+  if(pageSize > 1000){
 
-  const baseQuery = { ...options };
-  delete baseQuery.limit;
-  delete baseQuery.cursor;
-
-  const defaultLimit = 20;
-  const maxFetchSize = 20;
-
-  const desiredFetchTotal = userLimit ?? Infinity;
+    console.log('Warning: PageSize cannot exceed 1000, reducing to 1000');
+    pageSize = 1000
+  }
 
   do {
     const remaining = desiredFetchTotal - results.length;
-
-    const limitPerRequest = Number.isFinite(desiredFetchTotal)
-      ? Math.min(remaining, maxFetchSize)
-      : defaultLimit;
 
     const response = await requestHelper(state, resource, {
       method: 'GET',
       query: {
         ...baseQuery,
-        limit: limitPerRequest,
+        limit: Math.min(remaining, pageSize),
         ...(cursor ? { cursor } : {}),
       },
     });
@@ -99,7 +97,7 @@ export const requestWithPagination = async (state, resource, options) => {
 
     results.push(...page);
     cursor = next;
-  } while (cursor && results.length < desiredFetchTotal);  
+  } while (cursor && results.length < desiredFetchTotal);
 
   return composeNextState(state, {
     results: results,

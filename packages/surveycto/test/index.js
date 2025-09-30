@@ -55,7 +55,7 @@ describe('list', () => {
         path: '/api/v2/datasets',
         method: 'GET',
         query: {
-          limit: 20,
+          limit: 1000,
         },
       })
       .reply(
@@ -77,6 +77,7 @@ describe('list', () => {
       );
 
     const result = await list('datasets')(state);
+
     expect(result.data.results).to.eql([
       {
         id: 'new_dataset',
@@ -124,7 +125,7 @@ describe('list', () => {
       .intercept({
         path: '/api/v2/datasets/new_dataset/records',
         method: 'GET',
-        query: { limit: '20' },
+        query: { limit: 1000 },
       })
       .reply(
         200,
@@ -170,7 +171,6 @@ describe('list', () => {
         200,
         {
           total: 2,
-          limit: 2,
           data: [
             {
               recordId: '2',
@@ -239,7 +239,7 @@ describe('upsertDataset', () => {
           headers: { 'content-type': 'application/json' },
         }
       );
-    const result = await upsertDataset('new_dataset', {
+    const result = await upsertDataset({
       id: 'new_dataset',
       title: 'Updated dataset',
       discriminator: 'DATA',
@@ -285,7 +285,7 @@ describe('upsertDataset', () => {
           headers: { 'content-type': 'application/json' },
         }
       );
-    const result = await upsertDataset('enumerator_dataset', {
+    const result = await upsertDataset({
       id: 'enumerator_dataset',
       title: 'Enumerator Dataset',
       discriminator: 'ENUMERATORS',
@@ -322,7 +322,7 @@ describe('upsertRecords', () => {
         }
       );
 
-    const result = await upsertRecord('new_dataset', 2, {
+    const result = await upsertRecord('new_dataset', {
       id: '2',
       name: 'Trial updateses',
       users: 'All users',
@@ -515,7 +515,7 @@ describe('date regex', () => {
 });
 
 describe('request with pagination', () => {
-  const items = [...Array(40)].map((_item, index) => ({ id: index + 1 }));
+  const items = [...Array(2000)].map((_item, index) => ({ id: index + 1 }));
 
   it('should fetch all pages and combine results', async () => {
     // First page
@@ -523,11 +523,11 @@ describe('request with pagination', () => {
       .intercept({
         path: '/api/v2/datasets',
         method: 'GET',
-        query: { limit: 20 },
+        query: { limit: 1000 },
       })
       .reply(200, {
-        data: items.slice(0, 20),
-        nextCursor: items[19].id.toString(),
+        data: items.slice(0, 1000),
+        nextCursor: items[1999].id.toString(),
       });
 
     // Second page
@@ -535,17 +535,17 @@ describe('request with pagination', () => {
       .intercept({
         path: '/api/v2/datasets',
         method: 'GET',
-        query: { limit: 20, cursor: items[19].id.toString() },
+        query: { limit: 1000, cursor: items[1999].id.toString() },
       })
       .reply(200, {
-        data: items.slice(20, 40),
+        data: items.slice(1000, 2000),
         nextCursor: null,
       });
 
     const result = await requestWithPagination(state, '/datasets');
 
     expect(result.data.results).to.eql(items);
-    expect(result.data.total).to.equal(40);
+    expect(result.data.total).to.equal(2000);
     expect(result.data.nextCursor).to.be.null;
   });
   it('should respect a user limit', async () => {
@@ -567,7 +567,138 @@ describe('request with pagination', () => {
     expect(result.data.total).to.equal(10);
     expect(result.data.nextCursor).to.eql('10');
   });
-  it('should make extra calls if limit is more than maxFetchSize of 20 ', async () => {
+
+  it('should respect a user limit with pagesize', async () => {
+    // first call
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 5 },
+      })
+      .reply(200, {
+        data: items.slice(0, 5),
+        nextCursor: items[4].id.toString(),
+      });
+
+    // second call
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 5, cursor: items[4].id.toString() },
+      })
+      .reply(200, {
+        data: items.slice(5, 10),
+        nextCursor: null,
+      });
+
+    const result = await requestWithPagination(state, '/datasets', {
+      limit: 10,
+      pageSize: 5,
+    });
+    expect(result.data.results).to.eql(items.slice(0, 10));
+    expect(result.data.total).to.equal(10);
+    expect(result.data.nextCursor).to.eql(null);
+  });
+
+  it('should respect limit where pageSize is more than limit', async () => {
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 10 },
+      })
+      .reply(200, {
+        data: items.slice(0, 10),
+        nextCursor: items[9].id.toString(),
+      });
+
+    const result = await requestWithPagination(state, '/datasets', {
+      limit: 10,
+      pageSize: 20,
+    });
+    expect(result.data.results).to.eql(items.slice(0, 10));
+    expect(result.data.total).to.equal(10);
+    expect(result.data.nextCursor).to.eql('10');
+  });
+
+  it('should ignore defaultLimit if limit is set', async () => {
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 50 },
+      })
+      .reply(200, {
+        data: items.slice(0, 50),
+        nextCursor: items[49].id.toString(),
+      });
+
+    const result = await requestWithPagination(state, '/datasets', {
+      limit: 50,
+      pageSize: 1000,
+      defaultLimit: 40,
+    });
+    expect(result.data.results).to.eql(items.slice(0, 50));
+    expect(result.data.total).to.equal(50);
+    expect(result.data.nextCursor).to.eql('50');
+  });
+
+  it('should use defaultLimit if limit is not set', async () => {
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 40 },
+      })
+      .reply(200, {
+        data: items.slice(0, 40),
+        nextCursor: items[39].id.toString(),
+      });
+
+    const result = await requestWithPagination(state, '/datasets', {
+      pageSize: 1000,
+      defaultLimit: 40,
+    });
+    expect(result.data.results).to.eql(items.slice(0, 40));
+    expect(result.data.total).to.equal(40);
+    expect(result.data.nextCursor).to.eql('40');
+  });
+  it('should not allow pageSize to be more than 1000', async () => {
+    // first call
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 1000 },
+      })
+      .reply(200, {
+        data: items.slice(0, 1000),
+        nextCursor: items[999].id.toString(),
+      });
+    // second call
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 1000, cursor: items[999].id.toString() },
+      })
+      .reply(200, {
+        data: items.slice(1000, 2000),
+        nextCursor: null,
+      });
+
+    const result = await requestWithPagination(state, '/datasets', {
+      limit: 2000,
+      pageSize: 2000,
+    });
+    expect(result.data.results).to.eql(items.slice(0, 2000));
+    expect(result.data.total).to.equal(2000);
+    expect(result.data.nextCursor).to.eql(null);
+  });
+
+  it('should respect pageSize if the final page is not a full page', async () => {
     // First page
     mock
       .intercept({
@@ -594,7 +725,9 @@ describe('request with pagination', () => {
 
     const result = await requestWithPagination(state, '/datasets', {
       limit: 21,
+      pageSize: 20,
     });
+
     expect(result.data.results).to.eql(items.slice(0, 21));
     expect(result.data.total).to.equal(21);
     expect(result.data.nextCursor).to.eql('21');

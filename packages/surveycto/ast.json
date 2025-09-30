@@ -172,7 +172,6 @@
     {
       "name": "upsertDataset",
       "params": [
-        "datasetId",
         "data"
       ],
       "docs": {
@@ -185,22 +184,13 @@
           },
           {
             "title": "example",
-            "description": "upsertDataset('enum_dataset', {\n  id: 'enum_dataset',\n  title: 'Enum Dataset',\n  discriminator: 'ENUMERATORS',\n  locationContext: {\n    parentGroupId: 1,\n    siblingAbove: {\n      id: 'new_dataset',\n      itemClass: 'DATASET',\n    },\n  },\n  allowOfflineUpdates: false,\n  idFormatOptions: {\n    prefix: 'enum',\n    suffix: '',\n    numberOfDigits: '8',\n    allowCapitalLetters: true,\n  },\n});",
+            "description": "upsertDataset({\n  id: 'enum_dataset',\n  title: 'Enum Dataset',\n  discriminator: 'ENUMERATORS',\n  locationContext: {\n    parentGroupId: 1,\n    siblingAbove: {\n      id: 'new_dataset',\n      itemClass: 'DATASET',\n    },\n  },\n  allowOfflineUpdates: false,\n  idFormatOptions: {\n    prefix: 'enum',\n    suffix: '',\n    numberOfDigits: '8',\n    allowCapitalLetters: true,\n  },\n});",
             "caption": "Upsert a dataset"
           },
           {
             "title": "function",
             "description": null,
             "name": null
-          },
-          {
-            "title": "param",
-            "description": "ID of the dataset supplied to the `get` and the `put` endpoints",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "datasetId"
           },
           {
             "title": "param",
