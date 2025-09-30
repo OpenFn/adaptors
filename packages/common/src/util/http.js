@@ -1,4 +1,4 @@
-import { MockAgent, Agent } from 'undici';
+import { MockAgent, Agent, interceptors } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
@@ -40,7 +40,11 @@ const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
     const agent = new Agent({
       connect: tls,
       ...agentOpts,
-    });
+    }).compose(
+      interceptors.redirect({
+        maxRedirections: agentOpts.maxRedirections || 5,
+      })
+    );
 
     agents.set(origin, agent);
   }
@@ -235,7 +239,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     maxRedirections,
   } = options;
 
-  const dispatcher = getAgent(baseUrl, { tls });
+  const dispatcher = getAgent(baseUrl, { tls, maxRedirections });
 
   const queryParams = {
     ...optionQuery,
@@ -248,8 +252,8 @@ export async function request(method, fullUrlOrPath, options = {}) {
     method,
     headers,
     body: encodeRequestBody(body),
-    throwOnError: false,
-    maxRedirections,
+    // throwOnError: false,
+    // maxRedirections,
     bodyTimeout: timeout,
     headersTimeout: timeout,
     // If the request is redirected, undici requires the origin to be set (this affects commcare)

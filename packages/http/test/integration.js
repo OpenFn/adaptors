@@ -127,6 +127,8 @@ describe('Integration tests', () => {
     };
     const error = await execute(get('/no-certs'))(state).catch(e => e);
 
+    console.log({error})
+
     expect(error.message).to.eq('unable to verify the first certificate');
 
     httpsServer.close();
