@@ -1,4 +1,4 @@
-import TypeDoc, { TypeDocOptions } from 'typedoc';
+import TypeDoc, { type TypeDocOptions } from 'typedoc';
 
 export default async (pathToSource: string, pathToTsConfig?: string) => {
   const app = new TypeDoc.Application();

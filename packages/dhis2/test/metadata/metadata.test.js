@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { createMock } from '@openfn/metadata';
-import metadata from '../../src/meta/metadata';
-import dhis2Helper from '../../src/meta/helper';
+import metadata from '../../src/meta/metadata.js';
+import dhis2Helper from '../../src/meta/helper.js';
 
 let mockHelper;
 

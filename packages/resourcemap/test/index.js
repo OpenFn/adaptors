@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 
-import Adaptor from '../src';
+import Adaptor from '../src/index.js';
 const { execute, submitSite } = Adaptor;
 
 import superagentMock from 'superagent-mock';
-import Fixtures, { fixtures } from './Fixtures';
+import Fixtures, { fixtures } from './Fixtures.js';
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {

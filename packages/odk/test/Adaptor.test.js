@@ -10,7 +10,7 @@ import {
   getForms,
 } from '../src/Adaptor.js';
 
-import * as fixtures from './fixtures';
+import * as fixtures from './fixtures/index.js';
 
 // For the full mock API see
 // https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions

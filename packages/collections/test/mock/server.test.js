@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { createServer } from '../../src/mock';
-import { streamResponse } from '../../src/collections';
+import { createServer } from '../../src/mock.js';
+import { streamResponse } from '../../src/collections.js';
 
 let request;
 let api;

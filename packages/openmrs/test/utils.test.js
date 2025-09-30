@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import { afterEach } from 'mocha';
 
 import { enableMockClient } from '@openfn/language-common/util';
-import testData from './fixtures.json' assert { type: 'json' };
-import { request, requestWithPagination } from '../src/Utils';
+import testData from './fixtures.json' with { type: 'json' };
+import { request, requestWithPagination } from '../src/Utils.js';
 
 const testServer = enableMockClient('https://util-tests.openmrs.org');
 

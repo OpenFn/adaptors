@@ -9,9 +9,9 @@ import {
   createTask,
   upsertTask,
   searchTask,
-} from '../src';
-import { DEFAULT_PAGE_LIMIT } from '../src/util';
-import { mockServer } from './helper';
+} from '../src/index.js';
+import { DEFAULT_PAGE_LIMIT } from '../src/util.js';
+import { mockServer } from './helper.js';
 
 const configuration = {
   token: 'fake-token',

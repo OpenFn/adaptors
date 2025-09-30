@@ -1,6 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { assembleError, scrubResponse, tryJson } from './Utils';
+import { assembleError, scrubResponse, tryJson } from './Utils.js';
 import request from 'request';
 
 export const composeNextState = (state, data, meta) => {

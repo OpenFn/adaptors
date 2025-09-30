@@ -4,9 +4,9 @@ const { expect } = chai;
 import nock from 'nock';
 const { back } = nock;
 
-import ClientFixtures, { fixtures } from './ClientFixtures';
+import ClientFixtures, { fixtures } from './ClientFixtures.js';
 
-import Adaptor from '../src';
+import Adaptor from '../src/index.js';
 const { execute, sendSMS, dataValue } = Adaptor;
 
 describe('execute', () => {

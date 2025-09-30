@@ -4,7 +4,7 @@ import {
   parseCsv,
 } from '@openfn/language-common';
 import Client from 'ssh2-sftp-client';
-import { isObjectEmpty, handleResponse } from './Utils';
+import { isObjectEmpty, handleResponse } from './Utils.js';
 
 let sftp = null;
 
@@ -262,7 +262,8 @@ export function normalizeCSVarray(options, callback) {
   };
 }
 
-export * from 'lodash/fp';
+export * from 'lodash/fp.js';
+
 
 export {
   alterState,

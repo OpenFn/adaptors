@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
-import { execute } from '../src';
-import { appendValues, batchUpdateValues } from '../src';
+import { execute ,appendValues, batchUpdateValues } from '../src/index.js';
+
 
 describe('execute', () => {
   it('executes each operation in sequence', done => {

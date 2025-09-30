@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { assert, expect } from 'chai';
 import { request, MockAgent, setGlobalDispatcher } from 'undici';
-import testData from './fixtures/data.json' assert { type: 'json' };
+import testData from './fixtures/data.json' with { type: 'json' };
 import {
   arrayToString,
   chunk,
@@ -34,7 +34,7 @@ import {
   _ as lodash,
   map,
   as,
-} from '../src/Adaptor';
+} from '../src/Adaptor.js';
 import { startOfToday } from 'date-fns';
 
 const mockAgent = new MockAgent();

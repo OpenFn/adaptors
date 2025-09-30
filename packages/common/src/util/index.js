@@ -1,7 +1,7 @@
-export * from './http';
-export * from './references';
+export * from './http.js';
+export * from './references.js';
 
-export { default as parseDate } from './parse-date';
-export { default as throwError } from './throw-error';
-export { encode, decode } from './base64';
-export { uuid } from './uuid';
+export { default as parseDate } from './parse-date.js';
+export { default as throwError } from './throw-error.js';
+export { encode, decode } from './base64.js';
+export { uuid } from './uuid.js';

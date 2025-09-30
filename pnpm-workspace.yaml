@@ -7,3 +7,4 @@ packages:
   - '!**/test/**'
   # exclude testing
   - '!packages/testing/**'
+minimumReleaseAge: 1440 # 1 day

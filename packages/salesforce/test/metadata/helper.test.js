@@ -1,5 +1,5 @@
 import chai from 'chai';
-import createHelper from '../../src/meta/helper';
+import createHelper from '../../src/meta/helper.js';
 import { createMock } from '@openfn/metadata';
 
 const { expect } = chai;

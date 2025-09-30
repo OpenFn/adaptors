@@ -1,4 +1,4 @@
-import Adaptor from '../src';
+import Adaptor from '../src/index.js';
 import { expect } from 'chai';
 import nock from 'nock';
 

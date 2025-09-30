@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { execute, request, fetchSubmissions, jsonToCSVBuffer } from '../src';
-import { convertDate, dateRegex } from '../src/Utils';
+import { execute, request, fetchSubmissions, jsonToCSVBuffer } from '../src/index.js';
+import { convertDate, dateRegex } from '../src/Utils.js';
 
 const baseUrl = 'https://test.surveycto.com';
 const mock = enableMockClient(baseUrl);

@@ -1,4 +1,4 @@
-import { deepEqual, removeNullProps } from './Utils';
+import { deepEqual, removeNullProps } from './Utils.js';
 
 export function parseRtmdCollectionToReports(collection) {
   if (!Array.isArray(collection) || collection.length === 0) {

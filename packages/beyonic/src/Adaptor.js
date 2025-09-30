@@ -1,5 +1,5 @@
 import { execute as commonExecute } from '@openfn/language-common';
-import { post } from './Client';
+import { post } from './Client.js';
 import { resolve as resolveUrl } from 'url';
 import { expandReferences } from '@openfn/language-common/util';
 

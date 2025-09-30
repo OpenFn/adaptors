@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 
 import nock from 'nock';
-import { fixtures } from './Fixtures';
+import { fixtures } from './Fixtures.js';
 
-import Adaptor from '../src';
+import Adaptor from '../src/index.js';
 const { execute, event, dataElement, get } = Adaptor;
 
 describe('execute', () => {

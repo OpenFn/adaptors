@@ -1,12 +1,12 @@
 import { expect } from 'chai';
 
 // Note that we test against the build here
-import * as builders from '../src/builders';
-import * as util from '../src/utils';
-import output from './fixtures/output';
-import input from './fixtures/input';
+import * as builders from '../src/builders.js';
+import * as util from '../src/utils.js';
+import output from './fixtures/output/index.js';
+import input from './fixtures/input/index.js';
 
-import fixtures from './fixtures';
+import fixtures from './fixtures/index.js';
 
 describe('General', () => {
   it('should not try to map a value that is undefined', () => {

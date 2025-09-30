@@ -1,5 +1,5 @@
 import { MockAgent } from 'undici';
-import { validateRequestBody } from './util';
+import { validateRequestBody } from './util.js';
 
 // import Ajv from 'ajv';
 // // Generated from sample with https://www.jsongenerator.io/schema

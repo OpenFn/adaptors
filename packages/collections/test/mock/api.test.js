@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { API } from '../../src/mock';
+import { API } from '../../src/mock.js';
 
 describe('API', () => {
   let api;

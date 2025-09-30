@@ -1,7 +1,7 @@
 import { expandReferences } from '@openfn/language-common/util';
-import * as util from './Utils';
+import * as util from './Utils.js';
 import { execute as commonExecute } from '@openfn/language-common';
-import { searchEventsQuery } from './query';
+import { searchEventsQuery } from './query.js';
 
 /**
  * State object

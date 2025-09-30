@@ -1,5 +1,5 @@
 import { expandReferences, encode } from '@openfn/language-common/util';
-import * as util from './Utils';
+import * as util from './Utils.js';
 
 /**
  * State object

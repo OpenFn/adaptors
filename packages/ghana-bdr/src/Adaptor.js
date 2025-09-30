@@ -1,6 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
-import * as util from './util';
-import { createServer } from './mock';
+import * as util from './util.js';
+import { createServer } from './mock.js';
 
 /**
  * Executes an operation.

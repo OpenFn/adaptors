@@ -1,6 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
-import { request } from './fhir.utils';
-import { prepareNextState } from './Utils';
+import { request } from './fhir.utils.js';
+import { prepareNextState } from './Utils.js';
 
 /**
  * OpenMRS FHIR requests parameters options.
