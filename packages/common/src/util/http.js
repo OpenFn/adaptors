@@ -42,7 +42,7 @@ const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
       ...agentOpts,
     }).compose(
       interceptors.redirect({
-        maxRedirections: agentOpts.maxRedirections || 5,
+        maxRedirections: agentOpts.maxRedirections,
       })
     );
 
@@ -252,8 +252,6 @@ export async function request(method, fullUrlOrPath, options = {}) {
     method,
     headers,
     body: encodeRequestBody(body),
-    // throwOnError: false,
-    // maxRedirections,
     bodyTimeout: timeout,
     headersTimeout: timeout,
     // If the request is redirected, undici requires the origin to be set (this affects commcare)
