@@ -94,22 +94,22 @@
           },
           {
             "title": "example",
-            "description": "list('enumerators_dataset/records')",
+            "description": "list('datasets/enumerators_dataset/records')",
             "caption": "List all dataset records"
           },
           {
             "title": "example",
-            "description": "list()",
+            "description": "list('datasets')",
             "caption": "List all datasets"
           },
           {
             "title": "example",
-            "description": "list('enumerators_dataset/records',{\n  limit: 2,\n});",
+            "description": "list('datasets/enumerators_dataset/records',{\n  limit: 2,\n});",
             "caption": "List dataset records with pagination options"
           },
           {
             "title": "example",
-            "description": "list(null,{\n  limit: 2,\n});",
+            "description": "list('datasets',{\n  limit: 2,\n});",
             "caption": "List datasets with pagination options"
           },
           {

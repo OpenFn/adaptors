@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { post, get, request, _delete } from '../src/http';
+import { post, get, request, _delete } from '../src/http.js';
 
 const baseUrl = 'https://trial.surveycto.com';
 const mock = enableMockClient(baseUrl);

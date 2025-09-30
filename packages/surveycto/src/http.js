@@ -1,5 +1,5 @@
 import { expandReferences } from '@openfn/language-common/util';
-import { requestHelper, prepareNextState } from './Utils';
+import { requestHelper, prepareNextState } from './Utils.js';
 
 /**
  * State object

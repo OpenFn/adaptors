@@ -10,7 +10,7 @@ import {
   convertJSONToCSV,
   prepareNextState,
   requestWithPagination,
-} from './Utils';
+} from './Utils.js';
 
 /**
  * State object
@@ -118,15 +118,15 @@ export function fetchSubmissions(formId, options = {}) {
  * List resources from SurveyCTO
  * @public
  * @example <caption>List all dataset records</caption>
- * list('enumerators_dataset/records')
+ * list('datasets/enumerators_dataset/records')
  * @example <caption>List all datasets</caption>
- * list()
+ * list('datasets')
  * @example <caption>List dataset records with pagination options</caption>
- * list('enumerators_dataset/records',{
+ * list('datasets/enumerators_dataset/records',{
  *   limit: 2,
  * });
  * @example <caption>List datasets with pagination options</caption>
- * list(null,{
+ * list('datasets',{
  *   limit: 2,
  * });
  * @function
@@ -145,11 +145,7 @@ export function list(resource, options = {}) {
       options
     );
 
-    const path = resolvedResource
-      ? `/datasets/${resolvedResource}`
-      : '/datasets';
-
-    const result = await requestWithPagination(state, path, resolvedOptions);
+    const result = await requestWithPagination(state, resolvedResource, resolvedOptions);
     return result;
   };
 }

@@ -8,8 +8,8 @@ import {
   upsertDataset,
   upsertRecord,
   list,
-} from '../src';
-import { convertDate, dateRegex, requestWithPagination } from '../src/Utils';
+} from '../src/index.js';
+import { convertDate, dateRegex, requestWithPagination } from '../src/Utils.js';
 
 const baseUrl = 'https://test.surveycto.com';
 const mock = enableMockClient(baseUrl);
@@ -76,8 +76,8 @@ describe('list', () => {
         }
       );
 
-    const result = await list()(state);
-    expect(result.data.data).to.eql([
+    const result = await list('datasets')(state);
+    expect(result.data.results).to.eql([
       {
         id: 'new_dataset',
         title: 'New dataset',
@@ -87,7 +87,7 @@ describe('list', () => {
     ]);
   });
 
-  it('should list datasets with options', async () => {
+  it('should list datasets with a limit', async () => {
     mock
       .intercept({
         path: '/api/v2/datasets',
@@ -97,18 +97,12 @@ describe('list', () => {
       .reply(
         200,
         {
-          total: 3,
+          total: 1,
           data: [
             {
               id: 'new_dataset',
               title: 'New dataset',
               discriminator: 'DATA',
-              groupId: 1,
-            },
-            {
-              id: 'enumerators_dataset',
-              title: 'Enumerators Dataset',
-              discriminator: 'ENUMERATORS',
               groupId: 1,
             },
           ],
@@ -118,11 +112,10 @@ describe('list', () => {
         }
       );
 
-    const result = await list(null, {
+    const result = await list('datasets', {
       limit: 1,
     })(state);
-
-    expect(result.data.data.length).to.eql(1);
+    expect(result.data.results.length).to.eql(1);
     expect(result.data.total).to.eql(1);
   });
 
@@ -153,8 +146,8 @@ describe('list', () => {
         }
       );
 
-    const result = await list('new_dataset/records')(state);
-    expect(result.data.data).to.eql([
+    const result = await list('datasets/new_dataset/records')(state);
+    expect(result.data.results).to.eql([
       {
         recordId: '2',
         values: {
@@ -166,7 +159,7 @@ describe('list', () => {
     ]);
   });
 
-  it('should list records with options', async () => {
+  it('should list records with a limit', async () => {
     mock
       .intercept({
         path: '/api/v2/datasets/new_dataset/records',
@@ -202,10 +195,10 @@ describe('list', () => {
         }
       );
 
-    const result = await list('new_dataset/records', {
+    const result = await list('datasets/new_dataset/records', {
       limit: 2,
     })(state);
-    expect(result.data.data.length).to.eql(2);
+    expect(result.data.results.length).to.eql(2);
     expect(result.data.total).to.eql(2);
   });
 });
@@ -378,6 +371,7 @@ describe('uploadCsvRecords', () => {
   });
 
   it('should upload csv records with uploadMode option', async () => {
+    let capturedBody;
     mock
       .intercept({
         path: '/api/v2/datasets/new_dataset/records/upload',
@@ -385,10 +379,13 @@ describe('uploadCsvRecords', () => {
       })
       .reply(
         200,
-        {
-          columnsAdded: 0,
-          rowsAdded: 0,
-          rowsUpdated: 2,
+        function ({ body }) {
+          capturedBody = body;
+          return {
+            columnsAdded: 0,
+            rowsAdded: 0,
+            rowsUpdated: 2,
+          };
         },
         {
           headers: { 'content-type': 'application/json' },
@@ -414,6 +411,13 @@ describe('uploadCsvRecords', () => {
         joiningField: 'id',
       }
     )(state);
+    expect(capturedBody).to.exist;
+    if (typeof capturedBody.get === 'function') {
+      const file = capturedBody.get('file');
+      expect(file).to.exist;
+      expect(file.name).to.equal('data.csv');
+      expect(file.type).to.equal('text/csv');
+    }
     expect(result.data.rowsUpdated).to.eql(2);
     expect(result.data.rowsAdded).to.eql(0);
     expect(result.response.statusCode).to.eql(200);
@@ -511,7 +515,7 @@ describe('date regex', () => {
 });
 
 describe('request with pagination', () => {
-  const items = [...Array(40).keys()].map(i => ({ id: i + 1 }));
+  const items = [...Array(40)].map((_item, index) => ({ id: index + 1 }));
 
   it('should fetch all pages and combine results', async () => {
     // First page
@@ -540,7 +544,7 @@ describe('request with pagination', () => {
 
     const result = await requestWithPagination(state, '/datasets');
 
-    expect(result.data.data).to.eql(items);
+    expect(result.data.results).to.eql(items);
     expect(result.data.total).to.equal(40);
     expect(result.data.nextCursor).to.be.null;
   });
@@ -559,9 +563,41 @@ describe('request with pagination', () => {
     const result = await requestWithPagination(state, '/datasets', {
       limit: 10,
     });
-    expect(result.data.data).to.eql(items.slice(0, 10));
+    expect(result.data.results).to.eql(items.slice(0, 10));
     expect(result.data.total).to.equal(10);
     expect(result.data.nextCursor).to.eql('10');
+  });
+  it('should make extra calls if limit is more than maxFetchSize of 20 ', async () => {
+    // First page
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 20 },
+      })
+      .reply(200, {
+        data: items.slice(0, 20),
+        nextCursor: items[19].id.toString(),
+      });
+
+    // Second page
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 1, cursor: items[19].id.toString() },
+      })
+      .reply(200, {
+        data: items.slice(20, 21),
+        nextCursor: items[20].id.toString(),
+      });
+
+    const result = await requestWithPagination(state, '/datasets', {
+      limit: 21,
+    });
+    expect(result.data.results).to.eql(items.slice(0, 21));
+    expect(result.data.total).to.equal(21);
+    expect(result.data.nextCursor).to.eql('21');
   });
   it('should return empty array if no data', async () => {
     mock
@@ -578,7 +614,7 @@ describe('request with pagination', () => {
     const result = await requestWithPagination(state, '/datasets', {
       limit: 2,
     });
-    expect(result.data.data).to.eql([]);
+    expect(result.data.results).to.eql([]);
     expect(result.data.total).to.equal(0);
     expect(result.data.nextCursor).to.be.null;
   });
