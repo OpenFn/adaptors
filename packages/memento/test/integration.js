@@ -36,7 +36,7 @@ describe('http', () => {
     expect(data.entries.length).to.be.greaterThanOrEqual(1);
   }).timeout(10e4);
 
-  it.only(
+  it(
     'should handle concurrent requests when hitting rate limits',
     async () => {
       const startTime = Date.now();
@@ -55,7 +55,7 @@ describe('http', () => {
       });
 
       // If it took longer than making direct requests, rate limiting likely occurred
-      // expect(totalTime).to.be.greaterThan(numberOfRequests * 100); // assuming each request normally takes ~100ms
+      expect(totalTime).to.be.greaterThan(numberOfRequests * 100); // assuming each request normally takes ~100ms
     }
   ).timeout(10e4);
 });
