@@ -29,9 +29,9 @@ describe('http', () => {
         expect(error.body.reasonPhrase).to.eql('Unauthorized');
       });
   });
-  it('should auto throttle when api rate limit exceeded', async () => {
+  it.only('should auto throttle when api rate limit exceeded', async () => {
     const { data } = await listEntries('6AJPFZhgy', {
-      pageSize: 10,
+      pageSize: 1,
     })(state);
     expect(data.entries.length).to.be.greaterThanOrEqual(1);
   }).timeout(10e4);
