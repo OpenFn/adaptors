@@ -65,13 +65,10 @@ export function sendRequest(state, method, path, params = {}) {
 export function handleRateLimit(requestTimes, requestConfig) {
   const { throttleTime, maxRequests, hasReachedLimit = false } = requestConfig;
 
-  // const bufferTime = 1e3; //1s buffer
-  const safeDelayBetweenRequests = Math.ceil(throttleTime / maxRequests);
-  const delayTime = safeDelayBetweenRequests;
-
   if (hasReachedLimit) {
-    console.log(`Rate limit exceeded, waiting ${delayTime / 1000}s`);
-    return new Promise(resolve => setTimeout(resolve, delayTime));
+    console.log(`Rate limit exceeded, waiting ${throttleTime / 1000}s`);
+    
+    return new Promise(resolve => setTimeout(resolve, throttleTime));
   }
 
   const now = Date.now();
@@ -80,6 +77,8 @@ export function handleRateLimit(requestTimes, requestConfig) {
     requestTimes.shift();
   }
 
+  // const bufferTime = 1e3; //1s buffer
+  const delayTime = Math.ceil(throttleTime / maxRequests);
   const oldestRequestAge = now - requestTimes[0];
   const requestCount = requestTimes.length;
   const reachedMaxRequest = requestCount >= maxRequests;
@@ -179,3 +178,6 @@ export async function requestWithPagination(state, method, path, params = {}) {
   );
   return composeNextState(state, results);
 }
+
+
+
