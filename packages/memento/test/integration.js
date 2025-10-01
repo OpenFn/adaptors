@@ -1,13 +1,15 @@
 import { expect } from 'chai';
+import { describe, it } from 'mocha';
 import { http, listEntries } from '../src';
 import configuration from '../tmp/creds.json' assert { type: 'json' };
 
 const state = { configuration };
 
 describe('http', () => {
-  it('lists libraries', async () => {
+  it.only('lists libraries', async () => {
     const { data } = await http.get('libraries')(state);
 
+    console.log(data);
     expect(data.libraries).to.exist;
     expect(data.libraries.length).to.be.greaterThanOrEqual(1);
   });

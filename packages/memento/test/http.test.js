@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { describe, it } from 'mocha';
 import { enableMockClient } from '@openfn/language-common/util';
 
 import { request } from '../src/http.js';

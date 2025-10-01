@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { requestWithPagination, handleRateLimit } from '../src/util';
 import {
   mockEntriesResponse,
-  mockEntriesPagination,
   mockRateLimitExceeded,
 } from './helpers';
 import { enableMockClient } from '@openfn/language-common/util';
