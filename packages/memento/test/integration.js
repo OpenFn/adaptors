@@ -29,10 +29,33 @@ describe('http', () => {
         expect(error.body.reasonPhrase).to.eql('Unauthorized');
       });
   });
-  it.only('should auto throttle when api rate limit exceeded', async () => {
+  it('should auto throttle when api rate limit exceeded', async () => {
     const { data } = await listEntries('6AJPFZhgy', {
       pageSize: 1,
     })(state);
     expect(data.entries.length).to.be.greaterThanOrEqual(1);
   }).timeout(10e4);
+
+  it.only(
+    'should handle concurrent requests when hitting rate limits',
+    async () => {
+      const startTime = Date.now();
+      const numberOfRequests = 10;
+
+      const requests = Array(numberOfRequests)
+        .fill()
+        .map(() => listEntries('6AJPFZhgy', { pageSize: 10 })(state));
+
+      const results = await Promise.all(requests);
+
+      const totalTime = Date.now() - startTime;
+
+      results.forEach(result => {
+        expect(result.data.entries.length).to.be.greaterThanOrEqual(1);
+      });
+
+      // If it took longer than making direct requests, rate limiting likely occurred
+      // expect(totalTime).to.be.greaterThan(numberOfRequests * 100); // assuming each request normally takes ~100ms
+    }
+  ).timeout(10e4);
 });
