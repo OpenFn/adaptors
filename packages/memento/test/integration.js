@@ -6,7 +6,7 @@ import configuration from '../tmp/creds.json' assert { type: 'json' };
 const state = { configuration };
 
 describe('http', () => {
-  it.only('lists libraries', async () => {
+  it('lists libraries', async () => {
     const { data } = await http.get('libraries')(state);
 
     console.log(data);
