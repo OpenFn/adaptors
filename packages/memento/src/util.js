@@ -92,7 +92,7 @@ export function handleRateLimit(requestTimes, requestConfig) {
 
   const hasRequestTimes = requestCount > 0;
   if (hasRequestTimes) {
-    console.log(`Waiting ${delayTime / 1000}s between requests`);
+    console.log(`Waiting ${delayTime / 1000}s before next request`);
     return new Promise(resolve => setTimeout(resolve, delayTime));
   }
 
