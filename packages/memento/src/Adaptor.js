@@ -39,10 +39,12 @@ export function listLibraries() {
  * @returns {Operation}
  */
 export function getFields(libraryId) {
-  return state => {
+  return async state => {
     const [resolvedLibraryId] = expandReferences(state, libraryId);
     console.log('Getting library fields');
-    return sendRequest(state, 'GET', `libraries/${resolvedLibraryId}`);
+    const results = await sendRequest(state, 'GET', `libraries/${resolvedLibraryId}`);
+    console.log(`Got ${results.data?.fields?.length} fields`);
+    return results
   };
 }
 
@@ -83,6 +85,7 @@ export function listEntries(libraryId, options = {}) {
     }
 
     console.log('Listing entries');
+
     return requestWithPagination(
       state,
       'GET',
@@ -145,14 +148,14 @@ export function getEntry(libraryId, entryId) {
  * @returns {Operation}
  */
 export function createEntry(libraryId, body) {
-  return state => {
+  return async state => {
     const [resolvedLibraryId, resolvedBody] = expandReferences(
       state,
       libraryId,
       body
     );
     console.log('Creating a new entry');
-    return sendRequest(
+    const result = await sendRequest(
       state,
       'POST',
       `libraries/${resolvedLibraryId}/entries`,
@@ -160,6 +163,8 @@ export function createEntry(libraryId, body) {
         body: resolvedBody,
       }
     );
+    console.log('Created entry');
+    return result
   };
 }
 
@@ -187,7 +192,7 @@ export function createEntry(libraryId, body) {
  * @returns {Operation}
  */
 export function updateEntry(libraryId, entryId, body) {
-  return state => {
+  return async state => {
     const [resolvedLibraryId, resolvedEntryId, resolvedBody] = expandReferences(
       state,
       libraryId,
@@ -195,7 +200,7 @@ export function updateEntry(libraryId, entryId, body) {
       body
     );
     console.log('Updating entry');
-    return sendRequest(
+    const result = await sendRequest(
       state,
       'PUT',
       `libraries/${resolvedLibraryId}/entries/${resolvedEntryId}`,
@@ -203,6 +208,8 @@ export function updateEntry(libraryId, entryId, body) {
         body: resolvedBody,
       }
     );
+    console.log('Updated entry');
+    return result
   };
 }
 
