@@ -94,7 +94,7 @@
           },
           {
             "title": "example",
-            "description": "list('datasets/enumerators_dataset/records')",
+            "description": "list(`datasets/${$.datasetId}/records`)",
             "caption": "List all dataset records"
           },
           {
@@ -104,7 +104,7 @@
           },
           {
             "title": "example",
-            "description": "list('datasets/enumerators_dataset/records',{\n  limit: 2,\n});",
+            "description": "list(`datasets/${$.datasetId}/records`,{\n  limit: 2,\n});",
             "caption": "List dataset records with pagination options"
           },
           {
