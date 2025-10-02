@@ -201,6 +201,38 @@ describe('list', () => {
     expect(result.data.length).to.eql(2);
     expect(result.response.total).to.eql(2);
   });
+   it('should return a response', async () => {
+    mock
+      .intercept({
+        path: '/api/v2/datasets',
+        method: 'GET',
+        query: { limit: 1 },
+      })
+      .reply(
+        200,
+        {
+          total: 1,
+          data: [
+            {
+              id: 'new_dataset',
+              title: 'New dataset',
+              discriminator: 'DATA',
+              groupId: 1,
+            },
+          ],
+        },
+        {
+          headers: { 'content-type': 'application/json' },
+        }
+      );
+
+    const result = await list('datasets', {
+      limit: 1,
+    })(state);
+    
+    expect(result.response.total).to.eql(1);
+    expect(result.response.nextCursor).to.eql(null);
+  });
 });
 
 describe('upsertDataset', () => {

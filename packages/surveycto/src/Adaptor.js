@@ -17,7 +17,7 @@ import {
  * @typedef {Object} SurveyCTOState
  * @property data - the parsed response body
  * @property response - the response from the SurveyCTO server, including headers, statusCode, body, etc
- * @property references - an array of all previous data objects used in the Job
+ * @property references - an array of all previous data objects used in the Job. It will also include `total` and `nextCursor` when using `list()`.
  **/
 
 /**
@@ -118,11 +118,11 @@ export function fetchSubmissions(formId, options = {}) {
  * List resources from SurveyCTO
  * @public
  * @example <caption>List all dataset records</caption>
- * list('datasets/enumerators_dataset/records')
+ * list(`datasets/${$.datasetId}/records`)
  * @example <caption>List all datasets</caption>
  * list('datasets')
  * @example <caption>List dataset records with pagination options</caption>
- * list('datasets/enumerators_dataset/records',{
+ * list(`datasets/${$.datasetId}/records`,{
  *   limit: 2,
  * });
  * @example <caption>List datasets with pagination options</caption>
