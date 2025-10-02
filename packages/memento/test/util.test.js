@@ -1,9 +1,6 @@
 import { expect } from 'chai';
 import { requestWithPagination, handleRateLimit } from '../src/util';
-import {
-  mockEntriesResponse,
-  mockRateLimitExceeded,
-} from './helpers';
+import { mockEntriesResponse, mockRateLimitExceeded } from './helpers';
 import { enableMockClient } from '@openfn/language-common/util';
 
 const testServer = enableMockClient('https://util.mementodatabase.com');
@@ -200,14 +197,15 @@ describe('requestWithPagination', () => {
       fields: 'all',
     });
 
+    // Reducing throttleTime for faster test execution
+    const testCongig = { throttleTime: 1000 };
     const { data } = await requestWithPagination(
       state,
       'GET',
       'libraries/HyZV7AYk0/entries',
       {
-        throttleTime: 1000,
-        maxRequests: 10,
         query: { pageSize, fields: 'all' },
+        ...testCongig,
       }
     );
 

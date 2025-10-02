@@ -4,7 +4,7 @@ import { expandReferences } from '@openfn/language-common/util';
 /**
  * Fetch Entries Request Options
  * @typedef {Object} EntriesRequestOptions
- * See https://mementodatabase.docs.apiary.io/#reference/0/entries/list-entries-on-a-library
+ * See https://mementodatabase.docs.apiary.io
  * @public
  * @property {number} [options.pageSize=100] - The maximum number of entries to return per page.
  * @property {string} [options.pageToken] - Start pagination from this token/cursor.
@@ -42,9 +42,13 @@ export function getFields(libraryId) {
   return async state => {
     const [resolvedLibraryId] = expandReferences(state, libraryId);
     console.log('Getting library fields');
-    const results = await sendRequest(state, 'GET', `libraries/${resolvedLibraryId}`);
+    const results = await sendRequest(
+      state,
+      'GET',
+      `libraries/${resolvedLibraryId}`
+    );
     console.log(`Got ${results.data?.fields?.length} fields`);
-    return results
+    return results;
   };
 }
 
@@ -164,7 +168,7 @@ export function createEntry(libraryId, body) {
       }
     );
     console.log('Created entry');
-    return result
+    return result;
   };
 }
 
@@ -209,7 +213,7 @@ export function updateEntry(libraryId, entryId, body) {
       }
     );
     console.log('Updated entry');
-    return result
+    return result;
   };
 }
 

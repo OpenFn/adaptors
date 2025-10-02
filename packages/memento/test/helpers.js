@@ -66,3 +66,44 @@ export const mockRateLimitExceeded = (testServer, path, opts = {}) => {
     })
     .reply(200, mockEntriesResponse(2, totalPages, pageSize));
 };
+
+// const createPaginatingEndpoint = (testServer, path, data) => {
+//   // Set up a totally generic interceptor at the path
+//   testServer
+//     .intercept({
+//       path,
+//       method: 'GET',
+//     })
+//     .reply(req => {
+//       // I can't remember this syntax
+//       const { pageSize, token } = req.params;
+
+//       return getPaginatedResponse(data, token, pageSize);
+//     });
+// };
+
+export const mockEntries = (totalRecords, pageSize, nextPage = 0) => {
+  const data = Array(totalRecords)
+    .fill()
+    .map((_, i) => ({
+      id: `entry-${i}`,
+    }));
+
+  const isFirstPage = nextPage === 0;
+  const isLastPage = nextPage >= totalRecords;
+
+  const calcNextPageToken = isFirstPage ? pageSize + 1 : nextPage + 1;
+
+  const entries = data.slice(nextPage, pageSize);
+  const revision = Math.floor(Math.random() * 100);
+
+  const shouldFetchMoreContent = nextPage !== undefined;
+  const nextPageToken = shouldFetchMoreContent ? calcNextPageToken : undefined;
+
+  console.log({ nextPageToken });
+  return {
+    entries,
+    nextPageToken,
+    revision,
+  };
+};

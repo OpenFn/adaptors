@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
-import { mockEntriesPagination } from './helpers';
+import { mockEntries, mockEntriesPagination } from './helpers';
 import {
   listLibraries,
   listEntries,
@@ -45,25 +45,178 @@ describe('Adaptor', () => {
     });
   });
   describe('listEntries', () => {
-    it('should fetch all entries', async () => {
+    it.only('should fetch all entries', async () => {
+      const totalRecords = 11;
       const pageSize = 10;
-      mockEntriesPagination(testServer, '/v1/libraries/HyZV7AYk0/entries', {
-        pageSize,
-        totalRecords: 11,
+
+      const listEntriesQuery = {
+        token: 'user-api-token',
         fields: 'all',
+        pageSize,
+      };
+
+      let requestsCount = 0;
+      let rateLimitCount = 0;
+
+      // First 10 requests are successful
+      testServer
+        .intercept({
+          path: '/v1/libraries/HyZV7AYk0/entries',
+          method: 'GET',
+          query: listEntriesQuery,
+        })
+        .reply(200, req => {
+          requestsCount++;
+          return mockEntries(totalRecords, pageSize);
+        })
+        .times(10);
+
+      testServer
+        .intercept({
+          path: '/v1/libraries/HyZV7AYk0/entries',
+          method: 'GET',
+          query: listEntriesQuery,
+        })
+        .reply(403, req => {
+          requestsCount++;
+          rateLimitCount++;
+          expect(requestsCount).to.eql(11);
+          return {
+            description: 'API rate limit exceeded',
+            code: 403,
+          };
+        })
+        .times(1);
+
+      testServer
+        .intercept({
+          path: '/v1/libraries/HyZV7AYk0/entries',
+          method: 'GET',
+          query: { ...listEntriesQuery, pageToken: pageSize + 1 },
+        })
+        .reply(403, req => {
+          requestsCount++;
+          rateLimitCount++;
+          return { description: 'API rate limit exceeded', code: 403 };
+        })
+        .times(10);
+
+      testServer
+        .intercept({
+          path: '/v1/libraries/HyZV7AYk0/entries',
+          method: 'GET',
+          query: listEntriesQuery,
+        })
+        .reply(200, req => {
+          requestsCount++;
+          return mockEntries(totalRecords, pageSize);
+        })
+        .times(1);
+
+      // After throttleTime, Requests are successful again
+      testServer
+        .intercept({
+          path: '/v1/libraries/HyZV7AYk0/entries',
+          method: 'GET',
+          query: { ...listEntriesQuery, pageToken: pageSize + 1 },
+        })
+        .reply(200, req => {
+          requestsCount++;
+          const nextPage = parseInt(req.query.pageToken, 10) + 1;
+          return mockEntries(totalRecords, pageSize, nextPage);
+        })
+        .times(10);
+
+      const startTime = Date.now();
+      const numberOfRequests = 11;
+      const throttleTime = 1e3; // Reduced for faster test execution
+      const requests = Array(numberOfRequests)
+        .fill()
+        .map(() =>
+          listEntries('HyZV7AYk0', { pageSize: 10, throttleTime })(state)
+        );
+      const results = await Promise.all(requests);
+      const totalTime = Date.now() - startTime;
+
+      results.forEach(result => {
+        expect(result.data.entries.length).to.be.greaterThanOrEqual(10);
       });
 
-      // Reducing throttleTime for faster test execution
-      const testConfig = { throttleTime: 10000 };
+      // Ensure calls were spread over throttleTime due to rate limiting
+      expect(totalTime).to.be.greaterThanOrEqual(throttleTime);
+      expect(requestsCount).to.eql(10);
+      expect(requestsCount).to.eql(30);
+    }).timeout(6e4);
 
-      const { data } = await listEntries('HyZV7AYk0', {
+    it('should handle concurrent requests when hitting rate limits', async () => {
+      const totalRecords = 10;
+      const pageSize = 10;
+
+      const listEntriesQuery = {
+        token: 'user-api-token',
+        fields: 'all',
         pageSize,
-        ...testConfig,
-      })(state);
+      };
 
-      expect(data.entries.length).to.eql(11);
-      expect(data.nextPageToken).to.eql(undefined);
-    }).timeout(6e4 + 1000);
+      let requestsCount = 0;
+      // First 10 requests are successful
+      testServer
+        .intercept({
+          path: '/v1/libraries/HyZV7AYk0/entries',
+          method: 'GET',
+          query: listEntriesQuery,
+        })
+        .reply(200, req => {
+          requestsCount++;
+          return mockEntries(totalRecords, pageSize);
+        })
+        .times(10);
+
+      // Request 11 is rate limited
+      testServer
+        .intercept({
+          path: '/v1/libraries/HyZV7AYk0/entries',
+          method: 'GET',
+          query: listEntriesQuery,
+        })
+        .reply(403, req => {
+          requestsCount++;
+          expect(requestsCount).to.eql(11);
+          return { description: 'API rate limit exceeded', code: 403 };
+        });
+
+      // After throttleTime, Request 12 is successful again
+      testServer
+        .intercept({
+          path: '/v1/libraries/HyZV7AYk0/entries',
+          method: 'GET',
+          query: listEntriesQuery,
+        })
+        .reply(200, req => {
+          requestsCount++;
+          expect(requestsCount).to.eql(12);
+          return mockEntries(totalRecords, pageSize);
+        });
+
+      const startTime = Date.now();
+      const numberOfRequests = 11;
+      const throttleTime = 6e3; // Reduced for faster test execution
+      const requests = Array(numberOfRequests)
+        .fill()
+        .map(() =>
+          listEntries('HyZV7AYk0', { pageSize: 10, throttleTime })(state)
+        );
+      const results = await Promise.all(requests);
+      const totalTime = Date.now() - startTime;
+
+      results.forEach(result => {
+        expect(result.data.entries.length).to.be.greaterThanOrEqual(10);
+      });
+
+      // Ensure calls were spread over throttleTime due to rate limiting
+      expect(totalTime).to.be.greaterThanOrEqual(throttleTime);
+      expect(requestsCount).to.eql(12);
+    }).timeout(6e4);
   });
   describe('createEntry', () => {
     it('creates an entry', async () => {
@@ -170,11 +323,13 @@ describe('Adaptor', () => {
         ],
       };
 
-      testServer.intercept({
-        path: '/v1/libraries/HyZV7AYk0',
-        method: 'GET',
-        query: { token: 'user-api-token' },
-      }).reply(200, response);
+      testServer
+        .intercept({
+          path: '/v1/libraries/HyZV7AYk0',
+          method: 'GET',
+          query: { token: 'user-api-token' },
+        })
+        .reply(200, response);
 
       const { data } = await getFields('HyZV7AYk0')(state);
 

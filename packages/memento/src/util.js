@@ -67,7 +67,7 @@ export function handleRateLimit(requestTimes, requestConfig) {
 
   if (hasReachedLimit) {
     console.log(`Rate limit exceeded, waiting ${throttleTime / 1000}s`);
-    
+
     return new Promise(resolve => setTimeout(resolve, throttleTime));
   }
 
@@ -140,6 +140,7 @@ export async function requestWithPagination(state, method, path, params = {}) {
       requestTimes.push(Date.now());
       response = await request(state, method, path, requestOptions);
     } catch (error) {
+      // console.log('Error:', error);
       console.log('Error:', error.body);
       if (
         error.body?.description === 'API rate limit exceeded' &&
@@ -158,6 +159,7 @@ export async function requestWithPagination(state, method, path, params = {}) {
     }
 
     const { body } = response;
+
     results.entries.push(...body?.entries);
     results.nextPageToken = body?.nextPageToken;
     results.revision = body?.revision;
@@ -178,6 +180,3 @@ export async function requestWithPagination(state, method, path, params = {}) {
   );
   return composeNextState(state, results);
 }
-
-
-
