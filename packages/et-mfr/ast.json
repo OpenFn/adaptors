@@ -22,7 +22,7 @@
           {
             "title": "example",
             "description": "get('Facility/All', {\n  query: {\n    name: '010 Kombolcha Health Post',\n  },\n});",
-            "caption": "Get all facility details with serach options"
+            "caption": "Get all facility details with search options"
           },
           {
             "title": "function",
