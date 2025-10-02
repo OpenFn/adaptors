@@ -99,8 +99,8 @@ export const requestWithPagination = async (state, resource, options = {}) => {
     cursor = next;
   } while (cursor && results.length < desiredFetchTotal);
 
-  return composeNextState(state, {
-    results: results,
+  return prepareNextState(state, {
+   body: results,
     total: results.length,
     nextCursor: cursor,
   });

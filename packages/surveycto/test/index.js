@@ -78,7 +78,7 @@ describe('list', () => {
 
     const result = await list('datasets')(state);
 
-    expect(result.data.results).to.eql([
+    expect(result.data).to.eql([
       {
         id: 'new_dataset',
         title: 'New dataset',
@@ -116,8 +116,8 @@ describe('list', () => {
     const result = await list('datasets', {
       limit: 1,
     })(state);
-    expect(result.data.results.length).to.eql(1);
-    expect(result.data.total).to.eql(1);
+    expect(result.data.length).to.eql(1);
+    expect(result.response.total).to.eql(1);
   });
 
   it('should list all records', async () => {
@@ -148,7 +148,7 @@ describe('list', () => {
       );
 
     const result = await list('datasets/new_dataset/records')(state);
-    expect(result.data.results).to.eql([
+    expect(result.data).to.eql([
       {
         recordId: '2',
         values: {
@@ -198,8 +198,8 @@ describe('list', () => {
     const result = await list('datasets/new_dataset/records', {
       limit: 2,
     })(state);
-    expect(result.data.results.length).to.eql(2);
-    expect(result.data.total).to.eql(2);
+    expect(result.data.length).to.eql(2);
+    expect(result.response.total).to.eql(2);
   });
 });
 
@@ -544,9 +544,9 @@ describe('request with pagination', () => {
 
     const result = await requestWithPagination(state, '/datasets');
 
-    expect(result.data.results).to.eql(items);
-    expect(result.data.total).to.equal(2000);
-    expect(result.data.nextCursor).to.be.null;
+    expect(result.data).to.eql(items);
+    expect(result.response.total).to.equal(2000);
+    expect(result.response.nextCursor).to.be.null;
   });
   it('should respect a user limit', async () => {
     mock
@@ -563,9 +563,9 @@ describe('request with pagination', () => {
     const result = await requestWithPagination(state, '/datasets', {
       limit: 10,
     });
-    expect(result.data.results).to.eql(items.slice(0, 10));
-    expect(result.data.total).to.equal(10);
-    expect(result.data.nextCursor).to.eql('10');
+    expect(result.data).to.eql(items.slice(0, 10));
+    expect(result.response.total).to.equal(10);
+    expect(result.response.nextCursor).to.eql('10');
   });
 
   it('should respect a user limit with pagesize', async () => {
@@ -597,9 +597,9 @@ describe('request with pagination', () => {
       limit: 10,
       pageSize: 5,
     });
-    expect(result.data.results).to.eql(items.slice(0, 10));
-    expect(result.data.total).to.equal(10);
-    expect(result.data.nextCursor).to.eql(null);
+    expect(result.data).to.eql(items.slice(0, 10));
+    expect(result.response.total).to.equal(10);
+    expect(result.response.nextCursor).to.eql(null);
   });
 
   it('should respect limit where pageSize is more than limit', async () => {
@@ -618,9 +618,9 @@ describe('request with pagination', () => {
       limit: 10,
       pageSize: 20,
     });
-    expect(result.data.results).to.eql(items.slice(0, 10));
-    expect(result.data.total).to.equal(10);
-    expect(result.data.nextCursor).to.eql('10');
+    expect(result.data).to.eql(items.slice(0, 10));
+    expect(result.response.total).to.equal(10);
+    expect(result.response.nextCursor).to.eql('10');
   });
 
   it('should ignore defaultLimit if limit is set', async () => {
@@ -640,9 +640,9 @@ describe('request with pagination', () => {
       pageSize: 1000,
       defaultLimit: 40,
     });
-    expect(result.data.results).to.eql(items.slice(0, 50));
-    expect(result.data.total).to.equal(50);
-    expect(result.data.nextCursor).to.eql('50');
+    expect(result.data).to.eql(items.slice(0, 50));
+    expect(result.response.total).to.equal(50);
+    expect(result.response.nextCursor).to.eql('50');
   });
 
   it('should use defaultLimit if limit is not set', async () => {
@@ -661,9 +661,9 @@ describe('request with pagination', () => {
       pageSize: 1000,
       defaultLimit: 40,
     });
-    expect(result.data.results).to.eql(items.slice(0, 40));
-    expect(result.data.total).to.equal(40);
-    expect(result.data.nextCursor).to.eql('40');
+    expect(result.data).to.eql(items.slice(0, 40));
+    expect(result.response.total).to.equal(40);
+    expect(result.response.nextCursor).to.eql('40');
   });
   it('should not allow pageSize to be more than 1000', async () => {
     // first call
@@ -693,9 +693,9 @@ describe('request with pagination', () => {
       limit: 2000,
       pageSize: 2000,
     });
-    expect(result.data.results).to.eql(items.slice(0, 2000));
-    expect(result.data.total).to.equal(2000);
-    expect(result.data.nextCursor).to.eql(null);
+    expect(result.data).to.eql(items.slice(0, 2000));
+    expect(result.response.total).to.equal(2000);
+    expect(result.response.nextCursor).to.eql(null);
   });
 
   it('should respect pageSize if the final page is not a full page', async () => {
@@ -728,9 +728,9 @@ describe('request with pagination', () => {
       pageSize: 20,
     });
 
-    expect(result.data.results).to.eql(items.slice(0, 21));
-    expect(result.data.total).to.equal(21);
-    expect(result.data.nextCursor).to.eql('21');
+    expect(result.data).to.eql(items.slice(0, 21));
+    expect(result.response.total).to.equal(21);
+    expect(result.response.nextCursor).to.eql('21');
   });
   it('should return empty array if no data', async () => {
     mock
@@ -747,8 +747,8 @@ describe('request with pagination', () => {
     const result = await requestWithPagination(state, '/datasets', {
       limit: 2,
     });
-    expect(result.data.results).to.eql([]);
-    expect(result.data.total).to.equal(0);
-    expect(result.data.nextCursor).to.be.null;
+    expect(result.data).to.eql([]);
+    expect(result.response.total).to.equal(0);
+    expect(result.response.nextCursor).to.be.null;
   });
 });
