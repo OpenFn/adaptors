@@ -16,8 +16,16 @@ import {
  * State object
  * @typedef {Object} SurveyCTOState
  * @property data - the parsed response body
- * @property response - the response from the SurveyCTO server, including headers, statusCode, body, etc
- * @property references - an array of all previous data objects used in the Job. It will also include `total` and `nextCursor` when using `list()`.
+ * @property response - the response from the SurveyCTO server, including headers, statusCode etc
+ * @property references - an array of all previous data objects used in the Job.
+ **/
+
+/**
+ * List State object
+ * @typedef {Object} SurveyCTOListState
+ * @property data - the parsed response body
+ * @property response - the response from the server with `total` and `nextCursor`
+ * @property references - an array of all previous data objects used in the Job.
  **/
 
 /**
@@ -135,7 +143,7 @@ export function fetchSubmissions(formId, options = {}) {
  * @property {number} options.limit - Maximum number of items to return. Defaults to 20. Maximum is 1000.
  * @property {string} options.cursor - Optional string to specify the starting point of the next page of results.
  * @returns {Operation}
- * @state {SurveyCTOState}
+ * @state {SurveyCTOListState}
  */
 export function list(resource, options = {}) {
   return async state => {
