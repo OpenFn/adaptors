@@ -59333,11 +59333,69 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 185,
+      "lineno": 364,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
     },
-    "order": 5,
+    "order": 9,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "delete",
+    "longname": "delete",
+    "name": "delete",
+    "kind": "function",
+    "scope": "http",
+    "description": "Delete resources from SurveyCTO",
+    "alias": "delete",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Query and headers parameters",
+        "name": "params"
+      }
+    ],
+    "examples": [
+      "<caption>Delete a dataset</caption>\nhttp.delete('/datasets/enumerators_dataset');",
+      "<caption>Delete a dataset record</caption>\nhttp.delete('/datasets/enumerators_dataset/record', {\n  query: {\n    recordId: 2,\n  },\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 124,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HTTPState"
+      }
+    ],
+    "order": 16,
     "newscope": true,
     "level": 0
   },
@@ -59389,11 +59447,11 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 33,
+      "lineno": 54,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
     },
-    "order": 1,
+    "order": 3,
     "level": 0
   },
   {
@@ -59421,15 +59479,6 @@
         },
         "description": "Form submission date, format, status parameters",
         "name": "options"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "(Optional) Callback function",
-        "name": "callback"
       }
     ],
     "examples": [
@@ -59437,8 +59486,7 @@
       "<caption> With SurveyCTO date format (UTC)</caption>\nfetchSubmissions('test', { date: 'Apr 18, 2024 6:26:21 AM' });",
       "<caption>Using a rolling cursor </caption>\ncursor((state) => state.cursor, { defaultValue: 'today' });\nfetchSubmissions('test', { date: (state) => state.cursor, format: 'csv' });\ncursor('now');",
       "<caption> Formatting the results to CSV String</caption>\nfetchSubmissions('test', { format: 'csv' });",
-      "<caption> With reviewStatus filter</caption>\nfetchSubmissions('test', { status: 'approved|rejected' });",
-      "<caption> With a callback function</caption>\nfetchSubmissions(\n  'test',\n  {\n    date: 'Apr 18, 2024 6:26:21 AM',\n  },\n  state => {\n    console.log('Hello from the callback!');\n    return state;\n  }\n);"
+      "<caption> With reviewStatus filter</caption>\nfetchSubmissions('test', { status: 'approved|rejected' });"
     ],
     "returns": [
       {
@@ -59451,11 +59499,109 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 76,
+      "lineno": 86,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
     },
-    "order": 2,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SurveyCTOState"
+      }
+    ],
+    "order": 4,
+    "level": 0
+  },
+  {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "http",
+    "description": "Get resources from SurveyCTO",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Query and headers parameters",
+        "name": "params"
+      }
+    ],
+    "examples": [
+      "<caption>Get a record with id</caption>\nhttp.get('/datasets/enumerators_dataset/record', {\n  query: {\n    recordId: '4',\n  },\n});",
+      "<caption>Get a dataset with id</caption>\nhttp.get('/datasets/enumerators_dataset')",
+      "<caption>Get a dataset in csv format</caption>\nhttp.get('/datasets/data/csv/enumerators_dataset', {\n  query: {\n    asAttachment: true,\n  },\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 86,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HTTPState"
+      }
+    ],
+    "order": 14,
+    "level": 0
+  },
+  {
+    "id": "HTTPState",
+    "longname": "HTTPState",
+    "name": "HTTPState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the SurveyCTO server, including headers, statusCode, body, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 4,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
+    },
+    "order": 11,
     "level": 0
   },
   {
@@ -59490,20 +59636,98 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 212,
+      "lineno": 391,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
     },
-    "order": 6,
+    "order": 10,
     "level": 0
   },
   {
-    "id": "request",
-    "longname": "request",
-    "name": "request",
+    "id": "list",
+    "longname": "list",
+    "name": "list",
     "kind": "function",
     "scope": "global",
-    "description": "Make a HTTP request to the SurveyCTO API",
+    "description": "List resources from SurveyCTO",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Resource to fetch",
+        "name": "resource"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getdatasets-parameters)",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>List all dataset records</caption>\nlist(`datasets/${$.datasetId}/records`)",
+      "<caption>List all datasets</caption>\nlist('datasets')",
+      "<caption>List dataset records with pagination options</caption>\nlist(`datasets/${$.datasetId}/records`,{\n  limit: 2,\n});",
+      "<caption>List datasets with pagination options</caption>\nlist('datasets',{\n  limit: 2,\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Maximum number of items to return. Defaults to 20. Maximum is 1000.",
+        "name": "options.limit"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Optional string to specify the starting point of the next page of results.",
+        "name": "options.cursor"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 148,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SurveyCTOListState"
+      }
+    ],
+    "order": 5,
+    "level": 0
+  },
+  {
+    "id": "post",
+    "longname": "post",
+    "name": "post",
+    "kind": "function",
+    "scope": "http",
+    "description": "Send a HTTP POST request to SurveyCTO",
     "params": [
       {
         "type": {
@@ -59520,22 +59744,12 @@
             "RequestOptions"
           ]
         },
-        "description": "Query, body and method parameters",
+        "description": "Query, body, and headers parameters",
         "name": "params"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "(Optional) Callback function",
-        "name": "callback"
       }
     ],
     "examples": [
-      "<caption>Post JSON data to SurveyCTO</caption>\nrequest(\"/anEndpoint\", {\n  method: \"POST\",\n   contentType: \"json\",\n  body: { foo: \"bar\", a: 1 },\n});",
-      "<caption>Upload a CSV blob to a dataset</caption>\n  request('datasets/library/records/upload', {\n    method: 'POST',\n    contentType: 'form',\n    body: {\n      file: {\n        blob: $.data,\n        type: 'text/csv',\n        filename: 'library.csv'\n      }\n    },\n  });"
+      "<caption>Purge a dataset</caption>\nhttp.post('/datasets/enumeratorse_dataset/purge');"
     ],
     "returns": [
       {
@@ -59548,11 +59762,74 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 156,
-      "filename": "Adaptor.js",
+      "lineno": 101,
+      "filename": "http.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
     },
-    "order": 4,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HTTPState"
+      }
+    ],
+    "order": 15,
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a HTTP request to SurveyCTO",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Query, body, headers and method parameters",
+        "name": "params"
+      }
+    ],
+    "examples": [
+      "<caption>Post JSON data to SurveyCTO</caption>\nhttp.request(\"/anEndpoint\", {\n  method: \"POST\",\n   contentType: \"json\",\n  body: $.data,\n});",
+      "<caption>Upload a CSV blob to a dataset</caption>\n  http.request('datasets/library/records/upload', {\n    method: 'POST',\n    contentType: 'form',\n    body: {\n      file: {\n        blob: $.data,\n        type: 'text/csv',\n        filename: 'library.csv'\n      }\n    },\n  });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 50,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HTTPState"
+      }
+    ],
+    "order": 13,
     "level": 0
   },
   {
@@ -59622,11 +59899,265 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 118,
+      "lineno": 12,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
+    },
+    "order": 12,
+    "level": 0
+  },
+  {
+    "id": "SurveyCTOListState",
+    "longname": "SurveyCTOListState",
+    "name": "SurveyCTOListState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "List State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the server with `total` and `nextCursor`",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job.",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 23,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
     },
-    "order": 3,
+    "order": 1,
+    "level": 0
+  },
+  {
+    "id": "SurveyCTOState",
+    "longname": "SurveyCTOState",
+    "name": "SurveyCTOState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the SurveyCTO server, including headers, statusCode etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job.",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 15,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
+    },
+    "order": 0,
+    "level": 0
+  },
+  {
+    "id": "uploadCsvRecords",
+    "longname": "uploadCsvRecords",
+    "name": "uploadCsvRecords",
+    "kind": "function",
+    "scope": "global",
+    "description": "Upload CSV dataset records",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "ID of the dataset",
+        "name": "datasetId"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "An array of JSON objects to be uploaded as records. The data will be converted to CSV format before upload.",
+        "name": "rows"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Optional metadata for configuring how the uploaded data should be processed",
+        "name": "metadata"
+      }
+    ],
+    "examples": [
+      "<caption>Upload records</caption>\nuploadCsvRecords('enumerators_dataset', [\n  {\n    id: '4',\n    name: 'Trial update',\n    users: 'All users',\n  },\n  {\n    id: '5',\n    name: 'Trials',\n    users: 'All users here',\n  },\n]);",
+      "<caption>Upload records with metadata</caption>\nuploadCsvRecords(\n  'enumerators_dataset',\n  [\n    {\n      id: '4',\n      name: 'Trial update',\n      users: 'All users',\n    },\n    {\n      id: '5',\n      name: 'Trials',\n      users: 'All users here',\n    },\n  ],\n  {\n    uploadMode: 'MERGE',\n    joiningField: 'id',\n  }\n);"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Optional field name to use for merging records. Required when uploadMode is `MERGE`.",
+        "name": "joiningField"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Optional upload mode. One of `APPEND` (default), `MERGE` and `CLEAR`.",
+        "name": "uploadMode"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 314,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SurveyCTOState"
+      }
+    ],
+    "order": 8,
+    "level": 0
+  },
+  {
+    "id": "upsertDataset",
+    "longname": "upsertDataset",
+    "name": "upsertDataset",
+    "kind": "function",
+    "scope": "global",
+    "description": "Update (if exist) or create a dataset in SurveyCTO",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "The dataset object to create or update",
+        "name": "data"
+      }
+    ],
+    "examples": [
+      "<caption>Upsert a dataset</caption>\nupsertDataset({\n  id: 'enum_dataset',\n  title: 'Enum Dataset',\n  discriminator: 'ENUMERATORS',\n  locationContext: {\n    parentGroupId: 1,\n    siblingAbove: {\n      id: 'new_dataset',\n      itemClass: 'DATASET',\n    },\n  },\n  allowOfflineUpdates: false,\n  idFormatOptions: {\n    prefix: 'enum',\n    suffix: '',\n    numberOfDigits: '8',\n    allowCapitalLetters: true,\n  },\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 193,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SurveyCTOState"
+      }
+    ],
+    "order": 6,
+    "level": 0
+  },
+  {
+    "id": "upsertRecord",
+    "longname": "upsertRecord",
+    "name": "upsertRecord",
+    "kind": "function",
+    "scope": "global",
+    "description": "Update (if exist) or create a dataset record in SurveyCTO",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "ID of the dataset",
+        "name": "datasetId"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "The record object to create or update",
+        "name": "data"
+      }
+    ],
+    "examples": [
+      "<caption>Upsert a dataset record</caption>\nupsertRecord('enumerators_dataset', {\n  id: '2',\n  name: 'Trial update',\n  users: 'All users',\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 241,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/surveycto/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "SurveyCTOState"
+      }
+    ],
+    "order": 7,
     "level": 0
   },
   {
@@ -59721,7 +60252,7 @@
     "kind": "external-function"
   }
 ],
-{"name":"surveycto","adaptor":"@openfn/language-surveycto","version":"2.3.3","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#cursor\\\">cursor(value, options)</a></dt>\\n<dt>\\n    <a href=\\\"#fetchsubmissions\\\">fetchSubmissions(formId, options, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#jsontocsvbuffer\\\">jsonToCSVBuffer(rows)</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(path, params, callback)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#chunk\\\">chunk()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#parsecsv\\\">parseCsv()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### cursor\\n\\n<p><code>cursor(value, options) ⇒ Operation</code></p>\\n\\nSets `state.cursor` to a SurveyCTO timestamp string (`MMM dd, yyy h:mm:ss a`).\\nThis supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\\nwhich will be converted into timestamp strings.\\nSee the usage guide at [https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors](https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors)\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| value | <code>any</code> | the cursor value. Usually an ISO date, natural language date, or page number |\\n| options | <code>object</code> | options to control the cursor. |\\n| options.key | <code>string</code> | set the cursor key. Will persist through the whole run. |\\n| options.defaultValue | <code>any</code> | the value to use if value is falsy |\\n| options.format | <code>function</code> | custom formatter for the final cursor value |\\n\\n\\n**Example:** Use a cursor from state if present, or else use the default value\\n```js\\ncursor('today')\\nfetchSubmissions('test', { date: $.cursor });\\n```\\n\\n* * *\\n\\n### fetchSubmissions\\n\\n<p><code>fetchSubmissions(formId, options, callback) ⇒ Operation</code></p>\\n\\nFetch form submissions.\\n\\nIf a date filter is provided, it will be  converted internally to the surveyCTO `MMM dd, yyy h:mm:ss` format (in UTC time).\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| formId | <code>string</code> | Form id |\\n| options | [<code>FetchSubmissionOptions</code>](#fetchsubmissionoptions) | Form submission date, format, status parameters |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n\\n**Example:** Fetch all form submissions\\n```js\\nfetchSubmissions('test');\\n```\\n**Example:**  With SurveyCTO date format (UTC)\\n```js\\nfetchSubmissions('test', { date: 'Apr 18, 2024 6:26:21 AM' });\\n```\\n**Example:** Using a rolling cursor \\n```js\\ncursor((state) => state.cursor, { defaultValue: 'today' });\\nfetchSubmissions('test', { date: (state) => state.cursor, format: 'csv' });\\ncursor('now');\\n```\\n**Example:**  Formatting the results to CSV String\\n```js\\nfetchSubmissions('test', { format: 'csv' });\\n```\\n**Example:**  With reviewStatus filter\\n```js\\nfetchSubmissions('test', { status: 'approved|rejected' });\\n```\\n**Example:**  With a callback function\\n```js\\nfetchSubmissions(\\n  'test',\\n  {\\n    date: 'Apr 18, 2024 6:26:21 AM',\\n  },\\n  state => {\\n    console.log('Hello from the callback!');\\n    return state;\\n  }\\n);\\n```\\n\\n* * *\\n\\n### jsonToCSVBuffer\\n\\n<p><code>jsonToCSVBuffer(rows) ⇒ Operation</code></p>\\n\\nConverts an array of objects to a CSV buffer.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| rows | <code>\\\\*</code> | An array of JSON objects. |\\n\\n\\n**Example**\\n```js\\njsonToCSVBuffer([\\n {\\n    lastName: 'Rothfuss',\\n    firstName: 'Patrick',\\n    book: 'The Name of the Wind'\\n  },\\n {\\n    lastName: 'Martin',\\n    firstName: 'George',\\n    book: 'A Game of Thrones'\\n  },\\n])\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(path, params, callback) ⇒ Operation</code></p>\\n\\nMake a HTTP request to the SurveyCTO API\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| params | [<code>RequestOptions</code>](#requestoptions) | Query, body and method parameters |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n\\n**Example:** Post JSON data to SurveyCTO\\n```js\\nrequest(\\\"/anEndpoint\\\", {\\n  method: \\\"POST\\\",\\n   contentType: \\\"json\\\",\\n  body: { foo: \\\"bar\\\", a: 1 },\\n});\\n```\\n**Example:** Upload a CSV blob to a dataset\\n```js\\n  request('datasets/library/records/upload', {\\n    method: 'POST',\\n    contentType: 'form',\\n    body: {\\n      file: {\\n        blob: $.data,\\n        type: 'text/csv',\\n        filename: 'library.csv'\\n      }\\n    },\\n  });\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### FetchSubmissionOptions\\n\\nOptions provided to `fetchSubmissions()`\\n\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [date] | <code>string</code> | <code>0</code> | Fetch only submissions from this timestamp. Acccepts SuvreyCTO date strings, unix and epoch timestamps, and ISO dates. By default, all submissions will be retrieved. |\\n| [format] | <code>string</code> | <code>&quot;json&quot;</code> | Format the submission data type as  `csv` or `json`. |\\n| [status] | <code>string</code> |  | Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`. |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to request()\\n\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [headers] | <code>object</code> |  | An object of headers parameters. |\\n| [body] | <code>object</code> |  | Body data to append to the request. |\\n| [query] | <code>object</code> |  | An object of query parameters to be encoded into the URL. |\\n| [contentType] | <code>object</code> |  | Set the content-type header to the appropriate format. Supported values: `json` and `form` |\\n| [method] | <code>string</code> | <code>&quot;GET&quot;</code> | The HTTP method to use. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# Language SurveyCTO\\n\\nLanguage Pack for building expressions and operations to make HTTP calls to\\nSurveyCTO.\\n\\n## Documentation\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/surveycto-configuration-schema/)\\ndefinition.\\n\\n## fetchSubmissions\\n\\n`fetchSubmissions(1,2,3)` takes three arguments:\\n\\n1. the `formId` of the form on SurveyCTO\\n\\n2. the `initialAfterDate`, a date string or UNIX timestamp which instructs the\\n   job to only fetch submissions after a certain date. After the first run of\\n   the job, subsequent runs will only fetch _NEW_ submissions.\\n\\n3. the `postUrl` is where the wide-format JSON representation of each form\\n   submission should be sent. Note that a `formId` key will be added to each\\n   form submission for later filtering/routing.\\n\\n### sample `fetchSubmissions` expression\\n\\n```js\\nfetchSubmissions(\\n  // formId on SurveyCTO server\\n  'household_survey',\\n  // initialAfterDate: this will only be accessed if \\\"lastSubmissionDate\\\" is empty in your job_state\\\".\\n  // After the initial run of the job, OpenFn will only pull new submissions from SurveyCTO.\\n  'Aug 29, 2016 4:44:26 PM',\\n  // postUrl is where you want to send the JSON submissions, appended with a new \\\"formId\\\" key\\n  'https://www.openfn.org/inbox/secret-inbox-uuid'\\n);\\n```\\n\\n## Development\\n\\nClone the repo, run `npm install`.\\n\\nRun tests using `npm run test` or `npm run test:watch`\\n\\nBuild the project using `make`.\\n\"","changelog":"\"# @openfn/language-surveycto\\n\\n## 2.3.3 - 18 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[e2bc436]\\n  - @openfn/language-common@3.1.0\\n\\n## 2.3.2 - 01 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1d60531]\\n  - @openfn/language-common@3.0.3\\n\\n## 2.3.1 - 28 August 2025\\n\\n### Patch Changes\\n\\n- b7af59a: - Update `package.json` description to be LLM-readable\\n\\n## 2.3.0 - 14 August 2025\\n\\n### Minor Changes\\n\\n- af530fd: - Added `contentType` to `request()`\\n  - Added `jsonToCSVBuffer`\\n\\n## 2.2.7 - 14 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9b5a4f8]\\n  - @openfn/language-common@3.0.2\\n\\n## 2.2.6 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cf9c09f]\\n  - @openfn/language-common@3.0.1\\n\\n## 2.2.5 - 10 July 2025\\n\\n### Patch Changes\\n\\n- c4625fa: - Migrate from the deprecated `expandReferences` in `common` to the\\n  new `expandReferences` from common.util\\n  - Use `workspace:*` common version.\\n- Updated dependencies \\\\[ea85695]\\n- Updated dependencies \\\\[3fce58f]\\n- Updated dependencies \\\\[19f2d7e]\\n- Updated dependencies \\\\[f26bd2b]\\n- Updated dependencies \\\\[19f2d7e]\\n  - @openfn/language-common@3.0.0\\n\\n## 2.2.4 - 22 April 2025\\n\\n### Patch Changes\\n\\n- 99e4b48: - Better handling of HTML content in http requests\\n  - When logging HTTP requests, include query parameters\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 2.2.3 - 16 August 2024\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies \\\\[8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 2.2.2 - 06 August 2024\\n\\n### Patch Changes\\n\\n- d54ab59: Fix an issue assembling surveyCTO urls (which manifested as\\n  `TypeError: Cannot read properties of undefined (reading 'toString'`)\\n\\n## 2.2.1 - 01 August 2024\\n\\n### Patch Changes\\n\\n- f51c5d0: Enforce that absolute urls must not be passed to HTTP functions\\n- Updated dependencies \\\\[4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 2.2.0 - 13 June 2024\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 2.1.1 - 17 May 2024\\n\\n### Patch Changes\\n\\n- 6c588212: Fix `servername` typo in the `configuration-schema`\\n\\n## 2.1.0 - 08 May 2024\\n\\n### Minor Changes\\n\\n- b67f81be: Add a `cursor()` function which adds support for the surveyCTO\\n  string format dates.\\n\\n  The date option in `fetchSubmissions` can now accept a surveyCTO date, an\\n  epoch or unix timestamp, or basically anything you can pass into new Date().\\n\\n  Internally, any date you pass into `cursor` will be converted into a\\n  human-readable surveyCTO format in UTC time.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 2.0.0 - 23 April 2024\\n\\n### Major Changes\\n\\n- 59ae7b50: - Refactor `fetchSubmissions()` function\\n  - Update `instanceName` to `servername` in `configuration-schema.json`\\n  - Add `apiVersion` in `configuration-schema.json`. Defaults to `v1`\\n  - Add `request()` function for surveyCTO API requests\\n\\n## 1.2.1 - 19 June 2023\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 1.2.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 1.1.4 - 30 March 2023\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies \\\\[2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 1.1.3 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 1.1.2 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 1.1.1 - 13 January 2023\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*\\\\_ @module Adaptor \\\\_/\\n\\n## 1.1.0 - 18 November 2022\\n\\n### Minor Changes\\n\\n- 776bb13: migrate surveycto\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\"","functions":["cursor","fetchSubmissions","jsonToCSVBuffer","request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"servername":{"title":"Server Name","type":"string","description":"Your Surveycto server name also known as instance name","minLength":1,"examples":["openfn_test"]},"username":{"title":"Username","type":"string","description":"Your Surveycto server username","minLength":1,"examples":["someusername"]},"password":{"title":"Password","type":"string","description":"Your Surveycto server password","writeOnly":true,"minLength":1,"examples":["@some(%)!Password"]},"apiVersion":{"title":"API Version","type":"string","description":"The API version","default":"v1","examples":["v1","v2"]}},"type":"object","additionalProperties":true,"required":["servername","username","password"]}},
+{"name":"surveycto","adaptor":"@openfn/language-surveycto","version":"3.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#cursor\\\">cursor(value, options)</a></dt>\\n<dt>\\n    <a href=\\\"#fetchsubmissions\\\">fetchSubmissions(formId, options)</a></dt>\\n<dt>\\n    <a href=\\\"#jsontocsvbuffer\\\">jsonToCSVBuffer(rows)</a></dt>\\n<dt>\\n    <a href=\\\"#list\\\">list(resource, options)</a></dt>\\n<dt>\\n    <a href=\\\"#uploadcsvrecords\\\">uploadCsvRecords(datasetId, rows, metadata)</a></dt>\\n<dt>\\n    <a href=\\\"#upsertdataset\\\">upsertDataset(data)</a></dt>\\n<dt>\\n    <a href=\\\"#upsertrecord\\\">upsertRecord(datasetId, data)</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#http_delete\\\">http.delete(path, params)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_get\\\">http.get(path, params)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_post\\\">http.post(path, params)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_request\\\">http.request(path, params)</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#chunk\\\">chunk()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#parsecsv\\\">parseCsv()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### cursor\\n\\n<p><code>cursor(value, options) ⇒ Operation</code></p>\\n\\nSets `state.cursor` to a SurveyCTO timestamp string (`MMM dd, yyy h:mm:ss a`).\\nThis supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\\nwhich will be converted into timestamp strings.\\nSee the usage guide at [https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors](https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors)\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| value | <code>any</code> | the cursor value. Usually an ISO date, natural language date, or page number |\\n| options | <code>object</code> | options to control the cursor. |\\n| options.key | <code>string</code> | set the cursor key. Will persist through the whole run. |\\n| options.defaultValue | <code>any</code> | the value to use if value is falsy |\\n| options.format | <code>function</code> | custom formatter for the final cursor value |\\n\\n\\n**Example:** Use a cursor from state if present, or else use the default value\\n```js\\ncursor('today')\\nfetchSubmissions('test', { date: $.cursor });\\n```\\n\\n* * *\\n\\n### fetchSubmissions\\n\\n<p><code>fetchSubmissions(formId, options) ⇒ Operation</code></p>\\n\\nFetch form submissions.\\n\\nIf a date filter is provided, it will be  converted internally to the surveyCTO `MMM dd, yyy h:mm:ss` format (in UTC time).\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| formId | <code>string</code> | Form id |\\n| options | [<code>FetchSubmissionOptions</code>](#fetchsubmissionoptions) | Form submission date, format, status parameters |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the SurveyCTO server, including headers, statusCode etc |\\n| references | an array of all previous data objects used in the Job. |\\n\\n**Example:** Fetch all form submissions\\n```js\\nfetchSubmissions('test');\\n```\\n**Example:**  With SurveyCTO date format (UTC)\\n```js\\nfetchSubmissions('test', { date: 'Apr 18, 2024 6:26:21 AM' });\\n```\\n**Example:** Using a rolling cursor \\n```js\\ncursor((state) => state.cursor, { defaultValue: 'today' });\\nfetchSubmissions('test', { date: (state) => state.cursor, format: 'csv' });\\ncursor('now');\\n```\\n**Example:**  Formatting the results to CSV String\\n```js\\nfetchSubmissions('test', { format: 'csv' });\\n```\\n**Example:**  With reviewStatus filter\\n```js\\nfetchSubmissions('test', { status: 'approved|rejected' });\\n```\\n\\n* * *\\n\\n### jsonToCSVBuffer\\n\\n<p><code>jsonToCSVBuffer(rows) ⇒ Operation</code></p>\\n\\nConverts an array of objects to a CSV buffer.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| rows | <code>\\\\*</code> | An array of JSON objects. |\\n\\n\\n**Example**\\n```js\\njsonToCSVBuffer([\\n {\\n    lastName: 'Rothfuss',\\n    firstName: 'Patrick',\\n    book: 'The Name of the Wind'\\n  },\\n {\\n    lastName: 'Martin',\\n    firstName: 'George',\\n    book: 'A Game of Thrones'\\n  },\\n])\\n```\\n\\n* * *\\n\\n### list\\n\\n<p><code>list(resource, options) ⇒ Operation</code></p>\\n\\nList resources from SurveyCTO\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| resource | <code>string</code> | Resource to fetch |\\n| options | <code>object</code> | Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getdatasets-parameters) |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the server with `total` and `nextCursor` |\\n| references | an array of all previous data objects used in the Job. |\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| options.limit | <code>number</code> | Maximum number of items to return. Defaults to 20. Maximum is 1000. |\\n| options.cursor | <code>string</code> | Optional string to specify the starting point of the next page of results. |\\n\\n**Example:** List all dataset records\\n```js\\nlist(`datasets/${$.datasetId}/records`)\\n```\\n**Example:** List all datasets\\n```js\\nlist('datasets')\\n```\\n**Example:** List dataset records with pagination options\\n```js\\nlist(`datasets/${$.datasetId}/records`,{\\n  limit: 2,\\n});\\n```\\n**Example:** List datasets with pagination options\\n```js\\nlist('datasets',{\\n  limit: 2,\\n});\\n```\\n\\n* * *\\n\\n### uploadCsvRecords\\n\\n<p><code>uploadCsvRecords(datasetId, rows, metadata) ⇒ Operation</code></p>\\n\\nUpload CSV dataset records\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| datasetId | <code>string</code> | ID of the dataset |\\n| rows | <code>string</code> | An array of JSON objects to be uploaded as records. The data will be converted to CSV format before upload. |\\n| metadata | <code>object</code> | Optional metadata for configuring how the uploaded data should be processed |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the SurveyCTO server, including headers, statusCode etc |\\n| references | an array of all previous data objects used in the Job. |\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| joiningField | <code>string</code> | Optional field name to use for merging records. Required when uploadMode is `MERGE`. |\\n| uploadMode | <code>string</code> | Optional upload mode. One of `APPEND` (default), `MERGE` and `CLEAR`. |\\n\\n**Example:** Upload records\\n```js\\nuploadCsvRecords('enumerators_dataset', [\\n  {\\n    id: '4',\\n    name: 'Trial update',\\n    users: 'All users',\\n  },\\n  {\\n    id: '5',\\n    name: 'Trials',\\n    users: 'All users here',\\n  },\\n]);\\n```\\n**Example:** Upload records with metadata\\n```js\\nuploadCsvRecords(\\n  'enumerators_dataset',\\n  [\\n    {\\n      id: '4',\\n      name: 'Trial update',\\n      users: 'All users',\\n    },\\n    {\\n      id: '5',\\n      name: 'Trials',\\n      users: 'All users here',\\n    },\\n  ],\\n  {\\n    uploadMode: 'MERGE',\\n    joiningField: 'id',\\n  }\\n);\\n```\\n\\n* * *\\n\\n### upsertDataset\\n\\n<p><code>upsertDataset(data) ⇒ Operation</code></p>\\n\\nUpdate (if exist) or create a dataset in SurveyCTO\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | <code>object</code> | The dataset object to create or update |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the SurveyCTO server, including headers, statusCode etc |\\n| references | an array of all previous data objects used in the Job. |\\n\\n**Example:** Upsert a dataset\\n```js\\nupsertDataset({\\n  id: 'enum_dataset',\\n  title: 'Enum Dataset',\\n  discriminator: 'ENUMERATORS',\\n  locationContext: {\\n    parentGroupId: 1,\\n    siblingAbove: {\\n      id: 'new_dataset',\\n      itemClass: 'DATASET',\\n    },\\n  },\\n  allowOfflineUpdates: false,\\n  idFormatOptions: {\\n    prefix: 'enum',\\n    suffix: '',\\n    numberOfDigits: '8',\\n    allowCapitalLetters: true,\\n  },\\n});\\n```\\n\\n* * *\\n\\n### upsertRecord\\n\\n<p><code>upsertRecord(datasetId, data) ⇒ Operation</code></p>\\n\\nUpdate (if exist) or create a dataset record in SurveyCTO\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| datasetId | <code>string</code> | ID of the dataset |\\n| data | <code>object</code> | The record object to create or update |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the SurveyCTO server, including headers, statusCode etc |\\n| references | an array of all previous data objects used in the Job. |\\n\\n**Example:** Upsert a dataset record\\n```js\\nupsertRecord('enumerators_dataset', {\\n  id: '2',\\n  name: 'Trial update',\\n  users: 'All users',\\n});\\n```\\n\\n* * *\\n\\n\\n## http\\n\\nThese functions belong to the http namespace.\\n### http.delete {#http_delete}\\n\\n<p><code>delete(path, params) ⇒ Operation</code></p>\\n\\nDelete resources from SurveyCTO\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| params | [<code>RequestOptions</code>](#requestoptions) | Query and headers parameters |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the SurveyCTO server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Delete a dataset\\n```js\\nhttp.delete('/datasets/enumerators_dataset');\\n```\\n**Example:** Delete a dataset record\\n```js\\nhttp.delete('/datasets/enumerators_dataset/record', {\\n  query: {\\n    recordId: 2,\\n  },\\n});\\n```\\n\\n* * *\\n\\n\\n### http.get {#http_get}\\n\\n<p><code>get(path, params) ⇒ Operation</code></p>\\n\\nGet resources from SurveyCTO\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| params | [<code>RequestOptions</code>](#requestoptions) | Query and headers parameters |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the SurveyCTO server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Get a record with id\\n```js\\nhttp.get('/datasets/enumerators_dataset/record', {\\n  query: {\\n    recordId: '4',\\n  },\\n});\\n```\\n**Example:** Get a dataset with id\\n```js\\nhttp.get('/datasets/enumerators_dataset')\\n```\\n**Example:** Get a dataset in csv format\\n```js\\nhttp.get('/datasets/data/csv/enumerators_dataset', {\\n  query: {\\n    asAttachment: true,\\n  },\\n});\\n```\\n\\n* * *\\n\\n\\n### http.post {#http_post}\\n\\n<p><code>post(path, params) ⇒ Operation</code></p>\\n\\nSend a HTTP POST request to SurveyCTO\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| params | [<code>RequestOptions</code>](#requestoptions) | Query, body, and headers parameters |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the SurveyCTO server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Purge a dataset\\n```js\\nhttp.post('/datasets/enumeratorse_dataset/purge');\\n```\\n\\n* * *\\n\\n\\n### http.request {#http_request}\\n\\n<p><code>request(path, params) ⇒ Operation</code></p>\\n\\nMake a HTTP request to SurveyCTO\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| params | [<code>RequestOptions</code>](#requestoptions) | Query, body, headers and method parameters |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the SurveyCTO server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Post JSON data to SurveyCTO\\n```js\\nhttp.request(\\\"/anEndpoint\\\", {\\n  method: \\\"POST\\\",\\n   contentType: \\\"json\\\",\\n  body: $.data,\\n});\\n```\\n**Example:** Upload a CSV blob to a dataset\\n```js\\n  http.request('datasets/library/records/upload', {\\n    method: 'POST',\\n    contentType: 'form',\\n    body: {\\n      file: {\\n        blob: $.data,\\n        type: 'text/csv',\\n        filename: 'library.csv'\\n      }\\n    },\\n  });\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### FetchSubmissionOptions\\n\\nOptions provided to `fetchSubmissions()`\\n\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [date] | <code>string</code> | <code>0</code> | Fetch only submissions from this timestamp. Acccepts SuvreyCTO date strings, unix and epoch timestamps, and ISO dates. By default, all submissions will be retrieved. |\\n| [format] | <code>string</code> | <code>&quot;json&quot;</code> | Format the submission data type as  `csv` or `json`. |\\n| [status] | <code>string</code> |  | Review status. Can be either, `approved`, `rejected`, `pending` or combine eg `approved|rejected`. |\\n\\n\\n* * *\\n\\n### HTTPState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the SurveyCTO server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to request()\\n\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [headers] | <code>object</code> |  | An object of headers parameters. |\\n| [body] | <code>object</code> |  | Body data to append to the request. |\\n| [query] | <code>object</code> |  | An object of query parameters to be encoded into the URL. |\\n| [contentType] | <code>object</code> |  | Set the content-type header to the appropriate format. Supported values: `json` and `form` |\\n| [method] | <code>string</code> | <code>&quot;GET&quot;</code> | The HTTP method to use. |\\n\\n\\n* * *\\n\\n### SurveyCTOListState\\n\\nList State object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the server with `total` and `nextCursor` |\\n| references | an array of all previous data objects used in the Job. |\\n\\n\\n* * *\\n\\n### SurveyCTOState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the SurveyCTO server, including headers, statusCode etc |\\n| references | an array of all previous data objects used in the Job. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# Language SurveyCTO\\n\\nLanguage Pack for building expressions and operations to make HTTP calls to\\nSurveyCTO.\\n\\n## Documentation\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/surveycto-configuration-schema/)\\ndefinition.\\n\\n## fetchSubmissions\\n\\n`fetchSubmissions(1,2,3)` takes three arguments:\\n\\n1. the `formId` of the form on SurveyCTO\\n\\n2. the `initialAfterDate`, a date string or UNIX timestamp which instructs the\\n   job to only fetch submissions after a certain date. After the first run of\\n   the job, subsequent runs will only fetch _NEW_ submissions.\\n\\n3. the `postUrl` is where the wide-format JSON representation of each form\\n   submission should be sent. Note that a `formId` key will be added to each\\n   form submission for later filtering/routing.\\n\\n### sample `fetchSubmissions` expression\\n\\n```js\\nfetchSubmissions(\\n  // formId on SurveyCTO server\\n  'household_survey',\\n  // initialAfterDate: this will only be accessed if \\\"lastSubmissionDate\\\" is empty in your job_state\\\".\\n  // After the initial run of the job, OpenFn will only pull new submissions from SurveyCTO.\\n  'Aug 29, 2016 4:44:26 PM',\\n  // postUrl is where you want to send the JSON submissions, appended with a new \\\"formId\\\" key\\n  'https://www.openfn.org/inbox/secret-inbox-uuid'\\n);\\n```\\n\\n## Development\\n\\nClone the repo, run `npm install`.\\n\\nRun tests using `npm run test` or `npm run test:watch`\\n\\nBuild the project using `make`.\\n\"","changelog":"\"# @openfn/language-surveycto\\n\\n## 3.0.0\\n\\n### Major Changes\\n\\n- a4eafda: - Add new helper functions: - `list()` to list datasets and dataset\\n  records . - `http` namespace with `delete()`, `post()`, `get()`, and\\n  `request()`. - `upsertRecord()` and `upsertDataset()` to create or update a\\n  record or a dataset. - `uploadCsvRecords()` to upload records to a dataset in\\n  `csv` format\\n\\n  - Remove support for `callback` function options in the helper functions.\\n\\n  #### Migration Guide\\n\\n  - Before:\\n\\n  ```\\n\\n  fetchSubmissions('my-form', state => {\\n     state.results = state.data;\\n     return state\\n  })\\n\\n  ```\\n\\n  - Now:\\n\\n  ```\\n\\n  fetchSubmissions('my-form').then(state => {\\n   state.results = state.data;\\n   return state\\n  })\\n\\n  ```\\n\\n## 2.3.3 - 18 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[e2bc436]\\n  - @openfn/language-common@3.1.0\\n\\n## 2.3.2 - 01 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1d60531]\\n  - @openfn/language-common@3.0.3\\n\\n## 2.3.1 - 28 August 2025\\n\\n### Patch Changes\\n\\n- b7af59a: - Update `package.json` description to be LLM-readable\\n\\n## 2.3.0 - 14 August 2025\\n\\n### Minor Changes\\n\\n- af530fd: - Added `contentType` to `request()`\\n  - Added `jsonToCSVBuffer`\\n\\n## 2.2.7 - 14 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9b5a4f8]\\n  - @openfn/language-common@3.0.2\\n\\n## 2.2.6 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cf9c09f]\\n  - @openfn/language-common@3.0.1\\n\\n## 2.2.5 - 10 July 2025\\n\\n### Patch Changes\\n\\n- c4625fa: - Migrate from the deprecated `expandReferences` in `common` to the\\n  new `expandReferences` from common.util\\n  - Use `workspace:*` common version.\\n- Updated dependencies \\\\[ea85695]\\n- Updated dependencies \\\\[3fce58f]\\n- Updated dependencies \\\\[19f2d7e]\\n- Updated dependencies \\\\[f26bd2b]\\n- Updated dependencies \\\\[19f2d7e]\\n  - @openfn/language-common@3.0.0\\n\\n## 2.2.4 - 22 April 2025\\n\\n### Patch Changes\\n\\n- 99e4b48: - Better handling of HTML content in http requests\\n  - When logging HTTP requests, include query parameters\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 2.2.3 - 16 August 2024\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies \\\\[8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 2.2.2 - 06 August 2024\\n\\n### Patch Changes\\n\\n- d54ab59: Fix an issue assembling surveyCTO urls (which manifested as\\n  `TypeError: Cannot read properties of undefined (reading 'toString'`)\\n\\n## 2.2.1 - 01 August 2024\\n\\n### Patch Changes\\n\\n- f51c5d0: Enforce that absolute urls must not be passed to HTTP functions\\n- Updated dependencies \\\\[4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 2.2.0 - 13 June 2024\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 2.1.1 - 17 May 2024\\n\\n### Patch Changes\\n\\n- 6c588212: Fix `servername` typo in the `configuration-schema`\\n\\n## 2.1.0 - 08 May 2024\\n\\n### Minor Changes\\n\\n- b67f81be: Add a `cursor()` function which adds support for the surveyCTO\\n  string format dates.\\n\\n  The date option in `fetchSubmissions` can now accept a surveyCTO date, an\\n  epoch or unix timestamp, or basically anything you can pass into new Date().\\n\\n  Internally, any date you pass into `cursor` will be converted into a\\n  human-readable surveyCTO format in UTC time.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[88f99a8f]\\n  - @openfn/language-common@1.13.3\\n\\n## 2.0.0 - 23 April 2024\\n\\n### Major Changes\\n\\n- 59ae7b50: - Refactor `fetchSubmissions()` function\\n  - Update `instanceName` to `servername` in `configuration-schema.json`\\n  - Add `apiVersion` in `configuration-schema.json`. Defaults to `v1`\\n  - Add `request()` function for surveyCTO API requests\\n\\n## 1.2.1 - 19 June 2023\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 1.2.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 1.1.4 - 30 March 2023\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies \\\\[2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 1.1.3 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 1.1.2 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 1.1.1 - 13 January 2023\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*\\\\_ @module Adaptor \\\\_/\\n\\n## 1.1.0 - 18 November 2022\\n\\n### Minor Changes\\n\\n- 776bb13: migrate surveycto\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\"","functions":["cursor","fetchSubmissions","jsonToCSVBuffer","list","uploadCsvRecords","upsertDataset","upsertRecord"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"servername":{"title":"Server Name","type":"string","description":"Your Surveycto server name also known as instance name","minLength":1,"examples":["openfn_test"]},"username":{"title":"Username","type":"string","description":"Your Surveycto server username","minLength":1,"examples":["someusername"]},"password":{"title":"Password","type":"string","description":"Your Surveycto server password","writeOnly":true,"minLength":1,"examples":["@some(%)!Password"]},"apiVersion":{"title":"API Version","type":"string","description":"The API version","default":"v1","examples":["v1","v2"]}},"type":"object","additionalProperties":true,"required":["servername","username","password"]}},
 [
   {
     "id": "alterState",

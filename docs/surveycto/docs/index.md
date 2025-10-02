@@ -2,11 +2,37 @@
 <dt>
     <a href="#cursor">cursor(value, options)</a></dt>
 <dt>
-    <a href="#fetchsubmissions">fetchSubmissions(formId, options, callback)</a></dt>
+    <a href="#fetchsubmissions">fetchSubmissions(formId, options)</a></dt>
 <dt>
     <a href="#jsontocsvbuffer">jsonToCSVBuffer(rows)</a></dt>
 <dt>
-    <a href="#request">request(path, params, callback)</a></dt>
+    <a href="#list">list(resource, options)</a></dt>
+<dt>
+    <a href="#uploadcsvrecords">uploadCsvRecords(datasetId, rows, metadata)</a></dt>
+<dt>
+    <a href="#upsertdataset">upsertDataset(data)</a></dt>
+<dt>
+    <a href="#upsertrecord">upsertRecord(datasetId, data)</a></dt>
+</dl>
+
+This adaptor exports the following namespaced functions:
+
+<dl>
+<dt>
+    <a href="#http_delete">http.delete(path, params)</a>
+</dt>
+
+<dt>
+    <a href="#http_get">http.get(path, params)</a>
+</dt>
+
+<dt>
+    <a href="#http_post">http.post(path, params)</a>
+</dt>
+
+<dt>
+    <a href="#http_request">http.request(path, params)</a>
+</dt>
 </dl>
 
 
@@ -82,7 +108,7 @@ fetchSubmissions('test', { date: $.cursor });
 
 ### fetchSubmissions
 
-<p><code>fetchSubmissions(formId, options, callback) ⇒ Operation</code></p>
+<p><code>fetchSubmissions(formId, options) ⇒ Operation</code></p>
 
 Fetch form submissions.
 
@@ -93,8 +119,14 @@ If a date filter is provided, it will be  converted internally to the surveyCTO 
 | --- | --- | --- |
 | formId | <code>string</code> | Form id |
 | options | [<code>FetchSubmissionOptions</code>](#fetchsubmissionoptions) | Form submission date, format, status parameters |
-| callback | <code>function</code> | (Optional) Callback function |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the SurveyCTO server, including headers, statusCode etc |
+| references | an array of all previous data objects used in the Job. |
 
 **Example:** Fetch all form submissions
 ```js
@@ -117,19 +149,6 @@ fetchSubmissions('test', { format: 'csv' });
 **Example:**  With reviewStatus filter
 ```js
 fetchSubmissions('test', { status: 'approved|rejected' });
-```
-**Example:**  With a callback function
-```js
-fetchSubmissions(
-  'test',
-  {
-    date: 'Apr 18, 2024 6:26:21 AM',
-  },
-  state => {
-    console.log('Hello from the callback!');
-    return state;
-  }
-);
 ```
 
 * * *
@@ -164,31 +183,342 @@ jsonToCSVBuffer([
 
 * * *
 
-### request
+### list
 
-<p><code>request(path, params, callback) ⇒ Operation</code></p>
+<p><code>list(resource, options) ⇒ Operation</code></p>
 
-Make a HTTP request to the SurveyCTO API
+List resources from SurveyCTO
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resource | <code>string</code> | Resource to fetch |
+| options | <code>object</code> | Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getdatasets-parameters) |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the server with `total` and `nextCursor` |
+| references | an array of all previous data objects used in the Job. |
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| options.limit | <code>number</code> | Maximum number of items to return. Defaults to 20. Maximum is 1000. |
+| options.cursor | <code>string</code> | Optional string to specify the starting point of the next page of results. |
+
+**Example:** List all dataset records
+```js
+list(`datasets/${$.datasetId}/records`)
+```
+**Example:** List all datasets
+```js
+list('datasets')
+```
+**Example:** List dataset records with pagination options
+```js
+list(`datasets/${$.datasetId}/records`,{
+  limit: 2,
+});
+```
+**Example:** List datasets with pagination options
+```js
+list('datasets',{
+  limit: 2,
+});
+```
+
+* * *
+
+### uploadCsvRecords
+
+<p><code>uploadCsvRecords(datasetId, rows, metadata) ⇒ Operation</code></p>
+
+Upload CSV dataset records
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| datasetId | <code>string</code> | ID of the dataset |
+| rows | <code>string</code> | An array of JSON objects to be uploaded as records. The data will be converted to CSV format before upload. |
+| metadata | <code>object</code> | Optional metadata for configuring how the uploaded data should be processed |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the SurveyCTO server, including headers, statusCode etc |
+| references | an array of all previous data objects used in the Job. |
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| joiningField | <code>string</code> | Optional field name to use for merging records. Required when uploadMode is `MERGE`. |
+| uploadMode | <code>string</code> | Optional upload mode. One of `APPEND` (default), `MERGE` and `CLEAR`. |
+
+**Example:** Upload records
+```js
+uploadCsvRecords('enumerators_dataset', [
+  {
+    id: '4',
+    name: 'Trial update',
+    users: 'All users',
+  },
+  {
+    id: '5',
+    name: 'Trials',
+    users: 'All users here',
+  },
+]);
+```
+**Example:** Upload records with metadata
+```js
+uploadCsvRecords(
+  'enumerators_dataset',
+  [
+    {
+      id: '4',
+      name: 'Trial update',
+      users: 'All users',
+    },
+    {
+      id: '5',
+      name: 'Trials',
+      users: 'All users here',
+    },
+  ],
+  {
+    uploadMode: 'MERGE',
+    joiningField: 'id',
+  }
+);
+```
+
+* * *
+
+### upsertDataset
+
+<p><code>upsertDataset(data) ⇒ Operation</code></p>
+
+Update (if exist) or create a dataset in SurveyCTO
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>object</code> | The dataset object to create or update |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the SurveyCTO server, including headers, statusCode etc |
+| references | an array of all previous data objects used in the Job. |
+
+**Example:** Upsert a dataset
+```js
+upsertDataset({
+  id: 'enum_dataset',
+  title: 'Enum Dataset',
+  discriminator: 'ENUMERATORS',
+  locationContext: {
+    parentGroupId: 1,
+    siblingAbove: {
+      id: 'new_dataset',
+      itemClass: 'DATASET',
+    },
+  },
+  allowOfflineUpdates: false,
+  idFormatOptions: {
+    prefix: 'enum',
+    suffix: '',
+    numberOfDigits: '8',
+    allowCapitalLetters: true,
+  },
+});
+```
+
+* * *
+
+### upsertRecord
+
+<p><code>upsertRecord(datasetId, data) ⇒ Operation</code></p>
+
+Update (if exist) or create a dataset record in SurveyCTO
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| datasetId | <code>string</code> | ID of the dataset |
+| data | <code>object</code> | The record object to create or update |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the SurveyCTO server, including headers, statusCode etc |
+| references | an array of all previous data objects used in the Job. |
+
+**Example:** Upsert a dataset record
+```js
+upsertRecord('enumerators_dataset', {
+  id: '2',
+  name: 'Trial update',
+  users: 'All users',
+});
+```
+
+* * *
+
+
+## http
+
+These functions belong to the http namespace.
+### http.delete {#http_delete}
+
+<p><code>delete(path, params) ⇒ Operation</code></p>
+
+Delete resources from SurveyCTO
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| params | [<code>RequestOptions</code>](#requestoptions) | Query, body and method parameters |
-| callback | <code>function</code> | (Optional) Callback function |
+| params | [<code>RequestOptions</code>](#requestoptions) | Query and headers parameters |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the SurveyCTO server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Delete a dataset
+```js
+http.delete('/datasets/enumerators_dataset');
+```
+**Example:** Delete a dataset record
+```js
+http.delete('/datasets/enumerators_dataset/record', {
+  query: {
+    recordId: 2,
+  },
+});
+```
+
+* * *
+
+
+### http.get {#http_get}
+
+<p><code>get(path, params) ⇒ Operation</code></p>
+
+Get resources from SurveyCTO
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource |
+| params | [<code>RequestOptions</code>](#requestoptions) | Query and headers parameters |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the SurveyCTO server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Get a record with id
+```js
+http.get('/datasets/enumerators_dataset/record', {
+  query: {
+    recordId: '4',
+  },
+});
+```
+**Example:** Get a dataset with id
+```js
+http.get('/datasets/enumerators_dataset')
+```
+**Example:** Get a dataset in csv format
+```js
+http.get('/datasets/data/csv/enumerators_dataset', {
+  query: {
+    asAttachment: true,
+  },
+});
+```
+
+* * *
+
+
+### http.post {#http_post}
+
+<p><code>post(path, params) ⇒ Operation</code></p>
+
+Send a HTTP POST request to SurveyCTO
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource |
+| params | [<code>RequestOptions</code>](#requestoptions) | Query, body, and headers parameters |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the SurveyCTO server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Purge a dataset
+```js
+http.post('/datasets/enumeratorse_dataset/purge');
+```
+
+* * *
+
+
+### http.request {#http_request}
+
+<p><code>request(path, params) ⇒ Operation</code></p>
+
+Make a HTTP request to SurveyCTO
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource |
+| params | [<code>RequestOptions</code>](#requestoptions) | Query, body, headers and method parameters |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the SurveyCTO server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
 
 **Example:** Post JSON data to SurveyCTO
 ```js
-request("/anEndpoint", {
+http.request("/anEndpoint", {
   method: "POST",
    contentType: "json",
-  body: { foo: "bar", a: 1 },
+  body: $.data,
 });
 ```
 **Example:** Upload a CSV blob to a dataset
 ```js
-  request('datasets/library/records/upload', {
+  http.request('datasets/library/records/upload', {
     method: 'POST',
     contentType: 'form',
     body: {
@@ -222,6 +552,22 @@ Options provided to `fetchSubmissions()`
 
 * * *
 
+### HTTPState
+
+State object
+
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the SurveyCTO server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+
+* * *
+
 ### RequestOptions
 
 Options provided to request()
@@ -236,6 +582,38 @@ Options provided to request()
 | [query] | <code>object</code> |  | An object of query parameters to be encoded into the URL. |
 | [contentType] | <code>object</code> |  | Set the content-type header to the appropriate format. Supported values: `json` and `form` |
 | [method] | <code>string</code> | <code>&quot;GET&quot;</code> | The HTTP method to use. |
+
+
+* * *
+
+### SurveyCTOListState
+
+List State object
+
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the server with `total` and `nextCursor` |
+| references | an array of all previous data objects used in the Job. |
+
+
+* * *
+
+### SurveyCTOState
+
+State object
+
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the SurveyCTO server, including headers, statusCode etc |
+| references | an array of all previous data objects used in the Job. |
 
 
 * * *
