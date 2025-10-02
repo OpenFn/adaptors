@@ -21,7 +21,7 @@ export const prepareNextState = (state, response) => {
 
 export const requestWithPagination = async (
   state,
-  { resolvedPath, resolvedBody, resolvedoptions = {} },
+  { resolvedPath, resolvedBody = {}, resolvedoptions = {} },
   method = 'POST'
 ) => {
   const results = [];
@@ -41,7 +41,6 @@ export const requestWithPagination = async (
 
   const maxToFetch = userProvidedPageSize ? pageSize : defaultLimit;
 
-
   let totalFetched = 0;
   let nextPage = pageNumber;
 
@@ -59,7 +58,7 @@ export const requestWithPagination = async (
     });
 
     const model = response?.body?.model;
-    if (!Array.isArray(model)) {      
+    if (!Array.isArray(model)) {
       const payload = typeof model !== 'undefined' ? model : response?.body;
       return payload;
     }
@@ -69,10 +68,10 @@ export const requestWithPagination = async (
     results.push(...data);
     const fetchedCount = data.length;
     totalFetched += fetchedCount;
-    
+
     nextPage += 1;
 
-     if (fetchedCount < fetchSize || data.length === 0) {
+    if (fetchedCount < fetchSize || data.length === 0) {
       break; // No more data to fetch
     }
   }

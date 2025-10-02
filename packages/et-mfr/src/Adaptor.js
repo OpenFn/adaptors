@@ -78,20 +78,12 @@ export function post(path, body, options) {
       options
     );
 
-    // // make calls with pagination if showPerPage is set
-    // const hasShowPerPage = Object.prototype.hasOwnProperty.call(
-    //   resolvedBody,
-    //   'showPerPage'
-    // );
-
-  
-
-      const results = await util.requestWithPagination(state, {
-        resolvedPath,
-        resolvedBody,
-        resolvedoptions,
-      });
-      return util.prepareNextState(state, { body: results, response: {} });
+    const results = await util.requestWithPagination(state, {
+      resolvedPath,
+      resolvedBody,
+      resolvedoptions,
+    });
+    return util.prepareNextState(state, { body: results, response: {} });
   };
 }
 

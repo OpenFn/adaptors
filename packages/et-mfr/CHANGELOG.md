@@ -2,4 +2,4 @@
 
 ## 1.0.0
 
-Initial release.
+- Implemented `get()`, `post()`, and `request()` functions that support getting and creating resources in `et-mfr`

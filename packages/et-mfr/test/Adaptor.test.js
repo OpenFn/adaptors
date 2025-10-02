@@ -50,16 +50,13 @@ describe('request', () => {
       })
       .reply(200, [{ name: 'Item 1', id: 1 }]);
 
-    const finalState = await request(
-      'POST',
-      'Facility/GetFacilities',
-      { name: 'Item 1' },
-    )(state);
+    const finalState = await request('POST', 'Facility/GetFacilities', {
+      name: 'Item 1',
+    })(state);
 
-   expect(finalState.data).to.eql([{ name: 'Item 1', id: 1 }]);
-   expect(finalState.data).to.be.an('array');
+    expect(finalState.data).to.eql([{ name: 'Item 1', id: 1 }]);
+    expect(finalState.data).to.be.an('array');
   });
-
 });
 
 describe('get', () => {
@@ -250,5 +247,112 @@ describe('requestWithPagination', () => {
 
     expect(results).to.eql(items);
     expect(results).to.have.length(200);
+  });
+});
+
+describe('post', () => {
+  const items = [...Array(200)].map((_item, index) => ({
+    id: index + 1,
+    name: `Item ${index + 1}`,
+  }));
+  it('should respect showPerPage when set', async () => {
+    testServer
+      .intercept({
+        path: '/api/Facility/GetFacilities',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, items.slice(0, 2));
+
+    const results = await post('Facility/GetFacilities', { showPerPage: 2 })(
+      state
+    );
+
+    expect(results.data).to.eql(items.slice(0, 2));
+    expect(results.data).to.have.length(2);
+  });
+  it('makes a post request to the right endpoint with options', async () => {
+    testServer
+      .intercept({
+        path: '/api/Facility/ExportCSV',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+
+      .reply(200, 'name,id\nItem 1,1');
+
+    const finalState = await post(
+      'Facility/ExportCSV',
+      { name: 'Item 1' },
+      { parseAs: 'text' }
+    )(state);
+
+    expect(finalState.data).to.eql('name,id\nItem 1,1');
+    expect(finalState.data).to.be.a('string');
+  });
+
+  it('should paginate if showPerPage and is not set', async () => {
+    //first call
+    testServer
+      .intercept({
+        path: '/api/Facility/GetFacilities',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, {
+        model: items.slice(0, 100),
+      });
+    //second call
+    testServer
+      .intercept({
+        path: '/api/Facility/GetFacilities',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, {
+        model: items.slice(100, 200),
+      });
+
+    const finalState = await post(
+      'Facility/GetFacilities',
+      {},
+      {
+        defaultPageSize: 100,
+        defaultLimit: 200,
+      }
+    )(state);
+
+    expect(finalState.data).to.eql(items);
+    expect(finalState.data).to.have.length(200);
+  });
+
+  it('should not paginate when other data is passed with showPerPage or perNumber', async () => {
+    testServer
+      .intercept({
+        path: '/api/Facility/GetFacilities',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, items.slice(0, 1));
+
+    const finalState = await post('Facility/GetFacilities', {
+      name: 'Item 1',
+      showPerPage: 2,
+      pageNumber: 1,
+    })(state);
+
+    expect(finalState.data).to.eql(items.slice(0, 1));
+    expect(finalState.data).to.have.length(1);
+    expect(finalState.data[0]).to.have.property('name', 'Item 1');
   });
 });
