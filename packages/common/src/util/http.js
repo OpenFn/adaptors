@@ -1,10 +1,12 @@
-import { MockAgent, Agent, interceptors } from 'undici';
+// import { MockAgent, Agent, interceptors } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
 import path from 'node:path';
 import throwError from './throw-error.js';
 import { encode } from './base64.js';
+import pkg from 'undici';
+const { MockAgent, Agent, interceptors } = pkg;
 
 const agents = new Map();
 
@@ -36,7 +38,9 @@ export const logResponse = response => {
 };
 
 const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
-  if (!agents.has(origin)) {
+  const key = `${origin}|${Object.values(agentOpts).sort().join('.')}`;
+
+  if (!agents.has(key)) {
     const agent = new Agent({
       connect: tls,
       ...agentOpts,
@@ -46,19 +50,23 @@ const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
       })
     );
 
-    agents.set(origin, agent);
+    agents.set(key, agent);
   }
 
-  return agents.get(origin);
+  return agents.get(key);
 };
 
 export const enableMockClient = (baseUrl, options = {}) => {
-  const { defaultContentType = 'application/json' } = options;
+  const {
+    defaultContentType = 'application/json',
+    ...agentOpts
+  } = options;
+  const key = `${baseUrl}|${Object.values(agentOpts).sort().join('.')}`;
 
   const mockAgent = new MockAgent({ connections: 1 });
   mockAgent.disableNetConnect();
   const client = mockAgent.get(baseUrl);
-  if (!agents.has(baseUrl)) {
+  if (!agents.has(key)) {
     if (defaultContentType) {
       const _intercept = client.intercept;
       // because so many unit test use mock json,
@@ -103,7 +111,7 @@ export const enableMockClient = (baseUrl, options = {}) => {
       };
     }
 
-    agents.set(baseUrl, client);
+    agents.set(key, client);
   }
   return client;
 };
