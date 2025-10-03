@@ -6,6 +6,7 @@ import path from 'node:path';
 import throwError from './throw-error.js';
 import { encode } from './base64.js';
 import pkg from 'undici';
+import { keyword$DataError } from 'ajv/dist/compile/errors.js';
 const { MockAgent, Agent, interceptors } = pkg;
 
 const agents = new Map();
@@ -37,10 +38,16 @@ export const logResponse = response => {
   return response;
 };
 
-const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
-  const key = `${origin}|${Object.values(agentOpts).sort().join('.')}`;
+const generateDomainKey = (baseUrl, agentOpts) => {
+  const key = `${baseUrl}|${Object.values(agentOpts).sort().join('.')}`;
+  return key;
+};
 
-  if (!agents.has(key)) {
+const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
+  const key = generateDomainKey(origin, agentOpts);
+  const legacyKey = origin;
+
+  if (!agents.has(legacyKey) && !agents.has(key)) {
     const agent = new Agent({
       connect: tls,
       ...agentOpts,
@@ -50,18 +57,21 @@ const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
       })
     );
 
+    agents.set(legacyKey, agent);
     agents.set(key, agent);
   }
 
-  return agents.get(key);
+  return agents.get(key) || agents.get(legacyKey);
 };
 
 export const enableMockClient = (baseUrl, options = {}) => {
   const {
     defaultContentType = 'application/json',
+    tls = {},
     ...agentOpts
   } = options;
-  const key = `${baseUrl}|${Object.values(agentOpts).sort().join('.')}`;
+
+  const key = generateDomainKey(baseUrl, agentOpts);
 
   const mockAgent = new MockAgent({ connections: 1 });
   mockAgent.disableNetConnect();
@@ -112,6 +122,7 @@ export const enableMockClient = (baseUrl, options = {}) => {
     }
 
     agents.set(key, client);
+    agents.set(baseUrl, client);
   }
   return client;
 };
