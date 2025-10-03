@@ -5,6 +5,7 @@ import {
   logResponse,
   assertRelativeUrl,
 } from '@openfn/language-common/util';
+import { buffer } from 'node:stream/consumers';
 
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
@@ -140,8 +141,6 @@ export async function requestWithPagination(state, method, path, params = {}) {
       requestTimes.push(Date.now());
       response = await request(state, method, path, requestOptions);
     } catch (error) {
-      // console.log('Error:', error);
-      console.log('Error:', error.body);
       if (
         error.body?.description === 'API rate limit exceeded' &&
         error.body?.code === 403

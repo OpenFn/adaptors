@@ -11,8 +11,6 @@ const state = {
   },
 };
 
-const reqTimestamps = length => Array.from({ length }, (_, i) => Date.now());
-
 describe('handleRateLimit', () => {
   let originalConsoleLog;
   let consoleLogCalls;
@@ -28,7 +26,7 @@ describe('handleRateLimit', () => {
   });
 
   const requestConfig = {
-    throttleTime: 10000, // 10s
+    throttleTime: 1000, // 1s
     maxRequests: 5,
   };
 
@@ -43,16 +41,16 @@ describe('handleRateLimit', () => {
     await handleRateLimit([], config);
 
     const duration = Date.now() - startTime;
-    expect(duration).to.be.at.least(1900); // allowing small margin of error
-    expect(consoleLogCalls[0]).to.equal('Rate limit exceeded, waiting 2s');
+    expect(duration).to.be.at.least(1000); // allowing small margin of error
+    expect(consoleLogCalls[0]).to.equal('Rate limit exceeded, waiting 1s');
   }).timeout(1e4);
 
   it('should remove expired requests', () => {
     const now = Date.now();
     const requestTimes = [
-      now - 11000, // expired
-      now - 5000, // valid
-      now - 3000, // valid
+      now - 1100, // expired
+      now - 500, // valid
+      now - 300, // valid
     ];
 
     handleRateLimit(requestTimes, requestConfig);
@@ -63,43 +61,43 @@ describe('handleRateLimit', () => {
   it('should delay when max requests reached', async () => {
     const now = Date.now();
     const requestTimes = [
-      now - 5000,
-      now - 4000,
-      now - 3000,
-      now - 2000,
-      now - 1000,
+      now - 500,
+      now - 400,
+      now - 300,
+      now - 200,
+      now - 100,
     ];
 
     const startTime = Date.now();
     await handleRateLimit(requestTimes, requestConfig);
     const duration = Date.now() - startTime;
 
-    expect(duration).to.be.at.least(6900); // allowing small margin of error
+    expect(duration).to.be.at.least(690); // allowing small margin of error
     expect(consoleLogCalls[0]).to.match(/Rate limiting: waiting \d+\.*\d*s/);
   }).timeout(1e4);
 
   it('should add minimum delay between requests', async () => {
     const now = Date.now();
-    const requestTimes = [now - 5000];
+    const requestTimes = [now - 500];
 
     const startTime = Date.now();
     await handleRateLimit(requestTimes, requestConfig);
     const duration = Date.now() - startTime;
 
-    expect(duration).to.be.at.least(1900); // allowing small margin of error
-    expect(consoleLogCalls[0]).to.equal('Waiting 2s between requests');
+    expect(duration).to.be.at.least(190); // allowing small margin of error
+    expect(consoleLogCalls[0]).to.equal('Waiting 0.2s before next request');
   }).timeout(1e4);
 
   it('should log appropriate messages', async () => {
     // Test rate limit exceeded
     await handleRateLimit([], { ...requestConfig, hasReachedLimit: true });
-    expect(consoleLogCalls[0]).to.equal('Rate limit exceeded, waiting 2s');
+    expect(consoleLogCalls[0]).to.equal('Rate limit exceeded, waiting 1s');
 
     const now = Date.now();
 
     // Test normal delay between requests
     await handleRateLimit([now - 1000], requestConfig);
-    expect(consoleLogCalls[1]).to.equal('Waiting 2s between requests');
+    expect(consoleLogCalls[1]).to.equal('Waiting 0.2s before next request');
 
     // Test max requests reached
     const fullRequestTimes = Array(5)
