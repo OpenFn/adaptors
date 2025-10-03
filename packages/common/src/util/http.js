@@ -45,9 +45,8 @@ const generateDomainKey = (baseUrl, agentOpts) => {
 
 const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
   const key = generateDomainKey(origin, agentOpts);
-  const legacyKey = origin;
 
-  if (!agents.has(legacyKey) && !agents.has(key)) {
+  if (!agents.has(origin) && !agents.has(key)) {
     const agent = new Agent({
       connect: tls,
       ...agentOpts,
@@ -57,11 +56,11 @@ const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
       })
     );
 
-    agents.set(legacyKey, agent);
+    agents.set(origin, agent);
     agents.set(key, agent);
   }
 
-  return agents.get(key) || agents.get(legacyKey);
+  return agents.get(key) || agents.get(origin);
 };
 
 export const enableMockClient = (baseUrl, options = {}) => {
