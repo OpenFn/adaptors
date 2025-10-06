@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { expect } from 'chai';
 import { requestWithPagination, handleRateLimit } from '../src/util';
 import { mockEntriesResponse, mockRateLimitExceeded } from './helpers';

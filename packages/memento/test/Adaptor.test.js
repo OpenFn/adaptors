@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
-import { mockEntries, mockEntriesPagination } from './helpers';
+import { mockEntries } from './helpers';
 import {
   listLibraries,
   listEntries,
@@ -45,46 +45,33 @@ describe('Adaptor', () => {
     });
   });
   describe('listEntries', () => {
-    it.only('should fetch all entries', async () => {
+    it('should handle concurrent requests when hitting rate limits', async () => {
       const totalRecords = 11;
       const pageSize = 10;
 
-      let requestCounter = 0;
-      let rateLimitCounter = 0;
-      const maxRequestsPerWindow = 10;
-      const throttleTime = 1e3; // 1 second for testing
+      let requestCount = 0;
+      let totalRequests = 0;
+      let rateLimitCount = 0;
+      let successfulRequests = 0;
+      const maxRequests = 10;
+      const throttleTime = 2e3; // 1 second for testing
 
-      // Track requests in batches to simulate rate limiting
-      const requestBatches = [];
-      let currentBatch = 0;
+      let lastThrottleTime = null;
 
-      // Set up interceptor that simulates rate limiting
       testServer
         .intercept({
-          path: /\/v1\/libraries\/HyZV7AYk0\/entries/,
+          path: /\/v1\/libraries\/HyZV7AYk2\/entries/,
           method: 'GET',
         })
         .reply(req => {
-          requestCounter++;
-          const pageToken = parseInt(req.query.pageToken, 10) || 0;
+          totalRequests++;
+          requestCount++;
+          const currentTime = Date.now();
 
-          // Determine which batch this request belongs to
-          const batchIndex = Math.floor(
-            (requestCounter - 1) / maxRequestsPerWindow
-          );
-
-          // If this is a new batch and we've exceeded the rate limit
-          if (
-            batchIndex > currentBatch &&
-            requestCounter > maxRequestsPerWindow
-          ) {
-            currentBatch = batchIndex;
-
-            console.log({ currentBatch, requestCounter });
-            rateLimitCounter++;
-            console.log(
-              `Rate limit hit at request ${requestCounter}, returning 403`
-            );
+          // If we hit max requests, start throttling
+          if (requestCount > maxRequests && !lastThrottleTime) {
+            lastThrottleTime = currentTime;
+            rateLimitCount++;
             return {
               statusCode: 403,
               data: {
@@ -97,8 +84,31 @@ describe('Adaptor', () => {
             };
           }
 
-          // Return successful response with proper pagination
-          console.log(`Request ${requestCounter}, pageToken: ${pageToken}`);
+          // Continue returning 403 during throttle period
+          const progressTime = currentTime - lastThrottleTime;
+          if (requestCount > maxRequests && progressTime < throttleTime) {
+            rateLimitCount++;
+
+            return {
+              statusCode: 403,
+              data: {
+                description: 'API rate limit exceeded',
+                code: 403,
+              },
+              responseOptions: {
+                headers: { 'content-type': 'application/json' },
+              },
+            };
+          }
+
+          // Reset requestCount and throttle timer if we're past the throttle period
+          if (lastThrottleTime && progressTime > throttleTime) {
+            lastThrottleTime = null;
+            requestCount = 0;
+          }
+
+          successfulRequests++;
+          const pageToken = parseInt(req.query.pageToken, 10) || 0;
 
           return {
             statusCode: 200,
@@ -108,16 +118,16 @@ describe('Adaptor', () => {
             },
           };
         })
-        .times(44); // Allow enough requests for all scenarios
+        .times(60); // Allow up to 60 requests for the test
 
       const startTime = Date.now();
-      const numberOfRequests = 11;
+      const concurrentRequests = 11;
 
       // Create 11 concurrent requests
-      const requests = Array(numberOfRequests)
+      const requests = Array(concurrentRequests)
         .fill()
         .map(() =>
-          listEntries('HyZV7AYk0', { pageSize: 10, throttleTime })(state)
+          listEntries('HyZV7AYk2', { pageSize: 10, throttleTime })(state)
         );
 
       const results = await Promise.all(requests);
@@ -128,115 +138,12 @@ describe('Adaptor', () => {
         expect(result.data.entries.length).to.eq(11);
       });
 
-      console.log(`Total requests made: ${requestCounter}`);
-      console.log(`Rate limit responses: ${rateLimitCounter}`);
       console.log(`Total time: ${totalTime}ms`);
 
-      // The test should complete successfully despite rate limiting
-      expect(requestCounter).to.be.greaterThan(0);
+      expect(successfulRequests).to.eq(33);
+      expect(totalRequests).to.greaterThanOrEqual(56);
+      expect(rateLimitCount).to.greaterThanOrEqual(23);
     }).timeout(6e4);
-
-    it.skip(
-      'should handle concurrent requests when hitting rate limits',
-      async () => {
-        const totalRecords = 10;
-        const pageSize = 10;
-
-        const listEntriesQuery = {
-          token: 'user-api-token',
-          fields: 'all',
-          pageSize,
-        };
-
-        let requestsCount = 0;
-        // First 10 requests are successful
-        testServer
-          .intercept({
-            path: '/v1/libraries/HyZV7AYk1/entries',
-            method: 'GET',
-            query: listEntriesQuery,
-          })
-          .reply(200, req => {
-            requestsCount++;
-            return mockEntries(totalRecords, pageSize);
-          })
-          .times(10);
-
-        // Request 11 is rate limited
-        testServer
-          .intercept({
-            path: '/v1/libraries/HyZV7AYk1/entries',
-            method: 'GET',
-            query: listEntriesQuery,
-          })
-          .reply(403, req => {
-            requestsCount++;
-            expect(requestsCount).to.eql(11);
-            return { description: 'API rate limit exceeded', code: 403 };
-          })
-          .times(1);
-
-        testServer
-          .intercept({
-            path: '/v1/libraries/HyZV7AYk1/entries',
-            method: 'GET',
-            query: { ...listEntriesQuery, pageToken: pageSize + 1 },
-          })
-          .reply(403, req => {
-            requestsCount++;
-            // expect(requestsCount).to.eql(11);
-            return { description: 'API rate limit exceeded', code: 403 };
-          })
-          .times(11);
-
-        // After throttleTime, Request 12 is successful again
-        testServer
-          .intercept({
-            path: '/v1/libraries/HyZV7AYk1/entries',
-            method: 'GET',
-            query: listEntriesQuery,
-          })
-          .reply(200, req => {
-            requestsCount++;
-            // expect(requestsCount).to.eql(12);
-            const nextPage = parseInt(req.query.pageToken, 10) + 1;
-            return mockEntries(totalRecords, pageSize, nextPage);
-          })
-          .times(1);
-
-        // Request 13 will be successful but will return empty entries
-        testServer
-          .intercept({
-            path: '/v1/libraries/HyZV7AYk1/entries',
-            method: 'GET',
-            query: { ...listEntriesQuery, pageToken: pageSize + 1 },
-          })
-          .reply(200, req => {
-            requestsCount++;
-            return { entries: [], revision: Math.floor(Math.random() * 100) };
-          })
-          .times(10);
-
-        const startTime = Date.now();
-        const numberOfRequests = 11;
-        const throttleTime = 1e3; // Reduced for faster test execution
-        const requests = Array(numberOfRequests)
-          .fill()
-          .map(() =>
-            listEntries('HyZV7AYk1', { pageSize: 10, throttleTime })(state)
-          );
-        const results = await Promise.all(requests);
-        const totalTime = Date.now() - startTime;
-
-        results.forEach(result => {
-          expect(result.data.entries.length).to.be.greaterThanOrEqual(10);
-        });
-
-        // Ensure calls were spread over throttleTime due to rate limiting
-        expect(totalTime).to.be.greaterThanOrEqual(throttleTime);
-        expect(requestsCount).to.eql(13);
-      }
-    ).timeout(6e4);
   });
   describe('createEntry', () => {
     it('creates an entry', async () => {
