@@ -63,8 +63,14 @@ export function sendRequest(state, method, path, params = {}) {
     });
 }
 
+const DEFAULT_THROTTLE_TIME = 6e4; // 1 minute
+const DEFAULT_MAX_REQUESTS = 10; // 10 requests per minute
 export function handleRateLimit(requestTimes, requestConfig) {
-  const { throttleTime, maxRequests, hasReachedLimit = false } = requestConfig;
+  const {
+    throttleTime = DEFAULT_THROTTLE_TIME,
+    maxRequests = DEFAULT_MAX_REQUESTS,
+    hasReachedLimit = false,
+  } = requestConfig;
 
   if (hasReachedLimit) {
     console.log(`Rate limit exceeded, waiting ${throttleTime / 1000}s`);
@@ -99,8 +105,6 @@ export function handleRateLimit(requestTimes, requestConfig) {
   return;
 }
 
-export const DEFAULT_THROTTLE_TIME = 6e4; // 1 minute
-export const DEFAULT_MAX_REQUESTS = 10; // 10 requests per minute
 /**
  * Makes paginated API requests to fetch all available data.
  *
@@ -115,15 +119,20 @@ export const DEFAULT_MAX_REQUESTS = 10; // 10 requests per minute
  *   - revision: Latest revision number
  * @throws {Error} If the request fails and cannot be recovered with throttling
  */
-export async function requestWithPagination(state, method, path, params = {}) {
-  const {
-    throttleTime = DEFAULT_THROTTLE_TIME,
-    maxRequests = DEFAULT_MAX_REQUESTS,
-    query = {},
-    ...restOfOptions
-  } = params;
+export async function requestWithPagination(
+  state,
+  method,
+  path,
+  params = {},
+  currentResults = null
+) {
+  const { throttleTime, maxRequests, query = {}, ...restOfOptions } = params;
 
-  const results = { entries: [], nextPageToken: undefined, revision: 0 };
+  const results = currentResults ?? {
+    entries: [],
+    nextPageToken: undefined,
+    revision: 0,
+  };
 
   let requestCount = 0;
   let requestTimes = [];
@@ -138,8 +147,8 @@ export async function requestWithPagination(state, method, path, params = {}) {
         maxRequests,
       });
 
-      requestTimes.push(Date.now());
       response = await request(state, method, path, requestOptions);
+      requestTimes.push(Date.now());
     } catch (error) {
       if (
         error.body?.description === 'API rate limit exceeded' &&
@@ -150,8 +159,8 @@ export async function requestWithPagination(state, method, path, params = {}) {
           maxRequests,
           hasReachedLimit: true,
         });
-        requestTimes.push(Date.now());
-        response = await request(state, method, path, requestOptions);
+
+        return requestWithPagination(state, method, path, params, results);
       } else {
         throw error;
       }
