@@ -1,5 +1,6 @@
 import { expect } from 'chai';
-import { bulk2, setMockConnection } from '../src/index.js';
+import { describe, it, beforeEach } from 'mocha';
+import { bulk2, setMockConnection } from '../src/index';
 
 describe('bulk2', () => {
   beforeEach(() => {
@@ -122,7 +123,9 @@ describe('bulk2', () => {
       setMockConnection(fakeConnection);
       const state = {};
       bulk2
-        .insert('Account', [{ Name: 'Valid' }, {}], { failOnError: false })(state)
+        .insert('Account', [{ Name: 'Valid' }, {}], { failOnError: false })(
+          state
+        )
         .then(state => {
           expect(state.data.successfulResults.length).to.equal(1);
           expect(state.data.failedResults.length).to.equal(1);
@@ -132,6 +135,40 @@ describe('bulk2', () => {
         })
         .then(done)
         .catch(done);
+    });
+    it('should throw an error if failOnError is true and there are partial failures', done => {
+      const fakeConnection = {
+        bulk2: {
+          loadAndWaitForResults: args => {
+            return Promise.resolve({
+              successfulResults: [
+                {
+                  sf__Id: '0015g00000LJ2wGAAT',
+                  sf__Created: 'false',
+                  Name: 'test (Updated)',
+                },
+              ],
+              failedResults: [
+                {
+                  error: 'Required fields are missing: [Name]',
+                  success: false,
+                },
+              ],
+              unprocessedRecords: [],
+            });
+          },
+        },
+      };
+      setMockConnection(fakeConnection);
+      const state = {};
+      bulk2
+        .insert('Account', [{ Name: 'Valid' }, {}], { failOnError: true })(
+          state
+        )
+        .catch(error => {
+          expect(error.message).to.contain('Required fields');
+          done();
+        });
     });
   });
 
@@ -193,7 +230,9 @@ describe('bulk2', () => {
       setMockConnection(fakeConnection);
       const state = {};
       bulk2
-        .update('Account', [{ Id: '123', Name: 'test' }], { failOnError: false })(state)
+        .update('Account', [{ Id: '123', Name: 'test' }], {
+          failOnError: false,
+        })(state)
         .then(state => {
           expect(state.data.successfulResults).to.be.empty;
           expect(state.data.failedResults[0].error).to.equal('Invalid ID: 123');
@@ -293,11 +332,16 @@ describe('bulk2', () => {
       setMockConnection(fakeConnection);
       const state = {};
       bulk2
-        .upsert('Account', 'External_Id__c', [
-          { External_Id__c: '1', Name: 'success-record' },
-          { External_Id__c: '2', Name: 'failed-record' },
-          { External_Id__c: '3', Name: 'unprocessed-record' },
-        ], { failOnError: false })(state)
+        .upsert(
+          'Account',
+          'External_Id__c',
+          [
+            { External_Id__c: '1', Name: 'success-record' },
+            { External_Id__c: '2', Name: 'failed-record' },
+            { External_Id__c: '3', Name: 'unprocessed-record' },
+          ],
+          { failOnError: false }
+        )(state)
         .then(state => {
           expect(state.data.successfulResults.length).to.equal(1);
           expect(state.data.failedResults.length).to.equal(1);

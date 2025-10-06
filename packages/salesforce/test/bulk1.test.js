@@ -1,5 +1,6 @@
 import { expect } from 'chai';
-import { bulk1, setMockConnection } from '../src/index.js';
+import { describe, it } from 'mocha';
+import { bulk1, setMockConnection } from '../src/index';
 
 describe('bulk1', () => {
   it('should handle bulk insert operations with success and failure scenarios', done => {
@@ -27,12 +28,9 @@ describe('bulk1', () => {
     ];
 
     bulk1
-      .insert(
-        'Account',
-        records, {
+      .insert('Account', records, {
         failOnError: false,
-      }
-      )(state)
+      })(state)
       .then(resultState => {
         const { data } = resultState;
 
@@ -63,5 +61,27 @@ describe('bulk1', () => {
         done();
       })
       .catch(done);
+  });
+  it('should throw an error if failOnError is true and there are failures', done => {
+    const fakeConnection = {
+      bulk: {
+        load: (sObject, operation, options, records) => {
+          // Simulate mixed results: 2 success, 1 failure
+          return Promise.resolve([
+            { id: '0015g00000LJ2wGAAT', success: true, errors: [] },
+            { id: '0015g00000LJ2wGBBT', success: true, errors: [] },
+            { success: false, errors: ['Required field missing'] },
+          ]);
+        },
+      },
+    };
+    setMockConnection(fakeConnection);
+    const state = {};
+    bulk1
+      .insert('Account', [{ Name: 'Valid' }, {}], { failOnError: true })(state)
+      .catch(error => {
+        expect(error.message).to.contain('Required field missing');
+        done();
+      });
   });
 });
