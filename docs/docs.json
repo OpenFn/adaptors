@@ -1,4 +1,168 @@
 [
+{"name":"arcgis","adaptor":"@openfn/language-arcgis","version":"0.0.1","docs":"\"\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n\\n##  Interfaces\\n\\n### HttpState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-arcgis <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\narcgis API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/arcgis-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/arcgis-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-arcgis\\n\\n## 0.0.1\\n\\nInitial release.\\n\"","functions":[],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{},"type":"object","additionalProperties":true,"required":[]}},
+[
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the HTTP server, including headers, statusCode, body, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 1,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/arcgis/src"
+    },
+    "order": 0,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "as",
+    "common": true,
+    "name": "as",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "combine",
+    "common": true,
+    "name": "combine",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fnIf",
+    "common": true,
+    "name": "fnIf",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "group",
+    "common": true,
+    "name": "group",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "map",
+    "common": true,
+    "name": "map",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "scrubEmojis",
+    "common": true,
+    "name": "scrubEmojis",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "util",
+    "common": true,
+    "name": "util",
+    "scope": "global",
+    "kind": "external"
+  }
+],
 {"name":"asana","adaptor":"@openfn/language-asana","version":"5.0.3","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#createtask\\\">createTask(params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#createtaskstory\\\">createTaskStory(taskGid, params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#gettask\\\">getTask(taskGid, params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#gettasks\\\">getTasks(projectGid, params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(path, params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#searchtask\\\">searchTask(task, [query], [options])</a></dt>\\n<dt>\\n    <a href=\\\"#updatetask\\\">updateTask(taskGid, data, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#upserttask\\\">upsertTask(projectGid, params, callback)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### createTask\\n\\n<p><code>createTask(params, callback) ⇒ Operation</code></p>\\n\\nCreate a task.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| params | <code>object</code> | Body parameters |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n\\n**Example**\\n```js\\ncreateTask({\\n  name: \\\"test\\\",\\n  approval_status: \\\"pending\\\",\\n  assignee: \\\"12345\\\",\\n  projects: [\\\"1206933955023739\\\"],\\n});\\n```\\n\\n* * *\\n\\n### createTaskStory\\n\\n<p><code>createTaskStory(taskGid, params, callback) ⇒ Operation</code></p>\\n\\nCreate a story to a specific task.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| taskGid | <code>string</code> | Globally unique identifier for the task |\\n| params | [<code>StoryOptions</code>](#storyoptions) | Story parameters |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n\\n**Example:** Create a plain text comment\\n```js\\ncreateTaskStory(\\\"1206933955023739\\\", {\\n  text: \\\"This is a comment\\\",\\n});\\n```\\n**Example:** Create a HTML formatted text comment\\n```js\\ncreateTaskStory(\\\"1206933955023739\\\", {\\n  html_text: \\\"<body>This is a comment</body>\\\",\\n});\\n```\\n\\n* * *\\n\\n### getTask\\n\\n<p><code>getTask(taskGid, params, callback) ⇒ Operation</code></p>\\n\\nGet a single task of a given project.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| taskGid | <code>string</code> | Globally unique identifier for the task |\\n| params | <code>object</code> | Query params to include. |\\n| params.opt_fields | <code>string</code> | The fields to return. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n\\n**Example:** Get a task\\n```js\\ngetTask(\\\"1206933955023739\\\", {\\n  opt_fields: \\\"name,notes,assignee\\\",\\n});\\n```\\n\\n* * *\\n\\n### getTasks\\n\\n<p><code>getTasks(projectGid, params, callback) ⇒ Operation</code></p>\\n\\nGet the list of tasks for a given project.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| projectGid | <code>string</code> | Globally unique identifier for the project |\\n| params | <code>object</code> | Query params to include. |\\n| params.limit | <code>number</code> | The maximum number of tasks to return. |\\n| params.opt_fields | <code>string</code> | The fields to return. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n\\n**Example:** Get all tasks\\n```js\\ngetTasks(\\\"1206933955023739\\\", {\\n  opt_fields: \\\"name,notes,assignee\\\",\\n});\\n```\\n**Example:** Limit the number of tasks returned\\n```js\\ngetTasks(\\\"1206933955023739\\\", {\\n  opt_fields: \\\"name,notes,assignee\\\",\\n  limit: 100,\\n});\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(path, params, callback) ⇒ Operation</code></p>\\n\\nMake a HTTP request against the Asana API.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource (excluding api/version) |\\n| params | [<code>RequestOptions</code>](#requestoptions) | (Optional) Query, body and method parameters |\\n| callback | <code>function</code> | (Optional) Callback function |\\n\\n\\n**Example**\\n```js\\nGet a task by id\\nrequest(\\\"/tasks/1234\\\");\\n```\\n**Example**\\n```js\\nQuery for tasks in a given project\\nrequest(\\\"/tasks\\\", {\\n  query: { project: \\\"abc\\\" },\\n});\\n```\\n**Example**\\n```js\\nCreate a new task\\nrequest(\\\"/tasks\\\", {\\n  method: \\\"POST\\\",\\n  body: { data: { name: \\\"do the thing\\\", completed: false } },\\n});\\n```\\n\\n* * *\\n\\n### searchTask\\n\\n<p><code>searchTask(task, [query], [options]) ⇒ Operation</code></p>\\n\\nSearch for tasks in a workspace by task name.\\n\\n**Returns**: <code>Operation</code> - An operation that, when executed, returns the search results in state.data.  \\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| task | <code>string</code> |  | The text or name of the task to search for. |\\n| [query] | <code>object</code> |  | Query params. See [Docs](https://developers.asana.com/reference/searchtasksforworkspace) for a list of valid parameters. |\\n| [query.resource_subtype] | <code>string</code> | <code>&quot;default_task&quot;</code> | The resource subtype to search for. Must be either `\\\"default_task\\\"` or `\\\"milestone\\\"`. Defaults to `\\\"default_task\\\"`. |\\n| [options] | <code>object</code> |  | (Optional) options argument. |\\n| [options.workspaceGid] | <code>string</code> |  | The workspace to search in. Defaults to the workspace specified in the configuration. |\\n\\n\\n**Example:** Search for a task by name\\n```js\\nsearchTask(\\\"Test Search Task\\\", {\\n  sort_by: \\\"modified_at\\\"\\n});\\n```\\n**Example:** Search for a task by custom field only\\n```js\\nsearchTask(\\\"\\\", {\\n  \\\"custom_fields.12345.value\\\": $.data.custom_field_value,\\n});\\n```\\n**Example:** Search for a task by name and custom field\\n```js\\nsearchTask(\\\"Test Search Task\\\", {\\n  \\\"custom_fields.12345.is_set\\\": true,\\n});\\n```\\n**Example:** Search for a milestone by name\\n```js\\nsearchTask(\\\"Test Search Task\\\", {\\n  resource_subtype: \\\"milestone\\\",\\n});\\n```\\n\\n* * *\\n\\n### updateTask\\n\\n<p><code>updateTask(taskGid, data, callback) ⇒ Operation</code></p>\\n\\nUpdate a specific task.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| taskGid | <code>string</code> | Globally unique identifier for the task |\\n| data | <code>object</code> | Body data to update the task with |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n\\n**Example:** Update a task\\n```js\\nupdateTask(\\\"1206933955023739\\\", {\\n  name: \\\"test\\\",\\n  approval_status: \\\"pending\\\",\\n  assignee: \\\"12345\\\",\\n});\\n```\\n\\n* * *\\n\\n### upsertTask\\n\\n<p><code>upsertTask(projectGid, params, callback) ⇒ Operation</code></p>\\n\\nUpdate or create a task.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| projectGid | <code>string</code> | Globally unique identifier for the project |\\n| params | <code>object</code> | an object with an externalId and some task data. |\\n| params.externalId | <code>string</code> | The external id field name |\\n| params.data | <code>object</code> | The data to upsert. |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\n\\n**Example:** Upsert a task\\n```js\\nupsertTask(\\\"1201382240880\\\", {\\n  externalId: \\\"name\\\",\\n  data: {\\n    name: \\\"test\\\",\\n    approval_status: \\\"pending\\\",\\n    projects: [\\\"1201382240880\\\"],\\n    assignee: \\\"12345\\\",\\n  },\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### RequestOptions\\n\\nOptions provided to the Asana API request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> | Body data to append to the request. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| method | <code>string</code> | The HTTP method to use. Defaults to `GET` |\\n\\n\\n* * *\\n\\n### StoryOptions\\n\\nOptions provided to the createTaskStory request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| text | <code>string</code> | The plain text of the comment to add. Cannot be used with html_text. |\\n| html_text | <code>string</code> | Opt In. HTML formatted text for a comment. This will not include the name of the creator. |\\n| is_pinned | <code>boolean</code> | Default to `false`. Whether the story should be pinned on the resource. |\\n| sticker_name | <code>string</code> | The name of the sticker in this story. `null` if there is no sticker. |\\n| opt_fields | <code>array</code> | Opt In. This endpoint returns a compact resource, which excludes some properties by default. To include those optional properties, set this query parameter to a comma-separated list of the properties you wish to include. |\\n| opt_pretty | <code>boolean</code> | Defaults to `false`. Provides the response in a “pretty” format. In the case of JSON this means doing proper line breaking and indentation to make it readable. This will take extra time and increase the response size so it is advisable only to use this during debugging. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-asana\\n\\nLanguage Pack for connecting with Asana.\\n\\n## Documentation\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/asana-configuration-schema/)\\ndefinition.\\n\\n### How to create an API token\\n\\nUsing Asana's API requires having an API token. To generate that token, head to\\nthe [Asana developer console](https://app.asana.com/0/developer-console) and\\nenter the **Personal access tokens** section.\\n[For API Reference docs](https://developers.asana.com/docs/api-explorer)\\n\\nThere you can click on **+New access token**. A prompt will be opened allowing\\nyou to give the token a name and then create it.\\n\\n_Note: Treat your PAT like you would with a password. Do not share it or display\\nit online._\\n\\n### Sample expression\\n\\n## Find a single task of a given project using the task id.\\n\\n```js\\ngetTask('1234', {\\n  opt_fields: 'name,assignee',\\n});\\n```\\n\\n## Find the list of tasks of a given project using the project id.\\n\\n```js\\ngetTasks('22889593722', {\\n  opt_fields: 'name,notes,assignee',\\n});\\n```\\n\\n## Update a specific task\\n\\n```js\\nupdateTask('12344', {\\n  name: 'test',\\n  approval_status: 'pending',\\n  assignee: '12345',\\n});\\n```\\n\\n## Create a task\\n\\n```js\\ncreateTask({\\n  name: 'test',\\n  approval_status: 'pending',\\n  assignee: '12345',\\n});\\n```\\n\\n## Update a task or create a new one\\n\\nYou can use a field name literal as `externalId` to match a specific task. If\\nthe task does not exist, a new one will be created. The first parameter in this\\nfunction should be the `project_id`.\\n\\n```js\\nupsertTask('12344', {\\n  externalId: 'name',\\n  data: {\\n    name: 'A new task',\\n    projects: ['12344'],\\n    notes: 'This is a new task',\\n  },\\n});\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-asana\\n\\n## 5.0.3 - 18 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[e2bc436]\\n  - @openfn/language-common@3.1.0\\n\\n## 5.0.2 - 01 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1d60531]\\n  - @openfn/language-common@3.0.3\\n\\n## 5.0.1 - 26 August 2025\\n\\n### Patch Changes\\n\\n- 05aae5f: Default `resource_subtype` to `default_task` in `searchTask()`\\n\\n## 5.0.0 - 11 August 2025\\n\\n### Major Changes\\n\\n- a5cea4e: removed `http` export from `@openfn/language-common`\\n\\n  ### Migration Guide\\n\\n  The `http` export has been removed from `@openfn/language-common`. If you were\\n  using it, you should remove it from your code and create a new step that uses\\n  `http` adaptor. See example below.\\n\\n  **Before**\\n\\n  **Step 1: Fetch and post data using postgresql adaptor**\\n\\n  ```js\\n  sql('select * from foo');\\n  http.post('/example', { body: $.data }),\\n  ```\\n\\n  **Now**\\n\\n  **Step 1: Fetch data using postgresql adaptor**\\n\\n  ```js\\n  sql('select * from foo');\\n  ```\\n\\n  **Step 2: Post data using http adaptor**\\n\\n  ```js\\n  post('/example', { body: $.data });\\n  ```\\n\\n## 4.3.0 - 22 July 2025\\n\\n### Minor Changes\\n\\n- 3fae9d2: Add `searchTask` function\\n\\n## 4.2.2 - 14 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9b5a4f8]\\n  - @openfn/language-common@3.0.2\\n\\n## 4.2.1 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cf9c09f]\\n  - @openfn/language-common@3.0.1\\n\\n## 4.2.0 - 10 July 2025\\n\\n### Minor Changes\\n\\n- 19f2d7e: Exported `as()` function from common.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[ea85695]\\n- Updated dependencies \\\\[3fce58f]\\n- Updated dependencies \\\\[19f2d7e]\\n- Updated dependencies \\\\[f26bd2b]\\n- Updated dependencies \\\\[19f2d7e]\\n  - @openfn/language-common@3.0.0\\n\\n## 4.1.1 - 20 June 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[28c2e8b]\\n  - @openfn/language-common@2.5.0\\n\\n## 4.1.0 - 17 June 2025\\n\\n### Minor Changes\\n\\n- d1edd7c: #### Add Auto Pagination to `getTasks` and `upsertTask` Functions\\n\\n  ##### `getTasks` Function:\\n\\n  - **Example without limit** (returns all tasks):\\n\\n    ```js\\n    getTasks('1206933955023739', {\\n      opt_fields: 'name,notes,assignee',\\n    });\\n    ```\\n\\n  - **Limit the number of tasks returned**:\\n\\n    ```js\\n    getTasks('1206933955023739', {\\n      opt_fields: 'name,notes,assignee',\\n      limit: 100,\\n    });\\n    ```\\n\\n  ##### `upsertTask` Function:\\n\\n  - Now automatically fetches all tasks to find a matching task before updating\\n    or creating a new one.\\n\\n## 4.0.12 - 22 April 2025\\n\\n### Patch Changes\\n\\n- 99e4b48: - Better handling of HTML content in http requests\\n  - When logging HTTP requests, include query parameters\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 4.0.11 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 4.0.10 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 4.0.9 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 4.0.8 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b3d7f59]\\n- Updated dependencies \\\\[2d709ff]\\n- Updated dependencies \\\\[41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 4.0.7 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 4.0.6 - 09 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[a47d8d5]\\n- Updated dependencies \\\\[9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 4.0.5 - 28 October 2024\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 4.0.4 - 18 October 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 4.0.3 - 15 October 2024\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus \\\\[33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 4.0.2 - 24 September 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 4.0.1 - 16 August 2024\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies \\\\[8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 4.0.0 - 01 August 2024\\n\\n### Major Changes\\n\\n- Export new common http helpers (http namespace)\\n\\n## 3.3.1\\n\\n### Patch Changes\\n\\n- 510354a: Don't allow HTTP helpers to call out to different domains. This can\\n  cause a security violation where credentials are sent to external servers. Use\\n  generic HTTP helpers like `http.get` or `fetch` instead.\\n- 510354a: Fix an issue where not passing a params argument would trigger an\\n  exception\\n- Updated dependencies \\\\[4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 3.3.0 - 13 June 2024\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 3.2.0 - 12 April 2024\\n\\n### Minor Changes\\n\\n- bae5d3b6: Add the cursor() function from common. See the job writing guide for\\n  more information.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1ad86651]\\n  - @openfn/language-common@1.13.0\\n\\n## 3.1.0 - 03 April 2024\\n\\n### Minor Changes\\n\\n- 673e41e8: - Add `createTaskStory()` function\\n  - Replaced common `http` with a more efficient implementation from\\n    `common/util` http\\n\\n## 3.0.1 - 19 June 2023\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 3.0.0\\n\\n### Major Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 2.1.6 - 30 March 2023\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies \\\\[2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 2.1.5 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 2.1.4 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 2.1.3 - 13 January 2023\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*\\\\_ @module Adaptor \\\\_/\\n\\n## 2.1.2 - 11 November 2022\\n\\n### Patch Changes\\n\\n- f2a91a4: Update package exports\\n- Updated dependencies \\\\[f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\\n## 2.1.1 - 04 November 2022\\n\\n### Patch Changes\\n\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- ecf5d30: remove sinon since it was not being used\\n- Updated dependencies \\\\[8566b26]\\n- Updated dependencies \\\\[b3d45ff]\\n- Updated dependencies \\\\[b5eb665]\\n- Updated dependencies \\\\[ecf5d30]\\n  - @openfn/language-common@1.7.4\\n\\n## 2.1.0 - 21 October 2022\\n\\n### Minor Changes\\n\\n- 5f40dcf: Migrated language-asana\\n\\n### Patch Changes\\n\\n- e04aa28: Rename credential-schema to configuration-schema, update descriptions\\n\"","functions":["createTask","createTaskStory","getTask","getTasks","request","searchTask","updateTask","upsertTask"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"apiVersion":{"title":"API Version","type":"string","description":"The API version","examples":["1.0"],"default":"1.0"},"token":{"title":"Token","type":"string","description":"The API token","examples":["sample-tokenyWSJdXBACMLLWMNGgADFA"]},"workspaceGid":{"title":"Workspace GID","type":"string","description":"Globally unique identifier for the workspace or organization.","examples":["12345"]}},"type":"object","additionalProperties":true,"required":["token","workspaceGid"]}},
 [
   {
