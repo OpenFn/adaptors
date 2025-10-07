@@ -1,4 +1,3 @@
-// import { MockAgent, Agent, interceptors } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
@@ -6,7 +5,6 @@ import path from 'node:path';
 import throwError from './throw-error.js';
 import { encode } from './base64.js';
 import pkg from 'undici';
-import { keyword$DataError } from 'ajv/dist/compile/errors.js';
 const { MockAgent, Agent, interceptors } = pkg;
 
 const agents = new Map();
@@ -38,29 +36,35 @@ export const logResponse = response => {
   return response;
 };
 
-const generateDomainKey = (baseUrl, agentOpts) => {
+const generateAgentKey = (baseUrl, agentOpts) => {
   const key = `${baseUrl}|${Object.values(agentOpts).sort().join('.')}`;
   return key;
 };
 
 const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
-  const key = generateDomainKey(origin, agentOpts);
+  const key = generateAgentKey(origin, agentOpts);
+  let agent = agents.get(key) ?? agents.get(origin);
 
-  if (!agents.has(origin) && !agents.has(key)) {
-    const agent = new Agent({
-      connect: tls,
-      ...agentOpts,
-    }).compose(
-      interceptors.redirect({
-        maxRedirections: agentOpts.maxRedirections,
-      })
-    );
+  if (!agent) {
+    agent = new Agent({ connect: tls, ...agentOpts });
 
-    agents.set(origin, agent);
+    try {
+      const redirect = interceptors?.redirect;
+      if (redirect)
+        agent = agent.compose(
+          redirect({
+            maxRedirections: agentOpts.maxRedirections ?? 5,
+          })
+        );
+    } catch {
+      /* no-op */
+    }
+
+    // agents.set(origin, agent);
     agents.set(key, agent);
   }
 
-  return agents.get(key) || agents.get(origin);
+  return agent;
 };
 
 export const enableMockClient = (baseUrl, options = {}) => {
@@ -70,7 +74,7 @@ export const enableMockClient = (baseUrl, options = {}) => {
     ...agentOpts
   } = options;
 
-  const key = generateDomainKey(baseUrl, agentOpts);
+  const key = generateAgentKey(baseUrl, agentOpts);
 
   const mockAgent = new MockAgent({ connections: 1 });
   mockAgent.disableNetConnect();
