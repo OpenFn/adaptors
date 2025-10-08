@@ -30,9 +30,9 @@ describe('http', () => {
   });
   it('should auto throttle when api rate limit exceeded', async () => {
     const { data } = await listEntries('6AJPFZhgy', {
-      pageSize: 1,
+      pageSize: 10,
     })(state);
-    expect(data.entries.length).to.be.greaterThanOrEqual(1);
+    expect(data.entries.length).to.be.greaterThanOrEqual(11);
   }).timeout(10e4);
 
   it('should handle concurrent requests when hitting rate limits', async () => {

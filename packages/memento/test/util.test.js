@@ -31,8 +31,8 @@ describe('handleRateLimit', () => {
     maxRequests: 5,
   };
 
-  it('should return immediately when no previous requests exist', () => {
-    const result = handleRateLimit([], requestConfig);
+  it('should return immediately when no previous requests exist', async () => {
+    const result = await handleRateLimit([], requestConfig);
     expect(result).to.be.undefined;
   });
   it('should delay when hasReachedLimit is true', async () => {
