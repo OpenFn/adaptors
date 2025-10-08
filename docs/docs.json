@@ -40533,6 +40533,872 @@
     "kind": "external-function"
   }
 ],
+{"name":"memento","adaptor":"@openfn/language-memento","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#createentry\\\">createEntry(libraryId, body)</a></dt>\\n<dt>\\n    <a href=\\\"#getentry\\\">getEntry(libraryId, entryId)</a></dt>\\n<dt>\\n    <a href=\\\"#getfields\\\">getFields(libraryId)</a></dt>\\n<dt>\\n    <a href=\\\"#listentries\\\">listEntries(libraryId, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#listlibraries\\\">listLibraries()</a></dt>\\n<dt>\\n    <a href=\\\"#updateentry\\\">updateEntry(libraryId, entryId, body)</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#http_get\\\">http.get(path, options)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_post\\\">http.post(path, body, options)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_put\\\">http.put(path, body, options)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_request\\\">http.request(method, path, body, options)</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#assert\\\">assert()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### createEntry\\n\\n<p><code>createEntry(libraryId, body) ⇒ Operation</code></p>\\n\\nCreate an entry\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| libraryId | <code>string</code> | The library ID |\\n| body | <code>object</code> | The entry body to create |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The created entry as returned by Memento |\\n\\n**Example:** Create an entry\\n```js\\ncreateEntry(\\\"HyZV7AYk0\\\", {\\n  fields: [\\n    {\\n      value: \\\"Record 1\\\",\\n      id: 1,\\n    },\\n    {\\n      id: 2,\\n      value: 1000,\\n    },\\n  ],\\n});\\n```\\n\\n* * *\\n\\n### getEntry\\n\\n<p><code>getEntry(libraryId, entryId) ⇒ Operation</code></p>\\n\\nGet an entry\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| libraryId | <code>string</code> | The library ID |\\n| entryId | <code>string</code> | The entry ID |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | an entry object |\\n\\n**Example:** Get an entry\\n```js\\ngetEntry('HyZV7AYk0', 'T0xIYmE-V2QoMmRTWF1sVVJUKnU');\\n```\\n\\n* * *\\n\\n### getFields\\n\\n<p><code>getFields(libraryId) ⇒ Operation</code></p>\\n\\nGet fields for a library\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| libraryId | <code>string</code> | The library ID |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data.fields | An array of fields for the library |\\n\\n**Example:** Get library fields\\n```js\\ngetFields('HyZV7AYk0');\\n```\\n\\n* * *\\n\\n### listEntries\\n\\n<p><code>listEntries(libraryId, [options]) ⇒ Operation</code></p>\\n\\nList all entries in a library.\\nThis function handles rate limits and automatically paginates to fetch all entries.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| libraryId | <code>string</code> | The library ID |\\n| [options] | [<code>EntriesRequestOptions</code>](#entriesrequestoptions) | List entries request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data.entries | An array of entry objects for a library |\\n\\n**Example:** List all entries in a library\\n```js\\nlistEntries('HyZV7AYk0');\\n```\\n\\n* * *\\n\\n### listLibraries\\n\\n<p><code>listLibraries() ⇒ Operation</code></p>\\n\\nList all libraries\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data.libraries | an array of library objects |\\n\\n**Example:** List all libraries\\n```js\\nlistLibraries();\\n```\\n\\n* * *\\n\\n### updateEntry\\n\\n<p><code>updateEntry(libraryId, entryId, body) ⇒ Operation</code></p>\\n\\nUpdate an entry\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| libraryId | <code>string</code> | The ID of the library to update the entry in |\\n| entryId | <code>string</code> | The ID of the entry to update |\\n| body | <code>object</code> | The entry body to update |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The updated entry as returned by Memento |\\n\\n**Example:** Update an entry\\n```js\\nupdateEntry('HyZV7AYk0', 'T0xIYmE-V2QoMmRTWF1sVVJUKnU', {\\n  fields: [\\n    {\\n      value: \\\"Record Updated\\\",\\n      id: 1,\\n    },\\n    {\\n      id: 2,\\n      value: 100,\\n    },\\n  ],\\n});\\n```\\n\\n* * *\\n\\n\\n## http\\n\\nThese functions belong to the http namespace.\\n### http.get {#http_get}\\n\\n<p><code>get(path, options) ⇒ Operation</code></p>\\n\\nMake a GET request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** List all libraries\\n```js\\nget(\\\"libraries\\\");\\n```\\n**Example:** Get a single library fields\\n```js\\nget('libraries/HyZV7AYk0');\\n```\\n\\n* * *\\n\\n\\n### http.post {#http_post}\\n\\n<p><code>post(path, body, options) ⇒ Operation</code></p>\\n\\nMake a POST request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Create an entry\\n```js\\npost(\\\"libraries/HyZV7AYk0/entries\\\", { \\\"name\\\": \\\"Bukayo\\\" });\\n```\\n\\n* * *\\n\\n\\n### http.put {#http_put}\\n\\n<p><code>put(path, body, options) ⇒ Operation</code></p>\\n\\nMake a PUT request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the PUT body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Update an entry\\n```js\\nput(\\\"libraries/HyZV7AYk0/entries/T0xIYmE-V2QoMmRTWF1sVVJUKnU\\\", { \\\"name\\\": \\\"Bukayo\\\" });\\n```\\n\\n* * *\\n\\n\\n### http.request {#http_request}\\n\\n<p><code>request(method, path, body, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Edit an entry\\n```js\\nrequest(\\\"PUT\\\", \\\"libraries/HyZV7AYk0/entries/T0xIYmE-V2QoMmRTWF1sVVJUKnU\\\", { \\\"name\\\": \\\"Bukayo\\\" });\\n```\\n**Example:** Delete an entry\\n```js\\nrequest(\\\"DELETE\\\", \\\"libraries/HyZV7AYk0/entries/T0xIYmE-V2QoMmRTWF1sVVJUKnU\\\");\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### EntriesRequestOptions\\n\\nFetch Entries Request Options\\n\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [options.pageSize] | <code>number</code> | <code>100</code> | The maximum number of entries to return per page. |\\n| [options.pageToken] | <code>string</code> |  | Start pagination from this token/cursor. |\\n| [options.startRevision] | <code>string</code> |  | The revision to start from. |\\n| [options.fields] | <code>string</code> | <code>&quot;&#x27;all&#x27;&quot;</code> | The comma-separated list of fields ids to include in the response |\\n\\n\\n* * *\\n\\n### HttpState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-memento <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\nmemento API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/memento-docs) for\\nfull technical documentation. View the [Memento Cloud API docs](https://mementodatabase.docs.apiary.io/#introduction)\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/memento-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-memento\\n\\n## 1.0.0\\n\\nInitial release of the adaptor\\n\\n### Adaptor Operations\\n\\n- `listLibraries`: Retrieve available content libraries\\n- `getFields`: Fetch field definitions and schemas\\n- `listEntries`: List entries in a library\\n- `getEntry`: Get single entry by ID\\n- `createEntry`: Create new content entries\\n- `updateEntry`: Modify existing entries\\n\\n### HTTP Operations\\n\\n- Added low-level HTTP operations for custom implementations:\\n  - `http.request`: Generic HTTP request function\\n  - `http.get`: GET request function\\n  - `http.post`: POST request function\\n  - `http.put`: PUT request function\\n\"","functions":["createEntry","getEntry","getFields","listEntries","listLibraries","updateEntry"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The base URL (https://api.mementodatabase.com)","format":"uri","minLength":1,"default":"https://api.mementodatabase.com","examples":["https://api.mementodatabase.com"]},"apiVersion":{"title":"API Version","type":"string","description":"API Version","default":"v1","examples":["v1"]},"token":{"title":"Memento Auth Token","type":"string","description":"Memento Cloud User Auth Token","writeOnly":true,"examples":["1234567890"]}},"type":"object","additionalProperties":true,"required":["token"]}},
+[
+  {
+    "id": "createEntry",
+    "longname": "createEntry",
+    "name": "createEntry",
+    "kind": "function",
+    "scope": "global",
+    "description": "Create an entry",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The library ID",
+        "name": "libraryId"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "The entry body to create",
+        "name": "body"
+      }
+    ],
+    "examples": [
+      "<caption>Create an entry</caption>\ncreateEntry(\"HyZV7AYk0\", {\n  fields: [\n    {\n      value: \"Record 1\",\n      id: 1,\n    },\n    {\n      id: 2,\n      value: 1000,\n    },\n  ],\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 154,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/memento/src"
+    },
+    "state": [
+      {
+        "name": "data",
+        "description": "The created entry as returned by Memento",
+        "type": null
+      }
+    ],
+    "order": 5,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "EntriesRequestOptions",
+    "longname": "EntriesRequestOptions",
+    "name": "EntriesRequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Fetch Entries Request Options",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": 100,
+        "description": "The maximum number of entries to return per page.",
+        "name": "options.pageSize"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "description": "Start pagination from this token/cursor.",
+        "name": "options.pageToken"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "description": "The revision to start from.",
+        "name": "options.startRevision"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "'all'",
+        "description": "The comma-separated list of fields ids to include in the response",
+        "name": "options.fields"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 4,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/memento/src"
+    },
+    "order": 0,
+    "level": 0
+  },
+  {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a GET request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>List all libraries</caption>\nget(\"libraries\");",
+      "<caption>Get a single library fields</caption>\nget('libraries/HyZV7AYk0');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 36,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/memento/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 9,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "getEntry",
+    "longname": "getEntry",
+    "name": "getEntry",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get an entry",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The library ID",
+        "name": "libraryId"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The entry ID",
+        "name": "entryId"
+      }
+    ],
+    "examples": [
+      "<caption>Get an entry</caption>\ngetEntry('HyZV7AYk0', 'T0xIYmE-V2QoMmRTWF1sVVJUKnU');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 116,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/memento/src"
+    },
+    "state": [
+      {
+        "name": "data",
+        "description": "an entry object",
+        "type": null
+      }
+    ],
+    "order": 4,
+    "level": 0
+  },
+  {
+    "id": "getFields",
+    "longname": "getFields",
+    "name": "getFields",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get fields for a library",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The library ID",
+        "name": "libraryId"
+      }
+    ],
+    "examples": [
+      "<caption>Get library fields</caption>\ngetFields('HyZV7AYk0');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 41,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/memento/src"
+    },
+    "state": [
+      {
+        "name": "data.fields",
+        "description": "An array of fields for the library",
+        "type": null
+      }
+    ],
+    "order": 2,
+    "level": 0
+  },
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the HTTP server, including headers, statusCode, body, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 5,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/memento/src"
+    },
+    "order": 7,
+    "level": 0
+  },
+  {
+    "id": "listEntries",
+    "longname": "listEntries",
+    "name": "listEntries",
+    "kind": "function",
+    "scope": "global",
+    "description": "List all entries in a library.\nThis function handles rate limits and automatically paginates to fetch all entries.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The library ID",
+        "name": "libraryId"
+      },
+      {
+        "type": {
+          "names": [
+            "EntriesRequestOptions"
+          ]
+        },
+        "optional": true,
+        "description": "List entries request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>List all entries in a library</caption>\nlistEntries('HyZV7AYk0');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 67,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/memento/src"
+    },
+    "state": [
+      {
+        "name": "data.entries",
+        "description": "An array of entry objects for a library",
+        "type": null
+      }
+    ],
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "listLibraries",
+    "longname": "listLibraries",
+    "name": "listLibraries",
+    "kind": "function",
+    "scope": "global",
+    "description": "List all libraries",
+    "examples": [
+      "<caption>List all libraries</caption>\nlistLibraries();"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 24,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/memento/src"
+    },
+    "state": [
+      {
+        "name": "data.libraries",
+        "description": "an array of library objects",
+        "type": null
+      }
+    ],
+    "order": 1,
+    "level": 0
+  },
+  {
+    "id": "post",
+    "longname": "post",
+    "name": "post",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a POST request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Create an entry</caption>\npost(\"libraries/HyZV7AYk0/entries\", { \"name\": \"Bukayo\" });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 52,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/memento/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 10,
+    "level": 0
+  },
+  {
+    "id": "put",
+    "longname": "put",
+    "name": "put",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a PUT request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the PUT body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Update an entry</caption>\nput(\"libraries/HyZV7AYk0/entries/T0xIYmE-V2QoMmRTWF1sVVJUKnU\", { \"name\": \"Bukayo\" });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 67,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/memento/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 11,
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a general HTTP request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "HTTP method to use",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Edit an entry</caption>\nrequest(\"PUT\", \"libraries/HyZV7AYk0/entries/T0xIYmE-V2QoMmRTWF1sVVJUKnU\", { \"name\": \"Bukayo\" });",
+      "<caption>Delete an entry</caption>\nrequest(\"DELETE\", \"libraries/HyZV7AYk0/entries/T0xIYmE-V2QoMmRTWF1sVVJUKnU\");"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 85,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/memento/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 12,
+    "level": 0
+  },
+  {
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to the HTTP request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object",
+            "string"
+          ]
+        },
+        "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of headers to append to the request.",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Parse the response body as json, text or stream. By default will use the response headers.",
+        "name": "parseAs"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 13,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/memento/src"
+    },
+    "order": 8,
+    "level": 0
+  },
+  {
+    "id": "updateEntry",
+    "longname": "updateEntry",
+    "name": "updateEntry",
+    "kind": "function",
+    "scope": "global",
+    "description": "Update an entry",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The ID of the library to update the entry in",
+        "name": "libraryId"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The ID of the entry to update",
+        "name": "entryId"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "The entry body to update",
+        "name": "body"
+      }
+    ],
+    "examples": [
+      "<caption>Update an entry</caption>\nupdateEntry('HyZV7AYk0', 'T0xIYmE-V2QoMmRTWF1sVVJUKnU', {\n  fields: [\n    {\n      value: \"Record Updated\",\n      id: 1,\n    },\n    {\n      id: 2,\n      value: 100,\n    },\n  ],\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 198,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/memento/src"
+    },
+    "state": [
+      {
+        "name": "data",
+        "description": "The updated entry as returned by Memento",
+        "type": null
+      }
+    ],
+    "order": 6,
+    "level": 0
+  },
+  {
+    "id": "as",
+    "common": true,
+    "name": "as",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "assert",
+    "common": true,
+    "name": "assert",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "combine",
+    "common": true,
+    "name": "combine",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fnIf",
+    "common": true,
+    "name": "fnIf",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "group",
+    "common": true,
+    "name": "group",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "map",
+    "common": true,
+    "name": "map",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "scrubEmojis",
+    "common": true,
+    "name": "scrubEmojis",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "util",
+    "common": true,
+    "name": "util",
+    "scope": "global",
+    "kind": "external"
+  }
+],
 {"name":"mogli","adaptor":"@openfn/language-mogli","version":"0.6.4","docs":"\"\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#sourceHelpers_lookup\\\">sourceHelpers.lookup(relationshipName, externalID, path)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#sourceHelpers_relationship\\\">sourceHelpers.relationship(relationshipName, externalID, dataSource)</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#arraytostring\\\">arrayToString()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#beta\\\">beta</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#index\\\">index()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#join\\\">join()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#referencepath\\\">referencePath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#source\\\">source()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#toarray\\\">toArray()</a>\\n</dt></dl>\\n\\n\\n## sourceHelpers\\n\\nThese functions belong to the sourceHelpers namespace.\\n### sourceHelpers.lookup {#sourceHelpers_lookup}\\n\\n<p><code>lookup(relationshipName, externalID, path) ⇒ object</code></p>\\n\\nAdds a lookup or 'dome insert' to a record.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| relationshipName | <code>string</code> | `__r` relationship field on the record. |\\n| externalID | <code>string</code> | Salesforce ExternalID field. |\\n| path | <code>string</code> | JSONPath to data source. |\\n\\n\\n**Example:** Example\\n```js\\nlookup(\\\"relationship_name__r\\\", \\\"externalID on related object\\\", \\\"$.path\\\")\\n```\\n\\n* * *\\n\\n\\n### sourceHelpers.relationship {#sourceHelpers_relationship}\\n\\n<p><code>relationship(relationshipName, externalID, dataSource) ⇒ object</code></p>\\n\\nAdds a lookup or 'dome insert' to a record.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| relationshipName | <code>string</code> | `__r` relationship field on the record. |\\n| externalID | <code>string</code> | Salesforce ExternalID field. |\\n| dataSource | <code>string</code> | resolvable source. |\\n\\n\\n**Example:** Data Sourced Value\\n```js\\nrelationship(\\\"relationship_name__r\\\", \\\"externalID on related object\\\", dataSource(\\\"path\\\"))\\n```\\n**Example:** Fixed Value\\n```js\\nrelationship(\\\"relationship_name__r\\\", \\\"externalID on related object\\\", \\\"hello world\\\")\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# Language Mogli\\n\\nLanguage Pack for building expressions and operations to interact with Mogli\\nSMS.\\n\\n## Documentation\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/mogli-configuration-schema/)\\ndefinition.\\n\\n### Create inbound SMS\\n\\n```js\\ncreateSMS(\\n  fields(\\n    field('sender', dataValue('from_number')),\\n    field('receivedAt', dataValue('timestamp')),\\n    field('message', dataValue('message'))\\n  )\\n);\\n```\\n\\n<!-- TODO: determine update process -->\\n<!-- ### Update SMS status\\n```js\\nupdateSMS(\\n  fields(\\n    field(\\\"Id\\\", dataValue(\\\"externalId\\\")),\\n    field(\\\"status\\\", dataValue(\\\"status\\\"))\\n  )\\n);\\n``` -->\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"v0.1.6\\n\\n## 0.6.4 - 18 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[e2bc436]\\n  - @openfn/language-common@3.1.0\\n\\n## 0.6.3 - 01 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1d60531]\\n  - @openfn/language-common@3.0.3\\n\\n## 0.6.2 - 14 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9b5a4f8]\\n  - @openfn/language-common@3.0.2\\n\\n## 0.6.1 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cf9c09f]\\n  - @openfn/language-common@3.0.1\\n\\n## 0.6.0 - 10 July 2025\\n\\n### Minor Changes\\n\\n- a4f3740: Removed map() function, exported from common\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[ea85695]\\n- Updated dependencies \\\\[3fce58f]\\n- Updated dependencies \\\\[19f2d7e]\\n- Updated dependencies \\\\[f26bd2b]\\n- Updated dependencies \\\\[19f2d7e]\\n  - @openfn/language-common@3.0.0\\n\\n## 0.5.16 - 20 June 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[28c2e8b]\\n  - @openfn/language-common@2.5.0\\n\\n## 0.5.15 - 22 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 0.5.14 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 0.5.13 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 0.5.12 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 0.5.11 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b3d7f59]\\n- Updated dependencies \\\\[2d709ff]\\n- Updated dependencies \\\\[41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 0.5.10 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 0.5.9 - 09 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[a47d8d5]\\n- Updated dependencies \\\\[9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 0.5.8 - 28 October 2024\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 0.5.7 - 18 October 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 0.5.6 - 15 October 2024\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus \\\\[33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 0.5.5 - 09 October 2024\\n\\n### Patch Changes\\n\\n- 8d866e4: Update tough-cookie dependency\\n\\n## 0.5.4 - 24 September 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 0.5.3 - 16 August 2024\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies \\\\[8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 0.5.2 - 01 August 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 0.5.1 - 25 July 2024\\n\\n### Patch Changes\\n\\n- 73d0a02: Make documentation public\\n- Updated dependencies \\\\[4c08444]\\n- Updated dependencies \\\\[73d0a02]\\n  - @openfn/language-common@1.15.1\\n\\n## 0.5.0 - 13 June 2024\\n\\n### Minor Changes\\n\\n- 3d9d564c: Add `fn` and `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 0.4.1 - 19 June 2023\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 0.4.0\\n\\n### Minor Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 0.3.4 - 20 April 2023\\n\\n### Patch Changes\\n\\n- 7cc8efc: remove FakeAdaptor references\\n\\n## 0.3.3 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 0.3.2 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 0.3.1 - 13 January 2023\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*\\\\_ @module Adaptor \\\\_/\\n\\n## 0.3.0 - 25 November 2022\\n\\n### Minor Changes\\n\\n- # c6056e8: migrate mogli\\n\\n* State gets cleaned up after the operations are finished. This means that the\\n  final state is serializable.\\n\\n  The JSForce connection object is provided by `createConnection`, and in turn\\n  `execute` ensures it is run before the user's operations.\\n\\n  The `cleanupState` reducer simply deletes the connection key from state.\\n\\n# v0.1.3\\n\\n- Bumped language-common dependency to v0.0.4.\\n\"","functions":[],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"loginUrl":{"title":"Login URL","type":"string","description":"Mogli instance login URL","format":"uri","minLength":1,"examples":[" https://www.orange-or-airtel-or-vodafone.com/api/"]},"username":{"title":"Username","type":"string","description":"Mogli instance username","minLength":1,"examples":["admin"]},"password":{"title":"Password","type":"string","description":"Mogli instance password","writeOnly":true,"minLength":1,"examples":["@secret(!)Pass"]},"securityToken":{"title":"Security Token","type":"string","description":"Mogli instance security token","writeOnly":true,"minLength":1,"examples":["dGF5bG9yOnNlY3JldA=="]},"secret":{"title":"Secret","type":"string","description":"Mogli instance secret","writeOnly":true,"minLength":1,"examples":["someotherThiNGfSECret"]}},"type":"object","additionalProperties":true,"required":["loginUrl","username","password","securityToken","secret"]}},
 [
   {
