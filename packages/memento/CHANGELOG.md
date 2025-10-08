@@ -8,6 +8,7 @@ Initial release of the adaptor
 
 - `listLibraries`: Retrieve available content libraries
 - `getFields`: Fetch field definitions and schemas
+- `listEntries`: List entries in a library
 - `getEntry`: Get single entry by ID
 - `createEntry`: Create new content entries
 - `updateEntry`: Modify existing entries
