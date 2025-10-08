@@ -1,11 +1,10 @@
+import { MockAgent, Agent, interceptors } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
 import path from 'node:path';
 import throwError from './throw-error.js';
 import { encode } from './base64.js';
-import pkg from 'undici';
-const { MockAgent, Agent, interceptors } = pkg;
 
 const agents = new Map();
 
