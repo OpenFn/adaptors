@@ -65,7 +65,7 @@ export function sendRequest(state, method, path, params = {}) {
 
 const DEFAULT_THROTTLE_TIME = 6e4; // 1 minute
 const DEFAULT_MAX_REQUESTS = 10; // 10 requests per minute
-export function handleRateLimit(requestTimes, requestConfig) {
+export async function handleRateLimit(requestTimes, requestConfig) {
   const {
     throttleTime = DEFAULT_THROTTLE_TIME,
     maxRequests = DEFAULT_MAX_REQUESTS,
