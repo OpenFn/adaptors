@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
-import { http, listEntries } from '../src';
+import { http, listEntries } from '../src/index.js';
 import configuration from '../tmp/creds.json' assert { type: 'json' };
 
 const state = { configuration };

@@ -1,4 +1,4 @@
-import { sendRequest, requestWithPagination } from './util';
+import { sendRequest, requestWithPagination } from './util.js';
 import { expandReferences } from '@openfn/language-common/util';
 
 /**

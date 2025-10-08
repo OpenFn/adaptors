@@ -1,6 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
 
-import { sendRequest } from './util';
+import { sendRequest } from './util.js';
 
 /**
  * State object

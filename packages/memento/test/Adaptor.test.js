@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
-import { mockEntries } from './helpers';
+import { mockEntries } from './helpers.js';
 import {
   listLibraries,
   listEntries,
   createEntry,
   updateEntry,
   getFields,
-} from '../src';
+} from '../src/index.js';
 import { enableMockClient } from '@openfn/language-common/util';
 
 const testServer = enableMockClient('https://api.mementodatabase.com');

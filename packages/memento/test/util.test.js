@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { expect } from 'chai';
-import { requestWithPagination, handleRateLimit } from '../src/util';
-import { mockEntriesResponse, mockRateLimitExceeded } from './helpers';
+import { requestWithPagination, handleRateLimit } from '../src/util.js';
+import { mockEntriesResponse, mockRateLimitExceeded } from './helpers.js';
 import { enableMockClient } from '@openfn/language-common/util';
 
 const testServer = enableMockClient('https://util.mementodatabase.com');

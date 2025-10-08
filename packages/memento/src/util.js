@@ -5,7 +5,6 @@ import {
   logResponse,
   assertRelativeUrl,
 } from '@openfn/language-common/util';
-import { buffer } from 'node:stream/consumers';
 
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
