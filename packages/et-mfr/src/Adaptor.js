@@ -3,7 +3,7 @@ import * as util from './Utils.js';
 
 /**
  * State object
- * @typedef {Object} HttpState
+ * @typedef {Object} ET-MFRHttpState
  * @property data - the parsed response body
  * @property response - the response from the HTTP server, including headers, statusCode, etc
  * @property references - an array of all previous data objects used in the Job
@@ -13,7 +13,7 @@ import * as util from './Utils.js';
  * Options provided to the HTTP request
  * @typedef {Object} RequestOptions
  * @public
- * @property {object|string} body - body data to append to the request.
+ * @property {object} body - body data to append to the request.
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.
  * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
@@ -29,7 +29,7 @@ import * as util from './Utils.js';
  *     id: '1071644',
  *   },
  * });
- * @example <caption>Get all facility details with search options</caption>
+ * @example <caption>Get all facility details matching a name</caption>
  * get('Facility/All', {
  *   query: {
  *     name: '010 Kombolcha Health Post',
@@ -40,7 +40,7 @@ import * as util from './Utils.js';
  * @param {string} path - Path to resource
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
- * @state {HttpState}
+ * @state {ET-MFRHttpState}
  */
 export function get(path, options) {
   return request('GET', path, null, options);
@@ -53,7 +53,7 @@ export function get(path, options) {
  *   pageNumber: 1,
  *   showPerPage: 25,
  * });
- * @example <caption>Retrieve facility details in CSV format</caption>
+ * @example <caption>Retrieve facility details as CSV strings</caption>
  * post(
  *   'Facility/ExportCSV',
  *   { name: '010 Kombolcha Health Post' },
@@ -65,11 +65,11 @@ export function get(path, options) {
  * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
- * @state {HttpState}
+ * @state {ET-MFRHttpState}
  */
 export function post(path, body, options) {
   return async state => {
-    const [resolvedPath, resolvedBody, resolvedoptions] = expandReferences(
+    const [resolvedPath, resolvedBody, resolvedOptions] = expandReferences(
       state,
       path,
       body,
@@ -79,9 +79,9 @@ export function post(path, body, options) {
     const results = await util.requestWithPagination(state, {
       resolvedPath,
       resolvedBody,
-      resolvedoptions,
+      resolvedOptions,
     });
-    return util.prepareNextState(state, { body: results, response: {} });
+    return util.prepareNextState(state, { body: results });
   };
 }
 
@@ -101,7 +101,7 @@ export function post(path, body, options) {
  * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
- * @state {HttpState}
+ * @state {ET-MFRHttpState}
  */
 export function request(method, path, body, options = {}) {
   return async state => {
@@ -113,8 +113,8 @@ export function request(method, path, body, options = {}) {
       resolvedMethod,
       resolvedPath,
       {
-        body: resolvedBody,
         ...resolvedoptions,
+        body: resolvedBody
       }
     );
     const formattedBodyResponse = response?.body?.model

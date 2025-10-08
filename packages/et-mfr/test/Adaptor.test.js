@@ -111,145 +111,6 @@ describe('get', () => {
   });
 });
 
-describe('requestWithPagination', () => {
-  const items = [...Array(200)].map((_item, index) => ({
-    id: index + 1,
-    name: `Item ${index + 1}`,
-  }));
-  it('should respect showPerPage when set', async () => {
-    testServer
-      .intercept({
-        path: '/api/Facility/GetFacilities',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      .reply(200, items.slice(0, 2));
-
-    const results = await requestWithPagination(state, {
-      resolvedPath: '/Facility/GetFacilities',
-      resolvedBody: {
-        showPerPage: 2,
-        pageNumber: 1,
-      },
-    });
-
-    expect(results).to.eql(items.slice(0, 2));
-    expect(results).to.have.length(2);
-  });
-
-  it('should use default pageNumber if not set but showPerPage is set', async () => {
-    testServer
-      .intercept({
-        path: '/api/Facility/GetFacilities',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      .reply(200, items.slice(0, 2));
-
-    const results = await requestWithPagination(state, {
-      resolvedPath: 'Facility/GetFacilities',
-      resolvedBody: {
-        showPerPage: 2,
-      },
-    });
-
-    expect(results).to.eql(items.slice(0, 2));
-    expect(results).to.have.length(2);
-  });
-
-  it('should not paginate when other data is passed with showPerPage or perNumber', async () => {
-    testServer
-      .intercept({
-        path: '/api/Facility/GetFacilities',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      .reply(200, items.slice(0, 1));
-
-    const results = await requestWithPagination(state, {
-      resolvedPath: 'Facility/GetFacilities',
-      resolvedBody: {
-        showPerPage: 2,
-        pageNumber: 1,
-        name: 'Item 1',
-      },
-    });
-
-    expect(results).to.eql(items.slice(0, 1));
-    expect(results).to.have.length(1);
-    expect(results[0]).to.have.property('name', 'Item 1');
-  });
-
-  it('should return response if result is not an array', async () => {
-    testServer
-      .intercept({
-        path: '/api/Facility/ExportCSV',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      .reply(200, 'name,id\nItem 1,1\nItem 2,2');
-
-    const results = await requestWithPagination(state, {
-      resolvedPath: 'Facility/ExportCSV',
-      resolvedBody: {
-        showPerPage: 2,
-        pageNumber: 1,
-      },
-      resolvedoptions: { parseAs: 'text' },
-    });
-
-    expect(results).to.eql('name,id\nItem 1,1\nItem 2,2');
-    expect(results).to.be.a('string');
-  });
-
-  it('should paginate to fetch all results when showPerPage and pageNumber are not set', async () => {
-    //first call
-    testServer
-      .intercept({
-        path: '/api/Facility/GetFacilities',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      .reply(200, {
-        model: items.slice(0, 100),
-      });
-    //second call
-    testServer
-      .intercept({
-        path: '/api/Facility/GetFacilities',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      .reply(200, {
-        model: items.slice(100, 200),
-      });
-
-    const results = await requestWithPagination(state, {
-      resolvedPath: 'Facility/GetFacilities',
-      resolvedBody: {},
-      resolvedoptions: {
-        defaultPageSize: 100,
-        defaultLimit: 200,
-      },
-    });
-
-    expect(results).to.eql(items);
-    expect(results).to.have.length(200);
-  });
-});
-
 describe('post', () => {
   const items = [...Array(200)].map((_item, index) => ({
     id: index + 1,
@@ -318,7 +179,7 @@ describe('post', () => {
         },
       })
       .reply(200, {
-        model: items.slice(100, 200),
+        model: items.slice(100),
       });
 
     const finalState = await post(
@@ -354,5 +215,150 @@ describe('post', () => {
     expect(finalState.data).to.eql(items.slice(0, 1));
     expect(finalState.data).to.have.length(1);
     expect(finalState.data[0]).to.have.property('name', 'Item 1');
+  });
+});
+
+describe('requestWithPagination', () => {
+  const items = [...Array(200)].map((_item, index) => ({
+    id: index + 1,
+    name: `Item ${index + 1}`,
+  }));
+  it('should respect showPerPage when set', async () => {
+    testServer
+      .intercept({
+        path: '/api/Facility/GetFacilities',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, items.slice(0, 2));
+
+    const results = await requestWithPagination(state, {
+      resolvedPath: '/Facility/GetFacilities',
+      resolvedBody: {
+        showPerPage: 2,
+        pageNumber: 1,
+      },
+    });
+
+    expect(results).to.eql(items.slice(0, 2));
+    expect(results).to.have.length(2);
+  });
+
+  it('should use default pageNumber if not set but showPerPage is set', async () => {
+    let requestBody;
+    testServer
+      .intercept({
+        path: '/api/Facility/GetFacilities',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, req => {
+        requestBody = JSON.parse(req.body);
+
+        return items.slice(0, 2);
+      });
+
+    const results = await requestWithPagination(state, {
+      resolvedPath: 'Facility/GetFacilities',
+      resolvedBody: {
+        showPerPage: 2,
+      },
+    });
+
+    expect(requestBody).to.have.property('pageNumber', 1);
+    expect(results).to.eql(items.slice(0, 2));
+    expect(results).to.have.length(2);
+  });
+
+  it('should not paginate when other data is passed with showPerPage or perNumber', async () => {
+    testServer
+      .intercept({
+        path: '/api/Facility/GetFacilities',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, items.slice(0, 1));
+
+    const results = await requestWithPagination(state, {
+      resolvedPath: 'Facility/GetFacilities',
+      resolvedBody: {
+        showPerPage: 2,
+        pageNumber: 1,
+        name: 'Item 1',
+      },
+    });
+
+    expect(results).to.eql(items.slice(0, 1));
+    expect(results).to.have.length(1);
+    expect(results[0]).to.have.property('name', 'Item 1');
+  });
+
+  it('should return response if result is not an array', async () => {
+    testServer
+      .intercept({
+        path: '/api/Facility/ExportCSV',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, 'name,id\nItem 1,1\nItem 2,2');
+
+    const results = await requestWithPagination(state, {
+      resolvedPath: 'Facility/ExportCSV',
+      resolvedBody: {
+        showPerPage: 2,
+        pageNumber: 1,
+      },
+      resolvedOptions: { parseAs: 'text' },
+    });
+
+    expect(results).to.eql('name,id\nItem 1,1\nItem 2,2');
+    expect(results).to.be.a('string');
+  });
+
+  it('should paginate to fetch all results when showPerPage and pageNumber are not set', async () => {
+    //first call
+    testServer
+      .intercept({
+        path: '/api/Facility/GetFacilities',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, {
+        model: items.slice(0, 100),
+      });
+    //second call
+    testServer
+      .intercept({
+        path: '/api/Facility/GetFacilities',
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, {
+        model: items.slice(100, 200),
+      });
+
+    const results = await requestWithPagination(state, {
+      resolvedPath: 'Facility/GetFacilities',
+      resolvedBody: {},
+      resolvedOptions: {
+        defaultPageSize: 100,
+        defaultLimit: 200,
+      },
+    });
+
+    expect(results).to.eql(items);
+    expect(results).to.have.length(200);
   });
 });

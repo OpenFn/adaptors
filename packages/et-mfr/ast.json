@@ -22,7 +22,7 @@
           {
             "title": "example",
             "description": "get('Facility/All', {\n  query: {\n    name: '010 Kombolcha Health Post',\n  },\n});",
-            "caption": "Get all facility details with search options"
+            "caption": "Get all facility details matching a name"
           },
           {
             "title": "function",
@@ -62,7 +62,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{ET-MFRHttpState}"
           }
         ]
       },
@@ -86,7 +86,7 @@
           {
             "title": "example",
             "description": "post(\n  'Facility/ExportCSV',\n  { name: '010 Kombolcha Health Post' },\n  { parseAs: 'text' }\n);",
-            "caption": "Retrieve facility details in CSV format"
+            "caption": "Retrieve facility details as CSV strings"
           },
           {
             "title": "function",
@@ -135,7 +135,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{ET-MFRHttpState}"
           }
         ]
       },
@@ -212,7 +212,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{ET-MFRHttpState}"
           }
         ]
       },

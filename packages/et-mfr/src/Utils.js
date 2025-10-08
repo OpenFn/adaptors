@@ -21,7 +21,7 @@ export const prepareNextState = (state, response) => {
 
 export const requestWithPagination = async (
   state,
-  { resolvedPath, resolvedBody = {}, resolvedoptions = {} },
+  { resolvedPath, resolvedBody = {}, resolvedOptions = {} },
   method = 'POST'
 ) => {
   const results = [];
@@ -31,7 +31,7 @@ export const requestWithPagination = async (
     defaultLimit = 10000, // internal not documented
     defaultPageSize = 200, // internal not documented
     ...options
-  } = resolvedoptions;
+  } = resolvedOptions;
 
   const userProvidedPageSize = resolvedBody?.showPerPage;
 
@@ -54,7 +54,7 @@ export const requestWithPagination = async (
         pageNumber: nextPage,
         showPerPage: fetchSize,
       },
-      ...options,
+       ...options,
     });
 
     const model = response?.body?.model;
@@ -101,6 +101,7 @@ export const request = (configuration = {}, method, path, options = {}) => {
       ...headers,
     },
   };
+  
 
   const safePath = nodepath.join(`/api/${path}`);
 
