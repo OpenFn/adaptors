@@ -59,7 +59,6 @@ const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
       /* no-op */
     }
 
-    // agents.set(origin, agent);
     agents.set(key, agent);
   }
 
