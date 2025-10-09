@@ -114,7 +114,7 @@ export function request(method, path, body, options = {}) {
       resolvedPath,
       {
         ...resolvedoptions,
-        body: resolvedBody
+        body: resolvedBody,
       }
     );
     const formattedBodyResponse = response?.body?.model
@@ -128,6 +128,9 @@ export function request(method, path, body, options = {}) {
 }
 
 export {
+  log,
+  assert,
+  parseCsv,
   as,
   combine,
   cursor,
