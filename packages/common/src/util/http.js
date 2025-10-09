@@ -1,10 +1,11 @@
-import { MockAgent, Agent, interceptors } from 'undici';
 import { getReasonPhrase } from 'http-status-codes';
 import { Readable } from 'node:stream';
 import querystring from 'node:querystring';
 import path from 'node:path';
 import throwError from './throw-error.js';
 import { encode } from './base64.js';
+import pkg from 'undici';
+const { MockAgent, Agent, interceptors } = pkg;
 
 const agents = new Map();
 
@@ -36,33 +37,28 @@ export const logResponse = response => {
 };
 
 const generateAgentKey = (baseUrl, agentOpts) => {
-  const key = `${baseUrl}|${Object.values(agentOpts).sort().join('.')}`;
+  const optsString = Object.values(agentOpts).sort().join('.');
+  const key = optsString ? `${baseUrl}|${optsString}` : baseUrl;
   return key;
 };
 
 const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
   const key = generateAgentKey(origin, agentOpts);
-  let agent = agents.get(key) ?? agents.get(origin);
 
-  if (!agent) {
-    agent = new Agent({ connect: tls, ...agentOpts });
-
-    try {
-      const redirect = interceptors?.redirect;
-      if (redirect)
-        agent = agent.compose(
-          redirect({
-            maxRedirections: agentOpts.maxRedirections ?? 5,
-          })
-        );
-    } catch {
-      /* no-op */
-    }
+  if (!agents.has(origin) && !agents.has(key)) {
+    const agent = new Agent({
+      connect: tls,
+      ...agentOpts,
+    }).compose(
+      interceptors.redirect({
+        maxRedirections: agentOpts.maxRedirections,
+      })
+    );
 
     agents.set(key, agent);
   }
 
-  return agent;
+  return agents.get(key) || agents.get(origin);
 };
 
 export const enableMockClient = (baseUrl, options = {}) => {
@@ -77,7 +73,8 @@ export const enableMockClient = (baseUrl, options = {}) => {
   const mockAgent = new MockAgent({ connections: 1 });
   mockAgent.disableNetConnect();
   const client = mockAgent.get(baseUrl);
-  if (!agents.has(key)) {
+
+  if (!agents.has(baseUrl) && !agents.has(key)) {
     if (defaultContentType) {
       const _intercept = client.intercept;
       // because so many unit test use mock json,
@@ -123,7 +120,6 @@ export const enableMockClient = (baseUrl, options = {}) => {
     }
 
     agents.set(key, client);
-    agents.set(baseUrl, client);
   }
   return client;
 };
