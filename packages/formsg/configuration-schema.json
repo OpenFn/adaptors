@@ -1,36 +1,31 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
-    "baseUrl": {
-      "title": "Base URL",
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "description": "The base URL (http://www.example.com)",
-      "format": "uri",
-      "minLength": 1,
-      "examples": ["https://example.com"]
-    },
-    "username": {
-      "title": "Username",
+    "mode": {
+      "title": "SDK Mode",
       "type": "string",
-      "description": "Username",
-      "examples": ["test@openfn.org"]
+      "enum": ["production", "staging", "development"],
+      "description": "FormSG SDK mode (production, staging, or development)",
+      "default": "development",
+      "examples": ["development"]
     },
-    "password": {
-      "title": "Password",
+    "formSecretKey": {
+      "title": "Form Secret Key",
       "type": "string",
-      "description": "Password",
+      "description": "Your form's secret key downloaded from FormSG upon form creation",
       "writeOnly": true,
-      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+      "minLength": 1,
+      "examples": ["your-secret-key-here"]
+    },
+    "webhookEndpoint": {
+      "title": "Webhook Endpoint",
+      "type": "string",
+      "description": "The URI of your webhook endpoint (used for signature verification)",
+      "format": "uri",
+      "examples": ["https://my-domain.com/submissions"]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["password", "username"]
+  "required": ["formSecretKey"]
 }
