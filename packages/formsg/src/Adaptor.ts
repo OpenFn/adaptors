@@ -1,4 +1,5 @@
 import { expandReferences } from '@openfn/language-common/util';
+import { composeNextState } from '@openfn/language-common';
 import formsgSdk from '@opengovsg/formsg-sdk';
 import type {
   PackageMode,
@@ -55,7 +56,7 @@ export interface DecryptOptions {
  * @example
  * decryptSubmission($.data, {
  *   verifySignature: true,
- *   signatureHeader: $.headers['x-formsg-signature']
+ *   signatureHeader: $.request.headers['x-formsg-signature']
  * })
  * @function
  * @public
@@ -117,19 +118,14 @@ export function decryptSubmission(
     }
 
     console.log('✓ Submission decrypted successfully');
-
-    return {
-      ...state,
-      data: decryptedSubmission,
-      references: [state.data, ...(state.references || [])],
-    };
+    return composeNextState(state, decryptedSubmission);
   };
 }
 
 /**
  * Verify a FormSG webhook signature
  * @example
- * verifyWebhook($.headers['x-formsg-signature'])
+ * verifyWebhook($.request.headers['x-formsg-signature'])
  * @function
  * @public
  * @param {string} signatureHeader - The X-FormSG-Signature header value
@@ -153,21 +149,17 @@ export function verifyWebhook(signatureHeader: string): Operation {
     formsg.webhooks.authenticate(resolvedSignature, webhookEndpoint);
     console.log('✓ Webhook signature verified successfully');
 
-    return {
-      ...state,
-      data: {
-        verified: true,
-        signature: resolvedSignature,
-      },
-      references: [state.data, ...(state.references || [])],
-    };
+    return composeNextState(state, {
+      verified: true,
+      signature: resolvedSignature,
+    });
   };
 }
 
 /**
  * Process a FormSG webhook (verify and decrypt in one step)
  * @example
- * processWebhook($.data, $.headers['x-formsg-signature'])
+ * processWebhook($.data, $.request.headers['x-formsg-signature'])
  * @function
  * @public
  * @param {DecryptParams} submissionData - The encrypted submission data from FormSG webhook
@@ -190,6 +182,7 @@ export function processWebhook(
 }
 
 export {
+  assert,
   cursor,
   dataPath,
   dataValue,
