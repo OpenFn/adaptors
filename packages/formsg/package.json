@@ -13,8 +13,9 @@
   },
   "scripts": {
     "build": "pnpm clean && build-adaptor formsg src dts docs",
-    "test": "TS_NODE_TRANSPILE_ONLY=true mocha --experimental-specifier-resolution=node --no-warnings --loader=ts-node/esm test/**/*.test.ts",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "test": "pnpm test:integration",
+    "test:watch": "TS_NODE_TRANSPILE_ONLY=true mocha -w --experimental-specifier-resolution=node --no-warnings --loader=ts-node/esm test/integration.test.ts",
+    "test:integration": "TS_NODE_TRANSPILE_ONLY=true mocha --experimental-specifier-resolution=node --no-warnings --loader=ts-node/esm test/integration.test.ts",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
     "lint": "eslint src"
