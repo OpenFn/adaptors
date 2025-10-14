@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-et-mfr",
   "version": "1.0.0",
-  "description": "OpenFn et-mfr adaptor",
+  "description": "OpenFn adaptor for Ethiopia MFR system",
   "type": "module",
   "exports": {
     ".": {

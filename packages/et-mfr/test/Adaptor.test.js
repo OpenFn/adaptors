@@ -14,7 +14,7 @@ const state = {
 };
 
 describe('request', () => {
-  it('makes a post request to the right endpoint with options', async () => {
+  it('should return a string response if parseAs is text', async () => {
     // Setup a mock endpoint
     testServer
       .intercept({
@@ -38,8 +38,7 @@ describe('request', () => {
     expect(finalState.data).to.be.a('string');
   });
 
-  it('makes a post request to the right endpoint', async () => {
-    // Setup a mock endpoint
+  it('should return a list of facilities', async () => {
     testServer
       .intercept({
         path: '/api/Facility/GetFacilities',
