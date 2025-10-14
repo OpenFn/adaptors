@@ -17,8 +17,7 @@
     "test:watch": "TS_NODE_TRANSPILE_ONLY=true mocha -w --experimental-specifier-resolution=node --no-warnings --loader=ts-node/esm test/**/*.test.ts --exclude test/integration.test.ts --recursive",
     "test:integration": "TS_NODE_TRANSPILE_ONLY=true mocha --experimental-specifier-resolution=node --no-warnings --loader=ts-node/esm test/integration.test.ts",
     "clean": "rimraf dist types docs",
-    "pack": "pnpm pack --pack-destination ../../dist",
-    "lint": "eslint src"
+    "pack": "pnpm pack --pack-destination ../../dist"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
