@@ -686,9 +686,6 @@ importers:
       typescript:
         specifier: 5.9.2
         version: 5.9.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/ghana-bdr:
     dependencies:
