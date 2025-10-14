@@ -51,11 +51,11 @@ export interface DecryptOptions {
 /**
  * Decrypt a FormSG submission
  * @example
- * decryptSubmission(state.data)
+ * decryptSubmission($.data)
  * @example
- * decryptSubmission(state.data, {
+ * decryptSubmission($.data, {
  *   verifySignature: true,
- *   signatureHeader: state.headers['x-formsg-signature']
+ *   signatureHeader: $.headers['x-formsg-signature']
  * })
  * @function
  * @public
@@ -129,7 +129,7 @@ export function decryptSubmission(
 /**
  * Verify a FormSG webhook signature
  * @example
- * verifyWebhook(state.headers['x-formsg-signature'])
+ * verifyWebhook($.headers['x-formsg-signature'])
  * @function
  * @public
  * @param {string} signatureHeader - The X-FormSG-Signature header value
@@ -167,7 +167,7 @@ export function verifyWebhook(signatureHeader: string): Operation {
 /**
  * Process a FormSG webhook (verify and decrypt in one step)
  * @example
- * processWebhook(state.data, state.headers['x-formsg-signature'])
+ * processWebhook($.data, $.headers['x-formsg-signature'])
  * @function
  * @public
  * @param {DecryptParams} submissionData - The encrypted submission data from FormSG webhook
