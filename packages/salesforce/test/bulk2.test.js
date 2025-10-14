@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
-import { bulk2, setMockConnection } from '../src/index';
+import { bulk2, setMockConnection } from '../src/index.js';
 
 describe('bulk2', () => {
   beforeEach(() => {

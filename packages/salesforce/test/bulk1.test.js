@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
-import { bulk1, setMockConnection } from '../src/index';
+import { bulk1, setMockConnection } from '../src/index.js';
 
 describe('bulk1', () => {
   it('should handle bulk insert operations with success and failure scenarios', done => {
