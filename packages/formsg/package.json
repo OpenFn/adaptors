@@ -12,7 +12,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && build-adaptor formsg",
+    "build": "pnpm clean && build-adaptor formsg src dts docs",
     "test": "TS_NODE_TRANSPILE_ONLY=true mocha --experimental-specifier-resolution=node --no-warnings --loader=ts-node/esm test/**/*.test.ts",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
