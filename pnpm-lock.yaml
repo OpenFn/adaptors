@@ -650,6 +650,43 @@ importers:
         specifier: ^5.29.0
         version: 5.29.0
 
+  packages/formsg:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+      '@opengovsg/formsg-sdk':
+        specifier: ^0.15.0
+        version: 0.15.0
+    devDependencies:
+      '@types/chai':
+        specifier: ^5.2.2
+        version: 5.2.2
+      '@types/mocha':
+        specifier: ^10.0.10
+        version: 10.0.10
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      mocha:
+        specifier: ^10.7.3
+        version: 10.8.2
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      ts-node:
+        specifier: 10.9.1
+        version: 10.9.1(@swc/core@1.13.5)(@types/node@18.17.5)(typescript@5.9.2)
+      typescript:
+        specifier: 5.9.2
+        version: 5.9.2
+
   packages/ghana-bdr:
     dependencies:
       '@openfn/language-common':
@@ -3719,6 +3756,9 @@ packages:
   '@openfn/language-fhir@5.0.9':
     resolution: {integrity: sha512-EfRAWy5hMZskTVDgoo0pzqrVIC0Xc8MBw+hM5RdJAmCcmZlHWnAAR0GSQmtMEOya70yNUMpoAZADc/wq9Nf3xQ==}
 
+  '@opengovsg/formsg-sdk@0.15.0':
+    resolution: {integrity: sha512-TOfeu4U8h0jZNEPZGzdotgOVSZCPDbc27cU6heTe4KmdUg8uUwL8W1KEGQlxHBB1phLC+D/9bZu2/Ga8X1/TNg==}
+
   '@paralleldrive/cuid2@2.2.2':
     resolution: {integrity: sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==}
 
@@ -4023,6 +4063,9 @@ packages:
   '@types/chai@4.3.20':
     resolution: {integrity: sha512-/pC9HAB5I/xMlc5FP77qjCnI16ChlJfW0tGa0IUcFn38VJrTV6DeZ60NU5KZBtaOZqjdpwTWohz5HU1RrhiYxQ==}
 
+  '@types/chai@5.2.2':
+    resolution: {integrity: sha512-8kB30R7Hwqf40JPiKhVzodJs2Qc1ZJ5zuT3uzw5Hq/dhNCl3G3l83jfpdI1e20BP348+fV7VIL/+FxaXkqBmWg==}
+
   '@types/concat-stream@1.6.1':
     resolution: {integrity: sha512-eHE4cQPoj6ngxBZMvVf6Hw7Mh4jMW4U9lpGmS5GBPB9RYxlFg+CHaVN7ErNY4W9XfLIEn20b4VDYaIrbq0q4uA==}
 
@@ -4031,6 +4074,9 @@ packages:
 
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
+
+  '@types/deep-eql@4.0.2':
+    resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
 
   '@types/eslint-scope@3.7.7':
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
@@ -8313,12 +8359,14 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   q@2.0.3:
     resolution: {integrity: sha512-gv6vLGcmAOg96/fgo3d9tvA4dJNZL3fMyBqVRrGxQ+Q/o4k9QzbJ3NQF9cOO/71wRodoXhaPgphvMFU68qVAJQ==}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@2.3.3:
@@ -9335,8 +9383,14 @@ packages:
   tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
 
+  tweetnacl-util@0.15.1:
+    resolution: {integrity: sha512-RKJBIj8lySrShN4w6i/BonWp2Z/uxwC3h4y7xsRrpP59ZboCd0GpEVsOnMDYLMmKBpYhb5TgHzZXy7wTfYFBRw==}
+
   tweetnacl@0.14.5:
     resolution: {integrity: sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==}
+
+  tweetnacl@1.0.3:
+    resolution: {integrity: sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==}
 
   twilio@3.84.1:
     resolution: {integrity: sha512-Q/xaPoayTj+bgJdnUgpE+EiB/VoNOG+byDFdlDej0FgxiHLgXKliZfVv6boqHPWvC1k7Dt0AK96OBFZ0P55QQg==}
@@ -11328,6 +11382,14 @@ snapshots:
       '@openfn/language-common': 3.1.0
       undici: 5.29.0
 
+  '@opengovsg/formsg-sdk@0.15.0':
+    dependencies:
+      axios: 1.12.2
+      tweetnacl: 1.0.3
+      tweetnacl-util: 0.15.1
+    transitivePeerDependencies:
+      - debug
+
   '@paralleldrive/cuid2@2.2.2':
     dependencies:
       '@noble/hashes': 1.8.0
@@ -11562,6 +11624,10 @@ snapshots:
 
   '@types/chai@4.3.20': {}
 
+  '@types/chai@5.2.2':
+    dependencies:
+      '@types/deep-eql': 4.0.2
+
   '@types/concat-stream@1.6.1':
     dependencies:
       '@types/node': 18.17.5
@@ -11571,6 +11637,8 @@ snapshots:
   '@types/debug@4.1.12':
     dependencies:
       '@types/ms': 2.1.0
+
+  '@types/deep-eql@4.0.2': {}
 
   '@types/eslint-scope@3.7.7':
     dependencies:
@@ -17926,7 +17994,11 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
+  tweetnacl-util@0.15.1: {}
+
   tweetnacl@0.14.5: {}
+
+  tweetnacl@1.0.3: {}
 
   twilio@3.84.1:
     dependencies:

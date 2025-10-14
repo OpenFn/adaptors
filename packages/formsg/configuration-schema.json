@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "mode": {
+      "title": "SDK Mode",
+      "type": "string",
+      "enum": ["production", "staging", "development"],
+      "description": "FormSG SDK mode (production, staging, or development)",
+      "default": "development",
+      "examples": ["development"]
+    },
+    "formSecretKey": {
+      "title": "Form Secret Key",
+      "type": "string",
+      "description": "Your form's secret key downloaded from FormSG upon form creation",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": ["your-secret-key-here"]
+    },
+    "webhookEndpoint": {
+      "title": "Webhook Endpoint",
+      "type": "string",
+      "description": "The URI of your webhook endpoint (used for signature verification)",
+      "format": "uri",
+      "examples": ["https://my-domain.com/submissions"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["formSecretKey"]
+}
