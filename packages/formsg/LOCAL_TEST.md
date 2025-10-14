@@ -12,7 +12,7 @@ pnpm build
 
 ## Step 2: Set environment variable
 ```bash
-export OPENFN_ADAPTORS_REPO=/Users/devbox/code/adaptors
+export OPENFN_ADAPTORS_REPO=~/path/to/adaptors
 ```
 
 ## Step 3: Create test files
