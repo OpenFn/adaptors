@@ -33292,6 +33292,311 @@
     "kind": "external-function"
   }
 ],
+{"name":"formsg","adaptor":"@openfn/language-formsg","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#decryptsubmission\\\">decryptSubmission(submissionData, options)</a></dt>\\n<dt>\\n    <a href=\\\"#processwebhook\\\">processWebhook(submissionData, signatureHeader)</a></dt>\\n<dt>\\n    <a href=\\\"#verifywebhook\\\">verifyWebhook(signatureHeader)</a></dt>\\n</dl>\\n\\n\\n## Functions\\n### decryptSubmission\\n\\n<p><code>decryptSubmission(submissionData, options) ⇒ Operation</code></p>\\n\\nDecrypt a FormSG submission\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| submissionData | <code>DecryptParams</code> | The encrypted submission data from FormSG webhook |\\n| options | [<code>DecryptOptions</code>](#decryptoptions) | Options for decryption |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The current data/response |\\n| configuration | FormSG configuration |\\n| references | Array of previous data objects |\\n\\n**Example**\\n```js\\ndecryptSubmission($.data)\\n```\\n**Example**\\n```js\\ndecryptSubmission($.data, {\\n  verifySignature: true,\\n  signatureHeader: $.request.headers['x-formsg-signature']\\n})\\n```\\n\\n* * *\\n\\n### processWebhook\\n\\n<p><code>processWebhook(submissionData, signatureHeader) ⇒ Operation</code></p>\\n\\nProcess a FormSG webhook (verify and decrypt in one step)\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| submissionData | <code>DecryptParams</code> | The encrypted submission data from FormSG webhook |\\n| signatureHeader | <code>string</code> | The X-FormSG-Signature header value |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The current data/response |\\n| configuration | FormSG configuration |\\n| references | Array of previous data objects |\\n\\n**Example**\\n```js\\nprocessWebhook($.data, $.request.headers['x-formsg-signature'])\\n```\\n\\n* * *\\n\\n### verifyWebhook\\n\\n<p><code>verifyWebhook(signatureHeader) ⇒ Operation</code></p>\\n\\nVerify a FormSG webhook signature\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| signatureHeader | <code>string</code> | The X-FormSG-Signature header value |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The current data/response |\\n| configuration | FormSG configuration |\\n| references | Array of previous data objects |\\n\\n**Example**\\n```js\\nverifyWebhook($.request.headers['x-formsg-signature'])\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### DecryptOptions\\n\\nOptions for decrypting FormSG submissions\\n\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [verifySignature] | <code>boolean</code> | <code>false</code> | Whether to verify webhook signature |\\n| [signatureHeader] | <code>string</code> |  | The X-FormSG-Signature header value |\\n\\n\\n* * *\\n\\n### FormSGConfiguration\\n\\nConfiguration for FormSG adaptor\\n\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| formSecretKey | <code>string</code> |  | Your form's secret key from FormSG |\\n| [mode] | <code>PackageMode</code> | <code>&#x27;development&#x27;</code> | SDK mode: 'production', 'staging', or 'development' |\\n| [webhookEndpoint] | <code>string</code> |  | The URI of your webhook endpoint |\\n\\n\\n* * *\\n\\n### FormSGState\\n\\nState object for FormSG operations\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| data | <code>Object</code> | The current data/response |\\n| configuration | [<code>FormSGConfiguration</code>](#formsgconfiguration) | FormSG configuration |\\n| references | <code>Array</code> | Array of previous data objects |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-formsg <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for decrypting and verifying FormSG webhook submissions.\\n\\n## Overview\\n\\nThis adaptor wraps the [@opengovsg/formsg-sdk](https://github.com/opengovsg/formsg-javascript-sdk) to provide easy decryption and verification of FormSG form submissions in OpenFn workflows.\\n\\n**Key Features:**\\n- Decrypt end-to-end encrypted FormSG submissions\\n- Verify webhook signatures (for official FormSG deployments)\\n- Support for multiple FormSG environments (production, staging, development)\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/formsg-docs) for full technical documentation.\\n\\n### Configuration\\n\\nView the [configuration-schema](https://docs.openfn.org/adaptors/packages/formsg-configuration-schema/) for required and optional `configuration` properties.\\n\\n**Sample configuration:**\\n```json\\n{\\n  \\\"formSecretKey\\\": \\\"your-form-secret-key-from-formsg\\\",\\n  \\\"mode\\\": \\\"development\\\",\\n  \\\"webhookEndpoint\\\": \\\"https://your-domain.com/webhook\\\"\\n}\\n```\\n\\n## Usage Examples\\n\\n### Decrypt a submission (without signature verification)\\n\\n```js\\ndecryptSubmission(state.data);\\n```\\n\\n### Decrypt with signature verification\\n\\n```js\\ndecryptSubmission(state.data, {\\n  verifySignature: true,\\n  signatureHeader: state.headers['x-formsg-signature']\\n});\\n```\\n\\n### Process webhook (verify and decrypt in one step)\\n\\n```js\\nprocessWebhook(state.data, state.headers['x-formsg-signature']);\\n```\\n\\n## Important Limitations\\n\\n### Webhook Signature Verification\\n\\nThe FormSG SDK uses **hardcoded public signing keys** for webhook signature verification. This means:\\n\\n✅ **Signature verification works with:**\\n- Official FormSG production\\n- Official FormSG staging\\n- FormSG deployed in `development` mode\\n- FormSG deployed in `test` mode\\n\\n❌ **Signature verification does NOT work with:**\\n- Custom FormSG deployments using different signing keys\\n\\n### Why This Limitation Exists\\n\\nThe signing keys in the SDK (see [signing-keys.ts](https://github.com/opengovsg/formsg-javascript-sdk/blob/develop/src/resource/signing-keys.ts)) are used to verify that webhooks genuinely come from official FormSG servers. Custom deployments use different signing keys that aren't in the SDK.\\n\\n### Decryption Always Works\\n\\n**Form submission decryption works with ANY FormSG deployment** (official or custom), as long as you have the form's secret key. The limitation only applies to webhook signature verification.\\n\\n### Workarounds for Custom Deployments\\n\\nIf you're running a custom FormSG deployment:\\n\\n1. **Use development/test mode** - Deploy your FormSG instance using the public `development` or `test` signing keys from the SDK\\n2. **Skip signature verification** - Use `decryptSubmission()` without the `verifySignature` option\\n3. **Fork the SDK** - Modify the SDK to inject your custom public signing key (or contribute back via PR!)\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the \\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\\n### Testing Locally\\n\\nSee [LOCAL_TEST.md](LOCAL_TEST.md) for instructions on testing this adaptor locally with the OpenFn CLI.\\n\\n## Resources\\n\\n- [FormSG JavaScript SDK](https://github.com/opengovsg/formsg-javascript-sdk)\\n- [FormSG Documentation](https://form.gov.sg)\\n- [FormSG Self-hosting Documentation](https://international.open.gov.sg/self-hosting/formsg)\\n- [OpenFn Documentation](https://docs.openfn.org)\\n\"","changelog":"\"# @openfn/language-formsg\\n\\n## 1.0.0\\n\\nInitial release.\\n\\n### Features\\n\\n- `decryptSubmission()` - Decrypt FormSG end-to-end encrypted submissions\\n- `verifyWebhook()` - Verify FormSG webhook signatures\\n- `processWebhook()` - Verify and decrypt in one step\\n- Support for `production`, `staging`, and `development` modes\\n- TypeScript implementation with full type safety\\n- Integration with @opengovsg/formsg-sdk v0.15.0\\n\\n### Known Limitations\\n\\n- Webhook signature verification only works with official FormSG deployments or dev/test mode (the FormSG SDK uses hardcoded signing keys for verification)\\n- Form decryption works with any FormSG deployment (uses form-specific secret keys)\\n\"","functions":["decryptSubmission","processWebhook","verifyWebhook"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"mode":{"title":"SDK Mode","type":"string","enum":["production","staging","development"],"description":"FormSG SDK mode (production, staging, or development)","default":"development","examples":["development"]},"formSecretKey":{"title":"Form Secret Key","type":"string","description":"Your form's secret key downloaded from FormSG upon form creation","writeOnly":true,"minLength":1,"examples":["your-secret-key-here"]},"webhookEndpoint":{"title":"Webhook Endpoint","type":"string","description":"The URI of your webhook endpoint (used for signature verification)","format":"uri","examples":["https://my-domain.com/submissions"]}},"type":"object","additionalProperties":true,"required":["formSecretKey"]}},
+[
+  {
+    "id": "DecryptOptions",
+    "longname": "DecryptOptions",
+    "name": "DecryptOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options for decrypting FormSG submissions",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": false,
+        "description": "Whether to verify webhook signature",
+        "name": "verifySignature"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "description": "The X-FormSG-Signature header value",
+        "name": "signatureHeader"
+      }
+    ],
+    "meta": {
+      "lineno": 41,
+      "filename": "Adaptor.ts",
+      "path": "/home/runner/work/adaptors/adaptors/packages/formsg/src"
+    },
+    "order": 2,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "decryptSubmission",
+    "longname": "decryptSubmission",
+    "name": "decryptSubmission",
+    "kind": "function",
+    "scope": "global",
+    "description": "Decrypt a FormSG submission",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "DecryptParams"
+          ]
+        },
+        "description": "The encrypted submission data from FormSG webhook",
+        "name": "submissionData"
+      },
+      {
+        "type": {
+          "names": [
+            "DecryptOptions"
+          ]
+        },
+        "description": "Options for decryption",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "decryptSubmission($.data)",
+      "decryptSubmission($.data, {\n  verifySignature: true,\n  signatureHeader: $.request.headers['x-formsg-signature']\n})"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 52,
+      "filename": "Adaptor.ts",
+      "path": "/home/runner/work/adaptors/adaptors/packages/formsg/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "FormSGState"
+      }
+    ],
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "FormSGConfiguration",
+    "longname": "FormSGConfiguration",
+    "name": "FormSGConfiguration",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Configuration for FormSG adaptor",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Your form's secret key from FormSG",
+        "name": "formSecretKey"
+      },
+      {
+        "type": {
+          "names": [
+            "PackageMode"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "'development'",
+        "description": "SDK mode: 'production', 'staging', or 'development'",
+        "name": "mode"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "description": "The URI of your webhook endpoint",
+        "name": "webhookEndpoint"
+      }
+    ],
+    "meta": {
+      "lineno": 15,
+      "filename": "Adaptor.ts",
+      "path": "/home/runner/work/adaptors/adaptors/packages/formsg/src"
+    },
+    "order": 0,
+    "level": 0
+  },
+  {
+    "id": "FormSGState",
+    "longname": "FormSGState",
+    "name": "FormSGState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object for FormSG operations",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "The current data/response",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "FormSGConfiguration"
+          ]
+        },
+        "description": "FormSG configuration",
+        "name": "configuration"
+      },
+      {
+        "type": {
+          "names": [
+            "Array"
+          ]
+        },
+        "description": "Array of previous data objects",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 28,
+      "filename": "Adaptor.ts",
+      "path": "/home/runner/work/adaptors/adaptors/packages/formsg/src"
+    },
+    "order": 1,
+    "level": 0
+  },
+  {
+    "id": "processWebhook",
+    "longname": "processWebhook",
+    "name": "processWebhook",
+    "kind": "function",
+    "scope": "global",
+    "description": "Process a FormSG webhook (verify and decrypt in one step)",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "DecryptParams"
+          ]
+        },
+        "description": "The encrypted submission data from FormSG webhook",
+        "name": "submissionData"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The X-FormSG-Signature header value",
+        "name": "signatureHeader"
+      }
+    ],
+    "examples": [
+      "processWebhook($.data, $.request.headers['x-formsg-signature'])"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 159,
+      "filename": "Adaptor.ts",
+      "path": "/home/runner/work/adaptors/adaptors/packages/formsg/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "FormSGState"
+      }
+    ],
+    "order": 5,
+    "level": 0
+  },
+  {
+    "id": "verifyWebhook",
+    "longname": "verifyWebhook",
+    "name": "verifyWebhook",
+    "kind": "function",
+    "scope": "global",
+    "description": "Verify a FormSG webhook signature",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The X-FormSG-Signature header value",
+        "name": "signatureHeader"
+      }
+    ],
+    "examples": [
+      "verifyWebhook($.request.headers['x-formsg-signature'])"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 125,
+      "filename": "Adaptor.ts",
+      "path": "/home/runner/work/adaptors/adaptors/packages/formsg/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "FormSGState"
+      }
+    ],
+    "order": 4,
+    "level": 0
+  }
+],
 {"name":"ghana-bdr","adaptor":"@openfn/language-ghana-bdr","version":"0.1.13","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, query)</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, data)</a></dt>\\n<dt>\\n    <a href=\\\"#sendbirthnotification\\\">sendBirthNotification(data)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### get\\n\\n<p><code>get(path, query) ⇒ Operation</code></p>\\n\\nMake a GET request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nget(\\\"patient\\\");\\n```\\n\\n* * *\\n\\n### post\\n\\n<p><code>post(path, data) ⇒ Operation</code></p>\\n\\nMake a POST request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\npost(\\\"patient\\\", { \\\"name\\\":\\\"Bukayo\\\" });\\n```\\n\\n* * *\\n\\n### sendBirthNotification\\n\\n<p><code>sendBirthNotification(data) ⇒ Operation</code></p>\\n\\nGenerate a birth certificate\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | <code>object</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nsendBirthNotification({\\n  registry_code: 'abc123',\\n  child: {},\\n  mother: {},\\n  father: {},\\n})\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-ghana-bdr <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the Ghana\\nBirths and Deaths Registration (BDR) API.\\n\\nThere is no public documentation for the Ghana HBDRP, but the the BDR itself can\\nbe reached at https://bdr.gov.gh/\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/ghana-bdr-docs)\\nfor full technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/ghana-bdr-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-ghana-bdr\\n\\n## 0.1.13 - 18 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[e2bc436]\\n  - @openfn/language-common@3.1.0\\n\\n## 0.1.12 - 01 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1d60531]\\n  - @openfn/language-common@3.0.3\\n\\n## 0.1.11 - 14 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9b5a4f8]\\n  - @openfn/language-common@3.0.2\\n\\n## 0.1.10 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cf9c09f]\\n  - @openfn/language-common@3.0.1\\n\\n## 0.1.9 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[ea85695]\\n- Updated dependencies \\\\[3fce58f]\\n- Updated dependencies \\\\[19f2d7e]\\n- Updated dependencies \\\\[f26bd2b]\\n- Updated dependencies \\\\[19f2d7e]\\n  - @openfn/language-common@3.0.0\\n\\n## 0.1.8 - 20 June 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[28c2e8b]\\n  - @openfn/language-common@2.5.0\\n\\n## 0.1.7 - 22 April 2025\\n\\n### Patch Changes\\n\\n- 99e4b48: - Better handling of HTML content in http requests\\n  - When logging HTTP requests, include query parameters\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 0.1.6 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 0.1.5 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 0.1.4 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 0.1.3 - 31 January 2025\\n\\n### Patch Changes\\n\\n- 7c677a5: Update mock and examples for bdr, add auth to test\\n\\n## 0.1.2 - 29 January 2025\\n\\n### Patch Changes\\n\\n- 5e3b3cf: Updates to the mock endpoint, these are still moving targets\\n\\n## 0.1.1 - 28 January 2025\\n\\n### Patch Changes\\n\\n- 8fb854a: Swapped inline example for BDR and NIA\\n\\n## 0.1.0 - 28 January 2025\\n\\n- Add `get()` operation\\n- Add `post()` operation\\n- Add `sendBirthNotification()` operation\\n\"","functions":["get","post","sendBirthNotification"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"The base URL (http://www.example.com)","format":"uri","minLength":1,"examples":["https://example.com"]},"username":{"title":"Username","type":"string","description":"Username","examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]}},"type":"object","additionalProperties":true,"required":["password","username","baseUrl"]}},
 [
   {
