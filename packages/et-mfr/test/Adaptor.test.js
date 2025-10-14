@@ -81,6 +81,31 @@ describe('get', () => {
     ]);
     expect(finalState.data).to.have.length(2);
   });
+  it('makes a get request with authorization header', async () => {
+    let capturedHeaders;
+    testServer
+      .intercept({
+        path: '/api/Location/Regions',
+        method: 'GET',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+        },
+      })
+      .reply(200, function ({ headers }) {
+        capturedHeaders = headers;
+        return [
+          { id: 1, isActive: true },
+          { id: 2, isActive: true },
+        ];
+      });
+
+    await get('/Location/Regions')(state);
+
+    expect(capturedHeaders).to.have.property(
+      'Authorization',
+      'Basic aGVsbG86dGhlcmU='
+    );
+  });
 
   it('should get with a query option', async () => {
     testServer
