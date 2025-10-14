@@ -13,8 +13,8 @@
   },
   "scripts": {
     "build": "pnpm clean && build-adaptor formsg src dts docs",
-    "test": "pnpm test:integration",
-    "test:watch": "TS_NODE_TRANSPILE_ONLY=true mocha -w --experimental-specifier-resolution=node --no-warnings --loader=ts-node/esm test/integration.test.ts",
+    "test": "TS_NODE_TRANSPILE_ONLY=true mocha --experimental-specifier-resolution=node --no-warnings --loader=ts-node/esm test/**/*.test.ts --exclude test/integration.test.ts --recursive",
+    "test:watch": "TS_NODE_TRANSPILE_ONLY=true mocha -w --experimental-specifier-resolution=node --no-warnings --loader=ts-node/esm test/**/*.test.ts --exclude test/integration.test.ts --recursive",
     "test:integration": "TS_NODE_TRANSPILE_ONLY=true mocha --experimental-specifier-resolution=node --no-warnings --loader=ts-node/esm test/integration.test.ts",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
@@ -41,8 +41,7 @@
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
     "ts-node": "10.9.1",
-    "typescript": "5.9.2",
-    "undici": "^5.22.1"
+    "typescript": "5.9.2"
   },
   "repository": {
     "type": "git",
