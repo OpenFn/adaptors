@@ -5,7 +5,7 @@ import {
   execute,
   createBirthNotification,
   queryEvents,
-  createDocumentEntry
+  createDocumentEntry,
 } from '../src/Adaptor.js';
 import { birthRecordData } from './testData.js';
 
@@ -37,8 +37,6 @@ before(() => {
     })
     .persist();
 });
-
-
 
 describe('createBirthRecord', () => {
   it('successfully creates a birth record', async () => {
@@ -217,7 +215,9 @@ describe('createDocumentEntry', () => {
 
     expect(entry).to.have.property('fullUrl');
     expect(entry).to.have.property('resource');
-    expect(entry.fullUrl).to.match(/^urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+    expect(entry.fullUrl).to.match(
+      /^urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
+    );
     expect(entry.resource).to.deep.equal(resource);
   });
 
