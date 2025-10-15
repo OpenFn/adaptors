@@ -1,0 +1,47 @@
+{
+  "name": "@openfn/language-mojaloop",
+  "label": "Mojaloop",
+  "version": "0.0.1",
+  "description": "An adaptor for working with the Mojaloop Third Party API",
+  "homepage": "https://docs.openfn.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openfn/adaptors.git"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "type": "module",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "clean": "rimraf dist types docs",
+    "build": "pnpm clean && build-adaptor mojaloop",
+    "pack": "pnpm pack --pack-destination ../../dist",
+    "test": "mocha --require mocha-suppress-logs --experimental-specifier-resolution=node --no-warnings",
+    "test:watch": "mocha -w",
+    "lint": "eslint src"
+  },
+  "author": "Open Function Group",
+  "license": "LGPLv3",
+  "files": [
+    "dist/",
+    "types/",
+    "ast.json",
+    "configuration-schema.json"
+  ],
+  "dependencies": {
+    "@openfn/language-common": "workspace:*"
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "deep-eql": "4.1.1",
+    "mocha-suppress-logs": "^0.4.1",
+    "rimraf": "^3.0.2"
+  },
+  "main": "dist/index.cjs"
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "The base URL for the Mojaloop Third Party API",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://mojaloop.example.com"]
+    },
+    "apiKey": {
+      "title": "API Key",
+      "type": "string",
+      "description": "API Key for authentication",
+      "writeOnly": true,
+      "examples": ["your-api-key-here"]
+    },
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "OAuth Access token or Bearer token",
+      "writeOnly": true,
+      "examples": ["00QCjAl4MlV-WPX"]
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "Username for Basic Authentication",
+      "examples": ["user@example.com"]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Password for Basic Authentication",
+      "writeOnly": true,
+      "examples": ["@some(!)Password"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["baseUrl"]
+}
