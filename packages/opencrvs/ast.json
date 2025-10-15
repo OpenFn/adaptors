@@ -141,7 +141,7 @@
           },
           {
             "title": "param",
-            "description": "A FHIR resource (can use builders from fhir-4)",
+            "description": "A FHIR resource using builders from fhir-4",
             "type": {
               "type": "NameExpression",
               "name": "Object"
@@ -150,7 +150,7 @@
           },
           {
             "title": "param",
-            "description": "Custom fullUrl (auto-generated if not provided)",
+            "description": "Custom fullUrl. Auto-generated if not provided",
             "type": {
               "type": "OptionalType",
               "expression": {

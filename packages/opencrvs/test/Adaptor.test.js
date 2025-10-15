@@ -5,6 +5,7 @@ import {
   execute,
   createBirthNotification,
   queryEvents,
+  createDocumentEntry
 } from '../src/Adaptor.js';
 import { birthRecordData } from './testData.js';
 
@@ -201,5 +202,154 @@ describe('queryEvents', () => {
     expect(
       parsedBody.variables.advancedSearchParameters.motherFirstNames
     ).to.equal('Mom');
+  });
+});
+
+describe('createDocumentEntry', () => {
+  it('should create a valid bundle entry with auto-generated UUID when no fullUrl provided', () => {
+    const resource = {
+      resourceType: 'Patient',
+      name: [{ given: ['John'], family: 'Doe' }],
+      gender: 'male',
+    };
+
+    const entry = createDocumentEntry(resource);
+
+    expect(entry).to.have.property('fullUrl');
+    expect(entry).to.have.property('resource');
+    expect(entry.fullUrl).to.match(/^urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+    expect(entry.resource).to.deep.equal(resource);
+  });
+
+  it('should create a valid bundle entry with provided fullUrl', () => {
+    const resource = {
+      resourceType: 'Observation',
+      status: 'final',
+      code: {
+        coding: [
+          {
+            system: 'http://loinc.org',
+            code: '3141-9',
+            display: 'Body weight Measured',
+          },
+        ],
+      },
+      valueQuantity: {
+        value: 4,
+        unit: 'kg',
+      },
+    };
+
+    const customUrl = 'urn:uuid:12345678-abcd-efgh-ijkl-123456789012';
+    const entry = createDocumentEntry(resource, customUrl);
+
+    expect(entry.fullUrl).to.equal(customUrl);
+    expect(entry.resource).to.deep.equal(resource);
+  });
+
+  it('should preserve all resource properties without modification', () => {
+    const complexResource = {
+      resourceType: 'Patient',
+      active: true,
+      identifier: [
+        {
+          use: 'official',
+          type: {
+            coding: [
+              {
+                system: 'http://opencrvs.org/specs/identifier-type',
+                code: 'NATIONAL_ID',
+              },
+            ],
+          },
+          value: '1234567890',
+        },
+      ],
+      name: [
+        {
+          use: 'en',
+          family: 'Smith',
+          given: ['Jane', 'Marie'],
+        },
+      ],
+      gender: 'female',
+      birthDate: '1990-01-01',
+      address: [
+        {
+          type: 'PRIMARY_ADDRESS',
+          line: ['123 Main St', 'Apt 4B'],
+          city: 'Anytown',
+          postalCode: '12345',
+          country: 'US',
+        },
+      ],
+      extension: [
+        {
+          url: 'http://opencrvs.org/specs/extension/patient-occupation',
+          valueString: 'Engineer',
+        },
+      ],
+    };
+
+    const entry = createDocumentEntry(complexResource);
+
+    expect(entry.resource).to.deep.equal(complexResource);
+    expect(entry.resource.resourceType).to.equal('Patient');
+    expect(entry.resource.name[0].given).to.deep.equal(['Jane', 'Marie']);
+    expect(entry.resource.extension[0].valueString).to.equal('Engineer');
+  });
+
+  it('should work with FHIR-4 builder patterns', () => {
+    const builderResult = {
+      resourceType: 'Task',
+      status: 'draft',
+      intent: 'unknown',
+      code: {
+        coding: [
+          {
+            system: 'http://opencrvs.org/specs/types',
+            code: 'BIRTH',
+          },
+        ],
+      },
+      extension: [
+        {
+          url: 'http://opencrvs.org/specs/extension/contact-person',
+          valueString: 'MOTHER',
+        },
+      ],
+    };
+
+    const customId = 'urn:uuid:task-12345';
+    const entry = createDocumentEntry(builderResult, customId);
+
+    expect(entry.fullUrl).to.equal(customId);
+    expect(entry.resource.resourceType).to.equal('Task');
+    expect(entry.resource.status).to.equal('draft');
+    expect(entry.resource.code.coding[0].code).to.equal('BIRTH');
+  });
+
+  it('should handle empty resource objects', () => {
+    const emptyResource = {
+      resourceType: 'Basic',
+    };
+
+    const entry = createDocumentEntry(emptyResource);
+
+    expect(entry.resource).to.deep.equal(emptyResource);
+    expect(entry.resource.resourceType).to.equal('Basic');
+    expect(entry.fullUrl).to.match(/^urn:uuid:/);
+  });
+
+  it('should create unique UUIDs for multiple calls without fullUrl', () => {
+    const resource1 = { resourceType: 'Patient', name: [{ given: ['John'] }] };
+    const resource2 = { resourceType: 'Patient', name: [{ given: ['Jane'] }] };
+
+    const entry1 = createDocumentEntry(resource1);
+    const entry2 = createDocumentEntry(resource2);
+
+    expect(entry1.fullUrl).to.not.equal(entry2.fullUrl);
+    expect(entry1.fullUrl).to.match(/^urn:uuid:/);
+    expect(entry2.fullUrl).to.match(/^urn:uuid:/);
   });
 });

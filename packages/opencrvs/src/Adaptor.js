@@ -202,7 +202,6 @@ export function createDocumentEntry(resource, fullUrl) {
     fullUrl: uuid,
     resource: {
       ...resource,
-      // id: uuid.replace('urn:uuid:', '')
     },
   };
 }
