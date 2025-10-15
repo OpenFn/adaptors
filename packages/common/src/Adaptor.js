@@ -6,8 +6,7 @@ import { request } from 'undici';
 import dateFns from 'date-fns';
 import _ from 'lodash';
 
-import * as util  from './util/index.js';
-const { expandReferences, parseDate } = util;
+import { expandReferences, parseDate } from './util/index.js';
 
 const schemaCache = {};
 
