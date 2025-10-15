@@ -35,16 +35,15 @@ export const logResponse = response => {
   return response;
 };
 
-const generateAgentKey = (baseUrl, agentOpts) => {
-  const optsString = Object.values(agentOpts).sort().join('.');
+const generateAgentKey = (baseUrl, agentOpts = {}) => {
+  const optsString = Object.values(agentOpts).sort().join('|');
   const key = optsString ? `${baseUrl}|${optsString}` : baseUrl;
   return key;
 };
 
 const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
   const key = generateAgentKey(origin, agentOpts);
-
-  if (!agents.has(origin) && !agents.has(key)) {
+  if (!agents.has(key)) {
     const agent = new Agent({
       connect: tls,
       ...agentOpts,
@@ -57,7 +56,7 @@ const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
     agents.set(key, agent);
   }
 
-  return agents.get(key) || agents.get(origin);
+  return agents.get(origin);
 };
 
 export const enableMockClient = (baseUrl, options = {}) => {
@@ -71,9 +70,10 @@ export const enableMockClient = (baseUrl, options = {}) => {
 
   const mockAgent = new MockAgent({ connections: 1 });
   mockAgent.disableNetConnect();
+
   const client = mockAgent.get(baseUrl);
 
-  if (!agents.has(baseUrl) && !agents.has(key)) {
+  if (!agents.has(key)) {
     if (defaultContentType) {
       const _intercept = client.intercept;
       // because so many unit test use mock json,
