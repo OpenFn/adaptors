@@ -94,7 +94,7 @@ To build _only_ the docs run `pnpm build docs`.
 
 ### Testing Locally
 
-See [LOCAL_TEST.md](LOCAL_TEST.md) for instructions on testing this adaptor locally with the OpenFn CLI.
+See [LOCAL_TEST.md](./LOCAL_TEST.md) for instructions on testing this adaptor locally with the OpenFn CLI.
 
 ## Resources
 
