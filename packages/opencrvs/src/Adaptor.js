@@ -186,6 +186,27 @@ export function queryEvents(variables, options = {}) {
   };
 }
 
+/**
+ * Create a document bundle entry with automatic UUID generation
+ * @example
+ * createDocumentEntry(builders.patient({ name: [{ given: ['John'] }] }))
+ * @function
+ * @public
+ * @param {Object} resource - A FHIR resource using builders from fhir-4
+ * @param {string} [fullUrl] - Custom fullUrl. Auto-generated if not provided
+ * @returns {Object} Bundle entry with fullUrl and resource
+ */
+export function createDocumentEntry(resource, fullUrl) {
+  const uuid = fullUrl || `urn:uuid:${crypto.randomUUID()}`;
+  return {
+    fullUrl: uuid,
+    resource: {
+      ...resource,
+      // id: uuid.replace('urn:uuid:', '')
+    },
+  };
+}
+
 export {
   combine,
   cursor,
