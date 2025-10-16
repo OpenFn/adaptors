@@ -167,9 +167,9 @@ const mock = (path, req = {}, res = {}) => {
     }));
 };
 
-// Beacuse request is just a wrapper around util.request, it is only tested very lightly
+// Because request is just a wrapper around util.request, it is only tested very lightly
 describe('request()', () => {
-  it('should make a successful arbitary request', async () => {
+  it('should make a successful arbitrary request', async () => {
     mock('/api/1', { method: 'TEST' });
 
     const state = {};

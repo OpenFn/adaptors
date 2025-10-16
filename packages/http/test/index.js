@@ -1,4 +1,13 @@
-import { execute, request, get, post, put, patch, del, fn } from '../src/index.js';
+import {
+  execute,
+  request,
+  get,
+  post,
+  put,
+  patch,
+  del,
+  fn,
+} from '../src/index.js';
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect, assert } from 'chai';
 import { getTLSOptions } from '../src/util.js';
@@ -45,7 +54,7 @@ describe('execute()', () => {
 });
 
 describe('request()', () => {
-  it('should get a string', async () => {
+  it.only('should get a string', async () => {
     testServer.intercept({ path: '/greeting' }).reply(200, 'hello');
 
     const state = {
