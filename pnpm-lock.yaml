@@ -707,7 +707,7 @@ importers:
         version: 3.0.2
       ts-node:
         specifier: 10.9.1
-        version: 10.9.1(@swc/core@1.13.5)(@types/node@18.17.5)(typescript@5.9.2)
+        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@5.9.2)
       typescript:
         specifier: 5.9.2
         version: 5.9.2
@@ -3764,11 +3764,12 @@ packages:
   '@openfn/language-fhir@5.0.9':
     resolution: {integrity: sha512-EfRAWy5hMZskTVDgoo0pzqrVIC0Xc8MBw+hM5RdJAmCcmZlHWnAAR0GSQmtMEOya70yNUMpoAZADc/wq9Nf3xQ==}
 
+  '@opengovsg/formsg-sdk@0.15.0':
+    resolution: {integrity: sha512-TOfeu4U8h0jZNEPZGzdotgOVSZCPDbc27cU6heTe4KmdUg8uUwL8W1KEGQlxHBB1phLC+D/9bZu2/Ga8X1/TNg==}
+
   '@opentelemetry/api@1.9.0':
     resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
     engines: {node: '>=8.0.0'}
-  '@opengovsg/formsg-sdk@0.15.0':
-    resolution: {integrity: sha512-TOfeu4U8h0jZNEPZGzdotgOVSZCPDbc27cU6heTe4KmdUg8uUwL8W1KEGQlxHBB1phLC+D/9bZu2/Ga8X1/TNg==}
 
   '@paralleldrive/cuid2@2.2.2':
     resolution: {integrity: sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==}
@@ -9406,6 +9407,7 @@ packages:
   tunnel@0.0.6:
     resolution: {integrity: sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==}
     engines: {node: '>=0.6.11 <=0.7.0 || >=0.7.3'}
+
   tweetnacl-util@0.15.1:
     resolution: {integrity: sha512-RKJBIj8lySrShN4w6i/BonWp2Z/uxwC3h4y7xsRrpP59ZboCd0GpEVsOnMDYLMmKBpYhb5TgHzZXy7wTfYFBRw==}
 
@@ -9415,8 +9417,8 @@ packages:
   tweetnacl@1.0.3:
     resolution: {integrity: sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==}
 
-  twilio@3.84.1:
-    resolution: {integrity: sha512-Q/xaPoayTj+bgJdnUgpE+EiB/VoNOG+byDFdlDej0FgxiHLgXKliZfVv6boqHPWvC1k7Dt0AK96OBFZ0P55QQg==}
+  twilio@3.83.2:
+    resolution: {integrity: sha512-8mLEcGVdEAFWYOZJld/SC/4KeBjAXdg/qU4GXUCdXx+XK01/gb1zGlr6GmVGP6PPrexD7fblLShAadmzgvBsxg==}
     engines: {node: '>=6.0'}
 
   type-check@0.3.2:
@@ -11394,7 +11396,6 @@ snapshots:
       '@openfn/language-common': 3.1.0
       undici: 5.29.0
 
-  '@opentelemetry/api@1.9.0': {}
   '@opengovsg/formsg-sdk@0.15.0':
     dependencies:
       axios: 1.12.2
@@ -11402,6 +11403,8 @@ snapshots:
       tweetnacl-util: 0.15.1
     transitivePeerDependencies:
       - debug
+
+  '@opentelemetry/api@1.9.0': {}
 
   '@paralleldrive/cuid2@2.2.2':
     dependencies:
@@ -18053,13 +18056,15 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
+  tunnel@0.0.6: {}
+
   tweetnacl-util@0.15.1: {}
 
   tweetnacl@0.14.5: {}
 
   tweetnacl@1.0.3: {}
 
-  twilio@3.84.1:
+  twilio@3.83.2:
     dependencies:
       axios: 0.26.1
       dayjs: 1.11.18
