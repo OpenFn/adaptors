@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-postgresql",
   "label": "PostgreSQL",
-  "version": "7.0.3",
+  "version": "7.0.4",
   "description": "OpenFn adaptor for PostgreSQL",
   "homepage": "https://docs.openfn.org",
   "exports": {

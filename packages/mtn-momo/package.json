@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-mtn-momo",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "OpenFn mtn-momo adaptor for MTN Mobile Money payment operations",
   "type": "module",
   "exports": {
