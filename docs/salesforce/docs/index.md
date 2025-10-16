@@ -514,11 +514,11 @@ This operation writes the following keys to state:
 ```js
 bulk1.delete('Account', [{ Id: '001xx' }]);
 ```
-**Example:** Delete with custom options
+**Example:** Bulk delete continue on error
 ```js
 bulk1.delete('Account', [{ Id: '001xx' }], {
   pollInterval: 3000,
-  failOnError: true
+  failOnError: false
 });
 ```
 
@@ -552,11 +552,11 @@ This operation writes the following keys to state:
 ```js
 bulk1.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }]);
 ```
-**Example:** Insert with custom options
+**Example:** Bulk insert continue on error
 ```js
 bulk1.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }], {
   pollInterval: 1000,
-  failOnError: true
+  failOnError: false
 });
 ```
 
@@ -623,11 +623,11 @@ This operation writes the following keys to state:
 ```js
 bulk1.update('Account', [{ Id: '001xx', Name: 'Updated Name' }]);
 ```
-**Example:** Update with custom options
+**Example:** Bulk update continue on error
 ```js
 bulk1.update('Account', [{ Id: '001xx', Name: 'Updated Name' }], {
   pollInterval: 1000,
-  failOnError: true
+  failOnError: false
 });
 ```
 
@@ -662,12 +662,12 @@ This operation writes the following keys to state:
 ```js
 bulk1.upsert('Account', [{ External_Id__c: 'EXT001', Name: 'Upserted Name' }], { extIdField: 'External_Id__c' });
 ```
-**Example:** Upsert with custom options
+**Example:** Bulk upsert continue on error
 ```js
 bulk1.upsert('Account', [{ External_Id__c: 'EXT001', Name: 'Upserted Name' }], {
   extIdField: 'External_Id__c',
   pollInterval: 3000,
-  failOnError: true
+  failOnError: false
 });
 ```
 
@@ -700,14 +700,14 @@ This operation writes the following keys to state:
 | data.unprocessedRecords | Array of unprocessed records |
 | references | Array of previous state data objects used in the job |
 
-**Example:** Delete records
+**Example:** Bulk delete records
 ```js
 bulk2.destroy("Account", [
   "0010500000fxbcuAAA",
   "0010500000fxbcvAAA",
 ]);
 ```
-**Example:** Delete records with custom options
+**Example:** Bulk delete records with custom polling options
 ```js
 bulk2.destroy(
   "Account",
@@ -718,6 +718,19 @@ bulk2.destroy(
   {
     pollInterval: 1000,
     pollTimeout: 3000,
+  }
+);
+```
+**Example:** Bulk delete records continue on error
+```js
+bulk2.destroy(
+  "Account",
+  [
+    "0010500000fxbcuAAA",
+    "0010500000fxbcvAAA",
+  ],
+  {
+    failOnError: false,
   }
 );
 ```
@@ -748,11 +761,13 @@ This operation writes the following keys to state:
 | data.unprocessedRecords | Array of unprocessed records |
 | references | Array of previous state data objects used in the job |
 
-**Example:** Insert multiple records
+**Example:** Bulk insert continue on error
 ```js
-bulk2.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }]);
+bulk2.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }], {
+  failOnError: false,
+});
 ```
-**Example:** Insert with custom options
+**Example:** Bulk insert with custom polling options
 ```js
 bulk2.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }], {
   pollInterval: 1000,
@@ -782,11 +797,11 @@ This operation writes the following keys to state:
 | data | The processed records or query results from the Bulk API operation |
 | references | Array of previous state data objects used in the job |
 
-**Example:** Query records
+**Example:** Bulk query records
 ```js
 bulk2.query('SELECT Id, Name FROM Account');
 ```
-**Example:** Query with `scanAll` enabled
+**Example:** Bulk query with `scanAll` enabled
 ```js
 bulk2.query('SELECT Id, Name FROM Account', { scanAll: true });
 ```
@@ -828,14 +843,14 @@ This operation writes the following keys to state:
 | data.unprocessedRecords | Array of unprocessed records |
 | references | Array of previous state data objects used in the job |
 
-**Example:** Update records
+**Example:** Bulk update records
 ```js
 bulk2.update("Account", [
   { Id: "0010500000fxbcuAAA", Name: "Updated Account #1" },
   { Id: "0010500000fxbcvAAA", Name: "Updated Account #2" },
 ]);
 ```
-**Example:** Update records with custom options
+**Example:** Bulk update records continue on error
 ```js
 bulk2.update(
   "Account",
@@ -844,8 +859,7 @@ bulk2.update(
     { Id: "0010500000fxbcvAAA", Name: "Updated Account #2" },
   ],
   {
-    pollInterval: 1000,
-    pollTimeout: 3000,
+    failOnError: false,
   }
 );
 ```
@@ -877,14 +891,14 @@ This operation writes the following keys to state:
 | data.unprocessedRecords | Array of unprocessed records |
 | references | Array of previous state data objects used in the job |
 
-**Example:** Upsert records
+**Example:** Bulk upsert records
 ```js
 bulk2.upsert("UpsertTable__c", "ExtId__c", [
   { Name: "Record #1", ExtId__c : 'ID-0000001' },
   { Name: "Record #2", ExtId__c : 'ID-0000002' },
 ]);
 ```
-**Example:** Upsert records with custom options
+**Example:** Bulk upsert records with custom polling options
 ```js
 bulk2.upsert(
   "UpsertTable__c",
@@ -896,6 +910,20 @@ bulk2.upsert(
   {
     pollInterval: 1000,
     pollTimeout: 3000,
+  }
+);
+```
+**Example:** Bulk upsert records continue on error
+```js
+bulk2.upsert(
+  "UpsertTable__c",
+  "ExtId__c",
+  [
+    { Name: "Record #1", ExtId__c : 'ID-0000001' },
+    { Name: "Record #2", ExtId__c : 'ID-0000002' },
+  ],
+  {
+    failOnError: false,
   }
 );
 ```
@@ -1045,7 +1073,7 @@ Options for configuring Salesforce Bulk API 1.0 operations
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | [allowNoOp] | <code>boolean</code> | <code>false</code> | Skipping bulk operation if no records |
-| [failOnError] | <code>boolean</code> | <code>false</code> | Fail the operation on error |
+| [failOnError] | <code>boolean</code> | <code>true</code> | Fail the operation on error |
 | [pollTimeout] | <code>number</code> | <code>300000</code> | Polling timeout in milliseconds. Default: 300000 (30 seconds) |
 | [pollInterval] | <code>number</code> | <code>6000</code> | Polling interval in milliseconds. Default: 6000 (6 seconds) |
 | [concurrencyMode] | <code>boolean</code> | <code>&#x27;Parallel&#x27;</code> | Concurrency mode: 'Parallel' or 'Serial' |
@@ -1064,39 +1092,7 @@ Bulk insert options
 | --- | --- | --- | --- |
 | [pollInterval] | <code>number</code> | <code>1000</code> | Polling interval in milliseconds. Default: 1000 (1 second) |
 | [pollTimeout] | <code>number</code> | <code>30000</code> | Polling timeout in milliseconds. Default: 30000 (30 seconds) |
-
-
-* * *
-
-### BulkOptions
-
-Options provided to the Salesforce bulk API request
-
-
-**Properties**
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| extIdField | <code>string</code> |  | External id field. Required for upsert. |
-| [allowNoOp] | <code>boolean</code> | <code>false</code> | Skipping bulk operation if no records. |
-| [failOnError] | <code>boolean</code> | <code>false</code> | Fail the operation on error. |
-| [pollTimeout] | <code>integer</code> | <code>240000</code> | Polling timeout in milliseconds. |
-| [pollInterval] | <code>integer</code> | <code>6000</code> | Polling interval in milliseconds. |
-
-
-* * *
-
-### BulkQueryOptions
-
-Options provided to the Salesforce bulk query API request
-
-
-**Properties**
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| [pollTimeout] | <code>integer</code> | <code>90000</code> | Polling timeout in milliseconds. |
-| [pollInterval] | <code>integer</code> | <code>3000</code> | Polling interval in milliseconds. |
+| [failOnError] | <code>boolean</code> | <code>true</code> | Fail the operation on error |
 
 
 * * *

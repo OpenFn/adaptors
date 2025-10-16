@@ -2,6 +2,8 @@
 <dt>
     <a href="#createbirthnotification">createBirthNotification(body)</a></dt>
 <dt>
+    <a href="#createdocumententry">createDocumentEntry(resource, [fullUrl])</a></dt>
+<dt>
     <a href="#queryevents">queryEvents(variables, options)</a></dt>
 </dl>
 
@@ -134,6 +136,27 @@ createBirthNotification([
     },
   },
 ]);
+```
+
+* * *
+
+### createDocumentEntry
+
+<p><code>createDocumentEntry(resource, [fullUrl]) ⇒ Object</code></p>
+
+Create a document bundle entry with automatic UUID generation
+
+**Returns**: <code>Object</code> - Bundle entry with fullUrl and resource  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resource | <code>Object</code> | A FHIR resource using builders from fhir-4 |
+| [fullUrl] | <code>string</code> | Custom fullUrl. Auto-generated if not provided |
+
+
+**Example**
+```js
+createDocumentEntry(builders.patient({ name: [{ given: ['John'] }] }))
 ```
 
 * * *

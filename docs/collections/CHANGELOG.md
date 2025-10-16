@@ -1,5 +1,12 @@
 # @openfn/language-collections
 
+## 0.7.16
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
 ## 0.7.15 - 18 September 2025
 
 ### Patch Changes
