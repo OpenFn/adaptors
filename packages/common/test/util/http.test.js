@@ -10,6 +10,7 @@ import {
   parseUrl,
   ERROR_URL_MISMATCH,
   logResponse,
+  generateAgentKey,
 } from '../../src/util/http.js';
 import { encode } from '../../src/util/base64.js';
 
@@ -1101,5 +1102,36 @@ describe('helpers', () => {
 
       expect(result.body).to.eql(base64Encoded);
     });
+  });
+});
+
+describe('generateAgentKey', () => {
+  it('should generate a key with no options', () => {
+    const result = generateAgentKey('www');
+    expect(result).to.equal('www');
+  });
+  it('should generate a key with a single option', () => {
+    const result = generateAgentKey('www', { x: 'y' });
+    expect(result).to.equal('www+x:y');
+  });
+  it('should generate a key with a number', () => {
+    const result = generateAgentKey('www', { x: 1 });
+    expect(result).to.equal('www+x:1');
+  });
+  it('should generate a key with a multiple options, sorted', () => {
+    const result = generateAgentKey('www', { x: 'y', a: 1, z: true });
+    expect(result).to.equal('www+a:1|x:y|z:true');
+  });
+  it('should generate a key with a nested object option, sorted', () => {
+    const result = generateAgentKey('www', { x: { z: 2, a: 1 } });
+    expect(result).to.equal('www+x:{a:1|z:2}');
+  });
+  it('should ignore undefined values', () => {
+    const result = generateAgentKey('www', { x: undefined });
+    expect(result).to.equal('www');
+  });
+  it('should ignore undefined values with defined values', () => {
+    const result = generateAgentKey('www', { a: 1, x: undefined });
+    expect(result).to.equal('www+a:1');
   });
 });

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as util from '../../src/util/index.js';
-const  { encode, decode, uuid } = util;
+const { encode, decode, uuid } = util;
 
 describe('uuid', () => {
   it('should generate a uuid', () => {

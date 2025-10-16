@@ -1,5 +1,12 @@
 # @openfn/language-godata
 
+## 3.5.10
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
 ## 3.5.9 - 18 September 2025
 
 ### Patch Changes

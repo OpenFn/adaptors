@@ -1,4 +1,13 @@
-import { execute, request, get, post, put, patch, del, fn } from '../src/index.js';
+import {
+  execute,
+  request,
+  get,
+  post,
+  put,
+  patch,
+  del,
+  fn,
+} from '../src/index.js';
 import { enableMockClient } from '@openfn/language-common/util';
 import { expect, assert } from 'chai';
 import { getTLSOptions } from '../src/util.js';
@@ -7,6 +16,7 @@ const jsonHeaders = { 'Content-Type': 'application/json' };
 
 const testServer = enableMockClient('https://www.example.com', {
   defaultContentType: 'text',
+  maxRedirections: 5,
 });
 
 describe('execute()', () => {

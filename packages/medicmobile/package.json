@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-medicmobile",
   "label": "Medic Mobile",
-  "version": "0.5.20",
+  "version": "0.5.21",
   "description": "OpenFn adaptor for Medic Mobile",
   "main": "dist/index.cjs",
   "scripts": {
