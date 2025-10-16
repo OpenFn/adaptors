@@ -42,7 +42,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "@openfn/language-fhir": "^5.0.9",
+    "@openfn/language-fhir": "workspace:*",
     "@types/fhir": "^0.0.41",
     "ast-types": "^0.14.2",
     "lodash": "^4.17.21",
