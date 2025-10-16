@@ -16,6 +16,7 @@ const jsonHeaders = { 'Content-Type': 'application/json' };
 
 const testServer = enableMockClient('https://www.example.com', {
   defaultContentType: 'text',
+  maxRedirections: 5,
 });
 
 describe('execute()', () => {
@@ -54,7 +55,7 @@ describe('execute()', () => {
 });
 
 describe('request()', () => {
-  it.only('should get a string', async () => {
+  it('should get a string', async () => {
     testServer.intercept({ path: '/greeting' }).reply(200, 'hello');
 
     const state = {

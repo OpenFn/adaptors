@@ -87,6 +87,8 @@ const getDispatcher = (origin, options = {}) => {
 // Set the agent for a URL + options to be a mock dispatcher
 // This causes all subsequent getDispatcher calls to use the mock,
 // rather than a real dispatcher
+// Note that when testing adaptors, options like maxRedirections
+// MUST be set or else the mock agent will not be used!
 export const enableMockClient = (baseUrl, options = {}) => {
   const {
     defaultContentType = 'application/json',
@@ -101,6 +103,7 @@ export const enableMockClient = (baseUrl, options = {}) => {
     ...agentOpts,
     tls,
   });
+  console.log('Creating mock client for key:', key);
 
   const dispatcher = mockAgent.get(baseUrl);
   if (defaultContentType) {
