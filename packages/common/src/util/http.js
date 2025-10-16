@@ -42,13 +42,14 @@ export const logResponse = response => {
 const sortObject = obj =>
   _(obj)
     .toPairs()
-    .filter(([k, v]) => v !== undefined) // ignore undefined values
+    .filter(([_k, v]) => v !== undefined) // ignore undefined values
     .sortBy(0)
     .map(([k, v]) => {
       if (v && typeof v === 'object') {
         if (!Object.keys(v).length) {
           return '';
         }
+        // eslint-disable-next-line no-param-reassign
         v = `${'{'}${sortObject(v)}${'}'}`;
       }
       return [k, v].join(':');
