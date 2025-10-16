@@ -1,0 +1,78 @@
+{
+  "operations": [
+    {
+      "name": "decryptSubmission",
+      "params": [
+        "submissionData",
+        "options"
+      ],
+      "docs": {
+        "description": "Decrypt a FormSG submission",
+        "tags": [
+          {
+            "title": "public"
+          },
+          {
+            "title": "example",
+            "description": "decryptSubmission($.data)"
+          },
+          {
+            "title": "example",
+            "description": "decryptSubmission($.data, {\n  verifySignature: true,\n  signatureHeader: $.headers['x-formsg-signature']\n})"
+          },
+          {
+            "title": "function"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "verifyWebhook",
+      "params": [
+        "signatureHeader"
+      ],
+      "docs": {
+        "description": "Verify a FormSG webhook signature",
+        "tags": [
+          {
+            "title": "public"
+          },
+          {
+            "title": "example",
+            "description": "verifyWebhook($.headers['x-formsg-signature'])"
+          },
+          {
+            "title": "function"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "processWebhook",
+      "params": [
+        "submissionData",
+        "signatureHeader"
+      ],
+      "docs": {
+        "description": "Process a FormSG webhook (verify and decrypt in one step)",
+        "tags": [
+          {
+            "title": "public"
+          },
+          {
+            "title": "example",
+            "description": "processWebhook($.data, $.headers['x-formsg-signature'])"
+          },
+          {
+            "title": "function"
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
+  "exports": [],
+  "common": []
+}
