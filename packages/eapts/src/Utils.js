@@ -21,10 +21,10 @@ export const prepareNextState = (state, response) => {
 export const request = (configuration = {}, method, path, options) => {
   const {
     baseUrl,
-    apiKey,
+    apiToken,
   } = configuration;
   const headers = {
-    Authorization: `Bearer ${apiKey}`,
+    Authorization: `Bearer ${apiToken}`,
   };
 
   const { query = {}, body = {} } = options;
