@@ -4,9 +4,10 @@ import querystring from 'node:querystring';
 import path from 'node:path';
 import throwError from './throw-error.js';
 import { encode } from './base64.js';
-import pkg from 'undici';
-const { MockAgent, Agent, interceptors } = pkg;
+import { MockAgent, Agent, interceptors } from 'undici';
+import _ from 'lodash';
 
+// Maps undici dispatchers to keys (where a key is the base url + encoded options)
 const agents = new Map();
 
 export const makeBasicAuthHeader = (username, password) => {
@@ -36,16 +37,39 @@ export const logResponse = response => {
   return response;
 };
 
-const generateAgentKey = (baseUrl, agentOpts) => {
-  const optsString = Object.values(agentOpts).sort().join('.');
-  const key = optsString ? `${baseUrl}|${optsString}` : baseUrl;
-  return key;
+// Sort an object into a string of key,value pairs
+// Supports nesting
+const sortObject = obj =>
+  _(obj)
+    .toPairs()
+    .filter(([_k, v]) => v !== undefined) // ignore undefined values
+    .sortBy(0)
+    .map(([k, v]) => {
+      if (v && typeof v === 'object') {
+        if (!Object.keys(v).length) {
+          return '';
+        }
+        // eslint-disable-next-line no-param-reassign
+        v = `${'{'}${sortObject(v)}${'}'}`;
+      }
+      return [k, v].join(':');
+    })
+    .join('|');
+
+export const generateAgentKey = (baseUrl, agentOpts = {}) => {
+  if (Object.keys(agentOpts).length) {
+    const sortedSerializedOptions = sortObject(agentOpts);
+    if (sortedSerializedOptions.length) {
+      return `${baseUrl}+${sortedSerializedOptions}`;
+    }
+  }
+  return baseUrl;
 };
 
-const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
-  const key = generateAgentKey(origin, agentOpts);
-
-  if (!agents.has(origin) && !agents.has(key)) {
+const getDispatcher = (origin, options = {}) => {
+  const { tls = {}, defaultContentType, ...agentOpts } = options;
+  const key = generateAgentKey(origin, options);
+  if (!agents.has(key)) {
     const agent = new Agent({
       connect: tls,
       ...agentOpts,
@@ -58,9 +82,14 @@ const getAgent = (origin, { tls = {}, ...agentOpts } = {}) => {
     agents.set(key, agent);
   }
 
-  return agents.get(key) || agents.get(origin);
+  return agents.get(key);
 };
 
+// Set the agent for a URL + options to be a mock dispatcher
+// This causes all subsequent getDispatcher calls to use the mock,
+// rather than a real dispatcher
+// Note that when testing adaptors, options like maxRedirections
+// MUST be set or else the mock agent will not be used!
 export const enableMockClient = (baseUrl, options = {}) => {
   const {
     defaultContentType = 'application/json',
@@ -68,60 +97,64 @@ export const enableMockClient = (baseUrl, options = {}) => {
     ...agentOpts
   } = options;
 
-  const key = generateAgentKey(baseUrl, agentOpts);
-
   const mockAgent = new MockAgent({ connections: 1 });
   mockAgent.disableNetConnect();
-  const client = mockAgent.get(baseUrl);
 
-  if (!agents.has(baseUrl) && !agents.has(key)) {
-    if (defaultContentType) {
-      const _intercept = client.intercept;
-      // because so many unit test use mock json,
-      // force the content-type header if a body is specified
-      client.intercept = (...args) => {
-        const interceptor = _intercept.apply(client, args);
+  const key = generateAgentKey(baseUrl, {
+    ...agentOpts,
+    tls,
+  });
+  console.log('Creating mock client for key:', key);
 
-        const _reply = interceptor.reply;
+  const dispatcher = mockAgent.get(baseUrl);
+  if (defaultContentType) {
+    const _intercept = dispatcher.intercept;
+    // because so many unit test use mock json,
+    // force the content-type header if a body is specified
+    dispatcher.intercept = (...args) => {
+      const interceptor = _intercept.apply(dispatcher, args);
 
-        const ensureJsonHeader = (headers = {}) => {
-          const hasJsonHeader = Object.keys(headers).find(k =>
-            /content-type/i.test(k)
-          );
-          if (!hasJsonHeader) {
-            headers['content-type'] = defaultContentType;
-          }
-        };
+      const _reply = interceptor.reply;
 
-        const reply = (...args) => {
-          if (typeof args[0] === 'function') {
-            // call the function
-            // in the resulting object, set the headers
-            const response = _reply.apply(interceptor, args);
-            if (response.body) {
-              response.headers ??= {};
-              ensureJsonHeader(response.headers);
-            }
-            return response;
-          } else {
-            const [code, data, options = {}] = args;
-            if (data) {
-              options.headers ??= {};
-              ensureJsonHeader(options.headers);
-            }
-            return _reply.call(interceptor, code, data, options);
-          }
-        };
-
-        interceptor.reply = reply;
-
-        return interceptor;
+      const ensureJsonHeader = (headers = {}) => {
+        const hasJsonHeader = Object.keys(headers).find(k =>
+          /content-type/i.test(k)
+        );
+        if (!hasJsonHeader) {
+          headers['content-type'] = defaultContentType;
+        }
       };
-    }
 
-    agents.set(key, client);
+      const reply = (...args) => {
+        if (typeof args[0] === 'function') {
+          // call the function
+          // in the resulting object, set the headers
+          const response = _reply.apply(interceptor, args);
+          if (response.body) {
+            response.headers ??= {};
+            ensureJsonHeader(response.headers);
+          }
+          return response;
+        } else {
+          const [code, data, options = {}] = args;
+          if (data) {
+            options.headers ??= {};
+            ensureJsonHeader(options.headers);
+          }
+          return _reply.call(interceptor, code, data, options);
+        }
+      };
+
+      interceptor.reply = reply;
+
+      return interceptor;
+    };
   }
-  return client;
+
+  if (!agents.has(key)) {
+    agents.set(key, mockAgent);
+  }
+  return dispatcher;
 };
 
 const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
@@ -255,7 +288,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     maxRedirections,
   } = options;
 
-  const dispatcher = getAgent(baseUrl, { tls, maxRedirections });
+  const dispatcher = getDispatcher(baseUrl, { tls, maxRedirections });
 
   const queryParams = {
     ...optionQuery,

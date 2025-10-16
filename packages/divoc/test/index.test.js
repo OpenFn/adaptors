@@ -10,7 +10,9 @@ const configuration = {
 };
 
 
-const testServer = enableMockClient(configuration.baseUrl);
+const testServer = enableMockClient(configuration.baseUrl, {
+  maxRedirections: 1
+});
 const jsonHeaders = {
   headers: {
     'Content-Type': 'application/json',
