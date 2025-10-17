@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-twilio",
   "label": "Twilio",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "OpenFn adaptor for Twilio",
   "main": "dist/index.cjs",
   "scripts": {

@@ -1,5 +1,12 @@
 # @openfn/language-dhis2
 
+## 8.0.4
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
 ## 8.0.3 - 23 September 2025
 
 ### Patch Changes

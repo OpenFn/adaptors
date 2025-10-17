@@ -1,5 +1,12 @@
 # @openfn/language-divoc
 
+## 0.1.11
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
 ## 0.1.10 - 18 September 2025
 
 ### Patch Changes

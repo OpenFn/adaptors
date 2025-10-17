@@ -1,5 +1,12 @@
 # @openfn/language-openboxes
 
+## 1.0.10
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
 ## 1.0.9 - 18 September 2025
 
 ### Patch Changes

@@ -8,7 +8,9 @@ import { execute, get, post, put, patch } from '../src/Adaptor.js';
 // For the full mock API see
 // https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
 const baseUrl = 'https://fake.satusehat.server.com';
-const testServer = enableMockClient(baseUrl);
+const testServer = enableMockClient(baseUrl, {
+  maxRedirections: 1,
+});
 before(() => {
   testServer
     .intercept({

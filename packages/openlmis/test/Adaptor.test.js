@@ -10,6 +10,10 @@ const clientId = 'user-client';
 const clientSecret = 'changeme';
 const baseUrl = 'https://test.openlmis.org';
 const testServer = enableMockClient(baseUrl);
+// Ensure there's a mock agent to handle auth requests
+const authServer = enableMockClient(baseUrl, {
+  maxRedirections: 1,
+});
 
 const configuration = { baseUrl, username, password, clientId, clientSecret };
 
@@ -25,7 +29,7 @@ const mockResponse = (status, body) => ({
 
 // Set up a fake auth endpoint
 before(() => {
-  testServer
+  authServer
     .intercept({
       path: '/api/oauth/token',
       query: { grant_type: 'password', username, password },
