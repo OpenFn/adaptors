@@ -1,0 +1,40 @@
+{
+  "request": {
+    "response": {
+      "result": 0,
+      "message": "string",
+      "model": {
+        "draw": 0,
+        "error": "string",
+        "totalRecords": 0,
+        "totalRecordsFiltered": 0,
+        "data": "string",
+        "additionalParameters": {
+          "additionalProp1": "string",
+          "additionalProp2": "string",
+          "additionalProp3": "string"
+        },
+        "recordsTotal": 0,
+        "recordsFiltered": 0,
+        "additionalResponse": {
+          "additionalProp1": "string",
+          "additionalProp2": "string",
+          "additionalProp3": "string"
+        }
+      }
+    }
+  },
+  "stockOutReport": {
+    "response": {
+      "result": 0,
+      "message": "string",
+      "model": [
+        {
+          "itemName": "string",
+          "unitName": "string",
+          "itemAmc": 0
+        }
+      ]
+    }
+  }
+}
