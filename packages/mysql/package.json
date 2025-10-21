@@ -28,7 +28,7 @@
   "dependencies": {
     "@openfn/language-common": "workspace:*",
     "json-sql": "^0.3.10",
-    "mysql": "^2.13.0",
+    "mysql": "^2.14.0",
     "squel": "^5.8.0",
     "string-escape": "^0.3.0"
   },
