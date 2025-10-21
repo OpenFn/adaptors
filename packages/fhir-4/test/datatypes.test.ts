@@ -220,7 +220,7 @@ describe('concept', () => {
   });
 });
 
-describe('composite (datetime regex)', () => {
+describe('composite', () => {
   it('should identify valid datetime strings as DateTime', () => {
     const obj = {};
     b.composite(obj, 'value', '2022-06-29');
