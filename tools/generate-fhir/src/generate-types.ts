@@ -34,7 +34,7 @@ export const generateType = (
   // // find the superset of schema keys and mappings keys
   const allKeys = Object.keys(
     Object.assign({}, schema.props, mappings.overrides)
-  ).sort(); // Sort keys alphabetically
+  ).sort();
 
   // // Now for each key, build a type
   // // Note that mappings should overwrite schema if conflict
