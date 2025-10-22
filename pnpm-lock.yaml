@@ -1135,6 +1135,34 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
 
+  packages/md_archive:
+    dependencies:
+      '@duckdb/node-api':
+        specifier: ^1.3.2-alpha.25
+        version: 1.3.2-alpha.25
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      mocha:
+        specifier: ^10.7.3
+        version: 10.8.2
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      undici:
+        specifier: ^5.22.1
+        version: 5.29.0
+
   packages/medicmobile:
     dependencies:
       '@openfn/language-common':
@@ -1258,6 +1286,37 @@ importers:
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
+
+  packages/motherduck:
+    dependencies:
+      '@duckdb/node-api':
+        specifier: ^1.3.2-alpha.25
+        version: 1.3.2-alpha.25
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      mocha:
+        specifier: ^10.7.3
+        version: 10.8.2
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      undici:
+        specifier: ^5.22.1
+        version: 5.29.0
 
   packages/mpesa:
     dependencies:
@@ -3006,7 +3065,7 @@ packages:
       '@babel/core': 7.26.10
       '@babel/helper-compilation-targets': 7.26.5
       '@babel/helper-plugin-utils': 7.26.5
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1(supports-color@8.1.1)
       lodash.debounce: 4.0.8
       resolve: 1.22.1
     transitivePeerDependencies:
@@ -4109,7 +4168,7 @@ packages:
       '@babel/helper-split-export-declaration': 7.22.6
       '@babel/parser': 7.26.8
       '@babel/types': 7.23.0
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1(supports-color@8.1.1)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -4124,7 +4183,7 @@ packages:
       '@babel/parser': 7.26.10
       '@babel/template': 7.26.9
       '@babel/types': 7.26.10
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1(supports-color@8.1.1)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -4344,6 +4403,62 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
+
+  /@duckdb/node-api@1.3.2-alpha.25:
+    resolution: {integrity: sha512-AzDyyjTtnYUxoy/MHDFRwfOggDOkS8RBgGA82OI6nla8B9NDNZeAYJ97T3PvCL8cx7y00EtGVN3g03aoW4fRmw==}
+    dependencies:
+      '@duckdb/node-bindings': 1.3.2-alpha.25
+    dev: false
+
+  /@duckdb/node-bindings-darwin-arm64@1.3.2-alpha.25:
+    resolution: {integrity: sha512-vRjzNgkz2TAYW5c2rzPwcHBctBWr0lxQ4blFASAv0DdeGPOeuCMXJUA3982X7iPNwAppH0VMII6cYzON0GA+RA==}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@duckdb/node-bindings-darwin-x64@1.3.2-alpha.25:
+    resolution: {integrity: sha512-BSg/DZjT25QZe87+pmdMfE1XlHdi2WxtAO+F2PEXN6VnPeLyTdl5bYlnhOGrDKquKDmUEqok5OwF7mR4QfU+Aw==}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@duckdb/node-bindings-linux-arm64@1.3.2-alpha.25:
+    resolution: {integrity: sha512-VhjUH/AvolZWDX/URqiIh58JbAB1vYbDgSmQ0wvqhS9jzJ9Sj88urGDw+XWXw49Rr4BhIgDtX70SoARhO2i/Gg==}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@duckdb/node-bindings-linux-x64@1.3.2-alpha.25:
+    resolution: {integrity: sha512-raav2ypBiV4TlpnKU9hocsuFDO4ipwIcQQmkMIh20/Qd9vkv35QcQYNqStiZVJh2LAaVoQffNvcKMlclblYqUQ==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@duckdb/node-bindings-win32-x64@1.3.2-alpha.25:
+    resolution: {integrity: sha512-/fAKax+xYkdRhkUl3PkL3HfFd1ZsezG1yiOkL0StHBdD3xB80Njm1JGHxx1fO3WWE5XTbE1MTJ5I0xjEzPwsfQ==}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@duckdb/node-bindings@1.3.2-alpha.25:
+    resolution: {integrity: sha512-FkoSaoeRAi6Em0hs0qzr3SN04ykN99R+Qap5kLwhi6GNPnHzWMU1VrNpK9cE4eBj0n+RWlNK0TiO712dn44QzQ==}
+    optionalDependencies:
+      '@duckdb/node-bindings-darwin-arm64': 1.3.2-alpha.25
+      '@duckdb/node-bindings-darwin-x64': 1.3.2-alpha.25
+      '@duckdb/node-bindings-linux-arm64': 1.3.2-alpha.25
+      '@duckdb/node-bindings-linux-x64': 1.3.2-alpha.25
+      '@duckdb/node-bindings-win32-x64': 1.3.2-alpha.25
+    dev: false
 
   /@esbuild/aix-ppc64@0.23.1:
     resolution: {integrity: sha512-6VhYk1diRqrhBAqpJEdjASR/+WVRtfjpqKuNw11cLiaWpAT/Uu+nokB+UJnevzy/P9C/ty6AOe0dwueMrGh/iQ==}
@@ -4758,7 +4873,7 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
       ajv: 6.12.6
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1(supports-color@8.1.1)
       espree: 9.4.0
       globals: 13.17.0
       ignore: 5.2.0
@@ -4836,7 +4951,7 @@ packages:
     engines: {node: '>=10.10.0'}
     dependencies:
       '@humanwhocodes/object-schema': 1.2.1
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1(supports-color@8.1.1)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -5869,7 +5984,7 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
     dependencies:
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -7254,17 +7369,10 @@ packages:
       balanced-match: 1.0.2
       concat-map: 0.0.1
 
-  /brace-expansion@2.0.1:
-    resolution: {integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==}
-    dependencies:
-      balanced-match: 1.0.2
-    dev: false
-
   /brace-expansion@2.0.2:
     resolution: {integrity: sha512-Jt0vHyM+jmUBqojB7E1NIYadt0vI0Qxjxd2TErW94wDz+E2LAm5vKMXXwg6ZZBTHPuUlDgQHKXvjGBdfcF1ZDQ==}
     dependencies:
       balanced-match: 1.0.2
-    dev: true
 
   /braces@1.8.5:
     resolution: {integrity: sha512-xU7bpz2ytJl1bH9cgIurjpg/n8Gohy9GTw81heDYLJQ4RU60dlyJsa+atVF2pI0yMMvKxI9HkKwjePCj5XI1hw==}
@@ -8400,7 +8508,6 @@ packages:
     dependencies:
       ms: 2.1.3
       supports-color: 8.1.1
-    dev: true
 
   /decamelize-keys@1.1.1:
     resolution: {integrity: sha512-WiPxgEirIV0/eIOMcnFBA3/IJZAZqKnwAwWyvvdi4lsr1WCN22nhdf/3db3DoZcUjTV2SqfzIwNyp6y2xs3nmg==}
@@ -9244,6 +9351,7 @@ packages:
   /escalade@3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
     engines: {node: '>=6'}
+    dev: false
 
   /escalade@3.2.0:
     resolution: {integrity: sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==}
@@ -10666,7 +10774,7 @@ packages:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -10676,7 +10784,7 @@ packages:
     engines: {node: '>= 14'}
     dependencies:
       agent-base: 7.1.3
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -10705,7 +10813,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -10715,7 +10823,7 @@ packages:
     engines: {node: '>= 14'}
     dependencies:
       agent-base: 7.1.3
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -12508,7 +12616,7 @@ packages:
     resolution: {integrity: sha512-zpe98Q6kvavpCr1NPVSCMebCKfD7CA2NqZ+rykeNhONIJBpc1tFKt9hucLGwha3jNTNI8lHpctWJWoimVF4PfA==}
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1(supports-color@8.1.1)
       decode-named-character-reference: 1.1.0
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.3
@@ -12623,7 +12731,7 @@ packages:
     resolution: {integrity: sha512-ethXTt3SGGR+95gudmqJ1eNhRO7eGEGIgYA9vnPatK4/etz2MEVDno5GMCibdMTuBMyElzIlgxMna3K94XDIDQ==}
     engines: {node: 20 || >=22}
     dependencies:
-      brace-expansion: 2.0.1
+      brace-expansion: 2.0.2
     dev: false
 
   /minimatch@3.1.2:
@@ -12649,14 +12757,14 @@ packages:
     resolution: {integrity: sha512-Oz1iPEP+MGl7KS3SciLsLLcuZ7VsBfb7Qrz/jYt/s/sYAv272P26HSLz2f77Y6hzTKXiBi6g765fqpEDNc5fJw==}
     engines: {node: '>=10'}
     dependencies:
-      brace-expansion: 2.0.1
+      brace-expansion: 2.0.2
     dev: false
 
   /minimatch@9.0.5:
     resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
-      brace-expansion: 2.0.1
+      brace-expansion: 2.0.2
     dev: false
 
   /minimist-options@4.1.0:
@@ -14447,7 +14555,7 @@ packages:
     resolution: {integrity: sha512-xA93uxUD/rogV7BV59agW/JHPGXeREMWiZc9jhcwY4YdZ7QOtC7qbomYg0n4wyk2lJhggjvKvhNX8wln/Aldhg==}
     engines: {node: '>=8.10.0'}
     dependencies:
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1(supports-color@8.1.1)
       extend: 3.0.2
     transitivePeerDependencies:
       - supports-color
@@ -15428,7 +15536,7 @@ packages:
       indent-string: 5.0.0
       js-yaml: 3.14.1
       serialize-error: 7.0.1
-      strip-ansi: 7.0.1
+      strip-ansi: 7.1.0
     dev: false
 
   /supports-color@2.0.0:
@@ -16818,7 +16926,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       cliui: 7.0.4
-      escalade: 3.1.1
+      escalade: 3.2.0
       get-caller-file: 2.0.5
       require-directory: 2.1.1
       string-width: 4.2.3

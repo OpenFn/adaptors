@@ -1,0 +1,57 @@
+feat: Address PR review feedback - refactor batching, fix DECIMAL handling, improve tests
+
+Implemented feedback from josephclark's PR #1370 review to align with OpenFN best practices.
+
+## Major Changes
+
+### Architecture & Code Organization
+- Moved mock connection to separate `src/mock.js` file
+- Moved all utilities to `src/Utils.js` with proper namespacing
+- Removed lower-level functions (listDatabases, listTables, listSchemas, describe, connect)
+- Kept only essential operations: execute(), query(), insert()
+
+### Insert Batching Refactor
+- Refactored to ALWAYS use chunking (eliminates code duplication)
+- Added configurable `batchSize` option (default: 1000 records)
+- Single code path handles both small and large datasets
+- Uses lodash `_.chunk()` for array splitting as suggested by josephclark
+
+### DuckDB DECIMAL Handling
+- Fixed DECIMAL values being returned as objects: `{width: 10, scale: 2, value: 9500000}`
+- Implemented `convertBigIntToNumber()` to convert to JavaScript numbers
+- Uses formula: `value / 10^scale` to unpack DECIMAL objects
+- Also handles JavaScript BigInt values (safe range check)
+- Successfully tested on real MotherDuck database
+
+Example:
+```javascript
+// Before: salary = {width: 10, scale: 2, value: 9500000}
+// After:  salary = 95000
+```
+
+### Test Suite Improvements
+- Rewrote all 33 tests to use proper function reference pattern
+- Added inverse test for writeSql option (both true and false)
+- Fixed empty array handling: returns `{recordsInserted: 0, batches: 0}`
+- Made all error assertions specific (no generic assertions)
+- Added batch size customization test
+
+### Error Handling & Validation
+- Connection errors: check for 'token' in message
+- SQL syntax errors: match /syntax|parser|invalid/i
+- SQL injection: check for 'Invalid SQL identifier'
+- Missing connection: check for 'No active MotherDuck connection'
+
+## Test Results
+- Unit tests: 33/33 passing
+- Integration tests: ✅ Successfully tested on remote MotherDuck database
+- Created 2 tables with 2,510 records total
+- All DECIMAL values properly converted to numbers
+
+## Not Implemented
+1. Direct `validateSqlIdentifier()` unit tests - josephclark: "Not necessary to do before merging"
+2. More robust SQL validation using MSSQL adaptor pattern - can be added in future version if needed
+
+## References
+- PR #1370: https://github.com/OpenFn/adaptors/pull/1370
+
