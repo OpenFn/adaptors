@@ -10,7 +10,7 @@
  * @returns Operation
  */
 export declare function read(reference: string): (state: any) => Promise<any>;
-declare type SearchQuery = {
+type SearchQuery = {
     /** k/v pairs. Can do stuff like given:contains=eve and [parameter]=ge2013-03-14. So the parameter can have criteria   */
     query?: Record<string, string>;
     filter?: Record<string, string>;
@@ -62,6 +62,7 @@ export declare function update(reference: string, resource: any): (state: any) =
  * Delete a single FHIR resource.
  * @public
  * @function
+ * @alias delete
  * @param {string} reference - The type and ID of the resource to delete, eg, `Patient/123`
  * @state response - the HTTP response returned by the server.
  * @example <caption>Delete a single Patient resource</caption>

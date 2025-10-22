@@ -9,25 +9,25 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Slot_Props = {
+    appointmentType?: string[] | FHIR.CodeableConcept;
+    comment?: string;
+    contained?: any[];
+    end?: string;
+    extension?: FHIR.Extension[];
     id?: string;
-    meta?: FHIR.Meta;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     implicitRules?: string;
     language?: string;
-    text?: FHIR.Narrative;
-    contained?: any[];
-    extension?: FHIR.Extension[];
+    meta?: FHIR.Meta;
     modifierExtension?: FHIR.Extension[];
-    identifier?: MaybeArray<string | FHIR.Identifier>;
+    overbooked?: boolean;
+    schedule?: string | FHIR.Reference;
     serviceCategory?: MaybeArray<string[] | FHIR.CodeableConcept>;
     serviceType?: MaybeArray<string[] | FHIR.CodeableConcept>;
     specialty?: MaybeArray<string[] | FHIR.CodeableConcept>;
-    appointmentType?: string[] | FHIR.CodeableConcept;
-    schedule?: string | FHIR.Reference;
-    status?: string;
     start?: string;
-    end?: string;
-    overbooked?: boolean;
-    comment?: string;
+    status?: string;
+    text?: FHIR.Narrative;
     [key: string]: any;
 };
 

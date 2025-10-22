@@ -9,24 +9,24 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type DeviceMetric_Props = {
-    id?: string;
-    meta?: FHIR.Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: FHIR.Narrative;
+    calibration?: FHIR.BackboneElement[];
+    category?: string;
+    color?: string;
     contained?: any[];
     extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
+    id?: string;
     identifier?: MaybeArray<string | FHIR.Identifier>;
+    implicitRules?: string;
+    language?: string;
+    measurementPeriod?: FHIR.Timing;
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
+    operationalStatus?: string;
+    parent?: string | FHIR.Reference;
+    source?: string | FHIR.Reference;
+    text?: FHIR.Narrative;
     type?: string[] | FHIR.CodeableConcept;
     unit?: string[] | FHIR.CodeableConcept;
-    source?: string | FHIR.Reference;
-    parent?: string | FHIR.Reference;
-    operationalStatus?: string;
-    color?: string;
-    category?: string;
-    measurementPeriod?: FHIR.Timing;
-    calibration?: FHIR.BackboneElement[];
     [key: string]: any;
 };
 

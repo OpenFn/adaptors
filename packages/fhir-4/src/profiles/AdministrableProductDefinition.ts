@@ -9,24 +9,24 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type AdministrableProductDefinition_Props = {
-    id?: string;
-    meta?: FHIR.Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: FHIR.Narrative;
-    contained?: any[];
-    extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
-    identifier?: MaybeArray<string | FHIR.Identifier>;
-    status?: string;
-    formOf?: MaybeArray<string | FHIR.Reference>;
     administrableDoseForm?: string[] | FHIR.CodeableConcept;
-    unitOfPresentation?: string[] | FHIR.CodeableConcept;
-    producedFrom?: MaybeArray<string | FHIR.Reference>;
-    ingredient?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    contained?: any[];
     device?: string | FHIR.Reference;
+    extension?: FHIR.Extension[];
+    formOf?: MaybeArray<string | FHIR.Reference>;
+    id?: string;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
+    implicitRules?: string;
+    ingredient?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    language?: string;
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
+    producedFrom?: MaybeArray<string | FHIR.Reference>;
     property?: FHIR.BackboneElement[];
     routeOfAdministration?: FHIR.BackboneElement[];
+    status?: string;
+    text?: FHIR.Narrative;
+    unitOfPresentation?: string[] | FHIR.CodeableConcept;
     [key: string]: any;
 };
 

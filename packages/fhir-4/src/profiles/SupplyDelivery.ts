@@ -9,25 +9,25 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type SupplyDelivery_Props = {
+    basedOn?: MaybeArray<string | FHIR.Reference>;
+    contained?: any[];
+    destination?: string | FHIR.Reference;
+    extension?: FHIR.Extension[];
     id?: string;
-    meta?: FHIR.Meta;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     implicitRules?: string;
     language?: string;
-    text?: FHIR.Narrative;
-    contained?: any[];
-    extension?: FHIR.Extension[];
+    meta?: FHIR.Meta;
     modifierExtension?: FHIR.Extension[];
-    identifier?: MaybeArray<string | FHIR.Identifier>;
-    basedOn?: MaybeArray<string | FHIR.Reference>;
-    partOf?: MaybeArray<string | FHIR.Reference>;
-    status?: string;
-    patient?: string | FHIR.Reference;
-    type?: string[] | FHIR.CodeableConcept;
-    suppliedItem?: FHIR.BackboneElement;
     occurrence?: string | FHIR.Period | FHIR.Timing;
-    supplier?: string | FHIR.Reference;
-    destination?: string | FHIR.Reference;
+    partOf?: MaybeArray<string | FHIR.Reference>;
+    patient?: string | FHIR.Reference;
     receiver?: MaybeArray<string | FHIR.Reference>;
+    status?: string;
+    suppliedItem?: FHIR.BackboneElement;
+    supplier?: string | FHIR.Reference;
+    text?: FHIR.Narrative;
+    type?: string[] | FHIR.CodeableConcept;
     [key: string]: any;
 };
 

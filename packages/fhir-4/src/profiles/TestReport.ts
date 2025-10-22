@@ -9,26 +9,26 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type TestReport_Props = {
-    id?: string;
-    meta?: FHIR.Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: FHIR.Narrative;
     contained?: any[];
     extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
+    id?: string;
     identifier?: string | FHIR.Identifier;
+    implicitRules?: string;
+    issued?: string;
+    language?: string;
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
     name?: string;
-    status?: string;
-    testScript?: string | FHIR.Reference;
+    participant?: FHIR.BackboneElement[];
     result?: string;
     score?: number;
-    tester?: string;
-    issued?: string;
-    participant?: FHIR.BackboneElement[];
     setup?: FHIR.BackboneElement;
-    test?: FHIR.BackboneElement[];
+    status?: string;
     teardown?: FHIR.BackboneElement;
+    test?: FHIR.BackboneElement[];
+    testScript?: string | FHIR.Reference;
+    tester?: string;
+    text?: FHIR.Narrative;
     [key: string]: any;
 };
 
