@@ -62,7 +62,7 @@
           },
           {
             "title": "state",
-            "description": "{ET-MFRHttpState}"
+            "description": "{HttpState}"
           }
         ]
       },
@@ -135,7 +135,7 @@
           },
           {
             "title": "state",
-            "description": "{ET-MFRHttpState}"
+            "description": "{HttpState}"
           }
         ]
       },
@@ -212,7 +212,7 @@
           },
           {
             "title": "state",
-            "description": "{ET-MFRHttpState}"
+            "description": "{HttpState}"
           }
         ]
       },

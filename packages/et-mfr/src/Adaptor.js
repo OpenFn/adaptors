@@ -3,7 +3,7 @@ import * as util from './Utils.js';
 
 /**
  * State object
- * @typedef {Object} ET-MFRHttpState
+ * @typedef {Object} HttpState
  * @property data - the parsed response body
  * @property response - the response from the HTTP server, including headers, statusCode, etc
  * @property references - an array of all previous data objects used in the Job
@@ -40,7 +40,7 @@ import * as util from './Utils.js';
  * @param {string} path - Path to resource
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
- * @state {ET-MFRHttpState}
+ * @state {HttpState}
  */
 export function get(path, options) {
   return request('GET', path, null, options);
@@ -65,7 +65,7 @@ export function get(path, options) {
  * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
- * @state {ET-MFRHttpState}
+ * @state {HttpState}
  */
 export function post(path, body, options) {
   return async state => {
@@ -101,7 +101,7 @@ export function post(path, body, options) {
  * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
- * @state {ET-MFRHttpState}
+ * @state {HttpState}
  */
 export function request(method, path, body, options = {}) {
   return async state => {

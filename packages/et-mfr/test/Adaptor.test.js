@@ -79,7 +79,6 @@ describe('get', () => {
       { id: 1, isActive: true },
       { id: 2, isActive: true },
     ]);
-    expect(finalState.data).to.have.length(2);
   });
   it('makes a get request with authorization header', async () => {
     let capturedHeaders;
@@ -136,28 +135,6 @@ describe('get', () => {
 });
 
 describe('post', () => {
-  const items = [...Array(200)].map((_item, index) => ({
-    id: index + 1,
-    name: `Item ${index + 1}`,
-  }));
-  it('should respect showPerPage when set', async () => {
-    testServer
-      .intercept({
-        path: '/api/Facility/GetFacilities',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      .reply(200, items.slice(0, 2));
-
-    const results = await post('Facility/GetFacilities', { showPerPage: 2 })(
-      state
-    );
-
-    expect(results.data).to.eql(items.slice(0, 2));
-    expect(results.data).to.have.length(2);
-  });
   it('makes a post request to the right endpoint with options', async () => {
     testServer
       .intercept({
@@ -179,67 +156,6 @@ describe('post', () => {
     expect(finalState.data).to.eql('name,id\nItem 1,1');
     expect(finalState.data).to.be.a('string');
   });
-
-  it('should paginate if showPerPage and is not set', async () => {
-    //first call
-    testServer
-      .intercept({
-        path: '/api/Facility/GetFacilities',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      .reply(200, {
-        model: items.slice(0, 100),
-      });
-    //second call
-    testServer
-      .intercept({
-        path: '/api/Facility/GetFacilities',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      .reply(200, {
-        model: items.slice(100),
-      });
-
-    const finalState = await post(
-      'Facility/GetFacilities',
-      {},
-      {
-        defaultPageSize: 100,
-        defaultLimit: 200,
-      }
-    )(state);
-
-    expect(finalState.data).to.eql(items);
-    expect(finalState.data).to.have.length(200);
-  });
-
-  it('should not paginate when other data is passed with showPerPage or perNumber', async () => {
-    testServer
-      .intercept({
-        path: '/api/Facility/GetFacilities',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      .reply(200, items.slice(0, 1));
-
-    const finalState = await post('Facility/GetFacilities', {
-      name: 'Item 1',
-      showPerPage: 2,
-      pageNumber: 1,
-    })(state);
-
-    expect(finalState.data).to.eql(items.slice(0, 1));
-    expect(finalState.data).to.have.length(1);
-    expect(finalState.data[0]).to.have.property('name', 'Item 1');
-  });
 });
 
 describe('requestWithPagination', () => {
@@ -247,6 +163,7 @@ describe('requestWithPagination', () => {
     id: index + 1,
     name: `Item ${index + 1}`,
   }));
+  let requestBody;
   it('should respect showPerPage when set', async () => {
     testServer
       .intercept({
@@ -256,7 +173,10 @@ describe('requestWithPagination', () => {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
         },
       })
-      .reply(200, items.slice(0, 2));
+      .reply(200, ({ body }) => {
+        requestBody = JSON.parse(body);
+        return items.slice(0, 2);
+      });
 
     const results = await requestWithPagination(state, {
       resolvedPath: '/Facility/GetFacilities',
@@ -268,6 +188,7 @@ describe('requestWithPagination', () => {
 
     expect(results).to.eql(items.slice(0, 2));
     expect(results).to.have.length(2);
+    expect(requestBody).to.have.property('showPerPage', 2);
   });
 
   it('should use default pageNumber if not set but showPerPage is set', async () => {
