@@ -1,5 +1,32 @@
 # @openfn/language-commcare
 
+## 4.0.4
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
+## 4.0.3 - 18 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[e2bc436]
+  - @openfn/language-common@3.1.0
+
+## 4.0.2 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
+## 4.0.1 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 4.0.0 - 11 August 2025
 
 ### Major Changes

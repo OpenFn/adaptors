@@ -272,37 +272,28 @@ https://support.google.com/googleapi/answer/6158849
   - Click "Create"
 - On the resulting popup screen, find and click "DOWNLOAD JSON" and save this file to a secure location.
 
-## Use the Postman application to query the OAuth enpoint and retrieve an access token
+## Retrieve an access token
 
-Initially, you'll need to configure an authentication request using Postman's built-in OAuth 2.0 implementation:
-
-- Open Postman
-- Create a new request
-- Switch to the "Authorization" tab
-- On the left side, select Type OAuth 2.0
-- On the right side, scroll down to the "Configure New Token" section
-- Fill out the form using information from the downloaded json file from the
-  previous section
-  - Token Name: Google Oauth
-  - Grant Type: Authorization Code
-  - Auth URL: (found in the json file as auth_url)
-  - Access Token URL: (found in the json file as token_url)
-  - Client ID: (found in the json file as client_id)
-  - Client Secret: (found in the json file as client_secret)
-  - Scope:
-    https://www.googleapis.com/auth/gmail.readonly
-    https://www.googleapis.com/auth/gmail.send
-  - State: (any random string is fine)
-  - Client Authentication: Send as Basic Auth header
-
-Once the form is filled out, repeat these steps each hour to retrieve a new
-access token:
-
-- Click on "Get New Access Token"
-- A browser will open and you'll be asked to authenticate with your Google Account
-- Accept the request to allow this OAuth session to access your Google Account.
-- In the MANAGE ACCESS TOKENS popup, find and copy the new Access Token
-- This access token will be valid for 1 hour.
+- Navigate to [OAuth 2.0 Playground](https://developers.google.com/oauthplayground/).
+- Find *Step 1 Select & authorize APIs*:
+  - Find the section for *Gmail API v1*.
+  - Mark the following two scopes:
+    - https://www.googleapis.com/auth/gmail.readonly
+    - https://www.googleapis.com/auth/gmail.send
+  - In the box labeled with the watermark *Input your own scopes* add `openid`.
+  - Click on the **Authorize APIs** button.
+  - Log in to the Google account to which you want to grant access.
+  - On the *Sign in to Google OAuth 2.0 Playground* screen, Click **Continue**.
+  - On the *Google OAuth 2.0 Playground wants access to your Google Account* screen:
+    - **Select all**, including:
+      - **View your email messages and settings**.
+      - **Send email on your behalf**.
+    - Click **Continue**.
+- Find *Step 2 Exchange authorization code for tokens*:
+  - *Authorization code* will be prepopulated.
+  - Click **Exchange authorization code for tokens**.
+  - *Refresh token* and *Access token* will be populated briefly before the interface automatically advances to *Step 3 Configure request to API*. To view the *Access token*, return to *Step 2 Exchange authorization code for tokens*.
+- The *Access token* is valid for 1 hour. You may enable **Auto-refresh the token before it expires** or manually refresh it using the **Refresh access token** button.
 
 ## Configure OpenFn CLI to find the access token
 
@@ -320,7 +311,7 @@ Example configuration using a workflow:
       ],
       "expression": "path/to/gmail.js",
       "configuration": {
-        "access_token": "(access token acquired from Postman)"
+        "access_token": "[access token acquired from previous section]"
       }
     }
   ]

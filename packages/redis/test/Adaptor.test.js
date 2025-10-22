@@ -12,7 +12,7 @@ import {
   mGet,
   jSet,
   mSet,
-} from '../src';
+} from '../src/index.js';
 
 describe('get', () => {
   it('should get the string value of a key', async () => {

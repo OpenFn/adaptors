@@ -1,5 +1,75 @@
 # @openfn/language-surveycto
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
+## 3.0.0
+
+### Major Changes
+
+- a4eafda: - Add new helper functions: - `list()` to list datasets and dataset
+  records . - `http` namespace with `delete()`, `post()`, `get()`, and
+  `request()`. - `upsertRecord()` and `upsertDataset()` to create or update a
+  record or a dataset. - `uploadCsvRecords()` to upload records to a dataset in
+  `csv` format
+
+  - Remove support for `callback` function options in the helper functions.
+
+  #### Migration Guide
+
+  - Before:
+
+  ```
+
+  fetchSubmissions('my-form', state => {
+     state.results = state.data;
+     return state
+  })
+
+  ```
+
+  - Now:
+
+  ```
+
+  fetchSubmissions('my-form').then(state => {
+   state.results = state.data;
+   return state
+  })
+
+  ```
+
+## 2.3.3 - 18 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[e2bc436]
+  - @openfn/language-common@3.1.0
+
+## 2.3.2 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
+## 2.3.1 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
+## 2.3.0 - 14 August 2025
+
+### Minor Changes
+
+- af530fd: - Added `contentType` to `request()`
+  - Added `jsonToCSVBuffer`
+
 ## 2.2.7 - 14 July 2025
 
 ### Patch Changes

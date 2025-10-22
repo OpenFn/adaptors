@@ -376,8 +376,23 @@
           },
           {
             "title": "example",
-            "description": "searchTask(\"Test Search Task\", {\n  resource_subtype: \"default_task\",\n  sort_by: \"modified_at\"\n});",
+            "description": "searchTask(\"Test Search Task\", {\n  sort_by: \"modified_at\"\n});",
             "caption": "Search for a task by name"
+          },
+          {
+            "title": "example",
+            "description": "searchTask(\"\", {\n  \"custom_fields.12345.value\": $.data.custom_field_value,\n});",
+            "caption": "Search for a task by custom field only"
+          },
+          {
+            "title": "example",
+            "description": "searchTask(\"Test Search Task\", {\n  \"custom_fields.12345.is_set\": true,\n});",
+            "caption": "Search for a task by name and custom field"
+          },
+          {
+            "title": "example",
+            "description": "searchTask(\"Test Search Task\", {\n  resource_subtype: \"milestone\",\n});",
+            "caption": "Search for a milestone by name"
           },
           {
             "title": "function",
@@ -404,6 +419,19 @@
               }
             },
             "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "The resource subtype to search for. Must be either `\"default_task\"` or `\"milestone\"`. Defaults to `\"default_task\"`.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "query.resource_subtype",
+            "default": "default_task"
           },
           {
             "title": "param",
@@ -634,7 +662,7 @@
         "operation"
       ],
       "docs": {
-        "description": "A custom operation that will only execute the function if the condition returns true",
+        "description": "Execute a function only when the condition returns true",
         "tags": [
           {
             "title": "public",

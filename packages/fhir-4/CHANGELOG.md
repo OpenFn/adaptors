@@ -1,5 +1,33 @@
 # @openfn/language-fhir-4
 
+## 0.2.0
+
+### Minor Changes
+
+- 2040fa4: Updated `datetimeregex` to correctly distinguish betwen datetime and
+  strings
+
+## 0.1.12
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
+## 0.1.11 - 18 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[e2bc436]
+  - @openfn/language-common@3.1.0
+
+## 0.1.10 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
 ## 0.1.9 - 14 July 2025
 
 ### Patch Changes

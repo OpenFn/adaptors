@@ -1,8 +1,8 @@
 
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { post, request } from '../src/http';
-import { execute } from '../src';
+import { post, request } from '../src/http.js';
+import { execute } from '../src/index.js';
 
 const authUrl = enableMockClient('https://auth.fake.opencrvs.http.com');
 const baseUrl = 'https://gateway.fake.opencrvs.http.com';

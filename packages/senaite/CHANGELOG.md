@@ -1,5 +1,26 @@
 # @openfn/language-senaite
 
+## 1.0.9
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
+## 1.0.8 - 18 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[e2bc436]
+  - @openfn/language-common@3.1.0
+
+## 1.0.7 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
 ## 1.0.6 - 14 July 2025
 
 ### Patch Changes

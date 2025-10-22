@@ -1,5 +1,12 @@
 # @openfn/generate-fhir
 
+## 0.4.0
+
+### Minor Changes
+
+- 2040fa4: Updated `datetimeregex` to correctly distinguish betwen datetime and
+  strings
+
 ## 0.3.0
 
 - Generate Typescipt adaptor

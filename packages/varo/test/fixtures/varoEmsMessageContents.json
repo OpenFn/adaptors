@@ -1,0 +1,49 @@
+{
+  "contents": [
+    {
+      "metadata": {
+        "content": "{\"location\":{\"used\":{\"latitude\":-4.3,\"longitude\":15.3}}}"
+      },
+      "data": {
+        "filename": "000000000000000000000000_CURRENT_DATA_P0DT1H0M0S_20250701T000000Z.json",
+        "content": "{\"records\":[{\"TVC\":10,\"RELT\":\"P0DT0H1M0S\",\"RTCW\":\"PT0S\"}]}"
+      }
+    },
+    {
+      "metadata": {
+        "content": "{\"location\":{\"used\":{\"latitude\":-4.3,\"longitude\":15.3}}}"
+      },
+      "data": {
+        "filename": "000000000000000000000000_CURRENT_DATA_P1DT1H0M0S_20250702T000000Z.json",
+        "content": "{\"records\":[{\"TVC\":11,\"RELT\":\"P1DT0H1M0S\",\"RTCW\":\"PT0S\"}]}"
+      }
+    },
+    {
+      "metadata": {
+        "content": "{\"location\":{\"used\":{\"latitude\":-4.3,\"longitude\":15.3}}}"
+      },
+      "data": {
+        "filename": "000000000000000000000000_CURRENT_DATA_P2DT1H0M0S_20250703T000000Z.json",
+        "content": "{\"records\":[{\"TVC\":12,\"RELT\":\"P2DT0H1M0S\",\"RTCW\":\"PT0S\"}]}"
+      }
+    },
+    {
+      "metadata": {
+        "content": "{\"location\":{\"used\":{\"latitude\":-4.3,\"longitude\":15.3}}}"
+      },
+      "data": {
+        "filename": "000000000000000000000000_CURRENT_DATA_P3DT1H0M0S_20250704T000000Z.json",
+        "content": "{\"records\":[{\"TVC\":13,\"RELT\":\"P3DT0H1M0S\",\"RTCW\":\"PT0S\"}]}"
+      }
+    },
+    {
+      "metadata": {
+        "content": "{\"location\":{\"used\":{\"latitude\":-4.3,\"longitude\":15.3}}}"
+      },
+      "data": {
+        "filename": "000000000000000000000000_CURRENT_DATA_P4DT1H0M0S_20250705T000000Z.json",
+        "content": "{\"records\":[{\"TVC\":14,\"RELT\":\"P4DT0H1M0S\",\"RTCW\":\"PT0S\"}]}"
+      }
+    }
+  ]
+}

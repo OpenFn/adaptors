@@ -1,5 +1,32 @@
 # @openfn/language-mpesa
 
+## 1.1.6
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
+## 1.1.5 - 18 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[e2bc436]
+  - @openfn/language-common@3.1.0
+
+## 1.1.4 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
+## 1.1.3 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 1.1.2 - 14 July 2025
 
 ### Patch Changes
@@ -42,7 +69,7 @@
 
 - 99e4b48: - Better handling of HTML content in http requests
   - When logging HTTP requests, include query parameters
-- d1f7851: Fixed the title for the consumer\_secret on the configuration schema
+- d1f7851: Fixed the title for the consumer_secret on the configuration schema
 - Updated dependencies \[99e4b48]
 - Updated dependencies \[13bf08f]
   - @openfn/language-common@2.4.0

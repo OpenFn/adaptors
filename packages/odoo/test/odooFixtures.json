@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "name": "A Ltd",
+        "is_company": true,
+        "im_status": "im_partner",
+        "email": "a@example.com"
+    },
+    {
+        "id": 2,
+        "name": "B Ltd",
+        "is_company": true,
+        "im_status": "im_vendor",
+        "phone": "123"
+    },
+    {
+        "id": 3,
+        "name": "C Sole",
+        "is_company": false,
+        "im_status": "im_partner"
+    },
+    {
+        "id": 4,
+        "name": "D NGO",
+        "is_company": true,
+        "im_status": "im_vendor"
+    },
+    {
+        "id": 5,
+        "name": "E Corp",
+        "is_company": true,
+        "im_status": "im_partner",
+        "city": "Nairobi"
+    }
+]

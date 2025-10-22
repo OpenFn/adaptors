@@ -6,7 +6,7 @@ import { request } from 'undici';
 import dateFns from 'date-fns';
 import _ from 'lodash';
 
-import { expandReferences, parseDate } from './util';
+import { expandReferences, parseDate } from './util/index.js';
 
 const schemaCache = {};
 
@@ -80,7 +80,7 @@ export function fn(func) {
 }
 
 /**
- * A custom operation that will only execute the function if the condition returns true
+ * Execute a function only when the condition returns true
  * @public
  * @function
  * @example

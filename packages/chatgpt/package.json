@@ -1,8 +1,8 @@
 {
   "name": "@openfn/language-chatgpt",
   "label": "ChatGPT",
-  "version": "2.0.0",
-  "description": "OpenFn chatgpt adaptor",
+  "version": "2.0.4",
+  "description": "OpenFn adaptor for ChatGPT",
   "type": "module",
   "exports": {
     ".": {

@@ -1,4 +1,4 @@
-import { connection } from './Adaptor';
+import { connection } from './Adaptor.js';
 import { composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 
@@ -33,15 +33,16 @@ import { expandReferences } from '@openfn/language-common/util';
  * @typedef {Object} Bulk2LoadOptions - Bulk insert options
  * @property {number} [pollInterval=1000] - Polling interval in milliseconds. Default: 1000 (1 second)
  * @property {number} [pollTimeout=30000] - Polling timeout in milliseconds. Default: 30000 (30 seconds)
+ * @property {boolean} [failOnError=true] - Fail the operation on error
  * @public
  */
 
 /**
  * Executes a bulk query using Salesforce Bulk API 2.0
  * @public
- * @example <caption>Query records</caption>
+ * @example <caption>Bulk query records</caption>
  * bulk2.query('SELECT Id, Name FROM Account');
- * @example <caption>Query with `scanAll` enabled</caption>
+ * @example <caption>Bulk query with `scanAll` enabled</caption>
  * bulk2.query('SELECT Id, Name FROM Account', { scanAll: true });
  * @example <caption>Query with custom options</caption>
  * bulk2.query(
@@ -78,9 +79,11 @@ export function query(query, options) {
 /**
  * Bulk inserts records using Salesforce Bulk API 2.0
  * @public
- * @example <caption>Insert multiple records</caption>
- * bulk2.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }]);
- * @example <caption>Insert with custom options</caption>
+ * @example <caption>Bulk insert continue on error</caption>
+ * bulk2.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }], {
+ *   failOnError: false,
+ * });
+ * @example <caption>Bulk insert with custom polling options</caption>
  * bulk2.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }], {
  *   pollInterval: 1000,
  *   pollTimeout: 3000,
@@ -99,12 +102,12 @@ export function insert(sObject, records, options = {}) {
 /**
  * Bulk updates records using Salesforce Bulk API 2.0
  * @public
- * @example <caption>Update records</caption>
+ * @example <caption>Bulk update records</caption>
  * bulk2.update("Account", [
  *   { Id: "0010500000fxbcuAAA", Name: "Updated Account #1" },
  *   { Id: "0010500000fxbcvAAA", Name: "Updated Account #2" },
  * ]);
- * @example <caption>Update records with custom options</caption>
+ * @example <caption>Bulk update records continue on error</caption>
  * bulk2.update(
  *   "Account",
  *   [
@@ -112,8 +115,7 @@ export function insert(sObject, records, options = {}) {
  *     { Id: "0010500000fxbcvAAA", Name: "Updated Account #2" },
  *   ],
  *   {
- *     pollInterval: 1000,
- *     pollTimeout: 3000,
+ *     failOnError: false,
  *   }
  * );
  * @function
@@ -130,12 +132,12 @@ export function update(sObject, records, options = {}) {
 /**
  * Bulk upserts records using Salesforce Bulk API 2.0
  * @public
- * @example <caption>Upsert records</caption>
+ * @example <caption>Bulk upsert records</caption>
  * bulk2.upsert("UpsertTable__c", "ExtId__c", [
  *   { Name: "Record #1", ExtId__c : 'ID-0000001' },
  *   { Name: "Record #2", ExtId__c : 'ID-0000002' },
  * ]);
- * @example <caption>Upsert records with custom options</caption>
+ * @example <caption>Bulk upsert records with custom polling options</caption>
  * bulk2.upsert(
  *   "UpsertTable__c",
  *   "ExtId__c",
@@ -146,6 +148,18 @@ export function update(sObject, records, options = {}) {
  *   {
  *     pollInterval: 1000,
  *     pollTimeout: 3000,
+ *   }
+ * );
+ * @example <caption>Bulk upsert records continue on error</caption>
+ * bulk2.upsert(
+ *   "UpsertTable__c",
+ *   "ExtId__c",
+ *   [
+ *     { Name: "Record #1", ExtId__c : 'ID-0000001' },
+ *     { Name: "Record #2", ExtId__c : 'ID-0000002' },
+ *   ],
+ *   {
+ *     failOnError: false,
  *   }
  * );
  * @function
@@ -166,12 +180,12 @@ export function upsert(sObject, externalIdFieldName, records, options = {}) {
 /**
  * Bulk deletes records using Salesforce Bulk API 2.0
  * @public
- * @example <caption>Delete records</caption>
+ * @example <caption>Bulk delete records</caption>
  * bulk2.destroy("Account", [
  *   "0010500000fxbcuAAA",
  *   "0010500000fxbcvAAA",
  * ]);
- * @example <caption>Delete records with custom options</caption>
+ * @example <caption>Bulk delete records with custom polling options</caption>
  * bulk2.destroy(
  *   "Account",
  *   [
@@ -181,6 +195,17 @@ export function upsert(sObject, externalIdFieldName, records, options = {}) {
  *   {
  *     pollInterval: 1000,
  *     pollTimeout: 3000,
+ *   }
+ * );
+ * @example <caption>Bulk delete records continue on error</caption>
+ * bulk2.destroy(
+ *   "Account",
+ *   [
+ *     "0010500000fxbcuAAA",
+ *     "0010500000fxbcvAAA",
+ *   ],
+ *   {
+ *     failOnError: false,
  *   }
  * );
  * @function
@@ -208,6 +233,7 @@ function bulk2Load(operation, sObject, records, options = {}) {
       pollInterval = DEFAULT_POLL_INTERVAL,
       pollTimeout = DEFAULT_POLL_TIMEOUT,
       externalIdFieldName,
+      failOnError = true,
     } = resolvedOptions;
 
     connection.bulk2.pollTimeout = pollTimeout;
@@ -234,6 +260,13 @@ function bulk2Load(operation, sObject, records, options = {}) {
       } else {
         console.warn(`unprocessed record: ${rec}`);
       }
+    }
+
+    if (failOnError && res.failedResults.length > 0) {
+      throw new Error(
+        `Bulk ${resolvedOperation} failed with ${res.failedResults.length
+        } errors: ${JSON.stringify(res.failedResults)}`
+      );
     }
     return composeNextState(state, res);
   };

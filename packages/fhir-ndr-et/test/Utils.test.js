@@ -7,7 +7,7 @@ import {
   concept,
   composite,
   reference
-} from '../src/utils';
+} from '../src/utils.js';
 
 describe('findExtension()', () => {
   it('should find an extension with a matching url', () => {

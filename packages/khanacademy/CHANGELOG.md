@@ -1,5 +1,26 @@
 # @openfn/language-khanacademy
 
+## 0.5.21
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
+## 0.5.20 - 18 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[e2bc436]
+  - @openfn/language-common@3.1.0
+
+## 0.5.19 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
 ## 0.5.18 - 14 July 2025
 
 ### Patch Changes

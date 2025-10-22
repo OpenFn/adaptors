@@ -2,7 +2,7 @@
   "name": "@openfn/generate-fhir",
   "private": true,
   "type": "module",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Helper utility for fhir adaptor generator",
   "main": "src/index.ts",
   "license": "ISC",

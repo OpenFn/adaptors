@@ -1,5 +1,5 @@
 import { expandReferences } from '@openfn/language-common/util';
-import * as util from './util';
+import * as util from './util.js';
 
 /**
  * State object
@@ -15,7 +15,7 @@ import * as util from './util';
  * @typedef {Object} HTTPRequestOptions
  * @property {object} query - An object of query parameters to be encoded into the URL
  * @property {object} headers - An object of all request headers
- * @property {object} body - The request body (as JSON)
+ * @property {object} data - The request body data (as JSON)
  * @property {number} maxRedirections - The maximum number of redirects to follow
  * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
  */
@@ -24,7 +24,7 @@ import * as util from './util';
  * Make a HTTP request to any KoboToolbox endpoint
  * @example <caption>Bulk updating of submissions</caption>
  * http.request("PATCH", `assets/${$.form_uid}/data/bulk/`, {
- *   body: {
+ *   data: {
  *     submission_ids: [$.data.submission_id],
  *     data: {
  *       Transaction_status: "success",

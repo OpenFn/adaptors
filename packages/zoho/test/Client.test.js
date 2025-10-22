@@ -4,8 +4,8 @@ const { expect } = pkg;
 import request from 'superagent';
 import superagentMock from 'superagent-mock';
 
-import { post } from '../src/Client';
-import ClientFixtures, { fixtures } from './ClientFixtures';
+import { post } from '../src/Client.js';
+import ClientFixtures, { fixtures } from './ClientFixtures.js';
 
 describe('Client', () => {
   let mockRequest;

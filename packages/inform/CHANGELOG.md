@@ -1,5 +1,32 @@
 # @openfn/language-inform
 
+## 1.1.6
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
+## 1.1.5 - 18 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[e2bc436]
+  - @openfn/language-common@3.1.0
+
+## 1.1.4 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
+## 1.1.3 - 27 August 2025
+
+### Patch Changes
+
+- b2aec70: - Removed `common` exports in http
+
 ## 1.1.2 - 14 July 2025
 
 ### Patch Changes

@@ -8,7 +8,7 @@ import {
   getClaim,
   createTransactionBundle,
 } from '../src/Adaptor.js';
-import { fixtures } from './ClientFixtures';
+import { fixtures } from './ClientFixtures.js';
 
 import MockAgent from './mockAgent.js';
 import { setGlobalDispatcher } from 'undici';

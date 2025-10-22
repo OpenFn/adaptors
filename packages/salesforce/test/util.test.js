@@ -1,11 +1,11 @@
 import { expect } from 'chai';
-import { execute, setMockConnection } from '../src/Adaptor';
+import { execute, setMockConnection } from '../src/Adaptor.js';
 import {
   toUTF8,
   removeNestings,
   assertNoNesting,
   formatResults,
-} from '../src/util';
+} from '../src/util.js';
 
 describe('toUTF8', () => {
   it('Transliterate unicode to ASCII representation', async () => {

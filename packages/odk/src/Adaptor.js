@@ -3,7 +3,7 @@ import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
-import * as util from './Utils';
+import * as util from './Utils.js';
 
 /**
  * State object

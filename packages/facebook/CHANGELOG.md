@@ -1,5 +1,26 @@
 # @openfn/language-facebook
 
+## 0.4.21
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
+## 0.4.20 - 18 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[e2bc436]
+  - @openfn/language-common@3.1.0
+
+## 0.4.19 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
 ## 0.4.18 - 14 July 2025
 
 ### Patch Changes
@@ -160,7 +181,7 @@
 ### Patch Changes
 
 - aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access\_token" keys can be used for OAuth2-reliant adaptors
+  "access_token" keys can be used for OAuth2-reliant adaptors
 - Updated dependencies \[aad9549]
   - @openfn/language-common@1.10.0
 

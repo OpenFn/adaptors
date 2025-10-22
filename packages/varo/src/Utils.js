@@ -15,7 +15,7 @@ export function parseMetadata(message) {
 
 export function removeNullProps(obj) {
   for (const key in obj) {
-    if (obj[key] == null) {
+    if (obj[key] === null) {
       delete obj[key];
     }
   }
@@ -76,5 +76,18 @@ export function formatDeviceInfo(data) {
   output += formatType('Logger', data.LMFR, data.LMOD, data.LSER);
   output += formatType('EMD', data.EMFR, data.EMOD, data.ESER);
 
-  return output || 'No valid data found';
+  return output || 'Cannot determine device info; no valid data found.';
+}
+
+export function abbreviatedIsoToDate(iso) {
+  const [year, month, day, hour, minute, second] = [
+    iso.slice(0, 4),
+    iso.slice(4, 6),
+    iso.slice(6, 8),
+    iso.slice(9, 11),
+    iso.slice(11, 13),
+    iso.slice(13, 15),
+  ];
+
+  return new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}Z`);
 }

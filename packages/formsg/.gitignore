@@ -1,0 +1,5 @@
+# Local test files (see LOCAL_TEST.md for usage)
+job.js
+job-with-verify.js
+state.json
+output.json

@@ -10,12 +10,16 @@ import {
   getForms,
 } from '../src/Adaptor.js';
 
-import * as fixtures from './fixtures';
+import * as fixtures from './fixtures/index.js';
 
 // For the full mock API see
 // https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
 const baseUrl = 'https://odk.server.com';
 const testServer = enableMockClient(baseUrl);
+// Need to create a second interceptor here with different arguments
+const authInteceptor = enableMockClient(baseUrl, {
+  maxRedirections: 1,
+});
 
 const configuration = {
   baseUrl,
@@ -35,7 +39,7 @@ const mockResponse = (status, body) => ({
 
 // Set up a fake auth endpoint
 before(() => {
-  testServer
+  authInteceptor
     .intercept({
       path: '/v1/sessions',
       method: 'POST',

@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-common",
   "label": "Common",
-  "version": "3.0.2",
+  "version": "3.1.1",
   "description": "Common Expressions for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -50,7 +50,7 @@
     "http-status-codes": "^2.3.0",
     "jsonpath-plus": "^10.3.0",
     "lodash": "^4.17.21",
-    "undici": "^5.29.0"
+    "undici": "^7.15.0"
   },
   "devDependencies": {
     "chai": "4.3.6",

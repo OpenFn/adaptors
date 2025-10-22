@@ -166,6 +166,124 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "parseUtcForDataRange",
+      "params": [
+        "timeZone",
+        "startIso",
+        "endIso"
+      ],
+      "docs": {
+        "description": "Computes the UTC datetime range that corresponds to a given IANA timezone.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "An IANA time zone identifier (e.g. \"America/Los_Angeles\").",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "timeZone"
+          },
+          {
+            "title": "param",
+            "description": "Starting date in ISO format.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "startIso"
+          },
+          {
+            "title": "param",
+            "description": "Ending date range in ISO format.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "endIso"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "UtcRange"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "isKeyInRange",
+      "params": [
+        "key",
+        "start",
+        "end"
+      ],
+      "docs": {
+        "description": "Checks whether the timestamp embedded in a key falls within a UTC datetime range.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "A string key containing a UTC timestamp in the format `YYYYMMDDTHHMMSS`, following a colon (e.g. \"prefix:20250624T101530\").",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": "The inclusive lower bound of the UTC datetime range.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Date"
+            },
+            "name": "start"
+          },
+          {
+            "title": "param",
+            "description": "The exclusive upper bound of the UTC datetime range.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Date"
+            },
+            "name": "end"
+          },
+          {
+            "title": "returns",
+            "description": "True if the parsed UTC timestamp is within the range, false otherwise.",
+            "type": {
+              "type": "NameExpression",
+              "name": "boolean"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],
@@ -220,7 +338,7 @@
         "operation"
       ],
       "docs": {
-        "description": "A custom operation that will only execute the function if the condition returns true",
+        "description": "Execute a function only when the condition returns true",
         "tags": [
           {
             "title": "public",

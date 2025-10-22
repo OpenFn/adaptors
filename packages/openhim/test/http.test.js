@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { post, get, put, _delete, request } from '../src/http';
+import { post, get, put, _delete, request } from '../src/http.js';
 
 const testServer = enableMockClient('https://platform-http-tests.openhim.org');
 const jsonHeaders = {

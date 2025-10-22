@@ -177,7 +177,7 @@
               }
             },
             "name": "callback",
-            "default": "s=>s"
+            "default": "s"
           },
           {
             "title": "return",
@@ -245,7 +245,7 @@
               }
             },
             "name": "callback",
-            "default": "s=>s"
+            "default": "s"
           },
           {
             "title": "return",
@@ -313,7 +313,7 @@
               }
             },
             "name": "callback",
-            "default": "s=>s"
+            "default": "s"
           },
           {
             "title": "return",
@@ -509,7 +509,7 @@
         "operation"
       ],
       "docs": {
-        "description": "A custom operation that will only execute the function if the condition returns true",
+        "description": "Execute a function only when the condition returns true",
         "tags": [
           {
             "title": "public",

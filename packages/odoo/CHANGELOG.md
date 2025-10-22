@@ -1,5 +1,41 @@
 # @openfn/language-odoo
 
+## 2.1.4
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
+## 2.1.3 - 18 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[e2bc436]
+  - @openfn/language-common@3.1.0
+
+## 2.1.2 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
+## 2.1.1 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
+## 2.1.0 - 14 August 2025
+
+### Minor Changes
+
+- 282f9f3: Add `search()` and `searchReadRecord()` functions.
+  - `search()` Only returns the record IDs.
+  - `searchReadRecord()` returns the records with the specified criteria or the
+    full record if none is given.
+
 ## 2.0.0 - 11 August 2025
 
 ### Major Changes

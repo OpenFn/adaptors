@@ -1,4 +1,4 @@
-import { deepEqual, removeNullProps } from './Utils';
+import { deepEqual, removeNullProps } from './Utils.js';
 
 export function parseRtmdCollectionToReports(collection) {
   if (!Array.isArray(collection) || collection.length === 0) {
@@ -22,7 +22,6 @@ export function parseFlatRecordsToReports(collection, reqReport, reqRecord) {
     const records = groups[key];
     const reportRecord = records[0];
 
-    
     const report = mapProperties(reportRecord, records, reqReport, reqRecord);
     promoteDeviceProperties(report, 'E');
 
@@ -97,7 +96,9 @@ function mergeRecords(records, groupKey) {
 
     if (tambAlrm != null) {
       mergedRecord['zTambAlrm'] = tambAlrm;
-      mergedRecord['ALRM'] = tambAlrm;
+
+      // Do not assign ambient temperature alarms (tambAlrm) to ALRM when merging.
+      // Business logic specifies they are not considered true alarms.
     }
 
     if (tvcAlrm != null) {

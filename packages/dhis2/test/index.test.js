@@ -1,8 +1,8 @@
 import chai from 'chai';
-import { execute, create, update, upsert, get } from '../src/Adaptor';
+import { execute, create, update, upsert, get } from '../src/Adaptor.js';
 import { dataValue } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
-import * as util from '../src/util';
+import * as util from '../src/util.js';
 
 const { expect } = chai;
 

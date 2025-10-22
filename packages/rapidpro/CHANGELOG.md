@@ -1,5 +1,26 @@
 # @openfn/language-rapidpro
 
+## 2.0.5
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
+## 2.0.4 - 18 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[e2bc436]
+  - @openfn/language-common@3.1.0
+
+## 2.0.3 - 01 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
 ## 2.0.2 - 14 July 2025
 
 ### Patch Changes

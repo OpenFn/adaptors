@@ -1,9 +1,9 @@
 import { expect } from 'chai';
-import Adaptor from '../src';
+import Adaptor from '../src/index.js';
 const { execute, fetchSurveyData } = Adaptor;
 import request from 'superagent';
 import superagentMock from 'superagent-mock';
-import ClientFixtures, { fixtures } from './ClientFixtures'
+import ClientFixtures, { fixtures } from './ClientFixtures.js'
 
 describe("execute", () => {
 

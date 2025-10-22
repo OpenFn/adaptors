@@ -1,5 +1,133 @@
 # @openfn/language-salesforce
 
+## 9.0.0
+
+### Major Changes
+
+- 187b088: - Add `failOnError` option in bulk2 functions
+
+  - Default `failOnError` to `true` in bulk1 functions
+  - Fix `v8.0.0` migration guide typos
+  - Remove `BulkOptions` and `BulkQueryOptions` typedefs
+
+  ### Migration Guide
+
+  If you want to keep the old behavior, you can pass `failOnError: false` in the
+  options:
+
+  **For Example: Bulk upsert continue on error**
+
+  before:
+
+  ```js
+  bulk1.upsert(
+    'Account',
+    [{ External_Id__c: 'EXT001', Name: 'Upserted Name' }],
+    {
+      extIdField: 'External_Id__c',
+      pollInterval: 3000,
+    }
+  );
+  ```
+
+  now:
+
+  ```js
+  bulk1.upsert(
+    'Account',
+    [{ External_Id__c: 'EXT001', Name: 'Upserted Name' }],
+    {
+      extIdField: 'External_Id__c',
+      pollInterval: 3000,
+      failOnError: false,
+    }
+  );
+  ```
+
+  > Note: The `failOnError` option is available in `bulk1` and `bulk2`
+  > functions.
+
+### Patch Changes
+
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+
+## 8.0.1 - 18 September 2025
+
+### Patch Changes
+
+- Updated dependencies \[e2bc436]
+  - @openfn/language-common@3.1.0
+
+## 8.0.0 - 01 September 2025
+
+### Major Changes
+
+- fb30b2a: - Add `bulk1` functions for bulk insert, update, upsert, and destroy
+
+  - Removed `bulk()` function in favor of explicit `bulk1` and `bulk2` APIs
+  - Removed `bulkQuery()` function in favor of `bulk1.query()` and
+    `bulk2.query()`
+
+#### Migration Guide
+
+The legacy `bulk()` and `bulkQuery()` functions have been replaced with `bulk1`
+and `bulk2` APIs that provide better control and clarity:
+
+##### Bulk Operations
+
+**Before:**
+
+```javascript
+bulk('Account', 'insert', records, options);
+bulk('Account', 'update', records, options);
+bulk('Account', 'upsert', records, { extIdField: 'Id__c' });
+bulk('Account', 'delete', records, options);
+```
+
+**After:**
+
+```javascript
+// Bulk API 1.0 - More reliable, supports failOnError
+bulk1.insert('Account', records, { failOnError: true });
+bulk1.update('Account', records, { batchSize: 5000 });
+bulk1.upsert('Account', 'Id__c', records);
+bulk1.destroy('Account', records);
+
+// Bulk API 2.0 - Faster performance, simplified error handling
+bulk2.insert('Account', records);
+bulk2.update('Account', records);
+bulk2.upsert('Account', 'Id__c', records);
+bulk2.destroy('Account', records);
+```
+
+##### Bulk Queries
+
+**Before**
+
+```js
+bulkQuery('select Id, Name from Account');
+```
+
+**After**
+
+```js
+bulk1.query('select Id, Name from Account');
+// or
+bulk2.query('select Id, Name from Account');
+```
+
+### Patch Changes
+
+- Updated dependencies \[1d60531]
+  - @openfn/language-common@3.0.3
+
+## 7.2.1 - 28 August 2025
+
+### Patch Changes
+
+- b7af59a: - Update `package.json` description to be LLM-readable
+
 ## 7.2.0 - 04 August 2025
 
 ### Minor Changes

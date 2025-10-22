@@ -1,6 +1,6 @@
 import { expect, assert } from 'chai';
-import { request, get, post, options } from '../src/http';
-import { assertRelativeUrl, enableMockClient } from '../src/util/http';
+import { request, get, post, options } from '../src/http.js';
+import { assertRelativeUrl, enableMockClient } from '../src/util/http.js';
 
 const client = enableMockClient('https://a.com', {
   defaultContentType: 'text',
@@ -167,9 +167,9 @@ const mock = (path, req = {}, res = {}) => {
     }));
 };
 
-// Beacuse request is just a wrapper around util.request, it is only tested very lightly
+// Because request is just a wrapper around util.request, it is only tested very lightly
 describe('request()', () => {
-  it('should make a successful arbitary request', async () => {
+  it('should make a successful arbitrary request', async () => {
     mock('/api/1', { method: 'TEST' });
 
     const state = {};

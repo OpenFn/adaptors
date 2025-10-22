@@ -1,3 +1,4 @@
+import { Blob } from 'node:buffer';
 import { composeNextState } from '@openfn/language-common';
 import {
   assertRelativeUrl,
@@ -7,12 +8,23 @@ import {
 } from '@openfn/language-common/util';
 import { formatInTimeZone } from 'date-fns-tz';
 import nodepath from 'node:path';
+import xlsx from 'xlsx';
 
 const addBasicAuth = (configuration = {}, headers) => {
   const { username, password } = configuration;
   if (username && password) {
     Object.assign(headers, makeBasicAuthHeader(username, password));
   }
+};
+
+export const convertJSONToCSV = rows => {
+  const worksheet = xlsx.utils.json_to_sheet(rows);
+
+  const workbook = xlsx.utils.book_new();
+  xlsx.utils.book_append_sheet(workbook, worksheet, 'sheet1');
+
+  const csvBuffer = xlsx.write(workbook, { type: 'buffer', bookType: 'csv' });
+  return csvBuffer;
 };
 
 const buildUrl = (configuration = {}, path) => {
@@ -27,23 +39,89 @@ const buildUrl = (configuration = {}, path) => {
   );
 };
 
-export const prepareNextState = (state, response, callback) => {
+export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
   const nextState = {
-    ...composeNextState(state, response.body),
+    ...composeNextState(state, body),
     response: responseWithoutBody,
   };
-
-  return callback(nextState);
+  return nextState;
 };
 
-export const requestHelper = (state, path, params, callback = s => s) => {
+function encodeFormBody(data) {
+  const form = new FormData();
+  for (const [key, value] of Object.entries(data)) {
+    form.append(
+      key,
+      new Blob([value.blob], { type: value.type }),
+      value.filename
+    );
+  }
+
+  return form;
+}
+
+export const requestWithPagination = async (state, resource, options = {}) => {
+  const results = [];
+
+  let {
+    limit: userLimit,
+    cursor,
+    defaultLimit = 10000, // undocumented, internal
+    pageSize = 1000,
+    ...baseQuery
+  } = options;
+
+  const desiredFetchTotal = userLimit ?? defaultLimit;
+  if(pageSize > 1000){
+
+    console.log('Warning: PageSize cannot exceed 1000, reducing to 1000');
+    pageSize = 1000
+  }
+
+  do {
+    const remaining = desiredFetchTotal - results.length;
+
+    const response = await requestHelper(state, resource, {
+      method: 'GET',
+      query: {
+        ...baseQuery,
+        limit: Math.min(remaining, pageSize),
+        ...(cursor ? { cursor } : {}),
+      },
+    });
+
+    const body = response.body || {};
+    const page = body.data ?? [];
+    const next = body.nextCursor ?? null;
+
+    results.push(...page);
+    cursor = next;
+  } while (cursor && results.length < desiredFetchTotal);
+
+  return prepareNextState(state, {
+   body: results,
+    total: results.length,
+    nextCursor: cursor,
+  });
+};
+
+export const requestHelper = (state, path, params) => {
   assertRelativeUrl(path);
 
-  let { body = {}, headers, method = 'GET', query } = params;
+  let { body = {}, headers = {}, method = 'GET', query, contentType } = params;
 
   addBasicAuth(state.configuration, headers);
   const url = buildUrl(state.configuration, path);
+
+  if (contentType === 'form') {
+    body = encodeFormBody(body);
+  } else if (
+    contentType === 'json' &&
+    Object.keys(headers).find(h => /content-type/.exec(h))
+  ) {
+    headers.contentType = 'application/json';
+  }
 
   const options = {
     body,
@@ -51,15 +129,7 @@ export const requestHelper = (state, path, params, callback = s => s) => {
     query,
   };
 
-  return commonRequest(method, url, options)
-    .then(response => {
-      logResponse(response);
-      return prepareNextState(state, response, callback);
-    })
-    .catch(err => {
-      logResponse(err);
-      throw err;
-    });
+  return commonRequest(method, url, options).then(logResponse);
 };
 
 export const dateRegex = /^(\w{3} \d{2}, \d{4} \d{2}:\d{2}(:\d{2})? (PM|AM))$/;

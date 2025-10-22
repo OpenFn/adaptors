@@ -2,9 +2,10 @@ import path from 'path';
 import fs from 'node:fs/promises';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import { parseFridgeTagToReport, parseFridgeTag } from '../src/FridgeTagUtils';
-import { parseVaroEmsToReport } from '../src/VaroEmsUtils';
-import { parseFlatRecordsToReports } from '../src/StreamingUtils';
+import { parseFridgeTagToReport, parseFridgeTag } from '../src/FridgeTagUtils.js';
+import { applyDurationToDate, extractDeviceData } from '../src/VaroEmsUtils.js';
+import { parseFlatRecordsToReports } from '../src/StreamingUtils.js';
+import { convertToEms } from '../src/index.js';
 
 describe('parseFridgeTagToReport', () => {
   it('converts raw fridgetag data into ems report', async () => {
@@ -37,24 +38,71 @@ describe('parseFridgeTagToReport', () => {
   });
 });
 
-describe('parseVaroEmsToReport', () => {
-  it('converts varo ems data to ems report', async () => {
-    const rawMetadata = await getFixture('metadata.json');
-    const rawData = await getFixture('varoEmsData.json');
+describe('convertToEms', () => {
+  it('converts Varo EMS contents to an EMS report (happy path, first content)', async () => {
+    const rawMessageContents = await getFixture('varoEmsMessageContents.json');
+    const messageContents = JSON.parse(rawMessageContents).contents;
+    const firstContent = messageContents[0];
 
-    const metadata = JSON.parse(rawMetadata);
-    const data = JSON.parse(rawData);
-    const dataPath =
-      '345923483459456034592348_CURRENT_DATA_P100DT9H45M46S_20241115T102926Z.json';
+    // Ensure the fixture is what we think it is
+    expect(messageContents).to.be.an('array').that.is.not.empty;
+    expect(firstContent)
+      .to.have.nested.property('data.filename')
+      .that.matches(/_20250701T000000Z\.json$/);
 
-    const report = parseVaroEmsToReport(metadata, data, dataPath);
-    const firstDataRecord = data.records[0];
-    const firstEmsRecord = report.records[0];
+    // 1) filename-derived data
+    const { deviceId, deviceDate, finalRtcw } = extractDeviceData(firstContent);
+    expect(deviceId).to.eql('000000000000000000000000');
+    expect(deviceDate.toISOString()).to.eql('2025-06-30T23:00:00.000Z'); // filename ts minus 1h
+    expect(finalRtcw).to.eql('PT0S');
 
-    expect(firstDataRecord.TVC).to.eql(4.1);
-    expect(firstEmsRecord.TVC).to.eql(firstDataRecord.TVC);
-    expect(firstEmsRecord.ABST).to.eql('20241115T094554Z');
-    expect(report.LAT).to.eql(metadata.location.used.latitude);
+    // 2) raw content record sanity
+    const contentDataContent = firstContent.data.content; // should already be an object
+    expect(contentDataContent).to.be.an('object');
+    expect(contentDataContent.records)
+      .to.be.an('array')
+      .with.length.greaterThan(0);
+
+    const srcRec = contentDataContent.records[0];
+    expect(srcRec).to.include({ TVC: 10, RELT: 'P0DT0H1M0S', RTCW: 'PT0S' });
+
+    // 3) absolute date addition
+    const absoluteDate = applyDurationToDate(deviceDate, srcRec.RELT);
+    expect(absoluteDate.toISOString()).to.eql('2025-06-30T23:01:00.000Z');
+
+    // 4) result shape + mapped fields
+    const state = {};
+    const result = await convertToEms(messageContents)(state);
+
+    // minimal structural checks
+    expect(result).to.be.an('object');
+    expect(result)
+      .to.have.property('data')
+      .that.is.an('array')
+      .with.length(messageContents.length);
+
+    const firstOut = result.data[0];
+    expect(firstOut)
+      .to.have.property('records')
+      .that.is.an('array')
+      .with.length(1);
+
+    const outRec = firstOut.records[0];
+    expect(outRec).to.have.property('ABST', '20250630T230100Z'); // 2025-06-30 23:01:00Z
+    expect(outRec).to.have.property('TVC', srcRec.TVC);
+
+    // check ABST formatting is YYYYMMDDTHHmmssZ
+    expect(outRec.ABST).to.match(/^\d{8}T\d{6}Z$/);
+
+    // confirm metadata survived
+    if (firstOut.metadata) {
+      expect(firstOut.metadata).to.have.nested.property(
+        'location.used.latitude'
+      );
+      expect(firstOut.metadata).to.have.nested.property(
+        'location.used.longitude'
+      );
+    }
   });
 });
 

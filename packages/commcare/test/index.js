@@ -1,9 +1,11 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { execute, submitXls, get, post, request, bulk } from '../src';
+import { execute, submitXls, get, post, request, bulk } from '../src/index.js';
 
 const hostUrl = 'http://example.commcare.com';
-const testServer = enableMockClient(hostUrl);
+const testServer = enableMockClient(hostUrl, {
+  maxRedirections: 1,
+});
 const domain = 'my-domain';
 const app = 'my-app';
 

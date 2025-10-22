@@ -1,9 +1,32 @@
 import {
   execute as commonExecute,
   cursor as commonCursor,
+  composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { convertDate, requestHelper } from './Utils';
+import {
+  convertDate,
+  requestHelper,
+  convertJSONToCSV,
+  prepareNextState,
+  requestWithPagination,
+} from './Utils.js';
+
+/**
+ * State object
+ * @typedef {Object} SurveyCTOState
+ * @property data - the parsed response body
+ * @property response - the response from the SurveyCTO server, including headers, statusCode etc
+ * @property references - an array of all previous data objects used in the Job.
+ **/
+
+/**
+ * List State object
+ * @typedef {Object} SurveyCTOListState
+ * @property data - the parsed response body
+ * @property response - the response from the server with `total` and `nextCursor`
+ * @property references - an array of all previous data objects used in the Job.
+ **/
 
 /**
  * Execute a sequence of operations.
@@ -53,26 +76,15 @@ export function execute(...operations) {
  * fetchSubmissions('test', { format: 'csv' });
  * @example <caption> With reviewStatus filter</caption>
  * fetchSubmissions('test', { status: 'approved|rejected' });
- * @example <caption> With a callback function</caption>
- * fetchSubmissions(
- *   'test',
- *   {
- *     date: 'Apr 18, 2024 6:26:21 AM',
- *   },
- *   state => {
- *     console.log('Hello from the callback!');
- *     return state;
- *   }
- * );
  * @public
  * @function
  * @param {string} formId - Form id
  * @param {FetchSubmissionOptions} options - Form submission date, format, status parameters
- * @param {function} callback - (Optional) Callback function
  * @returns {Operation}
+ * @state {SurveyCTOState}
  */
-export function fetchSubmissions(formId, options = {}, callback = s => s) {
-  return state => {
+export function fetchSubmissions(formId, options = {}) {
+  return async state => {
     const [resolvedFormId, resolvedOptions] = expandReferences(
       state,
       formId,
@@ -96,56 +108,239 @@ export function fetchSubmissions(formId, options = {}, callback = s => s) {
 
     console.log(`Fetching '${resolvedFormId}' submissions for: ${date}`);
 
-    return requestHelper(
-      state,
-      path,
-      {
-        headers: {
-          'content-type': contentType,
-        },
-        query: {
-          date,
-          r: status,
-        },
+    const response = await requestHelper(state, path, {
+      headers: {
+        'content-type': contentType,
       },
-      callback
-    );
+      query: {
+        date,
+        r: status,
+      },
+    });
+
+    return prepareNextState(state, response);
   };
 }
 
 /**
- * Options provided to request()
- * @typedef {Object} RequestOptions
+ * List resources from SurveyCTO
  * @public
- * @property {object} [headers] - An object of headers parameters.
- * @property {object} [body] - Body data to append to the request.
- * @property {object} [query] - An object of query parameters to be encoded into the URL.
- * @property {string} [method = GET] - The HTTP method to use.
- */
-
-/**
- * Make a request in SurveyCTO API
- * @public
- * @example
- * request("/anEndpoint", {
- *   method: "POST",
- *   query: { foo: "bar", a: 1 },
+ * @example <caption>List all dataset records</caption>
+ * list(`datasets/${$.datasetId}/records`)
+ * @example <caption>List all datasets</caption>
+ * list('datasets')
+ * @example <caption>List dataset records with pagination options</caption>
+ * list(`datasets/${$.datasetId}/records`,{
+ *   limit: 2,
+ * });
+ * @example <caption>List datasets with pagination options</caption>
+ * list('datasets',{
+ *   limit: 2,
  * });
  * @function
- * @param {string} path - Path to resource
- * @param {RequestOptions} params - Query, body and method parameters
- * @param {function} callback - (Optional) Callback function
+ * @param {string} resource - Resource to fetch
+ * @param {object} options - Optional request query options. [See the API docs for details](https://developer.surveycto.com/api-v2.html#getdatasets-parameters)
+ * @property {number} options.limit - Maximum number of items to return. Defaults to 20. Maximum is 1000.
+ * @property {string} options.cursor - Optional string to specify the starting point of the next page of results.
  * @returns {Operation}
+ * @state {SurveyCTOListState}
  */
-export function request(path, params, callback = s => s) {
-  return state => {
-    const [resolvedPath, resolvedParams] = expandReferences(
+export function list(resource, options = {}) {
+  return async state => {
+    const [resolvedResource, resolvedOptions] = expandReferences(
       state,
-      path,
-      params
+      resource,
+      options
     );
 
-    return requestHelper(state, resolvedPath, resolvedParams, callback);
+    const result = await requestWithPagination(
+      state,
+      resolvedResource,
+      resolvedOptions
+    );
+    return result;
+  };
+}
+
+/**
+ * Update (if exist) or create a dataset in SurveyCTO
+ * @public
+ * @example <caption>Upsert a dataset</caption>
+ * upsertDataset({
+ *   id: 'enum_dataset',
+ *   title: 'Enum Dataset',
+ *   discriminator: 'ENUMERATORS',
+ *   locationContext: {
+ *     parentGroupId: 1,
+ *     siblingAbove: {
+ *       id: 'new_dataset',
+ *       itemClass: 'DATASET',
+ *     },
+ *   },
+ *   allowOfflineUpdates: false,
+ *   idFormatOptions: {
+ *     prefix: 'enum',
+ *     suffix: '',
+ *     numberOfDigits: '8',
+ *     allowCapitalLetters: true,
+ *   },
+ * });
+ * @function
+ * @param {object} data - The dataset object to create or update
+ * @returns {Operation}
+ * @state {SurveyCTOState}
+ */
+export function upsertDataset(data) {
+  return async state => {
+    const [resolvedData] = expandReferences(state, data);
+
+    let exists = false;
+
+    const datasetId = resolvedData?.id;
+
+    try {
+      const results = await requestHelper(state, `/datasets/${datasetId}`, {
+        method: 'GET',
+      });
+
+      exists = !!results && !!results.statusCode && results.statusCode === 200;
+    } catch (error) {
+      exists = false;
+    }
+
+    const url = exists ? `/datasets/${datasetId}` : `/datasets`;
+    const method = exists ? 'PUT' : 'POST';
+
+    const response = await requestHelper(state, url, {
+      method,
+      body: resolvedData,
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+
+    return prepareNextState(state, response);
+  };
+}
+
+/**
+ *  Update (if exist) or create a dataset record in SurveyCTO
+ * @public
+ * @example <caption>Upsert a dataset record</caption>
+ * upsertRecord('enumerators_dataset', {
+ *   id: '2',
+ *   name: 'Trial update',
+ *   users: 'All users',
+ * });
+ * @function
+ * @param {string} datasetId - ID of the dataset
+ * @param {object} data - The record object to create or update
+ * @returns {Operation}
+ * @state {SurveyCTOState}
+ */
+export function upsertRecord(datasetId, data) {
+  return async state => {
+    const [resolvedDatasetId, resolvedData] = expandReferences(
+      state,
+      datasetId,
+      data
+    );
+
+    const resultId = resolvedData?.id;
+
+    const response = await requestHelper(
+      state,
+      `/datasets/${resolvedDatasetId}/record`,
+      {
+        method: 'PATCH',
+        body: resolvedData,
+        query: {
+          recordId: resultId,
+        },
+        headers: {
+          'content-type': 'application/json',
+        },
+      }
+    );
+    return prepareNextState(state, response);
+  };
+}
+
+/**
+ * Upload CSV dataset records
+ * @public
+ * @example <caption>Upload records</caption>
+ * uploadCsvRecords('enumerators_dataset', [
+ *   {
+ *     id: '4',
+ *     name: 'Trial update',
+ *     users: 'All users',
+ *   },
+ *   {
+ *     id: '5',
+ *     name: 'Trials',
+ *     users: 'All users here',
+ *   },
+ * ]);
+ * @example <caption>Upload records with metadata</caption>
+ * uploadCsvRecords(
+ *   'enumerators_dataset',
+ *   [
+ *     {
+ *       id: '4',
+ *       name: 'Trial update',
+ *       users: 'All users',
+ *     },
+ *     {
+ *       id: '5',
+ *       name: 'Trials',
+ *       users: 'All users here',
+ *     },
+ *   ],
+ *   {
+ *     uploadMode: 'MERGE',
+ *     joiningField: 'id',
+ *   }
+ * );
+ * @function
+ * @param {string} datasetId - ID of the dataset
+ * @param {string} rows - An array of JSON objects to be uploaded as records. The data will be converted to CSV format before upload.
+ * @param {object} metadata - Optional metadata for configuring how the uploaded data should be processed
+ * @property {string} joiningField - Optional field name to use for merging records. Required when uploadMode is `MERGE`.
+ * @property {string} uploadMode - Optional upload mode. One of `APPEND` (default), `MERGE` and `CLEAR`.
+ * @returns {Operation}
+ * @state {SurveyCTOState}
+ */
+export function uploadCsvRecords(datasetId, rows, metadata = {}) {
+  return async state => {
+    const [resolvedDatasetId, resolvedRows, resolvedMetadata] =
+      expandReferences(state, datasetId, rows, metadata);
+
+    const file = convertJSONToCSV(resolvedRows);
+
+    const data = new FormData();
+    data.append('file', new Blob([file], { type: 'text/csv' }), 'data.csv');
+
+    if (Object.keys(resolvedMetadata).length) {
+      data.append(
+        'metadata',
+        new Blob([JSON.stringify(resolvedMetadata)], {
+          type: 'application/json',
+        }),
+        'metadata.json'
+      );
+    }
+
+    const response = await requestHelper(
+      state,
+      `/datasets/${resolvedDatasetId}/records/upload`,
+      {
+        method: 'POST',
+        body: data,
+      }
+    );
+
+    return prepareNextState(state, response);
   };
 }
 
@@ -172,6 +367,35 @@ export function cursor(value, options) {
     ...options,
   };
   return commonCursor(value, opts);
+}
+
+/**
+ * Converts an array of objects to a CSV buffer.
+ * @public
+ * @example
+ * jsonToCSVBuffer([
+ *  {
+ *     lastName: 'Rothfuss',
+ *     firstName: 'Patrick',
+ *     book: 'The Name of the Wind'
+ *   },
+ *  {
+ *     lastName: 'Martin',
+ *     firstName: 'George',
+ *     book: 'A Game of Thrones'
+ *   },
+ * ])
+ * @param {*} rows An array of JSON objects.
+ * @returns {Operation}
+ */
+export function jsonToCSVBuffer(rows) {
+  return state => {
+    const [resolvedRows] = expandReferences(state, rows);
+
+    const csvBuffer = convertJSONToCSV(resolvedRows);
+
+    return composeNextState(state, csvBuffer);
+  };
 }
 
 export {
