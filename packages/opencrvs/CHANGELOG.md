@@ -1,5 +1,22 @@
 # @openfn/language-opencrvs
 
+## 1.0.7
+
+### Patch Changes
+
+- Updated dependencies [2040fa4]
+  - @openfn/language-fhir-4@0.2.0
+
+## 1.0.6
+
+### Patch Changes
+
+- 5255aad: Add `createDocumentaryEntry` for creating resources using `fhir-4`
+  bundles
+- Updated dependencies [408a3a2]
+  - @openfn/language-common@3.1.1
+  - @openfn/language-fhir-4@0.1.12
+
 ## 1.0.5 - 18 September 2025
 
 ### Patch Changes

@@ -115,6 +115,62 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "createDocumentEntry",
+      "params": [
+        "resource",
+        "fullUrl"
+      ],
+      "docs": {
+        "description": "Create a document bundle entry with automatic UUID generation",
+        "tags": [
+          {
+            "title": "example",
+            "description": "createDocumentEntry(builders.patient({ name: [{ given: ['John'] }] }))"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "A FHIR resource using builders from fhir-4",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "resource"
+          },
+          {
+            "title": "param",
+            "description": "Custom fullUrl. Auto-generated if not provided",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "fullUrl"
+          },
+          {
+            "title": "returns",
+            "description": "Bundle entry with fullUrl and resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],

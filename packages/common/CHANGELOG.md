@@ -1,5 +1,11 @@
 ## 3.0.1 - 11 July 2025
 
+## 3.1.1
+
+### Patch Changes
+
+- 408a3a2: Update `undici` to `v7.15.0`
+
 ## 3.1.0 - 18 September 2025
 
 ### Minor Changes
@@ -329,7 +335,7 @@ content type to JSON.
 ### Minor Changes
 
 - aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access\_token" keys can be used for OAuth2-reliant adaptors
+  "access_token" keys can be used for OAuth2-reliant adaptors
 
 ## 1.9.0 - 23 June 2023
 

@@ -219,3 +219,74 @@ describe('concept', () => {
     });
   });
 });
+
+describe('composite', () => {
+  it('should identify valid datetime strings as DateTime', () => {
+    const obj = {};
+    b.composite(obj, 'value', '2022-06-29');
+    expect(obj).to.have.property('valueDateTime', '2022-06-29');
+  });
+
+  it('should identify full ISO datetime strings as DateTime', () => {
+    const obj = {};
+    b.composite(obj, 'value', '2022-08-14T14:43:47.000Z');
+    expect(obj).to.have.property('valueDateTime', '2022-08-14T14:43:47.000Z');
+  });
+
+  it('should identify datetime with timezone as DateTime', () => {
+    const obj = {};
+    b.composite(obj, 'value', '2022-08-14T14:43:47+02:00');
+    expect(obj).to.have.property('valueDateTime', '2022-08-14T14:43:47+02:00');
+  });
+
+  it('should NOT identify phone numbers as DateTime', () => {
+    const obj = {};
+    b.composite(obj, 'value', '+260759205190');
+    expect(obj).to.have.property('valueString', '+260759205190');
+    expect(obj).to.not.have.property('valueDateTime');
+  });
+
+  it('should NOT identify international phone numbers as DateTime', () => {
+    const obj = {};
+    b.composite(obj, 'value', '+1234567890123');
+    expect(obj).to.have.property('valueString', '+1234567890123');
+    expect(obj).to.not.have.property('valueDateTime');
+  });
+
+  it('should NOT identify numbers starting with valid year patterns as DateTime', () => {
+    const obj = {};
+    b.composite(obj, 'value', '2607592051901234');
+    expect(obj).to.have.property('valueString', '2607592051901234');
+    expect(obj).to.not.have.property('valueDateTime');
+  });
+
+  it('should identify partial dates as DateTime', () => {
+    const obj = {};
+    b.composite(obj, 'value', '2022-08');
+    expect(obj).to.have.property('valueDateTime', '2022-08');
+  });
+
+  it('should identify years as DateTime', () => {
+    const obj = {};
+    b.composite(obj, 'value', '2022');
+    expect(obj).to.have.property('valueDateTime', '2022');
+  });
+
+  it('should handle boolean values correctly', () => {
+    const obj = {};
+    b.composite(obj, 'value', true);
+    expect(obj).to.have.property('valueBoolean', true);
+  });
+
+  it('should handle numeric values correctly', () => {
+    const obj = {};
+    b.composite(obj, 'value', 42);
+    expect(obj).to.have.property('valueInteger', 42);
+  });
+
+  it('should handle regular strings correctly', () => {
+    const obj = {};
+    b.composite(obj, 'value', 'hello world');
+    expect(obj).to.have.property('valueString', 'hello world');
+  });
+});

@@ -37,25 +37,6 @@ import * as util from './util.js';
  * @property references - History of all previous states
  **/
 
-/**
- * Options provided to the Salesforce bulk API request
- * @typedef {Object} BulkOptions
- * @public
- * @property {string} extIdField - External id field. Required for upsert.
- * @property {boolean} [allowNoOp=false] - Skipping bulk operation if no records.
- * @property {boolean} [failOnError=false] - Fail the operation on error.
- * @property {integer} [pollTimeout=240000] - Polling timeout in milliseconds.
- * @property {integer} [pollInterval=6000] - Polling interval in milliseconds.
- */
-
-/**
- * Options provided to the Salesforce bulk query API request
- * @typedef {Object} BulkQueryOptions
- * @public
- * @property {integer} [pollTimeout=90000] - Polling timeout in milliseconds.
- * @property {integer} [pollInterval=3000] - Polling interval in milliseconds.
- * */
-
 let connection = null;
 
 /**
