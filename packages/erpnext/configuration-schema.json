@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "The base URL of your ERPNext instance",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://mycompany.erpnext.com"]
+    },
+    "apiKey": {
+      "title": "API Key",
+      "type": "string",
+      "description": "API Key (generate from ERPNext user profile)"
+    },
+    "apiSecret": {
+      "title": "API Secret",
+      "type": "string",
+      "description": "API Secret (generated with API Key)",
+      "writeOnly": true
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "Username (alternative to API Key)",
+      "examples": ["admin@example.com"]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Password (alternative to API Secret)",
+      "writeOnly": true,
+      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["baseUrl"]
+}
