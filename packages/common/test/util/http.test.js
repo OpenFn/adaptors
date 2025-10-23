@@ -1180,6 +1180,21 @@ describe('generateAgentKey', () => {
 });
 
 describe('redirect handling', () => {
+  let originalWarn;
+  let consoleWarnings = [];
+
+  beforeEach(() => {
+    // Setup: Override console.warn
+    originalWarn = console.warn;
+    consoleWarnings = [];
+    console.warn = (...args) => consoleWarnings.push(args);
+  });
+
+  afterEach(() => {
+    // Teardown: Restore console.warn
+    console.warn = originalWarn;
+  });
+
   const redirectTestCases = [
     { code: 301, name: 'Moved Permanently' },
     { code: 302, name: 'Moved Temporarily' },
@@ -1189,7 +1204,7 @@ describe('redirect handling', () => {
   ];
 
   redirectTestCases.forEach(({ code, name }) => {
-    it(`should provide a friendly error for ${code} redirects when maxRedirections is not set`, async () => {
+    it(`should log a friendly warning for ${code} (${name}) redirects when maxRedirections is not set`, async () => {
       const redirectClient = enableMockClient(
         `https://redirect-test-${code}.com`
       );
@@ -1205,29 +1220,32 @@ describe('redirect handling', () => {
           },
         });
 
-      let error = null;
-      try {
-        await request('GET', `https://redirect-test-${code}.com/old-path`);
-      } catch (err) {
-        error = err;
-      }
+      const response = await request(
+        'GET',
+        `https://redirect-test-${code}.com/old-path`,
+        {
+          errors: false, // Don't throw on non-2xx status
+        }
+      );
 
-      expect(error).to.not.be.null;
-      expect(error.code).to.equal('REDIRECT_NOT_FOLLOWED');
-      expect(error.statusCode).to.equal(code);
-      expect(error.url).to.equal(`https://redirect-test-${code}.com/old-path`);
-      expect(error.redirectLocation).to.equal(
+      // Verify the response is returned (not throwing)
+      expect(response.statusCode).to.equal(code);
+
+      // Verify the warning was logged
+      expect(consoleWarnings.length).to.equal(1);
+      const warningMessage = consoleWarnings[0][0];
+      expect(warningMessage).to.include(`${code} (${name})`);
+      expect(warningMessage).to.include('maxRedirections');
+      expect(warningMessage).to.include(
         `https://redirect-test-${code}.com/new-path`
       );
-      expect(error.message).to.include(`${code} (${name})`);
-      expect(error.message).to.include('maxRedirections');
-      expect(error.message).to.include(
-        `https://redirect-test-${code}.com/new-path`
+      expect(warningMessage).to.include(
+        `https://redirect-test-${code}.com/old-path`
       );
     });
   });
 
-  it('should not throw friendly error for 301 when maxRedirections is explicitly set to 0', async () => {
+  it('should not log warning for 301 when maxRedirections is explicitly set to 0', async () => {
     const redirectClient = enableMockClient('https://redirect-test.com', {
       maxRedirections: 0,
     });
@@ -1244,7 +1262,7 @@ describe('redirect handling', () => {
       });
 
     // When maxRedirections is explicitly set (even to 0), we assume the user
-    // is aware of redirect behavior and want the raw response
+    // is aware of redirect behavior and don't need to warn them
     const response = await request(
       'GET',
       'https://redirect-test.com/old-path',
@@ -1255,5 +1273,6 @@ describe('redirect handling', () => {
     );
 
     expect(response.statusCode).to.equal(301);
+    expect(consoleWarnings.length).to.equal(0);
   });
 });
