@@ -5,7 +5,7 @@ import {
 import { expandReferences } from '@openfn/language-common/util';
 import { DuckDBInstance } from '@duckdb/node-api';
 import _ from 'lodash';
-import * as util from './Utils.js';
+import * as util from './util.js';
 import { createMockConnection } from './mock.js';
 
 let instance = null;
