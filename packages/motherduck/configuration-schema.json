@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "token": {
+      "title": "MotherDuck Token",
+      "type": "string",
+      "description": "MotherDuck authentication token",
+      "writeOnly": true,
+      "examples": ["token_abc123..."]
+    },
+    "database": {
+      "title": "Database Name",
+      "type": "string",
+      "description": "MotherDuck database name",
+      "examples": ["my_database", "analytics_warehouse", "production_db"]
+    },
+    "sessionHint": {
+      "title": "Session Hint",
+      "type": "string",
+      "description": "Optional session hint for MotherDuck read scaling",
+      "examples": ["primary", "readonly", "analytics"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["token"]
+}
