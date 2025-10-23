@@ -43034,6 +43034,462 @@
     "kind": "external-function"
   }
 ],
+{"name":"motherduck","adaptor":"@openfn/language-motherduck","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#execute\\\">execute(...operations)</a></dt>\\n<dt>\\n    <a href=\\\"#insert\\\">insert(table, records, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#query\\\">query(sqlQuery, [options])</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#util_escapeSqlString\\\">util.escapeSqlString(value)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#util_formatSqlValue\\\">util.formatSqlValue(value)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#util_validateSqlIdentifier\\\">util.validateSqlIdentifier(identifier)</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#arraytostring\\\">arrayToString()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### execute\\n\\n<p><code>execute(...operations) ⇒ Operation</code></p>\\n\\nExecute a sequence of operations against MotherDuck cloud database.\\nWraps `@openfn/language-common/execute`, and prepends initial state for MotherDuck.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| ...operations | <code>Operation</code> | Operations to be performed. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| references | Array of previous operation results |\\n| data | Data from the last operation |\\n\\n**Example**\\n```js\\nexecute(\\n  query('SELECT * FROM my_table'),\\n  insert('users', { name: 'John', age: 30 })\\n)(state)\\n```\\n\\n* * *\\n\\n### insert\\n\\n<p><code>insert(table, records, [options]) ⇒ Operation</code></p>\\n\\nInsert one or more records into a MotherDuck table with automatic batching.\\nLarge datasets are automatically split into batches for optimal performance.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| table | <code>string</code> |  | Target table name |\\n| records | <code>object</code> \\\\| <code>Array</code> |  | A single record object or array of records |\\n| [options] | <code>object</code> |  | Insert options |\\n| [options.batchSize] | <code>number</code> | <code>1000</code> | Number of records per batch |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | Metadata including recordsInserted and batches |\\n\\n**Example:** Insert a single record\\n```js\\ninsert('users', { name: 'John', age: 30, email: 'john@example.com' })\\n```\\n**Example:** Insert multiple records\\n```js\\ninsert('users', [\\n  { name: 'John', age: 30 },\\n  { name: 'Jane', age: 25 }\\n])\\n```\\n**Example:** Insert with custom batch size\\n```js\\ninsert('users', records, { batchSize: 500 })\\n```\\n\\n* * *\\n\\n### query\\n\\n<p><code>query(sqlQuery, [options]) ⇒ Operation</code></p>\\n\\nExecute a SQL query against the MotherDuck database.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| sqlQuery | <code>string</code> |  | SQL query string |\\n| [options] | <code>object</code> |  | Query execution options |\\n| [options.writeSql] | <code>boolean</code> | <code>false</code> | Include full SQL in response.query (default: false, hides query for security) |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | Query results as array of row objects |\\n| response | Metadata including rowCount, command, and query |\\n\\n**Example:** Simple query\\n```js\\nquery('SELECT * FROM users WHERE age > 18')\\n```\\n**Example:** Query with SQL logging\\n```js\\nquery('SELECT * FROM orders', { writeSql: true })\\n```\\n\\n* * *\\n\\n\\n## util\\n\\nThese functions belong to the util namespace.\\n### util.escapeSqlString {#util_escapeSqlString}\\n\\n<p><code>escapeSqlString(value) ⇒ string</code></p>\\n\\nEscape SQL string values to prevent SQL injection\\n\\n**Returns**: <code>string</code> - - Escaped string value  \\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| value | <code>string</code> | String value to escape |\\n\\n\\n\\n* * *\\n\\n\\n### util.formatSqlValue {#util_formatSqlValue}\\n\\n<p><code>formatSqlValue(value) ⇒ string</code></p>\\n\\nFormat a value for SQL insertion\\n\\n**Returns**: <code>string</code> - - Formatted SQL value  \\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| value | <code>any</code> | Value to format |\\n\\n\\n\\n* * *\\n\\n\\n### util.validateSqlIdentifier {#util_validateSqlIdentifier}\\n\\n<p><code>validateSqlIdentifier(identifier) ⇒ string</code></p>\\n\\nValidate SQL identifier (table names, column names, etc.)\\n\\n**Returns**: <code>string</code> - - Validated identifier  \\n**Throws**:\\n\\n- <code>Error</code> - If identifier contains dangerous characters\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| identifier | <code>string</code> | SQL identifier to validate |\\n\\n\\n\\n* * *\\n\\n\\n\"","readme":"\"# Language MotherDuck <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nOpenFn Adaptor for building expressions and operations to interact with\\nMotherDuck, the serverless cloud analytics platform powered by DuckDB.\\n\\n## Configuration\\n\\n```json\\n{\\n  \\\"token\\\": \\\"your_motherduck_token_here\\\",\\n  \\\"database\\\": \\\"my_database\\\"\\n}\\n```\\n\\nWith session hint for read scaling:\\n\\n```json\\n{\\n  \\\"token\\\": \\\"your_motherduck_token_here\\\",\\n  \\\"database\\\": \\\"my_database\\\",\\n  \\\"sessionHint\\\": \\\"primary\\\"\\n}\\n```\\n\\n## Sample Expressions\\n\\n### Execute SQL queries\\n\\n```js\\nquery('SELECT * FROM users WHERE age > 25');\\n\\nquery(`\\n  SELECT \\n    COUNT(*) as total_users,\\n    AVG(age) as average_age\\n  FROM users\\n  WHERE created_at >= '2024-01-01'\\n`);\\n```\\n\\n### Insert data\\n\\n```js\\ninsert('users', {\\n  name: 'John Doe',\\n  age: 30,\\n  email: 'john@example.com',\\n});\\n\\ninsertMany('users', [\\n  { name: 'Alice', age: 28, email: 'alice@example.com' },\\n  { name: 'Bob', age: 35, email: 'bob@example.com' },\\n]);\\n```\\n\\n### Create and manage tables\\n\\n```js\\ncreateTable('analytics', [\\n  { name: 'id', type: 'INTEGER PRIMARY KEY' },\\n  { name: 'event_name', type: 'VARCHAR(100)', required: true },\\n  { name: 'timestamp', type: 'TIMESTAMP', default: 'CURRENT_TIMESTAMP' },\\n  { name: 'user_id', type: 'INTEGER' },\\n]);\\n\\ndropTable('old_table', { ifExists: true });\\n```\\n\\n### Data transformation pipeline\\n\\n```js\\n// Extract: Query source data\\nquery('SELECT * FROM raw_events WHERE processed = false');\\n\\n// Transform: Process the data\\nmap($.data, event => ({\\n  ...event,\\n  processed_at: new Date().toISOString(),\\n  category: event.type === 'click' ? 'engagement' : 'other',\\n}));\\n\\n// Load: Insert processed data\\ninsertMany('processed_events', state => state.data);\\n\\n// Mark as processed\\nquery('UPDATE raw_events SET processed = true WHERE processed = false');\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\"","changelog":"\"# @openfn/language-motherduck\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":["execute","insert","query"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"token":{"title":"MotherDuck Token","type":"string","description":"MotherDuck authentication token","writeOnly":true,"examples":["token_abc123..."]},"database":{"title":"Database Name","type":"string","description":"MotherDuck database name","examples":["my_database","analytics_warehouse","production_db"]},"sessionHint":{"title":"Session Hint","type":"string","description":"Optional session hint for MotherDuck read scaling","examples":["primary","readonly","analytics"]}},"type":"object","additionalProperties":true,"required":["token"]}},
+[
+  {
+    "id": "escapeSqlString",
+    "longname": "escapeSqlString",
+    "name": "escapeSqlString",
+    "kind": "function",
+    "scope": "util",
+    "description": "Escape SQL string values to prevent SQL injection",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "String value to escape",
+        "name": "value"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "- Escaped string value"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 54,
+      "filename": "util.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/motherduck/src"
+    },
+    "order": 8,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "execute",
+    "longname": "execute",
+    "name": "execute",
+    "kind": "function",
+    "scope": "global",
+    "description": "Execute a sequence of operations against MotherDuck cloud database.\nWraps `@openfn/language-common/execute`, and prepends initial state for MotherDuck.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        },
+        "variable": true,
+        "description": "Operations to be performed.",
+        "name": "operations"
+      }
+    ],
+    "examples": [
+      "execute(\n  query('SELECT * FROM my_table'),\n  insert('users', { name: 'John', age: 30 })\n)(state)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 29,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/motherduck/src"
+    },
+    "state": [
+      {
+        "name": "references",
+        "description": "Array of previous operation results",
+        "type": "Array"
+      },
+      {
+        "name": "data",
+        "description": "Data from the last operation",
+        "type": "*"
+      }
+    ],
+    "order": 0,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "formatSqlValue",
+    "longname": "formatSqlValue",
+    "name": "formatSqlValue",
+    "kind": "function",
+    "scope": "util",
+    "description": "Format a value for SQL insertion",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "description": "Value to format",
+        "name": "value"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "- Formatted SQL value"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 68,
+      "filename": "util.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/motherduck/src"
+    },
+    "order": 9,
+    "level": 0
+  },
+  {
+    "id": "insert",
+    "longname": "insert",
+    "name": "insert",
+    "kind": "function",
+    "scope": "global",
+    "description": "Insert one or more records into a MotherDuck table with automatic batching.\nLarge datasets are automatically split into batches for optimal performance.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Target table name",
+        "name": "table"
+      },
+      {
+        "type": {
+          "names": [
+            "object",
+            "Array"
+          ]
+        },
+        "description": "A single record object or array of records",
+        "name": "records"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "Insert options",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": 1000,
+        "description": "Number of records per batch",
+        "name": "options.batchSize"
+      }
+    ],
+    "examples": [
+      "<caption>Insert a single record</caption>\ninsert('users', { name: 'John', age: 30, email: 'john@example.com' })",
+      "<caption>Insert multiple records</caption>\ninsert('users', [\n  { name: 'John', age: 30 },\n  { name: 'Jane', age: 25 }\n])",
+      "<caption>Insert with custom batch size</caption>\ninsert('users', records, { batchSize: 500 })"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 172,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/motherduck/src"
+    },
+    "state": [
+      {
+        "name": "data",
+        "description": "Metadata including recordsInserted and batches",
+        "type": "object"
+      }
+    ],
+    "order": 4,
+    "level": 0
+  },
+  {
+    "id": "query",
+    "longname": "query",
+    "name": "query",
+    "kind": "function",
+    "scope": "global",
+    "description": "Execute a SQL query against the MotherDuck database.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "SQL query string",
+        "name": "sqlQuery"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "Query execution options",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": false,
+        "description": "Include full SQL in response.query (default: false, hides query for security)",
+        "name": "options.writeSql"
+      }
+    ],
+    "examples": [
+      "<caption>Simple query</caption>\nquery('SELECT * FROM users WHERE age > 18')",
+      "<caption>Query with SQL logging</caption>\nquery('SELECT * FROM orders', { writeSql: true })"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 132,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/motherduck/src"
+    },
+    "state": [
+      {
+        "name": "data",
+        "description": "Query results as array of row objects",
+        "type": "Array"
+      },
+      {
+        "name": "response",
+        "description": "Metadata including rowCount, command, and query",
+        "type": "object"
+      }
+    ],
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "validateSqlIdentifier",
+    "longname": "validateSqlIdentifier",
+    "name": "validateSqlIdentifier",
+    "kind": "function",
+    "scope": "util",
+    "description": "Validate SQL identifier (table names, column names, etc.)",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "SQL identifier to validate",
+        "name": "identifier"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "- Validated identifier"
+      }
+    ],
+    "access": "public",
+    "exceptions": [
+      {
+        "type": {
+          "names": [
+            "Error"
+          ]
+        },
+        "description": "- If identifier contains dangerous characters"
+      }
+    ],
+    "meta": {
+      "lineno": 9,
+      "filename": "util.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/motherduck/src"
+    },
+    "order": 7,
+    "level": 0
+  },
+  {
+    "id": "alterState",
+    "common": true,
+    "name": "alterState",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "arrayToString",
+    "common": true,
+    "name": "arrayToString",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "as",
+    "common": true,
+    "name": "as",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "combine",
+    "common": true,
+    "name": "combine",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fnIf",
+    "common": true,
+    "name": "fnIf",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "group",
+    "common": true,
+    "name": "group",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "map",
+    "common": true,
+    "name": "map",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  }
+],
 {"name":"mpesa","adaptor":"@openfn/language-mpesa","version":"1.1.6","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#buygoods\\\">buyGoods(data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#checktransactionstatus\\\">checkTransactionStatus(data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#registerurl\\\">registerUrl(data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#remittax\\\">remitTax(data, options)</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, options)</a></dt>\\n<dt>\\n    <a href=\\\"#stkpush\\\">stkPush(data, options)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### buyGoods\\n\\n<p><code>buyGoods(data, options) ⇒ Operation</code></p>\\n\\nPay for goods and services directly from your business account to a till number, merchant store number or Merchant HO\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | [<code>BuyGoodsObject</code>](#buygoodsobject) | The object that will be attached to the POST request body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request object. Includes headers, error mappings and query params |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the DARAJA API server (excluding the body) |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Pay for goods\\n```js\\nbuyGoods({\\n    \\\"Initiator\\\": \\\"testapi\\\",\\n    \\\"SecurityCredential\\\": \\\"sbMXpuhMX5LzieNiDrx9TgscfaBxxvie0WlBDdGli4MWu4s5gbhYVlBy+T89xHQdoYwcG202KNp403ln2dLFnytPqw==\\\",\\n    \\\"Amount\\\": 1,\\n    \\\"PartyA\\\": 600999,\\n    \\\"PartyB\\\": 600000,\\n    \\\"AccountReference\\\": 353353,\\n    \\\"Requester\\\": 254708374149,\\n    \\\"Remarks\\\": \\\"ok\\\",\\n    \\\"QueueTimeOutURL\\\": \\\"https://mydomain.com/b2b/queue/\\\",\\n    \\\"ResultURL\\\": \\\"https://mydomain.com/b2b/result/\\\"\\n});\\n```\\n\\n* * *\\n\\n### checkTransactionStatus\\n\\n<p><code>checkTransactionStatus(data, options) ⇒ Operation</code></p>\\n\\nCheck the status of the transaction\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | [<code>TransactionStatusObject</code>](#transactionstatusobject) | The object that will be attached to the POST request body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request object. Includes headers, error mappings and query params |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the DARAJA API server (excluding the body) |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Check status of a transaction\\n```js\\ncheckTransactionStatus({\\n    \\\"Initiator\\\": \\\"testapi\\\",\\n    \\\"SecurityCredential\\\": \\\"ctHDk+dN14A22B5GyQQvISSTY3K1tVnCTuQGoG7PsTCadzTkl5wz44Rhpkb0BZDvfRA==\\\",\\n    \\\"TransactionID\\\": \\\"OEI2AK4Q16\\\",\\n    \\\"PartyA\\\": 600998,\\n    \\\"IdentifierType\\\": 4,\\n    \\\"ResultURL\\\": \\\"https://mydomain.com/TransactionStatus/result/\\\",\\n    \\\"QueueTimeOutURL\\\": \\\"https://mydomain.com/TransactionStatus/queue/\\\",\\n    \\\"Remarks\\\": \\\"fdfdfdfdf\\\",\\n    \\\"Occassion\\\": \\\"null\\\",\\n});\\n```\\n\\n* * *\\n\\n### registerUrl\\n\\n<p><code>registerUrl(data, options) ⇒ Operation</code></p>\\n\\nRegister a URL that allows receiving payment notifications to your paybill.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | [<code>RegisterUrlObject</code>](#registerurlobject) | The object that will be attached to the POST request body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request object. Includes headers, error mappings and query params |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the DARAJA API server (excluding the body) |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Register a URL to receive payment notifications\\n```js\\nregisterUrl({\\n    \\\"ShortCode\\\": 600426,\\n    \\\"ResponseType\\\": \\\"Completed\\\",\\n    \\\"ConfirmationURL\\\": \\\"https://mydomain.com/confirmation\\\",\\n    \\\"ValidationURL\\\": \\\"https://mydomain.com/validation\\\"\\n});\\n```\\n\\n* * *\\n\\n### remitTax\\n\\n<p><code>remitTax(data, options) ⇒ Operation</code></p>\\n\\nRemit tax to the Kenya Revenue Authority (KRA).\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | [<code>RemitTaxObject</code>](#remittaxobject) | The object that will be attached to the POST request body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request object. Includes headers, error mappings and query params |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the DARAJA API server (excluding the body) |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Pay tax to KRA\\n```js\\nremitTax({\\n    \\\"Initiator\\\": \\\"testapi\\\",\\n    \\\"SecurityCredential\\\": \\\"Uq1qluCjSYfMF3XEvlpfuatnWwWerwq42fB+mMd8nsKdAVO04DGHhG/s3xO3g7POki9B8i7cSoEkBux4bQrlDLDWJhaTrt1TdbE+ZQ==\\\",\\n    \\\"Amount\\\": 1,\\n    \\\"PartyA\\\": 600995,\\n    \\\"AccountReference\\\": 353353,\\n    \\\"Remarks\\\": \\\"ok\\\",\\n    \\\"QueueTimeOutURL\\\": \\\"https://mydomain.com/b2b/queue/\\\",\\n    \\\"ResultURL\\\": \\\"https://mydomain.com/b2b/result/\\\"\\n})\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(method, path, body, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource. |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the DARAJA API server (excluding the body) |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Register a URL to receive payment notifications\\n```js\\nrequest(\\\"POST\\\", \\\"/mpesa/c2b/v1/registerurl\\\", \\n {\\n   \\\"ShortCode\\\": 600426,\\n   \\\"ResponseType\\\": \\\"Completed\\\",\\n   \\\"ConfirmationURL\\\": \\\"https://mydomain.com/confirmation\\\",\\n   \\\"ValidationURL\\\": \\\"https://mydomain.com/validation\\\"\\n });\\n```\\n\\n* * *\\n\\n### stkPush\\n\\n<p><code>stkPush(data, options) ⇒ Operation</code></p>\\n\\nInitiate a STK pin prompt to a Safaricom mobile number.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | [<code>STKPushObject</code>](#stkpushobject) | The object that will be attached to the POST request body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request object. Includes headers, error mappings and query params |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the DARAJA API server (excluding the body) |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Initiate STK Push\\n```js\\nstkPush({\\n    \\\"Amount\\\": 1,\\n    \\\"PartyA\\\": 254708374149,\\n    \\\"PartyB\\\": 174379,\\n    \\\"PhoneNumber\\\": 254708374149,\\n    \\\"CallBackURL\\\": \\\"https://mydomain.com/path\\\",\\n    \\\"AccountReference\\\": \\\"CompanyXLTD\\\",\\n    \\\"TransactionDesc\\\": \\\"Payment of X\\\"\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### BuyGoodsObject\\n\\nBuy goods parameter definition\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| Initiator | <code>string</code> | The M-Pesa API operator username. This user needs Org Business Pay Bill API initiator role on M-Pesa |\\n| SecurityCredential | <code>string</code> | The encrypted password of the M-Pesa API operator. |\\n| Amount | <code>number</code> | The transaction amount. |\\n| PartyA | <code>number</code> | Your shortcode. The shortcode from which money will be deducted. |\\n| AccountReference | <code>string</code> | The account number to be associated with the payment. Up to 13 characters |\\n| Remarks | <code>string</code> | Any additional information to be associated with the transaction. |\\n| QueueTimeOutURL | <code>URL</code> | A URL that will be used to notify your system in case the request times out before processing. |\\n| ResultURL | <code>URL</code> | A URL that will be used to send transaction results after processing. |\\n\\n\\n* * *\\n\\n### RegisterUrlObject\\n\\nRegister URL parameter definition\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| ShortCode | <code>numeric</code> | Usually, a unique number is tagged to an M-PESA pay bill/till number of the organization. |\\n| ResponseType | <code>string</code> | This parameter specifies what is to happen if for any reason the validation URL is not reachable. Sample values: 'Canceled', 'Completed' |\\n| ConfirmationURL | <code>URL</code> | This is the URL that receives the confirmation request from API upon payment completion. |\\n| ValidationURL | <code>URL</code> | This is the URL that receives the validation request from the API upon payment submission. |\\n\\n\\n* * *\\n\\n### RemitTaxObject\\n\\nRemit tax parameter definition\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| Initiator | <code>string</code> | The M-Pesa API operator username. |\\n| SecurityCredential | <code>string</code> | The encrypted password of the M-Pesa API operator. |\\n| Amount | <code>number</code> | The transaction amount. |\\n| PartyA | <code>number</code> | This is your own shortcode from which the money will be deducted. |\\n| AccountReference | <code>string</code> | The payment registration number (PRN) issued by KRA. |\\n| Remarks | <code>string</code> | Any additional information to be associated with the transaction. |\\n| QueueTimeOutURL | <code>URL</code> | A URL that will be used to notify your system in case the request times out before processing. |\\n| ResultURL | <code>URL</code> | A URL that will be used to send transaction results after processing. |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n\\n\\n* * *\\n\\n### STKPushObject\\n\\nSTKPush request data object\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| Amount | <code>number</code> | Amount charged. |\\n| PartyA | <code>number</code> | The phone number that receives the STK push prompt. Expected to be a valid Safaricom Number that is M-pesa registered in the format 2547XXXXXXXX |\\n| PartyB | <code>number</code> | The organization that receives the funds |\\n| PhoneNumber | <code>number</code> | The mobile number to receive the STK pin prompt |\\n| CallBackURL | <code>URL</code> | A valid secure URL that is used to receive notifications from M-Pesa API. It is the endpoint to which the results will be sent by M-Pesa API |\\n| AccountReference | <code>string</code> | Along with the business name, this value is also displayed to the customer in the STK pin prompt message. Maximum of 12 characters |\\n| TransactionDesc | <code>string</code> | Any additional information/comment that can be sent along with the request from you system. |\\n\\n\\n* * *\\n\\n### TransactionStatusObject\\n\\nCheck transaction status data object.\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| Initiator | <code>string</code> | The name of the initiator initiating the request. |\\n| SecurityCredential | <code>string</code> | Encrypted credential of the user getting transaction status. |\\n| TransactionID | <code>string</code> | Unique identifier to identify a transaction on Mpesa. |\\n| PartyA | <code>number</code> | Organization/MSISDN receiving the transaction. |\\n| IdentifierType | <code>number</code> | Type of organization receiving the transaction. Example: \\\"4\\\" Orgnaization shortcode. |\\n| ResultURL | <code>URL</code> | The path that stores information of a transaction. |\\n| QueueTimeOutURL | <code>URL</code> | The path that stores information of timeout transaction. |\\n| Remarks | <code>string</code> | Comments that are sent along with the transaction. |\\n| Occassion | <code>string</code> | Optional parameter. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-mpesa <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\nmpesa API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/mpesa-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/mpesa-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-mpesa\\n\\n## 1.1.6\\n\\n### Patch Changes\\n\\n- Updated dependencies [408a3a2]\\n  - @openfn/language-common@3.1.1\\n\\n## 1.1.5 - 18 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[e2bc436]\\n  - @openfn/language-common@3.1.0\\n\\n## 1.1.4 - 01 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1d60531]\\n  - @openfn/language-common@3.0.3\\n\\n## 1.1.3 - 28 August 2025\\n\\n### Patch Changes\\n\\n- b7af59a: - Update `package.json` description to be LLM-readable\\n\\n## 1.1.2 - 14 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9b5a4f8]\\n  - @openfn/language-common@3.0.2\\n\\n## 1.1.1 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cf9c09f]\\n  - @openfn/language-common@3.0.1\\n\\n## 1.1.0 - 10 July 2025\\n\\n### Minor Changes\\n\\n- 19f2d7e: Exported `as()` function from common.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[ea85695]\\n- Updated dependencies \\\\[3fce58f]\\n- Updated dependencies \\\\[19f2d7e]\\n- Updated dependencies \\\\[f26bd2b]\\n- Updated dependencies \\\\[19f2d7e]\\n  - @openfn/language-common@3.0.0\\n\\n## 1.0.4 - 20 June 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[28c2e8b]\\n  - @openfn/language-common@2.5.0\\n\\n## 1.0.3 - 22 April 2025\\n\\n### Patch Changes\\n\\n- 99e4b48: - Better handling of HTML content in http requests\\n  - When logging HTTP requests, include query parameters\\n- d1f7851: Fixed the title for the consumer_secret on the configuration schema\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 1.0.2 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 1.0.1 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 1.0.0 - 02 April 2025\\n\\nNew Mpesa adaptor that allows to make `STK push prompts`,\\n`register listener URLS`, `remit taxes to KRA`, `buy goods and services` and\\nexposes a `generic http helper` for any other actions outside this scope.\\n\"","functions":["buyGoods","checkTransactionStatus","registerUrl","remitTax","request","stkPush"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","description":"The base URL (https://api.safaricom.co.ke)","format":"uri","minLength":1,"examples":["https://api.safaricom.co.ke"]},"short_code":{"title":"Short code","type":"string","description":"This is the organization's shortcode used to identify YOUR organization. Usually a 5 to 6-digit account number","examples":["654321"]},"pass_key":{"title":"Pass key","type":"string","description":"Your app's pass key sent to you via email once you go live","examples":["bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"]},"consumer_key":{"title":"Consumer key","type":"string","description":"Your app's consumer key sent to you via email once you go live","examples":["GA2PNftcXvv2uC2VdgNjxXyvF8eZ4td6iBsL7N7N2ZFnXzf3"]},"consumer_secret":{"title":"Consumer secret","type":"string","description":"Your app's consumer secret sent to you via email once you go live","examples":["zKjr2j0jjihCtzIwzGtgnV0YgP82jZf1hY9RW6HygntWG6AGuf4tAUe3E5tPtiyA"]}},"type":"object","additionalProperties":true,"required":["short_code","pass_key","consumer_key","consumer_secret"]}},
 [
   {
