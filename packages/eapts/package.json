@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-eapts",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "OpenFn eapts adaptor",
   "type": "module",
   "exports": {
