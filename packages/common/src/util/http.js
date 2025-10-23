@@ -308,6 +308,30 @@ export async function request(method, fullUrlOrPath, options = {}) {
     origin: baseUrl,
   });
 
+  // Handle redirect responses when maxRedirections is not set
+  // 3xx status codes indicate redirects
+  const isRedirect =
+    response.statusCode >= 300 &&
+    response.statusCode < 400 &&
+    response.headers.location;
+
+  if (isRedirect && maxRedirections === undefined) {
+    const redirectLocation = response.headers.location;
+    const statusText = getReasonPhrase(response.statusCode);
+    const error = new Error(
+      `Request to ${url} returned ${response.statusCode} (${statusText}) and was redirected to ${redirectLocation}.\n\n` +
+        `To follow redirects, set the 'maxRedirections' option on your request call.\n` +
+        `For example: request('GET', '${fullUrlOrPath}', { maxRedirections: 5 })`
+    );
+    error.code = 'REDIRECT_NOT_FOLLOWED';
+    error.statusCode = response.statusCode;
+    error.url = url;
+    error.redirectLocation = redirectLocation;
+    error.fix =
+      "Add { maxRedirections: 5 } to your request options to allow up to 5 redirects";
+    throw error;
+  }
+
   const statusText = getReasonPhrase(response.statusCode);
 
   await assertOK(response, errors, url, method, startTime);

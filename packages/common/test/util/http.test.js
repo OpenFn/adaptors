@@ -1178,3 +1178,82 @@ describe('generateAgentKey', () => {
     expect(result).to.equal('www+a:1');
   });
 });
+
+describe('redirect handling', () => {
+  const redirectTestCases = [
+    { code: 301, name: 'Moved Permanently' },
+    { code: 302, name: 'Moved Temporarily' },
+    { code: 303, name: 'See Other' },
+    { code: 307, name: 'Temporary Redirect' },
+    { code: 308, name: 'Permanent Redirect' },
+  ];
+
+  redirectTestCases.forEach(({ code, name }) => {
+    it(`should provide a friendly error for ${code} redirects when maxRedirections is not set`, async () => {
+      const redirectClient = enableMockClient(
+        `https://redirect-test-${code}.com`
+      );
+
+      redirectClient
+        .intercept({
+          path: '/old-path',
+          method: 'GET',
+        })
+        .reply(code, '', {
+          headers: {
+            location: `https://redirect-test-${code}.com/new-path`,
+          },
+        });
+
+      let error = null;
+      try {
+        await request('GET', `https://redirect-test-${code}.com/old-path`);
+      } catch (err) {
+        error = err;
+      }
+
+      expect(error).to.not.be.null;
+      expect(error.code).to.equal('REDIRECT_NOT_FOLLOWED');
+      expect(error.statusCode).to.equal(code);
+      expect(error.url).to.equal(`https://redirect-test-${code}.com/old-path`);
+      expect(error.redirectLocation).to.equal(
+        `https://redirect-test-${code}.com/new-path`
+      );
+      expect(error.message).to.include(`${code} (${name})`);
+      expect(error.message).to.include('maxRedirections');
+      expect(error.message).to.include(
+        `https://redirect-test-${code}.com/new-path`
+      );
+    });
+  });
+
+  it('should not throw friendly error for 301 when maxRedirections is explicitly set to 0', async () => {
+    const redirectClient = enableMockClient('https://redirect-test.com', {
+      maxRedirections: 0,
+    });
+
+    redirectClient
+      .intercept({
+        path: '/old-path',
+        method: 'GET',
+      })
+      .reply(301, '', {
+        headers: {
+          location: 'https://redirect-test.com/new-path',
+        },
+      });
+
+    // When maxRedirections is explicitly set (even to 0), we assume the user
+    // is aware of redirect behavior and want the raw response
+    const response = await request(
+      'GET',
+      'https://redirect-test.com/old-path',
+      {
+        maxRedirections: 0,
+        errors: false, // Don't throw on non-2xx status
+      }
+    );
+
+    expect(response.statusCode).to.equal(301);
+  });
+});
