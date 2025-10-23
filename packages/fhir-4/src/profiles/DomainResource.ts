@@ -9,14 +9,14 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type DomainResource_Props = {
-    id?: string;
-    meta?: FHIR.Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: FHIR.Narrative;
     contained?: any[];
     extension?: FHIR.Extension[];
+    id?: string;
+    implicitRules?: string;
+    language?: string;
+    meta?: FHIR.Meta;
     modifierExtension?: FHIR.Extension[];
+    text?: FHIR.Narrative;
     [key: string]: any;
 };
 

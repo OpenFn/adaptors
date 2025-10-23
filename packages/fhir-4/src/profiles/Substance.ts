@@ -9,21 +9,21 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Substance_Props = {
-    id?: string;
-    meta?: FHIR.Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: FHIR.Narrative;
-    contained?: any[];
-    extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
-    identifier?: MaybeArray<string | FHIR.Identifier>;
-    status?: string;
     category?: MaybeArray<string[] | FHIR.CodeableConcept>;
     code?: string[] | FHIR.CodeableConcept;
+    contained?: any[];
     description?: string;
-    instance?: FHIR.BackboneElement[];
+    extension?: FHIR.Extension[];
+    id?: string;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
+    implicitRules?: string;
     ingredient?: FHIR.BackboneElement[];
+    instance?: FHIR.BackboneElement[];
+    language?: string;
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
+    status?: string;
+    text?: FHIR.Narrative;
     [key: string]: any;
 };
 

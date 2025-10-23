@@ -9,19 +9,19 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type SpecimenDefinition_Props = {
-    id?: string;
-    meta?: FHIR.Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: FHIR.Narrative;
+    collection?: MaybeArray<string[] | FHIR.CodeableConcept>;
     contained?: any[];
     extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
+    id?: string;
     identifier?: string | FHIR.Identifier;
-    typeCollected?: string[] | FHIR.CodeableConcept;
+    implicitRules?: string;
+    language?: string;
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
     patientPreparation?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    text?: FHIR.Narrative;
     timeAspect?: string;
-    collection?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    typeCollected?: string[] | FHIR.CodeableConcept;
     typeTested?: FHIR.BackboneElement[];
     [key: string]: any;
 };

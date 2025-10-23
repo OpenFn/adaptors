@@ -9,24 +9,24 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Group_Props = {
-    id?: string;
-    meta?: FHIR.Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: FHIR.Narrative;
+    active?: boolean;
+    actual?: boolean;
+    characteristic?: FHIR.BackboneElement[];
+    code?: string[] | FHIR.CodeableConcept;
     contained?: any[];
     extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
+    id?: string;
     identifier?: MaybeArray<string | FHIR.Identifier>;
-    active?: boolean;
-    type?: string;
-    actual?: boolean;
-    code?: string[] | FHIR.CodeableConcept;
+    implicitRules?: string;
+    language?: string;
+    managingEntity?: string | FHIR.Reference;
+    member?: FHIR.BackboneElement[];
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
     name?: string;
     quantity?: number;
-    managingEntity?: string | FHIR.Reference;
-    characteristic?: FHIR.BackboneElement[];
-    member?: FHIR.BackboneElement[];
+    text?: FHIR.Narrative;
+    type?: string;
     [key: string]: any;
 };
 

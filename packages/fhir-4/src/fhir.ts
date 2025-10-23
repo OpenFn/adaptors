@@ -5,157 +5,157 @@
 
 export type Address = {
     /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * home | work | temp | old | billing - purpose of this address
-     *  */
-    use?: string;
-    /**
-     * postal | physical | both
-     *  */
-    type?: string;
-    /**
-     * Text representation of the address
-     *  */
-    text?: string;
-    /**
-     * Street name, number, direction & P.O. Box etc.
-     *  */
-    line?: string[];
-    /**
      * Name of city, town etc.
      *  */
     city?: string;
-    /**
-     * District name (aka county)
-     *  */
-    district?: string;
-    /**
-     * Sub-unit of country (abbreviations ok)
-     *  */
-    state?: string;
-    /**
-     * Postal code for area
-     *  */
-    postalCode?: string;
     /**
      * Country (e.g. can be ISO 3166 2 or 3 letter code)
      *  */
     country?: string;
     /**
-     * Time period when address was/is in use
+     * District name (aka county)
      *  */
-    period?: Period;
-};
-export type Age = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
+    district?: string;
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
-     * Numerical value (with implicit precision)
+     * Unique id for inter-element referencing
      *  */
-    value?: number;
+    id?: string;
+    /**
+     * Street name, number, direction & P.O. Box etc.
+     *  */
+    line?: string[];
+    /**
+     * Time period when address was/is in use
+     *  */
+    period?: Period;
+    /**
+     * Postal code for area
+     *  */
+    postalCode?: string;
+    /**
+     * Sub-unit of country (abbreviations ok)
+     *  */
+    state?: string;
+    /**
+     * Text representation of the address
+     *  */
+    text?: string;
+    /**
+     * postal | physical | both
+     *  */
+    type?: string;
+    /**
+     * home | work | temp | old | billing - purpose of this address
+     *  */
+    use?: string;
+};
+export type Age = {
+    /**
+     * Coded form of the unit
+     *  */
+    code?: string;
     /**
      * < | <= | >= | > - how to understand the value
      *  */
     comparator?: string;
     /**
-     * Unit representation
+     * Additional content defined by implementations
      *  */
-    unit?: string;
+    extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
     /**
      * System that defines coded unit form
      *  */
     system?: string;
     /**
-     * Coded form of the unit
+     * Unit representation
      *  */
-    code?: string;
+    unit?: string;
+    /**
+     * Numerical value (with implicit precision)
+     *  */
+    value?: number;
 };
 export type Annotation = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
     /**
      * Individual responsible for the annotation
      *  */
     author?: (string | Reference) | string;
     /**
-     * When the annotation was made
+     * Additional content defined by implementations
      *  */
-    time?: string;
-    /**
-     * The annotation  - text content (as markdown)
-     *  */
-    text?: markdown;
-};
-export type Attachment = {
+    extension?: Extension[];
     /**
      * Unique id for inter-element referencing
      *  */
     id?: string;
     /**
-     * Additional content defined by implementations
+     * The annotation  - text content (as markdown)
      *  */
-    extension?: Extension[];
+    text?: markdown;
+    /**
+     * When the annotation was made
+     *  */
+    time?: string;
+};
+export type Attachment = {
     /**
      * Mime type of the content, with charset etc.
      *  */
     contentType?: string;
     /**
-     * Human language of the content (BCP-47)
+     * Date attachment was first created
      *  */
-    language?: string;
+    creation?: string;
     /**
      * Data inline, base64ed
      *  */
     data?: base64Binary;
     /**
-     * Uri where the data can be found
+     * Additional content defined by implementations
      *  */
-    url?: url;
-    /**
-     * Number of bytes of content (if url provided)
-     *  */
-    size?: number;
+    extension?: Extension[];
     /**
      * Hash of the data (sha-1, base64ed)
      *  */
     hash?: base64Binary;
     /**
-     * Label to display in place of the data
-     *  */
-    title?: string;
-    /**
-     * Date attachment was first created
-     *  */
-    creation?: string;
-};
-export type BackboneElement = {
-    /**
      * Unique id for inter-element referencing
      *  */
     id?: string;
     /**
+     * Human language of the content (BCP-47)
+     *  */
+    language?: string;
+    /**
+     * Number of bytes of content (if url provided)
+     *  */
+    size?: number;
+    /**
+     * Label to display in place of the data
+     *  */
+    title?: string;
+    /**
+     * Uri where the data can be found
+     *  */
+    url?: url;
+};
+export type BackboneElement = {
+    /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
@@ -163,17 +163,17 @@ export type BackboneElement = {
 };
 export type CodeableConcept = {
     /**
-     * Unique id for inter-element referencing
+     * Code defined by a terminology system
      *  */
-    id?: string;
+    coding?: Coding[];
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
-     * Code defined by a terminology system
+     * Unique id for inter-element referencing
      *  */
-    coding?: Coding[];
+    id?: string;
     /**
      * Plain text representation of the concept
      *  */
@@ -181,39 +181,23 @@ export type CodeableConcept = {
 };
 export type CodeableReference = {
     /**
-     * Unique id for inter-element referencing
+     * Reference to a concept (by class)
      *  */
-    id?: string;
+    concept?: string[] | CodeableConcept;
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
-     * Reference to a concept (by class)
+     * Unique id for inter-element referencing
      *  */
-    concept?: string[] | CodeableConcept;
+    id?: string;
     /**
      * Reference to a resource (by instance)
      *  */
     reference?: string | Reference;
 };
 export type Coding = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Identity of the terminology system
-     *  */
-    system?: string;
-    /**
-     * Version of the system - if relevant
-     *  */
-    version?: string;
     /**
      * Symbol in syntax defined by the system
      *  */
@@ -223,19 +207,35 @@ export type Coding = {
      *  */
     display?: string;
     /**
-     * If this coding was chosen directly by the user
+     * Additional content defined by implementations
      *  */
-    userSelected?: boolean;
-};
-export type ContactDetail = {
+    extension?: Extension[];
     /**
      * Unique id for inter-element referencing
      *  */
     id?: string;
     /**
+     * Identity of the terminology system
+     *  */
+    system?: string;
+    /**
+     * If this coding was chosen directly by the user
+     *  */
+    userSelected?: boolean;
+    /**
+     * Version of the system - if relevant
+     *  */
+    version?: string;
+};
+export type ContactDetail = {
+    /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
     /**
      * Name of an individual to contact
      *  */
@@ -247,111 +247,87 @@ export type ContactDetail = {
 };
 export type ContactPoint = {
     /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
-     * phone | fax | email | pager | url | sms | other
+     * Unique id for inter-element referencing
      *  */
-    system?: string;
+    id?: string;
     /**
-     * The actual contact point details
+     * Time period when the contact point was/is in use
      *  */
-    value?: string;
-    /**
-     * home | work | temp | old | mobile - purpose of this contact point
-     *  */
-    use?: string;
+    period?: Period;
     /**
      * Specify preferred order of use (1 = highest)
      *  */
     rank?: number;
     /**
-     * Time period when the contact point was/is in use
+     * phone | fax | email | pager | url | sms | other
      *  */
-    period?: Period;
+    system?: string;
+    /**
+     * home | work | temp | old | mobile - purpose of this contact point
+     *  */
+    use?: string;
+    /**
+     * The actual contact point details
+     *  */
+    value?: string;
 };
 export type Contributor = {
     /**
-     * Unique id for inter-element referencing
+     * Contact details of the contributor
      *  */
-    id?: string;
+    contact?: ContactDetail[];
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
-     * author | editor | reviewer | endorser
+     * Unique id for inter-element referencing
      *  */
-    type?: string;
+    id?: string;
     /**
      * Who contributed the content
      *  */
     name?: string;
     /**
-     * Contact details of the contributor
+     * author | editor | reviewer | endorser
      *  */
-    contact?: ContactDetail[];
+    type?: string;
 };
 export type Count = {
     /**
-     * Unique id for inter-element referencing
+     * Coded form of the unit
      *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Numerical value (with implicit precision)
-     *  */
-    value?: number;
+    code?: string;
     /**
      * < | <= | >= | > - how to understand the value
      *  */
     comparator?: string;
     /**
-     * Unit representation
+     * Additional content defined by implementations
      *  */
-    unit?: string;
-    /**
-     * System that defines coded unit form
-     *  */
-    system?: string;
-    /**
-     * Coded form of the unit
-     *  */
-    code?: string;
-};
-export type DataRequirement = {
+    extension?: Extension[];
     /**
      * Unique id for inter-element referencing
      *  */
     id?: string;
     /**
-     * Additional content defined by implementations
+     * System that defines coded unit form
      *  */
-    extension?: Extension[];
+    system?: string;
     /**
-     * The type of the required data
+     * Unit representation
      *  */
-    type?: string;
+    unit?: string;
     /**
-     * The profile of the required data
+     * Numerical value (with implicit precision)
      *  */
-    profile?: any[];
-    /**
-     * E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
-     *  */
-    subject?: (string[] | CodeableConcept) | (string | Reference);
-    /**
-     * Indicates specific structure elements that are referenced by the knowledge module
-     *  */
-    mustSupport?: string[];
+    value?: number;
+};
+export type DataRequirement = {
     /**
      * What codes are expected
      *  */
@@ -399,9 +375,25 @@ export type DataRequirement = {
         value: string;
     };
     /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
      * Number of results
      *  */
     limit?: number;
+    /**
+     * Indicates specific structure elements that are referenced by the knowledge module
+     *  */
+    mustSupport?: string[];
+    /**
+     * The profile of the required data
+     *  */
+    profile?: any[];
     /**
      * Order of the results
      *  */
@@ -419,86 +411,54 @@ export type DataRequirement = {
          *  */
         direction: string;
     };
+    /**
+     * E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
+     *  */
+    subject?: (string[] | CodeableConcept) | (string | Reference);
+    /**
+     * The type of the required data
+     *  */
+    type?: string;
 };
 export type Distance = {
     /**
-     * Unique id for inter-element referencing
+     * Coded form of the unit
      *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Numerical value (with implicit precision)
-     *  */
-    value?: number;
+    code?: string;
     /**
      * < | <= | >= | > - how to understand the value
      *  */
     comparator?: string;
     /**
-     * Unit representation
+     * Additional content defined by implementations
      *  */
-    unit?: string;
-    /**
-     * System that defines coded unit form
-     *  */
-    system?: string;
-    /**
-     * Coded form of the unit
-     *  */
-    code?: string;
-};
-export type Dosage = {
+    extension?: Extension[];
     /**
      * Unique id for inter-element referencing
      *  */
     id?: string;
     /**
-     * Additional content defined by implementations
+     * System that defines coded unit form
      *  */
-    extension?: Extension[];
+    system?: string;
     /**
-     * Extensions that cannot be ignored even if unrecognized
+     * Unit representation
      *  */
-    modifierExtension?: Extension[];
+    unit?: string;
     /**
-     * The order of the dosage instructions
+     * Numerical value (with implicit precision)
      *  */
-    sequence?: number;
-    /**
-     * Free text dosage instructions e.g. SIG
-     *  */
-    text?: string;
+    value?: number;
+};
+export type Dosage = {
     /**
      * Supplemental instruction or warnings to the patient - e.g. "with meals", "may cause drowsiness"
      *  */
     additionalInstruction?: string[] | CodeableConcept;
     /**
-     * Patient or consumer oriented instructions
-     *  */
-    patientInstruction?: string;
-    /**
-     * When medication should be administered
-     *  */
-    timing?: Timing;
-    /**
      * Take "as needed" (for x)
      *  */
     asNeeded?: boolean | (string[] | CodeableConcept);
-    /**
-     * Body site to administer to
-     *  */
-    site?: string[] | CodeableConcept;
-    /**
-     * How drug should enter body
-     *  */
-    route?: string[] | CodeableConcept;
-    /**
-     * Technique for administering medication
-     *  */
-    method?: string[] | CodeableConcept;
     /**
      * Amount of medication administered
      *  */
@@ -521,9 +481,13 @@ export type Dosage = {
         rate: Ratio;
     };
     /**
-     * Upper limit on medication per unit of time
+     * Additional content defined by implementations
      *  */
-    maxDosePerPeriod?: Ratio;
+    extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
     /**
      * Upper limit on medication per administration
      *  */
@@ -532,137 +496,88 @@ export type Dosage = {
      * Upper limit on medication per lifetime of the patient
      *  */
     maxDosePerLifetime?: Quantity;
-};
-export type Duration = {
     /**
-     * Unique id for inter-element referencing
+     * Upper limit on medication per unit of time
      *  */
-    id?: string;
+    maxDosePerPeriod?: Ratio;
     /**
-     * Additional content defined by implementations
+     * Technique for administering medication
      *  */
-    extension?: Extension[];
-    /**
-     * Numerical value (with implicit precision)
-     *  */
-    value?: number;
-    /**
-     * < | <= | >= | > - how to understand the value
-     *  */
-    comparator?: string;
-    /**
-     * Unit representation
-     *  */
-    unit?: string;
-    /**
-     * System that defines coded unit form
-     *  */
-    system?: string;
-    /**
-     * Coded form of the unit
-     *  */
-    code?: string;
-};
-export type Element = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-};
-export type ElementDefinition = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
+    method?: string[] | CodeableConcept;
     /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
     modifierExtension?: Extension[];
     /**
-     * Path of the element in the hierarchy of elements
+     * Patient or consumer oriented instructions
      *  */
-    path?: string;
+    patientInstruction?: string;
     /**
-     * xmlAttr | xmlText | typeAttr | cdaText | xhtml
+     * How drug should enter body
      *  */
-    representation?: string;
+    route?: string[] | CodeableConcept;
     /**
-     * Name for this particular element (in a set of slices)
+     * The order of the dosage instructions
      *  */
-    sliceName?: string;
+    sequence?: number;
     /**
-     * If this slice definition constrains an inherited slice definition (or not)
+     * Body site to administer to
      *  */
-    sliceIsConstraining?: boolean;
+    site?: string[] | CodeableConcept;
     /**
-     * Name for element to display with or prompt for element
+     * Free text dosage instructions e.g. SIG
      *  */
-    label?: string;
+    text?: string;
     /**
-     * Corresponding codes in terminologies
+     * When medication should be administered
      *  */
-    code?: Coding;
+    timing?: Timing;
+};
+export type Duration = {
     /**
-     * This element is sliced - slices follow
+     * Coded form of the unit
      *  */
-    slicing?: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Path to element value
-         *  */
-        discriminator: string;
-        /**
-         * Text description of how slicing works (or not)
-         *  */
-        description: string;
-        /**
-         * If elements must be in same order as slices
-         *  */
-        ordered: boolean;
-        /**
-         * closed | open | openAtEnd
-         *  */
-        rules: string;
-    };
+    code?: string;
     /**
-     * Concise definition for space-constrained presentation
+     * < | <= | >= | > - how to understand the value
      *  */
-    short?: string;
+    comparator?: string;
     /**
-     * Full formal definition as narrative text
+     * Additional content defined by implementations
      *  */
-    definition?: markdown;
+    extension?: Extension[];
     /**
-     * Comments about the use of this element
+     * Unique id for inter-element referencing
      *  */
-    comment?: markdown;
+    id?: string;
     /**
-     * Why this resource has been created
+     * System that defines coded unit form
      *  */
-    requirements?: markdown;
+    system?: string;
+    /**
+     * Unit representation
+     *  */
+    unit?: string;
+    /**
+     * Numerical value (with implicit precision)
+     *  */
+    value?: number;
+};
+export type Element = {
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+};
+export type ElementDefinition = {
     /**
      * Other names
      *  */
     alias?: string[];
-    /**
-     * Minimum Cardinality
-     *  */
-    min?: number;
-    /**
-     * Maximum Cardinality (a number or *)
-     *  */
-    max?: string;
     /**
      * Base definition information for tools
      *  */
@@ -685,87 +600,34 @@ export type ElementDefinition = {
         max: string;
     };
     /**
-     * Reference to definition of content for the element
+     * ValueSet details if this is coded
      *  */
-    contentReference?: string;
-    /**
-     * Data type and Profile for this element
-     *  */
-    type?: {
+    binding?: {
         /**
          * Unique id for inter-element referencing
          *  */
         id: string;
         /**
-         * Data type or Resource (reference to definition)
+         * required | extensible | preferred | example
          *  */
-        code: string;
+        strength: string;
         /**
-         * Profiles (StructureDefinition or IG) - one must apply
+         * Human explanation of the value set
          *  */
-        profile: any;
+        description: string;
         /**
-         * Profile (StructureDefinition or IG) on the Reference/canonical target - one must apply
+         * Source of value set
          *  */
-        targetProfile: any;
-        /**
-         * contained | referenced | bundled - how aggregated
-         *  */
-        aggregation: string;
-        /**
-         * either | independent | specific
-         *  */
-        versioning: string;
+        valueSet: any;
     };
     /**
-     * Specified value if missing from instance
+     * Corresponding codes in terminologies
      *  */
-    defaultValue?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    code?: Coding;
     /**
-     * Implicit meaning when this element is missing
+     * Comments about the use of this element
      *  */
-    meaningWhenMissing?: markdown;
-    /**
-     * What the order of the elements means
-     *  */
-    orderMeaning?: string;
-    /**
-     * Value must be exactly this
-     *  */
-    fixed?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
-    /**
-     * Value must have at least these property values
-     *  */
-    pattern?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
-    /**
-     * Example value (as defined for type)
-     *  */
-    example?: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * Describes the purpose of this example
-         *  */
-        label: string;
-        /**
-         * Value of Example (one of allowed types)
-         *  */
-        value: base64Binary;
-    };
-    /**
-     * Minimum Allowed Value (for some types)
-     *  */
-    minValue?: string | string | string | string | number | number | number | number | Quantity;
-    /**
-     * Maximum Allowed Value (for some types)
-     *  */
-    maxValue?: string | string | string | string | number | number | number | number | Quantity;
-    /**
-     * Max length for strings
-     *  */
-    maxLength?: number;
+    comment?: markdown;
     /**
      * Reference to invariant about presence
      *  */
@@ -808,9 +670,46 @@ export type ElementDefinition = {
         source: any;
     };
     /**
-     * If the element must be supported
+     * Reference to definition of content for the element
      *  */
-    mustSupport?: boolean;
+    contentReference?: string;
+    /**
+     * Specified value if missing from instance
+     *  */
+    defaultValue?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    /**
+     * Full formal definition as narrative text
+     *  */
+    definition?: markdown;
+    /**
+     * Example value (as defined for type)
+     *  */
+    example?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Describes the purpose of this example
+         *  */
+        label: string;
+        /**
+         * Value of Example (one of allowed types)
+         *  */
+        value: base64Binary;
+    };
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+    /**
+     * Value must be exactly this
+     *  */
+    fixed?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
     /**
      * If this modifies the meaning of other elements
      *  */
@@ -824,26 +723,9 @@ export type ElementDefinition = {
      *  */
     isSummary?: boolean;
     /**
-     * ValueSet details if this is coded
+     * Name for element to display with or prompt for element
      *  */
-    binding?: {
-        /**
-         * Unique id for inter-element referencing
-         *  */
-        id: string;
-        /**
-         * required | extensible | preferred | example
-         *  */
-        strength: string;
-        /**
-         * Human explanation of the value set
-         *  */
-        description: string;
-        /**
-         * Source of value set
-         *  */
-        valueSet: any;
-    };
+    label?: string;
     /**
      * Map element to another set of definitions
      *  */
@@ -869,32 +751,150 @@ export type ElementDefinition = {
          *  */
         comment: string;
     };
+    /**
+     * Maximum Cardinality (a number or *)
+     *  */
+    max?: string;
+    /**
+     * Max length for strings
+     *  */
+    maxLength?: number;
+    /**
+     * Maximum Allowed Value (for some types)
+     *  */
+    maxValue?: string | string | string | string | number | number | number | number | Quantity;
+    /**
+     * Implicit meaning when this element is missing
+     *  */
+    meaningWhenMissing?: markdown;
+    /**
+     * Minimum Cardinality
+     *  */
+    min?: number;
+    /**
+     * Minimum Allowed Value (for some types)
+     *  */
+    minValue?: string | string | string | string | number | number | number | number | Quantity;
+    /**
+     * Extensions that cannot be ignored even if unrecognized
+     *  */
+    modifierExtension?: Extension[];
+    /**
+     * If the element must be supported
+     *  */
+    mustSupport?: boolean;
+    /**
+     * What the order of the elements means
+     *  */
+    orderMeaning?: string;
+    /**
+     * Path of the element in the hierarchy of elements
+     *  */
+    path?: string;
+    /**
+     * Value must have at least these property values
+     *  */
+    pattern?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    /**
+     * xmlAttr | xmlText | typeAttr | cdaText | xhtml
+     *  */
+    representation?: string;
+    /**
+     * Why this resource has been created
+     *  */
+    requirements?: markdown;
+    /**
+     * Concise definition for space-constrained presentation
+     *  */
+    short?: string;
+    /**
+     * If this slice definition constrains an inherited slice definition (or not)
+     *  */
+    sliceIsConstraining?: boolean;
+    /**
+     * Name for this particular element (in a set of slices)
+     *  */
+    sliceName?: string;
+    /**
+     * This element is sliced - slices follow
+     *  */
+    slicing?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Path to element value
+         *  */
+        discriminator: string;
+        /**
+         * Text description of how slicing works (or not)
+         *  */
+        description: string;
+        /**
+         * If elements must be in same order as slices
+         *  */
+        ordered: boolean;
+        /**
+         * closed | open | openAtEnd
+         *  */
+        rules: string;
+    };
+    /**
+     * Data type and Profile for this element
+     *  */
+    type?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Data type or Resource (reference to definition)
+         *  */
+        code: string;
+        /**
+         * Profiles (StructureDefinition or IG) - one must apply
+         *  */
+        profile: any;
+        /**
+         * Profile (StructureDefinition or IG) on the Reference/canonical target - one must apply
+         *  */
+        targetProfile: any;
+        /**
+         * contained | referenced | bundled - how aggregated
+         *  */
+        aggregation: string;
+        /**
+         * either | independent | specific
+         *  */
+        versioning: string;
+    };
 };
 export type Expression = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
     /**
      * Natural language description of the condition
      *  */
     description?: string;
     /**
-     * Short name assigned to expression for reuse
+     * Expression in specified language
      *  */
-    name?: string;
+    expression?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
     /**
      * text/cql | text/fhirpath | application/x-fhir-query | text/cql-identifier | text/cql-expression | etc.
      *  */
     language?: string;
     /**
-     * Expression in specified language
+     * Short name assigned to expression for reuse
      *  */
-    expression?: string;
+    name?: string;
     /**
      * Where the expression is found
      *  */
@@ -902,13 +902,13 @@ export type Expression = {
 };
 export type Extension = {
     /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
     /**
      * identifies the meaning of the extension
      *  */
@@ -920,21 +920,9 @@ export type Extension = {
 };
 export type HumanName = {
     /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
-    /**
-     * usual | official | temp | nickname | anonymous | old | maiden
-     *  */
-    use?: string;
-    /**
-     * Text representation of the full name
-     *  */
-    text?: string;
     /**
      * Family name (often called 'Surname')
      *  */
@@ -944,6 +932,14 @@ export type HumanName = {
      *  */
     given?: string[];
     /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Time period when name was/is in use
+     *  */
+    period?: Period;
+    /**
      * Parts that come before the name
      *  */
     prefix?: string[];
@@ -952,99 +948,95 @@ export type HumanName = {
      *  */
     suffix?: string[];
     /**
-     * Time period when name was/is in use
+     * Text representation of the full name
      *  */
-    period?: Period;
+    text?: string;
+    /**
+     * usual | official | temp | nickname | anonymous | old | maiden
+     *  */
+    use?: string;
 };
 export type Identifier = {
     /**
-     * Unique id for inter-element referencing
+     * Organization that issued id (may be just text)
      *  */
-    id?: string;
+    assigner?: string | Reference;
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
-     * usual | official | temp | secondary | old (If known)
+     * Unique id for inter-element referencing
      *  */
-    use?: string;
-    /**
-     * Description of identifier
-     *  */
-    type?: string[] | CodeableConcept;
-    /**
-     * The namespace for the identifier value
-     *  */
-    system?: string;
-    /**
-     * The value that is unique
-     *  */
-    value?: string;
+    id?: string;
     /**
      * Time period when id is/was valid for use
      *  */
     period?: Period;
     /**
-     * Organization that issued id (may be just text)
+     * The namespace for the identifier value
      *  */
-    assigner?: string | Reference;
+    system?: string;
+    /**
+     * Description of identifier
+     *  */
+    type?: string[] | CodeableConcept;
+    /**
+     * usual | official | temp | secondary | old (If known)
+     *  */
+    use?: string;
+    /**
+     * The value that is unique
+     *  */
+    value?: string;
 };
 export type MarketingStatus = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Extensions that cannot be ignored even if unrecognized
-     *  */
-    modifierExtension?: Extension[];
     /**
      * The country in which the marketing authorisation has been granted shall be specified It should be specified using the ISO 3166 ‑ 1 alpha-2 code elements
      *  */
     country?: string[] | CodeableConcept;
     /**
-     * Where a Medicines Regulatory Agency has granted a marketing authorisation for which specific provisions within a jurisdiction apply, the jurisdiction can be specified using an appropriate controlled terminology The controlled term and the controlled term identifier shall be specified
-     *  */
-    jurisdiction?: string[] | CodeableConcept;
-    /**
-     * This attribute provides information on the status of the marketing of the medicinal product See ISO/TS 20443 for more information and examples
-     *  */
-    status?: string[] | CodeableConcept;
-    /**
      * The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
      *  */
     dateRange?: Period;
-    /**
-     * The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
-     *  */
-    restoreDate?: string;
-};
-export type Meta = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
-     * Version specific identifier
+     * Unique id for inter-element referencing
      *  */
-    versionId?: string;
+    id?: string;
+    /**
+     * Where a Medicines Regulatory Agency has granted a marketing authorisation for which specific provisions within a jurisdiction apply, the jurisdiction can be specified using an appropriate controlled terminology The controlled term and the controlled term identifier shall be specified
+     *  */
+    jurisdiction?: string[] | CodeableConcept;
+    /**
+     * Extensions that cannot be ignored even if unrecognized
+     *  */
+    modifierExtension?: Extension[];
+    /**
+     * The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
+     *  */
+    restoreDate?: string;
+    /**
+     * This attribute provides information on the status of the marketing of the medicinal product See ISO/TS 20443 for more information and examples
+     *  */
+    status?: string[] | CodeableConcept;
+};
+export type Meta = {
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
     /**
      * When the resource version last changed
      *  */
     lastUpdated?: string;
-    /**
-     * Identifies where the resource comes from
-     *  */
-    source?: string;
     /**
      * Profiles this resource claims to conform to
      *  */
@@ -1054,301 +1046,305 @@ export type Meta = {
      *  */
     security?: Coding;
     /**
+     * Identifies where the resource comes from
+     *  */
+    source?: string;
+    /**
      * Tags applied to this resource
      *  */
     tag?: Coding;
+    /**
+     * Version specific identifier
+     *  */
+    versionId?: string;
 };
 export type Money = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Numerical value (with implicit precision)
-     *  */
-    value?: number;
     /**
      * ISO 4217 Currency Code
      *  */
     currency?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Numerical value (with implicit precision)
+     *  */
+    value?: number;
 };
 export type MoneyQuantity = {
     /**
-     * Unique id for inter-element referencing
+     * Coded form of the unit
      *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Numerical value (with implicit precision)
-     *  */
-    value?: number;
+    code?: string;
     /**
      * < | <= | >= | > - how to understand the value
      *  */
     comparator?: string;
     /**
-     * Unit representation
+     * Additional content defined by implementations
      *  */
-    unit?: string;
+    extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
     /**
      * System that defines coded unit form
      *  */
     system?: string;
     /**
-     * Coded form of the unit
+     * Unit representation
      *  */
-    code?: string;
+    unit?: string;
+    /**
+     * Numerical value (with implicit precision)
+     *  */
+    value?: number;
 };
 export type Quantity = {
     /**
-     * Unique id for inter-element referencing
+     * Coded form of the unit
      *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Numerical value (with implicit precision)
-     *  */
-    value?: number;
+    code?: string;
     /**
      * < | <= | >= | > - how to understand the value
      *  */
     comparator?: string;
     /**
-     * Unit representation
+     * Additional content defined by implementations
      *  */
-    unit?: string;
+    extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
     /**
      * System that defines coded unit form
      *  */
     system?: string;
     /**
-     * Coded form of the unit
+     * Unit representation
      *  */
-    code?: string;
+    unit?: string;
+    /**
+     * Numerical value (with implicit precision)
+     *  */
+    value?: number;
 };
 export type SimpleQuantity = {
     /**
-     * Unique id for inter-element referencing
+     * Coded form of the unit
      *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Numerical value (with implicit precision)
-     *  */
-    value?: number;
+    code?: string;
     /**
      * < | <= | >= | > - how to understand the value
      *  */
     comparator?: string;
     /**
-     * Unit representation
+     * Additional content defined by implementations
      *  */
-    unit?: string;
-    /**
-     * System that defines coded unit form
-     *  */
-    system?: string;
-    /**
-     * Coded form of the unit
-     *  */
-    code?: string;
-};
-export type Narrative = {
+    extension?: Extension[];
     /**
      * Unique id for inter-element referencing
      *  */
     id?: string;
     /**
-     * Additional content defined by implementations
+     * System that defines coded unit form
      *  */
-    extension?: Extension[];
+    system?: string;
     /**
-     * generated | extensions | additional | empty
+     * Unit representation
      *  */
-    status?: string;
+    unit?: string;
+    /**
+     * Numerical value (with implicit precision)
+     *  */
+    value?: number;
+};
+export type Narrative = {
     /**
      * Limited xhtml content
      *  */
     div?: xhtml;
-};
-export type ParameterDefinition = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
-     * Name used to access the parameter value
+     * Unique id for inter-element referencing
      *  */
-    name?: string;
+    id?: string;
     /**
-     * in | out
+     * generated | extensions | additional | empty
      *  */
-    use?: string;
-    /**
-     * Minimum cardinality
-     *  */
-    min?: number;
-    /**
-     * Maximum cardinality (a number of *)
-     *  */
-    max?: string;
+    status?: string;
+};
+export type ParameterDefinition = {
     /**
      * A brief description of the parameter
      *  */
     documentation?: string;
     /**
-     * What type of value
+     * Additional content defined by implementations
      *  */
-    type?: string;
+    extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Maximum cardinality (a number of *)
+     *  */
+    max?: string;
+    /**
+     * Minimum cardinality
+     *  */
+    min?: number;
+    /**
+     * Name used to access the parameter value
+     *  */
+    name?: string;
     /**
      * What profile the value is expected to be
      *  */
     profile?: any;
+    /**
+     * What type of value
+     *  */
+    type?: string;
+    /**
+     * in | out
+     *  */
+    use?: string;
 };
 export type Period = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Starting time with inclusive boundary
-     *  */
-    start?: string;
     /**
      * End time with inclusive boundary, if not ongoing
      *  */
     end?: string;
-};
-export type Population = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
-     * Extensions that cannot be ignored even if unrecognized
+     * Unique id for inter-element referencing
      *  */
-    modifierExtension?: Extension[];
+    id?: string;
+    /**
+     * Starting time with inclusive boundary
+     *  */
+    start?: string;
+};
+export type Population = {
     /**
      * The age of the specific population
      *  */
     age?: Range | (string[] | CodeableConcept);
     /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+    /**
      * The gender of the specific population
      *  */
     gender?: string[] | CodeableConcept;
-    /**
-     * Race of the specific population
-     *  */
-    race?: string[] | CodeableConcept;
-    /**
-     * The existing physiological conditions of the specific population to which this applies
-     *  */
-    physiologicalCondition?: string[] | CodeableConcept;
-};
-export type ProdCharacteristic = {
     /**
      * Unique id for inter-element referencing
      *  */
     id?: string;
     /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
     modifierExtension?: Extension[];
     /**
-     * Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+     * The existing physiological conditions of the specific population to which this applies
      *  */
-    height?: Quantity;
+    physiologicalCondition?: string[] | CodeableConcept;
     /**
-     * Where applicable, the width can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+     * Race of the specific population
      *  */
-    width?: Quantity;
-    /**
-     * Where applicable, the depth can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
-     *  */
-    depth?: Quantity;
-    /**
-     * Where applicable, the weight can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
-     *  */
-    weight?: Quantity;
-    /**
-     * Where applicable, the nominal volume can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
-     *  */
-    nominalVolume?: Quantity;
-    /**
-     * Where applicable, the external diameter can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
-     *  */
-    externalDiameter?: Quantity;
-    /**
-     * Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
-     *  */
-    shape?: string;
+    race?: string[] | CodeableConcept;
+};
+export type ProdCharacteristic = {
     /**
      * Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
      *  */
     color?: string[];
     /**
-     * Where applicable, the imprint can be specified as text
+     * Where applicable, the depth can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
      *  */
-    imprint?: string[];
-    /**
-     * Where applicable, the image can be provided The format of the image attachment shall be specified by regional implementations
-     *  */
-    image?: Attachment[];
-    /**
-     * Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
-     *  */
-    scoring?: string[] | CodeableConcept;
-};
-export type ProductShelfLife = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
+    depth?: Quantity;
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
+     * Where applicable, the external diameter can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+     *  */
+    externalDiameter?: Quantity;
+    /**
+     * Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+     *  */
+    height?: Quantity;
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Where applicable, the image can be provided The format of the image attachment shall be specified by regional implementations
+     *  */
+    image?: Attachment[];
+    /**
+     * Where applicable, the imprint can be specified as text
+     *  */
+    imprint?: string[];
+    /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
     modifierExtension?: Extension[];
+    /**
+     * Where applicable, the nominal volume can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+     *  */
+    nominalVolume?: Quantity;
+    /**
+     * Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
+     *  */
+    scoring?: string[] | CodeableConcept;
+    /**
+     * Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
+     *  */
+    shape?: string;
+    /**
+     * Where applicable, the weight can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+     *  */
+    weight?: Quantity;
+    /**
+     * Where applicable, the width can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
+     *  */
+    width?: Quantity;
+};
+export type ProductShelfLife = {
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
     /**
      * Unique identifier for the packaged Medicinal Product
      *  */
     identifier?: string | Identifier;
     /**
-     * This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
+     * Extensions that cannot be ignored even if unrecognized
      *  */
-    type?: string[] | CodeableConcept;
+    modifierExtension?: Extension[];
     /**
      * The shelf life time period can be specified using a numerical value for the period of time and its unit of time measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
      *  */
@@ -1357,74 +1353,86 @@ export type ProductShelfLife = {
      * Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
      *  */
     specialPrecautionsForStorage?: string[] | CodeableConcept;
+    /**
+     * This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
+     *  */
+    type?: string[] | CodeableConcept;
 };
 export type Range = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
-    /**
-     * Low limit
-     *  */
-    low?: Quantity;
     /**
      * High limit
      *  */
     high?: Quantity;
-};
-export type Ratio = {
     /**
      * Unique id for inter-element referencing
      *  */
     id?: string;
     /**
-     * Additional content defined by implementations
+     * Low limit
      *  */
-    extension?: Extension[];
-    /**
-     * Numerator value
-     *  */
-    numerator?: Quantity;
+    low?: Quantity;
+};
+export type Ratio = {
     /**
      * Denominator value
      *  */
     denominator?: Quantity;
-};
-export type RatioRange = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
-     * Low Numerator limit
+     * Unique id for inter-element referencing
      *  */
-    lowNumerator?: Quantity;
+    id?: string;
+    /**
+     * Numerator value
+     *  */
+    numerator?: Quantity;
+};
+export type RatioRange = {
+    /**
+     * Denominator value
+     *  */
+    denominator?: Quantity;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
     /**
      * High Numerator limit
      *  */
     highNumerator?: Quantity;
     /**
-     * Denominator value
+     * Unique id for inter-element referencing
      *  */
-    denominator?: Quantity;
+    id?: string;
+    /**
+     * Low Numerator limit
+     *  */
+    lowNumerator?: Quantity;
 };
 export type Reference = {
+    /**
+     * Text alternative for the resource
+     *  */
+    display?: string;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
     /**
      * Unique id for inter-element referencing
      *  */
     id?: string;
     /**
-     * Additional content defined by implementations
+     * Logical reference, when literal reference is not known
      *  */
-    extension?: Extension[];
+    identifier?: string | Identifier;
     /**
      * Literal reference, Relative, internal or absolute URL
      *  */
@@ -1433,62 +1441,70 @@ export type Reference = {
      * Type the reference refers to (e.g. "Patient")
      *  */
     type?: string;
-    /**
-     * Logical reference, when literal reference is not known
-     *  */
-    identifier?: string | Identifier;
-    /**
-     * Text alternative for the resource
-     *  */
-    display?: string;
 };
 export type RelatedArtifact = {
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
-     *  */
-    type?: string;
-    /**
-     * Short label
-     *  */
-    label?: string;
-    /**
-     * Brief description of the related artifact
-     *  */
-    display?: string;
     /**
      * Bibliographic citation for the artifact
      *  */
     citation?: markdown;
     /**
-     * Where the artifact can be accessed
+     * Brief description of the related artifact
      *  */
-    url?: url;
+    display?: string;
     /**
      * What document is being referenced
      *  */
     document?: Attachment;
     /**
-     * What resource is being referenced
+     * Additional content defined by implementations
      *  */
-    resource?: any;
-};
-export type SampledData = {
+    extension?: Extension[];
     /**
      * Unique id for inter-element referencing
      *  */
     id?: string;
     /**
+     * Short label
+     *  */
+    label?: string;
+    /**
+     * What resource is being referenced
+     *  */
+    resource?: any;
+    /**
+     * documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
+     *  */
+    type?: string;
+    /**
+     * Where the artifact can be accessed
+     *  */
+    url?: url;
+};
+export type SampledData = {
+    /**
+     * Decimal values with spaces, or "E" | "U" | "L"
+     *  */
+    data?: string;
+    /**
+     * Number of sample points at each time point
+     *  */
+    dimensions?: number;
+    /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
+    /**
+     * Multiply data by this before adding to origin
+     *  */
+    factor?: number;
+    /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
+     * Lower limit of detection
+     *  */
+    lowerLimit?: number;
     /**
      * Zero value and units
      *  */
@@ -1498,35 +1514,35 @@ export type SampledData = {
      *  */
     period?: number;
     /**
-     * Multiply data by this before adding to origin
-     *  */
-    factor?: number;
-    /**
-     * Lower limit of detection
-     *  */
-    lowerLimit?: number;
-    /**
      * Upper limit of detection
      *  */
     upperLimit?: number;
-    /**
-     * Number of sample points at each time point
-     *  */
-    dimensions?: number;
-    /**
-     * Decimal values with spaces, or "E" | "U" | "L"
-     *  */
-    data?: string;
 };
 export type Signature = {
+    /**
+     * The actual signature content (XML DigSig. JWS, picture, etc.)
+     *  */
+    data?: base64Binary;
+    /**
+     * Additional content defined by implementations
+     *  */
+    extension?: Extension[];
     /**
      * Unique id for inter-element referencing
      *  */
     id?: string;
     /**
-     * Additional content defined by implementations
+     * The party represented
      *  */
-    extension?: Extension[];
+    onBehalfOf?: string | Reference;
+    /**
+     * The technical format of the signature
+     *  */
+    sigFormat?: string;
+    /**
+     * The technical format of the signed resources
+     *  */
+    targetFormat?: string;
     /**
      * Indication of the reason the entity signed the object(s)
      *  */
@@ -1539,40 +1555,28 @@ export type Signature = {
      * Who signed
      *  */
     who?: string | Reference;
-    /**
-     * The party represented
-     *  */
-    onBehalfOf?: string | Reference;
-    /**
-     * The technical format of the signed resources
-     *  */
-    targetFormat?: string;
-    /**
-     * The technical format of the signature
-     *  */
-    sigFormat?: string;
-    /**
-     * The actual signature content (XML DigSig. JWS, picture, etc.)
-     *  */
-    data?: base64Binary;
 };
 export type Timing = {
     /**
-     * Unique id for inter-element referencing
+     * BID | TID | QID | AM | PM | QD | QOD | +
      *  */
-    id?: string;
+    code?: string[] | CodeableConcept;
+    /**
+     * When the event occurs
+     *  */
+    event?: string[];
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
+     * Unique id for inter-element referencing
+     *  */
+    id?: string;
+    /**
      * Extensions that cannot be ignored even if unrecognized
      *  */
     modifierExtension?: Extension[];
-    /**
-     * When the event occurs
-     *  */
-    event?: string[];
     /**
      * When the event is to occur
      *  */
@@ -1642,24 +1646,24 @@ export type Timing = {
          *  */
         offset: number;
     };
-    /**
-     * BID | TID | QID | AM | PM | QD | QOD | +
-     *  */
-    code?: string[] | CodeableConcept;
 };
 export type TriggerDefinition = {
     /**
-     * Unique id for inter-element referencing
+     * Whether the event triggers (boolean expression)
      *  */
-    id?: string;
+    condition?: Expression;
+    /**
+     * Triggering data of the event (multiple = 'and')
+     *  */
+    data?: DataRequirement[];
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
-     * named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended
+     * Unique id for inter-element referencing
      *  */
-    type?: string;
+    id?: string;
     /**
      * Name or URI that identifies the event
      *  */
@@ -1669,27 +1673,23 @@ export type TriggerDefinition = {
      *  */
     timing?: Timing | (string | Reference) | string | string;
     /**
-     * Triggering data of the event (multiple = 'and')
+     * named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended
      *  */
-    data?: DataRequirement[];
-    /**
-     * Whether the event triggers (boolean expression)
-     *  */
-    condition?: Expression;
+    type?: string;
 };
 export type UsageContext = {
     /**
-     * Unique id for inter-element referencing
+     * Type of context being specified
      *  */
-    id?: string;
+    code?: Coding;
     /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
     /**
-     * Type of context being specified
+     * Unique id for inter-element referencing
      *  */
-    code?: Coding;
+    id?: string;
     /**
      * Value that defines the context
      *  */
@@ -1697,13 +1697,13 @@ export type UsageContext = {
 };
 export type base64Binary = {
     /**
-     * xml:id (or equivalent in JSON)
-     *  */
-    id?: string;
-    /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
+    /**
+     * xml:id (or equivalent in JSON)
+     *  */
+    id?: string;
     /**
      * Primitive value for base64Binary
      *  */
@@ -1711,13 +1711,13 @@ export type base64Binary = {
 };
 export type code = {
     /**
-     * xml:id (or equivalent in JSON)
-     *  */
-    id?: string;
-    /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
+    /**
+     * xml:id (or equivalent in JSON)
+     *  */
+    id?: string;
     /**
      * Primitive value for code
      *  */
@@ -1725,13 +1725,13 @@ export type code = {
 };
 export type markdown = {
     /**
-     * xml:id (or equivalent in JSON)
-     *  */
-    id?: string;
-    /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
+    /**
+     * xml:id (or equivalent in JSON)
+     *  */
+    id?: string;
     /**
      * Primitive value for markdown
      *  */
@@ -1739,13 +1739,13 @@ export type markdown = {
 };
 export type oid = {
     /**
-     * xml:id (or equivalent in JSON)
-     *  */
-    id?: string;
-    /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
+    /**
+     * xml:id (or equivalent in JSON)
+     *  */
+    id?: string;
     /**
      * Primitive value for oid
      *  */
@@ -1753,13 +1753,13 @@ export type oid = {
 };
 export type url = {
     /**
-     * xml:id (or equivalent in JSON)
-     *  */
-    id?: string;
-    /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
+    /**
+     * xml:id (or equivalent in JSON)
+     *  */
+    id?: string;
     /**
      * Primitive value for url
      *  */
@@ -1767,13 +1767,13 @@ export type url = {
 };
 export type uuid = {
     /**
-     * xml:id (or equivalent in JSON)
-     *  */
-    id?: string;
-    /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
+    /**
+     * xml:id (or equivalent in JSON)
+     *  */
+    id?: string;
     /**
      * Primitive value for uuid
      *  */
@@ -1781,13 +1781,13 @@ export type uuid = {
 };
 export type xhtml = {
     /**
-     * xml:id (or equivalent in JSON)
-     *  */
-    id?: string;
-    /**
      * Additional content defined by implementations
      *  */
     extension?: Extension[];
+    /**
+     * xml:id (or equivalent in JSON)
+     *  */
+    id?: string;
     /**
      * Actual xhtml
      *  */

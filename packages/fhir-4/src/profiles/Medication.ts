@@ -9,22 +9,22 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Medication_Props = {
-    id?: string;
-    meta?: FHIR.Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: FHIR.Narrative;
+    amount?: FHIR.Ratio;
+    batch?: FHIR.BackboneElement;
+    code?: string[] | FHIR.CodeableConcept;
     contained?: any[];
     extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
-    identifier?: MaybeArray<string | FHIR.Identifier>;
-    code?: string[] | FHIR.CodeableConcept;
-    status?: string;
-    manufacturer?: string | FHIR.Reference;
     form?: string[] | FHIR.CodeableConcept;
-    amount?: FHIR.Ratio;
+    id?: string;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
+    implicitRules?: string;
     ingredient?: FHIR.BackboneElement[];
-    batch?: FHIR.BackboneElement;
+    language?: string;
+    manufacturer?: string | FHIR.Reference;
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
+    status?: string;
+    text?: FHIR.Narrative;
     [key: string]: any;
 };
 

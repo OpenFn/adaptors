@@ -34,7 +34,7 @@ export const generateType = (
   // // find the superset of schema keys and mappings keys
   const allKeys = Object.keys(
     Object.assign({}, schema.props, mappings.overrides)
-  );
+  ).sort();
 
   // // Now for each key, build a type
   // // Note that mappings should overwrite schema if conflict
@@ -124,7 +124,9 @@ export const generateType = (
 
 const generateInlineType = (typeDef: PropDef) => {
   const props: ts.TypeElement[] = [];
-  for (let key in typeDef) {
+  // Sort keys alphabetically for consistent ordering
+  const sortedKeys = Object.keys(typeDef).sort();
+  for (let key of sortedKeys) {
     const useStringLiteral = /[\-\.\\\/\#\@\{\}\[\]]/.test(key);
     const { type, desc, values, isArray } = typeDef[key];
 

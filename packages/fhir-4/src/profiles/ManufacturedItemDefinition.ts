@@ -9,21 +9,21 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type ManufacturedItemDefinition_Props = {
-    id?: string;
-    meta?: FHIR.Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: FHIR.Narrative;
     contained?: any[];
     extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
+    id?: string;
     identifier?: MaybeArray<string | FHIR.Identifier>;
-    status?: string;
-    manufacturedDoseForm?: string[] | FHIR.CodeableConcept;
-    unitOfPresentation?: string[] | FHIR.CodeableConcept;
-    manufacturer?: MaybeArray<string | FHIR.Reference>;
+    implicitRules?: string;
     ingredient?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    language?: string;
+    manufacturedDoseForm?: string[] | FHIR.CodeableConcept;
+    manufacturer?: MaybeArray<string | FHIR.Reference>;
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
     property?: FHIR.BackboneElement[];
+    status?: string;
+    text?: FHIR.Narrative;
+    unitOfPresentation?: string[] | FHIR.CodeableConcept;
     [key: string]: any;
 };
 

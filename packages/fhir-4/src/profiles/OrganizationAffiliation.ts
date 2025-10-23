@@ -9,26 +9,26 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type OrganizationAffiliation_Props = {
+    active?: boolean;
+    code?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    contained?: any[];
+    endpoint?: MaybeArray<string | FHIR.Reference>;
+    extension?: FHIR.Extension[];
+    healthcareService?: MaybeArray<string | FHIR.Reference>;
     id?: string;
-    meta?: FHIR.Meta;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     implicitRules?: string;
     language?: string;
-    text?: FHIR.Narrative;
-    contained?: any[];
-    extension?: FHIR.Extension[];
+    location?: MaybeArray<string | FHIR.Reference>;
+    meta?: FHIR.Meta;
     modifierExtension?: FHIR.Extension[];
-    identifier?: MaybeArray<string | FHIR.Identifier>;
-    active?: boolean;
-    period?: FHIR.Period;
+    network?: MaybeArray<string | FHIR.Reference>;
     organization?: string | FHIR.Reference;
     participatingOrganization?: string | FHIR.Reference;
-    network?: MaybeArray<string | FHIR.Reference>;
-    code?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    period?: FHIR.Period;
     specialty?: MaybeArray<string[] | FHIR.CodeableConcept>;
-    location?: MaybeArray<string | FHIR.Reference>;
-    healthcareService?: MaybeArray<string | FHIR.Reference>;
     telecom?: FHIR.ContactPoint[];
-    endpoint?: MaybeArray<string | FHIR.Reference>;
+    text?: FHIR.Narrative;
     [key: string]: any;
 };
 

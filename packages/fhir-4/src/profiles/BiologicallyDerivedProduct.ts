@@ -9,25 +9,25 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type BiologicallyDerivedProduct_Props = {
-    id?: string;
-    meta?: FHIR.Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: FHIR.Narrative;
+    collection?: FHIR.BackboneElement;
     contained?: any[];
     extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
+    id?: string;
     identifier?: MaybeArray<string | FHIR.Identifier>;
+    implicitRules?: string;
+    language?: string;
+    manipulation?: FHIR.BackboneElement;
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
+    parent?: MaybeArray<string | FHIR.Reference>;
+    processing?: FHIR.BackboneElement[];
     productCategory?: string;
     productCode?: string[] | FHIR.CodeableConcept;
-    status?: string;
-    request?: MaybeArray<string | FHIR.Reference>;
     quantity?: number;
-    parent?: MaybeArray<string | FHIR.Reference>;
-    collection?: FHIR.BackboneElement;
-    processing?: FHIR.BackboneElement[];
-    manipulation?: FHIR.BackboneElement;
+    request?: MaybeArray<string | FHIR.Reference>;
+    status?: string;
     storage?: FHIR.BackboneElement[];
+    text?: FHIR.Narrative;
     [key: string]: any;
 };
 

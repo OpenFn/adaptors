@@ -9,24 +9,24 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Practitioner_Props = {
-    id?: string;
-    meta?: FHIR.Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: FHIR.Narrative;
+    active?: boolean;
+    address?: FHIR.Address[];
+    birthDate?: string;
+    communication?: MaybeArray<string[] | FHIR.CodeableConcept>;
     contained?: any[];
     extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
-    identifier?: MaybeArray<string | FHIR.Identifier>;
-    active?: boolean;
-    name?: FHIR.HumanName[];
-    telecom?: FHIR.ContactPoint[];
-    address?: FHIR.Address[];
     gender?: string;
-    birthDate?: string;
+    id?: string;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
+    implicitRules?: string;
+    language?: string;
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
+    name?: FHIR.HumanName[];
     photo?: FHIR.Attachment[];
     qualification?: FHIR.BackboneElement[];
-    communication?: MaybeArray<string[] | FHIR.CodeableConcept>;
+    telecom?: FHIR.ContactPoint[];
+    text?: FHIR.Narrative;
     [key: string]: any;
 };
 

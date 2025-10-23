@@ -9,22 +9,22 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Flag_Props = {
-    id?: string;
-    meta?: FHIR.Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: FHIR.Narrative;
-    contained?: any[];
-    extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
-    identifier?: MaybeArray<string | FHIR.Identifier>;
-    status?: string;
+    author?: string | FHIR.Reference;
     category?: MaybeArray<string[] | FHIR.CodeableConcept>;
     code?: string[] | FHIR.CodeableConcept;
-    subject?: string | FHIR.Reference;
-    period?: FHIR.Period;
+    contained?: any[];
     encounter?: string | FHIR.Reference;
-    author?: string | FHIR.Reference;
+    extension?: FHIR.Extension[];
+    id?: string;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
+    implicitRules?: string;
+    language?: string;
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
+    period?: FHIR.Period;
+    status?: string;
+    subject?: string | FHIR.Reference;
+    text?: FHIR.Narrative;
     [key: string]: any;
 };
 

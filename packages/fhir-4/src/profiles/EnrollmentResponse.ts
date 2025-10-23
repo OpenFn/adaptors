@@ -9,22 +9,22 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type EnrollmentResponse_Props = {
+    contained?: any[];
+    created?: string;
+    disposition?: string;
+    extension?: FHIR.Extension[];
     id?: string;
-    meta?: FHIR.Meta;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
     implicitRules?: string;
     language?: string;
-    text?: FHIR.Narrative;
-    contained?: any[];
-    extension?: FHIR.Extension[];
+    meta?: FHIR.Meta;
     modifierExtension?: FHIR.Extension[];
-    identifier?: MaybeArray<string | FHIR.Identifier>;
-    status?: string;
-    request?: string | FHIR.Reference;
-    outcome?: string;
-    disposition?: string;
-    created?: string;
     organization?: string | FHIR.Reference;
+    outcome?: string;
+    request?: string | FHIR.Reference;
     requestProvider?: string | FHIR.Reference;
+    status?: string;
+    text?: FHIR.Narrative;
     [key: string]: any;
 };
 

@@ -9,22 +9,22 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type BodyStructure_Props = {
+    active?: boolean;
+    contained?: any[];
+    description?: string;
+    extension?: FHIR.Extension[];
     id?: string;
-    meta?: FHIR.Meta;
+    identifier?: MaybeArray<string | FHIR.Identifier>;
+    image?: FHIR.Attachment[];
     implicitRules?: string;
     language?: string;
-    text?: FHIR.Narrative;
-    contained?: any[];
-    extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
-    identifier?: MaybeArray<string | FHIR.Identifier>;
-    active?: boolean;
-    morphology?: string[] | FHIR.CodeableConcept;
     location?: string[] | FHIR.CodeableConcept;
     locationQualifier?: MaybeArray<string[] | FHIR.CodeableConcept>;
-    description?: string;
-    image?: FHIR.Attachment[];
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
+    morphology?: string[] | FHIR.CodeableConcept;
     patient?: string | FHIR.Reference;
+    text?: FHIR.Narrative;
     [key: string]: any;
 };
 

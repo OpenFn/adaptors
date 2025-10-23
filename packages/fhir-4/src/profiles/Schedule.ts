@@ -9,22 +9,22 @@ import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Schedule_Props = {
-    id?: string;
-    meta?: FHIR.Meta;
-    implicitRules?: string;
-    language?: string;
-    text?: FHIR.Narrative;
+    active?: boolean;
+    actor?: MaybeArray<string | FHIR.Reference>;
+    comment?: string;
     contained?: any[];
     extension?: FHIR.Extension[];
-    modifierExtension?: FHIR.Extension[];
+    id?: string;
     identifier?: MaybeArray<string | FHIR.Identifier>;
-    active?: boolean;
+    implicitRules?: string;
+    language?: string;
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
+    planningHorizon?: FHIR.Period;
     serviceCategory?: MaybeArray<string[] | FHIR.CodeableConcept>;
     serviceType?: MaybeArray<string[] | FHIR.CodeableConcept>;
     specialty?: MaybeArray<string[] | FHIR.CodeableConcept>;
-    actor?: MaybeArray<string | FHIR.Reference>;
-    planningHorizon?: FHIR.Period;
-    comment?: string;
+    text?: FHIR.Narrative;
     [key: string]: any;
 };
 
