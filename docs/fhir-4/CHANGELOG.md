@@ -1,5 +1,11 @@
 # @openfn/language-fhir-4
 
+## 0.2.1
+
+### Patch Changes
+
+- fccecdc: Sort generated `fhir` types alphabetically
+
 ## 0.2.0
 
 ### Minor Changes
