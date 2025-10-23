@@ -8,7 +8,6 @@ import _ from 'lodash';
 import * as util from './Utils.js';
 import { createMockConnection } from './mock.js';
 
-// Store database clients in closure, NOT in state (OpenFN best practice)
 let instance = null;
 let connection = null;
 
@@ -56,13 +55,13 @@ export function execute(...operations) {
  * @returns {State}
  */
 async function createConnection(state) {
-  const { 
+  const {
     token,
     database = 'my_db',
     sessionHint,
-    testMode = false
+    testMode = false,
   } = state.configuration;
-  
+
   // In test mode, create a mock connection
   if (testMode || process.env.NODE_ENV === 'test') {
     const { mockInstance, mockConnection } = createMockConnection();
@@ -70,26 +69,28 @@ async function createConnection(state) {
     connection = mockConnection;
     return state;
   }
-  
+
   if (!token) {
-    throw new Error('MotherDuck token is required. Please provide a token in the configuration.');
+    throw new Error(
+      'MotherDuck token is required. Please provide a token in the configuration.'
+    );
   }
-  
+
   let databasePath = `md:${database}`;
-  
+
   if (sessionHint) {
     databasePath += `?session_hint=${sessionHint}`;
   }
-  
+
   const config = {
-    motherduck_token: token
+    motherduck_token: token,
   };
-  
+
   console.log(`Connecting to MotherDuck cloud database: ${database}`);
   instance = await DuckDBInstance.create(databasePath, config);
   connection = await instance.connect();
   console.log('Connected successfully to MotherDuck');
-  
+
   return state;
 }
 
@@ -131,9 +132,19 @@ function disconnect(state) {
 export function query(sqlQuery, options = {}) {
   return state => {
     // Expand function references to actual values
-    const [resolvedQuery, resolvedOptions] = expandReferences(state, sqlQuery, options);
+    const [resolvedQuery, resolvedOptions] = expandReferences(
+      state,
+      sqlQuery,
+      options
+    );
 
-    return util.queryHandler(connection, state, resolvedQuery, resolvedOptions, composeNextState);
+    return util.queryHandler(
+      connection,
+      state,
+      resolvedQuery,
+      resolvedOptions,
+      composeNextState
+    );
   };
 }
 
@@ -161,31 +172,45 @@ export function query(sqlQuery, options = {}) {
 export function insert(table, records, options = {}) {
   return async state => {
     // Expand function references to actual values
-    const [resolvedTable, resolvedRecords, resolvedOptions] = expandReferences(state, table, records, options);
+    const [resolvedTable, resolvedRecords, resolvedOptions] = expandReferences(
+      state,
+      table,
+      records,
+      options
+    );
 
     const batchSize = resolvedOptions.batchSize || 1000;
 
     // Normalize to array
-    const recordsArray = Array.isArray(resolvedRecords) ? resolvedRecords : [resolvedRecords];
+    const recordsArray = Array.isArray(resolvedRecords)
+      ? resolvedRecords
+      : [resolvedRecords];
 
     if (!recordsArray || recordsArray.length === 0) {
       console.log('No records provided; skipping insert.');
       return {
         ...state,
-        data: { recordsInserted: 0, batches: 0 }
+        data: { recordsInserted: 0, batches: 0 },
       };
     }
 
     util.validateSqlIdentifier(resolvedTable);
 
     const totalRecords = recordsArray.length;
-    console.log(`Preparing to insert ${totalRecords} record${totalRecords !== 1 ? 's' : ''} into:`, resolvedTable);
+    console.log(
+      `Preparing to insert ${totalRecords} record${
+        totalRecords !== 1 ? 's' : ''
+      } into:`,
+      resolvedTable
+    );
 
     // Split into chunks using lodash (even if just one chunk)
     const chunks = _.chunk(recordsArray, batchSize);
 
     if (chunks.length > 1) {
-      console.log(`Large dataset detected. Splitting into ${chunks.length} batches of up to ${batchSize} records.`);
+      console.log(
+        `Large dataset detected. Splitting into ${chunks.length} batches of up to ${batchSize} records.`
+      );
     }
 
     let currentState = state;
@@ -197,7 +222,9 @@ export function insert(table, records, options = {}) {
       const batchNumber = i + 1;
 
       if (chunks.length > 1) {
-        console.log(`Processing batch ${batchNumber}/${chunks.length}: ${chunk.length} records`);
+        console.log(
+          `Processing batch ${batchNumber}/${chunks.length}: ${chunk.length} records`
+        );
       }
 
       const columns = Object.keys(chunk[0]);
@@ -211,20 +238,30 @@ export function insert(table, records, options = {}) {
         return `(${values.join(', ')})`;
       });
 
-      const sqlQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES ${valuesStrings.join(', ')}`;
+      const sqlQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES ${valuesStrings.join(
+        ', '
+      )}`;
 
       // Execute batch query
-      currentState = await util.queryHandler(connection, currentState, sqlQuery, resolvedOptions, composeNextState);
+      currentState = await util.queryHandler(
+        connection,
+        currentState,
+        sqlQuery,
+        resolvedOptions,
+        composeNextState
+      );
       totalInserted += chunk.length;
     }
 
     if (chunks.length > 1) {
-      console.log(`Successfully inserted ${totalInserted} records in ${chunks.length} batches.`);
+      console.log(
+        `Successfully inserted ${totalInserted} records in ${chunks.length} batches.`
+      );
     }
 
     return {
       ...currentState,
-      data: { recordsInserted: totalInserted, batches: chunks.length }
+      data: { recordsInserted: totalInserted, batches: chunks.length },
     };
   };
 }
