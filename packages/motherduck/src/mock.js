@@ -112,6 +112,7 @@ export function createMockConnection() {
 
           valuesSets.forEach(valueSet => {
             const values = valueSet.slice(1, -1).split(',').map(v => {
+              // eslint-disable-next-line no-param-reassign
               v = v.trim();
               // Remove quotes from strings
               if (v.startsWith("'") && v.endsWith("'")) {
