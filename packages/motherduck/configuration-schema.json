@@ -12,7 +12,6 @@
       "title": "Database Name",
       "type": "string",
       "description": "MotherDuck database name",
-      "default": "my_db",
       "examples": ["my_database", "analytics_warehouse", "production_db"]
     },
     "sessionHint": {
@@ -20,12 +19,6 @@
       "type": "string",
       "description": "Optional session hint for MotherDuck read scaling",
       "examples": ["primary", "readonly", "analytics"]
-    },
-    "testMode": {
-      "title": "Test Mode",
-      "type": "boolean",
-      "description": "Use mock connection for testing (internal use only)",
-      "default": false
     }
   },
   "type": "object",

@@ -57,7 +57,7 @@ export function execute(...operations) {
 async function createConnection(state) {
   const {
     token,
-    database = 'my_db',
+    database,
     sessionHint,
     testMode = false,
   } = state.configuration;
