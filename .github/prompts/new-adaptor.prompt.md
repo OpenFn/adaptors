@@ -1,65 +1,68 @@
----
-mode: 'agent'
-description: 'Doc-first adaptor builder. Read ./docs first, show a PLAN, wait for APPROVED:. Default = 1 function + 1 test. Respect Utils.js naming invariant. No PRs.'
----
+# OpenFn Adaptors — Copilot Repository Instructions
 
-You are assisting with scaffolding or extending an **OpenFn adaptor** in this repo.
-**Do not** create branches or PRs — generate local files/diffs only for human review.
+**Default rule:**  
+If the user does not enumerate operations, implement **EXACTLY ONE** HTTP function and **ONE** happy-path test.  
+Do not infer or add endpoints.
 
 ---
 
-## 🔍 Preparation (Doc-first)
-Before proposing or generating any code:
-1. **Read the `./docs/*.md` files** to understand adaptor structure, HTTP/TLS patterns, and testing practices.
-2. Produce a short **PLAN** that includes:
-   - Adaptor name and purpose (ask once if missing)
-   - Endpoint(s) you will touch
-   - **Function count** and **Test count**
-   - Naming invariants acknowledged (see below)
-   - Assumptions & questions
-3. **Stop and wait** for a reply starting with **`APPROVED:`** before writing code.
+## 🚦 Plan & One-Function Gates (must pass before code)
+
+**PLAN GATE (required):**
+- Start every run with a PLAN block and **wait for a reply starting with `APPROVED:`** before generating code.
+- The PLAN must include:
+  - Adaptor name
+  - Endpoint(s) to touch
+  - **Function count** and **Test count**
+  - Naming invariants acknowledgment
+  - Assumptions & docs consulted (`./docs/...`)
+
+**ONE-FUNCTION DEFAULT:**
+- If the user **did not** enumerate operations, the PLAN **must** say `Function count: 1` and `Test count: 1`.
+- Do **not** infer or add endpoints.
+
+**Compliance checklist (include before code):**
+- ONE-FUNCTION DEFAULT respected? yes/no  
+- Context operations explicitly listed? yes/no  
+- Docs consulted: list `./docs/...` files  
+- **Naming invariants respected (`Utils.js` → `request`, `Adaptors.js` → `request`)**? yes/no
 
 ---
 
-## 🚧 Guardrails (must follow)
-- **ONE-FUNCTION DEFAULT:** If the user did **not** enumerate operations, plan **exactly 1** HTTP function and **exactly 1** happy-path test. Do **not** infer or add endpoints.
-- **CONTEXT MODE:** If the user enumerates operations, implement **one function per operation**, each with **one** happy-path test.
-- **NAMING INVARIANT:** In `Utils.js`, the exported HTTP function name is **`request`**. Do **not** rename or change this export. If you need new behavior, create a wrapper (e.g., `requestWithRetry`) that calls `request` internally.
-- **DOC-FIRST:** Follow structure, naming, HTTP/TLS, and testing patterns from local docs; add inline comments citing the exact `./docs/...` pages used.
-- **NO GIT/PR ACTIONS:** Never create branches or PRs; output local files/diffs only.
+## 🧩 Naming Invariants (do NOT break)
+
+- **`Utils.js`**: exported HTTP function **must remain** `request`.  
+  Do not rename, remove, change signature, or observable behavior. Use wrappers (e.g., `requestWithRetry`) if needed.
+
+- **`Adaptors.js`**: exported function **must remain** `request`.  
+  Do not rename, remove, change signature, or observable behavior. Use wrappers if needed.
+
+Include in the PLAN:  
+“**Naming invariants acknowledged:** `Utils.js → request`; `Adaptors.js → request` (will not be renamed or modified).”
 
 ---
 
-## 📚 Sources of truth (in order)
-1. Local docs in `./docs/*.md` (authoritative)
-2. Existing adaptors in `./packages/*` (copy patterns)
-3. Repo configs (`package.json`, `tsconfig`, `eslint`)
-4. (Fallback) Public GitHub wiki if something is missing locally
+## 📚 What to Prioritize (in order)
+1) Local docs in `./docs/*.md` (authoritative)  
+2) Recent adaptors in `./packages/*` (layout, naming, tests)  
+3) Repo configs: `package.json`, `tsconfig`, `eslint`  
+4) Fallback: public GitHub wiki if a topic is missing locally
 
 ---
 
-## ✅ Output (after approval)
-1. **File tree diff** / list of new & modified files
-2. **Full file contents** for each created/updated file
-3. **Test commands** to run locally
-4. **Assumptions & TODOs** (brief; link `./docs/...`)
-5. Reminder: *No git or PR actions — human will commit manually.*
+## ⚙️ Rules of Practice
+- **Doc-first**: read `./docs/*.md` before generating anything.
+- **Plan-first**: output the PLAN and wait for `APPROVED:` before code.
+- **One-function default** unless operations are explicitly listed.
+- **No git/PR actions**: generate local files/diffs only.
+- Mirror existing structure; keep changes minimal and tested.
+- Tests are mandatory; mock HTTP with Undici **MockAgent** (no live network).
+- Cross-reference design choices via relative links to `./docs/...`.
+- Follow TLS/Undici patterns; pass `origin` on redirecting requests.
+- Respect naming invariants for `Utils.js` and `Adaptors.js`.
 
 ---
 
-## 💬 Asking Rules
-- If `<ADAPTOR_NAME>` or base URL is missing, ask **once** before producing the PLAN.
-- If everything is clear, present the PLAN and wait for `APPROVED:` before code.
-
----
-
-## 📝 PLAN template (what you should output first)
-### PLAN:
-- Adaptor: <name>
-- Endpoint(s): <list>
-- Function count: <N> // If no operations were listed, N MUST be 1
-- Test count: <N> // If no operations were listed, N MUST be 1
-- Naming invariants acknowledged: Utils.js → request (will not be renamed)
-- Assumptions: <bullets>
-- Docs used: <./docs/... pages>
-- Questions (if any): <bullets>
+## 🧪 Quick Commands
+```bash
+pnpm i && pnpm lint && pnpm test && pnpm build

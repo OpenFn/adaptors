@@ -18,15 +18,24 @@ Do not infer or add endpoints.
 - ONE-FUNCTION DEFAULT respected? yes/no  
 - Context operations explicitly listed? yes/no  
 - Docs consulted: list `./docs/...` files  
-- **Naming invariant respected (`Utils.js` → `request`)**? yes/no  
+- **Naming invariants respected (`Utils.js` → `request`, `Adaptors.js` → `request`)**? yes/no  
 
 ---
 
-## 🧩 Naming Invariant (Do NOT break)
-- In `Utils.js`, the exported HTTP function **must remain named** `request`.  
-- **Never rename, replace, or change** this export.  
-- If new behavior is needed, create a **wrapper** (e.g., `requestWithRetry`) that internally calls `request`.  
-- Mention in your plan: “Naming invariants acknowledged: `Utils.js → request (will not be renamed)`”.
+## 🧩 Naming Invariants (Do NOT break)
+
+- In **`Utils.js`**, the exported HTTP function **must remain named** `request`.  
+  - Do **not** rename, remove, or change its export name or signature.
+  - Do **not** alter its observable behavior.  
+  - If new behavior is needed, create a wrapper (e.g., `requestWithRetry`) that delegates to `request`.
+
+- In **`Adaptors.js`**, the exported function **must remain named** `request`.  
+  - Do **not** rename, remove, or change its export name or signature.
+  - Do **not** alter its observable behavior.  
+  - If you must extend behavior, create a separate function that calls `request` internally.
+
+Include in your PLAN:  
+“**Naming invariants acknowledged:** `Utils.js → request` and `Adaptors.js → request` (will not be renamed or modified)”.
 
 ---
 
@@ -47,7 +56,7 @@ Do not infer or add endpoints.
 - **Tests are mandatory** and must mock HTTP using Undici `MockAgent` (no live network).  
 - **Cross-reference** all design choices with relative links to `./docs/...`.  
 - **Follow** TLS/Undici patterns; always pass `origin` on redirecting requests.  
-- **Respect naming invariant** in `Utils.js` (see above).  
+- **Respect naming invariants** in `Utils.js` and `Adaptors.js` (see above).  
 
 ---
 
