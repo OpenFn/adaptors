@@ -12,10 +12,12 @@
 
 1. **No PR automation.** Never create branches or PRs. Output code files and a short “changeset” summary. Ask the developer to run tests and commit.
 2. **Source of truth (in order):**
-   1. OpenFn adaptor wiki pages (linked below).
-   2. Recent adaptors in `./packages/*` (copy patterns).
-   3. Tests in `./packages/*/test`.
-   4. Repo configs: `package.json`, lint, tsconfig.
+   1. `./docs/*.md`  ← primary (in-repo docs)
+   2. Existing adaptors in `./packages/*` (copy patterns)
+   3. Tests in `./packages/*/test`
+   4. `package.json`, tsconfig, eslint
+   5. (Fallback) Public wiki pages on GitHub if something is missing
+
 3. **Always cross-reference**—when you make a design choice, add an inline comment with a link to the relevant wiki section.
 4. **Consistency > novelty.** Match file layout, naming, error model, logging, and testing from the most recently updated adaptor.
 5. **Security/correctness first.** Validate inputs, handle TLS/Undici per guidance, and mock all network in tests.

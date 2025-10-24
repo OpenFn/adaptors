@@ -1,19 +1,52 @@
 ---
 mode: 'agent'
-description: 'Scaffold a new OpenFn adaptor package with code + tests (no PRs)'
+description: 'Create an OpenFn adaptor — read ./docs first, show a plan before generating code. No PRs.'
 ---
 
-You are assisting with a new OpenFn adaptor. **Do not create branches or PRs.** Output:
-1) File tree diff  2) Full file contents  3) Test commands  4) Assumptions/TODOs with wiki links.
+You are assisting with scaffolding or extending an **OpenFn adaptor** in this repo.  
+**Do not** create branches or PRs — only generate code locally for human review.
 
-Follow:
-- Build a new adaptor → https://github.com/OpenFn/adaptors/wiki/Build-a-new-Adaptor
-- Best practices → https://github.com/OpenFn/adaptors/wiki/Adaptor-Writing-Best-Practice-%26-Common-Patterns
-- Unit tests → https://github.com/OpenFn/adaptors/wiki/Unit-Testing-Guide
+---
 
-Task:
-- Create `./packages/<ADAPTOR_NAME>/` with `package.json`, `src/index.ts`, `src/client.ts` (Undici agent factory), one operation in `src/operations/`, `test/*.test.ts` using `MockAgent`, and a `README.md` with examples.
-- Mirror naming & layout from the most recently updated adaptor in `./packages/*`.
-- Tests must mock HTTP only.
+## 🔍 Preparation Step
+Before writing or suggesting any code:
+1. **Read and summarize the key guidance in the `./docs` folder.**
+   - Focus on adaptor structure, HTTP conventions, testing practices, and code patterns.
+2. Based on what you read, **draft a concise plan** that includes:
+   - The adaptor name and purpose (if provided)
+   - The functions you will create
+   - The tests to include (or how they’ll be structured)
+   - Any assumptions, open questions, or clarifications needed  
+3. **Wait for my confirmation** before generating any code.
 
-When ready, ask me for `<ADAPTOR_NAME>` and any API spec details if missing.
+---
+
+## 🧭 Policy for Code Generation
+After I approve the plan:
+- If I **don’t provide API or context**, create a **minimal adaptor** with a single HTTP function and a single happy-path test.
+- If I **do provide API/spec/context**, implement **one function per described operation** and **one happy-path test per function**.
+- Follow the structure, naming, and examples exactly as described in the `./docs` folder.
+- Always cite which doc sections you relied on in inline comments (e.g., `// see ./docs/http-and-tls.md`).
+
+---
+
+## 📚 Sources of truth (in order)
+1. Local docs in `./docs/*.md` (authoritative)
+2. Existing adaptors in `./packages/*`
+3. Repo configs (`package.json`, tsconfig, eslint)
+4. Fallback: public GitHub wiki if something is missing locally
+
+---
+
+## 📦 Output after approval
+1. **File tree diff** and/or list of new/modified files
+2. **Full file contents**
+3. **Test commands** to run locally
+4. **Assumptions & TODOs** with links to `./docs/...`
+5. Reminder: *No git or PR actions — human will commit manually.*
+
+---
+
+## 💬 Asking Rules
+- If the adaptor name or base URL is missing, ask once before proposing the plan.
+- If everything is clear, present the plan first and wait for approval.
