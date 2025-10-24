@@ -1,5 +1,8 @@
 # OpenFn Adaptors — Copilot Repository Instructions
 
+**Default rule:** If the user does not enumerate operations, implement EXACTLY ONE HTTP function and ONE happy-path test. Do not infer or add endpoints.
+
+
 ## What to prioritize (in order)
 1) Local docs in `./docs/*.md` (authoritative)
 2) Recent adaptors in `./packages/*` (layout, naming, tests)
