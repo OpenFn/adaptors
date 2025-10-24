@@ -1,52 +1,34 @@
 ---
 mode: 'agent'
-description: 'Create an OpenFn adaptor — read ./docs first, show a plan before generating code. No PRs.'
+description: 'Doc-first adaptor builder. Read ./docs, propose a plan, then generate. Default: exactly 1 HTTP function + 1 test. No PRs.'
 ---
 
-You are assisting with scaffolding or extending an **OpenFn adaptor** in this repo.  
-**Do not** create branches or PRs — only generate code locally for human review.
+You are assisting with an **OpenFn adaptor**. **Do not** create branches/PRs. Generate local files only.
 
----
+## Guardrails (must follow)
+- **ONE-FUNCTION DEFAULT:** If the user only provides a base URL (e.g., `https://v2.jokeapi.dev/joke/`) and no operations, create **exactly one** HTTP function and **exactly one** happy-path test.
+- **NO INFERENCE:** Do **not** add endpoints or functions beyond what the user explicitly lists.
+- **CONTEXT MODE:** If (and only if) the user lists operations, implement **one function per listed operation**, each with **one** happy-path test.
+- **CONFIRMATION GATE:** First show a **PLAN** and wait for the user to reply `APPROVED:` before writing any code.
+- **DOC-FIRST:** Read `./docs/*.md` and follow structure, naming, HTTP/TLS, and testing patterns from the local docs. Link to the exact docs you used in inline comments.
 
-## 🔍 Preparation Step
-Before writing or suggesting any code:
-1. **Read and summarize the key guidance in the `./docs` folder.**
-   - Focus on adaptor structure, HTTP conventions, testing practices, and code patterns.
-2. Based on what you read, **draft a concise plan** that includes:
-   - The adaptor name and purpose (if provided)
-   - The functions you will create
-   - The tests to include (or how they’ll be structured)
-   - Any assumptions, open questions, or clarifications needed  
-3. **Wait for my confirmation** before generating any code.
+## Sources of truth (in order)
+1) `./docs/*.md` (authoritative)
+2) `./packages/*` (copy patterns)
+3) Repo configs (package.json, tsconfig, eslint)
+4) Fallback: public wiki if something is missing locally
 
----
+## PLAN (required before code)
+Output a short plan with:
+- Adaptor name (or ask once if missing)
+- Chosen endpoint(s)
+- List of functions (count them) and tests (count them)
+- Any assumptions / questions
+**Stop here and wait for `APPROVED:`**
 
-## 🧭 Policy for Code Generation
-After I approve the plan:
-- If I **don’t provide API or context**, create a **minimal adaptor** with a single HTTP function and a single happy-path test.
-- If I **do provide API/spec/context**, implement **one function per described operation** and **one happy-path test per function**.
-- Follow the structure, naming, and examples exactly as described in the `./docs` folder.
-- Always cite which doc sections you relied on in inline comments (e.g., `// see ./docs/http-and-tls.md`).
-
----
-
-## 📚 Sources of truth (in order)
-1. Local docs in `./docs/*.md` (authoritative)
-2. Existing adaptors in `./packages/*`
-3. Repo configs (`package.json`, tsconfig, eslint)
-4. Fallback: public GitHub wiki if something is missing locally
-
----
-
-## 📦 Output after approval
-1. **File tree diff** and/or list of new/modified files
-2. **Full file contents**
-3. **Test commands** to run locally
-4. **Assumptions & TODOs** with links to `./docs/...`
-5. Reminder: *No git or PR actions — human will commit manually.*
-
----
-
-## 💬 Asking Rules
-- If the adaptor name or base URL is missing, ask once before proposing the plan.
-- If everything is clear, present the plan first and wait for approval.
+## After approval, output in this order
+1) File tree diff (paths)
+2) Full file contents
+3) Test commands
+4) Assumptions & TODOs with `./docs/...` links
+5) Reminder: no git/PR actions
