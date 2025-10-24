@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "The Ethipean MFR baseUrl",
+      "format": "uri",
+      "default":"https://mfr.moh.gov.et",
+      "minLength": 1,
+      "examples": ["https://mfr.moh.gov.et"]
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "Username",
+      "examples": ["admin"]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Password",
+      "writeOnly": true,
+      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": []
+}
