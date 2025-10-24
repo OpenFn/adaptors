@@ -26,8 +26,9 @@ Do not infer or add endpoints.
 
 - In **`Utils.js`**, the exported HTTP function **must remain named** `request`.  
   - Do **not** rename, remove, or change its export name or signature.
-  - Do **not** alter its observable behavior.  
-  - If new behavior is needed, create a wrapper (e.g., `requestWithRetry`) that delegates to `request`.
+  - Do **not** alter its observable behavior.
+  - **Do not write any operational functions here.** `Utils.js` is infra/helpers only (e.g., low-level request, parsing utilities).
+
 
 - In **`Adaptors.js`**, the exported function **must remain named** `request`.  
   - Do **not** rename, remove, or change its export name or signature.

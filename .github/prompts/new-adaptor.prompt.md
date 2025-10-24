@@ -32,7 +32,7 @@ Do not infer or add endpoints.
 ## 🧩 Naming Invariants (do NOT break)
 
 - **`Utils.js`**: exported HTTP function **must remain** `request`.  
-  Do not rename, remove, change signature, or observable behavior. Use wrappers (e.g., `requestWithRetry`) if needed.
+  Do not rename, remove, change signature, or observable behavior. Use wrappers if needed.
 
 - **`Adaptors.js`**: exported function **must remain** `request`.  
   Do not rename, remove, change signature, or observable behavior. Use wrappers if needed.
