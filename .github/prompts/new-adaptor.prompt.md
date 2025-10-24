@@ -6,7 +6,7 @@ Do not infer or add endpoints.
 
 ---
 
-## 🚦 Plan & One-Function Gates (must pass before code)
+## Plan & One-Function Gates (must pass before code)
 
 **PLAN GATE (required):**
 - Start every run with a PLAN block and **wait for a reply starting with `APPROVED:`** before generating code.
@@ -29,7 +29,7 @@ Do not infer or add endpoints.
 
 ---
 
-## 🧩 Naming Invariants (do NOT break)
+## Naming Invariants (do NOT break)
 
 - **`Utils.js`**: exported HTTP function **must remain** `request`.  
   Do not rename, remove, change signature, or observable behavior. Use wrappers if needed.
@@ -42,7 +42,7 @@ Include in the PLAN:
 
 ---
 
-## 📚 What to Prioritize (in order)
+## What to Prioritize (in order)
 1) Local docs in `./docs/*.md` (authoritative)  
 2) Recent adaptors in `./packages/*` (layout, naming, tests)  
 3) Repo configs: `package.json`, `tsconfig`, `eslint`  
@@ -50,7 +50,7 @@ Include in the PLAN:
 
 ---
 
-## ⚙️ Rules of Practice
+## Rules of Practice
 - **Doc-first**: read `./docs/*.md` before generating anything.
 - **Plan-first**: output the PLAN and wait for `APPROVED:` before code.
 - **One-function default** unless operations are explicitly listed.
@@ -63,6 +63,6 @@ Include in the PLAN:
 
 ---
 
-## 🧪 Quick Commands
+## Quick Commands
 ```bash
 pnpm i && pnpm lint && pnpm test && pnpm build

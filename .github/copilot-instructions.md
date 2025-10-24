@@ -6,7 +6,7 @@ Do not infer or add endpoints.
 
 ---
 
-## 🚧 One-Function & Plan Gates
+## One-Function & Plan Gates
 
 **One-Function Gate (must pass before code):**
 - Start every run with a `PLAN:` section.
@@ -22,7 +22,7 @@ Do not infer or add endpoints.
 
 ---
 
-## 🧩 Naming Invariants (Do NOT break)
+## Naming Invariants (Do NOT break)
 
 - In **`Utils.js`**, the exported HTTP function **must remain named** `request`.  
   - Do **not** rename, remove, or change its export name or signature.
@@ -40,7 +40,7 @@ Include in your PLAN:
 
 ---
 
-## 📚 What to Prioritize (in order)
+## What to Prioritize (in order)
 1. Local docs in `./docs/*.md` (authoritative)
 2. Recent adaptors in `./packages/*` (layout, naming, tests)
 3. Repo configs: `package.json`, `tsconfig`, `eslint`
@@ -61,6 +61,6 @@ Include in your PLAN:
 
 ---
 
-## 🧪 Quick Commands
+## Quick Commands
 ```bash
 pnpm i && pnpm lint && pnpm test && pnpm build
