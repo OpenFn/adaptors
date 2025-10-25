@@ -14,6 +14,24 @@ View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/erpnext-configuration-schema/)
 for required and optional `configuration` properties.
 
+#### Authentication
+
+This adaptor uses **API Key and Secret** authentication. To generate your credentials:
+
+1. Log in to your ERPNext instance
+2. Go to your user profile (top right corner)
+3. Click on "API Access"
+4. Generate a new API Key/Secret pair
+5. Use these credentials in your OpenFn configuration:
+
+```json
+{
+  "baseUrl": "https://mycompany.erpnext.com",
+  "apiKey": "your_api_key",
+  "apiSecret": "your_api_secret"
+}
+```
+
 ### Example Usage
 
 ```js

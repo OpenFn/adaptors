@@ -70,7 +70,7 @@ export function setMockClient(mock) {
 
 /**
  * Logs in to ERPNext and initializes the Frappe client.
- * Supports both API Key/Secret and Username/Password authentication.
+ * Uses API Key and Secret for token-based authentication.
  * @example
  *  login(state)
  * @private
@@ -78,30 +78,24 @@ export function setMockClient(mock) {
  * @returns {State}
  */
 async function login(state) {
-  const { baseUrl, apiKey, apiSecret, username, password } =
-    state.configuration;
+  const { baseUrl, apiKey, apiSecret } = state.configuration;
 
   try {
-    if (apiKey && apiSecret) {
-      console.log('Authenticating with API Key...');
-      // Use token-based authentication with API Key and Secret
-      const token = `${apiKey}:${apiSecret}`;
-      frappeClient = new FrappeApp(baseUrl, {
-        useToken: true,
-        token: () => token,
-        type: 'token',
-      });
-      console.log('✓ Successfully authenticated to ERPNext');
-    } else if (username && password) {
-      console.log('Authenticating with Username/Password...');
-      frappeClient = new FrappeApp(baseUrl);
-      await frappeClient.auth().loginWithUsernamePassword({ username, password });
-      console.log('✓ Successfully authenticated to ERPNext');
-    } else {
+    if (!apiKey || !apiSecret) {
       throw new Error(
-        'Authentication credentials not provided. Please provide either apiKey/apiSecret or username/password.'
+        'Authentication credentials not provided. Please provide both apiKey and apiSecret.'
       );
     }
+
+    console.log('Authenticating with API Key...');
+    // Use token-based authentication with API Key and Secret
+    const token = `${apiKey}:${apiSecret}`;
+    frappeClient = new FrappeApp(baseUrl, {
+      useToken: true,
+      token: () => token,
+      type: 'token',
+    });
+    console.log('✓ Successfully authenticated to ERPNext');
   } catch (err) {
     console.error(`✗ Authentication Error: ${err.message}`);
     frappeClient = null;
