@@ -505,6 +505,34 @@ importers:
         specifier: ^5.22.1
         version: 5.29.0
 
+  packages/erpnext:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+      frappe-js-sdk:
+        specifier: ^1.11.0
+        version: 1.11.0
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      mocha:
+        specifier: ^10.7.3
+        version: 10.8.2
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      undici:
+        specifier: ^5.22.1
+        version: 5.29.0
+
   packages/facebook:
     dependencies:
       '@openfn/language-common':
@@ -6385,6 +6413,9 @@ packages:
   fragment-cache@0.2.1:
     resolution: {integrity: sha512-GMBAbW9antB8iZRHLoGw0b3HANt57diZYFO/HL1JGIC1MjKrdmhxvrJbupnVvpys0zsz7yBApXdQyfepKly2kA==}
     engines: {node: '>=0.10.0'}
+
+  frappe-js-sdk@1.11.0:
+    resolution: {integrity: sha512-XQM+FyiV4+ibEP6X+daWojqN5loex7d797HPIFzepDCEFw0ggERA/z2Dk7HD7+ilex1LrI4YpYislm54HMY0GQ==}
 
   fs-extra@7.0.1:
     resolution: {integrity: sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==}
@@ -14540,6 +14571,12 @@ snapshots:
     dependencies:
       map-cache: 0.2.2
     optional: true
+
+  frappe-js-sdk@1.11.0:
+    dependencies:
+      axios: 1.12.2
+    transitivePeerDependencies:
+      - debug
 
   fs-extra@7.0.1:
     dependencies:
