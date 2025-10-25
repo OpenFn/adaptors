@@ -81,21 +81,27 @@ async function login(state) {
   const { baseUrl, apiKey, apiSecret, username, password } =
     state.configuration;
 
-  frappeClient = new FrappeApp(baseUrl);
-
   try {
     if (apiKey && apiSecret) {
       console.log('Authenticating with API Key...');
-      await frappeClient.auth().loginWithApiKey(apiKey, apiSecret);
+      // Use token-based authentication with API Key and Secret
+      const token = `${apiKey}:${apiSecret}`;
+      frappeClient = new FrappeApp(baseUrl, {
+        useToken: true,
+        token: () => token,
+        type: 'token',
+      });
+      console.log('✓ Successfully authenticated to ERPNext');
     } else if (username && password) {
       console.log('Authenticating with Username/Password...');
-      await frappeClient.auth().loginWithUsernamePassword(username, password);
+      frappeClient = new FrappeApp(baseUrl);
+      await frappeClient.auth().loginWithUsernamePassword({ username, password });
+      console.log('✓ Successfully authenticated to ERPNext');
     } else {
       throw new Error(
         'Authentication credentials not provided. Please provide either apiKey/apiSecret or username/password.'
       );
     }
-    console.log('✓ Successfully authenticated to ERPNext');
   } catch (err) {
     console.error(`✗ Authentication Error: ${err.message}`);
     frappeClient = null;
