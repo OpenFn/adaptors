@@ -8,9 +8,6 @@ lerna-debug.log*
 
 .DS_STORE
 
-# Claude Code documentation
-CLAUDE.md
-
 # Generated jsdocs
 docs/
 
