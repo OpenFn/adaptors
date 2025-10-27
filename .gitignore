@@ -8,8 +8,8 @@ lerna-debug.log*
 
 .DS_STORE
 
-# Generated jsdocs
-docs/
+# Generated jsdocs in packages
+packages/*/docs/
 
 # Working folders
 tmp/
