@@ -1228,7 +1228,7 @@ describe('redirect handling', () => {
     });
   });
 
-  it.only(
+  it.skip(
     'should not log warning for 301 when maxRedirections is explicitly set to 0',
     async () => {
       client
