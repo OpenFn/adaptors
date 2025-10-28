@@ -1,194 +1,144 @@
-# CLAUDE CONTEXT — OpenFn Adaptors
+# CLAUDE.MD — OpenFn Adaptors
 
-> Primary guide for **Claude Code** when helping contributors build or extend OpenFn adaptors.  
-> Mirrors `.github/copilot-instructions.md` and `.github/prompts/new-adaptor.prompt.md`.
-
----
-
-## Overview
-
-- **Purpose:** Assist developers in creating new OpenFn adaptors in a consistent, compliant way.  
-- **Goal:** Generate clear, testable code for human review — **no automatic PRs** or branch creation.  
-- **Core principle:** Always reference and follow the `./docs` folder first.
-- When responding in VS Code, **read this file and all `./docs/*.md` files before proposing or generating code**.
-
+Build OpenFn adaptors following docs-first workflow. Generate code for human review only—no automatic commits or PRs.
 
 ---
 
-## Rules of Practice
+## Workflow
 
-1. **Doc-first:**  
-   Read all relevant `./docs/*.md` files before generating code. They are the authoritative source for:
-   - Adaptor structure  
-   - Naming conventions  
-   - HTTP/TLS & Undici agent patterns  
-   - Testing guidelines  
-   - Publishing and documentation
-
-2. **Plan-first:**  
-   Always present a **PLAN block** before writing any code.  
-   The PLAN must summarize what will be created and **wait for human approval** (`APPROVED:`) before code generation.
-
-3. **One-Function Default:**  
-   If the user does **not** specify operations, create **exactly one** HTTP function and **one** happy-path test.  
-   Do not infer additional endpoints.
-
-4. **Context Mode:**  
-   If the user provides API context or enumerates operations, create **one function per operation**, each with **one** happy-path test.
-
-5. **No PR Automation:**  
-   Generate files and diffs locally for human review only. Do not push commits, open PRs, or modify branches.
-
-6. **Tests Mandatory:**  
-   Every operation must have a corresponding unit test using **Undici MockAgent**.  
-   No live network calls.
-
-7. **Naming & File Placement Invariants:**
-   - `Utils.js`:  
-     - Exported function **must remain named** `request`.  
-     - **Do not** rename, remove, or alter this function’s signature or observable behavior.  
-     - **Do not** add operational functions here. It is for infra/helpers only.  
-     - To extend, create a wrapper (e.g., `requestWithRetry`) that calls `request`.
-   - `Adaptors.js`:  
-     - Exported function **must remain named** `request`.  
-     - **All operational functions belong here**, not in `Utils.js`.  
-     - Do not rename, remove, or modify the existing `request` function signature.
-
-8. **Cross-reference:**  
-   When generating code, include inline comments linking to the relevant `./docs/...` files used as references.
+1. **Read `./docs/` first** (especially `build-a-new-adaptor.md`, `unit-testing-guide.md`, `http-and-tls.md`)
+2. **Output PLAN** → wait for `APPROVED:`
+3. **Generate code** with doc references in comments
 
 ---
 
-## Sources of Truth (priority order)
+## Scoping Rules
 
-1. `./docs/*.md` — authoritative (e.g., `build-a-new-adaptor.md`, `unit-testing-guide.md`, `http-and-tls.md`)  
-2. Existing adaptors in `./packages/*`  
-3. Repo configurations (`package.json`, `tsconfig`, `eslint`)  
-4. Fallback: GitHub wiki if something is missing locally
+**No operations specified?** → Create 1 function + 1 test (default)  
+**Operations listed?** → Create 1 function + 1 test per operation
 
 ---
 
-## Plan Phase Template (must always come first)
+## File Invariants (CRITICAL)
 
-Claude must output this **PLAN block** first, between the given markers, then stop until approved.
+### `Utils.js`
+```javascript
+/**
+ * INVARIANT: Must export function named `request`
+ * - Infrastructure/helpers ONLY
+ * - NO operational functions
+ * - To extend: wrap it (e.g., requestWithRetry)
+ */
+export function request(configuration, path, params, callback) { ... }
+```
 
-- Output **only the PLAN block** first and stop. No extra text before or after.
+### `Adaptors.js`
+```javascript
+/**
+ * INVARIANT: Must export function named `request`
+ * - ALL operational functions go here
+ */
+export { request } from './Utils';
+export function getData(params) { ... }
+```
 
+---
 
-### PLAN
+## Testing
 
+- Every function needs a unit test using **Undici MockAgent**
+- No live network calls
+- Follow patterns in `./docs/unit-testing-guide.md`
+
+---
+
+## Plan Template
+
+Output this EXACTLY, then STOP:
+```
 <<<PLAN>>>
-- Adaptor: <name or ASK>
-- Endpoint(s): <list>
-- Function count: <N>
-- Test count: <N>
-- Naming & placement acknowledged: Utils.js → request only (no operational functions); Adaptors.js → request + all operational functions
-- Assumptions: <bullets>
-- Docs used: <./docs/... pages>
-- Questions (if any): <bullets>
+Adaptor: <name>
+Endpoint(s): <list>
+Functions: <N>
+Tests: <N>
 
+Invariants:
+✓ Utils.js: request only
+✓ Adaptors.js: request + operational functions
+
+Assumptions:
+- <bullets>
+
+Docs consulted:
+- ./docs/build-a-new-adaptor.md
+- ./docs/unit-testing-guide.md
+
+Questions: <bullets or "None">
 <<<END PLAN>>>
+```
 
-**Wait for human reply starting with `APPROVED:`** before any code generation.
-
-
----
-
-## Build Phase (after approval)
-
-After receiving `APPROVED:`, generate the following, in order:
-
-1. **File tree diff** — show paths to be created/modified.  
-2. **Full file contents** for each file.  
-3. **Test commands** to run locally (e.g., `pnpm test`).  
-4. **Assumptions & TODOs** — reference relevant `./docs/...` sections.  
-5. Reminder: *Human must commit manually (no PR actions).*
+Wait for `APPROVED:` before generating code.
 
 ---
 
-## Expected Compliance Checklist
+## Build Output (after approval)
 
-Every generated output should include or acknowledge:
+Generate in order:
 
-- [ ] ONE-FUNCTION DEFAULT respected  
-- [ ] Context operations explicitly listed (if any)  
-- [ ] Docs consulted (list of `./docs/...` files)  
-- [ ] Naming invariants respected (`Utils.js`, `Adaptors.js`)  
-- [ ] No operational code written to `Utils.js`  
-- [ ] Tests use `MockAgent` (no live network)  
-- [ ] Links to docs are included in comments  
+1. **File tree diff**
+```
+packages/<name>/
+├── src/Adaptor.js    [NEW]
+├── src/Utils.js      [NEW]
+└── test/index.test.js [NEW]
+```
+
+2. **Full file contents** with:
+   - Doc references: `// See: ./docs/http-and-tls.md#tls`
+   - Invariant comment blocks
+   - JSDoc annotations
+
+3. **Test commands**
+```bash
+cd packages/<name>
+pnpm install  # Installs dependencies from package.json
+pnpm test     # Runs test suite with Mocha
+```
+
+4. **TODOs** referencing specific doc sections
+
+5. **Reminder:** Review locally, commit manually
 
 ---
 
-## Example Interactions
+## Example
 
-### Minimal Adaptor
-**User:**  
-> Create a new adaptor for https://v2.jokeapi.dev/joke/.  
-> No operations listed — apply ONE-FUNCTION DEFAULT.  
-> Show PLAN first and wait for approval.
+**Human:** Create adaptor for https://v2.jokeapi.dev/joke/
 
-**Claude PLAN output:**  
-
+**Claude:**
+```
 <<<PLAN>>>
 Adaptor: jokeapi
 Endpoint(s): GET https://v2.jokeapi.dev/joke/Any?type=single
+Functions: 1 (getJoke)
+Tests: 1
 
-Function count: 1
-Test count: 1
-Naming & placement acknowledged: Utils.js → request only (no operational functions); Adaptors.js → request + all operational functions
+Invariants:
+✓ Utils.js: request only
+✓ Adaptors.js: request + getJoke
+
 Assumptions:
+- No auth
+- Response: {joke: string}
 
-No auth required
+Docs consulted:
+- ./docs/build-a-new-adaptor.md
+- ./docs/unit-testing-guide.md
 
-Response shape: { joke: string }
-Docs used:
-
-./docs/build-a-new-adaptor.md
-
-./docs/unit-testing-guide.md
-
-./docs/http-and-tls.md
-Questions: none
+Questions: None
 <<<END PLAN>>>
-
-
-
-**User:**  
-> APPROVED: proceed.
-
-**Claude then generates:**  
-- File tree diff  
-- Implementation in `Adaptors.js`  
-- Matching test file  
-- Assumptions/TODOs referencing docs  
-
----
-
-## 🔒 Enforcement via Code Comments
-
-Make sure these headers exist in your source files to reinforce the invariants:
-
-**`Utils.js`**
-```js
-/**
- * DO NOT RENAME OR MODIFY OBSERVABLE BEHAVIOR
- * Invariant: exported function must remain `request`.
- * No operational functions allowed here. For new operations, modify Adaptors.js.
- */
-export function request(/* args */) { ... }
-
 ```
 
+**Human:** APPROVED: proceed
 
-**`Adaptors.js`**
-
-```js
-/**
- * DO NOT RENAME OR MODIFY OBSERVABLE BEHAVIOR
- * Invariant: exported function must remain `request`.
- * All operational functions belong in this file.
- */
-export function request(/* args */) { ... }
-
-```
+**Claude:** *[generates files]*
