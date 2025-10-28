@@ -61,7 +61,7 @@ export function request(configuration, path, params, callback) { ... }
  * INVARIANT: Must export function named `request`
  * - ALL operational functions go here
  */
-export { request } from './Utils';
+export function request(method, path, body, options = {}){ ... }
 export function getData(params) { ... }
 ```
 
