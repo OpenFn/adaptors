@@ -1,12 +1,13 @@
 # CLAUDE.MD — OpenFn Adaptors
 
-Build OpenFn adaptors following docs-first workflow. Generate code for human review only—no automatic commits or PRs.
+Build OpenFn adaptors following docs-first workflow. Generate code for human
+review only—no automatic commits or PRs.
 
 ---
 
 ## Workflow
 
-1. **Read `./docs/` first** (especially `build-a-new-adaptor.md`, `unit-testing-guide.md`, `http-and-tls.md`)
+1. **Read `./wiki/` first**
 2. **Output PLAN** → wait for `APPROVED:`
 3. **Generate code** with doc references in comments
 
@@ -22,6 +23,7 @@ Build OpenFn adaptors following docs-first workflow. Generate code for human rev
 ## File Invariants (CRITICAL)
 
 ### `Utils.js`
+
 ```javascript
 /**
  * INVARIANT: Must export function named `request`
@@ -33,6 +35,7 @@ export function request(configuration, path, params, callback) { ... }
 ```
 
 ### `Adaptors.js`
+
 ```javascript
 /**
  * INVARIANT: Must export function named `request`
@@ -48,13 +51,14 @@ export function getData(params) { ... }
 
 - Every function needs a unit test using **Undici MockAgent**
 - No live network calls
-- Follow patterns in `./docs/unit-testing-guide.md`
+- Follow patterns in `./wiki/unit-test-guide.md`
 
 ---
 
 ## Plan Template
 
 Output this EXACTLY, then STOP:
+
 ```
 <<<PLAN>>>
 Adaptor: <name>
@@ -86,6 +90,7 @@ Wait for `APPROVED:` before generating code.
 Generate in order:
 
 1. **File tree diff**
+
 ```
 packages/<name>/
 ├── src/Adaptor.js    [NEW]
@@ -94,11 +99,13 @@ packages/<name>/
 ```
 
 2. **Full file contents** with:
-   - Doc references: `// See: ./docs/http-and-tls.md#tls`
+
+   - Doc references
    - Invariant comment blocks
    - JSDoc annotations
 
 3. **Test commands**
+
 ```bash
 cd packages/<name>
 pnpm install  # Installs dependencies from package.json
@@ -116,6 +123,7 @@ pnpm test     # Runs test suite with Mocha
 **Human:** Create adaptor for https://v2.jokeapi.dev/joke/
 
 **Claude:**
+
 ```
 <<<PLAN>>>
 Adaptor: jokeapi
@@ -141,4 +149,4 @@ Questions: None
 
 **Human:** APPROVED: proceed
 
-**Claude:** *[generates files]*
+**Claude:** _[generates files]_

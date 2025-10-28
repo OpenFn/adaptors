@@ -8,7 +8,7 @@ Do NOT infer or add endpoints.
 
 ## Workflow
 
-1. **Read docs first**: Check `./docs/build-a-new-adaptor.md`, `./docs/unit-testing-guide.md`, `./docs/http-and-tls.md`
+1. **Read docs first**
 2. **Output PLAN** (see template below)
 3. **Wait for "APPROVED:"** before generating code
 4. **Generate code** with doc references
@@ -18,6 +18,7 @@ Do NOT infer or add endpoints.
 ## Plan Template
 
 Always output this FIRST, then STOP:
+
 ```
 <<<PLAN>>>
 Adaptor: <name>
@@ -46,6 +47,7 @@ STOP and wait for "APPROVED:" before coding.
 ## File Invariants (DO NOT BREAK)
 
 ### Utils.js
+
 ```javascript
 /**
  * INVARIANT: Must export function named `request`
@@ -56,6 +58,7 @@ export function request(configuration, path, params, callback) { ... }
 ```
 
 ### Adaptors.js
+
 ```javascript
 /**
  * INVARIANT: Must export function named `request`
@@ -71,7 +74,7 @@ export function getData(params) { ... }
 
 - Every function needs unit test with **Undici MockAgent**
 - No live network calls
-- Follow `./docs/unit-testing-guide.md`
+- Follow `./wiki/unit-testing-guide.md`
 
 ---
 
@@ -80,6 +83,7 @@ export function getData(params) { ... }
 **User:** "Create adaptor for https://api.example.com/data"
 
 **Your response:**
+
 ```
 <<<PLAN>>>
 Adaptor: example-api
@@ -106,6 +110,7 @@ Then WAIT for "APPROVED:"
 ---
 
 ## Commands After Generation
+
 ```bash
 cd packages/<name>
 pnpm install            # Install dependencies
@@ -113,7 +118,3 @@ pnpm lint              # Check code style
 pnpm test              # Run tests
 pnpm build             # Build package
 ```
-```
-
----
-
