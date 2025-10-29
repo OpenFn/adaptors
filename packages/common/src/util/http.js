@@ -270,6 +270,7 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
  * - duration: the response time
  */
 export async function request(method, fullUrlOrPath, options = {}) {
+  console.log(' >> ', fullUrlOrPath);
   const startTime = Date.now();
   const {
     url,
