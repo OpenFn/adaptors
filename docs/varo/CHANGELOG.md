@@ -1,5 +1,12 @@
 # @openfn/language-varo
 
+## 2.1.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 2.1.3
 
 ### Patch Changes

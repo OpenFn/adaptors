@@ -1,5 +1,11 @@
 ## 3.0.1 - 11 July 2025
 
+## 3.1.2
+
+### Patch Changes
+
+- Add support for gzipped payloads
+
 ## 3.1.1
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @openfn/language-mojatax
 
+## 1.0.17
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 1.0.16
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @openfn/language-chatgpt
 
+## 2.0.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 2.0.4
 
 ### Patch Changes

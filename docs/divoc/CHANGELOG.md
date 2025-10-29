@@ -1,5 +1,12 @@
 # @openfn/language-divoc
 
+## 0.1.12
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 0.1.11
 
 ### Patch Changes

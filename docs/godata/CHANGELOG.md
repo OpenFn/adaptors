@@ -1,5 +1,12 @@
 # @openfn/language-godata
 
+## 3.5.11
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 3.5.10
 
 ### Patch Changes
