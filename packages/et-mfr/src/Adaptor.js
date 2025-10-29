@@ -77,9 +77,9 @@ export function post(path, body, options) {
     );
 
     const results = await util.requestWithPagination(state, {
-      resolvedPath,
-      resolvedBody,
-      resolvedOptions,
+      path:resolvedPath,
+      body:resolvedBody,
+      options:resolvedOptions,
     });
     return util.prepareNextState(state, { body: results });
   };

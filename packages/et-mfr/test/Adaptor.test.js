@@ -179,8 +179,8 @@ describe('requestWithPagination', () => {
       });
 
     const results = await requestWithPagination(state, {
-      resolvedPath: '/Facility/GetFacilities',
-      resolvedBody: {
+      path: '/Facility/GetFacilities',
+      body: {
         showPerPage: 2,
         pageNumber: 1,
       },
@@ -208,8 +208,8 @@ describe('requestWithPagination', () => {
       });
 
     const results = await requestWithPagination(state, {
-      resolvedPath: 'Facility/GetFacilities',
-      resolvedBody: {
+      path: 'Facility/GetFacilities',
+      body: {
         showPerPage: 2,
       },
     });
@@ -231,8 +231,8 @@ describe('requestWithPagination', () => {
       .reply(200, items.slice(0, 1));
 
     const results = await requestWithPagination(state, {
-      resolvedPath: 'Facility/GetFacilities',
-      resolvedBody: {
+      path: 'Facility/GetFacilities',
+      body: {
         showPerPage: 2,
         pageNumber: 1,
         name: 'Item 1',
@@ -256,12 +256,12 @@ describe('requestWithPagination', () => {
       .reply(200, 'name,id\nItem 1,1\nItem 2,2');
 
     const results = await requestWithPagination(state, {
-      resolvedPath: 'Facility/ExportCSV',
-      resolvedBody: {
+      path: 'Facility/ExportCSV',
+      body: {
         showPerPage: 2,
         pageNumber: 1,
       },
-      resolvedOptions: { parseAs: 'text' },
+      options: { parseAs: 'text' },
     });
 
     expect(results).to.eql('name,id\nItem 1,1\nItem 2,2');
@@ -295,9 +295,9 @@ describe('requestWithPagination', () => {
       });
 
     const results = await requestWithPagination(state, {
-      resolvedPath: 'Facility/GetFacilities',
-      resolvedBody: {},
-      resolvedOptions: {
+      path: 'Facility/GetFacilities',
+      body: {},
+      options: {
         defaultPageSize: 100,
         defaultLimit: 200,
       },

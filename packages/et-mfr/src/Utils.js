@@ -21,22 +21,22 @@ export const prepareNextState = (state, response) => {
 
 export const requestWithPagination = async (
   state,
-  { resolvedPath, resolvedBody = {}, resolvedOptions = {} },
+  { path, body = {}, options = {} },
   method = 'POST'
 ) => {
   const results = [];
 
-  const { pageNumber = 1 } = resolvedBody;
+  const { pageNumber = 1 } = body;
   const {
     defaultLimit = 10000, // internal not documented
     defaultPageSize = 200, // internal not documented
-    ...options
-  } = resolvedOptions;
+    ...rest
+  } = options;
 
-  const userProvidedPageSize = resolvedBody?.showPerPage;
+  const userProvidedPageSize = body?.showPerPage;
 
   const pageSize = userProvidedPageSize
-    ? Math.max(1, Number(resolvedBody.showPerPage) || defaultPageSize)
+    ? Math.max(1, Number(body.showPerPage) || defaultPageSize)
     : defaultPageSize;
 
   const maxToFetch = userProvidedPageSize ? pageSize : defaultLimit;
@@ -48,13 +48,13 @@ export const requestWithPagination = async (
     const remainingItems = maxToFetch - totalFetched;
     const fetchSize = Math.min(pageSize, remainingItems);
 
-    const response = await request(state.configuration, method, resolvedPath, {
+    const response = await request(state.configuration, method, path, {
       body: {
-        ...resolvedBody,
+        ...body,
         pageNumber: nextPage,
         showPerPage: fetchSize,
       },
-       ...options,
+      ...rest,
     });
 
     const model = response?.body?.model;
@@ -101,7 +101,6 @@ export const request = (configuration = {}, method, path, options = {}) => {
       ...headers,
     },
   };
-  
 
   const safePath = nodepath.join(`/api/${path}`);
 
