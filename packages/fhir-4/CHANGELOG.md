@@ -1,5 +1,12 @@
 # @openfn/language-fhir-4
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 0.2.1
 
 ### Patch Changes

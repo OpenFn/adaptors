@@ -76,7 +76,8 @@ const getDispatcher = (origin, options = {}) => {
     }).compose(
       interceptors.redirect({
         maxRedirections: agentOpts.maxRedirections,
-      })
+      }),
+      interceptors.decompress()
     );
 
     agents.set(key, agent);

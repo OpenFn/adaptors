@@ -14,6 +14,12 @@ import {
 } from '../../src/util/http.js';
 import { encode } from '../../src/util/base64.js';
 
+import Koa from 'koa';
+import compress from 'koa-compress';
+import zlib from 'zlib';
+
+const { Z_SYNC_FLUSH } = zlib.constants;
+
 const client = enableMockClient('https://www.example.com');
 
 describe('parseUrl', () => {
@@ -517,6 +523,43 @@ describe('request function', () => {
       body: { id: 2 },
     }).catch(error => {
       expect(error.bodyLength).to.eql(0);
+    });
+  });
+
+  it('should support gzipped responses', done => {
+    // For this test we need a little webserver that can serve gzipped content
+    const koa = new Koa();
+
+    // Enable gzip compression
+    koa.use(
+      compress({
+        threshold: 0,
+        br: false, // Disable brotli compression
+      })
+    );
+
+    koa.use(async ctx => {
+      if (ctx.url === '/data') {
+        ctx.type = 'application/json';
+        ctx.body = { ok: true };
+        return;
+      }
+      ctx.status = 404;
+    });
+
+    const server = koa.listen(6666, async () => {
+      const opts = {
+        headers: {
+          'Accept-Encoding': 'gzip',
+        },
+      };
+      const result = await request('GET', 'http://localhost:6666/data', opts);
+
+      expect(result.headers['transfer-encoding']).to.equal('chunked');
+      expect(result.body).to.eql({ ok: true });
+
+      server.close();
+      done();
     });
   });
 

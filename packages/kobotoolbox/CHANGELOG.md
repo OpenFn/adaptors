@@ -1,5 +1,12 @@
 # @openfn/language-kobotoolbox
 
+## 4.2.6
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 4.2.5
 
 ### Patch Changes
