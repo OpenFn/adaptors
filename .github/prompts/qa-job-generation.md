@@ -165,7 +165,7 @@ Follow this template:
     console.log('✗ SEED 1 FAILED:', error.message);
     state.error = error;
     return state;
-  }),
+  });
 
 // SEED 2: Create second test <resource> for pagination tests
 // Expected: 201 Created with id=test-<resource>-002
@@ -196,7 +196,7 @@ Follow this template:
     console.log('✗ SEED 2 FAILED:', error.message);
     state.error = error;
     return state;
-  }),
+  });
 
 // ═══════════════════════════════════════════════════════════
 // SECTION 2: AUTHENTICATION TESTS
@@ -207,7 +207,7 @@ fn(state => {
   console.log('AUTHENTICATION TESTS');
   console.log('═══════════════════════════════════════════\n');
   return state;
-}),
+});
 
 // Note: Authentication typically happens automatically via configuration
 // Test by making a request that requires auth
@@ -221,7 +221,7 @@ fn(state => {
   console.log('GET OPERATIONS (READ)');
   console.log('═══════════════════════════════════════════\n');
   return state;
-}),
+});
 
 // TEST 1: Get all <resources> (positive scenario)
 // Expected Response: 200 OK
@@ -255,7 +255,7 @@ fn(state => {
     console.log('✗ TEST 1 FAILED:', error.message);
     state.error = error;
     return state;
-  }),
+  });
 
 // TEST 2: Get single <resource> by ID (positive scenario)
 // Expected Response: 200 OK
@@ -285,7 +285,7 @@ fn(state => {
     console.log('✗ TEST 2 FAILED:', error.message);
     state.error = error;
     return state;
-  }),
+  });
 
 // TEST 3: Get non-existent resource (negative scenario)
 // Expected Response: 404 Not Found
@@ -321,7 +321,7 @@ fn(state => {
     // Clear error to continue tests
     delete state.error;
     return state;
-  }),
+  });
 
 // TEST 4: Get with query filters (edge case)
 // Expected Response: 200 OK
@@ -351,7 +351,7 @@ fn(state => {
     console.log('✗ TEST 4 FAILED:', error.message);
     state.error = error;
     return state;
-  }),
+  });
 
 // TEST 5: Empty result set (edge case)
 // Expected Response: 200 OK
@@ -384,7 +384,7 @@ fn(state => {
     console.log('✗ TEST 5 FAILED:', error.message);
     state.error = error;
     return state;
-  }),
+  });
 
 // ═══════════════════════════════════════════════════════════
 // SECTION 4: POST OPERATIONS (CREATE)
@@ -395,7 +395,7 @@ fn(state => {
   console.log('POST OPERATIONS (CREATE)');
   console.log('═══════════════════════════════════════════\n');
   return state;
-}),
+});
 
 // TEST 6: Create valid <resource> (positive scenario)
 // Expected Response: 201 Created
@@ -431,7 +431,7 @@ fn(state => {
     console.log('✗ TEST 6 FAILED:', error.message);
     state.error = error;
     return state;
-  }),
+  });
 
 // TEST 7: Create with missing required fields (negative scenario)
 // Expected Response: 400 Bad Request
@@ -469,7 +469,7 @@ fn(state => {
     
     delete state.error;
     return state;
-  }),
+  });
 
 // TEST 8: Create with invalid data type (negative scenario)
 // Expected Response: 400 Bad Request
@@ -506,7 +506,7 @@ fn(state => {
     
     delete state.error;
     return state;
-  }),
+  });
 
 // ═══════════════════════════════════════════════════════════
 // SECTION 5: PUT/PATCH OPERATIONS (UPDATE)
@@ -517,7 +517,7 @@ fn(state => {
   console.log('PUT/PATCH OPERATIONS (UPDATE)');
   console.log('═══════════════════════════════════════════\n');
   return state;
-}),
+});
 
 // TEST 9: Update existing resource (positive scenario)
 // Expected Response: 200 OK
@@ -550,7 +550,7 @@ fn(state => {
     console.log('✗ TEST 9 FAILED:', error.message);
     state.error = error;
     return state;
-  }),
+  });
 
 // TEST 10: Update non-existent resource (negative scenario)
 // Expected Response: 404 Not Found
@@ -586,7 +586,7 @@ fn(state => {
     
     delete state.error;
     return state;
-  }),
+  });
 
 // ═══════════════════════════════════════════════════════════
 // SECTION 6: DELETE OPERATIONS
@@ -597,7 +597,7 @@ fn(state => {
   console.log('DELETE OPERATIONS');
   console.log('═══════════════════════════════════════════\n');
   return state;
-}),
+});
 
 // TEST 11: Delete existing resource (positive scenario)
 // Expected Response: 204 No Content or 200 OK
@@ -626,7 +626,7 @@ fn(state => {
     console.log('✗ TEST 11 FAILED:', error.message);
     state.error = error;
     return state;
-  }),
+  });
 
 // TEST 12: Delete non-existent resource (negative scenario)
 // Expected Response: 404 Not Found
@@ -660,7 +660,7 @@ fn(state => {
     
     delete state.error;
     return state;
-  }),
+  });
 
 // TEST 13: Delete already-deleted resource (edge case)
 // Expected Response: 404 Not Found or 410 Gone
@@ -703,7 +703,7 @@ fn(state => {
     
     delete state.error;
     return state;
-  }),
+  });
 
 // ═══════════════════════════════════════════════════════════
 // SECTION 7: PAGINATION TESTS (if applicable)
@@ -714,7 +714,7 @@ fn(state => {
   console.log('PAGINATION TESTS');
   console.log('═══════════════════════════════════════════\n');
   return state;
-}),
+});
 
 // TEST 14: Pagination - first page (edge case)
 // Expected Response: 200 OK
@@ -746,7 +746,7 @@ fn(state => {
     console.log('✗ TEST 14 FAILED:', error.message);
     state.error = error;
     return state;
-  }),
+  });
 
 // TEST 15: Pagination - invalid offset (negative scenario)
 // Expected Response: 400 Bad Request
@@ -782,7 +782,7 @@ fn(state => {
     
     delete state.error;
     return state;
-  }),
+  });
 
 // ═══════════════════════════════════════════════════════════
 // SECTION 8: CLEANUP
@@ -810,7 +810,7 @@ fn(state => {
     console.log('⚠ Could not delete test-<resource>-002:', error.message);
     delete state.error;
     return state;
-  }),
+  });
 
 // CLEANUP 2: Delete dynamically created resource (from TEST 6)
 fn(state => {
@@ -819,7 +819,7 @@ fn(state => {
     state.resourceToDelete = state.createdResourceId;
   }
   return state;
-}),
+});
 
 // Conditional delete - only if we have a resource to delete
 fn(state => {
@@ -828,7 +828,7 @@ fn(state => {
     return state;
   }
   return state;
-}),
+});
 
 <deleteFunction>(state => state.resourceToDelete || 'placeholder')
   .then(state => {
@@ -848,7 +848,7 @@ fn(state => {
     delete state.error;
     delete state.resourceToDelete;
     return state;
-  }),
+  });
 
 // ═══════════════════════════════════════════════════════════
 // TEST SUMMARY
@@ -900,7 +900,7 @@ fn(state => {
     console.log('Test failed:', error.message);
     state.error = error;
     return state;
-  }),
+  });
 ```
 
 ### Error Handling Pattern
@@ -920,17 +920,18 @@ For negative tests (expecting errors):
     }
     delete state.error; // Clear error to continue
     return state;
-  }),
+  });
 ```
 
 ### Operation Chaining
 
-Operations chained with commas:
+
+Operations chained with **semicolons**:
 ```javascript
-operation1(),
-operation2(),
-fn(state => { /* validation */ return state; }),
-operation3(),
+operation1();
+operation2();
+fn(state => { /* validation */ return state; });
+operation3();
 ```
 
 ---

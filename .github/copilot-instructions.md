@@ -182,7 +182,7 @@ Then wait for APPROVED: before generating the test code.
     console.log('✗ Test failed:', error.message);
     state.error = error;
     return state;
-  }),
+  });
 ```
 
 **For negative tests (expecting errors):**
@@ -198,7 +198,7 @@ Then wait for APPROVED: before generating the test code.
     }
     delete state.error; // Clear to continue
     return state;
-  }),
+  });
 ```
 
 ### QA Code Format
