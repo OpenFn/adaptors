@@ -118,3 +118,67 @@ pnpm lint              # Check code style
 pnpm test              # Run tests
 pnpm build             # Build package
 ```
+---
+
+## QA Job Code Generation (Post-Adaptor Build)
+
+After building any adaptor (new or existing), you can generate comprehensive QA test jobs.
+
+### When to Generate QA Code
+
+User requests with phrases like:
+- "Generate QA job code"
+- "Create comprehensive tests"
+- "Generate test jobs for this adaptor"
+- "Create validation tests"
+
+### QA Generation Process
+
+1. **Analyze adaptor** - Identify all exported functions from the adaptor code
+2. **Output QA PLAN** - Following template in `.github/prompts/qa-job-generation.md`
+3. **Wait for APPROVED:**
+4. **Generate test code** - Copy/paste ready for app.openfn.org
+
+### Important: Platform-Specific Code
+
+Generated QA code runs on **app.openfn.org** (not locally):
+- ✅ No import statements (adaptors already available)
+- ✅ Comma-chained operations: `operation1(), fn(state => {...}), operation2()`
+- ✅ Configuration via platform UI (not in code)
+- ✅ Results viewed in Inspector tab
+- ✅ Copy/paste workflow
+
+**See:** `.github/prompts/qa-job-generation.md` for complete template and instructions.
+
+### Quick Example
+
+**User:** "Generate QA tests for the FHIR adaptor"
+
+**Your response:**
+```
+<<<QA PLAN>>>
+Adaptor: @openfn/fhir
+Functions: getPractitioners, getPractitioner, createPractitioner, updatePractitioner, deletePractitioner
+Test coverage: 15 tests (5 positive, 7 negative, 3 edge cases)
+Seed data: test-practitioner-001, test-practitioner-002
+Configuration needed: { baseUrl, username, password }
+<<<END QA PLAN>>>
+```
+
+Then wait for APPROVED: before generating the test code.
+
+### QA Code Format
+
+Generated code must:
+- Start with instructions for app.openfn.org
+- Use comma-chained operations (no imports)
+- Include console.log validation after each test
+- Use ✓/✗/⚠ indicators for results
+- Include data seeding, tests, and cleanup
+- Document required credential fields
+
+**Do NOT:**
+- Add import statements
+- Use `then/catch` promise chains (use fn() instead)
+- Reference local npm installation
+- Include commands like `npm test` or `pnpm test`
