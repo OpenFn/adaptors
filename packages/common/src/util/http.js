@@ -271,7 +271,6 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
  * - duration: the response time
  */
 export async function request(method, fullUrlOrPath, options = {}) {
-  console.log(' >> ', fullUrlOrPath);
   const startTime = Date.now();
   const {
     url,
@@ -308,7 +307,6 @@ export async function request(method, fullUrlOrPath, options = {}) {
     // If the request is redirected, undici requires the origin to be set (this affects commcare)
     origin: baseUrl,
   });
-  console.log(response.headers);
 
   const statusText = getReasonPhrase(response.statusCode);
 
