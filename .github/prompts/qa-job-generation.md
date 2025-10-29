@@ -32,12 +32,136 @@ Before generating QA code, you must have:
 
 ### Step 1: Analyze Adaptor
 
-Identify from the adaptor code:
-- All exported functions
-- Authentication method
+**IMPORTANT: Check ALL source files for operational functions, not just Adaptor.js**
+
+Many adaptors have operational functions spread across multiple files:
+- `src/Adaptor.js` - Main adaptor operations
+- `src/<namespace>.js` - Namespaced operations (e.g., `tracker.js`, `http.js` )
+- `src/Utils.js` - Should NOT contain operational functions (infrastructure only)
+
+**Analysis Process:**
+
+1. **List all source files:**
+```bash
+ls packages/<adaptor-name>/src/*.js
+```
+
+2. **Check each file for exported functions:**
+```bash
+# Check main adaptor
+grep "^export function" packages/<adaptor-name>/src/Adaptor.js
+
+# Check for namespaced files
+grep "^export function" packages/<adaptor-name>/src/*.js
+```
+
+3. **Identify operational vs infrastructure functions:**
+   - **Operational functions** (INCLUDE in QA): Functions that interact with external APIs, create/read/update/delete data, or perform business logic
+     - Examples: `getData()`, `createRecord()`, `updatePatient()`, `tracker.getTrackedEntityInstances()`, `http.get()`
+   - **Infrastructure functions** (EXCLUDE from QA): Low-level helpers, utilities, parsers
+     - Examples: `request()` in Utils.js, `parseResponse()`, `buildUrl()`
+
+4. **Document the structure:**
+   - Main operations: List functions from `Adaptor.js`
+   - Namespaced operations: List functions from namespace files (e.g., `tracker.*`, `http.*`)
+   - Note any special patterns or groupings
+
+**What to identify:**
+- All exported operational functions (with their namespace if applicable)
+- Authentication method (OAuth2, API key, basic auth, token)
 - HTTP methods used (GET, POST, PUT, DELETE, PATCH)
-- Resource types handled
-- Required configuration fields
+- Resource types handled (what entities/resources the API works with)
+- Required configuration fields (baseUrl, credentials, etc.)
+
+**Example Analysis Output:**
+
+For an adaptor like `@openfn/dhis2`:
+```
+Source Files Found:
+- src/Adaptor.js (main operations)
+- src/tracker.js (tracker namespace operations)
+- src/Utils.js (infrastructure - skip)
+
+Exported Functions:
+Main (Adaptor.js):
+- getData(resourceType, query)
+- create(resourceType, data)
+- update(resourceType, id, data)
+- destroy(resourceType, id)
+
+Tracker Namespace (tracker.js):
+- tracker.getTrackedEntityInstances(params)
+- tracker.createTrackedEntityInstance(data)
+- tracker.updateTrackedEntityInstance(id, data)
+- tracker.enrollTrackedEntityInstance(data)
+
+Authentication: Basic auth (username/password)
+HTTP Methods: GET, POST, PUT, DELETE
+Resource Types: dataElements, programs, trackedEntityInstances, etc.
+Configuration: { baseUrl, username, password }
+```
+
+**If structure is unclear:**
+- Read the main `Adaptor.js` file
+- Look for `export * from './namespace'` statements
+- Check `index.js` or `src/index.js` for re-exports
+- Examine package structure: `src/<namespace>.js` files
+- Check JSDoc comments for function descriptions
+
+**Common Namespace Patterns:**
+- `tracker.*` - DHIS2 tracker operations
+- `http.*` - HTTP utilities (may be operational)
+
+**After Analysis:**
+You should have a complete list of ALL operational functions across ALL files, ready for the QA PLAN.
+
+
+---
+
+### Step 1.5: Verify Complete Function List
+
+Before proceeding to the QA PLAN, verify you have found ALL operational functions:
+
+**Checklist:**
+- [ ] Checked `src/Adaptor.js` for main operations
+- [ ] Listed all `.js` files in `src/` directory
+- [ ] Checked each namespace file (e.g., `tracker.js`, `http.js`) for exports
+- [ ] Excluded infrastructure functions from Utils.js
+- [ ] Noted namespace prefix for namespaced functions (e.g., `tracker.getFoo()`)
+- [ ] Identified which HTTP method each function uses
+- [ ] Confirmed authentication requirements
+
+**If you're missing information:**
+Ask the user:
+```
+I found these operational functions:
+- [list main functions]
+- [list namespaced functions]
+
+Are there other namespace files or operations I should include in the QA tests?
+Please confirm this is the complete list or point me to additional files.
+```
+
+**Example Complete List:**
+
+For `@openfn/dhis2`:
+```
+Main Operations (src/Adaptor.js):
+1. getData - GET
+2. create - POST
+3. update - PUT
+4. destroy - DELETE
+5. upsert - POST/PUT
+
+Tracker Operations (src/tracker.js):
+6. tracker.getTrackedEntityInstances - GET
+7. tracker.createTrackedEntityInstance - POST
+8. tracker.updateTrackedEntityInstance - PUT
+9. tracker.deleteTrackedEntityInstance - DELETE
+10. tracker.enrollTrackedEntityInstance - POST
+
+Total: 10 operational functions to test
+```
 
 ---
 
@@ -51,16 +175,30 @@ Version: <if known>
 Test System URL: <base URL>
 Authentication: <method>
 
+Source Files Analyzed:
+- src/Adaptor.js
+- src/<namespace1>.js
+- src/<namespace2>.js
+
 Exported Functions:
+
+Main Operations (Adaptor.js):
 1. <functionName> - <HTTP method> - <endpoint pattern>
 2. <functionName> - <HTTP method> - <endpoint pattern>
-[... list all]
+
+<Namespace> Operations (<namespace>.js):
+3. <namespace>.<functionName> - <HTTP method> - <endpoint pattern>
+4. <namespace>.<functionName> - <HTTP method> - <endpoint pattern>
+
+[... list all operational functions with their namespace prefix]
 
 Test Coverage Plan:
+- Main operations tests: <count>
+- <Namespace> operations tests: <count>
 - Authentication tests: <count>
-- Positive scenarios: <count>
-- Negative scenarios: <count>
-- Edge cases: <count>
+- Positive scenarios: <total count>
+- Negative scenarios: <total count>
+- Edge cases: <total count>
 - Total tests: <sum>
 
 Seed Data Required:
@@ -76,7 +214,7 @@ Configuration Needed:
   // ... other fields
 }
 
-Output File: qa-<adaptor-name>.js (in root directory)
+Output File: qa-<adaptor-name>.js (root directory)
 
 Questions/Clarifications:
 - <any unknowns>
@@ -86,6 +224,97 @@ OR "None - ready to generate"
 ```
 
 **STOP and wait for "APPROVED:" before generating code.**
+
+---
+
+## Examples of Multi-File Adaptors
+
+### Example 1: DHIS2 with Tracker Namespace
+
+**File Structure:**
+```
+packages/dhis2/src/
+├── Adaptor.js          (main operations)
+├── tracker.js          (tracker namespace)
+└── Utils.js            (infrastructure)
+```
+
+**Analysis:**
+```javascript
+// Adaptor.js exports
+export function getData(resourceType, query) { ... }
+export function create(resourceType, data) { ... }
+
+// tracker.js exports
+export function getTrackedEntityInstances(params) { ... }
+export function createTrackedEntityInstance(data) { ... }
+
+// In final QA code, test both:
+getData('dataElements', { filter: 'name:eq:test' });  // Main operation
+tracker.getTrackedEntityInstances({ ou: 'test-org' }); // Namespaced operation
+```
+
+### Example 2: HTTP Adaptor with Namespace
+
+**File Structure:**
+```
+packages/http/src/
+├── Adaptor.js          (main http operations)
+└── Utils.js            (infrastructure)
+```
+
+**Analysis:**
+```javascript
+// Adaptor.js exports (all are operational)
+export function get(url, options) { ... }
+export function post(url, data, options) { ... }
+export function put(url, data, options) { ... }
+
+// In QA code, test all HTTP methods:
+get('/api/items');
+post('/api/items', { name: 'test' });
+put('/api/items/1', { name: 'updated' });
+```
+
+### Example 3: Complex Adaptor with Multiple Namespaces
+
+**File Structure:**
+```
+packages/example/src/
+├── Adaptor.js          (main operations)
+├── tracker.js          (tracker namespace)
+├── http.js             (http namespace)
+└── Utils.js            (infrastructure)
+```
+
+**QA Plan should include:**
+```
+Main Operations (Adaptor.js): 5 functions
+Tracker Operations (tracker.js): 3 functions
+Http Operations (http.js): 4 functions
+Total: 12 functions to test
+```
+
+---
+
+## Quick Decision Tree
+
+When analyzing an adaptor:
+```
+START: Check adaptor structure
+  │
+  ├─> List all .js files in src/
+  │
+  ├─> For each file:
+  │   ├─> Is it Utils.js? → SKIP (infrastructure only)
+  │   ├─> Is it Adaptor.js? → Include ALL exported functions
+  │   └─> Is it <namespace>.js? → Include ALL exported functions with namespace prefix
+  │
+  ├─> Verify complete list with user if unclear
+  │
+  └─> Proceed to QA PLAN with ALL functions
+```
+
 
 ---
 
