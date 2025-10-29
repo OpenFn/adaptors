@@ -137,20 +137,21 @@ User requests with phrases like:
 1. **Analyze adaptor** - Identify all exported functions from the adaptor code
 2. **Output QA PLAN** - Following template in `.github/prompts/qa-job-generation.md`
 3. **Wait for APPROVED:**
-4. **Generate test code** - Copy/paste ready for app.openfn.org
+4. **Generate test code** - Save to root as `qa-<adaptor-name>.js`
 
 ### Important: Platform-Specific Code
 
 Generated QA code runs on **app.openfn.org** (not locally):
 - ✅ No import statements (adaptors already available)
-- ✅ Comma-chained operations: `operation1(), fn(state => {...}), operation2()`
+- ✅ Use promise chaining: `.then(state => {...}).catch((error, state) => {...})`
 - ✅ Configuration via platform UI (not in code)
 - ✅ Results viewed in Inspector tab
-- ✅ Copy/paste workflow
+- ✅ Copy/paste ready workflow
+- ✅ Save to root directory: `qa-<adaptor-name>.js`
 
 **See:** `.github/prompts/qa-job-generation.md` for complete template and instructions.
 
-### Quick Example
+### Quick QA Example
 
 **User:** "Generate QA tests for the FHIR adaptor"
 
@@ -162,23 +163,57 @@ Functions: getPractitioners, getPractitioner, createPractitioner, updatePractiti
 Test coverage: 15 tests (5 positive, 7 negative, 3 edge cases)
 Seed data: test-practitioner-001, test-practitioner-002
 Configuration needed: { baseUrl, username, password }
+Output file: qa-fhir.js (root directory)
 <<<END QA PLAN>>>
 ```
 
 Then wait for APPROVED: before generating the test code.
 
+### QA Code Syntax Requirements
+
+**Use promise chaining:**
+```javascript
+()
+  .then(state => {
+    console.log('✓ Test passed');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('✗ Test failed:', error.message);
+    state.error = error;
+    return state;
+  }),
+```
+
+**For negative tests (expecting errors):**
+```javascript
+()
+  .then(state => {
+    console.log('✗ Should have thrown error');
+    return state;
+  })
+  .catch((error, state) => {
+    if (error.statusCode === 404) {
+      console.log('✓ Correctly returned 404');
+    }
+    delete state.error; // Clear to continue
+    return state;
+  }),
+```
+
 ### QA Code Format
 
 Generated code must:
 - Start with instructions for app.openfn.org
-- Use comma-chained operations (no imports)
+- Use `.then().catch()` promise chaining
 - Include console.log validation after each test
 - Use ✓/✗/⚠ indicators for results
 - Include data seeding, tests, and cleanup
 - Document required credential fields
+- **Save to root directory as `qa-<adaptor-name>.js`**
 
 **Do NOT:**
 - Add import statements
-- Use `then/catch` promise chains (use fn() instead)
-- Reference local npm installation
-- Include commands like `npm test` or `pnpm test`
+- Use local npm/pnpm commands
+- Reference local installation
+- Save to `packages/` or other subdirectories

@@ -4,6 +4,8 @@ Generate comprehensive Quality Assurance job code to validate adaptor functional
 
 **Usage:** After an adaptor is built (new or existing), generate test job code that users can copy/paste into the OpenFn platform.
 
+**Output:** Single file in root directory: `qa-<adaptor-name>.js`
+
 ---
 
 ## How Tests Run
@@ -74,6 +76,8 @@ Configuration Needed:
   // ... other fields
 }
 
+Output File: qa-<adaptor-name>.js (in root directory)
+
 Questions/Clarifications:
 - <any unknowns>
 OR "None - ready to generate"
@@ -87,7 +91,9 @@ OR "None - ready to generate"
 
 ### Step 3: Generate QA Job Code
 
-After approval, generate OpenFn job expression code following this template:
+After approval, generate file: **`qa-<adaptor-name>.js`** in root directory
+
+Follow this template:
 ```javascript
 /**
  * ═══════════════════════════════════════════════════════════
@@ -98,7 +104,7 @@ After approval, generate OpenFn job expression code following this template:
  * 1. Go to app.openfn.org
  * 2. Create a new workflow or use existing one
  * 3. Add a new step with adaptor: @openfn/<adaptor-name>@<version>
- * 4. Copy this entire code block
+ * 4. Copy this entire file contents
  * 5. Paste into the step editor
  * 6. Update configuration with your credentials (see below)
  * 7. Run the workflow
@@ -136,26 +142,30 @@ After approval, generate OpenFn job expression code following this template:
   <field1>: '<test-value>',
   <field2>: '<test-value>',
   // ... complete valid resource
-}),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('SEED 1: Create test <resource>');
-  console.log('Expected: 201 Created');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  console.log('Status:', response.status || response.statusCode);
-  console.log('Created ID:', response.data?.id || response.id);
-  
-  if ((response.status === 201 || response.statusCode === 201) && response.data?.id) {
-    console.log('✓ SEED 1 PASSED: Test <resource> created');
-  } else {
-    console.log('✗ SEED 1 FAILED: Expected 201 with ID');
-  }
-  console.log('\n');
-  return state;
-}),
+})
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('SEED 1: Create test <resource>');
+    console.log('Expected: 201 Created');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    console.log('Status:', response.status || response.statusCode);
+    console.log('Created ID:', response.data?.id || response.id);
+    
+    if ((response.status === 201 || response.statusCode === 201) && response.data?.id) {
+      console.log('✓ SEED 1 PASSED: Test <resource> created');
+    } else {
+      console.log('✗ SEED 1 FAILED: Expected 201 with ID');
+    }
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('✗ SEED 1 FAILED:', error.message);
+    state.error = error;
+    return state;
+  }),
 
 // SEED 2: Create second test <resource> for pagination tests
 // Expected: 201 Created with id=test-<resource>-002
@@ -163,26 +173,30 @@ fn(state => {
   id: 'test-<resource>-002',
   <field1>: '<test-value>',
   // ... complete valid resource
-}),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('SEED 2: Create second test <resource>');
-  console.log('Expected: 201 Created');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  console.log('Status:', response.status || response.statusCode);
-  console.log('Created ID:', response.data?.id || response.id);
-  
-  if (response.status === 201 || response.statusCode === 201) {
-    console.log('✓ SEED 2 PASSED');
-  } else {
-    console.log('✗ SEED 2 FAILED');
-  }
-  console.log('\n');
-  return state;
-}),
+})
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('SEED 2: Create second test <resource>');
+    console.log('Expected: 201 Created');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    console.log('Status:', response.status || response.statusCode);
+    console.log('Created ID:', response.data?.id || response.id);
+    
+    if (response.status === 201 || response.statusCode === 201) {
+      console.log('✓ SEED 2 PASSED');
+    } else {
+      console.log('✗ SEED 2 FAILED');
+    }
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('✗ SEED 2 FAILED:', error.message);
+    state.error = error;
+    return state;
+  }),
 
 // ═══════════════════════════════════════════════════════════
 // SECTION 2: AUTHENTICATION TESTS
@@ -213,142 +227,164 @@ fn(state => {
 // Expected Response: 200 OK
 // Expected Result: Array or Bundle of resources
 // Expected Fields: { data: [...], total }
-<getAllFunction>(),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 1: Get All <Resources> (Positive)');
-  console.log('Expected: 200 OK with results array');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  const results = response.data?.entry || response.data || [];
-  
-  console.log('Status:', response.status || response.statusCode);
-  console.log('Result count:', results.length);
-  console.log('Total:', response.data?.total);
-  
-  if ((response.status === 200 || response.statusCode === 200) && results.length > 0) {
-    console.log('✓ TEST 1 PASSED: Retrieved resources successfully');
-  } else if (response.status === 200 && results.length === 0) {
-    console.log('⚠ TEST 1 WARNING: 200 OK but empty results');
-  } else {
-    console.log('✗ TEST 1 FAILED: Expected 200 with results');
-  }
-  console.log('\n');
-  return state;
-}),
+<getAllFunction>()
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 1: Get All <Resources> (Positive)');
+    console.log('Expected: 200 OK with results array');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    const results = response.data?.entry || response.data || [];
+    
+    console.log('Status:', response.status || response.statusCode);
+    console.log('Result count:', results.length);
+    console.log('Total:', response.data?.total);
+    
+    if ((response.status === 200 || response.statusCode === 200) && results.length > 0) {
+      console.log('✓ TEST 1 PASSED: Retrieved resources successfully');
+    } else if (response.status === 200 && results.length === 0) {
+      console.log('⚠ TEST 1 WARNING: 200 OK but empty results');
+    } else {
+      console.log('✗ TEST 1 FAILED: Expected 200 with results');
+    }
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('✗ TEST 1 FAILED:', error.message);
+    state.error = error;
+    return state;
+  }),
 
 // TEST 2: Get single <resource> by ID (positive scenario)
 // Expected Response: 200 OK
 // Expected Result: Single resource object
 // Expected Fields: { id: 'test-<resource>-001', <key-fields> }
-<getByIdFunction>('test-<resource>-001'),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 2: Get <Resource> by ID (Positive)');
-  console.log('Expected: 200 OK with matching ID');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  console.log('Status:', response.status || response.statusCode);
-  console.log('ID:', response.data?.id);
-  console.log('<Key Field>:', response.data?.<keyField>);
-  
-  if ((response.status === 200 || response.statusCode === 200) && response.data?.id === 'test-<resource>-001') {
-    console.log('✓ TEST 2 PASSED: Retrieved correct resource');
-  } else {
-    console.log('✗ TEST 2 FAILED: Expected 200 with matching ID');
-  }
-  console.log('\n');
-  return state;
-}),
+<getByIdFunction>('test-<resource>-001')
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 2: Get <Resource> by ID (Positive)');
+    console.log('Expected: 200 OK with matching ID');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    console.log('Status:', response.status || response.statusCode);
+    console.log('ID:', response.data?.id);
+    console.log('<Key Field>:', response.data?.<keyField>);
+    
+    if ((response.status === 200 || response.statusCode === 200) && response.data?.id === 'test-<resource>-001') {
+      console.log('✓ TEST 2 PASSED: Retrieved correct resource');
+    } else {
+      console.log('✗ TEST 2 FAILED: Expected 200 with matching ID');
+    }
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('✗ TEST 2 FAILED:', error.message);
+    state.error = error;
+    return state;
+  }),
 
 // TEST 3: Get non-existent resource (negative scenario)
 // Expected Response: 404 Not Found
 // Expected Result: Resource not found error
-<getByIdFunction>('non-existent-id-999'),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 3: Get Non-existent Resource (Negative)');
-  console.log('Expected: 404 Not Found');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  const error = state.error || response;
-  
-  if (error?.statusCode === 404 || error?.status === 404) {
+<getByIdFunction>('non-existent-id-999')
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 3: Get Non-existent Resource (Negative)');
+    console.log('Expected: 404 Not Found');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    console.log('✗ TEST 3 FAILED: Should have thrown 404 error, got:', response.status || response.statusCode);
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 3: Get Non-existent Resource (Negative)');
+    console.log('Expected: 404 Not Found');
+    console.log('─────────────────────────────────────────');
+    
     console.log('Status:', error.statusCode || error.status);
-    console.log('✓ TEST 3 PASSED: Correctly returned 404');
-  } else if (response?.status === 200) {
-    console.log('✗ TEST 3 FAILED: Should have returned 404, got 200');
-  } else {
-    console.log('Status:', error?.statusCode || error?.status || response?.status);
-    console.log('⚠ TEST 3 WARNING: Unexpected status');
-  }
-  console.log('\n');
-  
-  // Clear error to continue
-  delete state.error;
-  return state;
-}),
+    console.log('Error:', error.message);
+    
+    if (error.statusCode === 404 || error.status === 404) {
+      console.log('✓ TEST 3 PASSED: Correctly returned 404');
+    } else {
+      console.log('⚠ TEST 3 WARNING: Expected 404, got', error.statusCode || error.status);
+    }
+    console.log('\n');
+    
+    // Clear error to continue tests
+    delete state.error;
+    return state;
+  }),
 
 // TEST 4: Get with query filters (edge case)
 // Expected Response: 200 OK
 // Expected Result: Filtered results matching criteria
-<getAllFunction>({ <filterField>: '<filter-value>' }),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 4: Query with Filters (Edge Case)');
-  console.log('Expected: 200 OK with filtered results');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  const results = response.data?.entry || response.data || [];
-  
-  console.log('Status:', response.status || response.statusCode);
-  console.log('Filtered results:', results.length);
-  
-  if (response.status === 200 || response.statusCode === 200) {
-    console.log('✓ TEST 4 PASSED: Query executed successfully');
-  } else {
-    console.log('✗ TEST 4 FAILED: Expected 200');
-  }
-  console.log('\n');
-  return state;
-}),
+<getAllFunction>({ <filterField>: '<filter-value>' })
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 4: Query with Filters (Edge Case)');
+    console.log('Expected: 200 OK with filtered results');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    const results = response.data?.entry || response.data || [];
+    
+    console.log('Status:', response.status || response.statusCode);
+    console.log('Filtered results:', results.length);
+    
+    if (response.status === 200 || response.statusCode === 200) {
+      console.log('✓ TEST 4 PASSED: Query executed successfully');
+    } else {
+      console.log('✗ TEST 4 FAILED: Expected 200');
+    }
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('✗ TEST 4 FAILED:', error.message);
+    state.error = error;
+    return state;
+  }),
 
 // TEST 5: Empty result set (edge case)
 // Expected Response: 200 OK
 // Expected Result: Empty array or bundle
 // Expected Fields: { data: [], total: 0 }
-<getAllFunction>({ <filterField>: 'NonExistentValue12345' }),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 5: Empty Results (Edge Case)');
-  console.log('Expected: 200 OK with empty results');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  const results = response.data?.entry || response.data || [];
-  const total = response.data?.total ?? results.length;
-  
-  console.log('Status:', response.status || response.statusCode);
-  console.log('Result count:', results.length);
-  console.log('Total:', total);
-  
-  if ((response.status === 200 || response.statusCode === 200) && total === 0) {
-    console.log('✓ TEST 5 PASSED: Correctly returned empty results');
-  } else {
-    console.log('⚠ TEST 5 WARNING: Check empty results handling');
-  }
-  console.log('\n');
-  return state;
-}),
+<getAllFunction>({ <filterField>: 'NonExistentValue12345' })
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 5: Empty Results (Edge Case)');
+    console.log('Expected: 200 OK with empty results');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    const results = response.data?.entry || response.data || [];
+    const total = response.data?.total ?? results.length;
+    
+    console.log('Status:', response.status || response.statusCode);
+    console.log('Result count:', results.length);
+    console.log('Total:', total);
+    
+    if ((response.status === 200 || response.statusCode === 200) && total === 0) {
+      console.log('✓ TEST 5 PASSED: Correctly returned empty results');
+    } else {
+      console.log('⚠ TEST 5 WARNING: Check empty results handling');
+    }
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('✗ TEST 5 FAILED:', error.message);
+    state.error = error;
+    return state;
+  }),
 
 // ═══════════════════════════════════════════════════════════
 // SECTION 4: POST OPERATIONS (CREATE)
@@ -369,29 +405,33 @@ fn(state => {
   <field1>: '<valid-value>',
   <field2>: '<valid-value>',
   // ... complete valid resource
-}),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 6: Create Valid <Resource> (Positive)');
-  console.log('Expected: 201 Created with ID');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  console.log('Status:', response.status || response.statusCode);
-  console.log('Created ID:', response.data?.id);
-  console.log('<Key Field>:', response.data?.<keyField>);
-  
-  if ((response.status === 201 || response.statusCode === 201) && response.data?.id) {
-    console.log('✓ TEST 6 PASSED: Resource created successfully');
-    // Store ID for update/delete tests
-    state.createdResourceId = response.data.id;
-  } else {
-    console.log('✗ TEST 6 FAILED: Expected 201 with ID');
-  }
-  console.log('\n');
-  return state;
-}),
+})
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 6: Create Valid <Resource> (Positive)');
+    console.log('Expected: 201 Created with ID');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    console.log('Status:', response.status || response.statusCode);
+    console.log('Created ID:', response.data?.id);
+    console.log('<Key Field>:', response.data?.<keyField>);
+    
+    if ((response.status === 201 || response.statusCode === 201) && response.data?.id) {
+      console.log('✓ TEST 6 PASSED: Resource created successfully');
+      // Store ID for update/delete tests
+      state.createdResourceId = response.data.id;
+    } else {
+      console.log('✗ TEST 6 FAILED: Expected 201 with ID');
+    }
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('✗ TEST 6 FAILED:', error.message);
+    state.error = error;
+    return state;
+  }),
 
 // TEST 7: Create with missing required fields (negative scenario)
 // Expected Response: 400 Bad Request
@@ -399,29 +439,37 @@ fn(state => {
 <createFunction>({
   <field1>: '<value>'
   // Missing required fields
-}),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 7: Missing Required Fields (Negative)');
-  console.log('Expected: 400 Bad Request');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  const error = state.error || response;
-  
-  if (error?.statusCode === 400 || error?.status === 400) {
+})
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 7: Missing Required Fields (Negative)');
+    console.log('Expected: 400 Bad Request');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    console.log('✗ TEST 7 FAILED: Should have thrown 400 error, got:', response.status || response.statusCode);
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 7: Missing Required Fields (Negative)');
+    console.log('Expected: 400 Bad Request');
+    console.log('─────────────────────────────────────────');
+    
     console.log('Status:', error.statusCode || error.status);
-    console.log('✓ TEST 7 PASSED: Correctly validated missing fields');
-  } else {
-    console.log('Status:', error?.statusCode || error?.status || response?.status);
-    console.log('✗ TEST 7 FAILED: Expected 400 validation error');
-  }
-  console.log('\n');
-  
-  delete state.error;
-  return state;
-}),
+    console.log('Error:', error.message);
+    
+    if (error.statusCode === 400 || error.status === 400) {
+      console.log('✓ TEST 7 PASSED: Correctly validated missing fields');
+    } else {
+      console.log('⚠ TEST 7 WARNING: Expected 400, got', error.statusCode || error.status);
+    }
+    console.log('\n');
+    
+    delete state.error;
+    return state;
+  }),
 
 // TEST 8: Create with invalid data type (negative scenario)
 // Expected Response: 400 Bad Request
@@ -429,29 +477,36 @@ fn(state => {
 <createFunction>({
   <field1>: 'should-be-array-not-string', // Wrong type
   <field2>: '<valid-value>'
-}),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 8: Invalid Data Type (Negative)');
-  console.log('Expected: 400 Bad Request');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  const error = state.error || response;
-  
-  if (error?.statusCode === 400 || error?.status === 400) {
+})
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 8: Invalid Data Type (Negative)');
+    console.log('Expected: 400 Bad Request');
+    console.log('─────────────────────────────────────────');
+    
+    console.log('✗ TEST 8 FAILED: Should have thrown 400 error');
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 8: Invalid Data Type (Negative)');
+    console.log('Expected: 400 Bad Request');
+    console.log('─────────────────────────────────────────');
+    
     console.log('Status:', error.statusCode || error.status);
-    console.log('✓ TEST 8 PASSED: Correctly validated data types');
-  } else {
-    console.log('Status:', error?.statusCode || error?.status || response?.status);
-    console.log('⚠ TEST 8 WARNING: Expected 400 validation error');
-  }
-  console.log('\n');
-  
-  delete state.error;
-  return state;
-}),
+    console.log('Error:', error.message);
+    
+    if (error.statusCode === 400 || error.status === 400) {
+      console.log('✓ TEST 8 PASSED: Correctly validated data types');
+    } else {
+      console.log('⚠ TEST 8 WARNING: Expected 400, got', error.statusCode || error.status);
+    }
+    console.log('\n');
+    
+    delete state.error;
+    return state;
+  }),
 
 // ═══════════════════════════════════════════════════════════
 // SECTION 5: PUT/PATCH OPERATIONS (UPDATE)
@@ -471,56 +526,67 @@ fn(state => {
   <field1>: '<updated-value>',
   <field2>: '<updated-value>',
   // ... complete updated resource
-}),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 9: Update Existing Resource (Positive)');
-  console.log('Expected: 200 OK with updated fields');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  console.log('Status:', response.status || response.statusCode);
-  console.log('ID:', response.data?.id);
-  console.log('Updated <field>:', response.data?.<field>);
-  
-  if ((response.status === 200 || response.statusCode === 200) && response.data?.id === 'test-<resource>-001') {
-    console.log('✓ TEST 9 PASSED: Resource updated successfully');
-  } else {
-    console.log('✗ TEST 9 FAILED: Expected 200 with same ID');
-  }
-  console.log('\n');
-  return state;
-}),
+})
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 9: Update Existing Resource (Positive)');
+    console.log('Expected: 200 OK with updated fields');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    console.log('Status:', response.status || response.statusCode);
+    console.log('ID:', response.data?.id);
+    console.log('Updated <field>:', response.data?.<field>);
+    
+    if ((response.status === 200 || response.statusCode === 200) && response.data?.id === 'test-<resource>-001') {
+      console.log('✓ TEST 9 PASSED: Resource updated successfully');
+    } else {
+      console.log('✗ TEST 9 FAILED: Expected 200 with same ID');
+    }
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('✗ TEST 9 FAILED:', error.message);
+    state.error = error;
+    return state;
+  }),
 
 // TEST 10: Update non-existent resource (negative scenario)
 // Expected Response: 404 Not Found
 // Expected Result: Resource not found error
 <updateFunction>('non-existent-999', {
   <field1>: '<value>'
-}),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 10: Update Non-existent (Negative)');
-  console.log('Expected: 404 Not Found');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  const error = state.error || response;
-  
-  if (error?.statusCode === 404 || error?.status === 404) {
+})
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 10: Update Non-existent (Negative)');
+    console.log('Expected: 404 Not Found');
+    console.log('─────────────────────────────────────────');
+    
+    console.log('✗ TEST 10 FAILED: Should have thrown 404 error');
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 10: Update Non-existent (Negative)');
+    console.log('Expected: 404 Not Found');
+    console.log('─────────────────────────────────────────');
+    
     console.log('Status:', error.statusCode || error.status);
-    console.log('✓ TEST 10 PASSED: Correctly returned 404');
-  } else {
-    console.log('Status:', error?.statusCode || error?.status || response?.status);
-    console.log('✗ TEST 10 FAILED: Expected 404');
-  }
-  console.log('\n');
-  
-  delete state.error;
-  return state;
-}),
+    console.log('Error:', error.message);
+    
+    if (error.statusCode === 404 || error.status === 404) {
+      console.log('✓ TEST 10 PASSED: Correctly returned 404');
+    } else {
+      console.log('⚠ TEST 10 WARNING: Expected 404, got', error.statusCode || error.status);
+    }
+    console.log('\n');
+    
+    delete state.error;
+    return state;
+  }),
 
 // ═══════════════════════════════════════════════════════════
 // SECTION 6: DELETE OPERATIONS
@@ -536,84 +602,108 @@ fn(state => {
 // TEST 11: Delete existing resource (positive scenario)
 // Expected Response: 204 No Content or 200 OK
 // Expected Result: Resource successfully deleted
-<deleteFunction>('test-<resource>-001'),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 11: Delete Existing Resource (Positive)');
-  console.log('Expected: 204 No Content or 200 OK');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  const status = response.status || response.statusCode;
-  
-  console.log('Status:', status);
-  
-  if (status === 204 || status === 200) {
-    console.log('✓ TEST 11 PASSED: Resource deleted successfully');
-  } else {
-    console.log('✗ TEST 11 FAILED: Expected 204 or 200, got', status);
-  }
-  console.log('\n');
-  return state;
-}),
+<deleteFunction>('test-<resource>-001')
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 11: Delete Existing Resource (Positive)');
+    console.log('Expected: 204 No Content or 200 OK');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    const status = response.status || response.statusCode;
+    
+    console.log('Status:', status);
+    
+    if (status === 204 || status === 200) {
+      console.log('✓ TEST 11 PASSED: Resource deleted successfully');
+    } else {
+      console.log('✗ TEST 11 FAILED: Expected 204 or 200, got', status);
+    }
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('✗ TEST 11 FAILED:', error.message);
+    state.error = error;
+    return state;
+  }),
 
 // TEST 12: Delete non-existent resource (negative scenario)
 // Expected Response: 404 Not Found
 // Expected Result: Resource not found error
-<deleteFunction>('non-existent-999'),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 12: Delete Non-existent (Negative)');
-  console.log('Expected: 404 Not Found');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  const error = state.error || response;
-  
-  if (error?.statusCode === 404 || error?.status === 404) {
+<deleteFunction>('non-existent-999')
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 12: Delete Non-existent (Negative)');
+    console.log('Expected: 404 Not Found');
+    console.log('─────────────────────────────────────────');
+    
+    console.log('✗ TEST 12 FAILED: Should have thrown 404 error');
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 12: Delete Non-existent (Negative)');
+    console.log('Expected: 404 Not Found');
+    console.log('─────────────────────────────────────────');
+    
     console.log('Status:', error.statusCode || error.status);
-    console.log('✓ TEST 12 PASSED: Correctly returned 404');
-  } else {
-    console.log('Status:', error?.statusCode || error?.status || response?.status);
-    console.log('⚠ TEST 12 WARNING: Expected 404');
-  }
-  console.log('\n');
-  
-  delete state.error;
-  return state;
-}),
+    console.log('Error:', error.message);
+    
+    if (error.statusCode === 404 || error.status === 404) {
+      console.log('✓ TEST 12 PASSED: Correctly returned 404');
+    } else {
+      console.log('⚠ TEST 12 WARNING: Expected 404, got', error.statusCode || error.status);
+    }
+    console.log('\n');
+    
+    delete state.error;
+    return state;
+  }),
 
 // TEST 13: Delete already-deleted resource (edge case)
 // Expected Response: 404 Not Found or 410 Gone
 // Expected Result: Resource no longer exists
-<deleteFunction>('test-<resource>-001'),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 13: Delete Already Deleted (Edge Case)');
-  console.log('Expected: 404 Not Found or 410 Gone');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  const error = state.error || response;
-  const status = error?.statusCode || error?.status || response?.status;
-  
-  console.log('Status:', status);
-  
-  if (status === 404 || status === 410) {
-    console.log('✓ TEST 13 PASSED: Correctly handled already-deleted resource');
-  } else if (status === 200 || status === 204) {
-    console.log('⚠ TEST 13 WARNING: Delete succeeded on already-deleted resource');
-  } else {
-    console.log('⚠ TEST 13 WARNING: Unexpected status');
-  }
-  console.log('\n');
-  
-  delete state.error;
-  return state;
-}),
+<deleteFunction>('test-<resource>-001')
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 13: Delete Already Deleted (Edge Case)');
+    console.log('Expected: 404 Not Found or 410 Gone');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    const status = response.status || response.statusCode;
+    
+    console.log('Status:', status);
+    
+    if (status === 200 || status === 204) {
+      console.log('⚠ TEST 13 WARNING: Delete succeeded on already-deleted resource');
+    } else {
+      console.log('⚠ TEST 13 WARNING: Unexpected status');
+    }
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 13: Delete Already Deleted (Edge Case)');
+    console.log('Expected: 404 Not Found or 410 Gone');
+    console.log('─────────────────────────────────────────');
+    
+    console.log('Status:', error.statusCode || error.status);
+    console.log('Error:', error.message);
+    
+    if (error.statusCode === 404 || error.status === 404 || error.statusCode === 410 || error.status === 410) {
+      console.log('✓ TEST 13 PASSED: Correctly handled already-deleted resource');
+    } else {
+      console.log('⚠ TEST 13 WARNING: Unexpected status');
+    }
+    console.log('\n');
+    
+    delete state.error;
+    return state;
+  }),
 
 // ═══════════════════════════════════════════════════════════
 // SECTION 7: PAGINATION TESTS (if applicable)
@@ -629,60 +719,70 @@ fn(state => {
 // TEST 14: Pagination - first page (edge case)
 // Expected Response: 200 OK
 // Expected Result: Bundle with pagination links
-<getAllFunction>({ _count: 10, _offset: 0 }),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 14: Pagination First Page (Edge Case)');
-  console.log('Expected: 200 OK with next link');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  const results = response.data?.entry || response.data || [];
-  const hasNextLink = response.data?.link?.find(l => l.relation === 'next');
-  
-  console.log('Status:', response.status || response.statusCode);
-  console.log('Page size:', results.length);
-  console.log('Has next link:', !!hasNextLink);
-  
-  if ((response.status === 200 || response.statusCode === 200) && results.length > 0) {
-    console.log('✓ TEST 14 PASSED: Pagination working');
-  } else {
-    console.log('⚠ TEST 14 WARNING: Check pagination support');
-  }
-  console.log('\n');
-  return state;
-}),
+<getAllFunction>({ _count: 10, _offset: 0 })
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 14: Pagination First Page (Edge Case)');
+    console.log('Expected: 200 OK with next link');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    const results = response.data?.entry || response.data || [];
+    const hasNextLink = response.data?.link?.find(l => l.relation === 'next');
+    
+    console.log('Status:', response.status || response.statusCode);
+    console.log('Page size:', results.length);
+    console.log('Has next link:', !!hasNextLink);
+    
+    if ((response.status === 200 || response.statusCode === 200) && results.length > 0) {
+      console.log('✓ TEST 14 PASSED: Pagination working');
+    } else {
+      console.log('⚠ TEST 14 WARNING: Check pagination support');
+    }
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('✗ TEST 14 FAILED:', error.message);
+    state.error = error;
+    return state;
+  }),
 
 // TEST 15: Pagination - invalid offset (negative scenario)
 // Expected Response: 400 Bad Request
 // Expected Result: Invalid parameter error
-<getAllFunction>({ _count: 10, _offset: -1 }),
-
-fn(state => {
-  console.log('─────────────────────────────────────────');
-  console.log('TEST 15: Invalid Pagination Offset (Negative)');
-  console.log('Expected: 400 Bad Request');
-  console.log('─────────────────────────────────────────');
-  
-  const response = state.data;
-  const error = state.error || response;
-  const status = error?.statusCode || error?.status || response?.status;
-  
-  console.log('Status:', status);
-  
-  if (status === 400) {
-    console.log('✓ TEST 15 PASSED: Correctly validated pagination parameters');
-  } else if (status === 200) {
+<getAllFunction>({ _count: 10, _offset: -1 })
+  .then(state => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 15: Invalid Pagination Offset (Negative)');
+    console.log('Expected: 400 Bad Request');
+    console.log('─────────────────────────────────────────');
+    
+    const response = state.data;
+    console.log('Status:', response.status || response.statusCode);
     console.log('⚠ TEST 15 WARNING: Invalid offset accepted (should validate)');
-  } else {
-    console.log('⚠ TEST 15 WARNING: Unexpected status');
-  }
-  console.log('\n');
-  
-  delete state.error;
-  return state;
-}),
+    console.log('\n');
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('─────────────────────────────────────────');
+    console.log('TEST 15: Invalid Pagination Offset (Negative)');
+    console.log('Expected: 400 Bad Request');
+    console.log('─────────────────────────────────────────');
+    
+    console.log('Status:', error.statusCode || error.status);
+    console.log('Error:', error.message);
+    
+    if (error.statusCode === 400 || error.status === 400) {
+      console.log('✓ TEST 15 PASSED: Correctly validated pagination parameters');
+    } else {
+      console.log('⚠ TEST 15 WARNING: Expected 400, got', error.statusCode || error.status);
+    }
+    console.log('\n');
+    
+    delete state.error;
+    return state;
+  }),
 
 // ═══════════════════════════════════════════════════════════
 // SECTION 8: CLEANUP
@@ -696,22 +796,21 @@ fn(state => {
 }),
 
 // CLEANUP 1: Delete test-<resource>-002
-<deleteFunction>('test-<resource>-002'),
-
-fn(state => {
-  console.log('Deleting test-<resource>-002...');
-  const response = state.data;
-  const error = state.error;
-  
-  if (!error && (response?.status === 204 || response?.status === 200 || response?.statusCode === 204 || response?.statusCode === 200)) {
-    console.log('✓ Deleted test-<resource>-002');
-  } else {
-    console.log('⚠ Could not delete test-<resource>-002 (may already be deleted)');
-  }
-  
-  delete state.error;
-  return state;
-}),
+<deleteFunction>('test-<resource>-002')
+  .then(state => {
+    console.log('Deleting test-<resource>-002...');
+    const response = state.data;
+    
+    if (response?.status === 204 || response?.status === 200 || response?.statusCode === 204 || response?.statusCode === 200) {
+      console.log('✓ Deleted test-<resource>-002');
+    }
+    return state;
+  })
+  .catch((error, state) => {
+    console.log('⚠ Could not delete test-<resource>-002:', error.message);
+    delete state.error;
+    return state;
+  }),
 
 // CLEANUP 2: Delete dynamically created resource (from TEST 6)
 fn(state => {
@@ -722,26 +821,34 @@ fn(state => {
   return state;
 }),
 
-// Only run delete if we have a resource to delete
-fn(state => state.resourceToDelete ? state : state),
-<deleteFunction>(state => state.resourceToDelete),
-
+// Conditional delete - only if we have a resource to delete
 fn(state => {
-  if (state.resourceToDelete) {
-    const response = state.data;
-    const error = state.error;
-    
-    if (!error && (response?.status === 204 || response?.status === 200 || response?.statusCode === 204 || response?.statusCode === 200)) {
-      console.log('✓ Deleted', state.resourceToDelete);
-    } else {
-      console.log('⚠ Could not delete', state.resourceToDelete);
-    }
-    
-    delete state.error;
-    delete state.resourceToDelete;
+  if (!state.resourceToDelete) {
+    console.log('No dynamic resource to delete');
+    return state;
   }
   return state;
 }),
+
+<deleteFunction>(state => state.resourceToDelete || 'placeholder')
+  .then(state => {
+    if (state.resourceToDelete) {
+      const response = state.data;
+      if (response?.status === 204 || response?.status === 200 || response?.statusCode === 204 || response?.statusCode === 200) {
+        console.log('✓ Deleted', state.resourceToDelete);
+      }
+      delete state.resourceToDelete;
+    }
+    return state;
+  })
+  .catch((error, state) => {
+    if (state.resourceToDelete) {
+      console.log('⚠ Could not delete', state.resourceToDelete, ':', error.message);
+    }
+    delete state.error;
+    delete state.resourceToDelete;
+    return state;
+  }),
 
 // ═══════════════════════════════════════════════════════════
 // TEST SUMMARY
@@ -778,76 +885,70 @@ fn(state => {
 
 ---
 
-## Key Differences for app.openfn.org
+## Key Syntax Features for app.openfn.org
 
-### 1. **No Import Statements**
-- Adaptors are already available on the platform
-- Functions are accessed directly without imports
-- No need for `import { function } from '@openfn/adaptor'`
-
-### 2. **Function Chaining with Commas**
-- Operations are chained with commas: `operation1(), operation2(), operation3()`
-- Each operation followed by `fn(state => {...})` for validation
-- Platform handles the execution flow
-
-### 3. **Configuration via Platform**
-- Credentials configured in app.openfn.org UI
-- No need to specify config in code
-- Code references `state.configuration` automatically
-
-### 4. **Error Handling**
-- Errors available in `state.error`
-- Use `fn()` to check both success (`state.data`) and error (`state.error`)
-- Clear errors with `delete state.error` to continue
-
-### 5. **Inspector Output**
-- All `console.log()` appears in Inspector
-- Users review results there, not in terminal
-- Visual indicators (✓/✗/⚠) work well in Inspector
-
----
-
-## Usage Instructions Template
-
-Always include these instructions at the top of generated code:
+### Promise Chaining (Supported)
 ```javascript
-/**
- * INSTRUCTIONS FOR app.openfn.org:
- * 
- * 1. Go to app.openfn.org and log in
- * 2. Navigate to your project
- * 3. Create a new workflow or edit existing
- * 4. Add a step with adaptor: @openfn/<adaptor-name>@latest
- * 5. In the step editor, paste this entire code block
- * 6. Configure credential with required fields:
- *    - Go to Settings → Credentials
- *    - Create/edit credential for this adaptor
- *    - Add: baseUrl, username, password, etc.
- * 7. Attach the credential to this step
- * 8. Click "Run" to execute tests
- * 9. Check the Inspector tab for test results
- * 10. Look for ✓ (passed), ✗ (failed), ⚠ (warning)
- * 
- * CREDENTIAL FORMAT:
- * {
- *   "baseUrl": "https://your-test-system.com",
- *   "username": "test-user",
- *   "password": "your-password"
- * }
- */
+<function>()
+  .then(state => {
+    // Success handler
+    console.log('Test passed');
+    return state;
+  })
+  .catch((error, state) => {
+    // Error handler
+    console.log('Test failed:', error.message);
+    state.error = error;
+    return state;
+  }),
+```
+
+### Error Handling Pattern
+
+For negative tests (expecting errors):
+```javascript
+<function>()
+  .then(state => {
+    // If we reach here, test failed (should have errored)
+    console.log('✗ TEST FAILED: Should have thrown error');
+    return state;
+  })
+  .catch((error, state) => {
+    // This is expected for negative tests
+    if (error.statusCode === 404) {
+      console.log('✓ TEST PASSED: Correctly returned 404');
+    }
+    delete state.error; // Clear error to continue
+    return state;
+  }),
+```
+
+### Operation Chaining
+
+Operations chained with commas:
+```javascript
+operation1(),
+operation2(),
+fn(state => { /* validation */ return state; }),
+operation3(),
 ```
 
 ---
 
-## Test Coverage Requirements (Same as Before)
+## Output File Location
 
-- Authentication tests
-- GET operations (all/single/non-existent/filtered/empty)
-- POST operations (valid/missing fields/invalid types)
-- PUT/PATCH operations (update existing/non-existent)
-- DELETE operations (existing/non-existent/already-deleted)
-- Pagination tests (if applicable)
-- Edge cases specific to the API
+Generate file in **root directory**: `qa-<adaptor-name>.js`
+
+Example paths:
+- `qa-fhir.js`
+- `qa-dhis2.js`
+- `qa-commcare.js`
+
+---
+
+## Test Coverage Requirements
+
+(Same as before - all sections required)
 
 ---
 
@@ -860,12 +961,16 @@ Always include these instructions at the top of generated code:
 - [ ] Resource types and fields identified
 - [ ] Pagination approach known (if applicable)
 - [ ] Error response formats documented
-- [ ] **Adaptor available on app.openfn.org** (published)
+- [ ] **Output file name**: `qa-<adaptor-name>.js` in root
 
 ---
 
-## Example Output File
+## Notes
 
-Save as: `qa-test-<adaptor-name>.js`
-
-Provide to user with instructions to copy/paste into app.openfn.org
+- QA job code writes to ACTUAL test system (not mocks)
+- Tests are validation/smoke tests, not unit tests
+- Runnable in OpenFn workflows on app.openfn.org
+- Console output appears in Inspector
+- Can be copy/pasted directly into platform
+- Use `then/catch` for promise chaining
+- Always include error handlers with `catch((error, state) => {...})`
