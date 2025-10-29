@@ -76,7 +76,8 @@ const getDispatcher = (origin, options = {}) => {
     }).compose(
       interceptors.redirect({
         maxRedirections: agentOpts.maxRedirections,
-      })
+      }),
+      interceptors.decompress()
     );
 
     agents.set(key, agent);
@@ -307,6 +308,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
     // If the request is redirected, undici requires the origin to be set (this affects commcare)
     origin: baseUrl,
   });
+  console.log(response.headers);
 
   const statusText = getReasonPhrase(response.statusCode);
 
