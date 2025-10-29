@@ -1,5 +1,12 @@
 # @openfn/language-mtn-momo
 
+## 1.1.6
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 1.1.5
 
 ### Patch Changes

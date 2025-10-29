@@ -1,5 +1,12 @@
 # @openfn/language-ghana-bdr
 
+## 0.1.15
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 0.1.14
 
 ### Patch Changes

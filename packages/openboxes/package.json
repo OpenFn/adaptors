@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-openboxes",
   "label": "OpenBoxes",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "OpenFn adaptor for OpenBoxes",
   "type": "module",
   "exports": {

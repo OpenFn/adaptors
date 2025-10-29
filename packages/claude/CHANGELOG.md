@@ -1,5 +1,12 @@
 # @openfn/language-claude
 
+## 1.0.16
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 1.0.15
 
 ### Patch Changes

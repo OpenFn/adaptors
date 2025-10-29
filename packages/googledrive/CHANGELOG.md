@@ -1,5 +1,12 @@
 # @openfn/language-googledrive
 
+## 2.0.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 2.0.3
 
 ### Patch Changes
