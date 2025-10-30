@@ -4,11 +4,10 @@
       "name": "create",
       "params": [
         "doctype",
-        "data",
-        "options"
+        "data"
       ],
       "docs": {
-        "description": "Create a document in ERPNext",
+        "description": "Create a document in ERPNext. Returns the complete created document with all fields.",
         "tags": [
           {
             "title": "public",
@@ -22,8 +21,8 @@
           },
           {
             "title": "example",
-            "description": "create('Sales Order', $.orderData, { downloadCreatedRecord: true });",
-            "caption": "Create with data from state and download the created record"
+            "description": "create('Sales Order', $.orderData);",
+            "caption": "Create with data from state"
           },
           {
             "title": "example",
@@ -52,15 +51,6 @@
               "name": "object"
             },
             "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "Optional configuration",
-            "type": {
-              "type": "NameExpression",
-              "name": "CreateOptions"
-            },
-            "name": "options"
           },
           {
             "title": "state",

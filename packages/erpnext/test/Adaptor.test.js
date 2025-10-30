@@ -41,40 +41,6 @@ describe('create', () => {
     expect(data).to.eql({ name: 'CUST-00001' });
   });
 
-  it('should create and download the full created record when downloadCreatedRecord is true', async () => {
-    const mockClient = {
-      db: () => ({
-        createDoc: (doctype, data) => {
-          expect(doctype).to.eql('Customer');
-          expect(data).to.eql({ customer_name: 'Test Corp' });
-          return Promise.resolve({ name: 'CUST-00002' });
-        },
-        getDoc: (doctype, name) => {
-          expect(doctype).to.eql('Customer');
-          expect(name).to.eql('CUST-00002');
-          return Promise.resolve({
-            name: 'CUST-00002',
-            customer_name: 'Test Corp',
-            customer_type: 'Company',
-            territory: 'All Territories',
-            customer_group: 'Commercial',
-          });
-        },
-      }),
-    };
-    setMockClient(mockClient);
-
-    const { data } = await create(
-      'Customer',
-      { customer_name: 'Test Corp' },
-      { downloadCreatedRecord: true }
-    )(state);
-
-    expect(data.name).to.eql('CUST-00002');
-    expect(data.customer_name).to.eql('Test Corp');
-    expect(data.territory).to.eql('All Territories');
-  });
-
   it('should throw an error when creation fails', async () => {
     const mockClient = {
       db: () => ({

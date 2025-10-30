@@ -17,12 +17,6 @@ let frappeClient = null;
  */
 
 /**
- * Options object for create operations
- * @typedef {Object} CreateOptions
- * @property {boolean} downloadCreatedRecord - Download the full created record. Defaults to `false`. When `true`, the entire created document will be fetched and returned in `state.data`.
- */
-
-/**
  * Options object for list operations
  * @typedef {Object} ListOptions
  * @property {object} filters - Filters to apply to the query (e.g., `{ status: 'Open' }`).
@@ -106,15 +100,15 @@ async function login(state) {
 }
 
 /**
- * Create a document in ERPNext
+ * Create a document in ERPNext. Returns the complete created document with all fields.
  * @public
  * @example <caption>Create a customer record</caption>
  * create('Customer', {
  *   customer_name: 'Acme Corporation',
  *   customer_type: 'Company'
  * });
- * @example <caption>Create with data from state and download the created record</caption>
- * create('Sales Order', $.orderData, { downloadCreatedRecord: true });
+ * @example <caption>Create with data from state</caption>
+ * create('Sales Order', $.orderData);
  * @example <caption>Create an item with multiple fields</caption>
  * create('Item', {
  *   item_code: 'ITEM-001',
@@ -125,19 +119,15 @@ async function login(state) {
  * @function
  * @param {string} doctype - The doctype to create (e.g., "Customer", "Sales Order")
  * @param {object} data - The document data as JSON
- * @param {CreateOptions} options - Optional configuration
  * @state {ERPNextState}
  * @returns {Operation}
  */
-export function create(doctype, data, options = {}) {
+export function create(doctype, data) {
   return async state => {
-    const mergedOptions = { downloadCreatedRecord: false, ...options };
-
-    const [resolvedDoctype, resolvedData, resolvedOptions] = expandReferences(
+    const [resolvedDoctype, resolvedData] = expandReferences(
       state,
       doctype,
-      data,
-      mergedOptions
+      data
     );
 
     console.log(`Creating ${resolvedDoctype} document...`);
@@ -146,16 +136,6 @@ export function create(doctype, data, options = {}) {
       const response = await frappeClient
         .db()
         .createDoc(resolvedDoctype, resolvedData);
-
-      if (resolvedOptions.downloadCreatedRecord && response?.name) {
-        console.log(
-          `Fetching created ${resolvedDoctype} document: ${response.name}...`
-        );
-        const fullRecord = await frappeClient
-          .db()
-          .getDoc(resolvedDoctype, response.name);
-        return composeNextState(state, fullRecord);
-      }
 
       return composeNextState(state, response);
     } catch (error) {
