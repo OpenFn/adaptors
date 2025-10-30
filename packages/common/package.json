@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-common",
   "label": "Common",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Common Expressions for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -55,8 +55,11 @@
   "devDependencies": {
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
+    "koa": "^3.0.3",
+    "koa-compress": "^5.1.1",
     "nock": "13.2.9",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "zlib": "^1.0.5"
   },
   "main": "dist/index.cjs"
 }

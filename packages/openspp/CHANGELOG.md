@@ -1,5 +1,12 @@
 # @openfn/language-openspp
 
+## 3.0.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 3.0.3
 
 ### Patch Changes

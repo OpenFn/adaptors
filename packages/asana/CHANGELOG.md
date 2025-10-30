@@ -1,5 +1,12 @@
 # @openfn/language-asana
 
+## 5.0.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 5.0.4
 
 ### Patch Changes

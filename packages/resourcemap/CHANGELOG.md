@@ -1,5 +1,12 @@
 # @openfn/language-resourcemap
 
+## 0.4.23
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 0.4.22
 
 ### Patch Changes

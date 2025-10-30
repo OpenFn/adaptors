@@ -1,5 +1,12 @@
 # @openfn/language-openfn
 
+## 3.0.7
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 3.0.6
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @openfn/language-pesapal
 
+## 1.1.8
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 1.1.7
 
 ### Patch Changes

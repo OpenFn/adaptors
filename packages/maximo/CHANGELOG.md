@@ -1,5 +1,12 @@
 # @openfn/language-maximo
 
+## 0.5.24
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-common@3.1.2
+
 ## 0.5.23
 
 ### Patch Changes
