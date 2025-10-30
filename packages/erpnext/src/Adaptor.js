@@ -146,51 +146,33 @@ export function create(doctype, data) {
 }
 
 /**
- * Read a document from ERPNext by name/ID
+ * Read a document from ERPNext by name/ID. Returns the complete document with all fields.
+ * Note: For field selection, use getList() with filters instead.
  * @public
  * @example <caption>Read a customer by name</caption>
  * read('Customer', 'CUST-00001');
- * @example <caption>Read with specific fields only</caption>
- * read('Sales Order', $.orderId, ['customer', 'grand_total', 'status']);
  * @example <caption>Read from state data</caption>
  * read('Item', $.data.item_code);
+ * @example <caption>Read a sales order</caption>
+ * read('Sales Order', $.orderId);
  * @function
  * @param {string} doctype - The doctype to read from (e.g., "Customer", "Sales Order")
  * @param {string} name - The document name/ID to read
- * @param {string[]} fields - Optional array of field names to return. If not provided, returns all fields.
  * @state {ERPNextState}
  * @returns {Operation}
  */
-export function read(doctype, name, fields = []) {
+export function read(doctype, name) {
   return async state => {
-    const [resolvedDoctype, resolvedName, resolvedFields] = expandReferences(
+    const [resolvedDoctype, resolvedName] = expandReferences(
       state,
       doctype,
-      name,
-      fields
+      name
     );
 
     console.log(`Reading ${resolvedDoctype} document: ${resolvedName}...`);
 
     try {
-      let response;
-      if (resolvedFields && resolvedFields.length > 0) {
-        // If fields are specified, we need to fetch and filter
-        const doc = await frappeClient.db().getDoc(resolvedDoctype, resolvedName);
-        response = {};
-        resolvedFields.forEach(field => {
-          if (doc[field] !== undefined) {
-            response[field] = doc[field];
-          }
-        });
-        // Always include name field
-        if (!resolvedFields.includes('name')) {
-          response.name = doc.name;
-        }
-      } else {
-        // Fetch all fields
-        response = await frappeClient.db().getDoc(resolvedDoctype, resolvedName);
-      }
+      const response = await frappeClient.db().getDoc(resolvedDoctype, resolvedName);
 
       return composeNextState(state, response);
     } catch (error) {

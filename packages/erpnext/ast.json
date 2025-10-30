@@ -72,11 +72,10 @@
       "name": "read",
       "params": [
         "doctype",
-        "name",
-        "fields"
+        "name"
       ],
       "docs": {
-        "description": "Read a document from ERPNext by name/ID",
+        "description": "Read a document from ERPNext by name/ID. Returns the complete document with all fields.\nNote: For field selection, use getList() with filters instead.",
         "tags": [
           {
             "title": "public",
@@ -90,13 +89,13 @@
           },
           {
             "title": "example",
-            "description": "read('Sales Order', $.orderId, ['customer', 'grand_total', 'status']);",
-            "caption": "Read with specific fields only"
+            "description": "read('Item', $.data.item_code);",
+            "caption": "Read from state data"
           },
           {
             "title": "example",
-            "description": "read('Item', $.data.item_code);",
-            "caption": "Read from state data"
+            "description": "read('Sales Order', $.orderId);",
+            "caption": "Read a sales order"
           },
           {
             "title": "function",
@@ -120,24 +119,6 @@
               "name": "string"
             },
             "name": "name"
-          },
-          {
-            "title": "param",
-            "description": "Optional array of field names to return. If not provided, returns all fields.",
-            "type": {
-              "type": "TypeApplication",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Array"
-              },
-              "applications": [
-                {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              ]
-            },
-            "name": "fields"
           },
           {
             "title": "state",

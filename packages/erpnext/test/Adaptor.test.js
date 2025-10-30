@@ -86,37 +86,6 @@ describe('read', () => {
     expect(data.customer_type).to.eql('Company');
   });
 
-  it('should read a document with specific fields', async () => {
-    const mockClient = {
-      db: () => ({
-        getDoc: (doctype, name) => {
-          expect(doctype).to.eql('Sales Order');
-          expect(name).to.eql('SO-00001');
-          return Promise.resolve({
-            name: 'SO-00001',
-            customer: 'CUST-00001',
-            grand_total: 5000,
-            status: 'Draft',
-            delivery_date: '2025-01-31',
-          });
-        },
-      }),
-    };
-    setMockClient(mockClient);
-
-    const { data } = await read('Sales Order', 'SO-00001', [
-      'customer',
-      'grand_total',
-      'status',
-    ])(state);
-
-    expect(data.name).to.eql('SO-00001');
-    expect(data.customer).to.eql('CUST-00001');
-    expect(data.grand_total).to.eql(5000);
-    expect(data.status).to.eql('Draft');
-    expect(data.delivery_date).to.be.undefined;
-  });
-
   it('should throw an error when document not found', async () => {
     const mockClient = {
       db: () => ({
