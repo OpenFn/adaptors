@@ -332,7 +332,7 @@
           },
           {
             "title": "param",
-            "description": "Optional query configuration with filters, fields, limit, offset, and orderBy",
+            "description": "Optional query configuration. See {@link https://frappeframework.com/docs/user/en/api/database#get-list Frappe Database API} for supported options.",
             "type": {
               "type": "NameExpression",
               "name": "ListOptions"

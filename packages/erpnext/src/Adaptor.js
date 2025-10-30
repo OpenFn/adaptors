@@ -24,6 +24,7 @@ let frappeClient = null;
  * @property {number} limit - Maximum number of records to return. Defaults to `1000`.
  * @property {number} offset - Number of records to skip. Defaults to `0`.
  * @property {string} orderBy - Field to sort by with direction (e.g., `'creation desc'`).
+ * @see {@link https://frappeframework.com/docs/user/en/api/database#get-list Frappe Database API}
  */
 
 /**
@@ -294,7 +295,7 @@ export function deleteRecord(doctype, name) {
  * });
  * @function
  * @param {string} doctype - The doctype to query (e.g., "Customer", "Sales Order")
- * @param {ListOptions} options - Optional query configuration with filters, fields, limit, offset, and orderBy
+ * @param {ListOptions} options - Optional query configuration. See {@link https://frappeframework.com/docs/user/en/api/database#get-list Frappe Database API} for supported options.
  * @state {ERPNextState}
  * @returns {Operation}
  */
@@ -306,23 +307,12 @@ export function getList(doctype, options = {}) {
       options
     );
 
-    const { filters, fields, limit, offset, orderBy } = resolvedOptions;
-
-    console.log(
-      `Fetching ${resolvedDoctype} list${filters ? ' with filters' : ''}...`
-    );
+    console.log(`Fetching ${resolvedDoctype} list...`);
 
     try {
-      const queryOptions = {};
-      if (filters) queryOptions.filters = filters;
-      if (fields) queryOptions.fields = fields;
-      if (limit) queryOptions.limit = limit;
-      if (offset) queryOptions.offset = offset;
-      if (orderBy) queryOptions.orderBy = orderBy;
-
       const response = await frappeClient
         .db()
-        .getDocList(resolvedDoctype, queryOptions);
+        .getDocList(resolvedDoctype, resolvedOptions);
 
       return composeNextState(state, response);
     } catch (error) {
