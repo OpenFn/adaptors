@@ -7689,6 +7689,543 @@
     "kind": "external"
   }
 ],
+{"name":"erpnext","adaptor":"@openfn/language-erpnext","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#create\\\">create(doctype, data)</a></dt>\\n<dt>\\n    <a href=\\\"#deleterecord\\\">deleteRecord(doctype, name)</a></dt>\\n<dt>\\n    <a href=\\\"#getcount\\\">getCount(doctype, filters)</a></dt>\\n<dt>\\n    <a href=\\\"#getlist\\\">getList(doctype, options)</a></dt>\\n<dt>\\n    <a href=\\\"#read\\\">read(doctype, name)</a></dt>\\n<dt>\\n    <a href=\\\"#update\\\">update(doctype, name, data)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### create\\n\\n<p><code>create(doctype, data) ⇒ Operation</code></p>\\n\\nCreate a document in ERPNext. Returns the complete created document with all fields.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| doctype | <code>string</code> | The doctype to create (e.g., \\\"Customer\\\", \\\"Sales Order\\\") |\\n| data | <code>object</code> | The document data as JSON |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the ERPNext server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n\\n**Example:** Create a customer record\\n```js\\ncreate('Customer', {\\n  customer_name: 'Acme Corporation',\\n  customer_type: 'Company'\\n});\\n```\\n**Example:** Create with data from state\\n```js\\ncreate('Sales Order', $.orderData);\\n```\\n**Example:** Create an item with multiple fields\\n```js\\ncreate('Item', {\\n  item_code: 'ITEM-001',\\n  item_name: 'Sample Product',\\n  item_group: 'Products',\\n  stock_uom: 'Nos'\\n});\\n```\\n\\n* * *\\n\\n### deleteRecord\\n\\n<p><code>deleteRecord(doctype, name) ⇒ Operation</code></p>\\n\\nDelete a document from ERPNext\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| doctype | <code>string</code> | The doctype to delete from (e.g., \\\"Customer\\\", \\\"Sales Order\\\") |\\n| name | <code>string</code> | The document name/ID to delete |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the ERPNext server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n\\n**Example:** Delete a customer\\n```js\\ndeleteRecord('Customer', 'CUST-00001');\\n```\\n**Example:** Delete using state data\\n```js\\ndeleteRecord('Sales Order', $.data.order_id);\\n```\\n**Example:** Delete a draft document\\n```js\\ndeleteRecord('Quotation', 'QTN-00001');\\n```\\n\\n* * *\\n\\n### getCount\\n\\n<p><code>getCount(doctype, filters) ⇒ Operation</code></p>\\n\\nGet count of documents matching filters\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| doctype | <code>string</code> | The doctype to count (e.g., \\\"Customer\\\", \\\"Sales Order\\\") |\\n| filters | <code>object</code> | Optional filters to apply (e.g., `{ status: 'Open' }`) |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the ERPNext server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n\\n**Example:** Count all customers\\n```js\\ngetCount('Customer');\\n```\\n**Example:** Count with filters\\n```js\\ngetCount('Sales Order', { status: 'Open' });\\n```\\n**Example:** Count from state data\\n```js\\ngetCount('Item', { item_group: $.data.group_name });\\n```\\n\\n* * *\\n\\n### getList\\n\\n<p><code>getList(doctype, options) ⇒ Operation</code></p>\\n\\nGet a list of documents from ERPNext with filtering, field selection, and pagination\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| doctype | <code>string</code> | The doctype to query (e.g., \\\"Customer\\\", \\\"Sales Order\\\") |\\n| options | [<code>ListOptions</code>](#listoptions) | Optional query configuration. See [Frappe Database API](https://frappeframework.com/docs/user/en/api/database#get-list) for supported options. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the ERPNext server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n\\n**Example:** Get all customers\\n```js\\ngetList('Customer');\\n```\\n**Example:** Get customers with filters\\n```js\\ngetList('Customer', {\\n  filters: { customer_type: 'Company' },\\n  fields: ['name', 'customer_name', 'territory']\\n});\\n```\\n**Example:** Get with pagination\\n```js\\ngetList('Sales Order', {\\n  filters: { status: 'Draft' },\\n  limit: 50,\\n  offset: 0,\\n  orderBy: 'creation desc'\\n});\\n```\\n**Example:** Get specific fields only\\n```js\\ngetList('Item', {\\n  fields: ['item_code', 'item_name', 'standard_rate'],\\n  filters: { item_group: 'Products' },\\n  limit: 100\\n});\\n```\\n\\n* * *\\n\\n### read\\n\\n<p><code>read(doctype, name) ⇒ Operation</code></p>\\n\\nRead a document from ERPNext by name/ID. Returns the complete document with all fields.\\nNote: For field selection, use getList() with filters instead.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| doctype | <code>string</code> | The doctype to read from (e.g., \\\"Customer\\\", \\\"Sales Order\\\") |\\n| name | <code>string</code> | The document name/ID to read |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the ERPNext server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n\\n**Example:** Read a customer by name\\n```js\\nread('Customer', 'CUST-00001');\\n```\\n**Example:** Read from state data\\n```js\\nread('Item', $.data.item_code);\\n```\\n**Example:** Read a sales order\\n```js\\nread('Sales Order', $.orderId);\\n```\\n\\n* * *\\n\\n### update\\n\\n<p><code>update(doctype, name, data) ⇒ Operation</code></p>\\n\\nUpdate a document in ERPNext\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| doctype | <code>string</code> | The doctype to update (e.g., \\\"Customer\\\", \\\"Sales Order\\\") |\\n| name | <code>string</code> | The document name/ID to update |\\n| data | <code>object</code> | The fields to update as JSON |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the ERPNext server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n\\n**Example:** Update a customer's details\\n```js\\nupdate('Customer', 'CUST-00001', {\\n  customer_name: 'Updated Corp Name',\\n  mobile_no: '+1234567890'\\n});\\n```\\n**Example:** Update using state data\\n```js\\nupdate('Sales Order', $.data.order_id, {\\n  status: 'Confirmed'\\n});\\n```\\n**Example:** Update multiple fields\\n```js\\nupdate('Item', 'ITEM-001', {\\n  item_name: 'Updated Product Name',\\n  standard_rate: 150.00,\\n  description: 'Updated description'\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### ListOptions\\n\\nOptions object for list operations\\n\\n**See**: [Frappe Database API](https://frappeframework.com/docs/user/en/api/database#get-list)  \\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| filters | <code>object</code> | Filters to apply to the query (e.g., `{ status: 'Open' }`). |\\n| fields | <code>Array.&lt;string&gt;</code> | Array of field names to return (e.g., `['name', 'status']`). |\\n| limit | <code>number</code> | Maximum number of records to return. Defaults to `1000`. |\\n| offset | <code>number</code> | Number of records to skip. Defaults to `0`. |\\n| orderBy | <code>string</code> | Field to sort by with direction (e.g., `'creation desc'`). |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-erpnext <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the ERPNext API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/erpnext-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/erpnext-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n#### Authentication\\n\\nThis adaptor uses **API Key and Secret** authentication. To generate your credentials:\\n\\n1. Log in to your ERPNext instance\\n2. Go to your user profile (top right corner)\\n3. Click on \\\"API Access\\\"\\n4. Generate a new API Key/Secret pair\\n5. Use these credentials in your OpenFn configuration:\\n\\n```json\\n{\\n  \\\"baseUrl\\\": \\\"https://mycompany.erpnext.com\\\",\\n  \\\"apiKey\\\": \\\"your_api_key\\\",\\n  \\\"apiSecret\\\": \\\"your_api_secret\\\"\\n}\\n```\\n\\n### Example Usage\\n\\n```js\\n// Create a new customer\\ncreate('Customer', {\\n  customer_name: 'Acme Corporation',\\n  customer_type: 'Company'\\n});\\n```\\n\\n```js\\n// Get a list of sales orders\\ngetList('Sales Order', {\\n  filters: { status: 'Draft' },\\n  fields: ['name', 'customer', 'grand_total'],\\n  limit: 50\\n});\\n```\\n\\n```js\\n// Update a customer record\\nupdate('Customer', 'CUST-00001', {\\n  mobile_no: '+1234567890'\\n});\\n```\\n\\n```js\\n// Read a document by ID\\nread('Item', 'ITEM-001', ['item_name', 'standard_rate']);\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-erpnext\\n\\n## 1.0.0\\n\\n### Major Changes\\n\\nInitial adaptor release with CRUD and list operations for ERPNext/Frappe.\\n\\n- `create` - Create documents in ERPNext\\n- `read` - Read documents by name\\n- `update` - Update existing documents\\n- `deleteRecord` - Delete documents\\n- `getList` - List documents with filters, pagination, and field selection\\n- `getCount` - Count documents matching filters\\n\\nAuthentication via API Key/Secret with token-based auth.\\n\"","functions":["create","deleteRecord","getCount","getList","read","update"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"The base URL of your ERPNext instance","format":"uri","minLength":1,"examples":["https://mycompany.erpnext.com"]},"apiKey":{"title":"API Key","type":"string","description":"API Key (generate from ERPNext user profile)"},"apiSecret":{"title":"API Secret","type":"string","description":"API Secret (generated with API Key)","writeOnly":true}},"type":"object","additionalProperties":true,"required":["baseUrl","apiKey","apiSecret"]}},
+[
+  {
+    "id": "create",
+    "longname": "create",
+    "name": "create",
+    "kind": "function",
+    "scope": "global",
+    "description": "Create a document in ERPNext. Returns the complete created document with all fields.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The doctype to create (e.g., \"Customer\", \"Sales Order\")",
+        "name": "doctype"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "The document data as JSON",
+        "name": "data"
+      }
+    ],
+    "examples": [
+      "<caption>Create a customer record</caption>\ncreate('Customer', {\n  customer_name: 'Acme Corporation',\n  customer_type: 'Company'\n});",
+      "<caption>Create with data from state</caption>\ncreate('Sales Order', $.orderData);",
+      "<caption>Create an item with multiple fields</caption>\ncreate('Item', {\n  item_code: 'ITEM-001',\n  item_name: 'Sample Product',\n  item_group: 'Products',\n  stock_uom: 'Nos'\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 126,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/erpnext/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "ERPNextState"
+      }
+    ],
+    "order": 5,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "deleteRecord",
+    "longname": "deleteRecord",
+    "name": "deleteRecord",
+    "kind": "function",
+    "scope": "global",
+    "description": "Delete a document from ERPNext",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The doctype to delete from (e.g., \"Customer\", \"Sales Order\")",
+        "name": "doctype"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The document name/ID to delete",
+        "name": "name"
+      }
+    ],
+    "examples": [
+      "<caption>Delete a customer</caption>\ndeleteRecord('Customer', 'CUST-00001');",
+      "<caption>Delete using state data</caption>\ndeleteRecord('Sales Order', $.data.order_id);",
+      "<caption>Delete a draft document</caption>\ndeleteRecord('Quotation', 'QTN-00001');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 250,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/erpnext/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "ERPNextState"
+      }
+    ],
+    "order": 8,
+    "level": 0
+  },
+  {
+    "id": "ERPNextState",
+    "longname": "ERPNextState",
+    "name": "ERPNextState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "The response body (as JSON)",
+        "name": "data"
+      },
+      {
+        "description": "The HTTP response from the ERPNext server (excluding the body)",
+        "name": "response"
+      },
+      {
+        "description": "An array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "access": "private",
+    "meta": {
+      "lineno": 10,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/erpnext/src"
+    },
+    "order": 0
+  },
+  {
+    "id": "getCount",
+    "longname": "getCount",
+    "name": "getCount",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get count of documents matching filters",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The doctype to count (e.g., \"Customer\", \"Sales Order\")",
+        "name": "doctype"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Optional filters to apply (e.g., `{ status: 'Open' }`)",
+        "name": "filters"
+      }
+    ],
+    "examples": [
+      "<caption>Count all customers</caption>\ngetCount('Customer');",
+      "<caption>Count with filters</caption>\ngetCount('Sales Order', { status: 'Open' });",
+      "<caption>Count from state data</caption>\ngetCount('Item', { item_group: $.data.group_name });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 340,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/erpnext/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "ERPNextState"
+      }
+    ],
+    "order": 10,
+    "level": 0
+  },
+  {
+    "id": "getList",
+    "longname": "getList",
+    "name": "getList",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get a list of documents from ERPNext with filtering, field selection, and pagination",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The doctype to query (e.g., \"Customer\", \"Sales Order\")",
+        "name": "doctype"
+      },
+      {
+        "type": {
+          "names": [
+            "ListOptions"
+          ]
+        },
+        "description": "Optional query configuration. See {@link https://frappeframework.com/docs/user/en/api/database#get-list Frappe Database API} for supported options.",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Get all customers</caption>\ngetList('Customer');",
+      "<caption>Get customers with filters</caption>\ngetList('Customer', {\n  filters: { customer_type: 'Company' },\n  fields: ['name', 'customer_name', 'territory']\n});",
+      "<caption>Get with pagination</caption>\ngetList('Sales Order', {\n  filters: { status: 'Draft' },\n  limit: 50,\n  offset: 0,\n  orderBy: 'creation desc'\n});",
+      "<caption>Get specific fields only</caption>\ngetList('Item', {\n  fields: ['item_code', 'item_name', 'standard_rate'],\n  filters: { item_group: 'Products' },\n  limit: 100\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 302,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/erpnext/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "ERPNextState"
+      }
+    ],
+    "order": 9,
+    "level": 0
+  },
+  {
+    "id": "ListOptions",
+    "longname": "ListOptions",
+    "name": "ListOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options object for list operations",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Filters to apply to the query (e.g., `{ status: 'Open' }`).",
+        "name": "filters"
+      },
+      {
+        "type": {
+          "names": [
+            "Array.<string>"
+          ]
+        },
+        "description": "Array of field names to return (e.g., `['name', 'status']`).",
+        "name": "fields"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Maximum number of records to return. Defaults to `1000`.",
+        "name": "limit"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Number of records to skip. Defaults to `0`.",
+        "name": "offset"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Field to sort by with direction (e.g., `'creation desc'`).",
+        "name": "orderBy"
+      }
+    ],
+    "see": [
+      "{@link https://frappeframework.com/docs/user/en/api/database#get-list Frappe Database API}"
+    ],
+    "meta": {
+      "lineno": 19,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/erpnext/src"
+    },
+    "order": 1,
+    "level": 0
+  },
+  {
+    "id": "read",
+    "longname": "read",
+    "name": "read",
+    "kind": "function",
+    "scope": "global",
+    "description": "Read a document from ERPNext by name/ID. Returns the complete document with all fields.\nNote: For field selection, use getList() with filters instead.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The doctype to read from (e.g., \"Customer\", \"Sales Order\")",
+        "name": "doctype"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The document name/ID to read",
+        "name": "name"
+      }
+    ],
+    "examples": [
+      "<caption>Read a customer by name</caption>\nread('Customer', 'CUST-00001');",
+      "<caption>Read from state data</caption>\nread('Item', $.data.item_code);",
+      "<caption>Read a sales order</caption>\nread('Sales Order', $.orderId);"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 165,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/erpnext/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "ERPNextState"
+      }
+    ],
+    "order": 6,
+    "level": 0
+  },
+  {
+    "id": "update",
+    "longname": "update",
+    "name": "update",
+    "kind": "function",
+    "scope": "global",
+    "description": "Update a document in ERPNext",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The doctype to update (e.g., \"Customer\", \"Sales Order\")",
+        "name": "doctype"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The document name/ID to update",
+        "name": "name"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "The fields to update as JSON",
+        "name": "data"
+      }
+    ],
+    "examples": [
+      "<caption>Update a customer's details</caption>\nupdate('Customer', 'CUST-00001', {\n  customer_name: 'Updated Corp Name',\n  mobile_no: '+1234567890'\n});",
+      "<caption>Update using state data</caption>\nupdate('Sales Order', $.data.order_id, {\n  status: 'Confirmed'\n});",
+      "<caption>Update multiple fields</caption>\nupdate('Item', 'ITEM-001', {\n  item_name: 'Updated Product Name',\n  standard_rate: 150.00,\n  description: 'Updated description'\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 211,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/erpnext/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "ERPNextState"
+      }
+    ],
+    "order": 7,
+    "level": 0
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fnIf",
+    "common": true,
+    "name": "fnIf",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  }
+],
 {"name":"et-mfr","adaptor":"@openfn/language-et-mfr","version":"1.0.1","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, options)</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, body, options)</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, options)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#assert\\\">assert()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#log\\\">log()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#parsecsv\\\">parseCsv()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### get\\n\\n<p><code>get(path, options) ⇒ Operation</code></p>\\n\\nMake a GET request to Ethiopia MFR\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Get all regions\\n```js\\nget('/Location/Regions');\\n```\\n**Example:** Get a facility with id\\n```js\\nget('Facility', {\\n  query: {\\n    id: '1071644',\\n  },\\n});\\n```\\n**Example:** Get all facility details matching a name\\n```js\\nget('Facility/All', {\\n  query: {\\n    name: '010 Kombolcha Health Post',\\n  },\\n});\\n```\\n\\n* * *\\n\\n### post\\n\\n<p><code>post(path, body, options) ⇒ Operation</code></p>\\n\\nMake a POST request to Ethiopia MFR\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Retrieve facilities with pagination\\n```js\\npost('Facility/GetFacilities', {\\n  pageNumber: 1,\\n  showPerPage: 25,\\n});\\n```\\n**Example:** Retrieve facility details as CSV strings\\n```js\\npost(\\n  'Facility/ExportCSV',\\n  { name: '010 Kombolcha Health Post' },\\n  { parseAs: 'text' }\\n);\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(method, path, body, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request to Ethiopia MFR\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nrequest(\\n  'POST',\\n  'Facility/ExportCSV',\\n  { name: '010 Kombolcha Health Post' },\\n  { parseAs: 'text' }\\n);\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### HttpState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> | body data to append to the request. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-et-mfr <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\n[et-mfr API](https://mfr.moh.gov.et/swagger/index.html). \\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/et-mfr-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/et-mfr-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-et-mfr\\n\\n## 1.0.1\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@3.1.2\\n\\n## 1.0.0\\n\\n- Implemented `get()`, `post()`, and `request()` functions that support getting\\n  and creating resources in `et-mfr`\\n\"","functions":["get","post","request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"The Ethipean MFR baseUrl","format":"uri","default":"https://mfr.moh.gov.et","minLength":1,"examples":["https://mfr.moh.gov.et"]},"username":{"title":"Username","type":"string","description":"Username","examples":["admin"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]}},"type":"object","additionalProperties":true,"required":[]}},
 [
   {
