@@ -24,6 +24,12 @@ const getMessage = changes => {
     pkg => `${pkg.version.padEnd(10)} ${pkg.name}`
   );
 
+  if (versions.length > 10) {
+    const other = versions.length - 10;
+    versions.splice(9, Infinity);
+    versions.push(`... and ${other} other versions`);
+  }
+
   const attachments = [
     {
       blocks: [
