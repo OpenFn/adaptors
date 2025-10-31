@@ -1,0 +1,916 @@
+{
+  "operations": [
+    {
+      "name": "create",
+      "params": [
+        "doctype",
+        "data"
+      ],
+      "docs": {
+        "description": "Create a document in ERPNext. Returns the complete created document with all fields.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "create('Customer', {\n  customer_name: 'Acme Corporation',\n  customer_type: 'Company'\n});",
+            "caption": "Create a customer record"
+          },
+          {
+            "title": "example",
+            "description": "create('Sales Order', $.orderData);",
+            "caption": "Create with data from state"
+          },
+          {
+            "title": "example",
+            "description": "create('Item', {\n  item_code: 'ITEM-001',\n  item_name: 'Sample Product',\n  item_group: 'Products',\n  stock_uom: 'Nos'\n});",
+            "caption": "Create an item with multiple fields"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The doctype to create (e.g., \"Customer\", \"Sales Order\")",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "doctype"
+          },
+          {
+            "title": "param",
+            "description": "The document data as JSON",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "state",
+            "description": "{ERPNextState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "read",
+      "params": [
+        "doctype",
+        "name"
+      ],
+      "docs": {
+        "description": "Read a document from ERPNext by name/ID. Returns the complete document with all fields.\nNote: For field selection, use getList() with filters instead.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "read('Customer', 'CUST-00001');",
+            "caption": "Read a customer by name"
+          },
+          {
+            "title": "example",
+            "description": "read('Item', $.data.item_code);",
+            "caption": "Read from state data"
+          },
+          {
+            "title": "example",
+            "description": "read('Sales Order', $.orderId);",
+            "caption": "Read a sales order"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The doctype to read from (e.g., \"Customer\", \"Sales Order\")",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "doctype"
+          },
+          {
+            "title": "param",
+            "description": "The document name/ID to read",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "name"
+          },
+          {
+            "title": "state",
+            "description": "{ERPNextState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "update",
+      "params": [
+        "doctype",
+        "name",
+        "data"
+      ],
+      "docs": {
+        "description": "Update a document in ERPNext",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "update('Customer', 'CUST-00001', {\n  customer_name: 'Updated Corp Name',\n  mobile_no: '+1234567890'\n});",
+            "caption": "Update a customer's details"
+          },
+          {
+            "title": "example",
+            "description": "update('Sales Order', $.data.order_id, {\n  status: 'Confirmed'\n});",
+            "caption": "Update using state data"
+          },
+          {
+            "title": "example",
+            "description": "update('Item', 'ITEM-001', {\n  item_name: 'Updated Product Name',\n  standard_rate: 150.00,\n  description: 'Updated description'\n});",
+            "caption": "Update multiple fields"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The doctype to update (e.g., \"Customer\", \"Sales Order\")",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "doctype"
+          },
+          {
+            "title": "param",
+            "description": "The document name/ID to update",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "name"
+          },
+          {
+            "title": "param",
+            "description": "The fields to update as JSON",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "state",
+            "description": "{ERPNextState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "deleteRecord",
+      "params": [
+        "doctype",
+        "name"
+      ],
+      "docs": {
+        "description": "Delete a document from ERPNext",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "deleteRecord('Customer', 'CUST-00001');",
+            "caption": "Delete a customer"
+          },
+          {
+            "title": "example",
+            "description": "deleteRecord('Sales Order', $.data.order_id);",
+            "caption": "Delete using state data"
+          },
+          {
+            "title": "example",
+            "description": "deleteRecord('Quotation', 'QTN-00001');",
+            "caption": "Delete a draft document"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The doctype to delete from (e.g., \"Customer\", \"Sales Order\")",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "doctype"
+          },
+          {
+            "title": "param",
+            "description": "The document name/ID to delete",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "name"
+          },
+          {
+            "title": "state",
+            "description": "{ERPNextState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getList",
+      "params": [
+        "doctype",
+        "options"
+      ],
+      "docs": {
+        "description": "Get a list of documents from ERPNext with filtering, field selection, and pagination",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getList('Customer');",
+            "caption": "Get all customers"
+          },
+          {
+            "title": "example",
+            "description": "getList('Customer', {\n  filters: { customer_type: 'Company' },\n  fields: ['name', 'customer_name', 'territory']\n});",
+            "caption": "Get customers with filters"
+          },
+          {
+            "title": "example",
+            "description": "getList('Sales Order', {\n  filters: { status: 'Draft' },\n  limit: 50,\n  offset: 0,\n  orderBy: 'creation desc'\n});",
+            "caption": "Get with pagination"
+          },
+          {
+            "title": "example",
+            "description": "getList('Item', {\n  fields: ['item_code', 'item_name', 'standard_rate'],\n  filters: { item_group: 'Products' },\n  limit: 100\n});",
+            "caption": "Get specific fields only"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The doctype to query (e.g., \"Customer\", \"Sales Order\")",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "doctype"
+          },
+          {
+            "title": "param",
+            "description": "Optional query configuration. See {@link https://frappeframework.com/docs/user/en/api/database#get-list Frappe Database API} for supported options.",
+            "type": {
+              "type": "NameExpression",
+              "name": "ListOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{ERPNextState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getCount",
+      "params": [
+        "doctype",
+        "filters"
+      ],
+      "docs": {
+        "description": "Get count of documents matching filters",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getCount('Customer');",
+            "caption": "Count all customers"
+          },
+          {
+            "title": "example",
+            "description": "getCount('Sales Order', { status: 'Open' });",
+            "caption": "Count with filters"
+          },
+          {
+            "title": "example",
+            "description": "getCount('Item', { item_group: $.data.group_name });",
+            "caption": "Count from state data"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The doctype to count (e.g., \"Customer\", \"Sales Order\")",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "doctype"
+          },
+          {
+            "title": "param",
+            "description": "Optional filters to apply (e.g., `{ status: 'Open' }`)",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "filters"
+          },
+          {
+            "title": "state",
+            "description": "{ERPNextState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
+  "exports": [],
+  "common": [
+    {
+      "name": "fn",
+      "params": [
+        "func"
+      ],
+      "docs": {
+        "description": "Creates a custom step (or operation) for more flexible job writing.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
+          },
+          {
+            "title": "param",
+            "description": "is the function",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "func"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fnIf",
+      "params": [
+        "condition",
+        "operation"
+      ],
+      "docs": {
+        "description": "Execute a function only when the condition returns true",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+          },
+          {
+            "title": "param",
+            "description": "The condition that returns true",
+            "type": {
+              "type": "NameExpression",
+              "name": "Boolean"
+            },
+            "name": "condition"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be executed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "sourceValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "dataPath",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Ensures a path points at the data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `data`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "dataValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `data`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "lastReferenceValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out the last reference value from source data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `references`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "each",
+      "params": [
+        "dataSource",
+        "operation"
+      ],
+      "docs": {
+        "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+            "caption": "Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+            "caption": "Iterate over items in state.data and pass each one into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);",
+            "caption": "Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            },
+            "name": "dataSource"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be repeated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "field",
+      "params": [
+        "key",
+        "value"
+      ],
+      "docs": {
+        "description": "Returns a key, value pair in an array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
+          },
+          {
+            "title": "param",
+            "description": "Name of the field",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": "The value itself or a sourceable operation.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Value"
+            },
+            "name": "value"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Field"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fields",
+      "params": [
+        "fields"
+      ],
+      "docs": {
+        "description": "Zips key value pairs into an object.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
+          },
+          {
+            "title": "param",
+            "description": "a list of fields",
+            "type": {
+              "type": "NameExpression",
+              "name": "Fields"
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "merge",
+      "params": [
+        "dataSource",
+        "fields"
+      ],
+      "docs": {
+        "description": "Merges fields into each item in an array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "merge(\n  \"$.books[*]\",\n  fields(\n    field( \"publisher\", sourceValue(\"$.publisher\") )\n  )\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            },
+            "name": "dataSource"
+          },
+          {
+            "title": "param",
+            "description": "Group of fields to merge in.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            }
+          }
+        ]
+      },
+      "valid": true
+    }
+  ]
+}
