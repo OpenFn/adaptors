@@ -12,8 +12,6 @@ communicate with external systems. These adaptors are used by
   - [Setup](#setup)
 - [Using Adaptors](#using-adaptors)
   - [With OpenFn CLI](#with-openfn-cli)
-    - [CLI Prerequisites](#cli-prerequisites)
-    - [Steps](#steps)
   - [With OpenFn Lightning](#with-openfn-lightning)
 - [Contributing](#contributing)
 - [Build Your Adaptor](#build-your-adaptor)
@@ -26,10 +24,6 @@ communicate with external systems. These adaptors are used by
 - [Pre-releases](#pre-releases)
 - [Metadata](#metadata)
 - [Useful Resources](#useful-resources)
-  - [Wiki](https://github.com/OpenFn/adaptors/wiki)
-  - [Documentation](https://docs.openfn.org)
-  - [Lightning](https://github.com/OpenFn/lightning)
-  - [CLI](https://github.com/openfn/kit)
 
 ## Quick Start
 
@@ -43,7 +37,7 @@ communicate with external systems. These adaptors are used by
 ```bash
 # Install asdf plugins
 asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-asdf plugin-add pnpm
+asdf plugin add pnpm
 
 # Install dependencies and build
 asdf install
