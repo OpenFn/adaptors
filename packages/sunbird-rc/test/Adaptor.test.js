@@ -75,6 +75,57 @@ describe('request', () => {
 });
 
 describe('issueCredential', () => {
+  it('issues a verifiable credential with token auth', async () => {
+    const mockResponse = {
+      credential: {
+        id: 'did:rcw:token-test-123',
+        type: ['VerifiableCredential', 'ProofOfAcademicEvaluationCredential'],
+        issuer: 'did:web:example.com:identifier:xxx',
+      },
+      credentialSchemaId: 'did:schema:7b2fc25c-b7f6-40b5-bee4-d95bb5924450',
+      tags: ['demo'],
+    };
+
+    testServer
+      .intercept({
+        path: '/credentials/issue',
+        method: 'POST',
+        headers: {
+          Token: 'test-api-key-12345',
+        },
+      })
+      .reply(200, mockResponse);
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://fake.server.com',
+        token: 'test-api-key-12345',
+      },
+      data: {},
+    };
+
+    const credentialPayload = {
+      credential: {
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        type: ['VerifiableCredential', 'ProofOfAcademicEvaluationCredential'],
+        issuer: 'did:web:example.com:identifier:xxx',
+        issuanceDate: new Date().toISOString(),
+        credentialSubject: {
+          id: 'did:schema:xxx',
+          name: 'Test User',
+        },
+      },
+      credentialSchemaId: 'did:schema:xxx',
+      credentialSchemaVersion: '1.0.0',
+      tags: ['demo'],
+    };
+
+    const finalState = await issueCredential(credentialPayload)(state);
+
+    expect(finalState.data.credential).to.have.property('id');
+    expect(finalState.data.credential.id).to.eql('did:rcw:token-test-123');
+  });
+
   it('issues a verifiable credential successfully', async () => {
     const mockResponse = {
       credential: {

@@ -28,10 +28,16 @@ export const request = (configuration = {}, method, path, options) => {
   // pass a baseURL to it and you don't need to build a path here
   // assertRelativeUrl(path);
 
-  // TODO This example adds basic auth from config data
-  //       you may need to support other auth strategies
-  const { baseUrl, username, password } = configuration;
-  const headers = makeBasicAuthHeader(username, password);
+  const { baseUrl, username, password, token } = configuration;
+
+  // Build auth headers based on available credentials
+  // Token auth takes precedence over basic auth
+  let authHeaders = {};
+  if (token) {
+    authHeaders = { Token: token };
+  } else if (username && password) {
+    authHeaders = makeBasicAuthHeader(username, password);
+  }
 
   // TODO You can define custom error messages here
   //      The request function will throw if it receives
@@ -55,7 +61,8 @@ export const request = (configuration = {}, method, path, options) => {
     // You can add extra headers here if you want to
     headers: {
       'content-type': 'application/json',
-      ...headers,
+      ...authHeaders,
+      ...options.headers,
     },
   };
 
