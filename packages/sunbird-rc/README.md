@@ -1,13 +1,15 @@
 # language-sunbird-rc <img src='./assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the
-sunbird-rc API.
+An OpenFn **_adaptor_** for building integration jobs for use with Sunbird RC.
+
+https://rc.sunbird.org/
+
+https://rc.sunbird.org/api-reference/credentialling-apis/credential-issuance-apis
 
 ## Documentation
 
-View the
-[docs site](https://docs.openfn.org/adaptors/packages/sunbird-rc-docs) for
-full technical documentation.
+View the [docs site](https://docs.openfn.org/adaptors/packages/sunbird-rc-docs)
+for full technical documentation.
 
 ### Configuration
 

@@ -38,9 +38,6 @@ export const request = async (configuration = {}, method, path, options) => {
     authHeaders = makeBasicAuthHeader(username, password);
   }
 
-  // TODO You can define custom error messages here
-  //      The request function will throw if it receives
-  //      an error code (<=400), terminating the workflow
   const errors = {
     404: 'Page not found',
   };
@@ -69,13 +66,12 @@ export const request = async (configuration = {}, method, path, options) => {
     opts.headers['content-type'] = 'application/json';
   }
 
-  // TODO you may want to add a prefix to the path
-  // use path.join to build the path safely
   const safePath = nodepath.join(path);
 
   console.log('Utils.request opts.parseAs:', opts.parseAs);
   console.log('Utils.request opts.headers:', opts.headers);
 
+  // ===========================================================================
   // Special handling for base64/binary responses
   // Use undici directly to get raw buffer when server doesn't set content-type
   if (opts.parseAs === 'base64') {
@@ -112,6 +108,7 @@ export const request = async (configuration = {}, method, path, options) => {
       duration: Date.now() - startTime,
     };
   }
+  // ===========================================================================
 
   // Make the actual request
   const result = await commonRequest(method, safePath, opts);
