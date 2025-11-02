@@ -62427,6 +62427,744 @@
 {"name":"stripe","adaptor":"@openfn/language-stripe","version":"1.0.4","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#get\\\">get(resource, id)</a></dt>\\n<dt>\\n    <a href=\\\"#list\\\">list(resource, options)</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#http_get\\\">http.get(path, options)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_post\\\">http.post(path, body, options)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_request\\\">http.request(method, path, body, options)</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#assert\\\">assert()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### get\\n\\n<p><code>get(resource, id) ⇒ Operation</code></p>\\n\\nGet a single resource using its ID\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| resource | <code>string</code> | The API path to retrieve. |\\n| id | <code>string</code> | The ID of the resource to retrieve. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The requested resource object |\\n\\n**Example:** Get a payment intent\\n```js\\nget('payment_intents','pi_3RxS5EEAUr6ipfDB0aKo3moC');\\n```\\n**Example:** Get a customer\\n```js\\nget('customers','cus_SthTl85l20LRJj');\\n```\\n\\n* * *\\n\\n### list\\n\\n<p><code>list(resource, options) ⇒ Operation</code></p>\\n\\nList items from Stripe\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| resource | <code>string</code> | The API resource to list items from. |\\n| options | <code>object</code> | Optional options object. See [Stripe API documentation](https://docs.stripe.com/api/payment_intents/list) for more details. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | an array of items |\\n\\n**Example:** List all payment intents\\n```js\\nlist('payment_intents');\\n```\\n**Example:** List customers with options\\n```js\\nlist('customers', {limit:3});\\n```\\n\\n* * *\\n\\n\\n## http\\n\\nThese functions belong to the http namespace.\\n### http.get {#http_get}\\n\\n<p><code>get(path, options) ⇒ Operation</code></p>\\n\\nMake a GET request to Stripe\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Get all invoices\\n```js\\nhttp.get('/invoices')\\n```\\n\\n* * *\\n\\n\\n### http.post {#http_post}\\n\\n<p><code>post(path, body, options) ⇒ Operation</code></p>\\n\\nMake a POST request to Stripe\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Post a new payment intent\\n```js\\nhttp.post(\\n  '/payment_intents',\\n  {},\\n  {\\n    query: {\\n      amount: 10000,\\n      currency: 'usd',\\n    },\\n  }\\n);\\n```\\n\\n* * *\\n\\n\\n### http.request {#http_request}\\n\\n<p><code>request(method, path, body, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request to Stripe\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Get all customers\\n```js\\nhttp.request('GET', 'customers');\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### HttpState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-stripe <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\nstripe API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/stripe-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/stripe-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-stripe\\n\\n## 1.0.4\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@3.1.2\\n\\n## 1.0.3\\n\\n### Patch Changes\\n\\n- Updated dependencies [408a3a2]\\n  - @openfn/language-common@3.1.1\\n\\n## 1.0.2 - 18 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[e2bc436]\\n  - @openfn/language-common@3.1.0\\n\\n## 1.0.1 - 01 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1d60531]\\n  - @openfn/language-common@3.0.3\\n\\n## 1.0.0 - 28 August 2025\\n\\n- Implement `list()`, and `get()` functions for `stripe`.\\n- Implement `http.get()`, `http.post()`, and `http.request()` namespaced\\n  functions.\\n\"","functions":["get","list"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The stripe base URL ","format":"uri","minLength":1,"default":"https://api.stripe.com","examples":["https://api.stripe.com"]},"apiVersion":{"title":"ApiVersion","type":"string","description":"Stripe API version to use","default":"v1","examples":["v1"]},"apiKey":{"title":"ApiKey","type":"string","description":"The API key for authenticating requests to Stripe","writeOnly":true,"examples":["sk_test_53iburgn5yb3u4nfufg477365gbvrnv348r475gf4bf485845gbrf"]}},"type":"object","additionalProperties":true,"required":["baseUrl","apiKey"]}},
 [
   {
+    "id": "del",
+    "longname": "del",
+    "name": "del",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a DELETE request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "del(\"credentials/did:rcw:123abc\");"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 68,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/sunbird-rc/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 4,
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "downloadCredential",
+    "longname": "downloadCredential",
+    "name": "downloadCredential",
+    "kind": "function",
+    "scope": "global",
+    "description": "Download a Verifiable Credential as PDF (base64 encoded)",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The credential ID to download",
+        "name": "id"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Optional request options. Can include templateId which will be added to headers",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "downloadCredential('did:rcw:123abc');",
+      "downloadCredential('did:rcw:123abc', { templateId: 'template-001' });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 160,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/sunbird-rc/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 8,
+    "level": 0
+  },
+  {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a GET request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "get(\"patients\");"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 37,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/sunbird-rc/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 2,
+    "level": 0
+  },
+  {
+    "id": "getCredential",
+    "longname": "getCredential",
+    "name": "getCredential",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get a Verifiable Credential by ID",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The credential ID to retrieve",
+        "name": "id"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Optional request options. Can include templateId which will be added to headers",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "getCredential('did:rcw:123abc');",
+      "getCredential('did:rcw:123abc', { templateId: 'template-001' });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 133,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/sunbird-rc/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 7,
+    "level": 0
+  },
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the HTTP server, including headers, statusCode, body, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 4,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/sunbird-rc/src"
+    },
+    "order": 0,
+    "level": 0
+  },
+  {
+    "id": "issueCredential",
+    "longname": "issueCredential",
+    "name": "issueCredential",
+    "kind": "function",
+    "scope": "global",
+    "description": "Issue a Verifiable Credential",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Credential issuance payload containing credential, credentialSchemaId, credentialSchemaVersion, and tags",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "issueCredential({\n  credential: {\n    '@context': ['https://www.w3.org/2018/credentials/v1'],\n    type: ['VerifiableCredential', 'ProofOfAcademicEvaluationCredential'],\n    issuer: 'did:web:example.com:identifier:xxx',\n    issuanceDate: new Date().toISOString(),\n    credentialSubject: {\n      id: 'did:schema:xxx',\n      name: 'John Doe',\n      grade: 'A'\n    }\n  },\n  credentialSchemaId: 'did:schema:xxx',\n  credentialSchemaVersion: '1.0.0',\n  tags: ['demo', 'education']\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 116,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/sunbird-rc/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 6,
+    "level": 0
+  },
+  {
+    "id": "post",
+    "longname": "post",
+    "name": "post",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a POST request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "post(\"patient\", { \"name\": \"Bukayo\" });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 53,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/sunbird-rc/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 3,
+    "level": 0
+  },
+  {
+    "id": "put",
+    "longname": "put",
+    "name": "put",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a PUT request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the PUT body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "put(\"template/cmhbkgjqo000ems0jvbeayn1h\", {\n  \"template\": \"some handlebars template...\"\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 86,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/sunbird-rc/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 5,
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a general HTTP request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "HTTP method to use",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "request(\"POST\", \"patient\", { \"name\": \"Bukayo\" });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 197,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/sunbird-rc/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 9,
+    "level": 0
+  },
+  {
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to the HTTP request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object",
+            "string"
+          ]
+        },
+        "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
+        "name": "errors"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.",
+        "name": "form"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of headers to append to the request.",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Parse the response body as json, text or stream. By default will use the response headers.",
+        "name": "parseAs"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Request timeout in ms. Default: 300 seconds.",
+        "name": "timeout"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions",
+        "name": "tls"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 12,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/sunbird-rc/src"
+    },
+    "order": 1,
+    "level": 0
+  },
+  {
+    "id": "as",
+    "common": true,
+    "name": "as",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "combine",
+    "common": true,
+    "name": "combine",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "cursor",
+    "common": true,
+    "name": "cursor",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataPath",
+    "common": true,
+    "name": "dataPath",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dataValue",
+    "common": true,
+    "name": "dataValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "dateFns",
+    "common": true,
+    "name": "dateFns",
+    "scope": "global",
+    "kind": "external"
+  },
+  {
+    "id": "each",
+    "common": true,
+    "name": "each",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "field",
+    "common": true,
+    "name": "field",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fields",
+    "common": true,
+    "name": "fields",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fn",
+    "common": true,
+    "name": "fn",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "fnIf",
+    "common": true,
+    "name": "fnIf",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "group",
+    "common": true,
+    "name": "group",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "lastReferenceValue",
+    "common": true,
+    "name": "lastReferenceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "map",
+    "common": true,
+    "name": "map",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "merge",
+    "common": true,
+    "name": "merge",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "scrubEmojis",
+    "common": true,
+    "name": "scrubEmojis",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "sourceValue",
+    "common": true,
+    "name": "sourceValue",
+    "scope": "global",
+    "kind": "external-function"
+  },
+  {
+    "id": "util",
+    "common": true,
+    "name": "util",
+    "scope": "global",
+    "kind": "external"
+  }
+],
+{"name":"sunbird-rc","adaptor":"@openfn/language-sunbird-rc","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#del\\\">del(path, options)</a></dt>\\n<dt>\\n    <a href=\\\"#downloadcredential\\\">downloadCredential(id, options)</a></dt>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, options)</a></dt>\\n<dt>\\n    <a href=\\\"#getcredential\\\">getCredential(id, options)</a></dt>\\n<dt>\\n    <a href=\\\"#issuecredential\\\">issueCredential(body, options)</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, body, options)</a></dt>\\n<dt>\\n    <a href=\\\"#put\\\">put(path, body, options)</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, options)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### del\\n\\n<p><code>del(path, options) ⇒ Operation</code></p>\\n\\nMake a DELETE request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ndel(\\\"credentials/did:rcw:123abc\\\");\\n```\\n\\n* * *\\n\\n### downloadCredential\\n\\n<p><code>downloadCredential(id, options) ⇒ Operation</code></p>\\n\\nDownload a Verifiable Credential as PDF (base64 encoded)\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| id | <code>string</code> | The credential ID to download |\\n| options | <code>object</code> | Optional request options. Can include templateId which will be added to headers |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ndownloadCredential('did:rcw:123abc');\\n```\\n**Example**\\n```js\\ndownloadCredential('did:rcw:123abc', { templateId: 'template-001' });\\n```\\n\\n* * *\\n\\n### get\\n\\n<p><code>get(path, options) ⇒ Operation</code></p>\\n\\nMake a GET request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nget(\\\"patients\\\");\\n```\\n\\n* * *\\n\\n### getCredential\\n\\n<p><code>getCredential(id, options) ⇒ Operation</code></p>\\n\\nGet a Verifiable Credential by ID\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| id | <code>string</code> | The credential ID to retrieve |\\n| options | <code>object</code> | Optional request options. Can include templateId which will be added to headers |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ngetCredential('did:rcw:123abc');\\n```\\n**Example**\\n```js\\ngetCredential('did:rcw:123abc', { templateId: 'template-001' });\\n```\\n\\n* * *\\n\\n### issueCredential\\n\\n<p><code>issueCredential(body, options) ⇒ Operation</code></p>\\n\\nIssue a Verifiable Credential\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> | Credential issuance payload containing credential, credentialSchemaId, credentialSchemaVersion, and tags |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nissueCredential({\\n  credential: {\\n    '@context': ['https://www.w3.org/2018/credentials/v1'],\\n    type: ['VerifiableCredential', 'ProofOfAcademicEvaluationCredential'],\\n    issuer: 'did:web:example.com:identifier:xxx',\\n    issuanceDate: new Date().toISOString(),\\n    credentialSubject: {\\n      id: 'did:schema:xxx',\\n      name: 'John Doe',\\n      grade: 'A'\\n    }\\n  },\\n  credentialSchemaId: 'did:schema:xxx',\\n  credentialSchemaVersion: '1.0.0',\\n  tags: ['demo', 'education']\\n});\\n```\\n\\n* * *\\n\\n### post\\n\\n<p><code>post(path, body, options) ⇒ Operation</code></p>\\n\\nMake a POST request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\npost(\\\"patient\\\", { \\\"name\\\": \\\"Bukayo\\\" });\\n```\\n\\n* * *\\n\\n### put\\n\\n<p><code>put(path, body, options) ⇒ Operation</code></p>\\n\\nMake a PUT request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the PUT body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nput(\\\"template/cmhbkgjqo000ems0jvbeayn1h\\\", {\\n  \\\"template\\\": \\\"some handlebars template...\\\"\\n});\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(method, path, body, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nrequest(\\\"POST\\\", \\\"patient\\\", { \\\"name\\\": \\\"Bukayo\\\" });\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### HttpState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-sunbird-rc <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with Sunbird RC.\\n\\nhttps://rc.sunbird.org/\\n\\nhttps://rc.sunbird.org/api-reference/credentialling-apis/credential-issuance-apis\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/sunbird-rc-docs)\\nfor full technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/sunbird-rc-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-sunbird-rc\\n\\n## 1.0.0 - 02 November 2025\\n\\n### Major Changes\\n\\n- Basic verifiable credentialing for Sunbird RC (issue, get, download)\"","functions":["del","downloadCredential","get","getCredential","issueCredential","post","put","request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The base URL (https://credentials.country.gov)","format":"uri","minLength":1,"examples":["https://credentials.country.gov","http://98.70.25.20/credential"]},"token":{"title":"Password","type":"string","description":"Password","writeOnly":true,"examples":["@some(!)Str0ngT0k3n"]}},"type":"object","additionalProperties":true,"required":["baseUrl"]}},
+[
+  {
     "id": "cursor",
     "longname": "cursor",
     "name": "cursor",
