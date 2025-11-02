@@ -68,7 +68,7 @@ export function execute(...operations) {
  * // Attach from base64 string
  * send({
  *   from: 'admin@openfn.org',
- *   to: 'taylor@openfn.org',
+ *   to: 'email@example.com',
  *   subject: 'Your invoice',
  *   text: 'Please find your invoice attached',
  *   attachment: {
