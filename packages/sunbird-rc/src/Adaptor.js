@@ -55,6 +55,39 @@ export function post(path, body, options) {
 }
 
 /**
+ * Make a DELETE request
+ * @example
+ * del("credentials/did:rcw:123abc");
+ * @function
+ * @public
+ * @param {string} path - Path to resource
+ * @param {RequestOptions} options - Optional request options
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function del(path, options) {
+  return request('DELETE', path, null, options);
+}
+
+/**
+ * Make a PUT request
+ * @example
+ * put("template/cmhbkgjqo000ems0jvbeayn1h", {
+ *   "template": "some handlebars template..."
+ * });
+ * @function
+ * @public
+ * @param {string} path - Path to resource
+ * @param {object} body - Object which will be attached to the PUT body
+ * @param {RequestOptions} options - Optional request options
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function put(path, body, options) {
+  return request('PUT', path, body, options);
+}
+
+/**
  * Issue a Verifiable Credential
  * @example
  * issueCredential({
