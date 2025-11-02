@@ -1,5 +1,11 @@
 # @openfn/language-mailgun
 
+## 0.6.0 - 02 November 2025
+
+### Minor Changes
+
+- Allow base64 string to be passed (and converted to buffer) for attachments
+
 ## 0.5.21
 
 ### Patch Changes
@@ -11,7 +17,7 @@
 
 ### Patch Changes
 
-- Updated dependencies [408a3a2]
+- Updated dependencies \[408a3a2]
   - @openfn/language-common@3.1.1
 
 ## 0.5.19 - 18 September 2025

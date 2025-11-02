@@ -58,6 +58,7 @@ Create an event
 
 **Example**
 ```js
+// Fetch attachment from URL
 send({
   from: 'from_email',
   to: 'to_email',
@@ -66,6 +67,20 @@ send({
   attachment: {
     url: 'www.google.com/doodle.png',
     filename: 'forYou.png',
+  },
+})
+```
+**Example**
+```js
+// Attach from base64 string
+send({
+  from: 'admin@openfn.org',
+  to: 'email@example.com',
+  subject: 'Your invoice',
+  text: 'Please find your invoice attached',
+  attachment: {
+    filename: 'invoice.pdf',
+    data: $.data // base64 string
   },
 })
 ```
