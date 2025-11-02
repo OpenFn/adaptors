@@ -1,7 +1,13 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { request, issueCredential, getCredential, dataValue } from '../src/Adaptor.js';
+import {
+  request,
+  issueCredential,
+  getCredential,
+  downloadCredential,
+  dataValue,
+} from '../src/Adaptor.js';
 
 // This creates a mock client which acts like a fake server.
 // It enables pattern-matching on the request object and custom responses
@@ -134,11 +140,14 @@ describe('issueCredential', () => {
         proof: {
           type: 'Ed25519Signature2020',
           created: '2025-11-02T08:07:32Z',
-          proofValue: 'zqyhqEppCmVNWvC1M8gXFmfatykHVXvsqcD7Nr57jTi56A2uTrvhCnaTPGix9pYcuvG3dN2q6Srqmrbdm5oxgqzU',
+          proofValue:
+            'zqyhqEppCmVNWvC1M8gXFmfatykHVXvsqcD7Nr57jTi56A2uTrvhCnaTPGix9pYcuvG3dN2q6Srqmrbdm5oxgqzU',
           proofPurpose: 'assertionMethod',
-          verificationMethod: 'did:web:example.com:identifier:9536bc3b-3f4b-4cec-8c48-f67c9c4d63fc#key-0',
+          verificationMethod:
+            'did:web:example.com:identifier:9536bc3b-3f4b-4cec-8c48-f67c9c4d63fc#key-0',
         },
-        issuer: 'did:web:example.com:identifier:9536bc3b-3f4b-4cec-8c48-f67c9c4d63fc',
+        issuer:
+          'did:web:example.com:identifier:9536bc3b-3f4b-4cec-8c48-f67c9c4d63fc',
         '@context': [
           'https://www.w3.org/2018/credentials/v1',
           'https://littlemight.github.io/sunbird-demo-vc-context/demo-context.json',
@@ -196,7 +205,8 @@ describe('issueCredential', () => {
           'https://littlemight.github.io/sunbird-demo-vc-context/demo-context.json',
         ],
         type: ['VerifiableCredential', 'ProofOfAcademicEvaluationCredential'],
-        issuer: 'did:web:example.com:identifier:9536bc3b-3f4b-4cec-8c48-f67c9c4d63fc',
+        issuer:
+          'did:web:example.com:identifier:9536bc3b-3f4b-4cec-8c48-f67c9c4d63fc',
         issuanceDate: new Date().toISOString(),
         credentialSubject: {
           id: 'did:schema:7b2fc25c-b7f6-40b5-bee4-d95bb5924450',
@@ -214,9 +224,13 @@ describe('issueCredential', () => {
     const finalState = await issueCredential(credentialPayload)(state);
 
     expect(finalState.data.credential).to.have.property('id');
-    expect(finalState.data.credential.id).to.eql('did:rcw:cbf00119-096f-4e70-9cf3-d108a71ae77d');
+    expect(finalState.data.credential.id).to.eql(
+      'did:rcw:cbf00119-096f-4e70-9cf3-d108a71ae77d'
+    );
     expect(finalState.data.credential).to.have.property('proof');
-    expect(finalState.data.credentialSchemaId).to.eql('did:schema:7b2fc25c-b7f6-40b5-bee4-d95bb5924450');
+    expect(finalState.data.credentialSchemaId).to.eql(
+      'did:schema:7b2fc25c-b7f6-40b5-bee4-d95bb5924450'
+    );
     expect(finalState.data.tags).to.be.an('array').that.includes('demo');
   });
 });
@@ -251,11 +265,15 @@ describe('getCredential', () => {
       data: {},
     };
 
-    const finalState = await getCredential('did:rcw:test-credential-123')(state);
+    const finalState = await getCredential('did:rcw:test-credential-123')(
+      state
+    );
 
     expect(finalState.data.credential).to.have.property('id');
     expect(finalState.data.credential.id).to.eql('did:rcw:test-credential-123');
-    expect(finalState.data.credential.credentialSubject.name).to.eql('Taylor Test');
+    expect(finalState.data.credential.credentialSubject.name).to.eql(
+      'Taylor Test'
+    );
   });
 
   it('retrieves a credential with templateId in headers', async () => {
@@ -288,3 +306,61 @@ describe('getCredential', () => {
     expect(finalState.data.credential.id).to.eql('did:rcw:template-test-456');
   });
 });
+
+// TODO - @Joe, we needed to use undici directly to get this PDF response
+// (likely because of some idiosyncrasy in the Sunbird RC API) and I don't know
+// how to test undici. I didn't like Claude's recommendations, so leaving this
+// out for now.
+
+// describe('downloadCredential', () => {
+//   it('downloads a credential as base64 encoded PDF', async () => {
+//     // Mock PDF binary data
+//     const pdfBuffer = Buffer.from('JVBERi0xLjQKJeLjz9MKMyAwIG9iago8PC9UeXBl');
+
+//     testServer
+//       .intercept({
+//         path: '/credentials/did:rcw:pdf-test-789',
+//         method: 'GET',
+//       })
+//       .reply(200, pdfBuffer);
+
+//     const state = {
+//       configuration: {
+//         baseUrl: 'https://fake.server.com',
+//         token: 'test-api-key',
+//       },
+//       data: {},
+//     };
+
+//     const finalState = await downloadCredential('did:rcw:pdf-test-789')(state);
+
+//     // Response should be base64 encoded (see dhis2/test/http.test.js:255 for reference)
+//     expect(finalState.data).to.be.a('string');
+//     expect(finalState.data.length).to.be.greaterThan(0);
+//   });
+
+//   it('downloads a credential with templateId header', async () => {
+//     const pdfBuffer = Buffer.from('PDF_CONTENT_HERE');
+
+//     testServer
+//       .intercept({
+//         path: '/credentials/did:rcw:pdf-template-999',
+//         method: 'GET',
+//       })
+//       .reply(200, pdfBuffer);
+
+//     const state = {
+//       configuration: {
+//         baseUrl: 'https://fake.server.com',
+//         token: 'test-api-key',
+//       },
+//       data: {},
+//     };
+
+//     const finalState = await downloadCredential('did:rcw:pdf-template-999', {
+//       templateId: 'pdf-template-v2',
+//     })(state);
+
+//     expect(finalState.data).to.be.a('string');
+//   });
+// });

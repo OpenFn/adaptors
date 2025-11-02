@@ -112,6 +112,43 @@ export function getCredential(id, options = {}) {
 }
 
 /**
+ * Download a Verifiable Credential as PDF (base64 encoded)
+ * @example
+ * downloadCredential('did:rcw:123abc');
+ * @example
+ * downloadCredential('did:rcw:123abc', { templateId: 'template-001' });
+ * @function
+ * @public
+ * @param {string} id - The credential ID to download
+ * @param {object} options - Optional request options. Can include templateId which will be added to headers
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function downloadCredential(id, options = {}) {
+  return async state => {
+    const [resolvedId, resolvedOptions] = expandReferences(state, id, options);
+    const { templateId, ...otherOptions } = resolvedOptions;
+
+    const opts = {
+      ...otherOptions,
+      parseAs: 'base64', // Encode response as base64 for downstream use
+      headers: {
+        Accept: 'application/pdf',
+        ...otherOptions.headers,
+      },
+    };
+
+    if (templateId) {
+      opts.headers.templateId = templateId;
+    }
+
+    console.log('downloadCredential opts:', JSON.stringify(opts, null, 2));
+
+    return get(`/credentials/${resolvedId}`, opts)(state);
+  };
+}
+
+/**
  * Make a general HTTP request
  * @example
  * request("POST", "patient", { "name": "Bukayo" });

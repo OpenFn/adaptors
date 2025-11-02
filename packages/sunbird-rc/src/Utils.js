@@ -2,11 +2,15 @@ import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   makeBasicAuthHeader,
-  assertRelativeUrl,
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
+import { request as undiciRequest } from 'undici';
 
 export const prepareNextState = (state, response) => {
+  console.log('prepareNextState response keys:', Object.keys(response));
+  console.log('prepareNextState response.body type:', typeof response.body);
+  console.log('prepareNextState response.body length:', response.body?.length);
+
   const { body, ...responseWithoutBody } = response;
 
   if (!state.references) {
@@ -22,12 +26,7 @@ export const prepareNextState = (state, response) => {
 // This helper function will call out to the backend service
 // and add authorisation headers
 // Refer to the common request function for options and details
-export const request = (configuration = {}, method, path, options) => {
-  // You might want to check that the path is not an absolute URL before
-  // appending credentials commonRequest will do this for you if you
-  // pass a baseURL to it and you don't need to build a path here
-  // assertRelativeUrl(path);
-
+export const request = async (configuration = {}, method, path, options) => {
   const { baseUrl, username, password, token } = configuration;
 
   // Build auth headers based on available credentials
@@ -60,16 +59,61 @@ export const request = (configuration = {}, method, path, options) => {
 
     // You can add extra headers here if you want to
     headers: {
-      'content-type': 'application/json',
       ...authHeaders,
       ...options.headers,
     },
   };
 
+  // Only set content-type for JSON requests (not for binary/base64 responses)
+  if (opts.parseAs === 'json') {
+    opts.headers['content-type'] = 'application/json';
+  }
+
   // TODO you may want to add a prefix to the path
   // use path.join to build the path safely
   const safePath = nodepath.join(path);
 
+  console.log('Utils.request opts.parseAs:', opts.parseAs);
+  console.log('Utils.request opts.headers:', opts.headers);
+
+  // Special handling for base64/binary responses
+  // Use undici directly to get raw buffer when server doesn't set content-type
+  if (opts.parseAs === 'base64') {
+    // Ensure baseUrl ends with / for proper URL joining
+    const normalizedBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+    const normalizedPath = safePath.startsWith('/')
+      ? safePath.slice(1)
+      : safePath;
+    const fullUrl = `${normalizedBase}${normalizedPath}`;
+
+    const startTime = Date.now();
+    const { statusCode, headers, body } = await undiciRequest(fullUrl, {
+      method,
+      headers: opts.headers,
+    });
+
+    // Collect the stream into a buffer
+    const chunks = [];
+    for await (const chunk of body) {
+      chunks.push(chunk);
+    }
+    const buffer = Buffer.concat(chunks);
+
+    // Convert to base64
+    const base64String = buffer.toString('base64');
+
+    return {
+      url: fullUrl,
+      method,
+      statusCode,
+      statusMessage: headers['status-message'] || 'OK',
+      headers,
+      body: base64String,
+      duration: Date.now() - startTime,
+    };
+  }
+
   // Make the actual request
-  return commonRequest(method, safePath, opts);
+  const result = await commonRequest(method, safePath, opts);
+  return result;
 };
