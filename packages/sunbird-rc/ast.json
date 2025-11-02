@@ -182,6 +182,67 @@
       "valid": true
     },
     {
+      "name": "getCredential",
+      "params": [
+        "id",
+        "options"
+      ],
+      "docs": {
+        "description": "Get a Verifiable Credential by ID",
+        "tags": [
+          {
+            "title": "example",
+            "description": "getCredential('did:rcw:123abc');"
+          },
+          {
+            "title": "example",
+            "description": "getCredential('did:rcw:123abc', { templateId: 'template-001' });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The credential ID to retrieve",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "id"
+          },
+          {
+            "title": "param",
+            "description": "Optional request options. Can include templateId which will be added to headers",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "request",
       "params": [
         "method",

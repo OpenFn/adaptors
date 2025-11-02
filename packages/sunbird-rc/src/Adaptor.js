@@ -85,6 +85,33 @@ export function issueCredential(body, options) {
 }
 
 /**
+ * Get a Verifiable Credential by ID
+ * @example
+ * getCredential('did:rcw:123abc');
+ * @example
+ * getCredential('did:rcw:123abc', { templateId: 'template-001' });
+ * @function
+ * @public
+ * @param {string} id - The credential ID to retrieve
+ * @param {object} options - Optional request options. Can include templateId which will be added to headers
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function getCredential(id, options = {}) {
+  return async state => {
+    const [resolvedId, resolvedOptions] = expandReferences(state, id, options);
+    const { templateId, ...otherOptions } = resolvedOptions;
+
+    const opts = { ...otherOptions };
+    if (templateId) {
+      opts.headers = { templateId, ...otherOptions.headers };
+    }
+
+    return get(`/credentials/${resolvedId}`, opts)(state);
+  };
+}
+
+/**
  * Make a general HTTP request
  * @example
  * request("POST", "patient", { "name": "Bukayo" });

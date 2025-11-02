@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { request, issueCredential, dataValue } from '../src/Adaptor.js';
+import { request, issueCredential, getCredential, dataValue } from '../src/Adaptor.js';
 
 // This creates a mock client which acts like a fake server.
 // It enables pattern-matching on the request object and custom responses
@@ -218,5 +218,73 @@ describe('issueCredential', () => {
     expect(finalState.data.credential).to.have.property('proof');
     expect(finalState.data.credentialSchemaId).to.eql('did:schema:7b2fc25c-b7f6-40b5-bee4-d95bb5924450');
     expect(finalState.data.tags).to.be.an('array').that.includes('demo');
+  });
+});
+
+describe('getCredential', () => {
+  it('retrieves a credential by ID', async () => {
+    const mockResponse = {
+      credential: {
+        id: 'did:rcw:test-credential-123',
+        type: ['VerifiableCredential', 'ProofOfAcademicEvaluationCredential'],
+        issuer: 'did:web:example.com:identifier:xxx',
+        credentialSubject: {
+          id: 'did:schema:xxx',
+          name: 'Taylor Test',
+          grade: 'A',
+        },
+      },
+    };
+
+    testServer
+      .intercept({
+        path: '/credentials/did:rcw:test-credential-123',
+        method: 'GET',
+      })
+      .reply(200, mockResponse);
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://fake.server.com',
+        token: 'test-api-key',
+      },
+      data: {},
+    };
+
+    const finalState = await getCredential('did:rcw:test-credential-123')(state);
+
+    expect(finalState.data.credential).to.have.property('id');
+    expect(finalState.data.credential.id).to.eql('did:rcw:test-credential-123');
+    expect(finalState.data.credential.credentialSubject.name).to.eql('Taylor Test');
+  });
+
+  it('retrieves a credential with templateId in headers', async () => {
+    const mockResponse = {
+      credential: {
+        id: 'did:rcw:template-test-456',
+        type: ['VerifiableCredential'],
+      },
+    };
+
+    testServer
+      .intercept({
+        path: '/credentials/did:rcw:template-test-456',
+        method: 'GET',
+      })
+      .reply(200, mockResponse);
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://fake.server.com',
+        token: 'test-api-key',
+      },
+      data: {},
+    };
+
+    const finalState = await getCredential('did:rcw:template-test-456', {
+      templateId: 'template-001',
+    })(state);
+
+    expect(finalState.data.credential.id).to.eql('did:rcw:template-test-456');
   });
 });
