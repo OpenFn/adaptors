@@ -211,7 +211,7 @@ pnpm changeset
 
 ## Versioning
 
-> If you're PR is approved, you can bump the version and add release dates.
+> If your PR is approved, you can bump the version and add release dates.
 
 - Run `pnpm run version` to bump the version and add release dates.
 - Commit your changes. And push to your PR branch.

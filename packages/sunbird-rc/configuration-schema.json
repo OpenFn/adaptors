@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL (https://credentials.country.gov)",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://credentials.country.gov", "http://98.70.25.20/credential"]
+    },
+    "token": {
+      "title": "Password",
+      "type": "string",
+      "description": "Password",
+      "writeOnly": true,
+      "examples": ["@some(!)Str0ngT0k3n"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["baseUrl"]
+}
