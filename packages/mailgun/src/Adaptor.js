@@ -53,6 +53,7 @@ export function execute(...operations) {
  * Create an event
  * @public
  * @example
+ * // Fetch attachment from URL
  * send({
  *   from: 'from_email',
  *   to: 'to_email',
@@ -61,6 +62,18 @@ export function execute(...operations) {
  *   attachment: {
  *     url: 'www.google.com/doodle.png',
  *     filename: 'forYou.png',
+ *   },
+ * })
+ * @example
+ * // Attach from base64 string
+ * send({
+ *   from: 'admin@openfn.org',
+ *   to: 'taylor@openfn.org',
+ *   subject: 'Your invoice',
+ *   text: 'Please find your invoice attached',
+ *   attachment: {
+ *     filename: 'invoice.pdf',
+ *     data: $.data // base64 string
  *   },
  * })
  * @function
@@ -74,12 +87,22 @@ export function send(params) {
     const [body] = expandReferences(state, params);
 
     if (body.attachment) {
-      const response = request('GET', body.attachment.url);
-      console.log(response);
-      body.attachment = {
-        data: response.body,
-        filename: body.attachment.filename,
-      };
+      // If attachment has a data property, convert base64 string to Buffer
+      if (body.attachment.data) {
+        // Convert base64 string to Buffer for mailgun.js
+        if (typeof body.attachment.data === 'string') {
+          body.attachment.data = Buffer.from(body.attachment.data, 'base64');
+        }
+        // If data is already a Buffer, leave it as is
+      } else if (body.attachment.url) {
+        // Fetch from URL if no data property exists
+        const response = request('GET', body.attachment.url);
+        console.log(response);
+        body.attachment = {
+          data: response.body,
+          filename: body.attachment.filename,
+        };
+      }
     }
     console.log('Sending mail:');
     return client.messages.create(domain, body).then(response => {

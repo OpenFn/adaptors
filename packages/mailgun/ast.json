@@ -15,7 +15,11 @@
           },
           {
             "title": "example",
-            "description": "send({\n  from: 'from_email',\n  to: 'to_email',\n  subject: 'Your Subject',\n  text: 'Your message goes here',\n  attachment: {\n    url: 'www.google.com/doodle.png',\n    filename: 'forYou.png',\n  },\n})"
+            "description": "// Fetch attachment from URL\nsend({\n  from: 'from_email',\n  to: 'to_email',\n  subject: 'Your Subject',\n  text: 'Your message goes here',\n  attachment: {\n    url: 'www.google.com/doodle.png',\n    filename: 'forYou.png',\n  },\n})"
+          },
+          {
+            "title": "example",
+            "description": "// Attach from base64 string\nsend({\n  from: 'admin@openfn.org',\n  to: 'taylor@openfn.org',\n  subject: 'Your invoice',\n  text: 'Please find your invoice attached',\n  attachment: {\n    filename: 'invoice.pdf',\n    data: $.data // base64 string\n  },\n})"
           },
           {
             "title": "function",
