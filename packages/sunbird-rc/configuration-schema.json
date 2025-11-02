@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL (http://www.example.com)",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://example.com"]
+    },
+    "token": {
+      "title": "Password",
+      "type": "string",
+      "description": "Password",
+      "writeOnly": true,
+      "examples": ["@some(!)Str0ngT0k3n"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["baseUrl"]
+}
