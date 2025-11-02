@@ -14,12 +14,15 @@
       "description": "The base URL (https://credentials.country.gov)",
       "format": "uri",
       "minLength": 1,
-      "examples": ["https://credentials.country.gov", "http://98.70.25.20/credential"]
+      "examples": [
+        "https://credentials.country.gov",
+        "http://98.70.25.20/credential"
+      ]
     },
     "token": {
-      "title": "Password",
+      "title": "Token",
       "type": "string",
-      "description": "Password",
+      "description": "An API key for your instance",
       "writeOnly": true,
       "examples": ["@some(!)Str0ngT0k3n"]
     }
