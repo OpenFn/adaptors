@@ -7,10 +7,6 @@ import nodepath from 'node:path';
 import { request as undiciRequest } from 'undici';
 
 export const prepareNextState = (state, response) => {
-  console.log('prepareNextState response keys:', Object.keys(response));
-  console.log('prepareNextState response.body type:', typeof response.body);
-  console.log('prepareNextState response.body length:', response.body?.length);
-
   const { body, ...responseWithoutBody } = response;
 
   if (!state.references) {
@@ -67,9 +63,6 @@ export const request = async (configuration = {}, method, path, options) => {
   }
 
   const safePath = nodepath.join(path);
-
-  console.log('Utils.request opts.parseAs:', opts.parseAs);
-  console.log('Utils.request opts.headers:', opts.headers);
 
   // ===========================================================================
   // Special handling for base64/binary responses
