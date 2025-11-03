@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL of the iHRIS FHIR server",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://ihris.example.com"]
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "Username for basic authentication",
+      "examples": ["ihris_user"]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Password for basic authentication",
+      "writeOnly": true,
+      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+   "required": ["baseUrl", "username", "password"]
+}
