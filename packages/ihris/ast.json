@@ -9,11 +9,12 @@
         "options"
       ],
       "docs": {
-        "description": "Make a general HTTP request",
+        "description": "Make a general HTTP request to iHRIS",
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", \"patient\", { \"name\": \"Bukayo\" });"
+            "description": "request(\n  'GET',\n  '/fhir/Practitioner',\n  {},\n  {\n    query: { active: 'true', _count: '10' },\n  }\n);",
+            "caption": "Make a GET request with query parameters"
           },
           {
             "title": "function",
